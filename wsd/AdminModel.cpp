@@ -233,7 +233,7 @@ std::string AdminModel::getAllHistory() const
     for (const auto& d : _documents)
     {
         oss << separator1;
-        oss << d.second->getHistory();
+        oss << d.second.getHistory();
         separator1 = ",";
     }
 
@@ -316,9 +316,9 @@ unsigned AdminModel::getKitsMemoryUsage() const
     unsigned docs = 0;
     for (const auto& it : _documents)
     {
-        if (!it.second->isExpired())
+        if (!it.second.isExpired())
         {
-            const int bytes = it.second->getMemoryDirty();
+            const int bytes = it.second.getMemoryDirty();
             if (bytes > 0)
             {
                 totalMem += bytes;
@@ -343,17 +343,17 @@ size_t AdminModel::getKitsJiffies() const
     size_t totalJ = 0;
     for (auto& it : _documents)
     {
-        if (!it.second->isExpired())
+        if (!it.second.isExpired())
         {
-            const int pid = it.second->getPid();
+            const int pid = it.second.getPid();
             if (pid > 0)
             {
                 unsigned newJ = Util::getCpuUsage(pid);
-                unsigned prevJ = it.second->getLastJiffies();
+                unsigned prevJ = it.second.getLastJiffies();
                 if(newJ >= prevJ)
                 {
                     totalJ += (newJ - prevJ);
-                    it.second->setLastJiffies(newJ);
+                    const_cast<Document&>(it.second).setLastJiffies(newJ);
                 }
             }
         }
@@ -512,7 +512,7 @@ void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t rec
 
     auto doc = _documents.find(docKey);
     if(doc != _documents.end())
-        doc->second->addBytes(sent, recv);
+        doc->second.addBytes(sent, recv);
 
     _sentBytesTotal += sent;
     _recvBytesTotal += recv;
@@ -524,7 +524,7 @@ void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool va
 
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
-        doc->second->setModified(value);
+        doc->second.setModified(value);
 
     std::ostringstream oss;
     oss << "modifications "
@@ -540,7 +540,7 @@ void AdminModel::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
 
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
-        doc->second->setUploaded(value);
+        doc->second.setUploaded(value);
 
     std::ostringstream oss;
     oss << "uploaded " << pid << ' ' << (value ? "Yes" : "No");
@@ -554,10 +554,10 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
     const auto ret =
-        _documents.emplace(docKey, std::make_unique<Document>(docKey, pid, filename, wopiSrc));
-    ret.first->second->setProcSMapsFp(smapsFp);
-    ret.first->second->takeSnapshot();
-    ret.first->second->addView(sessionId, userName, userId, isViewReadOnly);
+        _documents.emplace(docKey, Document(docKey, pid, filename, wopiSrc));
+    ret.first->second.setProcSMapsFp(smapsFp);
+    ret.first->second.takeSnapshot();
+    ret.first->second.addView(sessionId, userName, userId, isViewReadOnly);
     LOG_DBG("Added admin document [" << docKey << "].");
 
     std::string memoryAllocated;
@@ -593,7 +593,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     }
     else
     {
-        memoryAllocated = std::to_string(_documents.begin()->second->getMemoryDirty());
+        memoryAllocated = std::to_string(_documents.begin()->second.getMemoryDirty());
     }
 
     const std::string& wopiHost = wopiSrc.getHost();
@@ -616,19 +616,19 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto docIt = _documents.find(docKey);
-    if (docIt != _documents.end() && !docIt->second->isExpired())
+    if (docIt != _documents.end() && !docIt->second.isExpired())
     {
         // Notify the subscribers
         std::ostringstream oss;
         oss << "rmdoc "
-            << docIt->second->getPid() << ' '
+            << docIt->second.getPid() << ' '
             << sessionId;
         notify(oss.str());
 
         // The idea is to only expire the document and keep the history
         // of documents open and close, to be able to give a detailed summary
         // to the admin console with views.
-        if (docIt->second->expireView(sessionId) == 0)
+        if (docIt->second.expireView(sessionId) == 0)
             doRemove(docIt);
     }
 }
@@ -642,14 +642,14 @@ void AdminModel::removeDocument(const std::string& docKey)
     {
         std::ostringstream oss;
         oss << "rmdoc "
-            << docIt->second->getPid() << ' ';
+            << docIt->second.getPid() << ' ';
         const std::string msg = oss.str();
 
-        for (const auto& pair : docIt->second->getViews())
+        for (const auto& pair : docIt->second.getViews())
         {
             // Notify the subscribers
             notify(msg + pair.first);
-            docIt->second->expireView(pair.first);
+            docIt->second.expireView(pair.first);
         }
 
         LOG_DBG("Removed admin document [" << docKey << "].");
@@ -729,9 +729,9 @@ unsigned AdminModel::getTotalActiveViews() const
     unsigned numTotalViews = 0;
     for (const auto& it: _documents)
     {
-        if (!it.second->isExpired())
+        if (!it.second.isExpired())
         {
-            numTotalViews += it.second->getActiveViews();
+            numTotalViews += it.second.getActiveViews();
         }
     }
 
@@ -746,10 +746,10 @@ std::vector<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
     docs.reserve(_documents.size());
     for (const auto& it: _documents)
     {
-        docs.emplace_back(it.second->getDocKey(),
-                          it.second->getIdleTime(),
-                          it.second->getMemoryDirty(),
-                          !it.second->getModifiedStatus());
+        docs.emplace_back(it.second.getDocKey(),
+                          it.second.getIdleTime(),
+                          it.second.getMemoryDirty(),
+                          !it.second.getModifiedStatus());
     }
 
     // Sort the list by idle times;
@@ -768,26 +768,26 @@ void AdminModel::cleanupResourceConsumingDocs()
 
     DocCleanupSettings& settings = _defDocProcSettings.getCleanupSettings();
 
-    for (const auto& it: _documents)
+    for (auto& it: _documents)
     {
-        Document *doc = it.second.get();
-        if (!doc->isExpired())
+        Document& doc = it.second;
+        if (!doc.isExpired())
         {
-            size_t idleTime = doc->getIdleTime();
-            size_t memDirty = doc->getMemoryDirty();
-            unsigned cpuPercentage = doc->getLastCpuPercentage();
+            size_t idleTime = doc.getIdleTime();
+            size_t memDirty = doc.getMemoryDirty();
+            unsigned cpuPercentage = doc.getLastCpuPercentage();
 
             if (idleTime >= settings.getIdleTime() &&
                 (memDirty >= settings.getLimitDirtyMem() * 1024 ||
                  cpuPercentage >= settings.getLimitCpu()))
             {
                 time_t now = std::time(nullptr);
-                const size_t badBehaviorDuration = now - doc->getBadBehaviorDetectionTime();
-                if (!doc->getBadBehaviorDetectionTime())
+                const size_t badBehaviorDuration = now - doc.getBadBehaviorDetectionTime();
+                if (!doc.getBadBehaviorDetectionTime())
                 {
-                    LOG_WRN("Detected resource consuming doc [" << doc->getDocKey() << "]: idle="
+                    LOG_WRN("Detected resource consuming doc [" << doc.getDocKey() << "]: idle="
                             << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
-                    doc->setBadBehaviorDetectionTime(now);
+                    doc.setBadBehaviorDetectionTime(now);
                 }
                 else if (badBehaviorDuration >= settings.getBadBehaviorPeriod())
                 {
@@ -798,18 +798,18 @@ void AdminModel::cleanupResourceConsumingDocs()
                     // Also, try first to SIGABRT the kit process so that a stack trace
                     // could be dumped. If the process is still alive then, at next
                     // iteration, try to SIGKILL it.
-                    if (SigUtil::killChild(doc->getPid(), doc->getAbortTime() ? SIGKILL : SIGABRT))
-                        LOG_ERR((doc->getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << doc->getDocKey() << "]");
+                    if (SigUtil::killChild(doc.getPid(), doc.getAbortTime() ? SIGKILL : SIGABRT))
+                        LOG_ERR((doc.getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << doc.getDocKey() << "]");
                     else
-                        LOG_ERR("Cannot " << (doc->getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << doc->getDocKey() << "]");
-                    if (!doc->getAbortTime())
-                        doc->setAbortTime(std::time(nullptr));
+                        LOG_ERR("Cannot " << (doc.getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << doc.getDocKey() << "]");
+                    if (!doc.getAbortTime())
+                        doc.setAbortTime(std::time(nullptr));
                 }
             }
-            else if (doc->getBadBehaviorDetectionTime())
+            else if (doc.getBadBehaviorDetectionTime())
             {
-                doc->setBadBehaviorDetectionTime(0);
-                LOG_WRN("Removed doc [" << doc->getDocKey() << "] from resource consuming monitoring list: idle="
+                doc.setBadBehaviorDetectionTime(0);
+                LOG_WRN("Removed doc [" << doc.getDocKey() << "] from resource consuming monitoring list: idle="
                         << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
             }
         }
@@ -825,24 +825,24 @@ std::string AdminModel::getDocuments() const
     std::string separator1;
     for (const auto& it: _documents)
     {
-        if (!it.second->isExpired())
+        if (!it.second.isExpired())
         {
             std::string encodedFilename;
-            Poco::URI::encode(it.second->getFilename(), " ", encodedFilename); // Is encoded name needed?
+            Poco::URI::encode(it.second.getFilename(), " ", encodedFilename); // Is encoded name needed?
             oss << separator1 << '{' << ' '
-                << "\"pid\"" << ':' << it.second->getPid() << ','
-                << "\"docKey\"" << ':' << '"' << it.second->getDocKey() << '"' << ','
+                << "\"pid\"" << ':' << it.second.getPid() << ','
+                << "\"docKey\"" << ':' << '"' << it.second.getDocKey() << '"' << ','
                 << "\"fileName\"" << ':' << '"' << encodedFilename << '"' << ','
-                << "\"wopiHost\"" << ':' << '"' << it.second->getHostName() << '"' << ','
-                << "\"activeViews\"" << ':' << it.second->getActiveViews() << ','
-                << "\"memory\"" << ':' << it.second->getMemoryDirty() << ','
-                << "\"elapsedTime\"" << ':' << it.second->getElapsedTime() << ','
-                << "\"idleTime\"" << ':' << it.second->getIdleTime() << ','
-                << "\"modified\"" << ':' << '"' << (it.second->getModifiedStatus() ? "Yes" : "No") << '"' << ','
-                << "\"uploaded\"" << ':' << '"' << (it.second->getUploadedStatus() ? "Yes" : "No") << '"' << ','
-                << "\"wopiSrc\"" << ':' << '"' << it.second->getWopiSrc() << '"' << ','
+                << "\"wopiHost\"" << ':' << '"' << it.second.getHostName() << '"' << ','
+                << "\"activeViews\"" << ':' << it.second.getActiveViews() << ','
+                << "\"memory\"" << ':' << it.second.getMemoryDirty() << ','
+                << "\"elapsedTime\"" << ':' << it.second.getElapsedTime() << ','
+                << "\"idleTime\"" << ':' << it.second.getIdleTime() << ','
+                << "\"modified\"" << ':' << '"' << (it.second.getModifiedStatus() ? "Yes" : "No") << '"' << ','
+                << "\"uploaded\"" << ':' << '"' << (it.second.getUploadedStatus() ? "Yes" : "No") << '"' << ','
+                << "\"wopiSrc\"" << ':' << '"' << it.second.getWopiSrc() << '"' << ','
                 << "\"views\"" << ':' << '[';
-            std::map<std::string, View> viewers = it.second->getViews();
+            std::map<std::string, View> viewers = it.second.getViews();
             std::string separator;
             for(const auto& viewIt: viewers)
             {
@@ -872,11 +872,11 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
     {
-        if (docIt->second->getIdleTime() >= 10)
+        if (docIt->second.getIdleTime() >= 10)
         {
-            docIt->second->takeSnapshot(); // I would like to keep the idle time
-            docIt->second->updateLastActivityTime();
-            notify("resetidle " + std::to_string(docIt->second->getPid()));
+            docIt->second.takeSnapshot(); // I would like to keep the idle time
+            docIt->second.updateLastActivityTime();
+            notify("resetidle " + std::to_string(docIt->second.getPid()));
         }
     }
 }
@@ -893,21 +893,21 @@ void AdminModel::setViewLoadDuration(const std::string& docKey, const std::strin
 {
     auto it = _documents.find(docKey);
     if (it != _documents.end())
-        it->second->setViewLoadDuration(sessionId, viewLoadDuration);
+        it->second.setViewLoadDuration(sessionId, viewLoadDuration);
 }
 
 void AdminModel::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration)
 {
     auto it = _documents.find(docKey);
     if (it != _documents.end())
-        it->second->setWopiDownloadDuration(wopiDownloadDuration);
+        it->second.setWopiDownloadDuration(wopiDownloadDuration);
 }
 
 void AdminModel::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration)
 {
     auto it = _documents.find(docKey);
     if (it != _documents.end())
-        it->second->setWopiUploadDuration(wopiUploadDuration);
+        it->second.setWopiUploadDuration(wopiUploadDuration);
 }
 
 void AdminModel::addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
@@ -1124,7 +1124,7 @@ struct KitProcStats
 /// we don't need to keep the Document instances around.
 static DocumentAggregateStats ExpiredDocStats;
 
-void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator& docIt)
+void AdminModel::doRemove(std::map<std::string, Document>::iterator& docIt)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
@@ -1132,7 +1132,7 @@ void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iter
     if (getCurrentMigDoc() != docIt->first)
     {
         std::ostringstream ostream;
-        ostream << "routing_rmdoc " << docIt->second->getWopiSrc();
+        ostream << "routing_rmdoc " << docIt->second.getWopiSrc();
         notify(ostream.str());
     }
     else
@@ -1141,10 +1141,10 @@ void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iter
     }
 
     // Update the expired-documents' stats.
-    ExpiredDocStats.Update(*docIt->second, false);
+    ExpiredDocStats.Update(docIt->second, false);
 
     // Serialize the history of the expired document.
-    _expiredDocumentsHistories.emplace_back(docIt->second->getHistory());
+    _expiredDocumentsHistories.emplace_back(docIt->second.getHistory());
 
     // We have no need for the document anymore.
     _documents.erase(docIt);
@@ -1155,7 +1155,7 @@ void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats) const
     stats = ExpiredDocStats;
 
     for (auto& d : _documents)
-        stats.Update(*d.second, true);
+        stats.Update(d.second, true);
 }
 
 void CalcKitStats(KitProcStats& stats)
@@ -1253,7 +1253,7 @@ void AdminModel::getMetrics(std::ostream& oss) const
     // dump document data
     for (const auto& it : _documents)
     {
-        const Document &doc = *it.second;
+        const Document &doc = it.second;
         std::string pid = std::to_string(doc.getPid());
 
         std::string encodedFilename;
@@ -1282,29 +1282,29 @@ std::set<pid_t> AdminModel::getDocumentPids() const
     std::set<pid_t> pids;
 
     for (const auto& it : _documents)
-        pids.insert(it.second->getPid());
+        pids.insert(it.second.getPid());
 
     return pids;
 }
 
 void AdminModel::UpdateMemoryDirty()
 {
-    for (const auto& it: _documents)
+    for (auto& it: _documents)
     {
-        it.second->updateMemoryDirty();
+        it.second.updateMemoryDirty();
     }
 }
 
 void AdminModel::notifyDocsMemDirtyChanged()
 {
-    for (const auto& [name, doc] : _documents)
+    for (auto& [name, doc] : _documents)
     {
-        if (doc->hasMemDirtyChanged())
+        if (doc.hasMemDirtyChanged())
         {
             std::ostringstream msg;
-            msg << "propchange " << doc->getPid() << " mem " << doc->getMemoryDirty();
+            msg << "propchange " << doc.getPid() << " mem " << doc.getMemoryDirty();
             notify(msg.str());
-            doc->setMemDirtyChanged(false);
+            doc.setMemDirtyChanged(false);
         }
     }
 }
@@ -1313,7 +1313,7 @@ bool AdminModel::isDocSaved(const std::string& docKey)
 {
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
-        return !doc->second->getModifiedStatus();
+        return !doc->second.getModifiedStatus();
     LOG_DBG("cannot find document with docKey " << docKey);
     return false;
 }
@@ -1324,7 +1324,7 @@ bool AdminModel::isDocReadOnly(const std::string& docKey)
     if (doc != _documents.end())
     {
         bool isReadOnly = true;
-        for (const auto& view : doc->second->getViews())
+        for (const auto& view : doc->second.getViews())
         {
             if (!view.second.isReadOnly())
             {
@@ -1373,9 +1373,9 @@ std::string AdminModel::getWopiSrcMap() const
     size_t count = 0;
     for (const auto& it : _documents)
     {
-        if (!it.second->isExpired())
+        if (!it.second.isExpired())
         {
-            oss << "\"" << it.second->getWopiSrc() << "\"";
+            oss << "\"" << it.second.getWopiSrc() << "\"";
             if (count < _documents.size() - 1)
             {
                 oss << ',';
@@ -1405,9 +1405,9 @@ std::string AdminModel::getFilename(int pid) const
 {
     for (const auto& it : _documents)
     {
-        if (it.second->getPid() == pid)
+        if (it.second.getPid() == pid)
         {
-            return it.second->getFilename();
+            return it.second.getFilename();
         }
     }
     return std::string();
