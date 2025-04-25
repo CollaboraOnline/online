@@ -1,11 +1,11 @@
 :root {
   --settings-btn-primary: var(--color-primary);
-  --settings-btn-primary-text: var(--color-primary-text);
+  --settings-btn-primary-text: var(--color-main-text);
   --settings-btn-light-text: #0e242f;
   --settings-btn-light: var(--color-primary-lighter);
   --settings-border: var(--color-border);
   --settings-border-contrast: var(--color-border-darker);
-  --settings-text: var(--color-primary-text);
+  --settings-text: var(--color-main-text);
   --settings-text-maxcontrast: var(--color-border-lighter);
   --settings-background: var(--color-main-background);
   --settings-background-hover: var(--color-background-dark);
