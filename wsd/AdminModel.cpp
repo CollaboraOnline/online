@@ -17,6 +17,8 @@
 #include <chrono>
 #include <cmath>
 #include <csignal>
+#include <cstdint>
+#include <limits>
 #include <memory>
 #include <set>
 #include <sstream>
@@ -33,6 +35,17 @@
 
 #include <fnmatch.h>
 #include <dirent.h>
+
+namespace
+{
+std::ostringstream& print(std::ostringstream& oss, const std::string_view prefix,
+                          const std::string_view name, const std::string_view suffix)
+{
+    oss << prefix << (prefix.empty() ? "" : "_") << name << (suffix.empty() ? "" : "_") << suffix;
+    return oss;
+}
+
+} // namespace
 
 void Document::addView(const std::string& sessionId, const std::string& userName,
                        const std::string& userId, bool readOnly)
@@ -998,11 +1011,14 @@ int AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
     return count;
 }
 
-class AggregateStats
+class AggregateStats final
 {
 public:
     AggregateStats()
-    : _total(0), _min(0xFFFFFFFFFFFFFFFF), _max(0), _count(0)
+        : _total(0)
+        , _min(std::numeric_limits<uint64_t>::max())
+        , _max(0)
+        , _count(0)
     {}
 
     void Update(uint64_t value)
@@ -1014,28 +1030,25 @@ public:
     }
 
     uint64_t getIntAverage() const { return _count ? std::round(_total / (double)_count) : 0; }
-    double getDoubleAverage() const { return _count ? _total / (double) _count : 0; }
-    uint64_t getMin() const { return _min == 0xFFFFFFFFFFFFFFFF ? 0 : _min; }
+    uint64_t getMin() const { return _count == 0 ? 0 : _min; }
     uint64_t getMax() const { return _max; }
     uint64_t getTotal() const { return _total; }
     uint64_t getCount() const { return _count; }
 
-    void Print(std::ostringstream &oss, const char *prefix, const char* unit) const
+    void Print(std::ostringstream& oss, const std::string_view prefix,
+               const std::string_view unit) const
     {
-        std::string newUnit = std::string(unit && unit[0] ? "_" : "") + unit;
-        std::string newPrefix = prefix + std::string(prefix && prefix[0] ? "_" : "");
-
-        oss << newPrefix << "total" << newUnit << ' ' << _total << std::endl;
-        oss << newPrefix << "average" << newUnit << ' ' << getIntAverage() << std::endl;
-        oss << newPrefix << "min" << newUnit << ' ' << getMin() << std::endl;
-        oss << newPrefix << "max" << newUnit << ' ' << _max << std::endl;
+        print(oss, prefix, "total", unit) << _total << '\n';
+        print(oss, prefix, "average", unit) << getIntAverage() << '\n';
+        print(oss, prefix, "min", unit) << getMin() << '\n';
+        print(oss, prefix, "max", unit) << getMax() << '\n';
     }
 
 private:
     uint64_t _total;
     uint64_t _min;
     uint64_t _max;
-    uint32_t _count;
+    uint64_t _count; ///< The number of samples. We are 8-byte aligned, so make this 64-bits.
 };
 
 struct ActiveExpiredStats
@@ -1054,18 +1067,9 @@ public:
 
     void Print(std::ostringstream &oss, const char *prefix, const char* name, const char* unit) const
     {
-        std::ostringstream ossTmp;
-        std::string newName = std::string(name && name[0] ? "_" : "") + name;
-        std::string newPrefix = prefix + std::string(prefix && prefix[0] ? "_" : "");
-
-        ossTmp << newPrefix << "all" << newName;
-        _all.Print(oss, ossTmp.str().c_str(), unit);
-        ossTmp.str(std::string());
-        ossTmp << newPrefix << "active" << newName;
-        _active.Print(oss, ossTmp.str().c_str(), unit);
-        ossTmp.str(std::string());
-        ossTmp << newPrefix << "expired" << newName;
-        _expired.Print(oss, ossTmp.str().c_str(), unit);
+        _all.Print(print(oss, prefix, "all", name), std::string_view(), unit);
+        _active.Print(print(oss, prefix, "active", name), std::string_view(), unit);
+        _expired.Print(print(oss, prefix, "expired", name), std::string_view(), unit);
     }
 
 private:
@@ -1074,7 +1078,7 @@ private:
     AggregateStats _expired;
 };
 
-struct DocumentAggregateStats
+struct DocumentAggregateStats final
 {
     DocumentAggregateStats()
     : _resConsCount(0), _resConsAbortCount(0), _resConsAbortPendingCount(0)
@@ -1167,8 +1171,8 @@ void PrintDocActExpMetrics(std::ostringstream &oss, const char* name, const char
 
 void PrintKitAggregateMetrics(std::ostringstream &oss, const char* name, const char* unit, const AggregateStats &values)
 {
-    std::string prefix = std::string("kit_") + name;
-    values.Print(oss, prefix.c_str(), unit);
+    const std::string prefix = std::string("kit_") + name;
+    values.Print(oss, prefix, unit);
 }
 
 void AdminModel::getMetrics(std::ostringstream &oss)
