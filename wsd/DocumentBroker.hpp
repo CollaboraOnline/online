@@ -652,10 +652,11 @@ private:
     /// Returns false on failure/unauthorized.
     bool handleLockResult(ClientSession& session, const StorageBase::LockUpdateResult& result);
 
-    std::size_t getIdleTimeSecs() const
+    /// Returns the time elapsed since the last user activity.
+    std::chrono::milliseconds getIdleTime() const
     {
         const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
-        return std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+        return std::chrono::duration_cast<std::chrono::milliseconds>(duration);
     }
 
     void handleTileResponse(const std::shared_ptr<Message>& message);

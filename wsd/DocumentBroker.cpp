@@ -50,6 +50,7 @@
 #include "ProxyProtocol.hpp"
 #include "Util.hpp"
 #include "QuarantineUtil.hpp"
+#include <common/ConfigUtil.hpp>
 #include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
@@ -185,18 +186,18 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _uriOrig(uri)
     , _limitLifeSeconds(std::chrono::seconds::zero())
     , _uriPublic(uriPublic)
-    , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
-                                            ? 0
-                                            : ConfigUtil::getConfigValueNonZero<int>(
-                                                  "per_document.idlesave_duration_secs", 30)),
-                   std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
-                                            ? 0
-                                            : ConfigUtil::getConfigValueNonZero<int>(
-                                                  "per_document.autosave_duration_secs", 300)),
-                   std::chrono::milliseconds(ConfigUtil::getConfigValueNonZero<int>(
-                       "per_document.min_time_between_saves_ms", 500)))
-    , _storageManager(std::chrono::milliseconds(
-          ConfigUtil::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
+    , _saveManager((std::getenv("COOL_NO_AUTOSAVE") != nullptr)
+                       ? std::chrono::seconds::zero()
+                       : ConfigUtil::getConfigValue<std::chrono::seconds>(
+                             "per_document.idlesave_duration_secs", 30),
+                   (std::getenv("COOL_NO_AUTOSAVE") != nullptr)
+                       ? std::chrono::seconds::zero()
+                       : ConfigUtil::getConfigValue<std::chrono::seconds>(
+                             "per_document.autosave_duration_secs", 300),
+                   ConfigUtil::getConfigValue<std::chrono::milliseconds>(
+                       "per_document.min_time_between_saves_ms", 500))
+    , _storageManager(ConfigUtil::getConfigValue<std::chrono::milliseconds>(
+          "per_document.min_time_between_uploads_ms", 5000))
     , _docKey(docKey)
     , _docId(Util::encodeId(DocBrokerId++, 3))
     , _configId(configId)
@@ -273,8 +274,9 @@ void DocumentBroker::setupTransfer(SocketPoll& from, const std::weak_ptr<StreamS
 
 static std::chrono::seconds getLimitLoadSecs()
 {
-    const auto value = ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);
-    return std::chrono::seconds(std::max(value, 0));
+    CONFIG_STATIC const auto value =
+        ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_load_secs", 100, 5);
+    return value;
 }
 
 void DocumentBroker::assertCorrectThread(const char* filename, int line) const
@@ -336,8 +338,13 @@ void DocumentBroker::pollThread()
     setupPriorities();
 
 #if !MOBILEAPP
-    CONFIG_STATIC const std::size_t IdleDocTimeoutSecs =
-        ConfigUtil::getConfigValue<int>("per_document.idle_timeout_secs", 3600);
+    CONFIG_STATIC const std::chrono::seconds IdleDocTimeoutSecs =
+        ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.idle_timeout_secs", 3600);
+    if (IdleDocTimeoutSecs <= std::chrono::seconds(15))
+    {
+        LOG_WRN("The configured per_document.idle_timeout_secs ["
+                << IdleDocTimeoutSecs << "] is too low, consider increasing it");
+    }
 
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
@@ -361,8 +368,9 @@ void DocumentBroker::pollThread()
 
     bool waitingForMigrationMsg = false;
     std::chrono::time_point<std::chrono::steady_clock> migrationMsgStartTime;
-    static const std::chrono::microseconds migrationMsgTimeout = std::chrono::seconds(
-        ConfigUtil::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
+    CONFIG_STATIC const std::chrono::microseconds migrationMsgTimeout =
+        ConfigUtil::getConfigValue<std::chrono::seconds>(
+            "indirection_endpoint.migration_timeout_secs", 180);
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
@@ -499,8 +507,8 @@ void DocumentBroker::pollThread()
                 }
 
 #if !MOBILEAPP
-                // Remove idle documents after 1 hour.
-                if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
+                // Remove idle documents after the configured time.
+                if (isLoaded() && getIdleTime() >= IdleDocTimeoutSecs)
                 {
                     autoSaveAndStop("idle");
                 }
@@ -858,7 +866,7 @@ bool DocumentBroker::isAlive() const
 
 void DocumentBroker::timeoutNotLoaded(std::chrono::steady_clock::time_point now)
 {
-    if (!_stop && !_poll->isAlive() && !isLoaded() && now - _createTime > std::chrono::seconds(getLimitLoadSecs()))
+    if (!_stop && !_poll->isAlive() && !isLoaded() && now - _createTime > getLimitLoadSecs())
         stop("neverloaded");
 }
 
@@ -5266,7 +5274,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
-    os << "\n  idle time: " << getIdleTimeSecs();
+    os << "\n  idle time: " << getIdleTime();
     os << "\n  cursor X: " << _cursorPosX << ", Y: " << _cursorPosY << ", W: " << _cursorWidth
        << ", H: " << _cursorHeight;
 
