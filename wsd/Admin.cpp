@@ -48,9 +48,6 @@ using namespace COOLProtocol;
 
 using Poco::Util::Application;
 
-const int Admin::MinStatsIntervalMs = 50;
-const int Admin::DefStatsIntervalMs = 1000;
-
 /// Process incoming websocket messages
 void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
 {

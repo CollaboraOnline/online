@@ -264,8 +264,8 @@ private:
     std::atomic<bool> _closeMonitor = false;
 
     // Don't update any more frequently than this since it's excessive.
-    static const int MinStatsIntervalMs;
-    static const int DefStatsIntervalMs;
+    static constexpr int MinStatsIntervalMs = 50;
+    static constexpr int DefStatsIntervalMs = 1000;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
