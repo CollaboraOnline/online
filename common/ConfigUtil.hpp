@@ -16,16 +16,18 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+
 #include <Poco/Path.h>
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/MapConfiguration.h>
 
-#include <Util.hpp>
-
 #include <atomic>
 #include <string>
 #include <map>
+#include <type_traits>
 #include <unordered_map>
 
 namespace ConfigUtil
@@ -188,7 +190,19 @@ public:
     {
         value = _config->getUInt(name);
     }
-    void operator()(const std::string& name, uint64_t& value) const
+    void operator()(const std::string& name, long int& value) const
+    {
+        value = _config->getInt64(name);
+    }
+    void operator()(const std::string& name, unsigned long int& value) const
+    {
+        value = _config->getUInt64(name);
+    }
+    void operator()(const std::string& name, long long& value) const
+    {
+        value = _config->getInt64(name);
+    }
+    void operator()(const std::string& name, unsigned long long& value) const
     {
         value = _config->getUInt64(name);
     }
@@ -258,9 +272,14 @@ static std::string getPathFromConfig(const Poco::Util::AbstractConfiguration& co
     return path;
 }
 
-/// Returns the value of the specified application configuration,
+/// Returns the value for integral, floating-point, or string type
+/// of the specified application configuration,
 /// or the default, if one doesn't exist.
-template <typename T> static T getConfigValue(const std::string& name, T def)
+template <typename T,
+          typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value ||
+                                      std::is_same<T, std::string>::value,
+                                  void>::type* = nullptr>
+static T getConfigValue(const std::string& name, T def)
 {
     if (Util::isFuzzing())
     {
@@ -268,6 +287,55 @@ template <typename T> static T getConfigValue(const std::string& name, T def)
     }
 
     return getConfigValue(Poco::Util::Application::instance().config(), name, std::move(def));
+}
+
+/// Returns the chrono value of the specified application configuration,
+/// or the default, if one doesn't exist.
+/// By default, we expect non-negative values and will log warning otherwise.
+template <typename T>
+T getConfigValue(const Poco::Util::AbstractConfiguration& config, const std::string& name,
+                 const typename T::rep def, const typename T::rep min = 0)
+{
+    if (Util::isFuzzing())
+    {
+        return T(def);
+    }
+
+    auto value = def;
+    if (getRawConfig(config, name, value) || getRawConfig(config, name + "[@default]", value))
+    {
+        if (value < min)
+        {
+            LOG_WRN("Config value for " << name << " [" << value
+                                        << "] is below the required minimum [" << min
+                                        << "] and will be overridden by the minimum");
+            value = min;
+        }
+
+        return T(value);
+    }
+
+    return T(def);
+}
+
+/// Returns the chrono value of the specified application configuration,
+/// or the default, if one doesn't exist.
+/// By default, we expect non-negative values.
+template <typename T>
+inline T getConfigValue(const std::string& name, const typename T::rep def,
+                        const typename T::rep min = 0)
+{
+    return getConfigValue<T>(Poco::Util::Application::instance().config(), name, def, min);
+}
+
+/// Returns the chrono value of the specified application configuration,
+/// or the default, if one doesn't exist.
+/// By default, we expect non-negative values.
+template <typename T,
+          typename std::enable_if<std::is_integral<typename T::rep>::value>::type* = nullptr>
+inline T getConfigValue(const std::string& name, const T def, const T min = T(0))
+{
+    return getConfigValue<T>(name, def.count(), min.count());
 }
 
 /// Returns the value of the specified application configuration,
