@@ -52,11 +52,14 @@ void Cache::initialize(const std::string& path)
 
 std::string Cache::getConfigId(const std::string& uri)
 {
-    Poco::URI settingsUri(uri);
-    std::string sourcePrefix = settingsUri.getScheme() +
-                               '_' + settingsUri.getAuthority();
-    std::string sourcePath = settingsUri.getPath();
-    return sourcePrefix + sourcePath;
+    const Poco::URI settingsUri(uri);
+    std::string sourcePrefix;
+    sourcePrefix.reserve(256);
+    sourcePrefix.append(settingsUri.getScheme());
+    sourcePrefix.push_back('_');
+    sourcePrefix.append(settingsUri.getAuthority());
+    sourcePrefix.append(settingsUri.getPath());
+    return sourcePrefix;
 }
 
 void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
