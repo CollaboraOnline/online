@@ -35,10 +35,6 @@ class ClientAuditor {
 	}
 }
 
-// // 🔹 Utility function
-// export function isClipboardAvailable(): boolean {
-// 	return !!navigator.clipboard && window.isSecureContext;
-// }
 
 class ServerAuditDialog {
 	map: any;
