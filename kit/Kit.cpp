@@ -217,6 +217,7 @@ public:
                       // handling SIGABRT, so instead after some time fall-back to this:
 
                       // raise(3) will exit the current thread, not the process.
+                      // coverity[sleep : SUPPRESS] - don't report sleep with lock held
                       sleep(30); // long enough for a trace ?
                       std::cerr << "BgSave failed to terminate after SIGABRT - will hard self-destroy process " << getpid() << std::endl;
                       ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
