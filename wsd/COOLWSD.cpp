@@ -477,8 +477,9 @@ void cleanupDocBrokers()
                     }
                 });
 
-        CONFIG_STATIC const std::size_t IdleServerSettingsTimeoutSecs =
-            ConfigUtil::getConfigValue<int>("serverside_config.idle_timeout_secs", 3600);
+        CONFIG_STATIC const std::chrono::seconds IdleServerSettingsTimeoutSecs =
+            ConfigUtil::getConfigValue<std::chrono::seconds>("serverside_config.idle_timeout_secs",
+                                                             3600);
 
         // consider shutting down unused subforkits
         for (auto it = SubForKitProcs.begin(); it != SubForKitProcs.end(); )
@@ -495,10 +496,14 @@ void cleanupDocBrokers()
             } else if (OutstandingForks[configId] > 0) {
                 LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
                 ++it;
-            } else if (now - LastSubForKitBrokerExitTimes[configId] < std::chrono::seconds(IdleServerSettingsTimeoutSecs)) {
+            }
+            else if (now - LastSubForKitBrokerExitTimes[configId] < IdleServerSettingsTimeoutSecs)
+            {
                 LOG_DBG("subforkit " << configId << " recently used, keep it");
                 ++it;
-            } else {
+            }
+            else
+            {
                 LOG_DBG("subforkit " << configId << " is unused, dropping it");
                 LastSubForKitBrokerExitTimes.erase(configId);
                 OutstandingForks.erase(configId);
