@@ -35,7 +35,6 @@ class ClientAuditor {
 	}
 }
 
-
 class ServerAuditDialog {
 	map: any;
 	id: string = 'ServerAuditDialog';
