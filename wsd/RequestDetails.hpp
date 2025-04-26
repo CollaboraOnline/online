@@ -119,7 +119,6 @@ private:
     std::string _uriString;
     std::string _proxyPrefix;
     std::string _hostUntrusted;
-    std::string _documentURI;
     bool _isGet : 1;
     bool _isHead : 1;
     bool _isProxy : 1;
