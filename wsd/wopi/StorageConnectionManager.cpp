@@ -159,8 +159,8 @@ StorageConnectionManager::getHttpSession(const Poco::URI& uri, std::chrono::seco
 
     if (timeout == std::chrono::seconds::zero())
     {
-        CONFIG_STATIC const std::chrono::seconds defTimeout = std::chrono::seconds(
-            ConfigUtil::getConfigValue<int>("net.connection_timeout_secs", 30));
+        CONFIG_STATIC const std::chrono::seconds defTimeout =
+            ConfigUtil::getConfigValue<std::chrono::seconds>("net.connection_timeout_secs", 30);
         timeout = defTimeout;
     }
 

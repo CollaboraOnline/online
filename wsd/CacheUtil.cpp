@@ -45,7 +45,7 @@ void Cache::initialize(const std::string& path)
     // We are initialized at this point.
     CachePath = path;
 
-    MaxAgeMins = std::chrono::minutes(ConfigUtil::getConfigValue<std::size_t>("cache_files.expiry_min", 3000));
+    MaxAgeMins = ConfigUtil::getConfigValue<std::chrono::minutes>("cache_files.expiry_min", 3000);
 
     clearOutdatedConfigs();
 }

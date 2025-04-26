@@ -752,8 +752,8 @@ void Admin::pollingThread()
 
     _model.sendShutdownReceivedMsg();
 
-    static const std::chrono::microseconds closeMonitorMsgTimeout = std::chrono::seconds(
-        ConfigUtil::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
+    static const std::chrono::microseconds closeMonitorMsgTimeout = ConfigUtil::getConfigValue(
+        "indirection_endpoint.migration_timeout_secs", std::chrono::seconds(180));
 
     std::chrono::time_point<std::chrono::steady_clock> closeMonitorMsgStartTime =
         std::chrono::steady_clock::now();
