@@ -516,7 +516,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                 bool queryVersion = false)
 {
     // Generate a jail ID to be used for in the jail path.
-    const std::string jailId = Util::rng::getFilename(16);
+    std::string jailId = Util::rng::getFilename(16);
 
     // Update the dynamic files as necessary.
     const bool sysTemplateIncomplete = !JailUtil::SysTemplate::updateDynamicFiles(sysTemplate);
@@ -531,8 +531,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
     pid_t childPid = 0;
     if (Util::isKitInProcess())
     {
-        std::thread([childRoot, jailId, configId, sysTemplate, loTemplate,
-                     queryVersion, sysTemplateIncomplete] {
+        std::thread([childRoot, jailId = std::move(jailId), configId, sysTemplate,
+                     loTemplate, queryVersion, sysTemplateIncomplete] {
             sleepForDebugger();
             lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
                        true, false, queryVersion, DisplayVersion,
