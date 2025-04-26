@@ -4163,14 +4163,17 @@ std::string anonymizeUsername(const std::string& username)
 void dump_kit_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
+    oss << "Start Kit " << getpid() << " Dump State:\n";
+
     KitSocketPoll::dumpGlobalState(oss);
 
     oss << "\nMalloc info [" << getpid() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
+    oss << "\nEnd Kit " << getpid() << " Dump State.\n";
 
     const std::string msg = oss.str();
-    fprintf(stderr, "%s\n", msg.c_str()); // Log in the journal.
-    LOG_INF(msg);
+    fprintf(stderr, "%s", msg.c_str()); // Log in the journal.
+    LOG_WRN(msg);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -4239,17 +4239,18 @@ void forwardSignal(const int signum);
 void dump_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
+    oss << "Start WSD " << getpid() << " Dump State:\n";
 
     if (Server)
         Server->dumpState(oss);
 
     oss << "\nMalloc info [" << getpid() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
+    oss << "\nEnd WSD " << getpid() << " Dump State.\n";
 
     const std::string msg = oss.str();
-    fprintf(stderr, "%s\n", msg.c_str()); // Log in the journal.
-
-    LOG_INF(msg);
+    fprintf(stderr, "%s", msg.c_str()); // Log in the journal.
+    LOG_WRN(msg);
 
 #if !MOBILEAPP
     Admin::dumpMetrics();

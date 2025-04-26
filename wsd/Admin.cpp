@@ -709,12 +709,14 @@ void Admin::pollingThread()
         bool dumpMetrics = true;
         if (_dumpMetrics.compare_exchange_strong(dumpMetrics, false))
         {
-            std::ostringstream oss;
+            std::ostringstream oss(Util::makeDumpStateStream());
             oss << "Admin Metrics:\n";
             getMetrics(oss);
+            oss << '\n';
+
             const std::string str = oss.str();
-            fprintf(stderr, "%s\n", str.c_str());
-            LOG_TRC(str);
+            fprintf(stderr, "%s", str.c_str());
+            LOG_WRN(str);
         }
 
         // Handle websockets & other work.

@@ -87,7 +87,8 @@ extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
 
 void dump_forkit_state()
 {
-    std::ostringstream oss;
+    std::ostringstream oss(Util::makeDumpStateStream());
+    oss << "Start ForKit " << getpid() << " Dump State:\n";
 
     oss << "Forkit: " << ForkCounter << " forks\n"
         << "  LogLevel: " << LogLevel << "\n"
@@ -105,10 +106,11 @@ void dump_forkit_state()
 
     oss << "\nMalloc info [" << getpid() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
+    oss << "\nEnd ForKit " << getpid() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str());
-    LOG_TRC(msg);
+    LOG_WRN(msg);
 }
 
 class ServerWSHandler;
