@@ -572,7 +572,7 @@ namespace
         return FTW_CONTINUE;
     }
 
-    void linkOrCopy(std::string source, const Poco::Path& destination, const std::string& linkable,
+    void linkOrCopy(const std::string& source, const Poco::Path& destination, const std::string& linkable,
                     LinkOrCopyType type)
     {
         std::string resolved = FileUtil::realpath(source);
@@ -580,14 +580,13 @@ namespace
         {
             LOG_DBG("linkOrCopy: Using real path [" << resolved << "] instead of original link ["
                                                     << source << "].");
-            source = std::move(resolved);
         }
 
-        LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << source << "] to ["
+        LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << resolved << "] to ["
                               << destination.toString() << "].");
 
         linkOrCopyType = type;
-        sourceForLinkOrCopy = source;
+        sourceForLinkOrCopy = resolved;
         if (sourceForLinkOrCopy.back() == '/')
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
@@ -596,9 +595,9 @@ namespace
         linkOrCopyStartTime = std::chrono::steady_clock::now();
         forceInitialCopy = detectSlowStackingFileSystem(destination.toString());
 
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
+        if (nftw(resolved.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
-            LOG_ERR("linkOrCopy: nftw() failed for '" << source << '\'');
+            LOG_ERR("linkOrCopy: nftw() failed for '" << resolved << '\'');
         }
 
         if (linkOrCopyVerboseLogging)
@@ -608,7 +607,7 @@ namespace
                 std::chrono::steady_clock::now() - linkOrCopyStartTime).count();
             const double seconds = (ms + 1) / 1000.; // At least 1ms to avoid div-by-zero.
             const auto rate = linkOrCopyFileCount / seconds;
-            LOG_INF("Linking/Copying of " << linkOrCopyFileCount << " files from " << source
+            LOG_INF("Linking/Copying of " << linkOrCopyFileCount << " files from " << resolved
                                           << " to " << destinationForLinkOrCopy.toString()
                                           << " finished in " << seconds << " seconds, or " << rate
                                           << " files / second.");
