@@ -710,9 +710,11 @@ void Admin::pollingThread()
         if (_dumpMetrics.compare_exchange_strong(dumpMetrics, false))
         {
             std::ostringstream oss(Util::makeDumpStateStream());
-            oss << "Admin Metrics:\n";
-            getMetrics(oss);
-            oss << '\n';
+            oss << "Start Admin " << getpid() << " Dump State:\n";
+
+            dumpState(oss);
+
+            oss << "End Admin " << getpid() << " Dump State.\n";
 
             const std::string str = oss.str();
             fprintf(stderr, "%s", str.c_str());
@@ -1137,10 +1139,22 @@ void Admin::cleanupLostKits()
 
 void Admin::dumpState(std::ostream& os) const
 {
-    // FIXME: be more helpful ...
     SocketPoll::dumpState(os);
-}
 
+    os << "Monitor sockets: " << _monitorSockets.size() << ":\n";
+    if (!_monitorSockets.empty())
+    {
+        for (const auto& socket : _monitorSockets)
+        {
+            os << socket.first << ": " << (socket.second->isConnected() ? "" : "dis")
+               << "connected\n";
+        }
+    }
+
+    os << "Admin Metrics:\n";
+    getMetrics(os);
+    os << '\n';
+}
 
 MonitorSocketHandler::MonitorSocketHandler(Admin *admin, const std::string &uri)
     : AdminSocketHandler(admin)
