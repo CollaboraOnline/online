@@ -2951,9 +2951,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		let needsXScroll = false;
 		let needsYScroll = false;
+		const CSSPixelsToTwips = app.dpiScale * app.pixelsToTwips;
 
 		// If x coordinate is already within visible area, we won't scroll to that direction.
-		if (app.file.viewedRectangle.cX1 <= center.x && center.x <= app.file.viewedRectangle.cX2)
+		if (app.isXVisibleInTheDisplayedArea(Math.round(center.x * CSSPixelsToTwips)))
 			center.x = app.file.viewedRectangle.cX1;
 		else {
 			center.x -= this._map.getSize().divideBy(2).x;
@@ -2968,7 +2969,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		const controlYUp = center.y - (app.file.textCursor.visible ? app.file.textCursor.rectangle.cHeight :
 			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
 
-		if (app.file.viewedRectangle.cY1 <= controlYUp && controlYDown <= app.file.viewedRectangle.cY2)
+		if (app.isYVisibleInTheDisplayedArea(Math.round(controlYDown * CSSPixelsToTwips)) && app.isYVisibleInTheDisplayedArea(Math.round(controlYUp * CSSPixelsToTwips)))
 			center.y = app.file.viewedRectangle.cY1;
 		else {
 			center.y -= this._map.getSize().divideBy(2).y;
