@@ -94,16 +94,16 @@ public:
 
     void updateMonitors(std::vector<std::pair<std::string, int>>& oldMonitors);
 
-    std::vector<std::pair<std::string, int>> getMonitorList();
+    std::vector<std::pair<std::string, int>> getMonitorList() const;
 
     /// Custom poll thread function
     void pollingThread() override;
 
-    size_t getTotalMemoryUsage();
+    size_t getTotalMemoryUsage() const;
     /// Takes into account the 'memproportion' property in config file to find the amount of memory
     /// available to us.
-    size_t getTotalAvailableMemory() { return _totalAvailMemKb; }
-    size_t getTotalCpuUsage();
+    size_t getTotalAvailableMemory() const { return _totalAvailMemKb; }
+    size_t getTotalCpuUsage() const;
 
     void modificationAlert(const std::string& dockey, pid_t pid, bool value);
 
@@ -129,19 +129,19 @@ public:
     /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
 
-    unsigned getMemStatsInterval();
+    unsigned getMemStatsInterval() const;
 
-    unsigned getCpuStatsInterval();
+    unsigned getCpuStatsInterval() const;
 
-    unsigned getNetStatsInterval();
+    unsigned getNetStatsInterval() const;
 
     /// Returns the log levels of wsd and forkit & kits.
-    std::string getChannelLogLevels();
+    std::string getChannelLogLevels() const;
 
     /// Sets the specified channel's log level (wsd or forkit and kits).
     void setChannelLogLevel(const std::string& channelName, std::string level);
 
-    std::string getLogLines();
+    std::string getLogLines() const;
 
     void rescheduleMemTimer(unsigned interval);
 
@@ -176,7 +176,7 @@ public:
                               unsigned oomKilledCount);
     void addLostKitsTerminated(unsigned lostKitsTerminated);
 
-    void getMetrics(std::ostringstream &metrics);
+    void getMetrics(std::ostringstream& metrics) const;
 
     /// Will dump the metrics in the log and stderr from the Admin SocketPoll.
     static void dumpMetrics() { instance()._dumpMetrics = true; }
@@ -232,7 +232,7 @@ private:
     size_t _totalAvailMemKb;
 
     size_t _lastTotalMemory;
-    size_t _lastJiffies;
+    mutable size_t _lastJiffies;
     size_t _cleanupIntervalMs;
     uint64_t _lastSentCount;
     uint64_t _lastRecvCount;

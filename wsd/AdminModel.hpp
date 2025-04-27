@@ -78,13 +78,13 @@ struct DocCleanupSettings
     void setBadBehaviorPeriod(size_t badBehaviorPeriod) { _badBehaviorPeriod = badBehaviorPeriod; }
     size_t getBadBehaviorPeriod() const { return _badBehaviorPeriod; }
     void setIdleTime(size_t idleTime) { _idleTime = idleTime; }
-    size_t getIdleTime() { return _idleTime; }
+    size_t getIdleTime() const { return _idleTime; }
     void setLimitDirtyMem(size_t limitDirtyMem) { _limitDirtyMem = limitDirtyMem; }
     size_t getLimitDirtyMem() const { return _limitDirtyMem; }
     void setLimitCpu(size_t limitCpu) { _limitCpu = limitCpu; }
     size_t getLimitCpu() const { return _limitCpu; }
     void setLostKitGracePeriod(size_t lostKitGracePeriod) { _lostKitGracePeriod = lostKitGracePeriod; }
-    size_t getLostKitGracePeriod() { return _lostKitGracePeriod; }
+    size_t getLostKitGracePeriod() const { return _lostKitGracePeriod; }
 
 private:
     size_t _cleanupInterval;
@@ -216,7 +216,7 @@ public:
 
     size_t getLastJiffies() const { return _lastJiffy; }
     void setLastJiffies(size_t newJ);
-    unsigned getLastCpuPercentage(){ return _lastCpuPercentage; }
+    unsigned getLastCpuPercentage() const { return _lastCpuPercentage; }
 
     const std::map<std::string, View>& getViews() const { return _views; }
 
@@ -367,8 +367,8 @@ public:
     std::string getAllHistory() const;
 
     /// Returns memory consumed by all active coolkit processes
-    unsigned getKitsMemoryUsage();
-    size_t getKitsJiffies();
+    unsigned getKitsMemoryUsage() const;
+    size_t getKitsJiffies() const;
 
     void subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws);
     void subscribe(int sessionId, const std::string& command);
@@ -411,8 +411,8 @@ public:
 
     void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
 
-    uint64_t getSentBytesTotal() { return _sentBytesTotal; }
-    uint64_t getRecvBytesTotal() { return _recvBytesTotal; }
+    uint64_t getSentBytesTotal() const { return _sentBytesTotal; }
+    uint64_t getRecvBytesTotal() const { return _recvBytesTotal; }
 
     static double getServerUptimeSecs();
 
@@ -429,7 +429,7 @@ public:
     void setForKitPid(pid_t pid) { _forKitPid = pid; }
     void addLostKitsTerminated(unsigned lostKitsTerminated);
 
-    void getMetrics(std::ostringstream &oss);
+    void getMetrics(std::ostringstream& oss) const;
 
     std::set<pid_t> getDocumentPids() const;
     void UpdateMemoryDirty();
@@ -446,33 +446,33 @@ public:
     bool isDocReadOnly(const std::string&);
     void setMigratingInfo(const std::string& docKey, const std::string& routeToken, const std::string& serverId);
     void resetMigratingInfo();
-    std::string getCurrentMigDoc() { return _currentMigDoc; }
-    std::string getCurrentMigToken() { return _currentMigToken; }
-    std::string getTargetMigServerId() { return _targetMigServerId; }
+    std::string getCurrentMigDoc() const { return _currentMigDoc; }
+    std::string getCurrentMigToken() const { return _currentMigToken; }
+    std::string getTargetMigServerId() const { return _targetMigServerId; }
     void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
-    std::string getWopiSrcMap();
-    std::string getFilename(int pid);
+    std::string getWopiSrcMap() const;
+    std::string getFilename(int pid) const;
     void routeTokenSanityCheck();
     void sendShutdownReceivedMsg();
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
 
-    std::string getMemStats();
+    std::string getMemStats() const;
 
-    std::string getSentActivity();
+    std::string getSentActivity() const;
 
-    std::string getRecvActivity();
+    std::string getRecvActivity() const;
 
-    std::string getConnectionActivity();
+    std::string getConnectionActivity() const;
 
-    std::string getCpuStats();
+    std::string getCpuStats() const;
 
-    unsigned getTotalActiveViews();
+    unsigned getTotalActiveViews() const;
 
     std::string getDocuments() const;
 
-    void CalcDocAggregateStats(DocumentAggregateStats& stats);
+    void CalcDocAggregateStats(DocumentAggregateStats& stats) const;
 
 private:
     DocProcSettings _defDocProcSettings;
