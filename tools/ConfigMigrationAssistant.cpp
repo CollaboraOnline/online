@@ -50,6 +50,13 @@ static const std::map<std::string, std::string> specialAttribute {
 static std::vector<std::string> netPostAllow, netPostAllowDesc, wopiHost, wopiHostDesc, wopiHostAllow;
 static bool netPostAllowAdded, wopiHostAdded;
 
+static std::string getTargetKey(int id, const std::string& commonKeyPart)
+{
+    if (id == 0)
+        return commonKeyPart;
+    return commonKeyPart + "[" + std::to_string(id) + "]";
+}
+
 void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &targetConfig, const std::string& sourceLevel)
 {
     Poco::Util::AbstractConfiguration::Keys subKeys;
@@ -87,7 +94,7 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
                 int id = 0;
                 while (!foundKey)
                 {
-                    const std::string targetKey(id == 0 ? commonKeyPart : commonKeyPart + "[" + std::to_string(id) + "]");
+                    const std::string targetKey(getTargetKey(id, commonKeyPart));
                     if (!targetConfig.has(targetKey))
                     {
                         break;
@@ -133,7 +140,7 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
                     }
                     id++;
                 }
-                const std::string targetKey(id == 0 ? commonKeyPart : commonKeyPart + "[" + std::to_string(id) + "]");
+                const std::string targetKey(getTargetKey(id, commonKeyPart));
                 std::cout << targetKey << ": added \"" << sourceElement << "\"." << std::endl;
 
                 targetConfig.setString(targetKey, sourceElement);
