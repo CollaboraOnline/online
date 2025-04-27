@@ -236,14 +236,16 @@ std::string AdminModel::getAllHistory() const
         oss << d.second->getHistory();
         separator1 = ",";
     }
+
     oss << "], \"expiredDocuments\" : [";
-    separator1.clear();
-    for (const auto& ed : _expiredDocuments)
+
+    long count = 0;
+    for (const std::string& history : _expiredDocumentsHistories)
     {
-        oss << separator1;
-        oss << ed.second->getHistory();
-        separator1 = ",";
+        oss << (count ? "," : "") << history;
+        ++count;
     }
+
     oss << "]}";
     return oss.str();
 }
@@ -1117,13 +1119,17 @@ struct KitProcStats
     AggregateStats _cpuTime;
 };
 
+/// The aggregate stats of expired documents.
+/// Since expired documents don't change their stats,
+/// we don't need to keep the Document instances around.
+static DocumentAggregateStats ExpiredDocStats;
+
 void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator& docIt)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    std::string docItKey = docIt->first;
     // don't send the routing_rmdoc if document is migrating
-    if (getCurrentMigDoc() != docItKey)
+    if (getCurrentMigDoc() != docIt->first)
     {
         std::ostringstream ostream;
         ostream << "routing_rmdoc " << docIt->second->getWopiSrc();
@@ -1134,23 +1140,22 @@ void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iter
         resetMigratingInfo();
     }
 
-    std::unique_ptr<Document> doc;
-    std::swap(doc, docIt->second);
+    // Update the expired-documents' stats.
+    ExpiredDocStats.Update(*docIt->second, false);
+
+    // Serialize the history of the expired document.
+    _expiredDocumentsHistories.emplace_back(docIt->second->getHistory());
+
+    // We have no need for the document anymore.
     _documents.erase(docIt);
-    _expiredDocuments.emplace(
-        docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                      std::chrono::steady_clock::now().time_since_epoch())
-                                      .count()),
-        std::move(doc));
 }
 
 void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats) const
 {
+    stats = ExpiredDocStats;
+
     for (auto& d : _documents)
         stats.Update(*d.second, true);
-
-    for (auto& d : _expiredDocuments)
-        stats.Update(*d.second, false);
 }
 
 void CalcKitStats(KitProcStats& stats)

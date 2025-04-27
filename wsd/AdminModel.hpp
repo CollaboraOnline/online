@@ -479,7 +479,9 @@ private:
 
     std::map<int, Subscriber> _subscribers;
     std::map<std::string, std::unique_ptr<Document>> _documents;
-    std::map<std::string, std::unique_ptr<Document>> _expiredDocuments;
+
+    /// The serialized histories of all expired documents.
+    std::vector<std::string> _expiredDocumentsHistories;
 
     /// The last N total memory Dirty size.
     std::list<unsigned> _memStats;
