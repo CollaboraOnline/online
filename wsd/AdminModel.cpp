@@ -609,32 +609,6 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     notify(oss.str());
 }
 
-void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt)
-{
-    ASSERT_CORRECT_THREAD_OWNER(_owner);
-
-    std::string docItKey = docIt->first;
-    // don't send the routing_rmdoc if document is migrating
-    if (getCurrentMigDoc() != docItKey)
-    {
-        std::ostringstream ostream;
-        ostream << "routing_rmdoc " << docIt->second->getWopiSrc();
-        notify(ostream.str());
-    }
-    else
-    {
-        resetMigratingInfo();
-    }
-
-    std::unique_ptr<Document> doc;
-    std::swap(doc, docIt->second);
-    _documents.erase(docIt);
-    doc->setExpired();
-    _expiredDocuments.emplace(docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                                            std::chrono::steady_clock::now().time_since_epoch()).count()),
-                              std::move(doc));
-}
-
 void AdminModel::removeDocument(const std::string& docKey, const std::string& sessionId)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
@@ -1142,6 +1116,33 @@ struct KitProcStats
     AggregateStats _threadCount;
     AggregateStats _cpuTime;
 };
+
+void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator& docIt)
+{
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
+
+    std::string docItKey = docIt->first;
+    // don't send the routing_rmdoc if document is migrating
+    if (getCurrentMigDoc() != docItKey)
+    {
+        std::ostringstream ostream;
+        ostream << "routing_rmdoc " << docIt->second->getWopiSrc();
+        notify(ostream.str());
+    }
+    else
+    {
+        resetMigratingInfo();
+    }
+
+    std::unique_ptr<Document> doc;
+    std::swap(doc, docIt->second);
+    _documents.erase(docIt);
+    _expiredDocuments.emplace(
+        docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                      std::chrono::steady_clock::now().time_since_epoch())
+                                      .count()),
+        std::move(doc));
+}
 
 void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats) const
 {
