@@ -3363,8 +3363,7 @@ public:
         PrisonerPoll->dumpState(os);
 
 #if !MOBILEAPP
-        os << "\nAdmin poll:\n";
-        _admin.dumpState(os);
+        _admin.dumpMetrics(); // Dump the state from the Admin poll thread.
 
         // If we have any delaying work going on.
         os << '\n';
