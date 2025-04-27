@@ -429,7 +429,7 @@ public:
     void setForKitPid(pid_t pid) { _forKitPid = pid; }
     void addLostKitsTerminated(unsigned lostKitsTerminated);
 
-    void getMetrics(std::ostringstream& oss) const;
+    void getMetrics(std::ostream& oss) const;
 
     std::set<pid_t> getDocumentPids() const;
     void UpdateMemoryDirty();
