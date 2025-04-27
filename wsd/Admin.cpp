@@ -1223,7 +1223,7 @@ void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_c
     _pendingConnects.push_back(std::move(todo));
 }
 
-void Admin::getMetrics(std::ostringstream& metrics) const
+void Admin::getMetrics(std::ostream& metrics) const
 {
     const size_t memAvail = getTotalAvailableMemory();
     const size_t memUsed = getTotalMemoryUsage();

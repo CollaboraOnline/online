@@ -38,8 +38,8 @@
 
 namespace
 {
-std::ostringstream& print(std::ostringstream& oss, const std::string_view prefix,
-                          const std::string_view name, const std::string_view suffix)
+std::ostream& print(std::ostream& oss, const std::string_view prefix, const std::string_view name,
+                    const std::string_view suffix)
 {
     oss << prefix << (prefix.empty() ? "" : "_") << name << (suffix.empty() ? "" : "_") << suffix;
     return oss;
@@ -1035,8 +1035,7 @@ public:
     uint64_t getTotal() const { return _total; }
     uint64_t getCount() const { return _count; }
 
-    void Print(std::ostringstream& oss, const std::string_view prefix,
-               const std::string_view unit) const
+    void Print(std::ostream& oss, const std::string_view prefix, const std::string_view unit) const
     {
         print(oss, prefix, "total", unit) << _total << '\n';
         print(oss, prefix, "average", unit) << getIntAverage() << '\n';
@@ -1065,7 +1064,7 @@ public:
             _expired.Update(value);
     }
 
-    void Print(std::ostringstream &oss, const char *prefix, const char* name, const char* unit) const
+    void Print(std::ostream& oss, const char* prefix, const char* name, const char* unit) const
     {
         _all.Print(print(oss, prefix, "all", name), std::string_view(), unit);
         _active.Print(print(oss, prefix, "active", name), std::string_view(), unit);
@@ -1164,18 +1163,20 @@ void CalcKitStats(KitProcStats& stats)
     }
 }
 
-void PrintDocActExpMetrics(std::ostringstream &oss, const char* name, const char* unit, const ActiveExpiredStats &values)
+void PrintDocActExpMetrics(std::ostream& oss, const char* name, const char* unit,
+                           const ActiveExpiredStats& values)
 {
     values.Print(oss, "document", name, unit);
 }
 
-void PrintKitAggregateMetrics(std::ostringstream &oss, const char* name, const char* unit, const AggregateStats &values)
+void PrintKitAggregateMetrics(std::ostream& oss, const char* name, const char* unit,
+                              const AggregateStats& values)
 {
     const std::string prefix = std::string("kit_") + name;
     values.Print(oss, prefix, unit);
 }
 
-void AdminModel::getMetrics(std::ostringstream& oss) const
+void AdminModel::getMetrics(std::ostream& oss) const
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 

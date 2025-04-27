@@ -176,7 +176,7 @@ public:
                               unsigned oomKilledCount);
     void addLostKitsTerminated(unsigned lostKitsTerminated);
 
-    void getMetrics(std::ostringstream& metrics) const;
+    void getMetrics(std::ostream& metrics) const;
 
     /// Will dump the metrics in the log and stderr from the Admin SocketPoll.
     static void dumpMetrics() { instance()._dumpMetrics = true; }
