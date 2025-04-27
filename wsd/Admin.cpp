@@ -822,7 +822,7 @@ void Admin::rescheduleCpuTimer(unsigned interval)
     wakeup();
 }
 
-size_t Admin::getTotalMemoryUsage()
+size_t Admin::getTotalMemoryUsage() const
 {
     // To simplify and clarify this; since load, link and pre-init all
     // inside the forkit - we should account all of our fixed cost of
@@ -836,11 +836,10 @@ size_t Admin::getTotalMemoryUsage()
     return totalMem;
 }
 
-size_t Admin::getTotalCpuUsage()
+size_t Admin::getTotalCpuUsage() const
 {
     const size_t forkitJ = Util::getCpuUsage(_forKitPid);
     const size_t wsdJ = Util::getCpuUsage(getpid());
-    const size_t kitsJ = _model.getKitsJiffies();
 
     if (_lastJiffies == 0)
     {
@@ -848,31 +847,32 @@ size_t Admin::getTotalCpuUsage()
         return 0;
     }
 
+    const size_t kitsJ = _model.getKitsJiffies();
     const size_t totalJ = ((forkitJ + wsdJ) - _lastJiffies) + kitsJ;
     _lastJiffies = forkitJ + wsdJ;
 
     return totalJ;
 }
 
-unsigned Admin::getMemStatsInterval()
+unsigned Admin::getMemStatsInterval() const
 {
     ASSERT_CORRECT_THREAD();
     return _memStatsTaskIntervalMs;
 }
 
-unsigned Admin::getCpuStatsInterval()
+unsigned Admin::getCpuStatsInterval() const
 {
     ASSERT_CORRECT_THREAD();
     return _cpuStatsTaskIntervalMs;
 }
 
-unsigned Admin::getNetStatsInterval()
+unsigned Admin::getNetStatsInterval() const
 {
     ASSERT_CORRECT_THREAD();
     return _netStatsTaskIntervalMs;
 }
 
-std::string Admin::getChannelLogLevels()
+std::string Admin::getChannelLogLevels() const
 {
     std::string result = "wsd=" + Log::getLogLevelName("wsd");
 
@@ -896,7 +896,7 @@ void Admin::setChannelLogLevel(const std::string& channelName, std::string level
     }
 }
 
-std::string Admin::getLogLines()
+std::string Admin::getLogLines() const
 {
     ASSERT_CORRECT_THREAD();
 
@@ -1223,10 +1223,10 @@ void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_c
     _pendingConnects.push_back(std::move(todo));
 }
 
-void Admin::getMetrics(std::ostringstream &metrics)
+void Admin::getMetrics(std::ostringstream& metrics) const
 {
-    size_t memAvail =  getTotalAvailableMemory();
-    size_t memUsed = getTotalMemoryUsage();
+    const size_t memAvail = getTotalAvailableMemory();
+    const size_t memUsed = getTotalMemoryUsage();
 
     metrics << "global_host_system_memory_bytes " << _totalSysMemKb * 1024 << std::endl;
     metrics << "global_host_tcp_connections " << net::Defaults.maxExtConnections << std::endl;
@@ -1266,7 +1266,7 @@ void Admin::start()
     startThread();
 }
 
-std::vector<std::pair<std::string, int>> Admin::getMonitorList()
+std::vector<std::pair<std::string, int>> Admin::getMonitorList() const
 {
     const auto& config = Application::instance().config();
     std::vector<std::pair<std::string, int>> monitorList;
