@@ -1291,13 +1291,14 @@ void AdminModel::UpdateMemoryDirty()
 
 void AdminModel::notifyDocsMemDirtyChanged()
 {
-    for (const auto& it: _documents)
+    for (const auto& [name, doc] : _documents)
     {
-        int memoryDirty = it.second->getMemoryDirty();
-        if (it.second->hasMemDirtyChanged())
+        if (doc->hasMemDirtyChanged())
         {
-            notify("propchange " + std::to_string(it.second->getPid()) + " mem " + std::to_string(memoryDirty));
-            it.second->setMemDirtyChanged(false);
+            std::ostringstream msg;
+            msg << "propchange " << doc->getPid() << " mem " << doc->getMemoryDirty();
+            notify(msg.str());
+            doc->setMemDirtyChanged(false);
         }
     }
 }
