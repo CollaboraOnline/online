@@ -85,8 +85,6 @@ L.Draggable = L.Evented.extend({
 			L.DomUtil.preventOutline(this._element);
 		}
 
-		if (L.DomUtil.hasClass(this._element, 'leaflet-zoom-anim')) { return; }
-
 		L.DomUtil.disableImageDrag();
 		L.DomUtil.disableTextSelection();
 
