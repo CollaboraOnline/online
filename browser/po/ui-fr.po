@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-03-24 13:13+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-04-26 23:44+0000\n"
+"Last-Translator: TransGecko <sigekos824@mongrec.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -597,11 +597,11 @@ msgstr "Commentaire"
 #: src/canvas/sections/CommentListSection.ts:1456
 #: src/canvas/sections/CommentListSection.ts:1469
 msgid "Comments Updated"
-msgstr "Commentaires actualisés"
+msgstr "Commentaires mis à jour"
 
 #: src/canvas/sections/CommentListSection.ts:1457
 msgid "Another user has removed this comment."
-msgstr "Un autre utilisateur a éliminé votre commentaire."
+msgstr "Un autre utilisateur a éliminé ce commentaire."
 
 #: src/canvas/sections/CommentListSection.ts:1470
 msgid ""

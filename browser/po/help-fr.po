@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2024-12-27 20:19+0000\n"
-"Last-Translator: Zefut <zefut.pro@gmail.com>\n"
+"PO-Revision-Date: 2025-04-26 20:14+0000\n"
+"Last-Translator: TransGecko <sigekos824@mongrec.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "help/fr/>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -791,7 +791,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Retour arrière<kbd>"
+"\"kbd--plus\">+</span><kbd>Retour arrière</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
@@ -870,7 +870,7 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"</kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Flèches directionnelles</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
@@ -1219,7 +1219,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
-msgstr "Aller à la prochaine page"
+msgstr "Aller à la prochaine page."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
 msgid ""
@@ -1231,7 +1231,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
-msgstr "Aller à la page précédente"
+msgstr "Aller à la page précédente."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
 msgid ""
@@ -1259,8 +1259,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd> <span class=\"kbd--plus\">+</span> <kbd>Maj</kbd> <span "
-"class=\"kbd--plus\">+</span> <kbd>Flèche<kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span> <kbd>Maj</kbd><span class="
+"\"kbd--plus\">+</span> <kbd>Flèche</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
@@ -2059,14 +2059,13 @@ msgstr ""
 "s'ils sont copiés à partir du document sur lequel vous travaillez."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
-"Lorsque vous collez du texte provenant de l'extérieur du document (une autre "
-"fenêtre de navigateur ou une application de bureau), il sera collé en tant "
-"que texte enrichi."
+"Lorsque vous collez du texte provenant de l'extérieur du document (d'une "
+"autre fenêtre de navigateur ou d'une application de bureau), il sera collé "
+"en tant que texte enrichi (Rich Text)."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2106,7 +2105,6 @@ msgstr ""
 ">Diagrammes</span>. Personnalisez le diagramme dans le volet latéral :"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:453-31
-#, fuzzy
 msgid "chart"
 msgstr "graphique"
 
@@ -2206,7 +2204,6 @@ msgstr ""
 "sont affichés sur la droite et comportent le nom et la date de leur auteur."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:471-29
-#, fuzzy
 msgid "comment"
 msgstr "commentaire"
 
@@ -2352,9 +2349,8 @@ msgstr ""
 "entrées identiques dans un champ de données."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:515-34
-#, fuzzy
 msgid "filter"
-msgstr "filtrer"
+msgstr "filtre"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:517-11
 msgid ""
@@ -2410,9 +2406,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:531-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:536-31
-#, fuzzy
 msgid "data validate"
-msgstr "Données validées"
+msgstr "Valider les données"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:532-11
 msgid ""
@@ -3313,9 +3308,8 @@ msgstr ""
 "précis des données CSV."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:789-31
-#, fuzzy
 msgid "import"
-msgstr "Importer"
+msgstr "Importation"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:790-11
 msgid ""

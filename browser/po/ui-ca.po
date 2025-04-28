@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-03-16 07:15+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2025-04-26 20:14+0000\n"
+"Last-Translator: TransGecko <sigekos824@mongrec.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -816,7 +816,7 @@ msgstr "S'està baixant el contingut del porta-retalls"
 #: src/control/Control.DownloadProgress.js:113
 #: src/control/Control.PartsPreview.js:295
 msgid "Copy"
-msgstr "Copia"
+msgstr "Copiar"
 
 #: src/control/Control.DownloadProgress.js:111
 msgid "Download completed and ready to be copied to clipboard."
