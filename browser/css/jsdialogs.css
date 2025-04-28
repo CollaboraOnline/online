@@ -1489,6 +1489,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: transparent;
 	grid-column: 3;
 	position: relative;
+	border: none;
+	padding: 0px;
 }
 
 .arrowbackground:hover {
