@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-04-17 21:45+0000\n"
+"PO-Revision-Date: 2025-04-24 09:48+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -370,89 +370,96 @@ msgstr "Opravdu si přejete tento server vypnout?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:115
 msgid "Autotext"
-msgstr ""
+msgstr "AutoText"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Nahrání opakovaně použitelných textových fragmentů (.bau). Chcete-li text "
+"vložit do dokumentu, zadejte zkratku pro položku AutoText a stiskněte "
+"klávesu F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Nahrát AutoText"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Custom Dictionaries"
-msgstr ""
+msgstr "Vlastní slovníky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:129
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Přidání nebo úprava slov ve slovníku pro kontrolu pravopisu. Slova ve vašem "
+"slovníku (.dic) budou k dispozici pro kontrolu pravopisu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:135
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Nahrát Slovník"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:139
 msgid "Interface"
-msgstr ""
+msgstr "Rozhraní"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:140
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Nastavení výchozích předvoleb rozhraní."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Nahrát konfiguraci"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Document View"
-msgstr ""
+msgstr "Zobrazení dokumentu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 msgid "Adjust how office documents look."
-msgstr ""
+msgstr "Upravte vzhled kancelářských dokumentů."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Nahrání Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "V počátečních proměnných chybí sdílená URL adesa konfigurace."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "V počátečních proměnných chybí přístupový token."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Něco se pokazilo. Zkuste prosím stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Při načítání souboru s nastavením se něco pokazilo. Zkuste prosím stránku "
+"obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Při načítání slovníku se něco pokazilo. Zkuste prosím stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Při nahrávání souboru se něco pokazilo. Zkuste to prosím znovu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:501
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Při mazání souboru se něco pokazilo. Zkuste prosím obnovit stránku."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:626
 #: src/map/handler/Map.WOPI.js:690
@@ -639,9 +646,8 @@ msgid "Resolved"
 msgstr "Vyřešit"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Dokument obsahuje nepodporované video"
+msgstr "Dokument obsahuje nepodporované medium"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
