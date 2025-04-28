@@ -188,21 +188,17 @@ class Document: NSDocument {
         COWrapper.saveAs(with: self, url: tmpURL.absoluteString, format: "pdf", filterOptions: nil)
 
         // load the PDF into a PDFView
-        guard let pdfDoc = PDFDocument(url: tmpURL) else {
+        guard let pdfDocument = PDFDocument(url: tmpURL) else {
             throw CocoaError(.fileReadCorruptFile, userInfo: [NSURLErrorKey: tmpURL])
         }
 
         // we no longer need the file
         try? FileManager.default.removeItem(at: tmpURL)
 
-        // build the printing view and operation
-        let pdfView = PDFView()
-        pdfView.document   = pdfDoc
-        pdfView.autoScales = true
+        guard let op = pdfDocument.printOperation(for: self.printInfo, scalingMode: .pageScaleNone, autoRotate: true) else {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [NSURLErrorKey: tmpURL])
+        }
 
-        let op = NSPrintOperation(view: pdfView, printInfo: self.printInfo)
-        op.showsPrintPanel    = true
-        op.showsProgressPanel = true
         return op
     }
 
