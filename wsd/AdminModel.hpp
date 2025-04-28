@@ -256,13 +256,6 @@ public:
     time_t getAbortTime() const { return _abortTime; }
     void setAbortTime(time_t abortTime) { _abortTime = abortTime; }
 
-    // If the Document is expired then _memoryDirty is now static and we can
-    // drop the _procSMaps reference as we have no further interest in it.
-    void setExpired()
-    {
-        _procSMaps.reset();
-    }
-
     std::string to_string() const;
 
 private:
