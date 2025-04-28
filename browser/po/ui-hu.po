@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-04-23 14:30+0000\n"
+"PO-Revision-Date: 2025-04-23 17:35+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -433,12 +433,10 @@ msgid "Access token is missing in initial variables."
 msgstr "Hiányzik a hozzáférési token a kezdeti változók közül."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
-#, fuzzy
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Valami nem sikerült, frissítse az oldalt."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
-#, fuzzy
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -446,7 +444,6 @@ msgstr ""
 "Valami nem sikerült a beállítási fájl letöltése közben, frissítse az oldalt."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
-#, fuzzy
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
