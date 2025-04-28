@@ -970,6 +970,8 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/integrator/AdminIntegratorSettings.ts \
+		admin/src/integrator/WordBook.ts \
+		admin/src/integrator/Xcu.ts \
 		admin/src/Util.js \
 		js/global.js \
 		src/app/Debug.ts \

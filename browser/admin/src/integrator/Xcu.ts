@@ -1,3 +1,16 @@
+/* -*- js-indent-level: 8 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+var _: any = (window as any)._;
+
 interface XcuObject {
 	[app: string]: any;
 }
@@ -144,7 +157,7 @@ class Xcu {
 					: this.parse(XcuFileContent);
 		} catch (error) {
 			(window as any).SettingIframe.showErrorModal(
-				'Something went wrong while loading Document settings.',
+				_('Something went wrong while loading Document settings.'),
 			);
 			console.error('Error parsing XCU file:', error);
 		}
@@ -156,7 +169,7 @@ class Xcu {
 
 		if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
 			(window as any).SettingIframe.showErrorModal(
-				'Something went wrong while loading Document settings.',
+				_('Something went wrong while loading Document settings.'),
 			);
 		}
 
@@ -383,11 +396,11 @@ class Xcu {
 
 	public createXcuEditorUI(container: HTMLElement): HTMLElement {
 		const heading = document.createElement('h3');
-		heading.textContent = 'Document Settings';
+		heading.textContent = _('Document Settings');
 		container.appendChild(heading);
 
 		const descEl = document.createElement('p');
-		descEl.textContent = 'Adjust how office documents behave.';
+		descEl.textContent = _('Adjust how office documents behave.');
 		container.appendChild(descEl);
 
 		const editorContainer = document.createElement('div');
@@ -432,7 +445,7 @@ class Xcu {
 
 		const contentsContainer = document.createElement('div');
 		contentsContainer.id = 'xcu-tab-contents';
-		contentsContainer.textContent = 'Select a tab to view settings.';
+		contentsContainer.textContent = _('Select a tab to view settings.');
 
 		editorContainer.appendChild(navContainer);
 		editorContainer.appendChild(contentsContainer);
@@ -445,7 +458,7 @@ class Xcu {
 		resetButton.type = 'button';
 		resetButton.id = 'xcu-reset-button';
 		resetButton.classList.add('button', 'button--vue-secondary');
-		resetButton.title = 'Reset to default Document settings';
+		resetButton.title = _('Reset to default Document settings');
 		resetButton.innerHTML = `
 			<span class="button__wrapper">
 				<span class="button__icon xcu-reset-icon">
@@ -459,7 +472,7 @@ class Xcu {
 
 		resetButton.addEventListener('click', async () => {
 			const confirmed = window.confirm(
-				'Are you sure you want to reset Document settings?',
+				_('Are you sure you want to reset Document settings?'),
 			);
 			if (!confirmed) {
 				return;
@@ -474,7 +487,7 @@ class Xcu {
 		saveButton.type = 'button';
 		saveButton.id = 'xcu-save-button';
 		saveButton.classList.add('button', 'button-primary');
-		saveButton.title = 'Save Document settings';
+		saveButton.title = _('Save Document settings');
 		saveButton.innerHTML = `
 			<span class="button__wrapper">
 				<span class="button--text-only">Save</span>
