@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-03-16 12:13+0000\n"
+"PO-Revision-Date: 2025-04-28 04:37+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -363,89 +363,97 @@ msgstr "Are you sure you want to shut down the server?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:115
 msgid "Autotext"
-msgstr ""
+msgstr "Autotext"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Upload reusable text snippets (.bau). To insert the text in your document, "
+"type the shortcut for an AutoText entry and press F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Upload Autotext"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Custom Dictionaries"
-msgstr ""
+msgstr "Custom Dictionaries"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:129
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Add or edit words in a spell check dictionary. Words in your wordbook (.dic) "
+"will be available for spelling checks."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:135
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Upload Wordbook"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:139
 msgid "Interface"
-msgstr ""
+msgstr "Interface"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:140
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Set default interface preferences."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Upload Configuration"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Document View"
-msgstr ""
+msgstr "Document View"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 msgid "Adjust how office documents look."
-msgstr ""
+msgstr "Adjust how office documents look."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Upload Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Shared Config URL is missing in initial variables."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Access token is missing in initial variables."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Something went wrong. Please try to refresh the page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Something went wrong while fetching setting file. Please try to refresh the "
+"page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Something went wrong while fetching wordbook. Please try to refresh the page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Something went wrong while uploading the file. Please try again."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:501
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Something went wrong while deleting the file. Please try refreshing the page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:626
 #: src/map/handler/Map.WOPI.js:690
@@ -633,9 +641,8 @@ msgid "Resolved"
 msgstr "Resolved"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Document contains unsupported video"
+msgstr "Document contains unsupported media"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
@@ -1283,7 +1290,7 @@ msgstr "Language"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "No search results found!"
 
 #: src/control/Control.Menubar.ts:148 src/control/Control.Menubar.ts:163
 #: src/control/Control.Menubar.ts:1088
@@ -1944,11 +1951,11 @@ msgstr "Gradient End"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Navigation"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Close Navigation"
 
 #: src/control/Control.NavigatorPanel.ts:125
 #: src/slideshow/PresenterConsole.js:34
@@ -1957,12 +1964,12 @@ msgstr "Slides"
 
 #: src/control/Control.NavigatorPanel.ts:130
 msgid "Outline"
-msgstr ""
+msgstr "Outline"
 
 #: src/control/Control.NavigatorPanel.ts:155
 #: src/control/Control.NavigatorPanel.ts:160
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: src/control/Control.Notebookbar.js:671
 #: src/control/Control.NotebookbarCalc.js:164
