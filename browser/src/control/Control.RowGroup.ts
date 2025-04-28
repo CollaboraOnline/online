@@ -88,13 +88,14 @@ export class RowGroup extends GroupBase {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		let startY = this.getRelativeY(group.startPos);
 		const endY = this.getEndPosition(group.endPos);
+		const strokeColor = GroupBase.getColors().strokeColor;
 
 		if (this.isGroupHeaderVisible(startY, group.startPos)) {
 			// draw head
 			this.context.beginPath();
 			this.context.fillStyle = this.backgroundColor;
 			this.context.fillRect(this.transformRectX(startX, this._groupHeadSize), startY, this._groupHeadSize, this._groupHeadSize);
-			this.context.strokeStyle = 'black';
+			this.context.strokeStyle = strokeColor;
 			this.context.lineWidth = 1.0;
 			this.context.strokeRect(this.transformRectX(startX + 0.5, this._groupHeadSize), startY + 0.5, this._groupHeadSize, this._groupHeadSize);
 
@@ -128,7 +129,7 @@ export class RowGroup extends GroupBase {
 			startX += this._groupHeadSize * 0.5;
 			startX = Math.round(startX);
 			startY = Math.round(startY) + 1;
-			this.context.strokeStyle = 'black';
+			this.context.strokeStyle = strokeColor;
 			this.context.lineWidth = 2.0;
 			this.context.moveTo(this.transformX(startX), startY);
 			this.context.lineTo(this.transformX(startX), endY - app.roundedDpiScale);
@@ -147,7 +148,7 @@ export class RowGroup extends GroupBase {
 		const startX = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 		const startY = Math.round((this._cornerHeaderHeight - ctrlHeadSize) * 0.5);
 
-		ctx.strokeStyle = 'black';
+		ctx.strokeStyle = GroupBase.getColors().strokeColor;
 		ctx.lineWidth = 1.0;
 		ctx.strokeRect(this.transformRectX(startX + 0.5, ctrlHeadSize), startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number

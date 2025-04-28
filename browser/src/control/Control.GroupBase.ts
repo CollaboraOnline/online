@@ -60,7 +60,9 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
+		this._map.on('darkmodechanged', this._groupBaseColors, this);
 		this._createFont();
+		this._groupBaseColors();
 		this.update();
 		this.isRemoved = false;
 	}
@@ -72,15 +74,38 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	_createFont(): void {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
-		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
-		this.borderColor = this.backgroundColor;
-		this._textColor = L.DomUtil.getStyle(elem, 'color');
+
 		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
 		const fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
 		this._getFont = function() {
 			return Math.round(fontSize * app.dpiScale) + 'px ' + fontFamily;
 		};
 		L.DomUtil.remove(elem);
+	}
+
+	public static getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {	
+		const baseElem = document.getElementsByTagName('body')[0];
+		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+		const isDark = window.prefs.getBoolean('darkTheme');
+
+		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
+		this.borderColor = this.backgroundColor;
+
+		this._textColor = L.DomUtil.getStyle(elem, 'color');
+		L.DomUtil.remove(elem);
+		return {
+			backgroundColor: this.backgroundColor,
+			borderColor: this.borderColor,
+			textColor: this._textColor,
+			strokeColor: isDark ? 'white' : 'black'
+		};
+	}
+
+	private _groupBaseColors(): void {
+		const colors = GroupBase.getColors();
+		this.backgroundColor = colors.backgroundColor;
+		this.borderColor = colors.borderColor;
+		this._textColor = colors.textColor;
 	}
 
 	// This returns the required width for the section.
