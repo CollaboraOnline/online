@@ -76,24 +76,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		else
 			this.setShowSection(false);
 
-		// At this point, position is calculated without taking splitter into account.
-		var splitPosCore = {x: 0, y: 0};
-		if (this.map._docLayer.getSplitPanesContext())
-			splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
-
-		splitPosCore.x *= app.dpiScale;
-		splitPosCore.y *= app.dpiScale;
-
-		if (position[0] <= splitPosCore.x)
-			position[0] += this.documentTopLeft[0];
-		else if (position[0] - this.documentTopLeft[0] <= splitPosCore.x)
-			this.setShowSection(false);
-
-		if (position[1] <= splitPosCore.y)
-			position[1] += this.documentTopLeft[1];
-		else if (position[1] - this.documentTopLeft[1] <= splitPosCore.y)
-			this.setShowSection(false);
-
 		this.setPosition(position[0], position[1]);
 	}
 
