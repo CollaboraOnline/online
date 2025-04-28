@@ -24,7 +24,7 @@
     <string name="confirm_label">Επιβεβαίωση</string>
     <string name="up_description">Στον γονικό κατάλογο</string>
     <string name="password">Κωδικός πρόσβασης</string>
-    <string name="user_name">Όνομα χρήστη</string>
+    <string name="user_name">Όνομα του χρήστη</string>
     <string name="server_url_and_port">URL και θύρα διακομιστή σύννεφου.</string>
     <string name="server_url">URL διακομιστή</string>
     <string name="otg_warning">Πειραματικό χαρακτηριστικό: Χρησιμοποιήστε μόνο εάν η συσκευή OTG είναι εγγράψιμη.</string>
@@ -65,7 +65,7 @@
     <string name="sort_largest">Πρώτα το πιο μεγάλο</string>
     <string name="sort_smallest">Πρώτα το πιο μικρό</string>
     <string name="sort">Ταξινόμηση κατά</string>
-    <string name="filter">Φιλτράρισμα κατά</string>
+    <string name="filter">Φίλτρο κατά</string>
     <string name="default_document_name">χωρίς τίτλο</string>
     <string name="new_spreadsheet">Νέο Υπολογιστικό φύλλο</string>
     <string name="new_presentation">Νέα Παρουσίαση</string>

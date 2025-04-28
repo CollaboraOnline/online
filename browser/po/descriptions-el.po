@@ -1,12 +1,13 @@
 # Stratos Kostidis <petros8280@hotmail.com>, 2021.
 # george kitsoukakis <norhorn@gmail.com>, 2021.
+# GiannosOB <giannos2105@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2021-09-20 17:51+0000\n"
-"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
+"PO-Revision-Date: 2025-04-24 15:52+0000\n"
+"Last-Translator: GiannosOB <giannos2105@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/el/>\n"
 "Language: el\n"
@@ -14,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.11.1-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -38,36 +39,44 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
+"Το Collabora Office είναι ένα πρόγραμμα επεξεργασίας κειμένου, υπολογιστικών "
+"φύλλων και παρουσιάσεων που βασίζεται στο LibreOffice, την πιο δημοφιλή "
+"σουίτα γραφείου ανοιχτού κώδικα στον κόσμο - και τώρα είναι στο Android, "
+"ενισχύοντας τις δυνατότητές σας να εργάζεστε στο κινητό και για συνεργασία."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
 msgid ""
 "This app is in active development, feedback and bug reports are very welcome."
 msgstr ""
+"Αυτή η εφαρμογή βρίσκεται σε ενεργή ανάπτυξη, τα σχόλια και οι αναφορές "
+"σφαλμάτων είναι πολύ ευπρόσδεκτα."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
 msgid "Supported files:"
-msgstr ""
+msgstr "Υποστηριζόμενα αρχεία:"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-5
 msgid "Open Document Format (.odt, .odp, .ods, .ots, .ott, .otp)"
-msgstr ""
+msgstr "Άνοιγμα Μορφότυπου Εγγράφου (.odt, .odp, .ods, .ots, .ott, .otp)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-5
 msgid ""
 "Microsoft Office 2007/2010/2013/2016/2019 (.docx, .pptx, .xlsx, .dotx, ."
 "xltx, .ppsx)"
 msgstr ""
+"Microsoft Office 2007/2010/2013/2016/2019 (.docx, .pptx, .xlsx, .dotx, "
+".xltx, .ppsx)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-5
 msgid "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
-msgstr ""
+msgstr "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr ""
+msgstr "Αναφορά θεμάτων:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
@@ -76,11 +85,14 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
+"Χρησιμοποιήστε το bugtracker και επισυνάψτε τυχόν αρχεία που προκάλεσαν "
+"προβλήματα μέσω <a href=\"https://col.la/android\">https://col.la/android</"
+"a>. Λάβετε υπόψη ότι οτιδήποτε εισάγετε στο bugtracker θα είναι δημόσιο."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr ""
+msgstr "Σχετικά με την εφαρμογή:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
@@ -89,6 +101,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"Το Collabora Office για Android χρησιμοποιεί την ίδια μηχανή με το "
+"LibreOffice για Windows, Mac και Linux. Αυτό, σε συνδυασμό με ένα νέο front-"
+"end που βασίζεται στο Collabora Online, διαβάζει και αποθηκεύει έγγραφα "
+"παρόμοια με το LibreOffice desktop."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -98,21 +114,25 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Οι μηχανικοί της Collabora Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, "
+"Miklos Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia και Skyler Grey "
+"αναπτύσσουν την υποστήριξη του Android από το 2012, με τη βοήθεια των "
+"φοιτητών του Google Summer of Code Andrzej Hunt, Iain Billet και Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
 msgid "License:"
-msgstr ""
+msgstr "Άδεια:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
-msgstr ""
+msgstr "Ανοιχτός Κώδικας - Mozilla Public License v2 και άλλα"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr ""
+msgstr "Συντελεστές:"
 
 #~ msgid "Major upgrade to the new 6.4 core."
 #~ msgstr "Σημαντική αναβάθμιση στον νέο 6,4 πυρήνα."
