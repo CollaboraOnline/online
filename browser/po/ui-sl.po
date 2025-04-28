@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-03-23 12:41+0000\n"
+"PO-Revision-Date: 2025-04-28 15:46+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -368,89 +368,96 @@ msgstr "Ali ste prepričani, da želite zaustaviti strežnik?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:115
 msgid "Autotext"
-msgstr ""
+msgstr "Samobesedilo"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Naloži ponovno uporabne kose besedila (.bau) na strežnik. Za vstavljanje "
+"besedila v dokument, vnesite bližnjico za vnos samobesedila in pritisnite F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Naloži samobesedilo na strežnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Custom Dictionaries"
-msgstr ""
+msgstr "Slovarji po meri"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:129
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Dodajte ali uredite besede v slovarju črkovanja. Besede v vašem slovarčku "
+"(.dic) bodo na voljo za preverjanje črkovanja."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:135
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Naloži slovarček na strežnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:139
 msgid "Interface"
-msgstr ""
+msgstr "Vmesnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:140
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Določite privzete nastavitve vmesnika."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Naloži prilagoditev na strežnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Document View"
-msgstr ""
+msgstr "Pogled dokumenta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 msgid "Adjust how office documents look."
-msgstr ""
+msgstr "Prilagodite videz pisarniških dokumentov."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Naloži xcu na strežnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL-ju deljenih prilagoditev manjkajo začetne spremenljivke."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Žeton dostopa manjka v začetnih spremenljivkah."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Nekaj je narobe. Pokusite osvežiti stran."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Nekaj je narobe pri pridobivanju datoteke nastavitev. Poskusite osvežiti "
+"stran."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Nekaj je šlo narobe pri pridobivanju slovarčka. Poskusite osvežiti stran."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Nekaj je narobe pri nalaganju datoteke na strežnik. Poskusite znova."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:501
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Nekaj je narobe pri brisanju datoteke. Poskusite osvežiti stran."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:626
 #: src/map/handler/Map.WOPI.js:690
@@ -638,9 +645,8 @@ msgid "Resolved"
 msgstr "Razrešeno"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Dokument vsebuje nepodprt videoposnetek"
+msgstr "Dokument vsebuje nepodprto medijsko datoteko"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
@@ -1289,7 +1295,7 @@ msgstr "Jezik"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Ni zadetkov iskanja!"
 
 #: src/control/Control.Menubar.ts:148 src/control/Control.Menubar.ts:163
 #: src/control/Control.Menubar.ts:1088
@@ -1951,11 +1957,11 @@ msgstr "Konec preliva"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Krmarjenje"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Zapri krmarjenje"
 
 #: src/control/Control.NavigatorPanel.ts:125
 #: src/slideshow/PresenterConsole.js:34
@@ -1964,12 +1970,12 @@ msgstr "Prosojnice"
 
 #: src/control/Control.NavigatorPanel.ts:130
 msgid "Outline"
-msgstr ""
+msgstr "Oris"
 
 #: src/control/Control.NavigatorPanel.ts:155
 #: src/control/Control.NavigatorPanel.ts:160
 msgid "Navigator"
-msgstr ""
+msgstr "Krmar"
 
 #: src/control/Control.Notebookbar.js:671
 #: src/control/Control.NotebookbarCalc.js:164
