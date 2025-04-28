@@ -1236,7 +1236,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					// Determine key direction
 					let key;
 					if (e.key === 'Tab') {
-						e.preventDefault(); // Always prevent default tab behavior
 						key = e.shiftKey ? 'ArrowLeft' : 'ArrowRight'; // Reverse if Shift+Tab
 					} else {
 						key = e.key;
@@ -2244,12 +2243,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (options && options.hasDropdownArrow) {
 			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
+			if (data.applyCallback) {
+				// Arrow should be a real button (user can interact with it)
+				var arrowbackground = L.DomUtil.create('button', 'arrowbackground', div);
+			} else {
+				// Arrow is just decoration
+				var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
+				arrowbackground.setAttribute('aria-hidden', 'true');
+			}			
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrowbackground;
 		} else if (data.dropdown === true) {
 			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
+			var arrowbackground = L.DomUtil.create('button', 'arrowbackground', div);
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrowbackground;
 
@@ -2273,7 +2279,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (arrowbackground) {
 			div.setAttribute('aria-expanded', false);
-			arrowbackground.tabIndex = '0';
+			// if main button element in split button works same as arrowbackground then make sure arrowbackground not focusable due to a11y conflicts 
+			data.applyCallback ? arrowbackground.tabIndex = '0' : arrowbackground.tabIndex = '-1';
 		}
 
 		var openToolBoxMenu = function(event, div) {
