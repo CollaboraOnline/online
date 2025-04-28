@@ -37,7 +37,7 @@ class NetUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
 
 void NetUtilWhiteBoxTests::testBufferClass()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     Buffer buf;
     LOK_ASSERT_EQUAL(0UL, buf.size());
@@ -122,7 +122,7 @@ void NetUtilWhiteBoxTests::testBufferClass()
 
 void NetUtilWhiteBoxTests::testParseUri()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     std::string scheme = "***";
     std::string host = "***";
@@ -186,7 +186,7 @@ void NetUtilWhiteBoxTests::testParseUri()
 
 void NetUtilWhiteBoxTests::testParseUriUrl()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     std::string scheme = "***";
     std::string host = "***";
@@ -262,7 +262,7 @@ void NetUtilWhiteBoxTests::testParseUriUrl()
 
 void NetUtilWhiteBoxTests::testParseUrl()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL(std::string(), net::parseUrl(""));
 

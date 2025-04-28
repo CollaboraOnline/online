@@ -30,7 +30,7 @@ class UriTests : public CPPUNIT_NS::TestFixture
 
 void UriTests::testEncode()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT(Uri::needsEncoding("www.example.com") == false);
     LOK_ASSERT(Uri::needsEncoding("www.example.com/file") == true);

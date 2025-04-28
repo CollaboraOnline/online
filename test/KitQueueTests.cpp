@@ -83,7 +83,7 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
 #if 0
 void KitQueueTests::testKitQueuePriority()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const std::string reqHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string resHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1";
@@ -133,7 +133,7 @@ void KitQueueTests::testKitQueuePriority()
 
 void KitQueueTests::testTileCombinedRendering()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const std::string req1 = "tile nviewid=0 nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string req2 = "tile nviewid=0 part=0 width=256 height=256 tileposx=3840 tileposy=0 tilewidth=3840 tileheight=3840";
@@ -168,7 +168,7 @@ void KitQueueTests::testTileCombinedRendering()
 
 void KitQueueTests::testTileRecombining()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     class TestPrioritizer : public TilePrioritizer {
         int _prioX = 0;
@@ -244,7 +244,7 @@ void KitQueueTests::testTileRecombining()
 #if 0
 void KitQueueTests::testViewOrder()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     class TestPrioritizer : public TilePrioritizer {
     public:
@@ -288,7 +288,7 @@ void KitQueueTests::testViewOrder()
 
 void KitQueueTests::testPreviewsDeprioritization()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TilePrioritizer dummy;
     KitQueue queue(dummy);
@@ -364,7 +364,7 @@ namespace {
 
 void KitQueueTests::testSenderQueue()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     SenderQueue<std::shared_ptr<Message>> queue;
 
@@ -408,7 +408,7 @@ void KitQueueTests::testSenderQueue()
 
 void KitQueueTests::testSenderQueueLog()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     SenderQueue<std::shared_ptr<Message>> queue;
 
@@ -451,7 +451,7 @@ void KitQueueTests::testSenderQueueLog()
 
 void KitQueueTests::testSenderQueueProgress()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     SenderQueue<std::shared_ptr<Message>> queue;
 
@@ -488,7 +488,7 @@ void KitQueueTests::testSenderQueueProgress()
 
 void KitQueueTests::testSenderQueueTileDeduplication()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     SenderQueue<std::shared_ptr<Message>> queue;
 
@@ -542,7 +542,7 @@ void KitQueueTests::testSenderQueueTileDeduplication()
 
 void KitQueueTests::testInvalidateViewCursorDeduplication()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     SenderQueue<std::shared_ptr<Message>> queue;
 
@@ -618,7 +618,7 @@ void putCallback(KitQueue &queue, const std::string &str)
 
 void KitQueueTests::testCallbackInvalidation()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TilePrioritizer dummy;
     KitQueue queue(dummy);
@@ -653,7 +653,7 @@ void KitQueueTests::testCallbackInvalidation()
 
 void KitQueueTests::testCallbackIndicatorValue()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TilePrioritizer dummy;
     KitQueue queue(dummy);
@@ -672,7 +672,7 @@ void KitQueueTests::testCallbackIndicatorValue()
 
 void KitQueueTests::testCallbackPageSize()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TilePrioritizer dummy;
     KitQueue queue(dummy);
@@ -691,7 +691,7 @@ void KitQueueTests::testCallbackPageSize()
 
 void KitQueueTests::testCallbackModifiedStatusIsSkipped()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TilePrioritizer dummy;
     KitQueue queue(dummy);

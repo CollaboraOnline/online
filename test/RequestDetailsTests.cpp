@@ -44,7 +44,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
 
 void RequestDetailsTests::testDownloadURI()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const std::string Root = "localhost:9980";
 
@@ -93,7 +93,7 @@ void RequestDetailsTests::testDownloadURI()
 
 void RequestDetailsTests::testCoolURI()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const std::string Root = "localhost:9980";
 
@@ -129,7 +129,7 @@ void RequestDetailsTests::testCoolURI()
 
 void RequestDetailsTests::testLocal()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const std::string Root = "localhost:9980";
 
@@ -275,7 +275,7 @@ void RequestDetailsTests::testLocal()
 
 void RequestDetailsTests::testLocalHexified()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const std::string Root = "localhost:9980";
 
@@ -406,7 +406,7 @@ void RequestDetailsTests::testLocalHexified()
 
 void RequestDetailsTests::testRequestDetails()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const std::string Root = "localhost:9980";
 
@@ -764,7 +764,7 @@ void RequestDetailsTests::testRequestDetails()
 
 void RequestDetailsTests::testAuthorization()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     Authorization auth1(Authorization::Type::Token, "abc");
     Poco::URI uri1("http://localhost");

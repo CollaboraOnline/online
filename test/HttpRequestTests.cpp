@@ -179,7 +179,7 @@ constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 void HttpRequestTests::testSslHostname()
 {
 #if ENABLE_SSL
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     if (helpers::haveSsl())
     {
@@ -194,7 +194,7 @@ void HttpRequestTests::testSslHostname()
 
 void HttpRequestTests::testInvalidURI()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     try
     {
@@ -210,7 +210,7 @@ void HttpRequestTests::testInvalidURI()
 
 void HttpRequestTests::testBadResponse()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     http::Request httpRequest(std::string("/inject/" + HexUtil::bytesToHexString("\0\0xa", 2)));
 
@@ -228,7 +228,7 @@ void HttpRequestTests::testBadResponse()
 
 void HttpRequestTests::testGoodResponse()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // Inject the following response:
     // HTTP/1.1 200 OK
@@ -270,7 +270,7 @@ void HttpRequestTests::testGoodResponse()
 
 void HttpRequestTests::testSimpleGet()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     constexpr auto URL = "/";
 
@@ -308,9 +308,8 @@ void HttpRequestTests::testSimpleGet()
 
         std::unique_lock<std::mutex> lock(mutex);
 
-        httpSession->setConnectFailHandler([](const std::shared_ptr<http::Session>&) {
-            LOK_ASSERT_FAIL("Unexpected connection failure");
-        });
+        httpSession->setConnectFailHandler([testname](const std::shared_ptr<http::Session>&)
+                                           { LOK_ASSERT_FAIL("Unexpected connection failure"); });
 
         httpSession->asyncRequest(httpRequest, pollThread);
 
@@ -337,7 +336,7 @@ void HttpRequestTests::testSimpleGet()
 
 void HttpRequestTests::testSimpleGetSync()
 {
-    constexpr auto testname = "simpleGetSync";
+    constexpr std::string_view testname = "simpleGetSync";
 
     const auto data = Util::rng::getHexString(Util::rng::getNext() % 1024);
     const auto body = std::string(data.data(), data.size());
@@ -374,7 +373,7 @@ void HttpRequestTests::testSimpleGetSync()
 
 void HttpRequestTests::testChunkedGetSync()
 {
-    constexpr auto testname = "chunkedGetSync";
+    constexpr std::string_view testname = "chunkedGetSync";
 
     const auto data = Util::rng::getHexString(Util::rng::getNext() % 1024);
     const auto body = std::string(data.data(), data.size());
@@ -411,7 +410,7 @@ void HttpRequestTests::testChunkedGetSync()
 
 void HttpRequestTests::testChunkedGetSync_External()
 {
-    constexpr auto testname = "chunkedGetSync_External";
+    constexpr std::string_view testname = "chunkedGetSync_External";
 
     const std::string hostname = "http://anglesharp.azurewebsites.net";
     std::string URL = "/Chunked";
@@ -453,7 +452,7 @@ void HttpRequestTests::testChunkedGetSync_External()
 /// there is some content at all or not.
 static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::string& pocoBody,
                     const http::Response& httpResponse, bool checkReasonPhrase, bool checkBody,
-                    const std::string& testname)
+                    const std::string_view testname)
 {
     LOK_ASSERT_EQUAL_MESSAGE("Response state", httpResponse.state(),
                              http::Response::State::Complete);
@@ -487,7 +486,7 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
 /// It exercises a few hundred requests/responses.
 void HttpRequestTests::test500GetStatuses()
 {
-    constexpr auto testname = "test500GetStatuses ";
+    constexpr std::string_view testname = "test500GetStatuses ";
 
     // These should live longer than the pollThread,
     // in case the socket isn't removed by the time we
@@ -532,9 +531,8 @@ void HttpRequestTests::test500GetStatuses()
         std::unique_lock<std::mutex> lock(mutex);
         timedout = true; // Assume we timed out until we prove otherwise.
 
-        httpSession->setConnectFailHandler([](const std::shared_ptr<http::Session>&) {
-            LOK_ASSERT_FAIL("Unexpected connection failure");
-        });
+        httpSession->setConnectFailHandler([testname](const std::shared_ptr<http::Session>&)
+                                           { LOK_ASSERT_FAIL("Unexpected connection failure"); });
 
         httpSession->asyncRequest(httpRequest, pollThread);
 
@@ -591,7 +589,7 @@ void HttpRequestTests::test500GetStatuses()
 
 void HttpRequestTests::testSimplePost_External()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const char* URL = "/post";
 
@@ -624,9 +622,8 @@ void HttpRequestTests::testSimplePost_External()
 
     std::unique_lock<std::mutex> lock(mutex);
 
-    httpSession->setConnectFailHandler([](const std::shared_ptr<http::Session>&) {
-        LOK_ASSERT_FAIL("Unexpected connection failure");
-    });
+    httpSession->setConnectFailHandler([testname](const std::shared_ptr<http::Session>&)
+                                       { LOK_ASSERT_FAIL("Unexpected connection failure"); });
 
     httpSession->asyncRequest(httpRequest, pollThread);
 
@@ -650,7 +647,7 @@ void HttpRequestTests::testSimplePost_External()
 
 void HttpRequestTests::testTimeout()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const char* URL = "/timeout";
 
@@ -668,7 +665,7 @@ void HttpRequestTests::testTimeout()
 
 void HttpRequestTests::testOnFinished_Complete()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const char* URL = "/";
 
@@ -693,7 +690,7 @@ void HttpRequestTests::testOnFinished_Complete()
 
 void HttpRequestTests::testOnFinished_Timeout()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const char* URL = "/timeout";
 
