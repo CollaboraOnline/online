@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-04-26 23:44+0000\n"
-"Last-Translator: TransGecko <sigekos824@mongrec.com>\n"
+"PO-Revision-Date: 2025-04-27 23:50+0000\n"
+"Last-Translator: Timothée <automates@petitmote.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -371,89 +371,103 @@ msgstr "Êtes-vous sûr de vouloir arrêter le serveur ?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:115
 msgid "Autotext"
-msgstr ""
+msgstr "Texte auto"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Envoyez des fragments de texte réutilisables (.bau). Pour insérer le texte "
+"dans votre document, tapez le raccourci pour une entrée de Texte Auto et "
+"appuyez sur F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Envoyer le Texte auto"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Custom Dictionaries"
-msgstr ""
+msgstr "Dictionnaires personnalisés"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:129
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Ajouter ou éditer des mots dans un dictionnaire de vérification "
+"orthographique. Les mots dans votre dictionnaire (.dic) seront disponible "
+"pour la vérification orthographique."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:135
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Envoyer le dictionnaire"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:139
 msgid "Interface"
-msgstr ""
+msgstr "Interface"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:140
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Définir les préférences de l’interface par défaut."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Envoyer la Configuration"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Document View"
-msgstr ""
+msgstr "Vue Document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 msgid "Adjust how office documents look."
-msgstr ""
+msgstr "Ajuster l’apparence des documents de bureau."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Envoyer Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "L’URL de Config partagée est manquante dans les variables initiales."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Le token d’accès est manquant dans les variables initiales."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Quelque chose a mal fonctionné. Veuillez essayer de rafraichir la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Quelque chose a mal fonctionné pendant le chargement du fichier de "
+"configuration. Veuillez essayer de rafraichir la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Quelque chose a mal fonctionné pendant le chargement du dictionnaire. "
+"Veuillez essayer de rafraichir la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"Quelque chose a mal fonctionné pendant l’envoi du fichier. Veuillez "
+"réessayer."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:501
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Quelque chose a mal fonctionné pendant la suppression du fichier. Veuillez "
+"essayer de rafraichir la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:626
 #: src/map/handler/Map.WOPI.js:690
@@ -643,9 +657,8 @@ msgid "Resolved"
 msgstr "Résolu"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Le document contient une vidéo au format non-supportée"
+msgstr "Le document contient un média au format non supporté"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
@@ -749,7 +762,7 @@ msgstr "Collage spécial"
 
 #: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
-msgstr "Copier Cellules"
+msgstr "Copier les Cellules"
 
 #: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
@@ -1298,7 +1311,7 @@ msgstr "Langue"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "La recherche n’a pas trouvé de résultats !"
 
 #: src/control/Control.Menubar.ts:148 src/control/Control.Menubar.ts:163
 #: src/control/Control.Menubar.ts:1088
@@ -1505,7 +1518,7 @@ msgstr "Sélecteur intelligent"
 #: src/control/Control.Menubar.ts:266 src/control/Control.Menubar.ts:561
 #: src/control/Control.Menubar.ts:709 src/control/Control.Menubar.ts:866
 msgid "AI Assistant"
-msgstr "AI Assistant"
+msgstr "Assistant IA"
 
 #: src/control/Control.Menubar.ts:307
 msgid "Text orientation"
@@ -1706,7 +1719,7 @@ msgstr "Diapos en pleine page"
 #: src/control/Control.Menubar.ts:501
 #: src/control/Control.NotebookbarBuilder.js:658
 msgid "Notes Pages"
-msgstr "Notes de pages"
+msgstr "Pages de notes"
 
 #: src/control/Control.Menubar.ts:535
 #: src/control/Control.NotebookbarImpress.js:487
@@ -1720,7 +1733,7 @@ msgstr "Vue principale"
 
 #: src/control/Control.Menubar.ts:551
 msgid "Local Multimedia..."
-msgstr "Fichier multimédia local..."
+msgstr "Multimédia local..."
 
 #: src/control/Control.Menubar.ts:618 src/control/Control.Menubar.ts:1196
 #: src/control/Control.PresentationBar.js:127
@@ -1796,22 +1809,22 @@ msgstr "Mettre en évidence les cellules avec ..."
 #: src/control/Control.Menubar.ts:940
 #: src/control/jsdialog/Definitions.Menu.ts:313
 msgid "Values greater than..."
-msgstr "Valeurs plus grands que …"
+msgstr "Valeurs supérieures à…"
 
 #: src/control/Control.Menubar.ts:941
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Values less than..."
-msgstr "Valeurs plus petits que …"
+msgstr "Valeurs inférieures à…"
 
 #: src/control/Control.Menubar.ts:942
 #: src/control/jsdialog/Definitions.Menu.ts:321
 msgid "Values equal to..."
-msgstr "Valeurs pareils que …"
+msgstr "Valeurs égales à…"
 
 #: src/control/Control.Menubar.ts:943
 #: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Values between..."
-msgstr "Valeurs entre …"
+msgstr "Valeurs comprises entre…"
 
 #: src/control/Control.Menubar.ts:944
 #: src/control/jsdialog/Definitions.Menu.ts:329
@@ -1827,7 +1840,7 @@ msgstr "Contient le texte..."
 #: src/control/jsdialog/Definitions.Menu.ts:337
 #: src/control/jsdialog/Definitions.Menu.ts:368
 msgid "More highlights..."
-msgstr "Davantage de mises en évidence ..."
+msgstr "Davantage de mises en évidence…"
 
 #: src/control/Control.Menubar.ts:949
 #: src/control/jsdialog/Definitions.Menu.ts:341
@@ -1961,11 +1974,11 @@ msgstr "Fin du dégradé"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Navigation"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Fermer la Navigation"
 
 #: src/control/Control.NavigatorPanel.ts:125
 #: src/slideshow/PresenterConsole.js:34
@@ -1974,12 +1987,12 @@ msgstr "Diapositives"
 
 #: src/control/Control.NavigatorPanel.ts:130
 msgid "Outline"
-msgstr ""
+msgstr "Contour"
 
 #: src/control/Control.NavigatorPanel.ts:155
 #: src/control/Control.NavigatorPanel.ts:160
 msgid "Navigator"
-msgstr ""
+msgstr "Navigateur"
 
 #: src/control/Control.Notebookbar.js:671
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2399,11 +2412,11 @@ msgstr "La propriété utilisateur IsAdminUser est définie par l’intégration
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr "Votre serveur WOPI n’est pas sécurisé ; vérification SSL a échoué"
+msgstr "Votre serveur WOPI n'est pas sécurisé : vérification SSL échouée"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr "Pas de problèmes détectés avec la vérification SSL"
+msgstr "Aucun problème détecté pendant la vérification SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
