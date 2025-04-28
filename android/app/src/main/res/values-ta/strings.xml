@@ -39,7 +39,7 @@
     <string name="new_presentation">புதிய விளக்கக்காட்சி</string>
     <string name="new_spreadsheet">புதிய விரிதாள்</string>
     <string name="default_document_name">தலைப்பிடப்படாத</string>
-    <string name="filter">மூலம் வடிகட்டவும்</string>
+    <string name="filter">மூலம் வடிகட்டு</string>
     <string name="sort">வரிசைப்படுத்தவும்</string>
     <string name="sort_smallest">முதலில் சிறியது</string>
     <string name="sort_largest">முதல் பெரியது</string>
@@ -101,7 +101,7 @@
     <string name="action_overwrite">மேலெழுதும்</string>
     <string name="share_document">ஆவண ஆவணத்தைப் பகிரவும்</string>
     <string name="unable_to_go_further">மேலும் செல்ல முடியவில்லை.</string>
-    <string name="bmp_null">பி.எம்.பி.</string>
+    <string name="bmp_null">பிஎம்பி சுழியமாக உள்ளது!</string>
     <string name="title_activity_show_html">பற்றி</string>
     <string name="theme">கருப்பொருள்</string>
     <string name="choose_theme">கருப்பொருள் தேர்வு செய்யவும்</string>

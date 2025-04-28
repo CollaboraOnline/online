@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2024-12-14 09:00+0000\n"
+"PO-Revision-Date: 2025-04-27 23:50+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/collabora-online/"
 "help/ta/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -99,7 +99,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-38
 msgid "Display the Keyboard shortcuts help"
-msgstr "விசைப்பலகை குறுக்குவழி உதவிகளைக் காட்சியளிக்கிறது."
+msgstr "விசைப்பலகை குறுக்குவழி உதவிகளைக் காட்டு"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-100
 msgid ""
@@ -142,14 +142,14 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.h2:187-9
 #: html/cool-help.html%2Bdiv.div.div.h2:252-9
 msgid "Text formatting"
-msgstr "உரை வடிவூட்டல் "
+msgstr "உரை வடிவூட்டல்"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:27-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:189-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-38
 msgid "Bold"
-msgstr "தடிமன் "
+msgstr "தடிமன்"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:27-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
@@ -418,7 +418,7 @@ msgstr "இடஞ்சுட்டியை இடம் நகர்த்த�
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:213-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:278-88
 msgid "Arrow Left"
-msgstr "Arrow Left "
+msgstr "அம்பு வலது"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:214-38
@@ -565,7 +565,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-38
 msgid "Select to beginning of paragraph"
-msgstr "பத்தியின் தொடக்கத்துக்குத் தேர் "
+msgstr "பத்தியின் தொடக்கத்துக்குத் தேர்வு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-97
@@ -587,13 +587,13 @@ msgstr "இடஞ்சுட்டியை ஒரு வரி கீழே �
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-90
 msgid "Arrow Down"
-msgstr "கீழ் அம்பு "
+msgstr "கீழ் அம்பு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-38
 msgid "Select lines in downwards direction"
-msgstr "கீழ் நோக்கும் வரிகளைத் தேர் "
+msgstr "கீழ் நோக்கும் வரிகளைத் தேர்வு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-100
@@ -621,7 +621,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-38
 msgid "Select to end of paragraph"
-msgstr "பத்தி முடிவுக்குத் தேர்க "
+msgstr "பத்தி முடிவுக்குத் தேர்வு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-91
@@ -702,7 +702,7 @@ msgstr "வரி முடிவுக்குச் செல்க"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-82
 msgid "End"
-msgstr "முடிவு "
+msgstr "முடிவு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:77-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
@@ -768,7 +768,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
-msgstr "தெரிவுப் பக்கங்களை ஒரு பக்கம் மேலாக விரிவாக்குக "
+msgstr "தெரிவுப் பக்கங்களை மேலே ஒரு பக்கம் மேலாக விரிவாக்கு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
@@ -777,7 +777,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
-msgstr "பார்வையை ஒரு பக்கம் மேல் நகர்த்து "
+msgstr "பார்வையை ஒரு பக்கம்மேல் நகர்த்து"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-92
 msgid "PageDown"
@@ -795,7 +795,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
-msgstr "தெரிவுப் பக்கங்களை ஒரு பக்கம் மேலாக விரிவாக்குக "
+msgstr "தெரிவுப் பக்கங்களைக் கிழே ஒரு பக்கம் மேலாக விரிவாக்கு"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
