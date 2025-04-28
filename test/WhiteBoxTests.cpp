@@ -95,7 +95,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 
 void WhiteBoxTests::testCOOLProtocolFunctions()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     int foo;
     LOK_ASSERT(COOLProtocol::getTokenInteger("foo=42", "foo", foo));
@@ -205,7 +205,7 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
 
 void WhiteBoxTests::testSplitting()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, 5, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
@@ -351,7 +351,7 @@ void WhiteBoxTests::testMessage()
 
 void WhiteBoxTests::testPathPrefixTrimming()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // These helpers are used by the logging macros.
     // See Log.hpp for details.
@@ -403,7 +403,7 @@ void WhiteBoxTests::testPathPrefixTrimming()
 
 void WhiteBoxTests::testMessageAbbreviation()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, 5, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
@@ -443,7 +443,7 @@ void WhiteBoxTests::testMessageAbbreviation()
 
 void WhiteBoxTests::testReplace()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL(std::string("zesz one zwo flee"), Util::replace("test one two flee", "t", "z"));
     LOK_ASSERT_EQUAL(std::string("testt one two flee"), Util::replace("test one two flee", "tes", "test"));
@@ -455,7 +455,7 @@ void WhiteBoxTests::testReplace()
 
 void WhiteBoxTests::testReplaceChar()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replace("test one two flee", 't', 'z'));
     LOK_ASSERT_EQUAL_STR("test one two flee", Util::replace("test one two flee", ' ', ' '));
@@ -463,7 +463,7 @@ void WhiteBoxTests::testReplaceChar()
 
 void WhiteBoxTests::testReplaceCharInPlace()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // Can't compile, because the argument is a temporary.
     // LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replaceInPlace("test one two flee", 't', 'z'));
@@ -474,7 +474,7 @@ void WhiteBoxTests::testReplaceCharInPlace()
 
 void WhiteBoxTests::testReplaceAllOf()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL(std::string("humvee"), Util::replaceAllOf("humans","san", "eve"));
     LOK_ASSERT_EQUAL(std::string("simple.odt"), Util::replaceAllOf("s#&-le.odt", "#&-", "imp"));
@@ -482,7 +482,7 @@ void WhiteBoxTests::testReplaceAllOf()
 
 void WhiteBoxTests::testRegexListMatcher()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     Util::RegexListMatcher matcher;
 
@@ -524,7 +524,7 @@ void WhiteBoxTests::testRegexListMatcher()
 
 void WhiteBoxTests::testRegexListMatcher_Init()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     Util::RegexListMatcher matcher({"localhost", "192\\..*"}, {"192\\.168\\..*"});
 
@@ -560,7 +560,7 @@ void WhiteBoxTests::testRegexListMatcher_Init()
 
 void WhiteBoxTests::testTileDesc()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // simulate a previous overflow
     errno = ERANGE;
@@ -599,7 +599,7 @@ void WhiteBoxTests::testTileDesc()
 
 void WhiteBoxTests::testTileData()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TileData data(42, "Zfoo", 4);
 
@@ -656,7 +656,7 @@ void WhiteBoxTests::testTileData()
 
 void WhiteBoxTests::testRectanglesIntersect()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // these intersect
     LOK_ASSERT(TileDesc::rectanglesIntersect(1000, 1000, 2000, 1000,
@@ -683,7 +683,7 @@ void WhiteBoxTests::testRectanglesIntersect()
 
 void WhiteBoxTests::testJson()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const char* testString =
          "{\"BaseFileName\":\"SomeFile.pdf\",\"DisableCopy\":true,\"DisableExport\":true,\"DisableInactiveMessages\":true,\"DisablePrint\":true,\"EnableOwnerTermination\":true,\"HideExportOption\":true,\"HidePrintOption\":true,\"OwnerId\":\"id@owner.com\",\"PostMessageOrigin\":\"*\",\"Size\":193551,\"UserCanWrite\":true,\"UserFriendlyName\":\"Owning user\",\"UserId\":\"user@user.com\",\"WatermarkText\":null}";
@@ -717,7 +717,7 @@ void WhiteBoxTests::testJson()
 
 void WhiteBoxTests::testAnonymization()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     static const std::string name = "some name with space";
     static const std::string filename = "filename.ext";
@@ -787,7 +787,7 @@ void WhiteBoxTests::testAnonymization()
 
 void WhiteBoxTests::testIso8601Time()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     std::ostringstream oss;
 
@@ -877,7 +877,7 @@ void WhiteBoxTests::testClockAsString()
     // but the tests can't be run elsewhere.
     // I left them here to avoid recreating them when needed.
 #if 0
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const auto steady_tp = std::chrono::steady_clock::time_point(
         std::chrono::steady_clock::duration(std::chrono::nanoseconds(295708311764285)));
@@ -893,7 +893,7 @@ void WhiteBoxTests::testClockAsString()
 
 void WhiteBoxTests::testStat()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     FileUtil::Stat invalid("/missing/file/path");
     LOK_ASSERT(!invalid.good());
@@ -943,7 +943,7 @@ void WhiteBoxTests::testStat()
 
 void WhiteBoxTests::testStringCompare()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT(Util::iequal("abcd", "abcd"));
     LOK_ASSERT(Util::iequal("aBcd", "abCd"));
@@ -958,7 +958,7 @@ void WhiteBoxTests::testStringCompare()
 
 void WhiteBoxTests::testSafeAtoi()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     {
         std::string s("7");
@@ -1007,7 +1007,7 @@ void WhiteBoxTests::testSafeAtoi()
 
 void WhiteBoxTests::testJsonUtilEscapeJSONValue()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     constexpr std::string_view in = "domain\\username";
     const std::string expected = "domain\\\\username";
@@ -1017,7 +1017,7 @@ void WhiteBoxTests::testJsonUtilEscapeJSONValue()
 STATE_ENUM(TestState, First, Second, Last);
 void WhiteBoxTests::testStateEnum()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL_STR("TestState::First", name(TestState::First));
     LOK_ASSERT_EQUAL_STR("TestState::Second", name(TestState::Second));
@@ -1063,7 +1063,7 @@ void WhiteBoxTests::testStateEnum()
 
 void WhiteBoxTests::testFindInVector()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
     std::string s("fooBarfooBaz");
     std::vector<char> v(s.begin(), s.end());
 
@@ -1104,8 +1104,8 @@ size_t WhiteBoxTests::waitForThreads(size_t count)
 
 void WhiteBoxTests::testThreadPool()
 {
-    constexpr auto testname = __func__;
-//    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
+    constexpr std::string_view testname = __func__;
+    //    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
     // coverity[tainted_data_argument : FALSE] - we trust this variable in tests
     setenv("MAX_CONCURRENCY","8",1);
     // coverity[tainted_argument] : don't warn that getenv("MAX_CONCURRENCY") is tainted

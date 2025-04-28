@@ -32,7 +32,7 @@ class StringVectorTests : public CPPUNIT_NS::TestFixture
 
 void StringVectorTests::testTokenizer()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     StringVector tokens;
 
@@ -178,7 +178,7 @@ void StringVectorTests::testTokenizer()
 
 void StringVectorTests::testTokenizerTokenizeAnyOf()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     StringVector tokens;
     const char delimiters[] = "\n\r"; // any of these delimits; and we trim whitespace
@@ -253,7 +253,7 @@ void StringVectorTests::testTokenizerTokenizeAnyOf()
 
 void StringVectorTests::testStringVector()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // Test push_back() and getParam().
     StringVector vector;

@@ -41,13 +41,13 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     void testPreProcessedFileRoundtrip();
     void testPreProcessedFileSubstitution();
 
-    void preProcessedFileSubstitution(const std::string& testname,
+    void preProcessedFileSubstitution(const std::string_view testname,
                                       std::unordered_map<std::string, std::string> variables);
 };
 
 void FileServeTests::testUIDefaults()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     std::string uiMode;
     std::string uiTheme;
@@ -85,7 +85,7 @@ void FileServeTests::testUIDefaults()
 
 void FileServeTests::testCSSVars()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     LOK_ASSERT_EQUAL(
         std::string("OnJvb3Qgey0tY28tc29tZXN0eWxlLXRleHQ6IzEyMzQ1NjstLWNvLXNvbWVzdHlsZS1zaXplOjE1cHg7fQ=="),
@@ -110,7 +110,7 @@ void FileServeTests::testCSSVars()
 /// Tests file pre-processing through PreProcessedFile class.
 void FileServeTests::testPreProcessedFile()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     {
         const std::string data = "Data %VAR% Data";
@@ -345,7 +345,7 @@ window.welcomeUrl = '%WELCOME_URL%';
 
 void FileServeTests::testPreProcessedFileRoundtrip()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     const Poco::Path path(TDIST);
 
@@ -371,7 +371,7 @@ void FileServeTests::testPreProcessedFileRoundtrip()
 }
 
 void FileServeTests::preProcessedFileSubstitution(
-    const std::string& testname, std::unordered_map<std::string, std::string> variables)
+    const std::string_view testname, std::unordered_map<std::string, std::string> variables)
 {
     const Poco::Path path(TDIST);
 
@@ -417,7 +417,7 @@ void FileServeTests::preProcessedFileSubstitution(
 
 void FileServeTests::testPreProcessedFileSubstitution()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     std::unordered_map<std::string, std::string> variables = {
         { "ACCESS_TOKEN", "alksjdfiwjksnsdkafnsdl" },

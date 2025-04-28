@@ -49,18 +49,14 @@ class WopiProofTests : public CPPUNIT_NS::TestFixture
         return BN_bin2bn(vec.data(), vec.size(), nullptr);
     }
 
-    void verifySignature(const std::string &access,
-                         const std::string &uri,
-                         int64_t ticks,
-                         const std::string &discoveryModulus,
-                         const std::string &discoveryExponent,
-                         const std::string &msgProof,
-                         const std::string &testname);
+    void verifySignature(const std::string& access, const std::string& uri, int64_t ticks,
+                         const std::string& discoveryModulus, const std::string& discoveryExponent,
+                         const std::string& msgProof, const std::string_view testname);
 };
 
 void WopiProofTests::testCapiBlob()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     std::vector<unsigned char> modulus = Proof::Base64ToBytes("0HOWUPFFgmSYHbLZZzdWO/HUOr8YNfx5NAl7GUytooHZ7B9QxQKTJpj0NIJ4XEskQW8e4dLzRrPbNOOJ+KpWHttXz8HoQXkkZV/gYNxaNHJ8/pRXGMZzfVM5vchhx/2C7ULPTrpBsSpmfWQ6ShaVoQzfThFUd0MsBvIN7HVtqzPx9jbSV04wAqyNjcro7F3iu9w7AEsMejHbFlWoN+J05dP5ixryF7+2U5RVmjMt7/dYUdCoiXvCMt2CaVr0XEG6udHU4iDKVKZjmUBc7cTWRzhqEL7lZ1yQfylp38Nd2xxVJ0sSU7OkC1bBDlePcYGaF3JjJgsmp/H5BNnlW9gSxQ==");
     std::vector<unsigned char> exponent = Proof::Base64ToBytes("AQAB");
@@ -71,15 +67,12 @@ void WopiProofTests::testCapiBlob()
     LOK_ASSERT_EQUAL(capiEncoded, std::string("BgIAAACkAABSU0ExAAgAAAEAAQDFEthb5dkE+fGnJgsmY3IXmoFxj1cOwVYLpLNTEksnVRzbXcPfaSl/kFxn5b4QajhH1sTtXECZY6ZUyiDi1NG5ukFc9Fppgt0ywnuJqNBRWPfvLTOaVZRTtr8X8hqL+dPldOI3qFUW2zF6DEsAO9y74l3s6MqNjawCME5X0jb28TOrbXXsDfIGLEN3VBFO3wyhlRZKOmR9ZiqxQbpOz0Ltgv3HYci9OVN9c8YYV5T+fHI0Wtxg4F9lJHlB6MHPV9seVqr4ieM027NG89LhHm9BJEtceII09JgmkwLFUB/s2YGirUwZewk0efw1GL861PE7Vjdn2bIdmGSCRfFQlnPQ"));
 }
 
-void WopiProofTests::verifySignature(const std::string &access,
-                                     const std::string &uri,
-                                     int64_t ticks,
-                                     const std::string &discoveryModulus,
-                                     const std::string &discoveryExponent,
-                                     const std::string &msgProofStr,
-                                     const std::string &testname)
+void WopiProofTests::verifySignature(const std::string& access, const std::string& uri,
+                                     int64_t ticks, const std::string& discoveryModulus,
+                                     const std::string& discoveryExponent,
+                                     const std::string& msgProofStr,
+                                     [[maybe_unused]] const std::string_view testname)
 {
-    (void)testname; // unused
 #if OPENSSL_VERSION_NUMBER > 0x10100000L && OPENSSL_VERSION_NUMBER < 0x30000000L
     std::vector<unsigned char> proof = Proof::GetProof(access, uri, ticks);
 
@@ -113,7 +106,7 @@ void WopiProofTests::verifySignature(const std::string &access,
 
 void WopiProofTests::testExistingProof()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     verifySignature(
         "yZhdN1qgywcOQWhyEMVpB6NE3pvBksvcLXsrFKXNtBeDTPW%2fu62g2t%2fOCWSlb3jUGaz1zc%2fzOzbNgAredLdhQI1Q7sPPqUv2owO78olmN74DV%2fv52OZIkBG%2b8jqjwmUobcjXVIC1BG9g%2fynMN0itZklL2x27Z2imCF6xELcQUuGdkoXBj%2bI%2bTlKM", // access token
@@ -127,7 +120,7 @@ void WopiProofTests::testExistingProof()
 
 void WopiProofTests::testOurProof()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     Proof gen(Proof::Type::CreateKey);
 

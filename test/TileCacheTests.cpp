@@ -201,7 +201,7 @@ bool TileCacheTests::getPartFromInvalidateMessage(const std::string& message, in
 
 void TileCacheTests::testDesc()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     TileDesc descA = TileDesc(CanonicalViewId::None, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1);
     TileDesc descB = TileDesc(CanonicalViewId::None, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2);
@@ -213,7 +213,7 @@ void TileCacheTests::testDesc()
 
 void TileCacheTests::testSimple()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     if (isStandalone())
     {
@@ -413,7 +413,7 @@ void TileCacheTests::testTileSubscription()
 
 void TileCacheTests::testSize()
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     // Create TileCache and pretend the file was modified as recently as
     // now, so it discards the cached data.
@@ -905,7 +905,7 @@ void TileCacheTests::testLoad12ods()
 
 void TileCacheTests::checkBlackTile(BlobData::const_iterator start, BlobData::const_iterator end)
 {
-    constexpr auto testname = __func__;
+    constexpr std::string_view testname = __func__;
 
     size_t width = 256, height = 256, black = 0;
 
