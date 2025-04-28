@@ -260,7 +260,7 @@ window.L.Map.include({
 	},
 
 	print: function (options) {
-		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp || window.ThisIsTheMacOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp || window.ThisIsTheMacOSApp || window.ThisIsTheWindowsApp) {
 			window.postMobileMessage('PRINT');
 		} else {
 			this.showBusy(_('Downloading...'), false);
