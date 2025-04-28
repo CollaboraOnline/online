@@ -2293,7 +2293,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var clickFunction = function (e) {
 			if (!div.hasAttribute('disabled')) {
-				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
 				else if (isRealUnoCommand && data.dropdown !== true)
