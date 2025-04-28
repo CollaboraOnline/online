@@ -549,8 +549,13 @@ class CanvasSectionContainer {
 			var section: CanvasSectionObject = this.sections[i];
 
 			if (section.documentObject === true) {
-				section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
+				if (!app.file.writer.multiPageView)
+					section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
+				else
+					section.myTopLeft = MultiPageViewLayout.twipsToViewPixels(Math.round(section.position[0] * app.pixelsToTwips), Math.round(section.position[1] * app.pixelsToTwips));
+
 				const isVisible = this.isDocumentObjectVisible(section);
+
 				if (isVisible !== section.isVisible) {
 					section.isVisible = isVisible;
 					section.onDocumentObjectVisibilityChange();
@@ -1644,7 +1649,11 @@ class CanvasSectionContainer {
 			if (section.documentObject === true) { // "Document anchor" section should be processed before "document object" sections.
 				if (section.size && section.position) {
 					section.isLocated = true;
-					section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
+
+					if (!app.file.writer.multiPageView)
+						section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
+					else
+						section.myTopLeft = MultiPageViewLayout.twipsToViewPixels(Math.round(section.position[0] * app.pixelsToTwips), Math.round(section.position[1] * app.pixelsToTwips));
 				}
 			}
 			else if (section.boundToSection) { // Don't set boundToSection property for "window sections".
