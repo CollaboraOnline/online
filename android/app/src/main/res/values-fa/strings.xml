@@ -24,4 +24,19 @@
     <string name="pref_file_explorer_title">چیدمان مدیر پرونده</string>
     <string name="pref_sort_title">مرتب سازی پرونده</string>
     <string name="pref_filter_title">غربال پیش‌فرض پرونده</string>
+    <string name="pref_filter_summary">تنظیم کنید که کدام فیلتر پرونده باید به صورت پیش‌فرض استفاده شود .</string>
+    <string name="pref_show_debug_info">نمایش اطلاعات اشکال زدایی</string>
+    <string name="pref_show_debug_info_summary">فعال کردن نمایش اطلاعات اشکال زدایی در نمایشگر سند</string>
+    <string name="pref_user_name">نام کاربری</string>
+    <string name="pref_user_name_info">در هنگام اضافه کردن یک توضیح استفاده می‌شود</string>
+    <string name="pref_user_name_guest">کاربر مهمان</string>
+    <string name="pref_enable_chrome_debugger">اشکال زدایی کروم</string>
+    <string name="new_textdocument">سند متنی جدید</string>
+    <string name="about_moreinfo">اطلاعات بیشتر</string>
+    <string name="new_presentation">ارائه جدید</string>
+    <string name="new_spreadsheet">صفحه گسترده جدید</string>
+    <string name="default_document_name">بدون عنوان</string>
+    <string name="sort_az">آ-ی</string>
+    <string name="sort_za">ی-آ</string>
+    <string name="title_browser">همه پرونده ها</string>
 </resources>
