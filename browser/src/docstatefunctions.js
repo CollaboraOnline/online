@@ -98,6 +98,24 @@ app.isRectangleVisibleInTheDisplayedArea = function (
 	}
 };
 
+app.isXOrdinateInFrozenPane = function (pixelX) {
+	if (app.map._docLayer._splitPanesContext) {
+		const splitPos = app.map._docLayer._splitPanesContext.getSplitPos();
+
+		if (pixelX < splitPos.x) return true;
+		else return false;
+	} else return false;
+};
+
+app.isYOrdinateInFrozenPane = function (pixelY) {
+	if (app.map._docLayer._splitPanesContext) {
+		const splitPos = app.map._docLayer._splitPanesContext.getSplitPos();
+
+		if (pixelY < splitPos.y) return true;
+		else return false;
+	} else return false;
+};
+
 app.isReadOnly = function () {
 	return app.file.readOnly;
 };
