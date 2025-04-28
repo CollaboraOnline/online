@@ -14,7 +14,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 		cy.cGet('#options-custom-animation-button').click();
 		cy.cGet('#options-custom-animation-button').should('have.class', 'selected');
 
-		cy.cGet('#SdCustomAnimationPanelPanelExpander').should('be.visible');
+		cy.cGet('#Panel6').should('be.visible');
 
 		// all options are disabled
 		cy.cGet('#start_effect_list-input').should('be.disabled');

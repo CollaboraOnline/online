@@ -16,7 +16,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 	function openAppearencePanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.cGet('#ScCellAppearancePropertyPanel').click();
+		cy.cGet('#ScCellAppearancePropertyPanel, .ScCellAppearancePropertyPanel').click();
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Background Color')
 			.should('be.visible');

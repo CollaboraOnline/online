@@ -69,7 +69,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		//sidebar needs more time
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible').wait(2000).scrollTo('bottom');
 
-		cy.cGet('#PosSizePropertyPanelPanelExpander-label').should('be.visible').click();
+		cy.cGet('.ui-expander-label').contains('Position and Size').should('be.visible').click();
 
 		cy.cGet('#selectwidth input').clear({force:true})
 			.type('10{enter}', {force:true});
@@ -85,7 +85,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		//sidebar needs more time
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible').wait(2000).scrollTo('bottom');
 
-		cy.cGet('#PosSizePropertyPanelPanelExpander-label').should('be.visible').click();
+		cy.cGet('.ui-expander-label').contains('Position and Size').should('be.visible').click();
 
 		helper.waitUntilIdle('#ratio input');
 

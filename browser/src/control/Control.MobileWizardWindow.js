@@ -642,8 +642,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (deck)
 		{
 			// merge styles into text-panel for elegance
-			var stylesIdx = app.LOUtil.findIndexInParentByAttribute(deck, 'id', 'StylesPropertyPanel');
-			var textIdx = app.LOUtil.findIndexInParentByAttribute(deck, 'id', 'TextPropertyPanel');
+			var stylesIdx = app.LOUtil.findIndexInParentByAttribute(deck, 'name', 'StylesPropertyPanel');
+			var textIdx = app.LOUtil.findIndexInParentByAttribute(deck, 'name', 'TextPropertyPanel');
 
 			if (stylesIdx >= 0 && this.map.getDocType() === 'spreadsheet')
 			{       // remove rather useless calc styles panel

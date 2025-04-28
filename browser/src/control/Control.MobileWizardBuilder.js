@@ -635,7 +635,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var content = data.children;
 
 		var iconPath = null;
-		var entryId = data.id;
+		var entryId = data.name ? data.name : data.id; // name is legacy panel name, id is vcl one
 		if (entryId && entryId.length) {
 			iconPath = app.LOUtil.getIconNameOfCommand(entryId);
 		}

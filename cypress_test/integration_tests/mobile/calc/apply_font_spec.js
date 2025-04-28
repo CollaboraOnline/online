@@ -66,7 +66,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply font name.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#TextPropertyPanel').click();
+		cy.cGet('#TextPropertyPanel, .TextPropertyPanel').click();
 		cy.cGet('#fontnamecombobox').click();
 		cy.cGet('#fontnamecombobox').contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G').click();
 
@@ -79,7 +79,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply font size.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#TextPropertyPanel').click();
+		cy.cGet('#TextPropertyPanel, .TextPropertyPanel').click();
 		cy.cGet('#fontsizecombobox').click();
 		cy.cGet('#fontsizecombobox').contains('.mobile-wizard.ui-combobox-text', '14 pt').click();
 
