@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-04-23 14:30+0000\n"
-"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"PO-Revision-Date: 2025-04-23 17:35+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.11.1-dev\n"
 
 #: admin/admin.strings.js:15
@@ -436,12 +436,10 @@ msgid "Access token is missing in initial variables."
 msgstr "W zmiennych początkowych brakuje tokena dostępu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
-#, fuzzy
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Wystąpił błąd. Spróbuj odświeżyć stronę."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
-#, fuzzy
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -449,7 +447,6 @@ msgstr ""
 "Wystąpił błąd podczas pobierania pliku ustawień. Spróbuj odświeżyć stronę."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
-#, fuzzy
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
