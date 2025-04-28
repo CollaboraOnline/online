@@ -95,10 +95,7 @@ class Sidebar extends SidebarBase {
 			this.closeSidebar();
 		} else if (sidebarData.children) {
 			for (var i = sidebarData.children.length - 1; i >= 0; i--) {
-				if (
-					sidebarData.children[i].type !== 'deck' ||
-					sidebarData.children[i].visible === false
-				) {
+				if (sidebarData.children[i].type !== 'deck') {
 					sidebarData.children.splice(i, 1);
 					continue;
 				}
