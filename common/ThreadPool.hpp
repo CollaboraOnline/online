@@ -58,6 +58,8 @@ public:
 
     ~ThreadPool() { stop(); }
 
+    int getThreadCount() { return _maxConcurrency; }
+
     void start()
     {
         {

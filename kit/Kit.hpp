@@ -440,6 +440,11 @@ public:
 
     LogUiCmd& getLogUiCmd() { return logUiCmd; }
 
+    /// Get a thread-pool to perform an operation in
+    /// all operations must complete by the time we
+    /// return to the poll
+    ThreadPool& getSyncPool() { return _deltaPool; }
+
 private:
     void postForceModifiedCommand(bool modified);
 

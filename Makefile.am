@@ -435,6 +435,7 @@ kit_headers = kit/ChildSession.hpp \
               kit/KitHelper.hpp \
               kit/KitWebSocket.hpp \
               kit/SetupKitEnvironment.hpp \
+	      kit/SlideCompressor.hpp \
               kit/StateRecorder.hpp \
               kit/Watermark.hpp
 

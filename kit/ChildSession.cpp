@@ -50,6 +50,7 @@
 #include <Png.hpp>
 #include <Clipboard.hpp>
 #include <CommandControl.hpp>
+#include <SlideCompressor.hpp>
 
 #ifdef IOS
 #include "DocumentViewController.h"
@@ -2378,12 +2379,15 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned height, double dDevicePixelRatio, bool& done)
+bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
+                                        const unsigned width, const unsigned height,
+                                        double dDevicePixelRatio, bool& done)
 {
-    std::vector<unsigned char> pixmap(static_cast<size_t>(4) * width * height);
+    // FIXME: we need a cache here.
+    auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
     bool bIsBitmapLayer = false;
     char* msg = nullptr;
-    done = getLOKitDocument()->renderNextSlideLayer(pixmap.data(), &bIsBitmapLayer, &dDevicePixelRatio, &msg);
+    done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &bIsBitmapLayer, &dDevicePixelRatio, &msg);
     std::string jsonMsg(msg);
     free(msg);
 
@@ -2398,50 +2402,49 @@ bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned hei
     }
 
     const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
-
-    if (watermark())
-    {
-        const int watermarkWidth = width / 4;
-        const int watermarkHeight = height / 3;
-        const int stampsByX = 4;
-        const int stampsByY = 3;
-        for (int i = 0; i < stampsByX; ++i)
+    scomp.pushWork([=,this](std::vector<char>& output)
         {
-            int offsetX = i * watermarkWidth;
-            for (int j = 0; j < stampsByY; ++j)
+            if (watermark())
             {
-                int offsetY = j * watermarkHeight;
-                watermark()->blending(pixmap.data(), offsetX, offsetY,
-                                      width, height, watermarkWidth, watermarkHeight,
-                                      tileMode, /*isSlideShowLayer*/ true);
+                const int watermarkWidth = width / 4;
+                const int watermarkHeight = height / 3;
+                const int stampsByX = 4;
+                const int stampsByY = 3;
+                for (int i = 0; i < stampsByX; ++i)
+                {
+                    int offsetX = i * watermarkWidth;
+                    for (int j = 0; j < stampsByY; ++j)
+                    {
+                        int offsetY = j * watermarkHeight;
+                        // presumed thread-safe
+                        watermark()->blending(pixmap->data(), offsetX, offsetY,
+                                              width, height, watermarkWidth, watermarkHeight,
+                                              tileMode, /*isSlideShowLayer*/ true);
+                    }
+                }
             }
-        }
-    }
 
-    uint64_t pixmapHash = hashSubBuffer(pixmap.data(), 0, 0, width, height, width, height) + getViewId();
-    if (size_t start = jsonMsg.find("%IMAGETYPE%"); start != std::string::npos)
-        jsonMsg.replace(start, 11, "png");
-    if (size_t start = jsonMsg.find("%IMAGECHECKSUM%"); start != std::string::npos)
-        jsonMsg.replace(start, 15, std::to_string(pixmapHash));
+            uint64_t pixmapHash = hashSubBuffer(pixmap->data(), 0, 0, width, height, width, height) + getViewId();
+            std::string json = jsonMsg;
+            if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
+                json.replace(start, 11, "png");
+            if (size_t start = json.find("%IMAGECHECKSUM%"); start != std::string::npos)
+                json.replace(start, 15, std::to_string(pixmapHash));
 
-    std::string response = "slidelayer: " + jsonMsg;
+            std::string response = "slidelayer: " + json;
 
-    response += "\n";
+            response += "\n";
 
-    std::vector<char> output;
-    output.reserve(response.size() + pixmap.size());
-    output.resize(response.size());
-    std::memcpy(output.data(), response.data(), response.size());
+            output.reserve(response.size() + pixmap->size());
+            output.resize(response.size());
+            std::memcpy(output.data(), response.data(), response.size());
 
-    if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, width, height, output, tileMode))
-    {
-        LOG_ERR("Failed to encode into PNG.");
-        return false;
-    }
-
-    LOG_TRC("Sending response (" << output.size() << " bytes) for: " << std::string(output.data(), response.size() - 1));
-    sendBinaryFrame(output.data(), output.size());
-
+            if (!Png::encodeSubBufferToPNG(pixmap->data(), 0, 0, width, height, width, height, output, tileMode))
+            {
+                LOG_ERR("Failed to encode into PNG.");
+                output.resize(0);
+            }
+        });
     return true;
 }
 
@@ -2506,12 +2509,19 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     assert(bufferHeight <= suggestedHeight);
 
     bool done = false;
+    SlideCompressor scomp(_docManager->getSyncPool());
     while (!done)
     {
-        success = renderNextSlideLayer(bufferWidth, bufferHeight, devicePixelRatio, done);
+        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done);
         if (!success)
             break;
     }
+
+    scomp.compress([this](const std::vector<char>& output) {
+        LOG_TRC("Sending response (" << output.size() << " bytes) for: " <<
+                std::string(output.data(), Util::findInVector(output, "\n") - 1));
+        sendBinaryFrame(output.data(), output.size());
+    });
 
     getLOKitDocument()->postSlideshowCleanup();
 

@@ -65,6 +65,8 @@ enum class LokEventTargetEnum
     Window
 };
 
+class SlideCompressor;
+
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
 class ChildSession final : public Session
 {
@@ -194,8 +196,9 @@ private:
     bool unoSignatureCommand(const std::string& commandName);
     bool selectText(const StringVector& tokens, LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
-    bool renderNextSlideLayer(unsigned width, unsigned height, double dDevicePixelRatio,
-                              bool& done);
+    bool renderNextSlideLayer(SlideCompressor &scomp,
+                              unsigned width, unsigned height,
+                              double dDevicePixelRatio, bool& done);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);
