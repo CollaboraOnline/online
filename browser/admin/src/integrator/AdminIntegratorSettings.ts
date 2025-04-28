@@ -684,3 +684,5 @@ document.addEventListener('DOMContentLoaded', () => {
 		(window as any).settingIframe.init();
 	}
 });
+
+(window as any)._ = _;
