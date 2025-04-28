@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2024-12-14 09:00+0000\n"
+"PO-Revision-Date: 2025-04-27 23:50+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ta/>\n"
-"Language: \n"
+"Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-rc\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -366,89 +366,96 @@ msgstr "சேவையகத்தை மூட விரும்புகி�
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:115
 msgid "Autotext"
-msgstr ""
+msgstr "ஆட்டோடெக்ச்ட்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"மீண்டும் பயன்படுத்தக்கூடிய உரை துணுக்குகளை பதிவேற்றவும் (.Bau). உங்கள் ஆவணத்தில் உரையைச் "
+"செருக, ஆட்டோடெக்ச்ட் நுழைவுக்கான குறுக்குவழியைத் தட்டச்சு செய்து F3 ஐ அழுத்தவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Upload Autotext"
-msgstr ""
+msgstr "ஆட்டோடெக்ச்டைப் பதிவேற்றவும்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Custom Dictionaries"
-msgstr ""
+msgstr "தனிப்பயன் அகராதிகள்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:129
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"எழுத்துப்பிழை சோதனை அகராதியில் சொற்களைச் சேர்க்கவும் அல்லது திருத்தவும். உங்கள் வேர்ட்புக் "
+"(.dic) இல் உள்ள சொற்கள் எழுத்துப்பிழை சோதனைகளுக்கு கிடைக்கும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:135
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "வேர்ட்புக் பதிவேற்றவும்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:139
 msgid "Interface"
-msgstr ""
+msgstr "இடைமுகம்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:140
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "இயல்புநிலை இடைமுக விருப்பங்களை அமைக்கவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Upload Configuration"
-msgstr ""
+msgstr "உள்ளமைவைப் பதிவேற்றவும்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Document View"
-msgstr ""
+msgstr "ஆவணக் காட்சி"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 msgid "Adjust how office documents look."
-msgstr ""
+msgstr "அலுவலக ஆவணங்கள் எப்படி இருக்கும் என்பதை சரிசெய்யவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Upload Xcu"
-msgstr ""
+msgstr "XCU ஐ பதிவேற்றவும்"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "பகிரப்பட்ட கட்டமைப்பு முகவரி ஆரம்ப மாறிகளில் காணவில்லை."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "ஆரம்ப மாறிகளில் அணுகல் கிள்ளாக்கு இல்லை."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "ஏதோ தவறு நடந்தது. பக்கத்தைப் புதுப்பிக்க முயற்சிக்கவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"அமைவு கோப்பைப் பெறும்போது ஏதோ தவறு ஏற்பட்டது. பக்கத்தைப் புதுப்பிக்க முயற்சிக்கவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"வேர்ட்புக் பெறும்போது ஏதோ தவறு ஏற்பட்டது. பக்கத்தைப் புதுப்பிக்க முயற்சிக்கவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:375
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "கோப்பைப் பதிவேற்றும்போது ஏதோ தவறு ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:501
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"கோப்பை நீக்கும்போது ஏதோ தவறு ஏற்பட்டது. பக்கத்தை புதுப்பிக்க முயற்சிக்கவும்."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:626
 #: src/map/handler/Map.WOPI.js:690
@@ -493,15 +500,15 @@ msgstr "பிபி"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
-msgstr "மணி"
+msgstr " மணி"
 
 #: admin/src/Util.js:92 admin/src/Util.js:94
 msgid " mins"
-msgstr "நிமி"
+msgstr " நிமி"
 
 #: admin/src/Util.js:97
 msgid " s"
-msgstr "வி"
+msgstr " வி"
 
 #: js/global.js:1528
 msgid "Cluster is scaling, retrying..."
@@ -526,6 +533,7 @@ msgstr "CTRL+SHIFT+ALT+D வெளியேற"
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"நிகழ்வு கையாளுதல் எதிர்பாராத விதமாக நீண்ட காலத்திற்கு தாமதமானது: {0} எம்.எச்"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "A comment is being edited"
@@ -578,7 +586,7 @@ msgstr "பக்கத்தில் காட்டு"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Open in full view"
-msgstr ""
+msgstr "முழு பார்வையில் திறக்கவும்"
 
 #: src/canvas/sections/CommentListSection.ts:1236
 #: src/control/Control.JSDialogBuilder.js:1895
@@ -636,9 +644,8 @@ msgid "Resolved"
 msgstr "தீர்க்கப்பட்டது"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "ஆவணத்தில் ஆதரிக்கப்படாத வீடியோ உள்ளது"
+msgstr "ஆவணத்தில் ஆதரிக்கப்படாத ஊடகம் உள்ளது"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
@@ -839,320 +846,320 @@ msgstr "பதிவிறக்கம் தோல்வியடைந்த�
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr ""
+msgstr "அன்டோரா"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "ஐக்கிய அராபிய எமிரேட்சு"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Albania"
-msgstr ""
+msgstr "அல்பேனியா"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Armenia"
-msgstr ""
+msgstr "அர்மெனியா"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Argentina"
-msgstr ""
+msgstr "அர்சென்டினா"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Austria"
-msgstr ""
+msgstr "ஆச்திரியா"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Australia"
-msgstr ""
+msgstr "ஆச்திரேலியா"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr ""
+msgstr "அலண்ட் தீவுகள்"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
-msgstr ""
+msgstr "அசர்பைசான்"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "போச்னியா எர்சிகோவினா"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
-msgstr ""
+msgstr "பெல்சியம்"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Bulgaria"
-msgstr ""
+msgstr "பல்கேரியா"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Brazil"
-msgstr ""
+msgstr "பிரேசில்"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr ""
+msgstr "பெலாரச்"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
-msgstr ""
+msgstr "கனடா"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Switzerland"
-msgstr ""
+msgstr "சுவிட்சர்லாந்து"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Chile"
-msgstr ""
+msgstr "சிலி"
 
 #: src/control/Control.ESignature.ts:144
 msgid "China"
-msgstr ""
+msgstr "சீனா"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Cyprus"
-msgstr ""
+msgstr "சைப்ரச்"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
-msgstr ""
+msgstr "செக் குடியரசு"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Germany"
-msgstr ""
+msgstr "செர்மனி"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Denmark"
-msgstr ""
+msgstr "டென்மார்க்"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Estonia"
-msgstr ""
+msgstr "எசுதோனியா"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Spain"
-msgstr ""
+msgstr "ச்பெயின்"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Finland"
-msgstr ""
+msgstr "பின்லாந்து"
 
 #: src/control/Control.ESignature.ts:152
 msgid "France"
-msgstr ""
+msgstr "ஃப்ரான்ச்"
 
 #: src/control/Control.ESignature.ts:153
 msgid "United Kingdom"
-msgstr ""
+msgstr "ஐக்கிய முடியரசு"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Georgia"
-msgstr ""
+msgstr "சார்சியா"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "க்ரென்சி"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
-msgstr ""
+msgstr "கிரீச்"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Croatia"
-msgstr ""
+msgstr "குரோவேசியா"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Hungary"
-msgstr ""
+msgstr "அங்கேரி"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Indonesia"
-msgstr ""
+msgstr "இந்தோனேசியா"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Ireland"
-msgstr ""
+msgstr "அயர்லாந்து"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Israel"
-msgstr ""
+msgstr "இச்ரேல்"
 
 #: src/control/Control.ESignature.ts:162
 msgid "India"
-msgstr ""
+msgstr "இந்தியா"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Iceland"
-msgstr ""
+msgstr "ஐச்லாந்து"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Italy"
-msgstr ""
+msgstr "இத்தாலி"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Japan"
-msgstr ""
+msgstr "சப்பான்"
 
 #: src/control/Control.ESignature.ts:166
 msgid "Kenya"
-msgstr ""
+msgstr "கென்யா"
 
 #: src/control/Control.ESignature.ts:167
 msgid "South Korea"
-msgstr ""
+msgstr "தென் கொரிய"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Kazakhstan"
-msgstr ""
+msgstr "கசகிச்தான்"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Liechtenstein"
-msgstr ""
+msgstr "லீச்சென்சுதீன்"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Lithuania"
-msgstr ""
+msgstr "லிதுவேனியா"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Luxembourg"
-msgstr ""
+msgstr "லக்சம்பர்க்"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Latvia"
-msgstr ""
+msgstr "லட்வியா"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
-msgstr ""
+msgstr "மொனாக்கோ"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "மோல்ட்வா குடியரசு"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
-msgstr ""
+msgstr "மோன்டே நெக்ரோ"
 
 #: src/control/Control.ESignature.ts:176
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "வடக்கு மாசிடோனியா, குடியரசு"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Malta"
-msgstr ""
+msgstr "மால்டா"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Mexico"
-msgstr ""
+msgstr "மெக்சிகோ"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Netherlands"
-msgstr ""
+msgstr "நெதர்லாந்து"
 
 #: src/control/Control.ESignature.ts:180
 msgid "Norway"
-msgstr ""
+msgstr "நார்வே"
 
 #: src/control/Control.ESignature.ts:181
 msgid "New Zealand"
-msgstr ""
+msgstr "நியூசிலாந்து"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Philippines"
-msgstr ""
+msgstr "பிலிப்பைன்ச்"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Poland"
-msgstr ""
+msgstr "போலந்து"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Portugal"
-msgstr ""
+msgstr "போர்ச்சுகல்"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Qatar"
-msgstr ""
+msgstr "கதார்"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Romania"
-msgstr ""
+msgstr "ரோமானியா"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Serbia"
-msgstr ""
+msgstr "செர்பியா"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
-msgstr ""
+msgstr "ரச்யன் கூட்டமைப்பு"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "சவூதி அரேபியா"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Sweden"
-msgstr ""
+msgstr "சுவீடன்"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Singapore"
-msgstr ""
+msgstr "சிங்கப்பூர்"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovenia"
-msgstr ""
+msgstr "ச்லோவேனியா"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Slovakia"
-msgstr ""
+msgstr "சுலோவேக்கியா"
 
 #: src/control/Control.ESignature.ts:194
 msgid "San Marino"
-msgstr ""
+msgstr "சான் மரீனோ"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Turkey"
-msgstr ""
+msgstr "துருக்கி"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "தாய்வான் சீன மாநிலம்"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "உக்ரெயின்"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "ஐக்கிய அமெரிக்க நாடுகள்"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "ஓலி சி (வாடிகன் நகர நாடு)"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr ""
+msgstr "கொசோவோ"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "தென் ஆப்ரிக்கா"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "ஆவணம் கையொப்பமிடப்பட்டு விரைவில் கிடைக்கும்"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "நாடு:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "வழங்குநர்:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "மின்னணு கையொப்பத்தை செருகவும்"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -1290,7 +1297,7 @@ msgstr "மொழி"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "தேடல் முடிவுகள் எதுவும் கிடைக்கவில்லை!"
 
 #: src/control/Control.Menubar.ts:148 src/control/Control.Menubar.ts:163
 #: src/control/Control.Menubar.ts:1088
@@ -1471,7 +1478,7 @@ msgstr "தலைகீழ் பின்னணி"
 #: src/control/Control.NotebookbarWriter.js:865
 #: src/control/Control.NotebookbarWriter.js:983
 msgid "Style list"
-msgstr ""
+msgstr "நடை பட்டியல்"
 
 #: src/control/Control.Menubar.ts:230 src/control/Control.Menubar.ts:549
 #: src/control/Control.Menubar.ts:701 src/control/Control.Menubar.ts:853
@@ -1497,7 +1504,7 @@ msgstr "அறிவுள்ள பிக்கர்"
 #: src/control/Control.Menubar.ts:266 src/control/Control.Menubar.ts:561
 #: src/control/Control.Menubar.ts:709 src/control/Control.Menubar.ts:866
 msgid "AI Assistant"
-msgstr ""
+msgstr "உங்களுக்கு உதவியாளர் இருக்கிறார்"
 
 #: src/control/Control.Menubar.ts:307
 msgid "Text orientation"
@@ -1721,7 +1728,7 @@ msgstr "முழுத்திரை வழங்கல்"
 
 #: src/control/Control.Menubar.ts:619
 msgid "Present current slide"
-msgstr "தற்போதைய தற்போதைய ச்லைடு"
+msgstr "இப்போதைய தற்போதைய ச்லைடு"
 
 #: src/control/Control.Menubar.ts:620
 msgid "Present in new window"
@@ -1778,7 +1785,7 @@ msgstr "அனைத்து தாள்களும்"
 #: src/control/Control.Menubar.ts:845
 #: src/control/Control.NotebookbarCalc.js:1186
 msgid "Focus Cell"
-msgstr ""
+msgstr "கலத்தை மையப்படுத்தவும்"
 
 #: src/control/Control.Menubar.ts:939
 #: src/control/jsdialog/Definitions.Menu.ts:310
@@ -1908,11 +1915,11 @@ msgstr "வடிவத்தை செருகவும்"
 
 #: src/control/Control.Menubar.ts:2188
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "கையொப்ப வரியை இப்போது நகர்த்தலாம் அல்லது தேவைக்கேற்ப மறுஅளவிடலாம்."
 
 #: src/control/Control.Menubar.ts:2190
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "மின்னணு கையொப்பத்தை முடிக்கவும்"
 
 #: src/control/Control.Menubar.ts:2387
 msgid "file type icon"
@@ -1951,11 +1958,11 @@ msgstr "சாய்வு முடிவு"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "வானோடல்"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "வழிசெலுத்தலை மூடு"
 
 #: src/control/Control.NavigatorPanel.ts:125
 #: src/slideshow/PresenterConsole.js:34
@@ -1964,12 +1971,12 @@ msgstr "ச்லைடுகள்"
 
 #: src/control/Control.NavigatorPanel.ts:130
 msgid "Outline"
-msgstr ""
+msgstr "அவுட்லைன்"
 
 #: src/control/Control.NavigatorPanel.ts:155
 #: src/control/Control.NavigatorPanel.ts:160
 msgid "Navigator"
-msgstr ""
+msgstr "நேவிகேட்டர்"
 
 #: src/control/Control.Notebookbar.js:671
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2178,7 +2185,7 @@ msgstr "மோசமான"
 #: src/control/Control.NotebookbarImpress.js:1053
 #: src/control/Control.NotebookbarWriter.js:943
 msgid "Replace"
-msgstr ""
+msgstr "மாற்றவும்"
 
 #: src/control/Control.NotebookbarCalc.js:947
 msgid "Row Height"
@@ -2249,7 +2256,7 @@ msgstr "ச்பார்க்லைன்"
 #: src/control/Control.NotebookbarImpress.js:1286
 #: src/control/Control.NotebookbarWriter.js:1187
 msgid "Assistant"
-msgstr ""
+msgstr "உதவியாளர்"
 
 #: src/control/Control.NotebookbarCalc.js:1505
 #: src/control/Control.NotebookbarCalc.js:2404
@@ -2321,11 +2328,11 @@ msgstr "ஆஃப்லைனில் செல்லுங்கள்"
 
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Scroll up"
-msgstr ""
+msgstr "மேலே உருட்டவும்"
 
 #: src/control/Control.NotebookbarWriter.js:858
 msgid "Scroll down"
-msgstr ""
+msgstr "கீழே உருட்டவும்"
 
 #: src/control/Control.NotebookbarWriter.js:1412
 msgid "Rich Text"
@@ -2425,7 +2432,7 @@ msgstr "பிரச்சினைகள் எதுவும் கிடை�
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "விழிப்பூட்டல்கள்:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2457,12 +2464,12 @@ msgstr "தாள் செருகவும்"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "ஆன்"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Off"
-msgstr ""
+msgstr "அணை"
 
 #: src/control/Control.StatusBar.js:212
 #: src/control/jsdialog/Definitions.Menu.ts:24
@@ -2728,7 +2735,7 @@ msgstr "சேகரிப்புகளை ஏற்றுவதில் த�
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "குறிப்புகளை ஏற்றுகிறது"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2828,7 +2835,7 @@ msgstr "TABSTOP ஐ நீக்கு"
 
 #: src/control/Parts.js:480
 msgid "Show sheets"
-msgstr ""
+msgstr "தாள்களைக் காட்டு"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -2975,11 +2982,11 @@ msgstr "மிகவும் தளர்வான"
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "All users"
-msgstr ""
+msgstr "அனைத்து பயனர்களும்"
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "This user"
-msgstr ""
+msgstr "இந்த பயனர்"
 
 #: src/control/jsdialog/Definitions.Menu.ts:436
 msgid "From Beginning"
@@ -3016,7 +3023,7 @@ msgstr "இசைவு முறை"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Edit mode"
-msgstr ""
+msgstr "திருத்து பயன்முறை"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 #: src/control/jsdialog/Widget.HTMLContent.ts:154
@@ -3057,9 +3064,8 @@ msgid "Your changes have been saved"
 msgstr "உங்கள் மாற்றங்கள் சேமிக்கப்பட்டுள்ளன"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:187
-#, fuzzy
 msgid "Show Comments"
-msgstr "கருத்துகள் இல்லை"
+msgstr "கருத்துகளை காட்டு"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -3829,7 +3835,7 @@ msgstr "குறிப்புகள் இல்லை"
 
 #: src/slideshow/PresenterConsole.js:1329
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "{0} வினாடிகளில் மீண்டும் செய்யவும்"
 
 #: src/slideshow/PresenterConsole.js:1334
 #: src/slideshow/SlideShowPresenter.ts:382
@@ -3856,11 +3862,11 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
-"நிகழ்நிலை உற்பத்தித்திறனில் அண்மைக் கால முன்னேற்றங்களை அனுபவிக்கவும், நீங்கள்"
-" பயன்படுத்த, ஆராய்வது மற்றும் உலாவியில் மற்றவர்களுடன் பயன்படுத்த இலவசம். "
-"பல்வேறு <a இலக்கு = \"_ வெற்று\" href = \"https://www.collaboraonline.com/"
-"solutions/collabora-formice-android-ios/\"> பயன்பாடுகள் </a> மொபைலுக்கும் "
-"கிடைக்கின்றன."
+"நிகழ்நிலை உற்பத்தித்திறனில் அண்மைக் கால முன்னேற்றங்களை அனுபவிக்கவும், நீங்கள் பயன்படுத்த, "
+"ஆராய்வது மற்றும் உலாவியில் மற்றவர்களுடன் பயன்படுத்த இலவசம். பல்வேறு <a target=\"_blank\""
+" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\"> "
+"பயன்பாடுகள் </a> மொபைலுக்கும் கிடைக்கின்றன."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -3873,9 +3879,9 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
-"<A இலக்கு = \"_ வெற்று\" href = \"https://www.collaboraonline.com/"
-"code-24-04-d-04-release-notes/\"> வெளியீட்டு குறிப்புகள் </a> பதிப்பு, வீட்டு"
-" பயனர்கள் மற்றும் சிறிய குழுக்களை இலக்காகக் கொண்டது."
+"<a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/code-24-04-release-notes/\"> வெளியீட்டு "
+"குறிப்புகள் </a> பதிப்பு, வீட்டு பயனர்கள் மற்றும் சிறிய குழுக்களை இலக்காகக் கொண்டது."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -3896,12 +3902,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
-"நீங்கள் பங்களிப்பதில் ஆர்வமாக உள்ளீர்களா, ஆனால் எங்கு தொடங்குவது என்று "
-"தெரியவில்லையா? <A target = \"_ glang\" href = \"https://collaboraonline."
-"github.io/post/build-code/\"> படிப்படியான வழிமுறைகள் </a> க்குச் சென்று "
-"புதிதாக குறியீட்டை உருவாக்குங்கள். <A target = \"_ glang\" href = \"https"
-"://collaboraonline.github.io/post/translate/\"> மொழிபெயர்ப்புகள் </a> அல்லது "
-"<a இலக்கு = \"_ வெற்று\" href = \"https மூலம் நீங்கள் உதவலாம் ."
+"நீங்கள் பங்களிப்பதில் ஆர்வமாக உள்ளீர்களா, ஆனால் எங்குத் தொடங்குவது என்று தெரியவில்லையா? <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+"> படிப்படியான வழிமுறைகள் </a> க்குச் சென்று புதிதாகக் குறியீட்டை உருவாக்குங்கள். <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/\""
+"> மொழிபெயர்ப்புகள் </a> அல்லது <a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">பிழையைப் புகாரளி</a>மூலம் "
+"நீங்கள் உதவலாம்."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -3910,10 +3917,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
-"<a ஐடி = \"slide-1-inicator\" வகுப்பு = \"active\" href = \"#slide-1\" data-"
-"translate = \"true\"> 1 </a> <a ஐடி = \"slide-2-Incator\" href = \"#ச்லைடு -"
-"2\" தரவு-மொழிபெயர்ப்பு = \"உண்மை\"> 2 </a> <a ஐடி = \"slide-3-Incator\" href "
-"= \"#slide-3\" Data-translate = \"true\"> 3 </a >"
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "Insert mode: inactive"
 #~ msgstr "செருகு பயன்முறை: செயலற்றது"
