@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 16:31+0200\n"
-"PO-Revision-Date: 2025-04-23 17:35+0000\n"
-"Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
+"PO-Revision-Date: 2025-04-24 05:08+0000\n"
+"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
 "Language: uk\n"
@@ -380,7 +380,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Upload Autotext"
-msgstr "Завантажити автотекст"
+msgstr "Вивантажити автотекст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Custom Dictionaries"
@@ -392,11 +392,11 @@ msgid ""
 "dic) will be available for spelling checks."
 msgstr ""
 "Додавайте або редагуйте слова в словнику перевірки орфографії. Слова у "
-"вашому словнику (.dic) будуть доступні для перевірки орфографії."
+"вашому словнику (.dic) будуть доступні для перевірки правопису."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:135
 msgid "Upload Wordbook"
-msgstr "Завантажте Wordbook"
+msgstr "Вивантажити Wordbook"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:139
 msgid "Interface"
@@ -404,11 +404,11 @@ msgstr "Інтерфейс"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:140
 msgid "Set default interface preferences."
-msgstr "Встановити параметри інтерфейсу за замовчуванням."
+msgstr "Встановити типові параметри інтерфейсу."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Upload Configuration"
-msgstr "Завантажити конфігурацію"
+msgstr "Вивантажити конфігурацію"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Document View"
@@ -643,7 +643,7 @@ msgstr "Вирішено"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
 msgid "Document contains unsupported media"
-msgstr "Документ містить непідтримувані носії"
+msgstr "Документ містить непідтримувані медіа"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
