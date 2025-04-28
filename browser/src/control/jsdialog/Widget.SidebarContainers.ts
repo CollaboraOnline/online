@@ -41,19 +41,20 @@ JSDialog.panel = function (
 	data: PanelWidgetJSON,
 	builder: JSBuilder,
 ) {
-	// we want to show the contents always, hidden property decides if we collapse the panel
-	if (data.children && data.children.length) data.children[0].visible = true;
-
 	var expanderData: ExpanderWidgetJSON = data;
 	expanderData.type = 'expander';
 	expanderData.children = ([{ text: data.text }] as Array<any>).concat(
 		data.children,
 	);
-	expanderData.id = data.id + 'PanelExpander';
-	// FIXME: use getter for handlers
-	builder._expanderHandler(parentContainer, expanderData, builder, () => {
-		expanderData; /*do nothing*/
-	});
+
+	builder._controlHandlers['expander'](
+		parentContainer,
+		expanderData,
+		builder,
+		() => {
+			expanderData; /*do nothing*/
+		},
+	);
 
 	var expander = $(parentContainer).children('#' + expanderData.id);
 	if (expanderData.hidden === true) expander.hide();
