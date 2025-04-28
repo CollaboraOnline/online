@@ -37,13 +37,15 @@ export class CornerGroup extends app.definitions.canvasSectionObject {
 		this._map = L.Map.THIS;
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
+		this._map.on('darkmodechanged', this._cornerGroupColors, this);
 
-		// Style.
-		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
-		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
-		this.borderColor = this.backgroundColor; // This is a section property.
-		L.DomUtil.remove(elem);
+		this._cornerGroupColors();
+	}
+
+	private _cornerGroupColors(): void {
+		const colors = GroupBase.getColors();
+		this.backgroundColor = colors.backgroundColor;
+		this.borderColor = colors.borderColor;
 	}
 
 	update(): void {
