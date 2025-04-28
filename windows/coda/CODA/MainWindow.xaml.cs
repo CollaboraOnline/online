@@ -124,6 +124,11 @@ namespace CODA
                 openCOOL(_iWebView2, new Uri(openFileDialog.FileName).AbsoluteUri);
         }
 
+        private void MainWindow_Exit(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
         void WebView_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
             string s = args.WebMessageAsJson;
@@ -198,9 +203,9 @@ namespace CODA
         private void openCOOL(IWebView2 webView, String fileURL)
         {
             // Hide the helpful note
-            useFileDialogNote.Visibility = Visibility.Collapsed;
+            useFileDialogXamlElement.Visibility = Visibility.Collapsed;
             // Also hide the initial menu as COOL has its own
-            menu.Visibility = Visibility.Collapsed;
+            menuXamlElement.Visibility = Visibility.Collapsed;
 
             // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
 

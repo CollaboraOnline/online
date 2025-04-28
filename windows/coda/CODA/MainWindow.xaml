@@ -13,18 +13,16 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <Menu x:Name="menu" >
+    <Menu x:Name="menuXamlElement">
       <MenuItem Header="File" Grid.Row="0">
         <MenuItem Header="Open..." Click="MainWindow_FileOpen"/>
-        <MenuItem Header="Save"/>
-        <MenuItem Header="Save As..."/>
         <Separator/>
-        <MenuItem Header="Exit"/>
+        <MenuItem Header="Exit" Click="MainWindow_Exit"/>
       </MenuItem>
     </Menu>
     <!-- This TextBlock and the WebView2 intentionally overlap. The
          TextBlock is hidden once we open a document. -->
-    <TextBlock x:Name="useFileDialogNote" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Grid.Row="1">
+    <TextBlock x:Name="useFileDialogXamlElement" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Grid.Row="1">
       Use the File menu to open a document
     </TextBlock>
     <wv2:WebView2 x:Name="webView2XamlElement" Grid.Row="1">
