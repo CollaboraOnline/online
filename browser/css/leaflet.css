@@ -408,25 +408,8 @@ a.leaflet-control-buttons:hover:first-child {
 }
 
 
-/* attribution and scale controls */
+/* scale controls */
 
-.leaflet-container .leaflet-control-attribution {
-	background: #fff;
-	background: rgba(255, 255, 255, 0.7);
-	margin: 0;
-}
-.leaflet-control-attribution,
-.leaflet-control-scale-line {
-	padding: 0 5px;
-	color: #000;
-}
-.leaflet-control-attribution a {
-	text-decoration: none;
-}
-.leaflet-control-attribution a:hover {
-	text-decoration: underline;
-}
-.leaflet-container .leaflet-control-attribution,
 .leaflet-container .leaflet-control-scale {
 	font-size: 11px;
 }
@@ -446,7 +429,7 @@ a.leaflet-control-buttons:hover:first-child {
 	overflow: hidden;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
-
+	color: #000;
 	background: #fff;
 	background: rgba(255, 255, 255, 0.5);
 }
@@ -459,15 +442,11 @@ a.leaflet-control-buttons:hover:first-child {
 	border-bottom: 2px solid #777;
 }
 
-.leaflet-touch .leaflet-control-attribution,
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	box-shadow: none;
-}
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar {
 	border: 2px solid rgba(0,0,0,0.2);
 	background-clip: padding-box;
+	box-shadow: none;
 }
 
 
