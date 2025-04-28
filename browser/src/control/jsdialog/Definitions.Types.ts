@@ -138,6 +138,7 @@ interface PanelWidgetJSON extends WidgetJSON {
 	hidden: boolean; // is hidden
 	command: string; // command to trigger options for a panel
 	text: string; // panel title
+	name?: string; // legacy panel id
 }
 
 type ExpanderWidgetJSON = any;

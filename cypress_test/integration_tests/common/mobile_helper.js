@@ -229,7 +229,7 @@ function openTextPropertiesPanel() {
 
 	openMobileWizard();
 
-	cy.cGet('#TextPropertyPanel').click();
+	cy.cGet('#TextPropertyPanel, .TextPropertyPanel').click();
 
 	cy.cGet('#Bold').should('be.visible');
 

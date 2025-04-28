@@ -571,6 +571,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data && data.id)
 			mainContainer.id = data.id;
 
+		if (data && data.name)
+			mainContainer.id = data.name; // use legacy panel id FIXME: convert all CSS and cypress to vcl id
+
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
