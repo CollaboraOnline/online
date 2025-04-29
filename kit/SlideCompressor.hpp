@@ -36,7 +36,8 @@ public:
     {
         auto item = std::make_shared<SlideItem>();
         _items.push_back(item);
-                _pool.pushWork([=]{ workFn(item->_output); });
+        _pool.pushWork([item = std::move(item), workFn = std::move(workFn)]
+                       { workFn(item->_output); });
     }
 
     /// sendFunc is called in the same order after all items are compressed
