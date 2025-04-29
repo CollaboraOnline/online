@@ -52,7 +52,7 @@ namespace FileUtil
         while (count)
         {
             ssize_t written;
-            while ((written = ::write(to, ptr, count)) < 0 && errno == EINTR)
+            while ((written = writeToFD(to, ptr, count)) < 0 && errno == EINTR)
                 LOG_TRC("EINTR writing to " << anonymizeUrl(toPath));
             if (written < 0)
                 return -1;

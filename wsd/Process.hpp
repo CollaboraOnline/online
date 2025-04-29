@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/FileUtil.hpp>
 #include <net/WebSocketHandler.hpp>
 
 #include <atomic>
@@ -255,7 +256,7 @@ public:
         if (!_smapsFp)
         {
             LOG_ERR("Error while fdopen smaps fd");
-            ::close(smapsFD);
+            FileUtil::closeFD(smapsFD);
         }
     }
     std::weak_ptr<FILE> getSMapsFp() const { return _smapsFp; }
