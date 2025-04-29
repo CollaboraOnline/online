@@ -1487,6 +1487,8 @@ private:
         {
             LOG_ERR("Error while invoking onFinished client callback: " << exc.what());
         }
+
+        _onFinished = nullptr;
     }
 
     /// Set up a new request and response.
@@ -1891,6 +1893,30 @@ public:
     /// regardless of the reason (error, timeout, completion).
     void setFinishedHandler(FinishedCallback onFinished) { _onFinished = std::move(onFinished); }
 
+    std::shared_ptr<ServerSession> shared_from_this()
+    {
+        return std::static_pointer_cast<ServerSession>(ProtocolHandlerInterface::shared_from_this());
+    }
+
+    void callOnFinished()
+    {
+        fprintf(stderr, "ServerSession onFinished\n");
+
+        if (!_onFinished)
+            return;
+
+        LOG_TRC("onFinished calling client");
+        std::shared_ptr<ServerSession> self = shared_from_this();
+        try
+        {
+            _onFinished(self);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Error while invoking onFinished client callback: " << exc.what());
+        }
+    }
+
     using ResponseHeaders = http::Header::Container;
 
     /// Start an asynchronous upload from a file.
@@ -2191,6 +2217,7 @@ private:
         }
 
         _connected = false;
+        callOnFinished();
     }
 
     int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
