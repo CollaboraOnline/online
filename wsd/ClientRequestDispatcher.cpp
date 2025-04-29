@@ -781,7 +781,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         socket->compactChunks(map);
         Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
-        message.seekg(startmessage.tellg(), std::ios::beg);
+        message.seekg(headerSize, std::ios::beg);
 
         // re-write ServiceRoot and cache.
         RequestDetails requestDetails(request, COOLWSD::ServiceRoot);
