@@ -2011,11 +2011,13 @@ bool ClientSession::postProcessCopyPayload(std::vector<char>& data)
         return true;
     }
 
+#if 0
     // The content may not be json or any textual form. For example:
     // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
     // Do not issue this in those cases. (We should also cap the data we dump here.)
     LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload:\n"
             << [data](auto& log) { Util::dumpHex(log, data); });
+#endif
 
     return false;
 }
@@ -2441,7 +2443,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         // TEMP
         std::vector<char> res;
-        if (FileUtil::readFile(clipFile, res, f.size()) != f.size())
+        if (FileUtil::readFile(clipFile, res, f.size()) != static_cast<ssize_t>(f.size()))
             fprintf(stderr, "broken read\n");
         else
             fprintf(stderr, "good read of %ld from %s\n", res.size(), clipFile.c_str());
@@ -2451,11 +2453,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         std::cerr << "FOO len: " << res.size() << "\n";
 
-        FileUtil::removeFile(std::string("/tmp/cliptest"));
-        std::ofstream fileStream;
-        fileStream.open("/tmp/cliptest");
-        fileStream.write(res.data(), res.size());
-        fileStream.close();
+//        FileUtil::removeFile(std::string("/tmp/cliptest"));
+//        std::ofstream fileStream;
+//        fileStream.open("/tmp/cliptest");
+//        fileStream.write(res.data(), res.size());
+//        fileStream.close();
 
         // final cleanup ...
         bool removeClipFile = true;
@@ -2492,8 +2494,17 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             headers.emplace_back("Cache-Control", "no-cache");
             headers.emplace_back("Connection", "close");
 
-//            session->asyncUpload(clipFile, std::move(headers));
-            session->asyncUpload("/tmp/cliptest", std::move(headers));
+            if (removeClipFile)
+            {
+                fprintf(stderr, "we will want to remove %s\n", clipFile.c_str());
+                session->setFinishedHandler([clipFile](const std::shared_ptr<http::ServerSession>&) {
+                    fprintf(stderr, "FINISHED WITH %s\n", clipFile.c_str());
+                    FileUtil::removeFile(clipFile);
+                });
+            }
+
+            session->asyncUpload(clipFile, std::move(headers));
+//            session->asyncUpload("/tmp/cliptest", std::move(headers));
             socket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
 
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
