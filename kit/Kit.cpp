@@ -1435,6 +1435,8 @@ void Document::handleSaveMessage(const std::string &)
 #endif
 }
 
+#if !MOBILEAPP
+
 // need to hold a reference on session in case it exits during async save
 bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 {
@@ -1615,8 +1617,6 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
     }
     return true;
 }
-
-#if !MOBILEAPP
 
 void Document::reapZombieChildren()
 {

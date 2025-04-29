@@ -241,6 +241,7 @@ public:
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getConfigId() const { return _configId; }
+#if !MOBILEAPP
     void setSMapsFD(int smapsFD)
     {
         if (smapsFD < 0)
@@ -260,6 +261,7 @@ public:
         }
     }
     std::weak_ptr<FILE> getSMapsFp() const { return _smapsFp; }
+#endif
 
     void moveSocketFromTo(const std::shared_ptr<SocketPoll>& from,
                           const std::shared_ptr<SocketPoll>& to)

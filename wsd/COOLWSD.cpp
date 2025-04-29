@@ -3114,7 +3114,9 @@ private:
 
             _pid = pid;
             _socketFD = socket->getFD();
+#if !MOBILEAPP
             child->setSMapsFD(socket->getIncomingFD(SharedFDType::SMAPS));
+#endif
             _childProcess = child; // weak
 
             addNewChild(std::move(child));
