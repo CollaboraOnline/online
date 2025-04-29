@@ -79,9 +79,9 @@ msgstr "Per segnalare problemi:"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
 msgid ""
-"Use the bugtracker and attach any files that caused problems via <a href="
-"\"https://col.la/android\"> https://col.la/android</a>. Please note that "
-"anything you enter in the bugtracker will be public."
+"Use the bugtracker and attach any files that caused problems via <a "
+"href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
+"that anything you enter in the bugtracker will be public."
 msgstr ""
 "Utilizza il bugtracker ed allega i file che hanno causato problemi su <a "
 "href=\"https://col.la/android\"> https://col.la/android</a>. Nota bene: Ogni "
