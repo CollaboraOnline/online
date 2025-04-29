@@ -292,6 +292,11 @@ export class SheetGeometry {
 		simplePoint.y = this._rows.getTileTwipsPosFromPrint(simplePoint.y);
 	}
 
+	public convertRectangleToTileTwips(simpleRectangle: cool.SimpleRectangle): void {
+		simpleRectangle.x1 = this._columns.getTileTwipsPosFromPrint(simpleRectangle.x1);
+		simpleRectangle.y1 = this._rows.getTileTwipsPosFromPrint(simpleRectangle.y1);
+	}
+
 	// accepts a point in tile-twips coordinates and returns the equivalent point
 	// in print-twips.
 	public getPrintTwipsPointFromTile(point: Point): Point {
