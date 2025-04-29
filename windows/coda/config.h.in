@@ -183,3 +183,5 @@ struct pollfd {
 
 #define EXTERNC extern "C"
 #define EXPORT EXTERNC __declspec(dllexport)
+
+#define ENABLE_LOCAL_FILESYSTEM 1
