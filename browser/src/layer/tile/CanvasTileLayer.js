@@ -1781,8 +1781,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			let _cellCursorTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
 			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
-			app.calc.cellCursorTopLeftTwips = topLeftTwips;
-			app.calc.cellCursorOffset = offset;
 			let tempRectangle = _cellCursorTwips.toRectangle();
 			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
 			this._cellCursorSection.size[0] = app.calc.cellCursorRectangle.pWidth;
