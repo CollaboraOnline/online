@@ -242,6 +242,11 @@ public:
     const std::string& getConfigId() const { return _configId; }
     void setSMapsFD(int smapsFD)
     {
+        if (smapsFD < 0)
+        {
+            _smapsFp.reset();
+            return;
+        }
         _smapsFp = std::shared_ptr<FILE>(fdopen(smapsFD, "r"), [](FILE* p) {
             if (!p)
                 return;
