@@ -209,6 +209,7 @@ class VideoRenderer2d extends VideoRenderer {
 
 class VideoRendererGl extends VideoRenderer {
 	private static _program: WebGLProgram;
+	public static videoProgramInitialized: boolean = false;
 
 	private static getVertexShader(): string {
 		return `#version 300 es
@@ -252,6 +253,8 @@ class VideoRendererGl extends VideoRenderer {
 			vertexShader,
 			fragmentShader,
 		);
+
+		VideoRendererGl.videoProgramInitialized = true;
 	}
 
 	public static deleteProgram(context: RenderContextGl) {
@@ -259,6 +262,7 @@ class VideoRendererGl extends VideoRenderer {
 		const gl = context.getGl();
 		gl.deleteProgram(VideoRendererGl._program);
 		VideoRendererGl._program = null;
+		VideoRendererGl.videoProgramInitialized = false;
 	}
 
 	public prepareVideo(

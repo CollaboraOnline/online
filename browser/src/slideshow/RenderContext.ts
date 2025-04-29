@@ -131,7 +131,7 @@ class RenderContextGl extends RenderContext {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
 		if (image instanceof HTMLImageElement)
-			console.log(`Texture loaded:`, image.src);
+			console.debug(`Texture loaded successfully`);
 		return texture;
 	}
 
