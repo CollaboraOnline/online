@@ -1,4 +1,5 @@
 {
+"A~lignment...":"~Aliniación...",
 "Background Color":"Color d'o fundo",
 "Column":"Columna",
 "Comments":"Comentarios",
@@ -6,6 +7,7 @@
 "Fontwork...":"Fontwork...",
 "Formatting Mark":"Marca de formatación",
 "For~matting Marks":"~Marcas de formatación",
+"F~ont Size...":"Grandarias de fuen~t...",
 "General":"Cheneral",
 "Language":"Luenga",
 "None":"Garra",
@@ -23,10 +25,12 @@
 "~Advanced Filter...":"Filtro ~avanzau...",
 "~Arrange":"~Ordenar",
 "~File":"~Fichero",
+"~Fonts...":"~Fuenz...",
 "~Help":"~Aduya",
 "~Insert":"F~icar",
 "~Page":"~Pachina",
 "~Pivot Table":"Tabla ~dinamica",
 "~Properties...":"~Propiedaz...",
+"~Spacing...":"~Espacios...",
 "~Table Properties...":"Propiedaz d'a ~tabla..."
 }
