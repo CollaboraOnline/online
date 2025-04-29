@@ -168,16 +168,16 @@ namespace Log
             return ptr - data;
 #else // _WIN32
             if (!IsDebuggerPresent())
-                fwrite(data, size, 1, stderr);
+                fwrite(data, count, 1, stderr);
             else
             {
-                char *s = (char *)malloc(size + 1);
-                memcpy(s, data, size);
-                s[size] = 0;
+                char *s = (char *)malloc(count + 1);
+                memcpy(s, data, count);
+                s[count] = 0;
                 OutputDebugStringA(s);
                 free(s);
             }
-            return size;
+            return count;
 #endif
         }
 

@@ -61,7 +61,9 @@
 #include <stdexcept>
 #include <string>
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sysexits.h>
+#endif
 #include <utility>
 
 using namespace std::literals;
