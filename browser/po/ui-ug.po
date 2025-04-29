@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 16:31+0200\n"
+"POT-Creation-Date: 2025-04-29 16:27+0200\n"
 "PO-Revision-Date: 2024-10-14 02:46+0000\n"
 "Last-Translator: \"K.Y.\" <keramyasina@gmail.com>\n"
 "Language-Team: Uyghur <https://hosted.weblate.org/projects/collabora-online/"
@@ -142,7 +142,8 @@ msgstr "CPU گىرافىكى"
 msgid "Network Graph"
 msgstr "تور گىرافىكى"
 
-#: admin/admin.strings.js:45 src/canvas/sections/CommentListSection.ts:512
+#: admin/admin.strings.js:45 admin/src/integrator/WordBook.ts:394
+#: src/canvas/sections/CommentListSection.ts:512
 #: src/canvas/sections/CommentSection.ts:166
 #: src/control/Control.Notebookbar.js:284
 #: src/control/Control.NotebookbarCalc.js:115
@@ -217,7 +218,7 @@ msgstr "Log نى يېڭىلاش"
 msgid "Channel Filter:"
 msgstr "Channel Filter:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:480
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:482
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "يوق"
@@ -291,7 +292,7 @@ msgstr "ئاگاھلاندۇرۇش"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:638 src/app/Debug.ts:1383
+#: admin/src/integrator/AdminIntegratorSettings.ts:653 src/app/Debug.ts:1383
 #: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
@@ -310,15 +311,16 @@ msgstr "ئاگاھلاندۇرۇش"
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
 #: src/map/handler/Map.SlideShow.js:308 src/map/handler/Map.WOPI.js:690
-#: src/slideshow/SlideShowPresenter.ts:652
 #: src/slideshow/SlideShowPresenter.ts:667
 #: src/slideshow/SlideShowPresenter.ts:682
-#: src/slideshow/SlideShowPresenter.ts:705
+#: src/slideshow/SlideShowPresenter.ts:697
+#: src/slideshow/SlideShowPresenter.ts:720
 msgid "OK"
 msgstr "ماقۇل"
 
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
+#: admin/src/integrator/WordBook.ts:386
 #: src/canvas/sections/CommentListSection.ts:507
 #: src/canvas/sections/CommentSection.ts:165
 #: src/canvas/sections/CommentSection.ts:168
@@ -365,96 +367,154 @@ msgstr "بۇ جەرياننى راستلا ئاخىرلاشتۇرامسىز؟"
 msgid "Are you sure you want to shut down the server?"
 msgstr "مۇلازىمېتىرنى تاقاشنى خالامسىز؟"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:115
+#: admin/src/integrator/AdminIntegratorSettings.ts:130
 msgid "Autotext"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:117
+#: admin/src/integrator/AdminIntegratorSettings.ts:132
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:123
+#: admin/src/integrator/AdminIntegratorSettings.ts:138
 msgid "Upload Autotext"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:127
+#: admin/src/integrator/AdminIntegratorSettings.ts:142
 msgid "Custom Dictionaries"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:129
+#: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:135
+#: admin/src/integrator/AdminIntegratorSettings.ts:150
 msgid "Upload Wordbook"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:139
+#: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Interface"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:140
+#: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Set default interface preferences."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:146
+#: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Upload Configuration"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:151
-msgid "Document View"
+#: admin/src/integrator/AdminIntegratorSettings.ts:166
+#: admin/src/integrator/Xcu.ts:399
+msgid "Document Settings"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:152
-msgid "Adjust how office documents look."
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
+#: admin/src/integrator/Xcu.ts:403
+msgid "Adjust how office documents behave."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:158
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:207
+#: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Shared Config URL is missing in initial variables."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:213
+#: admin/src/integrator/AdminIntegratorSettings.ts:228
 msgid "Access token is missing in initial variables."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:242
+#: admin/src/integrator/AdminIntegratorSettings.ts:257
 msgid "Something went wrong. Please try to refresh the page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:315
+#: admin/src/integrator/AdminIntegratorSettings.ts:330
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:340
+#: admin/src/integrator/AdminIntegratorSettings.ts:355
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:375
+#: admin/src/integrator/AdminIntegratorSettings.ts:390
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:501
+#: admin/src/integrator/AdminIntegratorSettings.ts:516
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:626
+#: admin/src/integrator/AdminIntegratorSettings.ts:641
 #: src/map/handler/Map.WOPI.js:690
 msgid "Error"
 msgstr "خاتالىق"
+
+#: admin/src/integrator/WordBook.ts:117
+msgid "Standard dictionary"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:118
+msgid "Words are ignored by the spell checker"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:122
+msgid "Dictionary of exceptions"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:123
+msgid "Exception words are underlined while checking spelling"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:132
+msgid "Loading Wordbook..."
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:333
+msgid "Type to add a word"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:338
+msgid "Add"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:466
+msgid "Invalid dictionary format. Please check the file."
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:486
+msgid "Something went wrong while uploading dictionary file"
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
+msgid "Something went wrong while loading Document settings."
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:448
+msgid "Select a tab to view settings."
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:461
+msgid "Reset to default Document settings"
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:475
+msgid "Are you sure you want to reset Document settings?"
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:490
+msgid "Save Document settings"
+msgstr ""
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -582,9 +642,9 @@ msgid "Open in full view"
 msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1895
-#: src/layer/tile/CanvasTileLayer.js:3524
-#: src/layer/tile/CanvasTileLayer.js:3535
+#: src/control/Control.JSDialogBuilder.js:1940
+#: src/layer/tile/CanvasTileLayer.js:3553
+#: src/layer/tile/CanvasTileLayer.js:3564
 msgid "Comment"
 msgstr "ئىزاھات"
 
@@ -1177,98 +1237,98 @@ msgstr "بىكار ھۆججەت - قايتا چېكىپ تەھرىرلەشنى �
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "بىكار ھۆججەت - قايتا چېكىپ تەھرىرلەشنى ئەسلىگە كەلتۈرۈڭ"
 
-#: src/control/Control.JSDialog.js:288
+#: src/control/Control.JSDialog.js:303
 msgid "Close dialog"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:483
+#: src/control/Control.JSDialogBuilder.js:485
 msgid "Solid"
 msgstr "قاتتىق"
 
-#: src/control/Control.JSDialogBuilder.js:486
+#: src/control/Control.JSDialogBuilder.js:488
 msgid "Linear"
 msgstr "Linear"
 
-#: src/control/Control.JSDialogBuilder.js:489
+#: src/control/Control.JSDialogBuilder.js:491
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:492
+#: src/control/Control.JSDialogBuilder.js:494
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:495
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:499
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Quadratic"
 msgstr "Quadratic"
 
-#: src/control/Control.JSDialogBuilder.js:502
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Square"
 msgstr "مەيدان"
 
-#: src/control/Control.JSDialogBuilder.js:505
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Fixed size"
 msgstr "مۇقىم چوڭلۇقى"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1476
 msgid "From"
 msgstr "From"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1479
 msgid "To"
 msgstr "To"
 
-#: src/control/Control.JSDialogBuilder.js:1437
+#: src/control/Control.JSDialogBuilder.js:1482
 msgid "Color"
 msgstr "رەڭ"
 
-#: src/control/Control.JSDialogBuilder.js:1513
+#: src/control/Control.JSDialogBuilder.js:1558
 #, fuzzy
 msgid "Select range"
 msgstr "تاللانغان كاتەكچە دائىرىسى"
 
-#: src/control/Control.JSDialogBuilder.js:1626
+#: src/control/Control.JSDialogBuilder.js:1671
 #: src/control/Control.NotebookbarBuilder.js:154
 #, fuzzy
 msgid "Font Name"
 msgstr "خەت نۇسخا"
 
-#: src/control/Control.JSDialogBuilder.js:1628 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1673 src/control/Toolbar.js:134
 #, fuzzy
 msgid "Font Size"
 msgstr "خەت نۇسخا"
 
-#: src/control/Control.JSDialogBuilder.js:1630
+#: src/control/Control.JSDialogBuilder.js:1675
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "ئۇسلۇب"
 
-#: src/control/Control.JSDialogBuilder.js:1881
+#: src/control/Control.JSDialogBuilder.js:1926
 msgid "reply"
 msgstr "جاۋاب"
 
-#: src/control/Control.JSDialogBuilder.js:1884
+#: src/control/Control.JSDialogBuilder.js:1929
 msgid "replies"
 msgstr "دەپ جاۋاب بېرىدۇ"
 
-#: src/control/Control.JSDialogBuilder.js:1959
+#: src/control/Control.JSDialogBuilder.js:2004
 msgid "Insert Comment"
 msgstr "باھا قىستۇرۇش"
 
-#: src/control/Control.JSDialogBuilder.js:2537
+#: src/control/Control.JSDialogBuilder.js:2582
 #: src/control/Control.Menubar.ts:967
 msgid "Rows"
 msgstr "قۇر"
 
-#: src/control/Control.JSDialogBuilder.js:2538
+#: src/control/Control.JSDialogBuilder.js:2583
 #: src/control/Control.Menubar.ts:970
 msgid "Columns"
 msgstr "ستون"
 
-#: src/control/Control.JSDialogBuilder.js:2558
+#: src/control/Control.JSDialogBuilder.js:2603
 #, fuzzy
 msgid "Insert Table"
 msgstr "جەدۋەل قىستۇر"
@@ -3013,15 +3073,20 @@ msgstr "نۆۋەتتىكى تام تەسۋىردىن"
 msgid "Dismiss"
 msgstr "خىزمەتتىن ھەيدەش"
 
-#: src/control/jsdialog/Widget.ColorPicker.ts:179
+#: src/control/jsdialog/Widget.ColorPicker.ts:46
+#: src/control/jsdialog/Widget.ColorPicker.ts:137
+msgid "Unknown color"
+msgstr ""
+
+#: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
 msgstr "تولدۇرما"
 
-#: src/control/jsdialog/Widget.ColorPicker.ts:179
+#: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "Automatic"
 msgstr "ئاپتوماتىك"
 
-#: src/control/jsdialog/Widget.ColorPicker.ts:355
+#: src/control/jsdialog/Widget.ColorPicker.ts:395
 msgid "Recent"
 msgstr "يېقىنقى"
 
@@ -3085,7 +3150,7 @@ msgstr "باھا يوق"
 msgid "Cell borders"
 msgstr "كاتەكچە چېگرىسى"
 
-#: src/control/jsdialog/Widget.SidebarContainers.ts:75
+#: src/control/jsdialog/Widget.SidebarContainers.ts:78
 msgid "More options for {name}"
 msgstr "{Name for ئۈچۈن تېخىمۇ كۆپ تاللاشلار"
 
@@ -3268,19 +3333,19 @@ msgstr "بۇ تام تەسۋىرنى راستلا ئۆچۈرەمسىز؟"
 msgid "Are you sure you want to delete this page?"
 msgstr "بۇ بەتنى راستلا ئۆچۈرەمسىز؟"
 
-#: src/docstate.js:99
+#: src/docstate.js:100
 msgid "Standard"
 msgstr "Standard"
 
-#: src/docstate.js:112
+#: src/docstate.js:113
 msgid "Theme colors"
 msgstr "ئۇسلۇب رەڭلىرى"
 
-#: src/docstate.js:113
+#: src/docstate.js:114
 msgid "Document colors"
 msgstr "ھۆججەت رەڭلىرى"
 
-#: src/docstatefunctions.js:204
+#: src/docstatefunctions.js:246
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ""
 
@@ -3594,7 +3659,7 @@ msgstr "فۇنكسىيە"
 msgid "Named Range"
 msgstr "Range"
 
-#: src/layer/tile/CanvasTileLayer.js:3552
+#: src/layer/tile/CanvasTileLayer.js:3581
 msgid "No Comments"
 msgstr "باھا يوق"
 
@@ -3694,17 +3759,17 @@ msgstr "ھۆججەتنى مۇلازىمېتىرغا يوللاش ھالىتى م
 msgid "Print dialog"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:649
+#: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
 msgid "Empty Slide Show"
 msgstr "قۇرۇق تام تەسۋىر"
 
 #: src/map/handler/Map.SlideShow.js:167
-#: src/slideshow/SlideShowPresenter.ts:677
+#: src/slideshow/SlideShowPresenter.ts:692
 msgid "Windowed Presentation Blocked"
 msgstr "كۆزنەك تونۇشتۇرۇش توسۇلدى"
 
 #: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:679
+#: src/slideshow/SlideShowPresenter.ts:694
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -3715,17 +3780,17 @@ msgstr ""
 "ھەمبەھىرلەشكە بولىدۇ."
 
 #: src/map/handler/Map.SlideShow.js:172
-#: src/slideshow/SlideShowPresenter.ts:484
+#: src/slideshow/SlideShowPresenter.ts:491
 msgid "Windowed Presentation: "
 msgstr "كۆزنەك تونۇشتۇرۇش: "
 
 #: src/map/handler/Map.SlideShow.js:202
-#: src/slideshow/SlideShowPresenter.ts:527
+#: src/slideshow/SlideShowPresenter.ts:534
 msgid "Presenting in window"
 msgstr "كۆزنەكتە كۆرسىتىش"
 
 #: src/map/handler/Map.SlideShow.js:203
-#: src/slideshow/SlideShowPresenter.ts:528
+#: src/slideshow/SlideShowPresenter.ts:535
 msgid "Close Presentation"
 msgstr "يېقىن تونۇشتۇرۇش"
 
@@ -3738,22 +3803,22 @@ msgid "End Presentation"
 msgstr "End Presentation"
 
 #: src/map/handler/Map.SlideShow.js:295
-#: src/slideshow/SlideShowPresenter.ts:664
+#: src/slideshow/SlideShowPresenter.ts:679
 msgid "Already presenting"
 msgstr "ئاللىبۇرۇن ئوتتۇرىغا قويۇلدى"
 
 #: src/map/handler/Map.SlideShow.js:296
-#: src/slideshow/SlideShowPresenter.ts:665
+#: src/slideshow/SlideShowPresenter.ts:680
 msgid "You are already presenting this document"
 msgstr "سىز بۇ ھۆججەتنى ھازىرلا تەمىنلەۋاتىسىز"
 
 #: src/map/handler/Map.SlideShow.js:306
-#: src/slideshow/SlideShowPresenter.ts:702
+#: src/slideshow/SlideShowPresenter.ts:717
 msgid "Presentation disabled"
 msgstr "تونۇشتۇرۇش چەكلەنگەن"
 
 #: src/map/handler/Map.SlideShow.js:307
-#: src/slideshow/SlideShowPresenter.ts:703
+#: src/slideshow/SlideShowPresenter.ts:718
 msgid "Presentation mode has been disabled for this document"
 msgstr "بۇ ھۆججەت ئۈچۈن تونۇشتۇرۇش ھالىتى چەكلەنگەن"
 
@@ -3827,7 +3892,7 @@ msgid "Repeat in {0} seconds"
 msgstr ""
 
 #: src/slideshow/PresenterConsole.js:1334
-#: src/slideshow/SlideShowPresenter.ts:382
+#: src/slideshow/SlideShowPresenter.ts:389
 msgid "Click to exit presentation..."
 msgstr "چېكىنىش ئۈچۈن چېكىڭ ..."
 
