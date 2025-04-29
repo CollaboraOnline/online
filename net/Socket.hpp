@@ -1588,7 +1588,7 @@ public:
     /// populates a request for that.
     bool parseHeader(const std::string_view clientName, std::istream& message,
                      Poco::Net::HTTPRequest& request,
-                     std::chrono::steady_clock::time_point lastHTTPHeader, MessageMap& map);
+                     std::chrono::steady_clock::time_point& lastHTTPHeader, MessageMap& map);
 
     Buffer& getInBuffer() { return _inBuffer; }
 
