@@ -866,7 +866,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     // HULLO message from the JavaScript in global.js.
 
     // The "app document id", the numeric id of the document, from the appDocIdCounter
-    // It's currently relevant only for iOS and macOS, so fallback if it is not found
+    // It's currently relevant only for iOS, macOS, and Windows, so fallback if it is not found
     char* space = strchr(socket->getInBuffer().data(), ' ');
     if (space != nullptr)
     {

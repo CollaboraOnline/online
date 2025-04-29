@@ -36,6 +36,9 @@ namespace CODA
         public static extern int set_coolwsd_server_socket_fd(int fd);
 
         [DllImport("CODALib.dll")]
+        public static extern int generate_new_app_doc_id();
+
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketSocket();
         
         [DllImport("CODALib.dll")]
@@ -81,7 +84,7 @@ namespace CODA
         public static extern void set_send2JS_function(Send2JSDelegate f);
 
         [DllImport("CODALib.dll")]
-        public static extern void do_hullo_handling_things(String fileURL);
+        public static extern void do_hullo_handling_things(String fileURL, int appDocId);
 
         [DllImport("CODALib.dll")]
         public static extern void do_bye_handling_things();
@@ -93,6 +96,10 @@ namespace CODA
         // like that.
         // private static Send2JSDelegate _reference;
         private static GCHandle _gch;
+
+        private int _appDocId = -1;
+
+        private String _fileURL;
 
         public MainWindow()
         {
@@ -121,7 +128,11 @@ namespace CODA
                 "All files|*.*";
 
             if (openFileDialog.ShowDialog() == true)
-                openCOOL(_iWebView2, new Uri(openFileDialog.FileName).AbsoluteUri);
+            {
+                _appDocId = generate_new_app_doc_id();
+                _fileURL = new Uri(openFileDialog.FileName).AbsoluteUri;
+                openCOOL();
+            }
         }
 
         private void MainWindow_Exit(object sender, RoutedEventArgs e)
@@ -139,11 +150,19 @@ namespace CODA
                 s = s.Substring(5);
                 if (s == "HULLO\"")
                 {
-                   do_hullo_handling_things("file:///C:/Users/tml/sailing.odt");
+                    do_hullo_handling_things(_fileURL, _appDocId);
                 }
                 else if (s == "BYE\"")
                 {
                     do_bye_handling_things();
+                }
+                else if (s == "PRINT\"")
+                {
+                    Debug.WriteLine("Not yet implemented: Print");
+                }
+                else if (s.StartsWith("downloadas "))
+                {
+                    Debug.WriteLine("Not yet implemented: Save As");
                 }
                 else
                 {
@@ -200,27 +219,17 @@ namespace CODA
             _isNavigating = false;
         }
 
-        private void openCOOL(IWebView2 webView, String fileURL)
+        private void openCOOL()
         {
             // Hide the helpful note
             useFileDialogXamlElement.Visibility = Visibility.Collapsed;
             // Also hide the initial menu as COOL has its own
             menuXamlElement.Visibility = Visibility.Collapsed;
 
-            // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
+            // FIXME: Temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
+            _iWebView2.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda25-coda/browser/dist/cool.html?file_path=" + _fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=" + _appDocId + "&userinterfacemode=notebookbar&dir=ltr");
 
-            // FIXME: Even more temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
-            if (false)
-            {
-                webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
-                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=" + fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
-            }
-            else
-            {
-                webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda25-coda/browser/dist/cool.html?file_path=" + fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
-            }
-
-            webView.CoreWebView2.NewWindowRequested += delegate (
+            _iWebView2.CoreWebView2.NewWindowRequested += delegate (
                 object webview2, CoreWebView2NewWindowRequestedEventArgs args)
                 {
                     ProcessStartInfo startInfo = new ProcessStartInfo
