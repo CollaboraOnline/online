@@ -14,6 +14,7 @@
 #include <thread>
 
 #include <common/Log.hpp>
+#include <common/MobileApp.hpp>
 #include <net/FakeSocket.hpp>
 #include <wsd/COOLWSD.hpp>
 
@@ -42,6 +43,19 @@ int set_coolwsd_server_socket_fd(int fd)
 {
     coolwsd_server_socket_fd = fd;
     return fd;
+}
+
+EXPORT
+int generate_new_app_doc_id()
+{
+    // Start with a random document id to catch code that might assume it to be some fixed value,
+    // like 0 or 1. Also make it obvious that this numeric "app doc id", used by the mobile apps and
+    // CODA, is not related to the string document ids (usually with several leading zeroes) used in
+    // the C++ bits of normal COOL.
+    static int appDocId = 42 + (std::time(nullptr) % 100);
+
+    DocumentData::allocate(appDocId);
+    return appDocId++;
 }
 
 EXPORT
@@ -86,7 +100,7 @@ void set_send2JS_function(send2JS_t f)
 }
 
 EXPORT
-void do_hullo_handling_things(const char *fileURL)
+void do_hullo_handling_things(const char *fileURL, int appDocId)
 {
     // FIXME: Code snippet shared with gtk/mobile.cpp, factor out into separate file.
 
@@ -155,13 +169,14 @@ void do_hullo_handling_things(const char *fileURL)
     // Must do this in a thread, too, so that we can return to the main loop
     // Must duplicate fileURL as it exists only while this function is called from C#.
     char *fileURLcopy = _strdup(fileURL);
-    std::thread([fileURLcopy]
+    std::thread([fileURLcopy, appDocId]
     {
         struct pollfd pollfd;
         pollfd.fd = fakeClientFd;
         pollfd.events = POLLOUT;
         fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, fileURLcopy, strlen(fileURLcopy));
+        std::string message(fileURLcopy + (" " + std::to_string(appDocId)));
+        fakeSocketWrite(fakeClientFd, message.c_str(), message.size());
         std::free(fileURLcopy);
     }).detach();
 }
