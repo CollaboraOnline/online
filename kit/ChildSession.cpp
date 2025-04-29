@@ -2402,7 +2402,9 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
     }
 
     const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
-    scomp.pushWork([=,this](std::vector<char>& output)
+    scomp.pushWork(
+        [=, this, pixmap = std::move(pixmap),
+         jsonMsg = std::move(jsonMsg)](std::vector<char>& output)
         {
             if (watermark())
             {
