@@ -207,6 +207,13 @@ class LayerDrawing {
 	}
 
 	private drawVideos(slideHash: string) {
+		if (
+			!this.layerRenderer.getRenderContext().is2dGl() &&
+			!VideoRendererGl.videoProgramInitialized
+		) {
+			VideoRendererGl.createProgram(this.layerRenderer.getRenderContext());
+		}
+
 		const videoRenderers = this.videoRenderers.get(slideHash);
 		if (!videoRenderers) return;
 
@@ -326,7 +333,6 @@ class LayerDrawing {
 
 		try {
 			this.layerRenderer = new SlideShow.LayerRendererGl(this.offscreenCanvas);
-			VideoRendererGl.createProgram(this.layerRenderer.getRenderContext());
 		} catch (error) {
 			console.log('LayerDrawing: WebGl offscreen rendering not supported');
 			this.layerRenderer = new SlideShow.LayerRenderer2d(this.offscreenCanvas);
