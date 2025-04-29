@@ -1,9 +1,11 @@
 // -*- tab-width: 4; indent-tabs-mode: nil; fill-column: 100 -*-
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Drawing.Printing;
 using System.Runtime.InteropServices;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -17,17 +19,10 @@ namespace CODA
 {
     public partial class MainWindow : Window
     {
-        public struct pollfd {
-            public int fd;
-            public short events;
-            public short revents;
-        };
-
         private IWebView2 _iWebView2;
 
-        private bool _isNavigating = false;
-
         public delegate void Send2JSDelegate(IntPtr buffer, int length);
+        public delegate void ReplyWithStringDelegate(string s);
 
         [DllImport("CODALib.dll")]
         public static extern int get_coolwsd_server_socket_fd();
@@ -39,55 +34,19 @@ namespace CODA
         public static extern int generate_new_app_doc_id();
 
         [DllImport("CODALib.dll")]
-        public static extern int fakeSocketSocket();
-        
-        [DllImport("CODALib.dll")]
-        public static extern int fakeSocketPipe2(int[] pipefds);
-
-        [DllImport("CODALib.dll")]
-        public static extern int fakeSocketPoll(pollfd[] fds, int nfds, int timeout);
-
-        [DllImport("CODALib.dll")]
-        public static extern int fakeSocketListen(int fd);
-
-        [DllImport("CODALib.dll")]
-        public static extern int fakeSocketConnect(int fd1, int fd2);
-
-        [DllImport("CODALib.dll")]
-        public static extern int fakeSocketAccept4(int fd);
-
-        [DllImport("CODALib.dll")]
-        public static extern int fakeSocketPeer(int fd);
-
-        [DllImport("CODALib.dll")]
-        public static extern long fakeSocketAvailableDataLength(int fd);
-
-        [DllImport("CODALib.dll")]
-        public static extern long fakeSocketRead(int fd, byte[] buf, long nbytes);
-
-        [DllImport("CODALib.dll")]
-        public static extern long fakeSocketWrite(int fd, byte[] buf, long nbytes);
-
-        [DllImport("CODALib.dll")]
-        public static extern long fakeSocketShutdown(int fd);
-
-        [DllImport("CODALib.dll")]
-        public static extern long fakeSocketClose(int fd);
-
-        [DllImport("CODALib.dll")]
-        public static extern long fakeSocketDumpState();
-
-        [DllImport("CODALib.dll")]
         public static extern void initialize_cpp_things();
 
         [DllImport("CODALib.dll")]
         public static extern void set_send2JS_function(Send2JSDelegate f);
 
         [DllImport("CODALib.dll")]
-        public static extern void do_hullo_handling_things(String fileURL, int appDocId);
+        public static extern void do_hullo_handling_things(string fileURL, int appDocId);
 
         [DllImport("CODALib.dll")]
         public static extern void do_bye_handling_things();
+
+        [DllImport("CODALib.dll")]
+        public static extern void do_convert_to(string type, int appDocId, ReplyWithStringDelegate response);
 
         [DllImport("CODALib.dll")]
         public static extern void do_other_message_handling_things([MarshalAs(UnmanagedType.LPStr)] string message);
@@ -99,7 +58,7 @@ namespace CODA
 
         private int _appDocId = -1;
 
-        private String _fileURL;
+        private string _fileURL;
 
         public MainWindow()
         {
@@ -120,7 +79,7 @@ namespace CODA
 
         private void MainWindow_FileOpen(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Filter =
                 "Text documents|*.odt;*.docx;*.doc|" +
                 "Spreadsheets|*.ods;*.xlsx;*.xls|" +
@@ -158,7 +117,10 @@ namespace CODA
                 }
                 else if (s == "PRINT\"")
                 {
-                    Debug.WriteLine("Not yet implemented: Print");
+                    do_convert_to("pdf", _appDocId, s =>
+                    {
+                        PrintPdfDocument(s);
+                    });
                 }
                 else if (s.StartsWith("downloadas "))
                 {
@@ -202,21 +164,7 @@ namespace CODA
 
         void AttachControlEventHandlers(IWebView2 control)
         {
-            control.NavigationStarting += WebView_NavigationStarting;
-            control.NavigationCompleted += WebView_NavigationCompleted;
             control.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
-        }
-
-        void WebView_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
-        {
-            _isNavigating = true;
-
-            CoreWebView2NavigationKind kind = e.NavigationKind;
-        }
-
-        void WebView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            _isNavigating = false;
         }
 
         private void openCOOL()
@@ -243,12 +191,79 @@ namespace CODA
                 };
         }
 
+        private async void PrintPdfDocument(string path)
+        {
+            try
+            {
+                var images = await PdfToImage(path);
+                int index = 0;
+
+                PrintDocument printDocument = new PrintDocument();
+
+                printDocument.PrintPage += (sender, e) =>
+                {
+                    System.Drawing.Image image = images[index];
+
+                    // Calculate the scaling factor to fit the image within the page size
+                    float X = (float)e.PageSettings.PaperSize.Width / image.Width;
+                    float Y = (float)e.PageSettings.PaperSize.Height / image.Height;
+                    float scaleFactor = Math.Min(X, Y);
+
+                    // Draw the image on the page
+                    e.Graphics.DrawImage(image, 0, 0, image.Width * scaleFactor, image.Height * scaleFactor);
+
+                    index++;
+                    if (index < images.Count)
+                    {
+                        e.HasMorePages = true;
+                        image.Dispose();
+                        return;
+                    }
+
+                    e.HasMorePages = false;
+                    image.Dispose();
+                };
+
+                printDocument.Print();
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error : " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async Task<List<System.Drawing.Image>> PdfToImage(string path)
+        {
+            var storagePdfFile = await Windows.Storage.StorageFile.GetFileFromPathAsync(path);
+            Windows.Data.Pdf.PdfDocument pdfDocument = await Windows.Data.Pdf.PdfDocument.LoadFromFileAsync(storagePdfFile);
+
+            uint index = 0;
+            List<System.Drawing.Image> images = new List<System.Drawing.Image>();
+
+            while (index < pdfDocument.PageCount)
+            {
+                using (Windows.Data.Pdf.PdfPage pdfPage = pdfDocument.GetPage(index))
+                {
+                    using (Windows.Storage.Streams.InMemoryRandomAccessStream memStream = new Windows.Storage.Streams.InMemoryRandomAccessStream())
+                    {
+                        //                        Windows.Data.Pdf.PdfPageRenderOptions pdfPageRenderOptions = new Windows.Data.Pdf.PdfPageRenderOptions();
+                        await pdfPage.RenderToStreamAsync(memStream);
+                        System.Drawing.Image image = System.Drawing.Image.FromStream(memStream.AsStream());
+                        images.Add(image);
+                    }
+                }
+                index++;
+            }
+
+            return images;
+        }
+
         void WebView_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
         {
             if (e.IsSuccess)
                 _iWebView2.CoreWebView2.Navigate("about:blank");
             else
-                MessageBox.Show($"WebView2 creation failed with exception = {e.InitializationException}");
+                System.Windows.MessageBox.Show($"WebView2 creation failed with exception = {e.InitializationException}");
         }
 
         private bool _isMessageOfType(byte[] message, string type, int lengthOfMessage)
@@ -311,7 +326,7 @@ namespace CODA
                 Debug.WriteLine($"Evaluating JavaScript: {subjs}");
             }
 
-            Application.Current.Dispatcher.Invoke(new Action(() => {
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
                 _iWebView2.ExecuteScriptAsync(js);
             }));
         }
