@@ -3963,8 +3963,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	onRemove: function (map) {
-		this._painter.dispose();
-
 		L.DomUtil.remove(this._container);
 		map._removeZoomLimit(this);
 		this._container = null;
