@@ -10,10 +10,10 @@
 */
 
 class CellCursorSection extends CanvasSectionObject {
-	name: string = "OwnCellCursor";
-    zIndex: number = L.CSections.ColumnHeader.zIndex;
-    drawingOrder: number = L.CSections.OtherViewCellCursor.drawingOrder;
-    processingOrder: number = L.CSections.OtherViewCellCursor.processingOrder;
+	name: string = L.CSections.CellCursor.name;
+    zIndex: number = L.CSections.CellCursor.zIndex;
+    drawingOrder: number = L.CSections.CellCursor.drawingOrder;
+    processingOrder: number = L.CSections.CellCursor.processingOrder;
 
 	constructor (color: string, weight: number, viewId: number) {
         super();
