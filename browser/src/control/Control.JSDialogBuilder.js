@@ -2814,7 +2814,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// replaces widget in-place with new instance with updated data
 	updateWidget: function (container, data) {
-		this._updateWidgetImpl(container, data, this.build);
+		app.layoutingService.appendLayoutingTask(() => {
+			this._updateWidgetImpl(container, data, this.build);
+		});
 	},
 
 	postProcess: function(parent, data) {
