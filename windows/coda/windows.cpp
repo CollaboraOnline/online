@@ -29,6 +29,7 @@ static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 
 typedef void (*send2JS_t)(char *buffer, long length);
+typedef void(*replyWithString_t)(const char *s);
 
 static send2JS_t send2JSfunction;
 
@@ -188,6 +189,17 @@ void do_bye_handling_things()
 
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+}
+
+EXPORT
+void do_convert_to(const char *type, int appDocId, replyWithString_t response)
+{
+    const std::string tempFile = FileUtil::createRandomTmpDir() + "/haha." + std::string(type);
+    const std::string tempFileUri = Poco::URI(Poco::Path(tempFile)).toString();
+
+    DocumentData::get(appDocId).loKitDocument->saveAs(tempFileUri.c_str(), type, nullptr);
+
+    response(tempFileUri.c_str());
 }
 
 EXPORT
