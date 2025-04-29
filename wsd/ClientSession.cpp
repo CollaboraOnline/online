@@ -2097,6 +2097,25 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
     return forwardToClient(payload);
 }
 
+namespace
+{
+    class RemoveClipFile
+    {
+    private:
+        std::string _clipFile;
+    public:
+        RemoveClipFile(const std::string& clipFile)
+            : _clipFile(clipFile)
+        {
+        }
+        ~RemoveClipFile()
+        {
+            fprintf(stderr, "remove %s\n", _clipFile.c_str());
+            FileUtil::removeFile(_clipFile);
+        }
+    };
+}
+
 bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& payload)
 {
     LOG_TRC("handling kit-to-client [" << payload->abbr() << ']');
@@ -2453,13 +2472,9 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         std::cerr << "FOO len: " << res.size() << "\n";
 
-//        FileUtil::removeFile(std::string("/tmp/cliptest"));
-//        std::ofstream fileStream;
-//        fileStream.open("/tmp/cliptest");
-//        fileStream.write(res.data(), res.size());
-//        fileStream.close();
+        // final cleanup via clipFileRemove dtor
+        std::shared_ptr<RemoveClipFile> clipFileRemove;
 
-        // final cleanup ...
         bool removeClipFile = true;
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
         {
@@ -2474,6 +2489,9 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         }
         else
             fprintf(stderr, "don't save clipboard\n");
+
+        if (removeClipFile)
+            clipFileRemove = std::make_shared<RemoveClipFile>(clipFile);
 
         for (const auto& it : _clipSockets)
         {
@@ -2494,25 +2512,18 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             headers.emplace_back("Cache-Control", "no-cache");
             headers.emplace_back("Connection", "close");
 
-            if (removeClipFile)
-            {
-                fprintf(stderr, "we will want to remove %s\n", clipFile.c_str());
-                session->setFinishedHandler([clipFile](const std::shared_ptr<http::ServerSession>&) {
-                    fprintf(stderr, "FINISHED WITH %s\n", clipFile.c_str());
-                    FileUtil::removeFile(clipFile);
-                });
-            }
+            // on final session dtor clipFileRemove cleanup removes clipboard file
+            session->setFinishedHandler([clipFileRemove](const std::shared_ptr<http::ServerSession>&) {});
 
+            // Hand over socket to ServerSession which will async provide
+            // clipboard content backed by clipFile
             session->asyncUpload(clipFile, std::move(headers));
-//            session->asyncUpload("/tmp/cliptest", std::move(headers));
             socket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
 
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
 
         fprintf(stderr, "removeClipFile is %d\n", removeClipFile);
-        //if (removeClipFile)
-        //    FileUtil::removeFile(clipFile);
 #endif
         _clipSockets.clear();
         return true;
