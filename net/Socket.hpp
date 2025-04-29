@@ -284,46 +284,44 @@ public:
     /// Returns true on success only.
     bool setSocketBufferSize(const int size)
     {
-        if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+        int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
+
+        _sendBufferSize = getSocketBufferSize();
+        if (rc != 0 || _sendBufferSize < 0)
         {
-            int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
-
-            _sendBufferSize = getSocketBufferSize();
-            if (rc != 0 || _sendBufferSize < 0)
-            {
-                _sendBufferSize = DefaultSendBufferSize;
-                LOG_SYS("Error getting socket buffer size. Using default size of "
-                        << _sendBufferSize << " bytes.");
-                return false;
-            }
-
-            if (_sendBufferSize > MaximumSendBufferSize * 2)
-            {
-                LOG_TRC("Clamped send buffer size to " << MaximumSendBufferSize << " from "
-                                                       << _sendBufferSize);
-                _sendBufferSize = MaximumSendBufferSize;
-            }
-            else
-                LOG_TRC("Set socket buffer size to " << _sendBufferSize);
-
-            return true;
+            _sendBufferSize = DefaultSendBufferSize;
+            LOG_SYS("Error getting socket buffer size. Using default size of "
+                    << _sendBufferSize << " bytes.");
+            return false;
         }
 
+        if (_sendBufferSize > MaximumSendBufferSize * 2)
+        {
+            LOG_TRC("Clamped send buffer size to " << MaximumSendBufferSize << " from "
+                                                   << _sendBufferSize);
+            _sendBufferSize = MaximumSendBufferSize;
+        }
+        else
+            LOG_TRC("Set socket buffer size to " << _sendBufferSize);
+
+        return true;
+#else
         return false;
+#endif
     }
 
     /// Gets the actual send buffer size in bytes, -1 for failure.
     int getSocketBufferSize() const
     {
-        if constexpr (!Util::isMobileApp())
-        {
-            int size;
-            socklen_t len = sizeof(size);
-            const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
-            return rc == 0 ? size : -1;
-        }
-
+#if !MOBILEAPP
+        int size;
+        socklen_t len = sizeof(size);
+        const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
+        return rc == 0 ? size : -1;
+#else
         return -1;
+#endif
     }
 
     /// Gets our fast cache of the socket buffer size
