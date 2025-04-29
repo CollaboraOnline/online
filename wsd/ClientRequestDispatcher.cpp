@@ -698,7 +698,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     Poco::Net::HTTPRequest request;
 
     StreamSocket::MessageMap map;
-    if (!socket->parseHeader("Client", startmessage, request, _lastSeenHTTPHeader, map))
+    ssize_t headerSize = socket->readHeader("Client", startmessage, request, _lastSeenHTTPHeader);
+    if (headerSize < 0)
+        return;
+
+    if (!socket->parseHeader("Client", headerSize, request, _lastSeenHTTPHeader, map))
         return;
 
 //    fprintf(stderr, "2: size of message is %ld for %s\n", socket->getInBuffer().size(), requestDetails.toString().c_str());
