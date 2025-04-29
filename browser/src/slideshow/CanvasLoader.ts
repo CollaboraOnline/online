@@ -32,24 +32,29 @@ class CanvasLoader2d implements CanvasLoader {
 
 class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 	private animationId: number | null = null;
+	private uResolutionLoc: WebGLUniformLocation;
+	private uTimeLoc: WebGLUniformLocation;
 
 	constructor(canvasContext: RenderContextGl) {
 		super(canvasContext);
 		this.prepareTransition();
+
+		this.uResolutionLoc = this.gl.getUniformLocation(
+			this.program,
+			'u_resolution',
+		);
+		this.uTimeLoc = this.gl.getUniformLocation(this.program, 'u_time');
 	}
 
 	public renderUniformValue(): void {
 		if (this.context.isDisposed()) return;
 
 		this.gl.uniform2f(
-			this.gl.getUniformLocation(this.program, 'u_resolution'),
+			this.uResolutionLoc,
 			this.context.canvas.width,
 			this.context.canvas.height,
 		);
-		this.gl.uniform1f(
-			this.gl.getUniformLocation(this.program, 'u_time'),
-			this.time,
-		);
+		this.gl.uniform1f(this.uTimeLoc, this.time);
 	}
 
 	public startLoader(): void {
@@ -89,12 +94,6 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 
 			// Reset WebGL state
 			this.gl.useProgram(null);
-
-			// Optionally, you might want to reset the viewport
-			this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
-
-			// If you're using any textures, unbind them too
-			this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 
 			// Flush any pending WebGL commands
 			this.gl.flush();
