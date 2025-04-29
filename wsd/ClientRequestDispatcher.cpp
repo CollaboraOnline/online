@@ -682,26 +682,30 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    fprintf(stderr, "size of message is %ld\n", socket->getInBuffer().size());
-    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), socket->getInBuffer().size());
+    Poco::Net::HTTPRequest request;
+    ssize_t headerSize;
+
+    {
+        fprintf(stderr, "size of message is %ld\n", socket->getInBuffer().size());
+        Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), socket->getInBuffer().size());
 
 #if 0 // debug a specific command's payload
-        if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
-        {
-            std::ostringstream oss(Util::makeDumpStateStream());
-            oss << "Debug - specific command:\n";
-            socket->dumpState(oss);
-            LOG_INF(oss.str());
-        }
+            if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
+            {
+                std::ostringstream oss(Util::makeDumpStateStream());
+                oss << "Debug - specific command:\n";
+                socket->dumpState(oss);
+                LOG_INF(oss.str());
+            }
 #endif
 
-    Poco::Net::HTTPRequest request;
+
+        headerSize = socket->readHeader("Client", startmessage, request, _lastSeenHTTPHeader);
+        if (headerSize < 0)
+            return;
+    }
 
     StreamSocket::MessageMap map;
-    ssize_t headerSize = socket->readHeader("Client", startmessage, request, _lastSeenHTTPHeader);
-    if (headerSize < 0)
-        return;
-
     if (!socket->parseHeader("Client", headerSize, request, _lastSeenHTTPHeader, map))
         return;
 
@@ -720,7 +724,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         socket->compactChunks(map);
         Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
-        message.seekg(startmessage.tellg(), std::ios::beg);
+        message.seekg(headerSize, std::ios::beg);
 
         // re-write ServiceRoot and cache.
         RequestDetails requestDetails(request, COOLWSD::ServiceRoot);
