@@ -343,9 +343,11 @@ namespace FileUtil
     struct OwnedFile final
     {
         std::string _file;
+        bool _recursive;
 
-        OwnedFile(std::string file)
+        OwnedFile(std::string file, bool recursive = false)
             : _file(std::move(file))
+            , _recursive(recursive)
         {
         }
 
@@ -354,7 +356,7 @@ namespace FileUtil
 
         ~OwnedFile()
         {
-            FileUtil::removeFile(_file);
+            FileUtil::removeFile(_file, _recursive);
         }
     };
 
