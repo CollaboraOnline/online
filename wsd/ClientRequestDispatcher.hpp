@@ -80,12 +80,12 @@ private:
                                    const std::shared_ptr<StreamSocket>& socket);
 
     bool handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
-                                   Poco::MemoryInputStream& message,
+                                   std::istream& message,
                                    const std::shared_ptr<StreamSocket>& socket);
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
     static bool handleClipboardRequest(const Poco::Net::HTTPRequest& request,
-                                       Poco::MemoryInputStream& message,
+                                       std::istream& message,
                                        SocketDisposition& disposition,
                                        const std::shared_ptr<StreamSocket>& socket);
 
@@ -108,13 +108,13 @@ private:
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
     bool handlePostRequest(const RequestDetails& requestDetails,
-                           const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+                           const Poco::Net::HTTPRequest& request, std::istream& message,
                            SocketDisposition& disposition,
                            const std::shared_ptr<StreamSocket>& socket);
 
     bool handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
                                   const RequestDetails& requestDetails,
-                                  Poco::MemoryInputStream& message, SocketDisposition& disposition);
+                                  std::istream& message, SocketDisposition& disposition);
 
     void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 

@@ -1577,7 +1577,7 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 
 #if !MOBILEAPP
 
-bool StreamSocket::parseHeader(const char* clientName, Poco::MemoryInputStream& message,
+bool StreamSocket::parseHeader(const char* clientName, std::istream& message,
                                Poco::Net::HTTPRequest& request,
                                std::chrono::steady_clock::time_point lastHTTPHeader,
                                MessageMap& map)

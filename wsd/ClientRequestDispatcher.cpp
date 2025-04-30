@@ -1154,7 +1154,7 @@ void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& so
 }
 
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
-                                                           Poco::MemoryInputStream& message,
+                                                           std::istream& message,
                                                            const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
@@ -1384,7 +1384,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 }
 
 bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPRequest& request,
-                                                     Poco::MemoryInputStream& message,
+                                                     std::istream& message,
                                                      SocketDisposition& disposition,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
@@ -1821,7 +1821,7 @@ bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
 
 bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
                                                 const Poco::Net::HTTPRequest& request,
-                                                Poco::MemoryInputStream& message,
+                                                std::istream& message,
                                                 SocketDisposition& disposition,
                                                 const std::shared_ptr<StreamSocket>& socket)
 {
@@ -2134,7 +2134,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
 bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
                                                        const RequestDetails& requestDetails,
-                                                       Poco::MemoryInputStream& message,
+                                                       std::istream& message,
                                                        SocketDisposition& disposition)
 {
     //FIXME: The DocumentURI includes the WOPISrc, which makes it potentially invalid URI.

@@ -416,7 +416,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     //handles request starts with /wopi/files
     void handleWopiRequest(const HTTPRequest& request,
                            const RequestDetails &requestDetails,
-                           Poco::MemoryInputStream& message,
+                           std::istream& message,
                            const std::shared_ptr<StreamSocket>& socket)
     {
         Poco::URI requestUri(request.getURI());
@@ -720,7 +720,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     //handles request starts with /wopi/settings
     void handleSettingsRequest(const HTTPRequest& request,
                                const std::string& etagString,
-                               Poco::MemoryInputStream& message,
+                               std::istream& message,
                                const std::shared_ptr<StreamSocket>& socket)
     {
         Poco::URI requestUri(request.getURI());
@@ -886,7 +886,7 @@ static std::string getRequestPath(const HTTPRequest& request)
 
 bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                                              const RequestDetails& requestDetails,
-                                             Poco::MemoryInputStream& message,
+                                             std::istream& message,
                                              const std::shared_ptr<StreamSocket>& socket,
                                              ResourceAccessDetails& accessDetails)
 {
@@ -1634,7 +1634,7 @@ std::string boolToString(const bool value)
 
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
     const HTTPRequest& request, http::Response& httpResponse, const RequestDetails& requestDetails,
-    Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
+    std::istream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const ServerURL cnxDetails(requestDetails);
 
@@ -2026,7 +2026,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      http::Response& httpResponse,
                                                      const RequestDetails& requestDetails,
-                                                     Poco::MemoryInputStream& message,
+                                                     std::istream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
     const std::string relPath = getRequestPathname(request, requestDetails);
@@ -2073,7 +2073,7 @@ void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::is
 }
 
 void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
-                                                       Poco::MemoryInputStream& message,
+                                                       std::istream& message,
                                                        const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTMLForm form(request, message);
@@ -2148,8 +2148,8 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
 }
 
 void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& request,
-                                                 Poco::MemoryInputStream& message,
-                                                 const std::shared_ptr<StreamSocket>& socket)
+                                                std::istream& message,
+                                                const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTMLForm form(request, message);
 
@@ -2193,7 +2193,7 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
 }
 
 void FileServerRequestHandler::deleteWopiSettingConfigs(
-    const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+    const Poco::Net::HTTPRequest& request, std::istream& message,
     const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTMLForm form(request, message);
@@ -2272,7 +2272,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
 }
 
 void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
-                                                      Poco::MemoryInputStream& message,
+                                                      std::istream& message,
                                                       const std::shared_ptr<StreamSocket>& socket)
 {
     FilePartHandler partHandler;
@@ -2362,7 +2362,7 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& request,
                                                             http::Response& response,
                                                             const RequestDetails& requestDetails,
-                                                            Poco::MemoryInputStream& message,
+                                                            std::istream& message,
                                                             const std::shared_ptr<StreamSocket>& socket)
 {
     const ServerURL cnxDetails(requestDetails);
