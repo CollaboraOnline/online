@@ -183,27 +183,15 @@ class Transition2d extends TransitionBase {
 				0,
 			);
 		} else {
-			let bounds: BoundsType = null;
-			let alpha = 1.0;
-			let fromFillColor = Transition2d.DefaultFromColor;
-			let toFillColor = Transition2d.DefaultToColor;
-			let fromLineColor = Transition2d.DefaultFromColor;
-			let toLineColor = Transition2d.DefaultToColor;
-			if (properties) {
-				bounds = properties.bounds;
-				alpha = properties.alpha;
-				const colorMap = properties.colorMap;
-				if (colorMap) {
-					if (colorMap.fromFillColor && colorMap.toFillColor) {
-						fromFillColor = colorMap.fromFillColor.toFloat32Array();
-						toFillColor = colorMap.toFillColor.toFloat32Array();
-					}
-					if (colorMap.fromLineColor && colorMap.toLineColor) {
-						fromLineColor = colorMap.fromLineColor.toFloat32Array();
-						toLineColor = colorMap.toLineColor.toFloat32Array();
-					}
-				}
-			}
+			const {
+				bounds,
+				alpha,
+				fromFillColor,
+				toFillColor,
+				fromLineColor,
+				toLineColor,
+			} = LayerRendererGl.computeColor(properties);
+
 			console.debug(`Transition2d.render: alpha: ${alpha}`);
 
 			this.setPositionBuffer(bounds);
