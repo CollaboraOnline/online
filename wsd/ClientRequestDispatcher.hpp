@@ -130,6 +130,15 @@ private:
     void finishedMessage(const Poco::Net::HTTPRequest& request,
                          const std::shared_ptr<StreamSocket>& socket,
                          bool servedSync, size_t preInBufferSz);
+
+    void handleFullMessage(Poco::Net::HTTPRequest& request,
+                           std::istream& message,
+                           SocketDisposition& disposition,
+                           const std::shared_ptr<StreamSocket>& socket,
+                           ssize_t headerSize,
+                           ssize_t contentSize,
+                           bool eraseMessageFromSocket,
+                           std::chrono::steady_clock::time_point now);
 #endif // !MOBILEAPP
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
@@ -163,6 +172,11 @@ private:
     /// The private RequestVettingStation. Held privately after the
     /// WS is created and as long as it is connected.
     std::shared_ptr<RequestVettingStation> _rvs;
+
+    /// scratch dir that POSTs are streamed to
+    std::unique_ptr<FileUtil::OwnedFile> _postFileDir;
+    std::fstream _postStream;
+    std::streamsize _postContentPending;
 
     /// The minimum number of RVS instances in flight to trigger cleanup.
     static constexpr std::size_t RvsLowWatermark = 1 * 1024;
