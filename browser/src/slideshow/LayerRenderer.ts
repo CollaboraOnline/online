@@ -31,6 +31,15 @@ interface LayerRenderer {
 	getRenderContext(): RenderContext;
 }
 
+interface RenderUniforms {
+	bounds: BoundsType | null;
+	alpha: number;
+	fromFillColor: Float32Array;
+	toFillColor: Float32Array;
+	fromLineColor: Float32Array;
+	toLineColor: Float32Array;
+}
+
 class LayerRendererGl implements LayerRenderer {
 	private static readonly DefaultVertices = [-1, -1, 1, -1, -1, 1, 1, 1];
 	private static readonly DefaultFromColor = new Float32Array([0, 0, 0, 0]);
@@ -178,19 +187,9 @@ class LayerRendererGl implements LayerRenderer {
 		}
 	}
 
-	drawBitmap(
-		imageInfo: ImageInfo | ImageBitmap,
+	public static computeColor(
 		properties?: AnimatedElementRenderProperties,
-	): void {
-		if (this.disposed) {
-			console.log('LayerRenderer is disposed');
-			return;
-		}
-		if (!imageInfo) {
-			console.log('LayerRenderer.drawBitmap: no image');
-			return;
-		}
-
+	): RenderUniforms {
 		let bounds: BoundsType = null;
 		let alpha = 1.0;
 		let fromFillColor = LayerRendererGl.DefaultFromColor;
@@ -212,6 +211,37 @@ class LayerRendererGl implements LayerRenderer {
 				}
 			}
 		}
+		return {
+			bounds,
+			alpha,
+			fromFillColor,
+			toFillColor,
+			fromLineColor,
+			toLineColor,
+		};
+	}
+
+	drawBitmap(
+		imageInfo: ImageInfo | ImageBitmap,
+		properties?: AnimatedElementRenderProperties,
+	): void {
+		if (this.disposed) {
+			console.log('LayerRenderer is disposed');
+			return;
+		}
+		if (!imageInfo) {
+			console.log('LayerRenderer.drawBitmap: no image');
+			return;
+		}
+
+		const {
+			bounds,
+			alpha,
+			fromFillColor,
+			toFillColor,
+			fromLineColor,
+			toLineColor,
+		} = LayerRendererGl.computeColor(properties);
 
 		let texture: WebGLTexture;
 		let textureKey: string;
