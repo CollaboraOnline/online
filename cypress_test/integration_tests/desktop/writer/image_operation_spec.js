@@ -56,13 +56,11 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		helper.waitUntilIdle('#selectwidth input');
 
-		cy.cGet('#selectwidth input').clear({force:true})
-			.type('3{enter}', {force:true});
+		cy.cGet('#selectwidth input').type('{selectAll}{backspace}3{enter}');
 
 		helper.waitUntilIdle('#selectheight input');
 
-		cy.cGet('#selectheight input').clear({force:true})
-			.type('2{enter}', {force:true});
+		cy.cGet('#selectheight input').type('{selectAll}{backspace}2{enter}');
 
 		cy.wait(1000);
 
@@ -73,8 +71,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		helper.waitUntilIdle('#selectheight input');
 
-		cy.cGet('#selectheight input').clear({force:true})
-			.type('5{enter}', {force:true});
+		cy.cGet('#selectheight input').type('{selectAll}{backspace}5{enter}');
 
 		cy.wait(1000);
 

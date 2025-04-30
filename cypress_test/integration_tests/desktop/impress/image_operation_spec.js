@@ -71,11 +71,9 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		cy.cGet('.ui-expander-label').contains('Position and Size').should('be.visible').click();
 
-		cy.cGet('#selectwidth input').clear({force:true})
-			.type('10{enter}', {force:true});
+		cy.cGet('#selectwidth input').type('{selectAll}{backspace}10{enter}');
 
-		cy.cGet('#selectheight input').clear({force:true})
-			.type('4{enter}', {force:true});
+		cy.cGet('#selectheight input').type('{selectAll}{backspace}4{enter}');
 
 		triggerNewSVGForShapeInTheCenter();
 
@@ -93,8 +91,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		helper.waitUntilIdle('#selectheight');
 
-		cy.cGet('#selectheight input').clear({force:true})
-			.type('5{enter}', {force:true});
+		cy.cGet('#selectheight input').type('{selectAll}{backspace}5{enter}');
 
 		triggerNewSVGForShapeInTheCenter();
 
