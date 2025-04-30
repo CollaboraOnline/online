@@ -929,6 +929,11 @@ int main(int argc, char**argv)
         std::memcpy(vector.data() + vlen, data, dataLen);
     }
 
+    inline void vectorAppend(std::vector<char> &vector, const std::string &str)
+    {
+        vectorAppend(vector, str.c_str(), str.length());
+    }
+
     /// Splits a URL into path (with protocol), filename, extension, parameters.
     /// All components are optional, depending on what the URL represents (can be a unix path).
     std::tuple<std::string, std::string, std::string, std::string> splitUrl(const std::string& url);
