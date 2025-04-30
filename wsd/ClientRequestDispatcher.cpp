@@ -699,6 +699,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
+    const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+    std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
+
     size_t inBufferSize = socket->getInBuffer().size();
     Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), inBufferSize);
 
@@ -715,12 +718,19 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     Poco::Net::HTTPRequest request;
 
     StreamSocket::MessageMap map;
-    ssize_t headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, _lastSeenHTTPHeader);
+    ssize_t headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, delayMs);
     if (headerSize < 0)
         return;
 
-    if (!socket->parseHeader("Client", headerSize, request, _lastSeenHTTPHeader, map))
+    if (!socket->parseHeader("Client", headerSize, inBufferSize, request, delayMs, map))
         return;
+
+    socket->handleExpect(request);
+
+    if (!socket->checkChunks(request, headerSize, map, delayMs))
+        return;
+
+    _lastSeenHTTPHeader = now;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
     LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
