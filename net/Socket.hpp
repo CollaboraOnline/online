@@ -1566,6 +1566,8 @@ public:
                      const Poco::Net::HTTPRequest& request,
                      std::chrono::steady_clock::time_point& lastHTTPHeader, MessageMap& map);
 
+    bool checkChunks(size_t headerSize, MessageMap& map, float delayMsCount);
+
     Buffer& getInBuffer() { return _inBuffer; }
 
     Buffer& getOutBuffer()
