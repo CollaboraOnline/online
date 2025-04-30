@@ -1604,6 +1604,8 @@ public:
 
     void handleExpect(const Poco::Net::HTTPRequest& request);
 
+    bool checkChunks(size_t headerSize, MessageMap& map, float delayMsCount);
+
     Buffer& getInBuffer() { return _inBuffer; }
 
     Buffer& getOutBuffer()

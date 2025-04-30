@@ -1708,6 +1708,82 @@ void StreamSocket::handleExpect(const Poco::Net::HTTPRequest& request)
     }
 }
 
+bool StreamSocket::checkChunks(size_t headerSize, MessageMap& map, float delayMsCount)
+{
+    auto itBody = _inBuffer.begin() + headerSize;
+
+    // keep the header
+    map._spans.emplace_back(0, itBody - _inBuffer.begin());
+
+    int chunk = 0;
+    while (itBody != _inBuffer.end())
+    {
+        auto chunkStart = itBody;
+
+        // skip whitespace
+        for (; itBody != _inBuffer.end() && isascii(*itBody) && isspace(*itBody); ++itBody)
+            ; // skip.
+
+        // each chunk is preceeded by its length in hex.
+        size_t chunkLen = 0;
+        for (; itBody != _inBuffer.end(); ++itBody)
+        {
+            int digit = HexUtil::hexDigitFromChar(*itBody);
+            if (digit >= 0)
+                chunkLen = chunkLen * 16 + digit;
+            else
+                break;
+        }
+
+        LOG_CHUNK("parseHeader: Chunk of length " << chunkLen);
+
+        for (; itBody != _inBuffer.end() && *itBody != '\n'; ++itBody)
+            ; // skip to end of line
+
+        if (itBody != _inBuffer.end())
+            itBody++; /* \n */;
+
+        // skip the chunk.
+        auto chunkOffset = itBody - _inBuffer.begin();
+        auto chunkAvailable = _inBuffer.size() - chunkOffset;
+
+        if (chunkLen == 0) // we're complete.
+        {
+            map._messageSize = chunkOffset;
+            return true;
+        }
+
+        if (chunkLen > chunkAvailable + 2)
+        {
+            LOG_DBG("parseHeader: Not enough content yet in chunk " << chunk <<
+                    " starting at offset " << (chunkStart - _inBuffer.begin()) <<
+                    " chunk len: " << chunkLen << ", available: " << chunkAvailable << ", delay " << delayMsCount << "ms");
+            return false;
+        }
+        itBody += chunkLen;
+
+        map._spans.emplace_back(chunkOffset, chunkLen);
+
+        if (*itBody != '\r' || *(itBody + 1) != '\n')
+        {
+            LOG_ERR("parseHeader: Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen << ", delay " << delayMsCount << "ms");
+            LOG_CHUNK("Chunk " << chunk << " is: \n"
+                               << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
+            asyncShutdown();
+            return false; // TODO: throw something sensible in this case
+        }
+
+        LOG_CHUNK("parseHeader: Chunk "
+                  << chunk << " is: \n"
+                  << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
+
+        itBody+=2;
+        chunk++;
+    }
+    LOG_TRC("parseHeader: Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()) << ", delay " << delayMsCount << "ms");
+    return false;
+}
+
 bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerSize,
                                const Poco::Net::HTTPRequest& request,
                                std::chrono::steady_clock::time_point& lastHTTPHeader,
@@ -1720,8 +1796,6 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
 
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::chrono::duration<float, std::milli> delayMs = now - lastHTTPHeader;
-
-    auto itBody = _inBuffer.begin() + headerSize;
 
     map._headerSize = headerSize;
     map._messageSize = map._headerSize;
@@ -1751,83 +1825,15 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
 
     handleExpect(request);
 
+    bool ok = true;
+
     if (request.getChunkedTransferEncoding())
-    {
-        // keep the header
-        map._spans.emplace_back(0, itBody - _inBuffer.begin());
+        ok = checkChunks(headerSize, map, delayMs.count());
 
-        int chunk = 0;
-        while (itBody != _inBuffer.end())
-        {
-            auto chunkStart = itBody;
+    if (ok)
+        lastHTTPHeader = now;
 
-            // skip whitespace
-            for (; itBody != _inBuffer.end() && isascii(*itBody) && isspace(*itBody); ++itBody)
-                ; // skip.
-
-            // each chunk is preceeded by its length in hex.
-            size_t chunkLen = 0;
-            for (; itBody != _inBuffer.end(); ++itBody)
-            {
-                int digit = HexUtil::hexDigitFromChar(*itBody);
-                if (digit >= 0)
-                    chunkLen = chunkLen * 16 + digit;
-                else
-                    break;
-            }
-
-            LOG_CHUNK("parseHeader: Chunk of length " << chunkLen);
-
-            for (; itBody != _inBuffer.end() && *itBody != '\n'; ++itBody)
-                ; // skip to end of line
-
-            if (itBody != _inBuffer.end())
-                itBody++; /* \n */;
-
-            // skip the chunk.
-            auto chunkOffset = itBody - _inBuffer.begin();
-            auto chunkAvailable = _inBuffer.size() - chunkOffset;
-
-            if (chunkLen == 0) // we're complete.
-            {
-                map._messageSize = chunkOffset;
-                lastHTTPHeader = now;
-                return true;
-            }
-
-            if (chunkLen > chunkAvailable + 2)
-            {
-                LOG_DBG("parseHeader: Not enough content yet in chunk " << chunk <<
-                        " starting at offset " << (chunkStart - _inBuffer.begin()) <<
-                        " chunk len: " << chunkLen << ", available: " << chunkAvailable << ", delay " << delayMs.count() << "ms");
-                return false;
-            }
-            itBody += chunkLen;
-
-            map._spans.emplace_back(chunkOffset, chunkLen);
-
-            if (*itBody != '\r' || *(itBody + 1) != '\n')
-            {
-                LOG_ERR("parseHeader: Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen << ", delay " << delayMs.count() << "ms");
-                LOG_CHUNK("Chunk " << chunk << " is: \n"
-                                   << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
-                asyncShutdown();
-                return false; // TODO: throw something sensible in this case
-            }
-
-            LOG_CHUNK("parseHeader: Chunk "
-                      << chunk << " is: \n"
-                      << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
-
-            itBody+=2;
-            chunk++;
-        }
-        LOG_TRC("parseHeader: Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()) << ", delay " << delayMs.count() << "ms");
-        return false;
-    }
-
-    lastHTTPHeader = now;
-    return true;
+    return ok;
 }
 
 bool StreamSocket::compactChunks(MessageMap& map)
