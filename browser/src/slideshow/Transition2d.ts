@@ -83,7 +83,7 @@ abstract class TransitionBase extends SlideChangeGl {
 class Transition2d extends TransitionBase {
 	private static readonly DefaultFromColor = new Float32Array([0, 0, 0, 0]);
 	private static readonly DefaultToColor = new Float32Array([0, 0, 0, 0]);
-	private _uniformCache: Record<string, WebGLUniformLocation> = {};
+	private _uniformCache = new Map<string, WebGLUniformLocation | null>();
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
@@ -140,15 +140,16 @@ class Transition2d extends TransitionBase {
 		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 	}
 
-	private getUniformLocation(value: string) {
-		if (this.program) {
-			if (!this._uniformCache[value])
-				this._uniformCache[value] = this.gl.getUniformLocation(
-					this.program,
-					value,
-				);
-			return this._uniformCache[value];
+	private getUniformLocation(name: string): WebGLUniformLocation | null {
+		if (!this.program) return null;
+
+		if (this._uniformCache.has(name)) {
+			return this._uniformCache.get(name);
 		}
+
+		const loc = this.gl.getUniformLocation(this.program, name);
+		this._uniformCache.set(name, loc);
+		return loc;
 	}
 
 	public render(nT: number, properties?: AnimatedElementRenderProperties) {
