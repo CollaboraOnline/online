@@ -1668,7 +1668,7 @@ ssize_t StreamSocket::readHeader(const char* clientName, std::istream& message,
 }
 
 bool StreamSocket::parseHeader(const char* clientName, size_t headerSize,
-                               Poco::Net::HTTPRequest& request,
+                               const Poco::Net::HTTPRequest& request,
                                std::chrono::steady_clock::time_point& lastHTTPHeader,
                                MessageMap& map)
 {
