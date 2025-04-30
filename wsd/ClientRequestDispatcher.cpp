@@ -682,6 +682,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
+    const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+    std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
+
     Poco::Net::HTTPRequest request;
     ssize_t headerSize;
 
@@ -700,14 +703,30 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 #endif
 
 
-        headerSize = socket->readHeader("Client", startmessage, request, _lastSeenHTTPHeader);
+        headerSize = socket->readHeader("Client", startmessage, request, delayMs);
         if (headerSize < 0)
             return;
     }
 
+#if 0
+    {
+        // Remove the request header from our input buffer
+        socket->eraseFirstInputBytes(headerSize);
+        ///:
+            socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
+    }
+#endif
+
     StreamSocket::MessageMap map;
-    if (!socket->parseHeader("Client", headerSize, request, _lastSeenHTTPHeader, map))
+    if (!socket->parseHeader("Client", headerSize, socket->getInBuffer().size(), request, delayMs, map))
         return;
+
+    socket->handleExpect(request);
+
+    if (!socket->checkChunks(request, headerSize, map, delayMs))
+        return;
+
+    _lastSeenHTTPHeader = now;
 
 //    fprintf(stderr, "2: size of message is %ld for %s\n", socket->getInBuffer().size(), requestDetails.toString().c_str());
 

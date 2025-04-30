@@ -1558,17 +1558,19 @@ public:
 
     ssize_t readHeader(const char* clientName, Poco::MemoryInputStream& message,
                        Poco::Net::HTTPRequest& request,
-                       std::chrono::steady_clock::time_point& lastHTTPHeader);
+                       std::chrono::duration<float, std::milli> delayMs);
 
     /// Detects if we have an HTTP header in the provided message and
     /// populates a request for that.
-    bool parseHeader(const char* clientLoggingName, size_t headerSize,
+    bool parseHeader(const char* clientLoggingName, size_t headerSize, size_t bufferSize,
                      const Poco::Net::HTTPRequest& request,
-                     std::chrono::steady_clock::time_point& lastHTTPHeader, MessageMap& map);
+                     std::chrono::duration<float, std::milli> delayMs,
+                     MessageMap& map);
 
     void handleExpect(const Poco::Net::HTTPRequest& request);
 
-    bool checkChunks(size_t headerSize, MessageMap& map, float delayMsCount);
+    bool checkChunks(const Poco::Net::HTTPRequest& request, size_t headerSize, MessageMap& map,
+                     std::chrono::duration<float, std::milli> delayMs);
 
     Buffer& getInBuffer() { return _inBuffer; }
 
