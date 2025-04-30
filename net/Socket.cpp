@@ -1743,6 +1743,20 @@ bool StreamSocket::checkChunks(size_t headerSize, MessageMap& map, float delayMs
     return false;
 }
 
+void StreamSocket::handleExpect(const Poco::Net::HTTPRequest& request)
+{
+    const std::string expect = request.get("Expect", "");
+    const bool getExpectContinue = Util::iequal(expect, "100-continue");
+    if (getExpectContinue && !_sentHTTPContinue)
+    {
+        LOG_TRC("parseHeader: Got Expect: 100-continue, sending Continue");
+        // FIXME: should validate authentication headers early too.
+        send("HTTP/1.1 100 Continue\r\n\r\n",
+             sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
+        _sentHTTPContinue = true;
+    }
+}
+
 bool StreamSocket::parseHeader(const char* clientName, size_t headerSize,
                                const Poco::Net::HTTPRequest& request,
                                std::chrono::steady_clock::time_point& lastHTTPHeader,
@@ -1782,16 +1796,7 @@ bool StreamSocket::parseHeader(const char* clientName, size_t headerSize,
         map._messageSize += contentLength;
     }
 
-    const std::string expect = request.get("Expect", "");
-    const bool getExpectContinue = Util::iequal(expect, "100-continue");
-    if (getExpectContinue && !_sentHTTPContinue)
-    {
-        LOG_TRC("parseHeader: Got Expect: 100-continue, sending Continue");
-        // FIXME: should validate authentication headers early too.
-        send("HTTP/1.1 100 Continue\r\n\r\n",
-             sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
-        _sentHTTPContinue = true;
-    }
+    handleExpect(request);
 
     bool ok = true;
 
