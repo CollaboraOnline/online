@@ -3678,6 +3678,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_syncTilePanePos: function () {
+		if (this._container) {
+			var mapPanePos = this._map._getMapPanePos();
+			L.DomUtil.setPosition(this._container, new L.Point(-mapPanePos.x , -mapPanePos.y));
+		}
 		var documentBounds = this._map.getPixelBoundsCore();
 		var documentPos = documentBounds.min;
 		var documentEndPos = documentBounds.max;
