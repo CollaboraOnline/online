@@ -2381,31 +2381,31 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 
 bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
                                         const unsigned width, const unsigned height,
-                                        double dDevicePixelRatio, bool& done)
+                                        double devicePixelRatio, bool& done)
 {
-    // FIXME: we need a cache here.
+    // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
-    bool bIsBitmapLayer = false;
+    bool isBitmapLayer = false;
     char* msg = nullptr;
-    done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &bIsBitmapLayer, &dDevicePixelRatio, &msg);
+    done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer, &devicePixelRatio, &msg);
     std::string jsonMsg(msg);
     free(msg);
 
     if (jsonMsg.empty())
         return true;
 
-    if (!bIsBitmapLayer)
-    {
-        std::string response = "slidelayer: " + jsonMsg;
-        sendTextFrame(response);
-        return true;
-    }
-
     const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
     scomp.pushWork(
         [=, this, pixmap = std::move(pixmap),
          jsonMsg = std::move(jsonMsg)](std::vector<char>& output)
         {
+            if (!isBitmapLayer)
+            {
+                std::string response = "slidelayer: " + jsonMsg;
+                Util::vectorAppend(output, response);
+                return;
+            }
+
             if (watermark())
             {
                 const int watermarkWidth = width / 4;
@@ -2520,8 +2520,9 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     }
 
     scomp.compress([this](const std::vector<char>& output) {
+        size_t pos = Util::findInVector(output, "\n");
         LOG_TRC("Sending response (" << output.size() << " bytes) for: " <<
-                std::string(output.data(), Util::findInVector(output, "\n") - 1));
+                std::string(output.data(), pos == std::string::npos ? output.size() : pos - 1));
         sendBinaryFrame(output.data(), output.size());
     });
 
