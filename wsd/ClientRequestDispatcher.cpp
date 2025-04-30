@@ -708,6 +708,14 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             return;
     }
 
+    // start streaming condition
+    bool streamToFile =
+        request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST &&
+        request.getContentLength() != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH &&
+        !request.getChunkedTransferEncoding(); // ignore chunked transfer for now
+
+    fprintf(stderr, "CAN STREAM TO DISK %d\n", streamToFile);
+
 #if 0
     {
         // Remove the request header from our input buffer
