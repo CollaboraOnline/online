@@ -666,18 +666,19 @@ void launchAsyncCheckFileInfo(
 }
 
 static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket,
-                                     const StreamSocket::MessageMap& map,
+                                     ssize_t headerSize,
+                                     ssize_t contentSize,
                                      bool servedSync)
 {
     if( socket->getInBuffer().size() > 0 ) // erase request from inBuffer if not cleared by ignoreInput
     {
         // Remove the request header from our input buffer
-        socket->eraseFirstInputBytes(map._headerSize);
+        socket->eraseFirstInputBytes(headerSize);
         if (servedSync)
         {
             // Remove the request body from our input buffer, as it has been served (synchronously)
             // See cool#9621, commit 895c224efae9c21f0481e2fbf024a015656a5a97 and cool#10042
-            socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
+            socket->eraseFirstInputBytes(contentSize);
         }
     }
 }
@@ -702,6 +703,46 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
 
+    Poco::Net::HTTPRequest request;
+    ssize_t headerSize;
+
+    if (_postContentPending)
+    {
+        std::streamsize available = std::min<std::streamsize>(_postContentPending,
+                                                              socket->getInBuffer().size());
+        _postStream.write(socket->getInBuffer().data(), available);
+        socket->eraseFirstInputBytes(available);
+        _postContentPending -= available;
+        if (_postContentPending)
+        {
+            // not complete, accumulate more
+            return;
+        }
+
+        ssize_t messageSize = _postStream.tellp();
+        _postStream.seekg(0);
+
+        headerSize = socket->readHeader("Client", _postStream, messageSize, request, delayMs);
+        if (headerSize < 0)
+        {
+            // something rotten happened
+            socket->shutdown();
+            socket->ignoreInput();
+        }
+        else
+        {
+            socket->handleExpect(request);
+
+            _postStream.seekg(0);
+            handleFullMessage(request, _postStream, disposition, socket, headerSize, messageSize - headerSize, false, now);
+        }
+
+        _postStream.close();
+        _postFileDir.reset();
+
+        return;
+    }
+
     size_t inBufferSize = socket->getInBuffer().size();
     Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), inBufferSize);
 
@@ -715,13 +756,39 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
 #endif
 
-    Poco::Net::HTTPRequest request;
-
-    StreamSocket::MessageMap map;
-    ssize_t headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, delayMs);
+    headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, delayMs);
     if (headerSize < 0)
         return;
 
+    assert(!_postStream.is_open() && !_postFileDir && !_postContentPending);
+
+    // start streaming condition
+    const bool canStreamToFile =
+        request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST &&
+        request.getContentLength() != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH &&
+        !request.getChunkedTransferEncoding(); // ignore chunked transfer for now
+
+    if (canStreamToFile && request.getContentLength() > 0)
+    {
+        _postFileDir = std::make_unique<FileUtil::OwnedFile>(FileUtil::createRandomTmpDir(
+                    COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH) + '/', true);
+        std::string postFilename = _postFileDir->_file + "poststream";
+        _postStream.open(postFilename.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+        if (!_postStream)
+        {
+            LOG_ERR("Unable to open [" << postFilename << "] for POST streaming");
+            _postFileDir.reset();
+        }
+        else
+        {
+            _postStream.write(socket->getInBuffer().data(), headerSize);
+            socket->eraseFirstInputBytes(headerSize);
+            _postContentPending = request.getContentLength();
+            return;
+        }
+    }
+
+    StreamSocket::MessageMap map;
     if (!socket->parseHeader("Client", headerSize, inBufferSize, request, delayMs, map))
         return;
 
@@ -732,22 +799,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
     // We may need to re-write the chunks moving the inBuffer.
     socket->compactChunks(map);
-    const size_t preInBufferSz = socket->getInBuffer().size();
-
-    _lastSeenHTTPHeader = now;
 
     Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
-
-    ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
-    if (result == MessageResult::Ignore)
-        return;
-
-    assert(result == MessageResult::ServedSync || result == MessageResult::ServedAsync);
-    bool servedSync = result == MessageResult::ServedSync;
-
-    socketEraseConsumedBytes(socket, map, servedSync);
-
-    finishedMessage(request, socket, servedSync, preInBufferSz);
+    handleFullMessage(request, message, disposition, socket, map._headerSize, map._messageSize - map._headerSize, true, now);
 
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
@@ -787,6 +841,35 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 }
 
 #if !MOBILEAPP
+void ClientRequestDispatcher::handleFullMessage(Poco::Net::HTTPRequest& request,
+                                                std::istream& message,
+                                                SocketDisposition& disposition,
+                                                const std::shared_ptr<StreamSocket>& socket,
+                                                ssize_t headerSize,
+                                                ssize_t contentSize,
+                                                bool eraseMessageFromSocket,
+                                                std::chrono::steady_clock::time_point now)
+{
+    const size_t preInBufferSz = socket->getInBuffer().size();
+
+    _lastSeenHTTPHeader = now;
+
+    const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
+    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+
+    ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
+    if (result == MessageResult::Ignore)
+        return;
+
+    assert(result == MessageResult::ServedSync || result == MessageResult::ServedAsync);
+    bool servedSync = result == MessageResult::ServedSync;
+
+    if (eraseMessageFromSocket)
+        socketEraseConsumedBytes(socket, headerSize, contentSize, servedSync);
+
+    finishedMessage(request, socket, servedSync, preInBufferSz);
+}
+
 ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Poco::Net::HTTPRequest& request,
                                                                               std::istream& message,
                                                                               SocketDisposition& disposition,
