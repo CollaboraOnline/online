@@ -1558,7 +1558,7 @@ public:
 
     /// Detects if we have an HTTP header in the provided message and
     /// populates a request for that.
-    bool parseHeader(const char* clientLoggingName, Poco::MemoryInputStream& message,
+    bool parseHeader(const char* clientLoggingName, std::istream& message,
                      Poco::Net::HTTPRequest& request,
                      std::chrono::steady_clock::time_point lastHTTPHeader, MessageMap& map);
 
