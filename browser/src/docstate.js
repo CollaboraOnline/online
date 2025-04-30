@@ -44,8 +44,8 @@ window.app = {
 	DebugManager: null, // Attach DebugManager class.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
 	layoutingService: null, // instance of a service processing squashed DOM updates
-	twipsToPixels: 0, // Twips to pixels multiplier.
-	pixelsToTwips: 0, // Pixels to twips multiplier.
+	twipsToPixels: 0, // Twips to pixels multiplier, according to the current zoom level.
+	pixelsToTwips: 0, // Pixels to twips multiplier, according to the current zoom level.
 	accessibilityState: false, // If accessibility was enabled by user
 	UI: {
 		language: {
