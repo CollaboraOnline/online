@@ -1605,13 +1605,10 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream& message,
                                  size_t messagesize,
                                  Poco::Net::HTTPRequest& request,
-                                 std::chrono::steady_clock::time_point& lastHTTPHeader)
+                                 std::chrono::duration<float, std::milli> delayMs)
 {
     constexpr std::chrono::duration<float, std::milli> delayMax =
         std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
-
-    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    std::chrono::duration<float, std::milli> delayMs = now - lastHTTPHeader;
 
     // Find the end of the header, if any.
     constexpr std::string_view marker("\r\n\r\n");
@@ -1688,7 +1685,6 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
         return -1;
     }
 
-    lastHTTPHeader = now;
     return headerSize;
 }
 
@@ -1706,8 +1702,12 @@ void StreamSocket::handleExpect(const Poco::Net::HTTPRequest& request)
     }
 }
 
-bool StreamSocket::checkChunks(size_t headerSize, MessageMap& map, float delayMsCount)
+bool StreamSocket::checkChunks(const Poco::Net::HTTPRequest& request, size_t headerSize, MessageMap& map,
+                               std::chrono::duration<float, std::milli> delayMs)
 {
+    if (!request.getChunkedTransferEncoding())
+        return true;
+
     auto itBody = _inBuffer.begin() + headerSize;
 
     // keep the header
@@ -1755,7 +1755,7 @@ bool StreamSocket::checkChunks(size_t headerSize, MessageMap& map, float delayMs
         {
             LOG_DBG("parseHeader: Not enough content yet in chunk " << chunk <<
                     " starting at offset " << (chunkStart - _inBuffer.begin()) <<
-                    " chunk len: " << chunkLen << ", available: " << chunkAvailable << ", delay " << delayMsCount << "ms");
+                    " chunk len: " << chunkLen << ", available: " << chunkAvailable << ", delay " << delayMs.count() << "ms");
             return false;
         }
         itBody += chunkLen;
@@ -1764,7 +1764,7 @@ bool StreamSocket::checkChunks(size_t headerSize, MessageMap& map, float delayMs
 
         if (*itBody != '\r' || *(itBody + 1) != '\n')
         {
-            LOG_ERR("parseHeader: Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen << ", delay " << delayMsCount << "ms");
+            LOG_ERR("parseHeader: Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen << ", delay " << delayMs.count() << "ms");
             LOG_CHUNK("Chunk " << chunk << " is: \n"
                                << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
             shutdown();
@@ -1778,34 +1778,27 @@ bool StreamSocket::checkChunks(size_t headerSize, MessageMap& map, float delayMs
         itBody+=2;
         chunk++;
     }
-    LOG_TRC("parseHeader: Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()) << ", delay " << delayMsCount << "ms");
+    LOG_TRC("parseHeader: Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()) << ", delay " << delayMs.count() << "ms");
     return false;
 }
 
-bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerSize,
+bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerSize, size_t bufferSize,
                                const Poco::Net::HTTPRequest& request,
-                               std::chrono::steady_clock::time_point& lastHTTPHeader,
+                               std::chrono::duration<float, std::milli> delayMs,
                                MessageMap& map)
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
-
-    constexpr std::chrono::duration<float, std::milli> delayMax =
-        std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
-
-    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    std::chrono::duration<float, std::milli> delayMs = now - lastHTTPHeader;
 
     map._headerSize = headerSize;
     map._messageSize = map._headerSize;
 
     const std::streamsize contentLength = request.getContentLength();
-    const auto offset = headerSize;
-    const std::streamsize available = _inBuffer.size() - offset;
+    const std::streamsize available = bufferSize;
 
     LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request.getMethod()
                             << ", uri: [" << request.getURI() << "] " << request.getVersion()
                             << ", sz[header " << map._headerSize << ", content "
-                            << contentLength << "], offset " << offset << ", chunked "
+                            << contentLength << "], offset " << headerSize << ", chunked "
                             << request.getChunkedTransferEncoding() << ", "
                             << [&](auto& log) { Util::joinPair(log, request, " / "); });
 
@@ -1821,17 +1814,7 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
         map._messageSize += contentLength;
     }
 
-    handleExpect(request);
-
-    bool ok = true;
-
-    if (request.getChunkedTransferEncoding())
-        ok = checkChunks(headerSize, map, delayMs.count());
-
-    if (ok)
-        lastHTTPHeader = now;
-
-    return ok;
+    return true;
 }
 
 bool StreamSocket::compactChunks(MessageMap& map)
