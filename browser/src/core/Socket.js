@@ -765,7 +765,7 @@ app.definitions.Socket = L.Class.extend({
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				const anchor = document.createElement('a');
 				anchor.setAttribute('target', '_blank');
-				anchor.setAttribute('href', 'https://hub.libreoffice.org/git-core/' + h);
+				anchor.setAttribute('href', 'https://git.libreoffice.org/core/+log/' + lokitVersionObj.BuildId + '/');
 				anchor.textContent = 'git hash: ' + h;
 
 				const span = document.createElement('span');
