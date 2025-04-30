@@ -1605,6 +1605,8 @@ public:
                      const Poco::Net::HTTPRequest& request,
                      std::chrono::steady_clock::time_point& lastHTTPHeader, MessageMap& map);
 
+    void handleExpect(const Poco::Net::HTTPRequest& request);
+
     Buffer& getInBuffer() { return _inBuffer; }
 
     Buffer& getOutBuffer()
