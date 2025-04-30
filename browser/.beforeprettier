@@ -156,7 +156,6 @@
 /src/layer/tile/CanvasTileLayer.js
 /src/canvas/sections/CommentListSection.ts
 /src/canvas/sections/CalcGridSection.ts
-/src/canvas/sections/SplitSection.ts
 /src/canvas/sections/PixelGridSection.ts
 /src/canvas/sections/CommentSection.ts
 /src/canvas/sections/CursorHeaderSection.ts
