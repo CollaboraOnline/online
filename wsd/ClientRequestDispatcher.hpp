@@ -118,6 +118,9 @@ private:
 
     void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
+    void finishedMessage(const Poco::Net::HTTPRequest& request,
+                         const std::shared_ptr<StreamSocket>& socket,
+                         bool servedSync, size_t preInBufferSz);
 #endif // !MOBILEAPP
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
