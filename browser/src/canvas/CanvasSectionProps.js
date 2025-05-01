@@ -39,6 +39,7 @@ L.CSections.Debug.DebugOverlay = 	{ name: 'debug overlay'     , zIndex: 5 };
 L.CSections.Debug.PreloadMap = 	    { name: 'preload map'	    , zIndex: 5 };
 L.CSections.ColumnHeader = 			{ name: 'column header'		, zIndex: 5 };
 L.CSections.RowHeader = 			{ name: 'row header'		, zIndex: 5 };
+L.CSections.Splitter =              { name: 'splitter'			, zIndex: 5 };
 L.CSections.CornerHeader = 			{ name: 'corner header'		, zIndex: 5 };
 L.CSections.OtherViewCellCursor =   { zIndex: 5 };
 L.CSections.ColumnGroup = 			{ name: 'column group'		, zIndex: 5 };
@@ -82,6 +83,7 @@ L.CSections.Debug.DebugOverlay.processingOrder = 	67; // Writer & Impress & Calc
 L.CSections.Debug.PreloadMap.processingOrder =		68; // Writer & Impress & Calc. This is bound to tiles.
 L.CSections.CalcGrid.processingOrder = 				69; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			70; // Calc. This is bound to tiles.
+L.CSections.Splitter.processingOrder = 			    80; // Calc.
 
 L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
@@ -101,7 +103,7 @@ L.CSections.CornerGroup.drawingOrder =				120; // Calc.
 L.CSections.CornerHeader.drawingOrder =				130; // Calc.
 L.CSections.RowHeader.drawingOrder = 				140; // Calc.
 L.CSections.ColumnHeader.drawingOrder = 			150; // Calc.
-
+L.CSections.Splitter.drawingOrder = 				160; // Calc.
 
 /* zIndex = 6 and goes on. */
 

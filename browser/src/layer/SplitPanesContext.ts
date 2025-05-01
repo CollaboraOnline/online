@@ -38,17 +38,13 @@ export class SplitPanesContext {
 	protected _splitPos: Point;
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	constructor(docLayer: any, createSplitters: boolean = false) {
+	constructor(docLayer: any) {
 		console.assert(docLayer, 'no docLayer!');
 		console.assert(docLayer._map, 'no map!');
 
 		this._docLayer = docLayer;
 		this._map = docLayer._map;
 		this._setDefaults();
-
-		if (createSplitters) {
-			this.updateSplitters();
-		}
 	}
 
 	protected _setDefaults(): void {
@@ -100,9 +96,6 @@ export class SplitPanesContext {
 		console.assert(typeof splitX === 'number', 'splitX must be a number');
 
 		if (this._splitPos.x === splitX) {
-			if (forceUpdate || !this._docLayer.hasXSplitter()) {
-				this._updateXSplitter();
-			}
 			return false;
 		}
 
@@ -114,7 +107,6 @@ export class SplitPanesContext {
 		}
 
 		app.calc.splitCoordinate.pX = newX;
-		this._updateXSplitter();
 
 		if (!noFire)
 			this._map.fire('splitposchanged');
@@ -127,9 +119,6 @@ export class SplitPanesContext {
 		console.assert(typeof splitY === 'number', 'splitY must be a number');
 
 		if (this._splitPos.y === splitY) {
-			if (forceUpdate || !this._docLayer.hasYSplitter()) {
-				this._updateYSplitter();
-			}
 			return false;
 		}
 
@@ -141,25 +130,11 @@ export class SplitPanesContext {
 		}
 
 		app.calc.splitCoordinate.pY = newY;
-		this._updateYSplitter();
 
 		if (!noFire)
 			this._map.fire('splitposchanged');
 
 		return changed;
-	}
-
-	public updateSplitters(): void {
-		this._updateXSplitter();
-		this._updateYSplitter();
-	}
-
-	private _updateXSplitter(): void {
-		this._docLayer.updateHorizPaneSplitter();
-	}
-
-	private _updateYSplitter(): void {
-		this._docLayer.updateVertPaneSplitter();
 	}
 
 	public getPanesProperties(): PaneStatus[] {

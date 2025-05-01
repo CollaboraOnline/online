@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection */
 
 function clamp(num, min, max)
 {
@@ -4251,52 +4251,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var topLeft = new L.Point(coords.x, coords.y);
 		var bottomRight = topLeft.add(new L.Point(TileManager.tileSize, TileManager.tileSize));
 		return new L.Bounds(topLeft, bottomRight);
-	},
-
-	updateHorizPaneSplitter: function () {
-
-		var map = this._map;
-
-		if (!this._xSplitter) {
-			this._xSplitter = new CSplitterLine(
-				map, {
-					name: 'horiz-pane-splitter',
-					fillColor: this._splittersStyleData.getPropValue('color'),
-					fillOpacity: this._splittersStyleData.getFloatPropValue('opacity'),
-					thickness: Math.round(
-						this._splittersStyleData.getFloatPropWithoutUnit('border-top-width')
-						* app.dpiScale),
-					isHoriz: true
-				});
-
-			this._canvasOverlay.initPath(this._xSplitter);
-		}
-		else {
-			this._xSplitter.onPositionChange();
-		}
-	},
-
-	updateVertPaneSplitter: function () {
-
-		var map = this._map;
-
-		if (!this._ySplitter) {
-			this._ySplitter = new CSplitterLine(
-				map, {
-					name: 'vert-pane-splitter',
-					fillColor: this._splittersStyleData.getPropValue('color'),
-					fillOpacity: this._splittersStyleData.getFloatPropValue('opacity'),
-					thickness: Math.round(
-						this._splittersStyleData.getFloatPropWithoutUnit('border-top-width')
-						* app.dpiScale),
-					isHoriz: false
-				});
-
-			this._canvasOverlay.initPath(this._ySplitter);
-		}
-		else {
-			this._ySplitter.onPositionChange();
-		}
 	},
 
 	hasXSplitter: function () {
