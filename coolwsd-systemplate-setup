@@ -140,6 +140,16 @@ fi
 find $LOCALBASE/share -name '*.pcf' | xargs rm -f
 find $LOCALBASE/share -name '*.pcf.gz' | xargs rm -f
 
+# Same for /usr/local/share/fonts
+
+if test "$LOCALBASE" != "usr/local/"; then
+    mkdir -p $LOCALBASE/local/share || exit 1
+    ${CP} -r -p -L /${LOCALBASE}/local/share/fonts $LOCALBASE/local/share
+
+    find $LOCALBASE/local/share -name '*.pcf' | xargs rm -f
+    find $LOCALBASE/local/share -name '*.pcf.gz' | xargs rm -f
+fi
+
 # Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "$0: Copying development users's fonts into systemplate"
