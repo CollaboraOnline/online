@@ -316,6 +316,7 @@ L.Control.JSDialog = L.Control.extend({
 			title.innerText = instance.title;
 			instance.titleCloseButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
 			instance.titleCloseButton.setAttribute('aria-label', _('Close dialog'));
+			instance.titleCloseButton.setAttribute('title', _('Close dialog'));
 			instance.titleCloseButton.tabIndex = '0';
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
 		}
