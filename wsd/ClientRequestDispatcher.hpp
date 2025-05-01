@@ -118,6 +118,14 @@ private:
 
     void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
+    enum MessageResult { ServedAsync, ServedSync, Ignore };
+
+    MessageResult handleMessage(Poco::Net::HTTPRequest& request,
+                                std::istream& message,
+                                SocketDisposition& disposition,
+                                const std::shared_ptr<StreamSocket>& socket,
+                                ssize_t headerSize);
+
     void finishedMessage(const Poco::Net::HTTPRequest& request,
                          const std::shared_ptr<StreamSocket>& socket,
                          bool servedSync, size_t preInBufferSz);
