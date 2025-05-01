@@ -153,8 +153,21 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
         }
 #endif
 
+        if (takeOwnership)
+        {
+            LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString())
+                                      << "] as Conversion");
+            if (!uri.toString().starts_with(COOLWSD::ChildRoot))
+            {
+                LOG_ERR("Invalid path to document to convert [" << uri.toString() << ']');
+                return StorageBase::StorageType::Unsupported;
+            }
+
+            return StorageBase::StorageType::Conversion;
+        }
+
 #if ENABLE_LOCAL_FILESYSTEM
-        if (FilesystemEnabled || takeOwnership)
+        if (FilesystemEnabled)
         {
             LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString())
                                       << "] as FileSystem");
@@ -235,6 +248,10 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
                 "] in config");
             break;
 
+        case StorageBase::StorageType::Conversion:
+            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true);
+            break;
+
 #if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, takeOwnership);
@@ -251,8 +268,6 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     throw BadRequestException("No Storage configured or invalid URI " +
                               COOLWSD::anonymizeUrl(uri.toString()) + ']');
 }
-
-#if ENABLE_LOCAL_FILESYSTEM
 
 std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
@@ -421,8 +436,6 @@ std::size_t LocalStorage::uploadLocalFileToStorageAsync(
 
     return size;
 }
-
-#endif // ENABLE_LOCAL_FILESYSTEM
 
 void LockContext::initSupportsLocks()
 {

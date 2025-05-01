@@ -450,6 +450,7 @@ public:
     STATE_ENUM(StorageType,
                Unsupported, ///< An unsupported type.
                Unauthorized, ///< The host is not allowed by the admin.
+               Conversion, ///< Document conversion works like File-System internally.
 #if ENABLE_LOCAL_FILESYSTEM
                FileSystem, ///< File-System storage. Only for testing.
 #endif
@@ -532,8 +533,6 @@ private:
 #endif
 };
 
-#if ENABLE_LOCAL_FILESYSTEM
-
 /// Trivial implementation of local storage that does not need do anything.
 /// Used by both the FileSystem storage and for document conversion.
 class LocalStorage final : public StorageBase
@@ -614,8 +613,6 @@ private:
     bool _isCopy;
     static std::atomic<unsigned> LastLocalStorageId;
 };
-
-#endif // ENABLE_LOCAL_FILESYSTEM
 
 /// Represents whether the underlying file is locked
 /// and with what token.
