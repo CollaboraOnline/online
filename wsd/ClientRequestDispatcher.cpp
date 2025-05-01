@@ -730,6 +730,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     if (!socket->checkChunks(request, headerSize, map, delayMs))
         return;
 
+    // We may need to re-write the chunks moving the inBuffer.
+    socket->compactChunks(map);
+
     _lastSeenHTTPHeader = now;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
@@ -741,8 +744,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
     try
     {
-        // We may need to re-write the chunks moving the inBuffer.
-        socket->compactChunks(map);
         Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
         message.seekg(headerSize, std::ios::beg);
