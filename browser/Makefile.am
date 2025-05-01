@@ -292,6 +292,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CommentListSection.ts \
 	src/canvas/sections/CalcGridSection.ts \
 	src/canvas/sections/SplitSection.ts \
+	src/canvas/sections/SplitterLinesSection.ts \
 	src/canvas/sections/PixelGridSection.ts \
 	src/canvas/sections/DebugOverlaySection.ts \
 	src/canvas/sections/PreloadMapSection.ts \
@@ -323,7 +324,6 @@ COOL_JS_LST =\
 	src/layer/vector/CPolyUtil.ts \
 	src/layer/vector/CPolygon.ts \
 	src/layer/vector/CRectangle.ts \
-	src/layer/vector/CSplitterLine.ts \
 	src/layer/marker/Cursor.ts \
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \

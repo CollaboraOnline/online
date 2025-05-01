@@ -178,7 +178,6 @@
 /src/layer/vector/CPolyline.ts
 /src/layer/vector/CPolyUtil.ts
 /src/layer/vector/CRectangle.ts
-/src/layer/vector/CSplitterLine.ts
 /src/layer/vector/Path.Drag.js
 /src/layer/vector/Path.Drag.Transform.js
 /src/layer/vector/Path.js
