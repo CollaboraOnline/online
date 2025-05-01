@@ -10,7 +10,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/* See CanvasSectionContainer.ts for explanations. */
+
+/*
+	See CanvasSectionContainer.ts explanations about sections, event handlers and more.
+
+	This section is activated when user (currently) clicks on [View -> Focus Cell] button.
+	When feature is activated, this section draws 2 rectangles:
+		* One vertical that indicates the column of the cell cursor.
+		* One horizontal that indicates the row of the cell cursor.
+
+	So the purpose is to visually indicate the cell cursor position in the document better.
+*/
 
 class FocusCellSection extends CanvasSectionObject {
 	name: string = L.CSections.FocusCell.name;
