@@ -535,7 +535,8 @@ private:
 #if ENABLE_LOCAL_FILESYSTEM
 
 /// Trivial implementation of local storage that does not need do anything.
-class LocalStorage : public StorageBase
+/// Used by both the FileSystem storage and for document conversion.
+class LocalStorage final : public StorageBase
 {
 public:
     LocalStorage(const Poco::URI& uri, const std::string& localStorePath,

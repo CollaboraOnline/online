@@ -45,6 +45,7 @@
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
+#include <wsd/COOLWSD.hpp>
 
 #ifdef IOS
 #include <ios.h>
@@ -397,7 +398,7 @@ std::size_t LocalStorage::uploadLocalFileToStorageAsync(
         if (_isCopy && Poco::File(getRootFilePathUploading()).exists())
             FileUtil::copyFileTo(getRootFilePathUploading(), path);
 
-        const FileUtil::Stat stat(std::move(path));
+        const FileUtil::Stat stat(path); // Don't move 'path' as it's used in the catch.
         size = stat.size();
 
         // update its fileinfo object. This is used later to check if someone else changed the

@@ -27,6 +27,7 @@
 #include <CacheUtil.hpp>
 #include <Util.hpp>
 #include <ServerAuditUtil.hpp>
+#include <wsd/Storage.hpp>
 
 #if !MOBILEAPP
 #include <wopi/CheckFileInfo.hpp>
