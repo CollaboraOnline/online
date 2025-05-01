@@ -14,7 +14,7 @@
  * Collabora Online toolbar
  */
 
-/* global app $ _ JSDialog */
+/* global app $ _ _UNO JSDialog */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function(global) {
@@ -251,10 +251,12 @@ var highlightTableFunction = function(event) {
 	var col = $(event.target).index() + 1;
 	var row = $(event.target).parent().index() + 1;
 	$('.col').removeClass('bright');
-	$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
+	$('.col').removeAttr('title');
+	var elements = $('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
 		.addClass('bright');
-	var status = $('#inserttable-status')
-	status.html(col + 'x' + row);
+
+	var lastHighlightedCell = elements.last();
+	lastHighlightedCell.attr('title', `${col} x ${row}`);
 };
 
 function getInsertTablePopupElements(closeCallback) {
@@ -267,14 +269,8 @@ function getInsertTablePopupElements(closeCallback) {
 	grid.onmouseover = highlightTableFunction;
 	grid.onclick = sendInsertTableFunction;
 
-	const statusDiv = document.createElement('div');
-	statusDiv.id = 'inserttable-status';
-	statusDiv.className = 'cool-font';
-	statusDiv.style.padding = '5px';
-
 	container.textContent = '\n';
 	container.appendChild(grid);
-	container.appendChild(statusDiv);
 
 	insertTable(container.children[0]);
 
@@ -318,163 +314,163 @@ function insertTable(grid = document.getElementsByClassName('inserttable-grid')[
 var shapes = {
 	'insertshapes': {
 		'Basic Shapes': [
-			{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
-			{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
-			{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
-			{img: 'basicshapes_round-quadrat', uno: 'BasicShapes.round-quadrat'},
-			{img: 'basicshapes_circle', uno: 'BasicShapes.circle'},
-			{img: 'basicshapes_ellipse', uno: 'BasicShapes.ellipse'},
+			{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle', text: _UNO('.uno:BasicShapes.rectangle')},
+			{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle', text: _UNO('.uno:BasicShapes.round-rectangle')},
+			{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat', text: _UNO('.uno:BasicShapes.quadrat')},
+			{img: 'basicshapes_round-quadrat', uno: 'BasicShapes.round-quadrat', text: _UNO('.uno:BasicShapes.round-quadrat')},
+			{img: 'basicshapes_circle', uno: 'BasicShapes.circle', text: _UNO('.uno:BasicShapes.circle')},
+			{img: 'basicshapes_ellipse', uno: 'BasicShapes.ellipse', text: _UNO('.uno:BasicShapes.ellipse')},
 
-			{img: 'basicshapes_circle-pie', uno: 'BasicShapes.circle-pie'},
-			{img: 'basicshapes_isosceles-triangle', uno: 'BasicShapes.isosceles-triangle'},
-			{img: 'basicshapes_right-triangle', uno: 'BasicShapes.right-triangle'},
-			{img: 'basicshapes_trapezoid', uno: 'BasicShapes.trapezoid'},
-			{img: 'basicshapes_diamond', uno: 'BasicShapes.diamond'},
-			{img: 'basicshapes_parallelogram', uno: 'BasicShapes.parallelogram'},
+			{img: 'basicshapes_circle-pie', uno: 'BasicShapes.circle-pie', text: _UNO('.uno:BasicShapes.circle-pie')},
+			{img: 'basicshapes_isosceles-triangle', uno: 'BasicShapes.isosceles-triangle', text: _UNO('.uno:BasicShapes.isosceles-triangle')},
+			{img: 'basicshapes_right-triangle', uno: 'BasicShapes.right-triangle', text: _UNO('.uno:BasicShapes.right-triangle')},
+			{img: 'basicshapes_trapezoid', uno: 'BasicShapes.trapezoid', text: _UNO('.uno:BasicShapes.trapezoid')},
+			{img: 'basicshapes_diamond', uno: 'BasicShapes.diamond', text: _UNO('.uno:BasicShapes.diamond')},
+			{img: 'basicshapes_parallelogram', uno: 'BasicShapes.parallelogram', text: _UNO('.uno:BasicShapes.parallelogram')},
 
-			{img: 'basicshapes_pentagon', uno: 'BasicShapes.pentagon'},
-			{img: 'basicshapes_hexagon', uno: 'BasicShapes.hexagon'},
-			{img: 'basicshapes_octagon', uno: 'BasicShapes.octagon'},
-			{img: 'basicshapes_cross', uno: 'BasicShapes.cross'},
-			{img: 'basicshapes_ring', uno: 'BasicShapes.ring'},
-			{img: 'basicshapes_block-arc', uno: 'BasicShapes.block-arc'},
+			{img: 'basicshapes_pentagon', uno: 'BasicShapes.pentagon', text: _UNO('.uno:BasicShapes.pentagon')},
+			{img: 'basicshapes_hexagon', uno: 'BasicShapes.hexagon', text: _UNO('.uno:BasicShapes.hexagon')},
+			{img: 'basicshapes_octagon', uno: 'BasicShapes.octagon', text: _UNO('.uno:BasicShapes.octagon')},
+			{img: 'basicshapes_cross', uno: 'BasicShapes.cross', text: _UNO('.uno:BasicShapes.cross')},
+			{img: 'basicshapes_ring', uno: 'BasicShapes.ring', text: _UNO('.uno:BasicShapes.ring')},
+			{img: 'basicshapes_block-arc', uno: 'BasicShapes.block-arc', text: _UNO('.uno:BasicShapes.block-arc')},
 
-			{img: 'basicshapes_can', uno: 'BasicShapes.can'},
-			{img: 'basicshapes_cube', uno: 'BasicShapes.cube'},
-			{img: 'basicshapes_paper', uno: 'BasicShapes.paper'},
-			{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
+			{img: 'basicshapes_can', uno: 'BasicShapes.can', text: _UNO('.uno:BasicShapes.can')},
+			{img: 'basicshapes_cube', uno: 'BasicShapes.cube', text: _UNO('.uno:BasicShapes.cube')},
+			{img: 'basicshapes_paper', uno: 'BasicShapes.paper', text: _UNO('.uno:BasicShapes.paper')},
+			{img: 'basicshapes_frame', uno: 'BasicShapes.frame', text: _UNO('.uno:BasicShapes.frame')}
 		],
 
 		'Symbol Shapes':  [
-			{img: 'symbolshapes', uno: 'SymbolShapes.smiley'},
-			{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun'},
-			{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon'},
-			{img: 'symbolshapes_lightning', uno: 'SymbolShapes.lightning'},
-			{img: 'symbolshapes_heart', uno: 'SymbolShapes.heart'},
-			{img: 'symbolshapes_flower', uno: 'SymbolShapes.flower'},
+			{img: 'symbolshapes', uno: 'SymbolShapes.smiley', text: _UNO('.uno:SymbolShapes.smiley')},
+			{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun', text: _UNO('.uno:SymbolShapes.sun')},
+			{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon', text: _UNO('.uno:SymbolShapes.moon')},
+			{img: 'symbolshapes_lightning', uno: 'SymbolShapes.lightning', text: _UNO('.uno:SymbolShapes.lightning')},
+			{img: 'symbolshapes_heart', uno: 'SymbolShapes.heart', text: _UNO('.uno:SymbolShapes.heart')},
+			{img: 'symbolshapes_flower', uno: 'SymbolShapes.flower', text: _UNO('.uno:SymbolShapes.flower')},
 
-			{img: 'symbolshapes_cloud', uno: 'SymbolShapes.cloud'},
-			{img: 'symbolshapes_forbidden', uno: 'SymbolShapes.forbidden'},
-			{img: 'symbolshapes_puzzle', uno: 'SymbolShapes.puzzle'},
-			{img: 'symbolshapes_bracket-pair', uno: 'SymbolShapes.bracket-pair'},
-			{img: 'symbolshapes_left-bracket', uno: 'SymbolShapes.left-bracket'},
-			{img: 'symbolshapes_right-bracket', uno: 'SymbolShapes.right-bracket'},
+			{img: 'symbolshapes_cloud', uno: 'SymbolShapes.cloud', text: _UNO('.uno:SymbolShapes.cloud')},
+			{img: 'symbolshapes_forbidden', uno: 'SymbolShapes.forbidden', text: _UNO('.uno:SymbolShapes.forbidden')},
+			{img: 'symbolshapes_puzzle', uno: 'SymbolShapes.puzzle', text: _UNO('.uno:SymbolShapes.puzzle')},
+			{img: 'symbolshapes_bracket-pair', uno: 'SymbolShapes.bracket-pair', text: _UNO('.uno:SymbolShapes.bracket-pair')},
+			{img: 'symbolshapes_left-bracket', uno: 'SymbolShapes.left-bracket', text: _UNO('.uno:SymbolShapes.left-bracket')},
+			{img: 'symbolshapes_right-bracket', uno: 'SymbolShapes.right-bracket', text: _UNO('.uno:SymbolShapes.right-bracket')},
 
-			{img: 'symbolshapes_brace-pair', uno: 'SymbolShapes.brace-pair'},
-			{img: 'symbolshapes_left-brace', uno: 'SymbolShapes.left-brace'},
-			{img: 'symbolshapes_right-brace', uno: 'SymbolShapes.right-brace'},
-			{img: 'symbolshapes_quad-bevel', uno: 'SymbolShapes.quad-bevel'},
-			{img: 'symbolshapes_octagon-bevel', uno: 'SymbolShapes.octagon-bevel'},
-			{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel'}
+			{img: 'symbolshapes_brace-pair', uno: 'SymbolShapes.brace-pair', text: _UNO('.uno:SymbolShapes.brace-pair')},
+			{img: 'symbolshapes_left-brace', uno: 'SymbolShapes.left-brace', text: _UNO('.uno:SymbolShapes.left-brace')},
+			{img: 'symbolshapes_right-brace', uno: 'SymbolShapes.right-brace', text: _UNO('.uno:SymbolShapes.right-brace')},
+			{img: 'symbolshapes_quad-bevel', uno: 'SymbolShapes.quad-bevel', text: _UNO('.uno:SymbolShapes.quad-bevel')},
+			{img: 'symbolshapes_octagon-bevel', uno: 'SymbolShapes.octagon-bevel', text: _UNO('.uno:SymbolShapes.octagon-bevel')},
+			{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel', text: _UNO('.uno:SymbolShapes.diamond-bevel')}
 		],
 
 		'Block Arrows': [
-			{img: 'arrowshapes_left-arrow', uno: 'ArrowShapes.left-arrow'},
-			{img: 'arrowshapes_right-arrow', uno: 'ArrowShapes.right-arrow'},
-			{img: 'arrowshapes_up-arrow', uno: 'ArrowShapes.up-arrow'},
-			{img: 'arrowshapes_down-arrow', uno: 'ArrowShapes.down-arrow'},
-			{img: 'arrowshapes_left-right-arrow', uno: 'ArrowShapes.left-right-arrow'},
-			{img: 'arrowshapes_up-down-arrow', uno: 'ArrowShapes.up-down-arrow'},
+			{img: 'arrowshapes_left-arrow', uno: 'ArrowShapes.left-arrow', text: _UNO('.uno:ArrowShapes.left-arrow')},
+			{img: 'arrowshapes_right-arrow', uno: 'ArrowShapes.right-arrow', text: _UNO('.uno:ArrowShapes.right-arrow')},
+			{img: 'arrowshapes_up-arrow', uno: 'ArrowShapes.up-arrow', text: _UNO('.uno:ArrowShapes.up-arrow')},
+			{img: 'arrowshapes_down-arrow', uno: 'ArrowShapes.down-arrow', text: _UNO('.uno:ArrowShapes.down-arrow')},
+			{img: 'arrowshapes_left-right-arrow', uno: 'ArrowShapes.left-right-arrow', text: _UNO('.uno:ArrowShapes.left-right-arrow')},
+			{img: 'arrowshapes_up-down-arrow', uno: 'ArrowShapes.up-down-arrow', text: _UNO('.uno:ArrowShapes.up-down-arrow')},
 
-			{img: 'arrowshapes_up-right-arrow', uno: 'ArrowShapes.up-right-arrow'},
-			{img: 'arrowshapes_up-right-down-arrow', uno: 'ArrowShapes.up-right-down-arrow'},
-			{img: 'arrowshapes_quad-arrow', uno: 'ArrowShapes.quad-arrow'},
-			{img: 'arrowshapes_corner-right-arrow', uno: 'ArrowShapes.corner-right-arrow'},
-			{img: 'arrowshapes_split-arrow', uno: 'ArrowShapes.split-arrow'},
-			{img: 'arrowshapes_striped-right-arrow', uno: 'ArrowShapes.striped-right-arrow'},
+			{img: 'arrowshapes_up-right-arrow', uno: 'ArrowShapes.up-right-arrow', text: _UNO('.uno:ArrowShapes.up-right-arrow')},
+			{img: 'arrowshapes_up-right-down-arrow', uno: 'ArrowShapes.up-right-down-arrow', text: _UNO('.uno:ArrowShapes.up-right-down-arrow')},
+			{img: 'arrowshapes_quad-arrow', uno: 'ArrowShapes.quad-arrow', text: _UNO('.uno:ArrowShapes.quad-arrow')},
+			{img: 'arrowshapes_corner-right-arrow', uno: 'ArrowShapes.corner-right-arrow', text: _UNO('.uno:ArrowShapes.corner-right-arrow')},
+			{img: 'arrowshapes_split-arrow', uno: 'ArrowShapes.split-arrow', text: _UNO('.uno:ArrowShapes.split-arrow')},
+			{img: 'arrowshapes_striped-right-arrow', uno: 'ArrowShapes.striped-right-arrow', text: _UNO('.uno:ArrowShapes.striped-right-arrow')},
 
-			{img: 'arrowshapes_notched-right-arrow', uno: 'ArrowShapes.notched-right-arrow'},
-			{img: 'arrowshapes_pentagon-right', uno: 'ArrowShapes.pentagon-right'},
-			{img: 'arrowshapes_chevron', uno: 'ArrowShapes.chevron'},
-			{img: 'arrowshapes_right-arrow-callout', uno: 'ArrowShapes.right-arrow-callout'},
-			{img: 'arrowshapes_left-arrow-callout', uno: 'ArrowShapes.left-arrow-callout'},
-			{img: 'arrowshapes_up-arrow-callout', uno: 'ArrowShapes.up-arrow-callout'},
+			{img: 'arrowshapes_notched-right-arrow', uno: 'ArrowShapes.notched-right-arrow', text: _UNO('.uno:ArrowShapes.notched-right-arrow')},
+			{img: 'arrowshapes_pentagon-right', uno: 'ArrowShapes.pentagon-right', text: _UNO('.uno:ArrowShapes.pentagon-right')},
+			{img: 'arrowshapes_chevron', uno: 'ArrowShapes.chevron', text: _UNO('.uno:ArrowShapes.chevron')},
+			{img: 'arrowshapes_right-arrow-callout', uno: 'ArrowShapes.right-arrow-callout', text: _UNO('.uno:ArrowShapes.right-arrow-callout')},
+			{img: 'arrowshapes_left-arrow-callout', uno: 'ArrowShapes.left-arrow-callout', text: _UNO('.uno:ArrowShapes.left-arrow-callout')},
+			{img: 'arrowshapes_up-arrow-callout', uno: 'ArrowShapes.up-arrow-callout', text: _UNO('.uno:ArrowShapes.up-arrow-callout')},
 
-			{img: 'arrowshapes_down-arrow-callout', uno: 'ArrowShapes.down-arrow-callout'},
-			{img: 'arrowshapes_left-right-arrow-callout', uno: 'ArrowShapes.left-right-arrow-callout'},
-			{img: 'arrowshapes_up-down-arrow-callout', uno: 'ArrowShapes.up-down-arrow-callout'},
-			{img: 'arrowshapes_up-right-arrow-callout', uno: 'ArrowShapes.up-right-arrow-callout'},
-			{img: 'arrowshapes_quad-arrow-callout', uno: 'ArrowShapes.quad-arrow-callout'},
-			{img: 'arrowshapes_circular-arrow', uno: 'ArrowShapes.circular-arrow'},
+			{img: 'arrowshapes_down-arrow-callout', uno: 'ArrowShapes.down-arrow-callout', text: _UNO('.uno:ArrowShapes.down-arrow-callout')},
+			{img: 'arrowshapes_left-right-arrow-callout', uno: 'ArrowShapes.left-right-arrow-callout', text: _UNO('.uno:ArrowShapes.left-right-arrow-callout')},
+			{img: 'arrowshapes_up-down-arrow-callout', uno: 'ArrowShapes.up-down-arrow-callout', text: _UNO('.uno:ArrowShapes.up-down-arrow-callout')},
+			{img: 'arrowshapes_up-right-arrow-callout', uno: 'ArrowShapes.up-right-arrow-callout', text: _UNO('.uno:ArrowShapes.up-right-arrow-callout')},
+			{img: 'arrowshapes_quad-arrow-callout', uno: 'ArrowShapes.quad-arrow-callout', text: _UNO('.uno:ArrowShapes.quad-arrow-callout')},
+			{img: 'arrowshapes_circular-arrow', uno: 'ArrowShapes.circular-arrow', text: _UNO('.uno:ArrowShapes.circular-arrow')},
 
-			{img: 'arrowshapes_split-round-arrow', uno: 'ArrowShapes.split-round-arrow'},
-			{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
+			{img: 'arrowshapes_split-round-arrow', uno: 'ArrowShapes.split-round-arrow', text: _UNO('.uno:ArrowShapes.split-round-arrow')},
+			{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow', text: _UNO('.uno:ArrowShapes.s-sharped-arrow')}
 		],
 
 		'Stars and Banners': [
-			{img: 'starshapes_bang', uno: 'StarShapes.bang'},
-			{img: 'starshapes_star4', uno: 'StarShapes.star4'},
-			{img: 'starshapes_star5', uno: 'StarShapes.star5'},
-			{img: 'starshapes_star6', uno: 'StarShapes.star6'},
-			{img: 'starshapes_star8', uno: 'StarShapes.star8'},
-			{img: 'starshapes_star12', uno: 'StarShapes.star12'},
+			{img: 'starshapes_bang', uno: 'StarShapes.bang', text: _UNO('.uno:StarShapes.bang')},
+			{img: 'starshapes_star4', uno: 'StarShapes.star4', text: _UNO('.uno:StarShapes.star4')},
+			{img: 'starshapes_star5', uno: 'StarShapes.star5', text: _UNO('.uno:StarShapes.star5')},
+			{img: 'starshapes_star6', uno: 'StarShapes.star6', text: _UNO('.uno:StarShapes.star6')},
+			{img: 'starshapes_star8', uno: 'StarShapes.star8', text: _UNO('.uno:StarShapes.star8')},
+			{img: 'starshapes_star12', uno: 'StarShapes.star12', text: _UNO('.uno:StarShapes.star12')},
 
-			{img: 'starshapes_star24', uno: 'StarShapes.star24'},
-			{img: 'starshapes_concave-star6', uno: 'StarShapes.concave-star6'},
-			{img: 'starshapes_vertical-scroll', uno: 'StarShapes.vertical-scroll'},
-			{img: 'starshapes_horizontal-scroll', uno: 'StarShapes.horizontal-scroll'},
-			{img: 'starshapes_signet', uno: 'StarShapes.signet'},
-			{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate'}
+			{img: 'starshapes_star24', uno: 'StarShapes.star24', text: _UNO('.uno:StarShapes.star24')},
+			{img: 'starshapes_concave-star6', uno: 'StarShapes.concave-star6', text: _UNO('.uno:StarShapes.concave-star6')},
+			{img: 'starshapes_vertical-scroll', uno: 'StarShapes.vertical-scroll', text: _UNO('.uno:StarShapes.vertical-scroll')},
+			{img: 'starshapes_horizontal-scroll', uno: 'StarShapes.horizontal-scroll', text: _UNO('.uno:StarShapes.horizontal-scroll')},
+			{img: 'starshapes_signet', uno: 'StarShapes.signet', text: _UNO('.uno:StarShapes.signet')},
+			{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate', text: _UNO('.uno:StarShapes.doorplate')}
 		],
 
 		'Callouts': [
-			{img: 'calloutshapes_rectangular-callout', uno: 'CalloutShapes.rectangular-callout'},
-			{img: 'calloutshapes_round-rectangular-callout', uno: 'CalloutShapes.round-rectangular-callout'},
-			{img: 'calloutshapes_round-callout', uno: 'CalloutShapes.round-callout'},
-			{img: 'calloutshapes_cloud-callout', uno: 'CalloutShapes.cloud-callout'},
-			{img: 'calloutshapes_line-callout-1', uno: 'CalloutShapes.line-callout-1'},
-			{img: 'calloutshapes_line-callout-2', uno: 'CalloutShapes.line-callout-2'},
-			{img: 'calloutshapes_line-callout-3', uno: 'CalloutShapes.line-callout-3'}
+			{img: 'calloutshapes_rectangular-callout', uno: 'CalloutShapes.rectangular-callout', text: _UNO('.uno:CalloutShapes.rectangular-callout')},
+			{img: 'calloutshapes_round-rectangular-callout',uno: 'CalloutShapes.round-rectangular-callout', text: _UNO('.uno:CalloutShapes.round-rectangular-callout')},
+			{img: 'calloutshapes_round-callout', uno: 'CalloutShapes.round-callout', text: _UNO('.uno:CalloutShapes.round-callout')},
+			{img: 'calloutshapes_cloud-callout', uno: 'CalloutShapes.cloud-callout', text: _UNO('.uno:CalloutShapes.cloud-callout')},
+			{img: 'calloutshapes_line-callout-1', uno: 'CalloutShapes.line-callout-1', text: _UNO('.uno:CalloutShapes.line-callout-1')},
+			{img: 'calloutshapes_line-callout-2', uno: 'CalloutShapes.line-callout-2', text: _UNO('.uno:CalloutShapes.line-callout-2')},
+			{img: 'calloutshapes_line-callout-3', uno: 'CalloutShapes.line-callout-3', text: _UNO('.uno:CalloutShapes.line-callout-3')}
 		],
 
 		'Flowchart': [
-			{img: 'flowchartshapes_flowchart-process', uno: 'FlowchartShapes.flowchart-process'},
-			{img: 'flowchartshapes_flowchart-alternate-process', uno: 'FlowchartShapes.flowchart-alternate-process'},
-			{img: 'flowchartshapes_flowchart-decision', uno: 'FlowchartShapes.flowchart-decision'},
-			{img: 'flowchartshapes_flowchart-data', uno: 'FlowchartShapes.flowchart-data'},
-			{img: 'flowchartshapes_flowchart-predefined-process', uno: 'FlowchartShapes.flowchart-predefined-process'},
-			{img: 'flowchartshapes_flowchart-internal-storage', uno: 'FlowchartShapes.flowchart-internal-storage'},
+			{img: 'flowchartshapes_flowchart-process', uno: 'FlowchartShapes.flowchart-process', text: _UNO('.uno:FlowChartShapes.flowchart-process')},
+			{img: 'flowchartshapes_flowchart-alternate-process', uno: 'FlowchartShapes.flowchart-alternate-process', text: _UNO('.uno:FlowChartShapes.flowchart-alternate-process')},
+			{img: 'flowchartshapes_flowchart-decision', uno: 'FlowchartShapes.flowchart-decision', text: _UNO('.uno:FlowChartShapes.flowchart-decision')},
+			{img: 'flowchartshapes_flowchart-data', uno: 'FlowchartShapes.flowchart-data', text: _UNO('.uno:FlowChartShapes.flowchart-data')},
+			{img: 'flowchartshapes_flowchart-predefined-process', uno: 'FlowchartShapes.flowchart-predefined-process', text: _UNO('.uno:FlowChartShapes.flowchart-predefined-process')},
+			{img: 'flowchartshapes_flowchart-internal-storage', uno: 'FlowchartShapes.flowchart-internal-storage', text: _UNO('.uno:FlowChartShapes.flowchart-internal-storage')},
 
-			{img: 'flowchartshapes_flowchart-document', uno: 'FlowchartShapes.flowchart-document'},
-			{img: 'flowchartshapes_flowchart-multidocument', uno: 'FlowchartShapes.flowchart-multidocument'},
-			{img: 'flowchartshapes_flowchart-terminator', uno: 'FlowchartShapes.flowchart-terminator'},
-			{img: 'flowchartshapes_flowchart-preparation', uno: 'FlowchartShapes.flowchart-preparation'},
-			{img: 'flowchartshapes_flowchart-manual-input', uno: 'FlowchartShapes.flowchart-manual-input'},
-			{img: 'flowchartshapes_flowchart-manual-operation', uno: 'FlowchartShapes.flowchart-manual-operation'},
+			{img: 'flowchartshapes_flowchart-document', uno: 'FlowchartShapes.flowchart-document', text: _UNO('.uno:FlowChartShapes.flowchart-document')},
+			{img: 'flowchartshapes_flowchart-multidocument', uno: 'FlowchartShapes.flowchart-multidocument', text: _UNO('.uno:FlowChartShapes.flowchart-multidocument')},
+			{img: 'flowchartshapes_flowchart-terminator', uno: 'FlowchartShapes.flowchart-terminator', text: _UNO('.uno:FlowChartShapes.flowchart-terminator')},
+			{img: 'flowchartshapes_flowchart-preparation', uno: 'FlowchartShapes.flowchart-preparation', text: _UNO('.uno:FlowChartShapes.flowchart-preparation')},
+			{img: 'flowchartshapes_flowchart-manual-input', uno: 'FlowchartShapes.flowchart-manual-input', text: _UNO('.uno:FlowChartShapes.flowchart-manual-input')},
+			{img: 'flowchartshapes_flowchart-manual-operation', uno: 'FlowchartShapes.flowchart-manual-operation', text: _UNO('.uno:FlowChartShapes.flowchart-manual-operation')},
 
-			{img: 'flowchartshapes_flowchart-connector', uno: 'FlowchartShapes.flowchart-connector'},
-			{img: 'flowchartshapes_flowchart-off-page-connector', uno: 'FlowchartShapes.flowchart-off-page-connector'},
-			{img: 'flowchartshapes_flowchart-card', uno: 'FlowchartShapes.flowchart-card'},
-			{img: 'flowchartshapes_flowchart-punched-tape', uno: 'FlowchartShapes.flowchart-punched-tape'},
-			{img: 'flowchartshapes_flowchart-summing-junction', uno: 'FlowchartShapes.flowchart-summing-junction'},
-			{img: 'flowchartshapes_flowchart-or', uno: 'FlowchartShapes.flowchart-or'},
+			{img: 'flowchartshapes_flowchart-connector', uno: 'FlowchartShapes.flowchart-connector', text: _UNO('.uno:FlowChartShapes.flowchart-connector')},
+			{img: 'flowchartshapes_flowchart-off-page-connector', uno: 'FlowchartShapes.flowchart-off-page-connector', text: _UNO('.uno:FlowChartShapes.flowchart-off-page-connector')},
+			{img: 'flowchartshapes_flowchart-card', uno: 'FlowchartShapes.flowchart-card', text: _UNO('.uno:FlowChartShapes.flowchart-card')},
+			{img: 'flowchartshapes_flowchart-punched-tape', uno: 'FlowchartShapes.flowchart-punched-tape', text: _UNO('.uno:FlowChartShapes.flowchart-punched-tape')},
+			{img: 'flowchartshapes_flowchart-summing-junction', uno: 'FlowchartShapes.flowchart-summing-junction', text: _UNO('.uno:FlowChartShapes.flowchart-summing-junction')},
+			{img: 'flowchartshapes_flowchart-or', uno: 'FlowchartShapes.flowchart-or', text: _UNO('.uno:FlowChartShapes.flowchart-or')},
 
-			{img: 'flowchartshapes_flowchart-collate', uno: 'FlowchartShapes.flowchart-collate'},
-			{img: 'flowchartshapes_flowchart-sort', uno: 'FlowchartShapes.flowchart-sort'},
-			{img: 'flowchartshapes_flowchart-extract', uno: 'FlowchartShapes.flowchart-extract'},
-			{img: 'flowchartshapes_flowchart-merge', uno: 'FlowchartShapes.flowchart-merge'},
-			{img: 'flowchartshapes_flowchart-stored-data', uno: 'FlowchartShapes.flowchart-stored-data'},
-			{img: 'flowchartshapes_flowchart-delay', uno: 'FlowchartShapes.flowchart-delay'},
+			{img: 'flowchartshapes_flowchart-collate', uno: 'FlowchartShapes.flowchart-collate', text: _UNO('.uno:FlowChartShapes.flowchart-collate')},
+			{img: 'flowchartshapes_flowchart-sort', uno: 'FlowchartShapes.flowchart-sort', text: _UNO('.uno:FlowChartShapes.flowchart-sort')},
+			{img: 'flowchartshapes_flowchart-extract', uno: 'FlowchartShapes.flowchart-extract', text: _UNO('.uno:FlowChartShapes.flowchart-extract')},
+			{img: 'flowchartshapes_flowchart-merge', uno: 'FlowchartShapes.flowchart-merge', text: _UNO('.uno:FlowChartShapes.flowchart-merge')},
+			{img: 'flowchartshapes_flowchart-stored-data', uno: 'FlowchartShapes.flowchart-stored-data', text: _UNO('.uno:FlowChartShapes.flowchart-stored-data')},
+			{img: 'flowchartshapes_flowchart-delay', uno: 'FlowchartShapes.flowchart-delay', text: _UNO('.uno:FlowChartShapes.flowchart-delay')},
 
-			{img: 'flowchartshapes_flowchart-sequential-access', uno: 'FlowchartShapes.flowchart-sequential-access'},
-			{img: 'flowchartshapes_flowchart-magnetic-disk', uno: 'FlowchartShapes.flowchart-magnetic-disk'},
-			{img: 'flowchartshapes_flowchart-direct-access-storage', uno: 'FlowchartShapes.flowchart-direct-access-storage'},
-			{img: 'flowchartshapes_flowchart-display', uno: 'FlowchartShapes.flowchart-display'}
+			{img: 'flowchartshapes_flowchart-sequential-access', uno: 'FlowchartShapes.flowchart-sequential-access', text: _UNO('.uno:FlowChartShapes.flowchart-sequential-access')},
+			{img: 'flowchartshapes_flowchart-magnetic-disk', uno: 'FlowchartShapes.flowchart-magnetic-disk', text: _UNO('.uno:FlowChartShapes.flowchart-magnetic-disk')},
+			{img: 'flowchartshapes_flowchart-direct-access-storage', uno: 'FlowchartShapes.flowchart-direct-access-storage', text: _UNO('.uno:FlowChartShapes.flowchart-direct-access-storage')},
+			{img: 'flowchartshapes_flowchart-display', uno: 'FlowchartShapes.flowchart-display', text: _UNO('.uno:FlowChartShapes.flowchart-display')}
 		]
 	},
 	'insertconnectors': {
 		'Connectors': [
-			{img: 'connectors_connector', uno: 'Connector'},
-			{img: 'connectors_connectorarrows', uno: 'ConnectorArrows'},
-			{img: 'connectors_connectorarrowend', uno: 'ConnectorArrowEnd'},
-			{img: 'connectors_connectorlinearrowend', uno: 'ConnectorLineArrowEnd'},
-			{img: 'connectors_connectorcurvearrowend', uno: 'ConnectorCurveArrowEnd'},
-			{img: 'connectors_connectorlinesarrowend', uno: 'ConnectorLinesArrowEnd'},
-			{img: 'connectors_connectorline', uno: 'ConnectorLine'},
-			{img: 'connectors_connectorcurve', uno: 'ConnectorCurve'},
-			{img: 'connectors_connectorlines', uno: 'ConnectorLines'},
-			{img: 'connectors_connectorlinearrows', uno: 'ConnectorLineArrows'},
-			{img: 'connectors_connectorcurvearrows', uno: 'ConnectorCurvearrows'}
+			{img: 'connectors_connector', uno: 'Connector', text: _UNO('.uno:Connector', 'presentation')},
+			{img: 'connectors_connectorarrows', uno: 'ConnectorArrows', text: _UNO('.uno:ConnectorArrows', 'presentation')},
+			{img: 'connectors_connectorarrowend', uno: 'ConnectorArrowEnd', text: _UNO('.uno:ConnectorArrowEnd', 'presentation')},
+			{img: 'connectors_connectorlinearrowend', uno: 'ConnectorLineArrowEnd', text: _UNO('.uno:ConnectorLineArrowEnd', 'presentation')},
+			{img: 'connectors_connectorcurvearrowend', uno: 'ConnectorCurveArrowEnd', text: _UNO('.uno:ConnectorCurveArrowEnd', 'presentation')},
+			{img: 'connectors_connectorlinesarrowend', uno: 'ConnectorLinesArrowEnd', text: _UNO('.uno:ConnectorLinesArrowEnd', 'presentation')},
+			{img: 'connectors_connectorline', uno: 'ConnectorLine', text: _UNO('.uno:ConnectorLine', 'presentation')},
+			{img: 'connectors_connectorcurve', uno: 'ConnectorCurve', text: _UNO('.uno:ConnectorCurve', 'presentation')},
+			{img: 'connectors_connectorlines', uno: 'ConnectorLines', text: _UNO('.uno:ConnectorLines', 'presentation')},
+			{img: 'connectors_connectorlinearrows', uno: 'ConnectorLineArrows', text: _UNO('.uno:ConnectorLineArrows', 'presentation')},
+			{img: 'connectors_connectorcurvearrows', uno: 'ConnectorCurvearrows', text: _UNO('.uno:ConnectorCurveArrows', 'presentation')}
 		]
 	}
 };
@@ -575,6 +571,8 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 
 				col.className = 'col w2ui-icon ' + shape.img;
 				col.dataset.uno = shape.uno;
+				col.setAttribute('data-cooltip', shape.text);
+				L.control.attachTooltipEventListener(col, map);
 				col.tabIndex = 0;
 				col.setAttribute('index', r + ':' + c);
 				row.appendChild(col);
