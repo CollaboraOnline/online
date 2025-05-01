@@ -152,6 +152,11 @@ private:
     /// WS is created and as long as it is connected.
     std::shared_ptr<RequestVettingStation> _rvs;
 
+    /// scratch dir that POSTs are streamed to
+    std::string _postFileDir;
+    std::fstream _postStream;
+    std::streamsize _postContentPending;
+
     /// The minimum number of RVS instances in flight to trigger cleanup.
     static constexpr std::size_t RvsLowWatermark = 1 * 1024;
 

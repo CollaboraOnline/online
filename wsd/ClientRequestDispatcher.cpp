@@ -682,6 +682,20 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
+    if (_postContentPending)
+    {
+        std::streamsize available = std::min<std::streamsize>(_postContentPending,
+                                                              socket->getInBuffer().size());
+        _postStream.write(socket->getInBuffer().data(), available);
+        socket->eraseFirstInputBytes(available);
+        _postContentPending -= available;
+        if (_postContentPending)
+            return;
+        fprintf(stderr, "got everything written to %s\n", _postFileDir.c_str());
+        //TODO everything inside try catch basically as another block, then clean up after it
+        return;
+    }
+
     const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
 
@@ -708,6 +722,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             return;
     }
 
+    assert(!_postStream.is_open() && _postFileDir.empty() && !_postContentPending);
+
     // start streaming condition
     bool streamToFile =
         request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST &&
@@ -716,14 +732,27 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
     fprintf(stderr, "CAN STREAM TO DISK %d\n", streamToFile);
 
-#if 0
+    // do if we haven't enough in the first chunk
+    if (streamToFile)
     {
-        // Remove the request header from our input buffer
-        socket->eraseFirstInputBytes(headerSize);
-        ///:
-            socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
+        _postFileDir = FileUtil::createRandomTmpDir(COOLWSD::ChildRoot +
+                JailUtil::CHILDROOT_TMP_INCOMING_PATH) + '/';
+        std::string postFilename = _postFileDir + "poststream";
+        _postStream.open(postFilename.c_str());
+        if (!_postStream.good())
+        {
+            LOG_ERR("Unable to open [" << _postFileDir << "poststream] for POST streaming");
+            FileUtil::removeFile(_postFileDir, true);
+            _postFileDir.clear();
+        }
+        else
+        {
+            _postStream.write(socket->getInBuffer().data(), headerSize);
+            socket->eraseFirstInputBytes(headerSize);
+            _postContentPending = request.getContentLength();
+            return;
+        }
     }
-#endif
 
     StreamSocket::MessageMap map;
     if (!socket->parseHeader("Client", headerSize, socket->getInBuffer().size(), request, delayMs, map))
