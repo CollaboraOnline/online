@@ -470,7 +470,7 @@ dist-hook:
 EXTRA_DIST = discovery.xml \
              favicon.ico \
              cool-sbom-template.spdx.json \
-             coolkitconfig.xcu \
+             coolkitconfig.xcu.in \
              coolwsd.spec \
              coolwsd.xml.in \
              coolwsd.service \
