@@ -792,20 +792,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
     }
 
-    if (servedSync && closeConnection && !socket->isShutdown())
-    {
-        LOG_DBG("Handled request: " << request.getURI()
-                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
-                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
-                << "], served and closing connection.");
-        socket->shutdown();
-        socket->ignoreInput();
-    }
-    else
-        LOG_DBG("Handled request: " << request.getURI()
-                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
-                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
-                << "], connection open " << !socket->isShutdown());
+    finishedMessage(request, socket, servedSync, preInBufferSz);
 
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
@@ -1124,6 +1111,28 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
     }
 
     return servedSync ? MessageResult::ServedSync : MessageResult::ServedAsync;
+}
+
+void ClientRequestDispatcher::finishedMessage(const Poco::Net::HTTPRequest& request,
+                                              const std::shared_ptr<StreamSocket>& socket,
+                                              bool servedSync, size_t preInBufferSz)
+{
+    const bool closeConnection = !request.getKeepAlive();
+
+    if (servedSync && closeConnection && !socket->isShutdown())
+    {
+        LOG_DBG("Handled request: " << request.getURI()
+                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
+                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
+                << "], served and closing connection.");
+        socket->shutdown();
+        socket->ignoreInput();
+    }
+    else
+        LOG_DBG("Handled request: " << request.getURI()
+                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
+                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
+                << "], connection open " << !socket->isShutdown());
 }
 
 #if !MOBILEAPP

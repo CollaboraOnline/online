@@ -126,6 +126,10 @@ private:
                                 const std::shared_ptr<StreamSocket>& socket,
                                 ssize_t headerSize);
 
+    void finishedMessage(const Poco::Net::HTTPRequest& request,
+                         const std::shared_ptr<StreamSocket>& socket,
+                         bool servedSync, size_t preInBufferSz);
+
 #endif // !MOBILEAPP
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
