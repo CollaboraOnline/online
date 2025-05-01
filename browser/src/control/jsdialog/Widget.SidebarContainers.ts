@@ -68,20 +68,20 @@ JSDialog.panel = function (
 			'ui-expander-icon-right ' + builder.options.cssClass,
 			iconParent,
 		);
+		const moreOptionsText = expanderData.children[0].text
+			? _('More options for {name}').replace(
+					'{name}',
+					expanderData.children[0].text,
+				)
+			: '';
 		builder._controlHandlers['toolitem'](
 			icon,
 			{
 				type: 'toolitem',
 				command: expanderData.command,
-				aria: {
-					label: expanderData.children[0].text
-						? _('More options for {name}').replace(
-								'{name}',
-								expanderData.children[0].text,
-							)
-						: '',
-				},
+				aria: { label: moreOptionsText },
 				icon: app.LOUtil.getIconNameOfCommand('morebutton'),
+				text: moreOptionsText,
 			},
 			builder,
 		);

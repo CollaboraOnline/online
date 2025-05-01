@@ -81,18 +81,25 @@ L.Control.Notebookbar = L.Control.extend({
 		docLogoHeader.id = 'document-header';
 
 		var iconClass = 'document-logo';
+		var iconTooltip;
 		if (docType === 'text') {
 			iconClass += ' writer-icon-img';
+			iconTooltip = _('Writer');
 		} else if (docType === 'spreadsheet') {
 			iconClass += ' calc-icon-img';
+			iconTooltip = _('Calc');
 		} else if (docType === 'presentation') {
 			iconClass += ' impress-icon-img';
+			iconTooltip = _('Impress');
 		} else if (docType === 'drawing') {
 			iconClass += ' draw-icon-img';
+			iconTooltip = _('Draw');
 		}
 		var docLogo = L.DomUtil.create('div', iconClass, docLogoHeader);
 		$(docLogo).data('id', 'document-logo');
 		$(docLogo).data('type', 'action');
+		docLogo.setAttribute('data-cooltip', iconTooltip);
+		L.control.attachTooltipEventListener(docLogo, this.map);
 		$('.main-nav').prepend(docLogoHeader);
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
