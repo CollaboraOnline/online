@@ -947,7 +947,7 @@ bool DocumentBroker::download(
 
     const std::string sessionId = session ? session->getId() : "000";
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] in jail [" << jailId
-                        << ']');
+                        << "] from URI [" << uriPublic.toString() << ']');
 
     if (_unitWsd)
     {

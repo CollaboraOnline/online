@@ -2877,6 +2877,7 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
 {
     assert(_isConvertTo && "Expected convert-to context");
 
+    LOG_DBG("Conversion request of [" << docBroker->getDocKey() << "] failed: " << errorKind);
     if (!saveAsSocket)
         LOG_ERR("Error saveas socket missing in isConvertTo mode");
     else
