@@ -130,6 +130,15 @@ private:
                          const std::shared_ptr<StreamSocket>& socket,
                          bool servedSync, size_t preInBufferSz);
 
+    void whatever(Poco::Net::HTTPRequest& request,
+                  std::istream& message,
+                  SocketDisposition& disposition,
+                  const std::shared_ptr<StreamSocket>& socket,
+                  ssize_t headerSize,
+                  ssize_t contentSize,
+                  bool eraseMessageFromSocket,
+                  std::chrono::steady_clock::time_point now);
+
 #endif // !MOBILEAPP
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
