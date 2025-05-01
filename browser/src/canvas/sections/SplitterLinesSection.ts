@@ -123,6 +123,23 @@ class SplitterLinesSection extends CanvasSectionObject {
 		return linearGradient;
 	}
 
+	private GetColumnHeaderHeight(): number {
+		if (
+			this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name)
+		) {
+			return this.containerObject.getSectionWithName(
+				L.CSections.ColumnHeader.name,
+			).size[1];
+		} else return 0;
+	}
+
+	private GetRowHeaderWidth(): number {
+		if (this.containerObject.getSectionWithName(L.CSections.RowHeader.name)) {
+			return this.containerObject.getSectionWithName(L.CSections.RowHeader.name)
+				.size[0];
+		} else return 0;
+	}
+
 	onDraw(): void {
 		const splitPanesContext = app.map._docLayer.getSplitPanesContext();
 
@@ -147,7 +164,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 					this.context.fillRect(
 						splitPos.x * app.dpiScale,
-						0,
+						-this.GetColumnHeaderHeight(),
 						width,
 						this.size[1],
 					);
@@ -167,7 +184,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 					this.context.fillStyle = style;
 
 					this.context.fillRect(
-						0,
+						-this.GetRowHeaderWidth(),
 						splitPos.y * app.dpiScale,
 						this.size[0],
 						width,
