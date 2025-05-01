@@ -1719,6 +1719,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             Util::forcedExit(EX_OK);
         }
 #endif
+
         if (ChildRoot[ChildRoot.size() - 1] != '/')
             ChildRoot += '/';
 
@@ -1732,7 +1733,9 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         // Encode the process id into the path for parallel re-use of jails/
         ChildRoot += std::to_string(getpid()) + '-' + Util::rng::getHexString(8) + '/';
 
-        LOG_INF("Creating childroot: " + ChildRoot);
+        LOG_DBG("Normalizing childroot: " << ChildRoot);
+        ChildRoot = Poco::Path(ChildRoot).makeDirectory().makeAbsolute().toString();
+        LOG_DBG("Childroot: " << ChildRoot);
     }
 
 #if !MOBILEAPP
@@ -1790,6 +1793,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         UseMountNamespaces = false;
     }
 
+    LOG_INF("Creating childroot: [" << ChildRoot << "] with" << (UseMountNamespaces ? "" : "out")
+                                    << " mount-namespaces");
     setupChildRoot(UseMountNamespaces);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
