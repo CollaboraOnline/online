@@ -94,38 +94,8 @@ void StringVectorTests::testTokenizer()
     LOK_ASSERT_EQUAL(std::string("tileheight=3840"), tokens[8]);
     LOK_ASSERT_EQUAL(std::string("ver=-1"), tokens[9]);
 
-    // tokenize_outside_quotes
-    tokens = StringVector::tokenize_outside_quotes(std::string("A='X Y'"));
-    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
-    LOK_ASSERT_EQUAL(std::string("A='X Y'"), tokens[0]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string("A=\"X Y\""));
-    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
-    LOK_ASSERT_EQUAL(std::string("A=\"X Y\""), tokens[0]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string(" A=\"X Y\" B=\"Z\" C "));
-    LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), tokens.size());
-    LOK_ASSERT_EQUAL(std::string("A=\"X Y\""), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("B=\"Z\""), tokens[1]);
-    LOK_ASSERT_EQUAL(std::string("C"), tokens[2]);
-
-    tokens =
-        StringVector::tokenize_outside_quotes(std::string("\"don't tokenize this\" tokenize this"));
-    LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), tokens.size());
-    LOK_ASSERT_EQUAL(std::string("\"don't tokenize this\""), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("tokenize"), tokens[1]);
-    LOK_ASSERT_EQUAL(std::string("this"), tokens[2]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string("apost\\'phe don\\'t"));
-    LOK_ASSERT_EQUAL(std::string("apost\\'phe"), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("don\\'t"), tokens[1]);
-
     // With custom delimiters
     tokens = StringVector::tokenize(std::string("ABC:DEF"), ':');
-    LOK_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string("ABC'DEF"), '\'');
     LOK_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
 
@@ -149,31 +119,6 @@ void StringVectorTests::testTokenizer()
     tokens = StringVector::tokenize(URI, '/');
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(7), tokens.size());
     LOK_ASSERT_EQUAL(std::string("31"), tokens[6]);
-
-    // tokenize_outside_quotes with string delimiters
-    tokens = StringVector::tokenize_outside_quotes(std::string("ABC<delim>DEF"), "<delim>");
-    LOK_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
-
-    tokens =
-        StringVector::tokenize_outside_quotes(std::string("ABC\"<delim>\"DE<delim>F"), "<delim>");
-    LOK_ASSERT_EQUAL(std::string("ABC\"<delim>\"DE"), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("F"), tokens[1]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string("ABC'F"), "<delim>");
-    LOK_ASSERT_EQUAL(std::string("ABC'F"), tokens[0]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string("\"'<delim>'\""), "<delim>");
-    LOK_ASSERT_EQUAL(std::string("\"'<delim>'\""), tokens[0]);
-
-    tokens = StringVector::tokenize_outside_quotes(std::string("\"\"<delim>\"\"A"), "<delim>");
-    LOK_ASSERT_EQUAL(std::string("\"\""), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("\"\"A"), tokens[1]);
-
-    tokens =
-        StringVector::tokenize_outside_quotes(std::string("apost\\'phe<delim>don\\'t"), "<delim>");
-    LOK_ASSERT_EQUAL(std::string("apost\\'phe"), tokens[0]);
-    LOK_ASSERT_EQUAL(std::string("don\\'t"), tokens[1]);
 }
 
 void StringVectorTests::testTokenizerTokenizeAnyOf()
