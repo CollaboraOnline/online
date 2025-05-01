@@ -61,11 +61,11 @@ var NotebookbarAccessibility = function() {
 
 		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
 			var element = document.getElementById(this.activeTabPointers.contentList[i].id);
-			if (element) {
+			if (element && element.offsetParent !== null) {
 				element.accessKey = this.activeTabPointers.contentList[i].combination;
 				this.activeTabPointers.infoBoxList.push(this.addInfoBox(element));
 			}
-			else
+			else if(!element) // element is null
 				console.warn('NotebookbarAccessibility: Element with id ' + this.activeTabPointers.contentList[i].id + ' doesn\'t exist.');
 		}
 	};
