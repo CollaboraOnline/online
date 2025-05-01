@@ -54,6 +54,7 @@ class AddressInputField {
 		if (addressInput && document.activeElement !== addressInput) {
 			// if the user is not editing the address field
 			addressInput.value = event.address;
+			addressInput.setAttribute('aria-label', event.address);
 		}
 		this.map.formulabarSetDirty();
 	}
