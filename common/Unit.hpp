@@ -203,16 +203,16 @@ public:
 
     /// Custom response to a http request.
     virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& /*request*/,
-                                   Poco::MemoryInputStream& /*message*/,
-                                   std::shared_ptr<StreamSocket>& /*socket*/)
+                                   std::istream& /*message*/,
+                                   const std::shared_ptr<StreamSocket>& /*socket*/)
     {
         return false;
     }
 
     virtual std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& /*request*/,
-                             Poco::MemoryInputStream& /*message*/,
-                             std::shared_ptr<StreamSocket>& /*socket*/)
+                             std::istream& /*message*/,
+                             const std::shared_ptr<StreamSocket>& /*socket*/)
     {
         return {};
     }

@@ -1556,7 +1556,7 @@ public:
     /// returns true if we did any re-sizing/movement of _inBuffer.
     bool compactChunks(MessageMap& map);
 
-    ssize_t readHeader(const char* clientName, Poco::MemoryInputStream& message,
+    ssize_t readHeader(const char* clientName, std::istream& message,
                        Poco::Net::HTTPRequest& request,
                        std::chrono::duration<float, std::milli> delayMs);
 
