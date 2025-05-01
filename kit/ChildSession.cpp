@@ -192,8 +192,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC("handling [" << getAbbreviatedMessage(buffer, length) << ']');
     const std::string firstLine = getFirstLine(buffer, length);
-    const StringVector tokens =
-        StringVector::tokenize_outside_quotes(firstLine.data(), firstLine.size());
+    const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
     // if _clientVisibleArea.getWidth() == 0, then it is probably not a real user.. probably is a convert-to or similar
     LogUiCommands logUndoRelatedcommandAtfunctionEnd(this, &tokens);
@@ -2089,11 +2088,11 @@ bool ChildSession::dialogEvent(const StringVector& tokens)
     {
         getLOKitDocument()->setView(_viewId);
         getLOKitDocument()->sendDialogEvent(lokWindowId,
-                                            tokens.cat(' ', 2).c_str());
+                                            tokens.substrFromToken(2).c_str());
     }
     else
     {
-        getLOKit()->sendDialogEvent(lokWindowId, tokens.cat(' ', 2).c_str());
+        getLOKit()->sendDialogEvent(lokWindowId, tokens.substrFromToken(2).c_str());
     }
 
     return true;
@@ -2305,7 +2304,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
                           tokens.equals(1, ".uno:OpenHyperlink") ||
                           tokens.startsWith(1, "vnd.sun.star.script:"));
 
-    const std::string saveArgs = tokens.cat(' ', 2);
+    const std::string saveArgs = tokens.substrFromToken(2);
     LOG_TRC("uno command " << tokens[1] << " " << saveArgs << " notify: " << bNotify);
 
     // check that internal UNO commands don't make it to the core

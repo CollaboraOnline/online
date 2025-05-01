@@ -79,52 +79,6 @@ public:
             tokens.emplace_back(start - data, end - start);
     }
 
-    // Tokenize delimited values outside of quotes until we hit new-line or the end.
-    static void tokenize_outside_quotes(const char* data, const std::size_t size,
-                                        const char delimiter, std::vector<StringToken>& tokens)
-    {
-        if (size == 0 || data == nullptr || *data == '\0')
-            return;
-
-        // if delimiter is a quote default back to standard tokenize
-        if (delimiter == '\'' || delimiter == '"')
-        {
-            tokenize(data, size, delimiter, tokens);
-            return;
-        }
-
-        tokens.reserve(16);
-
-        const char* start = data;
-        const char* end = data;
-        char quote = '\0';
-
-        for (std::size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
-        {
-            if ((data[i] == '\'' || data[i] == '"') &&
-                (i == 0 || data[i - 1] != '\\')) // check for escaped quote
-            {
-                if (quote == '\0')
-                    quote = data[i];
-                else if (quote == data[i])
-                    quote = '\0';
-            }
-            if (quote == '\0' && data[i] == delimiter)
-            {
-                if (start != end && *start != delimiter)
-                    tokens.emplace_back(start - data, end - start);
-
-                start = end;
-            }
-            else if (*start == delimiter)
-                ++start;
-        }
-
-        if (start != end && *start != delimiter &&
-            *start != '\n') // tokenizes the end of the string
-            tokens.emplace_back(start - data, end - start);
-    }
-
     // call func on each token until func returns true or we run out of tokens
     template <class UnaryFunction>
     static void tokenize_foreach(UnaryFunction&& func, const char* data, const std::size_t size, const char delimiter = ' ')
@@ -179,29 +133,6 @@ public:
         return StringVector(s, std::move(tokens));
     }
 
-    /// Tokenize single-char delimited values outside of quotes until we hit new-line or the end.
-    static StringVector tokenize_outside_quotes(const char* data, const std::size_t size,
-                                                const char delimiter = ' ')
-    {
-        if (size == 0 || data == nullptr || *data == '\0')
-            return StringVector();
-
-        std::vector<StringToken> tokens;
-        tokenize_outside_quotes(data, size, delimiter, tokens);
-        return StringVector(std::string(data, size), std::move(tokens));
-    }
-
-    /// Tokenize single-char delimited values outside of quotes until we hit new-line or the end.
-    static StringVector tokenize_outside_quotes(const std::string& s, const char delimiter = ' ')
-    {
-        if (s.empty())
-            return StringVector();
-
-        std::vector<StringToken> tokens;
-        tokenize_outside_quotes(s.data(), s.size(), delimiter, tokens);
-        return StringVector(s, std::move(tokens));
-    }
-
     /// Tokenize by the delimiter string.
     static StringVector tokenize(const std::string& s, const char* delimiter, int len = -1)
     {
@@ -239,61 +170,6 @@ public:
     static StringVector tokenize(const std::string& s, const std::string& delimiter)
     {
         return tokenize(s, delimiter.data(), delimiter.size());
-    }
-
-    // Tokenize by the delimiter string outside of quotes
-    static StringVector tokenize_outside_quotes(const std::string& s, const char* delimiter,
-                                                int len = -1)
-    {
-        if (s.empty() || len == 0 || delimiter == nullptr || *delimiter == '\0')
-            return StringVector();
-
-        if (len < 0)
-            len = std::strlen(delimiter);
-
-        // if delimiter contains a quote default back to normal tokenize
-        if (strchr(delimiter, '\'') != nullptr || strchr(delimiter, '"') != nullptr)
-        {
-            return tokenize(s, delimiter, len);
-        }
-
-        std::size_t start = 0;
-        char quote = '\0';
-
-        std::vector<StringToken> tokens;
-        tokens.reserve(16);
-
-        for (std::size_t i = 0; i < s.length(); ++i)
-        {
-            if ((s[i] == '\'' || s[i] == '"') &&
-                (i == 0 || s[i - 1] != '\\')) // check for escaped quote
-            {
-                if (quote == '\0')
-                    quote = s[i];
-                else if (quote == s[i])
-                    quote = '\0';
-            }
-            if (quote == '\0' && s.substr(i, len) == delimiter)
-            {
-                tokens.emplace_back(start, i - start);
-                start = i + len;
-            }
-        }
-        if (start < s.length())
-            tokens.emplace_back(start, s.length() - start);
-
-        return StringVector(s, std::move(tokens));
-    }
-
-    template <std::size_t N>
-    static StringVector tokenize_outside_quotes(const std::string& s, const char (&delimiter)[N])
-    {
-        return tokenize_outside_quotes(s, delimiter, N - 1);
-    }
-
-    static StringVector tokenize_outside_quotes(const std::string& s, const std::string& delimiter)
-    {
-        return tokenize_outside_quotes(s, delimiter.data(), delimiter.size());
     }
 
     /** Tokenize based on any of the characters in 'delimiters'.
@@ -377,6 +253,15 @@ public:
         }
 
         return ret;
+    }
+
+    /// Returns a copy of the original string starting at token 'offset' until
+    /// the end of the string
+    std::string substrFromToken(std::size_t offset) const
+    {
+        if (offset >= _tokens.size())
+            return std::string();
+        return _string.substr(_tokens[offset]._index);
     }
 
     /// Compares the nth token with string.
