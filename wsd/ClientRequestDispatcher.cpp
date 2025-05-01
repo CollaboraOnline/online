@@ -778,19 +778,75 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
     // We may need to re-write the chunks moving the inBuffer.
     socket->compactChunks(map);
+    const size_t preInBufferSz = socket->getInBuffer().size();
 
     _lastSeenHTTPHeader = now;
 
+    Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
+
+    ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
+    if (result == MessageResult::Ignore)
+        return;
+
+    assert(result == MessageResult::ServedSync || result == MessageResult::ServedAsync);
+    bool servedSync = result == MessageResult::ServedSync;
+
+    socketEraseConsumedBytes(socket, map, servedSync);
+
+    finishedMessage(request, socket, servedSync, preInBufferSz);
+
+#else // !MOBILEAPP
+    Poco::Net::HTTPRequest request;
+
+#ifdef IOS
+    // The URL of the document is sent over the FakeSocket by the code in
+    // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
+    // HULLO message from the JavaScript in global.js.
+
+    // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
+    char* space = strchr(socket->getInBuffer().data(), ' ');
+    assert(space != nullptr);
+
+    // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
+    // its end, it might be followed in memory by more digits. Is there really no better way to
+    // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
+    // buffer?
+    const size_t appDocIdLen =
+        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
+    char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
+    memcpy(appDocIdBuffer, space + 1, appDocIdLen);
+    appDocIdBuffer[appDocIdLen] = '\0';
+    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
+    free(appDocIdBuffer);
+
+    handleClientWsUpgrade(
+        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
+        disposition, socket, appDocId);
+#else // IOS
+    handleClientWsUpgrade(
+        request,
+        RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
+        disposition, socket);
+#endif // !IOS
+    socket->getInBuffer().clear();
+#endif // MOBILEAPP
+}
+
+#if !MOBILEAPP
+ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Poco::Net::HTTPRequest& request,
+                                                                              std::istream& message,
+                                                                              SocketDisposition& disposition,
+                                                                              const std::shared_ptr<StreamSocket>& socket,
+                                                                              ssize_t headerSize)
+{
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
     LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
-    const size_t preInBufferSz = socket->getInBuffer().size();
 
     // denotes whether the request has been served synchronously
     bool servedSync = false;
 
     try
     {
-        Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
         message.seekg(headerSize, std::ios::beg);
 
@@ -939,7 +995,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
                 socket->sendAndShutdown(httpResponse);
                 socket->ignoreInput();
-                return;
+                return MessageResult::Ignore;
             }
 
             FileServerRequestHandler::hstsHeaders(*response);
@@ -1019,7 +1075,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
                 // Bad request.
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-                return;
+                return MessageResult::Ignore;
             }
 
             // Tunnel to WASM.
@@ -1032,7 +1088,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
             // Bad request.
             HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-            return;
+            return MessageResult::Ignore;
         }
     }
     catch (const BadRequestException& ex)
@@ -1043,7 +1099,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
         // Bad request.
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-        return;
+        return MessageResult::Ignore;
     }
     catch (const std::exception& exc)
     {
@@ -1057,51 +1113,12 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         httpResponse.set("Content-Length", "0");
         socket->sendAndShutdown(httpResponse);
         socket->ignoreInput();
-        return;
+        return MessageResult::Ignore;
     }
 
-    socketEraseConsumedBytes(socket, map, servedSync);
-
-    finishedMessage(request, socket, servedSync, preInBufferSz);
-
-#else // !MOBILEAPP
-    Poco::Net::HTTPRequest request;
-
-#ifdef IOS
-    // The URL of the document is sent over the FakeSocket by the code in
-    // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
-    // HULLO message from the JavaScript in global.js.
-
-    // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
-    char* space = strchr(socket->getInBuffer().data(), ' ');
-    assert(space != nullptr);
-
-    // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
-    // its end, it might be followed in memory by more digits. Is there really no better way to
-    // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
-    // buffer?
-    const size_t appDocIdLen =
-        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
-    char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
-    memcpy(appDocIdBuffer, space + 1, appDocIdLen);
-    appDocIdBuffer[appDocIdLen] = '\0';
-    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
-    free(appDocIdBuffer);
-
-    handleClientWsUpgrade(
-        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
-        disposition, socket, appDocId);
-#else // IOS
-    handleClientWsUpgrade(
-        request,
-        RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
-        disposition, socket);
-#endif // !IOS
-    socket->getInBuffer().clear();
-#endif // MOBILEAPP
+    return servedSync ? MessageResult::ServedSync : MessageResult::ServedAsync;
 }
 
-#if !MOBILEAPP
 void ClientRequestDispatcher::finishedMessage(const Poco::Net::HTTPRequest& request,
                                               const std::shared_ptr<StreamSocket>& socket,
                                               bool servedSync, size_t preInBufferSz)
