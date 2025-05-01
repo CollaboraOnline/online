@@ -1062,8 +1062,8 @@ bool DocumentBroker::download(
     }
     else
 #endif
-#if ENABLE_LOCAL_FILESYSTEM
     {
+        // Could be a conversion request.
         LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
         if (localStorage != nullptr)
         {
@@ -1110,12 +1110,6 @@ bool DocumentBroker::download(
             Util::forcedExit(EX_SOFTWARE);
         }
     }
-#else // !ENABLE_LOCAL_FILESYSTEM
-    {
-        LOG_FTL("Unknown or unsupported storage");
-        Util::forcedExit(EX_SOFTWARE);
-    }
-#endif // !ENABLE_LOCAL_FILESYSTEM
 
     if (session)
     {

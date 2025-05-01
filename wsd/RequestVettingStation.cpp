@@ -99,6 +99,11 @@ void RequestVettingStation::handleRequest(const std::string& id)
             sendUnauthorizedErrorAndShutdown();
             break;
 
+        case StorageBase::StorageType::Conversion:
+            LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
+                            << docKey << "] is for a document conversion");
+            break;
+
 #if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
@@ -272,6 +277,23 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                                                            << "] in config");
             sendUnauthorizedErrorAndShutdown();
             break;
+
+        case StorageBase::StorageType::Conversion:
+            LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
+                            << docKey << "] is for a document conversion");
+
+            LOG_TRC("Dissociating client socket from "
+                    "ClientRequestDispatcher and creating DocBroker for ["
+                    << docKey << ']');
+
+            // Create the DocBroker.
+            if (std::shared_ptr<DocumentBroker> docBroker =
+                    createDocBroker(docKey, "", url, uriPublic))
+            {
+                createClientSession(docBroker, docKey, url, uriPublic);
+            }
+            break;
+
 #if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
