@@ -1612,6 +1612,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder._addAriaLabel(pushbutton, data, builder);
 		}
 
+		const buttonTitle = (data.aria && data.aria.label) || builder._cleanText(data.text);
+		if(buttonTitle)
+			pushbutton.setAttribute('title', buttonTitle);
+
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
 		if (data.hidden)
