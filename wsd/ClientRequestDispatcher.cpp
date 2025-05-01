@@ -763,6 +763,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     if (!socket->checkChunks(request, headerSize, map, delayMs))
         return;
 
+    // We may need to re-write the chunks moving the inBuffer.
+    socket->compactChunks(map);
+
     _lastSeenHTTPHeader = now;
 
 //    fprintf(stderr, "2: size of message is %ld for %s\n", socket->getInBuffer().size(), requestDetails.toString().c_str());
@@ -776,8 +779,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
     try
     {
-        // We may need to re-write the chunks moving the inBuffer.
-        socket->compactChunks(map);
         Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
         message.seekg(headerSize, std::ios::beg);
