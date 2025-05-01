@@ -78,7 +78,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'id': 'Help-tab-label',
 				'text': _('Help'),
 				'name': 'Help',
-				'accessibility': { focusBack: true,	combination: 'Y1', de: null }
+				'accessibility': { focusBack: true,	combination: 'Y', de: null }
 			}
 		];
 	},
@@ -242,7 +242,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'bigtoolitem',
 						'text': _('Properties'),
 						'command': '.uno:SetDocumentProperties',
-						'accessibility': { focusBack: true,	combination: 'PR', de: null }
+						'accessibility': { focusBack: true,	combination: 'FP', de: 'I' }
 					}
 				]
 		});
@@ -270,6 +270,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							'class': 'unoRenameDocument',
 							'type': 'bigcustomtoolitem',
 							'text': _('Rename'),
+							'accessibility': { focusBack: true, combination: 'RN', de: null }
 						}
 					]
 				}
@@ -2011,6 +2012,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'toolbox',
 				'children': [
 					{
+						'id': 'review-protect-sheet',
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:Protect', 'spreadsheet'),
 						'command': '.uno:Protect',
