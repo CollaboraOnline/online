@@ -9,6 +9,12 @@
 	border: 1px solid var(--color-border-lighter);
 }
 
+#toolbar-down .unotoolbutton[disabled],
+#toolbar-down .unotoolbutton[disabled] *[disabled]{
+	opacity: 0.5;
+	background-color: transparent;
+}
+
 /* toolbuttons */
 .unotoolbutton .unobutton.selected + .ui-content.unolabel {
 	color: var(--color-text-dark);
