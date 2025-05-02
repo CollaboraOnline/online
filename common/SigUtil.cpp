@@ -492,7 +492,7 @@ void requestShutdown()
         {
             if (UnattendedRun)
             {
-                static constexpr auto msg =
+                static constexpr std::string_view msg =
                     "Crashed in unattended run and won't wait for debugger. Re-run without "
                     "--unattended to attach a debugger.";
                 std::cerr << msg << std::endl;
