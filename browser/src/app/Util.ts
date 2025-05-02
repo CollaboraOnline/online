@@ -276,13 +276,7 @@ class Util {
 		fn: () => void,
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		context: any,
-		immediate?: boolean,
 	): number {
-		if (immediate) {
-			fn.call(context);
-			return 0;
-		}
-
 		return window.requestAnimationFrame(fn.bind(context));
 	}
 
