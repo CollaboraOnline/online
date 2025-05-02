@@ -138,6 +138,10 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 					app.layoutingService.appendLayoutingTask(() => {
 						var dropdown = JSDialog.GetDropdown(subMenuId);
+						if (!dropdown) {
+							console.debug('Dropdown: missing :' + subMenuId);
+							return;
+						}
 						var container = dropdown.querySelector('.ui-grid');
 						JSDialog.MakeFocusCycle(container);
 						var focusables = JSDialog.GetFocusableElements(container);
