@@ -41,7 +41,7 @@ class LayoutingService {
 		if (!task) return false;
 
 		try {
-			task.call(this);
+			task();
 		} catch (ex) {
 			console.error('LayoutingTask exception: ' + ex);
 		}
