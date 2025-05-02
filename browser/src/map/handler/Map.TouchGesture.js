@@ -645,7 +645,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map.dragging._draggable._onDown(evt);
 		this._timeStamp = Date.now();
 		this._inSwipeAction = true;
-		this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this, true);
+		this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this);
 	},
 
 	_cancelAutoscrollRAF: function () {
@@ -705,7 +705,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			TileManager.preFetchTiles(true /* forceBorderCalc */);
 
 			if (!horizontalEnd || !verticalEnd) {
-				this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this, true);
+				this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this);
 			} else {
 				this._inSwipeAction = false;
 				if (app.file.fileBasedView)
