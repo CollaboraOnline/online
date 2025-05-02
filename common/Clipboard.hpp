@@ -184,13 +184,18 @@ public:
         os << "Saved clipboard total size: " << totalSize << " bytes (disk)\n";
     }
 
+    std::string nextClipFileName()
+    {
+        return _cacheDir + '/' + std::to_string(_cacheFileId++);
+    }
+
     std::string insertClipboard(const std::string key[2],
                          const std::string& clipFile)
     {
         Entry ent;
         ent._inserted = std::chrono::steady_clock::now();
 
-        std::string cacheFile = _cacheDir + '/' + std::to_string(_cacheFileId++);
+        std::string cacheFile = nextClipFileName();
         if (::rename(clipFile.c_str(), cacheFile.c_str()) < 0)
         {
             LOG_SYS("Failed to rename [" << clipFile << "] to [" << cacheFile << ']');

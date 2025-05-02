@@ -1994,8 +1994,8 @@ bool copyToMatch(std::istream& in, std::ostream& out, std::string_view search)
     const size_t searchLen = search.length();
     assert(searchLen && "need to search for something");
 
-    const size_t overlap = searchLen - 1;
-    size_t carrySize = 0;
+    const std::streamsize overlap = searchLen - 1;
+    std::streamsize carrySize = 0;
 
     char buffer[READ_BUFFER_SIZE + overlap];
 
@@ -2006,25 +2006,28 @@ bool copyToMatch(std::istream& in, std::ostream& out, std::string_view search)
     while (in)
     {
         in.read(buffer + carrySize, READ_BUFFER_SIZE);
-        size_t bytesRead = in.gcount();
+        std::streamsize bytesRead = in.gcount();
         if (!bytesRead)
             break;
 
-        size_t bytesInBuffer = carrySize + bytesRead;
+        std::streamsize bytesInBuffer = carrySize + bytesRead;
 
         std::string_view view(buffer, bytesInBuffer);
-        size_t match = view.find(search);
+        const auto match = view.find(search);
 
         if (match != std::string_view::npos)
         {
             // Copy as far as match
             out.write(buffer, match);
+            // Seek back to before match and return
+            in.clear();
+            in.seekg(-static_cast<std::streamoff>(bytesInBuffer - match), std::ios_base::cur);
             return true;
         }
         else
         {
             // Copy what definitely doesn't match so far to output.
-            size_t bytesToWrite = bytesInBuffer > overlap ? bytesInBuffer - overlap : 0;
+            std::streamsize bytesToWrite = bytesInBuffer > overlap ? bytesInBuffer - overlap : 0;
             out.write(buffer, bytesToWrite);
             // Rotate <= overlap to start of buffer for next iteration
             carrySize = std::min(overlap, bytesInBuffer);
@@ -2038,7 +2041,7 @@ bool copyToMatch(std::istream& in, std::ostream& out, std::string_view search)
     return false;
 }
 
-    // Insert our meta origin if we can
+// Insert our meta origin if we can
 bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
 {
     constexpr std::string_view textPlain = "text/plain";
@@ -2053,6 +2056,7 @@ bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
     }
 
     // back to start
+    in.clear();
     in.seekg(0);
 
     // copy as far as body
@@ -2566,32 +2570,25 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         LOG_TRC("clipboardcontent path: " << clipFile);
 
-//        postProcessCopyPayload(payload);
-
-#if 0
-        std::size_t header;
-        for (header = 0; header < payload->size();)
-            if (payload->data()[header++] == '\n')
-                break;
-        const bool empty = header >= payload->size();
-#endif
-
         bool empty = true;
         FileUtil::Stat f(clipFile);
         fprintf(stderr, "clipboard size is %ld, good is %d\n", f.size(), f.good());
         empty = f.size() == 0;
 
-        // TEMP
-        std::vector<char> res;
-        if (FileUtil::readFile(clipFile, res, f.size()) != static_cast<ssize_t>(f.size()))
-            fprintf(stderr, "broken read\n");
+        std::string postProcessedClipFile = COOLWSD::SavedClipboards->nextClipFileName();
+        std::ofstream ofs(postProcessedClipFile, std::ofstream::out);
+        std::ifstream ifs(clipFile, std::ifstream::in);
+        bool postProcesed = postProcessCopyPayload(ifs, ofs);
+        ifs.close();
+        ofs.close();
+
+        if (!postProcesed)
+            FileUtil::removeFile(postProcessedClipFile);
         else
-            fprintf(stderr, "good read of %ld from %s\n", res.size(), clipFile.c_str());
-
-        postProcessCopyPayload(res);
-        std::string_view sv(res.data(), res.size());
-
-        std::cerr << "FOO len: " << res.size() << "\n";
+        {
+            FileUtil::removeFile(clipFile);
+            clipFile = postProcessedClipFile;
+        }
 
         // final cleanup via clipFileRemove dtor
         std::shared_ptr<RemoveClipFile> clipFileRemove;
@@ -2619,8 +2616,6 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             auto socket = it.lock();
             if (!socket)
                 continue;
-
-            fprintf(stderr, "PAYLOAD LEN is %ld\n", res.size());
 
             // The custom header for the clipboard of a living document.
             auto session = std::make_shared<http::ServerSession>();
