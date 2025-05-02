@@ -482,6 +482,27 @@ getResponseStringAny(const std::shared_ptr<http::WebSocketSession>& ws,
     return std::string(response.data(), response.size());
 }
 
+inline std::vector<std::string> getAllResponsesTimed(const std::shared_ptr<http::WebSocketSession>& ws,
+                                                     const std::string& prefix, const std::string& testname,
+                                                     const std::chrono::milliseconds timeoutMs
+                                                     = std::chrono::seconds(5))
+{
+    std::vector<std::string> responses;
+
+    auto endTime = std::chrono::steady_clock::now() + timeoutMs;
+    std::chrono::steady_clock::time_point now;
+    while ((now = std::chrono::steady_clock::now()) < endTime)
+    {
+        auto response = helpers::getResponseString(ws, prefix, testname,
+                                                   std::chrono::duration_cast<std::chrono::milliseconds>(endTime - now));
+        if (response.length() > 0)
+            responses.push_back(response);
+    }
+
+    return responses;
+}
+
+
 inline std::string assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
                                         const std::string& prefix, const std::string& testname,
                                         const std::chrono::milliseconds timeoutMs
