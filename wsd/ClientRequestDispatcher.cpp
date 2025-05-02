@@ -1082,6 +1082,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
         {
+            fprintf(stderr, "doing CLIPBOARD thing\n");
             //              HexUtil::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
             servedSync = handleClipboardRequest(request, message, disposition, socket);
         }

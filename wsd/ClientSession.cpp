@@ -1976,6 +1976,127 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
     LOG_TRC("performed write, wrote " << wrote << " bytes");
 }
 
+void copyAll(std::istream& in, std::ostream& out)
+{
+    char buffer[READ_BUFFER_SIZE];
+    while (in)
+    {
+        in.read(buffer, READ_BUFFER_SIZE);
+        size_t bytesRead = in.gcount();
+        if (!bytesRead)
+            break;
+        out.write(buffer, bytesRead);
+    }
+}
+
+bool copyToMatch(std::istream& in, std::ostream& out, std::string_view search)
+{
+    const size_t searchLen = search.length();
+    assert(searchLen && "need to search for something");
+
+    const size_t overlap = searchLen - 1;
+    size_t carrySize = 0;
+
+    char buffer[READ_BUFFER_SIZE + overlap];
+
+    // Read READ_BUFFER_SIZE at a time, keep enough from last iteration to
+    // match 'search' against what existed at the end of the last window (but
+    // was too short to match) that might match now at the start of this
+    // new window.
+    while (in)
+    {
+        in.read(buffer + carrySize, READ_BUFFER_SIZE);
+        size_t bytesRead = in.gcount();
+        if (!bytesRead)
+            break;
+
+        size_t bytesInBuffer = carrySize + bytesRead;
+
+        std::string_view view(buffer, bytesInBuffer);
+        size_t match = view.find(search);
+
+        if (match != std::string_view::npos)
+        {
+            // Copy as far as match
+            out.write(buffer, match);
+            return true;
+        }
+        else
+        {
+            // Copy what definitely doesn't match so far to output.
+            size_t bytesToWrite = bytesInBuffer > overlap ? bytesInBuffer - overlap : 0;
+            out.write(buffer, bytesToWrite);
+            // Rotate <= overlap to start of buffer for next iteration
+            carrySize = std::min(overlap, bytesInBuffer);
+            std::memmove(buffer, buffer + bytesInBuffer - carrySize, carrySize);
+        }
+    }
+
+    // write left over
+    if (carrySize > 0)
+        out.write(buffer, carrySize);
+    return false;
+}
+
+    // Insert our meta origin if we can
+bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
+{
+    constexpr std::string_view textPlain = "text/plain";
+
+    char data[textPlain.size()];
+    in.read(data, textPlain.size());
+    if (in.gcount() == textPlain.size() &&
+        std::string_view(data, textPlain.size()) == textPlain)
+    {
+        // Single format and it's plain text (not HTML): no need to rewrite anything.
+        return false;
+    }
+
+    // back to start
+    in.seekg(0);
+
+    // copy as far as body
+    bool match = copyToMatch(in, out, "<body");
+    if (match)
+    {
+        // copy as far as the closing tag
+        match = copyToMatch(in, out, ">");
+    }
+
+    // cf. TileLayer.js /_dataTransferToDocument/
+    if (match)
+    {
+        // write the output tag close
+        out.write(">", 1);
+        // skip the input tag close
+        in.seekg(1, std::ios_base::cur);
+
+        const std::string meta = getClipboardURI();
+        LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
+        std::string origin = "<div id=\\\"meta-origin\\\" data-coolorigin=\\\"" + meta + "\\\">\\n";
+        out.write(origin.data(), origin.size());
+
+        // if there is a closing body tag, match style and write closing div tag before it
+        if (copyToMatch(in, out, "</body>"))
+            out.write("</div>", 6);
+
+        // write the remainder to out
+        copyAll(in, out);
+
+        return true;
+    }
+
+#if 0
+    // The content may not be json or any textual form. For example:
+    // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
+    // Do not issue this in those cases. (We should also cap the data we dump here.)
+    LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload:\n"
+            << [data](auto& log) { Util::dumpHex(log, data); });
+#endif
+
+    return false;
+}
+
 bool ClientSession::postProcessCopyPayload(std::vector<char>& data)
 {
     // Insert our meta origin if we can
@@ -2110,8 +2231,8 @@ namespace
         }
         ~RemoveClipFile()
         {
-            fprintf(stderr, "remove %s\n", _clipFile.c_str());
-            FileUtil::removeFile(_clipFile);
+            fprintf(stderr, "remove clip %s\n", _clipFile.c_str());
+            // FileUtil::removeFile(_clipFile);
         }
     };
 }

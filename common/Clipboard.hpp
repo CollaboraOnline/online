@@ -134,7 +134,7 @@ class ClipboardCache
         }
         ~ClipFile()
         {
-            FileUtil::removeFile(_file);
+            // FileUtil::removeFile(_file);
         }
     };
     struct Entry {

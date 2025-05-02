@@ -246,6 +246,7 @@ public:
     /// Adds and/or modified the copied payload before sending on to the client.
     void postProcessCopyPayload(const std::shared_ptr<Message>& payload);
     bool postProcessCopyPayload(std::vector<char>& data);
+    bool postProcessCopyPayload(std::istream&, std::ostream&);
 
     /// Removes the <meta name="origin" ...> tag which was added in
     /// ClientSession::postProcessCopyPayload().
