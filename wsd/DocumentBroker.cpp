@@ -2128,6 +2128,12 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
         return false;
     }
 
+    if (!_storage)
+    {
+        error = "Missing storage";
+        return false;
+    }
+
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
         session.getAuthorization(), *_lockCtx, lock, _currentStorageAttrs);
 
