@@ -48,23 +48,22 @@ using Poco::Net::HTTPSClientSession;
 #else
 using Poco::Net::HTTPClientSession;
 #endif
+using Poco::Runnable;
+using Poco::SharedPtr;
+using Poco::TemporaryFile;
+using Poco::URI;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::InvalidCertificateHandler;
 using Poco::Net::SSLManager;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
-using Poco::Runnable;
-using Poco::SharedPtr;
-using Poco::TemporaryFile;
-using Poco::URI;
-using Poco::Util::Application;
 
 bool EnableExperimental = false;
 static bool closeExpected = false;
 static std::mutex coutMutex;
 
-constexpr auto Name = "connect ";
+static const std::string Name = "connect ";
 
 /// Prints incoming data from a COOLWebSocket.
 class Output : public Runnable
