@@ -1131,9 +1131,11 @@ void Document::trimAfterInactivity()
             if (session && !session->isCloseFrame())
             {
                 session->loKitCallback(type, payload);
-                if (self->isLoadOngoing())
+                if (self->isLoadOngoing() && !self->processInputEnabled())
+                {
                     LOG_DBG("Enable processing input due to event of " << type << " during load");
-                session->getProtocol()->enableProcessInput(true);
+                    session->getProtocol()->enableProcessInput(true);
+                }
                 return;
             }
         }
