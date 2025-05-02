@@ -24,6 +24,7 @@
 #include <cctype>
 
 #include <Poco/Base64Decoder.h>
+#include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
@@ -2101,52 +2102,6 @@ bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
     return false;
 }
 
-bool ClientSession::postProcessCopyPayload(std::vector<char>& data)
-{
-    // Insert our meta origin if we can
-    std::string_view sv(data.data(), data.size());
-    if (sv.starts_with("text/plain"))
-    {
-        // Single format and it's plain text (not HTML): no need to rewrite anything.
-        return false;
-    }
-
-    std::size_t pos = Util::findInVector(data, "<body");
-    if (pos != std::string::npos)
-    {
-        pos = Util::findInVector(data, ">", pos);
-    }
-
-    // cf. TileLayer.js /_dataTransferToDocument/
-    if (pos != std::string::npos)
-    {
-        const std::string meta = getClipboardURI();
-        LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
-        std::string origin = "<div id=\\\"meta-origin\\\" data-coolorigin=\\\"" + meta + "\\\">\\n";
-        data.insert(data.begin() + pos + strlen(">"), origin.begin(), origin.end());
-
-        const char* end = "</body>";
-        pos = Util::findInVector(data, end);
-        if (pos != std::string::npos)
-        {
-            origin = "</div>";
-            data.insert(data.begin() + pos, origin.begin(), origin.end());
-        }
-
-        return true;
-    }
-
-#if 0
-    // The content may not be json or any textual form. For example:
-    // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
-    // Do not issue this in those cases. (We should also cap the data we dump here.)
-    LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload:\n"
-            << [data](auto& log) { Util::dumpHex(log, data); });
-#endif
-
-    return false;
-}
-
 // NB. also see browser/src/map/Clipboard.js that does this in JS for stubs.
 // See also ClientSession::preProcessSetClipboardPayload() which removes the
 // <div id="meta-origin"...>  tag added here.
@@ -2154,7 +2109,15 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
 {
     // Insert our meta origin if we can
     payload->rewriteDataBody([this](std::vector<char>& data) {
-            return postProcessCopyPayload(data);
+            Poco::MemoryInputStream iss(data.data(), data.size());
+            std::ostringstream oss;
+            if (postProcessCopyPayload(iss, oss))
+            {
+                std::string str(oss.str());
+                data.assign(str.begin(), str.end());
+                return true;
+            }
+            return false;
         });
 }
 
