@@ -79,15 +79,16 @@ L.Control.JSDialog = L.Control.extend({
 
 	close: function(id, sendCloseEvent) {
 		if (id !== undefined && this.dialogs[id]) {
-			if (!sendCloseEvent && this.dialogs[id].overlay && !this.dialogs[id].isSubmenu) {
+			const dialog = this.dialogs[id];
+			if (!sendCloseEvent && dialog.overlay && !dialog.isSubmenu) {
 				app.layoutingService.appendLayoutingTask(
-					() => { L.DomUtil.remove(this.dialogs[id].overlay); });
+					() => { L.DomUtil.remove(dialog.overlay); });
 			}
 
-			if (this.dialogs[id].timeoutId)
-				clearTimeout(this.dialogs[id].timeoutId);
+			if (dialog.timeoutId)
+				clearTimeout(dialog.timeoutId);
 
-			if (this.dialogs[id].isPopup)
+			if (dialog.isPopup)
 				this.closePopover(id, sendCloseEvent);
 			else
 				this.closeDialog(id, sendCloseEvent);
@@ -225,9 +226,16 @@ L.Control.JSDialog = L.Control.extend({
 
 		app.layoutingService.appendLayoutingTask(() => {
 			L.DomUtil.addClass(container, 'fadeout');
-			container.onanimationend = () => { instance.that.close(instance.id, false); };
+
+			let timeoutId = null;
+			const finallyClose = () => {
+				instance.that.close(instance.id, false);
+				clearTimeout(timeoutId);
+			};
+
+			container.onanimationend = finallyClose;
 			// be sure it will be removed if onanimationend will not be executed
-			setTimeout(() => { instance.that.close(instance.id, false); }, 700);
+			timeoutId = setTimeout(finallyClose, 700);
 		});
 	},
 
