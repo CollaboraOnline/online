@@ -3984,174 +3984,172 @@ void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::
 
 LogUiCommands::~LogUiCommands()
 {
-    if (!_skipDestructor && _session._isDocLoaded && Log::isLogUIEnabled() && _session._clientVisibleArea.getWidth() != 0)
+    if (_skipDestructor || !_session._isDocLoaded || !Log::isLogUIEnabled() || _session._clientVisibleArea.getWidth() == 0)
+        return;
+    if (_tokens->empty() || _cmdToLog.find((*_tokens)[0]) == _cmdToLog.end())
+        return;
+    int& lineCount = _session._lastUiCmdLinesLoggedCount;
+    LogUiCommandsLine& line0 = _session._lastUiCmdLinesLogged[0];
+    LogUiCommandsLine& line1 = _session._lastUiCmdLinesLogged[1];
+    std::string actCmd="";
+    std::string actSubCmd="";
+    bool commandHandled = false;
+    // drop, or modify some of the commands
+    if (_tokens->equals(0, "key"))
     {
-        if (_tokens->size() > 0 && _cmdToLog.find((*_tokens)[0]) != _cmdToLog.end())
+        // Do not log key release
+        if (_tokens->equals(1, "type=up"))
+            return;
+        if (_tokens->equals(2, "char=0"))
         {
-            int& lineCount = _session._lastUiCmdLinesLoggedCount;
-            LogUiCommandsLine& line0 = _session._lastUiCmdLinesLogged[0];
-            LogUiCommandsLine& line1 = _session._lastUiCmdLinesLogged[1];
-            std::string actCmd="";
-            std::string actSubCmd="";
-            bool commandHandled = false;
-            // drop, or modify some of the commands
-            if (_tokens->equals(0, "key"))
+            uint32_t keyCode=0;
+            (void)_tokens->getUInt32(3,"key",keyCode);
+            actSubCmd = "";
+            if (keyCode & 8192)
+                actSubCmd += "ctrl-";
+            if (keyCode & 4096)
+                actSubCmd += "shft-";
+            keyCode &= 4095;
+            if (keyCode >= 1024 && keyCode <= 1031)
             {
-                // Do not log key release
-                if (_tokens->equals(1, "type=up"))
-                    return;
-                if (_tokens->equals(2, "char=0"))
-                {
-                    uint32_t keyCode=0;
-                    (void)_tokens->getUInt32(3,"key",keyCode);
-                    actSubCmd = "";
-                    if (keyCode & 8192)
-                        actSubCmd += "ctrl-";
-                    if (keyCode & 4096)
-                        actSubCmd += "shft-";
-                    keyCode &= 4095;
-                    if (keyCode >= 1024 && keyCode <= 1031)
-                    {
-                        // arrow keys = 1024-1027  home/end = 1028-1029  page up/down = 1030-1031
-                        const std::vector<std::string> aNnavigationKeys = {"down","up","left","right","home","end","page-up","page-down"};
-                        actCmd = "key";
-                        actSubCmd += aNnavigationKeys[keyCode-1024];
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    // if char!=0, this is probably a textinput key
-                    actCmd = "textinput";
-                }
-            }
-            else if (_tokens->equals(0, "uno"))
-            {
-                if ( std::find_if(_unoCmdToNotLog.begin(), _unoCmdToNotLog.end(), [this](std::string const &S) { return (*_tokens)[1].starts_with(S); }) != _unoCmdToNotLog.end() )
-                    return;
-                actCmd = (*_tokens)[0];
-                actSubCmd = (*_tokens)[1];
-                std::size_t pos = actSubCmd.find_first_of ('?');
-                if (pos != std::string::npos) {
-                    actSubCmd = actSubCmd.substr (0,pos);
-                }
-            }
-            else if (_tokens->equals(0, "mouse"))
-            {
-                actCmd = (*_tokens)[0];
-                if ((*_tokens)[1].starts_with("type="))
-                {
-                    actSubCmd = (*_tokens)[1].substr(5);
-
-                    // If it is a buttonup and we have a saved buttondown, than exchange it to click
-                    if (actSubCmd == "buttonup" && lineCount > 0
-                        && _session._lastUiCmdLinesLogged[lineCount - 1]._cmd == "mouse"
-                        && _session._lastUiCmdLinesLogged[lineCount - 1]._subCmd == "buttondown")
-                    {
-                        if (lineCount == 1)
-                        {
-                            line0._subCmd = "click";
-                            commandHandled = true;
-                        }
-                        else
-                        {
-                            // drop the previous "buttondown", and change the actual to click
-                            lineCount = 1;
-                            actSubCmd = "click";
-                            // If "buttondown" generated an undo state change, we should save it too.
-                            line0._undoChange += line1._undoChange;
-                        }
-                    }
-                }
-                else
-                {
-                    actSubCmd = (*_tokens)[1];
-                }
+                // arrow keys = 1024-1027  home/end = 1028-1029  page up/down = 1030-1031
+                const std::vector<std::string> aNnavigationKeys = {"down","up","left","right","home","end","page-up","page-down"};
+                actCmd = "key";
+                actSubCmd += aNnavigationKeys[keyCode-1024];
             }
             else
             {
-                actCmd = (*_tokens)[0];
-            }
-
-            // Here we are sure we want to log this command sometime...
-            std::chrono::steady_clock::time_point actTime = std::chrono::steady_clock::now();
-
-            // We have to check if undo-count-change happened because of it
-            int undoAct = 0;
-            int undoChg = 0;
-            undoAct = atoi(_session.getLOKitDocument()->getCommandValues(".uno:UndoCount"));
-            // If undo count decrease without an undo .uno:Undo, then it is probably a fake (when cap reached)
-            if (_lastUndoCount!=undoAct && (_lastUndoCount<undoAct || actSubCmd == ".uno:Undo"))
-            {
-                if (undoAct - _lastUndoCount > 0)
-                    undoChg = 1;
-                else
-                    undoChg = -1;
-            }
-            if (commandHandled)
-            {
-                // Now, possible only if a buttonup become click
-                line0._undoChange += undoChg;
-                line0._timeEnd = actTime;
                 return;
             }
+        }
+        else
+        {
+            // if char!=0, this is probably a textinput key
+            actCmd = "textinput";
+        }
+    }
+    else if (_tokens->equals(0, "uno"))
+    {
+        if ( std::find_if(_unoCmdToNotLog.begin(), _unoCmdToNotLog.end(), [this](std::string const &S) { return (*_tokens)[1].starts_with(S); }) != _unoCmdToNotLog.end() )
+            return;
+        actCmd = (*_tokens)[0];
+        actSubCmd = (*_tokens)[1];
+        std::size_t pos = actSubCmd.find_first_of ('?');
+        if (pos != std::string::npos) {
+            actSubCmd = actSubCmd.substr (0,pos);
+        }
+    }
+    else if (_tokens->equals(0, "mouse"))
+    {
+        actCmd = (*_tokens)[0];
+        if ((*_tokens)[1].starts_with("type="))
+        {
+            actSubCmd = (*_tokens)[1].substr(5);
 
-            // If there is a Stored command, we check if the new is mergeable
-            //  Megre if we can
-            //  Log previous and store new command, if we cannot merge
-            if (lineCount >= 2)
+            // If it is a buttonup and we have a saved buttondown, than exchange it to click
+            if (actSubCmd == "buttonup" && lineCount > 0
+                && _session._lastUiCmdLinesLogged[lineCount - 1]._cmd == "mouse"
+                && _session._lastUiCmdLinesLogged[lineCount - 1]._subCmd == "buttondown")
             {
-                // Possible only if, the stored commands are: mouse click + mouse button down
-                // but the actual is not a mouse up .. that was handled before
-                // We have to log the 1. line, and copy the 2. to the first.
-                logLine(line1);
-                line0 = line1;
-                lineCount = 1;
-            }
-            if (lineCount > 0)
-            {
-                // Can we merge?
-                if (line0._cmd == actCmd && line0._subCmd == actSubCmd)
+                if (lineCount == 1)
                 {
-                    // We can merge. We just change the last stored command
-                    line0._repeat += 1;
-                    line0._timeEnd = actTime;
-                    line0._undoChange += undoChg;
-                    return;
-                }
-                else if (line0._cmd == "mouse" && line0._subCmd == "click"
-                         && actCmd == "mouse" && actSubCmd == "buttondown")
-                {
-                    // mouse button down after a click, may become 2x click later, do not log it yet
-                    // Nothing to do here now. (lineCount == 1)
+                    line0._subCmd = "click";
+                    commandHandled = true;
                 }
                 else
                 {
-                    // We can not merge. We log the last stored command, and continue to store the actual command
-                    logLine(line0);
-                    lineCount = 0;
+                    // drop the previous "buttondown", and change the actual to click
+                    lineCount = 1;
+                    actSubCmd = "click";
+                    // If "buttondown" generated an undo state change, we should save it too.
+                    line0._undoChange += line1._undoChange;
                 }
             }
-            // Store new command
-            LogUiCommandsLine& lineAct = _session._lastUiCmdLinesLogged[lineCount];
-            lineAct._cmd = std::move(actCmd);
-            lineAct._subCmd = std::move(actSubCmd);
-            lineAct._repeat = 1;
-            lineAct._undoChange = undoChg;
-            lineAct._timeStart = actTime;
-            lineAct._timeEnd = actTime;
-            lineCount++;
-
-            if (!Log::isLogUIMerged())
-            {
-                // If we are not to merge the commands, then log the saved command now.
-                logLine(line0);
-                lineCount = 0;
-            }
         }
+        else
+        {
+            actSubCmd = (*_tokens)[1];
+        }
+    }
+    else
+    {
+        actCmd = (*_tokens)[0];
+    }
+
+    // Here we are sure we want to log this command sometime...
+    std::chrono::steady_clock::time_point actTime = std::chrono::steady_clock::now();
+
+    // We have to check if undo-count-change happened because of it
+    int undoAct = 0;
+    int undoChg = 0;
+    undoAct = atoi(_session.getLOKitDocument()->getCommandValues(".uno:UndoCount"));
+    // If undo count decrease without an undo .uno:Undo, then it is probably a fake (when cap reached)
+    if (_lastUndoCount!=undoAct && (_lastUndoCount<undoAct || actSubCmd == ".uno:Undo"))
+    {
+        if (undoAct - _lastUndoCount > 0)
+            undoChg = 1;
+        else
+            undoChg = -1;
+    }
+    if (commandHandled)
+    {
+        // Now, possible only if a buttonup become click
+        line0._undoChange += undoChg;
+        line0._timeEnd = actTime;
+        return;
+    }
+
+    // If there is a Stored command, we check if the new is mergeable
+    //  Megre if we can
+    //  Log previous and store new command, if we cannot merge
+    if (lineCount >= 2)
+    {
+        // Possible only if, the stored commands are: mouse click + mouse button down
+        // but the actual is not a mouse up .. that was handled before
+        // We have to log the 1. line, and copy the 2. to the first.
+        logLine(line1);
+        line0 = line1;
+        lineCount = 1;
+    }
+    if (lineCount > 0)
+    {
+        // Can we merge?
+        if (line0._cmd == actCmd && line0._subCmd == actSubCmd)
+        {
+            // We can merge. We just change the last stored command
+            line0._repeat += 1;
+            line0._timeEnd = actTime;
+            line0._undoChange += undoChg;
+            return;
+        }
+        else if (line0._cmd == "mouse" && line0._subCmd == "click"
+                 && actCmd == "mouse" && actSubCmd == "buttondown")
+        {
+            // mouse button down after a click, may become 2x click later, do not log it yet
+            // Nothing to do here now. (lineCount == 1)
+        }
+        else
+        {
+            // We can not merge. We log the last stored command, and continue to store the actual command
+            logLine(line0);
+            lineCount = 0;
+        }
+    }
+    // Store new command
+    LogUiCommandsLine& lineAct = _session._lastUiCmdLinesLogged[lineCount];
+    lineAct._cmd = std::move(actCmd);
+    lineAct._subCmd = std::move(actSubCmd);
+    lineAct._repeat = 1;
+    lineAct._undoChange = undoChg;
+    lineAct._timeStart = actTime;
+    lineAct._timeEnd = actTime;
+    lineCount++;
+
+    if (!Log::isLogUIMerged())
+    {
+        // If we are not to merge the commands, then log the saved command now.
+        logLine(line0);
+        lineCount = 0;
     }
 }
 
