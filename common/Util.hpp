@@ -959,7 +959,7 @@ int main(int argc, char**argv)
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
     /// By default, everything is denied.
-    class RegexListMatcher
+    class RegexListMatcher final
     {
     public:
         RegexListMatcher() :
@@ -967,29 +967,8 @@ int main(int argc, char**argv)
         {
         }
 
-        RegexListMatcher(const bool allowByDefault)
+        explicit RegexListMatcher(const bool allowByDefault)
             : _allowByDefault(allowByDefault)
-        {
-        }
-
-        RegexListMatcher(std::initializer_list<std::string> allowed)
-            : _allowed(allowed)
-            , _allowByDefault(false)
-        {
-        }
-
-        RegexListMatcher(std::initializer_list<std::string> allowed,
-                         std::initializer_list<std::string> denied)
-            : _allowed(allowed)
-            , _denied(denied)
-            , _allowByDefault(false)
-        {
-        }
-
-        RegexListMatcher(const bool allowByDefault,
-                         std::initializer_list<std::string> denied)
-            : _denied(denied)
-            , _allowByDefault(allowByDefault)
         {
         }
 
@@ -1013,7 +992,7 @@ int main(int argc, char**argv)
                    !Util::matchRegex(_denied, subject);
         }
 
-        // whether a match exist within both _allowed and _denied
+        /// Whether a match exist in either _allowed or _denied.
         bool matchExist(const std::string& subject) const
         {
             return (Util::matchRegex(_allowed, subject) ||
