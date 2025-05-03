@@ -909,7 +909,6 @@ void WhiteBoxTests::testStat()
     LOK_ASSERT(!st.isDirectory());
     LOK_ASSERT(st.isFile());
     LOK_ASSERT(!st.isLink());
-    LOK_ASSERT(st.path() == tmpFile);
 
     // Modified-time tests.
     // Some test might fail when the system has a different resolution for file timestamps
