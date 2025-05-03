@@ -1319,8 +1319,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
             sendResult(destSocket, status);
     });
 
-    auto finishHandler =
-        [socketWeak, callbackUrlStr, this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr),
+                          this](const std::shared_ptr<http::Session>& probeSession)
     {
         LOG_TRC("finishHandler ");
 
