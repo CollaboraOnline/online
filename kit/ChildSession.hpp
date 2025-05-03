@@ -43,12 +43,12 @@ public:
     ChildSession& _session;
     int _lastUndoCount = 0;
     const StringVector* _tokens;
-    bool _skipDestructor = false;
-    LogUiCommands(ChildSession& session, const StringVector* tokens) : _session(session),_tokens(tokens) {}
-    LogUiCommands(ChildSession& session) : _session(session),_tokens(nullptr),_skipDestructor(true) {}
+    LogUiCommands(ChildSession& session, const StringVector* tokens);
+    LogUiCommands(ChildSession& session) : _session(session),_tokens(nullptr) {}
     ~LogUiCommands();
     void logSaveLoad(std::string cmd, const std::string & path, std::chrono::steady_clock::time_point timeStart);
 private:
+    std::weak_ptr<lok::Document> _document;
     // list the commands to log here.
     std::set<std::string> _cmdToLog = {
         "uno", "key", "mouse", "textinput", "removetextcontext",

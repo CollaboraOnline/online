@@ -3982,9 +3982,19 @@ void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::
     logLine(uiLogLine);
 }
 
+LogUiCommands::LogUiCommands(ChildSession& session, const StringVector* tokens)
+    : _session(session), _tokens(tokens)
+{
+    if (_session._isDocLoaded)
+        _document = session.getLOKitDocument();
+}
+
 LogUiCommands::~LogUiCommands()
 {
-    if (_skipDestructor || !_session._isDocLoaded || !Log::isLogUIEnabled() || _session._clientVisibleArea.getWidth() == 0)
+    auto document = _document.lock();
+    if (!document)
+        return;
+    if (!Log::isLogUIEnabled() || _session._clientVisibleArea.getWidth() == 0)
         return;
     if (_tokens->empty() || _cmdToLog.find((*_tokens)[0]) == _cmdToLog.end())
         return;
@@ -4082,7 +4092,7 @@ LogUiCommands::~LogUiCommands()
     // We have to check if undo-count-change happened because of it
     int undoAct = 0;
     int undoChg = 0;
-    undoAct = atoi(_session.getLOKitDocument()->getCommandValues(".uno:UndoCount"));
+    undoAct = atoi(document->getCommandValues(".uno:UndoCount"));
     // If undo count decrease without an undo .uno:Undo, then it is probably a fake (when cap reached)
     if (_lastUndoCount!=undoAct && (_lastUndoCount<undoAct || actSubCmd == ".uno:Undo"))
     {
