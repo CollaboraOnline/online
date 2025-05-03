@@ -17,6 +17,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/Message.hpp>
 #include <common/Protocol.hpp>
+#include <common/RegexUtil.hpp>
 #include <common/StateEnum.hpp>
 #include <common/ThreadPool.hpp>
 #include <common/Util.hpp>
@@ -484,7 +485,7 @@ void WhiteBoxTests::testRegexListMatcher()
 {
     constexpr std::string_view testname = __func__;
 
-    Util::RegexListMatcher matcher;
+    RegexUtil::RegexListMatcher matcher;
 
     matcher.allow("localhost");
     LOK_ASSERT(matcher.match("localhost"));
@@ -526,7 +527,7 @@ void WhiteBoxTests::testRegexListMatcher_Init()
 {
     constexpr std::string_view testname = __func__;
 
-    Util::RegexListMatcher matcher;
+    RegexUtil::RegexListMatcher matcher;
     matcher.allow("localhost");
     matcher.allow("192\\..*");
     matcher.deny("192\\.168\\..*");

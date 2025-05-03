@@ -13,6 +13,7 @@
 
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
+#include <common/RegexUtil.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/Exception.h>
@@ -40,8 +41,8 @@ public:
     static const std::string getLockedCommandListString();
 
     // Allow/deny Locked hosts
-    static Util::RegexListMatcher readOnlyWopiHosts;
-    static Util::RegexListMatcher disabledCommandWopiHosts;
+    static RegexUtil::RegexListMatcher readOnlyWopiHosts;
+    static RegexUtil::RegexListMatcher disabledCommandWopiHosts;
     static std::map<std::string, std::string> unlockLinkMap;
     static std::string unlockLink;
     static bool lockHostEnabled;
@@ -126,7 +127,7 @@ public:
     static void mapUnlockLink(const std::string& host, const std::string& path);
     static void setUnlockLink(const std::string& host)
     {
-        unlockLink = Util::getValue(unlockLinkMap, host);
+        unlockLink = RegexUtil::getValue(unlockLinkMap, host);
     }
 };
 

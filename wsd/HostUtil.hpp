@@ -14,7 +14,7 @@
 // HostUtil is only used in non-mobile apps.
 #if !MOBILEAPP
 
-#include <common/Util.hpp>
+#include <common/RegexUtil.hpp>
 
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -27,7 +27,7 @@ class HostUtil
 {
 private:
     /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
-    static Util::RegexListMatcher WopiHosts;
+    static RegexUtil::RegexListMatcher WopiHosts;
     /// mapping of alias host and port to real host and port
     static std::map<std::string, std::string> AliasHosts;
     /// When group configuration is not defined only the firstHost gets access

@@ -522,7 +522,7 @@ public:
 bool ClientRequestDispatcher::allowPostFrom(const std::string& address)
 {
     static bool init = false;
-    static Util::RegexListMatcher hosts;
+    static RegexUtil::RegexListMatcher hosts;
     if (!init)
     {
         const auto& app = Poco::Util::Application::instance();

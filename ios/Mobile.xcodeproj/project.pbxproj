@@ -29,6 +29,7 @@
 		BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */; };
 		BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BB213FE29900E0826C /* Session.cpp */; };
 		BE5EB5C4213FE29900E0826C /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BC213FE29900E0826C /* Util.cpp */; };
+		BE5EB5C4213FE29901E0826C /* RegexUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BC213FE29901E0826C /* RegexUtil.cpp */; };
 		BE5EB5C4214FE29900E0826C /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BC214FE29900E0826C /* Uri.cpp */; };
 		BE5EB5C5213FE29900E0826C /* KitQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BD213FE29900E0826C /* KitQueue.cpp */; };
 		BE5EB5C5214FE29900E0826C /* LogUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BD214FE29900E0826C /* LogUI.cpp */; };
@@ -565,6 +566,7 @@
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
 		BE58E12C217F295B00249358 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		BE58E12C217F295B01249358 /* RegexUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RegexUtil.hpp; sourceTree = "<group>"; };
 		BE58E12C218F295B00249358 /* Uri.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Uri.hpp; sourceTree = "<group>"; };
 		BE58E12D217F295B00249358 /* KitQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KitQueue.hpp; sourceTree = "<group>"; };
 		BE58E12D218F295B00249358 /* LogUI.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogUI.hpp; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 		BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpookyV2.cpp; sourceTree = "<group>"; };
 		BE5EB5BB213FE29900E0826C /* Session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
 		BE5EB5BC213FE29900E0826C /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
+		BE5EB5BC213FE29901E0826C /* RegexUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegexUtil.cpp; sourceTree = "<group>"; };
 		BE5EB5BC214FE29900E0826C /* Uri.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Uri.cpp; sourceTree = "<group>"; };
 		BE5EB5BD213FE29900E0826C /* KitQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KitQueue.cpp; sourceTree = "<group>"; };
 		BE5EB5BD214FE29900E0826C /* LogUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogUI.cpp; sourceTree = "<group>"; };
@@ -2223,9 +2226,11 @@
 				BEA28376214FFD8C00848631 /* Unit.cpp */,
 				BEA283782150172600848631 /* Unit.hpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
+				BE5EB5BC213FE29901E0826C /* RegexUtil.cpp */,
 				BE5EB5BC214FE29900E0826C /* Uri.cpp */,
 				1F957DC12BA82296006C9E78 /* Util-mobile.cpp */,
 				BE58E12C217F295B00249358 /* Util.hpp */,
+				BE58E12C217F295B01249358 /* RegexUtil.hpp */,
 				BE58E12C218F295B00249358 /* Uri.hpp */,
 			);
 			path = common;
@@ -3671,6 +3676,7 @@
 			files = (
 				BEA2835D21498AD400848631 /* Socket.cpp in Sources */,
 				BE5EB5C4213FE29900E0826C /* Util.cpp in Sources */,
+				BE5EB5C4213FE29901E0826C /* RegexUtil.cpp in Sources */,
 				BE5EB5C4214FE29900E0826C /* Uri.cpp in Sources */,
 				BEA283582146945500848631 /* ChildSession.cpp in Sources */,
 				BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */,

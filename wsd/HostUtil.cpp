@@ -19,12 +19,13 @@
 #include <common/CommandControl.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
+#include <common/RegexUtil.hpp>
 
 #include <map>
 #include <set>
 #include <string>
 
-Util::RegexListMatcher HostUtil::WopiHosts;
+RegexUtil::RegexListMatcher HostUtil::WopiHosts;
 std::map<std::string, std::string> HostUtil::AliasHosts;
 std::set<std::string> HostUtil::hostList;
 std::string HostUtil::FirstHost;
@@ -178,7 +179,7 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
     }
 
     Poco::URI newUri(uri);
-    const std::string value = Util::getValue(AliasHosts, newUri.getAuthority());
+    const std::string value = RegexUtil::getValue(AliasHosts, newUri.getAuthority());
     if (!value.empty())
     {
         newUri.setAuthority(value);
@@ -187,7 +188,7 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
     {
         // It is allowed for the host to be a regex.
         // In that case, the first who connects is treated as the 'host', and stored to the AliasHosts here
-        const std::string val = Util::getValue(hostList, newUri.getHost());
+        const std::string val = RegexUtil::getValue(hostList, newUri.getHost());
         // compare incoming request's host with existing hostList , if they are not equal it is regex and we store
         // the pair in AliasHosts
         if (val.compare(newUri.getHost()) != 0)
@@ -210,7 +211,7 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
 const Poco::URI HostUtil::getNewLockedUri(const Poco::URI& uri)
 {
     Poco::URI newUri(uri);
-    const std::string value = Util::getValue(AliasHosts, newUri.getAuthority());
+    const std::string value = RegexUtil::getValue(AliasHosts, newUri.getAuthority());
     if (!value.empty())
     {
         newUri.setAuthority(value);
