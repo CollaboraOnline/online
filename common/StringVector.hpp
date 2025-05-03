@@ -220,7 +220,7 @@ public:
         return _tokens.erase(it);
     }
 
-    void push_back(const std::string& string)
+    void push_back(const std::string_view string)
     {
         _tokens.emplace_back(_string.size(), string.size());
         _string += string;
