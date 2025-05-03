@@ -14,6 +14,7 @@
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
+#include <common/RegexUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Uri.hpp>
 #include <common/Util.hpp>
@@ -341,7 +342,7 @@ private:
 private:
     std::ofstream _stream;
     Poco::DeflatingOutputStream _deflater;
-    Util::RegexListMatcher _filter;
+    RegexUtil::RegexListMatcher _filter;
     std::map<std::string, SnapshotData> _urlToSnapshot;
     std::mutex _mutex;
     const std::string _path;
