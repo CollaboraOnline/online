@@ -526,7 +526,10 @@ void WhiteBoxTests::testRegexListMatcher_Init()
 {
     constexpr std::string_view testname = __func__;
 
-    Util::RegexListMatcher matcher({"localhost", "192\\..*"}, {"192\\.168\\..*"});
+    Util::RegexListMatcher matcher;
+    matcher.allow("localhost");
+    matcher.allow("192\\..*");
+    matcher.deny("192\\.168\\..*");
 
     LOK_ASSERT(matcher.match("localhost"));
     LOK_ASSERT(!matcher.match(""));

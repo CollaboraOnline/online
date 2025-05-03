@@ -781,7 +781,7 @@ namespace Util
         }
 
         // Not a perfect match, try regex.
-        for (const auto& value : set)
+        for (const std::string& value : set)
         {
             try
             {
