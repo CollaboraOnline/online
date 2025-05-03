@@ -566,7 +566,6 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
                                      << "], which will be used instead.");
         }
 
-        const Poco::File srcFilePath(srcFilename);
         FileUtil::Stat srcStat(srcFilename);
         if (!srcStat.exists())
             continue;
