@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <cassert>
 #include <cstdint>
 #include <cstring>
 #include <string>
@@ -203,27 +204,35 @@ public:
     /// Gets the underlying string of a single token.
     std::string getParam(const StringToken& token) const
     {
+        assert(token._index < _string.size() && "Index is out of range");
         return _string.substr(token._index, token._length);
     }
 
-    /// Concats tokens starting from begin, using separator as separator.
-    template <typename T> inline std::string cat(const T& separator, std::size_t offset) const
+    /// Concats tokens starting from firstOffset, using separator as separator.
+    /// An optional lastOffset can be used to decide the last entry, inclusive.
+    template <typename T>
+    inline std::string cat(const T& separator, std::size_t firstOffset,
+                           std::size_t lastOffset = std::string::npos) const
     {
-        std::string ret;
-
-        if (offset >= _tokens.size())
+        if (firstOffset >= _tokens.size() || firstOffset > lastOffset)
         {
-            return ret;
+            return std::string();
         }
 
+        assert(!_tokens.empty() && "Unexpected empty tokens");
+
+        std::string ret;
         ret.reserve(_string.size() * 2);
-        auto it = _tokens.begin() + offset;
-        ret = getParam(*it);
-        for (++it; it != _tokens.end(); ++it)
+
+        std::size_t i = firstOffset;
+        const std::size_t end = std::min<std::size_t>(lastOffset, _tokens.size() - 1);
+        ret = getParam(_tokens[i]);
+        for (++i; i <= end; ++i)
         {
             // Avoid temporary strings, append separately.
             ret += separator;
-            ret += getParam(*it);
+            assert(i < _tokens.size() && "Index is out of range");
+            ret += getParam(_tokens[i]);
         }
 
         return ret;
