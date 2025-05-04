@@ -27,6 +27,7 @@
 #include <chrono>
 #include <fstream>
 #include <mutex>
+#include <set>
 
 std::mutex CacheMutex;
 std::string CachePath;

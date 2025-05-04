@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <fstream>
-#include <mutex>
-#include <sstream>
-#include <string>
-#include <vector>
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormatter.h>
@@ -23,12 +24,11 @@
 #include <Poco/InflatingStream.h>
 #include <Poco/URI.h>
 
-#include "Protocol.hpp"
-#include "Log.hpp"
-#include "Util.hpp"
-#include "StringVector.hpp"
-#include "FileUtil.hpp"
-#include <common/Uri.hpp>
+#include <fstream>
+#include <mutex>
+#include <sstream>
+#include <string>
+#include <vector>
 
 /// Dumps commands and notification trace.
 class TraceFileRecord

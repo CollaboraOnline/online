@@ -15,9 +15,14 @@
 #if !MOBILEAPP
 
 #include "HostUtil.hpp"
+
+#include <common/CommandControl.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
-#include <common/CommandControl.hpp>
+
+#include <map>
+#include <set>
+#include <string>
 
 Util::RegexListMatcher HostUtil::WopiHosts;
 std::map<std::string, std::string> HostUtil::AliasHosts;
