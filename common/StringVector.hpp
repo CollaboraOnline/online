@@ -238,13 +238,19 @@ public:
         return ret;
     }
 
-    /// Returns a copy of the original string starting at token 'offset' until
-    /// the end of the string
-    std::string substrFromToken(std::size_t offset) const
+    /// Returns a copy of the original string starting at token 'startOffset'
+    /// until the 'lastOffset', the given, inclusive. Otherwise, to the end.
+    std::string substrFromToken(std::size_t firstOffset,
+                                std::size_t lastOffset = std::string::npos) const
     {
-        if (offset >= _tokens.size())
+        if (firstOffset >= _tokens.size() || firstOffset > lastOffset)
             return std::string();
-        return _string.substr(_tokens[offset]._index);
+
+        const std::size_t end = lastOffset < _tokens.size()
+                                    ? _tokens[lastOffset]._index + _tokens[lastOffset]._length -
+                                          _tokens[firstOffset]._index
+                                    : std::string::npos;
+        return _string.substr(_tokens[firstOffset]._index, end);
     }
 
     /// Compares the nth token with string.

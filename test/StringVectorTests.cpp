@@ -30,6 +30,7 @@ class StringVectorTests : public CPPUNIT_NS::TestFixture
     void testTokenizerTokenizeAnyOf();
     void testStringVector();
     void testCat();
+    void testSubstrFromToken();
 };
 
 void StringVectorTests::testTokenizer()
@@ -369,6 +370,81 @@ void StringVectorTests::testCat()
     LOK_ASSERT_EQUAL(std::string("forth"), vector.cat(' ', 3, 3));
     LOK_ASSERT_EQUAL(std::string("fifth"), vector.cat(' ', 4, 4));
     LOK_ASSERT_EQUAL(std::string(), vector.cat(' ', 5, 5));
+}
+
+void StringVectorTests::testSubstrFromToken()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Test push_back() and getParam().
+    StringVector vector;
+    vector.push_back("a");
+    vector.push_back("b");
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), vector.size());
+
+    // Test substrFromToken().
+    LOK_ASSERT_EQUAL(std::string("ab"), vector.substrFromToken(0));
+    LOK_ASSERT_EQUAL(std::string("b"), vector.substrFromToken(1));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(3));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(42));
+
+    vector.push_back("c");
+    vector.push_back("d");
+    vector.push_back("e");
+
+    // Test substrFromToken() with more tokens.
+    LOK_ASSERT_EQUAL(std::string("abcde"), vector.substrFromToken(0));
+    LOK_ASSERT_EQUAL(std::string("bcde"), vector.substrFromToken(1));
+    LOK_ASSERT_EQUAL(std::string("cde"), vector.substrFromToken(2));
+    LOK_ASSERT_EQUAL(std::string("de"), vector.substrFromToken(3));
+    LOK_ASSERT_EQUAL(std::string("e"), vector.substrFromToken(4));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(5));
+
+    // Test substrFromToken() with lastOffset.
+    LOK_ASSERT_EQUAL(std::string("abcde"), vector.substrFromToken(0, 5));
+    LOK_ASSERT_EQUAL(std::string("abcde"), vector.substrFromToken(0, 4));
+    LOK_ASSERT_EQUAL(std::string("abcd"), vector.substrFromToken(0, 3));
+    LOK_ASSERT_EQUAL(std::string("abc"), vector.substrFromToken(0, 2));
+    LOK_ASSERT_EQUAL(std::string("ab"), vector.substrFromToken(0, 1));
+    LOK_ASSERT_EQUAL(std::string("a"), vector.substrFromToken(0, 0));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(1, 0));
+
+    // Test substrFromToken() with more tokens.
+    LOK_ASSERT_EQUAL(std::string("abcde"), vector.substrFromToken(0));
+    LOK_ASSERT_EQUAL(std::string("bcde"), vector.substrFromToken(1));
+    LOK_ASSERT_EQUAL(std::string("cde"), vector.substrFromToken(2));
+    LOK_ASSERT_EQUAL(std::string("de"), vector.substrFromToken(3));
+    LOK_ASSERT_EQUAL(std::string("e"), vector.substrFromToken(4));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(5));
+
+    // Test substrFromToken() with lastOffset.
+    LOK_ASSERT_EQUAL(std::string("abcde"), vector.substrFromToken(0, 5));
+    LOK_ASSERT_EQUAL(std::string("abcde"), vector.substrFromToken(0, 4));
+    LOK_ASSERT_EQUAL(std::string("abcd"), vector.substrFromToken(0, 3));
+    LOK_ASSERT_EQUAL(std::string("abc"), vector.substrFromToken(0, 2));
+    LOK_ASSERT_EQUAL(std::string("ab"), vector.substrFromToken(0, 1));
+    LOK_ASSERT_EQUAL(std::string("a"), vector.substrFromToken(0, 0));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(1, 0));
+
+    vector = StringVector::tokenize("first second third forth fifth");
+    LOK_ASSERT_EQUAL(std::string("first second third forth fifth"), vector.substrFromToken(0, 5));
+    LOK_ASSERT_EQUAL(std::string("first second third forth fifth"), vector.substrFromToken(0, 4));
+    LOK_ASSERT_EQUAL(std::string("first second third forth"), vector.substrFromToken(0, 3));
+    LOK_ASSERT_EQUAL(std::string("first second third"), vector.substrFromToken(0, 2));
+    LOK_ASSERT_EQUAL(std::string("first second"), vector.substrFromToken(0, 1));
+    LOK_ASSERT_EQUAL(std::string("first"), vector.substrFromToken(0, 0));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(1, 0));
+    LOK_ASSERT_EQUAL(std::string("second third forth fifth"), vector.substrFromToken(1, 5));
+    LOK_ASSERT_EQUAL(std::string("third forth fifth"), vector.substrFromToken(2, 5));
+    LOK_ASSERT_EQUAL(std::string("forth fifth"), vector.substrFromToken(3, 5));
+    LOK_ASSERT_EQUAL(std::string("fifth"), vector.substrFromToken(4, 5));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(5, 5));
+    LOK_ASSERT_EQUAL(std::string("second third forth fifth"), vector.substrFromToken(1, 4));
+    LOK_ASSERT_EQUAL(std::string("third forth"), vector.substrFromToken(2, 3));
+    LOK_ASSERT_EQUAL(std::string("third"), vector.substrFromToken(2, 2));
+    LOK_ASSERT_EQUAL(std::string("forth"), vector.substrFromToken(3, 3));
+    LOK_ASSERT_EQUAL(std::string("fifth"), vector.substrFromToken(4, 4));
+    LOK_ASSERT_EQUAL(std::string(), vector.substrFromToken(5, 5));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(StringVectorTests);
