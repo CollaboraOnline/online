@@ -11,17 +11,17 @@
 
 #include <config.h>
 
-#include <Common.hpp>
-#include <FileUtil.hpp>
-#include <JsonUtil.hpp>
-#include <Protocol.hpp>
-#include <TileCache.hpp>
-#include <TileDesc.hpp>
-#include <Util.hpp>
 #include <common/Anonymizer.hpp>
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/Message.hpp>
+#include <common/Protocol.hpp>
 #include <common/StateEnum.hpp>
 #include <common/ThreadPool.hpp>
+#include <common/Util.hpp>
+#include <wsd/TileCache.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <test/lokassert.hpp>
 
