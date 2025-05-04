@@ -36,15 +36,18 @@ std::string getValue(const std::set<std::string>& set, const std::string& subjec
 /// By default, everything is denied.
 class RegexListMatcher final
 {
+    static constexpr std::size_t MaxMemoizationSize = 16;
+
 public:
     RegexListMatcher()
-        : _allowByDefault(false)
+        : RegexListMatcher(false)
     {
     }
 
     explicit RegexListMatcher(const bool allowByDefault)
         : _allowByDefault(allowByDefault)
     {
+        _matchedMemo.reserve(MaxMemoizationSize * 3);
     }
 
     void allow(const std::string& pattern)
@@ -77,7 +80,12 @@ public:
         }
 
         const bool res = matchImpl(subject);
-        _matchedMemo[subject] = res;
+        if (_matchedMemo.size() < MaxMemoizationSize)
+        {
+            // Cap the memoization memory footprint.
+            _matchedMemo[subject] = res;
+        }
+
         return res;
     }
 
