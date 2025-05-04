@@ -123,18 +123,18 @@ public:
     }
 
     /// Tokenize single-char delimited values until we hit new-line or the end.
-    static StringVector tokenize(const std::string& s, const char delimiter = ' ')
+    static StringVector tokenize(std::string s, const char delimiter = ' ')
     {
         if (s.empty())
             return StringVector();
 
         std::vector<StringToken> tokens;
         tokenize(s.data(), s.size(), delimiter, tokens);
-        return StringVector(s, std::move(tokens));
+        return StringVector(std::move(s), std::move(tokens));
     }
 
     /// Tokenize by the delimiter string.
-    static StringVector tokenize(const std::string& s, const char* delimiter, int len = -1)
+    static StringVector tokenize(std::string s, const char* delimiter, int len = -1)
     {
         if (s.empty() || len == 0 || delimiter == nullptr || *delimiter == '\0')
             return StringVector();
@@ -158,18 +158,17 @@ public:
             start = end + len;
         }
 
-        return StringVector(s, std::move(tokens));
+        return StringVector(std::move(s), std::move(tokens));
     }
 
-    template <std::size_t N>
-    static StringVector tokenize(const std::string& s, const char (&delimiter)[N])
+    template <std::size_t N> static StringVector tokenize(std::string s, const char (&delimiter)[N])
     {
-        return tokenize(s, delimiter, N - 1);
+        return tokenize(std::move(s), delimiter, N - 1);
     }
 
-    static StringVector tokenize(const std::string& s, const std::string& delimiter)
+    static StringVector tokenize(std::string s, const std::string_view delimiter)
     {
-        return tokenize(s, delimiter.data(), delimiter.size());
+        return tokenize(std::move(s), delimiter.data(), delimiter.size());
     }
 
     /** Tokenize based on any of the characters in 'delimiters'.
@@ -177,18 +176,18 @@ public:
         Ie. when there is '\n\r' in there, any of them means a delimiter.
         In addition, trim the values so there are no leading or trailing spaces.
     */
-    static StringVector tokenizeAnyOf(const std::string& s, const char* delimiters,
+    static StringVector tokenizeAnyOf(std::string s, const char* delimiters,
                                       const std::size_t delimitersLength);
 
     template <std::size_t N>
-    static StringVector tokenizeAnyOf(const std::string& s, const char (&delimiters)[N])
+    static StringVector tokenizeAnyOf(std::string s, const char (&delimiters)[N])
     {
-        return tokenizeAnyOf(s, delimiters, N - 1); // Exclude the null terminator.
+        return tokenizeAnyOf(std::move(s), delimiters, N - 1); // Exclude the null terminator.
     }
 
-    static StringVector tokenizeAnyOf(const std::string& s, const char* delimiters)
+    static StringVector tokenizeAnyOf(std::string s, const char* delimiters)
     {
-        return tokenizeAnyOf(s, delimiters, std::strlen(delimiters));
+        return tokenizeAnyOf(std::move(s), delimiters, std::strlen(delimiters));
     }
 
     /// Unlike std::vector, gives an empty string if index is unexpected.

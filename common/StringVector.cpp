@@ -81,7 +81,7 @@ bool StringVector::getNameIntegerPair(std::size_t index, std::string& name, int&
     return value > std::numeric_limits<int>::min() && value < std::numeric_limits<int>::max();
 }
 
-StringVector StringVector::tokenizeAnyOf(const std::string& s, const char* delimiters,
+StringVector StringVector::tokenizeAnyOf(std::string s, const char* delimiters,
                                          const std::size_t delimitersLength)
 {
     // trim from the end so that we do not have to check this exact case
@@ -124,7 +124,7 @@ StringVector StringVector::tokenizeAnyOf(const std::string& s, const char* delim
         start = end + 1;
     }
 
-    return StringVector(s, std::move(tokens));
+    return StringVector(std::move(s), std::move(tokens));
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
