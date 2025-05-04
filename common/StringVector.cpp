@@ -81,8 +81,7 @@ bool StringVector::getNameIntegerPair(std::size_t index, std::string& name, int&
     return value > std::numeric_limits<int>::min() && value < std::numeric_limits<int>::max();
 }
 
-StringVector StringVector::tokenizeAnyOf(std::string s, const char* delimiters,
-                                         const std::size_t delimitersLength)
+StringVector StringVector::tokenizeAnyOf(std::string s, const std::string_view delimiters)
 {
     // trim from the end so that we do not have to check this exact case
     // later
@@ -90,7 +89,7 @@ StringVector StringVector::tokenizeAnyOf(std::string s, const char* delimiters,
     while (length > 0 && s[length - 1] == ' ')
         --length;
 
-    if (length == 0 || delimiters == nullptr || delimitersLength == 0)
+    if (length == 0 || delimiters.empty())
         return StringVector();
 
     std::size_t start = 0;
@@ -108,7 +107,7 @@ StringVector StringVector::tokenizeAnyOf(std::string s, const char* delimiters,
         if (start == length)
             break;
 
-        std::size_t end = s.find_first_of(delimiters, start, delimitersLength);
+        std::size_t end = s.find_first_of(delimiters.data(), start, delimiters.size());
         if (end == std::string::npos)
             end = length;
 
