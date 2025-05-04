@@ -11,9 +11,11 @@
 
 #pragma once
 
+#include <cassert>
 #include <map>
 #include <set>
 #include <string>
+#include <unordered_map>
 
 namespace RegexUtil
 {
@@ -45,9 +47,15 @@ public:
     {
     }
 
-    void allow(const std::string& pattern) { _allowed.insert(pattern); }
+    void allow(const std::string& pattern)
+    {
+        _matchedMemo.clear();
+        _allowed.insert(pattern);
+    }
+
     void deny(const std::string& pattern)
     {
+        _matchedMemo.clear();
         _allowed.erase(pattern);
         _denied.insert(pattern);
     }
@@ -58,11 +66,29 @@ public:
         _denied.clear();
     }
 
+    /// Match the given value to the regex rules.
     bool match(const std::string& subject) const
+    {
+        // Check the memoized results; will match virtually always.
+        if (const auto it = _matchedMemo.find(subject); it != _matchedMemo.end())
+        {
+            assert(matchImpl(subject) == it->second && "Inconsistent memoized match result");
+            return it->second; // Return the memoized result.
+        }
+
+        const bool res = matchImpl(subject);
+        _matchedMemo[subject] = res;
+        return res;
+    }
+
+private:
+    /// The regex rules matching logic, without memoization.
+    bool matchImpl(const std::string& subject) const
     {
         return (_allowByDefault || matchRegex(_allowed, subject)) && !matchRegex(_denied, subject);
     }
 
+public:
     /// Whether a match exist in either _allowed or _denied.
     bool matchExist(const std::string& subject) const
     {
@@ -74,6 +100,8 @@ public:
 private:
     std::set<std::string> _allowed;
     std::set<std::string> _denied;
+    /// Memoizes the result of match().
+    mutable std::unordered_map<std::string, bool> _matchedMemo;
     const bool _allowByDefault;
 };
 
