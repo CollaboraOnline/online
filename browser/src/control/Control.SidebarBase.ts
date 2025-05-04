@@ -85,7 +85,8 @@ abstract class SidebarBase {
 			this.map.focus();
 		}
 
-		this.map.uiManager.setDocTypePref(`Show${this.type}`, false);
+		const upperCaseType = this.type[0].toUpperCase() + this.type.slice(1);
+		this.map.uiManager.setDocTypePref('Show' + upperCaseType, false);
 	}
 
 	onJSUpdate(e: FireEvent) {
