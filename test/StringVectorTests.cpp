@@ -23,11 +23,13 @@ class StringVectorTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTokenizer);
     CPPUNIT_TEST(testTokenizerTokenizeAnyOf);
     CPPUNIT_TEST(testStringVector);
+    CPPUNIT_TEST(testCat);
     CPPUNIT_TEST_SUITE_END();
 
     void testTokenizer();
     void testTokenizerTokenizeAnyOf();
     void testStringVector();
+    void testCat();
 };
 
 void StringVectorTests::testTokenizer()
@@ -210,14 +212,6 @@ void StringVectorTests::testStringVector()
     ++it;
     LOK_ASSERT_EQUAL(std::string("b"), vector.getParam(*it));
 
-    // Test cat().
-    LOK_ASSERT_EQUAL(std::string("a b"), vector.cat(" ", 0));
-    LOK_ASSERT_EQUAL(std::string("a b"), vector.cat(' ', 0));
-    LOK_ASSERT_EQUAL(std::string("a*b"), vector.cat('*', 0));
-    LOK_ASSERT_EQUAL(std::string("a blah mlah b"), vector.cat(" blah mlah ", 0));
-    LOK_ASSERT_EQUAL(std::string(), vector.cat(" ", 3));
-    LOK_ASSERT_EQUAL(std::string(), vector.cat(" ", 42));
-
     // Test operator []().
     LOK_ASSERT_EQUAL(std::string("a"), vector[0]);
     LOK_ASSERT_EQUAL(std::string(""), vector[2]);
@@ -303,6 +297,78 @@ void StringVectorTests::testStringVector()
         LOK_ASSERT_EQUAL(std::string("a"), name);
         LOK_ASSERT_EQUAL(11, value);
     }
+}
+
+void StringVectorTests::testCat()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Test push_back() and getParam().
+    StringVector vector;
+    vector.push_back("a");
+    vector.push_back("b");
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), vector.size());
+
+    // Test cat().
+    LOK_ASSERT_EQUAL(std::string("a b"), vector.cat(" ", 0));
+    LOK_ASSERT_EQUAL(std::string("a b"), vector.cat(' ', 0));
+    LOK_ASSERT_EQUAL(std::string("a*b"), vector.cat('*', 0));
+    LOK_ASSERT_EQUAL(std::string("a blah mlah b"), vector.cat(" blah mlah ", 0));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(" ", 3));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(" ", 42));
+
+    // Test equals().
+    LOK_ASSERT(vector.equals(0, "a"));
+    LOK_ASSERT(!vector.equals(0, "A"));
+    LOK_ASSERT(vector.equals(1, "b"));
+    LOK_ASSERT(!vector.equals(1, "B"));
+    LOK_ASSERT(!vector.equals(2, ""));
+
+    // Test cat() with more tokens.
+    vector.push_back("c");
+    vector.push_back("d");
+    vector.push_back("e");
+    LOK_ASSERT_EQUAL(std::string("a/b/c/d/e"), vector.cat('/', 0));
+    LOK_ASSERT_EQUAL(std::string("b/c/d/e"), vector.cat('/', 1));
+    LOK_ASSERT_EQUAL(std::string("c/d/e"), vector.cat('/', 2));
+    LOK_ASSERT_EQUAL(std::string("d/e"), vector.cat('/', 3));
+    LOK_ASSERT_EQUAL(std::string("e"), vector.cat('/', 4));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat('/', 5));
+
+    LOK_ASSERT_EQUAL(std::string("a/b/c/d/e"), vector.cat('/', 0, 7));
+    LOK_ASSERT_EQUAL(std::string("b/c/d/e"), vector.cat('/', 1, 7));
+    LOK_ASSERT_EQUAL(std::string("c/d/e"), vector.cat('/', 2, 7));
+    LOK_ASSERT_EQUAL(std::string("d/e"), vector.cat('/', 3, 7));
+    LOK_ASSERT_EQUAL(std::string("e"), vector.cat('/', 4, 7));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat('/', 5, 7));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat('/', 3, 0));
+
+    LOK_ASSERT_EQUAL(std::string("a/b/c/d/e"), vector.cat('/', 0, 4));
+    LOK_ASSERT_EQUAL(std::string("b/c/d/e"), vector.cat('/', 1, 4));
+    LOK_ASSERT_EQUAL(std::string("c/d/e"), vector.cat('/', 2, 4));
+    LOK_ASSERT_EQUAL(std::string("d/e"), vector.cat('/', 3, 4));
+    LOK_ASSERT_EQUAL(std::string("e"), vector.cat('/', 4, 4));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat('/', 5, 4));
+
+    vector = StringVector::tokenize("first second third forth fifth");
+    LOK_ASSERT_EQUAL(std::string("first second third forth fifth"), vector.cat(' ', 0, 5));
+    LOK_ASSERT_EQUAL(std::string("first second third forth fifth"), vector.cat(' ', 0, 4));
+    LOK_ASSERT_EQUAL(std::string("first second third forth"), vector.cat(' ', 0, 3));
+    LOK_ASSERT_EQUAL(std::string("first second third"), vector.cat(' ', 0, 2));
+    LOK_ASSERT_EQUAL(std::string("first second"), vector.cat(' ', 0, 1));
+    LOK_ASSERT_EQUAL(std::string("first"), vector.cat(' ', 0, 0));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(' ', 1, 0));
+    LOK_ASSERT_EQUAL(std::string("second third forth fifth"), vector.cat(' ', 1, 5));
+    LOK_ASSERT_EQUAL(std::string("third forth fifth"), vector.cat(' ', 2, 5));
+    LOK_ASSERT_EQUAL(std::string("forth fifth"), vector.cat(' ', 3, 5));
+    LOK_ASSERT_EQUAL(std::string("fifth"), vector.cat(' ', 4, 5));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(' ', 5, 5));
+    LOK_ASSERT_EQUAL(std::string("second third forth fifth"), vector.cat(' ', 1, 4));
+    LOK_ASSERT_EQUAL(std::string("third forth"), vector.cat(' ', 2, 3));
+    LOK_ASSERT_EQUAL(std::string("third"), vector.cat(' ', 2, 2));
+    LOK_ASSERT_EQUAL(std::string("forth"), vector.cat(' ', 3, 3));
+    LOK_ASSERT_EQUAL(std::string("fifth"), vector.cat(' ', 4, 4));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(' ', 5, 5));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(StringVectorTests);
