@@ -62,6 +62,12 @@
 	grid-gap: 8px;
 }
 
+#AcceptRejectChangesDialog #writerchanges.jsdialog.ui-treeview {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr) repeat(2, minmax(min-content, auto));
+	column-gap: 8px;
+}
+
 #AcceptRejectChangesDialog .jsdialog.ui-grid .has-img,
 #AcceptRejectChangesDialog .jsdialog.ui-grid .menubutton {
 	margin: 0 !important;
@@ -70,7 +76,7 @@
 
 #AcceptRejectChangesDialog .ui-treeview-headers,
 #AcceptRejectChangesDialog .jsdialog.ui-treeview-entry { 
-	grid-template-columns: 60px 60px 120px 130px;
+	display: contents;
 }
 
 #AcceptRejectChangesDialog .jsdialog.ui-treeview-entry > div:nth-child(2),
