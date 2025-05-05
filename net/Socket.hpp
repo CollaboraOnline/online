@@ -1210,6 +1210,7 @@ public:
         , _readType(readType)
         , _shutdownSignalled(false)
         , _inputProcessingEnabled(true)
+        , _doneDisconnect(false)
         , _isClient(isClient)
         , _isLocalHost(hostType == LocalHost)
         , _sentHTTPContinue(false)
@@ -1223,14 +1224,8 @@ public:
     {
         LOG_TRC("StreamSocket dtor called with pending write: " << _outBuffer.size()
                                                                 << ", read: " << _inBuffer.size());
-
-        if (!isShutdown())
-        {
-            ASSERT_CORRECT_SOCKET_THREAD(this);
-            if (_socketHandler)
-                _socketHandler->onDisconnect();
-            _socketHandler.reset();
-        }
+        ensureDisconnected();
+        _socketHandler.reset();
 
         if (!_shutdownSignalled)
         {
@@ -1239,6 +1234,19 @@ public:
         }
         if (isExternalCountedConnection())
             --ExternalConnectionCount;
+    }
+
+    /// Emit 'onDisconnect' if it has not been done
+    void ensureDisconnected()
+    {
+        if (!_doneDisconnect)
+        {
+            ASSERT_CORRECT_SOCKET_THREAD(this);
+
+            _doneDisconnect = true;
+            if (_socketHandler)
+                _socketHandler->onDisconnect();
+        }
     }
 
     bool isWebSocket() const { return _wsState == WSState::WS; }
@@ -1491,11 +1499,13 @@ public:
     void setHandler(std::shared_ptr<ProtocolHandlerInterface> handler)
     {
         LOG_TRC("setHandler");
+        resetHandler(); // don't disconnect the pre-upgrade handler
         _socketHandler = std::move(handler);
         ProtocolThreadOwnerChange::setThreadOwner(*_socketHandler, getThreadOwner());
         _socketHandler->onConnect(shared_from_this());
     }
 
+    /// Explicitly avoids onDisconnect
     void resetHandler()
     {
         LOG_TRC("resetHandler");
@@ -1738,7 +1748,7 @@ public:
         if (closed)
         {
             LOG_TRC("Closed. Firing onDisconnect.");
-            _socketHandler->onDisconnect();
+            ensureDisconnected();
             setShutdown();
             disposition.setClosed();
         }
@@ -1957,6 +1967,9 @@ private:
     /// It's accessed from different threads.
     std::atomic_bool _shutdownSignalled;
     std::atomic_bool _inputProcessingEnabled;
+
+    /// Did we emit the onDisconnect event yet
+    bool _doneDisconnect;
 
     /// True if owner is in client role, otherwise false (server)
     bool _isClient:1;
