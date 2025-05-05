@@ -49,6 +49,7 @@ describe(['tagdesktop'], 'Notebookbar review operations.', function() {
 
 		// When going to the next redline:
 		cy.cGet('#Review-tab-label').click();
+		cy.cGet('.ui-scroll-right').click();
 		cy.cGet('#review-next-tracked-change-button').click();
 		cy.cGet('#Table-tab-label').should('not.have.class', 'hidden');
 
