@@ -325,6 +325,11 @@ template <typename T>
 inline T getConfigValue(const std::string& name, const typename T::rep def,
                         const typename T::rep min = 0)
 {
+    if (Util::isFuzzing())
+    {
+        return T(def);
+    }
+
     return getConfigValue<T>(Poco::Util::Application::instance().config(), name, def, min);
 }
 
