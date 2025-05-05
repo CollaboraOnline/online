@@ -1553,7 +1553,7 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
                                                     << ", " << *this);
         if (_socketHandler)
         {
-            _socketHandler->onDisconnect();
+            ensureDisconnected();
             if (!isShutdown())
             {
                 // Note: Ensure proper semantics of onDisconnect()
