@@ -10,7 +10,7 @@ function showSidebar() {
 
 	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
-	cy.cGet('#sidebar').click({force: true});
+	cy.cGet('#sidebar').click();
 	cy.cGet('#sidebar').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
@@ -24,7 +24,7 @@ function hideSidebar() {
 
 	cy.cGet('#sidebar').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-	cy.cGet('#sidebar').click({force: true});
+	cy.cGet('#sidebar').click();
 	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
@@ -36,7 +36,7 @@ function hideSidebarImpress() {
 
 	cy.cGet('#modifypage').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-	cy.cGet('#modifypage button').click({force: true});
+	cy.cGet('#modifypage button').click('left');
 	cy.cGet('#modifypage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
