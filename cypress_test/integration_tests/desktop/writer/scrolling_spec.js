@@ -7,10 +7,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/scrolling.odt');
-		desktopHelper.switchUIToCompact();
-
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#sidebar').click({force: true});
 	});
 
 	it('Check if we jump the view on new page insertion', function() {
@@ -25,11 +21,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	});
 
 	it('Scrolling to bottom/top', function() {
-		desktopHelper.selectZoomLevel('40', false);
+		desktopHelper.selectZoomLevel('40');
+
 		helper.typeIntoDocument('{ctrl}{home}');
 		//scroll to bottom
 		desktopHelper.assertVisiblePage(1, 1, 4);
-		desktopHelper.pressKey(1, 'pagedown');
+		desktopHelper.pressKey(2, 'pagedown');
 		desktopHelper.assertVisiblePage(2, 2, 4);
 		desktopHelper.pressKey(1, 'pagedown');
 		desktopHelper.assertVisiblePage(3, 3, 4);
@@ -45,22 +42,25 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	});
 
 	it('Scrolling to left/right', function() {
-		cy.cGet('#toolbar-down').click();
-		desktopHelper.selectZoomLevel('200', false);
+		desktopHelper.selectZoomLevel('200');
 		//show horizontal scrollbar
 		cy.cGet('.leaflet-layer').click('bottom');
 		cy.wait(1000);
+		desktopHelper.assertScrollbarPosition('horizontal', 0, 270)
+;
 		helper.typeIntoDocument('{home}{end}{home}');
 		cy.wait(1000);
-		cy.cGet('#test-div-horizontal-scrollbar').should('have.text', '0');
+		desktopHelper.assertScrollbarPosition('horizontal', 0, 270);
+
 		helper.typeIntoDocument('{end}{home}{end}');
+		cy.wait(1000);
 		desktopHelper.assertScrollbarPosition('horizontal', 430, 653);
 	});
 
 	it('Check if we jump the view on change of formatting mark', function() {
 		desktopHelper.switchUIToNotebookbar();
+		desktopHelper.selectZoomLevel('40');
 
-		desktopHelper.selectZoomLevel('40', false);
 		helper.typeIntoDocument('{ctrl}{home}');
 		desktopHelper.pressKey(2, 'pagedown');
 		desktopHelper.pressKey(1, 'pagedown');

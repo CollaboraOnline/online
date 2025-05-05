@@ -239,8 +239,8 @@ function selectZoomLevel(zoomLevel, makeZoomVisible = true) {
 	// Force because sometimes the icons are scrolled off the screen to the right
 	if (makeZoomVisible)
 		makeZoomItemsVisible();
-	cy.cGet('#toolbar-down #zoom .arrowbackground').click({force: true});
-	cy.cGet('#zoom-dropdown').contains('.ui-combobox-entry', zoomLevel).click({force: true});
+	cy.cGet('#toolbar-down #zoom .arrowbackground').click();
+	cy.cGet('#zoom-dropdown').contains('.ui-combobox-entry', zoomLevel).click();
 	shouldHaveZoomLevel(zoomLevel);
 
 	cy.log('<< selectZoomLevel - end');
