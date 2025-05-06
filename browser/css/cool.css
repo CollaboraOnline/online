@@ -207,8 +207,7 @@ body {
 	margin: 0;
 }
 
-.leaflet-progress-layer
-{
+.leaflet-progress-layer {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -351,7 +350,7 @@ body {
 	}
 }
 
-.sidebar-panel{
+.sidebar-panel {
 	padding: 0px;
 	margin: 0px;
 	position: relative;
@@ -419,7 +418,7 @@ body {
 	display: none;
 }
 
-#mobile-edit-button.impress.portrait{
+#mobile-edit-button.impress.portrait {
 	bottom: 70px;
 }
 
@@ -430,7 +429,7 @@ body {
 	transform: rotate(0deg);
 	transition: transform 0.5s;
 }
-#mobile-edit-button:active{
+#mobile-edit-button:active {
 	transform: scale(1.2);
 }
 #mobile-edit-button:active > #mobile-edit-button-image {
@@ -737,10 +736,10 @@ body {
 	box-shadow: 0px 4px 10px var(--color-box-shadow);
 }
 
-.cool-annotation-img .avatar-img{
+.cool-annotation-img .avatar-img {
 	border: none;
 }
-.cool-annotation-img > .avatar-img{
+.cool-annotation-img > .avatar-img {
 	display: block;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;

@@ -1,4 +1,4 @@
-.slide-master-mode > .leaflet-container{
+.slide-master-mode > .leaflet-container {
 	background-color: var(--color-primary-lighter);
 	box-shadow: inset 0px 0px 5px 0px var(--color-primary);
 }

@@ -42,7 +42,7 @@
 	-webkit-align-items: center;
 	align-items: center;
 }
-.hasnotebookbar{
+.hasnotebookbar {
 	overflow: auto hidden;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
