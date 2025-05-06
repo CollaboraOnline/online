@@ -536,16 +536,16 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
         struct timespec timeout;
         timeout.tv_sec = timeoutMaxMicroS / (1000 * 1000);
         timeout.tv_nsec = (timeoutMaxMicroS % (1000 * 1000)) * 1000;
-        rc = ::ppoll(&_pollFds[0], size + 1, &timeout, nullptr);
+        rc = ::ppoll(_pollFds.data(), size + 1, &timeout, nullptr);
 #  else
         int timeoutMaxMs = (timeoutMaxMicroS + 999) / 1000;
         LOG_TRC("Legacy Poll start, timeoutMs: " << timeoutMaxMs);
-        rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
+        rc = ::poll(_pollFds.data(), size + 1, std::max(timeoutMaxMs,0));
 #  endif
 #else
         LOG_TRC("SocketPoll Poll");
         int timeoutMaxMs = (timeoutMaxMicroS + 999) / 1000;
-        rc = fakeSocketPoll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
+        rc = fakeSocketPoll(_pollFds.data(), size + 1, std::max(timeoutMaxMs,0));
 #endif
     }
     while (rc < 0 && errno == EINTR);
