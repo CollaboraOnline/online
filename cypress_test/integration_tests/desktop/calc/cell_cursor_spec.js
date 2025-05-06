@@ -8,9 +8,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/cell_cursor.ods');
-		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#sidebar').click({force: true});
 	});
 
 	it('No jump on long merged cell', function() {
@@ -58,9 +55,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/cell_cursor_split.ods');
-		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#sidebar').click({force: true});
 	});
 
 	it('No jump on long merged cell with split panes', function() {
@@ -83,9 +77,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test decimal separator of cells with different languages.', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/decimal_separator.ods');
-		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#sidebar').click({force: true});
 	});
 
 	it('Check different decimal separators', function() {
