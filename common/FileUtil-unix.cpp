@@ -170,10 +170,15 @@ namespace FileUtil
         return count <= 2; // Discounting . and ..
     }
 
+    /**
+     * Recursively lists the contents of a directory in a detailed format, similar to the "ls -lr" command.
+     * For each file or directory, it displays metadata such as permissions, owner, size, and modification time.
+     */
     void lslr(const std::string& path)
     {
         std::cout << path << ":\n";
 
+        // Log error if unable to open
         DIR* dir = opendir(path.c_str());
         if (dir == nullptr)
         {
@@ -181,16 +186,18 @@ namespace FileUtil
             return;
         }
 
+        /// Metadata for display purposes
         struct sb
         {
-            mode_t _mode;
-            nlink_t _nlink;
-            std::string _uid;
-            std::string _gid;
-            off_t _size;
-            time_t _mtime;
-            std::string _name;
+            mode_t _mode;          // File mode (permissions).
+            nlink_t _nlink;        // Number of hard links.
+            std::string _uid;      // User ID of the file owner.
+            std::string _gid;      // Group ID of the file owner.
+            off_t _size;           // File size in bytes.
+            time_t _mtime;         // Last modification time.
+            std::string _name;     // File or directory name.
 
+            /// Constructor
             sb(mode_t mode, nlink_t nlink, std::string uid, std::string gid, off_t size, time_t mtime, std::string name)
                 : _mode(mode)
                 , _nlink(nlink)
