@@ -69,8 +69,13 @@ export class SplitPanesContext {
 
 		var xchanged = this.setHorizSplitPos(splitX, forceUpdate, true /* noFire */);
 		var ychanged = this.setVertSplitPos(splitY, forceUpdate, true /* noFire */);
-		if (xchanged || ychanged)
+		if (xchanged || ychanged) {
 			this._map.fire('splitposchanged');
+			const section = app.sectionContainer.getSectionWithName(L.CSections.Splitter.name);
+			if (section) {
+				section.setPosition(0, 0); // To refresh myTopLeft property.
+			}
+		}
 	}
 
 	public getSplitPos(): Point {
