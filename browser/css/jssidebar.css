@@ -567,7 +567,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* required to dynamically resize treeviews or lists inside sidebar */
 .sidebar-container, .navigator-container
 .sidebar-container > .root-container.jsdialog.sidebar,.navigator-container > .root-container.jsdialog.sidebar > .root-container.jsdialog.sidebar
-.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar , .navigator-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar{
+.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar , .navigator-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar {
 	height: 100%;
 }
 

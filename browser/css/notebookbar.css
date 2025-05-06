@@ -211,11 +211,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 #table-Home-Section-Insert #table-GroupB20 #InsertTable.notebookbar {
 	width: 50px;
 }
-#table-Home-Section-Insert #table-LineB9 #InsertGraphic.notebookbar{
+#table-Home-Section-Insert #table-LineB9 #InsertGraphic.notebookbar {
 	width: auto;
 	margin-left: -2px;
 }
-#buttonbefore.notebookbar, #buttonafter.notebookbar, #buttonoptimal.notebookbar, #buttonparallel.notebookbar, #buttonnone.notebookbar, #buttonthrough.notebookbar, #bottom.notebookbar, #top.notebookbar, #standard.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar{
+#buttonbefore.notebookbar, #buttonafter.notebookbar, #buttonoptimal.notebookbar, #buttonparallel.notebookbar, #buttonnone.notebookbar, #buttonthrough.notebookbar, #bottom.notebookbar, #top.notebookbar, #standard.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar {
 	margin: 0px !important;
 	padding: 0px !important;
 }
@@ -285,10 +285,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	border-top-right-radius: 12px;
 	border-bottom-right-radius: 12px;
 }
-#table-HomeTab .unospan-uptoolbar:not(.disabled):hover{
+#table-HomeTab .unospan-uptoolbar:not(.disabled):hover {
 	box-shadow: -2px 0 2px 2px #e6e6e6b0;
 }
-#table-HomeTab .unospan-downtoolbar:not(.disabled):hover{
+#table-HomeTab .unospan-downtoolbar:not(.disabled):hover {
 	box-shadow: 2px 0 2px 2px #e6e6e6b0;
 }
 #table-HomeTab .unospan-uptoolbar img, #table-HomeTab .unospan-downtoolbar img {
@@ -347,7 +347,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin: auto !important;
 	display: block;
 }
-.has-label.has-dropdown:not(.inline) .unolabel{
+.has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
 }
@@ -367,8 +367,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	align-items: center;
 }
 
-#FormatPaintbrush span
-{
+#FormatPaintbrush span {
 	display: none;
 }
 
@@ -420,7 +419,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	gap: 0;
 }
 
-#stylesview-btn div{
+#stylesview-btn div {
 	border: none;
 }
 
@@ -533,13 +532,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* other */
 
-.ui-drawing-area-container
-{
+.ui-drawing-area-container {
 	position: relative;
 }
 
-.ui-drawing-area-loader
-{
+.ui-drawing-area-loader {
 	border: 5px solid var(--color-border-lighter);
 	border-top: 5px solid var(--color-border);
 	border-radius: 50%;
@@ -552,8 +549,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	top: 25%;
 }
 
-.ui-drawing-area-loader-container
-{
+.ui-drawing-area-loader-container {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -566,8 +562,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	100% { transform: rotate(360deg); }
 }
 
-.ui-drawing-area-placeholder-container
-{
+.ui-drawing-area-placeholder-container {
 	position: absolute;
 	overflow: hidden;
 	left: 0;
@@ -576,8 +571,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	height: 100%;
 }
 
-.ui-drawing-area-placeholder
-{
+.ui-drawing-area-placeholder {
 	margin: 0;
 	position: absolute;
 	top: 50%;

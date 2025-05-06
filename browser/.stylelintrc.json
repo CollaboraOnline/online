@@ -24,6 +24,7 @@
 		"no-invalid-double-slash-comments": true,
 		"shorthand-property-no-redundant-values": true,
 		"declaration-bang-space-before": "always",
-		"declaration-colon-space-after": "always"
+		"declaration-colon-space-after": "always",
+		"block-opening-brace-space-before": "always"
 	}
 }
