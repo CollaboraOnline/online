@@ -24,7 +24,7 @@
  * customEntryRenderer - specifies if entries have custom content which is rendered by the core
  */
 
-/* global JSDialog app $ */
+/* global JSDialog $ _UNO */
 
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
@@ -183,6 +183,15 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
 	container.role = 'listbox';
+
+	if (data.command) {
+		// TODO replace with data.label, changing ui file
+		var labelText = _UNO(data.command, 'label', true);
+		if (labelText) {
+			var label = L.DomUtil.create('label', '', container);
+			label.textContent = labelText + ':';
+		}
+	}
 
 	var content = L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
 	content.id = data.id + '-input';
