@@ -17,9 +17,10 @@
 #include "Util.hpp"
 #include <test/testlog.hpp>
 
-UnitBase** UnitBase::linkAndCreateUnit(UnitType type,
-                                       const std::string& unitLibPath)
+UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
+                                       [[maybe_unused]] const std::string& unitLibPath)
 {
+#if ENABLE_DEBUG
     DlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!DlHandle)
     {
@@ -89,6 +90,7 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type,
         return new UnitBase* [2] { hooks, nullptr };
 
     LOG_ERR("No wsd unit-tests found in " << unitLibPath);
+#endif // ENABLE_DEBUG
 
     return nullptr;
 }

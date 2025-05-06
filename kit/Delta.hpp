@@ -893,10 +893,13 @@ class DeltaGenerator {
                 oss << "tile-delta-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top
                     << "-" << dumpedIndex - 1 << "_to_" << dumpedIndex << ".zstd";
                 path += oss.str();
-                std::ofstream tileFile(path, std::ios::binary);
-                // Skip first character which is a 'D' used to identify deltas
-                // The rest should be a zstd compressed delta
-                tileFile.write(output.data() + 1, output.size() - 1);
+                if (path.find("../") == std::string::npos && path.find("/..") == std::string::npos) // avoid funny paths to make CodeQL happy
+                {
+                    std::ofstream tileFile(path, std::ios::binary);
+                    // Skip first character which is a 'D' used to identify deltas
+                    // The rest should be a zstd compressed delta
+                    tileFile.write(output.data() + 1, output.size() - 1);
+                }
             }
         }
 
