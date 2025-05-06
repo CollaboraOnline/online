@@ -141,7 +141,7 @@ bool ProxyProtocolHandler::parseEmitIncoming(
         it = in.begin();
         for (; it != in.end() && *it != '\n'; ++it);
         *it = '\0';
-        uint64_t len = strtoll( &in[0], nullptr, 16 );
+        uint64_t len = strtoll( in.data(), nullptr, 16 );
         in.erase(in.begin(), it + 1);
         if (len > in.size())
         {

@@ -325,7 +325,7 @@ public:
             std::vector<unsigned char> data;
             data.resize (map.size());
             if (lseek(mem_fd, map.getStart(), SEEK_SET) < 0 ||
-                read(mem_fd, &data[0], map.size()) != (int)map.size())
+                read(mem_fd, data.data(), map.size()) != (int)map.size())
                 error(EXIT_FAILURE, errno, "Failed to seek in /proc/%d/mem to %lld",
                       _proc_id, map.getStart());
 
