@@ -1214,13 +1214,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (app.calc.cellCursorRectangle.width > freePane.width)
 				return scroll; // no scroll needed.
 
-			var spacingX = app.calc.cellCursorRectangle.width / 4.0;
-
 			if (app.calc.cellCursorRectangle.x1 < freePane.x1) {
-				scroll.x = app.calc.cellCursorRectangle.x1 - freePane.x1 - spacingX;
+				scroll.x = app.calc.cellCursorRectangle.x1 - freePane.x1;
 			}
 			else if (app.calc.cellCursorRectangle.x2 > freePane.x2) {
-				scroll.x = app.calc.cellCursorRectangle.x2 - freePane.x2 + spacingX;
+				scroll.x = app.calc.cellCursorRectangle.x2 - freePane.x2;
 			}
 		}
 
@@ -1229,15 +1227,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (app.calc.cellCursorRectangle.height > freePane.height)
 				return scroll; // no scroll needed.
 
-			var spacingY = 100; // twips margin
-
 			// try to center in free pane the top of a cell
 			if (app.calc.cellCursorRectangle.y1 < freePane.y1)
-				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1 - spacingY;
+				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1;
 
 			// then check if end of a cell is visible
 			if (app.calc.cellCursorRectangle.y2 > freePane.y2 + scroll.y)
-				scroll.y = scroll.y + (app.calc.cellCursorRectangle.y2 - freePane.y2 + spacingY);
+				scroll.y = scroll.y + (app.calc.cellCursorRectangle.y2 - freePane.y2);
 		}
 
 		return scroll;
