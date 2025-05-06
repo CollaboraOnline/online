@@ -79,7 +79,12 @@ void UnitInvalidation::invokeWSDTest()
 {
     try
     {
-        // Load a document and make it empty, then paste some text into it.
+        // Load a document with two sheets/parts.
+        // Window one renders part 0.
+        // Window two gets created.
+        // Window one switches to part 1.
+        // Window one changes part 1 B2, part 0 refers to this cell.
+        // Window two should get an invalidate because of the reference.
         std::string documentPath;
         std::string documentURL;
         helpers::getDocumentPathAndURL("invalidate.fods", documentPath, documentURL, testname);
@@ -139,11 +144,16 @@ void UnitInvalidation::invokeWSDTest()
         invalidates = helpers::getAllResponsesTimed(windowOne, "invalidatetiles:", testname, std::chrono::seconds(2));
         LOK_ASSERT(invalidates.size() > 0);
 
-        std::cerr << "Window 1:\n";
+        bool invalidated = false;
         for (auto &i : invalidates)
         {
-            std::cerr << i << "\n";
+            if (i.starts_with("invalidatetiles: part=1"))
+            {
+                invalidated = true;
+                break;
+            }
         }
+        LOK_ASSERT(invalidated);
         // We expect invalidates on both part 1 (current) and 0 (dependent)
 
         LOG_TST("Wait for window two invalidations");
@@ -151,14 +161,18 @@ void UnitInvalidation::invokeWSDTest()
         // Notice no invalidation on window two
         invalidates = helpers::getAllResponsesTimed(windowTwo, "invalidatetiles:", testname, std::chrono::seconds(2));
 
-        // FIXME: We expect to get an invalidate for our current view ...
-        // due to the dependency updating ...
+        // We expect to get an invalidate for our current view, due to the dependency updating.
         LOK_ASSERT(invalidates.size() > 0);
-        std::cerr << "Window 2:\n";
+        invalidated = false;
         for (auto &i : invalidates)
         {
-            std::cerr << i << "\n";
+            if (i.starts_with("invalidatetiles: part=0"))
+            {
+                invalidated = true;
+                break;
+            }
         }
+        LOK_ASSERT(invalidated);
     }
     catch (const Poco::Exception& exc)
     {
