@@ -434,7 +434,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label.expanded::before,
 .ui-treeview-expandable:not(.collapsed) > div > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before  {
+.ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before {
 	content: 'V';
 	color: transparent;
 	margin-inline-end: 7px;
@@ -445,7 +445,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 [data-theme='dark'] .ui-expander-label::before,
 [data-theme='dark'] .ui-treeview-expandable > div > .ui-treeview-expander::before,
-[data-theme='dark'] .ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before  {
+[data-theme='dark'] .ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before {
 	filter: brightness(1);
 }
 
@@ -723,7 +723,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-treeview.droptarget {
 	border: 1px solid #888;
 }
-.ui-treeview.droptarget:hover{
+.ui-treeview.droptarget:hover {
 	border: 1px solid #888;
 	box-shadow: 0 0 2px 0 #777;
 }
@@ -942,7 +942,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 24px;
 }
 
-.ui-listbox-container{
+.ui-listbox-container {
 	height: 32px;
 }
 
@@ -953,7 +953,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-listbox,
 .ui-combobox,
-.ui-timefield  {
+.ui-timefield {
 	box-sizing: border-box;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -1376,8 +1376,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard #inclspaceslabel2,
 #mobile-wizard #exclspaceslabel2,
 #mobile-wizard #cjkcharsft2,
-#mobile-wizard #commentslabel
-{
+#mobile-wizard #commentslabel {
 	float: left !important;
 	clear: left !important;
 	width: 70% !important;
@@ -1392,8 +1391,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard #docchars,
 #mobile-wizard #doccharsnospaces,
 #mobile-wizard #doccjkchars,
-#mobile-wizard #docComments
-{
+#mobile-wizard #docComments {
 	float: right !important;
 	clear: right !important;
 	width: 20% !important;
@@ -1671,17 +1669,17 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	-webkit-animation-timing-function: ease-in-out;
 	animation-timing-function: ease-in-out;
 }
-@keyframes spinner-saving-anim{
-	0%{transform: translateY(-20px) translateX(0px); opacity: 0;}
-	20%{transform: translateY(5px) translateX(15px); opacity: 1;}
-	45%{transform: translateY(22px) translateX(-10px); opacity: 1;}
-	100%{transform: translateY(60px) translateX(15px); opacity: 0;}
+@keyframes spinner-saving-anim {
+	0% {transform: translateY(-20px) translateX(0px); opacity: 0;}
+	20% {transform: translateY(5px) translateX(15px); opacity: 1;}
+	45% {transform: translateY(22px) translateX(-10px); opacity: 1;}
+	100% {transform: translateY(60px) translateX(15px); opacity: 0;}
 }
-@-webkit-keyframes spinner-saving-anim{
-	0%{transform: translateY(-20px) translateX(0px); opacity: 0;}
-	20%{transform: translateY(5px) translateX(15px); opacity: 1;}
-	45%{transform: translateY(22px) translateX(-10px); opacity: 1;}
-	100%{transform: translateY(60px) translateX(15px); opacity: 0;}
+@-webkit-keyframes spinner-saving-anim {
+	0% {transform: translateY(-20px) translateX(0px); opacity: 0;}
+	20% {transform: translateY(5px) translateX(15px); opacity: 1;}
+	45% {transform: translateY(22px) translateX(-10px); opacity: 1;}
+	100% {transform: translateY(60px) translateX(15px); opacity: 0;}
 }
 
 .spinner-img #spinner-box-f-right {
@@ -2080,7 +2078,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-color: transparent;
 }
 
-#toolbar-down  .jsdialog .ui-edit-container{
+#toolbar-down  .jsdialog .ui-edit-container {
 	place-content: center;
 }
 

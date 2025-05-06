@@ -3,7 +3,7 @@ label.mobile-wizard {
 	float: left;
 }
 
-.menuwizard .menu-entry-icon{
+.menuwizard .menu-entry-icon {
 	padding-left: 4%;
 }
 #mobile-wizard:not(.menuwizard) .menu-entry-with-icon {
@@ -19,11 +19,11 @@ span.menu-entry-icon {
 	padding-left: 2%;
 }
 
-#mobile-wizard.menuwizard .mobile-wizard-back.close-button{
+#mobile-wizard.menuwizard .mobile-wizard-back.close-button {
 	visibility: hidden !important;
 }
 
-#toolbar-hamburger.menuwizard-opened{
+#toolbar-hamburger.menuwizard-opened {
 	z-index: 1501 !important;
 	position: relative !important;
 	background-color: var(--color-primary-lighter) !important;
@@ -31,7 +31,7 @@ span.menu-entry-icon {
 	border-radius: 0 0 0 15px !important;
 }
 
-#mobile-wizard.menuwizard .mobile-wizard-titlebar{
+#mobile-wizard.menuwizard .mobile-wizard-titlebar {
 	border: none !important;
 }
 span#main-menu-btn-icon {
@@ -49,7 +49,7 @@ span#main-menu-btn-icon {
 	width: 100%;
 }
 
-.ui-header.level-1.mobile-wizard.ui-widget img[src='images/lc_exportpdf.svg']{
+.ui-header.level-1.mobile-wizard.ui-widget img[src='images/lc_exportpdf.svg'] {
 	visibility: visible;
 }
 
@@ -90,7 +90,7 @@ span#main-menu-btn-icon {
 	background-color: #fff !important;
 }
 
-.colors-container-selected-basic-color{
+.colors-container-selected-basic-color {
 	box-shadow: 0 2px 3px -2px var(--color-primary);
 	border-radius: var(--border-radius);
 	border: 2px solid var(--color-primary) !important;
@@ -122,7 +122,7 @@ span#main-menu-btn-icon {
 	padding: 0 4%;
 }
 
-.colors-container-no-color-row, .colors-container-auto-color-row{
+.colors-container-no-color-row, .colors-container-auto-color-row {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -192,7 +192,7 @@ p.mobile-wizard.ui-combobox-text {
 .menuwizard #mobile-wizard-content > div .ui-widget {
 	padding-left: 0px !important;
 }
-#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget{
+#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget {
 	padding-left: 2% !important;
 	width: 100%;
 }
@@ -223,12 +223,12 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background: url('images/lc_helpindex_secondary.svg') no-repeat right 16px bottom 88px / 124px !important;
 }
 
-#ParaPropertyPanel + .ui-content{
+#ParaPropertyPanel + .ui-content {
 	display: flex;
 	flex-wrap: wrap !important;
 	justify-content: space-around;
 }
-.ui-tabs-content > div[title='Layouts']{
+.ui-tabs-content > div[title='Layouts'] {
 	justify-content: center;
 	-ms-box-orient: horizontal !important;
 	display: -webkit-box;
@@ -243,13 +243,13 @@ p.mobile-wizard.ui-combobox-text.selected {
 	flex-wrap: wrap !important;
 	margin-top: 25px;
 }
-#mobile-wizard #rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
+#mobile-wizard #rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel {
 	display: none;
 }
 #rotationlabel:not(#mobile-wizard) {
 	visibility: hidden;
 }
-#mobile-wizard #NumberFormatDecimal, #mobile-wizard #NumberFormatPercent{
+#mobile-wizard #NumberFormatDecimal, #mobile-wizard #NumberFormatPercent {
 	margin-left: 20%;
 }
 #mobile-wizard #NumberFormatCurrency {
@@ -293,7 +293,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: var(--color-background-lighter);
 }
 
-#mobile-wizard-content *{
+#mobile-wizard-content * {
 	font-family: var(--mobile-font);
 	color: var(--color-main-text);
 }
@@ -313,7 +313,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	border: none !important;
 	padding: 0px 0px 16px;
 }
-#mobile-wizard-content > #ScCellAppearancePropertyPanel + .ui-content.level-0.mobile-wizard{
+#mobile-wizard-content > #ScCellAppearancePropertyPanel + .ui-content.level-0.mobile-wizard {
 	display: flex;
 	justify-content: center;
 	align-items: start;
@@ -392,7 +392,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	display: none;
 }
 
-#mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
+#mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img {
 	margin-top: 0px !important;
 }
 
@@ -543,7 +543,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	display: table-cell;
 	vertical-align: middle;
 }
-.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
+.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active {
 	background-color: var(--color-primary-lighter);
 	font-weight: bold
 }
@@ -596,7 +596,7 @@ input.ui-edit.mobile-wizard,
 }
 
 /*insert table special layout*/
-.inserttablecontrols label.ui-text{
+.inserttablecontrols label.ui-text {
 	margin-left: 14%;
 	width: 50%;
 	border: none;
@@ -604,27 +604,27 @@ input.ui-edit.mobile-wizard,
 	color: #555 !important;
 }
 
-.inserttablecontrols #rows, .inserttablecontrols #cols{
+.inserttablecontrols #rows, .inserttablecontrols #cols {
 	background: url('images/lc_inserttable_row_mono.svg') no-repeat left;
 	border-bottom: 1px solid var(--color-border-lighter) !important;
 	width: 90%;
 	border-radius: none;
 }
-.inserttablecontrols #cols{
+.inserttablecontrols #cols {
 	background: url('images/lc_inserttable_col_mono.svg') no-repeat left;
 }
-.inserttablecontrols .spinfield{
+.inserttablecontrols .spinfield {
 	width: 35% !important;
 	margin-left: 10% !important;
 	text-align: center;
 }
-.inserttablecontrols .plus, .inserttablecontrols .minus{
+.inserttablecontrols .plus, .inserttablecontrols .minus {
 	border: none;
 	font-weight: bold;
 }
 /*END insert table special layout*/
 
-.leaflet-control-zoom.leaflet-bar{
+.leaflet-control-zoom.leaflet-bar {
 	border: none !important;
 }
 a.leaflet-control-zoom-in {
@@ -635,14 +635,14 @@ a.leaflet-control-zoom-in {
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 6px 0 rgba(0, 0, 0, 0.19) !important;
 	border: none !important;
 }
-#slide-sorter .preview-img{
+#slide-sorter .preview-img {
 	border-radius: var(--border-radius);
 	border-color: var(--color-border);
 }
-#slide-sorter .preview-img:hover{
+#slide-sorter .preview-img:hover {
 	border-color: var(--color-primary-darker);
 }
-#slide-sorter .preview-img-currentpart{
+#slide-sorter .preview-img-currentpart {
 	border-color: var(--color-primary-dark);
 	border-style: solid;
 	border-radius: var(--border-radius);
@@ -656,18 +656,18 @@ a.leaflet-control-zoom-in {
 	color: var(--color-primary-dark) !important;
 }
 
-.w2ui-icon.users{
+.w2ui-icon.users {
 	background-size: 20px !important;
 }
-.ui-content label{
+.ui-content label {
 	line-height: 25px;
 	vertical-align: top;
 	padding-left: 4%;
 }
-#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonthrough + label{
+#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonthrough + label {
 	padding-left: 0;
 }
-#mobile-wizard #Color > img{
+#mobile-wizard #Color > img {
 	border-radius: 100px;
 	background-color: var(--color-background);
 }
@@ -694,13 +694,13 @@ a.leaflet-control-zoom-in {
 #aligntoolbar span, #aligntoolbar2 span {
 	visibility: hidden;
 }
-#MergeCells > span{
+#MergeCells > span {
 	color: rgb(var(--doc-type));
 	text-align: end;
 	vertical-align: bottom;
 }
 
-#DeleteTable > span{
+#DeleteTable > span {
 	font-weight: bold;
 	color: var(--color-error);
 	text-align: end;
@@ -758,8 +758,8 @@ a.leaflet-control-zoom-in {
 	width: 100%;
 }
 
-#DecrementIndent + input:disabled{display: none;}
-div#mobile-wizard-content input[type='number']{
+#DecrementIndent + input:disabled {display: none;}
+div#mobile-wizard-content input[type='number'] {
 	color: var(--color-text-dark);
 	height: 46px;
 	width: 37%;
@@ -769,7 +769,7 @@ div#mobile-wizard-content input[type='number']{
 	-webkit-appearance: textfield;
 	background-color: var(--color-background-dark);
 }
-div#mobile-wizard-content .spinfieldcontainer{
+div#mobile-wizard-content .spinfieldcontainer {
 	height: 48px;
 	width: -moz-available;
 	width: -webkit-fill-available;
@@ -790,7 +790,7 @@ div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile
 div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	opacity: 0.5 !important;
 }
-#mobile-wizard #Bold, #mobile-wizard #Italic, #mobile-wizard #Underline, #mobile-wizard #Strikeout{
+#mobile-wizard #Bold, #mobile-wizard #Italic, #mobile-wizard #Underline, #mobile-wizard #Strikeout {
 	margin: 0;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -809,23 +809,23 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	float: left;
 	background-size: 24px !important;
 }
-#mobile-wizard-content > .unobutton:focus, #mobile-wizard-content .unobutton:active{
+#mobile-wizard-content > .unobutton:focus, #mobile-wizard-content .unobutton:active {
 	outline: none;
 	background-color: var(--color-primary-lighter) !important;
 	box-shadow: 0 0 0px 8px var(--color-primary-lighter);
 	border-radius: 0.1px;
 }
-#mobile-wizard #buttonbefore{background: url('images/sc_wrapleft.svg') no-repeat center;}
-#mobile-wizard #buttonafter{background: url('images/sc_wrapright.svg') no-repeat center;}
-#mobile-wizard #buttonoptimal{background: url('images/sc_wrapideal.svg') no-repeat center;}
-#mobile-wizard #buttonparallel{background: url('images/sc_wrapmenu.svg') no-repeat center;}
-#mobile-wizard #buttonnone{background: url('images/sc_wrapoff.svg') no-repeat center;}
-#mobile-wizard #buttonthrough{background: url('images/sc_wrapthrough.svg') no-repeat center;}
-#mobile-wizard #top{background: url('images/sc_aligntop.svg') no-repeat center;}
-#mobile-wizard #bottom{background: url('images/sc_alignbottom.svg') no-repeat center;}
-#mobile-wizard #standard{background: url('images/sc_alignverticalcenter.svg') no-repeat center;}
+#mobile-wizard #buttonbefore {background: url('images/sc_wrapleft.svg') no-repeat center;}
+#mobile-wizard #buttonafter {background: url('images/sc_wrapright.svg') no-repeat center;}
+#mobile-wizard #buttonoptimal {background: url('images/sc_wrapideal.svg') no-repeat center;}
+#mobile-wizard #buttonparallel {background: url('images/sc_wrapmenu.svg') no-repeat center;}
+#mobile-wizard #buttonnone {background: url('images/sc_wrapoff.svg') no-repeat center;}
+#mobile-wizard #buttonthrough {background: url('images/sc_wrapthrough.svg') no-repeat center;}
+#mobile-wizard #top {background: url('images/sc_aligntop.svg') no-repeat center;}
+#mobile-wizard #bottom {background: url('images/sc_alignbottom.svg') no-repeat center;}
+#mobile-wizard #standard {background: url('images/sc_alignverticalcenter.svg') no-repeat center;}
 #mobile-wizard .checkbutton,
-#mobile-wizard .radiobutton{
+#mobile-wizard .radiobutton {
 	clear: both;
 	width: 92%;
 	margin: 0 4%;
@@ -847,11 +847,11 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	line-height: normal;
 	padding: 10px 2px 10px 15px;
 }
-#mobile-wizard input[type='checkbox']:disabled{
+#mobile-wizard input[type='checkbox']:disabled {
 	border: 2px solid var(--color-border-lighter);
 	box-shadow: 0px 0px 2px 1px var(--color-border-lighter);
 }
-#mobile-wizard input[type='checkbox']{
+#mobile-wizard input[type='checkbox'] {
 	width: var(--btn-size);
 	height: var(--btn-size);
 	margin: 10px 10px 10px auto !important;
@@ -865,7 +865,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	outline: none;
 	box-shadow: 0px 0px 2px 1px var(--color-box-shadow);
 }
-#mobile-wizard input[type='checkbox']:checked{
+#mobile-wizard input[type='checkbox']:checked {
 	background: url('images/lc_ok_white.svg') no-repeat center;
 	background-color: var(--color-primary-lighter);
 	border-radius: var(--border-radius);
@@ -873,20 +873,20 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	outline: none;
 	box-shadow: none;
 }
-#mobile-wizard input[type='checkbox']:before{
+#mobile-wizard input[type='checkbox']:before {
 	width: 20px;
 	height: 20px;
 }
-#mobile-wizard input[type='checkbox']:after{
+#mobile-wizard input[type='checkbox']:after {
 	top: -20px;
 	width: 16px;
 }
 
-#mobile-wizard input[type='radio']:disabled{
+#mobile-wizard input[type='radio']:disabled {
 	border: 2px solid var(--color-border-lighter);
 	box-shadow: none;
 }
-#mobile-wizard input[type='radio']{
+#mobile-wizard input[type='radio'] {
 	border-radius: 50%;
 	width: var(--btn-size);
 	height: var(--btn-size);
@@ -899,36 +899,36 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	outline: none;
 	box-shadow: #00000015 0px 0px 2px 1px;
 }
-#mobile-wizard input[type='radio']:checked{
+#mobile-wizard input[type='radio']:checked {
 	background: url('images/lc_ok_white.svg') no-repeat center;
 	background-color: var(--color-primary-lighter);
 	border: 2px solid var(--color-primary);
 	outline: none;
 	box-shadow: none;
 }
-#mobile-wizard input[type='radio']:checked:disabled{
+#mobile-wizard input[type='radio']:checked:disabled {
 	background-color: var(--color-border-lighter) !important;
 	border: 2px solid var(--color-border-lighter) !important;
 }
-#mobile-wizard input[type='radio']:before{
+#mobile-wizard input[type='radio']:before {
 	width: 20px;
 	height: 20px;
 }
-#mobile-wizard input[type='radio']:after{
+#mobile-wizard input[type='radio']:after {
 	top: -20px;
 	width: 16px;
 }
 
-#enablecontour + label{
+#enablecontour + label {
 	line-height: 44px;
 	vertical-align: baseline;
 	padding-left: 24px;
 }
-#SdTableDesignPanel + .ui-content div[id^='Use']{
+#SdTableDesignPanel + .ui-content div[id^='Use'] {
 	width: 92%;
 	padding-right: 4% !important;
 }
-input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColumnStyle, input[type='checkbox']#UseFirstColumnStyle, input[type='checkbox']#UseBandingRowStyle, input[type='checkbox']#UseLastRowStyle, input[type='checkbox']#UseFirstRowStyle{
+input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColumnStyle, input[type='checkbox']#UseFirstColumnStyle, input[type='checkbox']#UseBandingRowStyle, input[type='checkbox']#UseLastRowStyle, input[type='checkbox']#UseFirstRowStyle {
 	margin-right: 0px !important;
 }
 #mobile-wizard #FontworkSameLetterHeights {
@@ -959,15 +959,15 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	margin: 5px 4%;
 	font-size: var(--default-font-size);
 }
-#mobile-wizard button:focus{
+#mobile-wizard button:focus {
 	outline: none;
 }
-#mobile-wizard button:active{
+#mobile-wizard button:active {
 	outline: none;
 	border: none;
 	background-color: var(--color-primary-lighter);
 }
-#mobile-wizard button:disabled{
+#mobile-wizard button:disabled {
 	background-color: var(--color-background-lighter);
 	border-color: var(--color-background-lighter);
 	color: var(--color-text-lighter) !important;
@@ -1145,7 +1145,7 @@ label.disabled {
 	padding-bottom: 32px;
 }
 
-#mobile-wizard .empty-comment-wizard-link{
+#mobile-wizard .empty-comment-wizard-link {
 	color: var(--color-primary);
 	display: flex;
 	justify-content: center;
@@ -1182,8 +1182,7 @@ label.disabled {
 	flex-wrap: wrap;
 }
 
-#mobile-wizard #FontworkShapeType-fontwork-plain-text, #mobile-wizard #FontworkShapeType-fontwork-wave, #mobile-wizard #FontworkShapeType-fontwork-inflate, #mobile-wizard #FontworkShapeType-fontwork-stop, #mobile-wizard #FontworkShapeType-fontwork-curve-up, #mobile-wizard #FontworkShapeType-fontwork-curve-down, #mobile-wizard #FontworkShapeType-fontwork-triangle-up, #mobile-wizard #FontworkShapeType-fontwork-triangle-down, #mobile-wizard #FontworkShapeType-fontwork-fade-right, #mobile-wizard #FontworkShapeType-fontwork-fade-left, #mobile-wizard #FontworkShapeType-fontwork-fade-up, #mobile-wizard #FontworkShapeType-fontwork-fade-down, #mobile-wizard #FontworkShapeType-fontwork-slant-up, #mobile-wizard #FontworkShapeType-fontwork-slant-down, #mobile-wizard #FontworkShapeType-fontwork-fade-up-and-right, #mobile-wizard #FontworkShapeType-fontwork-fade-up-and-left, #mobile-wizard #FontworkShapeType-fontwork-chevron-up, #mobile-wizard #FontworkShapeType-fontwork-chevron-down, #mobile-wizard #FontworkShapeType-fontwork-arch-up-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-down-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-left-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-right-curve, #mobile-wizard #FontworkShapeType-fontwork-circle-curve, #mobile-wizard #FontworkShapeType-fontwork-open-circle-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-up-pour, #mobile-wizard #FontworkShapeType-fontwork-arch-down-pour, #mobile-wizard #FontworkShapeType-fontwork-arch-right-pour, #mobile-wizard #FontworkShapeType-fontwork-circle-pour, #mobile-wizard #FontworkShapeType-fontwork-open-circle-pour
-{
+#mobile-wizard #FontworkShapeType-fontwork-plain-text, #mobile-wizard #FontworkShapeType-fontwork-wave, #mobile-wizard #FontworkShapeType-fontwork-inflate, #mobile-wizard #FontworkShapeType-fontwork-stop, #mobile-wizard #FontworkShapeType-fontwork-curve-up, #mobile-wizard #FontworkShapeType-fontwork-curve-down, #mobile-wizard #FontworkShapeType-fontwork-triangle-up, #mobile-wizard #FontworkShapeType-fontwork-triangle-down, #mobile-wizard #FontworkShapeType-fontwork-fade-right, #mobile-wizard #FontworkShapeType-fontwork-fade-left, #mobile-wizard #FontworkShapeType-fontwork-fade-up, #mobile-wizard #FontworkShapeType-fontwork-fade-down, #mobile-wizard #FontworkShapeType-fontwork-slant-up, #mobile-wizard #FontworkShapeType-fontwork-slant-down, #mobile-wizard #FontworkShapeType-fontwork-fade-up-and-right, #mobile-wizard #FontworkShapeType-fontwork-fade-up-and-left, #mobile-wizard #FontworkShapeType-fontwork-chevron-up, #mobile-wizard #FontworkShapeType-fontwork-chevron-down, #mobile-wizard #FontworkShapeType-fontwork-arch-up-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-down-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-left-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-right-curve, #mobile-wizard #FontworkShapeType-fontwork-circle-curve, #mobile-wizard #FontworkShapeType-fontwork-open-circle-curve, #mobile-wizard #FontworkShapeType-fontwork-arch-up-pour, #mobile-wizard #FontworkShapeType-fontwork-arch-down-pour, #mobile-wizard #FontworkShapeType-fontwork-arch-right-pour, #mobile-wizard #FontworkShapeType-fontwork-circle-pour, #mobile-wizard #FontworkShapeType-fontwork-open-circle-pour {
 	padding: 4% !important;
 	margin: 0px !important;
 	float: left;
@@ -1266,7 +1265,7 @@ label.disabled {
 	border: 1px solid var(--color-border);
 }
 
-.unotoolbutton.mobile-wizard .unobutton img{
+.unotoolbutton.mobile-wizard .unobutton img {
 	width: 24px;
 	height: 24px;
 }

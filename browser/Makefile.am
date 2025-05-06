@@ -787,7 +787,7 @@ $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DS
 $(DIST_FOLDER)/bundle.css: $(call prereq_css)
 	@mkdir -p $(dir $@)
 	@echo "Checking for CSS errors..."
-	@$(NODE) node_modules/stylelint/bin/stylelint.js --config $(srcdir)/.stylelintrc.json $(srcdir)/css/*.css
+	@$(NODE) node_modules/stylelint/bin/stylelint.js --config $(srcdir)/.stylelintrc.json $(srcdir)/css/*.css --fix
 	$(call bundle_css)
 
 $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/cool-src.js $(call prereq_all)

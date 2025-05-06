@@ -10,7 +10,7 @@
 }
 
 #toolbar-down .unotoolbutton[disabled],
-#toolbar-down .unotoolbutton[disabled] *[disabled]{
+#toolbar-down .unotoolbutton[disabled] *[disabled] {
 	opacity: 0.5;
 	background-color: transparent;
 }
