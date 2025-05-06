@@ -224,7 +224,14 @@ namespace CODA
                     image.Dispose();
                 };
 
-                printDocument.Print();
+                PrintDialog printDialog = new PrintDialog();
+                printDialog.AllowCurrentPage = true;
+                printDialog.AllowSomePages = true;
+                printDialog.Document = printDocument;
+                if (printDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    printDocument.Print();
+                }
             }
             catch (System.Exception ex)
             {
