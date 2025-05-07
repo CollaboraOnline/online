@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-29 16:27+0200\n"
-"PO-Revision-Date: 2025-03-19 15:28+0000\n"
+"PO-Revision-Date: 2025-05-01 01:45+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
 "n>6 && n<11) ? 3 : 4;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -368,91 +368,102 @@ msgstr "An bhfuil tú cinnte go bhfuil fonn ort an freastalaí a mhúchadh?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:130
 msgid "Autotext"
-msgstr ""
+msgstr "Uaththéacs"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:132
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Uaslódáil blúiríní téacs in-athúsáidte (.bau). Chun an téacs a chur isteach "
+"i do dhoiciméad, clóscríobh an aicearra le haghaidh iontráil Uaththéacs agus "
+"brúigh F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:138
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Uaslódáil Uaththéacs"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
 msgid "Custom Dictionaries"
-msgstr ""
+msgstr "Foclóirí Saincheaptha"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Cuir focail leis i bhfoclóir litrithe nó cuir focail in eagar iad. Beidh "
+"focail i do leabhar focal (.dic) ar fáil le haghaidh seiceálacha litrithe."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:150
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Uaslódáil Leabhar Focal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Interface"
-msgstr ""
+msgstr "Comhéadan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Socraigh roghanna comhéadain réamhshocraithe."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Cumraíocht Uaslódála"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Socruithe Doiciméid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Coigeartaigh conas a iompraíonn doiciméid oifige."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Uaslódáil Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Tá URL Cumraíochta Comhroinnte ar iarraidh sna hathróga tosaigh."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:228
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Tá comhartha rochtana ar iarraidh sna hathróga tosaigh."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:257
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Chuaigh rud éigin mícheart. Déan iarracht an leathanach a athnuachan."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:330
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Tharla fadhb agus comhad na socruithe á fháil. Déan iarracht an leathanach a "
+"athnuachan."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:355
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Tharla fadhb agus an leabhar focal á fháil. Déan iarracht an leathanach a "
+"athnuachan."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:390
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Tharla fadhb agus an comhad á uaslódáil. Déan iarracht arís."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:516
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Tharla fadhb agus an comhad á scriosadh. Déan iarracht an leathanach a "
+"athnuachan."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:641
 #: src/map/handler/Map.WOPI.js:690
@@ -461,59 +472,59 @@ msgstr "Earráid"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Foclóir caighdeánach"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Déanann an seiceálaí litrithe neamhaird ar fhocail"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Foclóir eisceachtaí"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Cuirtear líne faoi fhocail eisceachtúla agus litriú á sheiceáil"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Ag lódáil Leabhar Focal..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Clóscríobh chun focal a chur leis"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Cuir leis"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Formáid fhoclóra neamhbhailí. Seiceáil an comhad le do thoil."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Tharla fadhb agus comhad foclóra á uaslódáil"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Tharla fadhb agus socruithe an Doiciméid á lódáil."
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Roghnaigh cluaisín chun socruithe a fheiceáil."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Athshocraigh chuig socruithe réamhshocraithe an Doiciméid"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "An bhfuil tú cinnte gur mian leat socruithe an Doiciméid a athshocrú?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Socruithe Sábháil Doiciméid"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -698,9 +709,8 @@ msgid "Resolved"
 msgstr "Réitithe"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Tá físeán gan tacaíocht sa doiciméad"
+msgstr "Tá meáin nach dtacaítear leo sa doiciméad"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Copy link location"
@@ -1354,7 +1364,7 @@ msgstr "Teanga"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Níor aimsíodh aon torthaí cuardaigh!"
 
 #: src/control/Control.Menubar.ts:148 src/control/Control.Menubar.ts:163
 #: src/control/Control.Menubar.ts:1088
@@ -2015,11 +2025,11 @@ msgstr "Deireadh an Ghrádáin"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Loingseoireacht"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Dún Nascleanúint"
 
 #: src/control/Control.NavigatorPanel.ts:125
 #: src/slideshow/PresenterConsole.js:34
@@ -2028,12 +2038,12 @@ msgstr "Sleamhnáin"
 
 #: src/control/Control.NavigatorPanel.ts:130
 msgid "Outline"
-msgstr ""
+msgstr "Imlíne"
 
 #: src/control/Control.NavigatorPanel.ts:155
 #: src/control/Control.NavigatorPanel.ts:160
 msgid "Navigator"
-msgstr ""
+msgstr "Loingseoir"
 
 #: src/control/Control.Notebookbar.js:671
 #: src/control/Control.NotebookbarCalc.js:164
@@ -3063,7 +3073,7 @@ msgstr "Ruaig"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:137
 msgid "Unknown color"
-msgstr ""
+msgstr "Dath anaithnid"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
