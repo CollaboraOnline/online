@@ -42,4 +42,15 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 
 		cy.cGet('.MathElementsPanel').should('be.visible');
 	});
+
+	it('Show document accessibility sidebar', function() {
+		cy.cGet('#Help-tab-label').click();
+		cy.cGet('#Help .unoAccessibilityCheck').click();
+
+		cy.cGet('#updateLinkButton').click();
+
+		cy.cGet('#expand_document-label').should('exist');
+		cy.cGet('#expand_other').should('exist');
+	});
+
 });
