@@ -223,12 +223,15 @@ public:
         if (!_noShutdown)
         {
             LOG_TRC("Socket shutdown RDWR. " << *this);
-            setShutdown();
+            if (!_isShutdown)
+            {
+                setShutdown();
 #if !MOBILEAPP
-            ::shutdown(_fd, SHUT_RDWR);
+                ::shutdown(_fd, SHUT_RDWR);
 #else
-            fakeSocketShutdown(_fd);
+                fakeSocketShutdown(_fd);
 #endif
+            }
         }
     }
 
@@ -1247,13 +1250,17 @@ public:
     /// Emit 'onDisconnect' if it has not been done
     void ensureDisconnected()
     {
+        ASSERT_CORRECT_SOCKET_THREAD(this);
         if (!_doneDisconnect)
         {
-            ASSERT_CORRECT_SOCKET_THREAD(this);
-
             _doneDisconnect = true;
             if (_socketHandler)
                 _socketHandler->onDisconnect();
+        }
+        if (!isShutdown())
+        {
+            // Note: Ensure proper semantics of onDisconnect()
+            LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
         }
     }
 

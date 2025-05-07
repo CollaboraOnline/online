@@ -1583,18 +1583,8 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
         LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive << ", Termination "
                                                     << isTermination << "}, " << getStatsString(now)
                                                     << ", " << *this);
-        if (_socketHandler)
-        {
-            ensureDisconnected();
-            if (!isShutdown())
-            {
-                // Note: Ensure proper semantics of onDisconnect()
-                LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
-                shutdown(); // signal
-                shutdownConnection(); // real -> setShutdown()
-            }
-        }
-        else
+        ensureDisconnected();
+        if (!isShutdown())
         {
             shutdown(); // signal
             shutdownConnection(); // real -> setShutdown()
