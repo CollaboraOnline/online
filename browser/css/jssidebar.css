@@ -310,6 +310,11 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	height: 0;
 }
 
+/* https://github.com/CollaboraOnline/online/issues/11868 */
+/* To do: to solve it on core side */
+#box4 > [id^='hyphenation'] {
+	display: none !important;
+}
 
 /* Navigator */
 
