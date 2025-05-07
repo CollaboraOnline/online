@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-29 16:27+0200\n"
-"PO-Revision-Date: 2025-04-25 09:14+0000\n"
+"PO-Revision-Date: 2025-05-07 06:06+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.1-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -413,13 +413,12 @@ msgstr "Upload configuratie"
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Documentinstellingen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
-#, fuzzy
 msgid "Adjust how office documents behave."
-msgstr "Aanpassen hoe kantoordocumenten eruit zien."
+msgstr "Pas aan hoe kantoordocumenten zich gedragen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
@@ -474,59 +473,61 @@ msgstr "Fout"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standaard woordenboek"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Woorden worden genegeerd door de spellingscontrole"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Woordenboek met uitzonderingen"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
 msgstr ""
+"Uitzonderingswoorden worden onderstreept tijdens het controleren van de "
+"spelling"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Woordenboek laden..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Typ om een woord toe te voegen"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Toevoegen"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Ongeldig woordenboek formaat. Controleer het bestand."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Er is iets misgegaan bij het uploaden van het woordenboekbestand"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Er is iets misgegaan bij het laden van de documentinstellingen."
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Selecteer een tabblad om de instellingen te bekijken."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Standaardinstellingen document herstellen"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Weet je zeker dat je de documentinstellingen opnieuw wilt instellen?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Documentinstellingen opslaan"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -2246,7 +2247,7 @@ msgstr "Neutraal"
 
 #: src/control/Control.NotebookbarCalc.js:840
 msgid "Bad"
-msgstr "Fout"
+msgstr "Slecht"
 
 #: src/control/Control.NotebookbarCalc.js:871
 #: src/control/Control.NotebookbarDraw.js:1000
@@ -3070,7 +3071,7 @@ msgstr "Verwerpen"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:137
 msgid "Unknown color"
-msgstr ""
+msgstr "Onbekende kleur"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
