@@ -14,4 +14,24 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.wait(500); // wait for animations
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('sidebar_writer', 0.065);
 	});
+
+	it('Show table panel multiple times', function() {
+		cy.cGet('.TableEditPanel').should('not.exist');
+
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert .unoInsertTable').click();
+		cy.cGet('.inserttable-grid > .row > .col').eq(0).click();
+
+		cy.cGet('.TableEditPanel').should('exist');
+		cy.cGet('#sidebar-dock-wrapper').scrollTo(0, 300, { ensureScrollable: false });
+		cy.cGet('.TableEditPanel').should('be.visible');
+
+		helper.typeIntoDocument('{downArrow}');
+		cy.cGet('#sidebar-dock-wrapper').scrollTo(0, 300, { ensureScrollable: false });
+		cy.cGet('.TableEditPanel').should('not.be.visible');
+
+		helper.typeIntoDocument('{upArrow}');
+		cy.cGet('#sidebar-dock-wrapper').scrollTo(0, 300, { ensureScrollable: false });
+		cy.cGet('.TableEditPanel').should('be.visible');
+	});
 });
