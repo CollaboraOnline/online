@@ -34,4 +34,12 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.cGet('#sidebar-dock-wrapper').scrollTo(0, 300, { ensureScrollable: false });
 		cy.cGet('.TableEditPanel').should('be.visible');
 	});
+
+	it('Show formula Elements sidebar', function() {
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click().click().click().click();
+		cy.cGet('#Insert .unoInsertObjectStarMath').click();
+
+		cy.cGet('.MathElementsPanel').should('be.visible');
+	});
 });
