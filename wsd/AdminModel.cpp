@@ -869,13 +869,15 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
+    _lastActivity = std::time(nullptr);
+
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
     {
         if (docIt->second.getIdleTime() >= 10)
         {
             docIt->second.takeSnapshot(); // I would like to keep the idle time
-            docIt->second.updateLastActivityTime();
+            docIt->second.updateLastActivityTime(_lastActivity);
             notify("resetidle " + std::to_string(docIt->second.getPid()));
         }
     }
