@@ -92,7 +92,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
 		this._sheetGrid = true;
 
-		if (window.prefs.get('ColumnRowHighlightEnabled', false))
+		if (window.prefs.getBoolean('ColumnRowHighlightEnabled', false))
 			FocusCellSection.addFocusCellSection();
 	},
 
