@@ -43,12 +43,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	it('Scrolling to left/right', function() {
 		desktopHelper.selectZoomLevel('200');
+		cy.wait(1000);
+
 		//show horizontal scrollbar
 		cy.cGet('.leaflet-layer').click('bottom');
 		cy.wait(1000);
-		desktopHelper.assertScrollbarPosition('horizontal', 0, 270)
-;
-		helper.typeIntoDocument('{home}{end}{home}');
+		desktopHelper.assertScrollbarPosition('horizontal', 0, 270);
+
+		helper.typeIntoDocument('{home}{end}');
+		cy.wait(1000);
+		desktopHelper.assertScrollbarPosition('horizontal', 430, 653);
+
+		helper.typeIntoDocument('{home}');
 		cy.wait(1000);
 		desktopHelper.assertScrollbarPosition('horizontal', 0, 270);
 
