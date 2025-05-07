@@ -62,35 +62,40 @@ class URLPopUpSection extends HTMLObjectSection {
 
         const link = L.DomUtil.createWithId('a', this.linkId, parent);
 		link.innerText = url;
-
+		const copyLinkText = _('Copy link location');
 		const copyBtn = L.DomUtil.createWithId('div', this.copyButtonId, parent);
 		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
-		copyBtn.setAttribute('title', _('Copy link location'));
+		copyBtn.setAttribute('title', copyLinkText);
 
         const imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
 		app.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
+		imgCopyBtn.setAttribute('alt', copyLinkText);
 		imgCopyBtn.style.padding = '4px';
 
+		const editLinkText = _('Edit link');
 		const editBtn = L.DomUtil.createWithId('div', this.editButtonId, parent);
 		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
-		editBtn.setAttribute('title', _('Edit link'));
+		editBtn.setAttribute('title', editLinkText);
 
 		const imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
 		app.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
+		imgEditBtn.setAttribute('alt', editLinkText);
 		imgEditBtn.style.padding = '4px';
 
+		const removeLinkText = _('Remove link');
 		const removeBtn = L.DomUtil.createWithId('div', this.removeButtonId, parent);
 		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
-		removeBtn.setAttribute('title', _('Remove link'));
+		removeBtn.setAttribute('title', removeLinkText);
 
 		const imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
 		app.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
+		imgRemoveBtn.setAttribute('alt', removeLinkText);
 		imgRemoveBtn.style.padding = '4px';
 
 		this.arrowDiv = document.createElement('div');

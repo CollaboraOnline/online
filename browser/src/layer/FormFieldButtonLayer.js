@@ -11,7 +11,7 @@
 /*
  * L.FormFieldButton is used to interact with text based form fields.
  */
-/* global app $ */
+/* global _ app $ */
 L.FormFieldButton = L.Layer.extend({
 
 	options: {
@@ -102,6 +102,7 @@ L.FormFieldButton = L.Layer.extend({
 		button.style.width = container.style.height;
 
 		var image = L.DomUtil.create('img', 'form-field-button-image', button);
+		image.setAttribute('alt', _('Unfold'));
 		app.LOUtil.setImage(image, 'unfold.svg', this.map);
 		button.addEventListener('click', this._onClickDropDown);
 
