@@ -63,6 +63,8 @@
 #include <string>
 #include <string_view>
 #include <utility>
+#include <zlib.h>
+#include <zstd.h>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -2458,6 +2460,15 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
             if (size_t start = json.find("%IMAGECHECKSUM%"); start != std::string::npos)
                 json.replace(start, 15, std::to_string(pixmapHash));
 
+            {
+                Poco::JSON::Parser parser;
+                Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+                root->set("width", width);
+                root->set("height", height);
+                std::stringstream ss;
+                root->stringify(ss);
+                json = ss.str();
+            }
             std::string response = "slidelayer: " + json;
 
             response += "\n";
@@ -2465,12 +2476,31 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
             output.reserve(response.size() + pixmap->size());
             output.resize(response.size());
             std::memcpy(output.data(), response.data(), response.size());
+            std::vector<char> compressedOutPut;
+            compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
+            size_t compSize = ZSTD_compress(compressedOutPut.data(), compressedOutPut.size(),
+                                            pixmap->data(), pixmap->size(), -3);
 
-            if (!Png::encodeSubBufferToPNG(pixmap->data(), 0, 0, width, height, width, height, output, tileMode))
+            if (ZSTD_isError(compSize))
             {
-                LOG_ERR("Failed to encode into PNG.");
                 output.resize(0);
+                LOG_ERR("Failed to compress slidelayer of size " << pixmap->size() << " with "
+                                                                 << ZSTD_getErrorName(compSize));
+                return;
             }
+            size_t oldSize = output.size();
+            output.resize(oldSize + compSize);
+            std::memcpy(&output[oldSize], compressedOutPut.data(), compSize);
+
+            std::cout << "OUTPUT: " << output.data() << std::endl;
+            std::cout << "Compressed: " << (uint8_t)compressedOutPut[0]
+                      << (uint8_t)compressedOutPut[1] << (uint8_t)compressedOutPut[2]
+                      << (uint8_t)compressedOutPut[3] << std::endl;
+
+            std::cout << "Compressed slidelayer of size " << pixmap->size() << " to size "
+                      << compSize << std::endl;
+
+            LOG_TRC("Compressed slidelayer of size " << pixmap->size() << " to size " << compSize);
         });
     return true;
 }
