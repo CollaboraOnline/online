@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-29 16:27+0200\n"
-"PO-Revision-Date: 2025-04-24 05:08+0000\n"
-"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
+"PO-Revision-Date: 2025-04-29 16:46+0000\n"
+"Last-Translator: Максим Горпиніч <maksimgorpinic4@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.11.1-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -415,13 +415,12 @@ msgstr "Вивантажити конфігурацію"
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Налаштування документа"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
-#, fuzzy
 msgid "Adjust how office documents behave."
-msgstr "Налаштуйте вигляд офісних документів."
+msgstr "Налаштуйте поведінку офісних документів."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
@@ -470,59 +469,59 @@ msgstr "Помилка"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Стандартний словник"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Слова ігноруються перевіркою орфографії"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Словник винятків"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Слова-винятки підкреслюються під час перевірки орфографії"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Завантаження словника..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Введіть, щоб додати слово"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Недійсний формат словника. Перевірте файл."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Під час завантаження файлу словника сталася помилка"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Під час завантаження налаштувань документа сталася помилка."
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Виберіть вкладку, щоб переглянути налаштування."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Скинути налаштування документа до стандартних"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Ви впевнені, що хочете скинути налаштування документа?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Зберегти налаштування документа"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -3055,7 +3054,7 @@ msgstr "Знехтувати"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:137
 msgid "Unknown color"
-msgstr ""
+msgstr "Невідомий колір"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
