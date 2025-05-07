@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-29 16:27+0200\n"
-"PO-Revision-Date: 2025-04-23 22:13+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2025-05-02 09:01+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.1-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -413,13 +413,12 @@ msgstr "Ladda upp konfiguration"
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Dokument inställningar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
-#, fuzzy
 msgid "Adjust how office documents behave."
-msgstr "Anpassa hur kontorsdokument ser ut."
+msgstr "Justera hur Office-dokument beter sig."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
@@ -469,59 +468,59 @@ msgstr "Fel"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standardordbok"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Ord ignoreras av stavningskontrollen"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Ordbok för undantag"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Undantagsord är understrukna vid stavningskontroll"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Laddar ordbok..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Skriv för att lägga till ett ord"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Lägg till"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Ogiltigt ordboksformat. Kontrollera fil."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Något gick fel när ordboksfilen skulle laddas upp"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Något gick fel när dokumentinställningarna lästes in."
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Välj en flik för att visa inställningar."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Återställ till standardinställningar för dokument"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Är du säker på att du vill återställa dokumentinställningarna?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Spara dokumentinställningar"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -3055,7 +3054,7 @@ msgstr "Avfärda"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:137
 msgid "Unknown color"
-msgstr ""
+msgstr "Okänd färg"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
