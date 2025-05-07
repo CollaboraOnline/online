@@ -1499,7 +1499,7 @@ L.Map = L.Evented.extend({
 
 		if (!target) { return false; }
 
-		return (L.DomUtil.hasClass(target, 'leaflet-tile')
+		return (target.id === 'map'
 			&& !(related && (L.DomUtil.hasClass(related, 'leaflet-tile')
 				|| L.DomUtil.hasClass(related, 'leaflet-cursor'))));
 	},
