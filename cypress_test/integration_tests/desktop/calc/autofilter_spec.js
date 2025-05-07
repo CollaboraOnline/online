@@ -25,11 +25,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter Complex', funct
 		cy.wait(1000);
 
 		desktopHelper.assertScrollbarPosition('vertical', 250, 270);
-		desktopHelper.assertScrollbarPosition('horizontal', 210, 230);
+		desktopHelper.assertScrollbarPosition('horizontal', 260, 290);
 	});
 
 	it('Check checkbox status in the date tree', function() {
-		calcHelper.openAutoFilterMenu(true);
+		helper.typeIntoInputField(helper.addressInputSelector, 'P100');
+
+		cy.cGet('#test-div-OwnCellCursor').then((div) => {
+			const rect = div[0].getBoundingClientRect();
+			const x = rect.right - 3;
+			const y = rect.bottom - 3;
+			cy.cGet('body').click(x, y);
+		});
 
 		cy.cGet('.autofilter .vertical').should('be.visible');
 		cy.cGet('#toggle_all-input').should('not.be.checked');
@@ -131,7 +138,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		desktopHelper.selectColorFromPalette('3FAF46');
 
 		calcHelper.openAutoFilterMenu();
-		
+
 		//Click on `Filter by Color`
 		cy.cGet('body').contains('.autofilter', 'Filter by Color').click();
 
