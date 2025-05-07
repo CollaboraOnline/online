@@ -66,6 +66,7 @@ const initTranslationStr = () => {
 class SettingIframe {
 	private wordbook;
 	private xcuEditor;
+	private _viewSetting;
 
 	private API_ENDPOINTS = {
 		uploadSettings: window.enableDebug
@@ -99,6 +100,14 @@ class SettingIframe {
 	async uploadWordbookFile(filename: string, content: string): Promise<void> {
 		const file = new File([content], filename, { type: 'text/plain' });
 		await this.uploadFile(this.PATH.wordBookUpload(), file);
+	}
+
+	async uploadBrowserSettingFile(
+		filename: string,
+		content: string,
+	): Promise<void> {
+		const file = new File([content], filename, { type: 'text/plain' });
+		await this.uploadFile(this.PATH.browserSettingsUpload(), file);
 	}
 
 	private initWindowVariables(): void {
@@ -555,6 +564,174 @@ class SettingIframe {
 		});
 	}
 
+	private generateBrowserSettingUI(data: any) {
+		this._viewSetting = data;
+		const settingsContainer = document.getElementById('allConfigSection');
+		if (!settingsContainer) {
+			return;
+		}
+
+		const browserContainer = document.createElement('div');
+		browserContainer.id = 'browser-section';
+		browserContainer.classList.add('section');
+
+		let elem = document.createElement('h3');
+		elem.textContent = _('View Settings');
+		browserContainer.appendChild(elem);
+
+		elem = document.createElement('p');
+		elem.textContent = _('Adjust how Browser preference behave.');
+		browserContainer.appendChild(elem);
+
+		const divContainer = document.createElement('div');
+		divContainer.id = 'browser-editor';
+		browserContainer.appendChild(divContainer);
+
+		const fieldset = document.createElement('fieldset');
+		fieldset.classList.add('browser-settings-fieldset');
+		divContainer.appendChild(fieldset);
+
+		elem = document.createElement('legend');
+		elem.textContent = _('Option');
+		fieldset.appendChild(elem);
+
+		for (const key in data) {
+			if (typeof data[key] === 'boolean') {
+				const checkboxContainer = document.createElement('span');
+				checkboxContainer.className =
+					'checkbox-radio-switch checkbox-radio-switch-checkbox checkbox-wrapper';
+				fieldset.appendChild(checkboxContainer);
+
+				const checkbox = document.createElement('input');
+				checkbox.type = 'checkbox';
+				checkbox.className = 'checkbox-radio-switch-input';
+				checkbox.checked = data[key];
+				checkboxContainer.appendChild(checkbox);
+
+				const checkboxContent = document.createElement('span');
+				checkboxContent.className =
+					'checkbox-content checkbox-content-checkbox checkbox-content--has-text checkbox-radio-switch__content';
+				checkboxContainer.appendChild(checkboxContent);
+
+				const checkboxIcon = document.createElement('span');
+				checkboxIcon.className = `checkbox-content-icon checkbox-radio-switch__icon`;
+				checkboxIcon.ariaHidden = 'true';
+				checkboxContent.appendChild(checkboxIcon);
+
+				const materialIcon = document.createElement('span');
+				materialIcon.className = 'material-design-icon checkbox-marked-icon';
+				materialIcon.ariaHidden = 'true';
+
+				const iconSvg = `
+					<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
+					${
+						data[key]
+							? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
+						  </path>`
+							: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
+						  </path>`
+					}
+					</svg>`;
+
+				materialIcon.innerHTML = iconSvg;
+				checkboxIcon.appendChild(materialIcon);
+
+				const checkboxText = document.createElement('span');
+				checkboxText.className =
+					'checkbox-content__text checkbox-radio-switch__text';
+				checkboxText.textContent = key;
+				checkboxContent.appendChild(checkboxText);
+
+				checkboxContainer.addEventListener(
+					'click',
+					function () {
+						const currentChecked = !this.checked;
+						this.checked = currentChecked;
+						if (currentChecked) {
+							checkboxContainer.classList.remove(
+								'checkbox-radio-switch--checked',
+							);
+						} else {
+							checkboxContainer.classList.add('checkbox-radio-switch--checked');
+						}
+						materialIcon.innerHTML = `
+<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
+${
+	currentChecked
+		? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
+						</path>`
+		: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
+						</path>`
+}
+</svg>`;
+						data[key] = currentChecked;
+					}.bind(checkbox),
+				);
+			}
+		}
+
+		const actionsContainer = document.createElement('div');
+		actionsContainer.classList.add('xcu-editor-actions');
+
+		const resetButton = document.createElement('button');
+		resetButton.type = 'button';
+		resetButton.id = 'xcu-reset-button';
+		resetButton.classList.add('button', 'button--vue-secondary');
+		resetButton.title = _('Reset to default View settings');
+		resetButton.innerHTML = `
+			<span class="button__wrapper">
+				<span class="button__icon xcu-reset-icon">
+				<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24">
+					<!-- Replace with your Reset icon SVG path -->
+					<path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"></path>
+				</svg>
+				</span>
+			</span>
+			`;
+
+		resetButton.addEventListener('click', async () => {
+			const confirmed = window.confirm(
+				_('Are you sure you want to reset View Settings?'),
+			);
+			if (!confirmed) {
+				return;
+			}
+			resetButton.disabled = true;
+			const defaultBrowserSetting = { accessibility: false };
+			this.uploadBrowserSettingFile(
+				'browsersetting.json',
+				JSON.stringify(defaultBrowserSetting),
+			);
+			resetButton.disabled = false;
+		});
+
+		const saveButton = document.createElement('button');
+		saveButton.type = 'button';
+		saveButton.id = 'xcu-save-button';
+		saveButton.classList.add('button', 'button-primary');
+		saveButton.title = _('Save View Settings');
+		saveButton.innerHTML = `
+			<span class="button__wrapper">
+				<span class="button--text-only">Save</span>
+			</span>
+			`;
+
+		saveButton.addEventListener('click', async () => {
+			saveButton.disabled = true;
+			this.uploadBrowserSettingFile(
+				'browsersetting.json',
+				JSON.stringify(this._viewSetting),
+			);
+			saveButton.disabled = false;
+		});
+
+		actionsContainer.appendChild(resetButton);
+		actionsContainer.appendChild(saveButton);
+		browserContainer.appendChild(actionsContainer);
+
+		settingsContainer.appendChild(browserContainer);
+	}
+
 	private async populateSharedConfigUI(data: ConfigData): Promise<void> {
 		const browserSettingButton = document.getElementById(
 			'uploadBrowserSettingsButton',
@@ -578,6 +755,18 @@ class SettingIframe {
 			} else {
 				xcuSettingButton.style.removeProperty('display');
 			}
+		}
+
+		if (data.browsersetting && data.browsersetting.length > 0) {
+			const fileId = data.browsersetting[0].uri;
+			const fetchContent = await this.fetchSettingFile(fileId);
+			this.generateBrowserSettingUI(JSON.parse(fetchContent));
+		} else {
+			const defaultBrowserSetting = { accessibility: false };
+			this.uploadBrowserSettingFile(
+				'browsersetting.json',
+				JSON.stringify(defaultBrowserSetting),
+			);
 		}
 
 		if (data.xcu && data.xcu.length > 0) {
