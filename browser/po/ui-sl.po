@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-29 16:27+0200\n"
-"PO-Revision-Date: 2025-04-28 15:46+0000\n"
+"PO-Revision-Date: 2025-05-05 22:04+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.12-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -415,13 +415,12 @@ msgstr "Naloži prilagoditev na strežnik"
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Nastavitve dokumenta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
-#, fuzzy
 msgid "Adjust how office documents behave."
-msgstr "Prilagodite videz pisarniških dokumentov."
+msgstr "Prilagodite vedenje pisarniških dokumentov."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
@@ -471,59 +470,59 @@ msgstr "Napaka"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standardni slovar"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Besede preverjanje črkovanja prezre"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Slovarček izjem"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Besede, ki so izjeme, so med preverjanjem črkovanja podčrtane"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Nalaganje slovarčka ..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "S tipkanjem vnesite besedo"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Neveljavna oblika zapisa slovarčka. Preverite datoteko."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Pri nalaganju datoteke slovarčka je prišlo do napake"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Pri nalaganju nastavitev dokumenta je prišlo do napake."
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Izberite zavihek, da si ogledate nastavitve."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Ponastavi na privzete nastavitve dokumenta"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Ali ste prepričani, da želite ponastaviti nastavitve dokumenta?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Shrani nastavitve dokumenta"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -3060,7 +3059,7 @@ msgstr "Umakni"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:137
 msgid "Unknown color"
-msgstr ""
+msgstr "Neznana barva"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
