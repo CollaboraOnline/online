@@ -139,7 +139,7 @@ class SettingIframe {
 				uploadPath: this.PATH.autoTextUpload(),
 			},
 			{
-				sectionTitle: _('Custom Dictionaries'),
+				sectionTitle: _('Custom dictionaries'),
 				sectionDesc: _(
 					'Add or edit words in a spell check dictionary. Words in your wordbook (.dic) will be available for spelling checks.',
 				),
@@ -163,7 +163,7 @@ class SettingIframe {
 				enabledFor: 'userconfig',
 			},
 			{
-				sectionTitle: _('Document Settings'),
+				sectionTitle: _('Document settings'),
 				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
 				inputId: 'XcuFile',
