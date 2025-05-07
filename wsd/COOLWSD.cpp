@@ -3824,6 +3824,7 @@ int COOLWSD::innerMain()
 #if defined(M_TRIM_THRESHOLD)
     LOG_DBG("trimming memory post startup");
     malloc_trim(0);
+    time_t prevTrimTrigger = 0;
 #endif
 
     SigUtil::addActivity("coolwsd running");
@@ -3873,6 +3874,25 @@ int COOLWSD::innerMain()
             processFetchUpdate(mainWait);
             stampFetch = timeNow;
         }
+
+#if defined(M_TRIM_THRESHOLD)
+        // if Admin hasn't seen any document activity for over 10 mins them malloc_trim
+        constexpr time_t idleTrimCheck(10 * 60);
+
+        const time_t lastAdminActivity = Admin::instance().getLastActivityTime();
+        if (lastAdminActivity != prevTrimTrigger)
+        {
+            const time_t adminIdle = time(nullptr) - lastAdminActivity;
+            if (adminIdle > idleTrimCheck)
+            {
+                LOG_DBG("trimming memory on idle");
+                malloc_trim(0);
+                // Don't bother repeating until LastActivityTime changes.
+                prevTrimTrigger = lastAdminActivity;
+            }
+        }
+#endif
+
 #endif
 
 #if ENABLE_DEBUG && !MOBILEAPP

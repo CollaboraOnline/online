@@ -104,6 +104,7 @@ public:
     /// available to us.
     size_t getTotalAvailableMemory() const { return _totalAvailMemKb; }
     size_t getTotalCpuUsage() const;
+    std::time_t getLastActivityTime() const;
 
     void modificationAlert(const std::string& dockey, pid_t pid, bool value);
 

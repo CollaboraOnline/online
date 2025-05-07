@@ -212,7 +212,8 @@ public:
 
     const std::map<std::string, View>& getViews() const { return _views; }
 
-    void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
+    void updateLastActivityTime(std::time_t lastActivity) { _lastActivity = lastActivity; }
+    std::time_t getLastActivityTime() const { return _lastActivity; }
     void updateMemoryDirty();
     size_t getMemoryDirty() const { return _memoryDirty; }
 
@@ -393,6 +394,7 @@ public:
     void removeDocument(const std::string& docKey);
 
     void updateLastActivityTime(const std::string& docKey);
+    std::time_t getLastActivityTime() const { return _lastActivity; }
 
     void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
 
@@ -482,6 +484,8 @@ private:
     uint64_t _lostKitsTerminatedCount = 0;
     uint64_t _killedCount = 0;
     uint64_t _oomKilledCount = 0;
+
+    std::time_t _lastActivity = 0;
 
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;

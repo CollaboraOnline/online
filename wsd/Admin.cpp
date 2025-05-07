@@ -824,6 +824,11 @@ void Admin::rescheduleCpuTimer(unsigned interval)
     wakeup();
 }
 
+std::time_t Admin::getLastActivityTime() const
+{
+    return _model.getLastActivityTime();
+}
+
 size_t Admin::getTotalMemoryUsage() const
 {
     // To simplify and clarify this; since load, link and pre-init all
