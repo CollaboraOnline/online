@@ -250,7 +250,9 @@ class TileManager {
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
 			window.app.console.info('Creating CanvasTileWorker');
-			this.worker = new Worker('src/layer/tile/TileWorker.js');
+			this.worker = new Worker(
+				app.LOUtil.getURL('/src/layer/tile/TileWorker.js'),
+			);
 			this.worker.addEventListener('message', (e: any) =>
 				this.onWorkerMessage(e),
 			);
