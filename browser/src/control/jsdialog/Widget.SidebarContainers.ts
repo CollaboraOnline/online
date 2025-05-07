@@ -69,10 +69,7 @@ JSDialog.panel = function (
 			iconParent,
 		);
 		const moreOptionsText = expanderData.children[0].text
-			? _('More options for {name}').replace(
-					'{name}',
-					expanderData.children[0].text,
-				)
+			? _('More options for {1}').replace('{1}', expanderData.children[0].text)
 			: '';
 		builder._controlHandlers['toolitem'](
 			icon,

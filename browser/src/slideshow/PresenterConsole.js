@@ -170,6 +170,7 @@ class PresenterConsole {
 				img = this._proxyPresenter.document.createElement('img');
 				img.id = `preview-slide-${index}`;
 				img.src = document.querySelector('meta[name="previewImg"]').content;
+				img.alt = _('Preview Slide {1}').replace('{1}', index + 1);
 				img.style.marginLeft = '10px';
 				img.style.marginRight = '10px';
 				img.style.marginTop = '10px';

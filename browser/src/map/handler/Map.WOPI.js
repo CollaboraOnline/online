@@ -635,6 +635,7 @@ L.Map.WOPI = L.Handler.extend({
 				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
 					var image = L.DomUtil.create('img', '', preview);
 					image.src = msg.Values.image;
+					image.alt = msg.Values.title;
 					image.onload = function() {
 						URLPopUpSection.resetPosition();
 					};

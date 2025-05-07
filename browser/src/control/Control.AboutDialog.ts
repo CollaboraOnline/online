@@ -182,30 +182,29 @@ class AboutDialog {
 		form.addEventListener('click', this.aboutDialogClickHandler.bind(this));
 		form.addEventListener('keyup', this.aboutDialogKeyHandler.bind(this));
 		form.querySelector('#coolwsd-version').querySelector('a').focus();
-		var copyversion = L.DomUtil.create(
+		const copyVersionText = _('Copy all version information in English');
+		var copyVersion = L.DomUtil.create(
 			'button',
 			'ui-pushbutton jsdialog',
 			null,
 		);
-		copyversion.setAttribute('id', 'modal-dialog-about-dialog-box-copybutton');
-		copyversion.setAttribute(
-			'data-cooltip',
-			_('Copy all version information in English'),
-		);
+		copyVersion.setAttribute('id', 'modal-dialog-about-dialog-box-copybutton');
+		copyVersion.setAttribute('aria-label', copyVersionText);
+		copyVersion.setAttribute('data-cooltip', copyVersionText);
 		var img = L.DomUtil.create('img', null, null);
 		app.LOUtil.setImage(img, 'lc_copy.svg', this.map);
-		copyversion.innerHTML =
+		copyVersion.innerHTML =
 			'<img src="' + sanitizeUrl(img.src) + '" width="18px" height="18px">';
-		copyversion.addEventListener(
+		copyVersion.addEventListener(
 			'click',
 			this.copyVersionInfoToClipboard.bind(this),
 		);
-		L.control.attachTooltipEventListener(copyversion, this.map);
-		var aboutok = document.getElementById(
+		L.control.attachTooltipEventListener(copyVersion, this.map);
+		var aboutOk = document.getElementById(
 			'modal-dialog-about-dialog-box-yesbutton',
 		);
-		if (aboutok) {
-			aboutok.before(copyversion);
+		if (aboutOk) {
+			aboutOk.before(copyVersion);
 		}
 	}
 

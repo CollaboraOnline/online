@@ -15,6 +15,8 @@
 
 /* global JSDialog _ _UNO UNOKey */
 
+const EXPAND_FORMULA_BAR_TEXT = _('Expand Formula Bar');
+const FUNCTION_WIZARD_TEXT = _('Function Wizard');
 class FormulaBar {
 	constructor(map) {
 		this.map = map;
@@ -60,7 +62,7 @@ class FormulaBar {
 						{
 							id: 'functiondialog',
 							type: 'toolitem',
-							text: _('Function Wizard'),
+							text: FUNCTION_WIZARD_TEXT,
 							command: '.uno:FunctionDialog'
 						},
 						{
@@ -103,7 +105,7 @@ class FormulaBar {
 						{
 							id: 'expand',
 							type: 'pushbutton',
-							text: _('Expand Formula Bar'),
+							text: EXPAND_FORMULA_BAR_TEXT,
 							symbol: 'SPIN_DOWN',
 						}]
 				}];
@@ -116,7 +118,7 @@ class FormulaBar {
 						{
 							id: 'functiondialog',
 							type: 'toolitem',
-							text: _('Function Wizard'),
+							text: FUNCTION_WIZARD_TEXT,
 							command: '.uno:FunctionDialog'
 						}, {
 							id: 'sc_input_window',
@@ -126,7 +128,7 @@ class FormulaBar {
 						{
 							id: 'expand',
 							type: 'pushbutton',
-							text: _('Expand Formula Bar'),
+							text: EXPAND_FORMULA_BAR_TEXT,
 							symbol: 'SPIN_DOWN',
 						}]
 				}];
@@ -148,7 +150,7 @@ class FormulaBar {
 					control: {
 						id: 'expand',
 						type: 'pushbutton',
-						text: _('Expand Formula Bar'),
+						text: EXPAND_FORMULA_BAR_TEXT,
 						symbol: 'SPIN_DOWN'
 					}
 				}
