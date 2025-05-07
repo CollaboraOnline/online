@@ -594,17 +594,16 @@ app.definitions.Socket = L.Class.extend({
 
 		var isTile = e.textMsg.startsWith('tile:');
 		var isDelta = e.textMsg.startsWith('delta:');
-		if (!isTile && !isDelta &&
-		    !e.textMsg.startsWith('renderfont:') &&
-			!e.textMsg.startsWith('slidelayer:') &&
-		    !e.textMsg.startsWith('windowpaint:'))
+		var isSlideLayer = e.textMsg.startsWith('slidelayer:');
+		if (!isTile && !isDelta && !isSlideLayer && !e.textMsg.startsWith('renderfont:') &&
+			!e.textMsg.startsWith('windowpaint:'))
 			return;
 
 		if (e.textMsg.indexOf(' nopng') !== -1)
 			return;
 
 		// pass deltas through quickly.
-		if (e.imgBytes && (isTile || isDelta) && e.imgBytes[e.imgIndex] != 80 /* P(ng) */)
+		if (e.imgBytes && (isSlideLayer || ((isTile || isDelta) && e.imgBytes[e.imgIndex] != 80 /* P(ng) */)))
 		{
 			// window.app.console.log('Passed through delta object');
 			e.image = { rawData: e.imgBytes.subarray(e.imgIndex),
