@@ -2186,6 +2186,12 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
         const std::shared_ptr<ClientSession> requestingSession = _lockStateUpdateRequest->session();
         _lockStateUpdateRequest.reset(); // No longer needed.
 
+        if (!requestingSession)
+        {
+            LOG_DBG("RequestingSession no longer exists");
+            return;
+        }
+
         // We have some result, look at the result status.
         handleLockResult(*requestingSession, asyncLock.result());
     };
