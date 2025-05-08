@@ -52,6 +52,12 @@ L.Util = {
 		return obj.options;
 	},
 
+	sanitizeElementId: function (id) {
+		// remove spaces first
+		// escape forbidden characters (i.e: (, ), #, ., :, $)
+		return CSS.escape(id.replaceAll(' ' , ''));
+	}
+
 
 };
 
