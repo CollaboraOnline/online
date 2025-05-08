@@ -245,7 +245,7 @@ void RequestDetails::processURI()
     if (posLastWS != std::string::npos)
     {
         std::string lastWS = uriRes.substr(posLastWS);
-        const auto proxyTokens = StringVector::tokenize(lastWS, '/');
+        const auto proxyTokens = StringVector::tokenize(std::move(lastWS), '/');
         if (proxyTokens.size() > 1)
         {
             _fields[Field::SessionId] = proxyTokens[1];

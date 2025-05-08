@@ -914,8 +914,7 @@ int forkit_main(int argc, char** argv)
         else if (std::strstr(cmd, "--rlimits") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            const std::string rlimits = std::string(eq+1);
-            StringVector tokens = StringVector::tokenize(rlimits, ';');
+            StringVector tokens = StringVector::tokenize(std::string(eq+1), ';');
             for (const auto& cmdLimit : tokens)
             {
                 const std::pair<std::string, std::string> pair = Util::split(tokens.getParam(cmdLimit), ':');

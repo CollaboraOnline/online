@@ -513,8 +513,7 @@ public:
 
     std::string rewriteMessage(const std::string &msg)
     {
-        const std::string firstLine = COOLProtocol::getFirstLine(msg);
-        StringVector tokens = StringVector::tokenize(firstLine);
+        StringVector tokens = StringVector::tokenize(COOLProtocol::getFirstLine(msg));
 
         std::string out = msg;
 

@@ -569,9 +569,9 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
     // Handle forwarded header and make sure all participating IPs are allowed
     if (request.has("X-Forwarded-For"))
     {
-        const std::string forwardedData = request.get("X-Forwarded-For");
+        std::string forwardedData = request.get("X-Forwarded-For");
         LOG_INF_S("convert-to: X-Forwarded-For is: " << forwardedData);
-        StringVector tokens = StringVector::tokenize(forwardedData, ',');
+        StringVector tokens = StringVector::tokenize(std::move(forwardedData), ',');
         for (const auto& token : tokens)
         {
             std::string param = tokens.getParam(token);
