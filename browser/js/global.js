@@ -606,12 +606,30 @@ function getInitializerClass() {
 
 	global.setLogging(global.coolLogging != '');
 
+	function parseBool(val) {
+		if (typeof val !== 'string') return false;
+		switch (val.toLowerCase().trim()) {
+		case '1':
+		case 'true':
+		case 'yes':
+		case 'on':
+			return true;
+		case '0':
+		case 'false':
+		case 'no':
+		case 'off':
+			return false;
+		default:
+			return false;
+		}
+	}
+
 	global.L.Params = {
 		/// Shows close button if non-zero value provided
-		closeButtonEnabled: global.coolParams.get('closebutton'),
+		closeButtonEnabled: parseBool(global.coolParams.get('closebutton')),
 
 		/// Shows revision history file menu option
-		revHistoryEnabled: global.coolParams.get('revisionhistory'),
+		revHistoryEnabled: parseBool(global.coolParams.get('revisionhistory')),
 	};
 
 	global.prefs = {
