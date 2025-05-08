@@ -2683,8 +2683,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 const Poco::Dynamic::Var result = parser.parse(stringJSON);
                 const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-                const std::string rectangle = object->get("rectangle").toString();
-                StringVector rectangleTokens(StringVector::tokenize(rectangle, ','));
+                std::string rectangle = object->get("rectangle").toString();
+                StringVector rectangleTokens(StringVector::tokenize(std::move(rectangle), ','));
                 int x = 0, y = 0, w = 0, h = 0;
                 if (rectangleTokens.size() > 2 &&
                     stringToInteger(rectangleTokens[0], x) &&

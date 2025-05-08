@@ -167,7 +167,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
     // do we have secure_password?
     if (config.has("admin_console.secure_password"))
     {
-        const std::string securePass =
+        std::string securePass =
             config.getString("admin_console.secure_password", std::string());
         if (securePass.empty())
         {
@@ -177,7 +177,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 
         // Extract the salt from the config
         std::vector<unsigned char> saltData;
-        StringVector tokens = StringVector::tokenize(securePass, '.');
+        StringVector tokens = StringVector::tokenize(std::move(securePass), '.');
         if (tokens.size() != 5 ||
             !tokens.equals(0, "pbkdf2") ||
             !tokens.equals(1, "sha512") ||
