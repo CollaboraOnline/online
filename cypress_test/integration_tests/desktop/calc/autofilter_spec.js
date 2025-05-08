@@ -33,8 +33,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter Complex', funct
 
 		cy.cGet('#test-div-OwnCellCursor').then((div) => {
 			const rect = div[0].getBoundingClientRect();
-			const x = rect.right - 3;
-			const y = rect.bottom - 3;
+			const x = rect.right - 5;
+			const y = rect.bottom - 10;
 			cy.cGet('body').click(x, y);
 		});
 
