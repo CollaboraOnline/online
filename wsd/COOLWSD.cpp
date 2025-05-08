@@ -3787,8 +3787,14 @@ int COOLWSD::innerMain()
     {
         if (i.find("-edit") != std::string::npos)
         {
-            oss   << "    " << i << "\t" << getLaunchURI(std::string("test/samples/") + i) << "\n";
-            ossRO << "    " << i << "\t" << getLaunchURI(std::string("test/samples/") + i, true) << "\n";
+            std::string padded(i);
+            constexpr int width = 22;
+            if (padded.size() < width)
+            {
+                padded.insert(padded.size(), width - padded.size(), ' ');
+            }
+            oss   << "    " << padded << getLaunchURI(std::string("test/samples/") + i) << "\n";
+            ossRO << "    " << padded << getLaunchURI(std::string("test/samples/") + i, true) << "\n";
         }
     }
 
