@@ -1,0 +1,44 @@
+<!doctype html>
+<html data-theme="%UI_THEME%">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+    <title>Collabora Online - Settings</title>
+    <link
+      rel="StyleSheet"
+      href="%SERVICE_ROOT%/browser/%VERSION%/admin/css/admin.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="%SERVICE_ROOT%/browser/%VERSION%/color-palette.css" />
+    <link rel="stylesheet" href="%SERVICE_ROOT%/browser/%VERSION%/color-palette-dark.css" />
+    <script src="%SERVICE_ROOT%/browser/%VERSION%/l10n.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="%SERVICE_ROOT%/browser/%VERSION%/setting_iframe/css/adminIntegratorSettings.css"
+    />
+    <script
+      src="%SERVICE_ROOT%/browser/%VERSION%/setting-iframe-bundle.js"
+      defer
+    ></script>
+    <!--%BRANDING_CSS%-->
+    <!--%BRANDING_JS%-->
+  </head>
+  <body>
+    <div id="settingIframe">
+      <div id="allConfigSection"></div>
+      <input
+        type="hidden"
+        id="initial-variables"
+        data-access-token="%ACCESS_TOKEN%"
+        data-access-token-ttl="%ACCESS_TOKEN_TTL%"
+        data-access-header="%ACCESS_HEADER%"
+        data-enable-debug="%ENABLE_DEBUG%"
+        data-wopi-setting-base-url="%WOPI_SETTING_BASE_URL%"
+        data-iframe-type="%IFRAME_TYPE%"
+        data-css-vars="<!--%CSS_VARIABLES%-->"
+        data-lang="%UI_LANG%"
+      />
+    </div>
+  </body>
+</html>
