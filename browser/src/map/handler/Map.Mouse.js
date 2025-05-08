@@ -218,5 +218,13 @@ L.Map.Mouse = L.Handler.extend({
 		if (this._map.dragging.enabled()) {
 			this._map.dragging._draggable._onUp(e);
 		}
+		else if (this._map._docLayer) {
+			// If it is not handled by the dragged object, it should be safe to send mouseUp event to the core side.
+			const mousePos = this._map._docLayer._latLngToTwips(this._map.mouseEventToLatLng(e));
+			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+
+			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			if (section) section.onScrollVelocity({ vx: 0, vy: 0 });
+		}
 	})
 });
