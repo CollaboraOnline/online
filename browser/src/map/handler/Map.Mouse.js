@@ -83,7 +83,7 @@ L.Map.Mouse = L.Handler.extend({
 				clearTimeout(this._holdMouseEvent);
 			}
 			var mousePos = docLayer._latLngToTwips(e.latlng);
-			this._mouseEventsQueue.push(L.bind(function() {
+			this._mouseEventsQueue.push(L.bind(function () {
 				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, buttons, modifier);
 			}, docLayer));
 			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
@@ -131,7 +131,7 @@ L.Map.Mouse = L.Handler.extend({
 				this._clickCount = 1;
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				var timeOut = 0;
-				this._mouseEventsQueue.push(L.bind(function() {
+				this._mouseEventsQueue.push(L.bind(function () {
 					var docLayer = this._map._docLayer;
 					this._mouseEventsQueue = [];
 					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, buttons, modifier);
@@ -140,7 +140,7 @@ L.Map.Mouse = L.Handler.extend({
 				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
 			}
 
-			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
+			this._map.fire('scrollvelocity', { vx: 0, vy: 0 });
 		}
 		else if (e.type === 'mousemove' && this._mouseDown) {
 			if (this._mouseOverTimeout)
@@ -165,16 +165,16 @@ L.Map.Mouse = L.Handler.extend({
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, buttons, modifier);
 
-				this._map.fire('handleautoscroll', {pos: e.containerPoint, map: this._map});
+				this._map.fire('handleautoscroll', { pos: e.containerPoint, map: this._map });
 			}
 		}
 		else if (e.type === 'mousemove' && !this._mouseDown) {
 			clearTimeout(this._mouseOverTimeout);
 			mousePos = docLayer._latLngToTwips(e.latlng);
-			this._mouseOverTimeout = setTimeout(L.bind(function() {
+			this._mouseOverTimeout = setTimeout(L.bind(function () {
 				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 0, modifier);
-			  }, this),
-			  100);
+			}, this),
+				100);
 		}
 		else if (e.type === 'dblclick' || e.type === 'trplclick' || e.type === 'qdrplclick') {
 			mousePos = docLayer._latLngToTwips(e.latlng);
