@@ -71,6 +71,8 @@ interface LayerInfo {
 	type?: 'bitmap' | 'placeholder' | 'animated';
 	content: LayerContentType;
 	isField?: boolean;
+	width?: number;
+	height?: number;
 }
 
 interface LayerEntry {
@@ -466,16 +468,31 @@ class LayerDrawing {
 	handleTextFieldMsg(info: LayerInfo, img: any) {
 		const textFieldInfo = info.content as TextFieldInfo;
 		const imageInfo = textFieldInfo.content;
-		if (!this.checkAndAttachImageData(imageInfo, img)) return;
+		var img_ = (window as any).fzstd.decompress(img.rawData);
+		const clampedthing = new Uint8ClampedArray(img_);
+		var imageData = new ImageData(clampedthing, info.width, info.height);
 
-		let textFields = this.slideTextFieldsMap.get(info.slideHash);
-		if (!textFields) {
-			textFields = new Map<string, string>();
-			this.slideTextFieldsMap.set(info.slideHash, textFields);
-		}
-		textFields.set(textFieldInfo.hash, imageInfo.checksum);
+		var canvas = document.createElement('canvas');
+		canvas.width = info.width;
+		canvas.height = info.height;
+		var drawctx = canvas.getContext('2d');
+		drawctx.putImageData(imageData, 0, 0);
 
-		this.cachedTextFields.set(imageInfo.checksum, textFieldInfo);
+		img = new Image();
+		img.onload = () => {
+			if (!this.checkAndAttachImageData(imageInfo, img)) return;
+
+			let textFields = this.slideTextFieldsMap.get(info.slideHash);
+			if (!textFields) {
+				textFields = new Map<string, string>();
+				this.slideTextFieldsMap.set(info.slideHash, textFields);
+			}
+			textFields.set(textFieldInfo.hash, imageInfo.checksum);
+
+			this.cachedTextFields.set(imageInfo.checksum, textFieldInfo);
+		};
+
+		img.src = canvas.toDataURL();
 	}
 
 	private handleBackgroundMsg(info: LayerInfo, img: any) {
@@ -485,16 +502,30 @@ class LayerDrawing {
 		}
 		if (info.type === 'bitmap') {
 			const imageInfo = info.content as ImageInfo;
-			if (!this.checkAndAttachImageData(imageInfo, img)) return;
+			var img_ = (window as any).fzstd.decompress(img.rawData);
+			const clampedthing = new Uint8ClampedArray(img_);
+			var imageData = new ImageData(clampedthing, info.width, info.height);
 
-			const pageHash = slideInfo.background.isCustom
-				? info.slideHash
-				: slideInfo.masterPage;
-			this.backgroundChecksums.set(pageHash, imageInfo.checksum);
-			this.cachedBackgrounds.set(imageInfo.checksum, imageInfo);
+			var canvas = document.createElement('canvas');
+			canvas.width = info.width;
+			canvas.height = info.height;
+			var drawctx = canvas.getContext('2d');
+			drawctx.putImageData(imageData, 0, 0);
 
-			this.clearCanvas();
-			this.drawBitmap(imageInfo);
+			img = new Image();
+			img.onload = () => {
+				if (!this.checkAndAttachImageData(imageInfo, img)) return;
+
+				const pageHash = slideInfo.background.isCustom
+					? info.slideHash
+					: slideInfo.masterPage;
+				this.backgroundChecksums.set(pageHash, imageInfo.checksum);
+				this.cachedBackgrounds.set(imageInfo.checksum, imageInfo);
+
+				this.clearCanvas();
+				this.drawBitmap(imageInfo);
+			};
+			img.src = canvas.toDataURL();
 		}
 	}
 
@@ -503,28 +534,49 @@ class LayerDrawing {
 		if (!slideInfo.masterPageObjectsVisibility) {
 			return;
 		}
+		if (img.rawData.length !== 0) {
+			var img_ = (window as any).fzstd.decompress(img.rawData);
+			const clampedthing = new Uint8ClampedArray(img_);
+			var imageData = new ImageData(clampedthing, info.width, info.height);
 
-		if (info.index === 0 || !this.cachedMasterPages.get(slideInfo.masterPage))
-			this.cachedMasterPages.set(slideInfo.masterPage, new Array<LayerEntry>());
+			var canvas = document.createElement('canvas');
+			canvas.width = info.width;
+			canvas.height = info.height;
+			var drawctx = canvas.getContext('2d');
+			drawctx.putImageData(imageData, 0, 0);
 
-		const layers = this.cachedMasterPages.get(slideInfo.masterPage);
-		if (layers.length !== info.index) {
-			window.app.console.log(
-				'LayerDrawing.handleMasterPageLayerMsg: missed any layers ?',
-			);
+			img = new Image();
+			img.src = canvas.toDataURL();
+		} else {
+			img = new Image();
 		}
-		const layerEntry: LayerEntry = {
-			type: info.type,
-			content: info.content,
-			isField: info.isField,
+
+		img.onload = () => {
+			if (info.index === 0 || !this.cachedMasterPages.get(slideInfo.masterPage))
+				this.cachedMasterPages.set(
+					slideInfo.masterPage,
+					new Array<LayerEntry>(),
+				);
+
+			const layers = this.cachedMasterPages.get(slideInfo.masterPage);
+			if (layers.length !== info.index) {
+				window.app.console.log(
+					'LayerDrawing.handleMasterPageLayerMsg: missed any layers ?',
+				);
+			}
+			const layerEntry: LayerEntry = {
+				type: info.type,
+				content: info.content,
+				isField: info.isField,
+			};
+			if (info.type === 'bitmap') {
+				if (!this.checkAndAttachImageData(layerEntry.content as ImageInfo, img))
+					return;
+			}
+			layers.push(layerEntry);
+
+			this.drawMasterPageLayer(layerEntry, info.slideHash);
 		};
-		if (info.type === 'bitmap') {
-			if (!this.checkAndAttachImageData(layerEntry.content as ImageInfo, img))
-				return;
-		}
-		layers.push(layerEntry);
-
-		this.drawMasterPageLayer(layerEntry, info.slideHash);
 	}
 
 	private handleDrawPageLayerMsg(info: LayerInfo, img: any) {
@@ -541,26 +593,41 @@ class LayerDrawing {
 			type: info.type,
 			content: info.content,
 		};
-		if (info.type === 'bitmap') {
-			if (!this.checkAndAttachImageData(layerEntry.content as ImageInfo, img))
-				return;
-		} else if (info.type === 'animated') {
-			const content = layerEntry.content as AnimatedShapeInfo;
-			if (content.type === 'bitmap') {
-				if (!this.checkAndAttachImageData(content.content as ImageInfo, img))
+		var img_ = (window as any).fzstd.decompress(img.rawData);
+		const clampedthing = new Uint8ClampedArray(img_);
+		var imageData = new ImageData(clampedthing, info.width, info.height);
+
+		var canvas = document.createElement('canvas');
+		canvas.width = info.width;
+		canvas.height = info.height;
+		var drawctx = canvas.getContext('2d');
+		drawctx.putImageData(imageData, 0, 0);
+
+		img = new Image();
+		img.onload = () => {
+			if (info.type === 'bitmap') {
+				if (!this.checkAndAttachImageData(layerEntry.content as ImageInfo, img))
 					return;
-				const animatedElement = this.helper.getAnimatedElement(
-					info.slideHash,
-					content.hash,
-				);
-				if (animatedElement) {
-					animatedElement.updateAnimationInfo(content);
+			} else if (info.type === 'animated') {
+				const content = layerEntry.content as AnimatedShapeInfo;
+				if (content.type === 'bitmap') {
+					if (!this.checkAndAttachImageData(content.content as ImageInfo, img))
+						return;
+					const animatedElement = this.helper.getAnimatedElement(
+						info.slideHash,
+						content.hash,
+					);
+					if (animatedElement) {
+						animatedElement.updateAnimationInfo(content);
+					}
 				}
 			}
-		}
-		layers.push(layerEntry);
+			layers.push(layerEntry);
 
-		this.drawDrawPageLayer(info.slideHash, layerEntry);
+			this.drawDrawPageLayer(info.slideHash, layerEntry);
+		};
+
+		img.src = canvas.toDataURL();
 	}
 
 	private clearCanvas() {
