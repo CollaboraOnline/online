@@ -49,5 +49,14 @@ We use the Developer Certificate of Origin (DCO) as a additional safeguard for t
 
 Use your real name (sorry, no pseudonyms or anonymous contributions). If you set your `user.name` and `user.email` git configs, you can sign your commit automatically with `git commit -s`.
 
+### AI Policy
+
+We consider AI tools that help programming just one more tool that, if used judiciously, can help
+developers learn to code.  Volunteers using such AI tools are permitted to get good ideas, but you
+are responsible for the resulting code: you should be able to explain each hunk of the diff you have
+written based on the generated samples. Submitting patches without understanding their content,
+copying AI generated code verbatim, or not testing the result before submitting would create risk,
+and waste reviewer time and is forbidden.
+
 ## Translations
 Please submit translations via [Weblate](https://hosted.weblate.org/projects/collabora-online).
