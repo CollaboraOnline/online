@@ -113,7 +113,8 @@ L.Map.Feedback = L.Handler.extend({
 			      { wsdhash : window.app.socket.WSDServer.Hash },
 			      { 'lokit_hash' : lokitHash },
 			      { 'wopi_host_id' : wopiHostId },
-			      { 'proxy_prefix_enabled' : proxyPrefixEnabled }];
+			      { 'proxy_prefix_enabled' : proxyPrefixEnabled },
+			      { 'doc_type': this._map.getDocType()}];
 
 		var options = {
 			prefix: 'iframe-dialog',
