@@ -77,7 +77,7 @@ bool ChildSession::NoCapsForKit = false;
 namespace {
 
 /// Formats the uno command information for logging
-std::string formatUnoCommandInfo(const std::string& unoCommand)
+std::string formatUnoCommandInfo(const std::string_view unoCommand)
 {
     // E.g. '2023-09-06 12:19:32', matching systemd format.
     std::string recorded_time = Util::getTimeNow("%Y-%m-%d %T");
@@ -2234,7 +2234,7 @@ bool ChildSession::completeFunction(const StringVector& tokens)
     return true;
 }
 
-bool ChildSession::unoSignatureCommand(const std::string& commandName)
+bool ChildSession::unoSignatureCommand(const std::string_view commandName)
 {
     // See if user private info has a signing key/cert: if so, annotate the UNO command with those
     // parameters before sending.
