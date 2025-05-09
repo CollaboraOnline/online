@@ -1034,6 +1034,7 @@ pot:
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
+		src/control/jsdialog/Widget.TreeView.ts \
 		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.js \
