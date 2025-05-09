@@ -769,7 +769,8 @@ export class HeaderInfo {
 
 		this._docVisStart = startPx;
 		let startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
-		const endIdx = Math.min(this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels'), 1048576 - 1);
+		const maxIndex = this._isColumn ? this._map._docLayer.sheetGeometry.maxVisibleColumnIndex : this._map._docLayer.sheetGeometry.maxVisibleRowIndex;
+		const endIdx = Math.min(this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels'), 1048576 - 1, maxIndex);
 		this._elements = [];
 
 		this._hasSplits = false;
