@@ -358,7 +358,7 @@ private:
     std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
                                         const std::string& renderOpts);
 
-    bool forwardToChild(const std::string& prefix, const std::vector<char>& payload);
+    bool forwardToChild(const std::string_view prefix, const std::vector<char>& payload);
 
     static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName,
                                         const std::string& spellOnline, const std::string& theme,
