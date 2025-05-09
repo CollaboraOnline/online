@@ -715,7 +715,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
     const std::shared_ptr<SocketPoll>& socketPoll, const AsyncUploadCallback& asyncUploadCallback)
 {
     auto profileZone =
-        std::make_shared<ProfileZone>(std::string("WopiStorage::uploadLocalFileToStorage"),
+        std::make_shared<ProfileZone>(std::string("WopiStorage::uploadLocalFileToStorageAsync"),
                                       std::map<std::string, std::string>({ { "url", _fileUrl } }));
 
     // TODO: Check if this URI has write permission (canWrite = true)
