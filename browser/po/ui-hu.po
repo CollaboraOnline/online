@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 07:46+0200\n"
-"PO-Revision-Date: 2025-04-29 14:41+0000\n"
+"PO-Revision-Date: 2025-05-09 06:03+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -387,7 +387,6 @@ msgid "Upload Autotext"
 msgstr "Szövegblokkok feltöltése"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
-#, fuzzy
 msgid "Custom dictionaries"
 msgstr "Egyéni szótárak"
 
@@ -416,7 +415,6 @@ msgid "Upload Configuration"
 msgstr "Konfiguráció feltöltése"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
-#, fuzzy
 msgid "Document settings"
 msgstr "Dokumentumbeállítások"
 
@@ -1228,7 +1226,7 @@ msgstr "Elektronikus aláírás hozzáadása"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Képlet eszköztár lenyitása"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1236,7 +1234,7 @@ msgstr "Függvényvarázsló"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Válasszon függvényt"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1251,7 +1249,7 @@ msgstr "Elfogadás"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Képlet eszköztár összecsukása"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2057,15 +2055,15 @@ msgstr "Navigátor"
 
 #: src/control/Control.Notebookbar.js:87
 msgid "Writer"
-msgstr ""
+msgstr "Writer"
 
 #: src/control/Control.Notebookbar.js:90
 msgid "Calc"
-msgstr ""
+msgstr "Calc"
 
 #: src/control/Control.Notebookbar.js:93
 msgid "Impress"
-msgstr ""
+msgstr "Impress"
 
 #: src/control/Control.Notebookbar.js:96
 #: src/control/Control.NotebookbarCalc.js:66
@@ -2441,13 +2439,12 @@ msgid "Picture"
 msgstr "Kép"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "oldal előnézete "
+msgstr "%1. oldal előnézete"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "%1. dia"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3170,9 +3167,8 @@ msgid "Cell borders"
 msgstr "Cellaszegélyek"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "{name} további beállításai"
+msgstr "{1} további beállításai"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3733,6 +3729,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"A böngésző nagyon korlátozott hozzáférést biztosít a vágólaphoz, ezért "
+"kérjük, használja a beillesztés gombokat a képernyőn lévő billentyűzeten."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3927,7 +3925,7 @@ msgstr "Kicsinyítés"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "{1}. dia előnézete"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
