@@ -73,7 +73,7 @@ public:
     }
 
     virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
-                                   Poco::MemoryInputStream& message,
+                                   std::istream& message,
                                    std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
