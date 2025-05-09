@@ -47,7 +47,7 @@ public:
     }
 
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
-                           Poco::MemoryInputStream& message,
+                           std::istream& message,
                            std::shared_ptr<StreamSocket>& socket) override
     {
         return WopiTestServer::handleHttpRequest(request, message, socket);
@@ -55,7 +55,7 @@ public:
 
     std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
-                             Poco::MemoryInputStream& /*message*/,
+                             std::istream& /*message*/,
                              std::shared_ptr<StreamSocket>& /*socket*/) override
     {
         std::string uri = Uri::decode(request.getURI());
@@ -156,7 +156,7 @@ public:
     // enables parallel checkFileInfo connection
     std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
-                             Poco::MemoryInputStream& /*message*/,
+                             std::istream& /*message*/,
                              std::shared_ptr<StreamSocket>& socket) override
     {
         // We want to test that this socket dtor will get called when this
