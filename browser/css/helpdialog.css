@@ -47,7 +47,7 @@
 		/* Smooth transition effect */
 		font-family: Arial, sans-serif;
 		/* Use a common font family */
-		font-size: 16px;
+		font-size: 1rem;
 		/* Font size */
 		color: var(--color-main-text);
 	}
@@ -107,7 +107,7 @@
 		color: -webkit-link;
 		cursor: pointer;
 		text-decoration: underline;
-		font-size: 1em;
+		font-size: 1rem;
 		line-height: 1.5em;
 	}
 

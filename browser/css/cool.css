@@ -28,15 +28,15 @@
 	--border-radius: 4px; /* buttons, widgets */
 	--border-radius-large: 10px; /* dialog */
 
-	--tooltip-font-size: 14px;
-	--default-font-size: 12px;
-	--header-font-size: 16px;
+	--tooltip-font-size: 0.875rem;
+	--default-font-size: 0.75rem;
+	--header-font-size: 1rem;
 	/* tab min font-size */
-	--tb-min-fs: 11px;
+	--tb-min-fs: 0.6875rem;
 	/* tab min font-size without units*/
 	--tb-min-fs-u: 11;
 	/* tab max font-size */
-	--tb-max-fs: 16px;
+	--tb-max-fs: 1rem;
 	/* tab max font-size without units*/
 	--tb-max-fs-u: 16;
 	/* tab font-size preferred value or scaler */
@@ -56,6 +56,7 @@
 
 html {
 	height: 100%;
+	font-size: 1rem;
 }
 
 body {
@@ -100,7 +101,7 @@ body {
 .accessibility-info-box {
 	width: 26px;
 	height: 16px;
-	font-size: 12px;
+	font-size: 0.75rem;
 	line-height: 16px;
 	text-align: center;
 	background-color: yellow;
@@ -1035,7 +1036,7 @@ body {
 .hyperlink-popup .leaflet-popup-content {
 	white-space: nowrap;
 	margin: 6px 8px;
-	font-size: 14px;
+	font-size: 0.875rem;
 	line-height: 1;
 	overflow: hidden;
 }

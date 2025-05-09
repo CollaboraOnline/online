@@ -360,7 +360,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 }
 #NavigatorPanel .ui-treeview-cell-text {
 	/* good to move this into css var*/
-	font-size: 14px;
+	font-size: 0.875rem;
 	white-space: break-spaces;
 }
 
@@ -491,7 +491,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	flex: 1;
 	padding: 10px;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 0.875rem;
 	border-bottom: none;
 	color: var(--color-main-text);
 	transition: background-color 0.3s, border-color 0.3s;

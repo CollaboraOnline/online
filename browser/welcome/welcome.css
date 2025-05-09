@@ -138,21 +138,21 @@ body {
 }
 
 .slides h1 {
-	font-size: 22px;
+	font-size: 1.375rem;
 	font-weight: normal;
 	margin-bottom: 4px;
 	color: var(--welcome-text);
 }
 
 .slides h2 {
-	font-size: 16px;
+	font-size: 1rem;
 	font-weight: normal;
 	margin-top: 0;
 	color: var(--welcome-text);
 }
 
 .slides p {
-	font-size: 14px;
+	font-size: 0.875rem;
 	font-weight: normal;
 	color: var(--welcome-text);
 }
@@ -302,7 +302,7 @@ button:hover .arrow.left.close {
 	width: 48px;
 	height: 48px;
 	line-height: 48px;
-	font-size: 36px;
+	font-size: 2.25rem;
 	position: absolute;
 	content: '\00D7';
 	font-weight: normal;
@@ -351,7 +351,7 @@ button:hover .arrow.left.close {
 		height: 44px;
 		border-radius: 3px;
 		margin: 8px;
-		font-size: 1em;
+		font-size: 1rem;
 	}
 
 	a[id^='slide-'] {
@@ -404,7 +404,7 @@ button:hover .arrow.left.close {
 		height: 44px;
 		border-radius: 3px;
 		margin: 8px;
-		font-size: 1em;
+		font-size: 1rem;
 	}
 
 	a[id^='slide-'] {
