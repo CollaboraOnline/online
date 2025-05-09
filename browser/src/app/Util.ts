@@ -276,13 +276,7 @@ class Util {
 		fn: () => void,
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		context: any,
-		immediate?: boolean,
 	): number {
-		if (immediate) {
-			fn.call(context);
-			return 0;
-		}
-
 		return window.requestAnimationFrame(fn.bind(context));
 	}
 
@@ -292,8 +286,8 @@ class Util {
 		}
 	}
 
-	public static MAX_SAFE_INTEGER = Math.pow(2, 3) - 1;
-	public static MIN_SAFE_INTEGER = Util.MAX_SAFE_INTEGER;
+	public static MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
+	public static MIN_SAFE_INTEGER = -Util.MAX_SAFE_INTEGER;
 }
 
 app.util = Util;
