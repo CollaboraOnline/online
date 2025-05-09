@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 07:46+0200\n"
+"POT-Creation-Date: 2025-05-09 08:04+0200\n"
 "PO-Revision-Date: 2025-04-20 23:32+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -2044,25 +2044,6 @@ msgstr ""
 msgid "Navigator"
 msgstr "Nabigatzailea"
 
-#: src/control/Control.Notebookbar.js:87
-msgid "Writer"
-msgstr ""
-
-#: src/control/Control.Notebookbar.js:90
-msgid "Calc"
-msgstr ""
-
-#: src/control/Control.Notebookbar.js:93
-msgid "Impress"
-msgstr ""
-
-#: src/control/Control.Notebookbar.js:96
-#: src/control/Control.NotebookbarCalc.js:66
-#: src/control/Control.NotebookbarDraw.js:101
-#: src/control/Control.NotebookbarWriter.js:93
-msgid "Draw"
-msgstr "Marraztu"
-
 #: src/control/Control.Notebookbar.js:678
 #: src/control/Control.NotebookbarCalc.js:164
 #: src/control/Control.NotebookbarDraw.js:194
@@ -2140,6 +2121,12 @@ msgstr "Berrikusi"
 #: src/control/Control.NotebookbarWriter.js:74
 msgid "Format"
 msgstr "Formatua"
+
+#: src/control/Control.NotebookbarCalc.js:66
+#: src/control/Control.NotebookbarDraw.js:101
+#: src/control/Control.NotebookbarWriter.js:93
+msgid "Draw"
+msgstr "Marraztu"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108

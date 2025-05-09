@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 07:46+0200\n"
+"POT-Creation-Date: 2025-05-09 08:04+0200\n"
 "PO-Revision-Date: 2025-05-09 06:03+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: hu\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2053,25 +2053,6 @@ msgstr "Szerkezet"
 msgid "Navigator"
 msgstr "Navigátor"
 
-#: src/control/Control.Notebookbar.js:87
-msgid "Writer"
-msgstr "Writer"
-
-#: src/control/Control.Notebookbar.js:90
-msgid "Calc"
-msgstr "Calc"
-
-#: src/control/Control.Notebookbar.js:93
-msgid "Impress"
-msgstr "Impress"
-
-#: src/control/Control.Notebookbar.js:96
-#: src/control/Control.NotebookbarCalc.js:66
-#: src/control/Control.NotebookbarDraw.js:101
-#: src/control/Control.NotebookbarWriter.js:93
-msgid "Draw"
-msgstr "Rajzolás"
-
 #: src/control/Control.Notebookbar.js:678
 #: src/control/Control.NotebookbarCalc.js:164
 #: src/control/Control.NotebookbarDraw.js:194
@@ -2149,6 +2130,12 @@ msgstr "Véleményezés"
 #: src/control/Control.NotebookbarWriter.js:74
 msgid "Format"
 msgstr "Formátum"
+
+#: src/control/Control.NotebookbarCalc.js:66
+#: src/control/Control.NotebookbarDraw.js:101
+#: src/control/Control.NotebookbarWriter.js:93
+msgid "Draw"
+msgstr "Rajzolás"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -4023,6 +4010,15 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Writer"
+#~ msgstr "Writer"
+
+#~ msgid "Calc"
+#~ msgstr "Calc"
+
+#~ msgid "Impress"
+#~ msgstr "Impress"
 
 #~ msgid "Please use the paste buttons on your on-screen keyboard."
 #~ msgstr ""
