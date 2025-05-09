@@ -964,7 +964,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	height: 24px;
+	height: 1.5rem;
 	line-height: normal;
 	font-size: var(--default-font-size);
 	font-family: var(--jquery-ui-font);

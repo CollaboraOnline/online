@@ -376,9 +376,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 /* File Tab */
 
 /* Home tab */
-#fontsizecombobox.notebookbar {
-	width: 4.6rem;
-}
 .notebookbar.ui-combobox * {
 	line-height: 22px;
 }

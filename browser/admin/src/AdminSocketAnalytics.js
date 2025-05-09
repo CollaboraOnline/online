@@ -240,7 +240,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				.attr('x', this._graphWidth - 70)
 				.attr('y', 50)
 				.attr('y2', 50+legendSpacing)
-				.style('font-size', '17px');
+				.style('font-size', '1.1em');
 
 			var legendData = [
 				{

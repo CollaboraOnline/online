@@ -298,14 +298,14 @@
 	text-indent: 1px;
 }
 .leaflet-control-zoom-out {
-	font-size: 20px;
+	font-size: 1.25rem;
 }
 
 .leaflet-touch .leaflet-control-zoom-in {
-	font-size: 22px;
+	font-size: 1.375rem;
 }
 .leaflet-touch .leaflet-control-zoom-out {
-	font-size: 24px;
+	font-size: 1.5rem;
 }
 
 /* View / Edit mode control */
@@ -411,7 +411,7 @@ a.leaflet-control-buttons:hover:first-child {
 /* scale controls */
 
 .leaflet-container .leaflet-control-scale {
-	font-size: 11px;
+	font-size: 0.6875rem;
 }
 .leaflet-left .leaflet-control-scale {
 	margin-left: 5px;
@@ -424,7 +424,7 @@ a.leaflet-control-buttons:hover:first-child {
 	border-top: none;
 	line-height: 1.1;
 	padding: 2px 5px 1px;
-	font-size: 11px;
+	font-size: 0.6875rem;
 	white-space: nowrap;
 	overflow: hidden;
 	-moz-box-sizing: content-box;
@@ -517,7 +517,7 @@ a.leaflet-control-buttons:hover:first-child {
 	text-align: center;
 	width: 32px;
 	height: 32px;
-	font-size: 32px;
+	font-size: 2rem;
 	color: var(--color-main-text);
 	text-decoration: none;
 	background-color: transparent;
@@ -525,7 +525,7 @@ a.leaflet-control-buttons:hover:first-child {
 	border-radius: 50%;
 }
 .leaflet-container a.leaflet-popup-close-button.download-popup {
-	font-size: 20px;
+	font-size: 1.25rem;
 	width: 20px;
 	height: 20px;
 	right: -8px;
@@ -623,7 +623,7 @@ a.leaflet-control-buttons:hover:first-child {
 	margin-top: -10px;
 	pointer-events: none;
 	color: white;
-	font-size: 9px;
+	font-size: 0.5625rem;
 }
 
 div.leaflet-cursor-container:hover > .leaflet-cursor-header {
@@ -770,7 +770,7 @@ input.clipboard {
 
 .leaflet-paste-progress > span > span {
 	padding: 0 4px;
-	font-size: 10px;
+	font-size: 0.625rem;
 	font-weight: bold;
 	color: #fff;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.4);
@@ -805,7 +805,7 @@ input.clipboard {
 
 .leaflet-progress > span > span {
 	padding: 0 8px;
-	font-size: 11px;
+	font-size: 0.6875rem;
 	font-weight: bold;
 	color: #fff;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.4);
@@ -827,7 +827,7 @@ input.clipboard {
 }
 
 .leaflet-progress-label.brand-label {
-	font-size: 14px;
+	font-size: 0.875rem;
 	font-weight: bold;
 }
 
@@ -921,7 +921,7 @@ input.clipboard {
 	border-width: 0px .5px;
 	border-style: solid;
 	border-color: var(--color-border);
-	font-size: 10px;
+	font-size: 0.625rem;
 	text-align: center;
 	color: var(--color-text-lighter);
 	line-height: 7px;
