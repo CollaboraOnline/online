@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 07:46+0200\n"
-"PO-Revision-Date: 2025-04-29 14:41+0000\n"
+"PO-Revision-Date: 2025-05-09 06:03+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
@@ -389,7 +389,6 @@ msgid "Upload Autotext"
 msgstr "Prześlij autotekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
-#, fuzzy
 msgid "Custom dictionaries"
 msgstr "Słowniki niestandardowe"
 
@@ -418,7 +417,6 @@ msgid "Upload Configuration"
 msgstr "Prześlij konfigurację"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
-#, fuzzy
 msgid "Document settings"
 msgstr "Ustawienia dokumentu"
 
@@ -1228,7 +1226,7 @@ msgstr "Wstaw podpis elektroniczny"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Rozwiń pasek formuł"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1236,7 +1234,7 @@ msgstr "Kreator funkcji"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Wybierz funkcję"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1251,7 +1249,7 @@ msgstr "Akceptuj"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Zwiń pasek formuł"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2054,15 +2052,15 @@ msgstr "Nawigator"
 
 #: src/control/Control.Notebookbar.js:87
 msgid "Writer"
-msgstr ""
+msgstr "Writer"
 
 #: src/control/Control.Notebookbar.js:90
 msgid "Calc"
-msgstr ""
+msgstr "Calc"
 
 #: src/control/Control.Notebookbar.js:93
 msgid "Impress"
-msgstr ""
+msgstr "Impress"
 
 #: src/control/Control.Notebookbar.js:96
 #: src/control/Control.NotebookbarCalc.js:66
@@ -2438,13 +2436,12 @@ msgid "Picture"
 msgstr "Obraz"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "Podgląd strony "
+msgstr "podgląd strony %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Slajd %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
