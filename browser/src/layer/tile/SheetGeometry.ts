@@ -70,6 +70,8 @@ export class SheetGeometry {
 	private _columns: SheetDimension;
 	private _rows: SheetDimension;
 	private _unoCommand: string;
+	public maxVisibleColumnIndex: number;
+	public maxVisibleRowIndex: number;
 
 	constructor(sheetGeomJSON: SheetGeometryCoreData, tileWidthTwips: number, tileHeightTwips: number,
 		tileSizePixels: number, part: number) {
@@ -97,22 +99,49 @@ export class SheetGeometry {
 	}
 
 	private checkMaxIndex(sheetGeomJSON: SheetGeometryCoreData, column: boolean): number {
+		/*
+			About "hidden" variable format:
+			* This information is sent from the core side.
+			* Represents the hidden rows / columns.
+			* Works with "true - false - true - false" pattern.
+				* Like: 5 8 10 20... -> Means that visible up  to 5 (including), hidden up to 8 (including), visible up to 10 (including), hidden up to 20 (including)...
+			* But now, above format assumes the first row / column is visible.
+			* To determine if the data starts with true or false, the first value in data is formatted differently.
+				* If first is visible: 0:0 5 8 10 20... -> Means that visible up to 1 (index 0), hidden up to 5 (including 5), visible up to 8 (including), hidden up to 10 (including)...
+				* If first is hidden: 1:0 5 8 10 20... -> Means that hidden up to 0, visible up to 5, hidden up to 8, visible up to 10...
+		*/
+
 		// We will check one special case here: Only a few rows/columns are visible on top, others are hidden all the way to the bottom/right.
 		const hiddenInfo = column ? sheetGeomJSON.columns.hidden.trim() : sheetGeomJSON.rows.hidden.trim();
 
-		// Check if our special case may exist.
-		if (hiddenInfo.split(' ').length === 2) {
-			const parts = hiddenInfo.split(' ');
-			if (parseInt(parts[1]) === 1048575 || parseInt(parts[1]) === 16383) {
-				return parseInt(parts[0].split(':')[1]);
-			}
+		const isFirstHidden = hiddenInfo.indexOf('1') === 0;
+		const splitted = hiddenInfo.split(' ');
+		const isLastHidden = (splitted.length % 2 === 0 && !isFirstHidden) || (splitted.length % 2 === 1 && isFirstHidden);
+
+		if (splitted.length === 1) {
+			if (isFirstHidden) return 0; // All hidden.
+			else return parseInt(splitted[0].split(':')[1]); // All visible.
+		}
+		else if (!isLastHidden) { // Last rows / columns are visible.
+			return parseInt(splitted[splitted.length - 1]);
 		}
 
-		return parseInt(column ? sheetGeomJSON.maxtiledcolumn : sheetGeomJSON.maxtiledrow);
+		/*
+			Last rows / columns are hidden (below else if case):
+				* We need the index from the item that comes right before the last one. Becase we want last visible index.
+				* There are only 2 items, so we need the first item (index 0).
+				* First item is written in a different format (0:1->hiddenOrNot:LastIndex).
+				* We need to split the first item to get the last index (second item is hidden, we ignore that).
+		*/
+		else if (splitted.length === 2) {
+			return parseInt(splitted[0].split(':')[1]);
+		}
+		else { // Last rows / columns are hidden and there are more than 2 items.
+			return parseInt(splitted[splitted.length - 2]);
+		}
 	}
 
 	public update(sheetGeomJSON: SheetGeometryCoreData, checkCompleteness: boolean, part: number): boolean {
-
 		if (!this._testValidity(sheetGeomJSON, checkCompleteness)) {
 			return false;
 		}
@@ -123,6 +152,11 @@ export class SheetGeometry {
 				console.error(this._unoCommand + ': columns update failed.');
 				updateOK = false;
 			}
+
+			if (sheetGeomJSON.columns.hidden)
+				this.maxVisibleColumnIndex = this.checkMaxIndex(sheetGeomJSON, true);
+			else
+				this.maxVisibleColumnIndex = parseInt(sheetGeomJSON.maxtiledcolumn);
 		}
 
 		if (sheetGeomJSON.rows) {
@@ -130,6 +164,11 @@ export class SheetGeometry {
 				console.error(this._unoCommand + ': rows update failed.');
 				updateOK = false;
 			}
+
+			if (sheetGeomJSON.rows.hidden)
+				this.maxVisibleRowIndex = this.checkMaxIndex(sheetGeomJSON, false);
+			else
+				this.maxVisibleRowIndex = parseInt(sheetGeomJSON.maxtiledrow);
 		}
 
 		if (updateOK) {
@@ -139,21 +178,8 @@ export class SheetGeometry {
 			}
 		}
 
-		/*
-			There is a corner case here. If user hides all the rows/columns other than they use, all the document becomes visible.
-			For example: Where user shows only 3 rows, max index is equal to 1048575.
-			That max index value causes to initiate a very large array for the row headers. That kills the performance.
-		*/
-
-		if (sheetGeomJSON.columns && sheetGeomJSON.columns.hidden) { // If rows/columns .hidden property doesn't exist, don't change the maxIndex.
-			const tempMaxIndex = this.checkMaxIndex(sheetGeomJSON, true);
-			this._columns.setMaxIndex(tempMaxIndex);
-		}
-
-		if (sheetGeomJSON.rows && sheetGeomJSON.rows.hidden) {
-			const tempMaxIndex = this.checkMaxIndex(sheetGeomJSON, false);
-			this._rows.setMaxIndex(tempMaxIndex);
-		}
+		this._columns.setMaxIndex(+sheetGeomJSON.maxtiledcolumn);
+		this._rows.setMaxIndex(+sheetGeomJSON.maxtiledrow);
 
 		return updateOK;
 	}
