@@ -250,8 +250,6 @@ namespace FileUtil
         bool bad() const { return !good(); }
         const struct ::stat& sb() const { return _sb; }
 
-        const std::string& path() const { return _path; }
-
         bool isDirectory() const { return S_ISDIR(_sb.st_mode); }
         bool isFile() const { return S_ISREG(_sb.st_mode); }
         bool isLink() const { return S_ISLNK(_sb.st_mode); }
