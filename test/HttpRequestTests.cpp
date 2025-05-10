@@ -542,7 +542,13 @@ void HttpRequestTests::test500GetStatuses()
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
         std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponseExt;
         if (statusCode > 100)
-            pocoResponseExt = helpers::pocoGet(false, "httpbin.org", 80, url);
+        {
+#if ENABLE_SSL
+            pocoResponseExt = helpers::pocoGet(/*secure=*/true, "httpbin.org", 443, url);
+#else
+            pocoResponseExt = helpers::pocoGet(/*secure=*/false, "httpbin.org", 80, url);
+#endif // ENABLE_SSL
+        }
 #endif
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -607,7 +613,12 @@ void HttpRequestTests::testSimplePost_External()
 
     httpRequest.setBodyFile(path);
 
+#if ENABLE_SSL
     auto httpSession = http::Session::createHttpSsl("httpbin.org");
+#else
+    auto httpSession = http::Session::createHttp("httpbin.org");
+#endif // ENABLE_SSL
+
     httpSession->setTimeout(DefTimeoutSeconds);
 
     std::condition_variable cv;
