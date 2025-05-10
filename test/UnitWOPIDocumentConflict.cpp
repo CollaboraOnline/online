@@ -159,7 +159,10 @@ public:
         {
             // First attempt, timeout.
             LOG_TST("PutFile: sleeping");
-            sleep(ConnectionTimeoutSeconds + 1);
+            sleep(ConnectionTimeoutSeconds); // Connection timeout.
+            usleep(300'000); // Go over, to be certain we timed-out the upload.
+            // Don't sleep for 2 x ConnectionTimeoutSeconds, as the
+            // CheckFileInfo request may timeout, since we're stuck here.
         }
 
         // Success.
