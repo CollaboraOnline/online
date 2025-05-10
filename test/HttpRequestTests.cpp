@@ -65,6 +65,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimplePost_External);
 #endif
     CPPUNIT_TEST(testTimeout);
+    CPPUNIT_TEST(testInvalidPoll);
     CPPUNIT_TEST(testOnFinished_Complete);
     CPPUNIT_TEST(testOnFinished_Timeout);
 
@@ -81,6 +82,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testChunkedGetSync_External();
     void testSimplePost_External();
     void testTimeout();
+    void testInvalidPoll();
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
 
@@ -671,6 +673,35 @@ void HttpRequestTests::testTimeout()
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
+}
+
+void HttpRequestTests::testInvalidPoll()
+{
+    constexpr std::string_view testname = __func__;
+
+    const char* URL = "/timeout";
+
+    http::Request httpRequest(URL);
+
+    auto httpSession = http::Session::create(_localUri);
+
+    bool calledFinished = false;
+    http::Session::FinishedCallback finishedCallback = [&](const std::shared_ptr<http::Session>&)
+    { calledFinished = true; };
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+
+    bool calledFailed = false;
+    http::Session::ConnectFailCallback connectFailCallback =
+        [&](const std::shared_ptr<http::Session>&) { calledFailed = true; };
+    httpSession->setConnectFailHandler(connectFailCallback);
+
+    std::weak_ptr<SocketPoll> poll;
+    httpSession->asyncRequest(httpRequest, poll);
+
+    LOK_ASSERT(httpSession->response() == nullptr);
+
+    LOK_ASSERT(calledFailed == true);
+    LOK_ASSERT(calledFinished == false); //FIXME: We should call onFinished.
 }
 
 void HttpRequestTests::testOnFinished_Complete()
