@@ -430,6 +430,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 					this._map.deselectAll();
 					this._map.setPart(partToSelect);
+					this._map._docLayer._preview._previewTiles[this._map._docLayer._selectedPart].focus();
 					if (app.file.fileBasedView)
 						this._map._docLayer._checkSelectedPart();
 				}
