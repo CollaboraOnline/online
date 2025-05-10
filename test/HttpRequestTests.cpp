@@ -13,6 +13,21 @@
 
 #include <HttpTestServer.hpp>
 
+#if ENABLE_SSL
+#include <net/SslSocket.hpp>
+#endif // ENABLE_SSL
+#include <common/FileUtil.hpp>
+#include <common/Util.hpp>
+#include <net/AsyncDNS.hpp>
+#include <net/DelaySocket.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/ServerSocket.hpp>
+#include <net/Socket.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+
+#include <cppunit/extensions/HelperMacros.h>
+
 #include <Poco/URI.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
@@ -23,23 +38,9 @@
 
 #include <chrono>
 #include <condition_variable>
+#include <memory>
 #include <mutex>
 #include <string>
-#include <test/lokassert.hpp>
-
-#if ENABLE_SSL
-#include "Ssl.hpp"
-#include <net/SslSocket.hpp>
-#endif
-#include <net/AsyncDNS.hpp>
-#include <net/ServerSocket.hpp>
-#include <net/DelaySocket.hpp>
-#include <net/HttpRequest.hpp>
-#include <FileUtil.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
-
-#include <cppunit/extensions/HelperMacros.h>
 
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
