@@ -24,7 +24,7 @@
 #include <common/JsonUtil.hpp>
 #include <Util.hpp>
 
-void CheckFileInfo::checkFileInfo(int redirectLimit)
+bool CheckFileInfo::checkFileInfo(int redirectLimit)
 {
     std::string uriAnonym = COOLWSD::anonymizeUrl(_url.toString());
 
@@ -169,7 +169,7 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
     _state = State::Active;
 
     // Run the CheckFileInfo request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, _poll);
+    return _httpSession->asyncRequest(httpRequest, _poll);
 }
 
 void CheckFileInfo::checkFileInfoSync(int redirectionLimit)

@@ -5215,7 +5215,11 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
     assert(!_checkFileInfo && "Unexpected CheckFileInfo in progress");
     _checkFileInfo =
         std::make_shared<CheckFileInfo>(_poll, session->getPublicUri(), std::move(cfiContinuation));
-    _checkFileInfo->checkFileInfo(redirectLimit);
+    if (!_checkFileInfo->checkFileInfo(redirectLimit))
+    {
+        LOG_INF("Resetting async CheckFileInfo as it failed to start");
+        _checkFileInfo.reset();
+    }
 }
 #endif // !MOBILEAPP
 

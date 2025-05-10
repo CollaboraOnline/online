@@ -1326,7 +1326,8 @@ public:
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
-    void asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll)
+    /// Returns false when it fails to start the async request.
+    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll)
     {
         std::shared_ptr<SocketPoll> socketPoll(poll.lock());
         if (!socketPoll)
@@ -1341,7 +1342,7 @@ public:
                 _onConnectFail(shared_from_this());
             }
 
-            return;
+            return false;
         }
 
         LOG_TRC("New asyncRequest on [" << socketPoll->name() << "]: " << req.getVerb() << ' '
@@ -1363,6 +1364,7 @@ public:
 
         LOG_DBG("Starting asyncRequest on [" << socketPoll->name() << "]: " << req.getVerb() << ' '
                                              << host() << ':' << port() << ' ' << req.getUrl());
+        return true;
     }
 
     void asyncShutdown()
