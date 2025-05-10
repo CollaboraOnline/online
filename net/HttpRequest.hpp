@@ -1328,8 +1328,24 @@ public:
     /// use multiple SocketPoll instances on the same Session).
     void asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll)
     {
-        LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
-                                     << req.getUrl());
+        std::shared_ptr<SocketPoll> socketPoll(poll.lock());
+        if (!socketPoll)
+        {
+            LOG_ERR("Cannot start new asyncRequest without a valid SocketPoll: "
+                    << req.getVerb() << ' ' << host() << ':' << port() << ' ' << req.getUrl());
+
+            if (_onConnectFail)
+            {
+                // Call directly since we haven't started the async
+                // connect to pass the validation in callOnConnectFail().
+                _onConnectFail(shared_from_this());
+            }
+
+            return;
+        }
+
+        LOG_TRC("New asyncRequest on [" << socketPoll->name() << "]: " << req.getVerb() << ' '
+                                        << host() << ':' << port() << ' ' << req.getUrl());
 
         newRequest(req);
 
@@ -1342,16 +1358,11 @@ public:
             // Technically, there is a race here. The socket can
             // get disconnected and removed right after isConnected.
             // In that case, we will timeout and no request will be sent.
-            std::shared_ptr<SocketPoll> socketPoll(poll.lock());
-            if (socketPoll)
-                socketPoll->wakeup();
-            else
-                LOG_ERR("Failed to acquire SocketPoll");
+            socketPoll->wakeup();
         }
 
-        LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
-                                          << req.getUrl());
-
+        LOG_DBG("Starting asyncRequest on [" << socketPoll->name() << "]: " << req.getVerb() << ' '
+                                             << host() << ':' << port() << ' ' << req.getUrl());
     }
 
     void asyncShutdown()
