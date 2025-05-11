@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-05 22:04+0000\n"
+"PO-Revision-Date: 2025-05-11 19:33+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.12-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -385,7 +385,6 @@ msgid "Upload Autotext"
 msgstr "Naloži samobesedilo na strežnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
-#, fuzzy
 msgid "Custom dictionaries"
 msgstr "Slovarji po meri"
 
@@ -414,7 +413,6 @@ msgid "Upload Configuration"
 msgstr "Naloži prilagoditev na strežnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
-#, fuzzy
 msgid "Document settings"
 msgstr "Nastavitve dokumenta"
 
@@ -1227,7 +1225,7 @@ msgstr "Vstavi e-podpis"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Razširi vrstico za formule"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1235,7 +1233,7 @@ msgstr "Čarovnik za funkcije"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Izberite funkcijo"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1250,7 +1248,7 @@ msgstr "Sprejmi"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Strni vrstico za formule"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2426,13 +2424,12 @@ msgid "Picture"
 msgstr "Slika"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "Predogled strani "
+msgstr "Predogled strani %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Prosojnica %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3154,9 +3151,8 @@ msgid "Cell borders"
 msgstr "Obrobe celic"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Dodatne možnosti za {name}"
+msgstr "Dodatne možnosti za {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3711,6 +3707,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Vaš brskalnik ima zelo omejen do odložišča, zato raje uporabite gumbe za "
+"lepljenje vaše zaslonske tipkovnice."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3907,7 +3905,7 @@ msgstr "Oddalji"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Predogled prosojnice {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
