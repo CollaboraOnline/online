@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-09 06:03+0000\n"
+"PO-Revision-Date: 2025-05-09 19:55+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1226,7 +1226,7 @@ msgstr "Wstaw podpis elektroniczny"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr "Rozwiń pasek formuł"
+msgstr "Rozwiń pasek formuły"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1249,7 +1249,7 @@ msgstr "Akceptuj"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr "Zwiń pasek formuł"
+msgstr "Zwiń pasek formuły"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2424,7 +2424,7 @@ msgstr "Obraz"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
-msgstr "podgląd strony %1"
+msgstr "Podgląd strony %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
@@ -3152,9 +3152,8 @@ msgid "Cell borders"
 msgstr "Krawędzie komórek"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Więcej opcji {name}"
+msgstr "Więcej opcji dla {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3715,6 +3714,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Ta przeglądarka ma bardzo ograniczony dostęp do schowka, dlatego użyj "
+"przycisków wklejania na klawiaturze ekranowej."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3734,7 +3735,7 @@ msgstr "Anuluj wklejanie specjalne"
 
 #: src/map/Clipboard.js:1410
 msgid "Your browser has very limited access to the clipboard"
-msgstr "Twoja przeglądarka ma bardzo ograniczony dostęp do schowka"
+msgstr "Ta przeglądarka ma bardzo ograniczony dostęp do schowka"
 
 #: src/map/Clipboard.js:1415
 msgid "Please use following combination to see more options:"
@@ -3908,7 +3909,7 @@ msgstr "Oddal"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Podgląd slajdu {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
