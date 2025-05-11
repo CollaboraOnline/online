@@ -119,7 +119,7 @@ function selectFromListbox(item) {
 
 	cy.cGet('.select2-dropdown').should('be.visible');
 	// We use force because the tooltip sometimes hides the items.
-	cy.cGet('body').contains('.select2-results__option', item).click({force: true});
+	cy.cGet('body').contains('.select2-results__option', item).click();
 	cy.cGet('.select2-dropdown').should('not.exist');
 
 	cy.log('<< selectFromListbox - end');
@@ -135,9 +135,9 @@ function selectFromJSDialogListbox(item, isImage) {
 	// We use force because the tooltip sometimes hides the items.
 	if (isImage) {
 		cy.wait(1000); // We need some time to render custom entries
-		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click({force: true});
+		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click();
 	} else
-		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click({force: true});
+		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click();
 
 	cy.cGet('[id$="-dropdown"].modalpopup').should('not.exist');
 
