@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-04-30 10:14+0000\n"
+"PO-Revision-Date: 2025-05-10 20:01+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -387,9 +387,8 @@ msgid "Upload Autotext"
 msgstr "Ngarkoni Autotekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
-#, fuzzy
 msgid "Custom dictionaries"
-msgstr "Fjalorë Vetjakë"
+msgstr "Fjalorë vetjakë"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
@@ -417,9 +416,8 @@ msgid "Upload Configuration"
 msgstr "Ngarkoni Formësim"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
-#, fuzzy
 msgid "Document settings"
-msgstr "Rregullime Dokumenti"
+msgstr "Rregullime dokumenti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
@@ -1244,7 +1242,7 @@ msgstr "Ndihmës Funksionesh"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Përzgjidhni Funksion"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1259,7 +1257,7 @@ msgstr "Pranojeni"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Tkurre Shtyllën e Formulave"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2060,9 +2058,8 @@ msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
-#, fuzzy
 msgid "Navigator"
-msgstr "Lëvizje"
+msgstr ""
 
 #: src/control/Control.Notebookbar.js:678
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2437,9 +2434,8 @@ msgid "Picture"
 msgstr "Foto"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "paraparje e faqes "
+msgstr "paraparje e faqes %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
@@ -3165,9 +3161,8 @@ msgid "Cell borders"
 msgstr "Anë kutize"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Më tepër mundësi për {name}"
+msgstr "Më tepër mundësi për {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3727,6 +3722,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Shfletuesi juaj ka hyrje shumë të kufizuar te e papastra, ndaj ju lutemi më "
+"mirë përdorni butonat për ngjitje te tastiera në ekran."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3925,7 +3922,7 @@ msgstr "Zvogëloje"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Bëni paraparje Diapozitivi {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
