@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-04-29 16:46+0000\n"
+"PO-Revision-Date: 2025-05-09 19:55+0000\n"
 "Last-Translator: Максим Горпиніч <maksimgorpinic4@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
@@ -385,9 +385,8 @@ msgid "Upload Autotext"
 msgstr "Вивантажити автотекст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
-#, fuzzy
 msgid "Custom dictionaries"
-msgstr "Спеціальні словники"
+msgstr "Користувацькі словники"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
@@ -414,7 +413,6 @@ msgid "Upload Configuration"
 msgstr "Вивантажити конфігурацію"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
-#, fuzzy
 msgid "Document settings"
 msgstr "Налаштування документа"
 
@@ -1224,7 +1222,7 @@ msgstr "Вставте електронний підпис"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Розгорнути рядок формул"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1232,7 +1230,7 @@ msgstr "Майстер функцій"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Виберіть функцію"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1247,7 +1245,7 @@ msgstr "Прийняти"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Згорнути панель формул"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2422,13 +2420,12 @@ msgid "Picture"
 msgstr "Картинка"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "попередній перегляд сторінки "
+msgstr "попередній перегляд сторінки %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Слайд %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3149,9 +3146,8 @@ msgid "Cell borders"
 msgstr "Краї комірки"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Більше опцій для {name}"
+msgstr "Більше опцій для {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3704,6 +3700,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Ваш браузер має дуже обмежений доступ до буфера обміну, тому, будь ласка, "
+"використовуйте кнопки вставки на екранній клавіатурі."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3898,7 +3896,7 @@ msgstr "Зменшити"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Попередній перегляд слайда {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
