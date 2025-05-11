@@ -3,10 +3,10 @@
     <string name="app_name_settings">Socruithe</string>
     <string name="app_version_and_hash">Leagan: %1$s\ngit-hash ar líne: %2$s\ncroí-git-hash: %3$s</string>
     <string name="app_vendor">Chuir $VENDOR ar fáil an eisiúint seo.</string>
-    <string name="temp_file_saving_disabled">Tá an comhad seo léite amháin, tá sábháil díchumasaithe.</string>
+    <string name="temp_file_saving_disabled">Is comhad inléite amháin é seo, tá sábháil díchumasaithe.</string>
     <string name="file_exists_warning">Tá comhad leis an ainm seo ann cheana féin, agus déanfar é a fhorscríobh.</string>
     <string name="file_creation_failed">Theip ar chruthú comhad</string>
-    <string name="storage_permission_required">Teastaíonn cead stórála</string>
+    <string name="storage_permission_required">Tá cead stórála ag teastáil</string>
     <string name="failed_to_load_file">Theip ar an comhad le luchtú a chinneadh</string>
     <string name="grid_view">Eangach</string>
     <string name="pref_category_explorer">Socruithe Bainisteora Comhad</string>
