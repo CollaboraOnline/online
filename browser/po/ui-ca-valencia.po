@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-05-09 19:55+0000\n"
+"Last-Translator: Dream X <nodem49316@daupload.com>\n"
 "Language-Team: Valencian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ca@valencia/>\n"
-"Language: \n"
+"Language: ca-valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -60,7 +60,6 @@ msgid "User Name"
 msgstr "Nom d'usuari"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Documents open"
 msgstr "Documents oberts"
 
