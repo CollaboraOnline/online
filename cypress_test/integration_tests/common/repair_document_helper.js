@@ -15,7 +15,8 @@ function openRepairDialog(mobile = false) {
 	if (mobile) {
 		return mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 	}
-	cy.cGet('#menu-editmenu').click().cGet('#menu-repair').click();
+	cy.cGet('#menu-editmenu').click()
+	cy.cGet('#menu-repair').click();
 
 	cy.log('<< openRepairDialog - end');
 }
