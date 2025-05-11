@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-09 19:55+0000\n"
-"Last-Translator: Максим Горпиніч <maksimgorpinic4@gmail.com>\n"
+"PO-Revision-Date: 2025-05-10 20:01+0000\n"
+"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
 "Language: uk\n"
@@ -1218,11 +1218,11 @@ msgstr "Провайдер:"
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr "Вставте електронний підпис"
+msgstr "Вставити електронний підпис"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr "Розгорнути рядок формул"
+msgstr "Розгорнути панель формул"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1230,7 +1230,7 @@ msgstr "Майстер функцій"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr "Виберіть функцію"
+msgstr "Вибрати функцію"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -3700,8 +3700,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
-"Ваш браузер має дуже обмежений доступ до буфера обміну, тому, будь ласка, "
-"використовуйте кнопки вставки на екранній клавіатурі."
+"Ваш браузер має дуже обмежений доступ до буфера обміну використовуйте кнопки "
+"вставки на екранній клавіатурі."
 
 #: src/map/Clipboard.js:1366
 msgid ""
