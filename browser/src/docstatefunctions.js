@@ -275,12 +275,14 @@ app.isExperimentalMode = function () {
 
 app.calc.isPartHidden = function (part) {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+	if (part >= app.map._docLayer._lastStatusJSON.parts.length) return false;
 
 	return app.map._docLayer._lastStatusJSON.parts[part].visible === 0; // ToDo: Move _lastStatusJSON into docstate.js
 };
 
 app.calc.isPartProtected = function (part) {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+	if (part >= app.map._docLayer._lastStatusJSON.parts.length) return false;
 
 	return app.map._docLayer._lastStatusJSON.parts[part].protected === 1;
 };
