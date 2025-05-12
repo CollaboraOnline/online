@@ -571,7 +571,12 @@ class SettingIframe {
 			return;
 		}
 
-		const browserContainer = document.createElement('div');
+		let browserContainer = document.getElementById('browser-section');
+		if (browserContainer) {
+			browserContainer.remove();
+		}
+
+		browserContainer = document.createElement('div');
 		browserContainer.id = 'browser-section';
 		browserContainer.classList.add('section');
 
