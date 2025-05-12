@@ -7,7 +7,7 @@ android {
     namespace 'org.libreoffice.androidapp'
     compileSdkVersion 34
     buildDir = "${rootProject.getBuildDir()}/app"
-    ndkVersion "22.1.7171670"
+    ndkVersion "27.2.12479018"
 
     defaultConfig {
         // applicationId, versionCode and versionName are defined in appSettings.gradle
