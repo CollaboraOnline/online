@@ -685,8 +685,7 @@ class CanvasSectionContainer {
 
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
-			if (windowSection.interactable)
-				windowSection.onCellAddressChanged();
+			windowSection.onCellAddressChanged();
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -694,8 +693,7 @@ class CanvasSectionContainer {
 
 		if (propagate) {
 			for (var i: number = this.sections.length - 1; i > -1; i--) {
-				if (this.sections[i].interactable)
-					this.sections[i].onCellAddressChanged();
+				this.sections[i].onCellAddressChanged();
 			}
 		}
 	}

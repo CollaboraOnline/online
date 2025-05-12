@@ -40,17 +40,24 @@ class FocusCellSection extends CanvasSectionObject {
 		this.sectionProperties.maxRow = 20971124;
 	}
 
+	public onCellAddressChanged(): void {
+		this.size[0] = app.calc.cellCursorRectangle.pWidth;
+		this.size[1] = app.calc.cellCursorRectangle.pHeight;
+		this.setPosition(
+			app.calc.cellCursorRectangle.pX1,
+			app.calc.cellCursorRectangle.pY1,
+		);
+	}
+
 	private static addFocusCellSection() {
 		if (FocusCellSection.instance === null) {
 			FocusCellSection.instance = new FocusCellSection();
 			app.sectionContainer.addSection(FocusCellSection.instance);
 		}
 
-		// Make this always visible.
-		this.instance.size = [10000000, 10000000];
-		this.instance.setPosition(1, 1);
-
 		if (!this.instance.showSection) this.instance.setShowSection(true);
+
+		this.instance.onCellAddressChanged();
 	}
 
 	public static hideFocusCellSection() {
@@ -77,7 +84,7 @@ class FocusCellSection extends CanvasSectionObject {
 		this.context.globalAlpha = 0.3;
 
 		this.context.fillRect(
-			app.calc.cellCursorRectangle.pX1 - this.position[0],
+			0,
 			-this.position[1],
 			app.calc.cellCursorRectangle.pWidth,
 			this.sectionProperties.maxCol,
@@ -85,7 +92,7 @@ class FocusCellSection extends CanvasSectionObject {
 
 		this.context.fillRect(
 			-this.position[0],
-			app.calc.cellCursorRectangle.pY1 - this.position[1],
+			0,
 			this.sectionProperties.maxRow,
 			app.calc.cellCursorRectangle.pHeight,
 		);
@@ -94,7 +101,7 @@ class FocusCellSection extends CanvasSectionObject {
 		this.context.lineWidth = 2 * app.dpiScale;
 
 		this.context.strokeRect(
-			app.calc.cellCursorRectangle.pX1 - this.position[0],
+			0,
 			-this.position[1],
 			app.calc.cellCursorRectangle.pWidth,
 			this.sectionProperties.maxCol,
@@ -102,7 +109,7 @@ class FocusCellSection extends CanvasSectionObject {
 
 		this.context.strokeRect(
 			-this.position[0],
-			app.calc.cellCursorRectangle.pY1 - this.position[1],
+			0,
 			this.sectionProperties.maxRow,
 			app.calc.cellCursorRectangle.pHeight,
 		);
