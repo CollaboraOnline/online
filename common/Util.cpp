@@ -21,6 +21,7 @@
 
 #if !MOBILEAPP
 #include "SigHandlerTrap.hpp"
+#include <dlfcn.h>
 #endif
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
@@ -724,6 +725,24 @@ namespace Util
 #endif // __GLIBC__
 
         return info;
+    }
+
+    void trimMalloc()
+    {
+#if defined(M_TRIM_THRESHOLD)
+        // If platform supports glibc's malloc_trim, then attempt tcmalloc
+        // equivalents if that's in use as an alternative.
+        static auto releaseFreeMemory = [] {
+            auto symbol = reinterpret_cast<void(*)(void)>(dlsym(RTLD_NEXT, "MallocExtension_ReleaseFreeMemory"));
+            LOG_INF("Allocator is: " << (symbol ? "tcmalloc" : "glibc"));
+            return symbol;
+        }();
+
+        if (releaseFreeMemory)
+            releaseFreeMemory();
+        else
+            malloc_trim(0);
+#endif
     }
 
     void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo)
