@@ -3189,14 +3189,21 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_addCellDropDownArrow: function () {
 		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
-			if (!app.sectionContainer.getSectionWithName('DropDownArrow')) {
-				let position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - 16 * app.pixelsToTwips);
+			let position;
+			if (this.sheetGeometry) {
+				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y, this._map.getZoomScale(this._map.getZoom(), this._map.options.defaultZoom));
+				const height = position.max.y - position.min.y;
+				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1 + (height - 16) * app.pixelsToTwips);
+			}
+			else
+				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - 16 * app.pixelsToTwips);
 
+			if (!app.sectionContainer.getSectionWithName('DropDownArrow')) {
 				let dropDownSection = new app.definitions.calcValidityDropDown('DropDownArrow', position);
 				app.sectionContainer.addSection(dropDownSection);
 			}
 			else {
-				app.sectionContainer.getSectionWithName('DropDownArrow').setPosition(app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2 - 16 * app.dpiScale);
+				app.sectionContainer.getSectionWithName('DropDownArrow').setPosition(position.pX, position.pY);
 			}
 		}
 	},
