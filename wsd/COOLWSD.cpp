@@ -11,9 +11,6 @@
 
 #include <config.h>
 #include <config_version.h>
-#ifdef __linux__
-#include <malloc.h>
-#endif
 
 #include "COOLWSD.hpp"
 
@@ -3825,11 +3822,9 @@ int COOLWSD::innerMain()
         mainWait->insertNewSocket(inotifySocket);
     }
 #endif
-#endif
 
-#if defined(M_TRIM_THRESHOLD)
     LOG_DBG("trimming memory post startup");
-    malloc_trim(0);
+    Util::trimMalloc();
     time_t prevTrimTrigger = 0;
 #endif
 
@@ -3881,7 +3876,6 @@ int COOLWSD::innerMain()
             stampFetch = timeNow;
         }
 
-#if defined(M_TRIM_THRESHOLD)
         // if Admin hasn't seen any document activity for over 10 mins them malloc_trim
         constexpr time_t idleTrimCheck(10 * 60);
 
@@ -3892,13 +3886,11 @@ int COOLWSD::innerMain()
             if (adminIdle > idleTrimCheck)
             {
                 LOG_DBG("trimming memory on idle");
-                malloc_trim(0);
+                Util::trimMalloc();
                 // Don't bother repeating until LastActivityTime changes.
                 prevTrimTrigger = lastAdminActivity;
             }
         }
-#endif
-
 #endif
 
 #if ENABLE_DEBUG && !MOBILEAPP
