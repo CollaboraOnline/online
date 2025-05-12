@@ -62,6 +62,7 @@ test/samples/writer-edit.fodt
 test/samples/impress-edit.fodp
 test/samples/draw-edit.odg
 test/samples/calc-edit.ods
+test/samples/writer-large-edit.fodt
 cypress_test/test/data/presets/user/browsersetting.json
 test/fakesockettest
 test/unithttplib
