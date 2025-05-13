@@ -12,7 +12,7 @@
 #pragma once
 
 #include <ctime>
-#include <deque>
+#include <list>
 #include <memory>
 #include <regex>
 #include <set>
@@ -471,11 +471,11 @@ private:
     std::vector<std::string> _expiredDocumentsHistories;
 
     /// The last N total memory Dirty size.
-    std::deque<unsigned> _memStats;
-    std::deque<unsigned> _cpuStats;
-    std::deque<unsigned> _sentStats;
-    std::deque<unsigned> _recvStats;
-    std::deque<size_t> _connStats;
+    std::list<unsigned> _memStats;
+    std::list<unsigned> _cpuStats;
+    std::list<unsigned> _sentStats;
+    std::list<unsigned> _recvStats;
+    std::list<size_t> _connStats;
 
     uint64_t _sentBytesTotal = 0;
     uint64_t _recvBytesTotal = 0;
