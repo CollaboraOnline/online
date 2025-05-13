@@ -78,7 +78,7 @@ JSDialog.panel = function (
 				command: expanderData.command,
 				aria: { label: moreOptionsText },
 				icon: app.LOUtil.getIconNameOfCommand('morebutton'),
-				text: moreOptionsText,
+				tooltip: moreOptionsText,
 			},
 			builder,
 		);
