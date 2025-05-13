@@ -19,15 +19,16 @@
 + (void)startServer;
 + (void)stopServer;
 
-+ (void)handleHULLOWithDocument:(Document *)document;
-+ (void)handleMessageWith:(Document *)document message:(NSString *)message;
-+ (void)saveAsWith:(Document *)document url:(NSString *)url format:(NSString *)format filterOptions:(NSString *)filterOptions;
++ (void)handleHULLOWithDocument:(Document *_Nonnull)document;
++ (void)handleMessageWith:(Document *_Nonnull)document message:(NSString *_Nonnull)message;
++ (void)saveAsWith:(Document *_Nonnull)document url:(NSString *_Nonnull)url format:(NSString *_Nonnull)format filterOptions:(NSString *_Nullable)filterOptions;
++ (NSArray<id<NSPasteboardWriting>> * _Nullable) getClipboardWith:(Document *_Nonnull)document NS_SWIFT_NAME(getClipboard(_:));
 
 + (int)generateNewAppDocId;
 + (int)fakeSocketSocket;
 
-+ (void)LOG_DBG:(NSString *)message NS_SWIFT_NAME(LOG_DBG(_:));
-+ (void)LOG_ERR:(NSString *)message NS_SWIFT_NAME(LOG_ERR(_:));
-+ (void)LOG_TRC:(NSString *)message NS_SWIFT_NAME(LOG_TRC(_:));
++ (void)LOG_DBG:(NSString *_Nonnull)message NS_SWIFT_NAME(LOG_DBG(_:));
++ (void)LOG_ERR:(NSString *_Nonnull)message NS_SWIFT_NAME(LOG_ERR(_:));
++ (void)LOG_TRC:(NSString *_Nonnull)message NS_SWIFT_NAME(LOG_TRC(_:));
 
 @end
