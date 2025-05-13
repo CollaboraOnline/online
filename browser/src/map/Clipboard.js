@@ -449,7 +449,7 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_sendToInternalClipboard: async function (content) {
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
 		} else if (window.ThisIsTheWindowsApp) {
 			await window.postMobileMessage(`CLIPBOARDJS sendToInternal ${await content.text()}`);
@@ -712,9 +712,10 @@ window.L.Clipboard = window.L.Class.extend({
 		}
 
 		if (!window.ThisIsTheiOSApp && // in mobile apps, we want to drop straight to navigatorClipboardRead as execCommand will require user interaction...
-		    !window.ThisIsTheWindowsApp &&
-		    document.execCommand(operation) &&
-		    serial !== this._clipboardSerial) {
+			!window.ThisIsTheMacOSApp &&
+			!window.ThisIsTheWindowsApp &&
+			document.execCommand(operation) &&
+			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
 			this._unoCommandForCopyCutPaste = null;
 			return;
@@ -870,7 +871,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function(params) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheWindowsApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp) {
 			return false;
 		}
 
@@ -891,7 +892,7 @@ window.L.Clipboard = window.L.Class.extend({
 		// Deferring like this is kinda horrible - it certainly looks gross in places - but it's absolutely necessary to avoid errors on the clipboard.write line
 		// I don't like it either :). If you change this make sure to thoroughly test cross-browser and cross-device!
 
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			// This is sent down the fakewebsocket which can race with the
 			// native message - so first step is to wait for the result of
 			// that command so we are sure the clipboard is set before
@@ -981,7 +982,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheWindowsApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp) {
 			return false;
 		}
 
@@ -1035,7 +1036,7 @@ window.L.Clipboard = window.L.Class.extend({
 		}
 		let clipboardContents;
 		try {
-			if (window.ThisIsTheiOSApp)
+			if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp)
 				clipboardContents = await this._iOSReadClipboard();
 			else if (window.ThisIsTheWindowsApp)
 				clipboardContents = await this._WindowsReadClipboard();
