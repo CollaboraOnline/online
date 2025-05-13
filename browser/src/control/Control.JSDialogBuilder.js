@@ -2142,14 +2142,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			controls['button'] = button;
-			if (builder.options.noLabelsForUnoButtons !== true) {
-				var span = L.DomUtil.create('span', 'ui-content unolabel', button);
+			var span;
+			if (builder.options.noLabelsForUnoButtons !== true && data.text) {
+				span = L.DomUtil.create('span', 'ui-content unolabel', button);
 				span.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(span, button.accessKey);
 				controls['label'] = span;
 				$(div).addClass('has-label');
-			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(div).addClass('no-label');
+			} else if (builder.options.useInLineLabelsForUnoButtons === true && data.text) {
+				$(div).addClass('inline');
+				span = L.DomUtil.create('span', 'ui-content unolabel', div);
+				span.textContent = builder._cleanText(data.text);
+
+				controls['label'] = span;
 			} else {
 				$(div).addClass('no-label');
 			}
@@ -2169,13 +2174,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			const tooltip = builder._cleanText(data.tooltip) || builder._cleanText(data.text);
 			div.setAttribute('data-cooltip', tooltip);
 
-			if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(div).addClass('inline');
-				span = L.DomUtil.create('span', 'ui-content unolabel', div);
-				span.textContent = builder._cleanText(data.text);
-
-				controls['label'] = span;
-			}
 			var isDisabled = data.enabled === false;
 			if (data.command) {
 				var updateFunction = function() {
