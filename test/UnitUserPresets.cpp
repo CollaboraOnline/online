@@ -131,7 +131,7 @@ public:
     std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
                              std::istream& /*message*/,
-                             std::shared_ptr<StreamSocket>& /*socket*/) override
+                             const std::shared_ptr<StreamSocket>& /*socket*/) override
     {
         std::string uri = Uri::decode(request.getURI());
         LOG_TST("parallelizeCheckInfo requested: " << uri);
