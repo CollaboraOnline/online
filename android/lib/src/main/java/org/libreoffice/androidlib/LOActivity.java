@@ -72,6 +72,7 @@ import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -483,7 +484,7 @@ public class LOActivity extends AppCompatActivity {
                 OutputStream outputStream = null;
                 // CSV files need a .csv suffix to be opened in Calc.
                 String suffix = null;
-                String intentType = mActivity.getIntent().getType();
+                @Nullable String intentType = mActivity.getIntent().getType();
                 if (mActivity.getIntent().getType() == null) {
                     intentType = getMimeType();
                 }
@@ -662,11 +663,11 @@ public class LOActivity extends AppCompatActivity {
         boolean requestCopy = false;
         if (requestCode == REQUEST_COPY) {
             requestCopy = true;
-            if (getMimeType().equals("text/plain")) {
+            if (Objects.equals(getMimeType(), "text/plain")) {
                 requestCode = REQUEST_SAVEAS_ODT;
-            } else if (getMimeType().equals("text/comma-separated-values")) {
+            } else if (Objects.equals(getMimeType(), "text/comma-separated-values")) {
                 requestCode = REQUEST_SAVEAS_ODS;
-            } else if (getMimeType().equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
+            } else if (Objects.equals(getMimeType(), "application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
                 requestCode = REQUEST_SAVEAS_ODS;
             } else {
                 String filename = getFileName(true);
@@ -1162,7 +1163,7 @@ public class LOActivity extends AppCompatActivity {
         return true;
     }
 
-    public static void createNewFileInputDialog(Activity activity, final String defaultFileName, final String mimeType, final int requestCode) {
+    public static void createNewFileInputDialog(Activity activity, final String defaultFileName, final @Nullable String mimeType, final int requestCode) {
         Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
         // The mime type and category must be set
@@ -1189,9 +1190,13 @@ public class LOActivity extends AppCompatActivity {
         return builder;
     }
 
-    private String getMimeType() {
+    private @Nullable String getMimeType() {
         ContentResolver cR = getContentResolver();
-        return cR.getType(getIntent().getData());
+
+        Uri data = getIntent().getData();
+        if (data == null) return null;
+
+        return cR.getType(data);
     }
 
     private String getFileName(boolean withExtension) {
@@ -1227,21 +1232,20 @@ public class LOActivity extends AppCompatActivity {
 
     // readonly formats here
     private boolean canDocumentBeExported() {
-        if (getMimeType().equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
+        if (Objects.equals(getMimeType(), "application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
             return false;
         }
         return true;
     }
 
-    private String getOdfExtensionForDocType(String mimeType)
+    private String getOdfExtensionForDocType(@Nullable String mimeType)
     {
         String extTemp = null;
-        if (mimeType.equals("text/plain")) {
+        if (Objects.equals(mimeType, "text/plain")) {
             extTemp = "odt";
-        }
-        else if (mimeType.equals("text/comma-separated-values")) {
+        } else if (Objects.equals(mimeType, "text/comma-separated-values")) {
             extTemp = "ods";
-        } else if (mimeType.equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
+        } else if (Objects.equals(mimeType, "application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
             extTemp = "ods";
         }
         return extTemp;
