@@ -359,6 +359,9 @@
       <geolocation_setup>
         <enable desc="Enable geolocation_setup when using indirection server with geolocation configuration" type="bool" default="false">false</enable>
         <timezone desc="IANA timezone of server. For example: Europe/Berlin" type="string"></timezone>
+        <allowed_websocket_origins desc="Origin header to get accepted during websocket upgrade">
+          <!-- <origin></origin> -->
+        </allowed_websocket_origins>
       </geolocation_setup>
       <server_name desc="server name to show in cluster overview admin panel" type="string" default=""></server_name>
     </indirection_endpoint>

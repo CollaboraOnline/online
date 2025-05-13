@@ -113,6 +113,9 @@ void StorageBase::initialize()
 
     HostUtil::parseAliases(app.config());
 
+    if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
+        HostUtil::parseAllowedWSOrigins(app.config());
+
 #else // MOBILEAPP
     FilesystemEnabled = true;
 #endif // MOBILEAPP
