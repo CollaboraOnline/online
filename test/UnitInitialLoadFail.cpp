@@ -48,7 +48,7 @@ public:
 
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
                            std::istream& message,
-                           std::shared_ptr<StreamSocket>& socket) override
+                           const std::shared_ptr<StreamSocket>& socket) override
     {
         return WopiTestServer::handleHttpRequest(request, message, socket);
     }
@@ -56,7 +56,7 @@ public:
     std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
                              std::istream& /*message*/,
-                             std::shared_ptr<StreamSocket>& /*socket*/) override
+                             const std::shared_ptr<StreamSocket>& /*socket*/) override
     {
         std::string uri = Uri::decode(request.getURI());
         LOG_TST("parallelizeCheckInfo requested: " << uri);
@@ -69,7 +69,7 @@ public:
     }
 
     bool handleGetFileRequest(const Poco::Net::HTTPRequest& request,
-                              std::shared_ptr<StreamSocket>& socket) override
+                              const std::shared_ptr<StreamSocket>& socket) override
     {
         if (_getFileCount++ == 0)
         {
@@ -157,7 +157,7 @@ public:
     std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
                              std::istream& /*message*/,
-                             std::shared_ptr<StreamSocket>& socket) override
+                             const std::shared_ptr<StreamSocket>& socket) override
     {
         // We want to test that this socket dtor will get called when this
         // session is Unauthorized. Without the fix the test times out and
@@ -175,7 +175,7 @@ public:
     }
 
     bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/,
-                                            std::shared_ptr<StreamSocket>& socket) override
+                                    const std::shared_ptr<StreamSocket>& socket) override
     {
         std::unique_ptr<http::Response> httpResponse =
             std::make_unique<http::Response>(http::StatusCode::Unauthorized);
