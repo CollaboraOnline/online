@@ -11,7 +11,7 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDelegate {
+class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavigationDelegate {
 
     /// Access to the NSDocument (document loading & saving infrastructure).
     var document: Document!
@@ -24,9 +24,10 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
 
         // Setup jsHandler as the entry point co call back from JavaScript
         let contentController = WKUserContentController()
-        contentController.add(self, name: "debug")
-        contentController.add(self, name: "lok")
-        contentController.add(self, name: "error")
+        contentController.addScriptMessageHandler(self, contentWorld: .page, name: "debug")
+        contentController.addScriptMessageHandler(self, contentWorld: .page, name: "lok")
+        contentController.addScriptMessageHandler(self, contentWorld: .page, name: "error")
+        contentController.addScriptMessageHandler(self, contentWorld: .page, name: "clipboard")
 
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
@@ -61,32 +62,57 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
     }
 
     /**
-     * Receive message from JavaScript
+     * Receive message from JavaScript, with the possibility to reply
      */
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "error" {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) async -> (Any?, String?) {
+        switch message.name {
+
+        case "error":
             if let body = message.body as? String {
                 COWrapper.LOG_ERR("Error from WebView: \(body)")
             }
-        }
-        else if message.name == "debug" {
+
+        case "debug":
             if let body = message.body as? String {
                 print("==> \(body)")
             }
-        }
-        else if message.name == "lok" {
+
+        case "clipboard":
+            if let body = message.body as? String {
+                switch body {
+
+                /*case "read":
+                    setClipboardContent(from: .general)*/
+
+                case "write":
+                    guard let content = COWrapper.getClipboard(document) else {
+                        COWrapper.LOG_ERR("Failed to get clipboard contents")
+                        return (nil, nil)
+                    }
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.writeObjects(content)
+
+                /*case let s where s.hasPrefix("sendToInternal "):
+                    sendToInternal(String(s.dropFirst("sendToInternal ".count)))*/
+
+                default:
+                    COWrapper.LOG_ERR("Invalid clipboard action \(body)")
+                }
+            }
+
+        case "lok":
             if let body = message.body as? String {
                 COWrapper.LOG_DBG("To Online: \(message.body)")
 
                 if body == "HULLO" {
                     // Now we know that the JS has started completely
                     COWrapper.handleHULLO(with: document)
-                    return
+                    return (nil, nil)
                 }
                 else if body == "BYE" {
                     COWrapper.LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.")
                     //self.bye()
-                    return
+                    return (nil, nil)
                 }
                 else if body.hasPrefix("COMMANDSTATECHANGED ") {
                     if let brace = body.firstIndex(of: "{") {
@@ -105,7 +131,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                 }
                 else if body.hasPrefix("MODIFIED ") {
                     document?.isModified = body.hasSuffix("true")
-                    return
+                    return (nil, nil)
                 }
                 else if body == "SLIDESHOW" {
                     COWrapper.LOG_ERR("TODO: Implement slideshow")
@@ -152,7 +178,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     }
                      */
 
-                    return
+                    return (nil, nil)
                 }
                 else if body == "EXITSLIDESHOW" {
                     COWrapper.LOG_ERR("TODO: Implement EXITSLIDESHOW")
@@ -168,11 +194,11 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     self.slideshowWebView = nil
                     self.webView.isHidden = false
                     */
-                    return
+                    return (nil, nil)
                 }
                 else if body == "PRINT" {
                     document.printDocument(self)
-                    return
+                    return (nil, nil)
                 }
                 else if body == "FOCUSIFHWKBD" {
                     COWrapper.LOG_ERR("TODO: Implement FOCUSIFHWKBD")
@@ -195,17 +221,17 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                         }
                     }
                     */
-                    return
+                    return (nil, nil)
                 }
                 else if body.hasPrefix("HYPERLINK") {
                     let messageBodyItems = body.components(separatedBy: " ")
                     if messageBodyItems.count >= 2 {
                         if let url = URL(string: messageBodyItems[1]) {
                             NSWorkspace.shared.open(url)
-                            return
+                            return (nil, nil)
                         }
                     }
-                    return
+                    return (nil, nil)
                 }
                 else if body == "FONTPICKER" {
                     COWrapper.LOG_ERR("TODO: Implement FONTPICKER")
@@ -216,7 +242,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     fontManager.action = #selector(changeFont(_:))
                     fontManager.orderFrontFontPanel(self)
                     */
-                    return
+                    return (nil, nil)
                 }
                 else if body.hasPrefix("downloadas ") {
                     COWrapper.LOG_ERR("TODO: Implement downloadas")
@@ -284,15 +310,15 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                         return
                     }
                     */
-                    return
+                    return (nil, nil)
                 }
                 else {
                     // Just send the message
                     COWrapper.handleMessage(with: document, message: body)
                 }
             }
-        }
-        else {
+
+        default:
             if let body = message.body as? String {
                 COWrapper.LOG_ERR("Unrecognized kind of message received from WebView: \(message.name):\(body)")
             }
@@ -300,5 +326,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                 COWrapper.LOG_ERR("Unrecognized kind of message received from WebView: \(message.name)")
             }
         }
+
+        return (nil, nil)
     }
 }

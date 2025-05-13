@@ -10,7 +10,11 @@
 
 #include <config.h>
 
-#import "WebKit/WebKit.h"
+#define LIBO_INTERNAL_ONLY
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
+#import <WebKit/WebKit.h>
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 #import "coda-Swift.h"
 #import "COWrapper.h"
@@ -160,6 +164,69 @@ static int closeNotificationPipeForForwardingThread[2];
 
 + (void)saveAsWith:(Document *)document url:(NSString *)url format:(NSString *)format filterOptions:(NSString *)filterOptions {
     DocumentData::get(document.appDocId).loKitDocument->saveAs([url UTF8String], [format UTF8String], [filterOptions UTF8String]);
+}
+
+/**
+ * Call the LOKit getClipboard and return it so that it can be used in Swift.
+ */
++ (NSArray<id<NSPasteboardWriting>> * _Nullable) getClipboardInternalWith:(Document *_Nonnull)document mimeTypes:(const char**)mimeTypes {
+    size_t outCount = 0;
+    char  **outMimeTypes = nullptr;
+    size_t *outSizes = nullptr;
+    char  **outStreams = nullptr;
+
+    if (DocumentData::get(document.appDocId).loKitDocument->getClipboard(mimeTypes,
+                                                                         &outCount, &outMimeTypes,
+                                                                         &outSizes, &outStreams))
+    {
+        // return early
+        if (outCount == 0)
+            return nil;
+
+        NSMutableArray<id<NSPasteboardWriting>> *result = [NSMutableArray array];
+
+        for (size_t i = 0; i < outCount; ++i) {
+            NSString * identifier = [NSString stringWithUTF8String:outMimeTypes[i]];
+
+            // For interop with other apps, if this mime-type is known we can export it
+            UTType * uti = [UTType typeWithMIMEType:identifier];
+            if (uti != nil && !uti.dynamic) {
+                if ([uti conformsToType:UTTypePlainText] && outStreams[i] != nullptr) {
+                    [result addObject:[NSString stringWithUTF8String:outStreams[i]]];
+                }
+                else if ([uti conformsToType:UTTypeImage]) {
+                    [result addObject:[[NSImage alloc] initWithData:[NSData dataWithBytes:outStreams[i] length:outSizes[i]]]];
+                }
+            }
+
+            // Also preserve the data we need, we'll always also export the raw, unaltered bytes
+            NSPasteboardItem * item = [[NSPasteboardItem alloc] init];
+            [item setData:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forType:identifier];
+        }
+
+        return result;
+    }
+    else
+        LOG_DBG("failed to fetch mime-types");
+
+    return nil;
+}
+
+/**
+ * Get the clipboard content. Defaults to fetching text and/or html only, when a generic query fails.
+ */
++ (NSArray<id<NSPasteboardWriting>> * _Nullable) getClipboardWith:(Document *_Nonnull)document {
+    NSArray<id<NSPasteboardWriting>> * result = [COWrapper getClipboardInternalWith:document mimeTypes:nullptr];
+    if (result != nil)
+        return result;
+
+    const char* textMimeTypes[] = {
+        "text/plain;charset=utf-8",
+        "text/html",
+        nullptr
+    };
+
+    return [COWrapper getClipboardInternalWith:document mimeTypes:textMimeTypes];
 }
 
 /**
