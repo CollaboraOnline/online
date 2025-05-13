@@ -341,6 +341,25 @@ namespace FileUtil
         const int _stat_errno;
     };
 
+    /// File owning helper that removes it on destruction.
+    struct OwnedFile final
+    {
+        std::string _file;
+
+        OwnedFile(std::string file)
+            : _file(std::move(file))
+        {
+        }
+
+        OwnedFile(const OwnedFile&) = delete;
+        OwnedFile& operator=(const OwnedFile&) = delete;
+
+        ~OwnedFile()
+        {
+            FileUtil::removeFile(_file);
+        }
+    };
+
     void lslr(const std::string& dir);
 
     std::vector<std::string> getDirEntries(std::string dirPath);
