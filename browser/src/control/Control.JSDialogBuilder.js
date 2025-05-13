@@ -1320,29 +1320,29 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkboxLabel.htmlFor = data.id + '-input';
 
 		var toggleFunction = function() {
+			if (div.hasAttribute('disabled'))
+				return;
+
 			builder.callback('checkbox', 'change', div, this.checked, builder);
 		};
 
-		$(checkboxLabel).click(function () {
-			if (!div.hasAttribute('disabled')) {
-				var status = $(checkbox).is(':checked');
-				$(checkbox).prop('checked', !status);
-				toggleFunction.bind({checked: !status})();
-			}
-		});
-
 		const isDisabled = data.enabled === false;
 		if (isDisabled) {
+			div.setAttribute('disabled', 'true');
 			div.disabled = true;
+			checkbox.setAttribute('disabled', 'true');
 			checkbox.disabled = true;
 			checkbox.setAttribute('aria-disabled', true);
 		}
 
-		JSDialog.SynchronizeDisabledState(div, [checkbox]);
+		JSDialog.SynchronizeDisabledState(div, [checkbox, checkboxLabel]);
 
 		checkbox.addEventListener('change', toggleFunction);
 
 		var updateFunction = function() {
+			if (div.hasAttribute('disabled'))
+				return;
+
 			var state = data.checked;
 
 			if (state && state === 'true' || state === true || state === 1 || state === '1')
