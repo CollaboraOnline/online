@@ -89,10 +89,10 @@
 #include <png.h>
 #undef PNG_VERSION_INFO_ONLY
 
-
 #include "Log.hpp"
 #include "Protocol.hpp"
 #include "TraceEvent.hpp"
+#include "common/Common.hpp"
 
 namespace Util
 {
@@ -487,6 +487,74 @@ namespace Util
                 return i + offset;
         }
         return std::string::npos;
+    }
+
+    // For copyToMatch/seekToMatch
+    bool processToMatch(std::istream& in, std::ostream* out, std::string_view search)
+    {
+        const size_t searchLen = search.length();
+        assert(searchLen && "need to search for something");
+
+        const std::streamsize overlap = searchLen - 1;
+        std::streamsize carrySize = 0;
+
+        std::vector<char> scratch(READ_BUFFER_SIZE + overlap);
+        char* buffer = scratch.data();
+
+        // Read READ_BUFFER_SIZE at a time, keep enough from last iteration to
+        // match 'search' against what existed at the end of the last window (but
+        // was too short to match) that might match now at the start of this
+        // new window.
+        while (in)
+        {
+            in.read(buffer + carrySize, READ_BUFFER_SIZE);
+            std::streamsize bytesRead = in.gcount();
+            if (!bytesRead)
+                break;
+
+            std::streamsize bytesInBuffer = carrySize + bytesRead;
+
+            std::string_view view(buffer, bytesInBuffer);
+            const auto match = view.find(search);
+
+            if (match != std::string_view::npos)
+            {
+                // Copy as far as match
+                if (out)
+                    out->write(buffer, match);
+                // Seek back to before match and return
+                in.clear();
+                in.seekg(-static_cast<std::streamoff>(bytesInBuffer - match), std::ios_base::cur);
+                return true;
+            }
+            else
+            {
+                if (out)
+                {
+                    // Copy what definitely doesn't match so far to output.
+                    std::streamsize bytesToWrite = bytesInBuffer > overlap ? bytesInBuffer - overlap : 0;
+                    out->write(buffer, bytesToWrite);
+                }
+                // Rotate <= overlap to start of buffer for next iteration
+                carrySize = std::min(overlap, bytesInBuffer);
+                std::memmove(buffer, buffer + bytesInBuffer - carrySize, carrySize);
+            }
+        }
+
+        // write left over
+        if (carrySize > 0 && out)
+            out->write(buffer, carrySize);
+        return false;
+    }
+
+    bool seekToMatch(std::istream& in, std::string_view search)
+    {
+        return processToMatch(in, nullptr, search);
+    }
+
+    bool copyToMatch(std::istream& in, std::ostream& out, std::string_view search)
+    {
+        return processToMatch(in, &out, search);
     }
 
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time){

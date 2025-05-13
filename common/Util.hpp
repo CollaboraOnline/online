@@ -415,6 +415,18 @@ namespace Util
 
     size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset = 0);
 
+    /// Copy from @in to @out until @search is found.
+    /// On a match return is true, the read position of @in will be at the
+    /// start of @search and @out has a copy of @in appended as far as @search.
+    /// On no match return is false, the read position of @in will be at eof
+    /// and @out is appended to @in.
+    bool copyToMatch(std::istream& in, std::ostream& out, std::string_view search);
+
+    /// On a match return is true, the read position of @in will be at the
+    /// start of @search.
+    /// On no match return is false, the read position of @ will be at eof.
+    bool seekToMatch(std::istream& in, std::string_view search);
+
     /// Trim trailing characters (on the right).
     inline std::string_view rtrim(const std::string_view s, const char ch)
     {
