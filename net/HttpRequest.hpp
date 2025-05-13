@@ -1914,12 +1914,14 @@ public:
     /// regardless of the reason (error, timeout, completion).
     void setFinishedHandler(FinishedCallback onFinished) { _onFinished = std::move(onFinished); }
 
+    using ResponseHeaders = http::Header::Container;
+
     /// Start an asynchronous upload from a file.
     /// Return true when it dispatches the socket to the SocketPoll.
     /// Note: when reusing this ServerSession, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same ServerSession).
-    bool asyncUpload(std::string fromFile, std::string mimeType, int start, int end, bool startIsSuffix, http::StatusCode statusCode = http::StatusCode::OK)
+    bool asyncUpload(std::string fromFile, ResponseHeaders responseHeaders, int start, int end, bool startIsSuffix, http::StatusCode statusCode = http::StatusCode::OK)
     {
         _start = start;
         _end = end;
@@ -1947,7 +1949,8 @@ public:
 
         _size = sb.st_size;
         _filename = std::move(fromFile);
-        _mimeType = std::move(mimeType);
+        _responseHeaders = std::move(responseHeaders);
+        LOG_ASSERT_MSG(!getMimeType().empty(), "Missing Content-Type");
 
         int firstBytePos = getStart();
 
@@ -1960,19 +1963,19 @@ public:
     }
 
     /// Start an asynchronous upload of a whole file
-    bool asyncUpload(std::string fromFile, std::string mimeType)
+    bool asyncUpload(std::string fromFile, ResponseHeaders responseHeaders)
     {
-        return asyncUpload(std::move(fromFile), std::move(mimeType), 0, -1, false);
+        return asyncUpload(std::move(fromFile), std::move(responseHeaders), 0, -1, false);
     }
 
     /// Start a partial asynchronous upload from a file based on the contents of a "Range" header
-    bool asyncUpload(std::string fromFile, std::string mimeType, const std::string_view rangeHeader)
+    bool asyncUpload(std::string fromFile, ResponseHeaders responseHeaders, const std::string_view rangeHeader)
     {
         const size_t equalsPos = rangeHeader.find('=');
-        if (equalsPos == std::string::npos) return asyncUpload(std::move(fromFile), std::move(mimeType));
+        if (equalsPos == std::string::npos) return asyncUpload(std::move(fromFile), std::move(responseHeaders));
 
         const std::string_view unit = rangeHeader.substr(0, equalsPos);
-        if (unit != "bytes") return asyncUpload(std::move(fromFile), std::move(mimeType));
+        if (unit != "bytes") return asyncUpload(std::move(fromFile), std::move(responseHeaders));
 
         const std::string_view range = rangeHeader.substr(equalsPos + 1);
 
@@ -1998,7 +2001,7 @@ public:
             catch (std::invalid_argument&) {}
             catch (std::out_of_range&) {}
 
-            return asyncUpload(std::move(fromFile), std::move(mimeType), start, end,
+            return asyncUpload(std::move(fromFile), std::move(responseHeaders), start, end,
                                startIsSuffix, http::StatusCode::PartialContent);
         }
 
@@ -2011,7 +2014,7 @@ public:
 
         // FIXME: does not support ranges that specify multiple comma-separated values
 
-        return asyncUpload(std::move(fromFile), std::move(mimeType), start, end,
+        return asyncUpload(std::move(fromFile), std::move(responseHeaders), start, end,
                            startIsSuffix, http::StatusCode::PartialContent);
     }
 
@@ -2055,7 +2058,7 @@ public:
            << " socket)";
         os << indent << "\tconnected: " << _connected;
         os << indent << "\tstartTime: " << Util::getTimeForLog(now, _startTime);
-        os << indent << "\tmimeType: " << _mimeType;
+        os << indent << "\tmimeType: " << getMimeType();
         os << indent << "\tstatusCode: " << getReasonPhraseForCode(_statusCode);
         os << indent << "\tsize: " << _size;
         os << indent << "\tpos: " << _pos;
@@ -2085,8 +2088,9 @@ private:
 
                 LOG_DBG("Sending header with size " << getSendSize());
                 http::Response httpResponse(_statusCode);
+                for (const auto& header : _responseHeaders)
+                    httpResponse.set(header.first, header.second);
                 httpResponse.set("Content-Length", std::to_string(getSendSize()));
-                httpResponse.set("Content-Type", _mimeType);
                 httpResponse.set("Accept-Ranges", "bytes");
                 httpResponse.set("Content-Range", "bytes " + std::to_string(getStart()) + "-" + std::to_string(getEnd() - 1) + '/' +
                                     std::to_string(_size));
@@ -2213,11 +2217,22 @@ private:
     int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
     int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
 
+    std::string getMimeType() const
+    {
+        const auto it = std::find_if(_responseHeaders.begin(), _responseHeaders.end(),
+                                     [](const Header::Pair& pair) -> bool {
+                                        return Util::iequal(pair.first, "Content-Type");
+                                     });
+        if (it != _responseHeaders.end())
+            return it->second;
+        return std::string();
+    }
+
 private:
+    http::Header::Container _responseHeaders; ///< The data Content-Type.
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
     std::string _filename; ///< The input filename.
-    std::string _mimeType; ///< The data Content-Type.
     int _pos; ///< The current position in the data string.
     int _size; ///< The size of the data in bytes.
     int _fd; ///< The descriptor of the file to upload.
