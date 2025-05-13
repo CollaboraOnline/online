@@ -35,12 +35,24 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.cGet('.TableEditPanel').should('be.visible');
 	});
 
-	it('Show formula Elements sidebar', function() {
+	function checkMathElementsVisibility() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#toolbar-up .ui-scroll-right').click().click().click().click();
 		cy.cGet('#Insert .unoInsertObjectStarMath').click();
 
 		cy.cGet('.MathElementsPanel').should('be.visible');
+	}
+
+	it('Show formula Elements sidebar when closed', function() {
+		// close sidebar first, expect it to auto-open
+		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+		checkMathElementsVisibility();
+	});
+
+	it('Show formula Elements sidebar', function() {
+		checkMathElementsVisibility();
 	});
 
 	it('Show document accessibility sidebar', function() {
