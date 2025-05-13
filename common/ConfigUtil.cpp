@@ -103,6 +103,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "indirection_endpoint.migration_timeout_secs", "180" },
     { "indirection_endpoint.server_name", "" },
     { "indirection_endpoint.url", "" },
+    { "indirection_endpoint.geolocation_setup.allow_websocket_origin", ""},
     { "languagetool.api_key", "" },
     { "languagetool.base_url", "" },
     { "languagetool.enabled", "false" },

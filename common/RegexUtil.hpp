@@ -24,6 +24,10 @@ namespace RegexUtil
 /// Mainly used to match WOPI hosts patterns
 bool matchRegex(const std::set<std::string>& set, const std::string& subject);
 
+/// Return true if the subject matches in given value. It uses regex
+/// Mainly used to match Origin header pattern for websocket upgrade
+bool matchRegex(const std::string& value, const std::string& subject);
+
 /// Return value from key:value pair if the subject matches in given map. It uses regex
 /// Mainly used to match WOPI hosts patterns
 std::string getValue(const std::map<std::string, std::string>& map, const std::string& subject);
