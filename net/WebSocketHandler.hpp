@@ -95,9 +95,11 @@ public:
     /// Parameters:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
+    /// expectedOrigin: derived from serverurl
+    /// allowedOrigin: if origin is allowed using setting "indirection_endpoint.geolocation_setup.allowed_websocket_origins"
     template <typename T>
     WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request,
-                     const std::string& expectedOrigin = "")
+                     const std::string& expectedOrigin = "", bool allowedOrigin = false)
         : WebSocketHandler(/*isClient=*/false, /*isMasking=*/false)
     {
         if (!socket)
@@ -108,7 +110,7 @@ public:
 
         // As a server, respond with 101 protocol-upgrade.
         assert(!_isClient);
-        upgradeToWebSocket(socket, request, expectedOrigin);
+        upgradeToWebSocket(socket, request, expectedOrigin, allowedOrigin);
     }
 
     /// Status codes sent to peer on shutdown.
@@ -1009,7 +1011,7 @@ protected:
     template <typename T>
     void upgradeToWebSocket(const std::shared_ptr<StreamSocket>& socket,
                             [[maybe_unused]] const T& req,
-                            [[maybe_unused]] const std::string& expectedOrigin)
+                            [[maybe_unused]] const std::string& expectedOrigin, bool allowedOrigin)
     {
         assert(socket && "Must have a valid socket");
         LOGA_TRC(WebSocket, "Upgrading to WebSocket");
@@ -1030,10 +1032,10 @@ protected:
          * 403 Forbidden status code.
          */
         const std::string origin = req.get("Origin", "");
-        if (origin != expectedOrigin)
+        if (!allowedOrigin && origin != expectedOrigin)
         {
-            LOG_ERR("Rejecting WebSocket upgrade with: origin [" << origin << ']' <<
-                    " expected [" << expectedOrigin << "] instead");
+            LOG_ERR("Rejecting WebSocket upgrade with: origin [" << origin << "] expected ["
+                                                                 << expectedOrigin << "] instead");
             HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
             return;
         }

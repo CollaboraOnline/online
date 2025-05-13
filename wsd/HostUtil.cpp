@@ -30,6 +30,7 @@ std::map<std::string, std::string> HostUtil::AliasHosts;
 std::set<std::string> HostUtil::hostList;
 std::string HostUtil::FirstHost;
 bool HostUtil::WopiEnabled;
+std::set<std::string> HostUtil::AllowedWSOriginList;
 
 void HostUtil::parseWopiHost(const Poco::Util::LayeredConfiguration& conf)
 {
@@ -244,6 +245,31 @@ void HostUtil::setFirstHost(const Poco::URI& uri)
                 << FirstHost
                 << ", To use multiple host/aliases check alias_groups tag in configuration");
     }
+}
+
+void HostUtil::parseAllowedWSOrigins(Poco::Util::LayeredConfiguration& conf)
+{
+    for (size_t i = 0;; i++)
+    {
+        const std::string path =
+            "indirection_endpoint.geolocation_setup.allowed_websocket_origins.origin[" +
+            std::to_string(i) + ']';
+        if (!conf.has(path))
+        {
+            break;
+        }
+        const std::string origin = conf.getString(path, "");
+        if (!origin.empty())
+        {
+            LOG_INF("Adding Origin[" << origin << "] to allowed websocket origin list");
+            HostUtil::AllowedWSOriginList.insert(origin);
+        }
+    }
+}
+
+bool HostUtil::allowedWSOrigin(const std::string& origin)
+{
+    return AllowedWSOriginList.find(origin) != AllowedWSOriginList.end();
 }
 
 bool HostUtil::isWopiHostsEmpty()
