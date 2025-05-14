@@ -420,9 +420,7 @@ class HRuler extends Ruler {
 		this.options.rightParagraphIndent *= pxPerMm100;
 
 		// Get navigatiosidebar width only when navigation sidebar is visible
-		const navigationsidebarWidth = this._map.uiManager.getBooleanDocTypePref(
-			'ShowNavigator',
-		)
+		const navigationsidebarWidth = app.showNavigator
 			? this._getNavigationSidebarWidth()
 			: 0;
 

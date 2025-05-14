@@ -118,6 +118,8 @@ window.app = {
 	serverAudit: null, // contains list of warnings / errors detected on the server instance
 
 	events: null, // See app/DocEvents.ts for details.
+
+	showNavigator: false, // ShowNavigator class instance is assigned to this.
 };
 
 var activateValidation = false;
