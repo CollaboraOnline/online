@@ -1823,53 +1823,14 @@ function getInitializerClass() {
 	else if (global.ThisIsAMobileApp)
 		global.LANG = lang;
 	if (global.socket && global.socket.readyState !== 3) {
-		global.socket.onopen = function () {
-			// Note there are two socket "onopen" handlers, this one and the other in browser/src/core/Socket.js.
-			// See the notes there for explanation.
-			if (global.socket.readyState === 1) {
-				var ProtocolVersionNumber = '0.1';
-				var timestamp = encodeURIComponent(global.coolParams.get('timestamp'));
-				var msg = 'load url=' + encodeURIComponent(global.docURL);
+		global.socket.onopen = function (event) {
+			var ProtocolVersionNumber = '0.1';
+			var now0 = Date.now();
+			var now1 = performance.now();
+			var now2 = Date.now();
+			global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
-				var now0 = Date.now();
-				var now1 = performance.now();
-				var now2 = Date.now();
-				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
-
-				msg += ' accessibilityState=' + global.getAccessibilityState();
-
-				if (global.ThisIsAMobileApp) {
-					msg += ' lang=' + global.LANG;
-				} else {
-
-					if (timestamp) {
-						msg += ' timestamp=' + timestamp;
-					}
-					if (lang) {
-						msg += ' lang=' + lang;
-					}
-					// renderingOptions?
-				}
-
-				if (global.deviceFormFactor) {
-					msg += ' deviceFormFactor=' + global.deviceFormFactor;
-				}
-				var spellOnline = window.prefs.get('SpellOnline');
-				if (spellOnline) {
-					msg += ' spellOnline=' + spellOnline;
-				}
-
-				const darkTheme = window.prefs.getBoolean('darkTheme');
-				msg += ' darkTheme=' + darkTheme;
-
-				const darkBackground = window.prefs.getBoolean('darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'), darkTheme);
-				msg += ' darkBackground=' + darkBackground;
-
-				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
-				msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
-
-				global.socket.send(msg);
-			}
+			global.app.console.log(event);
 		};
 
 		global.socket.onerror = function (event) {
@@ -1887,7 +1848,49 @@ function getInitializerClass() {
 				} catch (e) {
 					global.app.console.error('Failed to initialize browser settings: ', e.message)
 				}
+
+				// Note there are two socket "onopen" handlers, this one and the other in browser/src/core/Socket.js.
+				// See the notes there for explanation.
+				if (global.socket.readyState === 1) {
+					var timestamp = encodeURIComponent(global.coolParams.get('timestamp'));
+					var msg = 'load url=' + encodeURIComponent(global.docURL);
+
+					msg += ' accessibilityState=' + global.getAccessibilityState();
+
+					if (global.ThisIsAMobileApp) {
+						msg += ' lang=' + global.LANG;
+					} else {
+
+						if (timestamp) {
+							msg += ' timestamp=' + timestamp;
+						}
+						if (lang) {
+							msg += ' lang=' + lang;
+						}
+						// renderingOptions?
+					}
+
+					if (global.deviceFormFactor) {
+						msg += ' deviceFormFactor=' + global.deviceFormFactor;
+					}
+					var spellOnline = window.prefs.get('SpellOnline');
+					if (spellOnline) {
+						msg += ' spellOnline=' + spellOnline;
+					}
+
+					const darkTheme = window.prefs.getBoolean('darkTheme');
+					msg += ' darkTheme=' + darkTheme;
+
+					const darkBackground = window.prefs.getBoolean('darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'), darkTheme);
+					msg += ' darkBackground=' + darkBackground;
+
+					msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+					msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
+
+					global.socket.send(msg);
+				}
 			}
+
 			if (typeof global.socket._onMessage === 'function') {
 				global.socket._emptyQueue();
 				global.socket._onMessage(event);
