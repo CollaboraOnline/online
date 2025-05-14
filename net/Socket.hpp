@@ -1593,7 +1593,7 @@ public:
     bool compactChunks(MessageMap& map);
 
     ssize_t readHeader(const std::string_view clientName, std::istream& message,
-                       Poco::Net::HTTPRequest& request,
+                       size_t messagesize, Poco::Net::HTTPRequest& request,
                        std::chrono::steady_clock::time_point& lastHTTPHeader);
 
     /// Detects if we have an HTTP header in the provided message and
