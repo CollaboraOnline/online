@@ -197,17 +197,9 @@ app.definitions.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		window.app.console.debug('_onSocketOpen:');
-		app.idleHandler._serverRecycling = false;
-		app.idleHandler._documentIdle = false;
 
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
-
-		// Note there are two socket "onopen" handlers, this one which ends up as part of
-		// bundle.js and the other in browser/js/global.js. The global.js one attempts to
-		// set up the connection early while bundle.js is still loading. If bundle.js
-		// starts before global.js has connected, then this _onSocketOpen will do the
-		// connection instead, after taking over the socket in "connect"
 
 		// Typically in a "make run" scenario it is the global.js case that sends the
 		// 'coolclient' and 'load' messages while currently in the "WASM app" case it is
@@ -218,6 +210,17 @@ app.definitions.Socket = L.Class.extend({
 		var now1 = performance.now();
 		var now2 = Date.now();
 		this._doSend('coolclient ' + this.ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
+	},
+
+	_doSendLoadDocument: function () {
+		// Note there are two socket "onopen" handlers, this one which ends up as part of
+		// bundle.js and the other in browser/js/global.js. The global.js one attempts to
+		// set up the connection early while bundle.js is still loading. If bundle.js
+		// starts before global.js has connected, then this _onSocketOpen will do the
+		// connection instead, after taking over the socket in "connect"
+
+		app.idleHandler._serverRecycling = false;
+		app.idleHandler._documentIdle = false;
 
 		var msg = 'load url=' + encodeURIComponent(this._map.options.doc);
 		if (this._map._docLayer) {
@@ -1369,6 +1372,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('browsersetting:')) {
 			window.prefs._initializeBrowserSetting(textMsg);
+			this._doSendLoadDocument();
 		}
 
 		if (textMsg.startsWith('downloadas:')) {
