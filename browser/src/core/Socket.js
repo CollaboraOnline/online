@@ -1373,6 +1373,7 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('browsersetting:')) {
 			window.prefs._initializeBrowserSetting(textMsg);
 			this._doSendLoadDocument();
+			this._map.fire('browsersetting');
 		}
 
 		if (textMsg.startsWith('downloadas:')) {

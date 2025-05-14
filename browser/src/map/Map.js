@@ -224,6 +224,8 @@ L.Map = L.Evented.extend({
 
 		this.on('searchstart', this._onSearchStart, this);
 
+		this.on('browsersetting', this._onBrowserSetting, this);
+
 		// View info (user names and view ids)
 		this._viewInfo = {};
 		this._viewInfoByUserName = {};
@@ -324,8 +326,8 @@ L.Map = L.Evented.extend({
 	// A11y
 
 	initTextInput: function(docType) {
-		var hasAccessibilitySupport =
-			window.enableAccessibility && window.prefs.getBoolean('accessibilityState');
+		var hasAccessibilitySupport = window.prefs.useBrowserSetting ? window.prefs.getBoolean('accessibilityState') :
+			window.enableAccessibility;
 		hasAccessibilitySupport = hasAccessibilitySupport &&
 			(docType === 'text' || docType === 'presentation'|| docType === 'spreadsheet');
 
@@ -1443,6 +1445,14 @@ L.Map = L.Evented.extend({
 
 	_onSearchStart: function () {
 		this._isSearching = true;
+	},
+
+	_onBrowserSetting: function () {
+		if (this._textInput && this._docLayer) {
+			this.removeLayer(this._textInput);
+			delete this._textInput;
+			this.initTextInput(this._docLayer._docType);
+		}
 	},
 
 	_onUpdateProgress: function (e) {
