@@ -1660,7 +1660,6 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " clientvisiblearea=" << getInitialClientVisibleArea();
         }
 
-        if (ConfigUtil::getConfigValue<bool>("accessibility.enable", false))
         {
             oss << " accessibilityState=" << getAccessibilityState();
         }
