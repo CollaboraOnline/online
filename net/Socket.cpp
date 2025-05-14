@@ -1073,13 +1073,16 @@ void SocketDisposition::execute()
             // Ensure the thread is running before adding callback.
             _toPoll->startThread();
         }
-        _toPoll->addCallback([pollCopy = _toPoll, socket = _socket, socketMoveFn = std::move(_socketMove)]()
+        _toPoll->addCallback(
+            [pollCopy = _toPoll, socket = std::move(_socket),
+             socketMoveFn = std::move(_socketMove)]()
             {
                 pollCopy->insertNewSocket(socket);
                 socketMoveFn(socket);
             });
 
         _socketMove = nullptr;
+        _socket = nullptr;
         _toPoll = nullptr;
     }
 }
