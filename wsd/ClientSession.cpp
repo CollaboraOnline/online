@@ -261,6 +261,32 @@ bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const st
                        [&tag](const std::string& it) { return it == tag; });
 }
 
+static std::string getLocalPathToJail(std::string filePath, const DocumentBroker& docBroker)
+{
+#if !MOBILEAPP
+    // Prepend the jail path in the normal (non-nocaps) case
+    if (!COOLWSD::NoCapsForKit)
+    {
+        if (filePath.size() > 0 && filePath[0] == '/')
+            filePath = filePath.substr(1);
+
+        // Rewrite path to be visible to the outside world.
+        const Path path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                       docBroker.getJailRoot(),
+                                                       filePath));
+        if (Poco::File(path).exists())
+            filePath = path.toString();
+        else
+        {
+            // Blank for failure.
+            filePath.clear();
+        }
+    }
+#else
+    (void)docBroker;
+#endif
+    return filePath;
+}
 
 void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
                                            const std::shared_ptr<StreamSocket> &socket,
