@@ -328,7 +328,7 @@ export class TilesSection extends CanvasSectionObject {
 			var partHeightPixels: number = Math.round(this.map._docLayer._partHeightTwips * app.twipsToPixels);
 			var gap: number = Math.round(this.map._docLayer._spaceBetweenParts * app.twipsToPixels);
 			var partWidthPixels: number = Math.round(this.map._docLayer._partWidthTwips * app.twipsToPixels);
-			var startY: number = (partHeightPixels + gap) * (topVisible > 0 ? topVisible -1: 0);
+			var startY: number = (partHeightPixels + gap) * (topVisible > 0 ? topVisible : 0);
 			var rectangle: Array<number>;
 
 			for (var i: number = 0; i <= bottomVisible - topVisible; i++) {
