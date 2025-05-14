@@ -2180,28 +2180,20 @@ class TileManager {
 					}
 
 					let keyframeImage = null;
-					if (x.isKeyframe) {
-						if (x.keyframeBuffer)
-							keyframeImage = new ImageData(
-								x.keyframeBuffer,
-								e.data.tileSize,
-								e.data.tileSize,
-							);
-						else {
-							tile.imgDataCache = null;
-							tile.rawDeltas = x.rawDelta;
-						}
-					}
-
-					if (!x.isKeyframe || keyframeImage)
-						this.applyDelta(
-							tile,
-							x.rawDelta,
-							x.deltas,
-							x.keyframeDeltaSize,
-							keyframeImage,
-							x.wireMessage,
+					if (x.isKeyframe)
+						keyframeImage = new ImageData(
+							x.keyframeBuffer,
+							e.data.tileSize,
+							e.data.tileSize,
 						);
+					this.applyDelta(
+						tile,
+						x.rawDelta,
+						x.deltas,
+						x.keyframeDeltaSize,
+						keyframeImage,
+						x.wireMessage,
+					);
 
 					this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
 				}

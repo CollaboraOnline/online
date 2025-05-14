@@ -18,7 +18,6 @@ const PROCESS_TIME = 10;
 
 let transactionHandlerId = null;
 const transactions = [];
-let currentKeys = new Set();
 
 function transactionCallback(start_time = null) {
 	if (start_time === null) start_time = performance.now();
@@ -36,9 +35,6 @@ function transactionCallback(start_time = null) {
 
 		transaction.decompressed.push(tile);
 		transaction.buffers.push(tile.rawDelta.buffer);
-
-		// Skip keyframe tiles that are no longer current
-		if (tile.isKeyframe && !currentKeys.has(tile.key)) continue;
 
 		const deltas = self.fzstd.decompress(tile.rawDelta);
 		tile.keyframeDeltaSize = 0;
@@ -108,7 +104,6 @@ if ('undefined' === typeof window) {
 	function onMessage(e) {
 		switch (e.data.message) {
 			case 'endTransaction':
-				currentKeys = new Set(e.data.current);
 				transactions.push({
 					data: e.data,
 					decompressed: [],
