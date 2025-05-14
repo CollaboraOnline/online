@@ -122,8 +122,11 @@ L.Map.include({
 		if (docLayer._invalidatePreviews) {
 			docLayer._invalidatePreviews();
 		}
-
-		this.focus();
+		if (this._docLayer._docType === 'presentation' || this._docLayer._docType === 'drawing') {
+			this._docLayer._preview.focusCurrentSlide();
+		} else {
+			this.focus();
+		}
 	},
 
 	// part is the part index/id

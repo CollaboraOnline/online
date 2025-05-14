@@ -845,7 +845,8 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	focusCurrentSlide: function () {
-		this._previewTiles[this._map._docLayer._selectedPart].focus();
+		if (this._previewTiles[this._map._docLayer._selectedPart])
+			this._previewTiles[this._map._docLayer._selectedPart].focus();
 	},
 });
 
