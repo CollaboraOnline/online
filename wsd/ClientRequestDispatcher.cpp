@@ -729,7 +729,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), socket->getInBuffer().size());
+    size_t inBufferSize = socket->getInBuffer().size();
+    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), inBufferSize);
 
 #if 0 // debug a specific command's payload
         if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
@@ -744,7 +745,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     Poco::Net::HTTPRequest request;
 
     StreamSocket::MessageMap map;
-    ssize_t headerSize = socket->readHeader("Client", startmessage, request, _lastSeenHTTPHeader);
+    ssize_t headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, _lastSeenHTTPHeader);
     if (headerSize < 0)
         return;
 

@@ -1605,6 +1605,7 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 #if !MOBILEAPP
 
 ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream& message,
+                                 size_t messagesize,
                                  Poco::Net::HTTPRequest& request,
                                  std::chrono::steady_clock::time_point& lastHTTPHeader)
 {
@@ -1616,16 +1617,15 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
 
     // Find the end of the header, if any.
     constexpr std::string_view marker("\r\n\r\n");
-    auto itBody = std::search(_inBuffer.begin(), _inBuffer.end(), marker.begin(), marker.end());
-    if (itBody == _inBuffer.end())
+    if (!Util::seekToMatch(message, marker))
     {
         LOG_TRC("parseHeader: " << clientName << " doesn't have enough data for the header yet. delay " << delayMs.count() << "ms");
         return -1;
     }
 
     // Skip the marker.
-    itBody += marker.size();
-    ssize_t headerSize = itBody - _inBuffer.begin();
+    ssize_t headerSize = message.tellg() + static_cast<std::streamsize>(marker.size());
+    message.seekg(0, std::ios_base::beg);
 
     try
     {
@@ -1634,7 +1634,7 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_DBG("parseHeader: Exception caught with "
-                << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
                 << delayMs.count() << "ms");
         asyncShutdown();
         return false;
@@ -1642,7 +1642,7 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
     catch (const Poco::Net::UnsupportedRedirectException& exc)
     {
         LOG_DBG("parseHeader: Exception caught with "
-                << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
                 << delayMs.count() << "ms");
         asyncShutdown();
         return -1;
@@ -1650,7 +1650,7 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
     catch (const Poco::Net::HTTPException& exc)
     {
         LOG_DBG("parseHeader: Exception caught with "
-                << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
                 << delayMs.count() << "ms");
         asyncShutdown();
         return -1;
@@ -1660,14 +1660,14 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
         if (delayMs > delayMax)
         {
             LOG_DBG("parseHeader: Exception caught with "
-                    << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                    << messagesize << " bytes, shutdown: " << exc.displayText() << ", delay "
                     << delayMs.count() << "ms");
             asyncShutdown();
         }
         else
         {
             LOG_DBG("parseHeader: Exception caught with "
-                    << _inBuffer.size() << " bytes, continue: " << exc.displayText() << ", delay "
+                    << messagesize << " bytes, continue: " << exc.displayText() << ", delay "
                     << delayMs.count() << "ms");
         }
         return -1;
@@ -1677,14 +1677,14 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
         if (delayMs > delayMax)
         {
             LOG_DBG("parseHeader: Exception caught with "
-                    << _inBuffer.size() << " bytes, shutdown: " << exc.what() << ", delay "
+                    << messagesize << " bytes, shutdown: " << exc.what() << ", delay "
                     << delayMs.count() << "ms");
             asyncShutdown();
         }
         else
         {
             LOG_DBG("parseHeader: Exception caught with "
-                    << _inBuffer.size() << " bytes, continue: " << exc.what() << ", delay "
+                    << messagesize << " bytes, continue: " << exc.what() << ", delay "
                     << delayMs.count() << "ms");
         }
         return -1;
