@@ -1601,7 +1601,7 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 
 bool StreamSocket::parseHeader(const std::string_view clientName, std::istream& message,
                                Poco::Net::HTTPRequest& request,
-                               std::chrono::steady_clock::time_point lastHTTPHeader,
+                               std::chrono::steady_clock::time_point& lastHTTPHeader,
                                MessageMap& map)
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
