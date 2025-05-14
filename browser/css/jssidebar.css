@@ -364,7 +364,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	white-space: break-spaces;
 }
 
-#StyleListPanelPanelExpander .ui-treeview-cell-text {
+.StyleListPanel #TemplatePanel .ui-treeview-cell-text {
 	white-space: break-spaces;
 }
 
@@ -542,26 +542,26 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	background-color: #0056b3;
 }
 /* Styles deck */
-#StyleListPanelPanelExpander [id='2'] button { background: transparent url('images/lc_parastyle.svg') no-repeat center; }
-#StyleListPanelPanelExpander [id='1'] button { background: transparent url('images/lc_charstyle.svg') no-repeat center; }
-#StyleListPanelPanelExpander [id='3'] button { background: transparent url('images/lc_framestyle.svg') no-repeat center; }
-#StyleListPanelPanelExpander [id='4'] button { background: transparent url('images/lc_pagestyle.svg') no-repeat center; }
-#StyleListPanelPanelExpander [id='5'] button { background: transparent url('images/lc_liststyle.svg') no-repeat center; }
-#StyleListPanelPanelExpander [id='6'] button { background: transparent url('images/lc_tablestyle.svg') no-repeat center; }
+.StyleListPanel #TemplatePanel [id='2'] button { background: transparent url('images/lc_parastyle.svg') no-repeat center; }
+.StyleListPanel #TemplatePanel [id='1'] button { background: transparent url('images/lc_charstyle.svg') no-repeat center; }
+.StyleListPanel #TemplatePanel [id='3'] button { background: transparent url('images/lc_framestyle.svg') no-repeat center; }
+.StyleListPanel #TemplatePanel [id='4'] button { background: transparent url('images/lc_pagestyle.svg') no-repeat center; }
+.StyleListPanel #TemplatePanel [id='5'] button { background: transparent url('images/lc_liststyle.svg') no-repeat center; }
+.StyleListPanel #TemplatePanel [id='6'] button { background: transparent url('images/lc_tablestyle.svg') no-repeat center; }
 
 
-[data-theme='dark'] #StyleListPanelPanelExpander [id='1'] button { background: transparent url('images/dark/lc_charstyle.svg') no-repeat center; }
-[data-theme='dark'] #StyleListPanelPanelExpander [id='5'] button { background: transparent url('images/dark/lc_liststyle.svg') no-repeat center; }
-[data-theme='dark'] #StyleListPanelPanelExpander [id='2'] button { background: transparent url('images/dark/lc_parastyle.svg') no-repeat center; }
-[data-theme='dark'] #StyleListPanelPanelExpander [id='4'] button { background: transparent url('images/dark/lc_pagestyle.svg') no-repeat center; }
-[data-theme='dark'] #StyleListPanelPanelExpander [id='3'] button { background: transparent url('images/dark/lc_framestyle.svg') no-repeat center; }
-[data-theme='dark'] #StyleListPanelPanelExpander [id='6'] button { background: transparent url('images/dark/lc_tablestyle.svg') no-repeat center; }
+[data-theme='dark'] .StyleListPanel #TemplatePanel [id='1'] button { background: transparent url('images/dark/lc_charstyle.svg') no-repeat center; }
+[data-theme='dark'] .StyleListPanel #TemplatePanel [id='5'] button { background: transparent url('images/dark/lc_liststyle.svg') no-repeat center; }
+[data-theme='dark'] .StyleListPanel #TemplatePanel [id='2'] button { background: transparent url('images/dark/lc_parastyle.svg') no-repeat center; }
+[data-theme='dark'] .StyleListPanel #TemplatePanel [id='4'] button { background: transparent url('images/dark/lc_pagestyle.svg') no-repeat center; }
+[data-theme='dark'] .StyleListPanel #TemplatePanel [id='3'] button { background: transparent url('images/dark/lc_framestyle.svg') no-repeat center; }
+[data-theme='dark'] .StyleListPanel #TemplatePanel [id='6'] button { background: transparent url('images/dark/lc_tablestyle.svg') no-repeat center; }
 
-#StyleListPanelPanelExpander #left.toolbox button {
+.StyleListPanel #left.toolbox button {
 	background-size: cover;
 }
 
-#StyleListPanelPanelExpander #left.toolbox img {
+.StyleListPanel #left.toolbox img {
 	visibility: hidden;
 }
 
@@ -579,13 +579,15 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #StyleListDeck,
 #StyleListDeck .root-container.jsdialog.sidebar,
 #StyleListDeck .vertical.jsdialog.sidebar,
-#StyleListPanelPanelExpander,
-#StyleListPanelPanelExpander #content,
-#StyleListPanelPanelExpander #TemplatePanel {
+.StyleListPanel,
+.StyleListPanel #content,
+.StyleListPanel #TemplatePanel {
 	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
-#StyleListPanelPanelExpander .ui-expander-content.jsdialog.sidebar.expanded {
+.StyleListPanel .ui-expander-content.jsdialog.sidebar.expanded {
 	height: calc(100% - 45px);
 }
 
@@ -605,6 +607,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #TemplatePanel .sidebar .ui-content.unobutton {
 	width: var(--btn-size-m);
 	height: var(--btn-size-m);
+	background-color: transparent !important;
 }
 
 #TemplatePanel {
