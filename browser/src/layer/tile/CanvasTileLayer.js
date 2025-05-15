@@ -4186,11 +4186,12 @@ L.CanvasTileLayer = L.Layer.extend({
 	highlightCurrentPart: function (part) {
 		var previews = document.getElementsByClassName('preview-frame');
 		for (var i = 0; i < previews.length; i++) {
+			const img = previews[i].querySelector('img');
 			if (parseInt(previews[i].id.replace('preview-frame-part-', '')) === part) {
-				previews[i].style.border = '2px solid darkgrey';
+				L.DomUtil.addClass(img, 'preview-img-currentpart');
 			}
 			else {
-				previews[i].style.border = 'none';
+				L.DomUtil.removeClass(img, 'preview-img-currentpart');
 			}
 		}
 	},
