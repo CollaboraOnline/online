@@ -654,7 +654,7 @@ function getInitializerClass() {
 		_initializeBrowserSetting: function (msg) {
 			let settingJSON = JSON.parse(msg.substring('browsersetting:'.length + 1));;
 
-			if (typeof settingJSON === 'undefined')
+			if (settingJSON === null)
 				return;
 
 			const processObject = (object, parentKey = '') => {
