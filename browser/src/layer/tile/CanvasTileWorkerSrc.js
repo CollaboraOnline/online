@@ -13,86 +13,6 @@
 /* eslint no-unused-vars: ["warn", { "argsIgnorePattern": "^_" }] */
 /* global importScripts Uint8Array */
 
-// Amount of time to spend decompressing deltas before returning to the main loop
-const PROCESS_TIME = 10;
-
-let transactionHandlerId = null;
-const transactions = [];
-
-function transactionCallback(start_time = null) {
-	if (start_time === null) start_time = performance.now();
-	else if (performance.now() - start_time >= PROCESS_TIME) {
-		transactionHandlerId = setTimeout(() => transactionCallback(), 0);
-		return;
-	}
-
-	const transaction = transactions.shift();
-	const tileByteSize =
-		transaction.data.tileSize * transaction.data.tileSize * 4;
-
-	while (transaction.data.deltas.length) {
-		const tile = transaction.data.deltas.pop();
-
-		transaction.decompressed.push(tile);
-		transaction.buffers.push(tile.rawDelta.buffer);
-
-		const deltas = self.fzstd.decompress(tile.rawDelta);
-		tile.keyframeDeltaSize = 0;
-
-		// Decompress the keyframe buffer
-		if (tile.isKeyframe) {
-			const keyframeBuffer = new Uint8Array(tileByteSize);
-			tile.keyframeDeltaSize = L.CanvasTileUtils.unrle(
-				deltas,
-				transaction.data.tileSize,
-				transaction.data.tileSize,
-				keyframeBuffer,
-			);
-			tile.keyframeBuffer = new Uint8ClampedArray(
-				keyframeBuffer.buffer,
-				keyframeBuffer.byteOffset,
-				keyframeBuffer.byteLength,
-			);
-			transaction.buffers.push(tile.keyframeBuffer.buffer);
-		}
-
-		// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
-		// it earlier to avoid unnecessarily incurring bounds-checking penalties.
-		tile.deltas = new Uint8ClampedArray(
-			deltas.buffer,
-			deltas.byteOffset,
-			deltas.length,
-		);
-
-		transaction.buffers.push(tile.deltas.buffer);
-		if (performance.now() - start_time >= PROCESS_TIME) break;
-	}
-
-	if (transaction.data.deltas.length) {
-		transactions.unshift(transaction);
-		transactionHandlerId = setTimeout(() => transactionCallback(), 0);
-		return;
-	}
-
-	// Transaction is complete, send it back.
-	postMessage(
-		{
-			message: transaction.data.message,
-			deltas: transaction.decompressed,
-			tileSize: transaction.data.tileSize,
-		},
-		transaction.buffers,
-	);
-
-	if (transactions.length === 0) {
-		transactionHandlerId = null;
-		return;
-	}
-
-	// See if we have time to process further transactions
-	transactionCallback(start_time);
-}
-
 if ('undefined' === typeof window) {
 	self.L = {};
 
@@ -104,13 +24,51 @@ if ('undefined' === typeof window) {
 	function onMessage(e) {
 		switch (e.data.message) {
 			case 'endTransaction':
-				transactions.push({
-					data: e.data,
-					decompressed: [],
-					buffers: [],
-				});
-				if (transactionHandlerId !== null) clearTimeout(transactionHandlerId);
-				transactionCallback();
+				var tileByteSize = e.data.tileSize * e.data.tileSize * 4;
+				var decompressed = [];
+				var buffers = [];
+				for (var tile of e.data.deltas) {
+					var deltas = self.fzstd.decompress(tile.rawDelta);
+					tile.keyframeDeltaSize = 0;
+
+					// Decompress the keyframe buffer
+					if (tile.isKeyframe) {
+						var keyframeBuffer = new Uint8Array(tileByteSize);
+						tile.keyframeDeltaSize = L.CanvasTileUtils.unrle(
+							deltas,
+							e.data.tileSize,
+							e.data.tileSize,
+							keyframeBuffer,
+						);
+						tile.keyframeBuffer = new Uint8ClampedArray(
+							keyframeBuffer.buffer,
+							keyframeBuffer.byteOffset,
+							keyframeBuffer.byteLength,
+						);
+						buffers.push(tile.keyframeBuffer.buffer);
+					}
+
+					// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
+					// it earlier to avoid unnecessarily incurring bounds-checking penalties.
+					tile.deltas = new Uint8ClampedArray(
+						deltas.buffer,
+						deltas.byteOffset,
+						deltas.length,
+					);
+
+					decompressed.push(tile);
+					buffers.push(tile.rawDelta.buffer);
+					buffers.push(tile.deltas.buffer);
+				}
+
+				postMessage(
+					{
+						message: e.data.message,
+						deltas: decompressed,
+						tileSize: e.data.tileSize,
+					},
+					buffers,
+				);
 				break;
 
 			default:
