@@ -57,6 +57,10 @@ QUIET_JSCPCD = $(QUIET_JSCPCD_$(V))
 QUIET_JSCPCD_ = $(QUIET_JSCPCD_$(AM_DEFAULT_VERBOSITY))
 QUIET_JSCPCD_0 = @echo "  JSCPCD  " $@;
 
+QUIET_STYLELINT = $(QUIET_STYLELINT_$(V))
+QUIET_STYLELINT_ = $(QUIET_STYLELINT_$(AM_DEFAULT_VERBOSITY))
+QUIET_STYLELINT_0 = @echo "  STYLELINT" $@;
+
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
@@ -786,8 +790,7 @@ $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DS
 
 $(DIST_FOLDER)/bundle.css: $(call prereq_css)
 	@mkdir -p $(dir $@)
-	@echo "Checking for CSS errors..."
-	@$(NODE) node_modules/stylelint/bin/stylelint.js --config $(srcdir)/.stylelintrc.json $(srcdir)/css/*.css --fix
+	$(QUIET_STYLELINT) $(NODE) node_modules/stylelint/bin/stylelint.js --config $(srcdir)/.stylelintrc.json $(srcdir)/css/*.css --fix
 	$(call bundle_css)
 
 $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/cool-src.js $(call prereq_all)
