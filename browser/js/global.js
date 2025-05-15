@@ -1889,6 +1889,7 @@ function getInitializerClass() {
 
 					global.socket.send(msg);
 				}
+				return;
 			}
 
 			if (typeof global.socket._onMessage === 'function') {
