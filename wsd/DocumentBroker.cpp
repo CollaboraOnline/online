@@ -1200,6 +1200,7 @@ bool DocumentBroker::download(
                 LOG_ERR("Request to uri["
                         << uriAnonym
                         << "] failed or timedout while adding session #" + session->getId());
+                session->sendTextFrame("browsersetting: null");
             }
         }
     }
