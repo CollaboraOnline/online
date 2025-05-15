@@ -2181,6 +2181,7 @@ private:
 
                     close(_fd);
                     _fd = -1;
+                    socket->flush();
                     onDisconnect();
                     break;
                 }
