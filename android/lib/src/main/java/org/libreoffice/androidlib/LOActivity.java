@@ -61,7 +61,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.BufferedWriter;
+import java.io.PipedOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -73,6 +73,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -131,6 +132,10 @@ public class LOActivity extends AppCompatActivity {
     private Handler nativeHandler;
     private Looper nativeLooper;
     private Bundle savedInstanceState;
+
+    public static ReentrantLock MessageOutputStreamLock = new ReentrantLock();
+    @Nullable
+    public static PipedOutputStream MessageOutputStream = null;
 
     private ProgressDialog mProgressDialog = null;
 
