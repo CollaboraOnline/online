@@ -85,7 +85,19 @@ class UIManager extends L.Control {
 				target.parentElement?.id === 'document-titlebar') { // checks if clicked on the document titlebar container
 				this.map.fire('editorgotfocus');}
 		});
+		const mainNav = document.querySelector('.main-nav') as HTMLElement;
+		mainNav.addEventListener('wheel', function(e: WheelEvent) {
+			const el = this as HTMLElement;
 
+			// Allow default scroll for Shift + scroll or if not horizontally scrollable
+			if (e.shiftKey || el.scrollWidth <= el.clientWidth) return;
+	  
+			// Scroll horizontally
+			this.scrollLeft += e.deltaY;
+	  
+			// Prevent vertical scroll only within this element
+			e.preventDefault();
+		  }, { passive: false });
 		this.map.on('updateviewslist', this.onUpdateViews, this);
 
 		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
