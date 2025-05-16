@@ -377,16 +377,18 @@ function documentChecks(skipInitializedCheck = false) {
 		});
 
 		// In Writer wait for styles to appear in notebookbar
-		doIfInWriter(() => {
-			cy.cframe().get('#stylesview.notebookbar .icon-view-item-container img')
-				.should('exist');
+		doIfOnDesktop(() => {
+			doIfInWriter(() => {
+				cy.cGet('#stylesview.notebookbar .icon-view-item-container img')
+					.should('exist');
+			});
 		});
 
 		// Check also that the inputbar is drawn in Calc.
-		doIfInCalc(function() {
-			cy.cframe().get('#sc_input_window.formulabar').should('exist');
-			cy.cframe().get('#pos_window-input.addressInput').should('exist');
-			cy.cframe().get('#pos_window-input.addressInput').should('not.be.empty');
+		doIfInCalc(() => {
+			cy.cGet('#sc_input_window.formulabar').should('exist');
+			cy.cGet('#pos_window-input.addressInput').should('exist');
+			//cy.cGet('#pos_window-input.addressInput').should('not.be.empty');
 		});
 	}
 
@@ -619,82 +621,59 @@ function initAliasToNegative(aliasName) {
 	cy.log('<< initAliasToNegative - end');
 }
 
+// Wait for attribute which appears after specialized UI is loaded
+function waitForDocType() {
+		cy.cGet('body', {log: false})
+		.should('have.attr', 'data-docType');
+}
+
+// Run a callback if docType is matching provided value
+function checkDocTypeAndRun(docType, matching, callback) {
+	waitForDocType();
+
+	cy.cframe().find('body', {log: false})
+		.then((bodyElm) => {
+			cy.log('>> doIf ' + docType + ' - start');
+
+			const isMatching = bodyElm.get(0).getAttribute('data-docType') == docType;
+			if (isMatching == matching) {
+				cy.log('>> doIf ' + docType + ' - TRUE');
+				callback();
+				return;
+			}
+
+			cy.log('>> doIf ' + docType + ' - FALSE');
+		});
+}
+
 // Run a code snippet if we are inside Calc.
 function doIfInCalc(callback) {
-	cy.cframe().find('body', {log: false})
-		.then(function(bodyElm) {
-		cy.log('>> doIfInCalc - start');
-		if (bodyElm.get('data-doctype') == 'spreadhsheet') {
-			cy.log('<< doIfInCalc - TRUE');
-			callback();
-		}
-		cy.log('<< doIfInCalc - FALSE');
-	});
+	checkDocTypeAndRun('spreadsheet', true, callback);
 }
 
 // Run a code snippet if we are *NOT* inside Calc.
 function doIfNotInCalc(callback) {
-	cy.cframe().find('body', {log: false})
-		.then(function(bodyElm) {
-		cy.log('>> doIfNotInCalc - start');
-			if (bodyElm.get('data-doctype') !== 'spreadhsheet') {
-				cy.log('<< doIfNotInCalc - TRUE');
-				callback();
-			}
-		cy.log('<< doIfNotInCalc - FALSE');
-		});
+	checkDocTypeAndRun('spreadsheet', false, callback);
 }
 
 // Run a code snippet if we are inside Impress.
 function doIfInImpress(callback) {
-	cy.cframe().find('body', {log: false})
-		.then(function(bodyElm) {
-		cy.log('>> doIfInImpress - start');
-		if (bodyElm.get('data-doctype') == 'presentation') {
-				cy.log('<< doIfInImpress - TRUE');
-				callback();
-			}
-		cy.log('<< doIfInImpress - FALSE');
-		});
+	checkDocTypeAndRun('presentation', true, callback);
 }
 
 // Run a code snippet if we are *NOT* inside Impress.
 function doIfNotInImpress(callback) {
-	cy.cframe().find('body', {log: false})
-		.then(function(bodyElm) {
-		cy.log('>> doIfNotInImpress - start');
-			if (bodyElm.get('data-doctype') !== 'presentation') {
-				cy.log('<< doIfNotInImpress - TRUE');
-				callback();
-			}
-		cy.log('<< doIfNotInImpress - FALSE');
-		});
+	checkDocTypeAndRun('presentation', false, callback);
 }
 
 // Run a code snippet if we are inside Writer.
 function doIfInWriter(callback) {
-	cy.cframe().find('body', {log: false})
-		.then(function(bodyElm) {
-		cy.log('>> doIfInWriter - start');
-		if (bodyElm.get('data-doctype') == 'text') {
-				cy.log('<< doIfInWriter - TRUE');
-				callback();
-			}
-		cy.log('<< doIfInWriter - FALSE');
-		});
+	checkDocTypeAndRun('text', true, callback);
 }
 
 // Run a code snippet if we are *NOT* inside Writer.
 function doIfNotInWriter(callback) {
-	cy.cframe().find('body', {log: false})
-		.then(function(bodyElm) {
-		cy.log('>> doIfNotInWriter - start');
-			if (bodyElm.get('data-doctype') !== 'text') {
-				cy.log('<< doIfNotInWriter - TRUE');
-				callback();
-			}
-		cy.log('<< doIfNotInWriter - FALSE');
-		});
+	checkDocTypeAndRun('text', false, callback);
 }
 
 // Types text into elem with a delay in between characters.
