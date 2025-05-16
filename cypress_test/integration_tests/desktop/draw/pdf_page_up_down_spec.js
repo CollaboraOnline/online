@@ -13,10 +13,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 	it('PDF page down', { env: { 'pdf-view': true } }, function() {
 		cy.cGet('#map').type('{pagedown}');
 		cy.cGet('#map').type('{pagedown}');
-		cy.cGet('#preview-frame-part-1').should('have.attr', 'style', 'border: 2px solid darkgrey;');
+		cy.cGet('#preview-frame-part-1 img').should('have.class', 'preview-img-currentpart');
 		cy.cGet('#map').type('{pageup}');
 		cy.cGet('#map').type('{pageup}');
-		cy.cGet('#preview-frame-part-0').should('have.attr', 'style', 'border: 2px solid darkgrey;');
+		cy.cGet('#preview-frame-part-0 img').should('have.class', 'preview-img-currentpart');
 	});
 
 	it.skip('PDF insert comment', { env: { 'pdf-view': true }, defaultCommandTimeout: 60000 }, function() {
