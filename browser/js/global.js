@@ -1900,14 +1900,95 @@ function getInitializerClass() {
 		global.socket.binaryType = 'arraybuffer';
 
 		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) {
-			// This corresponds to the initial GET request when creating a WebSocket
-			// connection and tells the app's code that it is OK to start invoking
-			// TheFakeWebSocket's onmessage handler. The app code that handles this
-			// special message knows the document to be edited anyway, and can send it
-			// on as necessary to the Online code.
-			global.postMobileMessage('HULLO');
-			// A FakeWebSocket is immediately open.
-			this.socket.onopen();
+			const messagesUrl = global.ThisIsTheAndroidApp ? 'http://cool/cool/messages' : 'cool:/cool/messages';
+			// The Android URL here acts the same as cool:/cool/messages would, but is usable from fetch which cannot handle custom protocols
+
+			fetch(messagesUrl).then(async (response) => {
+				if (!response.ok) {
+					throw new Error(`Response failed with code ${response.status}`);
+				}
+
+				console.log(`Successfully opened ${messagesUrl} socket`);
+
+				// This corresponds to the initial GET request when creating a WebSocket
+				// connection and tells the app's code that it is OK to start invoking
+				// TheFakeWebSocket's onmessage handler. The app code that handles this
+				// special message knows the document to be edited anyway, and can send it
+				// on as necessary to the Online code.
+				global.postMobileMessage('HULLO');
+				this.socket.onopen();
+
+				const stream = response.body;
+				const reader = stream.getReader();
+
+				const headerLength = 5; // 4 bytes for the size, 1 byte for if it is binary or not
+				let messageHeaderBuffer = new Uint8Array(headerLength);
+				
+				let messageIsBinary;
+				let messageBuffer;
+
+				let readingHeader = true;
+				let cursorOffset = 0;
+				let chunk;
+
+				while (!((chunk = await reader.read()).done)) {
+					let chunkBuffer = chunk.value;
+					let chunkOffset = 0;
+
+					while (chunkOffset < chunkBuffer.byteLength) {
+						if (readingHeader) {
+							let readLength = Math.min(chunkBuffer.byteLength - chunkOffset, headerLength - cursorOffset);
+							let readPortion = chunkBuffer.slice(chunkOffset, chunkOffset + readLength);
+							messageHeaderBuffer.set(readPortion, cursorOffset);
+							cursorOffset += readLength;
+							chunkOffset += readLength;
+
+							if (cursorOffset == headerLength) { // No more header to read...
+								let messageHeaderView = new DataView(messageHeaderBuffer.buffer);
+								let messageLength = messageHeaderView.getInt32(0);
+								messageIsBinary = !!messageHeaderView.getInt8(4);
+
+								messageBuffer = new Uint8Array(messageLength);
+
+								cursorOffset = 0;
+								readingHeader = false;
+							}
+						} else {
+							let readLength = Math.min(chunkBuffer.byteLength - chunkOffset, messageBuffer.byteLength - cursorOffset);
+							let readPortion = chunkBuffer.slice(chunkOffset, chunkOffset + readLength);
+							messageBuffer.set(readPortion, cursorOffset);
+							cursorOffset += readLength;
+							chunkOffset += readLength;
+
+							if (cursorOffset == messageBuffer.byteLength) { // No more message to read...
+								if (messageIsBinary) {
+									try {
+										window.TheFakeWebSocket.onmessage({'data': messageBuffer});
+									} catch (e) {
+										console.log(`Got an error while calling onmessage handler for a binary message, ignoring`);
+									}
+								} else {
+									let decodedMessage = new TextDecoder().decode(messageBuffer);
+									try {
+										window.TheFakeWebSocket.onmessage({'data': decodedMessage});
+									} catch (e) {
+										console.log(`Got an error while calling onmessage handler for the text message '${decodedMessage}', ignoring`);
+									}
+								}
+								
+								messageHeaderBuffer = new Uint8Array(headerLength);
+
+								cursorOffset = 0;
+								readingHeader = true;
+							}
+						}
+					}
+				}
+
+				console.log(`Server closed ${messagesUrl} connection`);
+			}).catch(e => {
+				console.log(`Got an error while reading ${messagesUrl}, we're pretty much done-for: ${e}`);
+			});
 		}
 	}
 
