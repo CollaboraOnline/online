@@ -69,6 +69,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -131,6 +132,9 @@ public class LOActivity extends AppCompatActivity {
     private Handler nativeHandler;
     private Looper nativeLooper;
     private Bundle savedInstanceState;
+
+    public static Map<String, byte[]> sendingMessages;
+    public static Integer messageIndex;
 
     private ProgressDialog mProgressDialog = null;
 
@@ -239,6 +243,10 @@ public class LOActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
+
+        sendingMessages = new HashMap<>();
+        messageIndex = 0;
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -966,6 +974,50 @@ public class LOActivity extends AppCompatActivity {
         String base64Message = Base64.getEncoder().encodeToString(message.getBytes());
 
         rawCallFakeWebsocketOnMessage("b64d('" + base64Message + "')");
+    }
+
+    /**
+     * Similar to callFakeWebsocketOnMessage but 'message' is instead any expression evaluable as
+     * JavaScript. For example, you should use this to pass Base64ToArrayBuffer invocations to
+     * the fake websocket
+     */
+    void rawCallFakeWebsocketOnLargeMessage(final byte[] message, final boolean isBinary) {
+        String messageString;
+
+        if (!isBinary) {
+            messageString = Arrays.toString(message);
+        } else {
+            messageString = "(binary message)";
+        }
+
+        // call from the UI thread
+        if (mWebView != null)
+            mWebView.post(() -> {
+                if (mWebView == null) {
+                    Log.i(TAG, "Skipped forwarding to the WebView: " + messageString);
+                    return;
+                }
+
+                Log.i(TAG, "Forwarding to the WebView: " + messageString);
+
+                /* Debug only: in case the message is too long, truncated in the logcat, and you need to see it.
+                final int size = 80;
+                for (int start = 0; start < message.length(); start += size) {
+                    Log.i(TAG, "split: " + message.substring(start, Math.min(message.length(), start + size)));
+                }
+                */
+
+                messageIndex++;
+                sendingMessages.put(messageIndex.toString(), message);
+
+                if (isBinary) {
+                    mWebView.loadUrl("javascript:window.TheFakeWebSocket.onremotebinarymessage(\"" + messageIndex.toString() + "\");");
+                } else {
+                    mWebView.loadUrl("javascript:window.TheFakeWebSocket.onremotemessage(\"" + messageIndex.toString() + "\");");
+                }
+            });
+
+        // Progress messages, etc. are never large
     }
 
     /**

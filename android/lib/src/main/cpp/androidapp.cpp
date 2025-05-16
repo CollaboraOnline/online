@@ -101,6 +101,25 @@ static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffe
 {
     LOG_DBG("Send to JS: " << COOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
+    const char *newline = (const char *)memchr(buffer.data(), '\n', buffer.size());
+    JNIEnv *env = jctx.getEnv();
+
+    if (buffer.size() > 1024) {
+        jbyteArray jmessage = env->NewByteArray(buffer.size());
+        env->SetByteArrayRegion(jmessage, 0, buffer.size(),
+                                reinterpret_cast<const jbyte *>(buffer.data()));
+
+        jboolean jisbinary = newline != nullptr;
+        jmethodID callFakeWebsocket = env->GetMethodID(g_loActivityClz, "rawCallFakeWebsocketOnLargeMessage", "([BZ)V");
+        env->CallVoidMethod(g_loActivityObj, callFakeWebsocket, jmessage, jisbinary);
+        env->DeleteLocalRef(jmessage);
+
+        if (env->ExceptionCheck())
+            env->ExceptionDescribe();
+
+        return;
+    }
+
     std::string js;
 
     // Check if the message is binary. We say that any message that isn't just a single line is
@@ -109,7 +128,6 @@ static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffe
     // handles it fine even if such a message, too, comes in as an ArrayBuffer. (Look for the
     // "textMsg = String.fromCharCode.apply(null, imgBytes);".)
 
-    const char *newline = (const char *)memchr(buffer.data(), '\n', buffer.size());
     if (newline != nullptr)
     {
         // The data needs to be an ArrayBuffer
@@ -147,7 +165,6 @@ static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffe
 
     LOG_DBG("Sending to JavaScript: " << subjs);
 
-    JNIEnv *env = jctx.getEnv();
     jstring jstr = env->NewStringUTF(js.c_str());
     jmethodID callFakeWebsocket = env->GetMethodID(g_loActivityClz, "rawCallFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
     env->CallVoidMethod(g_loActivityObj, callFakeWebsocket, jstr);
