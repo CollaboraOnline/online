@@ -2234,7 +2234,13 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
     // First Upgrade.
     const ServerURL cnxDetails(requestDetails);
-    auto ws = std::make_shared<WebSocketHandler>(socket, request, cnxDetails.getWebServerUrl());
+    std::string allowedOrigin;
+    if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
+        allowedOrigin = ConfigUtil::getString(
+            "indirection_endpoint.geolocation_setup.allow_websocket_origin", "");
+
+    auto ws = std::make_shared<WebSocketHandler>(socket, request, cnxDetails.getWebServerUrl(),
+                                                 allowedOrigin);
 
     // Response to clients beyond this point is done via WebSocket.
     try

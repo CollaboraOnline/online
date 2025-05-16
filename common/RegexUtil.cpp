@@ -50,6 +50,27 @@ bool matchRegex(const std::set<std::string>& set, const std::string& subject)
     return false;
 }
 
+bool matchRegex(const std::string& value, const std::string& subject)
+{
+    try
+    {
+        // Not performance critical to warrant caching.
+        Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
+        Poco::RegularExpression::Match reMatch;
+
+        // Must be a full match.
+        if (re.match(subject, reMatch) && reMatch.offset == 0 && reMatch.length == subject.size())
+        {
+            return true;
+        }
+    }
+    catch (const std::exception& exc)
+    {
+        // Nothing to do; skip.
+    }
+    return false;
+}
+
 std::string getValue(const std::map<std::string, std::string>& map, const std::string& subject)
 {
     if (const auto& it = map.find(subject); it != map.end())
