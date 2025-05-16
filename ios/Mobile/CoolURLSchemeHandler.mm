@@ -29,6 +29,8 @@
 - (id)initWithDocument:(CODocument *)document {
     self->document = document;
     self->ongoingTasks = [[NSMutableSet alloc] init];
+    self->messagesQueue = [[NSOperationQueue alloc] init];
+    self->messagesQueue.maxConcurrentOperationCount = 1;
     return self;
 }
 
@@ -109,6 +111,32 @@
 - (void)webView:(WKWebView *)webView startURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
     [ongoingTasks addObject:urlSchemeTask];
     
+    Poco::URI requestUri([[[urlSchemeTask.request.URL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
+    std::string path = requestUri.getPath();
+    
+    if (path == "/cool/media") {
+        [self handleMediaSchemeTask:urlSchemeTask];
+    } else if (path == "/cool/messages") {
+        [self handleMessagesSchemeTask:urlSchemeTask];
+    } else {
+        NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
+        [responseHeaders setObject:@"null" forKey:@"Access-Control-Allow-Origin"]; // Yes, the origin really is 'null' for 'file:' origins
+        [responseHeaders setObject:@"0" forKey:@"Content-Length"];
+
+        NSHTTPURLResponse * response = [[NSHTTPURLResponse alloc]
+                                        initWithURL:urlSchemeTask.request.URL
+                                        statusCode:404
+                                        HTTPVersion:nil
+                                        headerFields:responseHeaders
+        ];
+        [urlSchemeTask didReceiveResponse:response];
+
+        [ongoingTasks removeObject:urlSchemeTask];
+        [urlSchemeTask didFinish];
+    }
+}
+
+- (void) handleMediaSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
     // Get tag from request
     Poco::URI requestUri([[[urlSchemeTask.request.URL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
@@ -221,6 +249,60 @@
     // Tell the other side that we finished, and remove the ongoing-ness of the task
     [ongoingTasks removeObject:urlSchemeTask];
     [urlSchemeTask didFinish];
+}
+
+- (void)queueSendMessage:(std::string)message binary:(bool)isBinary {
+    [messagesQueue addOperationWithBlock:^{
+        LOG_DBG("Sending a message to the webview of length " + std::to_string(message.length()) + " that is binary?: " + std::to_string(isBinary));
+        if (self->messagesTask == NULL) {
+            LOG_WRN("Tried to send a message without an open socket...");
+            return;
+        }
+        
+        if (![self->ongoingTasks containsObject:self->messagesTask]) {
+            // The task was cancelled: exit immediately, without calling any further methods as per Apple docs
+            LOG_WRN("Tried to send a message to a closed socket, removing it...");
+            self->messagesTask = NULL;
+            return;
+        }
+
+        NSMutableData * data = [[NSMutableData alloc] initWithCapacity:5 + message.length()]; // We need 5 bytes for our header
+        std::int32_t lengthBytes = htonl((std::int32_t)message.length());
+        [data appendBytes:&lengthBytes length:4];
+        
+        std::int8_t isBinaryByte = (std::int8_t)(isBinary ? 1 : 0);
+        [data appendBytes:&isBinaryByte length:1];
+        
+        [data appendBytes:message.data() length:message.length()];
+        
+        [self->messagesTask didReceiveData:data];
+    }];
+}
+
+- (void)handleMessagesSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    // The object of the messages scheme-task is to have a long-running request to ferry messages to COOL
+    NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
+    [responseHeaders setObject:@"null" forKey:@"Access-Control-Allow-Origin"]; // Yes, the origin really is 'null' for 'file:' origins
+    
+    NSHTTPURLResponse * response = [[NSHTTPURLResponse alloc]
+                                    initWithURL:urlSchemeTask.request.URL
+                                    statusCode:200
+                                    HTTPVersion:nil
+                                    headerFields:responseHeaders
+    ];
+    [urlSchemeTask didReceiveResponse:response];
+    
+    [messagesQueue addOperationWithBlock:^{
+        if (self->messagesTask != NULL) { // Clean up the previous messages task if it still exists...
+            [self->ongoingTasks removeObject:self->messagesTask];
+            [self->messagesTask didFinish];
+        }
+        
+        self->messagesTask = urlSchemeTask;
+    }];
+    
+    std::string message = "hello world!";
+    [self queueSendMessage:"hello world!" binary:false]; // we need to send something to unchoke the socket...
 }
 
 - (void)webView:(WKWebView *)webView stopURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {

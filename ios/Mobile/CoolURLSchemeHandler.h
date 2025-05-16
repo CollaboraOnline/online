@@ -22,12 +22,17 @@
 @interface CoolURLSchemeHandler : NSObject<WKURLSchemeHandler>
 {
     NSMutableSet<id<WKURLSchemeTask>> *ongoingTasks;
+    id<WKURLSchemeTask> messagesTask;
+    NSOperationQueue* messagesQueue;
     CODocument *document;
 }
 
 - (id)initWithDocument:(CODocument *)document;
 - (std::shared_ptr<DocumentBroker>)getDocumentBroker;
 - (std::optional<std::tuple<NSUInteger, NSUInteger, NSUInteger>>)getPositionsAndSizeForRange:(NSString *)range withTotalSize:(NSInteger)size;
+- (void)handleMediaSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask;
+- (void)handleMessagesSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask;
+- (void)queueSendMessage:(std::string)message binary:(bool)isBinary;
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
