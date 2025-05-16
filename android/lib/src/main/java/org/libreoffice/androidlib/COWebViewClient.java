@@ -30,7 +30,7 @@ public class COWebViewClient extends WebViewClient {
     @Nullable
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        if (!Objects.equals(request.getUrl().getScheme(), "cool")) {
+        if (!Objects.equals(request.getUrl().getScheme(), "cool") && !Objects.equals(request.getUrl().getHost(), "cool")) { // We allow requests to http://cool as well as cool:, since as fetch can't work with custom intercepted protocols
             return super.shouldInterceptRequest(view, request);
         }
 
