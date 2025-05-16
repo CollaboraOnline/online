@@ -28,6 +28,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 		// Set right alignment
 		cy.cGet('#rightpara').click();
+		cy.wait(500);
 
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition[x="23583"], #document-container g.Page .TextParagraph .TextPosition[x="23584"]')
@@ -35,6 +36,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 		// Set left alignment
 		cy.cGet('#leftpara').click();
+		cy.wait(500);
 
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
@@ -42,6 +44,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 		// Set centered alignment
 		cy.cGet('#centerpara').click();
+		cy.wait(500);
 
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition[x="12491"], #document-container g.Page .TextParagraph .TextPosition[x="12492"]')
@@ -49,6 +52,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 		// Set justified alignment
 		cy.cGet('#justifypara').click();
+		cy.wait(500);
 
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
