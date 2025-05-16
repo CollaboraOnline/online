@@ -303,7 +303,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
                              "ClientRequestDispatcher and creating DocBroker for ["
                           << docKey << ']');
 
-            _ws->sendMessage("browsersetting: null");
+            if (!UnitBase::isUnitTesting())
+            {
+                _ws->sendMessage("browsersetting: null");
+            }
 
             // Create the DocBroker.
             if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
