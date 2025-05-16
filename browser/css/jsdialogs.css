@@ -1813,6 +1813,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-weight: 600;
 	font-size: var(--header-font-size) !important;
 	padding: 8px;
+	display: flex;
+	align-items: center;
 }
 .snackbar.jsdialog-container [id$='button']:hover {
 	background-color: #ffffff15 !important;
