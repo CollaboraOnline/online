@@ -375,6 +375,13 @@ function documentChecks(skipInitializedCheck = false) {
 						});
 				});
 		});
+
+		// In Writer wait for styles to appear in notebookbar
+		doIfInWriter(() => {
+			cy.cframe().get('#stylesview.notebookbar .icon-view-item-container img')
+				.should('exist');
+		});
+
 		// Check also that the inputbar is drawn in Calc.
 		doIfInCalc(function() {
 			cy.cframe().get('#sc_input_window.formulabar').should('exist');
