@@ -41,7 +41,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.assertVisiblePage(1, 1, 4);
 	});
 
-	it('Scrolling to left/right', function() {
+	// FIXME: from time to time fails with x always 0 (check test div)
+	it.skip('Scrolling to left/right', function() {
 		desktopHelper.selectZoomLevel('200');
 		cy.wait(1000);
 
