@@ -1303,7 +1303,7 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
     else
     {
         // Use the local temp file's timestamp.
-        const auto timepoint = FileUtil::Stat(std::move(localFilePath)).modifiedTimepoint();
+        const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
         _saveManager.setLastModifiedTime(timepoint);
         _storageManager.setLastUploadedFileModifiedTime(timepoint); // Used to detect modifications.
     }

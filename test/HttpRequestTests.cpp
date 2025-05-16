@@ -691,9 +691,8 @@ void HttpRequestTests::testInvalidPoll()
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     bool calledFailed = false;
-    http::Session::ConnectFailCallback connectFailCallback =
-        [&](const std::shared_ptr<http::Session>&) { calledFailed = true; };
-    httpSession->setConnectFailHandler(connectFailCallback);
+    httpSession->setConnectFailHandler([&calledFailed](const std::shared_ptr<http::Session>&)
+                                       { calledFailed = true; });
 
     std::weak_ptr<SocketPoll> poll;
     httpSession->asyncRequest(httpRequest, poll);

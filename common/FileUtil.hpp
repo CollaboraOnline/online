@@ -238,10 +238,9 @@ namespace FileUtil
     {
     public:
         /// Stat the given path. Symbolic links are stat'ed when @link is true.
-        Stat(std::string file, bool link = false)
-            : _path(std::move(file))
-            , _sb{}
-            , _res(link ? FileUtil::getLStatOfFile(_path, _sb) : FileUtil::getStatOfFile(_path, _sb))
+        Stat(const std::string& path, bool link = false)
+            : _sb{}
+            , _res(link ? FileUtil::getLStatOfFile(path, _sb) : FileUtil::getStatOfFile(path, _sb))
             , _stat_errno(errno)
         {
         }
@@ -302,40 +301,41 @@ namespace FileUtil
 
         /// Returns true if both files exist and have
         /// the same size and same contents.
-        bool isIdenticalTo(const Stat& other) const
+        static inline bool isIdenticalTo(const Stat& l, const std::string& lPath,
+                                         const Stat& r, const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,
             // and if they aren't, we still need to rely on the following.
             // Finally, compare the contents, to avoid costly copying if we fail to update.
-            return (exists() && other.exists() && !isDirectory() && !other.isDirectory() &&
-                    size() == other.size() && compareFileContents(_path, other._path));
+            return (l.exists() && r.exists() && !l.isDirectory() && !r.isDirectory() &&
+                    l.size() == r.size() && compareFileContents(lPath, rPath));
         }
 
         /// Returns true if both files exist and have
         /// the same size and modified timestamp.
-        bool isUpToDate(const Stat& other) const
+        static inline bool isUpToDate(const Stat& l, const std::string& lPath,
+                                      const Stat& r, const std::string& rPath)
         {
             // No need to check whether they are linked or not,
             // since if they are, the following check will match,
             // and if they aren't, we still need to rely on the following.
             // Finally, compare the contents, to avoid costly copying if we fail to update.
-            if (isIdenticalTo(other))
+            if (isIdenticalTo(l, lPath, r, rPath))
             {
                 return true;
             }
 
             // Clearly, no match. Log something informative.
             LOG_DBG("File contents mismatch: ["
-                    << _path << "] " << (exists() ? "exists" : "missing") << ", " << size()
-                    << " bytes, modified at " << modifiedTime().tv_sec << " =/= [" << other._path
-                    << "]: " << (other.exists() ? "exists" : "missing") << ", " << other.size()
-                    << " bytes, modified at " << other.modifiedTime().tv_sec);
+                    << lPath << "] " << (l.exists() ? "exists" : "missing") << ", " << l.size()
+                    << " bytes, modified at " << l.modifiedTime().tv_sec << " =/= [" << rPath
+                    << "]: " << (r.exists() ? "exists" : "missing") << ", " << r.size()
+                    << " bytes, modified at " << r.modifiedTime().tv_sec);
             return false;
         }
 
     private:
-        const std::string _path;
         struct ::stat _sb;
         const int _res;
         const int _stat_errno;

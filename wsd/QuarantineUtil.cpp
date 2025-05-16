@@ -399,15 +399,15 @@ bool Quarantine::quarantineFile(const std::string& docKey, const std::string& do
     auto& fileList = QuarantineMap[docKey];
     if (!fileList.empty())
     {
-        const auto& lastFile = fileList[fileList.size() - 1];
-        FileUtil::Stat lastFileStat(lastFile.fullPath());
+        const std::string lastFile = fileList[fileList.size() - 1].fullPath();
+        FileUtil::Stat lastFileStat(lastFile);
 
-        if (lastFileStat.isIdenticalTo(sourceStat))
+        if (FileUtil::Stat::isIdenticalTo(lastFileStat, lastFile, sourceStat, docPath))
         {
             LOG_INF("Quarantining of file ["
                     << docPath << "] to [" << linkedFilePath
                     << "] is skipped because this file version is already quarantined as ["
-                    << lastFile.fullPath() << ']');
+                    << lastFile << ']');
             return false;
         }
     }
