@@ -195,6 +195,7 @@ bool lockdown([[maybe_unused]] Type type)
         KILL_SYSCALL(sync),   // I/O perf.
         KILL_SYSCALL(mount),
         KILL_SYSCALL(umount2),
+        KILL_SYSCALL(setns),
         KILL_SYSCALL(swapon),
         KILL_SYSCALL(swapoff),
         KILL_SYSCALL(reboot), // !
