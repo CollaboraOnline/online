@@ -1107,7 +1107,7 @@ body {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	color: var(--color-border); /* color */
+	color: #b6b6b6; /* color */
 	opacity: 1; /* opacity */
 	border-top-width: 1px; /* weight */
 }
