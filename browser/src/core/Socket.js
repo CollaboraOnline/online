@@ -82,6 +82,11 @@ app.definitions.Socket = L.Class.extend({
 			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
 		}
 
+		if (window.ThisIsAMobileApp) {
+			this.socket.onremotebinarymessage = L.bind(this._onRemoteBinaryMessage, this);
+			this.socket.onremotemessage = L.bind(this._onRemoteMessage, this);
+		}
+
 		// process messages for early socket connection
 		this._emptyQueue();
 	},
@@ -483,6 +488,29 @@ app.definitions.Socket = L.Class.extend({
 				completeCallback();
 			}
 		}
+	},
+
+	_onRemoteBinaryMessage: function(messageId) {
+		const request = new XMLHttpRequest();
+		request.open("GET", `cool:/cool/message?id=${messageId}`);
+		request.responseType = "arraybuffer";
+		request.onload = () => {
+			console.log({ binaryMessage: request.response, request });
+			if (!request.response) return;
+			this._slurpMessage({ data: request.response });
+		};
+		request.send();
+	},
+
+	_onRemoteMessage: function(messageId) {
+		const request = new XMLHttpRequest();
+		request.open("GET", `cool:/cool/message?id=${messageId}`);
+		request.onload = () => {
+			console.log({ textualMessage: request.response, request });
+			if (!request.response) return;
+			this._slurpMessage({ data: request.response });
+		};
+		request.send();
 	},
 
 	// The problem: if we process one websocket message at a time, the

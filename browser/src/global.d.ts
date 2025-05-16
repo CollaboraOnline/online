@@ -27,8 +27,9 @@ interface COOLTouch {
 }
 
 interface Window {
-	touch: COOLTouch;
+	ThisIsAMobileApp: boolean;
 	setLogging(value: boolean): void;
+	touch: COOLTouch;
 }
 
 /*
