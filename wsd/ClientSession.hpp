@@ -235,7 +235,7 @@ public:
     void handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
                                 const std::shared_ptr<StreamSocket> &socket,
                                 const std::string                   &tag,
-                                const std::shared_ptr<std::string>  &data);
+                                const std::string                   &clipFile);
 
     /// Create URI for transient clipboard content.
     std::string getClipboardURI(bool encode = true);
@@ -245,10 +245,11 @@ public:
 
     /// Adds and/or modified the copied payload before sending on to the client.
     void postProcessCopyPayload(const std::shared_ptr<Message>& payload);
+    bool postProcessCopyPayload(std::istream&, std::ostream&);
 
     /// Removes the <meta name="origin" ...> tag which was added in
     /// ClientSession::postProcessCopyPayload().
-    void preProcessSetClipboardPayload(std::string& payload);
+    bool preProcessSetClipboardPayload(std::istream&, std::ostream&);
 
     /// Returns true if we're expired waiting for a clipboard and should be removed
     bool staleWaitDisconnect(std::chrono::steady_clock::time_point now);
