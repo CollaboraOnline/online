@@ -15,13 +15,13 @@
 #include <lokassert.hpp>
 #include <testlog.hpp>
 
+#include <algorithm>
+#include <chrono>
 #include <csignal>
 #include <set>
-#include <chrono>
-#include <iostream>
-#include <algorithm>
-#include <thread>
+#include <sstream>
 #include <string>
+#include <thread>
 
 std::string getPidList(const std::set<pid_t>& pids);
 
@@ -66,45 +66,44 @@ void helpers::waitForKitPidsReady(
         const std::chrono::milliseconds retryMs /* = KIT_PID_RETRY_MS */)
 {
     // It is generally not a great idea to look for exactly <N> processes
-    const int targetDocKits = 0;
-    const int targetSpareKits = 1;
+    constexpr size_t targetDocKits = 0;
+    constexpr size_t targetSpareKits = 1;
 
     TST_LOG("Waiting for kit processes to close, with one spare kit");
 
     std::set<pid_t> docKitPids;
     std::set<pid_t> spareKitPids;
 
-    bool pass = false;
-    int tries = timeoutMs / retryMs;
-
-    while (tries >= 0 && !pass)
+    for (int tries = timeoutMs / retryMs; tries >= 0; --tries)
     {
         docKitPids = helpers::getDocKitPids();
         spareKitPids = helpers::getSpareKitPids();
-        pass = (docKitPids.size() == static_cast<size_t>(targetDocKits) &&
-                spareKitPids.size() == static_cast<size_t>(targetSpareKits));
-        tries--;
 
         TST_LOG("Current kit processes: "
-                << "Doc Kits: " << getPidList(docKitPids)
-                << " Spare Kits: " << getPidList(spareKitPids));
+                << "Doc Kits (" << docKitPids.size() << ", expect: " << targetDocKits
+                << "): " << getPidList(docKitPids) << ", Spare Kits (" << spareKitPids.size()
+                << ", expect: " << targetSpareKits << "): " << getPidList(spareKitPids));
 
-        if (!pass)
-            std::this_thread::sleep_for(retryMs);
+        if (docKitPids.size() == targetDocKits && spareKitPids.size() >= targetSpareKits)
+        {
+            // We've closed the open kits and we have enough spare ones for new docs.
+            // N.B. In some cases, when the system is slow, to spawn new kits we
+            // end up with more than the expected number because we spawn more.
+            // This should not be a failure condition.
+            TST_LOG("Warning: have more spare kits than wanted; system may be too slow");
+            TST_LOG("Finished waiting for kit processes to close");
+            return;
+        }
+
+        std::this_thread::sleep_for(retryMs);
     }
 
-    if (pass)
-    {
-        TST_LOG("Finished waiting for kit processes to close");
-    }
-    else
-    {
-        std::ostringstream oss;
-        oss << "Current kit processes:"
-            << " Doc Kits: " << getPidList(docKitPids)
-            << " Spare Kits: " << getPidList(spareKitPids);
-        LOK_ASSERT_FAIL("Timed out waiting for kit processes to close: " << oss.str());
-    }
+    std::ostringstream oss;
+    oss << "Current kit processes: " << "Doc Kits (" << docKitPids.size()
+        << ", expect: " << targetDocKits << "): " << getPidList(docKitPids) << ", Spare Kits ("
+        << spareKitPids.size() << ", expect: " << targetSpareKits
+        << "): " << getPidList(spareKitPids);
+    LOK_ASSERT_FAIL("Timed out waiting for kit processes to close: " << oss.str());
 }
 
 void helpers::killPid(const std::string& testname, const pid_t pid)
