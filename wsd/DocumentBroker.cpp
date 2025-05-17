@@ -4111,15 +4111,16 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
     }
 }
 
-Poco::URI DocumentBroker::getPresetUploadBaseUrl(Poco::URI uriObject)
+Poco::URI DocumentBroker::getPresetUploadBaseUrl(const Poco::URI& uriObject)
 {
     std::string path = uriObject.getPath();
     size_t pos = path.find("/files/");
     if (pos != std::string::npos)
         path = path.substr(0, pos);
     path.append("/settings/upload");
-    uriObject.setPath(path);
-    return uriObject;
+    Poco::URI result(uriObject);
+    result.setPath(path);
+    return result;
 }
 
 void DocumentBroker::uploadPresetsToWopiHost()
