@@ -805,12 +805,9 @@ void SocketPoll::closeAllSockets()
     removeFromWakeupArray();
     for (std::shared_ptr<Socket> &it : _pollSockets)
     {
-        // first close the underlying socket
-#if !MOBILEAPP
+        // first close the underlying socket/fakeSocket
         it->closeFD(*this);
-#else
-        fakeSocketClose(it->getFD());
-#endif
+
         // avoid the socketHandler' getting an onDisconnect
         auto stream = dynamic_cast<StreamSocket *>(it.get());
         if (stream)

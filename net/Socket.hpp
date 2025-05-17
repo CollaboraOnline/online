@@ -161,17 +161,7 @@ public:
     {
         LOG_TRC("Socket dtor");
 
-        // explicit closeFD called, or initial createSocket failure
-        if (_fd < 0)
-            return;
-
-        // Doesn't block on sockets; no error handling needed.
-#if !MOBILEAPP
-        ::close(_fd);
-        LOG_DBG("Closed socket " << toStringImpl());
-#else
-        fakeSocketClose(_fd);
-#endif
+        closeFD(); // In case we haven't closed yet.
     }
 
     /// Returns true if this socket FD has been shutdown, but not necessarily closed.
@@ -399,19 +389,7 @@ public:
 
     // arg to emphasize what is allowed do this
     // close in advance of the ctor
-    void closeFD(const SocketPoll& /*rPoll*/)
-    {
-#if !MOBILEAPP
-        ::close(_fd);
-#else
-        fakeSocketClose(_fd);
-#endif
-        // Invalidate the FD by negating to preserve the original value.
-        if (_fd > 0)
-            _fd = -_fd;
-        else if (_fd == 0) // Unlikely, but technically possible.
-            _fd = -1;
-    }
+    void closeFD(const SocketPoll& /*rPoll*/) { closeFD(); }
 
 protected:
     /// Construct based on an existing socket fd.
@@ -499,6 +477,30 @@ private:
             }
 #endif
         }
+    }
+
+    /// Close the socket FD.
+    /// Internal implementation, always private.
+    void closeFD()
+    {
+        // explicit closeFD called, or initial createSocket failure
+        if (_fd < 0)
+            return;
+
+            // Doesn't block on sockets; no error handling needed.
+#if !MOBILEAPP
+        ::close(_fd);
+#else
+        fakeSocketClose(_fd);
+#endif
+
+        LOG_DBG("Closed socket " << toStringImpl()); // Should be logged exactly once.
+
+        // Invalidate the FD by negating to preserve the original value.
+        if (_fd > 0)
+            _fd = -_fd;
+        else if (_fd == 0) // Unlikely, but technically possible.
+            _fd = -1;
     }
 
     std::string _clientAddress;
