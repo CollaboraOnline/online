@@ -161,7 +161,7 @@ STATE_ENUM(FieldParseState,
 /// See https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 enum class StatusCode : unsigned
 {
-    None = 0, // Undefined status (unknown)
+    None = 0, // Undefined status (unknown); implies time-out.
 
     // Informational
     Continue = 100,
