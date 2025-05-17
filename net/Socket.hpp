@@ -164,6 +164,10 @@ public:
         closeFD(); // In case we haven't closed yet.
     }
 
+    /// Returns true iff we have a valid FD and haven't called shutdown(2).
+    /// Note: this is needed because shutting down and closing are independent.
+    bool isOpen() const { return _fd >= 0 && !_isShutdown; }
+
     /// Returns true if this socket FD has been shutdown, but not necessarily closed.
     bool isShutdown() const { return _isShutdown; }
 
@@ -1259,7 +1263,8 @@ public:
             if (_socketHandler)
                 _socketHandler->onDisconnect();
         }
-        if (!isShutdown())
+
+        if (isOpen())
         {
             // Note: Ensure proper semantics of onDisconnect()
             LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
@@ -1648,7 +1653,7 @@ public:
             return;
         }
 
-        if (isShutdown() || checkRemoval(now))
+        if (!isOpen() || checkRemoval(now))
         {
             disposition.setClosed();
             return;
@@ -1772,7 +1777,7 @@ public:
             setShutdown();
             disposition.setClosed();
         }
-        else if (isShutdown())
+        else if (!isOpen())
             disposition.setClosed();
     }
 

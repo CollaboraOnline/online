@@ -1018,10 +1018,10 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         socket->ignoreInput();
     }
     else
-        LOG_DBG("Handled request: " << request.getURI()
-                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
-                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
-                << "], connection open " << !socket->isShutdown());
+        LOG_DBG("Handled request: " << request.getURI() << ", inBuf[sz " << preInBufferSz << " -> "
+                                    << socket->getInBuffer().size() << ", rm "
+                                    << (preInBufferSz - socket->getInBuffer().size())
+                                    << "], connection open: " << socket->isOpen());
 
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;

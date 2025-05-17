@@ -200,9 +200,9 @@ protected:
             return;
         }
 
-        if (socket->isShutdown())
+        if (!socket->isOpen())
         {
-            LOG_DBG("Socket is shut down. Cannot send Close Frame");
+            LOG_DBG("Socket is not open. Cannot send Close Frame");
             return;
         }
 
@@ -269,7 +269,7 @@ public:
     bool isConnected() const
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        return socket && !socket->isShutdown();
+        return socket && socket->isOpen();
     }
 
 private:
@@ -841,9 +841,9 @@ protected:
             return -1;
         }
 
-        if (socket->isShutdown())
+        if (!socket->isOpen())
         {
-            LOG_DBG("Socket is shut down. Cannot send WS frame");
+            LOG_DBG("Socket is not open. Cannot send WS frame");
             return 0;
         }
 
