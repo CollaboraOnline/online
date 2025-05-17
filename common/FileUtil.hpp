@@ -11,18 +11,16 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+
 #include <cerrno>
 #include <chrono>
 #include <fcntl.h>
-#include <filesystem>
+#include <fstream>
+#include <string>
 #include <sys/stat.h>
 
-#include <string>
-#include <fstream>
-
 #include <Poco/Path.h>
-
-#include "Log.hpp"
 
 #if !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG)
 #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
@@ -207,7 +205,7 @@ namespace FileUtil
     template <typename T>
     ssize_t readFile(const std::string& path, T& data, int maxSize = 256 * 1024)
     {
-        const int fd = FileUtil::openFileAsFD(path.c_str(), O_RDONLY);
+        const int fd = FileUtil::openFileAsFD(path, O_RDONLY);
         if (fd < 0)
             return -1;
 
