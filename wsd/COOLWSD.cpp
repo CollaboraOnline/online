@@ -43,6 +43,7 @@
 #include <cassert>
 #include <clocale>
 #include <condition_variable>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
@@ -600,11 +601,11 @@ static bool cleanupChildren()
 }
 
 /// Decides how many children need spawning and spawns.
-static void rebalanceChildren(const std::string& configId, int balance)
+static void rebalanceChildren(const std::string& configId, int64_t balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
-    size_t available = 0;
+    int64_t available = 0;
     for (const auto& elem : NewChildren)
     {
         if (elem->getConfigId() == configId)
