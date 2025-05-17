@@ -260,7 +260,10 @@ bool runClientTests(const char* cmd, bool standalone, bool verbose)
 
         // output the ErrorsStream we got during the testing
         if (!result.wasSuccessful())
+        {
+            std::lock_guard<std::mutex> lock(ErrorMutex);
             writeTestLog(ErrorsStream.str() + '\n');
+        }
     }
     else
     {
