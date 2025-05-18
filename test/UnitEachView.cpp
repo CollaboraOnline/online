@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include <memory>
+#include <sstream>
 #include <string>
 
 #include <Poco/URI.h>
@@ -39,15 +40,17 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
 
         TST_LOG("Loading " << documentURL);
         int itView = 0;
-        const std::string view = testname + "view %d -> ";
-        std::shared_ptr<http::WebSocketSession> socket =
-            helpers::loadDocAndGetSession(socketPoll, Poco::URI(helpers::getTestServerURI()),
-                                          documentURL, Poco::format(view, itView));
+
+        std::ostringstream ossView;
+        ossView << testname << "view " << itView << " -> ";
+        const std::string view = ossView.str();
+
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, view);
 
         // Check document size
-        helpers::sendTextFrame(socket, "status", Poco::format(view, itView));
-        auto response
-            = helpers::assertResponseString(socket, "status:", Poco::format(view, itView));
+        helpers::sendTextFrame(socket, "status", view);
+        auto response = helpers::assertResponseString(socket, "status:", view);
         int docPart = -1;
         int docParts = 0;
         int docHeight = 0;
@@ -57,21 +60,23 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
                               docViewId, testname);
 
         // Send click message
-        std::string text;
-        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0",
-                     std::string("buttondown"), docWidth / 2, docHeight / 6);
-        helpers::sendTextFrame(socket, text, Poco::format(view, itView));
-        text.clear();
+        std::ostringstream ossButtondown;
+        ossButtondown << "mouse type=buttondown x=" << docWidth / 2 << " y=" << docHeight / 6
+                      << " count=1 buttons=1 modifier=0";
+        helpers::sendTextFrame(socket, ossButtondown.str(), view);
 
-        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0",
-                     std::string("buttonup"), docWidth / 2, docHeight / 6);
-        helpers::sendTextFrame(socket, text, Poco::format(view, itView));
+        std::ostringstream ossButtonup;
+        ossButtonup << "mouse type=buttonup x=" << docWidth / 2 << " y=" << docHeight / 6
+                    << " count=1 buttons=1 modifier=0";
+        helpers::sendTextFrame(socket, ossButtonup.str(), view);
         // Double of the default.
         constexpr std::chrono::milliseconds timeoutMs{ 20000 };
-        response = helpers::getResponseString(socket, protocol, Poco::format(view, itView), timeoutMs);
+        response = helpers::getResponseString(socket, protocol, view, timeoutMs);
 
-        const std::string error = testname + "view %d, did not receive a %s message as expected";
-        LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
+        std::ostringstream ossError;
+        ossError << testname << "view " << itView << ", did not receive a " << protocol
+                 << " message as expected";
+        LOK_ASSERT_MESSAGE(ossError.str(), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
         std::vector<std::shared_ptr<http::WebSocketSession>> views;
@@ -80,9 +85,10 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         for (itView = 0; itView < limit; ++itView)
         {
             TST_LOG("loadDocAndGetSession #" << (itView + 1) << ": " << documentURL);
-            views.emplace_back(
-                helpers::loadDocAndGetSession(socketPoll, Poco::URI(helpers::getTestServerURI()),
-                                              documentURL, Poco::format(view, itView)));
+            std::ostringstream oss;
+            oss << testname << "view " << itView << " -> ";
+            views.emplace_back(helpers::loadDocAndGetSession(
+                socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, oss.str()));
         }
 
         // main view should receive response each view
@@ -95,8 +101,14 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         for (const auto& socketView : views)
         {
             TST_LOG("getResponse #" << (itView + 1) << ": " << protocolView);
-            response = helpers::getResponseString(socket, protocolView, Poco::format(view, itView), timeoutMs);
-            LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
+            std::ostringstream oss;
+            oss << testname << "view " << itView << " -> ";
+            response = helpers::getResponseString(socket, protocolView, oss.str(), timeoutMs);
+
+            std::ostringstream ossSocketViewError;
+            ossSocketViewError << testname << "view " << itView << ", did not receive a "
+                               << protocol << " message as expected";
+            LOK_ASSERT_MESSAGE(ossSocketViewError.str(), !response.empty());
             ++itView;
             (void)socketView;
         }

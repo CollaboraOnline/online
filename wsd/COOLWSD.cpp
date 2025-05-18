@@ -397,7 +397,10 @@ void COOLWSD::checkSessionLimitsAndWarnClients()
     if (COOLWSD::MaxDocuments < 10000 &&
         (docBrokerCount > static_cast<ssize_t>(COOLWSD::MaxDocuments) || COOLWSD::NumConnections >= COOLWSD::MaxConnections))
     {
-        const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
+        std::ostringstream oss;
+        oss << "info: cmd=socket kind=limitreached params=" << COOLWSD::MaxDocuments << ","
+            << COOLWSD::MaxConnections;
+        const std::string info = oss.str();
         LOG_INF("Sending client 'limitreached' message: " << info);
 
         try

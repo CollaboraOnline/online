@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include <memory>
+#include <sstream>
 #include <string>
 
 #include <Poco/Exception.h>
@@ -86,13 +87,11 @@ void limitCursor(
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
     helpers::sendTextFrame(socket, "key type=input char=0 key=1027", testname);
 
-    std::string text;
-    Poco::format(text,
-                 "commandvalues "
-                 "command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%"
-                 "d",
-                 256, 256, 3840, 3840);
-    helpers::sendTextFrame(socket, text, testname);
+    std::ostringstream text;
+    text << "commandvalues "
+         << "command=.uno:CellCursor?outputHeight=" << 256 << "&outputWidth=" << 256
+         << "&tileHeight=" << 3840 << "&tileWidth=" << 3840;
+    helpers::sendTextFrame(socket, text.str(), testname);
     const auto cursor = helpers::getResponseString(socket, "commandvalues:", testname);
     getCursor(cursor.substr(14), cursorX, cursorY, cursorWidth, cursorHeight, testname);
 

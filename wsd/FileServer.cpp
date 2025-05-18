@@ -2490,9 +2490,10 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
                              adminFile); // Now template has the main content..
     }
 
-    static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH
-                                      "/%s.js\"></script>");
-    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
+    std::ostringstream ossBrandJS;
+    ossBrandJS << "<script src=\"" << responseRoot << "/browser/" COOLWSD_VERSION_HASH "/"
+               << BRANDING << ".js\"></script>";
+    std::string brandJS = ossBrandJS.str();
     std::string brandFooter;
 
     if constexpr (ConfigUtil::isSupportKeyEnabled())
@@ -2503,11 +2504,18 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
-            static const std::string footerPage(
-                "<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s "
-                "&nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
-            brandJS = Poco::format(scriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
-            brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+            std::ostringstream oss;
+            oss << "<script src=\"" << SUPPORT_KEY_BRANDING_UNSUPPORTED
+                << "/browser/" COOLWSD_VERSION_HASH ".js\"></script>";
+            brandJS = oss.str();
+
+            std::ostringstream ossBrandFooter;
+            ossBrandFooter << "<footer class=\"footer has-text-centered\"><strong>Key:</strong> "
+                           << key.data() << " &nbsp;&nbsp;<strong>Expiry Date:</strong> "
+                           << Poco::DateTimeFormatter::format(key.expiry(),
+                                                              Poco::DateTimeFormat::RFC822_FORMAT)
+                           << "</footer>";
+            brandFooter = ossBrandFooter.str();
         }
     }
 
@@ -2564,31 +2572,34 @@ void FileServerRequestHandler::updateThemeResources(std::string& fileContent,
         SupportKey key(keyString);
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
-            const std::string linkCSS = "<link rel=\"stylesheet\" href=\"" + responseRoot +
-                                        "/browser/" + COOLWSD_VERSION_HASH + "/" + themePrefix +
-                                        "%s.css\">";
-            const std::string themeScriptJS = "<script src=\"" + responseRoot + "/browser/" +
-                                              COOLWSD_VERSION_HASH + "/" + themePrefix +
-                                              "%s.js\"></script>";
-            brandCSS = Poco::format(linkCSS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
-            brandJS = Poco::format(themeScriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
+            std::ostringstream ossBrandCSS;
+            ossBrandCSS << "<link rel=\"stylesheet\" href=\"" << responseRoot << "/browser/"
+                        << COOLWSD_VERSION_HASH << "/" << themePrefix
+                        << SUPPORT_KEY_BRANDING_UNSUPPORTED << ".css\">";
+            brandCSS = ossBrandCSS.str();
+
+            std::ostringstream ossBrandJS;
+            ossBrandJS << "<script src=\"" << responseRoot << "/browser/" << COOLWSD_VERSION_HASH
+                       << "/" << themePrefix << SUPPORT_KEY_BRANDING_UNSUPPORTED
+                       << ".js\"></script>";
+            brandJS = ossBrandJS.str();
         }
     }
 
     if (brandCSS.empty())
     {
-        const std::string linkCSS = "<link rel=\"stylesheet\" href=\"" + responseRoot +
-                                    "/browser/" + COOLWSD_VERSION_HASH + "/" + themePrefix +
-                                    "%s.css\">";
-        brandCSS = Poco::format(linkCSS, std::string(BRANDING));
+        std::ostringstream ossBrandCSS;
+        ossBrandCSS << "<link rel=\"stylesheet\" href=\"" << responseRoot << "/browser/"
+                    << COOLWSD_VERSION_HASH << "/" << themePrefix << BRANDING << ".css\">";
+        brandCSS = ossBrandCSS.str();
     }
 
     if (brandJS.empty())
     {
-        const std::string themeScriptJS = "<script src=\"" + responseRoot + "/browser/" +
-                                          COOLWSD_VERSION_HASH + "/" + themePrefix +
-                                          "%s.js\"></script>";
-        brandJS = Poco::format(themeScriptJS, std::string(BRANDING));
+        std::ostringstream ossBrandJS;
+        ossBrandJS << "<script src=\"" << responseRoot << "/browser/" << COOLWSD_VERSION_HASH << "/"
+                   << themePrefix << BRANDING << ".js\"></script>";
+        brandJS = ossBrandJS.str();
     }
 
     Poco::replaceInPlace(fileContent, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
