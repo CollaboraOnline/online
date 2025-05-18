@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2024-11-20 18:10+0000\n"
-"Last-Translator: Tron Lee <472734894@qq.com>\n"
+"PO-Revision-Date: 2025-05-14 20:12+0000\n"
+"Last-Translator: blueskyxxz <xinxizhe@163.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/help/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -743,8 +743,9 @@ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>下一页</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
+#, fuzzy
 msgid "Extend the selection down one page"
-msgstr "向下延伸选择一页"
+msgstr "向下扩展选择一页"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
@@ -1224,11 +1225,13 @@ msgstr ""
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
+#, fuzzy
 msgid ""
 "Adds the next sheet to the current selection of sheets. If all the sheets in "
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
-msgstr ""
+msgstr "将下一个工作表添加到当前选定的工作表中。如果电子表格中的所有工作表都已选定，"
+"则此快捷键组合仅选择下一个工作表，使下一个工作表成为当前工作表。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
 msgid ""
@@ -1243,7 +1246,8 @@ msgid ""
 "where (*) is the multiplication sign on the numeric key pad. Selects the "
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
-msgstr ""
+msgstr "其中（*）是数字小键盘上的乘号。选择包含光标的单元格范围。一个范围是一个连续的"
+"单元格区域，包含数据，并且由空行和空列界定。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
@@ -1269,7 +1273,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>加号键</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "删除单元格（如同在菜单“编辑”-“删除单元格”中操作）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
@@ -1408,7 +1412,7 @@ msgstr "选择至文本框中文本的结尾位置"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:240-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "幻灯片键盘快捷键"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
@@ -1625,6 +1629,11 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">菜单栏：</span> "
+"主菜单位于顶部，包含许多选项，以及用于打印、编辑、查看和其他高级命令的功能。"
+"您可以点击最右侧的图标 <span class=\"w2ui-icon fold icon-size\""
+"></span>来隐藏菜单栏，点击图标 <span class=\"w2ui-icon unfold icon-size\""
+"></span>可以显示菜单。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -1937,7 +1946,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:453-31
 msgid "chart"
-msgstr ""
+msgstr "图表"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:454-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -2022,13 +2031,15 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:471-29
 msgid "comment"
-msgstr ""
+msgstr "注释"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
+"点击子菜单 (<span class=\"cool-annotation-menu icon-size\""
+"></span>)图标以回复、移动和删除评论。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -2082,7 +2093,7 @@ msgstr "在公式栏内输入公式。以半角等号“=”开头。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:494-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "所有电子表格函数和数学规则均适用。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:496-5
 msgid ""
@@ -2187,11 +2198,13 @@ msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
 "span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
+"从 <span class=\"ui\">数据</span> 菜单中选择 <span class=\"ui\">有效性</"
+"span> 菜单。 <span class=\"ui\">有效性</span> 有效性 对话框将打开。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:531-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:536-31
 msgid "data validate"
-msgstr ""
+msgstr "数据验证"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:532-11
 msgid ""
@@ -2206,12 +2219,15 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
 ">OK</span> to close the dialog."
 msgstr ""
+"Use the <span class=\"ui\">输入帮助</span> 和 <span class=\"ui\">错误警告</"
+"span> 选项卡来增强用户交互。点击 <span class=\"ui\">确定</span> 关闭对话框。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:537-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
-msgstr ""
+msgstr "要移除单元格的有效性， 打开对话框并将 <span class=\"ui\">允许</span> "
+"列表设置为“所有值”。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
