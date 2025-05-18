@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-07 06:06+0000\n"
+"PO-Revision-Date: 2025-05-17 15:10+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -383,9 +383,8 @@ msgid "Upload Autotext"
 msgstr "Upload Autotekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
-#, fuzzy
 msgid "Custom dictionaries"
-msgstr "Eigen woordenboeken"
+msgstr "Aangepaste woordenboeken"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
@@ -412,7 +411,6 @@ msgid "Upload Configuration"
 msgstr "Upload configuratie"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
-#, fuzzy
 msgid "Document settings"
 msgstr "Documentinstellingen"
 
@@ -1238,7 +1236,7 @@ msgstr "Elektronische handtekening toevoegen"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Formulebalk uitvouwen"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1246,7 +1244,7 @@ msgstr "Functie-assistent"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Functie selecteren"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1261,7 +1259,7 @@ msgstr "Accepteren"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Formulebalk samenvouwen"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -2436,13 +2434,12 @@ msgid "Picture"
 msgstr "Plaatje"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "voorbeeld van pagina "
+msgstr "voorbeeldweergave van pagina %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Dia %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3166,9 +3163,8 @@ msgid "Cell borders"
 msgstr "Celranden"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Meer mogelijkheden voor {naam}"
+msgstr "Meer opties voor {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3730,6 +3726,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Je browser heeft zeer beperkte toegang tot het klembord, dus gebruik in "
+"plaats daarvan de plakknoppen op je schermtoetsenbord."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3926,7 +3924,7 @@ msgstr "Uitzoomen"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Voorbeeldweergave dia {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
@@ -3982,10 +3980,11 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
-"Lees de <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-24-04-release-notes/\">uitgavenotities van deze versie</a> en kom meer "
-"te weten over de meest recente Collabora Online Ontwikkel Versie, gericht op "
-"thuisgebruikers en kleine teams."
+"Lees de <a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\""
+">uitgavenotities van deze versie</a> en kom meer te weten over de meest "
+"recente Collabora Online Ontwikkel Versie, gericht op thuisgebruikers en "
+"kleine teams."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
