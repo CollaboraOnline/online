@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-03-16 07:15+0000\n"
+"PO-Revision-Date: 2025-05-18 22:39+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Aragonese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/an/>\n"
-"Language: \n"
+"Language: an\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -33,11 +33,11 @@ msgstr ""
 
 #: admin/admin.strings.js:18
 msgid "(current)"
-msgstr ""
+msgstr "(actual)"
 
 #: admin/admin.strings.js:19
 msgid "Analytics"
-msgstr ""
+msgstr "Analitica"
 
 #: admin/admin.strings.js:20
 msgid "History"
@@ -45,7 +45,7 @@ msgstr "Historial"
 
 #: admin/admin.strings.js:21
 msgid "Log"
-msgstr ""
+msgstr "Rechistro"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
@@ -95,7 +95,7 @@ msgstr ""
 
 #: admin/admin.strings.js:33 admin/src/AdminClusterOverview.js:352
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #: admin/admin.strings.js:34
 msgid "Views"
@@ -188,7 +188,7 @@ msgstr ""
 
 #: admin/admin.strings.js:54
 msgid "Documents:"
-msgstr ""
+msgstr "Documentos:"
 
 #: admin/admin.strings.js:55
 msgid "Expired:"
@@ -458,7 +458,7 @@ msgstr ""
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Diccionario estándard"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
@@ -466,7 +466,7 @@ msgstr ""
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Diccionario d'excepcions"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
@@ -482,7 +482,7 @@ msgstr ""
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Adhibir"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
@@ -522,35 +522,35 @@ msgstr "kB"
 
 #: admin/src/Util.js:26
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: admin/src/Util.js:26
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: admin/src/Util.js:26
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: admin/src/Util.js:26
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:26
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:26
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:26
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:26
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
@@ -2299,7 +2299,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1364
 msgid "Sparkline"
-msgstr ""
+msgstr "Minidiagrama"
 
 #: src/control/Control.NotebookbarCalc.js:1422
 #: src/control/Control.NotebookbarDraw.js:1286
@@ -2318,7 +2318,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1130
 #: src/control/Control.NotebookbarWriter.js:2994
 msgid "Shapes"
-msgstr ""
+msgstr "Formas"
 
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1245
@@ -2341,7 +2341,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarDraw.js:1071
 msgid "Page Layout"
-msgstr ""
+msgstr "Compachinación"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"
@@ -2751,7 +2751,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:436
 msgid "Footnotes"
-msgstr ""
+msgstr "Notas a piet"
 
 #: src/control/Control.Zotero.js:436
 msgid "Endnotes"
@@ -2799,7 +2799,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
@@ -3291,7 +3291,7 @@ msgstr ""
 
 #: src/docstate.js:100
 msgid "Standard"
-msgstr ""
+msgstr "Estándard"
 
 #: src/docstate.js:113
 msgid "Theme colors"

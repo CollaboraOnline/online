@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-10 20:01+0000\n"
+"PO-Revision-Date: 2025-05-18 22:39+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
@@ -2361,9 +2361,8 @@ msgid "Ruler"
 msgstr "Regle"
 
 #: src/control/Control.NotebookbarDraw.js:1071
-#, fuzzy
 msgid "Page Layout"
-msgstr "Disposició de pàgines"
+msgstr "Compaginació"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"

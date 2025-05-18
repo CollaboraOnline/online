@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-10 20:01+0000\n"
+"PO-Revision-Date: 2025-05-18 22:39+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
@@ -90,7 +90,7 @@ msgstr "Bytes recibíos"
 
 #: admin/admin.strings.js:32
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin/admin.strings.js:33 admin/src/AdminClusterOverview.js:352
 msgid "Document"
@@ -365,7 +365,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:130
 msgid "Autotext"
-msgstr ""
+msgstr "Testu automáticu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:132
 msgid ""
@@ -379,7 +379,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Diccionarios personalizaos"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
@@ -393,7 +393,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Interface"
-msgstr ""
+msgstr "Interfaz"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Set default interface preferences."
@@ -457,7 +457,7 @@ msgstr ""
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Diccionariu estándar"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
@@ -465,7 +465,7 @@ msgstr ""
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Diccionariu d'esceiciones"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
@@ -477,11 +477,11 @@ msgstr ""
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Escribi p'amestar una pallabra"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Amestar"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
@@ -577,11 +577,11 @@ msgstr ""
 
 #: src/app/Debug.ts:135
 msgid "Debug Tools"
-msgstr ""
+msgstr "Ferramientes de depuración"
 
 #: src/app/Debug.ts:137
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+May+Alt+D pa colar"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
@@ -669,12 +669,12 @@ msgstr "Sobroscribir"
 
 #: src/canvas/sections/CommentListSection.ts:1472
 msgid "Update"
-msgstr ""
+msgstr "Anovar"
 
 #: src/canvas/sections/CommentListSection.ts:1573
 #: src/canvas/sections/CommentListSection.ts:1647
 msgid "Autosaved"
-msgstr ""
+msgstr "Guardáu automáticamente"
 
 #: src/canvas/sections/CommentSection.ts:313
 msgid "Open menu"
@@ -843,7 +843,7 @@ msgstr "Desfacer"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
-msgstr ""
+msgstr "Baxar esbilla"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
@@ -861,7 +861,7 @@ msgstr "Baxar"
 
 #: src/control/Control.DownloadProgress.js:81
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Baxando'l conteníu del cartafueyu"
 
 #: src/control/Control.DownloadProgress.js:88
 #: src/control/Control.DownloadProgress.js:113
@@ -904,15 +904,15 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:131
 msgid "Argentina"
-msgstr ""
+msgstr "Arxentina"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Austria"
-msgstr ""
+msgstr "Austria"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Australia"
-msgstr ""
+msgstr "Australia"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
@@ -924,11 +924,11 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia y Herzegovina"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
-msgstr ""
+msgstr "Bélxica"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Bulgaria"
@@ -936,7 +936,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:139
 msgid "Brazil"
-msgstr ""
+msgstr "Brasil"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
@@ -992,7 +992,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:153
 msgid "United Kingdom"
-msgstr ""
+msgstr "Reinu Xuníu"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Georgia"
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
-msgstr ""
+msgstr "Mónacu"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
@@ -1092,7 +1092,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:178
 msgid "Mexico"
-msgstr ""
+msgstr "Méxicu"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Netherlands"
@@ -1172,7 +1172,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Estaos Xuníos d'América"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
@@ -1192,16 +1192,16 @@ msgstr ""
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "País:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Fornidor:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Inxertar robla electrónica"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
@@ -1213,7 +1213,7 @@ msgstr "Encontu de funciones"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Esbillar función"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1240,7 +1240,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:318
 msgid "Close dialog"
-msgstr ""
+msgstr "Zarrar el diálogu"
 
 #: src/control/Control.JSDialogBuilder.js:485
 msgid "Solid"
@@ -1293,11 +1293,11 @@ msgstr "Esbillar la estaya"
 #: src/control/Control.JSDialogBuilder.js:1674
 #: src/control/Control.NotebookbarBuilder.js:154
 msgid "Font Name"
-msgstr ""
+msgstr "Nome del tipu lletra"
 
 #: src/control/Control.JSDialogBuilder.js:1676 src/control/Toolbar.js:134
 msgid "Font Size"
-msgstr ""
+msgstr "Tamañu del testu"
 
 #: src/control/Control.JSDialogBuilder.js:1678
 #: src/control/Control.TopToolbar.js:460
@@ -1453,7 +1453,7 @@ msgstr "Documentu PDF (.pdf)"
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:807
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Ficheru HTML (.html)"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:509
 #: src/control/Control.Menubar.ts:669 src/control/Control.Menubar.ts:815
@@ -1512,7 +1512,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:523
 #: src/control/Control.NotebookbarWriter.js:1572
 msgid "Dark Mode"
-msgstr ""
+msgstr "Mou escuru"
 
 #: src/control/Control.Menubar.ts:221 src/control/Control.Menubar.ts:544
 #: src/control/Control.Menubar.ts:700 src/control/Control.Menubar.ts:845
@@ -1530,7 +1530,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:869
 #: src/control/Control.NotebookbarWriter.js:987
 msgid "Style list"
-msgstr ""
+msgstr "Llista d'estilos"
 
 #: src/control/Control.Menubar.ts:231 src/control/Control.Menubar.ts:555
 #: src/control/Control.Menubar.ts:707 src/control/Control.Menubar.ts:859
@@ -1570,7 +1570,7 @@ msgstr "Referencies"
 #: src/control/Control.Menubar.ts:381
 #: src/control/Control.NotebookbarWriter.js:1939
 msgid "Update Index"
-msgstr ""
+msgstr "Anovar índiz"
 
 #: src/control/Control.Menubar.ts:390
 #: src/control/Control.NotebookbarWriter.js:2036
@@ -1585,7 +1585,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:392
 #: src/control/Control.NotebookbarWriter.js:2022
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Amestar bibliografía"
 
 #: src/control/Control.Menubar.ts:394
 #: src/control/Control.NotebookbarWriter.js:2068
@@ -1717,7 +1717,7 @@ msgstr "Guardar los comentarios"
 #: src/control/Control.Menubar.ts:494
 #: src/control/Control.NotebookbarBuilder.js:425
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Documentu HTML (.html)"
 
 #: src/control/Control.Menubar.ts:495
 #: src/control/Control.NotebookbarBuilder.js:456
@@ -1757,7 +1757,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:507
 #: src/control/Control.NotebookbarBuilder.js:658
 msgid "Notes Pages"
-msgstr ""
+msgstr "Páxines de notes"
 
 #: src/control/Control.Menubar.ts:541
 #: src/control/Control.NotebookbarImpress.js:489
@@ -1832,7 +1832,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:813 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:113
 msgid "All Sheets"
-msgstr ""
+msgstr "Toles fueyes"
 
 #: src/control/Control.Menubar.ts:851
 #: src/control/Control.NotebookbarCalc.js:1187
@@ -2347,7 +2347,7 @@ msgstr "Regla"
 
 #: src/control/Control.NotebookbarDraw.js:1071
 msgid "Page Layout"
-msgstr ""
+msgstr "Compaxinación"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"
@@ -2412,11 +2412,11 @@ msgstr ""
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Diapositiva %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
-msgstr ""
+msgstr "Apegar diapositiva"
 
 #: src/control/Control.PartsPreview.js:307
 msgid "Paste"
@@ -2424,12 +2424,11 @@ msgstr "Apegar"
 
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
-msgstr ""
+msgstr "Guardando"
 
 #: src/control/Control.SaveState.ts:53
-#, fuzzy
 msgid "Saved"
-msgstr "Guardar"
+msgstr "Guardáu"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -3301,7 +3300,7 @@ msgstr "¿De xuru que quies desaniciar esta páxina?"
 
 #: src/docstate.js:100
 msgid "Standard"
-msgstr ""
+msgstr "Estándar"
 
 #: src/docstate.js:113
 msgid "Theme colors"
