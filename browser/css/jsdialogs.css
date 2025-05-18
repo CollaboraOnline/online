@@ -997,22 +997,25 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: none;
 }
 
+/* Draw SVG downwards arrow.
+The same as .unoarrow to replace the old .png bitmap arrow*/
 .ui-listbox-arrow {
-	content: '';
-	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
-	background-position: -67px -17px !important;
-	display: inline-block;
-	position: relative;
-	width: 11px;
-	height: 11px;
-	cursor: pointer;
-	pointer-events: none;
+	width: auto !important;
+	height: 0px;
+	font-size: 0;
+	line-height: 0;
+	border: 4px solid transparent;
+	border-top: 5px solid var(--color-main-text);
+	display: inline-block !important;
 	margin-inline-start: -16px;
 	margin-inline-end: 4px;
+	margin-top: 4px;
+	cursor: pointer;
+	pointer-events: none;
 }
 
 [data-theme='dark'] .ui-listbox-arrow {
-	background: url('images/jquery-ui-lightness/ui-icons_ffffff_256x240.png') no-repeat transparent;
+	border-top-color: var(--color-text-dark);
 }
 
 .ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow,
@@ -1039,9 +1042,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding-inline: 5px;
 }
 
+/* Similar to .arrowbackground, centers the vector dropdown arrow. */
 .ui-combobox-button {
-	padding-left: 20px;
+	box-sizing: border-box;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	border-left: 1px solid var(--color-border);
+	background-color: transparent;
+	padding-left: 20px;
 }
 
 .ui-combobox-button:hover {
