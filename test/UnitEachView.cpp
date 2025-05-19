@@ -26,9 +26,6 @@ namespace
 void testEachView(const std::string& doc, const std::string& type, const std::string& protocol,
                   const std::string& protocolView, const std::string& testname)
 {
-    const std::string view = testname + "view %d -> ";
-    const std::string error = testname + "view %d, did not receive a %s message as expected";
-
     TST_LOG("testEachView for " << testname);
 
     std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("UnitEachView");
@@ -42,6 +39,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
 
         TST_LOG("Loading " << documentURL);
         int itView = 0;
+        const std::string view = testname + "view %d -> ";
         std::shared_ptr<http::WebSocketSession> socket =
             helpers::loadDocAndGetSession(socketPoll, Poco::URI(helpers::getTestServerURI()),
                                           documentURL, Poco::format(view, itView));
@@ -71,6 +69,8 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         // Double of the default.
         constexpr std::chrono::milliseconds timeoutMs{ 20000 };
         response = helpers::getResponseString(socket, protocol, Poco::format(view, itView), timeoutMs);
+
+        const std::string error = testname + "view %d, did not receive a %s message as expected";
         LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
