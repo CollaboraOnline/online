@@ -5262,26 +5262,35 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
         }
 
         // Failed, but don't end the SyncFileTimestamp activity yet.
-        std::shared_ptr<ClientSession> failedSession = weakSession.lock();
-        if (failedSession)
         {
-            if (checkFileInfo.state() == CheckFileInfo::State::Timedout)
+            // We failed to get CheckFileInfo.
+            _storage->setLastModifiedTimeUnSafe(); // We can't trust the LastModifiedTime.
+
+            std::shared_ptr<ClientSession> failedSession = weakSession.lock();
+            if (checkFileInfo.state() == CheckFileInfo::State::Unauthorized)
             {
-                // Timeout means we don't know whether the session is valid or not. Leave it alone.
-                LOG_INF("CheckFileInfo on [" << _docKey << "] for session #"
-                                             << failedSession->getId() << " timed-out");
+                if (failedSession)
+                {
+                    // Got some response, but not positive. This is an expired session.
+                    LOG_WRN("CheckFileInfo on ["
+                            << failedSession->getId()
+                            << "] failed because it has invalid access_token for [" << _docKey
+                            << "], resetting the authorization token");
+                    failedSession->invalidateAuthorizationToken();
+                }
+                else
+                {
+                    LOG_WRN("CheckFileInfo failed and its session is expired");
+                }
             }
             else
             {
-                // Got some response, but not positive. This is an expired session.
-                LOG_WRN("Session [" << failedSession->getId() << "] has invalid access_token for ["
-                                    << _docKey << "], resetting the authorization token");
-                failedSession->invalidateAuthorizationToken();
+                assert(checkFileInfo.state() == CheckFileInfo::State::Timedout ||
+                       checkFileInfo.state() == CheckFileInfo::State::Fail);
+                LOG_INF("CheckFileInfo on ["
+                        << _docKey << "] for session #"
+                        << (failedSession ? failedSession->getId() : "<expired>") << " timed-out");
             }
-        }
-        else
-        {
-            LOG_WRN("CheckFileInfo failed and its session is expired");
         }
     };
 
