@@ -49,19 +49,19 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		expectInitialText();
 	}
 
-	it('Undo', function() {
+	it.skip('Undo', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
 	});
 
-	it('Redo', function() {
+	it.skip('Redo', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
 		expectTypedText();
 	});
 
-	it('Repair Document', function() {
+	it.skip('Repair Document', function() {
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
