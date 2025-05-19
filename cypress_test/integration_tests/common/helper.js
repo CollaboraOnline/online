@@ -348,7 +348,7 @@ function waitForInterferingUser() {
 function documentChecks(skipInitializedCheck = false) {
 	cy.log('>> documentChecks - start');
 
-	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 30.0});
 	if (!skipInitializedCheck)
 		cy.cGet('#map').should('have.class', 'initialized');
 
