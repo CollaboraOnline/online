@@ -289,6 +289,9 @@ class Dispatcher {
 		};
 
 		this.actionsMap['togglea11ystate'] = () => {
+			if (app.map._lockAccessibilityOn) {
+				return;
+			}
 			var prevAccessibilityState =
 				window.prefs.getBoolean('accessibilityState');
 			app.map.setAccessibilityState(!prevAccessibilityState);

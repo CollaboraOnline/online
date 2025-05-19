@@ -1654,6 +1654,12 @@ private:
     /// Called when document conflict is detected (i.e. it changed in storage).
     void handleDocumentConflict();
 
+    /// if _isViewSettingsAccessibilityEnabled is set then set
+    /// accessibilityState=true in @message and force-enable
+    /// accessibility on for viewId
+    std::string applyViewAccessibility(const std::string& message,
+                                       const std::string& viewId);
+
     /// What type are we: affects priority.
     const Poco::URI _uriPublic;
 
@@ -1784,6 +1790,8 @@ private:
     /// True for file that COOLWSD::IsViewFileExtension return true.
     /// These files, such as PDF, don't have a reliable ModifiedStatus.
     bool _isViewFileExtension;
+
+    bool _isViewSettingsAccessibilityEnabled;
 
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit : 1;
