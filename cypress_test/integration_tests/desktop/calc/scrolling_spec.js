@@ -17,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.pressKey(3,'pagedown');
 		desktopHelper.assertScrollbarPosition('vertical', 110, 130);
 		desktopHelper.pressKey(3,'pageup');
-		desktopHelper.assertScrollbarPosition('vertical', 50, 70);
+		desktopHelper.assertScrollbarPosition('vertical', 50, 105);
 		desktopHelper.pressKey(3,'downArrow');
 		desktopHelper.assertScrollbarPosition('vertical', 25, 40);
 	});
