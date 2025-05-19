@@ -1271,6 +1271,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			obj = JSON.parse(textMsg.substring('versionbar:'.length + 1));
 			this._map.fire('versionbar', obj);
 		}
+		else if (textMsg.startsWith('lockaccessibilityon')) {
+			// a11y forced on by DocumentBroker, from view settings overrides.
+			this._map.lockAccessibilityOn();
+		}
 		else if (textMsg.startsWith('a11y')) {
 			if (!window.prefs.getBoolean('accessibilityState'))
 				throw 'A11y events come from the core while it is disabled in the client session.';
