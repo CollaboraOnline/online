@@ -52,10 +52,10 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	onDocLayerInit() {
+		const allowedDocTypes = ['presentation', 'drawing'];
 		// for presentation show slide sorter navigation panel by default
 		if (
-			app.map.getDocType() === 'presentation' &&
-			!app.map.isReadOnlyMode() &&
+			allowedDocTypes.includes(app.map.getDocType()) &&
 			!window.mode.isMobile()
 		) {
 			// Navigator panel should be visible and by default we should open slide sorter in case of impress/draw
