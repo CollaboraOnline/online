@@ -252,16 +252,19 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert hyperlink.', function() {
 		helper.setDummyClipboardForCopy();
-		writerHelper.selectAllTextOfDoc();
+		refreshCopyPasteContainer();
 		helper.copy();
+		cy.wait(1000);
 		helper.expectTextForClipboard('text text1');
-		cy.wait(500);
+
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .hyperlinkdialog button').click();
 		cy.cGet('#hyperlink-link-box-input').should('exist');
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
 		cy.cGet('#response-ok').click();
+
+		refreshCopyPasteContainer();
 		helper.copy();
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
