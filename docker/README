@@ -47,3 +47,10 @@ The brand package of CODE is not open source. To build an image without it:
    ./build.sh
 
 Check build.sh for more build options!
+
+
+Runtime
+
+At runtime use the provided cool-seccomp-profile.json as seccomp profile (Ref: https://docs.docker.com/engine/security/seccomp/)
+
+   docker run --security-opt cool-seccomp-profile.json
