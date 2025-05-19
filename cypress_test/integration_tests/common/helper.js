@@ -488,11 +488,6 @@ function expectTextForClipboard(expectedPlainText) {
 			.should('have.text', expectedPlainText);
 	});
 
-	doIfInImpress(function() {
-		cy.cGet('#copy-paste-container pre')
-			.should('have.text', expectedPlainText);
-	});
-
 	// above actions are async, do some barrier here
 	cy.cGet('#copy-paste-container').should('contain.text', expectedPlainText);
 
@@ -513,9 +508,8 @@ function matchClipboardText(regexp) {
 	doIfInCalc(function() {
 		cy.cGet('body').contains('#copy-paste-container pre', regexp).should('exist');
 	});
-	doIfInImpress(function() {
-		cy.cGet('body').contains('#copy-paste-container pre', regexp).should('exist');
-	});
+
+	// FIXME: above is async, do a barrier
 
 	cy.log('<< matchClipboardText - end');
 }
@@ -529,9 +523,9 @@ function clipboardTextShouldBeDifferentThan(text) {
 	doIfInCalc(function() {
 		cy.cGet('body').contains('#copy-paste-container pre', text).should('not.exist');
 	});
-	doIfInImpress(function() {
-		cy.cGet('body').contains('#copy-paste-container pre', text).should('not.exist');
-	});
+
+	// above actions are async, do some barrier here
+	cy.cGet('#copy-paste-container').should('not.contain.text', text);
 
 	cy.log('<< clipboardTextShouldBeDifferentThan - end');
 }

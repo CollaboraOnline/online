@@ -10,21 +10,29 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 	function skipMessage() {
 		// FIXME: receiveMessage: {"MessageId":"Doc_ModifiedStatus","SendTime":1741357902023,"Values":{"Modified":true}}
 		// FIXME: that message seems to close blinking cursor
-		cy.wait(500);
+		cy.wait(1500);
 	}
 
 	function expectInitialText() {
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.dblclickOnSelectedShape();
+		helper.typeIntoDocument('{ctrl+a}');
 		helper.copy();
+		impressHelper.dblclickOnSelectedShape();
 		helper.clipboardTextShouldBeDifferentThan('Hello World');
 	}
 
 	function expectTypedText() {
 		cy.log('expectTypedText - START');
 
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.dblclickOnSelectedShape();
+		helper.typeIntoDocument('{ctrl+a}');
 		helper.copy();
+
+		impressHelper.dblclickOnSelectedShape();
 		helper.expectTextForClipboard('Hello World');
+		cy.wait(1000);
 
 		cy.log('expectTypedText - END');
 	}
@@ -35,33 +43,33 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		// close the default slide-sorter navigation sidebar
 		desktopHelper.closeNavigatorSidebar();
 		desktopHelper.selectZoomLevel('30', false);
-		impressHelper.selectTextShapeInTheCenter();
+
 		skipMessage();
-		expectInitialText();
+		impressHelper.selectTextShapeInTheCenter();
+		impressHelper.dblclickOnSelectedShape();
+		skipMessage();
 	});
 
 	function undo() {
 		helper.typeIntoDocument('Hello World');
-		skipMessage();
 		expectTypedText();
-		impressHelper.dblclickOnSelectedShape();
-		helper.typeIntoDocument('{ctrl}z');
+		helper.typeIntoDocument('{ctrl+z}');
 		expectInitialText();
 	}
 
-	it.skip('Undo', function() {
+	it('Undo', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
 	});
 
-	it.skip('Redo', function() {
+	it('Redo', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
-		helper.typeIntoDocument('{ctrl}y');
+		helper.typeIntoDocument('{ctrl+y}');
 		expectTypedText();
 	});
 
-	it.skip('Repair Document', function() {
+	it('Repair Document', function() {
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
