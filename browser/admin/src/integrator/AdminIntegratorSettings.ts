@@ -682,6 +682,32 @@ document.addEventListener('DOMContentLoaded', () => {
 		initTranslationStr();
 		(window as any).settingIframe = new SettingIframe();
 		(window as any).settingIframe.init();
+		const postHeight = () => {
+			window.parent.postMessage(
+				{
+					MessageId: 'Iframe_Height',
+					SendTime: Date.now(),
+					Values: {
+						ContentHeight: document.documentElement.offsetHeight + 'px',
+					},
+				},
+				'*',
+			);
+		};
+
+		let timeout: any;
+		const debouncePostHeight = () => {
+			clearTimeout(timeout);
+			timeout = setTimeout(postHeight, 100);
+		};
+
+		const mutationObserver = new MutationObserver(debouncePostHeight);
+		mutationObserver.observe(document.body, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			characterData: true,
+		});
 	}
 });
 
