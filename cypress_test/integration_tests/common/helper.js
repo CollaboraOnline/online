@@ -493,6 +493,9 @@ function expectTextForClipboard(expectedPlainText) {
 			.should('have.text', expectedPlainText);
 	});
 
+	// above actions are async, do some barrier here
+	cy.cGet('#copy-paste-container').should('contain.text', expectedPlainText);
+
 	cy.log('<< expectTextForClipboard - end');
 }
 
