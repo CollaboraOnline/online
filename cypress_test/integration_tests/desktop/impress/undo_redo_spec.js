@@ -13,23 +13,38 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		cy.wait(500);
 	}
 
+	function expectInitialText() {
+		impressHelper.dblclickOnSelectedShape();
+		helper.copy();
+		helper.clipboardTextShouldBeDifferentThan('Hello World');
+	}
+
+	function expectTypedText() {
+		cy.log('expectTypedText - START');
+
+		impressHelper.dblclickOnSelectedShape();
+		helper.copy();
+		helper.expectTextForClipboard('Hello World');
+
+		cy.log('expectTypedText - END');
+	}
+
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/undo_redo.odp');
 		desktopHelper.switchUIToCompact();
 		desktopHelper.selectZoomLevel('30', false);
 		impressHelper.selectTextShapeInTheCenter();
 		skipMessage();
-		impressHelper.dblclickOnSelectedShape();
+		expectInitialText();
 	});
 
 	function undo() {
 		helper.typeIntoDocument('Hello World');
 		skipMessage();
+		expectTypedText();
 		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('{ctrl}z');
-		impressHelper.dblclickOnSelectedShape();
-		helper.copy();
-		helper.clipboardTextShouldBeDifferentThan('Hello World');
+		expectInitialText();
 	}
 
 	it('Undo', function() {
@@ -41,9 +56,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
-		impressHelper.selectTextOfShape();
-		helper.copy();
-		helper.expectTextForClipboard('Hello World');
+		expectTypedText();
 	});
 
 	it('Repair Document', function() {
@@ -55,8 +68,6 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		repairHelper.rollbackPastChange('Undo');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-		impressHelper.selectTextOfShape();
-		helper.copy();
-		helper.expectTextForClipboard('Hello World');
+		expectTypedText();
 	});
 });
