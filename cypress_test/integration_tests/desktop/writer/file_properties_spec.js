@@ -13,6 +13,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 	});
 
 	it('Add File Description.', function() {
+		cy.wait(1000);
+
 		writerHelper.openFileProperties();
 
 		cy.cGet('#tabcontrol-2').click();
@@ -67,6 +69,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// click the sub-dialog ok button
 		cy.cGet('#ok.ui-pushbutton').invoke('slice', 1).click();
+		cy.wait(100); // give a bit of time to spin the loop and update jsdialogs
 		cy.cGet('#ok.ui-pushbutton').click();
 
 		// Check property saved
