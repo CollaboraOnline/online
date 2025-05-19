@@ -639,6 +639,11 @@ L.Control.Notebookbar = L.Control.extend({
 		} else {
 			$('#togglea11ystate').removeClass('selected');
 		}
+		if (this._map && this._map._lockAccessibilityOn) {
+			$('#togglea11ystate').addClass('disabled');
+			$('#togglea11ystate').attr('disabled', true);
+			$('#togglea11ystate-button').attr('disabled', true);
+		}
 	},
 
 	buildOptionsSectionData: function(childrenArray) {
