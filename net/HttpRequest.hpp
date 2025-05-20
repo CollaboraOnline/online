@@ -2185,8 +2185,7 @@ private:
 
                     close(_fd);
                     _fd = -1;
-                    socket->flush();
-                    onDisconnect();
+                    socket->shutdown(); // Trigger async shutdown.
                     break;
                 }
 
