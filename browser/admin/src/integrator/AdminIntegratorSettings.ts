@@ -21,6 +21,7 @@ var _: any = (s) => s.toLocaleString();
 interface Window {
 	accessToken?: string;
 	accessTokenTTL?: string;
+	enableAccessibility?: boolean;
 	enableDebug?: boolean;
 	wopiSettingBaseUrl?: string;
 	iframeType?: string;
@@ -122,6 +123,7 @@ class SettingIframe {
 		window.accessToken = element.dataset.accessToken;
 		window.accessTokenTTL = element.dataset.accessTokenTtl;
 		window.enableDebug = element.dataset.enableDebug === 'true';
+		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 		window.iframeType = element.dataset.iframeType;
 		window.cssVars = element.dataset.cssVars;
@@ -621,6 +623,10 @@ class SettingIframe {
 				checkbox.type = 'checkbox';
 				checkbox.className = 'checkbox-radio-switch-input';
 				checkbox.checked = data[key];
+				if (key === 'accessibilityState') {
+					checkbox.checked = checkbox.checked && window.enableAccessibility;
+					checkbox.disabled = !window.enableAccessibility;
+				}
 				checkboxContainer.appendChild(checkbox);
 
 				const checkboxContent = document.createElement('span');
@@ -640,7 +646,7 @@ class SettingIframe {
 				const iconSvg = `
 					<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
 					${
-						data[key]
+						checkbox.checked
 							? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
 						  </path>`
 							: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
@@ -657,31 +663,47 @@ class SettingIframe {
 				checkboxText.textContent = label;
 				checkboxContent.appendChild(checkboxText);
 
-				checkboxContainer.addEventListener(
-					'click',
-					function () {
-						const currentChecked = !this.checked;
-						this.checked = currentChecked;
-						if (currentChecked) {
-							checkboxContainer.classList.remove(
-								'checkbox-radio-switch--checked',
-							);
-						} else {
-							checkboxContainer.classList.add('checkbox-radio-switch--checked');
-						}
-						materialIcon.innerHTML = `
-<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-${
-	currentChecked
-		? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-						</path>`
-		: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-						</path>`
-}
-</svg>`;
-						data[key] = currentChecked;
-					}.bind(checkbox),
-				);
+				if (checkbox.disabled) {
+					if (key === 'accessibilityState') {
+						// This has no effect if coolwsd accessibility.enable is not set. So present as disabled,
+						// and warn that it cannot be toggled unless coolwsd accessibility is on so we don't have
+						// a situation of a checkbox that doesn't actually do anything.
+						const warningText = document.createElement('span');
+						warningText.className = 'ui-state-error-text';
+						warningText.textContent = _(
+							'(Warning: Server accessibility must be enabled to toggle)',
+						);
+						checkboxContent.appendChild(warningText);
+					}
+				} else {
+					checkboxContainer.addEventListener(
+						'click',
+						function () {
+							const currentChecked = !this.checked;
+							this.checked = currentChecked;
+							if (currentChecked) {
+								checkboxContainer.classList.remove(
+									'checkbox-radio-switch--checked',
+								);
+							} else {
+								checkboxContainer.classList.add(
+									'checkbox-radio-switch--checked',
+								);
+							}
+							materialIcon.innerHTML = `
+	<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
+	${
+		currentChecked
+			? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
+							</path>`
+			: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
+							</path>`
+	}
+	</svg>`;
+							data[key] = currentChecked;
+						}.bind(checkbox),
+					);
+				}
 			}
 		}
 
