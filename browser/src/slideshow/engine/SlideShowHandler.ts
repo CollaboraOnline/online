@@ -46,12 +46,12 @@ class SlideShowContext {
 }
 
 class SlideShowHandler {
-	public static readonly MAXIMUM_FRAME_COUNT: number = 60;
+	public static readonly MAXIMUM_FRAME_COUNT: number = 120;
 	public static readonly MINIMUM_TIMEOUT: number =
 		1.0 / SlideShowHandler.MAXIMUM_FRAME_COUNT;
 	public static readonly MAXIMUM_TIMEOUT: number = 4.0;
 	public static readonly MINIMUM_FRAMES_PER_SECONDS: number = 10;
-	public static readonly PREFERRED_FRAMES_PER_SECONDS: number = 50;
+	public static readonly PREFERRED_FRAMES_PER_SECONDS: number = 60;
 	public static readonly PREFERRED_FRAME_RATE: number =
 		1.0 / SlideShowHandler.PREFERRED_FRAMES_PER_SECONDS;
 
