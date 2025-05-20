@@ -81,8 +81,9 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             if let body = message.body as? String {
                 switch body {
 
-                /*case "read":
-                    setClipboardContent(from: .general)*/
+                case "read":
+                    COWrapper.setClipboard(document, from: .general)
+                    return ("(internal)", nil);
 
                 case "write":
                     guard let content = COWrapper.getClipboard(document) else {
@@ -92,8 +93,11 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.writeObjects(content)
 
-                /*case let s where s.hasPrefix("sendToInternal "):
-                    sendToInternal(String(s.dropFirst("sendToInternal ".count)))*/
+                case let s where s.hasPrefix("sendToInternal "):
+                    if !COWrapper.sendToInternalClipboard(document, content: String(s.dropFirst("sendToInternal ".count))) {
+                        COWrapper.LOG_ERR("set clipboard returned failure");
+                        return (nil, "set clipboard returned failure");
+                    }
 
                 default:
                     COWrapper.LOG_ERR("Invalid clipboard action \(body)")
