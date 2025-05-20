@@ -9,6 +9,7 @@
  */
 
 import Cocoa
+import WebKit
 
 enum FormatMenuCommand: Int {
     case bold = 1
@@ -32,7 +33,7 @@ struct CommandStateChange: Decodable {
 class WindowController: NSWindowController, NSMenuItemValidation {
 
     /// Track menu states here, to be able to show the state in the menu
-    var formatStates: [String: Bool] = [:]
+    var commandState: [String: String] = [:]
 
     /// Single IBAction for all Format commands in the menu
     @IBAction func formatMenuAction(_ sender: NSMenuItem) {
@@ -54,7 +55,7 @@ class WindowController: NSWindowController, NSMenuItemValidation {
         let commandName = unoCommmandName[unoCommmandName.index(after: colon)...]
 
         // store it
-        formatStates[String(commandName)] = stateChange.state == "true"
+        commandState[String(commandName)] = stateChange.state
     }
 
     /// Show on/off checkmarks for the particular command(s) like Bold/Italics/...
@@ -68,8 +69,32 @@ class WindowController: NSWindowController, NSMenuItemValidation {
         guard let commandName = formatMenuCommandNames[command] else { return false }
 
         // Show a check if the command is currently ON
-        let isOn = formatStates[commandName] ?? false
+        let isOn = commandState[commandName] == "true"
         menuItem.state = isOn ? .on : .off
+        return true
+    }
+}
+
+/**
+ * Extend the WKWebView so that we can set the state of Cut/Copy/Paste in the macOS menu too.
+ */
+extension WKWebView: @retroactive NSMenuItemValidation {
+
+    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        guard let commandState = (window?.windowController as? WindowController)?.commandState else {
+            return true
+        }
+
+        if menuItem.action == #selector(NSText.cut(_:)) {
+            return commandState["Cut"] != "disabled"
+        }
+        else if menuItem.action == #selector(NSText.copy(_:)) {
+            return commandState["Copy"] != "disabled"
+        }
+        else if menuItem.action == #selector(NSText.paste(_:)) {
+            return commandState["Paste"] != "disabled"
+        }
+
         return true
     }
 }
