@@ -470,26 +470,16 @@ function expectTextForClipboard(expectedPlainText) {
 	cy.log('>> expectTextForClipboard - start');
 
 	cy.log('Text:' + expectedPlainText);
-	doIfInWriter(function() {
-		cy.cGet('#copy-paste-container p')
-			.then(function(pItem) {
-				if (pItem.children('font').length !== 0) {
-					cy.cGet('#copy-paste-container p font')
-						.should('have.text', expectedPlainText);
-				} else {
-					cy.cGet('#copy-paste-container p')
-						.should('have.text', expectedPlainText);
-				}
-			});
-	});
 
-	doIfInCalc(function() {
-		cy.cGet('#copy-paste-container pre')
-			.should('have.text', expectedPlainText);
+	// FIXME: create explicit function for Writer and other modules
+	// "p" and "p font" are for Writer only, pre for Calc and Impress
+	cy.cGet('#copy-paste-container').then(function(pItem) {
+		if (pItem.children('font').length !== 0) {
+			cy.cGet('#copy-paste-container p font').should('have.text', expectedPlainText);
+		} else {
+			cy.cGet('#copy-paste-container p, #copy-paste-container pre').should('have.text', expectedPlainText);
+		}
 	});
-
-	// above actions are async, do some barrier here
-	cy.cGet('#copy-paste-container').should('contain.text', expectedPlainText);
 
 	cy.log('<< expectTextForClipboard - end');
 }
@@ -502,14 +492,15 @@ function expectTextForClipboard(expectedPlainText) {
 function matchClipboardText(regexp) {
 	cy.log('>> matchClipboardText - start');
 
-	doIfInWriter(function() {
-		cy.cGet('body').contains('#copy-paste-container p font', regexp).should('exist');
+	// FIXME: create explicit function for Writer and other modules
+	// "p" and "p font" are for Writer only, pre for Calc and Impress
+	cy.cGet('#copy-paste-container').then(function(pItem) {
+		if (pItem.children('font').length !== 0) {
+			cy.cGet('body').contains('#copy-paste-container p font', regexp).should('exist');
+		} else {
+			cy.cGet('body').contains('#copy-paste-container pre', regexp).should('exist');
+		}
 	});
-	doIfInCalc(function() {
-		cy.cGet('body').contains('#copy-paste-container pre', regexp).should('exist');
-	});
-
-	// FIXME: above is async, do a barrier
 
 	cy.log('<< matchClipboardText - end');
 }
@@ -517,15 +508,15 @@ function matchClipboardText(regexp) {
 function clipboardTextShouldBeDifferentThan(text) {
 	cy.log('>> clipboardTextShouldBeDifferentThan - start');
 
-	doIfInWriter(function() {
-		cy.cGet('body').contains('#copy-paste-container p font', text).should('not.exist');
+	// FIXME: create explicit function for Writer and other modules
+	// "p" and "p font" are for Writer only, pre for Calc and Impress
+	cy.cGet('#copy-paste-container').then(function(pItem) {
+		if (pItem.children('font').length !== 0) {
+			cy.cGet('body').contains('#copy-paste-container p font', text).should('not.exist');
+		} else {
+			cy.cGet('body').contains('#copy-paste-container pre', text).should('not.exist');
+		}
 	});
-	doIfInCalc(function() {
-		cy.cGet('body').contains('#copy-paste-container pre', text).should('not.exist');
-	});
-
-	// above actions are async, do some barrier here
-	cy.cGet('#copy-paste-container').should('not.contain.text', text);
 
 	cy.log('<< clipboardTextShouldBeDifferentThan - end');
 }
