@@ -232,7 +232,8 @@ class InitializerBase {
 			} // else jsdom
 		}
 
-		const element = document.getElementById("initial-variables");
+		const element = window.L.initial = document.getElementById("initial-variables");
+		window.L.initial._stubMessage = function () {};
 
 		window.host = "";
 		window.serviceRoot = "";
