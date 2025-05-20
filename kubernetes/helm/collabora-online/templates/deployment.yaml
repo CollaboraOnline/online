@@ -6,6 +6,13 @@ metadata:
   name: {{ include "collabora-online.fullname" . }}
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
+    {{- with .Values.deployment.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.deployment.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   minReadySeconds: {{ .Values.deployment.minReadySeconds }}
   {{- if not .Values.autoscaling.enabled }}
