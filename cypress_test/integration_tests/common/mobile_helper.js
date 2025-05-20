@@ -311,6 +311,7 @@ function insertComment(skipCommentCheck = false) {
 	cy.cGet('.cool-annotation-table').should('exist');
 	cy.cGet('#input-modal-input').type('some text');
 	cy.cGet('#response-ok').click();
+	cy.wait(2000); // FIXME: skip DocModified message
 
 	if (!skipCommentCheck) {
 		cy.cGet('#comment-container-1').should('exist').wait(300);
