@@ -23,11 +23,12 @@
 // Include necessary C++ headers
 #include <thread>
 #include <string>
-#include "COOLWSD.hpp"
-#include "FakeSocket.hpp"
-#include "Log.hpp"
-#include "MobileApp.hpp"
-#include "Util.hpp"
+#include <common/Clipboard.hpp>
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
+#include <common/Util.hpp>
+#include <net/FakeSocket.hpp>
+#include <wsd/COOLWSD.hpp>
 
 // Declare the coolwsd pointer at global scope
 COOLWSD *coolwsd = nullptr;
@@ -227,6 +228,104 @@ static int closeNotificationPipeForForwardingThread[2];
     };
 
     return [COWrapper getClipboardInternalWith:document mimeTypes:textMimeTypes];
+}
+
+/**
+ * Sets the LOKit internal clipboard with the content of NSPasteboard.
+ */
++ (void)setClipboardWith:(Document *_Nonnull)document from:(NSPasteboard *_Nonnull)pasteboard {
+    NSMutableDictionary * pasteboardItems = [NSMutableDictionary new];
+
+    if (pasteboard.pasteboardItems.count != 0) {
+        NSPasteboardItem *item = pasteboard.pasteboardItems.firstObject;
+
+        for (NSPasteboardType identifier in item.types)
+        {
+            UTType * uti = [UTType typeWithIdentifier:identifier];
+            NSString * mime = uti? uti.preferredMIMEType: identifier;
+
+            if (mime == nil) {
+                LOG_WRN("UTI " << [identifier UTF8String] << " did not have associated mime type when deserializing clipboard, skipping...");
+                continue;
+            }
+
+            NSData * value = [item dataForType:identifier];
+            if (value == nil)
+                continue;
+
+            if (uti != nil && [pasteboardItems objectForKey:mime] != nil) {
+                // We export both mime and UTI keys, don't overwrite the mime-type ones with the UTI ones
+                continue;
+            }
+
+            [pasteboardItems setObject:value forKey:mime];
+        }
+    }
+
+    const char * pInMimeTypes[pasteboardItems.count];
+    size_t pInSizes[pasteboardItems.count];
+    const char * pInStreams[pasteboardItems.count];
+
+    size_t i = 0;
+
+    for (NSString * mime in pasteboardItems) {
+        pInMimeTypes[i] = [mime UTF8String];
+        pInStreams[i] = (const char*)[pasteboardItems[mime] bytes];
+        pInSizes[i] = [pasteboardItems[mime] length];
+        i++;
+    }
+
+    DocumentData::get(document.appDocId).loKitDocument->setClipboard(pasteboardItems.count, pInMimeTypes, pInSizes, pInStreams);
+}
+
+/**
+ * Insert data into the internal clipboard. The content's format is mimeType\nlegth\ndata\n[...repeat for more mimetypes...].
+ */
++ (bool)sendToInternalWith:(Document *_Nonnull)document content:(NSString *_Nonnull)content {
+    std::vector<char> html;
+
+    ClipboardData data;
+    size_t nInCount;
+
+    if ([content hasPrefix:@"<!DOCTYPE html>"]) {
+        // Content is just HTML
+        const char * _Nullable content_cstr = [content cStringUsingEncoding:NSUTF8StringEncoding];
+        html = std::vector(content_cstr, content_cstr + [content lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+        nInCount = 1;
+    }
+    else {
+        // objcString -> std::string (keeps embedded NULs, no extra copy for UTF-8)
+        std::string buffer(static_cast<const char*>([content UTF8String]),
+                           [content lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+
+        // put the buffer into a std::stringbuf, treated as binary (allow NULs in there), and create the input stream
+        std::stringbuf sb(buffer, std::ios::in | std::ios::binary);
+        std::istream stream(&sb);
+
+        // read the data
+        data.read(stream);
+        nInCount = data.size();
+        // DEBUG: data.dumpState(std::cout);
+    }
+
+    std::vector<size_t> pInSizes(nInCount);
+    std::vector<const char*> pInMimeTypes(nInCount);
+    std::vector<const char*> pInStreams(nInCount);
+
+    if (html.empty()) {
+        for (size_t i = 0; i < nInCount; ++i) {
+            pInSizes[i] = data._content[i].length();
+            pInStreams[i] = data._content[i].c_str();
+            pInMimeTypes[i] = data._mimeTypes[i].c_str();
+        }
+    }
+    else {
+        pInSizes[0] = html.size();
+        pInStreams[0] = html.data();
+        pInMimeTypes[0] = "text/html";
+    }
+
+    return DocumentData::get(document.appDocId).loKitDocument->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(), pInStreams.data());
 }
 
 /**
