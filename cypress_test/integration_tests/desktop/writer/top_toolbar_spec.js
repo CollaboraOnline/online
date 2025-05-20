@@ -262,7 +262,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
 		cy.cGet('#response-ok').click();
+
+		writerHelper.selectAllTextOfDoc();
 		helper.copy();
+		cy.wait(1000);
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});
@@ -298,6 +301,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.reloadDocument(newFilePath);
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
+		cy.wait(1000);
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
