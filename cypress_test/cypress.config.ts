@@ -13,6 +13,7 @@ export default defineConfig({
 	chromeWebSecurity: false,
 	screenshotOnRunFailure: true,
 	screenshotsFolder: './integration_tests/snapshots/actual',
+	logServerResponse: false,
 	env: {
 		USER_INTERFACE: process.env.USER_INTERFACE,
 		visualRegressionType: 'regression',
