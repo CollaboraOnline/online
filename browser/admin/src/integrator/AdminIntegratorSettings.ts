@@ -794,16 +794,15 @@ class SettingIframe {
 			}
 		}
 
-		if (data.viewsetting && data.viewsetting.length > 0) {
-			const fileId = data.viewsetting[0].uri;
-			const fetchContent = await this.fetchSettingFile(fileId);
-			this.generateViewSettingUI(JSON.parse(fetchContent));
-		} else {
-			const defaultViewSetting = { accessibilityState: false };
-			this.uploadViewSettingFile(
-				'viewsetting.json',
-				JSON.stringify(defaultViewSetting),
-			);
+		if (data.kind === 'user') {
+			if (data.viewsetting && data.viewsetting.length > 0) {
+				const fileId = data.viewsetting[0].uri;
+				const fetchContent = await this.fetchSettingFile(fileId);
+				this.generateViewSettingUI(JSON.parse(fetchContent));
+			} else {
+				const defaultViewSetting = { accessibilityState: false };
+				this.generateViewSettingUI(defaultViewSetting);
+			}
 		}
 
 		if (data.xcu && data.xcu.length > 0) {
