@@ -2394,6 +2394,8 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
 #endif
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
                          std::string(enableDebug ? "true" : "false"));
+    std::string enableAccessibility = stringifyBoolFromConfig(config, "accessibility.enable", false);
+    Poco::replaceInPlace(adminFile, std::string("%ENABLE_ACCESSIBILITY%"), enableAccessibility);
 
     updateThemeResources(adminFile, responseRoot, urv[BRANDING_THEME], config);
 
