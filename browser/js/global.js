@@ -1122,12 +1122,6 @@ function getInitializerClass() {
 		};
 		this.close = function() {
 		};
-		if (global.ThisIsAMobileApp) {
-			this.onremotebinarymessage = function() {
-			};
-			this.onremotemessage = function() {
-			};
-		}
 	};
 	global.FakeWebSocket.prototype.send = function(data) {
 		global.postMobileMessage(data);
@@ -1905,14 +1899,84 @@ function getInitializerClass() {
 		global.socket.binaryType = 'arraybuffer';
 
 		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) {
-			// This corresponds to the initial GET request when creating a WebSocket
-			// connection and tells the app's code that it is OK to start invoking
-			// TheFakeWebSocket's onmessage handler. The app code that handles this
-			// special message knows the document to be edited anyway, and can send it
-			// on as necessary to the Online code.
-			global.postMobileMessage('HULLO');
-			// A FakeWebSocket is immediately open.
-			this.socket.onopen();
+			fetch('http://cool/cool/messages').then(async (response) => { // This acts the same as cool:/cool/messages would, but is usable from fetch which cannot handle custom protocols
+				if (!response.ok) {
+					throw new Error(`Response failed with code ${response.status}`);
+				}
+
+				console.log('Successfully opened http://cool/cool/messages socket')
+
+				// This corresponds to the initial GET request when creating a WebSocket
+				// connection and tells the app's code that it is OK to start invoking
+				// TheFakeWebSocket's onmessage handler. The app code that handles this
+				// special message knows the document to be edited anyway, and can send it
+				// on as necessary to the Online code.
+				global.postMobileMessage('HULLO');
+				this.socket.onopen();
+
+				const stream = response.body;
+				const reader = stream.getReader();
+
+				const headerLength = 5; // 4 bytes for the size, 1 byte for if it is binary or not
+				let messageHeaderBuffer = new Uint8Array(headerLength);
+				
+				let messageIsBinary;
+				let messageBuffer;
+
+				let readingHeader = true;
+				let cursorOffset = 0;
+				let chunk;
+
+				while (!((chunk = await reader.read()).done)) {
+					let chunkBuffer = chunk.value;
+					let chunkOffset = 0;
+
+					while (chunkOffset < chunkBuffer.byteLength) {
+						if (readingHeader) {
+							let readLength = Math.min(chunkBuffer.byteLength - chunkOffset, headerLength - cursorOffset);
+							let readPortion = chunkBuffer.slice(chunkOffset, chunkOffset + readLength);
+							messageHeaderBuffer.set(readPortion, cursorOffset);
+							cursorOffset += readLength;
+							chunkOffset += readLength;
+
+							if (cursorOffset == headerLength) { // No more header to read...
+								let messageHeaderView = new DataView(messageHeaderBuffer.buffer);
+								let messageLength = messageHeaderView.getInt32(0);
+								messageIsBinary = !!messageHeaderView.getInt8(4);
+
+								messageBuffer = new Uint8Array(messageLength);
+
+								cursorOffset = 0;
+								readingHeader = false;
+							}
+						} else {
+							let readLength = Math.min(chunkBuffer.byteLength - chunkOffset, messageBuffer.byteLength - cursorOffset);
+							let readPortion = chunkBuffer.slice(chunkOffset, chunkOffset + readLength);
+							messageBuffer.set(readPortion, cursorOffset);
+							cursorOffset += readLength;
+							chunkOffset += readLength;
+
+							if (cursorOffset == messageBuffer.byteLength) { // No more message to read...
+								if (messageIsBinary) {
+									window.TheFakeWebSocket.onmessage({'data': messageBuffer});
+								} else {
+									let decodedMessage = new TextDecoder().decode(messageBuffer);
+									window.TheFakeWebSocket.onmessage({'data': decodedMessage});
+								}
+								
+								messageHeaderBuffer = new Uint8Array(headerLength);
+
+								cursorOffset = 0;
+								readingHeader = true;
+							}
+						}
+					}
+				}
+
+				console.log('Server closed http://cool/cool/messages connection');
+			}).catch(e => {
+				console.log(`Got an error while reading http://cool/cool/messages, we're pretty much done-for: ${e}`);
+			});
 		}
 	}
 
