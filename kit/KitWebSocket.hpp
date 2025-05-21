@@ -99,11 +99,12 @@ public:
         , _document(std::move(document))
         , _session(session)
     {
+        _document->bgSaveStarted();
     }
 
     ~BgSaveParentWebSocketHandler()
     {
-        // Just to make it easier to set a breakpoint
+        _document->bgSaveEnded();
     }
 
 protected:
