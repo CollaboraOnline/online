@@ -1057,44 +1057,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					return !$(tab).hasClass('hidden');
 				};
 
-				var findNextVisibleTab = function (tab, backwards) {
-					var diff = (backwards ? -1 : 1);
-					var nextTab = tabs[tabs.indexOf(tab) + diff];
-
-					while (!isTabVisible(nextTab) && nextTab != tab) {
-						if (backwards && tabs.indexOf(nextTab) == 0)
-							nextTab = tabs[tabs.length - 1];
-						else if (!backwards && tabs.indexOf(nextTab) == tabs.length - 1)
-							nextTab = tabs[0];
-						else
-							nextTab = tabs[tabs.indexOf(nextTab) + diff];
+				var findNextVisibleTab = function(tab, backwards) {
+					const currentIndex = tabs.indexOf(tab);
+					const diff = backwards ? -1 : 1;
+					const total = tabs.length;
+				
+					for (let i = 1; i <= total; i++) {
+						const nextIndex = (currentIndex + diff * i + total) % total;
+						const nextTab = tabs[nextIndex];
+						if (isTabVisible(nextTab)) {
+							return nextTab;
+						}
 					}
-
-					return nextTab;
+				
+					// Fallback to current tab if no visible one is found (shouldn't happen)
+					return tab;
 				};
 
 				var moveFocusToPreviousTab = function(tab) {
-					if (tab === tabs[0]) {
-						tabs[tabs.length - 1].click();
-						tabs[tabs.length - 1].focus();
-					}
-					else {
-						var nextTab = findNextVisibleTab(tab, true);
-						nextTab.click();
-						nextTab.focus(); // We add this or document gets the focus.
-					}
+					const nextTab = findNextVisibleTab(tab, true);
+					nextTab.click();
+					nextTab.focus(); // Prevent document from taking focus
 				};
 
 				var moveFocusToNextTab = function(tab) {
-					if (tab === tabs[tabs.length - 1]) {
-						tabs[0].click();
-						tabs[0].focus();
-					}
-					else {
-						var nextTab = findNextVisibleTab(tab, false);
-						nextTab.click();
-						nextTab.focus(); // We add this or document gets the focus.
-					}
+					const nextTab = findNextVisibleTab(tab, false);
+					nextTab.click();
+					nextTab.focus(); // Prevent document from taking focus
 				};
 
 				var moveFocusIntoTabPage = function(tab) {
