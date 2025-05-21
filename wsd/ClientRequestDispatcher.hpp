@@ -61,7 +61,8 @@ private:
     /// Does this address feature in the allowed hosts list.
     static bool allowPostFrom(const std::string& address);
 
-    static bool allowConvertTo(const std::string& address, const Poco::Net::HTTPRequest& request, AsyncFn asyncCb);
+    static bool allowConvertTo(const std::string& address, const Poco::Net::HTTPRequest& request,
+                               bool capabilityQuery, AsyncFn asyncCb);
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
     bool handleRootRequest(const RequestDetails& requestDetails,
