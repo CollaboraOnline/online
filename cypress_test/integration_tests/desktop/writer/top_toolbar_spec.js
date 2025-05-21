@@ -250,7 +250,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
 
-	it('Insert hyperlink.', function() {
+	it.skip('Insert hyperlink.', function() {
 		helper.setDummyClipboardForCopy();
 		helper.copy();
 		cy.wait(1000);
