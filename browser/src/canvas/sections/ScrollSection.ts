@@ -105,6 +105,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.animatingScroll = false;
 
 		this.sectionProperties.animateWheelScroll = (<any>window).mode.isDesktop();
+		this.sectionProperties.lastElapsedTime = 0;
 		this.sectionProperties.scrollAnimationDelta = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
 		this.sectionProperties.scrollAnimationDisableTimeout = null;
@@ -560,8 +561,9 @@ export class ScrollSection extends CanvasSectionObject {
 	public onAnimate(frameCount: number, elapsedTime: number): void {
 		if (this.sectionProperties.animatingScroll) {
 			const lineHeight = this.containerObject.getScrollLineHeight();
-			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration;
-			const maxDelta = lineHeight * ScrollSection.scrollAnimationMaxVelocity;
+			const timeDelta = (elapsedTime - this.sectionProperties.lastElapsedTime) / (1000/60);
+			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration * timeDelta;
+			const maxDelta = lineHeight * ScrollSection.scrollAnimationMaxVelocity * timeDelta;
 
 			// Calculate horizontal and vertical scroll deltas for this animation step
 			const deltas = [0, 0];
@@ -598,6 +600,8 @@ export class ScrollSection extends CanvasSectionObject {
 				this.scrollVerticalWithOffset(delta);
 			}
 		}
+
+		this.sectionProperties.lastElapsedTime = elapsedTime;
 
 		const animatingScrollbar =
 			(this.sectionProperties.animatingHorizontalScrollBar
@@ -1140,7 +1144,8 @@ export class ScrollSection extends CanvasSectionObject {
 	private animateScroll(delta: [number, number]): void {
 		const maxDelta = ScrollSection.scrollAnimationMaxDelta * this.containerObject.getScrollLineHeight();
 		for (let i = 0; i < 2; ++i) {
-			if ((delta[i] > 0) !== (this.sectionProperties.scrollAnimationDelta[i] > 0)) {
+			if (Math.abs(delta[i]) > 0 &&
+				(delta[i] > 0) !== (this.sectionProperties.scrollAnimationDelta[i] > 0)) {
 				// Stop animation on scroll change direction
 				this.sectionProperties.scrollAnimationVelocity[i] = 0;
 				this.sectionProperties.scrollAnimationDelta[i] = 0;
@@ -1158,6 +1163,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		if (!this.sectionProperties.animatingScroll) {
 			this.sectionProperties.animatingScroll = true;
+			this.sectionProperties.lastElapsedTime = 0;
 			// We're about to start a duration-less animation, so we need to
 			// ensure the animation is reset.
 			if (!this.startAnimating({})) this.resetAnimation();
