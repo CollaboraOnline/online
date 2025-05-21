@@ -1475,12 +1475,13 @@ app.definitions.Socket = L.Class.extend({
 			} else if (textMsg.startsWith('saveas:')) {
 				var accessToken = this._getParameterByName(url, 'access_token');
 				var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
+				let noAuthHeader = this._getParameterByName(url, 'no_auth_header');
 
 				if (accessToken !== undefined) {
 					if (accessTokenTtl === undefined) {
 						accessTokenTtl = 0;
 					}
-					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
+					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl, 'no_auth_header': noAuthHeader };
 				}
 				else {
 					this._map.options.docParams = {};

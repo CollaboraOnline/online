@@ -241,6 +241,7 @@ class InitializerBase {
 		window.versionPath = "";
 		window.accessToken = element.dataset.accessToken;
 		window.accessTokenTTL = element.dataset.accessTokenTtl;
+		window.noAuthHeader = element.dataset.noAuthHeader;
 		window.accessHeader = element.dataset.accessHeader;
 		window.postMessageOriginExt = "";
 		window.coolwsdVersion = "";
@@ -1673,7 +1674,7 @@ function getInitializerClass() {
 	if (global.wopiSrc != '') {
 		global.docURL = decodeURIComponent(global.wopiSrc);
 		if (global.accessToken !== '') {
-			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL };
+			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL, 'no_auth_header': global.noAuthHeader };
 		}
 		else if (global.accessHeader !== '') {
 			wopiParams = { 'access_header': global.accessHeader };

@@ -645,11 +645,15 @@ void launchAsyncCheckFileInfo(
     const std::string requestKey = RequestDetails::getRequestKey(
         accessDetails.wopiSrc(), accessDetails.accessToken());
     LOG_DBG("RequestKey: [" << requestKey << "], wopiSrc: [" << accessDetails.wopiSrc()
-                            << "], accessToken: [" << accessDetails.accessToken() << ']');
+            << "], accessToken: [" << accessDetails.accessToken() << "], noAuthHeader: ["
+            << accessDetails.noAuthHeader() << ']');
 
     std::vector<std::string> options = {
         "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
     };
+
+    if (!accessDetails.noAuthHeader().empty())
+        options.push_back("no_auth_header=" + accessDetails.noAuthHeader());
 
     if (!accessDetails.permission().empty())
         options.push_back("permission=" + accessDetails.permission());
@@ -770,6 +774,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                     auto accessDetails = FileServerRequestHandler::ResourceAccessDetails(
                         mapAccessDetails.at("wopiSrc"),
                         mapAccessDetails.at("accessToken"),
+                        mapAccessDetails.at("noAuthHeader"),
                         mapAccessDetails.at("permission"),
                         mapAccessDetails.at("configid"));
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations,
