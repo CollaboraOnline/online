@@ -415,9 +415,9 @@ class ConvertToAddressResolver : public std::enable_shared_from_this<ConvertToAd
         // unauthorized host to use convert-to, only a query to report if it is
         // possible to use convert-to.
         if (_capabilityQuery)
-            LOG_INF_S("convert-to: Requesting address is denied: " << addressToCheck);
+            LOG_DBG("convert-to: Requesting address is denied: " << addressToCheck);
         else
-            LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
+            LOG_WRN("convert-to: Requesting address is denied: " << addressToCheck);
     }
 
 public:
