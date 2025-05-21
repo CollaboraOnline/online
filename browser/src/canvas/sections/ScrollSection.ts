@@ -25,6 +25,9 @@ export class ScrollSection extends CanvasSectionObject {
 	static readonly scrollAnimationMaxDelta: number = 75;
 	static readonly scrollDirectTimeoutMs: number = 100;
 
+	// The number of lines a scroll-wheel tick should travel
+	static readonly scrollWheelDelta: number = 20;
+
 	name: string = L.CSections.Scroll.name;
 	processingOrder: number = L.CSections.Scroll.processingOrder
 	drawingOrder: number = L.CSections.Scroll.drawingOrder;
@@ -1147,23 +1150,26 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private animateScroll(delta: [number, number]): void {
-		const maxDelta = ScrollSection.scrollAnimationMaxDelta * this.containerObject.getScrollLineHeight();
+		const lineHeight = this.containerObject.getScrollLineHeight();
+		const maxDelta = ScrollSection.scrollAnimationMaxDelta * lineHeight;
+
 		for (let i = 0; i < 2; ++i) {
-			if (Math.abs(delta[i]) > 0 &&
-				(delta[i] > 0) !== (this.sectionProperties.scrollAnimationDelta[i] > 0)) {
+			if (Math.abs(delta[i]) === 0) continue;
+
+			if ((delta[i] > 0) !== (this.sectionProperties.scrollAnimationDelta[i] > 0)) {
 				// Stop animation on scroll change direction
 				this.sectionProperties.scrollAnimationVelocity[i] = 0;
 				this.sectionProperties.scrollAnimationDelta[i] = 0;
 			}
 
-			this.sectionProperties.scrollAnimationDelta[i] += delta[i];
+			const sign = delta[i] > 0 ? 1 : -1;
+			this.sectionProperties.scrollAnimationDelta[i] +=
+				lineHeight * ScrollSection.scrollWheelDelta * sign;
 
 			// Don't let the delta get too big, or the user will be able to
 			// accumulate a long scrolling animation and it'd feel weird.
-			if (Math.abs(this.sectionProperties.scrollAnimationDelta[i]) > maxDelta) {
-				this.sectionProperties.scrollAnimationDelta[i] = delta[i] > 0 ?
-					maxDelta : -maxDelta;
-			}
+			if (Math.abs(this.sectionProperties.scrollAnimationDelta[i]) > maxDelta)
+				this.sectionProperties.scrollAnimationDelta[i] = sign * maxDelta;
 		}
 
 		if (!this.sectionProperties.animatingScroll) {
