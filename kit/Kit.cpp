@@ -791,6 +791,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _lastMemTrimTime(std::chrono::steady_clock::now())
     , _mobileAppDocId(mobileAppDocId)
     , _duringLoad(0)
+    , _bgSavesOngoing(0)
 {
     LOG_INF("Document ctor for [" << _docKey <<
             "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
@@ -1048,7 +1049,7 @@ bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode)
 void Document::trimIfInactive()
 {
     // Don't perturb memory un-necessarily
-    if (_isBgSaveProcess)
+    if (_isBgSaveProcess || _bgSavesOngoing)
         return;
 
     // FIXME: multi-document mobile optimization ?
@@ -1071,7 +1072,7 @@ void Document::trimIfInactive()
 void Document::trimAfterInactivity()
 {
     // Don't perturb memory un-necessarily
-    if (_isBgSaveProcess)
+    if (_isBgSaveProcess || _bgSavesOngoing)
         return;
 
     if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
@@ -2712,6 +2713,8 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tmodified: " << name(_modified)
         << "\n\tbgSaveProc: " << _isBgSaveProcess
         << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled;
+    if (!_isBgSaveProcess)
+        oss << "\n\tbgSavesOnging: "<< _bgSavesOngoing;
 
     std::string smap;
     if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
