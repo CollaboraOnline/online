@@ -138,6 +138,7 @@ public:
         return std::map<std::string, std::string>{
             {"wopiSrc", "/wopi/files/0"},
             {"accessToken", "anything"},
+            {"noAuthHeader", ""},
             {"permission", ""},
             {"configid", ""}
         };

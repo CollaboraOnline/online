@@ -46,7 +46,10 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
     switch (_type)
     {
         case Type::Token:
-            request.set("Authorization", "Bearer " + _data);
+            if (!_noHeader)
+            {
+                request.set("Authorization", "Bearer " + _data);
+            }
             break;
         case Type::Header:
         {
@@ -91,22 +94,26 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
 
 Authorization Authorization::create(const Poco::URI& uri)
 {
-    // prefer the access_token
+    bool noHeader = false;
+    Authorization::Type type = Authorization::Type::None;
     std::string decoded;
     for (const auto& param : uri.getQueryParameters())
     {
+        // prefer the access_token
         if (param.first == "access_token")
         {
             decoded = Uri::decode(param.second);
-            return Authorization(Authorization::Type::Token, decoded);
-        }
-
-        if (param.first == "access_header")
+            type = Authorization::Type::Token;
+        } else if (param.first == "access_header" && type == Authorization::Type::None) {
             decoded = Uri::decode(param.second);
+            type = Authorization::Type::Header;
+        } else if (param.first == "no_auth_header") {
+            noHeader = true;
+        }
     }
 
     if (!decoded.empty())
-        return Authorization(Authorization::Type::Header, decoded);
+        return Authorization(type, decoded, noHeader);
 
     return Authorization();
 }

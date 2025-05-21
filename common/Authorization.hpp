@@ -41,16 +41,19 @@ public:
 private:
     std::string _data;
     Type _type;
+    bool _noHeader;
 
 public:
     Authorization()
         : _type(Type::None)
+        , _noHeader(false)
     {
     }
 
-    Authorization(Type type, const std::string& data)
+    Authorization(Type type, const std::string& data, bool noHeader)
         : _data(data)
         , _type(type)
+        , _noHeader(noHeader)
     {
     }
 

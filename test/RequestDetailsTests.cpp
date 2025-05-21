@@ -766,7 +766,7 @@ void RequestDetailsTests::testAuthorization()
 {
     constexpr std::string_view testname = __func__;
 
-    Authorization auth1(Authorization::Type::Token, "abc");
+    Authorization auth1(Authorization::Type::Token, "abc", false);
     Poco::URI uri1("http://localhost");
     auth1.authorizeURI(uri1);
     LOK_ASSERT_EQUAL(std::string("http://localhost/?access_token=abc"), uri1.toString());
@@ -774,17 +774,17 @@ void RequestDetailsTests::testAuthorization()
     auth1.authorizeRequest(req1);
     LOK_ASSERT_EQUAL(std::string("Bearer abc"), req1.get("Authorization"));
 
-    Authorization auth1modify(Authorization::Type::Token, "modified");
+    Authorization auth1modify(Authorization::Type::Token, "modified", false);
     // still the same uri1, currently "http://localhost/?access_token=abc"
     auth1modify.authorizeURI(uri1);
     LOK_ASSERT_EQUAL(std::string("http://localhost/?access_token=modified"), uri1.toString());
 
-    Authorization auth2(Authorization::Type::Header, "def");
+    Authorization auth2(Authorization::Type::Header, "def", false);
     Poco::Net::HTTPRequest req2;
     auth2.authorizeRequest(req2);
     LOK_ASSERT(!req2.has("Authorization"));
 
-    Authorization auth3(Authorization::Type::Header, "Authorization: Basic huhu== ");
+    Authorization auth3(Authorization::Type::Header, "Authorization: Basic huhu== ", false);
     Poco::URI uri2("http://localhost");
     auth3.authorizeURI(uri2);
     // nothing added with the Authorization header approach
@@ -793,7 +793,7 @@ void RequestDetailsTests::testAuthorization()
     auth3.authorizeRequest(req3);
     LOK_ASSERT_EQUAL(std::string("Basic huhu=="), req3.get("Authorization"));
 
-    Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\rX-Something:   additional  ");
+    Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\rX-Something:   additional  ", false);
     Poco::Net::HTTPRequest req4;
     auth4.authorizeRequest(req4);
     LOK_ASSERT_MESSAGE("Exected request to have Authorization header", req4.has("Authorization"));
@@ -801,13 +801,13 @@ void RequestDetailsTests::testAuthorization()
     LOK_ASSERT_MESSAGE("Exected request to have X-Something header", req4.has("X-Something"));
     LOK_ASSERT_EQUAL(std::string("additional"), req4.get("X-Something"));
 
-    Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\rX-Something-More:   else  \n\r");
+    Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\rX-Something-More:   else  \n\r", false);
     Poco::Net::HTTPRequest req5;
     auth5.authorizeRequest(req5);
     LOK_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
     LOK_ASSERT_EQUAL(std::string("else"), req5.get("X-Something-More"));
 
-    Authorization auth6(Authorization::Type::None, "Authorization: basic huh==");
+    Authorization auth6(Authorization::Type::None, "Authorization: basic huh==", false);
     Poco::Net::HTTPRequest req6;
     CPPUNIT_ASSERT_NO_THROW(auth6.authorizeRequest(req6));
 
