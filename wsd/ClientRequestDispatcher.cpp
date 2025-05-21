@@ -407,13 +407,28 @@ class ConvertToAddressResolver : public std::enable_shared_from_this<ConvertToAd
     std::vector<std::string> _addressesToResolve;
     ClientRequestDispatcher::AsyncFn _asyncCb;
     bool _allow;
+    bool _capabilityQuery;
+
+    void logAddressIsDenied(const std::string& addressToCheck) const
+    {
+        // capability queries if convert-to is available in order to put that
+        // info in its results. If disallowed this isn't an attempt by an
+        // unauthorized host to use convert-to, only a query to report if it is
+        // possible to use convert-to.
+        if (_capabilityQuery)
+            LOG_DBG("convert-to: Requesting address is denied: " << addressToCheck);
+        else
+            LOG_WRN("convert-to: Requesting address is denied: " << addressToCheck);
+    }
 
 public:
 
-    ConvertToAddressResolver(std::vector<std::string> addressesToResolve, ClientRequestDispatcher::AsyncFn asyncCb)
+    ConvertToAddressResolver(std::vector<std::string> addressesToResolve, bool capabilityQuery,
+                             ClientRequestDispatcher::AsyncFn asyncCb)
         : _addressesToResolve(std::move(addressesToResolve))
         , _asyncCb(std::move(asyncCb))
         , _allow(true)
+        , _capabilityQuery(capabilityQuery)
     {
     }
 
@@ -449,7 +464,7 @@ public:
             }
             else
             {
-                LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
+                logAddressIsDenied(addressToCheck);
                 break;
             }
 
@@ -506,7 +521,7 @@ public:
         if (_allow)
             LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
         else
-            LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
+            logAddressIsDenied(addressToCheck);
         _addressesToResolve.pop_back();
 
         // If hostToCheck is not allowed, or there are no addresses
@@ -552,6 +567,7 @@ bool ClientRequestDispatcher::allowPostFrom(const std::string& address)
 
 bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
                                              const Poco::Net::HTTPRequest& request,
+                                             bool capabilityQuery,
                                              AsyncFn asyncCb)
 {
     const bool allow = allowPostFrom(address) || HostUtil::allowedWopiHost(request.getHost());
@@ -595,7 +611,8 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
         return true;
     }
 
-    auto resolver = std::make_shared<ConvertToAddressResolver>(std::move(addressesToResolve), asyncCb);
+    auto resolver = std::make_shared<ConvertToAddressResolver>(std::move(addressesToResolve),
+                                                               capabilityQuery, asyncCb);
     if (asyncCb)
     {
         resolver->startAsyncProcessing();
@@ -1816,7 +1833,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         requestDetails.equals(1, "get-thumbnail"))
     {
         // Validate sender - FIXME: should do this even earlier.
-        if (!allowConvertTo(socket->clientAddress(), request, nullptr))
+        if (!allowConvertTo(socket->clientAddress(), request, false, nullptr))
         {
             LOG_WRN(
                 "Conversion requests not allowed from this address: " << socket->clientAddress());
@@ -2504,7 +2521,7 @@ bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPReq
                                                  { sendCapabilities(allowedConvert, closeConnection, socket); });
     };
 
-    allowConvertTo(socket->clientAddress(), request, std::move(convertToAllowedCb));
+    allowConvertTo(socket->clientAddress(), request, true, std::move(convertToAllowedCb));
     return false;
 }
 
