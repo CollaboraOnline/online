@@ -87,7 +87,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': tableTabName + '-tab-label',
 				'name': tableTabName,
 				'context': 'Table',
-				'accessibility': { focusBack: true, combination: '' }
+				'accessibility': { focusBack: true, combination: 'T' }
 			},
 			{
 				'text': _('Draw'),
