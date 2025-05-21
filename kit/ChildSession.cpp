@@ -621,7 +621,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "setclipboard"))
         {
-            return setClipboard(buffer, length, tokens);
+            return setClipboard(tokens);
         }
         else if (tokens.equals(0, "paste"))
         {
@@ -1532,8 +1532,15 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     size_t      *outSizes = nullptr;
     char       **outStreams = nullptr;
 
+    std::string tagName;
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "name", tagName))
+    {
+        sendTextFrameAndLogError("error: cmd=getclipboard kind=syntax");
+        return false;
+    }
+
     std::string mimeType;
-    bool hasMimeRequest = tokens.size() > 1 && getTokenString(tokens[1], "mimetype", mimeType);
+    bool hasMimeRequest = tokens.size() > 2 && getTokenString(tokens[2], "mimetype", mimeType);
     if (hasMimeRequest)
     {
         specifics = Util::splitStringToVector(mimeType, ',');
@@ -1567,8 +1574,6 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     std::vector<char> output;
     output.reserve(outGuess);
 
-    // FIXME: extra 'content' is necessary for Message parsing.
-    Util::vectorAppend(output, "clipboardcontent: content\n");
     bool json = !specifics.empty();
     Poco::JSON::Object selectionObject;
     LOG_TRC("Building clipboardcontent: " << outCount << " items");
@@ -1606,30 +1611,53 @@ bool ChildSession::getClipboard(const StringVector& tokens)
         Util::vectorAppend(output, selection.c_str(), selection.size());
     }
 
+    std::string clipFile = ChildSession::getJailDocRoot() + "clipboard." + tagName;
+
+    std::ofstream fileStream;
+    fileStream.open(clipFile);
+    fileStream.write(output.data(), output.size());
+    fileStream.close();
+
+    if (fileStream.fail())
+    {
+        LOG_ERR("GetClipboard Failed for tag: " << tagName);
+        return false;
+    }
+
     LOG_TRC("Sending clipboardcontent of size " << output.size() << " bytes");
-    sendBinaryFrame(output.data(), output.size());
+    sendTextFrame("clipboardcontent: file=" + clipFile);
 
     return true;
 }
 
-bool ChildSession::setClipboard(const char* buffer, int length, const StringVector& /* tokens */)
+bool ChildSession::setClipboard(const StringVector& tokens)
 {
+    std::string clipFile;
+
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "name", clipFile))
+    {
+        sendTextFrameAndLogError("error: cmd=setclipboard name=filename");
+        return false;
+    }
+
     try {
         ClipboardData data;
-        Poco::MemoryInputStream stream(buffer, length);
+        std::ifstream stream(clipFile);
 
-        SigUtil::addActivity(getId(), "setClipboard " + std::to_string(length) + " bytes");
+        if (!stream)
+        {
+            LOG_ERR("unable to open clipboard: " << clipFile);
+            return false;
+        }
 
-        std::string command; // skip command
-        std::getline(stream, command, '\n');
+        SigUtil::addActivity(getId(), "setClipboard " + std::to_string(FileUtil::Stat(clipFile).size()) + " bytes");
 
         // See if the data is in the usual mimetype-size-content format or is just plain HTML.
-        std::streampos pos = stream.tellg();
         std::string firstLine;
         std::getline(stream, firstLine, '\n');
         std::vector<char> html;
         bool hasHTML = firstLine.starts_with("<!DOCTYPE html>");
-        stream.seekg(pos, stream.beg);
+        stream.seekg(0, stream.beg);
         if (hasHTML)
         {
             // It's just HTML: copy that as-is.

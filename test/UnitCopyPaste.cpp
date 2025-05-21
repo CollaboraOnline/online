@@ -247,7 +247,11 @@ public:
         // The removal doesn't depend on the clipboard URL, so just ask the first session to do the
         // removal for us.
         std::shared_ptr<ClientSession> clientSession = getChildSession(0);
-        clientSession->preProcessSetClipboardPayload(payload);
+
+        std::istringstream ifs(payload);
+        std::ostringstream ofs;
+        clientSession->preProcessSetClipboardPayload(ifs, ofs);
+        payload = ofs.str();
     }
 
     std::string buildClipboardText(const std::string &text)
