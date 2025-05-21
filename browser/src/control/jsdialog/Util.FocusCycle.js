@@ -55,14 +55,14 @@ function isFocusable(element) {
 
 	// Check if element is focusable (e.g. input, button, link etc.)
 	const focusableElements = [
-		'a[href]',
-		'button',
-		'textarea',
-		'input[type="text"]',
-		'input[type="radio"]',
-		'input[type="checkbox"]',
-		'select',
-		'[tabindex]:not([tabindex="-1"])',
+		'a[href]:not([disabled]):not(.hidden)',
+		'button:not([disabled]):not(.hidden)',
+		'textarea:not([disabled]):not(.hidden)',
+		'input[type="text"]:not([disabled]):not(.hidden)',
+		'input[type="radio"]:not([disabled]):not(.hidden)',
+		'input[type="checkbox"]:not([disabled]):not(.hidden)',
+		'select:not([disabled]):not(.hidden)',
+		'[tabindex]:not([tabindex="-1"]):not(.jsdialog-begin-marker):not(.jsdialog-end-marker):not([disabled]):not(.hidden)',
 	];
 
 	return focusableElements.some((selector) => element.matches(selector));
