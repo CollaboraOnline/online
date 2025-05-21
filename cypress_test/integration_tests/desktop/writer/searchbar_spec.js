@@ -121,7 +121,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 
 		helper.copy();
 		helper.expectTextForClipboard('sit');
-		desktopHelper.assertScrollbarPosition('vertical', 55, 155);
+		desktopHelper.assertScrollbarPosition('vertical', 55, 230);
 		desktopHelper.assertVisiblePage(1, 2, 6);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
