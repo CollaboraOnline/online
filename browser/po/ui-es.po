@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-18 22:39+0000\n"
+"PO-Revision-Date: 2025-05-22 04:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
@@ -2382,7 +2382,7 @@ msgstr "Presentación"
 
 #: src/control/Control.NotebookbarImpress.js:385
 msgid "Present in Window"
-msgstr "Presente en la ventana"
+msgstr "Presentar en ventana"
 
 #: src/control/Control.NotebookbarImpress.js:505
 msgid "Show Grid"

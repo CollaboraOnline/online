@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-05-18 22:39+0000\n"
+"PO-Revision-Date: 2025-05-22 04:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
@@ -960,7 +960,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:145
 msgid "Cyprus"
-msgstr ""
+msgstr "Xipre"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
@@ -972,23 +972,23 @@ msgstr "Alemaña"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Denmark"
-msgstr ""
+msgstr "Dinamarca"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Estonia"
-msgstr ""
+msgstr "Estonia"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Spain"
-msgstr ""
+msgstr "España"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Finland"
-msgstr ""
+msgstr "Finlandia"
 
 #: src/control/Control.ESignature.ts:152
 msgid "France"
-msgstr ""
+msgstr "Francia"
 
 #: src/control/Control.ESignature.ts:153
 msgid "United Kingdom"
@@ -996,51 +996,51 @@ msgstr "Reinu Xuníu"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Georgia"
-msgstr ""
+msgstr "Xeorxa"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "Guérnesei"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
-msgstr ""
+msgstr "Grecia"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Croatia"
-msgstr ""
+msgstr "Croacia"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Hungary"
-msgstr ""
+msgstr "Hungría"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonesia"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Ireland"
-msgstr ""
+msgstr "Irlanda"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: src/control/Control.ESignature.ts:162
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Iceland"
-msgstr ""
+msgstr "Islandia"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Italy"
-msgstr ""
+msgstr "Italia"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Japan"
-msgstr ""
+msgstr "Xapón"
 
 #: src/control/Control.ESignature.ts:166
 msgid "Kenya"
