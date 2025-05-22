@@ -132,6 +132,8 @@ void ConvertToBroker::sendStartMessage(const std::shared_ptr<ClientSession>& cli
     std::string load = "load url=" + encodedFrom + " batch=true";
     if (!getLang().empty())
         load += " lang=" + getLang();
+    if(!_sOptions.empty() && _sOptions.starts_with(",infilterOptions="))
+        load +=  " " + _sOptions.substr(1);
     std::vector<char> loadRequest(load.begin(), load.end());
     clientSession->handleMessage(loadRequest);
 }

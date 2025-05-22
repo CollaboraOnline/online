@@ -249,6 +249,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _disableVerifyHost = value == "false";
             ++offset;
         }
+        else if (name == "infilterOptions")
+        {
+            _inFilterOptions = std::move(value);
+            ++offset;
+        }
     }
 
     Anonymizer::mapAnonymized(_userId, _userIdAnonym);

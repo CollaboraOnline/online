@@ -306,6 +306,8 @@ public:
 
     const std::string& getDocTemplate() const { return _docTemplate; }
 
+    const std::string& getInFilterOption() const { return _inFilterOptions; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -450,6 +452,9 @@ private:
     /// Specifies whether certification verification for the wopi server
     /// should be disabled in core
     bool _disableVerifyHost;
+
+    /// Used in convert-to apis to specify loading options
+    std::string _inFilterOptions;
 
 };
 
