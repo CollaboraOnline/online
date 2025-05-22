@@ -2,5 +2,6 @@
   <PropertyGroup>
     <IncludePath>@POCOINCLUDE_WINDOWS@;@ZSTDINCLUDE_WINDOWS@;@LIBPNG_INCLUDES_WINDOWS@;@ZLIB_INCLUDES_WINDOWS@;@LOBUILDDIR_WINDOWS@\include;$(IncludePath)</IncludePath>
     <LibraryPath>@POCOLIB_WINDOWS@;@ZSTDLIB_WINDOWS@;@LIBPNG_LIBS_WINDOWS@;@ZLIB_LIBS_WINDOWS@;$(LibraryPath)</LibraryPath>
+    <LO_PATH>@LO_PATH@</LO_PATH>
   </PropertyGroup>
 </Project>
