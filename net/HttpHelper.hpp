@@ -42,7 +42,7 @@ inline void sendErrorAndShutdown(http::StatusCode errorCode,
                                  const std::string& extraHeader = std::string())
 {
     sendError(errorCode, socket, body, extraHeader + "Connection: close\r\n");
-    socket->shutdown();
+    socket->asyncShutdown();
     socket->ignoreInput();
 }
 

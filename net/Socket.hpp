@@ -212,7 +212,7 @@ public:
 
     /// Shutdown the socket.
     /// TODO: Support separate read/write shutdown.
-    virtual void shutdown()
+    void syncShutdown()
     {
         if (!_noShutdown)
         {
@@ -227,6 +227,11 @@ public:
 #endif
             }
         }
+    }
+
+    virtual void shutdown()
+    {
+        syncShutdown();
     }
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
@@ -1284,11 +1289,16 @@ public:
     /// Returns true in case of forced removal, caller shall stop processing
     bool checkRemoval(std::chrono::steady_clock::time_point now);
 
-    /// Just trigger the async shutdown.
-    void shutdown() override
+    void asyncShutdown()
     {
         _shutdownSignalled = true;
         LOG_TRC("Async shutdown requested.");
+    }
+
+    /// Just trigger the async shutdown.
+    void shutdown() override
+    {
+        asyncShutdown();
     }
 
     void ignoreInput() override
@@ -1298,7 +1308,7 @@ public:
     }
 
     /// Perform the real shutdown.
-    virtual void shutdownConnection() { Socket::shutdown(); }
+    virtual void shutdownConnection() { syncShutdown(); }
 
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t &timeoutMaxMicroS) override

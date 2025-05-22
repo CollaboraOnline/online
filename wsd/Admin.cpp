@@ -1267,7 +1267,7 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
     response->setBody(oss.str(), "text/plain");
 
     socket->send(*response);
-    socket->shutdown();
+    socket->asyncShutdown();
 
     static bool skipAuthentication =
         ConfigUtil::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
