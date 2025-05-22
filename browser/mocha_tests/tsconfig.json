@@ -7,12 +7,11 @@
       "sourceMap": false,
       "incremental": true,
 
-      "moduleResolution": "classic",
+      "moduleResolution": "node",
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": false,
       "downlevelIteration": true,
-      "watch": false,
     },
     "exclude": [
       "node_modules",
