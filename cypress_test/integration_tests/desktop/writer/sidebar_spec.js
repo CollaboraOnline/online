@@ -65,4 +65,29 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.cGet('#expand_other').should('exist');
 	});
 
+	it('Focus on the first focusable child', function() {
+		cy.cGet('#sidebar-dock-wrapper')
+			.then(function(sidebar) {
+				cy.getFrameWindow().then(function(win) {
+					cy.expect(sidebar[0].contains(win.document.activeElement)).to.be.false;
+			});
+		});
+
+		// Hide
+		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+		// Show
+		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
+		// Wait for the sidebar to be populated
+		cy.wait(1000)
+
+		cy.cGet('#sidebar-dock-wrapper')
+			.then(function(sidebar) {
+				cy.getFrameWindow().then(function(win) {
+					cy.expect(sidebar[0].contains(win.document.activeElement)).to.be.true;
+				});
+			});
+		});
+	});
 });
