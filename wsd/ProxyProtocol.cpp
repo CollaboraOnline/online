@@ -87,8 +87,7 @@ void DocumentBroker::handleProxyRequest(
     }
 
     auto protocol = clientSession->getProtocol();
-    auto streamSocket = std::static_pointer_cast<StreamSocket>(socket);
-    streamSocket->setHandler(protocol);
+    socket->setHandler(protocol);
 
     // this DocumentBroker's poll handles reading & writing
     addSocketToPoll(socket);
