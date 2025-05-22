@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\..\common\Log.cpp" />
     <ClCompile Include="..\..\..\common\MobileApp.cpp" />
     <ClCompile Include="..\..\..\common\Protocol.cpp" />
+    <ClCompile Include="..\..\..\common\RegexUtil.cpp" />
     <ClCompile Include="..\..\..\common\Session.cpp" />
     <ClCompile Include="..\..\..\common\SigUtil-mobile.cpp" />
     <ClCompile Include="..\..\..\common\Simd.cpp" />
