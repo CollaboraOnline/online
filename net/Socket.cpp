@@ -1123,7 +1123,7 @@ bool StreamSocket::send(const http::Response& response)
 {
     if (response.writeData(_outBuffer))
     {
-        flush();
+        attemptWrites();
         return true;
     }
 
@@ -1135,7 +1135,7 @@ bool StreamSocket::send(http::Request& request)
 {
     if (request.writeData(_outBuffer, getSendBufferCapacity()))
     {
-        flush();
+        attemptWrites();
         return true;
     }
 

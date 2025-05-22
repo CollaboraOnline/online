@@ -1079,7 +1079,7 @@ bool ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDet
     httpResponse.writeData(socket->getOutBuffer());
     if (requestDetails.isGet())
         socket->send(responseString);
-    socket->flush();
+    socket->attemptWrites();
     LOG_INF("Sent / response successfully.");
     return true;
 }
@@ -1548,7 +1548,7 @@ bool handleStaticRequest(const Poco::Net::HTTPRequest& request,
     {
         socket->send(responseString);
     }
-    socket->flush();
+    socket->attemptWrites();
     LOG_INF_S("Sent the response successfully");
     return true;
 }
