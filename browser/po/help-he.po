@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2024-05-24 12:09+0000\n"
+"PO-Revision-Date: 2025-05-20 20:58+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -49,16 +49,15 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "העתקה"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -1657,6 +1656,11 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">סרגל התפריטים:</span> התפריט הראשי ניצב בחלק העליון "
+"וכולל שלל אפשרויות, פקודות להדפסה, עריכה, הצגה ופקודות מתקדמות נוספות. אפשר "
+"להסתיר את סרגל התפריטים בלחיצה על <span class=\"w2ui-icon fold icon-size\"></"
+"span> הסמל בקצה השמאלי. לחיצה על הסמל <span class=\"w2ui-icon unfold icon-"
+"size\"></span> תציג את התפריט."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -1864,6 +1868,9 @@ msgid ""
 ">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
 "you were concurrently editing."
 msgstr ""
+"שימושי במיוחד למצבים שבהם שותפים לעריכת המסמך בחרו בשוגג את כל הטקסט במסמך "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd> והמשיכו להקליד "
+"על גבי זה תוך מחיקת כל מה שהיה כתוב בזמן שערכת את המסמך."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:428-5
 msgid "Inactive document"
@@ -1887,6 +1894,8 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
+"כדי להמשיך לערוך, יש ללחוץ על המסמך ושכבת העל וההודעה תיעלמנה. שינויים שערכו "
+"משתמשים אחרים בזמן עריכה משותפת של המסמך ייטענו מחדש."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:434-5
 msgid "Pasting"
@@ -1928,33 +1937,37 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:446-5
 msgid "Adding charts"
-msgstr ""
+msgstr "הוספת תרשימים"
 
 #: html/cool-help.html%2Bdiv.div.div.p:447-5
 msgid ""
 "<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
+"<span class=\"productname\">{productname}</span> תומך בהוספה והמחשה של "
+"תרשימים במסמכים. כדי להוסיף תרשים:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:449-11
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
-msgstr ""
+msgstr "יש לבחור טבלה במסמך טקסט, טווח בגיליון נתונים או טבלה במצגת."
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:451-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
+"לבחור ב<span class=\"ui\">הוספה</span> ← <span class=\"ui\">תרשימים</span>. "
+"להתאים את התרשים שלך מסרגל הצד:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:453-31
 msgid "chart"
-msgstr ""
+msgstr "תרשים"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:454-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "אם לא נבחרו טבלה או טווח, תופיע טבלת אבטיפוס."
 
 #: html/cool-help.html%2Bdiv.div.div.p:458-28
 msgid ""
@@ -1978,7 +1991,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:462-5
 msgid "Handling images"
-msgstr ""
+msgstr "טיפול בתמונות"
 
 #: html/cool-help.html%2Bdiv.div.div.p:463-5
 msgid ""
@@ -1999,6 +2012,8 @@ msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\">הוספת תמונה מקומית:</span> פתיחת בורר הקבצים של הדפדפן "
+"כדי להעלות את התמונה מהמחשב המקומי שלך ולהוסיף אותה למסמך."
 
 #: html/cool-help.html%2Bdiv.div.div.p:466-5
 msgid ""
@@ -2020,7 +2035,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:471-29
 msgid "comment"
-msgstr ""
+msgstr "הערה"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
 msgid ""
@@ -2030,7 +2045,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "בדיקת איות"
 
 #: html/cool-help.html%2Bdiv.div.div.p:476-5
 msgid ""
