@@ -1482,7 +1482,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 4px solid transparent;
 	border-top: 5px solid var(--color-main-text);
 	display: inline-block !important;
-	margin-left: 3px;
+	margin-inline-start: 3px;
 	margin-top: 4px;
 }
 
