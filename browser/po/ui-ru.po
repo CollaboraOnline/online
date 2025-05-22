@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2025-04-23 08:03+0000\n"
-"Last-Translator: xXxLeVIaFaNxXx <sakovalev@polyplast-nm.ru>\n"
+"PO-Revision-Date: 2025-05-20 14:25+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.11.1-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -373,90 +373,96 @@ msgstr "Вы уверены, что хотите остановить серве
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:130
 msgid "Autotext"
-msgstr ""
+msgstr "Автотекст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:132
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Загрузите вставляемые фрагменты текста (.bau). Для вставки текста в документ "
+"введите код нужного фрагмента автотекста и нажмите F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:138
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Загрузить автотекст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:142
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Пользовательские словари"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:144
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Добавить или изменить слова в словаре проверки орфографии. Слова в словаре "
+"(.dic) будут доступны при проверке орфографии."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:150
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Загрузить словарь"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Interface"
-msgstr ""
+msgstr "Интерфейс"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Установить предпочтения интерфейса по умолчанию."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Загрузить конфигурацию"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Document settings"
-msgstr ""
+msgstr "Настройки документа"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Настроить поведение документов."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Загрузить Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "В переменных инициализации отсутствует URL общей конфигурации."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:228
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "В переменных инициализации отсутствует URL токена доступа."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:257
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Что-то пошло не так. Попробуйте обновить страницу."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:330
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Что-то пошло не так при загрузке файла настроек. Попробуйте обновить "
+"страницу."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:355
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Что-то пошло не так при загрузке словаря. Попробуйте обновить страницу."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:390
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Что-то пошло не так при загрузке файла. Попробуйте обновить страницу."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:516
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Что-то пошло не так при удалении файла. Попробуйте обновить страницу."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:641
 #: src/map/handler/Map.WOPI.js:691
@@ -465,63 +471,63 @@ msgstr "Ошибка"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Стандартный словарь"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Слова пропускаются проверкой орфографии"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Словарь исключений"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Слова-исключения подчёркиваются при проверке орфографии"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Загрузка словаря..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Введите слово для добавления"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Недопустимый формат словаря. Проверьте файл."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Что-то пошло не так при загрузке файла словаря"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Что-то пошло не так при загрузке настроек документа."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Настройки документа"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Выберите вкладку настроек."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Сбросить к настройкам документа по умолчанию"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Вы уверены, что хотите сбросить настройки документа?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Сохранить настройки документа"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -705,9 +711,8 @@ msgid "Resolved"
 msgstr "Решено"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Документ содержит неподдерживаемое видео"
+msgstr "Документ содержит неподдерживаемое медиа"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -1223,7 +1228,7 @@ msgstr "Вставить электронную подпись"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Раскрыть панель формул"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1231,7 +1236,7 @@ msgstr "Мастер функций"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Выбор функции"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1246,12 +1251,12 @@ msgstr "Принять"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Свернуть панель формул"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
-"Не активный документ - пожалуйста щёлкните, чтобы перезагрузить его и "
+"Неактивный документ - пожалуйста щёлкните, чтобы перезагрузить его и "
 "продолжить редактирование"
 
 #: src/control/Control.IdleHandler.ts:45
@@ -2423,13 +2428,12 @@ msgid "Picture"
 msgstr "Изображение"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "предпросмотр страницы "
+msgstr "предпросмотр страницы %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Слайд %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3076,7 +3080,7 @@ msgstr "Закрыть"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Неизвестный цвет"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
@@ -3150,9 +3154,8 @@ msgid "Cell borders"
 msgstr "Обрамление ячеек"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Больше настроек для {name}"
+msgstr "Больше настроек для {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1138
 msgid "Headings and objects that you add to the document will appear here"
@@ -3704,6 +3707,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Доступ вашего браузера к буферу обмена ограничен. Используйте кнопки вставки "
+"на экранной клавиатуре."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3896,7 +3901,7 @@ msgstr "Отдалить"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Предварительный просмотр слайда {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
