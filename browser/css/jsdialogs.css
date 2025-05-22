@@ -973,8 +973,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: none;
 }
 
-/* Draw SVG downwards arrow.
-The same as .unoarrow to replace the old .png bitmap arrow*/
+/* Draw vector border as downwards arrow. */
 .ui-listbox-arrow {
 	width: auto !important;
 	height: 0px;
@@ -988,10 +987,6 @@ The same as .unoarrow to replace the old .png bitmap arrow*/
 	margin-top: 4px;
 	cursor: pointer;
 	pointer-events: none;
-}
-
-[data-theme='dark'] .ui-listbox-arrow {
-	border-top-color: var(--color-text-dark);
 }
 
 .ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow,
