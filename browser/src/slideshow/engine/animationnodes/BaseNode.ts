@@ -20,6 +20,7 @@ enum NodeState {
 	Ended = 16,
 }
 
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 enum FillModes {
 	Default = 0,
 	Inherit = 0,
@@ -30,6 +31,7 @@ enum FillModes {
 	Auto,
 }
 
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 enum RestartMode {
 	Default = 0,
 	Inherit = 0,
