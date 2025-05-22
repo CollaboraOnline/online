@@ -781,6 +781,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _modified(ModifiedState::UnModified)
     , _isBgSaveProcess(false)
     , _isBgSaveDisabled(false)
+    , _trimIfInactivePostponed(false)
     , _haveDocPassword(false)
     , _isDocPasswordProtected(false)
     , _docPasswordType(DocumentPasswordType::ToView)
@@ -1046,11 +1047,30 @@ bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode)
     return false;
 }
 
+void Document::bgSaveEnded()
+{
+    _bgSavesOngoing--;
+    if (!_bgSavesOngoing)
+    {
+        // Delay the next trimAfterInactivity check to let our state
+        // settle before trimming.
+        _lastMemTrimTime = std::chrono::steady_clock::now();
+    }
+}
+
 void Document::trimIfInactive()
 {
     // Don't perturb memory un-necessarily
-    if (_isBgSaveProcess || _bgSavesOngoing)
+    if (_isBgSaveProcess)
         return;
+    if (_bgSavesOngoing)
+    {
+        // Postpone until trimAfterInactivity after bgsave has completed.
+        _trimIfInactivePostponed = true;
+        return;
+    }
+
+    _trimIfInactivePostponed = false;
 
     // FIXME: multi-document mobile optimization ?
     for (const auto& it : _sessions)
@@ -1078,6 +1098,13 @@ void Document::trimAfterInactivity()
     if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
                                                          _lastMemTrimTime) < std::chrono::seconds(30))
     {
+        return;
+    }
+
+    // If a deep trim was missed due to an ongoing bg save then enable that to happen now.
+    if (_trimIfInactivePostponed)
+    {
+        trimIfInactive();
         return;
     }
 
