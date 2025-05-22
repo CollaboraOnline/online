@@ -46,10 +46,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)CODA\bin\$(Configuration)\net8.0-windows10.0.19041.0</OutDir>
+    <OutDir>$(SolutionDir)CODA\bin\$(Configuration)\net8.0-windows10.0.19041.0\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)CODA\bin\$(Configuration)\net8.0-windows</OutDir>
+    <OutDir>$(SolutionDir)CODA\bin\$(Configuration)\net8.0-windows10.0.19041.0\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
