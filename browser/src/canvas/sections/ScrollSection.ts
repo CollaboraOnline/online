@@ -110,6 +110,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.animateWheelScroll = (<any>window).mode.isDesktop();
 		this.sectionProperties.lastElapsedTime = 0;
 		this.sectionProperties.scrollAnimationDelta = [0, 0];
+		this.sectionProperties.scrollAnimationAcc = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
 		this.sectionProperties.scrollAnimationDisableTimeout = null;
 		this.sectionProperties.scrollWheelDelta = [0, 0];	// Used for non-animated scrolling
@@ -569,26 +570,32 @@ export class ScrollSection extends CanvasSectionObject {
 	public onAnimate(frameCount: number, elapsedTime: number): void {
 		if (this.sectionProperties.animatingScroll) {
 			const lineHeight = this.containerObject.getScrollLineHeight();
+			// Smoothness will be affected by Firefox bug #1967935
 			const timeDelta = (elapsedTime - this.sectionProperties.lastElapsedTime) / (1000/60);
-			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration * timeDelta;
-			const maxDelta = lineHeight * ScrollSection.scrollAnimationMaxVelocity * timeDelta;
+			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration * timeDelta * app.dpiScale;
+			const maxVelocity = lineHeight * ScrollSection.scrollAnimationMaxVelocity * timeDelta * app.dpiScale;
+			const maxDelta = lineHeight * ScrollSection.scrollAnimationMaxDelta * app.dpiScale;
 
 			// Calculate horizontal and vertical scroll deltas for this animation step
 			const deltas = [0, 0];
 			for (let i = 0; i < 2; ++i) {
-				const sign = this.sectionProperties.scrollAnimationDelta[i] > 0 ? 1 : -1;
+				this.sectionProperties.scrollAnimationAcc[i] += this.sectionProperties.scrollAnimationDelta[i];
+				this.sectionProperties.scrollAnimationDelta[i] = 0;
 
+				// Don't let the accumulated delta get too big, or the user will be able to
+				// accumulate a long scrolling animation and it'd feel weird.
+				const sign = this.sectionProperties.scrollAnimationAcc[i] > 0 ? 1 : -1;
+				if (Math.abs(this.sectionProperties.scrollAnimationAcc[i]) > maxDelta)
+					this.sectionProperties.scrollAnimationAcc[i] = sign * maxDelta;
 				this.sectionProperties.scrollAnimationVelocity[i] += accel * sign;
-				if (Math.abs(this.sectionProperties.scrollAnimationVelocity[i]) > maxDelta)
-					this.sectionProperties.scrollAnimationVelocity[i] = sign * maxDelta;
 
-				deltas[i] = this.sectionProperties.scrollAnimationVelocity[i];
-				if (Math.abs(deltas[i]) >= Math.abs(this.sectionProperties.scrollAnimationDelta[i])) {
-					deltas[i] = this.sectionProperties.scrollAnimationDelta[i];
-					this.sectionProperties.scrollAnimationDelta[i] = 0;
+				deltas[i] = Math.round(Math.min(Math.abs(this.sectionProperties.scrollAnimationVelocity[i]), maxVelocity) * sign);
+				if (Math.abs(deltas[i]) >= Math.abs(this.sectionProperties.scrollAnimationAcc[i])) {
+					deltas[i] = this.sectionProperties.scrollAnimationAcc[i];
+					this.sectionProperties.scrollAnimationAcc[i] = 0;
 					this.sectionProperties.scrollAnimationVelocity[i] = 0;
 				} else
-					this.sectionProperties.scrollAnimationDelta[i] -= deltas[i];
+					this.sectionProperties.scrollAnimationAcc[i] -= deltas[i];
 			}
 
 			// Perform scrolling, if necessary
@@ -616,7 +623,7 @@ export class ScrollSection extends CanvasSectionObject {
 			|| this.sectionProperties.animatingVerticalScrollBar) &&
 			elapsedTime && (elapsedTime < this.sectionProperties.fadeOutDuration);
 		const animatingScroll = this.sectionProperties.animatingScroll
-			&& this.sectionProperties.scrollAnimationDelta.reduce((a: number, x: number) => a + x, 0) !== 0;
+			&& this.sectionProperties.scrollAnimationAcc.reduce((a: number, x: number) => a + x, 0) !== 0;
 		if (!animatingScrollbar && !animatingScroll) this.containerObject.stopAnimating();
 	}
 
@@ -624,7 +631,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
 		this.sectionProperties.animatingScroll = false;
-		this.sectionProperties.scrollAnimationDelta = [0, 0];
+		this.sectionProperties.scrollAnimationAcc = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
 	}
 
@@ -1151,25 +1158,19 @@ export class ScrollSection extends CanvasSectionObject {
 
 	private animateScroll(delta: [number, number]): void {
 		const lineHeight = this.containerObject.getScrollLineHeight();
-		const maxDelta = ScrollSection.scrollAnimationMaxDelta * lineHeight;
 
 		for (let i = 0; i < 2; ++i) {
 			if (Math.abs(delta[i]) === 0) continue;
 
-			if ((delta[i] > 0) !== (this.sectionProperties.scrollAnimationDelta[i] > 0)) {
+			if ((delta[i] > 0) !== (this.sectionProperties.scrollAnimationAcc[i] > 0)) {
 				// Stop animation on scroll change direction
 				this.sectionProperties.scrollAnimationVelocity[i] = 0;
-				this.sectionProperties.scrollAnimationDelta[i] = 0;
+				this.sectionProperties.scrollAnimationAcc[i] = 0;
 			}
 
 			const sign = delta[i] > 0 ? 1 : -1;
-			this.sectionProperties.scrollAnimationDelta[i] +=
-				lineHeight * ScrollSection.scrollWheelDelta * sign;
-
-			// Don't let the delta get too big, or the user will be able to
-			// accumulate a long scrolling animation and it'd feel weird.
-			if (Math.abs(this.sectionProperties.scrollAnimationDelta[i]) > maxDelta)
-				this.sectionProperties.scrollAnimationDelta[i] = sign * maxDelta;
+			this.sectionProperties.scrollAnimationDelta[i] =
+				lineHeight * ScrollSection.scrollWheelDelta * sign * app.dpiScale;
 		}
 
 		if (!this.sectionProperties.animatingScroll) {
@@ -1177,7 +1178,7 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.lastElapsedTime = 0;
 			// We're about to start a duration-less animation, so we need to
 			// ensure the animation is reset.
-			if (!this.startAnimating({})) this.resetAnimation();
+			if (!this.startAnimating({ 'defer': true })) this.resetAnimation();
 		}
 	}
 
