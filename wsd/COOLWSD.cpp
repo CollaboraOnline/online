@@ -4300,14 +4300,14 @@ void forwardSignal(const int signum);
 void dump_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
-    oss << "Start WSD " << getpid() << " Dump State:\n";
+    oss << "Start WSD " << Util::getProcessId() << " Dump State:\n";
 
     if (Server)
         Server->dumpState(oss);
 
     oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
-    oss << "\nEnd WSD " << getpid() << " Dump State.\n";
+    oss << "\nEnd WSD " << Util::getProcessId() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str()); // Log in the journal.
