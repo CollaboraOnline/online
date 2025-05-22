@@ -120,6 +120,10 @@
 #include "DocumentBroker.hpp"
 #endif
 
+#ifdef _WIN32
+#include "windows.hpp"
+#endif
+
 using Poco::Exception;
 using Poco::File;
 using Poco::JSON::Object;
@@ -3955,9 +3959,9 @@ void lokit_main(
 #elif defined(IOS) // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
 #elif defined(_WIN32)
-        // LO_PATH is a Windows path starting with a drive letter. For the second parameter to
-        // lok_init_2() turn it into a file: URI.
-        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", "file:///" LO_PATH);
+        LibreOfficeKit *kit = lok_init_2
+            ((app_installation_path + "lo\\program").c_str(),
+             (app_installation_uri + "lo").c_str());
 #else
         // FIXME: I wonder for which platform this is supposed to be? Android?
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
