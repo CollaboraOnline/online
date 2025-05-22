@@ -1014,7 +1014,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
                 << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
                 << "], served and closing connection.");
-        socket->shutdown();
+        socket->asyncShutdown();
         socket->ignoreInput();
     }
     else

@@ -228,10 +228,10 @@ public:
     {
         std::shared_ptr<StreamSocket> urpFromKit(_urpFromKit.lock());
         if (urpFromKit)
-            urpFromKit->shutdown();
+            urpFromKit->asyncShutdown();
         std::shared_ptr<StreamSocket> urpToKit(_urpToKit.lock());
         if (urpToKit)
-            urpToKit->shutdown();
+            urpToKit->asyncShutdown();
         _smapsFp.reset();
     }
 

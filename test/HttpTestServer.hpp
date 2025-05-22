@@ -60,7 +60,7 @@ private:
         {
             // Interrupt the transfer.
             disposition.setClosed();
-            socket->shutdown();
+            socket->asyncShutdown();
             return;
         }
 
@@ -124,7 +124,7 @@ private:
                 const std::string bytes = HexUtil::hexStringToBytes(
                     reinterpret_cast<const uint8_t*>(hex.data()), hex.size());
                 socket->send(bytes);
-                socket->shutdown();
+                socket->asyncShutdown();
             }
             else
             {

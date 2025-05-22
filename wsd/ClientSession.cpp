@@ -409,7 +409,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             httpResponse.set("Content-Length", "0");
             httpResponse.set("Connection", "close");
             socket->send(httpResponse);
-            socket->shutdown();
+            socket->asyncShutdown();
         }
         else
         {
@@ -2433,7 +2433,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 socket->send(&payload->data()[header], payload->size() - header);
             }
 
-            socket->shutdown();
+            socket->asyncShutdown();
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
 #endif

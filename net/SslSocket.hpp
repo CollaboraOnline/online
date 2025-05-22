@@ -141,7 +141,7 @@ public:
         }
 
         // Close the TCP Socket.
-        Socket::shutdown();
+        syncShutdown();
     }
 
     int readIncomingData() override

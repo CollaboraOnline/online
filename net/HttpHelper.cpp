@@ -131,7 +131,7 @@ static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std:
             sendDeflatedFileContent(socket, path, st.size());
     }
     if(closeSocket) {
-        socket->shutdown();
+        socket->asyncShutdown();
     }
 }
 
