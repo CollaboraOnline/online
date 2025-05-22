@@ -1189,6 +1189,12 @@ function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('<< assertImageSize - end');
 }
 
+function containsFocusElement(container, doesContain) {
+	cy.getFrameWindow().then(function(win) {
+		cy.expect(container.contains(win.document.activeElement)).to.equal(doesContain);
+	});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1237,3 +1243,4 @@ module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
 module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
+module.exports.containsFocusElement = containsFocusElement;
