@@ -7,25 +7,25 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-09 08:04+0200\n"
-"PO-Revision-Date: 2024-12-27 06:17+0000\n"
+"PO-Revision-Date: 2025-05-22 04:01+0000\n"
 "Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
-msgstr ""
+msgstr "Tadiwent n tadbelt"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
-msgstr "Iɣewwaṛen"
+msgstr "Iɣewwaren"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
@@ -44,9 +44,8 @@ msgid "History"
 msgstr "Azray"
 
 #: admin/admin.strings.js:21
-#, fuzzy
 msgid "Log"
-msgstr "Tuqqna"
+msgstr "Aɣmis"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
@@ -61,9 +60,8 @@ msgid "User Name"
 msgstr "Isem n useqdac"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Documents open"
-msgstr "Isemliyen"
+msgstr "Isemliyen yeldin"
 
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
@@ -76,7 +74,7 @@ msgstr ""
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
-msgstr ""
+msgstr "Amḍan n isemliyen"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
@@ -202,16 +200,15 @@ msgstr "Smiren"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Seḥbes aqeddac"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
 msgstr ""
 
 #: admin/admin.strings.js:59
-#, fuzzy
 msgid "Refresh Log"
-msgstr "Smiren"
+msgstr "Smiren aɣmis"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
@@ -336,7 +333,7 @@ msgstr "Semmet"
 
 #: admin/src/AdminSocketAnalytics.js:247
 msgid "Received"
-msgstr ""
+msgstr "Yettwaṭṭef-d"
 
 #: admin/src/AdminSocketAnalytics.js:251
 msgid "Sent"
@@ -368,7 +365,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:130
 msgid "Autotext"
-msgstr ""
+msgstr "Aḍris awurman"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:132
 msgid ""
@@ -408,7 +405,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Document settings"
-msgstr ""
+msgstr "Iɣewwaren n isemli"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 #: admin/src/integrator/Xcu.ts:403
@@ -500,7 +497,7 @@ msgstr ""
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Iɣewwaren n isemli"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
@@ -516,7 +513,7 @@ msgstr ""
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Sekles iɣewwaren n isemli"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -536,23 +533,23 @@ msgstr "To"
 
 #: admin/src/Util.js:26
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:26
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:26
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:26
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:26
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
@@ -693,9 +690,8 @@ msgid "Reject change"
 msgstr ""
 
 #: src/canvas/sections/CommentSection.ts:410
-#, fuzzy
 msgid "Resolved"
-msgstr "Fru"
+msgstr "Yefra"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
 msgid "Document contains unsupported media"
@@ -718,9 +714,8 @@ msgid "No color"
 msgstr "Ulac ini"
 
 #: src/control/ColorPicker.ts:275
-#, fuzzy
 msgid "Automatic color"
-msgstr "Ulac ini"
+msgstr "Ini awurman"
 
 #: src/control/Control.AboutDialog.ts:112
 msgid "This version of {productname} is powered by"
@@ -1223,12 +1218,12 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarWriter.js:1400
 msgid "Formula"
-msgstr ""
+msgstr "Tanfalit"
 
 #: src/control/Control.FormulaBarJSDialog.js:85
 #: src/control/Control.MobileTopBar.ts:42
 msgid "Accept"
-msgstr ""
+msgstr "Qbel"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
@@ -1331,9 +1326,8 @@ msgid "Columns"
 msgstr "Colonnes"
 
 #: src/control/Control.JSDialogBuilder.js:2614
-#, fuzzy
 msgid "Insert Table"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:441
 #: src/control/Control.Menubar.ts:443 src/control/Control.Menubar.ts:445
@@ -1344,7 +1338,7 @@ msgstr ""
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Fren tutlayt"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
@@ -1359,21 +1353,21 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:336
 #: src/control/Control.NotebookbarBuilder.js:549
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "Isemli n uḍris ODF (.odt)"
 
 #: src/control/Control.Menubar.ts:150 src/control/Control.Menubar.ts:165
 #: src/control/Control.Menubar.ts:1095
 #: src/control/Control.NotebookbarBuilder.js:348
 #: src/control/Control.NotebookbarBuilder.js:561
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Isemli Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.ts:151 src/control/Control.Menubar.ts:166
 #: src/control/Control.Menubar.ts:1096
 #: src/control/Control.NotebookbarBuilder.js:344
 #: src/control/Control.NotebookbarBuilder.js:557
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Isemli Word (.docx)"
 
 #: src/control/Control.Menubar.ts:152 src/control/Control.Menubar.ts:167
 #: src/control/Control.Menubar.ts:1097
@@ -1410,7 +1404,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:635
 #: src/control/Control.NotebookbarDraw.js:246
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "Isemli PDF (.pdf)"
 
 #: src/control/Control.Menubar.ts:156 src/control/Control.Menubar.ts:168
 #: src/control/Control.Menubar.ts:1084 src/control/Control.Menubar.ts:1098
@@ -1421,7 +1415,7 @@ msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:158 src/control/Control.UIManager.ts:305
 msgid "Rename Document"
-msgstr ""
+msgstr "Snifel isem n isemli"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:486
 #: src/control/Control.Menubar.ts:658 src/control/Control.Menubar.ts:798
@@ -1452,7 +1446,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:401
 #: src/control/Control.NotebookbarBuilder.js:443
 msgid "PDF Document (.pdf) as..."
-msgstr ""
+msgstr "Isemli PDF (.pdf) am..."
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:807
 msgid "HTML file (.html)"
@@ -1462,7 +1456,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:669 src/control/Control.Menubar.ts:815
 #: src/control/Control.Toolbar.js:1121
 msgid "Close document"
-msgstr ""
+msgstr "Mdel isemli"
 
 #: src/control/Control.Menubar.ts:179 src/control/Control.Menubar.ts:514
 #: src/control/Control.Menubar.ts:674 src/control/Control.Menubar.ts:820
@@ -1563,12 +1557,12 @@ msgstr ""
 
 #: src/control/Control.Menubar.ts:308
 msgid "Text orientation"
-msgstr ""
+msgstr "Taɣda n weḍris"
 
 #: src/control/Control.Menubar.ts:378
 #: src/control/Control.NotebookbarWriter.js:62
 msgid "References"
-msgstr ""
+msgstr "Timsisɣal"
 
 #: src/control/Control.Menubar.ts:381
 #: src/control/Control.NotebookbarWriter.js:1939
@@ -1623,9 +1617,8 @@ msgid "Insert Picture"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:428 src/control/Control.Menubar.ts:1384
-#, fuzzy
 msgid "Insert Date"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.Menubar.ts:429 src/control/Control.Menubar.ts:1385
 #: src/control/Control.NotebookbarCalc.js:243
@@ -1715,14 +1708,13 @@ msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:485 src/control/Control.Menubar.ts:657
-#, fuzzy
 msgid "Save Comments"
-msgstr "Commentaire"
+msgstr "Sekles iwenniten"
 
 #: src/control/Control.Menubar.ts:494
 #: src/control/Control.NotebookbarBuilder.js:425
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Isemli HTML (.html)"
 
 #: src/control/Control.Menubar.ts:495
 #: src/control/Control.NotebookbarBuilder.js:456
@@ -1827,7 +1819,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.ts:806
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Afaylu CSV (.csv)"
 
 #: src/control/Control.Menubar.ts:812
 #: src/control/jsdialog/Definitions.Menu.ts:112
@@ -1946,7 +1938,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.ts:1611 src/control/Control.StatusBar.js:547
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Ales ar tutlayt tamezwarut"
 
 #: src/control/Control.Menubar.ts:1642 src/control/Control.Menubar.ts:1643
 #: src/control/Control.Menubar.ts:1644 src/control/Control.Toolbar.js:140
@@ -1967,9 +1959,8 @@ msgid "Read-only mode"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:2121
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.Menubar.ts:2199
 msgid "The signature line can now be moved or resized as needed."
@@ -1986,9 +1977,8 @@ msgstr ""
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:198
-#, fuzzy
 msgid "Show the search bar"
-msgstr "Sken afeggag n unadi"
+msgstr "Sken-d tafeggagt n unadi"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:140
@@ -2008,14 +1998,12 @@ msgid "Background Color"
 msgstr ""
 
 #: src/control/Control.MobileWizardBuilder.js:540
-#, fuzzy
 msgid "Gradient Start"
-msgstr "Gradient"
+msgstr ""
 
 #: src/control/Control.MobileWizardBuilder.js:542
-#, fuzzy
 msgid "Gradient End"
-msgstr "Gradient"
+msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
@@ -2065,7 +2053,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarBuilder.js:387
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Afaylu CSV (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:530
 msgid "Image (.png)"
@@ -2089,9 +2077,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:103
 #: src/control/Control.NotebookbarWriter.js:50
-#, fuzzy
 msgid "Insert"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:76
@@ -2108,9 +2095,8 @@ msgstr "Isefka"
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:68
-#, fuzzy
 msgid "Review"
-msgstr "Agzul"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:88
@@ -2145,7 +2131,7 @@ msgstr "Tallalt"
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarWriter.js:288
 msgid "Save As"
-msgstr ""
+msgstr "Sekles am"
 
 #: src/control/Control.NotebookbarCalc.js:149
 #: src/control/Control.NotebookbarDraw.js:178
@@ -2233,15 +2219,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:827
 msgid "Good"
-msgstr ""
+msgstr "Yelha"
 
 #: src/control/Control.NotebookbarCalc.js:834
 msgid "Neutral"
-msgstr ""
+msgstr "Amagnu"
 
 #: src/control/Control.NotebookbarCalc.js:841
 msgid "Bad"
-msgstr ""
+msgstr "Diri-t"
 
 #: src/control/Control.NotebookbarCalc.js:872
 #: src/control/Control.NotebookbarDraw.js:1001
@@ -2259,18 +2245,16 @@ msgid "Column Width"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:969
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:976
 msgid "Insert Columns Before"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:983
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Kkes"
+msgstr "Kkes izirigen"
 
 #: src/control/Control.NotebookbarCalc.js:995
 msgid "Insert Rows Below"
@@ -2281,9 +2265,8 @@ msgid "Insert Columns After"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1009
-#, fuzzy
 msgid "Delete Columns"
-msgstr "Colonnes"
+msgstr "Kkes Tigejda"
 
 #: src/control/Control.NotebookbarCalc.js:1195
 #: src/control/Control.NotebookbarDraw.js:336
@@ -2381,9 +2364,8 @@ msgid "Snap to Grid"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:80
-#, fuzzy
 msgid "Form"
-msgstr "Anmager"
+msgstr "Tiferkit"
 
 #: src/control/Control.NotebookbarWriter.js:360
 msgid "Go Online"
@@ -2407,7 +2389,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1426
 msgid "Checkbox"
-msgstr ""
+msgstr "taxxamt n ṛṛcem"
 
 #: src/control/Control.NotebookbarWriter.js:1433
 msgid "Dropdown"
@@ -2438,9 +2420,8 @@ msgid "Saving"
 msgstr "Asekles"
 
 #: src/control/Control.SaveState.ts:53
-#, fuzzy
 msgid "Saved"
-msgstr "Sekles"
+msgstr "Yettwasekles"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -2527,9 +2508,8 @@ msgid "Scroll to the last sheet"
 msgstr ""
 
 #: src/control/Control.SheetsBar.js:78
-#, fuzzy
 msgid "Insert sheet"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
@@ -2591,11 +2571,11 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:564
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Sbadu tutlayt i uḍris s umata"
 
 #: src/control/Control.StatusBar.js:567
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Sbadu tutlayt n tṣeddart"
 
 #: src/control/Control.StatusBar.js:568
 msgid "Set Language for Selection"
@@ -2652,9 +2632,8 @@ msgid "Insert table"
 msgstr "Ger tafelwit"
 
 #: src/control/Control.TopToolbar.js:186
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Control.TopToolbar.js:188
 msgid "Insert connectors"
@@ -2740,7 +2719,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:248 src/core/Socket.js:1344
 msgid "Loading..."
-msgstr "Yettali-d"
+msgstr "Yessalay-d…"
 
 #: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
 #: src/slideshow/PresenterConsole.js:31
@@ -2822,7 +2801,7 @@ msgstr "Azwel"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
-msgstr ""
+msgstr "Ameslal (i-en)"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
@@ -2885,14 +2864,12 @@ msgid "Right Margin"
 msgstr "Tama tayeffust"
 
 #: src/control/HRuler.ts:892
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/HRuler.ts:899
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "Ger tafelwit"
+msgstr ""
 
 #: src/control/Parts.js:480
 msgid "Show sheets"
@@ -2900,7 +2877,7 @@ msgstr ""
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Ẓreg isemli"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -3120,12 +3097,11 @@ msgstr ""
 #: src/control/jsdialog/Widget.HTMLContent.ts:163
 #: src/control/jsdialog/Widget.HTMLContent.ts:175
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Ttwaskelsen isenfal-ik·im"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:187
-#, fuzzy
 msgid "Show Comments"
-msgstr "Commentaire"
+msgstr "Sken-d iwenniten"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -3277,7 +3253,7 @@ msgstr "Sefsex"
 
 #: src/core/Socket.js:1435
 msgid "Save to new file"
-msgstr ""
+msgstr "Sekles ar ufaylu amaynut"
 
 #: src/core/Socket.js:1445
 msgid "Document has been changed"
@@ -3296,9 +3272,8 @@ msgid ""
 msgstr ""
 
 #: src/core/Socket.js:1726
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Tuqqna..."
+msgstr "Tulsa n tuqqna…"
 
 #: src/core/Socket.js:1736
 msgid "The server has been disconnected."
@@ -3322,7 +3297,7 @@ msgstr ""
 
 #: src/docstate.js:114
 msgid "Document colors"
-msgstr ""
+msgstr "Initen n isemli"
 
 #: src/docstatefunctions.js:246
 msgid ", cluster configuration error: mis-matching serverid"
@@ -3589,18 +3564,16 @@ msgid "the View menu"
 msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:1577
-#, fuzzy
 msgid "Functions"
-msgstr "Amarag n twuri"
+msgstr "Tiwuriwin"
 
 #: src/layer/tile/CanvasTileLayer.js:1838
 msgid "Named Range"
 msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:3542
-#, fuzzy
 msgid "No Comments"
-msgstr "Commentaire"
+msgstr "Ulac iwenniten"
 
 #: src/main.js:141
 msgid "Warning! The browser you are using is not supported."
@@ -3637,7 +3610,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
-msgstr ""
+msgstr "Senṭeḍ seg isemli-a"
 
 #: src/map/Clipboard.js:1388
 msgid "Cancel paste special"

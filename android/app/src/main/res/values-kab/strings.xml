@@ -88,7 +88,7 @@
     <string name="enter_filename">Ttxil-k sekcem isem n ufayllu:</string>
     <string name="action_create">Rnu</string>
     <string name="action_overwrite">Sfeɛj</string>
-    <string name="loading">Yettali-d</string>
+    <string name="loading">Yessalay-d…</string>
     <string name="share_document">Bḍu isemli</string>
     <string name="unable_to_go_further">Ur izmir ara ad ikemmel</string>
     <string name="bmp_null">Bmp d ilem!</string>
@@ -105,4 +105,8 @@
     <string name="theme">Asentel</string>
     <string name="theme_system_default">Amezwer n unagraw</string>
     <string name="pref_user_name">Isem n useqdac</string>
+    <string name="pref_user_name_info">Yettwaseqdec deg tmerniwt n uwennit</string>
+    <string name="choose_theme">Fren asentel</string>
+    <string name="theme_dark">Ubrik</string>
+    <string name="theme_light">Asfaw</string>
 </resources>

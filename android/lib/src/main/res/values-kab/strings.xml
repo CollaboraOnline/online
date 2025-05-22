@@ -10,6 +10,9 @@
     <string name="later">Ticki</string>
     <string name="rate_our_app_title">Tanemmirt imi tseqdaceḍ %1$s!</string>
     <string name="rate_our_app_text">Ma tebɣiḍ, mudd-d arma d 5 n yitran deg Google Play. Iceggiren-ik yelhan rennun-aɣ-d tabɣest.</string>
-    <string name="loading">Yettali-d</string>
+    <string name="loading">Yessalay-d…</string>
     <string name="exiting">Tufɣa...</string>
+    <string name="restarting">Tulsa n usekker…</string>
+    <string name="view_only">Askan kan</string>
+    <string name="cant_open_the_document">Ur yezmir ara ad yeldi afaylu-nni</string>
 </resources>
