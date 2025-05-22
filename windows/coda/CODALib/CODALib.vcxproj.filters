@@ -48,6 +48,9 @@
     <ClCompile Include="..\..\..\common\Protocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\RegexUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\SpookyV2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
