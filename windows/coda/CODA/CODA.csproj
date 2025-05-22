@@ -14,4 +14,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\..\browser\dist\**\*.*" CopyToOutputDirectory="PreserveNewest" TargetPath="cool\%(RecursiveDir)%(Filename)%(Extension)" />
+   </ItemGroup>
 </Project>
