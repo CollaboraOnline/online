@@ -4342,7 +4342,7 @@ std::string anonymizeUsername(const std::string& username)
 void dump_kit_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
-    oss << "Start Kit " << getpid() << " Dump State:\n";
+    oss << "Start Kit " << Util::getProcessId() << " Dump State:\n";
 
     SigUtil::signalLogActivity();
 
@@ -4350,7 +4350,7 @@ void dump_kit_state()
 
     oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
-    oss << "\nEnd Kit " << getpid() << " Dump State.\n";
+    oss << "\nEnd Kit " << Util::getProcessId() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str()); // Log in the journal.
