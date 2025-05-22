@@ -436,7 +436,7 @@ public:
     void disableBgSave(const std::string &reason);
 
     void bgSaveStarted() { _bgSavesOngoing++; }
-    void bgSaveEnded() { _bgSavesOngoing--; }
+    void bgSaveEnded();
 
     /// Are we currently performing a load ?
     bool isLoadOngoing() const { return _duringLoad > 0; }
@@ -481,6 +481,7 @@ private:
     ModifiedState _modified;
     bool _isBgSaveProcess;
     bool _isBgSaveDisabled;
+    bool _trimIfInactivePostponed;
 
     // Document password provided
     std::string _docPassword;
