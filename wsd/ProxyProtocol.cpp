@@ -168,12 +168,10 @@ bool ProxyProtocolHandler::parseEmitIncoming(
     return true;
 }
 
-void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket)
+void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<StreamSocket> &streamSocket)
 {
-    auto streamSocket = std::static_pointer_cast<StreamSocket>(socket);
-
     LOG_INF("proxy: handle request type: " << (isWaiting ? "wait" : "respond") <<
-            " on socket #" << socket->getFD());
+            " on socket #" << streamSocket->getFD());
 
     if (!isWaiting)
     {
@@ -220,7 +218,7 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
         else
             LOG_TRC("Returned a reply immediately");
 
-        socket->shutdown();
+        streamSocket->shutdown();
     }
 }
 

@@ -61,7 +61,7 @@ public:
     void dumpProxyState(std::ostream& os);
     bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
 
-    void handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket);
+    void handleRequest(bool isWaiting, const std::shared_ptr<StreamSocket> &socket);
 
     /// tell our handler we've received a close.
     void notifyDisconnected();
