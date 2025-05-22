@@ -19,10 +19,9 @@
 #include <wsd/COOLWSD.hpp>
 
 const char *user_name = nullptr;
-
 int coolwsd_server_socket_fd = -1;
-
-LibreOfficeKit *lo_kit;
+std::string app_installation_path;
+std::string app_installation_uri;
 
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
@@ -44,6 +43,18 @@ int set_coolwsd_server_socket_fd(int fd)
 {
     coolwsd_server_socket_fd = fd;
     return fd;
+}
+
+EXPORT
+void set_app_installation_path(const char* path)
+{
+    app_installation_path = path;
+}
+
+EXPORT
+void set_app_installation_uri(const char* uri)
+{
+    app_installation_uri = uri;
 }
 
 EXPORT

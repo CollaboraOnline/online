@@ -25,10 +25,10 @@ namespace CODA
         public delegate void ReplyWithStringDelegate(string s);
 
         [DllImport("CODALib.dll")]
-        public static extern int get_coolwsd_server_socket_fd();
+        public static extern void set_app_installation_path(string path);
 
         [DllImport("CODALib.dll")]
-        public static extern int set_coolwsd_server_socket_fd(int fd);
+        public static extern void set_app_installation_uri(string uri);
 
         [DllImport("CODALib.dll")]
         public static extern int generate_new_app_doc_id();
@@ -67,6 +67,9 @@ namespace CODA
             Send2JSDelegate fp = new Send2JSDelegate(send2JS);
             _gch = GCHandle.Alloc(fp);
             set_send2JS_function(fp);
+            var exeLocation = System.Windows.Forms.Application.StartupPath;
+            set_app_installation_path(exeLocation);
+            set_app_installation_uri(new System.Uri(exeLocation).AbsoluteUri);
             initialize_cpp_things();
         }
 

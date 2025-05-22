@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ImportGroup Label="Props">
+    <Import Project="$(SolutionDir)config.props"/>
+  </ImportGroup>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -16,5 +20,6 @@
 
   <ItemGroup>
     <Content Include="..\..\..\browser\dist\**\*.*" CopyToOutputDirectory="PreserveNewest" TargetPath="cool\%(RecursiveDir)%(Filename)%(Extension)" />
-   </ItemGroup>
+    <Content Include="$(LO_PATH)\**\*.*" CopyToOutputDirectory="PreserveNewest" TargetPath="lo\%(RecursiveDir)%(Filename)%(Extension)"/>
+  </ItemGroup>
 </Project>

@@ -7,7 +7,11 @@
 
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
+#include <string>
+
 extern int coolwsd_server_socket_fd;
 extern const char *user_name;
+extern std::string app_installation_path;
+extern std::string app_installation_uri;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
