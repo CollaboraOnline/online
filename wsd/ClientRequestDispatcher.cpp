@@ -1914,6 +1914,11 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 options += ",PDFVer=" + pdfVer + "PDFVEREND";
             }
 
+            if (form.has("infilterOptions"))
+            {
+                options += ",infilterOptions=" + form.get("infilterOptions");
+            }
+
             std::string lang = (form.has("lang") ? form.get("lang") : std::string());
             std::string target = (form.has("target") ? form.get("target") : std::string());
             std::string filter = (form.has("filter") ? form.get("filter") : std::string());

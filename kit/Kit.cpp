@@ -1930,13 +1930,18 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     const std::string& userTimezone = session->getTimezone();
     const std::string& userPrivateInfo = session->getUserPrivateInfo();
     const std::string& docTemplate = session->getDocTemplate();
+    const std::string& filterOption = session->getInFilterOption();
 
     if constexpr (!Util::isMobileApp())
         consistencyCheckFileExists(uri);
 
     std::string options;
+
+    if (!filterOption.empty())
+        options = filterOption;
+
     if (!lang.empty())
-        options = "Language=" + lang;
+        options += ",Language=" + lang;
 
     if (!deviceFormFactor.empty())
         options += ",DeviceFormFactor=" + deviceFormFactor;
