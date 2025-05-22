@@ -174,8 +174,7 @@ namespace CODA
             // Also hide the initial menu as COOL has its own
             menuXamlElement.Visibility = Visibility.Collapsed;
 
-            // FIXME: Temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
-            _iWebView2.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda25-coda/browser/dist/cool.html?file_path=" + _fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=" + _appDocId + "&userinterfacemode=notebookbar&dir=ltr");
+            _iWebView2.CoreWebView2.Navigate(new System.Uri(System.Windows.Forms.Application.StartupPath).AbsoluteUri + "cool/cool.html?file_path=" + _fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=" + _appDocId + "&userinterfacemode=notebookbar&dir=ltr");
 
             _iWebView2.CoreWebView2.NewWindowRequested += delegate (
                 object webview2, CoreWebView2NewWindowRequestedEventArgs args)
