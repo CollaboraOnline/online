@@ -120,7 +120,7 @@ public:
             if (_dest && _state == State::ReadWrite)
                 _dest->pushCloseChunk();
             _dest = nullptr;
-            shutdown();
+            syncShutdown();
             break;
         }
         DELAY_LOG('#' << getFD() << " changed to state " << nameShort(newState) << '\n');
