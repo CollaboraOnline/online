@@ -1537,8 +1537,9 @@ class CanvasSectionContainer {
 	}
 
 	private calculateSectionInitialPosition(section: CanvasSectionObject, index: number): number {
-		if (typeof section.anchor[index] === 'string' || section.anchor[index].length === 1) {
-			var anchor: string = typeof section.anchor[index] === 'string' ? section.anchor[index]: section.anchor[index][0];
+		const anyAnchor: string | Array<any> = section.anchor[index];
+		if (typeof anyAnchor === 'string' || (typeof anyAnchor === 'object' && (anyAnchor as Array<any>).length === 1)) {
+			var anchor: string = typeof anyAnchor === 'string' ? anyAnchor : anyAnchor[0];
 			if (index === 0)
 				return anchor === 'top' ? section.position[1]: (this.height - (section.position[1] + section.size[1]));
 			else
@@ -1549,18 +1550,18 @@ class CanvasSectionContainer {
 			// Count should always be an odd number. Because last variable will be used as a fallback to canvas's edges (top, bottom, right or left).
 			// See anchor explanation on top of this file.
 			// Correct example: ["header", "bottom", "top"] => Look for section "header", if found, use its bottom, if not found, use canvas's top.
-			if (section.anchor[index].length % 2 === 0) { // eslint-disable-line no-lonely-if
+			if ((anyAnchor as Array<any>).length % 2 === 0) { // eslint-disable-line no-lonely-if
 				console.error('Section: ' + section.name + '. Wrong anchor definition.');
 				return 0;
 			}
 			else {
-				var count: number = section.anchor[index].length;
+				var count: number = (anyAnchor as Array<any>).length;
 				var targetSection: CanvasSectionObject = null;
 				var targetEdge: string = null;
 				for (var i: number = 0; i < count - 1; i++) {
-					targetSection = this.getSectionWithName(section.anchor[index][i]);
+					targetSection = this.getSectionWithName(anyAnchor[i]);
 					if (targetSection) {
-						targetEdge = section.anchor[index][i + 1];
+						targetEdge = anyAnchor[i + 1];
 						break;
 					}
 				}
@@ -1595,7 +1596,7 @@ class CanvasSectionContainer {
 				}
 				else {
 					// No target section is found. Use fallback.
-					var anchor: string = section.anchor[index][count - 1];
+					var anchor: string = (anyAnchor as Array<any>)[count - 1];
 					if (index === 0) {
 						return anchor === 'top' ? section.position[1]: (this.height - (section.position[1] + section.size[1]));
 					}
