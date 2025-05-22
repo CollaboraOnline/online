@@ -1360,8 +1360,8 @@ public:
     /// Will always shutdown the socket.
     bool sendAndShutdown(http::Response& response);
 
-    /// Safely flush any outgoing data.
-    inline void flush()
+    /// Safely attempt to write any outgoing data.
+    inline void attemptWrites()
     {
         if (!_outBuffer.empty())
             writeOutgoingData();
@@ -1378,7 +1378,7 @@ public:
         // Flush existing non-ancillary data
         // so that our non-ancillary data will
         // match ancillary data.
-        flush();
+        attemptWrites();
 
         msghdr msg;
         iovec iov[1];
