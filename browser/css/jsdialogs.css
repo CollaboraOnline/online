@@ -993,6 +993,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	pointer-events: none;
 }
 
+:dir(rtl) .ui-listbox-arrow {
+	margin-inline-start: 4px;
+	margin-inline-end: -16px;
+}
 .ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow,
 .ui-combobox[disabled='disabled'] ~ .ui-listbox-arrow {
 	opacity: 0.5;
@@ -1024,7 +1028,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-left: 1px solid var(--color-border);
+	border-inline-start: 1px solid var(--color-border);
 	background-color: transparent;
 	padding-left: 20px;
 }
