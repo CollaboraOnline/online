@@ -2038,7 +2038,7 @@ class CanvasSectionContainer {
 
 	private animate (timeStamp: number) {
 		if (this.lastFrameStamp > 0)
-			this.elapsedTime += timeStamp - this.lastFrameStamp;
+			this.elapsedTime += Math.max(0, timeStamp - this.lastFrameStamp);
 
 		this.lastFrameStamp = timeStamp;
 
@@ -2113,7 +2113,7 @@ class CanvasSectionContainer {
 			if (options.defer)
 				requestAnimationFrame(this.animate.bind(this));
 			else
-				this.animate(performance.now());
+				this.animate(document.timeline.currentTime as number);
 			return true;
 		}
 		else {
