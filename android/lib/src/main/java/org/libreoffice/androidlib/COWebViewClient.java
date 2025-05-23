@@ -34,6 +34,31 @@ public class COWebViewClient extends WebViewClient {
             return super.shouldInterceptRequest(view, request);
         }
 
+        String path = request.getUrl().getPath();
+        if (path == null) {
+            path = "";
+        }
+
+        switch (path) {
+            case "/cool/media": return handleMediaRequest(view, request);
+            case "/cool/message": return handleMessageRequest(view, request);
+            default: return new WebResourceResponse(
+                    null,
+                    null,
+                    404,
+                    "Not Found",
+                    new HashMap<String, String>() {
+                        {
+                            put("Access-Control-Allow-Origin", "null");
+                            put("Content-Length", "0");
+                        }
+                    },
+                    new ByteArrayInputStream(new byte[0])
+            );
+        }
+    }
+
+    private WebResourceResponse handleMediaRequest(WebView view, WebResourceRequest request) {
         Uri uriDecoded = Uri.parse(Uri.decode(request.getUrl().toString())); // We have to do this weird-looking decoding step as presentation mode gives us a broken (i.e. parameters are encoded, including the & delimiter, etc.) URI
         String tag = uriDecoded.getQueryParameter("Tag");
 
@@ -99,5 +124,40 @@ public class COWebViewClient extends WebViewClient {
         );
     }
 
+    private WebResourceResponse handleMessageRequest(WebView view, WebResourceRequest request) {
+        String id = request.getUrl().getQueryParameter("id");
+
+        Map<String, String> responseHeaders = new HashMap<>();
+        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
+
+        byte[] message = LOActivity.sendingMessages.remove(id);
+
+        if (message == null) {
+            responseHeaders.put("Content-Length", "0");
+
+            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
+
+            return new WebResourceResponse(
+                    null,
+                    null,
+                    404,
+                    "Not Found",
+                    responseHeaders,
+                    data
+            );
+        }
+
+        ByteArrayInputStream data = new ByteArrayInputStream(message);
+        responseHeaders.put("Content-Length", Long.toString(message.length));
+
+        return new WebResourceResponse(
+                null,
+                null,
+                200,
+                "OK",
+                responseHeaders,
+                data
+        );
+    }
     private native String getEmbeddedMediaPath(String tag);
 }

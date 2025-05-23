@@ -1122,6 +1122,12 @@ function getInitializerClass() {
 		};
 		this.close = function() {
 		};
+		if (global.ThisIsAMobileApp) {
+			this.onremotebinarymessage = function() {
+			};
+			this.onremotemessage = function() {
+			};
+		}
 	};
 	global.FakeWebSocket.prototype.send = function(data) {
 		global.postMobileMessage(data);
