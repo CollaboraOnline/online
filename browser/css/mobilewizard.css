@@ -865,7 +865,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	outline: none;
 	box-shadow: 0px 0px 2px 1px var(--color-box-shadow);
 }
-#mobile-wizard input[type='checkbox']:checked {
+#mobile-wizard input[type='checkbox']:checked:not(:disabled) {
 	background: url('images/lc_ok_white.svg') no-repeat center;
 	background-color: var(--color-primary-lighter);
 	border-radius: var(--border-radius);
