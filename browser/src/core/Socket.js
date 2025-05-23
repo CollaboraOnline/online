@@ -659,6 +659,10 @@ app.definitions.Socket = L.Class.extend({
 		textMsg = e.textMsg;
 		imgBytes = e.imgBytes;
 
+		if (window.L.Browser.cypressTest) {
+			window.L.initial._stubMessage(textMsg);
+		}
+
 		this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);

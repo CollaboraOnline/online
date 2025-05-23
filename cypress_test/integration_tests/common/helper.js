@@ -183,6 +183,18 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 				}
 			});
 		}
+	}).then(function(win) {
+		if (Cypress.config('logServerResponse')) {
+			cy.getFrameWindow()
+				.its('L', {log: false})
+				.then(function(L) {
+					cy.stub(L.initial, '_stubMessage')
+						.log(false)
+						.callsFake(function(e){
+							Cypress.log({name: 'server response =>', message: e});
+						});
+				});
+		}
 	});
 
 	cy.log('<< loadDocumentNoIntegration - end');
