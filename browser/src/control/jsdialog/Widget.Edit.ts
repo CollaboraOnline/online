@@ -89,8 +89,10 @@ class EditWidget {
 
 		if (data.hidden) $(edit).hide();
 
-		if (data.placeholder) $(edit).attr('placeholder', data.placeholder);
-
+		if (data.placeholder) {
+			edit.setAttribute('placeholder', data.placeholder);
+			edit.setAttribute('aria-label', data.placeholder);
+		}
 		return result;
 	}
 

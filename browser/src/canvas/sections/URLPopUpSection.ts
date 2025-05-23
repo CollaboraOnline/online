@@ -66,6 +66,8 @@ class URLPopUpSection extends HTMLObjectSection {
 		const copyBtn = L.DomUtil.createWithId('div', this.copyButtonId, parent);
 		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 		copyBtn.setAttribute('title', copyLinkText);
+		copyBtn.setAttribute('role', 'button');
+		copyBtn.setAttribute('aria-label', copyLinkText);
 
         const imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
 		app.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
@@ -78,6 +80,9 @@ class URLPopUpSection extends HTMLObjectSection {
 		const editBtn = L.DomUtil.createWithId('div', this.editButtonId, parent);
 		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 		editBtn.setAttribute('title', editLinkText);
+		editBtn.setAttribute('role', 'button');
+		editBtn.setAttribute('aria-label', copyLinkText);
+
 
 		const imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
 		app.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
@@ -90,6 +95,8 @@ class URLPopUpSection extends HTMLObjectSection {
 		const removeBtn = L.DomUtil.createWithId('div', this.removeButtonId, parent);
 		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 		removeBtn.setAttribute('title', removeLinkText);
+		removeBtn.setAttribute('role', 'button');
+		removeBtn.setAttribute('aria-label', removeLinkText);
 
 		const imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
 		app.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);

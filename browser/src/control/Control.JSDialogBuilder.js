@@ -1687,6 +1687,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
 		listbox.id = data.id + '-input';
+		if (data.labelledBy)
+			listbox.setAttribute('aria-labelledby', data.labelledBy);
 		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
