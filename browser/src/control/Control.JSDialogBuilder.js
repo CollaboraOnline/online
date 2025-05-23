@@ -2637,6 +2637,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return;
 		}
 
+		// eg. in mobile wizard input is inside spin button div
+		var innerInput = control.querySelector('input');
+
 		switch (data.action_type) {
 		case 'grab_focus':
 			control.focus();
@@ -2667,11 +2670,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'enable':
 			control.disabled = false;
 			control.removeAttribute('disabled');
+			if (innerInput) {
+				innerInput.disabled = false;
+				innerInput.removeAttribute('disabled');
+			}
 			break;
 
 		case 'disable':
-			control.setAttribute('disabled', 'true');
 			control.disabled = true;
+			control.setAttribute('disabled', 'true');
+			if (innerInput) {
+				innerInput.disabled = true;
+				innerInput.setAttribute('disabled');
+			}
 			break;
 
 		case 'setText':
@@ -2680,8 +2691,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				break;
 			}
 
-			// eg. in mobile wizard input is inside spin button div
-			var innerInput = control.querySelector('input');
 			if (innerInput)
 				control = innerInput;
 
