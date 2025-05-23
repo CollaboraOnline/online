@@ -60,6 +60,8 @@ namespace CODA
 
         private string _fileURL;
 
+        private string _exeLocation;
+
         public MainWindow()
         {
             Loaded += MainWindow_Loaded;
@@ -67,9 +69,11 @@ namespace CODA
             Send2JSDelegate fp = new Send2JSDelegate(send2JS);
             _gch = GCHandle.Alloc(fp);
             set_send2JS_function(fp);
-            var exeLocation = System.Windows.Forms.Application.StartupPath;
-            set_app_installation_path(exeLocation);
-            set_app_installation_uri(new System.Uri(exeLocation).AbsoluteUri);
+            _exeLocation = System.IO.Path.GetDirectoryName(typeof(MainWindow).Assembly.Location);
+            if (!_exeLocation.EndsWith('\\'))
+                _exeLocation += "\\";
+            set_app_installation_path(_exeLocation);
+            set_app_installation_uri(new System.Uri(_exeLocation).AbsoluteUri);
             initialize_cpp_things();
         }
 
@@ -177,7 +181,7 @@ namespace CODA
             // Also hide the initial menu as COOL has its own
             menuXamlElement.Visibility = Visibility.Collapsed;
 
-            _iWebView2.CoreWebView2.Navigate(new System.Uri(System.Windows.Forms.Application.StartupPath).AbsoluteUri + "cool/cool.html?file_path=" + _fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=" + _appDocId + "&userinterfacemode=notebookbar&dir=ltr");
+            _iWebView2.CoreWebView2.Navigate(new System.Uri(_exeLocation).AbsoluteUri + "cool/cool.html?file_path=" + _fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=" + _appDocId + "&userinterfacemode=notebookbar&dir=ltr");
 
             _iWebView2.CoreWebView2.NewWindowRequested += delegate (
                 object webview2, CoreWebView2NewWindowRequestedEventArgs args)
