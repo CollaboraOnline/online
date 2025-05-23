@@ -393,7 +393,7 @@ JSDialog.colorPicker = function (
 
 	const recentLabel = L.DomUtil.create('label', '', container);
 	recentLabel.innerText = _('Recent');
-	recentLabel.for = 'ui-color-picker-recent';
+	recentLabel.htmlFor = 'ui-color-picker-recent';
 
 	const recentContainer = L.DomUtil.createWithId(
 		'div',
