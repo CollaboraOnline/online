@@ -832,6 +832,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	display: flex;
 	align-items: center;
 }
+.radiobutton label,
 .checkbutton label {
 	line-height: 44px;
 	vertical-align: top;
