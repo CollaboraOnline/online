@@ -292,8 +292,7 @@ bool HostEntry::isLocalhost() const
 
     try
     {
-        const Poco::Net::NetworkInterface::NetworkInterfaceList list =
-            Poco::Net::NetworkInterface::list(true, true);
+        const auto list = Poco::Net::NetworkInterface::list(true, true);
         for (const auto& netif : list)
         {
             std::string address = netif.address().toString();
