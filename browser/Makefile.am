@@ -61,6 +61,10 @@ QUIET_STYLELINT = $(QUIET_STYLELINT_$(V))
 QUIET_STYLELINT_ = $(QUIET_STYLELINT_$(AM_DEFAULT_VERBOSITY))
 QUIET_STYLELINT_0 = @echo "  STYLELINT" $@;
 
+QUIET_UNOCOMMANDS = $(QUIET_UNOCOMMANDS_$(V))
+QUIET_UNOCOMMANDS_ = $(QUIET_UNOCOMMANDS_$(AM_DEFAULT_VERBOSITY))
+QUIET_UNOCOMMANDS_0 = @echo "  UNOCOMMANDS " $@;
+
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
@@ -780,7 +784,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(COOL_ADMIN_TS_JS) $(COOL_ADMIN_JS)
 
 $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DST) $(abs_top_srcdir)/scripts/unocommands.py
 	@mkdir -p $(dir $@)
-	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
+	$(QUIET_UNOCOMMANDS) $(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@printf "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(COOL_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(COOL_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	$(call run_eslint_check,$(srcdir)/src $(srcdir)/js)
