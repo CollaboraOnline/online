@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "DllImportTest": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}
