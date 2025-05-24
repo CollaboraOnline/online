@@ -1679,6 +1679,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             oss << " batch=" << getBatchMode();
         }
+
+        if (!getInFilterOption().empty())
+        {
+            oss << " infilterOptions=" << getInFilterOption();
+        }
+
 #if ENABLE_FEATURE_LOCK
         sendLockedInfo();
 #endif
