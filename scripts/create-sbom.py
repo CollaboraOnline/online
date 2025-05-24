@@ -14,7 +14,7 @@ import sys
 import os
 import json
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Fetch the library versions from coolforkit-ns output
 def get_library_versions():
@@ -53,7 +53,7 @@ def update_document_namespace():
             break
 
 def update_date():
-    sbom_data["creationInfo"]["created"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    sbom_data["creationInfo"]["created"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 file_path = os.path.dirname(os.path.dirname(__file__)) + "/cool-sbom-template.spdx.json"
 with open(file_path, "r") as file:
