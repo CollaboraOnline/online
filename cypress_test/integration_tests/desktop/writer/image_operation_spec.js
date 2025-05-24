@@ -54,11 +54,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		helper.assertImageSize(248, 63);
 		// if window is too small sidebar won't popup
 
-		helper.waitUntilIdle('#selectwidth input');
-
 		cy.cGet('#selectwidth input').type('{selectAll}{backspace}3{enter}');
-
-		helper.waitUntilIdle('#selectheight input');
 
 		cy.cGet('#selectheight input').type('{selectAll}{backspace}2{enter}');
 
@@ -68,8 +64,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		//Keep ratio checked
 		cy.cGet('#ratio input').check();
-
-		helper.waitUntilIdle('#selectheight input');
 
 		cy.cGet('#selectheight input').type('{selectAll}{backspace}5{enter}');
 
