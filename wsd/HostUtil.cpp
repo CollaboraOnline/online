@@ -258,11 +258,11 @@ void HostUtil::parseAllowedWSOrigins(Poco::Util::LayeredConfiguration& conf)
         {
             break;
         }
-        const std::string origin = conf.getString(path, "");
+        std::string origin = conf.getString(path, "");
         if (!origin.empty())
         {
             LOG_INF("Adding Origin[" << origin << "] to allowed websocket origin list");
-            HostUtil::AllowedWSOriginList.insert(origin);
+            HostUtil::AllowedWSOriginList.insert(std::move(origin));
         }
     }
 }

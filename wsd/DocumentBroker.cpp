@@ -4941,7 +4941,7 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
         return true;
     }
 
-    const std::string viewId = session->getId();
+    std::string viewId = session->getId();
 
     // Should not get through; we have our own save command.
     assert(!message.starts_with("uno .uno:Save"));
@@ -4970,7 +4970,7 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
 #if !MOBILEAPP
             if (_asyncInstallTask)
             {
-                auto sendLoad = [selfWeak = weak_from_this(), this, viewId,
+                auto sendLoad = [selfWeak = weak_from_this(), this, viewId = std::move(viewId),
                                  msg = std::move(msg), binary](bool success) {
                     if (!success)
                         return;
