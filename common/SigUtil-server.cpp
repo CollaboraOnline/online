@@ -474,6 +474,9 @@ void requestShutdown()
                     "Crashed in unattended run and won't wait for debugger. Re-run without "
                     "--unattended to attach a debugger.";
                 std::cerr << msg << std::endl;
+                char gdb[1024];
+                sprintf(gdb, "gdb --pid %d -batch -ex=\"thread apply all backtrace full\"", getpid());
+                system(gdb);
             }
             else
             {
