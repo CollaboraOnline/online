@@ -188,7 +188,6 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		desktopHelper.insertComment();
 		addSlide(2);
 		desktopHelper.insertComment();
-		helper.waitUntilIdle('.leaflet-control-scroll-up');
 		cy.cGet('.leaflet-control-scroll-up').should('be.visible');
 		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
 		cy.cGet('#SlideStatus').should('contain','Slide 1 of 3');

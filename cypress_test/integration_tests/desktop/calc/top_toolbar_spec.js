@@ -145,7 +145,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		desktopHelper.selectFromListbox('Alef');
 		calcHelper.selectEntireSheet();
 		helper.copy();
-		helper.waitUntilIdle('#copy-paste-container');
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'face', 'Alef');
 	});
 

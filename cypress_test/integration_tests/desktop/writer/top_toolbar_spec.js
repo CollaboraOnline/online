@@ -439,8 +439,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		//var data = [];
 		//var expectedData = ['text ', 'text1'];
 
-		//helper.waitUntilIdle('#copy-paste-container');
-
 		//cy.cGet('#copy-paste-container').find('p').each($el => {
 		//	cy.wrap($el)
 		//		.invoke('text')
