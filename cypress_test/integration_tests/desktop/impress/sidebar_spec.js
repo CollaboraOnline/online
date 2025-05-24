@@ -23,11 +23,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 	it('Set gradient background color', function() {
 		cy.cGet('#fillattr2').should('not.be.visible');
 
-		helper.waitUntilIdle('#fillstyle');
 		cy.cGet('#fillstyle select').select('Gradient');
 		cy.cGet('#fillattr2').should('be.visible');
 		cy.cGet('#fillattr3').should('be.visible');
-		helper.waitUntilIdle('#fillattr2');
 		cy.cGet('#fillattr2').click();
 		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
 		cy.cGet('#colorset').should('be.visible');

@@ -85,11 +85,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		cy.cGet('.ui-expander-label').contains('Position and Size').should('be.visible').click();
 
-		helper.waitUntilIdle('#ratio input');
-
 		cy.cGet('#ratio input').check();
-
-		helper.waitUntilIdle('#selectheight');
 
 		cy.cGet('#selectheight input').type('{selectAll}{backspace}5{enter}');
 

@@ -21,8 +21,6 @@ describe(['tagscreenshot'], 'Help dialog update', function() {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('Chart...').click();
 
-		helper.waitUntilIdle('.lokdialog_container');
-
 		cy.cGet('.lokdialog_container').click();
 
 		helper.typeIntoDocument('{shift}{enter}');

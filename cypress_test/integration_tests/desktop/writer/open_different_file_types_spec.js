@@ -21,7 +21,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		cy.cGet('#copy-paste-container colgroup').find('col').should('have.length', 4);
 		cy.cGet('#copy-paste-container tbody').find('tr').should('have.length', 1);
 		helper.typeIntoDocument('{downarrow}');
-		helper.waitUntilIdle('.leaflet-cursor.blinking-cursor');
 
 		// Click right to the blinking cursor position.
 		cy.cGet('.leaflet-cursor.blinking-cursor')

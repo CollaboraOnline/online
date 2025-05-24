@@ -8,16 +8,6 @@ var helper = require('./helper');
 function clickFormulaBar() {
 	cy.log('>> clickFormulaBar - start');
 
-	// The inputbar_container is 100% width, which
-	// can extend behind the sidebar. So we can't
-	// rely on its width. Instead, we rely on the
-	// canvas, which is accurately sized.
-	// N.B. Setting the width of the inputbar_container
-	// is futile because it messes the size of the canvas.
-	helper.doIfOnMobile(function() {
-		helper.waitUntilIdle('#sc_input_window.formulabar');
-	});
-
 	cy.cGet('#sc_input_window.formulabar').focus();
 	cy.cGet('body').trigger('mouseover');
 

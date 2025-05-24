@@ -295,8 +295,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.typeIntoDocument('{ctrl}{a}');
 		helper.copy();
 
-		helper.waitUntilIdle('#copy-paste-container');
-
 		cy.cGet('#copy-paste-container colgroup').find('col').should('have.length.greaterThan', 0);
 		cy.cGet('#copy-paste-container tbody').find('tr').should('have.length.greaterThan', 0);
 		helper.typeIntoDocument('{leftarrow}');
@@ -308,8 +306,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 		helper.typeIntoDocument('{ctrl}{a}');
 		helper.copy();
-
-		helper.waitUntilIdle('#copy-paste-container');
 
 		cy.cGet('#copy-paste-container colgroup').find('col').should('have.length.greaterThan', 0);
 		cy.cGet('#copy-paste-container tbody').find('tr').should('have.length.greaterThan', 0);
