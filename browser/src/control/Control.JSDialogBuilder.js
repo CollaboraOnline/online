@@ -282,7 +282,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				 !window._firstDialogHandled &&
 				 (eventType === 'close' ||
 				 (objectType === 'responsebutton' && data == 7))) {
-				app.dispatcher.dispatch('closeapp');
+				let dispatcher = app.dispatcher;
+				if (!dispatcher)
+					dispatcher = new app.definitions['dispatcher']('global');
+
+				dispatcher.dispatch('closeapp');
 			}
 			switch (typeof data) {
 			case 'string':
