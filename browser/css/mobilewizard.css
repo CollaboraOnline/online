@@ -984,7 +984,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 }
 div#enablecontour + label, #arrangelabel, #SetMinimalRowHeight {clear: both;}
 
-label.disabled {
+label[disabled] {
 	color: var(--color-text-lighter) !important;
 }
 
