@@ -257,7 +257,11 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		if (data.enabled === 'false' || data.enabled === false) {
 			$(checkboxLabel).addClass('disabled');
 			$(checkbox).attr('disabled', 'disabled');
+			div.disabled = true;
+			div.setAttribute('disabled', 'disabled');
 		}
+
+		JSDialog.SynchronizeDisabledState(div, [checkbox, checkboxLabel]);
 
 		checkbox.addEventListener('change', function() {
 			builder.callback('checkbox', 'change', div, this.checked, builder);
@@ -288,8 +292,13 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		if (data.group)
 			radiobutton.name = data.group;
 
-		if (data.enabled === 'false' || data.enabled === false)
+		if (data.enabled === 'false' || data.enabled === false) {
 			$(radiobutton).attr('disabled', 'disabled');
+			container.disabled = true;
+			container.setAttribute('disabled', 'disabled');
+		}
+
+		JSDialog.SynchronizeDisabledState(container, [radiobutton, radiobuttonLabel]);
 
 		if (data.checked === 'true' || data.checked === true)
 			$(radiobutton).prop('checked', true);
