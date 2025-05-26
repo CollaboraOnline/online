@@ -105,6 +105,8 @@ class LayerDrawing {
 	private onSlideRenderingCompleteCallback: VoidFunction = null;
 	private layerRenderer: LayerRenderer;
 	private videoRenderers: Map<string, Array<VideoRenderer>> = new Map();
+	private isTransitionActive: boolean = false;
+	private queuedLayers: any[] = [];
 
 	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
@@ -428,6 +430,10 @@ class LayerDrawing {
 	onSlideLayerMsg(e: any) {
 		if (this.isDisposed()) return;
 
+		if (this.isTransitionActive) {
+			this.queuedLayers.push(e);
+			return;
+		}
 		const info = e.message;
 		if (!info) {
 			window.app.console.log(
@@ -848,7 +854,18 @@ class LayerDrawing {
 		return this.layerRenderer.getRenderContext();
 	}
 
+	public notifyTransitionStart() {
+		this.isTransitionActive = true;
+		this.queuedLayers = [];
+	}
+
 	public notifyTransitionEnd(slideHash: string) {
+		this.isTransitionActive = false;
+		while (this.queuedLayers.length > 0) {
+			const layer = this.queuedLayers.shift();
+			this.onSlideLayerMsg(layer);
+		}
+
 		this.handleVideos(slideHash);
 		if (this.videoRenderers.has(slideHash)) {
 			this.loadVideos(slideHash);
