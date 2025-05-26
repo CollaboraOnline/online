@@ -215,7 +215,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('entirerow');
 
-		helper.waitUntilIdle('.leaflet-control-buttons-disabled svg');
+		cy.cGet('.leaflet-control-buttons-disabled svg').should('exist');
 
 		clickOnTableOperation('mergecells');
 
@@ -245,7 +245,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('entirecolumn');
 
-		helper.waitUntilIdle('.leaflet-control-buttons-disabled svg');
+		cy.cGet('.leaflet-control-buttons-disabled svg').should('exist');
 
 		clickOnTableOperation('mergecells');
 

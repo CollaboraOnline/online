@@ -31,14 +31,14 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		mobileHelper.enableEditingMobile();
 		skipDocModifiedMessage();
 		mobileHelper.openCommentWizard();
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 	});
 
 	it('Modifying comment.', function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectAnnotationMenuItem('Modify');
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
@@ -55,7 +55,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Reply to comment.', function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectAnnotationMenuItem('Reply');
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#input-modal-input').should('have.text', '');
 		cy.cGet('#input-modal-input').type('reply');
@@ -75,7 +75,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Try to insert empty comment.', function() {
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 		cy.cGet('#input-modal-input').should('exist').should('have.text', '');
 		cy.cGet('#response-ok').click();
 		skipDocModifiedMessage();
@@ -89,7 +89,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		mobileHelper.insertComment(/* FIXME: skipCommentCheck */true);
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 		mobileHelper.selectAnnotationMenuItem('Resolve');
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved')
 			.should('exist')
 			.should('have.text', 'Resolved');
@@ -117,7 +117,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 
 		cy.cGet('#response-ok').click();
 		skipDocModifiedMessage();
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#annotation-content-area-1 a')
@@ -149,7 +149,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		skipDocModifiedMessage();
 
 		cy.cGet('#toolbar-up #comment_wizard').click();
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#annotation-content-area-1 a')
@@ -180,7 +180,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 
 		cy.cGet('#response-ok').click();
 		skipDocModifiedMessage();
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 
 		cy.cGet('#comment-container-1').should('exist').click();
 		cy.cGet('#comment-container-2').should('exist');

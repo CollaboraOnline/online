@@ -21,7 +21,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 		helper.reloadDocument(newFilePath);
 		mobileHelper.enableEditingMobile();
 		mobileHelper.openCommentWizard();
-		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard-content').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 		cy.cGet('#comment-container-1').should('exist');
 	});

@@ -12,7 +12,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		helper.waitUntilIdle('#toolbar-down');
+		cy.cGet('#toolbar-down').should('exist');
 
 		calcHelper.clickOnFirstCell();
 	});
