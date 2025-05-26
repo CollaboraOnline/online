@@ -1073,10 +1073,12 @@ void SocketDisposition::execute()
         }
         _toPoll->addCallback(
             [pollCopy = _toPoll, socket = std::move(_socket),
-             socketMoveFn = std::move(_socketMove)]()
+             socketMoveFn = std::move(_socketMove)]() mutable
             {
                 pollCopy->insertNewSocket(socket);
                 socketMoveFn(socket);
+                // Clear lambda's socket capture while in the polling thread
+                socket = nullptr;
             });
 
         _socketMove = nullptr;
