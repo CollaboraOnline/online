@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 08:04+0200\n"
+"POT-Creation-Date: 2025-05-26 18:27+0200\n"
 "PO-Revision-Date: 2025-05-13 22:02+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: cs\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -220,7 +220,7 @@ msgstr "Obnovit protokol"
 msgid "Channel Filter:"
 msgstr "Filtr kanálu:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:482
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:486
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "Žádný"
@@ -237,7 +237,7 @@ msgstr "Úrovně podrobností protokolu"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:435 src/core/Socket.js:1204 src/core/Socket.js:1209
+#: src/core/Socket.js:435 src/core/Socket.js:1207 src/core/Socket.js:1212
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Zavřít"
@@ -295,7 +295,7 @@ msgstr "Upozornění"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:653 src/app/Debug.ts:1383
+#: admin/src/integrator/AdminIntegratorSettings.ts:878 src/app/Debug.ts:1383
 #: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
@@ -307,9 +307,9 @@ msgstr "Upozornění"
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
 #: src/control/Parts.js:480 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:740 src/control/Toolbar.js:839
-#: src/core/Socket.js:709 src/core/Socket.js:1174 src/core/Socket.js:1244
-#: src/core/Socket.js:1395 src/core/Socket.js:1399 src/docdispatcher.ts:521
+#: src/control/Toolbar.js:741 src/control/Toolbar.js:840
+#: src/core/Socket.js:712 src/core/Socket.js:1177 src/core/Socket.js:1247
+#: src/core/Socket.js:1398 src/core/Socket.js:1402 src/docdispatcher.ts:524
 #: src/main.js:86 src/main.js:89 src/main.js:142 src/map/Clipboard.js:1292
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
@@ -331,10 +331,10 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:82
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1692 src/control/Control.UIManager.ts:1771
-#: src/control/Control.UIManager.ts:1923 src/control/Control.UIManager.ts:2101
-#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:834
-#: src/core/Socket.js:1420
+#: src/control/Control.UIManager.ts:1700 src/control/Control.UIManager.ts:1779
+#: src/control/Control.UIManager.ts:1931 src/control/Control.UIManager.ts:2109
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:835
+#: src/core/Socket.js:1423
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -370,11 +370,15 @@ msgstr "Opravdu si přejete ukončit tuto relaci?"
 msgid "Are you sure you want to shut down the server?"
 msgstr "Opravdu si přejete tento server vypnout?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:130
+#: admin/src/integrator/AdminIntegratorSettings.ts:73
+msgid "Accessibility"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
 msgstr "AutoText"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:132
+#: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -383,15 +387,15 @@ msgstr ""
 "vložit do dokumentu, zadejte zkratku pro položku AutoText a stiskněte "
 "klávesu F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:138
+#: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
 msgstr "Nahrát AutoText"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:142
+#: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Custom dictionaries"
 msgstr "Vlastní slovníky"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:144
+#: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -399,48 +403,48 @@ msgstr ""
 "Přidání nebo úprava slov ve slovníku pro kontrolu pravopisu. Slova ve vašem "
 "slovníku (.dic) budou k dispozici pro kontrolu pravopisu."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:150
+#: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Upload Wordbook"
 msgstr "Nahrát Slovník"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:154
+#: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Interface"
 msgstr "Rozhraní"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:155
+#: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Set default interface preferences."
 msgstr "Nastavení výchozích předvoleb rozhraní."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:161
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Upload Configuration"
 msgstr "Nahrát konfiguraci"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:166
+#: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Document settings"
 msgstr "Nastavení dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:167
+#: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
 msgstr "Upravte chování kancelářských dokumentů."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:173
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Upload Xcu"
 msgstr "Nahrání Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:222
+#: admin/src/integrator/AdminIntegratorSettings.ts:238
 msgid "Shared Config URL is missing in initial variables."
 msgstr "V počátečních proměnných chybí sdílená URL adesa konfigurace."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:228
+#: admin/src/integrator/AdminIntegratorSettings.ts:244
 msgid "Access token is missing in initial variables."
 msgstr "V počátečních proměnných chybí přístupový token."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:257
+#: admin/src/integrator/AdminIntegratorSettings.ts:273
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Něco se pokazilo. Zkuste prosím stránku obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:330
+#: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -448,23 +452,53 @@ msgstr ""
 "Při načítání souboru s nastavením se něco pokazilo. Zkuste prosím stránku "
 "obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:355
+#: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr "Při načítání slovníku se něco pokazilo. Zkuste prosím stránku obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:390
+#: admin/src/integrator/AdminIntegratorSettings.ts:406
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Při nahrávání souboru se něco pokazilo. Zkuste to prosím znovu."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:516
+#: admin/src/integrator/AdminIntegratorSettings.ts:532
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr "Při mazání souboru se něco pokazilo. Zkuste prosím obnovit stránku."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:641
+#: admin/src/integrator/AdminIntegratorSettings.ts:591
+msgid "View Settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:595
+msgid "Adjust view settings."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:607
+msgid "Option"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:674
+msgid "(Warning: Server accessibility must be enabled to toggle)"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:717
+#, fuzzy
+msgid "Reset to default View settings"
+msgstr "Obnovení výchozího nastavení dokumentu"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:731
+#, fuzzy
+msgid "Are you sure you want to reset View Settings?"
+msgstr "Opravdu chcete obnovit nastavení dokumentu?"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:749
+msgid "Save View Settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
 msgstr "Chyba"
@@ -577,15 +611,15 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1528
+#: js/global.js:1547
 msgid "Cluster is scaling, retrying..."
 msgstr "Cluster je škálován, zkouší se znovu..."
 
-#: js/global.js:1530
+#: js/global.js:1549
 msgid "Document is migrating to new server, retrying..."
 msgstr "Dokument je migrován na nový server, zkouší se znovu..."
 
-#: js/global.js:1532
+#: js/global.js:1551
 msgid "Failed to get RouteToken from controller"
 msgstr "Z controlleru se nepodařilo získat RouteToken"
 
@@ -655,9 +689,9 @@ msgid "Open in full view"
 msgstr "Otevřít v plném zobrazení"
 
 #: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1943
-#: src/layer/tile/CanvasTileLayer.js:3514
+#: src/control/Control.JSDialogBuilder.js:1938
 #: src/layer/tile/CanvasTileLayer.js:3525
+#: src/layer/tile/CanvasTileLayer.js:3536
 msgid "Comment"
 msgstr "Komentář"
 
@@ -677,7 +711,7 @@ msgid ""
 msgstr ""
 "Komentář byl aktualizován jiným uživatelem. Přejete si jeho změny přepsat?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1424
+#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1427
 msgid "Overwrite"
 msgstr "Přepsat"
 
@@ -690,21 +724,30 @@ msgstr "Aktualizovat"
 msgid "Autosaved"
 msgstr "Automaticky uloženo"
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:232
+#, fuzzy
+msgid "Edit comment"
+msgstr "Upravit dokument"
+
+#: src/canvas/sections/CommentSection.ts:239
+msgid "Reply comment"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
 msgstr "Otevřít nabídku"
 
-#: src/canvas/sections/CommentSection.ts:379
-#: src/canvas/sections/CommentSection.ts:380
+#: src/canvas/sections/CommentSection.ts:383
+#: src/canvas/sections/CommentSection.ts:384
 msgid "Accept change"
 msgstr "Přijmout změnu"
 
-#: src/canvas/sections/CommentSection.ts:386
-#: src/canvas/sections/CommentSection.ts:387
+#: src/canvas/sections/CommentSection.ts:390
+#: src/canvas/sections/CommentSection.ts:391
 msgid "Reject change"
 msgstr "Odmítnout změnu"
 
-#: src/canvas/sections/CommentSection.ts:410
+#: src/canvas/sections/CommentSection.ts:414
 msgid "Resolved"
 msgstr "Vyřešit"
 
@@ -716,11 +759,11 @@ msgstr "Dokument obsahuje nepodporované medium"
 msgid "Copy link location"
 msgstr "Zkopírovat umístění odkazu"
 
-#: src/canvas/sections/URLPopUpSection.ts:77
+#: src/canvas/sections/URLPopUpSection.ts:79
 msgid "Edit link"
 msgstr "Upravit odkaz"
 
-#: src/canvas/sections/URLPopUpSection.ts:89
+#: src/canvas/sections/URLPopUpSection.ts:94
 msgid "Remove link"
 msgstr "Odstranit odkaz"
 
@@ -739,6 +782,10 @@ msgstr "Tato verze aplikace {productname} využívá"
 #: src/control/Control.AboutDialog.ts:135
 msgid "\"Slow Proxy\""
 msgstr "„Pomalé proxy“"
+
+#: src/control/Control.AboutDialog.ts:147
+msgid "Time zone:"
+msgstr ""
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -801,7 +848,7 @@ msgstr "Server zaznamenal během zpracovávání příkazu {1} chybu {0}."
 msgid "Unlock"
 msgstr "Odemknout"
 
-#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:518
+#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:521
 msgid "Delete"
 msgstr "Smazat"
 
@@ -1269,91 +1316,91 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Zavřít dialogové okno"
 
-#: src/control/Control.JSDialogBuilder.js:485
+#: src/control/Control.JSDialogBuilder.js:489
 msgid "Solid"
 msgstr "Plný"
 
-#: src/control/Control.JSDialogBuilder.js:488
+#: src/control/Control.JSDialogBuilder.js:492
 msgid "Linear"
 msgstr "Lineární"
 
-#: src/control/Control.JSDialogBuilder.js:491
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Axial"
 msgstr "Axiální"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Radial"
 msgstr "Radiální"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Ellipsoid"
 msgstr "Oválný"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Quadratic"
 msgstr "Krychlový"
 
-#: src/control/Control.JSDialogBuilder.js:504
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Square"
 msgstr "Čtvercový"
 
-#: src/control/Control.JSDialogBuilder.js:507
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Fixed size"
 msgstr "Neměnná velikost"
 
-#: src/control/Control.JSDialogBuilder.js:1475
+#: src/control/Control.JSDialogBuilder.js:1468
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1478
+#: src/control/Control.JSDialogBuilder.js:1471
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1481
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "Color"
 msgstr "Barva"
 
-#: src/control/Control.JSDialogBuilder.js:1557
+#: src/control/Control.JSDialogBuilder.js:1550
 msgid "Select range"
 msgstr "Vybrat rozsah"
 
-#: src/control/Control.JSDialogBuilder.js:1674
+#: src/control/Control.JSDialogBuilder.js:1667
 #: src/control/Control.NotebookbarBuilder.js:154
 msgid "Font Name"
 msgstr "Název písma"
 
-#: src/control/Control.JSDialogBuilder.js:1676 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1669 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Velikost písma"
 
-#: src/control/Control.JSDialogBuilder.js:1678
+#: src/control/Control.JSDialogBuilder.js:1671
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Styl"
 
-#: src/control/Control.JSDialogBuilder.js:1929
+#: src/control/Control.JSDialogBuilder.js:1924
 msgid "reply"
 msgstr "odpověď"
 
-#: src/control/Control.JSDialogBuilder.js:1932
+#: src/control/Control.JSDialogBuilder.js:1927
 msgid "replies"
 msgstr "odpovědí"
 
-#: src/control/Control.JSDialogBuilder.js:2007
+#: src/control/Control.JSDialogBuilder.js:2002
 msgid "Insert Comment"
 msgstr "Vložit komentář"
 
-#: src/control/Control.JSDialogBuilder.js:2593
+#: src/control/Control.JSDialogBuilder.js:2586
 #: src/control/Control.Menubar.ts:973
 msgid "Rows"
 msgstr "Řádky"
 
-#: src/control/Control.JSDialogBuilder.js:2594
+#: src/control/Control.JSDialogBuilder.js:2587
 #: src/control/Control.Menubar.ts:976
 msgid "Columns"
 msgstr "Sloupce"
 
-#: src/control/Control.JSDialogBuilder.js:2614
+#: src/control/Control.JSDialogBuilder.js:2607
 msgid "Insert Table"
 msgstr "Vložit tabulku"
 
@@ -1441,7 +1488,7 @@ msgstr "Dokument PDF (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.ts:158 src/control/Control.UIManager.ts:305
+#: src/control/Control.Menubar.ts:158 src/control/Control.UIManager.ts:317
 msgid "Rename Document"
 msgstr "Přejmenovat dokument"
 
@@ -1948,7 +1995,7 @@ msgstr "Pod průměrem..."
 #: src/control/Control.NotebookbarImpress.js:1044
 #: src/control/Control.NotebookbarWriter.js:936
 #: src/control/Control.StatusBar.js:253 src/control/Control.Zotero.js:222
-#: src/control/Toolbar.js:575
+#: src/control/Toolbar.js:575 src/control/Toolbar.js:576
 msgid "Search"
 msgstr "Hledat"
 
@@ -2022,15 +2069,15 @@ msgstr "Skrýt vyhledávací lištu"
 msgid "Clear the search field"
 msgstr "Vymazat vyhledávací pole"
 
-#: src/control/Control.MobileWizardBuilder.js:538
+#: src/control/Control.MobileWizardBuilder.js:547
 msgid "Background Color"
 msgstr "Barva pozadí"
 
-#: src/control/Control.MobileWizardBuilder.js:540
+#: src/control/Control.MobileWizardBuilder.js:549
 msgid "Gradient Start"
 msgstr "Začátek přechodu"
 
-#: src/control/Control.MobileWizardBuilder.js:542
+#: src/control/Control.MobileWizardBuilder.js:551
 msgid "Gradient End"
 msgstr "Konec přechodu"
 
@@ -2056,7 +2103,7 @@ msgstr "Obrys"
 msgid "Navigator"
 msgstr "Navigátor"
 
-#: src/control/Control.Notebookbar.js:678
+#: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
 #: src/control/Control.NotebookbarDraw.js:194
 #: src/control/Control.NotebookbarImpress.js:78
@@ -2188,7 +2235,7 @@ msgstr "Podpis"
 #: src/control/Control.NotebookbarDraw.js:319
 #: src/control/Control.NotebookbarImpress.js:353
 #: src/control/Control.NotebookbarWriter.js:345
-#: src/control/Control.UIManager.ts:305
+#: src/control/Control.UIManager.ts:317
 msgid "Rename"
 msgstr "Přejmenovat"
 
@@ -2230,7 +2277,7 @@ msgstr "Zlomek"
 msgid "Boolean Value"
 msgstr "Booleovská hodnota"
 
-#: src/control/Control.NotebookbarCalc.js:626 src/control/Toolbar.js:806
+#: src/control/Control.NotebookbarCalc.js:626 src/control/Toolbar.js:807
 msgid "Text"
 msgstr "Text"
 
@@ -2676,15 +2723,15 @@ msgstr "Vložit tvary"
 msgid "Insert connectors"
 msgstr "Vložit spojnice"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.ts:1061
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.ts:1069
 msgid "Hide Menu"
 msgstr "Skrýt nabídku"
 
-#: src/control/Control.UIManager.ts:305
+#: src/control/Control.UIManager.ts:317
 msgid "Enter new name"
 msgstr "Zadejte nový název"
 
-#: src/control/Control.UIManager.ts:1088
+#: src/control/Control.UIManager.ts:1096
 msgid "Show Menu"
 msgstr "Zobrazit nabídku"
 
@@ -2757,7 +2804,7 @@ msgstr ""
 "webového API dostupné. To může při úpravách citací nebo seznamu použité "
 "literatury způsobovat problémy."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1344
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
 msgstr "Načítání…"
 
@@ -2897,19 +2944,19 @@ msgstr ""
 "Zrušení odkazů na citace způsobí, že v Collabora Online nebude v tomto "
 "dokumentu možné aktualizovat citace a seznam použité literatury."
 
-#: src/control/HRuler.ts:606
+#: src/control/HRuler.ts:604
 msgid "Left Margin"
 msgstr "Levý okraj"
 
-#: src/control/HRuler.ts:607
+#: src/control/HRuler.ts:605
 msgid "Right Margin"
 msgstr "Pravý okraj"
 
-#: src/control/HRuler.ts:892
+#: src/control/HRuler.ts:890
 msgid "Insert tabstop"
 msgstr "Vložit tabulátor"
 
-#: src/control/HRuler.ts:899
+#: src/control/HRuler.ts:897
 msgid "Delete tabstop"
 msgstr "Smazat tabulátor"
 
@@ -3005,11 +3052,11 @@ msgstr "Ukládání…"
 msgid "Renaming..."
 msgstr "Přejmenovávání…"
 
-#: src/control/Toolbar.js:794
+#: src/control/Toolbar.js:795
 msgid "Insert hyperlink"
 msgstr "Vložit hypertextový odkaz"
 
-#: src/control/Toolbar.js:818
+#: src/control/Toolbar.js:819
 msgid "Link"
 msgstr "Odkaz"
 
@@ -3157,7 +3204,7 @@ msgstr "Ohraničení buněk"
 msgid "More options for {1}"
 msgstr "Další možnosti pro {1}"
 
-#: src/control/jsdialog/Widget.TreeView.ts:1138
+#: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Na tomto místě se zobrazí nadpisy a objekty přidané do dokumentu"
 
@@ -3165,63 +3212,63 @@ msgstr "Na tomto místě se zobrazí nadpisy a objekty přidané do dokumentu"
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Došlo k problému při připojování k {productname}: "
 
-#: src/core/Socket.js:690
+#: src/core/Socket.js:693
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server je nyní dostupný. Stránku je nutné znovu načíst."
 
-#: src/core/Socket.js:692
+#: src/core/Socket.js:695
 msgid "Server is now reachable..."
 msgstr "Server je nyní dostupný…"
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:699
 msgid "RELOAD"
 msgstr "Znovu načíst"
 
-#: src/core/Socket.js:709
+#: src/core/Socket.js:712
 msgid "Cluster configuration warning"
 msgstr "Upozornění konfigurace clusteru"
 
-#: src/core/Socket.js:712
+#: src/core/Socket.js:715
 msgid "Wrong server, reconnecting..."
 msgstr "Nesprávný server, opětovné připojování..."
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:724
 msgid "COOLWSD version:"
 msgstr "Verze COOLWSD:"
 
-#: src/core/Socket.js:746
+#: src/core/Socket.js:749
 msgid "Served by:"
 msgstr "Ze serveru:"
 
-#: src/core/Socket.js:752
+#: src/core/Socket.js:755
 msgid "Unsupported server version."
 msgstr "Nepodporovaná verze serveru."
 
-#: src/core/Socket.js:756
+#: src/core/Socket.js:759
 msgid "LOKit version:"
 msgstr "Verze LOKit:"
 
-#: src/core/Socket.js:880
+#: src/core/Socket.js:883
 msgid "Document is getting migrated"
 msgstr "Dokument se převádí"
 
-#: src/core/Socket.js:907
+#: src/core/Socket.js:910
 msgid "Session terminated by document owner"
 msgstr "Relace byla ukončena vlastníkem dokumentu"
 
-#: src/core/Socket.js:918
+#: src/core/Socket.js:921
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server bude vypnut z důvodu údržby (automatické ukládání)"
 
-#: src/core/Socket.js:924
+#: src/core/Socket.js:927
 msgid "Oops, there is a problem connecting the document"
 msgstr "Došlo k problému při připojování k dokumentu"
 
-#: src/core/Socket.js:928
+#: src/core/Socket.js:931
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Server není dostupný, ale automaticky se restartuje. Počkejte prosím."
 
-#: src/core/Socket.js:955
+#: src/core/Socket.js:958
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -3229,7 +3276,7 @@ msgstr ""
 "Dokument byl v úložišti změněn. Načítá se nová verze, vaše verze bude "
 "dostupná jako revize."
 
-#: src/core/Socket.js:961
+#: src/core/Socket.js:964
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -3237,81 +3284,81 @@ msgstr ""
 "Obnovuje se starší revize. Veškeré neuložené změny budou dostupné v historii "
 "verzí"
 
-#: src/core/Socket.js:967
+#: src/core/Socket.js:970
 msgid "Reloading the document after rename"
 msgstr "Dokument je znovu načítán po přejmenování"
 
-#: src/core/Socket.js:1126
+#: src/core/Socket.js:1129
 msgid "Document requires password to view."
 msgstr "Pro prohlížení dokumentu je vyžadováno heslo."
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1132
 msgid "Document requires password to modify."
 msgstr "Pro úpravy dokumentu je vyžadováno heslo."
 
-#: src/core/Socket.js:1131
+#: src/core/Socket.js:1134
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stisknutím Zrušit dokument otevřete v režimu jen pro čtení."
 
-#: src/core/Socket.js:1135
+#: src/core/Socket.js:1138
 msgid "Wrong password provided. Please try again."
 msgstr "Chybné heslo. Zkuste ho zadat znovu."
 
-#: src/core/Socket.js:1173
+#: src/core/Socket.js:1176
 msgid "Only the document owner can change the password."
 msgstr "Heslo může změnit pouze vlastník dokumentu."
 
-#: src/core/Socket.js:1204 src/core/Socket.js:1209
+#: src/core/Socket.js:1207 src/core/Socket.js:1212
 msgid "Missing Fonts"
 msgstr "Chybějící písma"
 
-#: src/core/Socket.js:1241
+#: src/core/Socket.js:1244
 msgid "Someone"
 msgstr "Někdo"
 
-#: src/core/Socket.js:1242
+#: src/core/Socket.js:1245
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "Tento dokument byl uložen uživatelem {username} jako {filename}. Chcete se "
 "přidat?"
 
-#: src/core/Socket.js:1259
+#: src/core/Socket.js:1262
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1265
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Dokument se přepíná do režimu offline a za chvíli bude znovu načten"
 
-#: src/core/Socket.js:1344
+#: src/core/Socket.js:1347
 msgid "Connecting..."
 msgstr "Připojování…"
 
-#: src/core/Socket.js:1359
+#: src/core/Socket.js:1362
 msgid "Server is shutting down"
 msgstr "Server se vypíná"
 
-#: src/core/Socket.js:1395
+#: src/core/Socket.js:1398
 msgid "Exported to storage"
 msgstr "Exportováno do úložiště"
 
-#: src/core/Socket.js:1395
+#: src/core/Socket.js:1398
 msgid "Successfully exported: "
 msgstr "Úspěšně exportováno: "
 
-#: src/core/Socket.js:1423
+#: src/core/Socket.js:1426
 msgid "Discard"
 msgstr "Zahodit"
 
-#: src/core/Socket.js:1435
+#: src/core/Socket.js:1438
 msgid "Save to new file"
 msgstr "Uložit do nového souboru"
 
-#: src/core/Socket.js:1445
+#: src/core/Socket.js:1448
 msgid "Document has been changed"
 msgstr "Dokument byl změněn"
 
-#: src/core/Socket.js:1446
+#: src/core/Socket.js:1449
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3319,26 +3366,26 @@ msgstr ""
 "Dokument byl v úložišti změněn. Co si přejete provést se svými neuloženými "
 "změnami?"
 
-#: src/core/Socket.js:1709
+#: src/core/Socket.js:1712
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Toto je nepříjemné, nepodařilo se připojit k dokumentu. Zkuste to znovu."
 
-#: src/core/Socket.js:1726
+#: src/core/Socket.js:1729
 msgid "Reconnecting..."
 msgstr "Opětovné připojování…"
 
-#: src/core/Socket.js:1736
+#: src/core/Socket.js:1739
 msgid "The server has been disconnected."
 msgstr "Server byl odpojen."
 
-#: src/docdispatcher.ts:511
+#: src/docdispatcher.ts:514
 msgid "Are you sure you want to delete this slide?"
 msgstr "Opravdu si přejete smazat tento snímek?"
 
-#: src/docdispatcher.ts:514
+#: src/docdispatcher.ts:517
 msgid "Are you sure you want to delete this page?"
 msgstr "Opravdu si přejete smazat tuto stránku?"
 
@@ -3670,15 +3717,15 @@ msgstr "karta Nápověda"
 msgid "the View menu"
 msgstr "nabídka Zobrazit"
 
-#: src/layer/tile/CanvasTileLayer.js:1577
+#: src/layer/tile/CanvasTileLayer.js:1581
 msgid "Functions"
 msgstr "Funkce"
 
-#: src/layer/tile/CanvasTileLayer.js:1838
+#: src/layer/tile/CanvasTileLayer.js:1842
 msgid "Named Range"
 msgstr "Pojmenovaná oblast"
 
-#: src/layer/tile/CanvasTileLayer.js:3542
+#: src/layer/tile/CanvasTileLayer.js:3553
 msgid "No Comments"
 msgstr "Bez komentářů"
 
@@ -3739,15 +3786,15 @@ msgstr "Následující kombinací zobrazíte další možnosti:"
 msgid "Close popup to ignore paste special"
 msgstr "Zavřením okna vložení jinak ignorujete"
 
-#: src/map/Map.js:217
+#: src/map/Map.js:218
 msgid "Initializing..."
 msgstr "Inicializace…"
 
-#: src/map/Map.js:491 src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500
+#: src/map/Map.js:498 src/map/Map.js:501 src/map/Map.js:504 src/map/Map.js:507
 msgid "Last saved:"
 msgstr "Naposledy uloženo:"
 
-#: src/map/Map.js:1476
+#: src/map/Map.js:1483
 msgid "Please wait!"
 msgstr "Počkejte"
 
