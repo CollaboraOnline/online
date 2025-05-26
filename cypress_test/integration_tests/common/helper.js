@@ -746,26 +746,6 @@ function isCanvasWhite(expectWhite = true) {
 	cy.log('<< isCanvasWhite - end');
 }
 
-// Waits until a DOM element becomes idle (does not change for a given time).
-// It's useful to handle flickering on the UI, which might make cypress
-// tests unstable. If the UI flickers, we can use this method to wait
-// until it settles and the move on with the test.
-// Parameters:
-// selector - a CSS selector to query a DOM element to wait on to be idle.
-// content - a string, a content selector used by cy.contains() to select the correct DOM element.
-// waitingTime - how much time to wait before we say the item is idle.
-function waitUntilIdle(selector, content) {
-	// waitUntilIdle has been stubbed in order to reduce the number of calls to cy.wait().
-	// Find a specific condition to wait for using waitUntil, or even better use Cypress's
-	// built-in retrying functionality on find, should, and other functions.
-	cy.log('waitUntilIdle stubbed');
-	if (content) {
-		cy.cGet(selector, content);
-	} else {
-		cy.cGet(selector);
-	}
-}
-
 // Run a code snippet if we are in a mobile test.
 function doIfOnMobile(callback) {
 	cy.window({log: false})
@@ -1221,7 +1201,6 @@ module.exports.doIfNotInWriter = doIfNotInWriter;
 module.exports.typeText = typeText;
 module.exports.isImageWhite = isImageWhite;
 module.exports.isCanvasWhite = isCanvasWhite;
-module.exports.waitUntilIdle = waitUntilIdle;
 module.exports.doIfOnMobile = doIfOnMobile;
 module.exports.doIfOnDesktop = doIfOnDesktop;
 module.exports.moveCursor = moveCursor;
