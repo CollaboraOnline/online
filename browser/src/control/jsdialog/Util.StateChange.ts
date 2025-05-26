@@ -34,13 +34,15 @@ function onStateChange(element: Element, callback: StateChangeCallback) {
 
 function synchronizeDisabledState(source: Element, targets: Array<Element>) {
 	var enabledCallback = function (enable: boolean) {
+		app.layoutingService.appendLayoutingTask(() => {
 		for (const i in targets) {
-			if (enable) {
-				targets[i].removeAttribute('disabled');
-			} else {
-				targets[i].setAttribute('disabled', 'true');
+				if (enable) {
+					targets[i].removeAttribute('disabled');
+				} else {
+					targets[i].setAttribute('disabled', 'true');
+				}
 			}
-		}
+		});
 	};
 	onStateChange(source, enabledCallback);
 }
