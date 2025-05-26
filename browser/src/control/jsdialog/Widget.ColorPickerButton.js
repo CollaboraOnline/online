@@ -45,13 +45,19 @@ JSDialog.getCurrentColor = function (data, builder) {
 		data.command,
 	);
 
-	if (!selectedColor || selectedColor < 0)
-		selectedColor = builder._getUnoStateForItemId(data.id, builder);
+	selectedColor = parseInt(selectedColor);
+	// we need to handle auto color (No fill)
+	// we set state for command to -1 but when it is set by _onStateChanged
+	// its value is equal to uInt32 max value
+	if (selectedColor === 0xffffffff || selectedColor === -1) return -1;
 
-	if (!selectedColor || selectedColor < 0)
+	if (isNaN(selectedColor) || selectedColor < 0)
+		selectedColor = parseInt(builder._getUnoStateForItemId(data.id, builder));
+
+	if (isNaN(selectedColor) || selectedColor < 0)
 		selectedColor = getDefaultColorForCommand(data.command);
 
-	return toHexColor(parseInt(selectedColor));
+	return toHexColor(selectedColor);
 };
 
 JSDialog.sendColorCommand = function (builder, data, color, themeData) {
