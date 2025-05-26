@@ -134,14 +134,16 @@ class Document: NSDocument {
             DispatchQueue.main.async {
                 COWrapper.handleMessage(with: self, message: "save dontTerminateEdit=1 dontSaveIfUnmodified=1")
             }
+
+            // FIXME would be much better to have handleMessage() with some kind of await or completion handler,
+            // and call the completionHandler() from there, so that we can be 100% sure the save has concluded
+            DispatchQueue.main.async {
+                completionHandler(nil)
+            }
         }
         else {
             // all is good, we can proceed with copying the data from COOL
             super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
-        }
-
-        DispatchQueue.main.async {
-            completionHandler(nil)
         }
     }
 
