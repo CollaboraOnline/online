@@ -255,7 +255,6 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		checkbox.type = 'checkbox';
 
 		if (data.enabled === 'false' || data.enabled === false) {
-			$(checkboxLabel).addClass('disabled');
 			$(checkbox).attr('disabled', 'disabled');
 			div.disabled = true;
 			div.setAttribute('disabled', 'disabled');
