@@ -127,15 +127,19 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                         let data = Data(jsonSlice.utf8)
                         do {
                             let state = try JSONDecoder().decode(CommandStateChange.self, from: data)
+
+                            // Has the modification state of the document changed?
+                            // This is smportant for saving which has to copy the document from the temporary location.
+                            if state.commandName == ".uno:ModifiedStatus" {
+                                document?.isModified = (state.state == "true")
+                            }
+
+                            // remember states of the commands for app menu handling
                             if let windowController = view.window?.windowController as? WindowController {
                                 windowController.handleCommandStateChange(state)
                             }
                         } catch {}
                     }
-                }
-                else if body.hasPrefix("MODIFIED ") {
-                    document?.isModified = body.hasSuffix("true")
-                    return (nil, nil)
                 }
                 else if body == "SLIDESHOW" {
                     COWrapper.LOG_ERR("TODO: Implement slideshow")

@@ -241,10 +241,6 @@ window.L.Map = window.L.Evented.extend({
 				// Fire an event to let the client know whether the document needs saving or not.
 				this.fire('postMessage', {msgId: 'Doc_ModifiedStatus', args: { Modified: e.state === 'true' }});
 
-				if (window.ThisIsTheMacOSApp) {
-					window.postMobileMessage('MODIFIED ' + e.state);
-				}
-
 				if (this._everModified) {
 					this.fire('updatemodificationindicator', { status: e.state === 'true' ? 'MODIFIED' : 'SAVED' });
 				}
