@@ -70,6 +70,8 @@ abstract class SlideCompositor {
 
 	public abstract pauseVideos(slideHash: string): void;
 
+	public abstract notifyTransitionStart(): void;
+
 	public abstract notifyTransitionEnd(slideHash: string): void;
 }
 
