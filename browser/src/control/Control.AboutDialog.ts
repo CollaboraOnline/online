@@ -144,7 +144,7 @@ class AboutDialog {
 					'#timeZone',
 				) as HTMLElement;
 				timezoneElement.innerText =
-					'TimeZone: ' + app.socket.WSDServer.TimeZone;
+					_('Time zone:') + ' ' + app.socket.WSDServer.TimeZone;
 			}
 		}
 
