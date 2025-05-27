@@ -136,6 +136,7 @@ RUN --mount=type=secret,id=secret_key \
 # FIXME
 # Use the old starter script until we find out how to replace it.
 COPY /scripts/start-collabora-online.sh /
+RUN chown cool:cool /start-collabora-online.sh && chmod u+x /start-collabora-online.sh
 
 # coolwsd listens on port 9980
 EXPOSE 9980
