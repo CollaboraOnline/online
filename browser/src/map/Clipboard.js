@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -887,10 +887,18 @@ window.L.Clipboard = window.L.Class.extend({
 		const command = this._unoCommandForCopyCutPaste;
 		const check_ = this._sendCommandAndWaitForCompletion(command, params);
 
-		// I strongly disrecommend awaiting before the clipboard.write line in the non-iOS-app path
-		// It turns out there are some rather precarious conditions for copy/paste to be allowed in Safari on mobile - and awaiting seems to tip us over into "too late to copy/paste"
-		// Deferring like this is kinda horrible - it certainly looks gross in places - but it's absolutely necessary to avoid errors on the clipboard.write line
-		// I don't like it either :). If you change this make sure to thoroughly test cross-browser and cross-device!
+		// I strongly disrecommend awaiting before the clipboard.write line in the
+		// non-iOS-app path
+
+		// It turns out there are some rather precarious conditions for copy/paste to be
+		// allowed in Safari on mobile - and awaiting seems to tip us over into "too late to
+		// copy/paste"
+
+		// Deferring like this is kinda horrible - it certainly looks gross in places - but
+		// it's absolutely necessary to avoid errors on the clipboard.write line
+
+		// I don't like it either :). If you change this make sure to thoroughly test
+		// cross-browser and cross-device!
 
 		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			// This is sent down the fakewebsocket which can race with the
