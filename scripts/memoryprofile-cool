@@ -1,0 +1,70 @@
+#! /bin/bash
+#
+# get a memory profile flamegraph of a kit session
+# 1. to start memory profiling
+# scripts/memoryprofile-cool <PID> start
+# 2. to explicitly dump a memory profile
+# scripts/memoryprofile-cool <PID> dump
+# 3. to stop memory profiling
+# scripts/memoryprofile-cool <PID> stop
+# 4) to generate memory flamegraph
+# scripts/memoryprofile-cool <PID> visualize
+
+# Typical use is to identify the spare kit that will be used and start
+# profiling from that ready-to-use point. e.g. Open and close a document to
+# prime a local debug setup to create initial subforkit and then pstree -plt
+# `pidof coolwsd` to get the pid of the kit_spare_XXX process that is a child
+# of the "subforkit_XXX" process and: scripts/memoryprofile-cool <PID> start,
+# etc.
+#
+# Don't close the document until after visualize is complete because pprof
+# needs the proc/<PID>/maps info and tcmalloc is unable to automatically
+# provide that in the kit chroot environment so this script fixes the profile
+# up for use by pprof.
+
+if ! which flamegraph.pl > /dev/null 2>&1; then
+    REAL_USER_HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
+    PATH=$PATH:$HOME/FlameGraph:$REAL_USER_HOME/FlameGraph
+fi
+if ! which flamegraph.pl > /dev/null 2>&1; then
+    echo "no flamegraph.pl found"
+    echo "On fedora install systemwide with: sudo dnf install flamegraph"
+    echo "Otherwise install locally manually into ~/FlameGraph"
+    echo "    e.g. git clone https://github.com/brendangregg/FlameGraph ~/FlameGraph"
+    exit 1
+fi
+
+if [ -z "$2" ]
+then
+    echo 'error: Usage: memoryprofile-cool <PID> start|dump|stop|visualize' >&2
+    exit 1
+fi
+
+PPROF=pprof
+# debian/ubuntu use google-pprof as the name, pprof was taken by tau package already
+if grep -q "ID_LIKE=debian" /etc/os-release; then
+    PPROF=google-pprof
+fi
+
+case $2 in
+start)
+    gdb --pid $1 -batch -iex "set sysroot /" -ex='call (void)HeapProfilerStart("/tmp/kitheap-'$1'")'
+    ;;
+dump)
+    gdb --pid $1 -batch -iex "set sysroot /" -ex='call (void)HeapProfilerDump("explicit")'
+    ;;
+stop)
+    gdb --pid $1 -batch -iex "set sysroot /" -ex='call (void)HeapProfilerStop()'
+    ;;
+visualize)
+    LATEST=`ls -t jails/*/tmp/cool-*/kitheap-*.*.heap|head -n 1`
+    if [ `tail -1 $LATEST` = "MAPPED_LIBRARIES:" ]; then
+        echo "recovering missing MAPPED_LIBRARIES"
+	cat /proc/$1/maps >> $LATEST
+    fi
+    $PPROF --collapsed ./coolforkit-ns $LATEST | flamegraph.pl --color=mem > kitheap-$1.svg
+    ;;
+*)
+    echo "unknown command: " $2
+    ;;
+esac
