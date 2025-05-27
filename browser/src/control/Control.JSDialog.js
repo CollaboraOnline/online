@@ -857,9 +857,16 @@ L.Control.JSDialog = L.Control.extend({
 
 		builder.updateWidget(dialog, data.control);
 
+		const dialogInfos = this.dialogs;
+
 		// after widget update we might have bigger content and need to center the dialog again
 		app.layoutingService.appendLayoutingTask(() => {
-			var dialogInfo = this.dialogs[data.id];
+			var dialogInfo = dialogInfos[data.id];
+			if (!dialogInfo) {
+				console.debug('JSDialog: dialog info with id: "' + data.id + '" not found.');
+				if (dialog) console.debug('JSDialog: old data was: ' + JSON.stringify(dialog));
+				return;
+			}
 			if (dialogInfo.isDocumentAreaPopup) {
 				// In case of AutocompletePopup's update data would have posx, posy
 				dialogInfo.updatePos(new L.Point(data.posx, data.posy));
