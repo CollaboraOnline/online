@@ -48,7 +48,7 @@
 }
 
 #AcceptRejectChangesDialog {
-	width: 100%;
+	width: max-content;
 	max-width: 1000px;
 }
 #AcceptRejectChangesDialog #RedlineViewPage.jsdialog.ui-grid-cell {
@@ -56,32 +56,8 @@
 	flex-direction: column;
 	gap: 8px;
 }
-
-#AcceptRejectChangesDialog #grid3.jsdialog.ui-grid {
-	margin-top: 8px;
-	grid-gap: 8px;
-}
-
-#AcceptRejectChangesDialog #writerchanges.jsdialog.ui-treeview {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr) repeat(2, minmax(min-content, auto));
-	column-gap: 8px;
-}
-
-#AcceptRejectChangesDialog .jsdialog.ui-grid .has-img,
-#AcceptRejectChangesDialog .jsdialog.ui-grid .menubutton {
-	margin: 0 !important;
-	width: 100% !important;
-}
-
-#AcceptRejectChangesDialog .ui-treeview-headers,
-#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry { 
-	display: contents;
-}
-
-#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry > div:nth-child(2),
-#AcceptRejectChangesDialog .ui-treeview-headers .ui-treeview-icon-column {
-	display: none;
+#AcceptRejectChangesDialog #RedlineFilterPage .ui-timefield {
+	margin: 5px;
 }
 .jsdialog.one-child-popup {
 	border: 0;
