@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackagingLayout xmlns="http://schemas.microsoft.com/appx/makeappx/2017">
+    <PackageFamily ID="%DISTNAME.%VER" FlatBundle="true" ManifestPath="%WORKDIR/AppxManifest.xml" ResourceManager="false">
+        <Package ID="%DISTNAME.%VER.%ARCH" ProcessorArchitecture="%ARCH" ManifestPath="%WORKDIR/AppxManifest.%ARCH.xml">
+            <Files>
+                <File DestinationPath="**" SourcePath="%FILES/**"/>
+                <File ExcludePath="%FILES/lo/program/bootstrap.ini"/>
+                <File ExcludePath="%FILES/lo/**/*.exe"/>
+                <File ExcludePath="%FILES/lo/program/*.bin"/>		
+                <File DestinationPath="lo/program/bootstrap.ini" SourcePath="%BOOTSTRAP"/>
+                <File DestinationPath="Assets/*" SourcePath="%ASSETS/*"/>
+                <File DestinationPath="resources.pri" SourcePath="%PRI"/>
+            </Files>
+        </Package>
+    </PackageFamily>
+</PackagingLayout>
