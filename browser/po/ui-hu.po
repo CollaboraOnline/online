@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-09 06:03+0000\n"
+"PO-Revision-Date: 2025-05-27 06:23+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -371,7 +371,7 @@ msgstr "Biztos benne, hogy leállítja a kiszolgálót?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Akadálymentesítés"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -468,33 +468,33 @@ msgstr "Valami nem sikerült a fájl törlése közben, frissítse az oldalt."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Nézetfüggő beállítások"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Itt adhatóak meg a nézetfüggő beállítások."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Beállítás"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Figyelem: csak akkor állítható be, ha a kiszolgálón engedélyezve van az "
+"akadálymentesítés, azaz accessibility.enable=true)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Az alapértelmezett dokumentumbeállítások visszaállítása"
+msgstr "Az alapértelmezett nézetfüggő beállítások visszaállítása"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Biztos benne, hogy visszaállítja a dokumentumbeállításokat?"
+msgstr "Biztos benne, hogy visszaállítja a nézetfüggő beállításokat?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Nézetfüggő beállítások mentése"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -724,13 +724,12 @@ msgid "Autosaved"
 msgstr "Automatikusan mentve"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Dokumentum szerkesztése"
+msgstr "Megjegyzés szerkesztése"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Válaszolás megjegyzésre"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -784,7 +783,7 @@ msgstr "„Lassú proxy üzemmód”"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Időzóna:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
