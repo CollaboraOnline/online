@@ -346,7 +346,7 @@ def main():
                                      .replace('%PRI', path2win(pri_file)))
 
     # create PRI
-    subprocess.run([makepri_exe, 'new', '/pr', path2win(assetsrootdir), '/cf', path2win(os.path.join(scriptPath, 'MakePri.xml')), '/in', 'CollaboraProductivityLtd.CollaboraOffice', '/of', path2win(pri_file)]).check_returncode()
+    subprocess.run([makepri_exe, 'new', '/pr', path2win(assetsrootdir), '/cf', path2win(os.path.join(scriptPath, 'MakePri.xml')), '/in', 'CollaboraProductivityLtd.CODA', '/of', path2win(pri_file)]).check_returncode()
 
     fileBaseName = args.distname + '.' + args.ver + '.' + args.arch + '.'
     appxName = os.path.join(workdir, fileBaseName + 'appx')
@@ -380,7 +380,7 @@ def main():
             pdbPath = os.path.join(linkTarget, target)
             for pdb in filterPDBs([f.lower() for f in os.listdir(pdbPath) if f.lower().endswith('.pdb')], filelist):
                 pdbFile = os.path.join(pdbPath, pdb)
-                print('adding ' + pdbFile)
+                # print('adding ' + pdbFile)
                 myzip.write(pdbFile, pdb, ZIP_DEFLATED)
                 #os.system('pdbcopy.exe "{0}" "{1}" -p'.format(pathOld, pathNew))
 
@@ -389,7 +389,7 @@ def main():
     with ZipFile(appxuploadName, 'w') as myzip:
         for file in [appxName, appxsymName]:
             basename = os.path.basename(file)
-            print('adding ' + basename)
+            # print('adding ' + basename)
             myzip.write(file, basename, ZIP_STORED)
 
     # cleanup
