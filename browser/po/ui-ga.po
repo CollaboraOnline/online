@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-10 20:01+0000\n"
+"PO-Revision-Date: 2025-05-27 23:12+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -368,7 +368,7 @@ msgstr "An bhfuil tú cinnte go bhfuil fonn ort an freastalaí a mhúchadh?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Inrochtaineacht"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -470,33 +470,33 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Socruithe Féachana"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Coigeartaigh socruithe radhairc."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Rogha"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Rabhadh: Ní mór inrochtaineacht an fhreastalaí a bheith cumasaithe chun "
+"lascadh)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Athshocraigh chuig socruithe réamhshocraithe an Doiciméid"
+msgstr "Athshocraigh chuig socruithe réamhshocraithe radhairc"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "An bhfuil tú cinnte gur mian leat socruithe an Doiciméid a athshocrú?"
+msgstr "An bhfuil tú cinnte gur mian leat Socruithe Amhairc a athshocrú?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Sábháil Socruithe Amhairc"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -728,13 +728,12 @@ msgid "Autosaved"
 msgstr "Uathshábháil"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Cuir cáipéis in eagar"
+msgstr "Cuir trácht in eagar"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Freagra trácht"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -788,7 +787,7 @@ msgstr "\"Seachfhreastalaí Mall\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Crios ama:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
