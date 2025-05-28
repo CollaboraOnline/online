@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-09 19:55+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2025-05-27 06:23+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -368,7 +368,7 @@ msgstr "Är du säker på att du vill stänga av servern?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Tillgänglighet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -466,33 +466,33 @@ msgstr "Något gick fel vid borttagningen av filen. Prova att ladda om sidan."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Visa inställningar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Justera vyinställningarna."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Alternativ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Varning: För att byta läge behöver tillgänglighetsinställningen på servern "
+"aktiveras)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Återställ till standardinställningar för dokument"
+msgstr "Återställ till standard Vyinställningar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Är du säker på att du vill återställa dokumentinställningarna?"
+msgstr "Är du säker på att du vill återställa vyinställningarna?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Spara vyinställningarna"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -722,13 +722,12 @@ msgid "Autosaved"
 msgstr "Automatisk sparning"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Redigera dokument"
+msgstr "Redigera kommentar"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Svara på kommentar"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -782,7 +781,7 @@ msgstr "\"Långsam proxy\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Tidszon:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
