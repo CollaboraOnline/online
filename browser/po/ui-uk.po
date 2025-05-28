@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-10 20:01+0000\n"
-"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
+"PO-Revision-Date: 2025-05-27 06:23+0000\n"
+"Last-Translator: Максим Горпиніч <maksimgorpinic4@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
@@ -369,7 +369,7 @@ msgstr "Ви справді бажаєте вимкнути сервер?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Доступність"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -467,33 +467,31 @@ msgstr "Під час видалення файлу сталася помилк�
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Налаштування перегляду"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Налаштуйте параметри перегляду."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Варіант"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Попередження: Для перемикання необхідно ввімкнути доступність сервера)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Скинути налаштування документа до стандартних"
+msgstr "Скинути налаштування перегляду до заводських значень"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Ви впевнені, що хочете скинути налаштування документа?"
+msgstr "Ви впевнені, що хочете скинути налаштування перегляду?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Зберегти налаштування перегляду"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -721,13 +719,12 @@ msgid "Autosaved"
 msgstr "Збережено автоматично"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Редагувати документ"
+msgstr "Редагувати коментар"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Відповісти на коментар"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -781,7 +778,7 @@ msgstr "\"Повільний проксі\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Часовий пояс:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
