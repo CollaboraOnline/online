@@ -257,6 +257,7 @@ def main():
     parser = argparse.ArgumentParser()
     group = parser.add_argument_group('main arguments')
     group.add_argument('-coda', action='store_true', help='use if packaging CODA')
+    group.add_argument('-nopdb', action='store_true', help='do not package .pdb files')
     group.add_argument('-distname', default=distname, required=(distname is None), help='product name' + ((', defaults to ' + distname) if distname else ''))
     group.add_argument('-ver', default=ver, required=(ver is None), help='product version' + ((', defaults to ' + ver) if ver else ''))
     group.add_argument('-arch', default=arch, required=(arch is None), help='product architecture: x64 or x86' + ((', defaults to ' + arch) if arch else ''))
@@ -369,25 +370,30 @@ def main():
     else:
         print('No pfx provided; the package will be unsigned.')
 
-    # collect PDBs with public symbols: https://stackoverflow.com/questions/44510991/how-to-create-appxsym-for-zipping-appxupload
-    # depends on PDBCopy.exe in $PATH - https://docs.microsoft.com/en-us/windows-hardware/drivers/download-the-wdk
-    # well - let's try to go without PDBCopy, simply copy the PDBs as is: installing WDK breaks our configure
-    print('Collecting PDBs...')
-    linkTarget = os.path.join(args.builddir, 'workdir/LinkTarget')
-    with ZipFile(appxsymName, 'w') as myzip:
-        filelist = glob.glob(os.path.join(args.files, '**/*.*'), recursive=True)
-        for target in ['Executable', 'Library']:
-            pdbPath = os.path.join(linkTarget, target)
-            for pdb in filterPDBs([f.lower() for f in os.listdir(pdbPath) if f.lower().endswith('.pdb')], filelist):
-                pdbFile = os.path.join(pdbPath, pdb)
-                # print('adding ' + pdbFile)
-                myzip.write(pdbFile, pdb, ZIP_DEFLATED)
-                #os.system('pdbcopy.exe "{0}" "{1}" -p'.format(pathOld, pathNew))
+    if not args.nopdb:
+        # collect PDBs with public symbols: https://stackoverflow.com/questions/44510991/how-to-create-appxsym-for-zipping-appxupload
+        # depends on PDBCopy.exe in $PATH - https://docs.microsoft.com/en-us/windows-hardware/drivers/download-the-wdk
+        # well - let's try to go without PDBCopy, simply copy the PDBs as is: installing WDK breaks our configure
+        print('Collecting PDBs...')
+        linkTarget = os.path.join(args.builddir, 'workdir/LinkTarget')
+        with ZipFile(appxsymName, 'w') as myzip:
+            filelist = glob.glob(os.path.join(args.files, '**/*.*'), recursive=True)
+            for target in ['Executable', 'Library']:
+                pdbPath = os.path.join(linkTarget, target)
+                for pdb in filterPDBs([f.lower() for f in os.listdir(pdbPath) if f.lower().endswith('.pdb')], filelist):
+                    pdbFile = os.path.join(pdbPath, pdb)
+                    # print('adding ' + pdbFile)
+                    myzip.write(pdbFile, pdb, ZIP_DEFLATED)
+                    #os.system('pdbcopy.exe "{0}" "{1}" -p'.format(pathOld, pathNew))
 
     # create appxupload
     print('Creating appxupload...')
     with ZipFile(appxuploadName, 'w') as myzip:
-        for file in [appxName, appxsymName]:
+        if not args.nopdb:
+            members = [appxName, appxsymName]
+        else:
+            members = [appxName]
+        for file in members:
             basename = os.path.basename(file)
             # print('adding ' + basename)
             myzip.write(file, basename, ZIP_STORED)
