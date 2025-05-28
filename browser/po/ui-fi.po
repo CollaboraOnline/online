@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-02-28 19:22+0000\n"
-"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
+"PO-Revision-Date: 2025-05-28 20:18+0000\n"
+"Last-Translator: Kieli Puoli <kielipuoli@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fi/>\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.3-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -367,11 +367,11 @@ msgstr "Haluatko varmasti sammuttaa palvelimen?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Esteettömyys"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
-msgstr ""
+msgstr "Automaattinen teksti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
@@ -2134,7 +2134,7 @@ msgstr "Tiedosto"
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Home"
-msgstr "Koti"
+msgstr "Home"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:70

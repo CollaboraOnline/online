@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
-"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
+"PO-Revision-Date: 2025-05-28 20:18+0000\n"
+"Last-Translator: Kieli Puoli <kielipuoli@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "help/fi/>\n"
 "Language: fi\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -77,7 +77,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
-msgstr ""
+msgstr "Liitä määräten"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-78
 #, fuzzy
@@ -129,12 +129,13 @@ msgid "Focus to document from menu"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-92
+#, fuzzy
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-38
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Keskity valitun kommentin valikkoon"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
 #, fuzzy
@@ -152,7 +153,7 @@ msgstr "Tekstin muotoilu"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:189-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-38
 msgid "Bold"
-msgstr ""
+msgstr "Lihavointi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:27-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
@@ -167,7 +168,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:190-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-38
 msgid "Italic"
-msgstr ""
+msgstr "Kursivointi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-71
@@ -182,7 +183,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:191-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-38
 msgid "Underline"
-msgstr ""
+msgstr "Alleviivaus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-74
@@ -194,7 +195,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
-msgstr ""
+msgstr "Kaksinkertainen alleviivaus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
@@ -207,7 +208,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-38
 msgid "Strikethrough"
-msgstr ""
+msgstr "Yliviivaus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-78
@@ -225,7 +226,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-38
 msgid "Superscript"
-msgstr ""
+msgstr "Yläindeksi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-76
@@ -242,7 +243,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:259-38
 msgid "Subscript"
-msgstr ""
+msgstr "Alaindeksi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-74
@@ -258,7 +259,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "Poista suora muotoilu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-89
@@ -270,14 +271,14 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.h2:199-9
 #: html/cool-help.html%2Bdiv.div.div.h2:264-9
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "Kappaleen muotoilu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:40-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:201-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-38
 msgid "Align Center"
-msgstr ""
+msgstr "Keskitä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:40-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-77
@@ -292,7 +293,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:202-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:267-38
 msgid "Align Left"
-msgstr ""
+msgstr "Tasaa vasemmalle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:41-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-75
@@ -307,7 +308,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:203-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:268-38
 msgid "Align Right"
-msgstr ""
+msgstr "Tasaa oikealle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
@@ -322,7 +323,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:204-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:269-38
 msgid "Justify"
-msgstr ""
+msgstr "Tasaa molempiin reunoihin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:43-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-72
@@ -334,7 +335,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-38
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Käytä oletuskappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-94
 #, fuzzy
@@ -343,7 +344,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-38
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Käytä Otsikko 1 -kappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-96
 #, fuzzy
@@ -352,7 +353,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-38
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Käytä Otsikko 2 -kappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-96
 #, fuzzy
@@ -361,7 +362,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-38
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Käytä Otsikko 3 -kappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-89
@@ -371,7 +372,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-38
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Käytä Otsikko 4 -kappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-96
 #, fuzzy
@@ -380,7 +381,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-38
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Käytä Otsikko 5 -kappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-96
 #, fuzzy
@@ -389,7 +390,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Tekstin valinta ja siirtyminen asiakirjassa"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:55-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:170-38
@@ -398,7 +399,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:260-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:277-38
 msgid "Select All"
-msgstr ""
+msgstr "Valitse kaikki"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:55-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:95-38
@@ -417,13 +418,13 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:213-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:278-38
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Siirrä kohdistinta vasemmalle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:213-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:278-88
 msgid "Arrow Left"
-msgstr ""
+msgstr "Nuoli vasemmalle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:214-38
@@ -442,7 +443,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:280-38
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "Siirry sanan alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-90
@@ -455,7 +456,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:281-38
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Valitse sana sanalta vasemmalle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-96
@@ -472,13 +473,13 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:282-38
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Siirrä kohdistinta oikealle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:282-89
 msgid "Arrow Right"
-msgstr ""
+msgstr "Nuoli oikealle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:218-38
@@ -489,370 +490,364 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:218-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:283-104
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>nuoli "
+"oikealle</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:284-38
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "Siirry seuraavan sanan alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:284-93
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>nuoli oikealle</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-38
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "Valitse sana sanalta oikealle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>valintapainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>nuoli oikealle</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:286-38
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "Siirrä kohdistinta rivin verran ylöspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:286-88
 msgid "Arrow Up"
-msgstr ""
+msgstr "Nuoli ylöspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-38
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Valitse rivejä ylöspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-98
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>nuoli "
+"ylöspäin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:288-38
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "Siirrä kohdistin edellisen kappaleen alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:288-115
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>nuoli ylöspäin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-38
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "Valitse kappaleen alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>nuoli ylöspäin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-38
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "Siirrä kohdistinta rivin verran alaspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-90
 msgid "Arrow Down"
-msgstr ""
+msgstr "Nuoli alaspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-38
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Valitse rivejä alaspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-100
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>nuoli "
+"alaspäin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-38
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "Siirrä kohdistin seuraavan kappaleen alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-111
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>nuoli alaspäin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-38
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Valitse kappaleen loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>nuoli alaspäin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-38
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "Siirry rivin alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-119
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-88
 msgid "Home"
-msgstr "Koti"
+msgstr "Home"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-38
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "Siirry ja valitse rivin alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-105
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-38
 msgid "Go to start of document"
-msgstr ""
+msgstr "Siirry asiakirjan alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:96-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-88
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "Siirry ja valitse tekstiä asiakirjan alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-103
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-38
 msgid "Go to end of line"
-msgstr ""
+msgstr "Siirry rivin loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-82
 msgid "End"
-msgstr ""
+msgstr "End"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:77-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-38
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Siirry ja valitse rivin loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:77-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-38
 msgid "Go to end of document"
-msgstr ""
+msgstr "Siirry asiakirjan loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:97-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-131
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "Siirry ja valitse tekstiä asiakirjan loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-102
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-101
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Siirrä näkymää sivun verran ylöspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-90
 msgid "PageUp"
-msgstr ""
+msgstr "PageUp"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-38
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Siirrä kohdistinta tekstin ja ylätunnisteen välillä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Laajenna valintaa sivun verran ylöspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Siirrä näkymää sivun verran alaspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-92
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-38
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Siirrä kohdistinta tekstin ja alatunnisteen välillä"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Laajenna valintaa sivun verran alaspäin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Poista sanan alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>askelpalautin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Poista sanan loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Poista virkkeen alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>askelpalautin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Poista virkkeen loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Taulukkojen pikanäppäimet"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:95-125
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
+"Jos aktiivinen solu on tyhjä, valitsee koko taulukon. Muussa tapauksessa "
+"valitsee aktiivisen solun sisällön. Uudelleenpainaminen valitsee koko "
+"taulukon."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:96-128
 msgid ""
@@ -860,6 +855,9 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
+"Jos aktiivinen solu on tyhjä, siirtyy taulukon alkuun. Muussa tapauksessa "
+"ensimmäinen painallus siirtää aktiivisen solun alkuun, toinen painallus "
+"nykyisen taulukon alkuun ja kolmas painallus asiakirjan alkuun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:97-127
 msgid ""
@@ -867,11 +865,14 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
+"Jos aktiivinen solu on tyhjä, siirtyy taulukon loppuun. Muussa tapauksessa "
+"ensimmäinen painallus siirtää aktiivisen solun loppuun, toinen painallus "
+"nykyisen taulukon loppuun ja kolmas painallus asiakirjan loppuun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>sarkainpainike</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-127
 msgid ""
@@ -879,69 +880,72 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
+"Lisää sarkainkohdan (vain taulukoissa). Joissakin ikkunanhallintaohjelmissa "
+"voi käyttää myös näppäinyhdistelmää <kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>sarkainpainike</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>nuolipainikkeet</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-133
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
+"Pienentää tai suurentaa saraketta tai riviä solun oikeassa tai alareunassa"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>nuolipainikkeet</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
+"Pienentää tai suurentaa saraketta tai riviä solun vasemmassa tai yläreunassa"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>nuolipainikkeet</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-228
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Toimii samoin kuin Alt, mutta vain aktiivista solua muokataan"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-38
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>vaihtopainike</kbd><span class=\"kbd--plus\""
+">+</span><kbd>nuolipainikkeet</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-129
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
+"3 sekuntia lisäystilassa, nuolipainike lisää rivin tai sarakkeen, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>nuolipainike</kbd> solun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-126
 msgid ""
@@ -949,15 +953,17 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
+"3 sekuntia poistotilassa, nuolipainike poistaa rivin tai sarakkeen "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>nuolipainike</kbd> "
+"yhdistää solun viereiseen soluun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-197
 msgid ""
@@ -965,6 +971,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"Jos kokonaista solua ei ole valittu, tekstiä poistetaan kohdistimesta "
+"nykyisen virkkeen loppuun. Jos kohdistin on solun lopussa eikä kokonaista "
+"solua ole valittu, seuraavan solun sisältö poistetaan."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:106-1
 msgid ""
@@ -972,6 +981,9 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
+"Jos kokonaista solua ei ole valittu ja kohdistin on taulukon lopussa, "
+"taulukon jälkeinen kappale poistetaan, jollei se ole asiakirjan viimeinen "
+"kappale."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:107-1
 msgid ""
@@ -979,188 +991,189 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"Jos yksi tai useampia soluja on valittu, kaikki valinnan sisältävät rivit "
+"poistetaan. Jos kaikki rivit on valittu kokonaan tai osittain, koko taulukko "
+"poistetaan."
 
 #: html/cool-help.html%2Bdiv.div.div.h2:112-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "Tekstinkäsittelyohjelman toiminnot"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-38
 msgid "Insert footnote"
-msgstr ""
+msgstr "Lisää alaviite"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
-msgstr ""
+msgstr "Lisää loppuviite"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
 msgid "Insert comment"
-msgstr ""
+msgstr "Lisää kommentti"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "Lisää ehdollinen tavuviiva"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "Lisää sitova tavuviiva"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>?"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "Lisää sitova välilyönti"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>välilyönti</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
-msgstr ""
+msgstr "Lisää rivinvaihto"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\""
+">+</span><kbd>rivinvaihto</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
-msgstr ""
+msgstr "Manuaalinen sivunvaihto"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>rivinvaihto</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Column break (in multicolumnar text)"
-msgstr ""
+msgstr "Sarakkeenvaihto (sarakkeisiin jaetussa tekstissä)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-101
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>vaihtopainike</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>rivinvaihto</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
+msgstr "Lisää uusi kappale suoraan osion eteen tai perään tai taulukon eteen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-175
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>rivinvaihto</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-38
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
+"Lisää luetteloon uusi kappale ilman numerointia. Ei toimi, jos kohdistin on "
+"luettelon lopussa."
 
 #: html/cool-help.html%2Bdiv.div.div.h2:132-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Laskentataulukoissa siirtyminen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-38
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Siirtää kohdistimen taulukon ensimmäiseen soluun (A1)."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Siirtää kohdistimen taulukon viimeiseen tietoja sisältävään soluun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-38
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Siirtää kohdistimen nykyisen rivin ensimmäiseen soluun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Siirtää kohdistimen nykyisen rivin viimeiseen soluun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-38
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Valitsee soluja nykyisestä solusta nykyisen rivin ensimmäiseen soluun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-38
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Valitsee soluja nykyisestä solusta nykyisen rivin viimeiseen soluun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-38
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Valitsee soluja nykyisestä solusta sivun verran ylöspäin nykyisessä "
+"sarakkeessa tai laajentaa valintaa sivun verran ylöspäin."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Valitsee soluja nykyisestä solusta sivun verran alaspäin nykyisessä "
+"sarakkeessa tai laajentaa valintaa sivun verran alaspäin."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr ""
+"<kbd>Vaihtopainike</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
