@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-09 19:55+0000\n"
+"PO-Revision-Date: 2025-05-27 06:23+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
@@ -374,7 +374,7 @@ msgstr "Czy na pewno chcesz zatrzymać serwer?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Ułatwienia dostępu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -471,33 +471,32 @@ msgstr "Wystąpił błąd podczas usuwania pliku. Spróbuj odświeżyć stronę.
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Ustawienia widoku"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Dostosuj ustawienia widoku."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Opcja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Ostrzeżenie: aby przełączyć, należy włączyć ustawienia dostępności serwera)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Przywróć domyślne ustawienia dokumentu"
+msgstr "Przywróć domyślne ustawienia widoku"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Czy na pewno chcesz zresetować ustawienia dokumentu?"
+msgstr "Czy na pewno chcesz zresetować ustawienia widoku?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Zapisz ustawienia widoku"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -725,13 +724,12 @@ msgid "Autosaved"
 msgstr "Automatycznie zapisano"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Edytuj dokument"
+msgstr "Edytuj komentarz"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Odpowiedz na komentarz"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -785,7 +783,7 @@ msgstr "\"Powolne proxy\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Strefa czasowa:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
