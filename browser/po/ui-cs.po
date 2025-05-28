@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-13 22:02+0000\n"
+"PO-Revision-Date: 2025-05-27 23:12+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -372,7 +372,7 @@ msgstr "Opravdu si přejete tento server vypnout?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Přístupnost"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -470,33 +470,31 @@ msgstr "Při mazání souboru se něco pokazilo. Zkuste prosím obnovit stránku
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Zobrazit nastavení"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Úprava nastavení zobrazení."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Možnost"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Upozornění: Pro přepnutí musí být povolena přístupnost serveru)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Obnovení výchozího nastavení dokumentu"
+msgstr "Obnovení výchozího nastavení zobrazení"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Opravdu chcete obnovit nastavení dokumentu?"
+msgstr "Opravdu chcete obnovit nastavení zobrazení?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Uložit nastavení zobrazení"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -725,13 +723,12 @@ msgid "Autosaved"
 msgstr "Automaticky uloženo"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Upravit dokument"
+msgstr "Upravit komentář"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Odpovědět na komentář"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -785,7 +782,7 @@ msgstr "„Pomalé proxy“"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Časové pásmo:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
