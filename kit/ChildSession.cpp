@@ -63,8 +63,6 @@
 #include <string>
 #include <string_view>
 #include <utility>
-#include <zlib.h>
-#include <zstd.h>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -2462,47 +2460,19 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
             if (size_t start = json.find("%IMAGECHECKSUM%"); start != std::string::npos)
                 json.replace(start, 15, std::to_string(pixmapHash));
 
-            {
-                Poco::JSON::Parser parser;
-                Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
-                root->set("width", width);
-                root->set("height", height);
-                std::stringstream ss;
-                root->stringify(ss);
-                json = ss.str();
-            }
             std::string response = "slidelayer: " + json;
 
             response += "\n";
 
-            size_t compressed_max_size = ZSTD_COMPRESSBOUND(pixmap->size());
-            size_t max_required_size = response.size() + compressed_max_size;
-            output.resize(max_required_size);
+            output.reserve(response.size() + pixmap->size());
+            output.resize(response.size());
             std::memcpy(output.data(), response.data(), response.size());
-            std::vector<char> compressedOutPut;
-            compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
 
-            if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
+            if (!Png::encodeSubBufferToPNG(pixmap->data(), 0, 0, width, height, width, height, output, tileMode))
             {
-                png_row_info rowInfo;
-                rowInfo.rowbytes = pixmap->size();
-                // Following function just needs row size to transform from BGRA to RGBA
-                // We have a flat array so its safe to pass pixmap size as row size
-                Png::unpremultiply_bgra_data(nullptr, &rowInfo, pixmap->data());
-            }
-            size_t compSize = ZSTD_compress(&output[response.size()], compressed_max_size,
-                                            pixmap->data(), pixmap->size(), -3);
-
-            if (ZSTD_isError(compSize))
-            {
+                LOG_ERR("Failed to encode into PNG.");
                 output.resize(0);
-                LOG_ERR("Failed to compress slidelayer of size " << pixmap->size() << " with "
-                                                                 << ZSTD_getErrorName(compSize));
-                return;
             }
-            output.resize(response.size() + compSize);
-
-            LOG_TRC("Compressed slidelayer of size " << pixmap->size() << " to size " << compSize);
         });
     return true;
 }
