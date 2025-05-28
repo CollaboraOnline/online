@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-10 20:01+0000\n"
+"PO-Revision-Date: 2025-05-27 23:12+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -473,35 +473,33 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Rregullime Parjeje"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Përimtoni rregullime parjeje."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Mundësi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Riktheji te parazgjedhjet rregullimet e Dokumenteve"
+msgstr "Riktheji rregullime Parjeje te parazgjedhjet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
 msgstr ""
-"Jeni i sigurt se dëshironi të kthehen rregullime Dokumentesh te vlerat "
+"Jeni i sigurt se dëshironi të kthehen Rregullime Parjeje te vlerat "
 "parazgjedhje?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Ruaj Rregullime Parjeje"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -733,13 +731,12 @@ msgid "Autosaved"
 msgstr "U vetëruajt"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Përpunoni dokument"
+msgstr "Përpunoni koment"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Përgjigjuni komentit"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -793,7 +790,7 @@ msgstr "“Ndërmjetës i Ngadaltë”"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Zonë kohore:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1283,7 +1280,7 @@ msgstr "Fut Nënshkrim Elektroni"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Zgjero Shtyllë Formulash"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -2107,9 +2104,8 @@ msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
-#, fuzzy
 msgid "Navigator"
-msgstr "Lëvizje"
+msgstr ""
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2489,7 +2485,7 @@ msgstr "paraparje e faqes %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Diapozitivi %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
