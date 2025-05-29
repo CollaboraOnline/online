@@ -62,6 +62,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.BufferedWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -73,6 +74,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,6 +120,7 @@ public class LOActivity extends AppCompatActivity {
 
     private String urlToLoad;
     private COWebView mWebView = null;
+    private MobileSocket mMobileSocket = null;
     private SharedPreferences sPrefs;
     private Handler mMainHandler = null;
     private RateAppController rateAppController;
@@ -351,6 +355,7 @@ public class LOActivity extends AppCompatActivity {
         if (mTempFile != null)
         {
             mWebView = (COWebView) findViewById(R.id.browser);
+            mMobileSocket = mWebView.getWebViewClient().getMobileSocket();
 
             WebSettings webSettings = mWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
@@ -631,6 +636,7 @@ public class LOActivity extends AppCompatActivity {
             viewGroup.removeView(mWebView);
         mWebView.destroy();
         mWebView = null;
+        mMobileSocket = null;
 
         // Most probably the native part has already got a 'BYE' from
         // finishWithProgress(), but it is actually better to send it twice
@@ -963,9 +969,7 @@ public class LOActivity extends AppCompatActivity {
      * Passing message the other way around - from Java to the FakeWebSocket in JS.
      */
     void callFakeWebsocketOnMessage(final String message) {
-        String base64Message = Base64.getEncoder().encodeToString(message.getBytes());
-
-        rawCallFakeWebsocketOnMessage("b64d('" + base64Message + "')");
+        rawCallFakeWebsocketOnMessage(message.getBytes());
     }
 
     /**
@@ -973,43 +977,36 @@ public class LOActivity extends AppCompatActivity {
      * JavaScript. For example, you should use this to pass Base64ToArrayBuffer invocations to
      * the fake websocket
      */
-    void rawCallFakeWebsocketOnMessage(final String message) {
-        // call from the UI thread
-        if (mWebView != null)
-            mWebView.post(new Runnable() {
-                public void run() {
-                    if (mWebView == null) {
-                        Log.i(TAG, "Skipped forwarding to the WebView: " + message);
-                        return;
-                    }
-
-                    Log.i(TAG, "Forwarding to the WebView: " + message);
-
-                    /* Debug only: in case the message is too long, truncated in the logcat, and you need to see it.
-                    final int size = 80;
-                    for (int start = 0; start < message.length(); start += size) {
-                        Log.i(TAG, "split: " + message.substring(start, Math.min(message.length(), start + size)));
-                    }
-                    */
-
-                    mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data':" + message + "});");
-                }
+    void rawCallFakeWebsocketOnMessage(final byte[] message) {
+        try {
+            mMobileSocket.queueSend(message, () -> {
+                mWebView.post(() -> {
+                    mWebView.loadUrl("javascript:window.socket.doSend();");
+                });
             });
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         // update progress bar when loading
-        if (b64MessageStartsWith(message, "progress")) {
+        if (messageStartsWith(message, "progress")) {
             runOnUiThread(() -> {
                 JSONObject messageJSON;
                 String messageID;
-                String decodedMessage = b64d(message);
+                String messageString;
+                try {
+                    messageString = new String(message, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
 
-                int jsonStart = decodedMessage.indexOf("{");
+                int jsonStart = messageString.indexOf("{");
                 if (jsonStart == -1) {
                     return;
                 }
 
                 try {
-                    messageJSON = new JSONObject(decodedMessage.substring(jsonStart));
+                    messageJSON = new JSONObject(messageString.substring(jsonStart));
                     messageID = messageJSON.getString("id");
                 } catch (JSONException e) {
                     return;
@@ -1032,7 +1029,7 @@ public class LOActivity extends AppCompatActivity {
                     mProgressDialog.determinateProgress(progress);
                 } catch (JSONException ignored) {}
             });
-        } else if (b64MessageStartsWith(message, "error:")) {
+        } else if (messageStartsWith(message, "error:")) {
             runOnUiThread(() -> mProgressDialog.dismiss());
         }
     }
@@ -1065,6 +1062,22 @@ public class LOActivity extends AppCompatActivity {
 
         byte[] decodedContent = Base64.getDecoder().decode(messageContent);
         return new String(decodedContent);
+    }
+
+    /**
+     * @param message The message to test for the prefix
+     * @param prefix The prefix to test for
+     * @return true if the decoded message starts with the prefix, else false
+     */
+    private static boolean messageStartsWith(byte[] message, String prefix) {
+        byte[] prefixBytes = prefix.getBytes();
+        for (int i = 0; i < prefixBytes.length; i++) {
+            if (message[i] != prefixBytes[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
