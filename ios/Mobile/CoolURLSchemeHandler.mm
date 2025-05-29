@@ -108,7 +108,28 @@
 
 - (void)webView:(WKWebView *)webView startURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
     [ongoingTasks addObject:urlSchemeTask];
+
+    if ([urlSchemeTask.request.URL.path isEqualToString:@"/cool/media"]) {
+        return [self handleMediaTask:urlSchemeTask];
+    }
     
+    NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
+    [responseHeaders setObject:@"null" forKey:@"Access-Control-Allow-Origin"]; // Yes, the origin really is 'null' for 'file:' origins
+    [responseHeaders setObject:@"0" forKey:@"Content-Length"];
+    
+    NSHTTPURLResponse * response = [[NSHTTPURLResponse alloc]
+                                    initWithURL:urlSchemeTask.request.URL
+                                    statusCode:404
+                                    HTTPVersion:nil
+                                    headerFields:responseHeaders
+    ];
+    [urlSchemeTask didReceiveResponse:response];
+    
+    [ongoingTasks removeObject:urlSchemeTask];
+    [urlSchemeTask didFinish];
+}
+    
+- (void)handleMediaTask:(id<WKURLSchemeTask>)urlSchemeTask {
     // Get tag from request
     Poco::URI requestUri([[[urlSchemeTask.request.URL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
