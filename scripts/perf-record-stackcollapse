@@ -11,7 +11,7 @@
 #
 
 # generate output for flamegraph from incremental perf record 100M dumps
-# e.g. perf-record-stackcollapse -e probe:do_wp_page -F5 --call-graph dwarf,65528 -a sleep 10s
+# e.g. perf-record-stackcollapse -e probe:do_wp_page -F5 --call-graph dwarf,16384 -a sleep 10s
 
 # perf record typically uses a huge amount of disk space by default
 # there is perf record -i - to stream instead, but:
