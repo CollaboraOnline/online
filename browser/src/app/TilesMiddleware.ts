@@ -233,7 +233,7 @@ class TileManager {
 	private static emptyTilesCount: number = 0;
 	private static debugDeltas: boolean = false;
 	private static debugDeltasDetail: boolean = false;
-	private static tiles: Map<string, Tile> = new Map(); // stores all tiles, keyed by coordinates, and cached, compressed deltas
+	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 	private static tileBitmapList: Tile[] = []; // stores all tiles with bitmaps, sorted by distance from view(s)
 	public static tileSize: number = 256;
 
@@ -267,7 +267,9 @@ class TileManager {
 		var totalSize = 0;
 		var n_bitmaps = 0;
 		var n_current = 0;
-		for (const tile of this.tiles.values()) {
+		var keys = Object.keys(this.tiles);
+		for (var i = 0; i < keys.length; ++i) {
+			var tile = this.tiles[keys[i]];
 			if (tile.image) ++n_bitmaps;
 			if (tile.distanceFromView === 0) ++n_current;
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
@@ -279,7 +281,7 @@ class TileManager {
 		app.map._debug.setOverlayMessage(
 			'top-tileMem',
 			'Tiles: ' +
-				String(this.tiles.size).padStart(4, ' ') +
+				String(keys.length).padStart(4, ' ') +
 				', bitmaps: ' +
 				String(n_bitmaps).padStart(3, ' ') +
 				' current ' +
@@ -295,10 +297,8 @@ class TileManager {
 	}
 
 	private static sortTileKeysByDistance() {
-		return Array.from(this.tiles.keys()).sort((a: any, b: any) => {
-			return (
-				this.tiles.get(b).distanceFromView - this.tiles.get(a).distanceFromView
-			);
+		return Object.keys(this.tiles).sort((a: any, b: any) => {
+			return this.tiles[b].distanceFromView - this.tiles[a].distanceFromView;
 		});
 	}
 
@@ -326,7 +326,7 @@ class TileManager {
 		// FIXME: could maintain this as we go rather than re-accounting it regularly.
 		var totalSize = 0;
 		var tileCount = 0;
-		for (const tile of this.tiles.values()) {
+		for (const tile of Object.values(this.tiles) as Tile[]) {
 			// Don't count size of tiles that are visible or that have pending deltas. We don't have
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
 			// cause flickering, and the same would happen for tiles with pending deltas.
@@ -349,7 +349,7 @@ class TileManager {
 
 			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i) {
 				const key = keys[i];
-				const tile: Tile = this.tiles.get(key);
+				const tile: Tile = this.tiles[key];
 				if (
 					tile.rawDeltas &&
 					tile.distanceFromView !== 0 &&
@@ -378,7 +378,7 @@ class TileManager {
 
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
-				const tile: Tile = this.tiles.get(key);
+				const tile: Tile = this.tiles[key];
 				if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
 					this.removeTile(keys[i]);
 				}
@@ -452,7 +452,7 @@ class TileManager {
 			const delta = deltas.shift();
 			const bitmap = bitmaps.shift();
 
-			const tile = this.tiles.get(delta.key);
+			const tile = this.tiles[delta.key];
 			if (!tile) continue;
 
 			this.setBitmapOnTile(tile, bitmap);
@@ -482,7 +482,8 @@ class TileManager {
 		if (this.pausedForDehydration) {
 			// Check if all current tiles are accounted for and resume drawing if so.
 			let shouldUnpause = true;
-			for (const tile of this.tiles.values()) {
+			for (const key in this.tiles) {
+				const tile = this.tiles[key];
 				if (
 					tile.distanceFromView === 0 &&
 					!tile.needsFetch() &&
@@ -535,8 +536,8 @@ class TileManager {
 					message: message,
 					deltas: this.pendingDeltas,
 					tileSize: this.tileSize,
-					current: Array.from(this.tiles.keys()).filter(
-						(key) => this.tiles.get(key).distanceFromView === 0,
+					current: Object.keys(this.tiles).filter(
+						(k) => this.tiles[k].distanceFromView === 0,
 					),
 				},
 				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
@@ -546,7 +547,7 @@ class TileManager {
 			const bitmaps: Promise<ImageBitmap>[] = [];
 			const pendingDeltas: any[] = [];
 			for (const e of this.pendingDeltas) {
-				const tile = this.tiles.get(e.key);
+				const tile = this.tiles[e.key];
 
 				if (!tile) {
 					window.app.console.warn(
@@ -940,7 +941,7 @@ class TileManager {
 	) {
 		var key = coords.key();
 
-		const tile: Tile = this.tiles.get(key);
+		var tile: Tile = this.tiles[key];
 		if (!tile) return;
 
 		var emptyTilesCountChanged = false;
@@ -963,14 +964,14 @@ class TileManager {
 	}
 
 	private static createTile(coords: TileCoordData, key: string) {
-		if (this.tiles.has(key)) {
+		if (this.tiles[key]) {
 			if (this.debugDeltas)
 				window.app.console.debug('Already created tile ' + key);
-			return this.tiles.get(key);
+			return this.tiles[key];
 		}
 		const tile = new Tile(coords);
 
-		this.tiles.set(key, tile);
+		this.tiles[key] = tile;
 
 		return tile;
 	}
@@ -1193,7 +1194,7 @@ class TileManager {
 	}
 
 	private static removeTile(key: string) {
-		const tile = this.tiles.get(key);
+		var tile = this.tiles[key];
 		if (!tile) return;
 
 		if (
@@ -1204,12 +1205,12 @@ class TileManager {
 			this.emptyTilesCount -= 1;
 
 		this.reclaimTileBitmapMemory(tile);
-		this.tiles.delete(key);
+		delete this.tiles[key];
 	}
 
 	private static removeAllTiles() {
 		this.tileBitmapList = [];
-		for (const key in Array.from(this.tiles.keys())) {
+		for (var key in this.tiles) {
 			this.removeTile(key);
 		}
 	}
@@ -1357,7 +1358,7 @@ class TileManager {
 			for (var i = 0; i < partTileQueue.length; ++i) {
 				var coords = partTileQueue[i];
 				var key = coords.key();
-				const tile = this.tiles.get(key);
+				var tile = this.tiles[key];
 
 				// don't send lots of duplicate, fast tilecombines
 				if (tile && tile.requestingTooFast(now)) continue;
@@ -1414,7 +1415,7 @@ class TileManager {
 	}
 
 	private static tileNeedsFetch(key: string) {
-		const tile: Tile = this.tiles.get(key);
+		const tile: Tile = this.tiles[key];
 		return !tile || tile.needsFetch();
 	}
 
@@ -1467,9 +1468,8 @@ class TileManager {
 			const currentBounds = app.map._docLayer._splitPanesContext
 				? app.map._docLayer._splitPanesContext.getPxBoundList(pixelBounds)
 				: [pixelBounds];
-			for (const tile of this.tiles.values()) {
-				this.updateTileDistance(tile, zoom, currentBounds);
-			}
+			for (const key in this.tiles)
+				this.updateTileDistance(this.tiles[key], zoom, currentBounds);
 			this.sortTileBitmapList();
 		}
 
@@ -1498,7 +1498,7 @@ class TileManager {
 					if (!this.isValidTile(coords)) continue;
 
 					var key = coords.key();
-					const tile = this.tiles.get(key);
+					var tile = this.tiles[key];
 
 					if (!tile || tile.needsFetch()) queue.push(coords);
 					else if (isCurrent && this.makeTileCurrent(tile)) {
@@ -1562,7 +1562,7 @@ class TileManager {
 		// Ensure tiles exist for requested coordinates
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
-			let tile: Tile = this.tiles.get(key);
+			let tile: Tile = this.tiles[key];
 
 			if (!tile) {
 				tile = this.createTile(coordsQueue[i], key);
@@ -1640,9 +1640,7 @@ class TileManager {
 	}
 
 	public static refreshTilesInBackground() {
-		for (const tile of this.tiles.values()) {
-			tile.forceKeyframe();
-		}
+		for (const key in this.tiles) this.tiles[key].forceKeyframe();
 	}
 
 	public static setDebugDeltas(state: boolean) {
@@ -1651,7 +1649,7 @@ class TileManager {
 	}
 
 	public static get(key: string): Tile {
-		return this.tiles.get(key);
+		return this.tiles[key];
 	}
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
@@ -1675,8 +1673,8 @@ class TileManager {
 		let needsNewTiles = false;
 		const calc = app.map._docLayer.isCalc();
 
-		this.tiles.forEach((tile, key) => {
-			const coords: TileCoordData = tile.coords;
+		for (const key in this.tiles) {
+			const coords: TileCoordData = this.tiles[key].coords;
 			const tileRectangle = this.pixelCoordsToTwipTileBounds(coords);
 
 			if (
@@ -1685,11 +1683,11 @@ class TileManager {
 				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
 					(calc && !this.tileZoomIsCurrent(coords))) // In calc, we invalidate all tiles with different zoom levels.
 			) {
-				if (tile.distanceFromView === 0) needsNewTiles = true;
+				if (this.tiles[key].distanceFromView === 0) needsNewTiles = true;
 
 				this.invalidateTile(key, wireId);
 			}
-		});
+		}
 
 		if (
 			app.map._docLayer._debug.tileInvalidationsOn &&
@@ -1985,7 +1983,7 @@ class TileManager {
 
 		var coords = this.tileMsgToCoords(tileMsgObj);
 		var key = coords.key();
-		let tile = this.tiles.get(key);
+		var tile = this.tiles[key];
 
 		if (!tile) {
 			tile = this.createTile(coords, key);
@@ -2170,7 +2168,7 @@ class TileManager {
 		switch (e.data.message) {
 			case 'endTransaction':
 				for (const x of e.data.deltas) {
-					const tile = this.tiles.get(x.key);
+					const tile = this.tiles[x.key];
 
 					if (!tile) {
 						window.app.console.warn(
@@ -2226,7 +2224,7 @@ class TileManager {
 			for (let i = 0; i < queue.length; i++) {
 				coords = queue[i];
 				key = coords.key();
-				if (!this.tiles.has(key)) this.createTile(coords, key);
+				if (!this.tiles[key]) this.createTile(coords, key);
 			}
 
 			this.sendTileCombineRequest(queue);
@@ -2282,8 +2280,8 @@ class TileManager {
 		const coordList = Array<TileCoordData>();
 		const zoom = app.map.getZoom();
 
-		for (const tile of this.tiles.values()) {
-			const coords = tile.coords;
+		for (const [, value] of Object.entries(this.tiles)) {
+			const coords = (value as Tile).coords;
 			if (
 				coords.z === zoom &&
 				rectangle.intersectsRectangle([
@@ -2393,14 +2391,14 @@ class TileManager {
 
 			this.sortFileBasedQueue(queue);
 
-			for (const tile of this.tiles.values()) {
+			for (const key in this.tiles) {
 				// Visible tiles' distance property will be set zero below by makeTileCurrent.
-				tile.distanceFromView = Number.MAX_SAFE_INTEGER;
+				this.tiles[key].distanceFromView = Number.MAX_SAFE_INTEGER;
 			}
 
 			this.beginTransaction();
 			for (i = 0; i < queue.length; i++) {
-				const tempTile = this.tiles.get(queue[i].key());
+				const tempTile = this.tiles[queue[i].key()];
 
 				if (tempTile) this.makeTileCurrent(tempTile);
 			}
@@ -2416,7 +2414,7 @@ class TileManager {
 			var tileCombineQueue = [];
 			for (var i = 0; i < queue.length; i++) {
 				var key = queue[i].key();
-				let tile = this.tiles.get(key);
+				var tile = this.tiles[key];
 				if (!tile) tile = this.createTile(queue[i], key);
 				if (tile.needsFetch()) tileCombineQueue.push(queue[i]);
 			}
@@ -2430,7 +2428,7 @@ class TileManager {
 	// so we match this to a new incoming tile to unset
 	// the invalid state later.
 	public static invalidateTile(key: any, wireId: number) {
-		const tile: Tile = this.tiles.get(key);
+		const tile: Tile = this.tiles[key];
 		if (!tile) return;
 
 		tile.invalidateCount++;
