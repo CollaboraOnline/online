@@ -1452,6 +1452,19 @@ function getInitializerClass() {
 		this.getSessionId();
 	};
 
+	class MobileSocket extends global.ProxySocket {
+		constructor(url) {
+			super("cool:/cool/mobilesocket" + url);
+
+			this.send = this.__proto__.send;
+			// HACK: We need this to complete the override because ProxySocket messed up the protoype chain... evenually I want to convert it to a Real Class which will fix it
+		}
+
+		send(data) {
+			global.postMobileMessage(data);
+		}
+	}
+
 	global.iterateCSSImages = function(visitor) {
 		var visitUrls = function(rules, visitor, base) {
 			if (!rules)
@@ -1627,7 +1640,9 @@ function getInitializerClass() {
 			uri = global.processCoolUrl({ url: uri, type: 'ws' });
 		}
 
-		if (global.socketProxy) {
+		if (global.ThisIsAMobileApp) {
+			return new MobileSocket(uri);
+		} else if (global.socketProxy) {
 			return new global.ProxySocket(uri);
 		} else if (global.indirectionUrl != '' && !global.migrating) {
 			global.indirectSocket = true;
@@ -1694,7 +1709,6 @@ function getInitializerClass() {
 
 	// Form a valid WS URL to the host with the given path.
 	global.makeWsUrl = function (path) {
-		global.app.console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
 		return global.host + global.serviceRoot + path;
 	};
 
@@ -1771,7 +1785,7 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (global.ThisIsAMobileApp) {
+	if (global.ThisIsTheiOSApp) {
 		global.socket = new global.FakeWebSocket();
 		global.TheFakeWebSocket = global.socket;
 	} else {
@@ -1781,7 +1795,7 @@ function getInitializerClass() {
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
-			global.app.console.log(err);
+			global.app.console.log(`Creating WS failed: ${err}`);
 		}
 	}
 
