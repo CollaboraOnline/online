@@ -29,6 +29,8 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.on('zoomend', this.onZoomEnd, this);
 		this.map.on('closealldialogs', this.onCloseAll, this);
 		this.map.on('closeAutoFilterDialog', this.closePopupsOnTabChange, this);
+		L.DomEvent.on(window.document, 'keyup', this.onKeyUp, this);
+
 	},
 
 	onRemove: function() {
@@ -38,6 +40,8 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('zoomend', this.onZoomEnd, this);
 		this.map.off('closealldialogs', this.onCloseAll, this);
 		this.map.off('closeAutoFilterDialog', this.closePopupsOnTabChange, this);
+		L.DomEvent.off(window.document, 'keyup', this.onKeyUp, this);
+
 	},
 
 	hasDialogOpened: function() {
@@ -984,9 +988,19 @@ L.Control.JSDialog = L.Control.extend({
 				this.close(lastKey, sendCloseToServer);
 				return true;
 			}
+			break;
+		case 18:
+			if (app.map && app.map.jsdialog && app.map.jsdialog.hasDialogOpened()) {
+				document.body.classList.add('activate-underlines');
+			}
 		}
 
 		return false;
+	},
+	onKeyUp: function(ev) {
+		if ((ev.keyCode === 18) && app.map && app.map.jsdialog && app.map.jsdialog.hasDialogOpened()) {
+			document.body.classList.remove('activate-underlines');
+		}
 	},
 
 	onZoomEnd: function () {
