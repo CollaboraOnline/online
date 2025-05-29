@@ -76,15 +76,9 @@ var NotebookbarAccessibility = function() {
 	*/
 	this.mayShowAcceleratorInfoBoxes = false;
 	this.onDocumentKeyDown = function(event) {
-		if (this.initialized) {
-			if (app.map && app.map.jsdialog && app.map.jsdialog.hasDialogOpened()) {
-				if (event.keyCode === 18)
-					document.body.classList.add('activate-underlines');
-			}
-			else if (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey)) {
+			 if (this.initialized && (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey))) {
 				this.mayShowAcceleratorInfoBoxes = true;
 			}
-		}
 	};
 
 	this.onDocumentKeyUp = function(event) {
