@@ -34,17 +34,50 @@ public class COWebViewClient extends WebViewClient {
             return super.shouldInterceptRequest(view, request);
         }
 
+        String path = request.getUrl().getPath();
+        if (Objects.equals(path, "/cool/media")) {
+            return handleMediaRequest(request);
+        } else {
+            Map<String, String> responseHeaders = new HashMap<>();
+            responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
+            responseHeaders.put("Content-Length", "0");
+
+            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
+
+            return new WebResourceResponse(
+                    null,
+                    null,
+                    404,
+                    "Not Found",
+                    responseHeaders,
+                    data
+            );
+        }
+    }
+
+    private WebResourceResponse handleMediaRequest(WebResourceRequest request) {
+        Map<String, String> responseHeaders = new HashMap<>();
+        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
+
         Uri uriDecoded = Uri.parse(Uri.decode(request.getUrl().toString())); // We have to do this weird-looking decoding step as presentation mode gives us a broken (i.e. parameters are encoded, including the & delimiter, etc.) URI
         String tag = uriDecoded.getQueryParameter("Tag");
 
         if (tag == null) {
-            return super.shouldInterceptRequest(view, request);
+            responseHeaders.put("Content-Length", "0");
+
+            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
+
+            return new WebResourceResponse(
+                    null,
+                    null,
+                    404,
+                    "Not Found",
+                    responseHeaders,
+                    data
+            );
         }
 
         String mediaPath = getEmbeddedMediaPath(tag);
-
-        Map<String, String> responseHeaders = new HashMap<>();
-        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
 
         if (mediaPath.isEmpty()) {
             responseHeaders.put("Content-Length", "0");
