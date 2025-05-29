@@ -222,7 +222,20 @@ class SettingIframe {
 								fileInput.files[0],
 							);
 						} else {
-							this.uploadFile(cfg.uploadPath, fileInput.files[0]);
+							let file = fileInput.files[0];
+
+							// We don't allow users to upload the Interface (browser) settings file with a different name,
+							// as we use the static name 'browsersetting.json' on the coolwsd side to upload/update browser settings.
+							if (
+								cfg.uploadPath === this.PATH.browserSettingsUpload() &&
+								file.name !== 'browsersetting.json'
+							) {
+								file = new File([file], 'browsersetting.json', {
+									type: file.type,
+									lastModified: file.lastModified,
+								});
+							}
+							this.uploadFile(cfg.uploadPath, file);
 						}
 						fileInput.value = '';
 					}
