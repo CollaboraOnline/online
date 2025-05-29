@@ -1223,7 +1223,13 @@ function getInitializerClass() {
 					global.app.console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
 				}
 				that.inSerial = serial;
-				this.onmessage({ data: data });
+				try {
+					this.onmessage({ data: data });
+				} catch (e) {
+					global.app.console.error(e);
+					global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
+					// It's better to ignore any failures rather than to lose the rest of the messages in this packet
+				}
 
 				i += size; // skip trailing '\n' in loop-increment
 			}
