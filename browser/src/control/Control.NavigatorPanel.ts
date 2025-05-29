@@ -155,13 +155,14 @@ class NavigatorPanel extends SidebarBase {
 		this.floatingNavIcon.className =
 			'notebookbar unoNavigator unospan-view-navigator unotoolbutton visible';
 		this.floatingNavIcon.setAttribute('tabindex', '-1');
-		this.floatingNavIcon.setAttribute('data-cooltip', _('Navigator'));
+		const navigatorText = _('Navigator');
+		this.floatingNavIcon.setAttribute('data-cooltip', navigatorText);
 		L.control.attachTooltipEventListener(this.floatingNavIcon, this.map);
 
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');
 		buttonWrapper.className = 'navigator-btn-wrapper'; // Class for styling
-		buttonWrapper.setAttribute('aria-label', _('Navigator'));
+		buttonWrapper.setAttribute('aria-label', navigatorText);
 
 		// Create the button
 		const button = document.createElement('button');
