@@ -16,13 +16,16 @@
 #import <WebKit/WKURLSchemeHandler.h>
 
 #import "CODocument.h"
+#import "MobileSocket.h"
 
 #import <wsd/DocumentBroker.hpp>
 
 @interface CoolURLSchemeHandler : NSObject<WKURLSchemeHandler>
 {
     NSMutableSet<id<WKURLSchemeTask>> *ongoingTasks;
+    NSMutableSet<id<WKURLSchemeTask>> *ongoingMobileSocketTasks;
     CODocument *document;
+    MobileSocket *mobileSocket;
 }
 
 - (id)initWithDocument:(CODocument *)document;
@@ -30,6 +33,8 @@
 - (std::optional<std::tuple<NSUInteger, NSUInteger, NSUInteger>>)getPositionsAndSizeForRange:(NSString *)range withTotalSize:(NSInteger)size;
 
 - (void)handleMediaTask:(id<WKURLSchemeTask>)urlSchemeTask;
+- (void)handleMobileSocketTask:(id<WKURLSchemeTask>)urlSchemeTask;
+- (void)queueSend:(std::string)message then:(void (^)())callback;
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
