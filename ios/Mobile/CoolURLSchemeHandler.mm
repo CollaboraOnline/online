@@ -12,6 +12,7 @@
 #import "config.h"
 
 #import "CoolURLSchemeHandler.h"
+#import "MobileSocket.h"
 
 #import "MobileApp.hpp"
 
@@ -29,6 +30,8 @@
 - (id)initWithDocument:(CODocument *)document {
     self->document = document;
     self->ongoingTasks = [[NSMutableSet alloc] init];
+    self->ongoingMobileSocketTasks = [[NSMutableSet alloc] init];
+    self->mobileSocket = [[MobileSocket alloc] init];
     return self;
 }
 
@@ -111,6 +114,10 @@
 
     if ([urlSchemeTask.request.URL.path isEqualToString:@"/cool/media"]) {
         return [self handleMediaTask:urlSchemeTask];
+    }
+    
+    if ([urlSchemeTask.request.URL.path hasPrefix:@"/cool/mobilesocket/"]) {
+        return [self handleMobileSocketTask:urlSchemeTask];
     }
     
     NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
@@ -244,7 +251,38 @@
     [urlSchemeTask didFinish];
 }
 
+- (void)handleMobileSocketTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    [self->ongoingMobileSocketTasks addObject:urlSchemeTask];
+
+    // As on Android, I'm expecting [@"cool", @"mobilesocket", @"cool", wopipath, @"ws", @"ws", command, @"open", id] or similar
+    // However unlike on Android, the wopipath, etc. gets split into components itself. Luckily the ID will never be split so we can guarentee the position of the command being 3 from the end
+    NSArray<NSString *> * path = urlSchemeTask.request.URL.pathComponents;
+    NSString * command = [path objectAtIndex:[path count] - 3];
+    
+    if ([command isEqualToString:@"open"]) {
+        [mobileSocket open:urlSchemeTask];
+        [self->ongoingMobileSocketTasks removeObject:urlSchemeTask];
+        [self->ongoingTasks removeObject:urlSchemeTask];
+        return;
+    }
+    
+    [mobileSocket write:urlSchemeTask onFinish:^{
+        [self->ongoingMobileSocketTasks removeObject:urlSchemeTask];
+        [self->ongoingTasks removeObject:urlSchemeTask];
+    }];
+}
+
+- (void)queueSend:(std::string)message {
+    [mobileSocket queueSend:message];
+}
+
 - (void)webView:(WKWebView *)webView stopURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    if ([ongoingMobileSocketTasks containsObject:urlSchemeTask]) {
+        // We need to notify the mobile socket handler about this task disappearing too
+        [mobileSocket stopURLSchemeTask:urlSchemeTask];
+        [ongoingMobileSocketTasks removeObject:urlSchemeTask];
+    }
+    
     // Yeet the task from the ongoingTasks
     [ongoingTasks removeObject:urlSchemeTask];
 }
