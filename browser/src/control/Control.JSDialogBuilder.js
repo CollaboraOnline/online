@@ -1605,9 +1605,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder._addAriaLabel(pushbutton, data, builder);
 		}
 
-		const buttonTitle = (data.aria && data.aria.label) || builder._cleanText(data.text);
-		if(buttonTitle)
-			pushbutton.setAttribute('title', buttonTitle);
+		const tooltipText = (data.aria && data.aria.label) || data.text;
+		if (!pushbuttonText && tooltipText) {
+			pushbutton.setAttribute('data-cooltip', builder._cleanText(tooltipText));
+			L.control.attachTooltipEventListener(pushbutton, builder.map);
+		}
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
@@ -2304,6 +2306,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			e.stopPropagation();
 		};
 
+		const hasLabel = !!controls.label;
 		var mouseEnterFunction = window.touch.mouseOnly(function () {
 			if (builder.map.tooltip)
 				builder.map.tooltip.beginShow(div);
@@ -2320,9 +2323,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.isCustomTooltip) {
 			this._handleCutomTooltip(div, builder);
 		}
-		else {
+		else if (!hasLabel) {
 			$(div).on('mouseenter', mouseEnterFunction);
 			$(div).on('mouseleave', mouseLeaveFunction);
+		} else {
+			div.removeAttribute('data-cooltip'); // If there is a label, we don't need the tooltip
 		}
 
 		div.addEventListener('keydown', function(e) {
