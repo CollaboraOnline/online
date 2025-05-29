@@ -24,9 +24,7 @@ if ! which flamegraph.pl > /dev/null 2>&1; then
     echo "    e.g. git clone https://github.com/brendangregg/FlameGraph ~/FlameGraph"
     exit 1
 fi
-perf record -F50 -o perf.data.watchdog -e syscalls:sys_enter_futimesat --call-graph dwarf -a sleep $1
-#alternatively record every nth sample
-#perf record -c12 -o perf.data.watchdog -e syscalls:sys_enter_futimesat --call-graph dwarf -a sleep $1
+perf record -o perf.data.watchdog -e syscalls:sys_enter_futimesat --call-graph dwarf,16384 -a sleep $1
 perf script -i perf.data.watchdog --no-inline | stackcollapse-perf.pl | \
     sed -E -s "s/^kitbroker[^;]+/kitbroker/" | \
     sed -E -s "s/^docbroker[^;]+/docbroker/" | \
