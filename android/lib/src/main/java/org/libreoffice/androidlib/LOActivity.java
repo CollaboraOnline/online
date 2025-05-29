@@ -1035,36 +1035,6 @@ public class LOActivity extends AppCompatActivity {
     }
 
     /**
-     * determine if a base64-encoded message which would normally be decoded with b64d on the online-side starts with a specific string
-     * useful to see if a message is a specific command...
-     *
-     * @param message The message to test for the prefix, including the "b64d('" decoder wrapping
-     * @param prefix The prefix to test for, not including any sort of wrapping
-     * @return true if the decoded message starts with the prefix, else false
-     */
-    private static boolean b64MessageStartsWith(String message, String prefix) {
-        String base64Message = Base64.getEncoder().withoutPadding().encodeToString(prefix.getBytes());
-
-        return message.startsWith("b64d('" + base64Message);
-    }
-
-    /**
-     * decode a base64-encoded message which would normally be decoded with b64d on the online-side
-     *
-     * @param message The message to decode, including the "b64d('{message}')" decoder wrapping
-     * @return The decoded message
-     */
-    private static String b64d(String message) {
-        assert message.startsWith("b64d('");
-        assert message.endsWith("')");
-
-        String messageContent = message.substring("b64d('".length(), message.length() - "')".length());
-
-        byte[] decodedContent = Base64.getDecoder().decode(messageContent);
-        return new String(decodedContent);
-    }
-
-    /**
      * @param message The message to test for the prefix
      * @param prefix The prefix to test for
      * @return true if the decoded message starts with the prefix, else false
