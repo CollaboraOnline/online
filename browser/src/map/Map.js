@@ -376,7 +376,6 @@ L.Map = L.Evented.extend({
 		// TODO: remove duplicated init code
 		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		if (this._docLayer._docType === 'spreadsheet') {
-			this._docLayer._gotFirstCellCursor = false;
 			if (this._docLayer.options.sheetGeometryDataEnabled)
 				this._docLayer.requestSheetGeometryData();
 			this._docLayer.refreshViewData();
