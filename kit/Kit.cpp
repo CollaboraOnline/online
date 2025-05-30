@@ -4186,7 +4186,6 @@ bool globalPreinit(const std::string &loTemplate)
 
     // Disable problematic components that may be present from a
     // desktop or developer's install if env. var not set.
-    ::setenv("DISABLE_SYSTEM_DEPENDENT_PRIMITIVE_RENDERER", "1", 1);
     ::setenv("UNODISABLELIBRARY",
              "abp avmediagst avmediavlc cmdmail losessioninstall OGLTrans PresenterScreen "
              "syssh ucpftp1 ucpgio1 ucpimage updatecheckui updatefeed updchk"
