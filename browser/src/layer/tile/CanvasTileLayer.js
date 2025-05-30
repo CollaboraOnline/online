@@ -3674,6 +3674,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.sectionContainer.resumeDrawing(topLevel);
 	},
 
+	// used in Calc, see CalcTileLayer
+	allowDrawing: function() {},
+
 	enableDrawing: function () {
 		if (this._painter && app.sectionContainer)
 			app.sectionContainer.enableDrawing();
