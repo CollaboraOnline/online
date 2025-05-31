@@ -467,8 +467,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		presentation: [
@@ -643,8 +642,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		drawing: [
@@ -780,8 +778,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		spreadsheet: [
@@ -1070,8 +1067,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		mobiletext:  [
@@ -2930,46 +2926,6 @@ class Menubar extends L.Control {
 		return null;
 	}
 
-	/**
-	 * Initializes the modification indicator in the menubar.
-	 * @param lastmodtime - The last modification time.
-	 */
-	private _onInitModificationIndicator(lastmodtime: any): void {
-		var lastModButton = L.DomUtil.get('menu-last-mod');
-		if (lastModButton !== null && lastModButton !== undefined
-			&& lastModButton.firstChild
-			&& lastModButton.firstChild.innerHTML !== null
-			&& lastModButton.firstChild.childElementCount == 0) {
-			if (lastmodtime == null) {
-				// No modification time -> hide the indicator
-				L.DomUtil.setStyle(lastModButton, 'display', 'none');
-				return;
-			}
-			var mainSpan = document.createElement('span');
-			this.lastModIndicator = document.createElement('span');
-			mainSpan.appendChild(this.lastModIndicator);
-
-			// Replace menu button body with new content
-			lastModButton.firstChild.replaceChildren();
-			lastModButton.firstChild.appendChild(mainSpan);
-
-			if (L.Params.revHistoryEnabled) {
-				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
-			}
-
-			this._map.fire('modificationindicatorinitialized');
-		}
-	}
-
-	/**
-       * Updates the modification indicator.
-       * @param e - Event data containing the new modification time.
-       */
-	private _onUpdateModificationIndicator(e: any): void {
-		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
-			this.lastModIndicator.textContent = e.lastSaved;
-		}
-	}
 }
 
 L.control.menubar = () => {
