@@ -6,34 +6,64 @@
  */
 package org.libreoffice.androidlib;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.logging.Logger;
 
 public class COWebViewClient extends WebViewClient {
+    private String LOGTAG = COWebViewClient.class.getSimpleName();
+
     @Nullable
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        if (!Objects.equals(request.getUrl().getScheme(), "cool")) {
+        if (!Objects.equals(request.getUrl().getScheme(), "cool") && !Objects.equals(request.getUrl().getHost(), "cool")) { // We allow requests to http://cool as well as cool:, since as fetch can't work with custom intercepted protocols
             return super.shouldInterceptRequest(view, request);
         }
 
+        String path = request.getUrl().getPath();
+        if (path == null) {
+            path = "";
+        }
+
+        Log.i(LOGTAG, "Received request to " + path + " via cool request interception");
+
+        switch (path) {
+            case "/cool/media": return handleMediaRequest(view, request);
+            case "/cool/messages": return handleMessagesRequest(view, request);
+            default: return new WebResourceResponse(
+                    null,
+                    null,
+                    404,
+                    "Not Found",
+                    new HashMap<String, String>() {
+                        {
+                            put("Access-Control-Allow-Origin", "null");
+                            put("Content-Length", "0");
+                        }
+                    },
+                    new ByteArrayInputStream(new byte[0])
+            );
+        }
+    }
+
+    private WebResourceResponse handleMediaRequest(WebView view, WebResourceRequest request) {
         Uri uriDecoded = Uri.parse(Uri.decode(request.getUrl().toString())); // We have to do this weird-looking decoding step as presentation mode gives us a broken (i.e. parameters are encoded, including the & delimiter, etc.) URI
         String tag = uriDecoded.getQueryParameter("Tag");
 
@@ -96,6 +126,59 @@ public class COWebViewClient extends WebViewClient {
             reasonPhrase,
             responseHeaders,
             data
+        );
+    }
+
+    private WebResourceResponse handleMessagesRequest(WebView view, WebResourceRequest request) {
+        Map<String, String> responseHeaders = new HashMap<>();
+        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
+
+        PipedOutputStream outputStream = new PipedOutputStream();
+        PipedInputStream data;
+        try {
+            data = new PipedInputStream(outputStream);
+        } catch (IOException e) {
+            responseHeaders.put("Content-Length", "0");
+
+            ByteArrayInputStream errorBody = new ByteArrayInputStream(new byte[0]);
+
+            return new WebResourceResponse(
+                    null,
+                    null,
+                    500,
+                    "Internal Server Error",
+                    responseHeaders,
+                    errorBody
+            );
+        }
+
+        try {
+            // We have to send some initial message or the socket chokes
+            byte[] message = "hello world!".getBytes();
+
+            ByteBuffer header = ByteBuffer.allocate(5);
+            header.putInt(message.length);
+            header.put((byte)0); // 0 is for 'Not a binary message'
+
+            outputStream.write(header.array());
+            outputStream.write(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        LOActivity.MessageOutputStreamLock.lock();
+        LOActivity.MessageOutputStream = outputStream;
+        LOActivity.MessageOutputStreamLock.unlock();
+
+
+        Log.i(LOGTAG, "Sending streamed WebResourceResponse");
+        return new WebResourceResponse(
+                null,
+                null,
+                200,
+                "OK",
+                responseHeaders,
+                data
         );
     }
 
