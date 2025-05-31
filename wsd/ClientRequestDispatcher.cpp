@@ -804,7 +804,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                     std::string proxyRatingServer =
                         !isUnitTesting ? ProxyRequestHandler::getProxyRatingServer()
                                        : UnitWSD::get().getProxyRatingServer();
-                    ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket,
+                    ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen - 1), socket,
                                                        proxyRatingServer);
                     servedSync = true;
                 }
