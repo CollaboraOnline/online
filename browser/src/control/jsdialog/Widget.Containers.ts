@@ -66,8 +66,8 @@ JSDialog.grid = function (
 		rows +
 		', auto); \
 		grid-template-columns: repeat(' +
-		cols +
-		', auto);';
+		(cols - 1) +
+		', max-content) min-content;';
 
 	table.style = gridRowColStyle;
 
