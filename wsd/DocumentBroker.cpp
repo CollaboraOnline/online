@@ -3843,7 +3843,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
             // if there is no reason to think the document is possibly-
             // modified, then it's unlikely there is anything in the clipboard.
             LOG_TRC("request/rescue clipboard on disconnect for " << session->getId());
-            forwardToChild(session, "getclipboard");
+            forwardToChild(session, "getclipboard name=shutdown");
         }
 #endif
 
@@ -4518,28 +4518,30 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
 {
     LOG_TRC("Clipboard request " << tag << " not for a live session - check cache.");
 #if !MOBILEAPP
-    std::shared_ptr<std::string> saved =
+    std::shared_ptr<FileUtil::OwnedFile> clipFile =
         COOLWSD::SavedClipboards->getClipboard(tag);
-    if (saved)
+    if (clipFile)
     {
-            std::ostringstream oss;
-            // The custom header for the clipboard of an already closed document.
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-                << "Content-Length: " << saved->length() << "\r\n"
-                << "Content-Type: application/octet-stream\r\n"
-                << "X-Content-Type-Options: nosniff\r\n"
-                << "X-COOL-Clipboard: true\r\n"
-                << "Cache-Control: no-cache\r\n"
-                << "Connection: close\r\n"
-                << "\r\n";
-            oss.write(saved->c_str(), saved->length());
-            socket->setSocketBufferSize(
-                std::min(saved->length() + 256, std::size_t(Socket::MaximumSendBufferSize)));
-            socket->send(oss.str());
-            socket->asyncShutdown();
-            LOG_INF("Found and queued clipboard response for send of size " << saved->length());
-            return true;
+        auto session = std::make_shared<http::ServerSession>();
+
+        http::ServerSession::ResponseHeaders headers;
+        headers.emplace_back("Last-Modified", Util::getHttpTimeNow());
+        headers.emplace_back("Content-Type", "application/octet-stream");
+        headers.emplace_back("X-Content-Type-Options", "nosniff");
+        headers.emplace_back("X-COOL-Clipboard", "true");
+        headers.emplace_back("Cache-Control", "no-cache");
+        headers.emplace_back("Connection", "close");
+
+        // hold save clipfile until session dtor to guarantee it persists until completion
+        session->setFinishedHandler([clipFile](const std::shared_ptr<http::ServerSession>&) {});
+
+        // Hand over socket to ServerSession which will async provide
+        // clipboard content backed by clipFile
+        session->asyncUpload(clipFile->_file, std::move(headers));
+        socket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
+
+        LOG_INF("Found and queued clipboard response for send of size " << FileUtil::Stat(clipFile->_file).size());
+        return true;
     }
 #endif
 
@@ -4563,13 +4565,13 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
 
 void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                             const std::string &viewId, const std::string &tag,
-                                            const std::shared_ptr<std::string> &data)
+                                            const std::string &clipFile)
 {
     for (const auto& it : _sessions)
     {
         if (it.second->matchesClipboardKeys(viewId, tag))
         {
-            it.second->handleClipboardRequest(type, socket, tag, data);
+            it.second->handleClipboardRequest(type, socket, tag, clipFile);
             return;
         }
     }

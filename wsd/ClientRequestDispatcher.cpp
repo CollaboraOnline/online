@@ -205,19 +205,37 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 /// For clipboard setting
 class ClipboardPartHandler : public Poco::Net::PartHandler
 {
-    std::shared_ptr<std::string> _data; // large.
+    std::string _filename;
 
 public:
-    std::shared_ptr<std::string> getData() const { return _data; }
+    /// Afterwards someone else is responsible for cleaning that up.
+    void takeFile() { _filename.clear(); }
 
-    ClipboardPartHandler() {}
+    ClipboardPartHandler(std::string filename)
+        : _filename(std::move(filename))
+    {
+    }
+
+    virtual ~ClipboardPartHandler()
+    {
+        if (!_filename.empty())
+        {
+            LOG_TRC("Remove temporary clipboard file '" << _filename << '\'');
+            StatelessBatchBroker::removeFile(_filename);
+        }
+    }
 
     virtual void handlePart(const Poco::Net::MessageHeader& /* header */,
                             std::istream& stream) override
     {
-        std::istreambuf_iterator<char> eos;
-        _data = std::make_shared<std::string>(std::istreambuf_iterator<char>(stream), eos);
-        LOG_TRC("Clipboard stream from part header stored of size " << _data->length());
+        LOG_DBG("Storing incoming clipboard to: " << _filename);
+
+        // Copy the stream to _filename.
+        std::ofstream fileStream;
+        fileStream.open(_filename);
+
+        Poco::StreamCopier::copyStream(stream, fileStream);
+        fileStream.close();
     }
 };
 
@@ -931,7 +949,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
         {
-            //              HexUtil::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
             servedSync = handleClipboardRequest(request, message, disposition, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
@@ -1480,7 +1497,7 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
     // we simply go to the fallback below.
     if (docBroker && docBroker->isAlive())
     {
-        std::shared_ptr<std::string> data;
+        std::string jailClipFile, clipFile;
         DocumentBroker::ClipboardRequest type;
         if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
         {
@@ -1494,25 +1511,40 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         else
         {
             type = DocumentBroker::CLIP_REQUEST_SET;
-            ClipboardPartHandler handler;
+
+            std::string clipDir = JAILED_DOCUMENT_ROOT + std::string("clipboards");
+            std::string clipName = "setclipboard." + tag;
+
+            std::string jailId = docBroker->getJailId();
+            const Poco::Path filePath(FileUtil::buildLocalPathToJail(
+                COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId, clipDir));
+            clipFile = filePath.toString() + '/' + clipName;
+            jailClipFile = clipDir + '/' + clipName;
+
+            ClipboardPartHandler handler(clipFile);
             Poco::Net::HTMLForm form(request, message, handler);
-            data = handler.getData();
-            if (!data || data->length() == 0)
+            if (FileUtil::Stat(clipFile).size())
+                handler.takeFile();
+            else
+            {
                 LOG_ERR_S("Invalid zero size set clipboard content with tag ["
                           << tag << "] on docKey [" << docKey << ']');
+                clipFile.clear();
+                jailClipFile.clear();
+            }
         }
 
         // Do things in the right thread.
         LOG_TRC_S("Move clipboard request tag [" << tag << "] to docbroker thread with "
-                                                 << (data ? data->length() : 0)
+                                                 << (!clipFile.empty() ? FileUtil::Stat(clipFile).size() : 0)
                                                  << " bytes of data");
         docBroker->setupTransfer(
             disposition,
             [docBroker, type, viewId=std::move(viewId),
-             tag=std::move(tag), data=std::move(data)](const std::shared_ptr<Socket>& moveSocket)
+             tag=std::move(tag), jailClipFile=std::move(jailClipFile)](const std::shared_ptr<Socket>& moveSocket)
             {
                 auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                docBroker->handleClipboardRequest(type, streamSocket, viewId, tag, data);
+                docBroker->handleClipboardRequest(type, streamSocket, viewId, tag, jailClipFile);
             });
         LOG_TRC_S("queued clipboard command " << type << " on docBroker fetch");
     }
@@ -2004,9 +2036,9 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             if (formChildid.find('/') == std::string::npos &&
                 formName.find('/') == std::string::npos)
             {
-                const std::string dirPath =
-                    FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + formChildid,
-                                                   JAILED_DOCUMENT_ROOT + std::string("insertfile"));
+                const std::string dirPath = FileUtil::buildLocalPathToJail(
+                    COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + formChildid,
+                    JAILED_DOCUMENT_ROOT + std::string("insertfile"));
                 const std::string fileName = dirPath + '/' + form.get("name");
                 LOG_INF("Perform insertfile: " << formChildid << ", " << formName
                                                << ", filename: " << fileName);
@@ -2056,7 +2088,8 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
         const std::string decoded = Uri::decode(url);
 
-        const Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId,
+        const Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                                 COOLWSD::ChildRoot + jailId,
                                                                  JAILED_DOCUMENT_ROOT + decoded));
         const std::string filePathAnonym = COOLWSD::anonymizeUrl(filePath.toString());
 
