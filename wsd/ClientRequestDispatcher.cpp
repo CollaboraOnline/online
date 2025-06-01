@@ -522,8 +522,8 @@ public:
             return toState();
         };
 
-        const std::string& addressToCheck = _addressesToResolve.front();
-        net::AsyncDNS::lookup(addressToCheck, pushHostnameResolvedToPoll, dumpState);
+        net::AsyncDNS::lookup(_addressesToResolve.front(), std::move(pushHostnameResolvedToPoll),
+                              dumpState);
     }
 
     void hostnameResolved(const net::HostEntry& hostEntry)
