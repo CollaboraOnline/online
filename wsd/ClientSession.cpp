@@ -3476,13 +3476,14 @@ bool ClientSession::preProcessSetClipboardPayload(std::istream& in, std::ostream
     if (!Util::copyToMatch(in, out, "<div id=\"meta-origin\" data-coolorigin=\""))
         return false;
 
+    const std::string_view endtag = "\">\n";
     // discard this tag
-    if (!Util::seekToMatch(in, "\">\n"))
+    if (!Util::seekToMatch(in, endtag))
     {
         LOG_DBG("Found unbalanced starting meta <div> tag in setclipboard payload.");
         return false;
     }
-    in.seekg(3, std::ios_base::cur);
+    in.seekg(endtag.size(), std::ios_base::cur);
 
     if (!Util::copyToMatch(in, out, "</div></body>"))
     {
