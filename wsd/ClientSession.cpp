@@ -262,6 +262,7 @@ bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const st
                        [&tag](const std::string& it) { return it == tag; });
 }
 
+// Rewrite path to be visible to the outside world
 static std::string getLocalPathToJail(std::string filePath, const DocumentBroker& docBroker)
 {
 #if !MOBILEAPP
@@ -271,7 +272,6 @@ static std::string getLocalPathToJail(std::string filePath, const DocumentBroker
         if (filePath.size() > 0 && filePath[0] == '/')
             filePath = filePath.substr(1);
 
-        // Rewrite path to be visible to the outside world.
         const Path path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
                                                        docBroker.getJailRoot(),
                                                        filePath));
