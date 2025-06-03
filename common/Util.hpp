@@ -1234,6 +1234,25 @@ int main(int argc, char**argv)
         return iequal(lhs.data(), lhs.size(), rhs.data(), rhs.size());
     }
 
+    /// Compare two containers (of the same type) for equality.
+    template <typename Container> inline bool equal(const Container& c1, const Container& c2)
+    {
+        if (c1.size() == c2.size())
+        {
+            auto it1 = c1.begin();
+            auto it2 = c2.begin();
+            for (; it1 != c1.end() && it2 != c2.end(); ++it1, ++it2)
+            {
+                if (*it1 != *it2)
+                    return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     /// Convert a vector to a string. Useful for conversion in templates.
     template <typename T> inline std::string toString(const T& x)
     {
