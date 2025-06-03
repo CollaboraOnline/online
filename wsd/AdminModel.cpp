@@ -496,6 +496,7 @@ void AdminModel::notify(const std::string& message)
         {
             if (!it->second.notify(message))
             {
+                LOG_INF("Failed to notify admin [" << it->first << "]; unsubscribing");
                 it = _subscribers.erase(it);
             }
             else
