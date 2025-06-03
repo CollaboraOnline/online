@@ -81,8 +81,8 @@ private:
                                    const std::shared_ptr<StreamSocket>& socket);
 
     bool handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
-                                   std::istream& message,
-                                   const std::shared_ptr<StreamSocket>& socket);
+                                      const std::string& text,
+                                      const std::shared_ptr<StreamSocket>& socket);
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
     static bool handleClipboardRequest(const Poco::Net::HTTPRequest& request,

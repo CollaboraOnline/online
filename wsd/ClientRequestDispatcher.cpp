@@ -937,7 +937,10 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             else if (requestDetails.equals(1, "capabilities"))
                 servedSync = handleCapabilitiesRequest(request, socket);
             else if (requestDetails.equals(1, "wopiAccessCheck"))
-                handleWopiAccessCheckRequest(request, message, socket);
+            {
+                const std::string text(std::istreambuf_iterator<char>(message), {});
+                handleWopiAccessCheckRequest(request, text, socket);
+            }
             else
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
@@ -1198,15 +1201,14 @@ void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& so
     LOG_INF("Wopi Access Check request, result: " << nameShort(result));
 }
 
-bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
-                                                           std::istream& message,
-                                                           const std::shared_ptr<StreamSocket>& socket)
+bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
+    const Poco::Net::HTTPRequest& request, const std::string& text,
+    const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
 
     LOG_DBG("Wopi Access Check request: " << request.getURI());
 
-    std::string text(std::istreambuf_iterator<char>(message), {});
     LOG_TRC("Wopi Access Check request text: " << text);
 
     std::string callbackUrlStr;
