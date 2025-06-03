@@ -1936,7 +1936,8 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 // we want it enabled (i.e. we shouldn't set the option if we don't want it).
                 options = ",FullSheetPreview=trueFULLSHEETPREVEND";
             }
-            const std::string pdfVer = (form.has("PDFVer") ? form.get("PDFVer") : "");
+
+            const std::string pdfVer = (form.has("PDFVer") ? form.get("PDFVer") : std::string());
             if (!pdfVer.empty())
             {
                 if (strcasecmp(pdfVer.c_str(), "PDF/A-1b") &&
@@ -1959,9 +1960,9 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 options += ",infilterOptions=" + form.get("infilterOptions");
             }
 
-            std::string lang = (form.has("lang") ? form.get("lang") : std::string());
-            std::string target = (form.has("target") ? form.get("target") : std::string());
-            std::string filter = (form.has("filter") ? form.get("filter") : std::string());
+            const std::string lang = (form.has("lang") ? form.get("lang") : std::string());
+            const std::string target = (form.has("target") ? form.get("target") : std::string());
+            const std::string filter = (form.has("filter") ? form.get("filter") : std::string());
 
             std::string encodedTransformJSON;
             if (form.has("transform"))
@@ -2370,8 +2371,7 @@ const std::string& ClientRequestDispatcher::getFileContent(const std::string& fi
     const auto it = StaticFileContentCache.find(filename);
     if (it == StaticFileContentCache.end())
     {
-        throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filename +
-                                              "].");
+        throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filename + ']');
     }
 
     return it->second;
