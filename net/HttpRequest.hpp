@@ -1013,9 +1013,14 @@ public:
     /// Append a chunk to the body. Must have Transfer-Encoding: chunked.
     void appendChunk(const std::string& chunk)
     {
+        _body.reserve(_body.size() + chunk.size() + 32);
+
         std::stringstream ss;
-        ss << std::hex << chunk.size() << "\r\n" << chunk << "\r\n";
+        ss << std::hex << chunk.size();
         _body.append(ss.str());
+        _body.append("\r\n");
+        _body.append(chunk);
+        _body.append("\r\n");
     }
 
     /// Handles incoming data (from the Server) in the Client.
