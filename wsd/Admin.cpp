@@ -427,6 +427,8 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     }
 }
 
+std::atomic<uint64_t> AdminSocketHandler::NextSessionId(1);
+
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
                                        const std::weak_ptr<StreamSocket>& socket,
                                        const Poco::Net::HTTPRequest& request,
@@ -435,8 +437,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
     , _admin(adminManager)
     , _isAuthenticated(false)
 {
-    // Different session id pool for admin sessions (?)
-    _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
+    _sessionId = NextSessionId++;
     _clientIPAdress = socket.lock()->clientAddress();
 }
 
@@ -445,7 +446,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
       _admin(adminManager),
       _isAuthenticated(true)
 {
-    _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
+    _sessionId = NextSessionId++;
 }
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
