@@ -57,7 +57,6 @@ if ('undefined' === typeof window) {
 					);
 
 					decompressed.push(tile);
-					buffers.push(tile.rawDelta.buffer);
 					buffers.push(tile.deltas.buffer);
 				}
 

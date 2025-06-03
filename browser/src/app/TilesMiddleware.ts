@@ -140,7 +140,7 @@ class Tile {
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	image: ImageBitmap | null = null; // ImageBitmap ready to render
 	imgDataCache: any = null; // flat byte array of image data
-	rawDeltas: any = null; // deltas ready to decompress
+	rawDeltas: any[] = []; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
 	loadCount: number = 0; // how many times did we get a new keyframe
@@ -168,11 +168,13 @@ class Tile {
 	}
 
 	needsRehydration(): boolean {
-		return !this.imgDataCache && this.hasKeyframe();
+		return (
+			!this.imgDataCache && this.hasPendingKeyframe === 0 && this.hasKeyframe()
+		);
 	}
 
 	hasKeyframe(): boolean {
-		return !!this.rawDeltas && this.rawDeltas.length > 0;
+		return !!this.rawDeltas.length && this.rawDeltas[0].length > 0;
 	}
 
 	hasPendingUpdate(): boolean {
@@ -270,7 +272,7 @@ class TileManager {
 		for (const tile of this.tiles.values()) {
 			if (tile.image) ++n_bitmaps;
 			if (tile.distanceFromView === 0) ++n_current;
-			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
+			totalSize += tile.rawDeltas.reduce((a, c) => a + c.byteLength, 0);
 		}
 		let mismatch = '';
 		if (n_bitmaps != this.tileBitmapList.length)
@@ -331,7 +333,7 @@ class TileManager {
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
 			// cause flickering, and the same would happen for tiles with pending deltas.
 			if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
-				totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
+				totalSize += tile.rawDeltas.reduce((a, c) => a + c.byteLength, 0);
 				tileCount++;
 			}
 		}
@@ -351,21 +353,21 @@ class TileManager {
 				const key = keys[i];
 				const tile: Tile = this.tiles.get(key);
 				if (
-					tile.rawDeltas &&
+					tile.rawDeltas.length &&
 					tile.distanceFromView !== 0 &&
 					!tile.hasPendingDelta
 				) {
-					totalSize -= tile.rawDeltas.length;
+					const rawDeltaSize = tile.rawDeltas.reduce(
+						(a, c) => a + c.byteLength,
+						0,
+					);
+					totalSize -= rawDeltaSize;
 					if (this.debugDeltas)
 						window.app.console.log(
-							'Reclaim delta ' +
-								key +
-								' memory: ' +
-								tile.rawDeltas.length +
-								' bytes',
+							'Reclaim delta ' + key + ' memory: ' + rawDeltaSize + ' bytes',
 						);
 					this.reclaimTileBitmapMemory(tile);
-					tile.rawDeltas = null;
+					tile.rawDeltas = [];
 					tile.forceKeyframe();
 				}
 			}
@@ -608,22 +610,22 @@ class TileManager {
 
 	private static applyCompressedDelta(
 		tile: Tile,
-		rawDelta: any,
+		rawDeltas: any[],
 		isKeyframe: any,
 		wireMessage: any,
-		rehydrate = true,
 	) {
 		if (this.inTransaction === 0)
 			window.app.console.warn(
 				'applyCompressedDelta called outside of transaction',
 			);
 
-		if (rehydrate && !tile.imgDataCache && !isKeyframe)
-			this.rehydrateTile(tile);
-
-		// We need to own rawDelta for it to hang around outside of a transaction (which happens
-		// with workers enabled). If we're rehydrating, we already own it.
-		if (this.worker && !rehydrate) rawDelta = new Uint8Array(rawDelta);
+		const rawDelta = new Uint8Array(
+			rawDeltas.reduce((a, c) => a + c.byteLength, 0),
+		);
+		rawDeltas.reduce((a, c) => {
+			rawDelta.set(c, a);
+			return a + c.byteLength;
+		}, 0);
 
 		var e = {
 			key: tile.coords.key(),
@@ -993,7 +995,7 @@ class TileManager {
 				window.app.console.log(
 					'Restoring a tile from cached delta at ' + tile.coords.key(),
 				);
-			this.applyCompressedDelta(tile, tile.rawDeltas, true, false, false);
+			this.applyCompressedDelta(tile, tile.rawDeltas, true, false);
 		}
 	}
 
@@ -1070,7 +1072,6 @@ class TileManager {
 		if (keyframeDeltaSize) {
 			// Important to do this before ensuring the context, or we'll needlessly
 			// reconstitute the old keyframe from compressed data.
-			tile.rawDeltas = null;
 			tile.imgDataCache = null;
 		}
 
@@ -1106,25 +1107,6 @@ class TileManager {
 			'L.CanvasTileLayer.applyDelta',
 			{ keyFrame: !!keyframeDeltaSize, length: rawDelta.length },
 		);
-
-		// store the compressed version for later in its current
-		// form as byte arrays, so that we can manage our bitmaps
-		// better.
-		if (keyframeDeltaSize) {
-			tile.rawDeltas = rawDelta; // overwrite
-		} else if (!tile.hasKeyframe()) {
-			window.app.console.warn(
-				'Unusual: attempt to append a delta when we have no keyframe.',
-			);
-			return;
-		} // assume we already have a delta.
-		else {
-			// FIXME: this is not beautiful; but no concatenate here.
-			var tmp = new Uint8Array(tile.rawDeltas.byteLength + rawDelta.byteLength);
-			tmp.set(tile.rawDeltas, 0);
-			tmp.set(rawDelta, tile.rawDeltas.byteLength);
-			tile.rawDeltas = tmp;
-		}
 
 		// apply potentially several deltas in turn.
 		var i = 0;
@@ -2026,6 +2008,19 @@ class TileManager {
 
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent) {
+			// Store the compressed tile data for later decompression and
+			// display. This lets us store many more tiles than if we were
+			// to only store the decompressed tile data.
+			if (img.isKeyframe) {
+				tile.rawDeltas = [img.rawData];
+			} else if (tile.hasKeyframe()) {
+				tile.rawDeltas.push(img.rawData);
+			} else {
+				window.app.console.warn(
+					'Unusual: attempt to append a delta when we have no keyframe.',
+				);
+			}
+
 			// Only decompress deltas for tiles that are either current, have image data or
 			// have a pending update (so will imminently have image data). This stops
 			// prefetching from blowing past GC limits.
@@ -2033,19 +2028,11 @@ class TileManager {
 				tile.distanceFromView === 0 ||
 				tile.imgDataCache ||
 				tile.hasPendingUpdate();
-
 			if (shouldDecompressDelta) {
-				this.applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
-			} else if (img.isKeyframe) {
-				tile.rawDeltas = img.rawData;
-			} else {
-				// FIXME: this is not beautiful; but no concatenate here.
-				const tmp = new Uint8Array(
-					tile.rawDeltas.byteLength + img.rawData.byteLength,
-				);
-				tmp.set(tile.rawDeltas, 0);
-				tmp.set(img.rawData, tile.rawDeltas.byteLength);
-				tile.rawDeltas = tmp;
+				if (!img.isKeyframe && tile.needsRehydration())
+					this.rehydrateTile(tile);
+				else
+					this.applyCompressedDelta(tile, [img.rawData], img.isKeyframe, true);
 			}
 		}
 
