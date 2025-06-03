@@ -37,6 +37,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testUtf8);
 #endif
     CPPUNIT_TEST(testEliminatePrefix);
+    CPPUNIT_TEST(testStreamMatch);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -47,6 +48,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     void testCharacterConverter();
     void testUtf8();
     void testEliminatePrefix();
+    void testStreamMatch();
 };
 
 void UtilTests::testStringifyHexLine()
@@ -218,6 +220,29 @@ void UtilTests::testEliminatePrefix()
     LOK_ASSERT_EQUAL_STR(".uno:Command", Util::eliminatePrefix(std::string(".uno:Command"), ".uno:Commander"));
     LOK_ASSERT_EQUAL_STR("uno:Command", Util::eliminatePrefix(std::string(".uno:Command"), "."));
     LOK_ASSERT_EQUAL_STR(".uno:Command", Util::eliminatePrefix(std::string(".uno:Command"), ""));
+}
+
+void UtilTests::testStreamMatch()
+{
+    constexpr auto testname = __func__;
+
+    std::string input("Lorem ipsum dolor sit amet consectetur adipiscing elit");
+    std::istringstream is(input);
+    std::ostringstream os;
+
+    Util::copyToMatch(is, os, " amet ");
+    std::string expected = "Lorem ipsum dolor sit";
+    LOK_ASSERT_EQUAL_STR(expected, os.str());
+    // input stream read position should be at the start of the match
+    LOK_ASSERT_EQUAL(static_cast<std::streampos>(expected.size()), is.tellg());
+
+    Util::seekToMatch(is, " adipiscing ");
+    LOK_ASSERT_EQUAL(static_cast<std::streampos>(38), is.tellg());
+
+    // copy as far as match that never occurs should copy to end of stream
+    Util::copyToMatch(is, os, "nomatch");
+    std::string final = "Lorem ipsum dolor sit adipiscing elit";
+    LOK_ASSERT_EQUAL_STR(final, os.str());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UtilTests);
