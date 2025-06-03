@@ -177,6 +177,9 @@ private:
 
     /// Cache for static files, to avoid reading and processing from disk.
     static std::map<std::string, std::string> StaticFileContentCache;
+
+    /// The next unique connection-ID.
+    static std::atomic<uint64_t> NextConnectionId;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
