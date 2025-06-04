@@ -1016,10 +1016,10 @@ public:
 
     void Print(std::ostream& oss, const std::string_view prefix, const std::string_view unit) const
     {
-        print(oss, prefix, "total", unit) << _total << '\n';
-        print(oss, prefix, "average", unit) << getIntAverage() << '\n';
-        print(oss, prefix, "min", unit) << getMin() << '\n';
-        print(oss, prefix, "max", unit) << getMax() << '\n';
+        print(oss, prefix, "total", unit) << ' ' << _total << '\n';
+        print(oss, prefix, "average", unit) << ' ' << getIntAverage() << '\n';
+        print(oss, prefix, "min", unit) << ' ' << getMin() << '\n';
+        print(oss, prefix, "max", unit) << ' ' << getMax() << '\n';
     }
 
 private:
