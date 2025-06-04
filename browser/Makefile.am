@@ -103,6 +103,10 @@ COOL_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html' -or -name '*.css' -
 COOL_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
 COOL_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(DIST_FOLDER)/admin/%,$(COOL_ADMIN_SRC))
 
+COOL_SETTING_IFRAME_SRC = $(shell find $(srcdir)/setting_iframe -name '*.html' -or -name '*.css' -or -name '*.ttf' -or -name 'OFL.txt' -or -name '*.svg')
+COOL_SETTING_IFRAME_ALL = $(shell find $(srcdir)/setting_iframe -name '*')
+COOL_SETTING_IFRAME_DST = $(patsubst $(srcdir)/setting_iframe/%,$(DIST_FOLDER)/setting_iframe/%,$(COOL_SETTING_IFRAME_SRC))
+
 define file_target
 $(1): $(2)
 	@mkdir -p $$(dir $$@)
@@ -132,10 +136,7 @@ define npm_source
 endef
 
 COOL_ADMIN_TS = \
-	admin/src/ModalDialogCreator.ts \
-	admin/src/integrator/WordBook.ts \
-	admin/src/integrator/Xcu.ts \
-	admin/src/integrator/AdminIntegratorSettings.ts
+	admin/src/ModalDialogCreator.ts
 
 COOL_ADMIN_TS_JS = $(patsubst %.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(COOL_ADMIN_TS))
 
@@ -159,6 +160,13 @@ NODE_MODULES_SRC =\
 	select2@4.0.13 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
+
+COOL_SETTING_IFRAME_TS = \
+	setting_iframe/src/WordBook.ts \
+	setting_iframe/src/Xcu.ts \
+	setting_iframe/src/AdminIntegratorSettings.ts
+
+COOL_SETTING_IFRAME_TS_JS = $(patsubst %.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(COOL_SETTING_IFRAME_TS))
 
 COOL_CSS_LST =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
@@ -715,6 +723,8 @@ if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
+SETTING_IFRAME_BUNDLE = $(DIST_FOLDER)/setting-iframe-bundle.js
+
 if ENABLE_WASM
 $(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
 	@mkdir -p $(dir $@)
@@ -751,6 +761,7 @@ build-cool: \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(ADMIN_BUNDLE) \
+	$(SETTING_IFRAME_BUNDLE) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/device-mobile.css \
 	$(DIST_FOLDER)/device-tablet.css \
@@ -781,6 +792,16 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(COOL_ADMIN_TS_JS) $(COOL_ADMIN_JS)
 	$(call run_eslint_check,--ignore-pattern $(COOL_ADMIN_TS_JS) $(srcdir)/admin/src)
 	$(call run_prettier_check,--debug-check $(srcdir)/admin/src)
 	@awk 'FNR == 1 {print ""} 1' $(COOL_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(COOL_ADMIN_JS)) > $@
+
+$(SETTING_IFRAME_BUNDLE): $(COOL_SETTING_IFRAME_DST) \
+	$(INTERMEDIATE_DIR)/setting-iframe-src.js
+	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css -o $@ $(INTERMEDIATE_DIR)/setting-iframe-src.js
+
+$(INTERMEDIATE_DIR)/setting-iframe-src.js: $(COOL_SETTING_IFRAME_TS_JS)
+	@mkdir -p $(dir $@)
+	$(call run_eslint_check,--ignore-pattern $(COOL_SETTING_IFRAME_TS_JS) $(srcdir)/setting_iframe/src)
+	$(call run_prettier_check,--debug-check $(srcdir)/setting_iframe/src)
+	@awk 'FNR == 1 {print ""} 1' $(COOL_SETTING_IFRAME_TS_JS) > $@
 
 $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DST) $(abs_top_srcdir)/scripts/unocommands.py
 	@mkdir -p $(dir $@)
@@ -941,6 +962,10 @@ $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
+$(DIST_FOLDER)/setting_iframe/%: $(srcdir)/setting_iframe/%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
 if ENABLE_DEBUG
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
@@ -977,10 +1002,10 @@ pot:
 		admin/src/AdminSocketBase.js \
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
-		admin/src/integrator/AdminIntegratorSettings.ts \
-		admin/src/integrator/WordBook.ts \
-		admin/src/integrator/Xcu.ts \
 		admin/src/Util.js \
+		setting_iframe/src/AdminIntegratorSettings.ts \
+		setting_iframe/src/WordBook.ts \
+		setting_iframe/src/Xcu.ts \
 		js/global.js \
 		src/app/Debug.ts \
 		src/canvas/sections/CommentListSection.ts \
@@ -1103,24 +1128,28 @@ jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 build-tests: $(MOCHA_TS_JS_FILES)
 	@echo "Build of mocha test finished."
 
-eslint: $(COOL_ADMIN_TS_JS)
+eslint: $(COOL_ADMIN_TS_JS) $(COOL_SETTING_IFRAME_TS_JS)
 	$(call run_eslint_check,--max-warnings 0 \
 		--ignore-pattern $(COOL_ADMIN_TS_JS) \
+		--ignore-pattern $(COOL_SETTING_IFRAME_TS_JS) \
 		$(srcdir)/src \
 		$(srcdir)/js \
-		$(srcdir)/admin/src)
+		$(srcdir)/admin/src \
+		$(srcdir)/setting_iframe/src)
 
 prettier:
 	$(call run_prettier_check,--check \
 		$(srcdir)/src \
 		$(srcdir)/js \
-		$(srcdir)/admin/src)
+		$(srcdir)/admin/src \
+		$(srcdir)/setting_iframe/src)
 
 prettier-write:
 	$(call run_prettier_check,--write \
 		$(srcdir)/src \
 		$(srcdir)/js \
-		$(srcdir)/admin/src)
+		$(srcdir)/admin/src \
+		$(srcdir)/setting_iframe/src)
 
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
 DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
