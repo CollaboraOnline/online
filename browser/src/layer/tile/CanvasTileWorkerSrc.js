@@ -56,8 +56,11 @@ if ('undefined' === typeof window) {
 						deltas.length,
 					);
 
+					// The main thread has no use for the concatenated rawDelta, delete it here
+					// instead of passing it back.
+					delete tile.rawDelta;
+
 					decompressed.push(tile);
-					buffers.push(tile.rawDelta.buffer);
 					buffers.push(tile.deltas.buffer);
 				}
 
