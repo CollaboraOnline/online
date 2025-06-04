@@ -83,6 +83,32 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     processURI();
 }
 
+RequestDetails::RequestDetails(http::Request& request, const std::string& serviceRoot)
+{
+    // Check and remove the ServiceRoot from the request.getURI()
+    if (!request.getUrl().starts_with(serviceRoot))
+        throw BadRequestException("The request does not start with prefix: " + serviceRoot);
+
+    // re-writes ServiceRoot out of request
+    _uriString = request.getUrl().substr(serviceRoot.length());
+    dehexify();
+    request.setUrl(_uriString);
+    const std::string& method = request.getVerb();
+    _isGet = method == "GET";
+    _isHead = method == "HEAD";
+    _isProxy = request.header().has("ProxyPrefix");
+    if (_isProxy)
+        _proxyPrefix = request.header().get("ProxyPrefix");
+    _isWebSocket = Util::iequal(request.header().get("Upgrade"), "websocket");
+    _closeConnection =
+        !request.isKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
+    // request.getHost fires an exception on mobile.
+    if constexpr (!Util::isMobileApp())
+        _hostUntrusted = request.get("Host");
+
+    processURI();
+}
+
 RequestDetails::RequestDetails(const std::string &mobileURI)
     : _isGet(true)
     , _isHead(false)

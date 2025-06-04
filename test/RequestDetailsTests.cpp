@@ -68,6 +68,10 @@ void RequestDetailsTests::testDownloadURI()
         LOK_ASSERT_EQUAL(std::string("src"), details[2]);
         LOK_ASSERT_EQUAL(std::string("map"), details[3]);
         LOK_ASSERT_EQUAL(std::string("Clipboard.js"), details[4]);
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -88,6 +92,10 @@ void RequestDetailsTests::testDownloadURI()
         LOK_ASSERT(details.equals(0, "browser"));
         LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
         LOK_ASSERT_EQUAL(std::string("select2.css"), details[2]);
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 }
 
@@ -125,6 +133,10 @@ void RequestDetailsTests::testCoolURI()
                                  "2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&"
                                  "title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1"),
                      details[3]);
+
+    http::Request request2(URI);
+    request2.set("Host", Root);
+    LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
 }
 
 void RequestDetailsTests::testLocal()
@@ -180,6 +192,12 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
         LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -225,6 +243,12 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -270,6 +294,12 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 }
 
@@ -325,6 +355,12 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
         LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -363,6 +399,12 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -401,6 +443,12 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 }
 
@@ -518,6 +566,12 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "close"));
         LOK_ASSERT_EQUAL(std::string("31"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "31"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -594,6 +648,12 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "write"));
         LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "2"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -639,6 +699,12 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -678,6 +744,12 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 
     {
@@ -759,6 +831,12 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        LOK_ASSERT_EQUAL(details, RequestDetails(request2, ""));
     }
 }
 

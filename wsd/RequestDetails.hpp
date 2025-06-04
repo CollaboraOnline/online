@@ -14,10 +14,11 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 
+#include <common/Log.hpp>
 #include <common/StringVector.hpp>
 #include <common/Uri.hpp>
 #include <common/Util.hpp>
-#include <common/Log.hpp>
+#include <net/HttpRequest.hpp>
 
 /**
  * A class to encapsulate various useful pieces from the request.
@@ -129,8 +130,8 @@ private:
     void processURI();
 
 public:
-
     RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot);
+    RequestDetails(http::Request& request, const std::string& serviceRoot);
     RequestDetails(const std::string &mobileURI);
 
     /// Constructs from its components.
