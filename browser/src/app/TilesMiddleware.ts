@@ -135,12 +135,34 @@ class PaneBorder {
 	}
 }
 
+class RawDelta {
+	private _delta: Uint8Array;
+	private _wireId: number;
+
+	constructor(delta: Uint8Array, wireId: number) {
+		this._delta = delta;
+		this._wireId = wireId;
+	}
+
+	public get length() {
+		return this.delta.length;
+	}
+
+	public get delta() {
+		return this._delta;
+	}
+
+	public get wireId() {
+		return this._wireId;
+	}
+}
+
 class Tile {
 	coords: TileCoordData;
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	image: ImageBitmap | null = null; // ImageBitmap ready to render
 	imgDataCache: any = null; // flat byte array of image data
-	rawDeltas: any[] = []; // deltas ready to decompress
+	rawDeltas: RawDelta[] = []; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
 	loadCount: number = 0; // how many times did we get a new keyframe
@@ -272,7 +294,7 @@ class TileManager {
 		for (const tile of this.tiles.values()) {
 			if (tile.image) ++n_bitmaps;
 			if (tile.distanceFromView === 0) ++n_current;
-			totalSize += tile.rawDeltas.reduce((a, c) => a + c.byteLength, 0);
+			totalSize += tile.rawDeltas.reduce((a, c) => a + c.length, 0);
 		}
 		let mismatch = '';
 		if (n_bitmaps != this.tileBitmapList.length)
@@ -333,7 +355,7 @@ class TileManager {
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
 			// cause flickering, and the same would happen for tiles with pending deltas.
 			if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
-				totalSize += tile.rawDeltas.reduce((a, c) => a + c.byteLength, 0);
+				totalSize += tile.rawDeltas.reduce((a, c) => a + c.length, 0);
 				tileCount++;
 			}
 		}
@@ -357,10 +379,7 @@ class TileManager {
 					tile.distanceFromView !== 0 &&
 					!tile.hasPendingDelta
 				) {
-					const rawDeltaSize = tile.rawDeltas.reduce(
-						(a, c) => a + c.byteLength,
-						0,
-					);
+					const rawDeltaSize = tile.rawDeltas.reduce((a, c) => a + c.length, 0);
 					totalSize -= rawDeltaSize;
 					if (this.debugDeltas)
 						window.app.console.log(
@@ -610,7 +629,7 @@ class TileManager {
 
 	private static applyCompressedDelta(
 		tile: Tile,
-		rawDeltas: any[],
+		rawDeltas: RawDelta[],
 		isKeyframe: any,
 		wireMessage: any,
 	) {
@@ -620,11 +639,11 @@ class TileManager {
 			);
 
 		const rawDelta = new Uint8Array(
-			rawDeltas.reduce((a, c) => a + c.byteLength, 0),
+			rawDeltas.reduce((a, c) => a + c.length, 0),
 		);
 		rawDeltas.reduce((a, c) => {
-			rawDelta.set(c, a);
-			return a + c.byteLength;
+			rawDelta.set(c.delta, a);
+			return a + c.length;
 		}, 0);
 
 		var e = {
@@ -2011,10 +2030,11 @@ class TileManager {
 			// Store the compressed tile data for later decompression and
 			// display. This lets us store many more tiles than if we were
 			// to only store the decompressed tile data.
+			const rawDelta = new RawDelta(img.rawData, tile.wireId);
 			if (img.isKeyframe) {
-				tile.rawDeltas = [img.rawData];
+				tile.rawDeltas = [rawDelta];
 			} else if (tile.hasKeyframe()) {
-				tile.rawDeltas.push(img.rawData);
+				tile.rawDeltas.push(rawDelta);
 			} else {
 				window.app.console.warn(
 					'Unusual: attempt to append a delta when we have no keyframe.',
@@ -2031,8 +2051,7 @@ class TileManager {
 			if (shouldDecompressDelta) {
 				if (!img.isKeyframe && tile.needsRehydration())
 					this.rehydrateTile(tile);
-				else
-					this.applyCompressedDelta(tile, [img.rawData], img.isKeyframe, true);
+				else this.applyCompressedDelta(tile, [rawDelta], img.isKeyframe, true);
 			}
 		}
 
