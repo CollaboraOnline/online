@@ -568,14 +568,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 }
             }
 
-            std::streamsize size = request.getContentLength();
-            std::vector<char> buffer(size);
-            message.read(buffer.data(), size);
             localFile->fileLastModifiedTime = std::chrono::system_clock::now();
 
-            std::ofstream outfile;
-            outfile.open(localFile->localPath, std::ofstream::binary);
-            outfile.write(buffer.data(), size);
+            std::ofstream outfile(localFile->localPath, std::ofstream::binary);
+            std::copy_n(std::istreambuf_iterator<char>(message), request.getContentLength(),
+                        std::ostreambuf_iterator<char>(outfile));
             outfile.close();
 
             std::string body = "{\"LastModifiedTime\": \"" +
@@ -807,9 +804,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 const std::string& type = splitStr[1];
                 const std::string& fileName = splitStr[3];
 
-                std::vector<char> buffer(size);
-                message.read(buffer.data(), size);
-
                 std::string dirPath = "test/data/presets/";
                 if (type == "userconfig")
                     dirPath.append("user");
@@ -818,12 +812,14 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
                 Poco::File(dirPath).createDirectories();
 
-                LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << dirPath << ']');
-                std::ofstream outfile;
+                LOG_DBG("Saving uploaded file [" << fileName << "] to directory [" << dirPath
+                                                 << ']');
                 dirPath.push_back('/');
                 dirPath.append(fileName);
-                outfile.open(dirPath, std::ofstream::binary);
-                outfile.write(buffer.data(), size);
+
+                std::ofstream outfile(dirPath, std::ofstream::binary);
+                std::copy_n(std::istreambuf_iterator<char>(message), size,
+                            std::ostreambuf_iterator<char>(outfile));
                 outfile.close();
 
                 std::string timestamp =
