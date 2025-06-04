@@ -651,6 +651,19 @@ public:
         return _header.get(key, def);
     }
 
+    /// True if we are a Keep-Alive request.
+    bool isKeepAlive() const
+    {
+        const std::string token = get(Header::CONNECTION);
+        if (!token.empty())
+        {
+            return !Util::iequal("close", token);
+        }
+
+        // 1.1 and newer are reusable by default (i.e. keep-alive).
+        return _version != "HTTP/1.0";
+    }
+
     /// Set the request body source to upload some data. Meaningful for POST.
     /// Size is needed to set the Content-Length.
     void setBodySource(IoReadFunc bodyReaderCb, int64_t size)
