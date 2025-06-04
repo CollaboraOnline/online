@@ -509,8 +509,8 @@ namespace
             }
         }
 
-        assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
+        assert(fpath[sourceForLinkOrCopy.size()] == '/');
+        const char* relativeOldPath = fpath + sourceForLinkOrCopy.size() + 1;
         const Poco::Path newPath(destinationForLinkOrCopy, Poco::Path(relativeOldPath));
 
         switch (typeflag)
@@ -648,8 +648,8 @@ namespace
         }
 
         assert(path.size() >= sourceForGCDAFiles.size());
-        assert(fpath[strlen(sourceForGCDAFiles.c_str())] == '/');
-        const char* relativeOldPath = fpath + strlen(sourceForGCDAFiles.c_str()) + 1;
+        assert(fpath[sourceForGCDAFiles.size()] == '/');
+        const char* relativeOldPath = fpath + sourceForGCDAFiles.size() + 1;
         const Poco::Path newPath(destForGCDAFiles, Poco::Path(relativeOldPath));
 
         switch (typeflag)
