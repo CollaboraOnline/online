@@ -137,6 +137,25 @@ class SettingIframe {
 		}
 	}
 
+	private validateJsonFile(file: File): Promise<any> {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = (event) => {
+				try {
+					const content = event.target?.result as string;
+					const jsonData = JSON.parse(content);
+					resolve(jsonData);
+				} catch (error) {
+					reject(new Error(_('Invalid JSON file')));
+				}
+			};
+			reader.onerror = () => {
+				reject(new Error(_('Error reading file')));
+			};
+			reader.readAsText(file);
+		});
+	}
+
 	private insertConfigSections(): void {
 		const sharedConfigsContainer = document.getElementById('allConfigSection');
 		if (!sharedConfigsContainer) return;
@@ -214,7 +233,7 @@ class SettingIframe {
 					fileInput.click();
 				});
 
-				fileInput.addEventListener('change', () => {
+				fileInput.addEventListener('change', async () => {
 					if (fileInput.files?.length) {
 						if (cfg.uploadPath === this.PATH.wordBookUpload()) {
 							this.wordbook.wordbookValidation(
@@ -224,16 +243,27 @@ class SettingIframe {
 						} else {
 							let file = fileInput.files[0];
 
-							// We don't allow users to upload the Interface (browser) settings file with a different name,
-							// as we use the static name 'browsersetting.json' on the coolwsd side to upload/update browser settings.
-							if (
-								cfg.uploadPath === this.PATH.browserSettingsUpload() &&
-								file.name !== 'browsersetting.json'
-							) {
-								file = new File([file], 'browsersetting.json', {
-									type: file.type,
-									lastModified: file.lastModified,
-								});
+							if (cfg.uploadPath === this.PATH.browserSettingsUpload()) {
+								try {
+									await this.validateJsonFile(file);
+								} catch (error) {
+									SettingIframe.showErrorModal(
+										_(
+											'Interface settings file is not valid JSON. Please check the file and try again.',
+										),
+									);
+
+									return;
+								}
+
+								// We don't allow users to upload the Interface (browser) settings file with a different name,
+								// as we use the static name 'browsersetting.json' on the coolwsd side to upload/update browser settings.
+								if (file.name !== 'browsersetting.json') {
+									file = new File([file], 'browsersetting.json', {
+										type: file.type,
+										lastModified: file.lastModified,
+									});
+								}
 							}
 							this.uploadFile(cfg.uploadPath, file);
 						}
