@@ -172,10 +172,10 @@ class Tile {
 	viewId: number = 0; // canonical view id
 	wireId: number = 0; // monotonic timestamp for optimizing fetch
 	invalidFrom: number = 0; // a wireId - for avoiding races on invalidation
+	lastPendingId: number = 0; // the wireId of the last delta requested to be decompressed
+	decompressedId: number = 0; // the wireId of the last decompressed delta chunk in imgDataCache
 	lastRendered: number = performance.timeOrigin;
 	private lastRequestTime: Date = undefined; // when did we last do a tilecombine request.
-	hasPendingDelta: number = 0;
-	hasPendingKeyframe: number = 0;
 
 	constructor(coords: TileCoordData) {
 		this.coords = coords;
@@ -190,17 +190,17 @@ class Tile {
 	}
 
 	needsRehydration(): boolean {
-		return (
-			!this.imgDataCache && this.hasPendingKeyframe === 0 && this.hasKeyframe()
-		);
+		if (this.rawDeltas.length === 0) return false;
+		const lastWireId = this.rawDeltas[this.rawDeltas.length - 1].wireId;
+		return this.lastPendingId !== lastWireId && this.hasKeyframe();
 	}
 
 	hasKeyframe(): boolean {
 		return !!this.rawDeltas.length && this.rawDeltas[0].length > 0;
 	}
 
-	hasPendingUpdate(): boolean {
-		return this.hasPendingDelta > 0 || this.hasPendingKeyframe > 0;
+	isReady(): boolean {
+		return this.decompressedId === this.lastPendingId;
 	}
 
 	/// Demand a whole tile back to the keyframe from coolwsd.
@@ -351,10 +351,10 @@ class TileManager {
 		var totalSize = 0;
 		var tileCount = 0;
 		for (const tile of this.tiles.values()) {
-			// Don't count size of tiles that are visible or that have pending deltas. We don't have
+			// Don't count size of tiles that are visible. We don't have
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
-			// cause flickering, and the same would happen for tiles with pending deltas.
-			if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
+			// cause flickering.
+			if (tile.distanceFromView !== 0) {
 				totalSize += tile.rawDeltas.reduce((a, c) => a + c.length, 0);
 				tileCount++;
 			}
@@ -377,7 +377,7 @@ class TileManager {
 				if (
 					tile.rawDeltas.length &&
 					tile.distanceFromView !== 0 &&
-					!tile.hasPendingDelta
+					tile.isReady()
 				) {
 					const rawDeltaSize = tile.rawDeltas.reduce((a, c) => a + c.length, 0);
 					totalSize -= rawDeltaSize;
@@ -387,6 +387,8 @@ class TileManager {
 						);
 					this.reclaimTileBitmapMemory(tile);
 					tile.rawDeltas = [];
+					tile.decompressedId = 0;
+					tile.lastPendingId = 0;
 					tile.forceKeyframe();
 				}
 			}
@@ -400,9 +402,7 @@ class TileManager {
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles.get(key);
-				if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
-					this.removeTile(keys[i]);
-				}
+				if (tile.distanceFromView !== 0) this.removeTile(keys[i]);
 			}
 		}
 	}
@@ -477,11 +477,9 @@ class TileManager {
 			if (!tile) continue;
 
 			this.setBitmapOnTile(tile, bitmap);
+			tile.decompressedId = delta.wireIds[1];
 
-			if (delta.isKeyframe) --tile.hasPendingKeyframe;
-			else --tile.hasPendingDelta;
-
-			if (!tile.hasPendingUpdate()) this.tileReady(tile.coords, visibleRanges);
+			if (tile.isReady()) this.tileReady(tile.coords, visibleRanges);
 		}
 
 		if (this.pendingTransactions <= 0)
@@ -504,11 +502,7 @@ class TileManager {
 			// Check if all current tiles are accounted for and resume drawing if so.
 			let shouldUnpause = true;
 			for (const tile of this.tiles.values()) {
-				if (
-					tile.distanceFromView === 0 &&
-					!tile.needsFetch() &&
-					tile.hasPendingUpdate()
-				) {
+				if (tile.distanceFromView === 0 && !tile.isReady()) {
 					shouldUnpause = false;
 					break;
 				}
@@ -536,15 +530,9 @@ class TileManager {
 			);
 			deltas.push(delta);
 		} else {
-			// This is an error state, tiles should not have a null ImageData
-			// after a keyframe or delta update. It's still a good idea to maintain
-			// correct properties for a chance at recovery and continuing in a
-			// coherent state.
-			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
-			if (delta.isKeyframe) --tile.hasPendingKeyframe;
-			else --tile.hasPendingDelta;
-			if (!tile.hasPendingUpdate())
-				this.tileReady(tile.coords, this.getVisibleRanges());
+			window.app.console.warn(
+				'Unusual: Tried to create a tile bitmap with no image data',
+			);
 		}
 	}
 
@@ -632,6 +620,7 @@ class TileManager {
 		rawDeltas: RawDelta[],
 		isKeyframe: any,
 		wireMessage: any,
+		wireIds: number[],
 	) {
 		if (this.inTransaction === 0)
 			window.app.console.warn(
@@ -651,9 +640,10 @@ class TileManager {
 			rawDelta: rawDelta,
 			isKeyframe: isKeyframe,
 			wireMessage: wireMessage,
+			wireIds: wireIds,
 		};
-		if (isKeyframe) ++tile.hasPendingKeyframe;
-		else ++tile.hasPendingDelta;
+		tile.lastPendingId = wireIds[1];
+
 		this.pendingDeltas.push(e);
 	}
 
@@ -1001,20 +991,34 @@ class TileManager {
 	private static makeTileCurrent(tile: Tile): boolean {
 		tile.distanceFromView = 0;
 		tile.allowFastRequest();
+		this.rehydrateTile(tile, false);
 
-		if (tile.needsRehydration()) this.rehydrateTile(tile);
-
-		return tile.hasPendingUpdate();
+		return !tile.isReady();
 	}
 
-	private static rehydrateTile(tile: Tile) {
-		if (tile.hasKeyframe() && tile.hasPendingKeyframe === 0) {
+	private static rehydrateTile(tile: Tile, wireMessage: boolean) {
+		if (tile.needsRehydration()) {
 			// Re-hydrate tile from cached raw deltas.
 			if (this.debugDeltas)
 				window.app.console.log(
 					'Restoring a tile from cached delta at ' + tile.coords.key(),
 				);
-			this.applyCompressedDelta(tile, tile.rawDeltas, true, false);
+			let firstDelta = 0;
+			if (tile.lastPendingId !== 0) {
+				const continuedIdIndex = tile.rawDeltas.findIndex(
+					(d) => d.wireId === tile.lastPendingId,
+				);
+				if (continuedIdIndex !== -1) firstDelta = continuedIdIndex + 1;
+			}
+			const rawDeltas = tile.rawDeltas.slice(firstDelta);
+			const lastWireId = tile.rawDeltas[tile.rawDeltas.length - 1].wireId;
+			this.applyCompressedDelta(
+				tile,
+				rawDeltas,
+				firstDelta === 0,
+				wireMessage,
+				[tile.rawDeltas[firstDelta].wireId, lastWireId],
+			);
 		}
 	}
 
@@ -1197,11 +1201,7 @@ class TileManager {
 		const tile = this.tiles.get(key);
 		if (!tile) return;
 
-		if (
-			!tile.hasContent() &&
-			tile.hasPendingKeyframe === 0 &&
-			this.emptyTilesCount > 0
-		)
+		if (!tile.hasContent() && this.emptyTilesCount > 0)
 			this.emptyTilesCount -= 1;
 
 		this.reclaimTileBitmapMemory(tile);
@@ -2005,12 +2005,7 @@ class TileManager {
 		// keyframe content in JS but coolwsd still thinks we have
 		// it and now we just have a delta with nothing to apply
 		// it to; if so, mark it bad to re-fetch.
-		if (
-			img &&
-			!img.isKeyframe &&
-			!tile.hasKeyframe() &&
-			tile.hasPendingKeyframe === 0
-		) {
+		if (img && !img.isKeyframe && !tile.hasKeyframe()) {
 			window.app.console.debug(
 				'Unusual: Delta sent - but we have no keyframe for ' + key,
 			);
@@ -2041,18 +2036,9 @@ class TileManager {
 				);
 			}
 
-			// Only decompress deltas for tiles that are either current, have image data or
-			// have a pending update (so will imminently have image data). This stops
+			// Only decompress deltas for tiles that are current. This stops
 			// prefetching from blowing past GC limits.
-			const shouldDecompressDelta =
-				tile.distanceFromView === 0 ||
-				tile.imgDataCache ||
-				tile.hasPendingUpdate();
-			if (shouldDecompressDelta) {
-				if (!img.isKeyframe && tile.needsRehydration())
-					this.rehydrateTile(tile);
-				else this.applyCompressedDelta(tile, [rawDelta], img.isKeyframe, true);
-			}
+			if (tile.distanceFromView === 0) this.rehydrateTile(tile, true);
 		}
 
 		this.queueAcknowledgement(tileMsgObj);
@@ -2183,6 +2169,20 @@ class TileManager {
 							'Tile deleted during rawDelta decompression.',
 						);
 						continue;
+					}
+
+					// Check if the tile delta range is valid.
+					if (tile.decompressedId !== 0) {
+						const i = tile.rawDeltas.findIndex(
+							(d) => d.wireId === tile.decompressedId,
+						);
+						if (i === -1 || tile.rawDeltas[i + 1].wireId !== x.wireIds[0]) {
+							window.app.console.warn(
+								'Unusual: Received discontinuous or unknown decompressed delta',
+							);
+							tile.lastPendingId = tile.decompressedId;
+							continue;
+						}
 					}
 
 					let keyframeImage = null;
@@ -2445,8 +2445,7 @@ class TileManager {
 			app.map._debug.tileDataAddInvalidate();
 		}
 
-		if (!tile.hasContent() && tile.hasPendingKeyframe === 0)
-			this.removeTile(key);
+		if (!tile.hasContent()) this.removeTile(key);
 		else {
 			if (this.debugDeltas)
 				window.app.console.debug(
