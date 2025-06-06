@@ -27,6 +27,7 @@
 #include <Poco/AutoPtr.h>
 #include <Poco/FileChannel.h>
 #include <Poco/Logger.h>
+#include <Poco/Version.h>
 
 #include "Log.hpp"
 #include "Util.hpp"
@@ -79,7 +80,17 @@ public:
             break;
 #undef MAP
         }
-        log(text, prio);
+
+        if (getLevel() < prio)
+            return;
+#if POCO_VERSION >= 0x010D0000
+        Poco::Channel* pChannel = getChannel().get();
+#else
+        auto pChannel = getChannel();
+#endif
+        if (!pChannel)
+            return;
+        pChannel->log(Poco::Message(name(), text, prio));
     }
 
     static Log::Level mapToLevel(Poco::Message::Priority prio)
