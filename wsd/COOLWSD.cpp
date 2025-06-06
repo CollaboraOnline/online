@@ -387,6 +387,14 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
     writeTraceEventRecording(recording.data(), recording.length());
 }
 
+#if !MOBILEAPP
+static ssize_t getInteractiveDocBrokerCount()
+{
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+    return DocBrokers.size() - ConvertToBroker::getInstanceCount();
+}
+#endif
+
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
 #if !MOBILEAPP
@@ -396,8 +404,8 @@ void COOLWSD::checkSessionLimitsAndWarnClients()
     if (COOLWSD::MaxDocuments >= 10000)
         return;
 
-    ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
-    if (docBrokerCount > static_cast<ssize_t>(COOLWSD::MaxDocuments) || COOLWSD::NumConnections >= COOLWSD::MaxConnections)
+    if (getInteractiveDocBrokerCount() > static_cast<ssize_t>(COOLWSD::MaxDocuments) ||
+        COOLWSD::NumConnections >= COOLWSD::MaxConnections)
     {
         std::ostringstream oss;
         oss << "info: cmd=socket kind=limitreached params=" << COOLWSD::MaxDocuments << ","
