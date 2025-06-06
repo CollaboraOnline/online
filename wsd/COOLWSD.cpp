@@ -554,6 +554,8 @@ static void forkChildren(const std::string& configId, const int number)
     }
 }
 
+bool queueMessageToForKit(const std::string& message);
+
 bool COOLWSD::ensureSubForKit(const std::string& configId)
 {
     if (Util::isKitInProcess())
@@ -572,9 +574,7 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 
     const std::string aMessage = "addforkit " + configId + '\n';
     LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-    COOLWSD::sendMessageToForKit(aMessage);
-
-    return true;
+    return queueMessageToForKit(aMessage);
 }
 
 /// Cleans up dead children.
@@ -846,46 +846,68 @@ public:
 
 #if !MOBILEAPP
     // Resets the forkit process object
-    void setForKitProcess(const std::weak_ptr<ForKitProcess>& forKitProc)
+    void setForKitProcess(const std::shared_ptr<ForKitProcess>& forKitProc)
     {
         assertCorrectThread(__FILE__, __LINE__);
         _forKitProc = forKitProc;
+        if (forKitProc && !_queuedSendMessages.empty())
+        {
+            for (const auto& msg : _queuedSendMessages)
+                sendMessageToForKit(msg, forKitProc);
+            _queuedSendMessages.clear();
+        }
     }
 
     void sendMessageToForKit(const std::string& msg,
-                             const std::weak_ptr<ForKitProcess>& proc)
+                             const std::weak_ptr<ForKitProcess>& proc,
+                             bool queueIfUnavailable = false)
     {
         if (std::this_thread::get_id() == getThreadOwner())
         {
             // Speed up sending the message if the request comes from owner thread
-            std::shared_ptr<ForKitProcess> forKitProc = proc.lock();
-            if (forKitProc)
-            {
-                forKitProc->sendTextFrame(msg);
-            }
+            doSendMessage(msg, proc, queueIfUnavailable);
         }
         else
         {
             // Put the message in the owner's thread queue to be send later
             // because WebSocketHandler is not thread safe and otherwise we
             // should synchronize inside WebSocketHandler.
-            addCallback([proc, msg]{
-                std::shared_ptr<ForKitProcess> forKitProc = proc.lock();
-                if (forKitProc)
-                {
-                    forKitProc->sendTextFrame(msg);
-                }
+            addCallback([this, msg, proc, queueIfUnavailable]{
+                doSendMessage(msg, proc, queueIfUnavailable);
             });
         }
     }
 
     void sendMessageToForKit(const std::string& msg)
     {
-        sendMessageToForKit(msg, _forKitProc);
+        sendMessageToForKit(msg, _forKitProc, false);
+    }
+
+    void queueMessageToForKit(const std::string& msg)
+    {
+        sendMessageToForKit(msg, _forKitProc, true);
     }
 
 private:
     std::weak_ptr<ForKitProcess> _forKitProc;
+    std::vector<std::string> _queuedSendMessages;
+
+    void doSendMessage(const std::string& msg,
+                       const std::weak_ptr<ForKitProcess>& proc,
+                       bool queueIfUnavailable)
+    {
+        std::shared_ptr<ForKitProcess> forKitProc = proc.lock();
+        if (forKitProc)
+            forKitProc->sendTextFrame(msg);
+        else if (queueIfUnavailable)
+        {
+            _queuedSendMessages.push_back(msg);
+            LOG_TRC("queued forkit message: [" << msg << "]. " << _queuedSendMessages.size() << " in queue.");
+        }
+        else
+            LOG_DBG("dropping forkit message: " << msg);
+    }
+
 #endif
 };
 
@@ -1186,6 +1208,14 @@ COOLWSD::~COOLWSD()
 }
 
 #if !MOBILEAPP
+
+bool queueMessageToForKit(const std::string& message)
+{
+    if (!PrisonerPoll)
+        return false;
+    PrisonerPoll->queueMessageToForKit(message);
+    return true;
+}
 
 void COOLWSD::requestTerminateSpareKits()
 {
