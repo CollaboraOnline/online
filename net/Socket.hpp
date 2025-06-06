@@ -1000,11 +1000,11 @@ public:
     typedef std::function<void()> CallbackFn;
 
     /// Add a callback to be invoked in the polling thread
-    void addCallback(const CallbackFn& fn)
+    void addCallback(CallbackFn fn)
     {
         std::lock_guard<std::mutex> lock(_mutex);
         const bool wasEmpty = taskQueuesEmpty();
-        _newCallbacks.emplace_back(fn);
+        _newCallbacks.emplace_back(std::move(fn));
         if (wasEmpty)
             wakeup();
     }

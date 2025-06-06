@@ -1071,18 +1071,19 @@ void SocketDisposition::execute()
             // Ensure the thread is running before adding callback.
             _toPoll->startThread();
         }
-        _toPoll->addCallback(
-            [pollCopy = _toPoll, socket = std::move(_socket),
-             socketMoveFn = std::move(_socketMove)]() mutable
-            {
-                pollCopy->insertNewSocket(socket);
-                socketMoveFn(socket);
-                // Clear lambda's socket capture while in the polling thread
-                socket = nullptr;
-            });
 
+        auto callback = [pollCopy = _toPoll, socket = std::move(_socket),
+                         socketMoveFn = std::move(_socketMove)]() mutable
+        {
+            pollCopy->insertNewSocket(socket);
+            socketMoveFn(socket);
+            // Clear lambda's socket capture while in the polling thread
+            socket = nullptr;
+        };
         _socketMove = nullptr;
         _socket = nullptr;
+
+        _toPoll->addCallback(std::move(callback));
         _toPoll = nullptr;
     }
 }
