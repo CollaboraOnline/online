@@ -393,9 +393,11 @@ void COOLWSD::checkSessionLimitsAndWarnClients()
     if constexpr (ConfigUtil::isSupportKeyEnabled())
         return;
 
+    if (COOLWSD::MaxDocuments >= 10000)
+        return;
+
     ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
-    if (COOLWSD::MaxDocuments < 10000 &&
-        (docBrokerCount > static_cast<ssize_t>(COOLWSD::MaxDocuments) || COOLWSD::NumConnections >= COOLWSD::MaxConnections))
+    if (docBrokerCount > static_cast<ssize_t>(COOLWSD::MaxDocuments) || COOLWSD::NumConnections >= COOLWSD::MaxConnections)
     {
         std::ostringstream oss;
         oss << "info: cmd=socket kind=limitreached params=" << COOLWSD::MaxDocuments << ","
