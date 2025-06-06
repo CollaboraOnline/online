@@ -6,12 +6,12 @@
  */
 package org.libreoffice.androidlib;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.ByteArrayInputStream;
@@ -19,22 +19,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class COWebViewClient extends WebViewClient {
     int serial;
+
+    ExecutorService socketMessageExecutor = Executors.newFixedThreadPool(1);
 
     @Nullable
     @Override
@@ -146,14 +145,19 @@ public class COWebViewClient extends WebViewClient {
     public void sendMessage(byte[] message, PipedOutputStream output) throws IOException {
         this.serial = this.serial + 1;
 
-        byte[] serialString = Integer.toString(this.serial).getBytes();
-        // Not sure how we "stick to the format" if our messages aren't binary...
+        byte[] serialString = Integer.toString(this.serial, 16).getBytes();
+        byte[] sizeString = Integer.toString(message.length, 16).getBytes();
+
         ByteBuffer packet = ByteBuffer.allocate(
             1 /* type */
-            + (2 * 2) /* preambles */
+            + 2 /* hexadecimal preamble */
             + serialString.length
-            + 2 /* EOM newlines */
+            + 1 /* hexadecimal end */
+            + 2 /* hexadecimal preamble */
+            + sizeString.length
+            + 1 /* hexadecimal end */
             + message.length
+            + 1 /* message end */
         );
         Boolean binary = false;
 
@@ -171,11 +175,14 @@ public class COWebViewClient extends WebViewClient {
         packet.put((byte)'x');
 
         packet.put(serialString);
-        packet.put((byte)'\n'); // End of first line
+        packet.put((byte)'\n'); // End of serial
 
         // Preamble
         packet.put((byte)'0');
         packet.put((byte)'x');
+
+        packet.put(sizeString);
+        packet.put((byte)'\n'); // End of size
 
         packet.put(message);
         packet.put((byte)'\n'); // End of message
@@ -220,7 +227,13 @@ public class COWebViewClient extends WebViewClient {
                     PipedOutputStream output = new PipedOutputStream();
                     data = new PipedInputStream(output);
 
-                    flushMessageBuffer(output);
+                    socketMessageExecutor.execute(() -> {
+                        try {
+                            flushMessageBuffer(output);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

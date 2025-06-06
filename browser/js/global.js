@@ -1179,6 +1179,8 @@ function getInitializerClass() {
 				if (type != 'T' && type != 'B')
 				{
 					global.app.console.debug('wrong data type: ' + type);
+					global.app.console.debug(`full data: ${arr}`);
+					global.app.console.debug(`position: ${i}`);
 					break;
 				}
 				i++;
