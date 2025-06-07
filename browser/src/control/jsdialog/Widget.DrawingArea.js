@@ -40,10 +40,15 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.tabIndex = 0;
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
-	image.setAttribute('data-cooltip', data.text);
 
-	if (builder.map) {
-		L.control.attachTooltipEventListener(image, builder.map);
+	if (data.text) {
+		image.setAttribute('data-cooltip', data.text);
+
+		if (builder.map) {
+			L.control.attachTooltipEventListener(image, builder.map);
+		}
+	} else if (data.aria && data.aria.label) {
+		image.setAttribute('aria-label', data.aria.label);
 	}
 
 	// Line width dialog is affected from delay on image render.
