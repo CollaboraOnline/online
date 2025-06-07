@@ -1054,7 +1054,7 @@ public:
     }
 
     /// If not already in done state, finish with State::Error.
-    void finish()
+    void error()
     {
         // We expect to have completed successfully, or timed out,
         // anything else means we didn't get complete data.
@@ -1724,7 +1724,7 @@ private:
 
         _connected = false;
         if (_response)
-            _response->finish();
+            _response->error();
 
         _fd = -1; // No longer our socket fd.
     }
