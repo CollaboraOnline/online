@@ -1081,7 +1081,7 @@ void SocketDisposition::execute()
             socket = nullptr;
         };
         _socketMove = nullptr;
-        _socket = nullptr;
+        assert(!_socket && "should be unset after move");
 
         _toPoll->addCallback(std::move(callback));
         _toPoll = nullptr;
