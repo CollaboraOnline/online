@@ -952,20 +952,20 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
 			const isImage = this.sectionProperties.svg.querySelectorAll('.Graphic').length > 0;
 			if (viewBox && clientRect.width > 0 && clientRect.height > 0 && !isImage) {
-				this.sectionProperties.svg.children[0].style.width = (width / app.dpiScale) + 'px';
-				this.sectionProperties.svg.children[0].style.height = (height / app.dpiScale) + 'px';
+				this.sectionProperties.svg.children[0].style.width = width + 'px';
+				this.sectionProperties.svg.children[0].style.height = height + 'px';
 
 				const widthPixelRatio = viewBox[2] / width;
 				const heightPixelRatio = viewBox[3] / height;
 
-				left = (viewBox[0] / widthPixelRatio) / app.dpiScale;
-				top = (viewBox[1] / heightPixelRatio) / app.dpiScale;
+				left = (viewBox[0] / widthPixelRatio);
+				top = (viewBox[1] / heightPixelRatio);
 			}
 			else {
 				left = (this.position[0] / app.dpiScale);
 				top = (this.position[1] / app.dpiScale);
-				const widthText = (this.size[0] / app.dpiScale) + 'px';
-				const heightText = (this.size[1] / app.dpiScale) + 'px';
+				const widthText = this.size[0] + 'px';
+				const heightText = this.size[1] + 'px';
 
 				this.sectionProperties.svg.style.width = widthText;
 				this.sectionProperties.svg.style.height = heightText;
