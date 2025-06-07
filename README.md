@@ -115,7 +115,7 @@ See the corresponding web pages:
 ### Releases and pre-releases
 
 Releases and pre-release builds are made from the
-`distro/collabora/co-24.04-mobile` branch. Releases for Android and iOS are
+`distro/collabora/co-25.04-mobile` branch. Releases for Android and iOS are
 generally built from the same commit, and are tagged as a release on GitHub.
 
 Android snapshots are automatically built once a week, but may be built more
@@ -123,19 +123,19 @@ frequently if there's something new to test. iOS testflight builds are
 exclusively built when there is something new to test. Pre-release builds are
 not tagged in GitHub.
 
-### Getting changes into 24.04-mobile
+### Getting changes into 25.04-mobile
 
 You should still develop against `master`, even if you're working on
 mobile-only features. Changes made in `master` will be moved into the
-`distro/collabora/co-24.04` branch according to the release schedule. Changes
-from the `distro/collabora/co-24.04` branch are then regularly cherry-picked
-into the `distro/collabora/co-24.04-mobile` branch.
+`distro/collabora/co-25.04` branch according to the release schedule. Changes
+from the `distro/collabora/co-25.04` branch are then regularly cherry-picked
+into the `distro/collabora/co-25.04-mobile` branch.
 
 If you have a change which you want to get into mobile snapshots or releases
 more quickly, you should still develop it against `master`. When it's merged
 into `master`, you should make a backport pull request against
-`distro/collabora/co-24.04-mobile`. Please don't make pull requests directly
-against `distro/collabora/co-24.04-mobile` (i.e. without the change first being
+`distro/collabora/co-25.04-mobile`. Please don't make pull requests directly
+against `distro/collabora/co-25.04-mobile` (i.e. without the change first being
 merged into `master`).
 
 ## GitPod
