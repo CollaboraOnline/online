@@ -34,6 +34,7 @@
 #include <Poco/Util/Application.h>
 
 #include <Common.hpp>
+#include <Globals.hpp>
 #include <Protocol.hpp>
 #include "COOLWebSocket.hpp"
 #include <Log.hpp>

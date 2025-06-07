@@ -14,6 +14,7 @@
 #include <common/Anonymizer.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Crypto.hpp>
+#include <common/Globals.hpp>
 #include <common/Util.hpp>
 
 #include <iostream>

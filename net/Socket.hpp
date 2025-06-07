@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <config.h>
+
 #if !MOBILEAPP
 #include <poll.h>
 #include <unistd.h>
@@ -279,7 +281,7 @@ public:
     /// Note: the upper limit is set via /proc/sys/net/core/wmem_max,
     /// and there is an unconfigurable lower limit as well.
     /// Returns true on success only.
-    bool setSocketBufferSize(const int size)
+    bool setSocketBufferSize([[maybe_unused]] const int size)
     {
 #if !MOBILEAPP
         int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
