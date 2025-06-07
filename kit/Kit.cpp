@@ -2212,6 +2212,11 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     return _loKitDocument;
 }
 
+int Document::getViewsCount() const
+{
+    return _loKitDocument ? _loKitDocument->getViewsCount() : 0;
+}
+
 bool Document::forwardToChild(const std::string_view prefix, const std::vector<char>& payload)
 {
     assert(Util::isFuzzing() || payload.size() > prefix.size());
