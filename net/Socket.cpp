@@ -1078,10 +1078,10 @@ void SocketDisposition::execute()
             pollCopy->insertNewSocket(socket);
             socketMoveFn(socket);
             // Clear lambda's socket capture while in the polling thread
-            socket = nullptr;
+            socket.reset();
         };
         _socketMove = nullptr;
-        _socket = nullptr;
+        assert(!_socket && "should be unset after move");
 
         _toPoll->addCallback(std::move(callback));
         _toPoll = nullptr;
