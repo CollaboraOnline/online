@@ -447,6 +447,10 @@ L.Map.Keyboard = L.Handler.extend({
 					this._map.setPart(0);
 				else if (!ev.altKey && ev.keyCode === this.keyCodes.END)
 					this._map.setPart(this._map._docLayer._parts - 1);
+				else {
+					this._handleCtrlCommand(ev);
+					return;
+				}
 			}
 			else {
 				this._map._docLayer._preview.partsFocused = false;
