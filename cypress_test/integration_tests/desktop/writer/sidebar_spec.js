@@ -65,4 +65,22 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.cGet('#expand_other').should('exist');
 	});
 
+	it('Focus on the first focusable child', function() {
+		cy.cGet('#sidebar-dock-wrapper').then(function(sidebar) {
+			helper.containsFocusElement(sidebar[0], false);
+		});
+
+		// Hide
+		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+		// Show
+		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('#sidebar-panel').should('be.visible');
+		cy.cGet('#sidebar-panel').should('not.be.empty');
+
+		cy.cGet('#sidebar-dock-wrapper').then(function(sidebar) {
+			helper.containsFocusElement(sidebar[0], true)
+		});
+	});
 });
