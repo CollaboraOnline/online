@@ -151,10 +151,6 @@ int getCurrentThreadCount()
 
 _LibreOfficeKit* loKitPtr = nullptr;
 
-/// Used for test code to accelerating waiting until idle and to
-/// flush sockets with a 'processtoidle' -> 'idle' reply.
-static std::chrono::steady_clock::time_point ProcessToIdleDeadline;
-
 static bool EnableWebsocketURP = false;
 static int URPStartCount = 0;
 
@@ -2425,23 +2421,6 @@ std::vector<TilePrioritizer::ViewIdInactivity> Document::getViewIdsByInactivity(
     return viewIds;
 }
 
-// poll is idle, are we ?
-void Document::checkIdle()
-{
-    // FIXME: can have Idle CallbackFlushHandler work in the core.
-
-    if (!processInputEnabled() || hasQueueItems())
-    {
-        LOG_TRC("Nearly idle - but have more queued items to process");
-        return; // more to do
-    }
-
-    sendTextFrame("idle");
-
-    // get rid of idle check for now.
-    ProcessToIdleDeadline = std::chrono::steady_clock::now() - std::chrono::milliseconds(10);
-}
-
 bool Document::processInputEnabled() const
 {
     bool enabled = !_websocketHandler || _websocketHandler->processInputEnabled();
@@ -2556,13 +2535,6 @@ void Document::drainQueue()
             else if (tokens.startsWith(0, "child-"))
             {
                 forwardToChild(tokens[0], input);
-            }
-            else if (tokens.equals(0, "processtoidle"))
-            {
-                ProcessToIdleDeadline = std::chrono::steady_clock::now();
-                uint32_t timeoutUs = 0;
-                if (tokens.getUInt32(1, "timeout", timeoutUs))
-                    ProcessToIdleDeadline += std::chrono::microseconds(timeoutUs);
             }
             else if (tokens.equals(0, "callback"))
             {
@@ -3023,9 +2995,6 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
 
     auto startTime = std::chrono::steady_clock::now();
 
-    // handle processtoidle waiting optimization
-    bool checkForIdle = ProcessToIdleDeadline >= startTime;
-
     if (timeoutMicroS < 0)
     {
         // Flush at most 1 + maxExtraEvents, or return when nothing left.
@@ -3034,9 +3003,6 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     }
     else
     {
-        if (checkForIdle)
-            timeoutMicroS = 0;
-
         // Flush at most maxEvents+1, or return when nothing left.
         _pollEnd = startTime + std::chrono::microseconds(timeoutMicroS);
         do
@@ -3055,21 +3021,6 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
                 std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
             ++eventsSignalled;
         } while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
-    }
-
-    if (_document && checkForIdle && eventsSignalled == 0 && timeoutMicroS > 0 &&
-        !hasCallbacks() && !hasBuffered())
-    {
-        auto remainingTime = ProcessToIdleDeadline - startTime;
-        LOG_TRC(
-            "Poll of "
-            << timeoutMicroS << " vs. remaining time of: "
-            << std::chrono::duration_cast<std::chrono::microseconds>(remainingTime).count());
-        // would we poll until then if we could ?
-        if (remainingTime < std::chrono::microseconds(timeoutMicroS))
-            _document->checkIdle();
-        else
-            LOG_TRC("Poll of would not close gap - continuing");
     }
 
     drainQueue();
