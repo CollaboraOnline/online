@@ -498,10 +498,16 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     }
 }
 
+std::string UnitBase::getReason() const
+{
+    std::lock_guard<std::mutex> guard(_lock);
+    return _reason;
+}
+
 std::string UnitKit::getResultMessage() const
 {
     assert(isFinished());
-    return std::string("unitresult: ") + std::string(nameShort(_result)) + " " + _reason;
+    return std::string("unitresult: ") + std::string(nameShort(_result)) + " " + getReason();
 }
 
 void UnitWSD::processUnitResult(const StringVector &tokens)
