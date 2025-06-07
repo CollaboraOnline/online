@@ -707,6 +707,23 @@ void launchAsyncCheckFileInfo(
     }
 }
 
+static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket,
+                                     ssize_t headerSize,
+                                     ssize_t contentSize,
+                                     bool servedSync)
+{
+    if( socket->getInBuffer().size() > 0 ) // erase request from inBuffer if not cleared by ignoreInput
+    {
+        // Remove the request header from our input buffer
+        socket->eraseFirstInputBytes(headerSize);
+        if (servedSync)
+        {
+            // Remove the request body from our input buffer, as it has been served (synchronously)
+            // See cool#9621, commit 895c224efae9c21f0481e2fbf024a015656a5a97 and cool#10042
+            socket->eraseFirstInputBytes(contentSize);
+        }
+    }
+}
 
 void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& disposition)
 {
@@ -725,7 +742,51 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), socket->getInBuffer().size());
+    const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+    std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
+
+    Poco::Net::HTTPRequest request;
+    ssize_t headerSize;
+
+    if (_postContentPending)
+    {
+        std::streamsize available = std::min<std::streamsize>(_postContentPending,
+                                                              socket->getInBuffer().size());
+        _postStream.write(socket->getInBuffer().data(), available);
+        socket->eraseFirstInputBytes(available);
+        _postContentPending -= available;
+        if (_postContentPending)
+        {
+            // not complete, accumulate more
+            return;
+        }
+
+        ssize_t messageSize = _postStream.tellp();
+        _postStream.seekg(0);
+
+        headerSize = socket->readHeader("Client", _postStream, messageSize, request, delayMs);
+        if (headerSize < 0)
+        {
+            // something rotten happened
+            socket->asyncShutdown();
+            socket->ignoreInput();
+        }
+        else
+        {
+            socket->handleExpect(request);
+
+            _postStream.seekg(0);
+            handleFullMessage(request, _postStream, disposition, socket, headerSize, messageSize - headerSize, false, now);
+        }
+
+        _postStream.close();
+        _postFileDir.reset();
+
+        return;
+    }
+
+    size_t inBufferSize = socket->getInBuffer().size();
+    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), inBufferSize);
 
 #if 0 // debug a specific command's payload
         if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
@@ -737,26 +798,136 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
 #endif
 
-    Poco::Net::HTTPRequest request;
+    headerSize = socket->readHeader("Client", startmessage, inBufferSize, request, delayMs);
+    if (headerSize < 0)
+        return;
+
+    assert(!_postStream.is_open() && !_postFileDir && !_postContentPending);
+
+    // start streaming condition
+    const bool canStreamToFile =
+        request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST &&
+        request.getContentLength() != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH &&
+        !request.getChunkedTransferEncoding(); // ignore chunked transfer for now
+
+    if (canStreamToFile && request.getContentLength() > 0)
+    {
+        _postFileDir = std::make_unique<FileUtil::OwnedFile>(FileUtil::createRandomTmpDir(
+                    COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH) + '/', true);
+        std::string postFilename = _postFileDir->_file + "poststream";
+        _postStream.open(postFilename.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+        if (!_postStream)
+        {
+            LOG_ERR("Unable to open [" << postFilename << "] for POST streaming");
+            _postFileDir.reset();
+        }
+        else
+        {
+            _postStream.write(socket->getInBuffer().data(), headerSize);
+            socket->eraseFirstInputBytes(headerSize);
+            _postContentPending = request.getContentLength();
+            return;
+        }
+    }
 
     StreamSocket::MessageMap map;
-    if (!socket->parseHeader("Client", startmessage, request, _lastSeenHTTPHeader, map))
+    if (!socket->parseHeader("Client", headerSize, inBufferSize, request, delayMs, map))
         return;
+
+    socket->handleExpect(request);
+
+    if (!socket->checkChunks(request, headerSize, map, delayMs))
+        return;
+
+    // We may need to re-write the chunks moving the inBuffer.
+    socket->compactChunks(map);
+
+    Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
+    handleFullMessage(request, message, disposition, socket, map._headerSize, map._messageSize - map._headerSize, true, now);
+
+#else // !MOBILEAPP
+    Poco::Net::HTTPRequest request;
+
+#ifdef IOS
+    // The URL of the document is sent over the FakeSocket by the code in
+    // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
+    // HULLO message from the JavaScript in global.js.
+
+    // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
+    char* space = strchr(socket->getInBuffer().data(), ' ');
+    assert(space != nullptr);
+
+    // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
+    // its end, it might be followed in memory by more digits. Is there really no better way to
+    // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
+    // buffer?
+    const size_t appDocIdLen =
+        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
+    char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
+    memcpy(appDocIdBuffer, space + 1, appDocIdLen);
+    appDocIdBuffer[appDocIdLen] = '\0';
+    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
+    free(appDocIdBuffer);
+
+    handleClientWsUpgrade(
+        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
+        disposition, socket, appDocId);
+#else // IOS
+    handleClientWsUpgrade(
+        request,
+        RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
+        disposition, socket);
+#endif // !IOS
+    socket->getInBuffer().clear();
+#endif // MOBILEAPP
+}
+
+#if !MOBILEAPP
+void ClientRequestDispatcher::handleFullMessage(Poco::Net::HTTPRequest& request,
+                                                std::istream& message,
+                                                SocketDisposition& disposition,
+                                                const std::shared_ptr<StreamSocket>& socket,
+                                                ssize_t headerSize,
+                                                ssize_t contentSize,
+                                                bool eraseMessageFromSocket,
+                                                std::chrono::steady_clock::time_point now)
+{
+    const size_t preInBufferSz = socket->getInBuffer().size();
+
+    _lastSeenHTTPHeader = now;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
     LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
-    const size_t preInBufferSz = socket->getInBuffer().size();
+
+    ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
+    if (result == MessageResult::Ignore)
+        return;
+
+    assert(result == MessageResult::ServedSync || result == MessageResult::ServedAsync);
+    bool servedSync = result == MessageResult::ServedSync;
+
+    if (eraseMessageFromSocket)
+        socketEraseConsumedBytes(socket, headerSize, contentSize, servedSync);
+
+    finishedMessage(request, socket, servedSync, preInBufferSz);
+}
+
+ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Poco::Net::HTTPRequest& request,
+                                                                              std::istream& message,
+                                                                              SocketDisposition& disposition,
+                                                                              const std::shared_ptr<StreamSocket>& socket,
+                                                                              ssize_t headerSize)
+{
+    const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
+    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
 
     // denotes whether the request has been served synchronously
     bool servedSync = false;
 
     try
     {
-        // We may need to re-write the chunks moving the inBuffer.
-        socket->compactChunks(map);
-        Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
-        message.seekg(startmessage.tellg(), std::ios::beg);
+        message.seekg(headerSize, std::ios::beg);
 
         // re-write ServiceRoot and cache.
         RequestDetails requestDetails(request, COOLWSD::ServiceRoot);
@@ -903,7 +1074,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
                 socket->sendAndShutdown(httpResponse);
                 socket->ignoreInput();
-                return;
+                return MessageResult::Ignore;
             }
 
             FileServerRequestHandler::hstsHeaders(*response);
@@ -980,7 +1151,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
                 // Bad request.
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-                return;
+                return MessageResult::Ignore;
             }
 
             // Tunnel to WASM.
@@ -993,7 +1164,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
             // Bad request.
             HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-            return;
+            return MessageResult::Ignore;
         }
     }
     catch (const BadRequestException& ex)
@@ -1004,7 +1175,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
         // Bad request.
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-        return;
+        return MessageResult::Ignore;
     }
     catch (const std::exception& exc)
     {
@@ -1018,20 +1189,17 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         httpResponse.set("Content-Length", "0");
         socket->sendAndShutdown(httpResponse);
         socket->ignoreInput();
-        return;
+        return MessageResult::Ignore;
     }
 
-    if( socket->getInBuffer().size() > 0 ) // erase request from inBuffer if not cleared by ignoreInput
-    {
-        // Remove the request header from our input buffer
-        socket->eraseFirstInputBytes(map._headerSize);
-        if (servedSync)
-        {
-            // Remove the request body from our input buffer, as it has been served (synchronously)
-            // See cool#9621, commit 895c224efae9c21f0481e2fbf024a015656a5a97 and cool#10042
-            socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
-        }
-    }
+    return servedSync ? MessageResult::ServedSync : MessageResult::ServedAsync;
+}
+
+void ClientRequestDispatcher::finishedMessage(const Poco::Net::HTTPRequest& request,
+                                              const std::shared_ptr<StreamSocket>& socket,
+                                              bool servedSync, size_t preInBufferSz)
+{
+    const bool closeConnection = !request.getKeepAlive();
 
     if (servedSync && closeConnection && !socket->isShutdown())
     {
@@ -1043,49 +1211,12 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         socket->ignoreInput();
     }
     else
-        LOG_DBG("Handled request: " << request.getURI() << ", inBuf[sz " << preInBufferSz << " -> "
-                                    << socket->getInBuffer().size() << ", rm "
-                                    << (preInBufferSz - socket->getInBuffer().size())
-                                    << "], connection open: " << socket->isOpen());
-
-#else // !MOBILEAPP
-    Poco::Net::HTTPRequest request;
-
-#ifdef IOS
-    // The URL of the document is sent over the FakeSocket by the code in
-    // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
-    // HULLO message from the JavaScript in global.js.
-
-    // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
-    char* space = strchr(socket->getInBuffer().data(), ' ');
-    assert(space != nullptr);
-
-    // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
-    // its end, it might be followed in memory by more digits. Is there really no better way to
-    // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
-    // buffer?
-    const size_t appDocIdLen =
-        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
-    char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
-    memcpy(appDocIdBuffer, space + 1, appDocIdLen);
-    appDocIdBuffer[appDocIdLen] = '\0';
-    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
-    free(appDocIdBuffer);
-
-    handleClientWsUpgrade(
-        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
-        disposition, socket, appDocId);
-#else // IOS
-    handleClientWsUpgrade(
-        request,
-        RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
-        disposition, socket);
-#endif // !IOS
-    socket->getInBuffer().clear();
-#endif // MOBILEAPP
+        LOG_DBG("Handled request: " << request.getURI()
+                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
+                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
+                << "], connection open " << !socket->isShutdown());
 }
 
-#if !MOBILEAPP
 bool ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDetails,
                                                 const std::shared_ptr<StreamSocket>& socket)
 {
