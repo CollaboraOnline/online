@@ -158,7 +158,7 @@ public:
 
 private:
     /// The only instance of the Anonymizer per process.
-    static inline std::unique_ptr<Anonymizer> _instance;
+    static std::unique_ptr<Anonymizer> _instance;
 
     /// The map of plain to anonymized strings.
     std::unordered_map<std::string, std::string> _map;

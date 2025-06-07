@@ -337,7 +337,7 @@ coolconfig_SOURCES = tools/Config.cpp \
                     common/Log.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
-		     common/Util-unix.cpp \
+                    common/Util-unix.cpp \
                     common/Util.cpp
 
 coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
@@ -384,6 +384,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
                  common/Crypto.hpp \
+                 common/Globals.hpp \
                  common/HexUtil.hpp \
                  common/JsonUtil.hpp \
                  common/FileUtil.hpp \
@@ -393,6 +394,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/Protocol.hpp \
                  common/RegexUtil.hpp \
                  common/StateEnum.hpp \
+                 common/StaticLogHelper.hpp \
                  common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \

@@ -10,6 +10,7 @@
  */
 #include "config.h"
 #include "Common.hpp"
+#include "Globals.hpp"
 #include "Kit.hpp"
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;

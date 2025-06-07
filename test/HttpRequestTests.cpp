@@ -17,6 +17,7 @@
 #include <net/SslSocket.hpp>
 #endif // ENABLE_SSL
 #include <common/FileUtil.hpp>
+#include <common/Globals.hpp>
 #include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/DelaySocket.hpp>

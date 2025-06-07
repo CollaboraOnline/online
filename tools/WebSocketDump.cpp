@@ -13,6 +13,7 @@
 
 #include <config.h>
 
+#include <common/Globals.hpp>
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
