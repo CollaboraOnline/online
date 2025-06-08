@@ -1711,17 +1711,61 @@ The same as .unoarrow to replace the old .png bitmap arrow*/
 
 /* progressbar */
 .ui-progressbar {
-	display: flex;
-	align-items: center;
-}
-
-.ui-progressbar progress {
+	position: relative;
+	height: 4px !important;
+	background-color: rgba(var(--doc-type), 0.2);
 	width: 100%;
+	overflow: hidden;
 }
 
 .snackbar .ui-progressbar progress {
 	min-width: 120px;
 	margin-right: 10px;
+}
+
+.ui-progressbar progress {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-progressbar progress::-webkit-progress-bar {
+	background: transparent;
+}
+
+.ui-progressbar progress::-webkit-progress-value {
+	background: transparent;
+}
+
+.ui-progressbar progress::-moz-progress-bar {
+	background: transparent;
+}
+
+.ui-progressbar::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgb(var(--doc-type));
+	animation: indeterminateAnimation 1s infinite linear;
+	transform-origin: 0% 50%;
+	z-index: 0;
+	pointer-events: none;
+}
+
+@keyframes indeterminateAnimation {
+	0% {
+		transform: translateX(0) scaleX(0);
+	}
+	40% {
+		transform: translateX(0) scaleX(0.4);
+	}
+	100% {
+		transform: translateX(100%) scaleX(0.5);
+	}
 }
 
 /* snackbar */
