@@ -1362,10 +1362,13 @@ public:
     bool sendAndShutdown(http::Response& response);
 
     /// Safely attempt to write any outgoing data.
-    inline void attemptWrites()
+    /// Returns true iff no data is left in the buffer.
+    inline bool attemptWrites()
     {
         if (!_outBuffer.empty())
             writeOutgoingData();
+
+        return _outBuffer.empty();
     }
 
 #if !MOBILEAPP
