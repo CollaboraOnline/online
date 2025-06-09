@@ -60,11 +60,9 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
         of << newgid << " " << origgid << " 1";
     }
 }
-#endif // __linux__
 
 bool enterMountingNS(uid_t uid, gid_t gid)
 {
-#ifdef __linux__
     // Put this process into its own user and mount namespace.
     if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
     {
@@ -88,16 +86,10 @@ bool enterMountingNS(uid_t uid, gid_t gid)
     mapuser(uid, 0, gid, 0);
 
     return true;
-#else
-    (void)uid;
-    (void)gid;
-    return false;
-#endif
 }
 
 bool enterUserNS(uid_t uid, gid_t gid)
 {
-#ifdef __linux__
     if (unshare(CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
@@ -112,12 +104,9 @@ bool enterUserNS(uid_t uid, gid_t gid)
     assert(getegid() == gid);
 
     return true;
-#else
-    (void)uid;
-    (void)gid;
-    return false;
-#endif
 }
+
+#endif // __linux__
 
 bool coolmount(const std::string& arg, std::string source, std::string target, bool silent = false)
 {
