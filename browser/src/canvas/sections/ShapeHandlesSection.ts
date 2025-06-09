@@ -937,46 +937,26 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	adjustSVGProperties() {
 		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && GraphicSelection.hasActiveSelection()) {
-
-			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
-			let width: number = clientRect.width;
-			let height: number = clientRect.height;
-
-			if (app.map._docLayer._docType !== 'presentation') {
-				width *= app.getScale();
-				height *= app.getScale();
-			}
-
-			let left = 0, top = 0;
+			const widthText = GraphicSelection.rectangle.cWidth + 'px';
+			const heightText = GraphicSelection.rectangle.cHeight + 'px';
 
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
 			const isImage = this.sectionProperties.svg.querySelectorAll('.Graphic').length > 0;
-			if (viewBox && clientRect.width > 0 && clientRect.height > 0 && !isImage) {
-				this.sectionProperties.svg.children[0].style.width = (width / app.dpiScale) + 'px';
-				this.sectionProperties.svg.children[0].style.height = (height / app.dpiScale) + 'px';
 
-				const widthPixelRatio = viewBox[2] / width;
-				const heightPixelRatio = viewBox[3] / height;
-
-				left = (viewBox[0] / widthPixelRatio) / app.dpiScale;
-				top = (viewBox[1] / heightPixelRatio) / app.dpiScale;
+			if (viewBox || isImage) {
+				this.sectionProperties.svg.children[0].style.width = widthText;
+				this.sectionProperties.svg.children[0].style.height = heightText;
 			}
 			else {
-				left = (this.position[0] / app.dpiScale);
-				top = (this.position[1] / app.dpiScale);
-				const widthText = (this.size[0] / app.dpiScale) + 'px';
-				const heightText = (this.size[1] / app.dpiScale) + 'px';
-
 				this.sectionProperties.svg.style.width = widthText;
 				this.sectionProperties.svg.style.height = heightText;
-				if (isImage) {
-					this.sectionProperties.svg.children[0].setAttribute('width', widthText);
-					this.sectionProperties.svg.children[0].setAttribute('height', heightText);
-				}
 			}
 
-			this.sectionProperties.svg.style.left = (left - (this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (top - (this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			const left = GraphicSelection.rectangle.pX1;
+			const top = GraphicSelection.rectangle.pY1;
+
+			this.sectionProperties.svg.style.left = Math.round((left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svgPosition = [left, top];
 		}
 		this.hideSVG();
