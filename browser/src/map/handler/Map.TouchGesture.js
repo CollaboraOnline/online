@@ -507,6 +507,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		} else if (this._map.scrollingIsHandled === false) {
 			this._map.dragging._draggable._onMove(this._constructFakeEvent(point, 'mousemove'));
 		}
+
+		app.idleHandler.notifyActive();
 	},
 
 	_onPanEnd: function (e) {
@@ -566,6 +568,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map._docLayer.zoomStep) {
 			this._map._docLayer.zoomStep(this._zoom, this._origCenter);
 		}
+
+		app.idleHandler.notifyActive();
 	},
 
 	_onPinchEnd: function () {
@@ -646,6 +650,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._timeStamp = Date.now();
 		this._inSwipeAction = true;
 		this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this);
+
+		app.idleHandler.notifyActive();
 	},
 
 	_cancelAutoscrollRAF: function () {
