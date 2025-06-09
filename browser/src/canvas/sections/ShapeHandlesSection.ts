@@ -197,10 +197,23 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let topMiddle = this.sectionProperties.info.handles.kinds.rectangle['2'][0];
 		topMiddle = new cool.SimplePoint(parseInt(topMiddle.point.x), parseInt(topMiddle.point.y));
 
-		const center = GraphicSelection.rectangle.center; // number array in twips.
+		const center = this.getShapeCenter();
 
 		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
 		return radians - Math.PI * 0.5;
+	}
+
+	getShapeCenter(twips = true) {
+		let topLeft = this.sectionProperties.info.handles.kinds.rectangle['1'][0];
+		topLeft = new cool.SimplePoint(parseInt(topLeft.point.x), parseInt(topLeft.point.y));
+
+		let bottomRight = this.sectionProperties.info.handles.kinds.rectangle['8'][0];
+		bottomRight = new cool.SimplePoint(parseInt(bottomRight.point.x), parseInt(bottomRight.point.y));
+
+		if (twips)
+			return [Math.round((topLeft.x + bottomRight.x) / 2), Math.round((topLeft.y + bottomRight.y) / 2)]; // number array in twips.
+		else
+			return [Math.round((topLeft.pX + bottomRight.pX) / 2), Math.round((topLeft.pY + bottomRight.pY) / 2)]; // number array in core pixels.
 	}
 
 	/*
@@ -213,7 +226,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: GraphicSelection.rectangle.pCenter.slice(),
+			center: this.getShapeCenter(false),
 			height: this.getShapeHeight() * app.twipsToPixels,
 			width: this.getShapeWidth() * app.twipsToPixels
 		};
@@ -943,13 +956,20 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
 			const isImage = this.sectionProperties.svg.querySelectorAll('.Graphic').length > 0;
 
-			if (viewBox || isImage) {
+			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
+
+			if (viewBox && !isImage && clientRect.width > 0 && clientRect.height > 0) {
 				this.sectionProperties.svg.children[0].style.width = widthText;
 				this.sectionProperties.svg.children[0].style.height = heightText;
 			}
 			else {
 				this.sectionProperties.svg.style.width = widthText;
 				this.sectionProperties.svg.style.height = heightText;
+
+				if (isImage) {
+					this.sectionProperties.svg.children[0].style.width = widthText;
+					this.sectionProperties.svg.children[0].style.height = heightText;
+				}
 			}
 
 			const left = GraphicSelection.rectangle.pX1;
