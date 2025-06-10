@@ -120,6 +120,8 @@ window.app = {
 	events: null, // See app/DocEvents.ts for details.
 
 	showNavigator: false, // ShowNavigator class instance is assigned to this.
+
+	valuesets: {}, // It is used for store information about an item of a drawingarea widget
 };
 
 var activateValidation = false;
