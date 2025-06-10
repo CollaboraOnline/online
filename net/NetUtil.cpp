@@ -402,7 +402,7 @@ void AsyncDNS::resolveDNS()
 void AsyncDNS::addLookup(std::string lookup, DNSThreadFn cb, const DNSThreadDumpStateFn& dumpState)
 {
     std::unique_lock<std::mutex> guard(_lock);
-    _lookups.emplace(std::move(lookup), std::move(cb), dumpState);
+    _lookups.push({std::move(lookup), std::move(cb), dumpState});
     guard.unlock();
     _condition.notify_one();
 }
