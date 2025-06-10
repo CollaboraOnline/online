@@ -124,7 +124,7 @@ function _iconViewEntry(
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
-			$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
+			$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
 			if (singleClick) {
 				builder.callback(
@@ -136,9 +136,24 @@ function _iconViewEntry(
 				);
 			}
 		});
+
+		entryContainer.addEventListener('contextmenu', function (e: Event) {
+			$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
+			builder.callback('iconview', 'select', parentData, entry.row, builder);
+			$(entryContainer).addClass('selected');
+			builder.callback(
+				'iconview',
+				'contextmenu',
+				parentData,
+				entry.row,
+				builder,
+			);
+			e.preventDefault();
+		});
+
 		if (!singleClick) {
 			$(entryContainer).dblclick(function () {
-				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
+				$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
 				builder.callback(
 					'iconview',
 					'activate',
