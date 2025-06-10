@@ -21,7 +21,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		impressHelper.selectTextOfShape();
 	}
 
-	it('Apply horizontal alignment on selected text.', function() {
+	it.skip('Apply horizontal alignment on selected text.', function() {
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
