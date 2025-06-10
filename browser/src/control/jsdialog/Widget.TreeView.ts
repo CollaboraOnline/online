@@ -490,7 +490,9 @@ class TreeViewControl {
 			builder.options.cssClass + ' ui-treeview-cell-text',
 			parent,
 		);
-		cell.innerText = entry.columns[index].text || entry.text;
+		cell.innerText =
+			builder._cleanText(entry.columns[index].text) ||
+			builder._cleanText(entry.text);
 	}
 
 	createLinkCell(

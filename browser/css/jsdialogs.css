@@ -514,6 +514,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	justify-content: stretch;
 }
 
+.modalpopup .ui-treeview {
+	min-height: min-content;
+}
+
 .ui-treeview * {
 	border-radius: initial;
 }

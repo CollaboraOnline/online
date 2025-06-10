@@ -513,11 +513,12 @@ L.Control.JSDialog = L.Control.extend({
 				var childButton = parent.querySelector('[id=\'' + instance.clickToCloseId + '\']');
 				if (childButton)
 					parent = childButton;
-			} else if (instance.clickToCloseText && parent) { // treeview entry for context menu
-				var treeNodes = parent.querySelectorAll('span.ui-treeview-cell-text');
-				if (treeNodes && treeNodes.length) {
-					treeNodes = Array.from(treeNodes);
-					parent = treeNodes.find((value) => { return value.innerText == instance.clickToCloseText; });
+			} else if (instance.clickToCloseText && parent) {
+				var matchingElements;
+				if ((matchingElements = parent.querySelectorAll('span.ui-treeview-cell-text')).length) {// treeview entry for context menu
+					parent = Array.from(matchingElements).find((value) => value.innerText === instance.clickToCloseText);
+				} else if ((matchingElements = parent.querySelectorAll('div.ui-iconview-entry > img')).length) {// iconview entry for context menu
+					parent = Array.from(matchingElements).find((img) => img.title === instance.clickToCloseText);
 				}
 			}
 
