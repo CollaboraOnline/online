@@ -60,6 +60,16 @@ private:
         std::string query;
         AsyncDNS::DNSThreadFn cb;
         AsyncDNS::DNSThreadDumpStateFn dumpState;
+
+        Lookup()
+        {
+        }
+        Lookup(const std::string& q, const AsyncDNS::DNSThreadFn& c, const AsyncDNS::DNSThreadDumpStateFn& d)
+            : query(q),
+            cb(c),
+            dumpState(d)
+        {
+        }
     };
     std::queue<Lookup> _lookups;
     Lookup _activeLookup;
