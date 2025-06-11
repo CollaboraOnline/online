@@ -1078,6 +1078,7 @@ l10n: pot
 	for i in po/descriptions-*.po; do pot2po --input=po/templates/descriptions.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 
 clean-local:
+	@rm -rf $(MOCHA_JS_DIR)/*.js
 	@rm -rf $(DIST_FOLDER)
 	@rm -rf $(INTERMEDIATE_DIR)
 	@rm -rf node_modules
