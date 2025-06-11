@@ -27,21 +27,7 @@
 	transform: rotate(180deg);
 }
 
-/* Additions for the main menu. */
-.main-nav {
-	margin: 0;
-}
-.main-nav.hasnotebookbar {
-	overflow: visible; /*make sure #Menubar's contents are visible*/
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	flex-direction: row;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	align-items: center;
-}
+
 .hasnotebookbar {
 	overflow: auto hidden;
 	scrollbar-width: none;
@@ -90,9 +76,7 @@
 	word-wrap: nowrap;
 }
 
-.main-nav.readonly.hasnotebookbar .notebookbar-tabs-container {
-	display: none;
-}
+
 
 .hasnotebookbar #document-titlebar {
 	position: static;
@@ -101,22 +85,6 @@
 	width: auto;
 }
 
-.main-nav:not(.readonly) #document-name-input {
-	display: none;
-}
-
-.main-nav.readonly.hasnotebookbar #document-titlebar {
-	width: auto;
-}
-
-.main-nav.readonly.hasnotebookbar #document-name-input {
-	min-width: 100%;
-}
-
-.main-nav.readonly.hasnotebookbar #document-title-pencil {
-	min-width: var(--btn-size);
-	margin: 0;
-}
 
 #coolwsd-version span:before,
 #lokit-version > span:before {

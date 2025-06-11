@@ -12,6 +12,8 @@
 /**
  * Type for the toolbar button configuration.
  */
+
+
 interface ToolbarButton {
 	type: string;
 	uno: string;
@@ -78,14 +80,12 @@ class UIManager extends L.Control {
 				this.map.fire('editorgotfocus');
 		});
 
-		$('.main-nav').on('click', (event) => {
-			const target = event.target as HTMLElement;
-			if (target.parentElement?.nodeName === 'NAV' || // checks if clicked on an container of an element
-				target.nodeName === 'NAV' || // checks if clicked on navigation bar itself
-				target.parentElement?.id === 'document-titlebar') { // checks if clicked on the document titlebar container
-				this.map.fire('editorgotfocus');}
-		});
-		const mainNav = document.querySelector('.main-nav') as HTMLElement;
+		Control.menuAndTitleBar.registerMainNavClick(this.map);
+		const mainNav = Control.menuAndTitleBar.getMainNav();
+		if (mainNav) {
+	
+			mainNav.classList.add('hasnotebookbar');
+		}
 		mainNav.addEventListener('wheel', function(e: WheelEvent) {
 			const el = this as HTMLElement;
 
@@ -689,7 +689,7 @@ class UIManager extends L.Control {
 			this.removeNotebookbarUI();
 			this.createNotebookbarControl(this.map.getDocType());
 			if (this._map._permission === 'edit') {
-				$('.main-nav').removeClass('readonly');
+				Control.menuAndTitleBar.removeReadonlyClass();
 			}
 			$('#' + selectedTab).click();
 			this.makeSpaceForNotebookbar();
@@ -1057,7 +1057,7 @@ class UIManager extends L.Control {
 		this._menubarShouldBeHidden = false;
 		if (!this.isMenubarHidden())
 			return;
-		$('.main-nav').show();
+		Control.menuAndTitleBar.showMainNav();
 		if (L.Params.closeButtonEnabled && !window.mode.isTablet()) {
 			$('#closebuttonwrapper').show();
 			$('#closebuttonwrapperseparator').show();
@@ -1084,7 +1084,7 @@ class UIManager extends L.Control {
 		this.extendNotebookbar();  // The notebookbar has the button to show the menu bar, so having it hidden at the same time softlocks you
 		this._notebookbarShouldBeCollapsed = notebookbarWasCollapsed;
 
-		$('.main-nav').hide();
+		Control.menuAndTitleBar.hideMainNav();
 		if (L.Params.closeButtonEnabled) {
 			$('#closebuttonwrapper').hide();
 			$('#closebuttonwrapperseparator').hide();
@@ -1100,7 +1100,7 @@ class UIManager extends L.Control {
 	 * Returns whether the menubar is hidden.
 	 */
 	isMenubarHidden(): boolean {
-		return $('.main-nav').css('display') === 'none';
+		return Control.menuAndTitleBar.isMainNavHidden();
 	}
 
 	/**
