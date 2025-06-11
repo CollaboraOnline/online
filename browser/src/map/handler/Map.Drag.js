@@ -62,13 +62,15 @@ L.Map.Drag = L.Handler.extend({
 		var pos = this._map._getMapPanePos();
 		var size = this._map.getLayerMaxBounds().getSize().subtract(this._map.getSize());
 
+		this._draggable._newPos = this._draggable._newPos.add(this._dragEdgeOffset);
+
 		if (this._draggable._newPos.x !== pos.x) {
 			let clampedX = Math.max(
 				Math.min(org.x, this._draggable._newPos.x),
 				org.x - Math.max(size.x, 0)
 			);
-			this._dragEdgeOffset.x = Math.min(this._dragEdgeOffset.x, clampedX - this._draggable._newPos.x);
-			this._draggable._newPos.x = this._draggable._newPos.x + this._dragEdgeOffset.x;
+			this._dragEdgeOffset.x += clampedX - this._draggable._newPos.x;
+			this._draggable._newPos.x = clampedX;
 		}
 
 		if (this._draggable._newPos.y !== pos.y) {
@@ -76,8 +78,8 @@ L.Map.Drag = L.Handler.extend({
 				Math.min(org.y, this._draggable._newPos.y),
 				org.y - Math.max(size.y, 0)
 			);
-			this._dragEdgeOffset.y = Math.min(this._dragEdgeOffset.y, clampedY - this._draggable._newPos.y);
-			this._draggable._newPos.y = this._draggable._newPos.y + this._dragEdgeOffset.y;
+			this._dragEdgeOffset.y += clampedY - this._draggable._newPos.y;
+			this._draggable._newPos.y = clampedY;
 		}
 	},
 
