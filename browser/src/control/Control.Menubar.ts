@@ -2571,6 +2571,11 @@ class Menubar extends L.Control {
 		if (isReadOnly && !app.file.editComment) {
 			this._hiddenItems.push('insert');
 		}
+
+		if (!window.documentSigningEnabled) {
+			this._hiddenItems.push('signature');
+		}
+
 		for (var i in menu) {
 			if (this._checkItemVisibility(menu[i]) === false)
 				continue;
