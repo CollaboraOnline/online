@@ -40,7 +40,7 @@
     <string name="title_recents">Ifuyla ineggura</string>
     <string name="title_browser">Akk ifuyla</string>
     <string name="action_about">Ɣef</string>
-    <string name="action_settings">Iγewwaṛen</string>
+    <string name="action_settings">Iɣewwaren</string>
     <string name="open">Ldi</string>
     <string name="share">Bḍu</string>
     <string name="remove_from_list">Kkes si tebdart</string>
@@ -80,7 +80,7 @@
     <string name="current_dir">Akaram amiran: %1$s</string>
     <string name="title_permission_required">Tasiregt tlaq</string>
     <string name="reason_required_to_read_documents">Tasiregt n usekles tlaq i tɣuri n yisemliyen-k.</string>
-    <string name="positive_ok">Γas</string>
+    <string name="positive_ok">Ih</string>
     <string name="negative_im_sure">Tebteɣ</string>
     <string name="negative_cancel">Sefsex</string>
     <string name="action_cancel">Sefsex</string>
