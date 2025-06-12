@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-03-14 19:04+0000\n"
+"PO-Revision-Date: 2025-06-02 09:52+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -366,122 +366,133 @@ msgstr "Ydych chi'n siŵr eich bod eisiau cau'r gweinydd?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Hygyrchedd"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
-msgstr ""
+msgstr "Awtotestun"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Llwythwch ddarnau testun y mae modd eu hailddefnyddio (.bau). I fewnosod y "
+"testun yn eich dogfen, teipiwch y llwybr byr ar gyfer cofnod Awtotestun a "
+"phwyswch F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Llwytho Awtotestun i fyny"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Geiriaduron cyfaddas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Ychwanegu neu olygu geiriau mewn geiriadur gwirio sillafu. Bydd geiriau yn "
+"eich llyfr geiriau (.dic) ar gael ar gyfer gwirio sillafu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Llwytho Llyfr Geiriau i Fyny"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Interface"
-msgstr ""
+msgstr "Rhyngwyneb"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Gosod dewisiadau rhyngwyneb rhagosodedig."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Llwytho Ffurfweddiad i Fyny"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Document settings"
-msgstr ""
+msgstr "Gosodiadau'r ddogfen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Addasu sut mae dogfennau swyddfa yn ymddwyn."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Llwytho Xcu i Fyny"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:238
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Mae URL Ffurfweddu a Rennir ar goll yn y newidynnau cychwynnol."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:244
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Mae tocyn mynediad ar goll yn y newidynnau cychwynnol."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:273
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Aeth rhywbeth o'i le. Ceisiwch adnewyddu'r dudalen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Aeth rhywbeth o'i le wrth nôl ffeil y gosodiadau. Ceisiwch adnewyddu'r "
+"dudalen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Aeth rhywbeth o'i le wrth nôl y llyfr geiriau. Ceisiwch adnewyddu'r dudalen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:406
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"Aeth rhywbeth o'i le wrth lwytho'r ffeil i fyny. Rhowch gynnig arall arni."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:532
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Aeth rhywbeth o'i le wrth ddileu'r ffeil. Rhowch gynnig ar adnewyddu'r "
+"dudalen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Gweld Gosodiadau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Addasu gosodiadau golwg."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Dewis"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Rhybudd: Rhaid galluogi hygyrchedd gweinydd i doglo)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Ailosod i'r gosodiadau Golwg rhagosodedig"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Ydych chi'n siŵr eich bod chi eisiau ailosod Gosodiadau Golwg?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Cadw Gosodiadau'r Golwg"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -490,63 +501,63 @@ msgstr "Gwall"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Geiriadur safonol"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Mae geiriau'n cael eu hanwybyddu gan y gwiriydd sillafu"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Geiriadur eithriadau"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Mae geiriau eithriad wedi'u tanlinellu wrth wirio sillafu"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Wrthi'n llwytho Llyfr Geiriau..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Teipiwch i ychwanegu gair"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Ychwanegu"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Fformat geiriadur annilys. Gwiriwch y ffeil."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Aeth rhywbeth o'i le wrth lwytho y ffeil geiriadur i fyny"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Aeth rhywbeth o'i le wrth lwytho gosodiadau'r Ddogfen."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Gosodiadau Dogfen"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Dewiswch dab i weld gosodiadau."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Ailosod i osodiadau rhagosodedig y Ddogfen"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Ydych chi'n siŵr eich bod chi eisiau ailosod gosodiadau'r Ddogfen?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Cadw gosodiadau'r Ddogfen"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -711,13 +722,12 @@ msgid "Autosaved"
 msgstr "Wedi'i gadw'n awtomatig"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Golygu dogfen"
+msgstr "Golygu sylw"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Ateb sylw"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -738,9 +748,8 @@ msgid "Resolved"
 msgstr "Datryswyd"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Mae'r ddogfen yn cynnwys fideo heb ei gefnogi"
+msgstr "Mae'r ddogfen yn cynnwys cyfrwng heb ei gefnogi"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -772,7 +781,7 @@ msgstr "\"Dirprwy Araf\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Parth amser:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1263,7 +1272,7 @@ msgstr "Mewnosod Llofnod Electronig"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Ehangu'r Bar Fformiwla"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1271,7 +1280,7 @@ msgstr "Dewin Swyddogaeth"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Dewis Swyddogaeth"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1286,7 +1295,7 @@ msgstr "Derbyn"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Lleihau Bar Fformiwla"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1405,7 +1414,7 @@ msgstr "Iaith"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Heb ganfod unrhyw ganlyniadau chwilio!"
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -2067,11 +2076,11 @@ msgstr "Diwedd Graddiant"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Llywio"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Cau'r Llywio"
 
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
@@ -2080,12 +2089,12 @@ msgstr "Sleidiau"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
-msgstr ""
+msgstr "Amlinelliad"
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
 msgid "Navigator"
-msgstr ""
+msgstr "Llywiwr"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2460,13 +2469,12 @@ msgid "Picture"
 msgstr "Llun"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "rhagolwg o'r dudalen "
+msgstr "rhagolwg o dudalen %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Sleid %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3115,7 +3123,7 @@ msgstr "Cau"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Lliw anhysbys"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
@@ -3189,9 +3197,8 @@ msgid "Cell borders"
 msgstr "Borderi celloedd"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Mwy o ddewisiadau ar gyfer {name}"
+msgstr "Mwy o ddewisiadau ar gyfer {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
@@ -3748,6 +3755,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Mae gan eich porwr fynediad cyfyngedig iawn i'r clipfwrdd, felly defnyddiwch "
+"y botymau gludo ar eich bysellfwrdd ar y sgrin yn lle hynny."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3944,7 +3953,7 @@ msgstr "Chwyddo Allan"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Rhagolwg Sleid {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
