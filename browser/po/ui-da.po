@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-11 19:04+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-12 10:35+0000\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -403,7 +403,7 @@ msgstr "Upload ordbog"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Interface"
-msgstr "Grænseflade"
+msgstr "Brugergrænseflade"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Set default interface preferences."
@@ -474,8 +474,10 @@ msgid "Option"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
+#, fuzzy
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Advarsel: Servertilgængelighed skal være aktiveret for at kunne slå til/fra)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
@@ -854,8 +856,9 @@ msgid "Copy Cells"
 msgstr "Kopiér celler"
 
 #: src/control/Control.ContextMenu.js:286
+#, fuzzy
 msgid "Fill Series"
-msgstr ""
+msgstr "Udfyld serie"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1288,8 +1291,9 @@ msgid "Accept"
 msgstr "Accepter"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
+#, fuzzy
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Skjul formellinjen"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1584,7 +1588,7 @@ msgstr "Mørketilstand"
 #: src/control/Control.NotebookbarImpress.js:530
 #: src/control/Control.NotebookbarWriter.js:1579
 msgid "Invert Background"
-msgstr ""
+msgstr "Invertér baggrunden"
 
 #: src/control/Control.Menubar.ts:223 src/control/Control.Menubar.ts:848
 #: src/control/Control.NotebookbarCalc.js:2054
@@ -1617,7 +1621,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:267 src/control/Control.Menubar.ts:567
 #: src/control/Control.Menubar.ts:715 src/control/Control.Menubar.ts:872
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI Assistent"
 
 #: src/control/Control.Menubar.ts:308
 msgid "Text orientation"
@@ -1631,7 +1635,7 @@ msgstr "Referencer"
 #: src/control/Control.Menubar.ts:381
 #: src/control/Control.NotebookbarWriter.js:1939
 msgid "Update Index"
-msgstr ""
+msgstr "Opdatér indeks"
 
 #: src/control/Control.Menubar.ts:390
 #: src/control/Control.NotebookbarWriter.js:2036
@@ -1743,7 +1747,7 @@ msgstr "Send Feedback"
 #: src/control/Control.ServerAuditDialog.ts:196
 #: src/control/Control.ServerAuditDialog.ts:197
 msgid "Server audit"
-msgstr ""
+msgstr "Serverstatus"
 
 #: src/control/Control.Menubar.ts:471 src/control/Control.Menubar.ts:647
 #: src/control/Control.Menubar.ts:784 src/control/Control.Menubar.ts:1074
@@ -1832,7 +1836,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.ts:557
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Lokale multimedier..."
 
 #: src/control/Control.Menubar.ts:624 src/control/Control.Menubar.ts:1202
 #: src/control/Control.PresentationBar.js:127
@@ -1888,7 +1892,7 @@ msgstr "CSV fil (.csv)"
 #: src/control/Control.Menubar.ts:812
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktivt ark"
 
 #: src/control/Control.Menubar.ts:813 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:113
@@ -1933,13 +1937,13 @@ msgstr ""
 #: src/control/Control.Menubar.ts:951
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "Containing text..."
-msgstr ""
+msgstr "Indeholder tekst..."
 
 #: src/control/Control.Menubar.ts:953 src/control/Control.Menubar.ts:963
 #: src/control/jsdialog/Definitions.Menu.ts:337
 #: src/control/jsdialog/Definitions.Menu.ts:368
 msgid "More highlights..."
-msgstr ""
+msgstr "Flere markeringer..."
 
 #: src/control/Control.Menubar.ts:955
 #: src/control/jsdialog/Definitions.Menu.ts:341
@@ -2016,7 +2020,7 @@ msgstr "Brug kompakt visning"
 
 #: src/control/Control.Menubar.ts:1988
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Brug fanevisning"
 
 #: src/control/Control.Menubar.ts:2073
 msgid "Read-only mode"
@@ -2028,7 +2032,7 @@ msgstr "Indsæt figur"
 
 #: src/control/Control.Menubar.ts:2199
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "Signaturlinjen kan nu flyttes eller ændres efter behov."
 
 #: src/control/Control.Menubar.ts:2201
 msgid "Finish electronic signing"
@@ -2088,8 +2092,9 @@ msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
+#, fuzzy
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2370,7 +2375,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1290
 #: src/control/Control.NotebookbarWriter.js:1194
 msgid "Assistant"
-msgstr ""
+msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1506
 #: src/control/Control.NotebookbarCalc.js:2406
@@ -2382,7 +2387,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1130
 #: src/control/Control.NotebookbarWriter.js:2994
 msgid "Shapes"
-msgstr ""
+msgstr "Former"
 
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1245
@@ -2405,7 +2410,7 @@ msgstr "Lineal"
 
 #: src/control/Control.NotebookbarDraw.js:1071
 msgid "Page Layout"
-msgstr ""
+msgstr "Sidelayout"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"
@@ -2414,7 +2419,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:377
 #: src/control/Control.NotebookbarImpress.js:1029
 msgid "Presentation"
-msgstr ""
+msgstr "Præsentation"
 
 #: src/control/Control.NotebookbarImpress.js:385
 msgid "Present in Window"
@@ -2548,15 +2553,16 @@ msgstr "Ingen problemer fundet"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Advarsler:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
 msgstr "Tjek sikkerhedsadvarsler på din server"
 
 #: src/control/Control.ServerAuditDialog.ts:277
+#, fuzzy
 msgid "OPEN"
-msgstr ""
+msgstr "ÅBN"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2785,6 +2791,9 @@ msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokumentet indeholder nogle citater, som kan være utilgængelige gennem web-"
+"API. Det kan forårsage problemer, mens du redigerer citater eller "
+"bibliografi."
 
 #: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
@@ -2806,7 +2815,7 @@ msgstr "Sprog:"
 
 #: src/control/Control.Zotero.js:309
 msgid "Store as:"
-msgstr ""
+msgstr "Gem som:"
 
 #: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
@@ -3060,7 +3069,7 @@ msgstr "Indsæt lokalt billede"
 
 #: src/control/jsdialog/Definitions.Menu.ts:265
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Indsæt lokale multimedier"
 
 #: src/control/jsdialog/Definitions.Menu.ts:270
 msgid "Very Tight"
@@ -3184,7 +3193,7 @@ msgstr "Flere indstillinger for {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Overskrifter og objekter, som du tilføjer til dokumentet, vil vises her"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -3227,8 +3236,9 @@ msgid "LOKit version:"
 msgstr ""
 
 #: src/core/Socket.js:883
+#, fuzzy
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Dokument bliver migreret"
 
 #: src/core/Socket.js:910
 msgid "Session terminated by document owner"
@@ -3321,8 +3331,9 @@ msgid "Exported to storage"
 msgstr ""
 
 #: src/core/Socket.js:1398
+#, fuzzy
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Eksporteret succesfuldt: "
 
 #: src/core/Socket.js:1426
 msgid "Discard"
@@ -3355,8 +3366,9 @@ msgid "Reconnecting..."
 msgstr "Genetablerer forbindelse..."
 
 #: src/core/Socket.js:1739
+#, fuzzy
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Forbindelsen til serveren er blevet afbrudt."
 
 #: src/docdispatcher.ts:514
 msgid "Are you sure you want to delete this slide?"
@@ -3496,13 +3508,15 @@ msgstr ""
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Renser dokument fra forrige session."
 
 #: src/errormessages.js:38
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Vi er ved at rense dette dokument fra sidste session. Forsøg venligst igen "
+"senere."
 
 #: src/errormessages.js:39
 msgid ""
@@ -3542,12 +3556,16 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokumentet er for stort, eller der er ikke plads nok på harddisken til at "
+"gemme. Dokumentet vil nu være skrivebekyttet."
 
 #: src/errormessages.js:47
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Dokumentet kan ikke gemmes, fordi sessionen er udløbet. Genåbn venligst "
+"dokumentet for at fortsætte."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -3605,7 +3623,7 @@ msgstr "Upload af filen til server slog fejl, filen er for stor."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Uden for tabellen"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
@@ -3645,7 +3663,7 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} slettet"
 
 #: src/layer/marker/TextInput.js:451
 msgid "Screen reader support for text content is disabled. "
@@ -3669,7 +3687,7 @@ msgstr "Hjælp-fanen"
 
 #: src/layer/marker/TextInput.js:456
 msgid "the View menu"
-msgstr ""
+msgstr "menuen Vis"
 
 #: src/layer/tile/CanvasTileLayer.js:1581
 #, fuzzy
@@ -3712,6 +3730,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Din browser har meget begrænset adgang til udklipsholderen, så brug venligst "
+"Sæt ind-knapperne på dit skærmtastatur i stedet."
 
 #: src/map/Clipboard.js:1366
 #, fuzzy
@@ -3725,19 +3745,19 @@ msgstr ""
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
-msgstr ""
+msgstr "Sæt ind fra dette dokument"
 
 #: src/map/Clipboard.js:1388
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Anullér indsæt speciel"
 
 #: src/map/Clipboard.js:1410
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Din browser har meget begrænset adgang til udklipsholderen"
 
 #: src/map/Clipboard.js:1415
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Brug venligst følgende kombination for at se flere valgmuligheder:"
 
 #: src/map/Clipboard.js:1433
 msgid "Close popup to ignore paste special"
@@ -3855,7 +3875,7 @@ msgstr "Oprette en ny fil fra en skabelon..."
 
 #: src/map/handler/Map.WOPI.js:691
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Filnavnet skal indeholde en filendelse."
 
 #: src/map/handler/Map.WOPI.js:699
 msgid "Creating copy..."
@@ -3863,7 +3883,7 @@ msgstr "Oprette kopi..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Dialogen Velkommen"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
@@ -3924,7 +3944,7 @@ msgstr "Klik for at forlade præsentation..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Collabora Online Velkommen"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
@@ -3964,8 +3984,9 @@ msgid "Get Involved"
 msgstr "Bliv involveret"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
+#, fuzzy
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
