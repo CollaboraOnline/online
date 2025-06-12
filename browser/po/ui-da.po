@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 11:30+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-12 20:58+0000\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -2083,15 +2083,15 @@ msgstr "Luk navigation"
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Dias"
 
 #: src/control/Control.NavigatorPanel.ts:133
+#, fuzzy
 msgid "Outline"
-msgstr ""
+msgstr "Disposition"
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
-#, fuzzy
 msgid "Navigator"
 msgstr "Navigator"
 
@@ -2260,11 +2260,11 @@ msgstr "Tid"
 
 #: src/control/Control.NotebookbarCalc.js:623
 msgid "Scientific"
-msgstr ""
+msgstr "Videnskabelig"
 
 #: src/control/Control.NotebookbarCalc.js:624
 msgid "Fraction"
-msgstr ""
+msgstr "Brøk"
 
 #: src/control/Control.NotebookbarCalc.js:625
 msgid "Boolean Value"
@@ -2367,7 +2367,7 @@ msgstr "Statusbjælke"
 
 #: src/control/Control.NotebookbarCalc.js:1364
 msgid "Sparkline"
-msgstr ""
+msgstr "Mini-diagram"
 
 #: src/control/Control.NotebookbarCalc.js:1422
 #: src/control/Control.NotebookbarDraw.js:1286
@@ -2399,7 +2399,7 @@ msgstr "Tabel"
 
 #: src/control/Control.NotebookbarDraw.js:255
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF Document (.pdf) - Ekspert"
 
 #: src/control/Control.NotebookbarDraw.js:400
 #: src/control/Control.NotebookbarImpress.js:458
@@ -2413,7 +2413,7 @@ msgstr "Sidelayout"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"
-msgstr ""
+msgstr "Master"
 
 #: src/control/Control.NotebookbarImpress.js:377
 #: src/control/Control.NotebookbarImpress.js:1029
@@ -2430,7 +2430,7 @@ msgstr "Vis gitter"
 
 #: src/control/Control.NotebookbarImpress.js:512
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Fastgør til gitter"
 
 #: src/control/Control.NotebookbarWriter.js:80
 msgid "Form"
@@ -2474,7 +2474,7 @@ msgstr "forhåndsvisning af side %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Dias%1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -2502,7 +2502,7 @@ msgstr "Rul op i kommentarer"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Egenskaben IsAdminUser angives ikke af integrationen"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
