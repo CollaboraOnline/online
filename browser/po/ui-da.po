@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
 "PO-Revision-Date: 2025-06-12 11:30+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -1615,7 +1615,7 @@ msgstr "Alle"
 #: src/control/Control.NotebookbarImpress.js:1270
 #: src/control/Control.NotebookbarWriter.js:1174
 msgid "Smart Picker"
-msgstr ""
+msgstr "Smartvælger"
 
 #: src/control/Control.Menubar.ts:267 src/control/Control.Menubar.ts:567
 #: src/control/Control.Menubar.ts:715 src/control/Control.Menubar.ts:872
@@ -1649,7 +1649,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:392
 #: src/control/Control.NotebookbarWriter.js:2022
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Tilføj bibliografi"
 
 #: src/control/Control.Menubar.ts:394
 #: src/control/Control.NotebookbarWriter.js:2068
@@ -1699,7 +1699,7 @@ msgstr "Egenskaber"
 #: src/control/Control.Menubar.ts:449 src/control/Control.Menubar.ts:1129
 #: src/control/Control.NotebookbarWriter.js:423
 msgid "Screen Reading"
-msgstr ""
+msgstr "Skærmlæsning"
 
 #: src/control/Control.Menubar.ts:462
 #: src/control/Control.NotebookbarWriter.js:389
