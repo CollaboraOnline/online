@@ -154,9 +154,21 @@ deployment:
   minReadySeconds: 0
   maxUnavailable: 0
   maxSurge: 1
+
   # info on how to use hostAliases: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
   # note: different from aliasgroups
   hostAliases: null
+
+  customFonts:
+    enabled: false
+    pvc:
+      size: 1Gi
+      accessMode: "ReadWriteOnce"
+      # storageClassName: ""
+    image:
+      repository: alpine
+      tag: 3.22.0
+    securityContext: {}
 
 probes:
   startup:
