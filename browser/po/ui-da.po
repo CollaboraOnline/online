@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-11 10:41+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-11 19:04+0000\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -592,15 +592,15 @@ msgstr "BB"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
-msgstr "timer"
+msgstr " timer"
 
 #: admin/src/Util.js:92 admin/src/Util.js:94
 msgid " mins"
-msgstr "min"
+msgstr " min"
 
 #: admin/src/Util.js:97
 msgid " s"
-msgstr "s"
+msgstr " s"
 
 #: js/global.js:1547
 msgid "Cluster is scaling, retrying..."
@@ -916,7 +916,6 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:232
 #: src/control/Control.NotebookbarImpress.js:296
 #: src/control/Control.NotebookbarWriter.js:288
-#, fuzzy
 msgid "Download"
 msgstr "Download"
 
@@ -977,7 +976,7 @@ msgstr "Australien"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr ""
+msgstr "Ålandsøerne"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
@@ -1237,7 +1236,7 @@ msgstr "Amerikas Forenede Stater"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Den Hellige Stol (Vatikanstaten)"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
@@ -1248,9 +1247,9 @@ msgid "South Africa"
 msgstr "Sydafrika"
 
 #: src/control/Control.ESignature.ts:335
-#, fuzzy
 msgid "The document is being signed and will be availably shortly"
-msgstr "Dokumentet signeres og vil snart være tilgængeligt igen"
+msgstr ""
+"Dokumentet er ved at blive underskrevet og vil snart være tilgængeligt igen"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1369,9 +1368,8 @@ msgid "Style"
 msgstr "Typografi"
 
 #: src/control/Control.JSDialogBuilder.js:1924
-#, fuzzy
 msgid "reply"
-msgstr "Svar"
+msgstr "besvar"
 
 #: src/control/Control.JSDialogBuilder.js:1927
 msgid "replies"
@@ -1392,7 +1390,6 @@ msgid "Columns"
 msgstr "Kolonner"
 
 #: src/control/Control.JSDialogBuilder.js:2607
-#, fuzzy
 msgid "Insert Table"
 msgstr "Indsæt tabel"
 
@@ -1481,9 +1478,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:158 src/control/Control.UIManager.ts:317
-#, fuzzy
 msgid "Rename Document"
-msgstr "Reparer dokument"
+msgstr "Omdøb dokument"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:486
 #: src/control/Control.Menubar.ts:658 src/control/Control.Menubar.ts:798
@@ -1912,22 +1908,22 @@ msgstr "Fremhæv celler med..."
 #: src/control/Control.Menubar.ts:946
 #: src/control/jsdialog/Definitions.Menu.ts:313
 msgid "Values greater than..."
-msgstr ""
+msgstr "Værdier større end..."
 
 #: src/control/Control.Menubar.ts:947
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Values less than..."
-msgstr ""
+msgstr "Værdier mindre end..."
 
 #: src/control/Control.Menubar.ts:948
 #: src/control/jsdialog/Definitions.Menu.ts:321
 msgid "Values equal to..."
-msgstr ""
+msgstr "Værdier lig med..."
 
 #: src/control/Control.Menubar.ts:949
 #: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Values between..."
-msgstr ""
+msgstr "Værdier mellem..."
 
 #: src/control/Control.Menubar.ts:950
 #: src/control/jsdialog/Definitions.Menu.ts:329
@@ -1990,7 +1986,7 @@ msgstr ""
 #: src/control/Control.StatusBar.js:253 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575 src/control/Toolbar.js:576
 msgid "Search"
-msgstr "Søg:"
+msgstr "Søg"
 
 #: src/control/Control.Menubar.ts:1131
 msgid "Page Setup"
@@ -1998,11 +1994,11 @@ msgstr "Sideindstillinger"
 
 #: src/control/Control.Menubar.ts:1275
 msgid "Define print area"
-msgstr ""
+msgstr "Definér udskriftsområde"
 
 #: src/control/Control.Menubar.ts:1276
 msgid "Remove print area"
-msgstr ""
+msgstr "Fjern udskriftsområde"
 
 #: src/control/Control.Menubar.ts:1611 src/control/Control.StatusBar.js:547
 msgid "Reset to Default Language"
@@ -2016,7 +2012,7 @@ msgstr "Mere..."
 
 #: src/control/Control.Menubar.ts:1986
 msgid "Use Compact view"
-msgstr ""
+msgstr "Brug kompakt visning"
 
 #: src/control/Control.Menubar.ts:1988
 msgid "Use Tabbed view"
@@ -2036,7 +2032,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.ts:2201
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Afslut elektronisk underskrift"
 
 #: src/control/Control.Menubar.ts:2398
 msgid "file type icon"
@@ -2074,7 +2070,6 @@ msgid "Gradient End"
 msgstr "Farveforløbets slutfarve"
 
 #: src/control/Control.NavigatorPanel.ts:90
-#, fuzzy
 msgid "Navigation"
 msgstr "Navigation"
 
@@ -2108,12 +2103,12 @@ msgstr "Del"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Tap to expand"
-msgstr ""
+msgstr "Tryk for at udvide"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:270
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Tryk for at minimere"
 
 #: src/control/Control.NotebookbarBuilder.js:362
 #: src/control/Control.NotebookbarBuilder.js:391
@@ -2343,7 +2338,7 @@ msgstr "Slet kolonner"
 #: src/control/Control.NotebookbarImpress.js:370
 #: src/control/Control.NotebookbarWriter.js:1470
 msgid "Read mode"
-msgstr "Skrivebeskyttet"
+msgstr "Læsetilstand"
 
 #: src/control/Control.NotebookbarCalc.js:1246
 #: src/control/Control.NotebookbarDraw.js:387
@@ -2585,7 +2580,7 @@ msgstr "Indsæt ark"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:293
@@ -2639,19 +2634,19 @@ msgstr "Vælg flere celler"
 
 #: src/control/Control.StatusBar.js:486
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Markeringstilstand: inaktiv"
 
 #: src/control/Control.StatusBar.js:564
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Vælg sprog for al tekst"
 
 #: src/control/Control.StatusBar.js:567
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Vælg sprog for afsnit"
 
 #: src/control/Control.StatusBar.js:568
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Vælg sprog for markering"
 
 #: src/control/Control.Tabs.js:52
 msgid "Insert sheet before this"
@@ -2663,11 +2658,11 @@ msgstr "Indsæt ark efter dette"
 
 #: src/control/Control.Tabs.js:88
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Flyt ark til venstre"
 
 #: src/control/Control.Tabs.js:93
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Flyt ark til højre"
 
 #: src/control/Control.Tabs.js:103
 msgid "Copy Sheet..."
@@ -2695,7 +2690,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Aktivt ark"
 
 #: src/control/Control.TopToolbar.js:121
 msgid "Default Style"
@@ -2767,7 +2762,7 @@ msgstr ""
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
-msgstr ""
+msgstr "Følger"
 
 #: src/control/Control.UserList.ts:552
 msgid "Always follow the editor"
@@ -2858,7 +2853,6 @@ msgid "Citation Style"
 msgstr ""
 
 #: src/control/Control.Zotero.js:829
-#, fuzzy
 msgid "Styles"
 msgstr "Typografi"
 
@@ -2876,7 +2870,7 @@ msgstr "Titel"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
-msgstr ""
+msgstr "Skaber(e)"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
@@ -2992,7 +2986,7 @@ msgstr ""
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokumentet er ikke underskrevet."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -3046,19 +3040,19 @@ msgstr "Hyperlink"
 
 #: src/control/VRuler.ts:359
 msgid "Top Margin"
-msgstr ""
+msgstr "Topmargen"
 
 #: src/control/VRuler.ts:360
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Bundmargen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:25
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Max"
-msgstr ""
+msgstr "Maks"
 
 #: src/control/jsdialog/Definitions.Menu.ts:260
 msgid "Insert Local Image"
@@ -3098,11 +3092,11 @@ msgstr "Denne bruger"
 
 #: src/control/jsdialog/Definitions.Menu.ts:436
 msgid "From Beginning"
-msgstr ""
+msgstr "Fra start"
 
 #: src/control/jsdialog/Definitions.Menu.ts:440
 msgid "From Current Slide"
-msgstr ""
+msgstr "Fra nuværende dias"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:119
 msgid "Dismiss"
@@ -3198,7 +3192,7 @@ msgstr "Ups, der opstod et problem med at forbinde til {productname}: "
 
 #: src/core/Socket.js:693
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "Serveren er nu tilgængelig. Vi skal genindlæse siden nu."
 
 #: src/core/Socket.js:695
 msgid "Server is now reachable..."
@@ -3286,7 +3280,7 @@ msgstr "Klik på Annuller for at for at åbne i skrivebeskyttet tilstand."
 
 #: src/core/Socket.js:1138
 msgid "Wrong password provided. Please try again."
-msgstr "Forkert adgangskode; prøv venligst igen:"
+msgstr "Forkert adgangskode. Prøv igen."
 
 #: src/core/Socket.js:1176
 msgid "Only the document owner can change the password."
@@ -3374,7 +3368,7 @@ msgstr "Er du sikker på, at du vil slette denne side?"
 
 #: src/docstate.js:100
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: src/docstate.js:113
 msgid "Theme colors"
@@ -3382,7 +3376,7 @@ msgstr "Temafarver"
 
 #: src/docstate.js:114
 msgid "Document colors"
-msgstr ""
+msgstr "Dokumentfarver"
 
 #: src/docstatefunctions.js:246
 msgid ", cluster configuration error: mis-matching serverid"
@@ -3490,7 +3484,7 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
-"Du er ved at forlade dokumentet. Den følgende web-side åbner i en ny fane: "
+"Du er ved at forlade dokumentet. Den følgende webside åbner i en ny fane: "
 
 #: src/errormessages.js:36
 msgid ""
@@ -3586,18 +3580,20 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Dokumentet kan ikke gemmes, da sessionen er udløbet. Genindlæs venligst "
+"siden for at fortsætte."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Dokumentet kan ikke gemmes. Tjek dine rettigheder."
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dokumentet kan ikke omdøbes. Tjek dine rettigheder."
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Dokumentet kan ikke eksporteres. Prøv igen."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
@@ -3613,31 +3609,31 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabel med {0} rækker og {1} kolonner"
 
 #: src/layer/marker/A11yTextInput.js:243
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Række {0} til {1}"
 
 #: src/layer/marker/A11yTextInput.js:246
 msgid "Row {0}"
-msgstr ""
+msgstr "Række {0}"
 
 #: src/layer/marker/A11yTextInput.js:254
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Kolonne {0} til {1}"
 
 #: src/layer/marker/A11yTextInput.js:257
 msgid "Column {0}"
-msgstr ""
+msgstr "Kolonne {0}"
 
 #: src/layer/marker/A11yTextInput.js:285
 msgid "Editing activated. "
-msgstr ""
+msgstr "Redigering aktiveret. "
 
 #: src/layer/marker/A11yTextInput.js:304
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} markeret"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
@@ -3690,7 +3686,7 @@ msgstr "Ingen Kommentarer"
 
 #: src/main.js:141
 msgid "Warning! The browser you are using is not supported."
-msgstr "Advarsel. Du bruger en browser der ikke er understøttet."
+msgstr "Advarsel! Du bruger en browser der ikke er understøttet."
 
 #: src/map/Clipboard.js:176
 msgid ""
@@ -3757,7 +3753,7 @@ msgstr "Sidst gemt:"
 
 #: src/map/Map.js:1483
 msgid "Please wait!"
-msgstr ""
+msgstr "Vent venligst!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
@@ -3791,7 +3787,7 @@ msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Tomt diasshow"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:692
@@ -3814,7 +3810,7 @@ msgstr ""
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:534
 msgid "Presenting in window"
-msgstr ""
+msgstr "Præsenterer i vindue"
 
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:535
@@ -3823,35 +3819,35 @@ msgstr "Luk præsentation"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Præsenterer i fuld skærm"
 
 #: src/map/handler/Map.SlideShow.js:231
 msgid "End Presentation"
-msgstr ""
+msgstr "Afslut præsentation"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:679
 msgid "Already presenting"
-msgstr ""
+msgstr "Præsentation i gang"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:680
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Du præsenterer allerede dette dokument"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:717
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Præsentation deaktiveret"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:718
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Præsentationstilstand er deaktiveret for dette dokument"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
-msgstr ""
+msgstr "Din Collabora Online server skal opdateres. Version {0} er tilgængelig."
 
 #: src/map/handler/Map.WOPI.js:176
 msgid "Creating new file from template..."
@@ -3875,36 +3871,35 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Nuværende dias"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Næste dias"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Genstart"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Fortsæt"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Gå tilbage"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Zoom ind"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zoom ud"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
@@ -3916,16 +3911,16 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:1242
 msgid "No Notes"
-msgstr ""
+msgstr "Ingen noter"
 
 #: src/slideshow/PresenterConsole.js:1330
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Gentag om [0} sekunder"
 
 #: src/slideshow/PresenterConsole.js:1335
 #: src/slideshow/SlideShowPresenter.ts:389
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Klik for at forlade præsentation..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
@@ -3933,7 +3928,7 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr ""
+msgstr "Udforsk den nye [coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3949,7 +3944,6 @@ msgid ""
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
-#, fuzzy
 msgid "Discover All The Changes"
 msgstr "Se alle ændringerne"
 
@@ -3960,6 +3954,10 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Læs vores <a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/code-24-04-release-notes/\">release notes</"
+"a> og bliv klogere på: Den seneste Collabora Online Development Edition, "
+"henvendt til hjemmebrugere og mindre teams."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
