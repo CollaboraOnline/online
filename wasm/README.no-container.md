@@ -8,8 +8,7 @@ without using the Allotropia container.
 Before building Collabora Online as WASM you need to build three
 dependencies: LibreOffice core, Poco, and zstd.
 
-The toolchain used is Emscripten. Versions 2.0.31 and 3.1.30 are known
-to work. The examples below assume 3.1.30.
+The toolchain used is Emscripten. Versions >= 3.1.58 should generally work.
 
 Below we assume that the Emscripten environment is already set up,
 that you have sourced the emsdk_env.sh file in your shell.
