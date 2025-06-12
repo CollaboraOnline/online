@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 10:35+0000\n"
+"PO-Revision-Date: 2025-06-12 10:52+0000\n"
 "Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
@@ -1352,78 +1352,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "To decimaler, tusindtalsskilletegn"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
 msgstr "Standard eksponentialformat"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
 msgstr "Standard datoformat"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
 msgstr "Standard valutaformat"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "Standard procentdelformater (to decimaler)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-112
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
 msgstr "Standardformat"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:205-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-38
