@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-03-15 14:59+0000\n"
+"PO-Revision-Date: 2025-06-06 13:13+0000\n"
 "Last-Translator: HM <goodlinuxuser@chmail.ir>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fa/>\n"
-"Language: \n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -272,7 +272,7 @@ msgstr "حافظه"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "لطفا ً منتظر باشید که خوشه kubernetes در حال مقیاس شدن است …"
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -342,7 +342,7 @@ msgstr "ارسال شد"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "اتصالات"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -366,25 +366,27 @@ msgstr "آیا مطمئن هستید که می خواهید سرور را خام
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "دسترسی‌پذیری"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
-msgstr ""
+msgstr "متن خودکار"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"بارگذاری متن های قابل استفاده مجدد snippets ( . bau ) . برای درج متن در "
+"نوشتار خود، میان‌بری برای ثبت یک متن خودکار بنویسید و F3 را فشار دهید."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
-msgstr ""
+msgstr "بارگذاری متن خودکار"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "واژه نامه‌های شخصی‌سازی شده"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid ""
