@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 10:57+0000\n"
+"PO-Revision-Date: 2025-06-12 20:58+0000\n"
 "Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
@@ -3229,13 +3229,12 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Formater kildecellen med skrifttype, baggrundsfarve med mere."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Klik på ikonet Klon formatering <img style=\"height:0.6cm;width:0.6cm;\" alt="
-"\"\" src=\"images/lc_formatpaintbrush.svg\">. Musemarkøren bliver til en "
+"Klik på ikonet Klon formatering <img class=\"icon-size\" src="
+"\"images/lc_formatpaintbrush.svg\" />. . Musemarkøren bliver til en "
 "malerbøtte."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
@@ -3289,6 +3288,9 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
+"Vælg enten <span class=\"ui\">Diasshow</span> → <span class=\"ui\""
+">Fuldskærmspræsentation</span> , eller klik på ikonet længst til venstre i "
+"bunden af diaspanelet:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:825-5
 msgid "How can I change the line, area and position of a shape in my slides?"
