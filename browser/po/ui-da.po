@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-02-14 20:10+0000\n"
-"Last-Translator: Ronny Buelund <ronnyworkmail@gmail.com>\n"
+"PO-Revision-Date: 2025-06-04 17:16+0000\n"
+"Last-Translator: Mads William Scharling <mws@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Ændret"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Uploadet"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
@@ -171,7 +171,7 @@ msgstr "Tidsinterval i processorstatistikken (i ms)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr ""
+msgstr "Stop session."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -367,102 +367,107 @@ msgstr "Er du sikker på, at du vil stoppe denne server?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Tilgængelighed"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
-msgstr ""
+msgstr "Autotekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Upload genbrugelige tekst-stykker (.bau). For at indsætte teksten i dit "
+"dokument, tast genvejen til en Autotekst og tryk F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Upload Autotekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Brugertilpassede ordbøger"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Tilføj eller redigér ord i en stavekontrolsordbog. Ord i din ordbog (.dic) "
+"vil blive brugt til stavekontrol."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Upload ordbog"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Interface"
-msgstr ""
+msgstr "Grænseflade"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Angiv standardindstillinger for grænsefladen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Upload konfiguration"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Document settings"
-msgstr ""
+msgstr "Dokumentindstillinger"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Bestem Office-dokumenters opførsel."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Upload XCU"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:238
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL for delt konfigurering mangler i indledende variabler."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:244
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Adgangs-token mangler i indledende variabler."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:273
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Noget gik galt. Prøv at genindlæse siden."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Noget gik galt ved henting af indstillingsfilen. Prøv at genindlæse siden."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Noget gik galt ved hentning af ordbogen. Prøv at genindlæse siden."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:406
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Noget gik galt ved upload af filen. Prøv igen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:532
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Noget gik galt ved sletning af filen. Prøv at genindlæse siden."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Visningsindstillinger"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Justér visningsindstillinger."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
@@ -474,15 +479,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Nulstil til standardvisningsindstillinger"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Er du sikker på, at du vil nulstille visningsindstillinger?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Gem visningsindstillinger"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -491,7 +496,7 @@ msgstr "Fejl"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standardordbog"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
@@ -917,7 +922,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:113
 #: src/control/Control.PartsPreview.js:297
 msgid "Copy"
-msgstr ""
+msgstr "Kopiér"
 
 #: src/control/Control.DownloadProgress.js:111
 msgid "Download completed and ready to be copied to clipboard."
