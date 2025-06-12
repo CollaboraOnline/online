@@ -140,6 +140,11 @@ spec:
               mountPath: /etc/coolwsd/proof_key.pub
               subPath: proof_key.pub
             {{- end }}
+            {{- if .Values.deployment.customFonts.enabled }}
+            - name: custom-fonts
+              mountPath: /usr/share/fonts/custom
+              readOnly: true
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -162,6 +167,11 @@ spec:
         - name: wopi-proof
           secret:
             secretName: {{ .Values.collabora.proofKeysSecretRef | quote }}
+        {{- end }}
+        {{- if .Values.deployment.customFonts.enabled }}
+        - name: custom-fonts
+          persistentVolumeClaim:
+            claimName: {{ include "collabora-online.fullname" . }}-custom-fonts
         {{- end }}
         {{- if .Values.extraVolumes }}
         {{- .Values.extraVolumes | nindent 8 }}
