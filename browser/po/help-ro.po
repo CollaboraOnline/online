@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2023-03-30 08:41+0000\n"
-"Last-Translator: Cosmin <cosmin@fsfe.org>\n"
+"PO-Revision-Date: 2025-06-02 08:48+0000\n"
+"Last-Translator: Ion Silvestru <ion.silvestru@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
 "collabora-online/help/ro/>\n"
 "Language: ro\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -28,119 +28,110 @@ msgid "Undo"
 msgstr "Anulează"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
 msgstr "Refă"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-38
 msgid "Cut"
 msgstr "Tăiere"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "Copiere"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>enter"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
 msgstr "Lipește textul neformatat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>V"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
-msgstr ""
+msgstr "Lipire specială"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-78
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
 msgstr "Tipărire (descărcare ca PDF)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-88
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-38
 msgid "Display the Keyboard shortcuts help"
 msgstr "Afișare ajutor pentru tastele rapide"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-100
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>?</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Focalizare pe meniul barei de file"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Focalizare pe document din meniu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-92
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-38
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Focalizare pe meniul comentariului selectat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:25-9
 #: html/cool-help.html%2Bdiv.div.div.h2:187-9
@@ -159,9 +150,8 @@ msgstr "Aldin"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:189-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
@@ -174,9 +164,8 @@ msgstr "Cursiv"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:190-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
@@ -189,9 +178,8 @@ msgstr "Subliniat"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:191-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-74
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
@@ -199,9 +187,8 @@ msgstr "Subliniere dublă"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
@@ -214,13 +201,12 @@ msgstr "Tăiat"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-78
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-38
@@ -231,13 +217,12 @@ msgstr "Exponent"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-38
@@ -248,13 +233,12 @@ msgstr "Indice"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:259-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>B"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -263,9 +247,8 @@ msgstr "Elimină formatarea directă"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-89
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:38-9
 #: html/cool-help.html%2Bdiv.div.div.h2:199-9
@@ -284,9 +267,8 @@ msgstr "Aliniere la centru"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:201-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-77
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:41-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-38
@@ -299,9 +281,8 @@ msgstr "Aliniere la stânga"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:202-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:267-75
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-38
@@ -314,9 +295,8 @@ msgstr "Aliniere la dreapta"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:203-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:268-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:43-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-38
@@ -329,36 +309,32 @@ msgstr "Margini"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:204-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:269-72
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-38
 msgid "Apply Default paragraph style"
 msgstr "Aplică stilul implicit pentru paragraf"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-94
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-38
 msgid "Apply Heading 1 paragraph style"
 msgstr "Aplică stilul de paragraf Titlu 1"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-38
 msgid "Apply Heading 2 paragraph style"
 msgstr "Aplică stilul de paragraf Titlu 2"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-38
 msgid "Apply Heading 3 paragraph style"
@@ -366,27 +342,24 @@ msgstr "Aplică stilul de paragraf Titlu 3"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-89
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-38
 msgid "Apply Heading 4 paragraph style"
 msgstr "Aplică stilul de paragraf Titlu 4"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-38
 msgid "Apply Heading 5 paragraph style"
 msgstr "Aplică stilul de paragraf Titlu 5"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
@@ -410,9 +383,8 @@ msgstr "Selectează tot"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:260-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:277-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-91
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:213-38
@@ -435,9 +407,9 @@ msgstr "Mută cursorul cu selecție spre stânga"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:214-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:279-103
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeată stânga"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Stânga</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-38
@@ -448,9 +420,9 @@ msgstr "Salt la începutul cuvântului"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:280-90
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată stânga"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Stânga</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-38
@@ -461,13 +433,12 @@ msgstr "Selecție spre stânga cuvânt cu cuvânt"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:281-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>săgeată stânga"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeata Stânga</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-38
@@ -490,10 +461,10 @@ msgstr "Mută cursorul cu selecție spre dreapta"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:218-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:283-104
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată dreapta"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Dreapta</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
@@ -504,9 +475,9 @@ msgstr "Salt la începutul următorului cuvânt"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:284-93
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată dreapta"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Dreapta</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
@@ -517,13 +488,12 @@ msgstr "Selecție spre dreapta cuvânt cu cuvânt"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>săgeată dreapta"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeata Dreapta</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -546,9 +516,9 @@ msgstr "Selectează rânduri în sus"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-98
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată sus"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Sus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -559,9 +529,8 @@ msgstr "Mută cursorul la începutul paragrafului anterior"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:288-115
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată sus"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Sus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
@@ -572,13 +541,12 @@ msgstr "Selectează până la începutul paragrafului"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>săgeată sus"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeata Sus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -601,9 +569,9 @@ msgstr "Selectează rânduri în jos"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-100
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată jos"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Jos</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
@@ -614,9 +582,8 @@ msgstr "Mută cursorul la începutul paragrafului următor"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-111
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată jos"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Jos</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-38
@@ -627,13 +594,12 @@ msgstr "Selectează până la sfârșitul paragrafului"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>săgeată jos"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeata Jos</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -646,7 +612,7 @@ msgstr "Salt la începutul rândului"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-88
 msgid "Home"
-msgstr "Home"
+msgstr "Acasă"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
@@ -658,9 +624,8 @@ msgstr "Mergi și selectează la început de rând"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-105
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
@@ -673,9 +638,8 @@ msgstr "Salt la începutul documentului"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-88
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
@@ -684,13 +648,12 @@ msgstr "Mergi și selectează la început de document"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-103
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Home"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -715,9 +678,8 @@ msgstr "Mergi și selectează la sfârșitul unui rând"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -730,9 +692,8 @@ msgstr "Salt la sfârșitul documentului"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-131
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
@@ -741,13 +702,12 @@ msgstr "Mergi și selectează la început de document"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-102
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-101
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>End"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -762,18 +722,16 @@ msgid "Switch cursor between text and header"
 msgstr "Comută cursorul între text și antet"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
 msgstr "Extinde selecția o pagină în sus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -788,62 +746,56 @@ msgid "Switch cursor between text and footer"
 msgstr "Comută cursorul între text și subsol"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
 msgstr "Extinde selecția o pagină în jos"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
 msgstr "Șterge până la inceputul cuvântului"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
 msgstr "Șterge până la sfârșitul cuvântului"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
 msgstr "Șterge până la începutul propoziției"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Backspace"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
 msgstr "Șterge până la sfârșitul propoziției"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -880,9 +832,8 @@ msgstr ""
 "documentului."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tab"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-127
 msgid ""
@@ -890,94 +841,92 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
+"Inserează un punct de tabulație (numai în tabele). În funcție de Managerul "
+"de ferestre utilizat, poate fi folosit în schimb <kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Tab</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>taste săgeți"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeți</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-133
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
+"Mărește/micșorează dimensiunea coloanei/rândului de pe marginea celulei din "
+"dreapta/jos"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>taste săgeți"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeți</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
+"Măriți/micșorați dimensiunea coloanei/rândului de pe marginea celulei din stâ"
+"nga/sus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>taste săgeți"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeți</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-228
-#, fuzzy
 msgid "Like Alt, but only the active cell is modified"
 msgstr "La fel ca Alt, doar că se modifică numai celula activă"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-38
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>shift</kbd><span class=\"kbd--plus\">+</span><kbd>taste "
-"săgeți"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Săgeți</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>insert"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-129
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 secunde în mod inserare, tasta săgeată inserează un rând/o coloană, ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>săgeată inserează o celulă"
+"3 secunde în modul Inserare, tasta săgeată inserează rând/coloana, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasta săgeată</kbd> "
+"inserează celula"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-126
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 secunde în mod ștergere, tasta săgeată șterge rândul/coloana, ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>săgeată unește celula cu celula "
-"adiacentă"
+"3 secunde în modul Ștergere, tasta săgeată șterge rândul/coloana, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Tasta săgeată</kbd> îmbină celula "
+"cu celula vecină"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-197
 msgid ""
@@ -1019,86 +968,78 @@ msgid "Insert footnote"
 msgstr "Inserează notă de subsol"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>F"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
 msgstr "Inserează notă de sfârșit"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
-#, fuzzy
 msgid "Insert comment"
 msgstr "Inserează comentariu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>C"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
 msgstr "Inserează liniuță de despărțire"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 msgid "Insert non-breaking hyphen"
 msgstr "Inserează cratimă de unire"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>-"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
 msgstr "Inserează un spațiu nedespărțibil"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>spațiu"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Space</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
 msgstr "Inserare întrerupere de rând"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>enter"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
@@ -1107,22 +1048,20 @@ msgstr "Întrerupere manuală de pagină"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Column break (in multicolumnar text)"
 msgstr "Întrerupere de coloană (în text multicoloană)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-101
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>enter"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1133,9 +1072,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-175
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>enter"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-38
 msgid ""
@@ -1147,55 +1085,61 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:132-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigarea în foi de calcul"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-38
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Mută cursorul la prima celulă din foaie (A1)."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Mută cursorul la ultima celulă de pe foaia care conține date."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-38
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Mută cursorul la prima celulă a rândului curent."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Mută cursorul la ultima celulă a rândului curent."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-38
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Selectează celulele din celula curentă până la prima celulă a rândului "
+"curent."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-38
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Selectează celulele din celula curentă până la ultima celulă a rândului "
+"curent."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-38
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Selectează celulele din celula curentă până la o pagină în coloana curentă "
+"sau extinde selecția existentă cu o pagină în sus."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Selectează celulele din celula curentă până la o pagină în coloana curentă "
+"sau extinde selecția existentă cu o pagină în jos."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1203,11 +1147,14 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Mută cursorul la marginea stângă a intervalului de date curent. Dacă coloana "
+"din stânga celulei care conține cursorul este goală, cursorul se deplasează "
+"la următoarea coloană din stânga care conține date"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-265
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Stânga</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 msgid ""
@@ -1215,11 +1162,14 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Mută cursorul la marginea dreaptă a intervalului de date curent. Dacă "
+"coloana din dreapta celulei care conține cursorul este goală, cursorul se "
+"deplasează la următoarea coloană din dreapta care conține date."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Dreapta</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-38
 msgid ""
@@ -1227,11 +1177,13 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Mută cursorul la marginea de sus a intervalului de date curent. Dacă rândul "
+"de deasupra celulei care conține cursorul este gol, cursorul se mută în sus "
+"la următorul rând care conține date."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>săgeată sus"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Sus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 msgid ""
@@ -1239,37 +1191,37 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Mută cursorul la marginea de jos a intervalului de date curent. Dacă rândul "
+"de sub celula care conține cursorul este gol, cursorul se deplasează în jos "
+"la următorul rând care conține date."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Săgeata Jos</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Treceți la foaia următoare."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Mergeți la foaia anterioară."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1278,33 +1230,34 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Selectează toate celulele care conțin date de la celula curentă până la "
+"sfârșitul intervalului continuu de celule de date, în direcția săgeții "
+"apăsate. Dacă este utilizat pentru a selecta rânduri și coloane împreună, "
+"este selectat un interval de celule dreptunghiulare."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-292
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>săgeată sus"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Săgeata</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Mută o foaie la stânga."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Mută o pagină de ecran la dreapta."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1312,15 +1265,18 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Adaugă foaia anterioară la selecția curentă de foi. Dacă toate foile dintr-o "
+"foaie de calcul sunt selectate, această combinație de taste de comandă "
+"rapidă selectează doar foaia anterioară. Face din foaia anterioară foaia "
+"curentă."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1328,15 +1284,18 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Adaugă următoarea foaie la selecția curentă de foi. Dacă toate foile dintr-o "
+"foaie de calcul sunt selectate, această combinație de taste de comandă "
+"rapidă selectează doar foaia următoare. Face din foaia următoare foaia "
+"curentă."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1344,40 +1303,42 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"unde (*) este semnul de înmulțire de pe tastatura numerică. Selectează "
+"intervalul de date care conține cursorul. Un interval este un interval de "
+"celule învecinate care conține date și este delimitat de rânduri și coloane "
+"goale."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-38
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"unde (/) este semnul diviziunii de pe tastatura numerică. Selectează "
+"intervalul de formule matriceale care conține cursorul."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Inserează celule (ca în meniul Inserare - Celule)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Șterge celule (ca în meniul Editare - Ștergeți celule)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 msgid "Cell formatting"
@@ -1388,9 +1349,8 @@ msgid "Display comment"
 msgstr "Afișează comentariu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:168-80
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-38
 msgid "Fill Down"
@@ -1405,78 +1365,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "Două zecimale, separator pentru mii"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
 msgstr "Format standard exponențial"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
 msgstr "Format standard dată calendaristică"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
-msgstr ""
+msgstr "Format valutar standard"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "Format standard procentaj (două zecimale)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-112
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
 msgstr "Format standard"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:205-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-38
@@ -1487,7 +1441,6 @@ msgstr "Retrogradează elementul în listă (elementul trebuie să fie selectat)
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:243-119
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-112
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:308-119
-#, fuzzy
 msgid "Tab"
 msgstr "Tab"
 
@@ -1500,9 +1453,8 @@ msgstr "Promovează elementul în listă (elementul trebuie să fie selectat)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-127
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:210-9
 #: html/cool-help.html%2Bdiv.div.div.h2:275-9
@@ -1511,19 +1463,17 @@ msgstr "Selectare text și navigare în caseta de text"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-38
-#, fuzzy
 msgid "Go and select text to start of textbox"
-msgstr "Mergi și selectează la început de document"
+msgstr "Mergeți și selectați text pentru a începe caseta de text"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-38
-#, fuzzy
 msgid "Go and select text to end of textbox"
-msgstr "Mergi și selectează la început de document"
+msgstr "Mergeți și selectați text până la sfârșitul casetei de text"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:240-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Glisați comenzile rapide de la tastatură"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
@@ -1551,48 +1501,48 @@ msgstr "Selectează obiectele în ordinea inversă a creării"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-38
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Treceți la următorul obiect text de pe diapozitiv"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:246-38
 msgid "Select all in slide"
-msgstr ""
+msgstr "Selectați totul din diapozitiv"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:305-9
 msgid "Draw page keyboard shortcuts"
-msgstr ""
+msgstr "Desenați comenzi rapide de la tastatură pentru pagină"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
 msgid "Move to next text object on drawing page"
-msgstr ""
+msgstr "Treceți la următorul obiect text de pe pagina de desen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-38
 msgid "Select all in drawing page"
-msgstr ""
+msgstr "Selectați totul în pagina de desen"
 
 #: html/cool-help.html%2Bdiv.h1:317-5
 msgid "<span class=\"productname\">{productname}</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">{productname}</span> Ajutor"
 
 #: html/cool-help.html%2Bdiv.p:318-5
 #: html/cool-help.html%2Bdiv.div.h3:354-5
-#, fuzzy
 msgid "Collaborative editing"
-msgstr "Formatare celulă"
+msgstr "Editare în colaborare"
 
 #: html/cool-help.html%2Bdiv.p:319-5
 #: html/cool-help.html%2Bdiv.div.h3:365-5
 msgid "<span class=\"productname\">{productname}</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">{productname}</span> interfața utilizator"
 
 #: html/cool-help.html%2Bdiv.p:320-5
 #: html/cool-help.html%2Bdiv.div.h3:403-5
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr ""
+"Deschiderea, închiderea, salvarea, tipărirea și descărcarea documentelor"
 
 #: html/cool-help.html%2Bdiv.p:321-5
 #: html/cool-help.html%2Bdiv.div.h3:413-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Editarea documentelor"
 
 #: html/cool-help.html%2Bdiv.p:322-5
 #: html/cool-help.html%2Bdiv.div.p:328-9
@@ -1601,88 +1551,88 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.h3:509-5
 #: html/cool-help.html%2Bdiv.div.div.h3:630-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Funcționalități avansate"
 
 #: html/cool-help.html%2Bdiv.div.p:324-9
 #: html/cool-help.html%2Bdiv.div.h2:483-5
 msgid "<span class=\"productname\">{productname}</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">{productname}</span> foi de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:325-9
 #: html/cool-help.html%2Bdiv.div.div.h3:486-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Editarea foilor de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:326-9
 #: html/cool-help.html%2Bdiv.div.div.h3:491-5
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:495-29
 msgid "Formulas"
-msgstr ""
+msgstr "Formule"
 
 #: html/cool-help.html%2Bdiv.div.p:327-9
 #: html/cool-help.html%2Bdiv.div.div.h3:501-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formatarea foilor de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:329-9
 #: html/cool-help.html%2Bdiv.div.div.h3:776-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Foi de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:332-9
 #: html/cool-help.html%2Bdiv.div.h2:552-5
 msgid "<span class=\"productname\">{productname}</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">{productname}</span> documente text"
 
 #: html/cool-help.html%2Bdiv.div.p:333-9
 #: html/cool-help.html%2Bdiv.div.div.h3:555-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Editarea documentelor text"
 
 #: html/cool-help.html%2Bdiv.div.p:334-9
 #: html/cool-help.html%2Bdiv.div.div.h3:560-5
 msgid "Context menus"
-msgstr ""
+msgstr "Meniuri contextuale"
 
 #: html/cool-help.html%2Bdiv.div.p:335-9
 #: html/cool-help.html%2Bdiv.div.div.h3:578-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Funcții avansate ale editorului de documente text"
 
 #: html/cool-help.html%2Bdiv.div.p:336-9
 #: html/cool-help.html%2Bdiv.div.div.h3:694-5
 msgid "Text documents"
-msgstr ""
+msgstr "Documente text"
 
 #: html/cool-help.html%2Bdiv.div.p:339-9
 #: html/cool-help.html%2Bdiv.div.h2:606-5
 msgid "<span class=\"productname\">{productname}</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">{productname}</span> prezentări"
 
 #: html/cool-help.html%2Bdiv.div.p:340-9
 #: html/cool-help.html%2Bdiv.div.div.h3:609-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Editarea prezentărilor"
 
 #: html/cool-help.html%2Bdiv.div.p:341-9
 #: html/cool-help.html%2Bdiv.div.div.h3:614-5
 msgid "Slide show"
-msgstr ""
+msgstr "Prezentare de diapozitive"
 
 #: html/cool-help.html%2Bdiv.div.p:342-9
 #: html/cool-help.html%2Bdiv.div.div.h3:622-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Glisați panoul"
 
 #: html/cool-help.html%2Bdiv.div.p:344-9
 #: html/cool-help.html%2Bdiv.div.div.h3:816-5
 msgid "Presentations"
-msgstr ""
+msgstr "Prezentări"
 
 #: html/cool-help.html%2Bdiv.p:346-5
 #: html/cool-help.html%2Bdiv.div.h2:643-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Întrebări frecvente"
 
 #: html/cool-help.html%2Bdiv.div.p:349-5
 msgid ""
@@ -1691,6 +1641,10 @@ msgid ""
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
+"<span class=\"productname\">{productname}</span> vă permite să creați și să "
+"editați documente de birou, documente text, foi de calcul și prezentări "
+"direct în browser, într-un mod simplu și direct. Puteți lucra singur la un "
+"document sau în colaborare ca parte a unei echipe."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:357-11
 msgid ""
@@ -1698,18 +1652,26 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"Fiecărui utilizator i se atribuie o culoare. Cursorul fiecărui utilizator va "
+"fi afișat în culoarea atribuită. Notă: veți vedea cursorul ca negru, cursor "
+"intermitent, deși alții vă vor vedea cu o culoare diferită."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:358-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"Puteți sări la cursorul unui utilizator făcând clic pe numele (sau avatarul) "
+"utilizatorului. Este posibil să urmăriți editorul."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:359-11
 msgid ""
 "<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"<span class=\"productname\">{productname}</span> vă anunță printr-o mică "
+"notificare în subsol atunci când intră un utilizator nou sau când un "
+"utilizator iese."
 
 #: html/cool-help.html%2Bdiv.div.div.p:366-30
 msgid ""
@@ -1718,12 +1680,18 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
+"<span class=\"productname\">{productname}</span> folosește resurse moderne "
+"de browser pentru a adapta interfața cu utilizatorul la dimensiunea zonei de "
+"vizualizare, inclusiv ecrane mici găsite pe dispozitivele mobile. Interfața "
+"este compusă din:"
 
 #: html/cool-help.html%2Bdiv.div.div.p:368-5
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\">Zona de document:</span> zona de aplicație arată "
+"conținutul documentului, fie foi de calcul, prezentări sau documente text."
 
 #: html/cool-help.html%2Bdiv.div.div.p:371-5
 msgid ""
@@ -1733,12 +1701,20 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Bara de meniu:</span> meniul principal este plasat în "
+"partea de sus și include multe opțiuni, comenzi pentru imprimare, editare, "
+"vizualizare și alte comenzi avansate. Puteți ascunde bara de meniu făcând "
+"clic pe pictograma <span class=\"w2ui-icon fold icon-size\"></span> din "
+"extrema dreaptă. Faceți clic pe pictograma <span class=\"w2ui-icon unfold "
+"icon-size\"></span> pentru a afișa meniul."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
+"<span class=\"def\">Meniuri contextuale:</span> la clic cu butonul din "
+"dreapta al mouse-ului, apare un meniu cu comenzi asociate obiectului de bază."
 
 #: html/cool-help.html%2Bdiv.div.div.p:377-5
 msgid ""
@@ -1746,12 +1722,18 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
+"<span class=\"def\">Bara de instrumente:</span> bara de instrumente conține "
+"cele mai utilizate opțiuni pentru editarea zilnică. Butoanele din bara de "
+"instrumente sunt dinamice, ceea ce înseamnă că starea lor (activată sau "
+"oprită) depinde de diferiți factori."
 
 #: html/cool-help.html%2Bdiv.div.div.p:380-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
+"<span class=\"def\">Bara de stare:</span> Bara de stare este afișată în "
+"partea de jos și conține mai multe opțiuni și caracteristici utile."
 
 #: html/cool-help.html%2Bdiv.div.div.p:384-5
 msgid ""
@@ -1760,18 +1742,22 @@ msgid ""
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
+"<span class=\"def\">Bara de căutare:</span> Căutarea începe automat când "
+"conținutul este inserat în caseta de căutare, iar fereastra documentului se "
+"mută automat la prima apariție găsită. Căutarea nu face distincție între "
+"majuscule și minuscule. Există trei butoane chiar lângă caseta de căutare:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:386-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Căutați înapoi"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:387-11
 msgid "Search forward"
-msgstr ""
+msgstr "Căutați înainte"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:388-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Anulează căutarea (apare numai când a fost căutat un text)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:392-5
 msgid ""
@@ -1780,16 +1766,26 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\">Bara de zoom:</span> În partea dreaptă a barei de stare, "
+"există un set de butoane care vă permit să măriți până la 100%, să micșorați "
+"și să măriți. Mărirea se aplică zonei documentului, interfața cu "
+"utilizatorul nu este afectată. Nivelul actual de zoom este afișat în această "
+"zonă."
 
 #: html/cool-help.html%2Bdiv.div.div.p:393-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"Textul, diagramele, formele și imaginile svg vor rămâne clare, când măriți, "
+"veți vedea doar pixeli care apar la imaginile inserate, cum ar fi jpg sau "
+"png."
 
 #: html/cool-help.html%2Bdiv.div.div.p:394-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
+"Utilizarea zoom-ului browser afectează documentele și zonele de interfață cu "
+"utilizatorul."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -1797,12 +1793,17 @@ msgid ""
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">Bara de informații:</span> în partea dreaptă a barei de "
+"căutare, este afișat un set de informații despre document. Informațiile "
+"reale depind de natura documentului."
 
 #: html/cool-help.html%2Bdiv.div.p:404-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">{productname}</span>."
 msgstr ""
+"Documentele dvs. sunt stocate și gestionate în spațiul de stocare în cloud "
+"care este integrat cu <span class=\"productname\">{productname}</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:405-30
 msgid ""
@@ -1811,12 +1812,19 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"Pentru a descărca un document, descărcați-l din meniul <span class=\"ui\""
+">Fișier</span> al aplicației <span class=\"productname\">{productname}</"
+"span>. Formatele de descărcare disponibile depind de aplicație. Toate "
+"aplicațiile exportă documente în format PDF."
 
 #: html/cool-help.html%2Bdiv.div.div.p:406-30
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">{productname}</span> module associated to the document format."
 msgstr ""
+"Pentru a deschide documentul, faceți clic pe fișier pentru a deschide "
+"modulul <span class=\"productname\">{productname}</span> asociat formatului "
+"documentului."
 
 #: html/cool-help.html%2Bdiv.div.div.p:407-30
 msgid ""
@@ -1825,6 +1833,10 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"Documentele din <span class=\"productname\">{productname}</span> se salvează "
+"automat, dar dacă vă îngrijorează că un document este sincronizat cât mai "
+"repede posibil, puteți forța și salvarea utilizând intrarea <span class="
+"\"ui\">Salvare</span> din meniul <span class=\"ui\">Fișier</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:408-30
 msgid ""
@@ -1832,21 +1844,29 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
+"În funcție de capacitățile browserului dvs., poate apărea fereastra de "
+"imprimare sau „Descărcați export PDF?” se afișează pop-up. Puteți imprima "
+"acest PDF în cititorul PDF preferat."
 
 #: html/cool-help.html%2Bdiv.div.div.p:409-30
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
+"La închiderea unui document, acesta este salvat automat dacă a fost "
+"modificat."
 
 #: html/cool-help.html%2Bdiv.div.p:414-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
+"Editarea documentelor ar trebui să fie familiară tuturor celor care au "
+"folosit o aplicație de birou înainte, dar iată câteva caracteristici "
+"distinctive:"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:416-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Copiere și lipire"
 
 #: html/cool-help.html%2Bdiv.div.div.p:417-5
 msgid ""
@@ -1863,6 +1883,19 @@ msgid ""
 "selecting text by double tapping, and using a long-tap to access copy/cut/"
 "paste via the context menu is required."
 msgstr ""
+"Copierea/decuparea și inserarea conținutului bogat este acceptată, nu numai "
+"într-un anumit document, ci și între documente de pe același sau diferit "
+"<span class=\"productname\">{productname}</span>. Pentru aceste utilizări "
+"interne, utilizatorii pot copia/decupa conținut, inclusiv imagini și "
+"conținut mixt, pe computer folosind direct comenzile rapide de la tastatură "
+"(<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>). Din motive de securitate, este "
+"necesar să folosiți <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd> pentru a lipi pe computer, dar meniurile contextuale pot fi folosite "
+"pentru tăiere și copiere. Pe Android sau iOS, este necesară selectarea "
+"textului prin atingere dublă și utilizarea unei atingeri lungi pentru a "
+"accesa copierea/tăierea/lipirea prin meniul contextual."
 
 #: html/cool-help.html%2Bdiv.div.div.p:418-5
 msgid ""
@@ -1874,10 +1907,18 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
+"Pentru a copia conținut mai mare în alte aplicații de pe dispozitivul dvs., "
+"utilizatorii trebuie să apese butonul <span class=\"ui\">Începe descărcarea</"
+"span>, apoi să copieze din nou acest conținut în clipboard pentru a le pune "
+"la dispoziție aplicației țintă pentru a le citi. Acest lucru este posibil "
+"printr-un widget minuscul care apare în colțul din dreapta jos și este "
+"necesar doar pentru a exporta conținutul pentru lipire în aplicații externe. "
+"Acest pas transformă, de asemenea, tipuri complexe de obiecte în imagini "
+"statice."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:421-5
 msgid "Document repair"
-msgstr ""
+msgstr "Reparare document"
 
 #: html/cool-help.html%2Bdiv.div.div.p:422-5
 msgid ""
@@ -1886,16 +1927,23 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
+"Atunci când mai multe persoane editează același document simultan, este "
+"posibil ca modificările lor să intre în conflict și acest lucru poate "
+"provoca o oarecare confuzie. Funcția de reparare a documentelor permite "
+"utilizatorilor să anuleze modificările altor editor ale documentului într-o "
+"stare anterioară."
 
 #: html/cool-help.html%2Bdiv.div.div.p:423-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
+"Pentru a reveni la starea selectată, selectați-o cu mouse-ul și apăsați pe "
+"<span class=\"ui\">Săriți la stare</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:424-29
 msgid "document repair"
-msgstr ""
+msgstr "reparare document"
 
 #: html/cool-help.html%2Bdiv.div.div.p:425-5
 msgid ""
@@ -1904,10 +1952,14 @@ msgid ""
 ">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
 "you were concurrently editing."
 msgstr ""
+"Acest lucru este deosebit de util – să spunem atunci când un coleg a "
+"selectat din greșeală tot textul din document cu <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>A</kbd> și a trecut la tast peste el, distrugându-"
+"l – în timp ce editați concomitent."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:428-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Document inactiv"
 
 #: html/cool-help.html%2Bdiv.div.div.p:429-5
 msgid ""
@@ -1916,10 +1968,15 @@ msgid ""
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
+"Când <span class=\"productname\">{productname}</span> detectează că nu a "
+"existat nicio activitate în browser pentru o perioadă de timp, acesta pune "
+"documentul într-o stare „Inactiv”. Documentul este afișat cu o suprapunere "
+"gri transparentă, cu mesajul „Document inactiv – vă rugăm să faceți clic "
+"pentru a relua editarea”."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:430-29
 msgid "inactive document"
-msgstr ""
+msgstr "document inactiv"
 
 #: html/cool-help.html%2Bdiv.div.div.p:431-5
 msgid ""
@@ -1927,10 +1984,13 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
+"Pentru a continua editarea, faceți clic pe document și intervalul și mesajul "
+"dispar. Orice modificări care ar fi putut fi făcute de alți utilizatori – în "
+"timp ce editați documentul în colaborare – sunt reîncărcate."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:434-5
 msgid "Pasting"
-msgstr ""
+msgstr "Lipire"
 
 #: html/cool-help.html%2Bdiv.div.div.p:435-5
 msgid ""
@@ -1939,6 +1999,10 @@ msgid ""
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
+"Când lipiți conținut copiat din același document, formatul și elementele "
+"sunt menținute. Dacă copiați dintr-un alt document, într-o altă filă sau "
+"fereastră de browser sau din afara browserului, conținutul lipit va păstra "
+"textul îmbogățit."
 
 #: html/cool-help.html%2Bdiv.div.div.p:436-5
 msgid ""
@@ -1946,6 +2010,9 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>V</kbd>"
 msgstr ""
+"Puteți lipi ca text neformatat cu comanda rapidă de la tastatură: <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:437-5
 msgid ""
@@ -1953,48 +2020,63 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
+"Când lipiți text din interiorul documentului, formatarea va fi respectată. "
+"De asemenea, puteți lipi obiecte, cum ar fi imagini, dacă sunt copiate din "
+"documentul în care lucrați."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
+"Când lipiți text din afara documentului (o altă fereastră de browser sau o "
+"aplicație desktop), acesta va fi lipit ca text îmbogățit."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "using the context menu."
 msgstr ""
+"Când aveți conținut intern tăiat sau copiat, puteți lipi acest conținut "
+"folosind meniul contextual."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:446-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Adăugarea de diagrame"
 
 #: html/cool-help.html%2Bdiv.div.div.p:447-5
 msgid ""
 "<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
+"<span class=\"productname\">{productname}</span> acceptă inserarea și "
+"vizualizarea diagramelor în documente. Pentru a adăuga o diagramă:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:449-11
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
 msgstr ""
+"Selectați un tabel dintr-un document text, un interval dintr-o foaie de "
+"calcul sau un tabel dintr-o prezentare."
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:451-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
+"Alegeți <span class=\"ui\">Inserați</span> → <span class=\"ui\">Diagrame</"
+"span>. Personalizați-vă graficul din bara laterală:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:453-31
 msgid "chart"
-msgstr ""
+msgstr "diagramă"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:454-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
+"Dacă nu a fost selectat niciun tabel sau interval, este afișat un prototip "
+"de diagramă."
 
 #: html/cool-help.html%2Bdiv.div.div.p:458-28
 msgid ""
@@ -2003,22 +2085,31 @@ msgid ""
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
+"<span class=\"def\">Editarea diagramei:</span> faceți dublu clic pe diagramă "
+"pentru a o selecta. Utilizați meniurile contextuale pentru a adăuga elemente "
+"de diagramă, cum ar fi titlul, axa și altele. Alegeți <span class=\"ui\""
+">Interval de date</span> și <span class=\"ui\">Tipul diagramei</span> pentru "
+"a edita datele diagramei și selectați tipul diagramei."
 
 #: html/cool-help.html%2Bdiv.div.div.p:459-28
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
+"<span class=\"def\">Formatare diagramă:</span> același meniu contextual vă "
+"aduce la tabelul de date și la selecția tipului de diagramă."
 
 #: html/cool-help.html%2Bdiv.div.div.p:460-28
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
+"<span class=\"def\">Formatarea seriei de date:</span> deschideți meniul "
+"contextual și alegeți <span class=\"ui\">Formatați seria de date</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:462-5
 msgid "Handling images"
-msgstr ""
+msgstr "Manipularea imaginilor"
 
 #: html/cool-help.html%2Bdiv.div.div.p:463-5
 msgid ""
@@ -2026,6 +2117,9 @@ msgid ""
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
+"<span class=\"productname\">{productname}</span> inserează imagini în "
+"documentul text de pe computerul local sau din stocarea în cloud. Imaginile "
+"inserate sunt întotdeauna încorporate în document."
 
 #: html/cool-help.html%2Bdiv.div.div.p:464-5
 msgid ""
@@ -2033,12 +2127,18 @@ msgid ""
 ">Insert image</span> icon allows you to choose an image from the cloud "
 "storage's folders and shares."
 msgstr ""
+"<span class=\"def\">Inserați imaginea:</span> făcând clic pe pictograma "
+"<span class=\"ui\">Inserați imaginea</span> vă permite să alegeți o imagine "
+"din folderele și partajările stocării în cloud."
 
 #: html/cool-help.html%2Bdiv.div.div.p:465-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\">Inserați imaginea locală:</span> deschide selectorul de "
+"fișiere din browser pentru a încărca imaginea de pe computerul local și a o "
+"introduce în document."
 
 #: html/cool-help.html%2Bdiv.div.div.p:466-5
 msgid ""
@@ -2046,11 +2146,14 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
+"Imaginile pot fi redimensionate, rotite și ancorate. Textul poate fi "
+"înfășurat în jurul imaginii. Selectați imaginea și deschideți meniul "
+"contextual. Utilizați mânerele imaginilor pentru a redimensiona imaginea cu "
+"mouse-ul."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:469-5
-#, fuzzy
 msgid "Comments in documents"
-msgstr "Salt la sfârșitul documentului"
+msgstr "Comentarii în documente"
 
 #: html/cool-help.html%2Bdiv.div.div.p:470-5
 msgid ""
@@ -2058,20 +2161,25 @@ msgid ""
 "places that need special reader attention. Comments are displayed on the "
 "right and carry the name and date of the issuer."
 msgstr ""
+"Introduceți comentarii în <span class=\"productname\">{productname}</span> "
+"în locurile care necesită atenție specială a cititorului. Comentariile sunt "
+"afișate în partea dreaptă și poartă numele și data emitentului."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:471-29
 msgid "comment"
-msgstr ""
+msgstr "comentariu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
+"Faceți clic pe pictograma submeniu (<span class=\"cool-annotation-menu icon-"
+"size\"></span>) pentru a răspunde, muta și șterge comentariile."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Verificare ortografică"
 
 #: html/cool-help.html%2Bdiv.div.div.p:476-5
 msgid ""
@@ -2080,16 +2188,23 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
+"<span class=\"productname\">{productname}</span> poate verifica ortografia "
+"în documente text, foi de calcul și prezentări. O sublinie roșie ondulată "
+"indică cuvinte greșite. Faceți clic pe butonul din dreapta al mouse-ului "
+"pentru a deschide un meniu contextual cu corecții de ortografie sugerate."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:477-29
 msgid "spellchecking"
-msgstr ""
+msgstr "verificare ortografică"
 
 #: html/cool-help.html%2Bdiv.div.div.p:478-5
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
+"Pentru a verifica sistematic ortografia întregului document, utilizați "
+"opțiunea <span class=\"ui\">Ortografie</span> din meniul <span class=\"ui\""
+">Instrumente</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:487-30
 msgid ""
@@ -2102,15 +2217,26 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
+"Editați o foaie de calcul online în același mod în care editați o foaie de "
+"calcul desktop. Operațiuni precum introducerea datelor, selectarea "
+"intervalelor, coloanelor, rândurilor sau foilor sunt aceleași. Utilizați "
+"tastatura, meniurile sau bara de instrumente pentru a comanda acțiuni din "
+"foaia de calcul. De asemenea, este acceptată glisarea conținutului celulelor "
+"pentru a umple celulele cu date. Comenzile de copiere, tăiere și lipire sunt "
+"disponibile din meniul contextual. Urmând datele introduse cu un <kbd>Tab</"
+"kbd>, cursorul va muta în următoarea celulă din dreapta și cu <kbd>Enter</"
+"kbd> în celula de mai jos pentru o introducere ulterioară a datelor."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:493-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr ""
+"Formulele sunt introduse în bara de formule. Introduceți „=” și introduceți "
+"formula."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:494-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "Se aplică toate funcțiile foilor de calcul și regulile matematice."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:496-5
 msgid ""
@@ -2119,6 +2245,10 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\" target="
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
+"Limbajul formulei ar trebui să fie extrem de familiar oricărui utilizator al "
+"foii de calcul și este specificat în detaliu în <a href=\"https://"
+"www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221."
+"html\" target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:503-5
 msgid ""
@@ -2130,6 +2260,14 @@ msgid ""
 "complex and custom number formatting, as well as font, complex border, "
 "background, cell protection and other options."
 msgstr ""
+"<span class=\"def\">Formatare directă:</span> puteți formata celulele, "
+"coloanele, rândurile și foile foilor de calcul prin formatare direct din "
+"meniuri, bara de instrumente sau meniurile contextuale. Formatarea directă "
+"se aplică numai obiectului curent selectat. Pentru a formata o celulă fie "
+"utilizați meniul, fie apăsați pe <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>1</kbd>. Caseta de dialog permite formatarea complexă și "
+"personalizată a numerelor, precum și font, chenar complex, fundal, protecție "
+"celulară și alte opțiuni."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:510-30
 msgid ""
@@ -2138,6 +2276,10 @@ msgid ""
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
+"<span class=\"def\">Sortarea datelor:</span> puteți sorta o listă de numere "
+"sau text crescător sau descrescător. <span class=\"productname\""
+">{productname}</span> detectează automat celulele care sunt anteturi și "
+"coloane adiacente, pentru a extinde selecția."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:511-30
 msgid ""
@@ -2146,16 +2288,23 @@ msgid ""
 "spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
+"<span class=\"def\">Filtrarea datelor:</span> filtrele și filtrele avansate "
+"vă permit să lucrați pe anumite rânduri (înregistrări) filtrate dintr-un "
+"interval de date. În foile de calcul din <span class=\"productname\""
+">{productname}</span> există diverse posibilități de aplicare a filtrelor."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:514-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
+"O utilizare pentru funcția <span class=\"ui\">AutoFilter</span> este de a "
+"restricționa rapid afișarea la înregistrări cu intrări identice într-un câmp "
+"de date."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:515-34
 msgid "filter"
-msgstr ""
+msgstr "filtru"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:517-11
 msgid ""
@@ -2164,6 +2313,10 @@ msgid ""
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
+"În dialogul <span class=\"ui\">Filtru standard</span>, puteți defini, de "
+"asemenea, intervale care conțin valorile în anumite câmpuri de date. Puteți "
+"utiliza filtrul standard pentru a conecta condițiile fie cu un operator "
+"logic și cu un operator logic OR."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:518-11
 msgid ""
@@ -2171,6 +2324,8 @@ msgid ""
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
+"<span class=\"ui\">Filtrul avansat</span> permite până la opt condiții de "
+"filtrare. Cu filtrele avansate introduceți condițiile direct în foaie."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2178,6 +2333,10 @@ msgid ""
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
+"<span class=\"def\">Obturare:</span> puteți crea un contur al datelor dvs. "
+"și puteți grupa rândurile și coloanele împreună, astfel încât să puteți "
+"restrânge și extinde grupurile cu un singur clic, facilitând reprezentarea "
+"datelor ierarhice."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:526-5
 msgid ""
@@ -2185,17 +2344,22 @@ msgid ""
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
+"<span class=\"def\">Validarea datelor:</span> pentru fiecare celulă, puteți "
+"defini intrările ca să fie valide. Intrările nevalide într-o celulă vor fi "
+"respinse. Pentru a activa validarea datelor:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:529-9
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
 "span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
+"Alegeți <span class=\"ui\">Valabilitate</span> din meniul <span class=\"ui\""
+">Date</span>. Se deschide dialogul <span class=\"ui\">Validitate</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:531-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:536-31
 msgid "data validate"
-msgstr ""
+msgstr "validare date"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:532-11
 msgid ""
@@ -2203,6 +2367,9 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
+"Selectați criteriul de valabilitate din lista drop-box <span class=\"ui\""
+">Permite</span>. În funcție de criteriu, se afișează mai multe opțiuni. "
+"Completați datele necesare."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:534-9
 msgid ""
@@ -2210,12 +2377,18 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
 ">OK</span> to close the dialog."
 msgstr ""
+"Utilizați filele <span class=\"ui\">Ajutor de introducere</span> și <span "
+"class=\"ui\">Alerta de eroare</span> pentru a îmbunătăți interacțiunile "
+"utilizatorului. Faceți clic pe <span class=\"ui\">OK</span> pentru a închide "
+"caseta de dialog."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:537-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
+"Pentru a elimina validitatea celulei, deschideți caseta de dialog și setați "
+"lista <span class=\"ui\">Permite</span> la „Toate valorile”."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2225,6 +2398,12 @@ msgid ""
 "dot shows on the top right corner of the cell when it has a comment. Hover "
 "the mouse on the cell to display comments."
 msgstr ""
+"<span class=\"def\">Comentarii:</span> într-o foaie de calcul puteți insera "
+"un comentariu pe celulă. Când selectați <span class=\"ui\">Inserați "
+"comentariu</span>, apare o fereastră pop-up care vă permite să scrieți "
+"conținutul comentariului. Un punct roșu apare în colțul din dreapta sus al "
+"celulei când are un comentariu. Treceți mouse-ul pe celulă pentru a afișa "
+"comentarii."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:545-5
 msgid ""
@@ -2234,6 +2413,12 @@ msgid ""
 ">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
+"<span class=\"def\">Formatare condiționată:</span> <span class="
+"\"productname\">{productname}</span> adaugă simboluri la fiecare celulă "
+"dintr-un interval în funcție de condițiile celulelor. Selectați intervalul "
+"de celule și faceți clic pe pictograma <span class=\"ui\">Formatare "
+"condiționată</span> din bara de instrumente. Selectați setul de simboluri de "
+"aplicat pe interval."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:556-30
 msgid ""
@@ -2245,6 +2430,14 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
+"<span class=\"productname\">{productname}</span> editează documentele text "
+"în același mod în care editați un document desktop. Oferă un aspect Ce vezi "
+"este ceea ce obții (WYSIWYG) – care prezintă convenabil documentul pe măsură "
+"ce va fi imprimat. Operațiuni precum tastarea textului, tăierea, copierea și "
+"lipirea conținutului, selectarea textului, inserarea, redimensionarea, "
+"ancorarea imaginilor, adăugarea și manipularea tabelelor și diagramelor sunt "
+"similare cu un procesor de text desktop. Utilizați tastatura, meniurile și "
+"barele de instrumente pentru a interacționa cu documentul dvs."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:561-30
 msgid ""
@@ -2252,9 +2445,11 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
+"Meniurile contextuale sunt disponibile făcând clic pe butonul din dreapta al "
+"mouse-ului. Comenzile disponibile în meniul contextual sunt legate - nu în "
+"mod extensiv - de obiectul de bază din document."
 
 #: html/cool-help.html%2Bdiv.div.div.h3:565-5
-#, fuzzy
 msgid "Formatting text"
 msgstr "Formatare text"
 
@@ -2269,6 +2464,14 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
+"<span class=\"productname\">{productname}</span> acceptă tehnici moderne de "
+"formatare a paragrafelor prin stiluri. Un stil este un set de proprietăți de "
+"text (font, culoare, fundal și multe altele) etichetate cu un nume, numele "
+"stilului. Utilizați stilul pentru a aplica același set de proprietăți la mai "
+"multe paragrafe din document și pentru a produce un aspect uniform, "
+"profesional. De asemenea, dacă modificați una dintre proprietățile de "
+"formatare a stilului, toate paragrafele cu același stil modifică și "
+"formatarea, simplificând efortul de formatare a multor paragrafe individual."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:568-5
 msgid ""
@@ -2574,9 +2777,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:696-5
-#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr "Salt la începutul documentului"
+msgstr "Cum obțin un număr de cuvinte din documentul meu?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:697-5
 msgid ""
@@ -2696,9 +2898,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:731-5
-#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr "Salt la începutul documentului"
+msgstr "Cum stabilesc marginile documentului?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:732-5
 msgid ""
@@ -2780,9 +2981,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:761-5
-#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "Aplică stilul de paragraf Titlu 1"
+msgstr "Aplicarea unui stil de paragraf:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:763-11
 msgid "Place the cursor at the paragraph to be formatted"

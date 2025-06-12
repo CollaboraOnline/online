@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2023-09-23 08:08+0000\n"
-"Last-Translator: Cosmin Humeniuc <cosmin.humeniuc@1and1.ro>\n"
+"PO-Revision-Date: 2025-06-03 16:01+0000\n"
+"Last-Translator: Ion Silvestru <ion.silvestru@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ro/>\n"
-"Language: \n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -83,7 +83,7 @@ msgstr "Memorie utilizată"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
-msgstr "Bytes trimiși"
+msgstr "Octeţi trimiși"
 
 #: admin/admin.strings.js:31
 msgid "Bytes received"
@@ -99,7 +99,7 @@ msgstr "Document"
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr ""
+msgstr "Aspecte"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -115,7 +115,7 @@ msgstr "Modificat"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Încărcat"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
@@ -168,7 +168,7 @@ msgstr "Mărimea statistici despre CPU"
 
 #: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
-msgstr "Intervalul statistici despre CPU (ms) "
+msgstr "Interval de timp al statisticilor CPU (în ms)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
@@ -251,7 +251,7 @@ msgstr "Informații despre versiune"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licență"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.ts:469
 #: src/control/Control.Menubar.ts:645 src/control/Control.Menubar.ts:782
@@ -264,19 +264,19 @@ msgstr "Despre"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Istoricul procesorului"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Istoricul memoriei"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Memorie"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Așteptați, clusterul kubernetes se scalează..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -289,7 +289,7 @@ msgstr "Nu s-a putut autentifica această sesiune pe protocolul {0}"
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Avertizare"
 
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
@@ -347,7 +347,7 @@ msgstr "Trimis"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Conexiuni"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -371,187 +371,201 @@ msgstr "Ești sigur că vrei să închizi serverul?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Accesibilitate"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
-msgstr ""
+msgstr "Text Auto"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Încărcați fragmente de text reutilizabile (.bau). Pentru a insera textul în "
+"document, tastați comanda rapidă pentru o intrare AutoText și apăsați F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Încarcă Autotext"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Dicționare personalizate"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Adăugați sau editați cuvinte într-un dicționar de verificare ortografică. "
+"Cuvintele din cartea de cuvinte (.dic) vor fi disponibile pentru verificări "
+"ortografice."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Încărcă Wordbook"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Interface"
-msgstr ""
+msgstr "Interfață"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Setați preferințele implicite de interfață."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Încărcă configurația"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Document settings"
-msgstr ""
+msgstr "Setările documentului"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Ajustați modul în care se comportă documentele de birou."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Încarcă Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:238
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Adresa URL de configurare partajată lipsește din variabilele inițiale."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:244
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Jetonul de acces lipsește în variabilele inițiale."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:273
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Ceva nu a mers bine. Vă rugăm să încercați să reîmprospătați pagina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"A apărut o eroare la preluarea fișierului de setare. Vă rugăm să încercați "
+"să reîmprospătați pagina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Ceva nu a mers bine la preluarea unei cărți de cuvinte. Vă rugăm să "
+"încercați să reîmprospătați pagina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:406
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"A apărut o eroare la încărcarea fișierului. Vă rugăm să încercați din nou."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:532
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"A apărut o eroare la ștergerea fișierului. Vă rugăm să încercați să "
+"reîmprospătați pagina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Setări de vizualizare"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Ajustați setările de vizualizare."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Opţiune"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Avertisment: accesibilitatea serverului trebuie să fie activată pentru a "
+"comuta)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Resetare la setările implicite de vizualizare"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Sigur doriți să resetați Setările de vizualizare?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Salvează setările de vizualizare"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
-msgstr ""
+msgstr "Eroare"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Dicționar standard"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Cuvintele sunt ignorate de corectorul ortografic"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Dicţionar de excepţii"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Cuvintele de excepție sunt subliniate în timpul verificării ortografiei"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Se încarcă Wordbook..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Tastați pentru a adăuga un cuvânt"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Adăugă"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Format de dicționar nevalid. Vă rugăm să verificați fișierul."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "A apărut o eroare la încărcarea fișierului dicționar"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "A apărut o eroare la încărcarea setărilor documentului."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Setări document"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Selectați o filă pentru a vizualiza setările."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Resetați la setările implicite ale documentului"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Sigur doriți să resetați setările documentului?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Salvați setările documentului"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -603,39 +617,41 @@ msgstr " s"
 
 #: js/global.js:1547
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Clusterul se scalează, se reîncearcă..."
 
 #: js/global.js:1549
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Documentul migrează pe un server nou, se reîncearcă..."
 
 #: js/global.js:1551
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Nu s-a putut obține RouteToken de la controler"
 
 #: src/app/Debug.ts:135
 msgid "Debug Tools"
-msgstr ""
+msgstr "Instrumente de depanare"
 
 #: src/app/Debug.ts:137
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D pentru a ieși"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"Gestionarea evenimentelor a fost amânată pentru o perioadă neașteptat de "
+"lungă: {0}ms"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Un comentariu este în curs de editare"
 
 #: src/canvas/sections/CommentListSection.ts:165
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Salvați sau renunțați la comentariul în curs de editare."
 
 #: src/canvas/sections/CommentListSection.ts:1166
 msgid "Modify"
-msgstr ""
+msgstr "Modifică"
 
 #: src/canvas/sections/CommentListSection.ts:1172
 #: src/canvas/sections/CommentSection.ts:169
@@ -644,39 +660,39 @@ msgstr "Răspuns"
 
 #: src/canvas/sections/CommentListSection.ts:1178
 msgid "Remove"
-msgstr ""
+msgstr "Elimină"
 
 #: src/canvas/sections/CommentListSection.ts:1184
 msgid "Remove Thread"
-msgstr ""
+msgstr "Elimină firul"
 
 #: src/canvas/sections/CommentListSection.ts:1190
 msgid "Resolve"
-msgstr ""
+msgstr "Rezolvă"
 
 #: src/canvas/sections/CommentListSection.ts:1190
 msgid "Unresolve"
-msgstr ""
+msgstr "Nerezolvat"
 
 #: src/canvas/sections/CommentListSection.ts:1196
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Fir nerezolvat"
 
 #: src/canvas/sections/CommentListSection.ts:1196
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Rezolvă fir"
 
 #: src/canvas/sections/CommentListSection.ts:1202
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promovați în topul comentariului"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Show on the side"
-msgstr ""
+msgstr "Arată pe lateral"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Open in full view"
-msgstr ""
+msgstr "Deschide la vedere completă"
 
 #: src/canvas/sections/CommentListSection.ts:1236
 #: src/control/Control.JSDialogBuilder.js:1938
@@ -688,72 +704,74 @@ msgstr "Comentariu"
 #: src/canvas/sections/CommentListSection.ts:1456
 #: src/canvas/sections/CommentListSection.ts:1469
 msgid "Comments Updated"
-msgstr ""
+msgstr "Comentarii actualizate"
 
 #: src/canvas/sections/CommentListSection.ts:1457
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Un alt utilizator a eliminat acest comentariu."
 
 #: src/canvas/sections/CommentListSection.ts:1470
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Un alt utilizator a actualizat comentariul. Doriți să suprascrieți aceste "
+"modificări?"
 
 #: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1427
 msgid "Overwrite"
-msgstr ""
+msgstr "Suprascrie"
 
 #: src/canvas/sections/CommentListSection.ts:1472
 msgid "Update"
-msgstr ""
+msgstr "Actualizare"
 
 #: src/canvas/sections/CommentListSection.ts:1573
 #: src/canvas/sections/CommentListSection.ts:1647
 msgid "Autosaved"
-msgstr ""
+msgstr "Salvat automat"
 
 #: src/canvas/sections/CommentSection.ts:232
 msgid "Edit comment"
-msgstr ""
+msgstr "Editează comentariul"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Răspunde la comentariu"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
-msgstr ""
+msgstr "Deschide meniul"
 
 #: src/canvas/sections/CommentSection.ts:383
 #: src/canvas/sections/CommentSection.ts:384
 msgid "Accept change"
-msgstr ""
+msgstr "Acceptă modificarea"
 
 #: src/canvas/sections/CommentSection.ts:390
 #: src/canvas/sections/CommentSection.ts:391
 msgid "Reject change"
-msgstr ""
+msgstr "Respinge modificarea"
 
 #: src/canvas/sections/CommentSection.ts:414
 msgid "Resolved"
-msgstr ""
+msgstr "Rezolvat"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
 msgid "Document contains unsupported media"
-msgstr ""
+msgstr "Documentul conține conținut media neacceptat"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
-msgstr ""
+msgstr "Copiați locația linkului"
 
 #: src/canvas/sections/URLPopUpSection.ts:79
 msgid "Edit link"
-msgstr ""
+msgstr "Editați linkul"
 
 #: src/canvas/sections/URLPopUpSection.ts:94
 msgid "Remove link"
-msgstr ""
+msgstr "Eliminați linkul"
 
 #: src/control/ColorPicker.ts:270
 msgid "No color"
@@ -765,24 +783,23 @@ msgstr "Culoare automată"
 
 #: src/control/Control.AboutDialog.ts:112
 msgid "This version of {productname} is powered by"
-msgstr "Această versiune a {productname} este creat de "
+msgstr "Această versiune de {productname} este dezvoltată de"
 
 #: src/control/Control.AboutDialog.ts:135
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Proxy lent\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Fus orar:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copiați toate informațiile despre versiune în engleză"
 
 #: src/control/Control.AddressInputField.ts:67
-#, fuzzy
 msgid "cell address"
-msgstr "adresă celulară"
+msgstr "adresa celulei"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
@@ -794,11 +811,11 @@ msgstr "Deschide legătura"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Sursele externe copiate nu sunt permise"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Se pare că ați copiat o selecție care include imagini externe."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -806,24 +823,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Descărcarea resurselor externe este interzisă, dar lipirea imaginilor este "
+"încă posibilă. Faceți clic dreapta pe imagine, alegeți „Copiați imaginea” și "
+"inserați-o în document."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Sursa externă de date nu este permisă"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Se pare că ați încercat să introduceți date externe."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Sursa de date externă selectată este interzisă. Vă rugăm să contactați "
+"administratorul de sistem."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "Nu mai afișa asta"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
@@ -843,11 +865,11 @@ msgstr "Lipire specială"
 
 #: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copiați celule"
 
 #: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
-msgstr ""
+msgstr "Completează cu serii"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -893,13 +915,15 @@ msgstr "Anulează"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
-msgstr ""
+msgstr "Descărcați selecția"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
+"Dacă doriți să partajați elemente mari în afara {productname}, este necesar "
+"să le descărcați mai întâi."
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:215
@@ -907,364 +931,365 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:296
 #: src/control/Control.NotebookbarWriter.js:288
 msgid "Download"
-msgstr ""
+msgstr "Descărcați"
 
 #: src/control/Control.DownloadProgress.js:81
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Descărcarea conținutului clipboard-ului"
 
 #: src/control/Control.DownloadProgress.js:88
 #: src/control/Control.DownloadProgress.js:113
 #: src/control/Control.PartsPreview.js:297
 msgid "Copy"
-msgstr ""
+msgstr "Copiere"
 
 #: src/control/Control.DownloadProgress.js:111
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Descărcarea finalizată și gata pentru a fi copiată în clipboard."
 
 #: src/control/Control.DownloadProgress.js:112
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"De acum înainte notificările din clipboard vor apărea discret în partea de "
+"jos."
 
 #: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Conținut copiat în clipboard"
 
 #: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
-msgstr ""
+msgstr "Descărcarea a eșuat"
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr ""
+msgstr "Andora"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Emiratele Arabe Unite"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Austria"
-msgstr ""
+msgstr "Austria"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Australia"
-msgstr ""
+msgstr "Australia"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr ""
+msgstr "Insulele Aland"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaijan"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia și Herzegovina"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
-msgstr ""
+msgstr "Belgia"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgaria"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Brazil"
-msgstr ""
+msgstr "Brazilia"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr ""
+msgstr "Belarus"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Switzerland"
-msgstr ""
+msgstr "Elveția"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Chile"
-msgstr ""
+msgstr "Chile"
 
 #: src/control/Control.ESignature.ts:144
 msgid "China"
-msgstr ""
+msgstr "China"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Cyprus"
-msgstr ""
+msgstr "Cipru"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
-msgstr ""
+msgstr "Cehia"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Germany"
-msgstr ""
+msgstr "Germania"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Denmark"
-msgstr ""
+msgstr "Danemarca"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Estonia"
-msgstr ""
+msgstr "Estonia"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Spain"
-msgstr ""
+msgstr "Spania"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Finland"
-msgstr ""
+msgstr "Finlanda"
 
 #: src/control/Control.ESignature.ts:152
 msgid "France"
-msgstr ""
+msgstr "Franța"
 
 #: src/control/Control.ESignature.ts:153
 msgid "United Kingdom"
-msgstr ""
+msgstr "Regatul Unit"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Georgia"
-msgstr ""
+msgstr "Georgia"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
-msgstr ""
+msgstr "Grecia"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Croatia"
-msgstr ""
+msgstr "Croația"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Hungary"
-msgstr ""
+msgstr "Ungaria"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonezia"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Ireland"
-msgstr ""
+msgstr "Irlanda"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: src/control/Control.ESignature.ts:162
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Iceland"
-msgstr ""
+msgstr "Islanda"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Italy"
-msgstr ""
+msgstr "Italia"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Japan"
-msgstr ""
+msgstr "Japonia"
 
 #: src/control/Control.ESignature.ts:166
 msgid "Kenya"
-msgstr ""
+msgstr "Kenya"
 
 #: src/control/Control.ESignature.ts:167
 msgid "South Korea"
-msgstr ""
+msgstr "Coreea de Sud"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazahstan"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituania"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxemburg"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Latvia"
-msgstr ""
+msgstr "Letonia"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldova, Republica"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
-msgstr ""
+msgstr "Muntenegru"
 
 #: src/control/Control.ESignature.ts:176
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Macedonia de Nord, Republica"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Mexico"
-msgstr ""
+msgstr "Mexic"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Netherlands"
-msgstr ""
+msgstr "Olanda"
 
 #: src/control/Control.ESignature.ts:180
 msgid "Norway"
-msgstr ""
+msgstr "Norvegia"
 
 #: src/control/Control.ESignature.ts:181
 msgid "New Zealand"
-msgstr ""
+msgstr "Noua Zeelandă"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Philippines"
-msgstr ""
+msgstr "Filipine"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Poland"
-msgstr ""
+msgstr "Polonia"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Portugal"
-msgstr ""
+msgstr "Portugalia"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Qatar"
-msgstr ""
+msgstr "Qatar"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Romania"
-msgstr ""
+msgstr "România"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Serbia"
-msgstr ""
+msgstr "Serbia"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
-msgstr ""
+msgstr "Federația Rusă"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Arabia Saudită"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Sweden"
-msgstr ""
+msgstr "Suedia"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Singapore"
-msgstr ""
+msgstr "Singapore"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovenia"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovacia"
 
 #: src/control/Control.ESignature.ts:194
 msgid "San Marino"
-msgstr ""
+msgstr "San Marino"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Turkey"
-msgstr ""
+msgstr "Turcia"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ucraina"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Statele Unite ale Americii"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Vatican"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Africa de Sud"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Documentul este semnat și va fi disponibil în curând"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Ţara:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Furnizor:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Introduceți semnătura electronică"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Extindeți bara de formule"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
-#, fuzzy
 msgid "Function Wizard"
-msgstr "Asistent funcții"
+msgstr "Expertul de funcții"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Selectați Funcție"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1279,23 +1304,23 @@ msgstr "Acceptă"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Restrângeți bara de formule"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Document inactiv - faceți clic pentru a reîncărca și a relua editarea"
 
 #: src/control/Control.IdleHandler.ts:45
 msgid "Idle document - please tap to reload and resume editing"
-msgstr ""
+msgstr "Document inactiv - atingeți pentru a reîncărca și a relua editarea"
 
 #: src/control/Control.JSDialog.js:318
 msgid "Close dialog"
-msgstr ""
+msgstr "Închide caseta de dialog"
 
 #: src/control/Control.JSDialogBuilder.js:489
 msgid "Solid"
-msgstr ""
+msgstr "Solid"
 
 #: src/control/Control.JSDialogBuilder.js:492
 msgid "Linear"
@@ -1331,27 +1356,24 @@ msgstr "De la"
 
 #: src/control/Control.JSDialogBuilder.js:1471
 msgid "To"
-msgstr ""
+msgstr "În"
 
 #: src/control/Control.JSDialogBuilder.js:1474
 msgid "Color"
-msgstr ""
+msgstr "Culoare"
 
 #: src/control/Control.JSDialogBuilder.js:1550
-#, fuzzy
 msgid "Select range"
-msgstr "Zone de celule selectate"
+msgstr "Selectați interval"
 
 #: src/control/Control.JSDialogBuilder.js:1667
 #: src/control/Control.NotebookbarBuilder.js:154
-#, fuzzy
 msgid "Font Name"
 msgstr "Font"
 
 #: src/control/Control.JSDialogBuilder.js:1669 src/control/Toolbar.js:134
-#, fuzzy
 msgid "Font Size"
-msgstr "Font"
+msgstr "Dimensiune font"
 
 #: src/control/Control.JSDialogBuilder.js:1671
 #: src/control/Control.TopToolbar.js:460
@@ -1359,79 +1381,77 @@ msgid "Style"
 msgstr "Stil"
 
 #: src/control/Control.JSDialogBuilder.js:1924
-#, fuzzy
 msgid "reply"
-msgstr "Răspuns"
+msgstr "răspuns"
 
 #: src/control/Control.JSDialogBuilder.js:1927
 msgid "replies"
-msgstr ""
+msgstr "răspunsuri"
 
 #: src/control/Control.JSDialogBuilder.js:2002
 msgid "Insert Comment"
-msgstr ""
+msgstr "Inserează comentariu"
 
 #: src/control/Control.JSDialogBuilder.js:2586
 #: src/control/Control.Menubar.ts:973
 msgid "Rows"
-msgstr ""
+msgstr "Rânduri"
 
 #: src/control/Control.JSDialogBuilder.js:2587
 #: src/control/Control.Menubar.ts:976
 msgid "Columns"
-msgstr ""
+msgstr "Coloane"
 
 #: src/control/Control.JSDialogBuilder.js:2607
-#, fuzzy
 msgid "Insert Table"
-msgstr "Inserează un tabel"
+msgstr "Inserează tabel"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:441
 #: src/control/Control.Menubar.ts:443 src/control/Control.Menubar.ts:445
 #: src/control/Control.Menubar.ts:633 src/control/Control.Menubar.ts:773
 #: src/control/Control.Menubar.ts:1059 src/control/Control.StatusBar.js:548
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Niciuna (Nu verificați ortografia)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Selectați limba"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Limba"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Nu s-au găsit rezultate de căutare!"
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
 #: src/control/Control.NotebookbarBuilder.js:336
 #: src/control/Control.NotebookbarBuilder.js:549
 msgid "ODF text document (.odt)"
-msgstr "ODF text document (.odt)"
+msgstr "Document text ODF (.odt)"
 
 #: src/control/Control.Menubar.ts:150 src/control/Control.Menubar.ts:165
 #: src/control/Control.Menubar.ts:1095
 #: src/control/Control.NotebookbarBuilder.js:348
 #: src/control/Control.NotebookbarBuilder.js:561
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Word 2003 Document (.doc)"
 
 #: src/control/Control.Menubar.ts:151 src/control/Control.Menubar.ts:166
 #: src/control/Control.Menubar.ts:1096
 #: src/control/Control.NotebookbarBuilder.js:344
 #: src/control/Control.NotebookbarBuilder.js:557
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Document Word (.docx)"
 
 #: src/control/Control.Menubar.ts:152 src/control/Control.Menubar.ts:167
 #: src/control/Control.Menubar.ts:1097
 #: src/control/Control.NotebookbarBuilder.js:340
 #: src/control/Control.NotebookbarBuilder.js:553
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Text îmbogățit (.rtf)"
 
 #: src/control/Control.Menubar.ts:154 src/control/Control.Menubar.ts:161
 #: src/control/Control.Menubar.ts:482 src/control/Control.Menubar.ts:488
@@ -1442,7 +1462,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1213 src/control/Control.Menubar.ts:1220
 #: src/control/Control.Menubar.ts:1268 src/control/Control.Menubar.ts:1278
 msgid "Export as"
-msgstr ""
+msgstr "Export ca"
 
 #: src/control/Control.Menubar.ts:155 src/control/Control.Menubar.ts:162
 #: src/control/Control.Menubar.ts:483 src/control/Control.Menubar.ts:489
@@ -1468,19 +1488,18 @@ msgstr "PDF Document (.pdf)"
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:158 src/control/Control.UIManager.ts:317
-#, fuzzy
 msgid "Rename Document"
-msgstr "Repară documentul"
+msgstr "Redenumiți documentul"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:486
 #: src/control/Control.Menubar.ts:658 src/control/Control.Menubar.ts:798
 #: src/control/Control.Menubar.ts:1086 src/control/Control.Menubar.ts:1151
 #: src/control/Control.Menubar.ts:1216 src/control/Control.Menubar.ts:1271
 msgid "Share..."
-msgstr ""
+msgstr "Partajează..."
 
 #: src/control/Control.Menubar.ts:160 src/control/Control.Menubar.ts:487
 #: src/control/Control.Menubar.ts:660 src/control/Control.Menubar.ts:799
@@ -1503,13 +1522,12 @@ msgstr "Descarcă ca"
 #: src/control/Control.NotebookbarBuilder.js:367
 #: src/control/Control.NotebookbarBuilder.js:401
 #: src/control/Control.NotebookbarBuilder.js:443
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF Document (.pdf)"
+msgstr "PDF Document (.pdf) ca..."
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:807
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Fișier HTML (.html)"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:509
 #: src/control/Control.Menubar.ts:669 src/control/Control.Menubar.ts:815
@@ -1526,7 +1544,7 @@ msgstr "Închide documentul"
 #: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:301
 msgid "Repair"
-msgstr ""
+msgstr "Reparare"
 
 #: src/control/Control.Menubar.ts:207 src/control/Control.Menubar.ts:213
 #: src/control/Control.Menubar.ts:526 src/control/Control.Menubar.ts:532
@@ -1543,21 +1561,21 @@ msgstr "Reinițializează apropierea"
 #: src/control/Control.Menubar.ts:216 src/control/Control.Menubar.ts:538
 #: src/control/Control.Menubar.ts:698 src/control/Control.Menubar.ts:841
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Modul UI"
 
 #: src/control/Control.Menubar.ts:217 src/control/Control.Menubar.ts:539
 msgid "Show Ruler"
-msgstr ""
+msgstr "Rigla"
 
 #: src/control/Control.Menubar.ts:218 src/control/Control.Menubar.ts:540
 #: src/control/Control.Menubar.ts:703 src/control/Control.Menubar.ts:842
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Bara de stare"
 
 #: src/control/Control.Menubar.ts:219 src/control/Control.Menubar.ts:542
 #: src/control/Control.Menubar.ts:704 src/control/Control.Menubar.ts:843
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Ascunde bara de meniu"
 
 #: src/control/Control.Menubar.ts:220 src/control/Control.Menubar.ts:543
 #: src/control/Control.Menubar.ts:699 src/control/Control.Menubar.ts:844
@@ -1568,7 +1586,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:523
 #: src/control/Control.NotebookbarWriter.js:1572
 msgid "Dark Mode"
-msgstr ""
+msgstr "Mod închis"
 
 #: src/control/Control.Menubar.ts:221 src/control/Control.Menubar.ts:544
 #: src/control/Control.Menubar.ts:700 src/control/Control.Menubar.ts:845
@@ -1579,26 +1597,26 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:530
 #: src/control/Control.NotebookbarWriter.js:1579
 msgid "Invert Background"
-msgstr ""
+msgstr "Inversare fundal"
 
 #: src/control/Control.Menubar.ts:223 src/control/Control.Menubar.ts:848
 #: src/control/Control.NotebookbarCalc.js:2054
 #: src/control/Control.NotebookbarWriter.js:869
 #: src/control/Control.NotebookbarWriter.js:987
 msgid "Style list"
-msgstr ""
+msgstr "Lista de stiluri"
 
 #: src/control/Control.Menubar.ts:231 src/control/Control.Menubar.ts:555
 #: src/control/Control.Menubar.ts:707 src/control/Control.Menubar.ts:859
 #: src/control/Control.Menubar.ts:1341 src/control/Control.Menubar.ts:1391
 #: src/control/Control.Menubar.ts:1405 src/control/Control.Menubar.ts:1428
 msgid "Local Image..."
-msgstr ""
+msgstr "Imagine locală..."
 
 #: src/control/Control.Menubar.ts:255 src/control/Control.Menubar.ts:257
 #: src/control/Control.Menubar.ts:1358 src/control/Control.Menubar.ts:1360
 msgid "All"
-msgstr ""
+msgstr "Toate"
 
 #: src/control/Control.Menubar.ts:266 src/control/Control.Menubar.ts:566
 #: src/control/Control.Menubar.ts:714 src/control/Control.Menubar.ts:871
@@ -1607,78 +1625,77 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1270
 #: src/control/Control.NotebookbarWriter.js:1174
 msgid "Smart Picker"
-msgstr ""
+msgstr "Selector inteligent"
 
 #: src/control/Control.Menubar.ts:267 src/control/Control.Menubar.ts:567
 #: src/control/Control.Menubar.ts:715 src/control/Control.Menubar.ts:872
 msgid "AI Assistant"
-msgstr ""
+msgstr "Asistent AI"
 
 #: src/control/Control.Menubar.ts:308
 msgid "Text orientation"
-msgstr ""
+msgstr "Orientare text"
 
 #: src/control/Control.Menubar.ts:378
 #: src/control/Control.NotebookbarWriter.js:62
 msgid "References"
-msgstr ""
+msgstr "Referințe"
 
 #: src/control/Control.Menubar.ts:381
 #: src/control/Control.NotebookbarWriter.js:1939
 msgid "Update Index"
-msgstr ""
+msgstr "Actualizare index"
 
 #: src/control/Control.Menubar.ts:390
 #: src/control/Control.NotebookbarWriter.js:2036
 msgid "Add Citation"
-msgstr ""
+msgstr "Adăugare citat"
 
 #: src/control/Control.Menubar.ts:391
 #: src/control/Control.NotebookbarWriter.js:2049
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Adăugare notă de citat"
 
 #: src/control/Control.Menubar.ts:392
 #: src/control/Control.NotebookbarWriter.js:2022
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Adăugare bibliografie"
 
 #: src/control/Control.Menubar.ts:394
 #: src/control/Control.NotebookbarWriter.js:2068
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Reîmprospătare citate"
 
 #: src/control/Control.Menubar.ts:395
 #: src/control/Control.NotebookbarWriter.js:2081
 #: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Deconectare citate"
 
 #: src/control/Control.Menubar.ts:396
 #: src/control/Control.NotebookbarWriter.js:2094
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Preferințe citate"
 
 #: src/control/Control.Menubar.ts:424 src/control/Control.Menubar.ts:1380
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Inserare Rich Text"
 
 #: src/control/Control.Menubar.ts:425 src/control/Control.Menubar.ts:1381
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Inserare casetă de bifare"
 
 #: src/control/Control.Menubar.ts:426 src/control/Control.Menubar.ts:1382
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Inserare meniu derulant"
 
 #: src/control/Control.Menubar.ts:427 src/control/Control.Menubar.ts:1383
 msgid "Insert Picture"
-msgstr ""
+msgstr "Inserare imagine"
 
 #: src/control/Control.Menubar.ts:428 src/control/Control.Menubar.ts:1384
-#, fuzzy
 msgid "Insert Date"
-msgstr "Inserează un tabel"
+msgstr "Inserează data"
 
 #: src/control/Control.Menubar.ts:429 src/control/Control.Menubar.ts:1385
 #: src/control/Control.NotebookbarCalc.js:243
@@ -1687,23 +1704,23 @@ msgstr "Inserează un tabel"
 #: src/control/Control.NotebookbarWriter.js:316
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Properties"
-msgstr ""
+msgstr "Proprietăți"
 
 #: src/control/Control.Menubar.ts:449 src/control/Control.Menubar.ts:1129
 #: src/control/Control.NotebookbarWriter.js:423
 msgid "Screen Reading"
-msgstr ""
+msgstr "Citire ecran"
 
 #: src/control/Control.Menubar.ts:462
 #: src/control/Control.NotebookbarWriter.js:389
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: src/control/Control.Menubar.ts:463 src/control/Control.Menubar.ts:639
 #: src/control/Control.Menubar.ts:776 src/control/Control.Menubar.ts:1066
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Online Help"
-msgstr ""
+msgstr "Ajutor online"
 
 #: src/control/Control.Menubar.ts:464 src/control/Control.Menubar.ts:640
 #: src/control/Control.Menubar.ts:777 src/control/Control.Menubar.ts:1067
@@ -1715,7 +1732,7 @@ msgstr "Scurtături de taste"
 #: src/control/Control.Menubar.ts:778 src/control/Control.Menubar.ts:1068
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Report an issue"
-msgstr ""
+msgstr "Raportați o problemă"
 
 #: src/control/Control.Menubar.ts:466 src/control/Control.Menubar.ts:642
 #: src/control/Control.Menubar.ts:779 src/control/Control.Menubar.ts:1069
@@ -1723,7 +1740,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1258 src/control/Control.Menubar.ts:1333
 #: src/control/Control.NotebookbarWriter.js:462
 msgid "Latest Updates"
-msgstr ""
+msgstr "Ultimele actualizări"
 
 #: src/control/Control.Menubar.ts:467 src/control/Control.Menubar.ts:643
 #: src/control/Control.Menubar.ts:780 src/control/Control.Menubar.ts:1070
@@ -1731,7 +1748,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1259 src/control/Control.Menubar.ts:1334
 #: src/control/Control.NotebookbarWriter.js:476
 msgid "Send Feedback"
-msgstr ""
+msgstr "Trimiteți feedback"
 
 #: src/control/Control.Menubar.ts:468 src/control/Control.Menubar.ts:644
 #: src/control/Control.Menubar.ts:781 src/control/Control.Menubar.ts:1071
@@ -1739,97 +1756,96 @@ msgstr ""
 #: src/control/Control.ServerAuditDialog.ts:196
 #: src/control/Control.ServerAuditDialog.ts:197
 msgid "Server audit"
-msgstr ""
+msgstr "Auditul serverului"
 
 #: src/control/Control.Menubar.ts:471 src/control/Control.Menubar.ts:647
 #: src/control/Control.Menubar.ts:784 src/control/Control.Menubar.ts:1074
 msgid "Last modification"
-msgstr ""
+msgstr "Ultima modificare"
 
 #: src/control/Control.Menubar.ts:478 src/control/Control.Menubar.ts:491
 #: src/control/Control.Menubar.ts:1159
 #: src/control/Control.NotebookbarBuilder.js:409
 #: src/control/Control.NotebookbarBuilder.js:583
 msgid "ODF presentation (.odp)"
-msgstr "ODF presentation (.odp)"
+msgstr "Presentare ODF (.odp)"
 
 #: src/control/Control.Menubar.ts:479 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:1160
 #: src/control/Control.NotebookbarBuilder.js:421
 #: src/control/Control.NotebookbarBuilder.js:591
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "Prezentare PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.ts:480 src/control/Control.Menubar.ts:493
 #: src/control/Control.Menubar.ts:1161
 #: src/control/Control.NotebookbarBuilder.js:417
 #: src/control/Control.NotebookbarBuilder.js:587
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "Prezentare PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.ts:485 src/control/Control.Menubar.ts:657
-#, fuzzy
 msgid "Save Comments"
-msgstr "Comentariu"
+msgstr "Salvare comentariu"
 
 #: src/control/Control.Menubar.ts:494
 #: src/control/Control.NotebookbarBuilder.js:425
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Document HTML (.html)"
 
 #: src/control/Control.Menubar.ts:495
 #: src/control/Control.NotebookbarBuilder.js:456
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.ts:496
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.ts:497
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Diapozitivul curent ca Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:498
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Diapozitivul curent ca Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.ts:499
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Diapozitivul curent ca Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.ts:500
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Diapozitivul curent ca Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.ts:506
 #: src/control/Control.NotebookbarBuilder.js:654
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Diapozitive de pagină completă"
 
 #: src/control/Control.Menubar.ts:507
 #: src/control/Control.NotebookbarBuilder.js:658
 msgid "Notes Pages"
-msgstr ""
+msgstr "Pagini de note"
 
 #: src/control/Control.Menubar.ts:541
 #: src/control/Control.NotebookbarImpress.js:489
 msgid "Notes View"
-msgstr ""
+msgstr "Vizualizare note"
 
 #: src/control/Control.Menubar.ts:545
 #: src/control/Control.NotebookbarImpress.js:495
 msgid "Master View"
-msgstr ""
+msgstr "Vizualizare principală"
 
 #: src/control/Control.Menubar.ts:557
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Multimedia locală..."
 
 #: src/control/Control.Menubar.ts:624 src/control/Control.Menubar.ts:1202
 #: src/control/Control.PresentationBar.js:127
@@ -1838,141 +1854,140 @@ msgstr "Prezentare pe tot ecranul"
 
 #: src/control/Control.Menubar.ts:625
 msgid "Present current slide"
-msgstr ""
+msgstr "Prezentare diapozitiv curent"
 
 #: src/control/Control.Menubar.ts:626
 msgid "Present in new window"
-msgstr ""
+msgstr "Prezentare în fereastră nouă"
 
 #: src/control/Control.Menubar.ts:627
 #: src/control/Control.NotebookbarImpress.js:393
 #: src/slideshow/PresenterConsole.js:230
 msgid "Presenter Console"
-msgstr ""
+msgstr "Consola prezentatorului"
 
 #: src/control/Control.Menubar.ts:664 src/control/Control.Menubar.ts:1162
 #: src/control/Control.Menubar.ts:1223
 #: src/control/Control.NotebookbarBuilder.js:413
 #: src/control/Control.NotebookbarBuilder.js:526
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "ODF presentation (.odp)"
+msgstr "Desen ODF (.odg)"
 
 #: src/control/Control.Menubar.ts:791 src/control/Control.Menubar.ts:803
 #: src/control/Control.Menubar.ts:1281
 #: src/control/Control.NotebookbarBuilder.js:375
 #: src/control/Control.NotebookbarBuilder.js:568
 msgid "ODF spreadsheet (.ods)"
-msgstr "ODF spreadsheet (.ods)"
+msgstr "Foaie de calcul ODF (.ods)"
 
 #: src/control/Control.Menubar.ts:792 src/control/Control.Menubar.ts:804
 #: src/control/Control.Menubar.ts:1282
 #: src/control/Control.NotebookbarBuilder.js:383
 #: src/control/Control.NotebookbarBuilder.js:576
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Foaie de calcul Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.ts:793 src/control/Control.Menubar.ts:805
 #: src/control/Control.Menubar.ts:1283
 #: src/control/Control.NotebookbarBuilder.js:379
 #: src/control/Control.NotebookbarBuilder.js:572
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Foaie de calcul Excel (.xlsx)"
 
 #: src/control/Control.Menubar.ts:806
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Fişier CSV (.csv)"
 
 #: src/control/Control.Menubar.ts:812
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "Active sheet"
-msgstr ""
+msgstr "Foaie activă"
 
 #: src/control/Control.Menubar.ts:813 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:113
 msgid "All Sheets"
-msgstr ""
+msgstr "Toate foile"
 
 #: src/control/Control.Menubar.ts:851
 #: src/control/Control.NotebookbarCalc.js:1187
 msgid "Focus Cell"
-msgstr ""
+msgstr "Focalizare celulă"
 
 #: src/control/Control.Menubar.ts:945
 #: src/control/jsdialog/Definitions.Menu.ts:310
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Evidențiere celulele cu..."
 
 #: src/control/Control.Menubar.ts:946
 #: src/control/jsdialog/Definitions.Menu.ts:313
 msgid "Values greater than..."
-msgstr ""
+msgstr "Valori mai mari de..."
 
 #: src/control/Control.Menubar.ts:947
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Values less than..."
-msgstr ""
+msgstr "Valori mai mici de..."
 
 #: src/control/Control.Menubar.ts:948
 #: src/control/jsdialog/Definitions.Menu.ts:321
 msgid "Values equal to..."
-msgstr ""
+msgstr "Valori egale cu..."
 
 #: src/control/Control.Menubar.ts:949
 #: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Values between..."
-msgstr ""
+msgstr "Valori intre..."
 
 #: src/control/Control.Menubar.ts:950
 #: src/control/jsdialog/Definitions.Menu.ts:329
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Valori duplicat..."
 
 #: src/control/Control.Menubar.ts:951
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "Containing text..."
-msgstr ""
+msgstr "Conține text..."
 
 #: src/control/Control.Menubar.ts:953 src/control/Control.Menubar.ts:963
 #: src/control/jsdialog/Definitions.Menu.ts:337
 #: src/control/jsdialog/Definitions.Menu.ts:368
 msgid "More highlights..."
-msgstr ""
+msgstr "Mai multe evidenţieri..."
 
 #: src/control/Control.Menubar.ts:955
 #: src/control/jsdialog/Definitions.Menu.ts:341
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Reguli de sus/de jos..."
 
 #: src/control/Control.Menubar.ts:956
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "Top N elements..."
-msgstr ""
+msgstr "N elemente de sus..."
 
 #: src/control/Control.Menubar.ts:957
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "Top N percent..."
-msgstr ""
+msgstr "N procent de sus..."
 
 #: src/control/Control.Menubar.ts:958
 #: src/control/jsdialog/Definitions.Menu.ts:352
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N elemente de jos..."
 
 #: src/control/Control.Menubar.ts:959
 #: src/control/jsdialog/Definitions.Menu.ts:356
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N procent de jos..."
 
 #: src/control/Control.Menubar.ts:960
 #: src/control/jsdialog/Definitions.Menu.ts:360
 msgid "Above Average..."
-msgstr ""
+msgstr "Peste medie..."
 
 #: src/control/Control.Menubar.ts:961
 #: src/control/jsdialog/Definitions.Menu.ts:364
 msgid "Below Average..."
-msgstr ""
+msgstr "Sub medie..."
 
 #: src/control/Control.Menubar.ts:1078 src/control/Control.Menubar.ts:1144
 #: src/control/Control.Menubar.ts:1209 src/control/Control.Menubar.ts:1264
@@ -1983,116 +1998,113 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:936
 #: src/control/Control.StatusBar.js:253 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575 src/control/Toolbar.js:576
-#, fuzzy
 msgid "Search"
-msgstr "Caută:"
+msgstr "Căutare"
 
 #: src/control/Control.Menubar.ts:1131
 msgid "Page Setup"
-msgstr ""
+msgstr "Configurare pagină"
 
 #: src/control/Control.Menubar.ts:1275
 msgid "Define print area"
-msgstr ""
+msgstr "Definire zonă de imprimare"
 
 #: src/control/Control.Menubar.ts:1276
 msgid "Remove print area"
-msgstr ""
+msgstr "Eliminare zonă de imprimare"
 
 #: src/control/Control.Menubar.ts:1611 src/control/Control.StatusBar.js:547
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Resetare la limba implicită"
 
 #: src/control/Control.Menubar.ts:1642 src/control/Control.Menubar.ts:1643
 #: src/control/Control.Menubar.ts:1644 src/control/Control.Toolbar.js:140
 #: src/control/Control.Toolbar.js:206
 msgid "More..."
-msgstr ""
+msgstr "Mai mult..."
 
 #: src/control/Control.Menubar.ts:1986
 msgid "Use Compact view"
-msgstr ""
+msgstr "Utilizare vizualizare compactă"
 
 #: src/control/Control.Menubar.ts:1988
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Utilizare vizualizare cu file"
 
 #: src/control/Control.Menubar.ts:2073
 msgid "Read-only mode"
-msgstr ""
+msgstr "Mod numai citire"
 
 #: src/control/Control.Menubar.ts:2121
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Inserează un tabel"
+msgstr "Inserează figură"
 
 #: src/control/Control.Menubar.ts:2199
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Linia de semnătură poate fi acum mutată sau redimensionată după cum este "
+"necesar."
 
 #: src/control/Control.Menubar.ts:2201
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Finalizare semnare electronică"
 
 #: src/control/Control.Menubar.ts:2398
 msgid "file type icon"
-msgstr ""
+msgstr "pictograma tipului de fișier"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:198
-#, fuzzy
 msgid "Show the search bar"
-msgstr "Anulează căutarea"
+msgstr "Afișează bara de căutare"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:140
 msgid "Borders"
-msgstr ""
+msgstr "Margini"
 
 #: src/control/Control.MobileSearchBar.ts:28
-#, fuzzy
 msgid "Hide the search bar"
-msgstr "Anulează căutarea"
+msgstr "Ascunde bara de căutare"
 
 #: src/control/Control.MobileSearchBar.ts:48
-#, fuzzy
 msgid "Clear the search field"
-msgstr "Anulează căutarea"
+msgstr "Curăță câmpul de căutare"
 
 #: src/control/Control.MobileWizardBuilder.js:547
 msgid "Background Color"
-msgstr ""
+msgstr "Culoare fundal"
 
 #: src/control/Control.MobileWizardBuilder.js:549
 msgid "Gradient Start"
-msgstr ""
+msgstr "Început gradient"
 
 #: src/control/Control.MobileWizardBuilder.js:551
 msgid "Gradient End"
-msgstr ""
+msgstr "Sfârșit gradient"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Navigare"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Închide navigare"
 
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Diapozitive"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
-msgstr ""
+msgstr "Contur"
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2102,90 +2114,88 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:210
 #: src/control/Control.NotebookbarWriter.js:234
 msgid "Share"
-msgstr ""
+msgstr "Partajează"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Tap to expand"
-msgstr ""
+msgstr "Atingeți pentru a extinde"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:270
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Atingeți pentru a restrânge"
 
 #: src/control/Control.NotebookbarBuilder.js:362
 #: src/control/Control.NotebookbarBuilder.js:391
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "Fişier HTML (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:387
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Fişier CSV (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:530
 msgid "Image (.png)"
-msgstr ""
+msgstr "Imagine (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:57
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarWriter.js:37
 msgid "File"
-msgstr ""
+msgstr "Fişier"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Home"
-msgstr ""
+msgstr "Acasă"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:103
 #: src/control/Control.NotebookbarWriter.js:50
-#, fuzzy
 msgid "Insert"
-msgstr "Inserează un tabel"
+msgstr "Inserare"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarImpress.js:109
 #: src/control/Control.NotebookbarWriter.js:56
 msgid "Layout"
-msgstr ""
+msgstr "Aspect"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Data"
-msgstr ""
+msgstr "Date"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:68
-#, fuzzy
 msgid "Review"
-msgstr "Prezentarea generală"
+msgstr "Revizuire"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:121
 #: src/control/Control.NotebookbarWriter.js:74
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:93
 msgid "Draw"
-msgstr ""
+msgstr "Desen"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
 #: src/control/Control.NotebookbarImpress.js:148
 #: src/control/Control.NotebookbarWriter.js:100
 msgid "View"
-msgstr ""
+msgstr "Vizualizare"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:114
@@ -2193,21 +2203,21 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:106
 #: src/control/Control.ServerAuditDialog.ts:216
 msgid "Help"
-msgstr ""
+msgstr "Ajutor"
 
 #: src/control/Control.NotebookbarCalc.js:130
 #: src/control/Control.NotebookbarImpress.js:208
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarWriter.js:288
 msgid "Save As"
-msgstr ""
+msgstr "Salvare ca"
 
 #: src/control/Control.NotebookbarCalc.js:149
 #: src/control/Control.NotebookbarDraw.js:178
 #: src/control/Control.NotebookbarImpress.js:228
 #: src/control/Control.NotebookbarWriter.js:196
 msgid "Export As"
-msgstr ""
+msgstr "Export ca"
 
 #: src/control/Control.NotebookbarCalc.js:174
 #: src/control/Control.NotebookbarDraw.js:204
@@ -2215,14 +2225,14 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:218
 #: src/control/Control.NotebookbarWriter.js:248
 msgid "See history"
-msgstr ""
+msgstr "Istoric"
 
 #: src/control/Control.NotebookbarCalc.js:256
 #: src/control/Control.NotebookbarDraw.js:302
 #: src/control/Control.NotebookbarImpress.js:337
 #: src/control/Control.NotebookbarWriter.js:329
 msgid "Signature"
-msgstr ""
+msgstr "Semnătură"
 
 #: src/control/Control.NotebookbarCalc.js:272
 #: src/control/Control.NotebookbarDraw.js:319
@@ -2230,144 +2240,140 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:345
 #: src/control/Control.UIManager.ts:317
 msgid "Rename"
-msgstr ""
+msgstr "Redenumire"
 
 #: src/control/Control.NotebookbarCalc.js:617
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "Number"
-msgstr ""
+msgstr "Număr"
 
 #: src/control/Control.NotebookbarCalc.js:619
 msgid "Percent"
-msgstr ""
+msgstr "Procent"
 
 #: src/control/Control.NotebookbarCalc.js:620
 msgid "Currency"
-msgstr ""
+msgstr "Valută"
 
 #: src/control/Control.NotebookbarCalc.js:621
 #: src/control/Control.NotebookbarWriter.js:1447
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
-msgstr ""
+msgstr "Dată"
 
 #: src/control/Control.NotebookbarCalc.js:622
 msgid "Time"
-msgstr ""
+msgstr "Timp"
 
 #: src/control/Control.NotebookbarCalc.js:623
 msgid "Scientific"
-msgstr ""
+msgstr "Ştiinţific"
 
 #: src/control/Control.NotebookbarCalc.js:624
 msgid "Fraction"
-msgstr ""
+msgstr "Fracţie"
 
 #: src/control/Control.NotebookbarCalc.js:625
 msgid "Boolean Value"
-msgstr ""
+msgstr "Valoare booleană"
 
 #: src/control/Control.NotebookbarCalc.js:626 src/control/Toolbar.js:807
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:800
 msgid "Default"
-msgstr ""
+msgstr "Implicit"
 
 #: src/control/Control.NotebookbarCalc.js:807
 msgid "Heading 1"
-msgstr ""
+msgstr "Titlu 1"
 
 #: src/control/Control.NotebookbarCalc.js:814
 msgid "Heading 2"
-msgstr ""
+msgstr "Titlu 2"
 
 #: src/control/Control.NotebookbarCalc.js:827
 msgid "Good"
-msgstr ""
+msgstr "Bun"
 
 #: src/control/Control.NotebookbarCalc.js:834
 msgid "Neutral"
-msgstr ""
+msgstr "Neutru"
 
 #: src/control/Control.NotebookbarCalc.js:841
 msgid "Bad"
-msgstr ""
+msgstr "Rău"
 
 #: src/control/Control.NotebookbarCalc.js:872
 #: src/control/Control.NotebookbarDraw.js:1001
 #: src/control/Control.NotebookbarImpress.js:1055
 #: src/control/Control.NotebookbarWriter.js:947
 msgid "Replace"
-msgstr ""
+msgstr "Înlocuire"
 
 #: src/control/Control.NotebookbarCalc.js:948
 msgid "Row Height"
-msgstr ""
+msgstr "Înălţime rând"
 
 #: src/control/Control.NotebookbarCalc.js:956
 msgid "Column Width"
-msgstr ""
+msgstr "Lăţime coloană"
 
 #: src/control/Control.NotebookbarCalc.js:969
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Inserează un tabel"
+msgstr "Înserează rânduri deasupra"
 
 #: src/control/Control.NotebookbarCalc.js:976
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Inserează foia înainte"
+msgstr "Inserează coloane înainte"
 
 #: src/control/Control.NotebookbarCalc.js:983
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Inserează un tabel"
+msgstr "Șterge rânduri"
 
 #: src/control/Control.NotebookbarCalc.js:995
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "Inserare rânduri dedesubt"
 
 #: src/control/Control.NotebookbarCalc.js:1002
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Inserează foia după"
+msgstr "Inserează coloane după"
 
 #: src/control/Control.NotebookbarCalc.js:1009
 msgid "Delete Columns"
-msgstr ""
+msgstr "Eliminare coloane"
 
 #: src/control/Control.NotebookbarCalc.js:1195
 #: src/control/Control.NotebookbarDraw.js:336
 #: src/control/Control.NotebookbarImpress.js:370
 #: src/control/Control.NotebookbarWriter.js:1470
 msgid "Read mode"
-msgstr ""
+msgstr "Mod citire"
 
 #: src/control/Control.NotebookbarCalc.js:1246
 #: src/control/Control.NotebookbarDraw.js:387
 #: src/control/Control.NotebookbarImpress.js:445
 #: src/control/Control.NotebookbarWriter.js:1528
 msgid "Compact view"
-msgstr ""
+msgstr "Vizualizare compactă"
 
 #: src/control/Control.NotebookbarCalc.js:1259
 #: src/control/Control.NotebookbarDraw.js:424
 #: src/control/Control.NotebookbarImpress.js:482
 #: src/control/Control.NotebookbarWriter.js:1565
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Restrânge file"
 
 #: src/control/Control.NotebookbarCalc.js:1271
 #: src/control/Control.NotebookbarDraw.js:412
 #: src/control/Control.NotebookbarImpress.js:470
 #: src/control/Control.NotebookbarWriter.js:1553
 msgid "Status Bar"
-msgstr ""
+msgstr "Bara de stare"
 
 #: src/control/Control.NotebookbarCalc.js:1364
 msgid "Sparkline"
@@ -2378,7 +2384,7 @@ msgstr "Diagramă sparkline"
 #: src/control/Control.NotebookbarImpress.js:1290
 #: src/control/Control.NotebookbarWriter.js:1194
 msgid "Assistant"
-msgstr ""
+msgstr "Asistent"
 
 #: src/control/Control.NotebookbarCalc.js:1506
 #: src/control/Control.NotebookbarCalc.js:2406
@@ -2390,7 +2396,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1130
 #: src/control/Control.NotebookbarWriter.js:2994
 msgid "Shapes"
-msgstr ""
+msgstr "Figuri"
 
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1245
@@ -2399,201 +2405,203 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:86
 #: src/control/Control.NotebookbarWriter.js:1109
 msgid "Table"
-msgstr ""
+msgstr "Tabel"
 
 #: src/control/Control.NotebookbarDraw.js:255
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Document PDF (.pdf) - Expert"
 
 #: src/control/Control.NotebookbarDraw.js:400
 #: src/control/Control.NotebookbarImpress.js:458
 #: src/control/Control.NotebookbarWriter.js:1541
 msgid "Ruler"
-msgstr ""
+msgstr "Riglă"
 
 #: src/control/Control.NotebookbarDraw.js:1071
 msgid "Page Layout"
-msgstr ""
+msgstr "Aspect pagină"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"
-msgstr ""
+msgstr "Principal"
 
 #: src/control/Control.NotebookbarImpress.js:377
 #: src/control/Control.NotebookbarImpress.js:1029
 msgid "Presentation"
-msgstr ""
+msgstr "Prezentare"
 
 #: src/control/Control.NotebookbarImpress.js:385
 msgid "Present in Window"
-msgstr ""
+msgstr "Presentare în fereastră"
 
 #: src/control/Control.NotebookbarImpress.js:505
 msgid "Show Grid"
-msgstr ""
+msgstr "Afișare grilă"
 
 #: src/control/Control.NotebookbarImpress.js:512
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Aliniere la grilă"
 
 #: src/control/Control.NotebookbarWriter.js:80
 msgid "Form"
-msgstr ""
+msgstr "Formular"
 
 #: src/control/Control.NotebookbarWriter.js:360
 msgid "Go Online"
-msgstr ""
+msgstr "Accesare online"
 
 #: src/control/Control.NotebookbarWriter.js:360
 msgid "Go Offline"
-msgstr ""
+msgstr "Accesare offline"
 
 #: src/control/Control.NotebookbarWriter.js:855
 msgid "Scroll up"
-msgstr ""
+msgstr "Derulare în sus"
 
 #: src/control/Control.NotebookbarWriter.js:862
 msgid "Scroll down"
-msgstr ""
+msgstr "Derulare în jos"
 
 #: src/control/Control.NotebookbarWriter.js:1419
 msgid "Rich Text"
-msgstr ""
+msgstr "Rich Text"
 
 #: src/control/Control.NotebookbarWriter.js:1426
 msgid "Checkbox"
-msgstr ""
+msgstr "Casetă de bifare"
 
 #: src/control/Control.NotebookbarWriter.js:1433
 msgid "Dropdown"
-msgstr ""
+msgstr "Dropdown"
 
 #: src/control/Control.NotebookbarWriter.js:1440
 msgid "Picture"
-msgstr ""
+msgstr "Imagine"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
-msgstr ""
+msgstr "previzualizarea paginii %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Diapozitiv %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
-msgstr ""
+msgstr "Lipire diapozitiv"
 
 #: src/control/Control.PartsPreview.js:307
 msgid "Paste"
-msgstr ""
+msgstr "Lipire"
 
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
-msgstr ""
+msgstr "Se salvează"
 
 #: src/control/Control.SaveState.ts:53
-#, fuzzy
 msgid "Saved"
-msgstr "Salvează"
+msgstr "Salvat"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Derulare adnotări în sus"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Derulare adnotări în jos"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Opţiunea IsAdminUser nu este setată prin integrare"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Folosit câmpul depreciat is_admin, integrarea trebuie să folosească opţiunea "
+"IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Opţiunea utilizatorului IsAdminUser este setată de către integrare"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Serverul dvs. WOPI nu este securizat: verificarea SSL a eșuat"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Nu au fost depistate probleme cu verificarea SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "API-ul PostMessage este inițializat"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrarea nu este pregătită pentru apelurile PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Serverul dvs. este configurat cu resurse hardware insuficiente, ceea ce "
+"poate duce la performanțe slabe."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Resursele hardware sunt suficiente pentru o performanță optimă"
 
 #: src/control/Control.ServerAuditDialog.ts:215
 msgid "Status"
-msgstr ""
+msgstr "Stare"
 
 #: src/control/Control.ServerAuditDialog.ts:225
 msgid "No issues found"
-msgstr ""
+msgstr "Nu s-au găsit probleme"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Alerte:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Verificați avertismentele de securitate ale serverului dvs"
 
 #: src/control/Control.ServerAuditDialog.ts:277
 msgid "OPEN"
-msgstr ""
+msgstr "DESCHIDE"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Derulare la prima foaie"
 
 #: src/control/Control.SheetsBar.js:55
 msgid "Scroll left"
-msgstr ""
+msgstr "Derulare stânga"
 
 #: src/control/Control.SheetsBar.js:63
 msgid "Scroll right"
-msgstr ""
+msgstr "Derulare dreapta"
 
 #: src/control/Control.SheetsBar.js:71
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Derulare la ultima foaie"
 
 #: src/control/Control.SheetsBar.js:78
-#, fuzzy
 msgid "Insert sheet"
-msgstr "Inserează un tabel"
+msgstr "Inserează foaie"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Da"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Off"
-msgstr ""
+msgstr "Nu"
 
 #: src/control/Control.StatusBar.js:212
 #: src/control/jsdialog/Definitions.Menu.ts:24
@@ -2635,26 +2643,28 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Pentru a preveni modificările accidentale, autorul a setat acest fișier să "
+"se deschidă doar pentru vizualizare"
 
 #: src/control/Control.StatusBar.js:469
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Selectare celule multiple"
 
 #: src/control/Control.StatusBar.js:486
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Mod selecție: inactiv"
 
 #: src/control/Control.StatusBar.js:564
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Setare limbă pentru tot textul"
 
 #: src/control/Control.StatusBar.js:567
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Setare limbă pentru paragraf"
 
 #: src/control/Control.StatusBar.js:568
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Setare limbă pentru selecţie"
 
 #: src/control/Control.Tabs.js:52
 msgid "Insert sheet before this"
@@ -2666,24 +2676,23 @@ msgstr "Inserează foia după"
 
 #: src/control/Control.Tabs.js:88
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Mutare foaie stânga"
 
 #: src/control/Control.Tabs.js:93
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Mutare foaie dreapta"
 
 #: src/control/Control.Tabs.js:103
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copiere foaie..."
 
 #: src/control/Control.Tabs.js:383
-#, fuzzy
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "Sigur doriți să ștergeți foaia {sheet} ?"
+msgstr "Sigur doriți să ștergeți foaia {sheet}?"
 
 #: src/control/Control.Tabs.js:394
 msgid "Rename sheet"
-msgstr ""
+msgstr "Redenumire foaie"
 
 #: src/control/Control.Tabs.js:394
 msgid "Enter new sheet name"
@@ -2694,105 +2703,108 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
+"Conflict Anulare/Refacere cu mai mulți utilizatori. Vă rugăm să utilizați "
+"repararea documentelor pentru a rezolva"
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Foaie activă"
 
 #: src/control/Control.TopToolbar.js:121
 msgid "Default Style"
-msgstr ""
+msgstr "Stil implicit"
 
 #: src/control/Control.TopToolbar.js:183
 msgid "Insert table"
 msgstr "Inserează un tabel"
 
 #: src/control/Control.TopToolbar.js:186
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Inserează un tabel"
+msgstr "Inserează figuri"
 
 #: src/control/Control.TopToolbar.js:188
 msgid "Insert connectors"
-msgstr ""
+msgstr "Inserare conectori"
 
 #: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.ts:1069
 msgid "Hide Menu"
-msgstr ""
+msgstr "Ascunde meniu"
 
 #: src/control/Control.UIManager.ts:317
 msgid "Enter new name"
-msgstr ""
+msgstr "Introduceţi numele nou"
 
 #: src/control/Control.UIManager.ts:1096
 msgid "Show Menu"
-msgstr ""
+msgstr "Afişează meniu"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
-msgstr ""
+msgstr "{user} s-a alăturat"
 
 #: src/control/Control.UserList.ts:57
 msgid "{user} has left"
-msgstr ""
+msgstr "{user} a plecat"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
-msgstr ""
+msgstr "Urmărire {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Urmărire editor"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr ""
+msgstr "Nu mai urmăresc"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "Avatar pentru {user}"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
-msgstr ""
+msgstr "%n utilizatori"
 
 #: src/control/Control.UserList.ts:82
 msgid "1 user"
-msgstr ""
+msgstr "1 utilizator"
 
 #: src/control/Control.UserList.ts:83
 msgid "0 users"
-msgstr ""
+msgstr "0 utilizatori"
 
 #: src/control/Control.UserList.ts:87
 msgid "User List Summary"
-msgstr ""
+msgstr "Rezumatul listei de utilizatori"
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
-msgstr ""
+msgstr "Urmăresc"
 
 #: src/control/Control.UserList.ts:552
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Urmăreşte întotdeauna editorul"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Cheia API Zotero nu este configurată"
 
 #: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Cheia API Zotero este incorectă"
 
 #: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Avertisment Zotero"
 
 #: src/control/Control.Zotero.js:192
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Documentul conține câteva citate care pot fi inaccesibile prin API-ul web. "
+"Poate cauza unele probleme la editarea citatelor sau a bibliografiei."
 
 #: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
@@ -2801,227 +2813,232 @@ msgstr "Se încarcă..."
 #: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
-msgstr ""
+msgstr "Următor"
 
 #: src/control/Control.Zotero.js:294
 msgid "Language:"
-msgstr ""
+msgstr "Limba:"
 
 #: src/control/Control.Zotero.js:309
 msgid "Store as:"
-msgstr ""
+msgstr "Depozitare ca:"
 
 #: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
-msgstr ""
+msgstr "Câmpuri"
 
 #: src/control/Control.Zotero.js:316 src/control/Control.Zotero.js:438
 msgid "Bookmarks"
-msgstr ""
+msgstr "Marcaje"
 
 #: src/control/Control.Zotero.js:436
 msgid "Footnotes"
-msgstr ""
+msgstr "Note de subsol"
 
 #: src/control/Control.Zotero.js:436
 msgid "Endnotes"
-msgstr ""
+msgstr "Note de final"
 
 #: src/control/Control.Zotero.js:523
 msgid "My Publications"
-msgstr ""
+msgstr "Publicațiile mele"
 
 #: src/control/Control.Zotero.js:529 src/control/Control.Zotero.js:748
 msgid "My Library"
-msgstr ""
+msgstr "Biblioteca mea"
 
 #: src/control/Control.Zotero.js:530
 msgid "Group Libraries"
-msgstr ""
+msgstr "Bibliotecile de grup"
 
 #: src/control/Control.Zotero.js:764
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Nu s-au încărcat grupurile"
 
 #: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Nu s-au încărcat colecțiile"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Se încarcă referințe"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
-msgstr ""
+msgstr "Stil citat"
 
 #: src/control/Control.Zotero.js:829
-#, fuzzy
 msgid "Styles"
-msgstr "Stil"
+msgstr "Stiluri"
 
 #: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "A apărut o eroare la preluarea listei de stiluri"
 
 #: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Nu s-au încărcat stilurile"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
-msgstr ""
+msgstr "Titlu"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
-msgstr ""
+msgstr "Creator(i)"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
-msgstr ""
+msgstr "Biblioteca ta este goală"
 
 #: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
-msgstr ""
+msgstr "Elementele nu au putut fi încărcate"
 
 #: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
-msgstr ""
+msgstr "Avertisment de citare"
 
 #: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Odată ce citările sunt introduse, tipul lor de stocare și afișare nu pot fi "
+"modificate."
 
 #: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmare"
 
 #: src/control/Control.Zotero.js:1339
 msgid "Add Note"
-msgstr ""
+msgstr "Adăugare notă"
 
 #: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
-msgstr ""
+msgstr "Note"
 
 #: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "A apărut o eroare la preluarea notelor"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
-msgstr ""
+msgstr "Citate actualizate"
 
 #: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
-msgstr ""
+msgstr "Actualizarea citărilor nu a reușit"
 
 #: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
-msgstr ""
+msgstr "Actualizarea citatelor"
 
 #: src/control/Control.Zotero.js:1534
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Deconectarea citărilor va împiedica Collabora Online să actualizeze citările "
+"și bibliografia din acest document."
 
 #: src/control/HRuler.ts:604
 msgid "Left Margin"
-msgstr ""
+msgstr "Margine stânga"
 
 #: src/control/HRuler.ts:605
 msgid "Right Margin"
-msgstr ""
+msgstr "Margine dreapta"
 
 #: src/control/HRuler.ts:890
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "Inserează un tabel"
+msgstr "Inserează tabulator"
 
 #: src/control/HRuler.ts:897
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "Inserează un tabel"
+msgstr "Șterge tabulator"
 
 #: src/control/Parts.js:480
 msgid "Show sheets"
-msgstr ""
+msgstr "Afişare foi"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Editare document"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Documentul nu a putut fi blocat și este deschis în modul numai citire."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Serverul a returnat acest motiv:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
-msgstr ""
+msgstr "Documentul nu a putut fi blocat."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr ""
+msgstr "Introduceți un nume de fișier"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Salvare ca format ODF"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "Continuați editarea"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Continuați numai citire"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Acest document poate conține formatare sau conținut care nu poate fi salvat "
+"în formatul de fișier curent."
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Documentul nu este semnat."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
-msgstr ""
+msgstr "Acest document este semnat digital și semnătura este valabilă."
 
 #: src/control/Signing.js:36
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Acest document are o semnătură nevalidă."
 
 #: src/control/Signing.js:40
 msgid "The signature was valid, but the document has been modified."
-msgstr ""
+msgstr "Semnătura era valabilă, dar documentul a fost modificat."
 
 #: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Semnătura este OK, dar certificatul nu a putut fi validat."
 
 #: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
-msgstr ""
+msgstr "Semnătura este OK, dar documentul este doar parțial semnat."
 
 #: src/control/Signing.js:52
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Semnătura este OK, dar certificatul nu a putut fi validat și documentul este "
+"doar parțial semnat."
 
 #: src/control/Toolbar.js:56
 msgid "Font"
@@ -3037,23 +3054,23 @@ msgstr "Salvare..."
 
 #: src/control/Toolbar.js:299
 msgid "Renaming..."
-msgstr ""
+msgstr "Redenumire..."
 
 #: src/control/Toolbar.js:795
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Inserare hyperlink"
 
 #: src/control/Toolbar.js:819
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: src/control/VRuler.ts:359
 msgid "Top Margin"
-msgstr ""
+msgstr "Margine sus"
 
 #: src/control/VRuler.ts:360
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Margine jos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:25
 msgid "Min"
@@ -3065,64 +3082,64 @@ msgstr "Max"
 
 #: src/control/jsdialog/Definitions.Menu.ts:260
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Inserare imagine locală"
 
 #: src/control/jsdialog/Definitions.Menu.ts:265
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Inserare multimedia locală"
 
 #: src/control/jsdialog/Definitions.Menu.ts:270
 msgid "Very Tight"
-msgstr ""
+msgstr "Foarte compact"
 
 #: src/control/jsdialog/Definitions.Menu.ts:271
 msgid "Tight"
-msgstr ""
+msgstr "Compact"
 
 #: src/control/jsdialog/Definitions.Menu.ts:272
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "Loose"
-msgstr ""
+msgstr "Larg"
 
 #: src/control/jsdialog/Definitions.Menu.ts:274
 msgid "Very Loose"
-msgstr ""
+msgstr "Foarte larg"
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "All users"
-msgstr ""
+msgstr "Toți utilizatorii"
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "This user"
-msgstr ""
+msgstr "Acest utilizator"
 
 #: src/control/jsdialog/Definitions.Menu.ts:436
 msgid "From Beginning"
-msgstr ""
+msgstr "De la început"
 
 #: src/control/jsdialog/Definitions.Menu.ts:440
 msgid "From Current Slide"
-msgstr ""
+msgstr "De la diapozitivul curent"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:119
 msgid "Dismiss"
-msgstr ""
+msgstr "Revocare"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Culoare necusnoscută"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
-msgstr ""
+msgstr "Fără umplere"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "Automatic"
-msgstr ""
+msgstr "Automat"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:395
 msgid "Recent"
@@ -3130,16 +3147,16 @@ msgstr "Recent"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
-msgstr ""
+msgstr "Numai citire"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:48
 #: src/control/jsdialog/Widget.HTMLContent.ts:56
 msgid "Permission Mode"
-msgstr ""
+msgstr "Mod permisiune"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Edit mode"
-msgstr ""
+msgstr "Mod editare"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 #: src/control/jsdialog/Widget.HTMLContent.ts:154
@@ -3177,57 +3194,55 @@ msgstr "Numărul diapozitivelor"
 #: src/control/jsdialog/Widget.HTMLContent.ts:163
 #: src/control/jsdialog/Widget.HTMLContent.ts:175
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Modificările dvs. au fost salvate"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:187
-#, fuzzy
 msgid "Show Comments"
-msgstr "Comentariu"
+msgstr "Afișează comentarii"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
-msgstr ""
+msgstr "Margini celulă"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {1}"
-msgstr ""
+msgstr "Mai multe opțiuni pentru {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Titlurile și obiectele pe care le adăugați în document vor apărea aici"
 
 #: src/core/Socket.js:68
-#, fuzzy
 msgid "Oops, there is a problem connecting to {productname}: "
-msgstr "A intervenit o problemă de conectare la Collabora Online: "
+msgstr "Hopa, a apărut o problemă la conectarea la {productname}: "
 
 #: src/core/Socket.js:693
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "Serverul este acum accesibil. Trebuie să reîmprospătăm pagina acum."
 
 #: src/core/Socket.js:695
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Serverul este acum accesibil."
 
 #: src/core/Socket.js:699
 msgid "RELOAD"
-msgstr ""
+msgstr "REÎNCARCĂ"
 
 #: src/core/Socket.js:712
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Avertisment de configurare a clusterului"
 
 #: src/core/Socket.js:715
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Server greșit, reconectare..."
 
 #: src/core/Socket.js:724
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Versiunea COOLWSD:"
 
 #: src/core/Socket.js:749
 msgid "Served by:"
-msgstr ""
+msgstr "Servit de:"
 
 #: src/core/Socket.js:755
 msgid "Unsupported server version."
@@ -3235,44 +3250,47 @@ msgstr "Versiune server nesuportată."
 
 #: src/core/Socket.js:759
 msgid "LOKit version:"
-msgstr ""
+msgstr "Versiunea LOKit:"
 
 #: src/core/Socket.js:883
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Documentul este în curs de migrare"
 
 #: src/core/Socket.js:910
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Sesiune încheiată de proprietarul documentului"
 
 #: src/core/Socket.js:921
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Serverul se închide pentru întreținere (salvare automată)"
 
 #: src/core/Socket.js:927
-#, fuzzy
 msgid "Oops, there is a problem connecting the document"
-msgstr "A intervenit o problemă de conectare la Collabora Online: "
+msgstr "Hopa, a apărut o problemă la conectarea documentului"
 
 #: src/core/Socket.js:931
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Serverul este oprit, repornind automat. Va rugam asteptati."
 
 #: src/core/Socket.js:958
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Documentul s-a schimbat în stocare. Se încarcă noul document. Versiunea dvs. "
+"este disponibilă ca revizuire."
 
 #: src/core/Socket.js:964
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Restabilirea versiunii mai vechi. Orice modificări nesalvate vor fi "
+"disponibile în istoricul versiunilor"
 
 #: src/core/Socket.js:970
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Reîncărcarea documentului după redenumire"
 
 #: src/core/Socket.js:1129
 msgid "Document requires password to view."
@@ -3280,7 +3298,7 @@ msgstr "Documentul necesită parolă pentru vizualizare."
 
 #: src/core/Socket.js:1132
 msgid "Document requires password to modify."
-msgstr "Documentul necesită parolă pentru modificare. "
+msgstr "Documentul necesită parolă pentru modificare."
 
 #: src/core/Socket.js:1134
 msgid "Hit Cancel to open in view-only mode."
@@ -3292,61 +3310,64 @@ msgstr "Parolă greșită. Încercați din nou."
 
 #: src/core/Socket.js:1176
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Numai proprietarul documentului poate schimba parola."
 
 #: src/core/Socket.js:1207 src/core/Socket.js:1212
 msgid "Missing Fonts"
-msgstr ""
+msgstr "Fonturi lipsă"
 
 #: src/core/Socket.js:1244
 msgid "Someone"
-msgstr ""
+msgstr "Cineva"
 
 #: src/core/Socket.js:1245
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
+"{username} a salvat acest document ca {filename}. Doriți să vă alăturați?"
 
 #: src/core/Socket.js:1262
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Documentul este redenumit și se va reîncărca în curând"
 
 #: src/core/Socket.js:1265
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Documentul trece în modul Offline și se va reîncărca în scurt timp"
 
 #: src/core/Socket.js:1347
 msgid "Connecting..."
-msgstr ""
+msgstr "Conectare..."
 
 #: src/core/Socket.js:1362
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Serverul se închide"
 
 #: src/core/Socket.js:1398
 msgid "Exported to storage"
-msgstr ""
+msgstr "Exportat în stocare"
 
 #: src/core/Socket.js:1398
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Exportat cu succes: "
 
 #: src/core/Socket.js:1426
 msgid "Discard"
-msgstr ""
+msgstr "Renunţare"
 
 #: src/core/Socket.js:1438
 msgid "Save to new file"
-msgstr ""
+msgstr "Salvare în fișier nou"
 
 #: src/core/Socket.js:1448
 msgid "Document has been changed"
-msgstr ""
+msgstr "Documentul a fost modificat"
 
 #: src/core/Socket.js:1449
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Documentul a fost modificat în stocare. Ce ați dori să faceți cu "
+"modificările nesalvate?"
 
 #: src/core/Socket.js:1712
 msgid ""
@@ -3356,11 +3377,11 @@ msgstr "Ne pare rău, dar nu se poate conecta la document. Încercați mai târz
 
 #: src/core/Socket.js:1729
 msgid "Reconnecting..."
-msgstr ""
+msgstr "Reconectare..."
 
 #: src/core/Socket.js:1739
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Serverul a fost deconectat."
 
 #: src/docdispatcher.ts:514
 msgid "Are you sure you want to delete this slide?"
@@ -3372,27 +3393,27 @@ msgstr "Sigur doriți să ștergeți pagina?"
 
 #: src/docstate.js:100
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: src/docstate.js:113
 msgid "Theme colors"
-msgstr ""
+msgstr "Culori temă"
 
 #: src/docstate.js:114
 msgid "Document colors"
-msgstr ""
+msgstr "Culori document"
 
 #: src/docstatefunctions.js:246
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", eroare de configurare a clusterului: serverid nu se potrivește"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "Fila {0} selectată"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Nu a mai rămas spațiu pe disc pe server."
 
 #: src/errormessages.js:23
 msgid ""
@@ -3409,42 +3430,56 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
+"Aceasta este o versiune neacceptată de {productname}. Pentru a evita "
+"impresia că este potrivit pentru implementare în întreprinderi, acest mesaj "
+"apare atunci când sunt utilizate simultan mai mult de {docs} documente sau "
+"{connections} conexiuni."
 
 #: src/errormessages.js:25
 msgid "More information and support"
-msgstr ""
+msgstr "Mai multe informații și asistență"
 
 #: src/errormessages.js:26
 msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"Acest serviciu este limitat la {0} documente și la un total de {1} conexiuni "
+"de către administrator. Această limită a fost atinsă. Vă rugăm să încercați "
+"din nou mai târziu."
 
 #: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Serviciul este indisponibil. Vă rugăm să încercați din nou mai târziu și să "
+"raportați administratorului dacă problema persistă."
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Gazdă WOPI neautorizată. Vă rugăm să încercați din nou mai târziu și să "
+"raportați administratorului dacă problema persistă."
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Eroare de autorizare a fost: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Parametrul WOPISrc greșit sau lipsă, vă rugăm să contactați asistența."
 
 #: src/errormessages.js:31
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
+"Sesiunea dvs. va expira în {time}. Salvați-vă munca și reîmprospătați "
+"sesiunea (sau pagina web) pentru a continua. Este posibil să fie nevoie să "
+"vă autentificați din nou."
 
 #: src/errormessages.js:32
 msgid ""
@@ -3452,38 +3487,48 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
+"Sesiunea dvs. a expirat. Modificările ulterioare ale documentului ar putea "
+"să nu fie salvate. Vă rugăm să reîmprospătați sesiunea (sau pagina web) "
+"pentru a continua. Este posibil să fie nevoie să vă autentificați din nou."
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Nu s-a încărcat documentul. Asigurați-vă că tipul de fișier este acceptat și "
+"nu este corupt și încercați din nou."
 
 #: src/errormessages.js:34
 msgid "Invalid link: '{url}'"
-msgstr ""
+msgstr "Link nevalid: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Părăsiţi documentul. Următoarea pagină web se va deschide într-o filă nouă: "
 
 #: src/errormessages.js:36
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Nu s-a încărcat documentul. Acest document fie este malformat, fie necesită "
+"mai multe resurse decât este permis. Vă rugăm să contactați administratorul."
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Curățarea documentului din ultima sesiune."
 
 #: src/errormessages.js:38
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Suntem în proces de curățare a acestui document din ultima sesiune, vă rugăm "
+"să încercați din nou mai târziu."
 
 #: src/errormessages.js:39
 msgid ""
@@ -3493,6 +3538,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
+"Clusterul dvs. {productname} pare să fie configurat greșit sau se scalează "
+"rapid - vă rugăm să contactați administratorul de sistem. Continuarea "
+"editării poate duce la faptul că mai mulți utilizatori nu se văd, conflicte "
+"în stocarea documentelor și/sau probleme de copiere/lipire. ServerId "
+"așteptat {0} pentru routeToken {1}, dar conectat la serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -3501,51 +3551,68 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Nu s-a putut stabili conexiunea la priză sau conexiunea la priză s-a închis "
+"în mod neașteptat. Proxy-ul invers ar putea fi configurat greșit, vă rugăm "
+"să contactați administratorul. Pentru mai multe informații despre "
+"configurarea proxy, vă rugăm să verificați https://sdk.collaboraonline.com/"
+"docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Nu s-a putut stabili conexiunea sau conexiunea s-a închis în mod neașteptat."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
-msgstr ""
+msgstr "Nu s-a putut încărca documentul."
 
 #: src/errormessages.js:45
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
+"Salvarea nu a reușit din cauza lipsei de spațiu pe disc. Documentul va fi "
+"acum doar pentru citire."
 
 #: src/errormessages.js:46
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Documentul este prea mare sau nu a mai rămas spațiu pe disc pentru a fi "
+"salvat. Documentul va fi acum doar pentru citire."
 
 #: src/errormessages.js:47
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Documentul nu poate fi salvat din cauza sesiunii expirate, vă rugăm să "
+"redeschideți documentul pentru a continua."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Documentul nu poate fi salvat."
 
 #: src/errormessages.js:49
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Documentul nu poate fi redenumit."
 
 #: src/errormessages.js:53
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Nu s-a putut citi documentul din stocare, încercați să încărcați din nou "
+"documentul."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Salvarea nu a reușit din cauza lipsei spațiului de stocare. Documentul va fi "
+"acum doar pentru citire. Asigurați-vă că este disponibil suficient spațiu pe "
+"disc și încercați să economisiți din nou."
 
 #: src/errormessages.js:55
 msgid ""
@@ -3553,167 +3620,181 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Salvarea nu a reușit deoarece documentul este prea mare sau depășește "
+"spațiul de stocare rămas. Documentul va fi acum doar pentru citire, dar îl "
+"puteți descărca acum pentru a păstra o copie local."
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Documentul nu poate fi salvat din cauza sesiunii expirate, vă rugăm să "
+"reîncărcați pagina pentru a continua."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Documentul nu poate fi salvat, vă rugăm să vă verificați permisiunile."
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
+"Documentul nu poate fi redenumit, vă rugăm să vă verificați permisiunile."
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Documentul nu poate fi exportat. Vă rugăm să încercați din nou."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Încărcarea fișierului pe server a eșuat, fișierul nu a fost găsit."
 
 #: src/errormessages.js:65
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Încărcarea fișierului pe server a eșuat, fișierul este prea mare."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "În afara tabelului"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabel cu {0} rânduri și {1} coloane"
 
 #: src/layer/marker/A11yTextInput.js:243
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Rândul de la {0} la {1}"
 
 #: src/layer/marker/A11yTextInput.js:246
 msgid "Row {0}"
-msgstr ""
+msgstr "Rândul {0}"
 
 #: src/layer/marker/A11yTextInput.js:254
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Coloana de la {0} la {1}"
 
 #: src/layer/marker/A11yTextInput.js:257
 msgid "Column {0}"
-msgstr ""
+msgstr "Coloana {0}"
 
 #: src/layer/marker/A11yTextInput.js:285
 msgid "Editing activated. "
-msgstr ""
+msgstr "Editarea a fost activată. "
 
 #: src/layer/marker/A11yTextInput.js:304
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} selectat"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Are text: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} neselectat"
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} eliminat"
 
 #: src/layer/marker/TextInput.js:451
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Suportul cititorului de ecran pentru conținutul text este dezactivat. "
 
 #: src/layer/marker/TextInput.js:452
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "Trebuie să-l activați atât la nivel de server, cât și în UI. "
 
 #: src/layer/marker/TextInput.js:453
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Căutați secțiunea de accesibilitate în coolwsd.xml pentru setarea "
+"serverului. "
 
 #: src/layer/marker/TextInput.js:454
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Verificați, de asemenea, comutatorul de voce over sub {parentControl}."
 
 #: src/layer/marker/TextInput.js:456
 msgid "the Help tab"
-msgstr ""
+msgstr "fila Ajutor"
 
 #: src/layer/marker/TextInput.js:456
 msgid "the View menu"
-msgstr ""
+msgstr "meniul Vizualizare"
 
 #: src/layer/tile/CanvasTileLayer.js:1581
-#, fuzzy
 msgid "Functions"
-msgstr "Funcție"
+msgstr "Funcții"
 
 #: src/layer/tile/CanvasTileLayer.js:1842
 msgid "Named Range"
-msgstr ""
+msgstr "Interval numit"
 
 #: src/layer/tile/CanvasTileLayer.js:3553
-#, fuzzy
 msgid "No Comments"
-msgstr "Comentariu"
+msgstr "Fără comentarii"
 
 #: src/main.js:141
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Avertizare! Browserul pe care îl utilizați nu este acceptat."
 
 #: src/map/Clipboard.js:176
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr ""
+"Pentru a lipi în afara {productname}, faceți mai întâi clic pe butonul "
+"'descărcați'"
 
 #: src/map/Clipboard.js:184
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Copierea din document a fost dezactivată"
 
 #: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "avertisment: cererea de copiere/lipire a expirat"
 
 #: src/map/Clipboard.js:329
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Clipboard-ul nu a fost descărcat, vă rugăm să copiați din nou"
 
 #: src/map/Clipboard.js:1310
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Browserul dvs. are acces foarte limitat la clipboard, așa că vă rugăm să "
+"utilizați butoanele de lipire de pe tastatura de pe ecran."
 
 #: src/map/Clipboard.js:1366
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
+"O descărcare din cauza unei operațiuni mari de copiere/lipire a început "
+"deja. Vă rugăm să așteptați descărcarea curentă sau să o anulați înainte de "
+"a începe una nouă"
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
-msgstr ""
+msgstr "Lipire din acest document"
 
 #: src/map/Clipboard.js:1388
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Anulare lipire specială"
 
 #: src/map/Clipboard.js:1410
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Browserul dvs. are acces foarte limitat la clipboard"
 
 #: src/map/Clipboard.js:1415
 msgid "Please use following combination to see more options:"
 msgstr ""
+"Vă rugăm să utilizați următoarea combinație pentru a vedea mai multe opțiuni:"
 
 #: src/map/Clipboard.js:1433
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Închideți fereastra pop-up pentru a ignora lipirea specială"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -3721,48 +3802,51 @@ msgstr "Se inițializează..."
 
 #: src/map/Map.js:498 src/map/Map.js:501 src/map/Map.js:504 src/map/Map.js:507
 msgid "Last saved:"
-msgstr ""
+msgstr "Ultima salvare:"
 
 #: src/map/Map.js:1483
 msgid "Please wait!"
-msgstr ""
+msgstr "Vă rugăm aşteptaţi!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Vă rugăm să ne trimiteți feedbackul dvs"
 
 #: src/map/handler/Map.FileInserter.js:174
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file has no "
 "name"
 msgstr ""
+"Fișierul de tip: {0} nu poate fi încărcat pe server, deoarece fișierul nu "
+"are nume"
 
 #: src/map/handler/Map.FileInserter.js:176
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
+"Fișierul de tip: {0} nu poate fi încărcat pe server, deoarece fișierul este "
+"gol"
 
 #: src/map/handler/Map.FileInserter.js:214
-#, fuzzy
 msgid "Uploading..."
 msgstr "Se încarcă..."
 
 #: src/map/handler/Map.FileInserter.js:239
 msgid "Uploading file to server failed with status: {0}"
-msgstr ""
+msgstr "Încărcarea fișierului pe server a eșuat cu starea: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Dialog imprimare"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Prezentare de diapozitive goală"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:692
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Prezentare cu fereastră blocată"
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:694
@@ -3771,140 +3855,144 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Prezentarea a fost blocată. Vă rugăm să permiteți ferestrele pop-up în "
+"browser. Acest lucru permite ca prezentările de diapozitive să fie afișate "
+"în ferestre separate, permițând partajarea ușoară a ecranului."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:491
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Prezentare în fereastră: "
 
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:534
 msgid "Presenting in window"
-msgstr ""
+msgstr "Prezentare în fereastră"
 
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:535
 msgid "Close Presentation"
-msgstr ""
+msgstr "Închide prezentarea"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Prezentarea pe ecran complet"
 
 #: src/map/handler/Map.SlideShow.js:231
 msgid "End Presentation"
-msgstr ""
+msgstr "Încheie prezentarea"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:679
 msgid "Already presenting"
-msgstr ""
+msgstr "Se prezintă deja"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:680
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Deja prezintați acest document"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:717
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Prezentarea este dezactivată"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:718
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Modul de prezentare a fost dezactivat pentru acest document"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Serverul dvs. Collabora Online necesită actualizare. Versiunea {0} este "
+"disponibilă."
 
 #: src/map/handler/Map.WOPI.js:176
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Se creează un fișier nou din șablon..."
 
 #: src/map/handler/Map.WOPI.js:691
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Numele fișierului trebuie să conțină o extensie."
 
 #: src/map/handler/Map.WOPI.js:699
 msgid "Creating copy..."
-msgstr ""
+msgstr "Se creează copie..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Dialog de bun venit"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pauză... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Diapozitiv curent"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Diapozitivul următor"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pauză"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Restart"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Reluare"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Întoarcere"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Mărire"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Micşorare"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Previzualizare diapozitiv {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Diapozitiv {0} din {1}"
 
 #: src/slideshow/PresenterConsole.js:1242
 msgid "No Notes"
-msgstr ""
+msgstr "Fără note"
 
 #: src/slideshow/PresenterConsole.js:1330
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Repetare în {0} secunde"
 
 #: src/slideshow/PresenterConsole.js:1335
 #: src/slideshow/SlideShowPresenter.ts:389
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Faceți clic pentru a ieși din prezentare..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Bine ați venit în Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr ""
+msgstr "Explorează noua versiune {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Ediţia Dezvoltator"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -3913,10 +4001,15 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Bucurați-vă de cele mai recente evoluții în productivitatea online, gratuit "
+"pentru dvs. să le utilizați, să le explorați și să le utilizați împreună cu "
+"alții în browser. Diferite <a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">aplicații</a> sunt disponibile și pentru dispozitive mobile."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Descoperiți toate modificările"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -3925,14 +4018,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Consultați <a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/code-24-04-release-notes/\">notele de "
+"lansare</a> și aflați totul despre: Cea mai recentă ediție de dezvoltare "
+"Collabora Online, destinată utilizatorilor casnici și echipelor mici."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Implică-te"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -3945,6 +4042,14 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Ești interesat să contribui, dar nu știi de unde să începi? Accesați <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">instrucțiuni pas cu pas</a> și creați COD de la zero. De asemenea, puteți "
+"ajuta cu <a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/translate/\">traduceri</a> sau <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
+">întocmind un raport de eroare</a> cu toți pașii esențiali despre cum să îl "
+"reproduceți."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -3953,6 +4058,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "Edit"
 #~ msgstr "Editează"
