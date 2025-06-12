@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-05-22 04:01+0000\n"
+"PO-Revision-Date: 2025-06-02 08:48+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -365,7 +365,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Accesibilidá"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
@@ -464,7 +464,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Opción"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -736,7 +736,7 @@ msgstr "Solucionáu"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
 msgid "Document contains unsupported media"
-msgstr ""
+msgstr "El documentu contién multimedia non compatible"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -768,7 +768,7 @@ msgstr ""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Estaya horaria:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
