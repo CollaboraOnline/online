@@ -114,9 +114,9 @@ if (window.ThisIsTheEmscriptenApp) {
 		arguments_: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 	};
-	createOnlineModule(Module);
-	app.HandleCOOLMessage = Module['_handle_cool_message'];
-	app.AllocateUTF8 = Module['allocateUTF8'];
+	createOnlineModule(Module).then(() => {
+		app.HandleCOOLMessage = Module['_handle_cool_message'];
+		app.AllocateUTF8 = Module['allocateUTF8']; });
 } else {
 	map.loadDocument(global.socket);
 }
