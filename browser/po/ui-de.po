@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-03-16 15:04+0000\n"
-"Last-Translator: iwonder <iwonder@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2025-06-01 15:01+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -375,122 +375,140 @@ msgstr "Sind Sie sicher, dass Sie den Server herunterfahren möchten?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Barrierefreiheit"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:146
 msgid "Autotext"
-msgstr ""
+msgstr "Autotext"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Wiederverwendbare Textschnipsel (.bau) hochladen. Um den Text in Ihr "
+"Dokument einzufügen, geben Sie das Kürzel für einen AutoText-Eintrag ein und "
+"drücken Sie F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Autotext hochladen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Benutzerdefinierte Wörterbücher"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Hinzufügen oder Bearbeiten von Wörtern in einem "
+"Rechtschreibprüfungswörterbuch. Die Wörter in Ihrem Wörterbuch (.dic) sind "
+"für die Rechtschreibprüfung verfügbar."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Wörterbuch hochladen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Interface"
-msgstr ""
+msgstr "Schnittstelle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Standardeinstellungen für die Schnittstelle festlegen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Konfiguration hochladen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Document settings"
-msgstr ""
+msgstr "Dokumenteinstellungen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Anpassen des Verhaltens von Office-Dokumenten."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Xcu hochladen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:238
+#, fuzzy
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Die gemeinsame Konfigurations-URL fehlt in den Anfangsvariablen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:244
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "In den Anfangsvariablen fehlt das Zugriffstoken."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:273
 msgid "Something went wrong. Please try to refresh the page."
 msgstr ""
+"Irgendetwas ist schiefgelaufen. Bitte versuchen Sie, die Seite zu "
+"aktualisieren."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Irgendetwas ist beim Abrufen der Einstellungsdatei schiefgelaufen. Bitte "
+"versuchen Sie, die Seite zu aktualisieren."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Irgendetwas ist beim Abrufen des Wörterbuchs schiefgelaufen. Bitte versuchen "
+"Sie, die Seite zu aktualisieren."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:406
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"Irgendetwas ist beim Hochladen der Datei schiefgelaufen. Bitte versuchen Sie "
+"es erneut."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:532
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Irgendetwas ist beim Löschen der Datei schiefgelaufen. Bitte versuchen Sie, "
+"die Seite zu aktualisieren."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:591
 msgid "View Settings"
-msgstr ""
+msgstr "Ansichtseinstellungen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:595
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Ansichtseinstellungen anpassen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
 msgid "Option"
-msgstr ""
+msgstr "Option"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Warnung: Serverzugriff muss zum Umschalten aktiviert sein)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Auf Standard-Ansichtseinstellungen zurücksetzen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Are you sure you want to reset View Settings?"
 msgstr ""
+"Sind Sie sicher, dass Sie die Ansichtseinstellungen zurücksetzen möchten?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:749
 msgid "Save View Settings"
-msgstr ""
+msgstr "Ansichtseinstellungen speichern"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:866
 #: src/map/handler/Map.WOPI.js:691
@@ -499,63 +517,64 @@ msgstr "Fehler"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standardwörterbuch"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Wörter werden von der Rechtschreibprüfung ignoriert"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Wörterbuch der Ausnahmen"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Ausnahmewörter werden bei der Rechtschreibprüfung unterstrichen"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Wörterbuch wird geladen..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Tippen, um ein Wort hinzuzufügen"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Ungültiges Wörterbuchformat. Bitte überprüfen Sie die Datei."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Irgendetwas ist beim Hochladen der Wörterbuchdatei schiefgelaufen"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Irgendetwas ist beim Laden der Dokumenteinstellungen schiefgelaufen."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Dokumenteinstellungen"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Wählen Sie einen Tab zum Anzeigen der Einstellungen aus."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Auf Standard-Dokumenteinstellungen zurücksetzen"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
 msgstr ""
+"Sind Sie sicher, dass Sie die Dokumenteinstellungen zurücksetzen möchten?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Dokumenteinstellungen speichern"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -722,13 +741,12 @@ msgid "Autosaved"
 msgstr "Automatisch gespeichert"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Dokument bearbeiten"
+msgstr "Kommentar bearbeiten"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Kommentar beantworten"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -749,9 +767,8 @@ msgid "Resolved"
 msgstr "Erledigt"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Dokument enthält nicht unterstütztes Video"
+msgstr "Dokument enthält nicht unterstützte Medien"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -783,7 +800,7 @@ msgstr "\"Langsamer Proxy\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Zeitzone:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1277,7 +1294,7 @@ msgstr "Elektronische Signatur einfügen"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Formelleiste aufklappen"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1285,7 +1302,7 @@ msgstr "Funktions-Assistent"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Funktion auswählen"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1300,7 +1317,7 @@ msgstr "Übernehmen"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Formelleiste einklappen"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1422,7 +1439,7 @@ msgstr "Sprache"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Keine Suchergebnisse gefunden!"
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -2085,11 +2102,11 @@ msgstr "Endfarbe"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Navigation"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Navigation schließen"
 
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
@@ -2098,12 +2115,12 @@ msgstr "Folien"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
-msgstr ""
+msgstr "Gliederung"
 
 #: src/control/Control.NavigatorPanel.ts:158
 #: src/control/Control.NavigatorPanel.ts:164
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2478,13 +2495,12 @@ msgid "Picture"
 msgstr "Bild"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "Voransicht der Seite "
+msgstr "Vorschau der Seite %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Folie %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3134,7 +3150,7 @@ msgstr "Verwerfen"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Unbekannte Farbe"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
@@ -3208,9 +3224,8 @@ msgid "Cell borders"
 msgstr "Zellumrandung"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Weitere Optionen für {Name}"
+msgstr "Weitere Optionen für {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
@@ -3798,6 +3813,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage. "
+"Verwenden Sie stattdessen die Einfügetasten auf Ihrer Bildschirmtastatur."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3998,7 +4015,7 @@ msgstr "Herauszoomen"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Vorschau Folie {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
