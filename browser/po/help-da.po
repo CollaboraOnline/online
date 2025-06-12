@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 10:52+0000\n"
+"PO-Revision-Date: 2025-06-12 10:57+0000\n"
 "Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
@@ -1440,7 +1440,6 @@ msgstr "Opgrader et listeelement (listeelementet skal være markeret)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-127
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
@@ -1498,17 +1497,14 @@ msgid "Select all in slide"
 msgstr "Markér alt i slide"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:305-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
 msgstr "Tastaturgenveje til dias / tegningsside"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
-#, fuzzy
 msgid "Move to next text object on drawing page"
 msgstr "Flyt til det næste tekstobjekt på diasset / tegnesiden"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-38
-#, fuzzy
 msgid "Select all in drawing page"
 msgstr "Markér alt på diasset / tegnesiden"
 
@@ -1686,7 +1682,6 @@ msgstr ""
 "tekstdokumenter."
 
 #: html/cool-help.html%2Bdiv.div.div.p:371-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
