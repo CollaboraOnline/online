@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 10:57+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-12 11:30+0000\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -1291,9 +1291,8 @@ msgid "Accept"
 msgstr "Accepter"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
-#, fuzzy
 msgid "Collapse Formula Bar"
-msgstr "Skjul formellinjen"
+msgstr "Skjul formellinje"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1566,7 +1565,7 @@ msgstr "Vis Status Bar"
 #: src/control/Control.Menubar.ts:219 src/control/Control.Menubar.ts:542
 #: src/control/Control.Menubar.ts:704 src/control/Control.Menubar.ts:843
 msgid "Hide Menu Bar"
-msgstr "Skjul menubaren"
+msgstr "Skjul menulinjen"
 
 #: src/control/Control.Menubar.ts:220 src/control/Control.Menubar.ts:543
 #: src/control/Control.Menubar.ts:699 src/control/Control.Menubar.ts:844
@@ -1577,7 +1576,7 @@ msgstr "Skjul menubaren"
 #: src/control/Control.NotebookbarImpress.js:523
 #: src/control/Control.NotebookbarWriter.js:1572
 msgid "Dark Mode"
-msgstr "Mørketilstand"
+msgstr "Mørk tilstand"
 
 #: src/control/Control.Menubar.ts:221 src/control/Control.Menubar.ts:544
 #: src/control/Control.Menubar.ts:700 src/control/Control.Menubar.ts:845
