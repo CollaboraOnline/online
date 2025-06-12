@@ -2,7 +2,7 @@
 <resources>
     <string name="exiting">Afslutter…</string>
     <string name="loading">Indlæser…</string>
-    <string name="rate_our_app_text">Hvis du kan lide den, giv os venligst 5 stjerner i Google Play. Dine gode anmeldelser er vores bedste motivation.</string>
+    <string name="rate_our_app_text">Hvis du kan lide den, så giv os gerne 5 stjerner i Google Play. Dine gode anmeldelser er vores største motivation.</string>
     <string name="rate_our_app_title">Tak, fordi du bruger %1$s!</string>
     <string name="later">Senere</string>
     <string name="rate_now">Vurdér nu</string>
