@@ -211,7 +211,7 @@ namespace Util
     {
         // Skip leading (high-order) zeros, if any.
         int highNibble = (2 * sizeof(number) - 1) * 4;
-        while ((number & (0xfUL << highNibble)) == 0)
+        while ((number & (std::uint64_t(0xf) << highNibble)) == 0)
         {
             highNibble -= 4;
             if (highNibble <= 0)
