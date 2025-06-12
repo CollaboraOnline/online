@@ -31,7 +31,7 @@ Build libzstd  with assembly code disable, and using the Makefile (didn't try it
 
     tar -xzvf ~/Downloads/zstd-1.5.2.tar.gz
     cd zstd-1.5.2/
-    emmake make CC='emcc -pthread -fexceptions -s DISABLE_EXCEPTION_CATCHING=0' CXX='em++ -pthread -fexceptions -s DISABLE_EXCEPTION_CATCHING=0' lib-mt V=1 ZSTD_NO_ASM=1 PREFIX=/opt/zstd.emsc.3.1.30
+    emmake make CC='emcc -pthread' CXX='em++ -pthread' lib-mt V=1 ZSTD_NO_ASM=1 PREFIX=/opt/zstd.emsc.3.1.30
     (cd lib && emmake make install-static install-includes ZSTD_NO_ASM=1 PREFIX=/opt/zstd.emsc.3.1.30)
 
 This will install the zstd headers and libraries in `/opt/zstd.emsc.3.1.30`.
@@ -53,7 +53,7 @@ adapt as necessary.
     mv XML/src/xmlparse.cpp XML/src/xmlparse.c
     patch -p0 < $HOME/lo/online/wasm/poco-no-special-expat-sauce.diff
     emconfigure ./configure --static --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,JWT,Data,Data/SQLite,Data/ODBC,Data/MySQL,Data/PostgreSQL,Zip,PageCompiler,PageCompiler/File2Page,MongoDB,Redis,ActiveRecord,ActiveRecord/Compiler,Prometheus
-	emmake make CC=emcc CXX=em++  CXXFLAGS="-DPOCO_NO_LINUX_IF_PACKET_H -DPOCO_NO_INOTIFY -pthread -s USE_PTHREADS=1 -fexceptions -s DISABLE_EXCEPTION_CATCHING=0"
+	emmake make CC=emcc CXX=em++  CXXFLAGS="-DPOCO_NO_LINUX_IF_PACKET_H -DPOCO_NO_INOTIFY -pthread -s USE_PTHREADS=1 -fwasm-exceptions"
     make install INSTALLDIR=/opt/poco.emsc.3.1.30
 
 This will install into `/opt/poco.emsc.3.1.30`.
