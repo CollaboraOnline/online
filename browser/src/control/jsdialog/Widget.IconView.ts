@@ -124,6 +124,9 @@ function _iconViewEntry(
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
+			//avoid re-selecting already selected entry
+			if ($(entryContainer).hasClass('selected')) return;
+
 			$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
 			if (singleClick) {
@@ -153,7 +156,6 @@ function _iconViewEntry(
 
 		if (!singleClick) {
 			$(entryContainer).dblclick(function () {
-				$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
 				builder.callback(
 					'iconview',
 					'activate',
@@ -240,6 +242,26 @@ JSDialog.iconView = function (
 			if (hasText) _createEntryText(container, entry);
 		}
 	};
+
+	JSDialog.KeyboardGridNavigation(container);
+	container.addEventListener('keydown', function (e: KeyboardEvent) {
+		if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
+
+		const active = document.activeElement as HTMLElement;
+		if (!active || !active.classList.contains('ui-iconview-entry')) return;
+
+		const iconViewEntries = Array.from(
+			container.querySelectorAll('.ui-iconview-entry'),
+		);
+		const selectedIndex = iconViewEntries.indexOf(active);
+
+		if (selectedIndex === -1) return;
+
+		if (e.key === ' ' || e.code === 'Space')
+			builder.callback('iconview', 'select', data, selectedIndex, builder);
+		else if (e.key === 'Enter')
+			builder.callback('iconview', 'activate', data, selectedIndex, builder);
+	});
 
 	return false;
 };
