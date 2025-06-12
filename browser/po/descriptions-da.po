@@ -1,13 +1,14 @@
 # Frank Pearson <rob@pearson.net.nz>, 2024.
 # Ronny Buelund <ronnyworkmail@gmail.com>, 2025.
 # Mads William Scharling <mws@cbrain.com>, 2025.
+# Kasper Rud Jensen <kje@cbrain.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-04 17:16+0000\n"
-"Last-Translator: Mads William Scharling <mws@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-11 10:01+0000\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/da/>\n"
 "Language: da\n"
@@ -47,7 +48,8 @@ msgstr ""
 msgid ""
 "This app is in active development, feedback and bug reports are very welcome."
 msgstr ""
-"Denne app er i aktiv udvikling. Feedback og fejlrapporter er meget velkomne."
+"Denne app er under fortsat udvikling. Feedback og fejlrapporter er meget "
+"velkomne."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
@@ -56,7 +58,7 @@ msgstr "Understøttede filer:"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-5
 msgid "Open Document Format (.odt, .odp, .ods, .ots, .ott, .otp)"
-msgstr "Open dokument format (.odt, .odp, .ods, .ots, .ott, .otp)"
+msgstr "Åbn dokumentformat (.odt, .odp, .ods, .ots, .ott, .otp)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-5
 msgid ""
@@ -84,7 +86,7 @@ msgid ""
 msgstr ""
 "Brug fejlsøgeren og vedhæft de filer, der forårsagede problemer, gennem <a "
 "href=\"https://col.la/android\"> https://col.la/android</a>. Bemærk "
-"venligst, at dét, du skriver fejlsøgeren, vil være synligt for "
+"venligst, at dét, du skriver i fejlsøgeren, vil være synligt for "
 "offentligheden."
 
 #. Long description
@@ -101,8 +103,8 @@ msgid ""
 msgstr ""
 "Collabora Office til Android bruger den samme motor som LibreOffice til "
 "Windows, Mac, og Linux. Dette, kombineret med en ny grafisk brugerflade "
-"baseret på Collabora Online, giver læsning og lagring af dokumenter på samme "
-"måde som LibreOffice til computer."
+"baseret på Collabora Online, indlæser og gemmer dokumenter på samme måde som "
+"LibreOffice på en computer."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -130,4 +132,4 @@ msgstr "Open Source - Mozilla Public License v2 og andre"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr "Bidragydere:"
+msgstr "Bidragsydere:"
