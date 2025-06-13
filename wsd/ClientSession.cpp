@@ -2621,6 +2621,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             if (JsonUtil::parseJSON(json, object))
             {
                 const std::string url = JsonUtil::getJSONValue<std::string>(object, "url");
+                const std::string srt = JsonUtil::getJSONValue<std::string>(object, "srt");
                 if (!url.empty())
                 {
                     const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
@@ -2633,6 +2634,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                             Uri::encode(createPublicURI("media", id, /*encode=*/false), "&");
                         object->set("url", mediaUrl); // Replace the url with the public one.
                         object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
+
+                        if (!srt.empty())
+                        {
+                            const std::string mediaVTT =
+                                Uri::encode(createPublicURI("mediavtt", id, /*encode=*/false), "&");
+                            object->set("srt", mediaVTT);
+                        }
 
                         std::ostringstream mediaStr;
                         object->stringify(mediaStr);

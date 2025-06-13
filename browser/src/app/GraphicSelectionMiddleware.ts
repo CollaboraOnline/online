@@ -76,8 +76,11 @@ class GraphicSelection {
 			videoDesc.url +
 			'" type="' +
 			videoDesc.mimeType +
-			'"/>\
-				</video>\
+			'"/>\n ' +
+			(videoDesc.srt
+				? '<track src="' + videoDesc.srt + '" kind="subtitles"/>\n '
+				: '') +
+			'</video>\
 			</body>\
 		</foreignObject>';
 
