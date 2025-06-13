@@ -1346,6 +1346,8 @@ int main(int argc, char**argv)
     std::tm *time_t_to_localtime(std::time_t t, std::tm& tm);
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm);
 
+    std::string base64Encode(std::string_view input);
+
 } // end namespace Util
 
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)
