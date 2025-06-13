@@ -4603,7 +4603,8 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
 
 void DocumentBroker::handleMediaRequest(const std::string_view range,
                                         const std::shared_ptr<Socket>& socket,
-                                        const std::string& tag)
+                                        const std::string& tag,
+                                        const std::string& field)
 {
     LOG_DBG("handleMediaRequest: " << tag);
 
@@ -4627,7 +4628,7 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
     if (JsonUtil::parseJSON(it->second, object))
     {
         LOG_ASSERT(JsonUtil::getJSONValue<std::string>(object, "id") == tag);
-        const std::string url = JsonUtil::getJSONValue<std::string>(object, "url");
+        const std::string url = JsonUtil::getJSONValue<std::string>(object, field);
         LOG_ASSERT(!url.empty());
         if (Util::toLower(url).starts_with("file://"))
         {
@@ -4638,7 +4639,7 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
 
             auto session = std::make_shared<http::ServerSession>();
             http::ServerSession::ResponseHeaders responseHeaders;
-            responseHeaders.emplace_back("Content-Type", "video/mp4");
+            responseHeaders.emplace_back("Content-Type", (field == "url" ? "video/mp4" : "text/plain"));
             session->asyncUpload(std::move(path), std::move(responseHeaders), range);
             streamSocket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
         }
