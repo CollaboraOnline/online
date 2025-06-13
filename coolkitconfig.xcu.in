@@ -61,6 +61,17 @@
 <!-- Hide MediaPlaybackPanel on sidebar. It does not work in Online. Video playback controls are implemented by the browser.  -->
 <item oor:path="/org.openoffice.Office.UI.Sidebar/Content/PanelList/org.openoffice.Office.UI.Sidebar:Panel['MediaPlaybackPanel']"><prop oor:name="ContextList" oor:op="fuse"><value><it>any</it><it>default</it><it>hidden</it></value></prop></item>
 
+<!-- CJK/CTL settings -->
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="VerticalText" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="Ruby" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="JapaneseFind" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="EmphasisMarks" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="DoubleLines" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="CJKFont" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="ChangeCaseMap" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="AsianTypography" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/I18N/CTL"><prop oor:name="CTLFont" oor:op="fuse"><value>true</value></prop></item>
+
 <!-- Themes -->
 <!-- Light Theme -->
 <item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes">
