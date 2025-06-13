@@ -13,6 +13,7 @@
 
 #include <memory>
 #include <string>
+#include <regex>
 
 #include <HttpRequest.hpp>
 #include <Socket.hpp>
@@ -66,6 +67,7 @@ class UnitSession : public UnitWSD
     TestResult testFileServer();
     TestResult testSlideShow();
     TestResult testSlideShowMultiDL();
+    TestResult testGetMetrics();
 
 public:
     UnitSession()
@@ -162,7 +164,6 @@ UnitBase::TestResult UnitSession::testFilesOpenConnection()
     setTestname(__func__);
 
     const std::vector<std::string> documentURLs = {
-        // "/cool/getMetrics", // < Requires Admin
         "/", // <
         "/favicon.ico",
         "/hosting/discovery",
@@ -215,7 +216,6 @@ UnitBase::TestResult UnitSession::testFilesCloseConnection()
     setTestname(__func__);
 
     const std::vector<std::string> documentURLs = {
-        // "/cool/getMetrics", // < Requires Admin
         "/", // <
         "/favicon.ico",
         "/hosting/discovery",
@@ -525,6 +525,73 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
     return TestResult::Ok;
 }
 
+UnitBase::TestResult UnitSession::testGetMetrics()
+{
+    setTestname(__func__);
+
+    // Reused http session, keep-alive
+    std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
+
+    // Keep alive socket, avoid forced socket disconnect via dtor
+    std::shared_ptr<TerminatingPoll> socketPoller = std::make_shared<TerminatingPoll>(testname);
+    socketPoller->runOnClientThread();
+
+    std::vector<std::string> check_exists = {"document_all_views_all_count_total", "document_all_views_all_count_average", "document_all_views_all_count_min", "document_all_views_all_count_max"};
+
+    TST_LOG("Test: " << testname);
+    try
+    {
+        std::string documentURL = "/cool/getMetrics";
+        // getMetrics is not keepAlive
+        LOK_ASSERT_EQUAL(false, session->isConnected());
+
+        http::Request request(documentURL);
+        request.setBasicAuth("admin", "admin");
+        const std::shared_ptr<const http::Response> response =
+            session->syncRequest(request, *socketPoller);
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, response->state());
+        LOK_ASSERT(response->header().hasContentLength());
+        LOK_ASSERT(0 < response->header().getContentLength());
+        LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
+        LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
+
+        // check metrics format and a few key values
+        auto body = std::istringstream(response->getBody());
+        std::string line;
+
+        // line examples:
+        // coolwsd_count 1
+        // doc_info{host=\"\",key=\"%2Ftmp%2FtestHandshake6cb43aac_hello.odt\",filename=\"testHandshake6cb43aac_hello.odt\",pid=\"2267723\"} 1
+        const std::regex line_regex("([\\w_]+(\\{([\\w_]+=\"[\\w_%\\.]*\",?)+\\})?) (\\d+(\\.\\d+)?)");
+        std::smatch match;
+        int line_count = 0;
+        while (std::getline(body, line)) {
+            if (line.empty()) {
+                continue;
+            }
+
+            ++line_count;
+            auto found = std::regex_match(line, match, line_regex);
+            LOK_ASSERT(found);
+
+            if (check_exists.empty()) {
+                continue;
+            }
+            auto it = std::find(check_exists.begin(), check_exists.end(), match[1]);
+            if (it != check_exists.end()) {
+                check_exists.erase(it);
+            }
+        }
+        LOK_ASSERT(line_count > 10);
+        LOK_ASSERT(check_exists.empty());
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
+    return TestResult::Ok;
+}
+
 void UnitSession::invokeWSDTest()
 {
     UnitBase::TestResult result = testBadRequest();
@@ -554,6 +621,10 @@ void UnitSession::invokeWSDTest()
         exitTest(result);
 
     result = testSlideShowMultiDL();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testGetMetrics();
     if (result != TestResult::Ok)
         exitTest(result);
 
