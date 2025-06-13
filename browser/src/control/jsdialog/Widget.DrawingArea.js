@@ -23,7 +23,47 @@
  * }
  */
 
-/* global JSDialog $ UNOKey UNOModifier */
+/* global JSDialog $ UNOKey UNOModifier app */
+
+function _setupItemInfo(itemInfo, data) {
+	const columns = Math.floor(data.imagewidth / itemInfo.innerWidth);
+	const hSpacing =
+		(data.imagewidth - itemInfo.innerWidth * columns) / (2 * columns);
+
+	const rows = Math.floor(data.imageheight / itemInfo.innerHeight);
+	const vSpacing =
+		(data.imageheight - itemInfo.innerHeight * rows) / (2 * rows);
+
+	itemInfo.outerWidth = itemInfo.innerWidth + 2 * hSpacing;
+	itemInfo.outerHeight = itemInfo.innerHeight + 2 * vSpacing;
+	itemInfo.hSpacing = hSpacing;
+	itemInfo.vSpacing = vSpacing;
+	itemInfo.rows = rows;
+	itemInfo.columns = columns;
+}
+
+function _getItemPos(pos, itemInfo) {
+	const width = itemInfo.outerWidth;
+	const height = itemInfo.outerHeight;
+	const c = Math.floor(pos[0] / width);
+	const r = Math.floor(pos[1] / height);
+	return [r, c]; // row, column
+}
+
+function _isCurrentItem(curItem, item) {
+	return curItem[0] === item[0] && curItem[1] === item[1];
+}
+
+function _isOverItem(pos, item, itemInfo) {
+	const x = item[1] * itemInfo.outerWidth + itemInfo.hSpacing;
+	const y = item[0] * itemInfo.outerHeight + itemInfo.vSpacing;
+	const witdh = itemInfo.innerWidth;
+	const height = itemInfo.innerHeight;
+
+	return (
+		pos[0] >= x && pos[0] <= x + witdh && pos[1] >= y && pos[1] <= y + height
+	);
+}
 
 function _drawingAreaControl (parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
@@ -152,6 +192,43 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		window.addEventListener('mousemove', onMove);
 		window.addEventListener('mouseup', endMove);
 	});
+
+	var itemInfo = app.valuesets[data.id];
+	if (itemInfo) {
+		_setupItemInfo(itemInfo, data);
+
+		// simulate mouse enter event
+		image.addEventListener('mousemove', function (e) {
+			// normPos is in [0,1] coordinates
+			const normPos = getCoordinatesFromEvent(e);
+			const pos = [normPos[0] * data.imagewidth, normPos[1] * data.imageheight];
+
+			const item = _getItemPos(pos, itemInfo);
+
+			const currentItem = itemInfo.currentItem;
+			if (currentItem && _isCurrentItem(currentItem, item)) {
+				return;
+			}
+
+			if (_isOverItem(pos, item, itemInfo)) {
+				itemInfo.currentItem = item;
+
+				const x = (item[1] + 0.5) / itemInfo.columns;
+				const y = (item[0] + 0.5) / itemInfo.rows;
+
+				const coordinates = x + ';' + y;
+				builder.callback('drawingarea', 'mousemove', container, coordinates, builder);
+			}
+		});
+
+		image.addEventListener('mouseleave', function (e) {
+			itemInfo.currentItem = null;
+
+			const pos = getCoordinatesFromEvent(e);
+			const coordinates = pos[0] + ';' + pos[1];
+			builder.callback('drawingarea', 'mousemove', container, coordinates, builder);
+		});
+	}
 
 	var modifier = 0;
 

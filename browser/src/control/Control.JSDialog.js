@@ -81,6 +81,18 @@ L.Control.JSDialog = L.Control.extend({
 		return builder;
 	},
 
+	clearValueSet: function(id) {
+		const container = this.dialogs[id].container;
+		if (container) {
+			const drawingAreas = container.querySelectorAll(
+				'.ui-drawing-area-container',
+			);
+			for (let i = 0; i < drawingAreas.length; ++i) {
+				delete app.valuesets[drawingAreas[i].id];
+			}
+		}
+	},
+
 	close: function(id, sendCloseEvent) {
 		if (id !== undefined && this.dialogs[id]) {
 			const dialog = this.dialogs[id];
@@ -127,6 +139,8 @@ L.Control.JSDialog = L.Control.extend({
 
 		this.focusToLastElement(id);
 
+		this.clearValueSet(id);
+
 		var builder = this.clearDialog(id);
 		if (sendCloseEvent !== false && builder)
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
@@ -139,6 +153,8 @@ L.Control.JSDialog = L.Control.extend({
 			console.warn('missing popover data');
 			return;
 		}
+
+		this.clearValueSet(id);
 
 		var clickToClose = this.dialogs[id].clickToClose;
 		var builder = this.dialogs[id].builder;
