@@ -771,6 +771,13 @@ public:
         Util::joinPair(os, _header, indent + '\t');
     }
 
+    void setBasicAuth(std::string_view username, std::string_view password) {
+        std::string basicAuth{username};
+        basicAuth.append(":");
+        basicAuth.append(password);
+        _header.add("Authorization", "Basic " + Util::base64Encode(basicAuth));
+    }
+
 private:
     Header _header;
     std::string _url; ///< The URL to request, without hostname.
