@@ -81,6 +81,9 @@ std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
 
+static constexpr std::string_view MEDIA_STR = "str";
+static constexpr std::string_view MEDIA_MP4 = "url";
+
 namespace
 {
 
@@ -1219,7 +1222,11 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-            servedSync = handleMediaRequest(request, disposition, socket);
+            servedSync = handleMediaRequest(request, disposition, socket, false);
+
+        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 requestDetails.equals(1, "mediaVTT"))
+            servedSync = handleMediaRequest(request, disposition, socket, true);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
@@ -1863,7 +1870,8 @@ bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
 
 bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                                  SocketDisposition& /*disposition*/,
-                                                 const std::shared_ptr<StreamSocket>& socket)
+                                                 const std::shared_ptr<StreamSocket>& socket,
+                                                 bool bVTT)
 {
     assert(socket && "Must have a valid socket");
 
@@ -1947,7 +1955,8 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         LOG_TRC_S("Move media request " << tag << " to docbroker thread");
 
         std::string range = request.get("Range", "none");
-        docBroker->handleMediaRequest(std::move(range), socket, tag);
+        docBroker->handleMediaRequest(std::move(range), socket, tag, (bVTT ? std::string(MEDIA_STR)
+                                                                      : std::string(MEDIA_MP4)));
     }
     return false; // async
 }
