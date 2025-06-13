@@ -995,6 +995,15 @@ namespace Util
         }
     }
 
+    std::string base64Encode(std::string_view input)
+    {
+        std::ostringstream oss;
+        Poco::Base64Encoder encoder(oss);
+        encoder << input;
+        encoder.close();
+        return oss.str();
+    }
+
 } // namespace Util
 
 #if !MOBILEAPP
