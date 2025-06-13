@@ -16,8 +16,8 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
+#include "Globals.hpp"
 #include "Replay.hpp"
-// #include <test/helpers.hpp>
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
