@@ -594,9 +594,9 @@ app.definitions.Socket = L.Class.extend({
 
 		var isTile = e.textMsg.startsWith('tile:');
 		var isDelta = e.textMsg.startsWith('delta:');
-		if (!isTile && !isDelta &&
+		var isSlideLayer = e.textMsg.startsWith('slidelayer:');
+		if (!isTile && !isDelta && !isSlideLayer &&
 		    !e.textMsg.startsWith('renderfont:') &&
-			!e.textMsg.startsWith('slidelayer:') &&
 		    !e.textMsg.startsWith('windowpaint:'))
 			return;
 
@@ -613,6 +613,40 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 
+
+		var onload = () => {
+			e.imageIsComplete = true;
+			this._queueSlurpEventEmission(1);
+			if (e.completeTraceEvent)
+				e.completeTraceEvent.finish();
+		};
+
+		var onerror = (err) => {
+			window.app.console.log('Failed to load image ' + img + ' fun ' + err);
+			e.imageIsComplete = true;
+			this._queueSlurpEventEmission(1);
+			if (e.completeTraceEvent)
+				e.completeTraceEvent.abort();
+		};
+
+		if (isSlideLayer) {
+			var json = JSON.parse(e.textMsg.substring('slidelayer: '.length));
+			if (json.width && json.height) {
+				var imgData = this.decompressAndCreateImageData(e.imgBytes.subarray(e.imgIndex), json.width, json.height);
+				createImageBitmap(imgData).then(
+					(img) => {
+						e.image = img;
+						onload();
+					},
+					() => {
+						onerror("createImageBitmap promise failed.");
+					}
+				);
+			}
+			e.completeTraceEvent = this.createAsyncTraceEvent('loadTile');
+			return;
+		}
+
 		// window.app.console.log('PNG preview');
 
 		// lazy-loaded PNG slide previews
@@ -624,23 +658,17 @@ app.definitions.Socket = L.Class.extend({
 		}
 
 		// PNG dialog bits
-		var that = this;
 		e.image = new Image();
-		e.image.onload = function() {
-			e.imageIsComplete = true;
-			that._queueSlurpEventEmission(1);
-			if (e.image.completeTraceEvent)
-				e.image.completeTraceEvent.finish();
-		};
-		e.image.onerror = function(err) {
-			window.app.console.log('Failed to load image ' + img + ' fun ' + err);
-			e.imageIsComplete = true;
-			that._queueSlurpEventEmission(1);
-			if (e.image.completeTraceEvent)
-				e.image.completeTraceEvent.abort();
-		};
-		e.image.completeTraceEvent = this.createAsyncTraceEvent('loadTile');
+		e.image.onload = onload;
+		e.image.onerror = onerror;
+		e.completeTraceEvent = this.createAsyncTraceEvent('loadTile');
 		e.image.src = img;
+	},
+
+	decompressAndCreateImageData: function(imgRawData, width, height) {
+		const img = window.fzstd.decompress(imgRawData);
+		const clampedArray = new Uint8ClampedArray(img);
+		return new ImageData(clampedArray, width, height);
 	},
 
 	_buildUnauthorizedMessage: function (command) {
