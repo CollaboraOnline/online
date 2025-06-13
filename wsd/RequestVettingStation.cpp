@@ -23,7 +23,6 @@
 #include <ClientSession.hpp>
 #include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
-#include <Poco/Base64Encoder.h>
 #include <CacheUtil.hpp>
 #include <Util.hpp>
 #include <ServerAuditUtil.hpp>
@@ -123,19 +122,6 @@ void RequestVettingStation::handleRequest(const std::string& id)
     }
 }
 
-#if !MOBILEAPP
-
-static std::string base64Encode(std::string& input)
-{
-    std::ostringstream oss;
-    Poco::Base64Encoder encoder(oss);
-    encoder << input;
-    encoder.close();
-    return oss.str();
-}
-
-#endif
-
 void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
 {
     std::string error = "error: cmd=internal kind=unauthorized";
@@ -145,7 +131,7 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
     {
         std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
         if (!sslVerifyResult.empty())
-            error += " code=" + base64Encode(sslVerifyResult);
+            error += " code=" + Util::base64Encode(sslVerifyResult);
     }
 #endif
     sendErrorAndShutdown(error, WebSocketHandler::StatusCodes::POLICY_VIOLATION);
