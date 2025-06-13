@@ -12,6 +12,7 @@
 #import "config.h"
 
 #import "CoolURLSchemeHandler.h"
+#import "MobileSocket.h"
 
 #import "MobileApp.hpp"
 
@@ -29,6 +30,8 @@
 - (id)initWithDocument:(CODocument *)document {
     self->document = document;
     self->ongoingTasks = [[NSMutableSet alloc] init];
+    self->ongoingMobileSocketTasks = [[NSMutableSet alloc] init];
+    self->mobileSocket = [[MobileSocket alloc] init];
     return self;
 }
 
@@ -108,7 +111,32 @@
 
 - (void)webView:(WKWebView *)webView startURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
     [ongoingTasks addObject:urlSchemeTask];
+
+    if ([urlSchemeTask.request.URL.path isEqualToString:@"/cool/media"]) {
+        return [self handleMediaTask:urlSchemeTask];
+    }
     
+    if ([urlSchemeTask.request.URL.path hasPrefix:@"/cool/mobilesocket/"]) {
+        return [self handleMobileSocketTask:urlSchemeTask];
+    }
+    
+    NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
+    [responseHeaders setObject:@"null" forKey:@"Access-Control-Allow-Origin"]; // Yes, the origin really is 'null' for 'file:' origins
+    [responseHeaders setObject:@"0" forKey:@"Content-Length"];
+    
+    NSHTTPURLResponse * response = [[NSHTTPURLResponse alloc]
+                                    initWithURL:urlSchemeTask.request.URL
+                                    statusCode:404
+                                    HTTPVersion:nil
+                                    headerFields:responseHeaders
+    ];
+    [urlSchemeTask didReceiveResponse:response];
+    
+    [ongoingTasks removeObject:urlSchemeTask];
+    [urlSchemeTask didFinish];
+}
+    
+- (void)handleMediaTask:(id<WKURLSchemeTask>)urlSchemeTask {
     // Get tag from request
     Poco::URI requestUri([[[urlSchemeTask.request.URL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
@@ -223,7 +251,38 @@
     [urlSchemeTask didFinish];
 }
 
+- (void)handleMobileSocketTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    [self->ongoingMobileSocketTasks addObject:urlSchemeTask];
+
+    // As on Android, I'm expecting [@"cool", @"mobilesocket", @"cool", wopipath, @"ws", @"ws", command, @"open", id] or similar
+    // However unlike on Android, the wopipath, etc. gets split into components itself. Luckily the ID will never be split so we can guarentee the position of the command being 3 from the end
+    NSArray<NSString *> * path = urlSchemeTask.request.URL.pathComponents;
+    NSString * command = [path objectAtIndex:[path count] - 3];
+    
+    if ([command isEqualToString:@"open"]) {
+        [mobileSocket open:urlSchemeTask];
+        [self->ongoingMobileSocketTasks removeObject:urlSchemeTask];
+        [self->ongoingTasks removeObject:urlSchemeTask];
+        return;
+    }
+    
+    [mobileSocket write:urlSchemeTask onFinish:^{
+        [self->ongoingMobileSocketTasks removeObject:urlSchemeTask];
+        [self->ongoingTasks removeObject:urlSchemeTask];
+    }];
+}
+
+- (void)queueSend:(std::string)message {
+    [mobileSocket queueSend:message];
+}
+
 - (void)webView:(WKWebView *)webView stopURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+    if ([ongoingMobileSocketTasks containsObject:urlSchemeTask]) {
+        // We need to notify the mobile socket handler about this task disappearing too
+        [mobileSocket stopURLSchemeTask:urlSchemeTask];
+        [ongoingMobileSocketTasks removeObject:urlSchemeTask];
+    }
+    
     // Yeet the task from the ongoingTasks
     [ongoingTasks removeObject:urlSchemeTask];
 }
