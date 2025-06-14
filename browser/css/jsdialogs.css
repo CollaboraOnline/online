@@ -1184,6 +1184,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 40vh;
 }
 
+#presets, #shadows {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* we want presets and shadows in a single row */
+	overflow: visible;
+}
+
 .ui-iconview.mobile-wizard {
 	justify-content: space-around;
 }
@@ -1202,7 +1207,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-self: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
-	padding-top: 5px;
 	text-wrap: nowrap;
 	font-family: var(--jquery-ui-font);
 }
@@ -1217,6 +1221,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker);
 }
+
+.ui-iconview-entry img {
+	vertical-align: middle;
+}
+
 
 .ui-iconview-separator {
 	flex: 0 0 99%;
