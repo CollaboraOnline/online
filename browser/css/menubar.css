@@ -18,17 +18,7 @@
 	position: relative;
 	background: transparent;
 }
-/*avoid multiple document-headers in readonly mode*/
-.main-nav.hasnotebookbar.readonly > #main-menu #document-header {
-	display: none;
-}
 
-/* hide document-header to free up space when using narrow windows */
-@media screen and (max-width: 800px) {
-	.main-nav.hasnotebookbar:not(.readonly) #document-header {
-		display: none !important;
-	}
-}
 
 .document-logo {
 	position: relative;
@@ -120,53 +110,7 @@ nav.hasnotebookbar #save.saved::after {
 	margin-right: 52px;
 }
 
-.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
-	display: flex;
-	align-self: center;
-}
 
-@media screen and (max-width: 900px) {
-	.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
-		display: none;
-	}
-	.notebookbar-tabs-container {
-		flex: 1 1 auto !important;
-	}
-}
-
-.main-nav.readonly #optionstoolboxdown {
-	display: none;
-}
-.main-nav {
-	box-sizing: border-box;
-	height: var(--header-height); /* on mouseover menubar items, border emerges */
-	width: 100%;
-	background: var(--color-background-lighter);
-	padding: 3px 3px 3px 0;
-	white-space: nowrap;
-	z-index: 12;
-	display: flex;
-	align-items: center;
-}
-.main-nav.readonly {
-	position: relative;
-	border-bottom: 1px solid var(--color-border);
-}
-.main-nav.hasnotebookbar {
-	height: var(--header-height);
-	/* overflow is set dynamically */
-	scrollbar-width: none;
-	-ms-scrollbar: none;
-}
-.main-nav.hasnotebookbar::-webkit-scrollbar {
-	height: 0;
-}
-.main-nav.hasnotebookbar:not(.readonly) {
-	background: var(--color-main-background);
-	padding: 0px;
-	overflow: scroll hidden;
-	padding-inline-start: 5px;
-}
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
 .lo-menu {
@@ -272,14 +216,6 @@ nav.hasnotebookbar #save.saved::after {
 }
 /* lo-menu customizations end */
 
-.main-nav:after {
-	clear: both;
-	content: '\00a0';
-	display: block;
-	height: 0;
-	font: 0px/0 serif;
-	overflow: hidden;
-}
 
 /* Hamburger button */
 
