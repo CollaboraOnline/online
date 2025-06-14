@@ -56,7 +56,7 @@ namespace Control {
 
             // hasnotebookbar styles
             if (mainNav.classList.contains('hasnotebookbar')) {
-                mainNav.style.scrollbarWidth = 'none';
+                mainNav.style.setProperty('scrollbar-width', 'none');
                 mainNav.style.setProperty('-ms-scrollbar', 'none');
 
                 const scrollStyles = (mainNav.style as any);
