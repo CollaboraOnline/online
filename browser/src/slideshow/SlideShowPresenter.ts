@@ -132,6 +132,10 @@ class SlideShowPresenter {
 	private _onImpressModeChanged: any = null;
 	private _startingPresentation: boolean = false;
 	private _hammer: HammerManager;
+	private _preFetchSlideCache: any = null;
+	private _preFetchPresentationInfo: PresentationInfo = null;
+	private _isPrefetching: boolean = false;
+	public _slideBitmapCache: Map<string, ImageBitmap> = new Map();
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -147,6 +151,7 @@ class SlideShowPresenter {
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
 		this._map.on('updateparts', this.onUpdateParts, this);
+		this._map.on('prefetchslides', this._onPreFetchSlides, this);
 	}
 
 	removeHooks() {
@@ -160,6 +165,7 @@ class SlideShowPresenter {
 			this,
 		);
 		this._map.off('updateparts', this.onUpdateParts, this);
+		this._map.off('prefetchslides', this._onPreFetchSlides, this);
 	}
 
 	private _init() {
@@ -172,6 +178,78 @@ class SlideShowPresenter {
 		this._onKeyDownHandler = this._slideShowNavigator.onKeyDown.bind(
 			this._slideShowNavigator,
 		);
+	}
+
+	private _onPreFetchSlides(e: any) {
+		console.log('VIVEK : SlideShowPresenter._onPreFetchSlides');
+		this._isPrefetching = true;
+		app.socket.sendMessage('getpresentationinfo');
+	}
+
+	_slidePrefetching(data: PresentationInfo) {
+		this._preFetchPresentationInfo = data;
+		console.log('vivek prefetch info set', this._preFetchPresentationInfo);
+
+		if (!this._slideCompositor) {
+			console.log('vivek : _slideCompositor before', this._slideBitmapCache);
+
+			this._slideCompositor = new SlideShow.LayersCompositor(
+				this,
+				new MetaPresentation(
+					data,
+					this._slideShowHandler,
+					this._slideShowNavigator,
+				),
+			);
+			this._slideCompositor.onUpdatePresentationInfo();
+			console.log('vivek : _slideCompositor after', this._slideBitmapCache);
+		}
+		console.log('vivek : before Prefetched slides', this._slideBitmapCache);
+
+		const fetchSlidesSequentially = (slides: SlideInfo[], currentIndex = 0) => {
+			if (currentIndex >= slides.length) {
+				console.log('All slides prefetched');
+				return;
+			}
+
+			const { index: slideIndex, hash: slideHash } = slides[currentIndex];
+
+			if (!this._slideBitmapCache.has(slideHash)) {
+				console.log('Calling fetchAndRun for slide', slideIndex, slideHash);
+
+				this._slideCompositor.fetchAndRun(slideIndex, () => {
+					console.log(
+						'fetchAndRun callback called for slide',
+						slideIndex,
+						slideHash,
+					);
+					const bitmap = this._slideCompositor.getSlide(slideIndex);
+					console.log('Bitmap received from getSlide:', bitmap);
+					this._slideBitmapCache.set(slideHash, bitmap);
+					console.log(
+						'Prefetched slides cache updated for slide',
+						slideIndex,
+						' slidecache',
+						this._slideBitmapCache,
+					);
+					// Fetch the next slide after current is done
+					setTimeout(() => {
+						fetchSlidesSequentially(slides, currentIndex + 1);
+					}, 5000);
+				});
+			} else {
+				// Slide is already cached, skip to next
+				setTimeout(() => {
+					fetchSlidesSequentially(slides, currentIndex + 1);
+				}, 5000);
+			}
+		};
+
+		if (!data.slides || data.slides.length === 0) {
+			console.warn('No slides available to fetch');
+		} else {
+			fetchSlidesSequentially.call(this, data.slides);
+		}
 	}
 
 	private onUpdateParts() {
@@ -732,6 +810,15 @@ class SlideShowPresenter {
 		// disable slide sorter or it will receive key events
 		this._map._docLayer._preview.partsFocused = false;
 		this._startingPresentation = true;
+		this._isPrefetching = false;
+		this._getPresentationInfo();
+	}
+
+	_getPresentationInfo() {
+		if (this._preFetchPresentationInfo !== null) {
+			this.onSlideShowInfo(this._preFetchPresentationInfo);
+			return;
+		}
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
@@ -744,12 +831,20 @@ class SlideShowPresenter {
 		// disable present in console onStartInWindow
 		this._enablePresenterConsole(true);
 		this._startingPresentation = true;
-		app.socket.sendMessage('getpresentationinfo');
+		this._isPrefetching = false;
+		this._getPresentationInfo();
 	}
 
 	/// called as a response on getpresentationinfo
 	onSlideShowInfo(data: PresentationInfo) {
 		console.debug('SlideShow: received information about presentation');
+		if (this._isPrefetching) {
+			this._isPrefetching = false;
+			console.log('vivek : PresentationInfo', data);
+			this._slidePrefetching(data);
+			return;
+		}
+
 		this._presentationInfo = data;
 
 		const numberOfSlides = this._getSlidesCount();
@@ -839,6 +934,7 @@ class SlideShowPresenter {
 		}
 
 		this._presentationInfoChanged = true;
+		this._isPrefetching = false;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 }

@@ -47,6 +47,10 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		this._partWidthTwips = 0; // Single part's width. These values are equal to app.file.size.x & app.file.size.y when app.file.partBasedView is true.
 
 		app.events.on('contextchange', this._onContextChange.bind(this));
+		// Fire prefetchslides event after a short delay to ensure SlideShowPresenter is ready
+		setTimeout(() => {
+			app.map.fire('prefetchslides');
+		}, 1000);
 	},
 
 	_onContextChange(e) {

@@ -936,7 +936,24 @@ class SlideShowHandler {
 		nSlideIndex: number,
 		transitionFilterInfo?: TransitionFilterInfo,
 	): WebGLTexture | ImageBitmap | null {
-		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
+		const slideHash = this.theMetaPres.getSlideHash(nSlideIndex);
+		let slideImage: ImageBitmap | null = null;
+
+		if (slideHash && this.presenter._slideBitmapCache.has(slideHash)) {
+			slideImage = this.presenter._slideBitmapCache.get(slideHash) || null;
+			console.log(
+				'getTexture: Using cached ImageBitmap for slide',
+				nSlideIndex,
+				slideHash,
+			);
+		} else {
+			slideImage = this.slideCompositor.getSlide(nSlideIndex);
+			console.log(
+				'getTexture: Fetched ImageBitmap from slideCompositor for slide',
+				nSlideIndex,
+			);
+		}
+
 		if (!slideImage) {
 			console.error('SlideShowHandler: cannot get texture');
 			return null;

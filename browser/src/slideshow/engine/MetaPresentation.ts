@@ -126,6 +126,7 @@ class MetaPresentation {
 	}
 
 	public getMetaSlide(slideHash: string): MetaSlide {
+		console.log('MetaPresentation.getMetaSlide: ' + slideHash);
 		return this.metaSlides.get(slideHash);
 	}
 
@@ -134,6 +135,7 @@ class MetaPresentation {
 	}
 
 	public getSlideInfo(slideHash: string): SlideInfo {
+		console.log('MetaPresentation.getSlideInfo: ' + slideHash);
 		const metaSlide = this.getMetaSlide(slideHash);
 		return metaSlide ? metaSlide.info : null;
 	}

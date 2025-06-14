@@ -139,6 +139,11 @@ class LayerDrawing {
 
 	public getSlide(slideNumber: number): ImageBitmap {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
+		console.log(
+			'vivek: LayerDrawing.getSlide: slide hash: ',
+			startSlideHash,
+			this.slideCache.get(startSlideHash),
+		);
 		return this.slideCache.get(startSlideHash);
 	}
 
@@ -319,6 +324,7 @@ class LayerDrawing {
 		this.onSlideRenderingCompleteCallback = callback;
 
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
+		console.log('LayerDrawing.requestSlide: slide hash: ' + startSlideHash);
 		this.requestSlideImpl(startSlideHash);
 	}
 
@@ -344,7 +350,7 @@ class LayerDrawing {
 	private requestSlideImpl(slideHash: string, prefetch: boolean = false) {
 		if (this.isDisposed()) return;
 
-		console.debug(
+		console.log(
 			'LayerDrawing.requestSlideImpl: slide hash: ' +
 				slideHash +
 				', prefetching: ' +
@@ -397,6 +403,8 @@ class LayerDrawing {
 			return;
 		}
 
+		console.log('Is Prefetched: ', prefetch, ' slideHash: ', slideHash);
+
 		if (prefetch) {
 			this.prefetchedSlideHash = slideHash;
 			this.requestedSlideHash = null;
@@ -418,7 +426,7 @@ class LayerDrawing {
 				return;
 			}
 		}
-
+		console.log('send msg');
 		app.socket.sendMessage(
 			`getslide hash=${slideInfo.hash} part=${slideInfo.index} width=${this.canvasWidth} height=${this.canvasHeight} ` +
 				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio}`,
@@ -499,6 +507,12 @@ class LayerDrawing {
 			this.backgroundChecksums.set(pageHash, imageInfo.checksum);
 			this.cachedBackgrounds.set(imageInfo.checksum, imageInfo);
 
+			console.log(
+				'LayerDrawing.handleBackgroundMsg: slideHash: ',
+				info.slideHash,
+				' imageInfo: ',
+				imageInfo,
+			);
 			this.clearCanvas();
 			this.drawBitmap(imageInfo);
 		}
@@ -555,9 +569,17 @@ class LayerDrawing {
 			if (content.type === 'bitmap') {
 				if (!this.checkAndAttachImageData(content.content as ImageInfo, img))
 					return;
+
+				// if it's prefetched then?? todo - next fix animations
 				const animatedElement = this.helper.getAnimatedElement(
 					info.slideHash,
 					content.hash,
+				);
+				console.log(
+					'Is prefetched: ',
+					this.prefetchedSlideHash,
+					' animatedElement: ',
+					animatedElement,
 				);
 				if (animatedElement) {
 					animatedElement.updateAnimationInfo(content);
@@ -573,6 +595,11 @@ class LayerDrawing {
 		this.layerRenderer.clearCanvas();
 	}
 	private drawBackground(slideHash: string) {
+		console.log(
+			'LayerDrawing.drawBackground: slideHash: ',
+			slideHash,
+			this.layerRenderer,
+		);
 		this.clearCanvas();
 
 		const slideInfo = this.getSlideInfo(slideHash);
@@ -687,6 +714,7 @@ class LayerDrawing {
 	}
 
 	onSlideRenderingComplete(e: any) {
+		console.log('vivek: LayerDrawing.onSlideRenderingComplete: ', e);
 		if (this.isDisposed()) return;
 
 		if (!e.success) {
@@ -695,7 +723,7 @@ class LayerDrawing {
 			const index = slideInfo ? slideInfo.index : undefined;
 			this.requestedSlideHash = null;
 			this.prefetchedSlideHash = null;
-			console.debug(
+			console.log(
 				'LayerDrawing.onSlideRenderingComplete: rendering failed for slide: ' +
 					index,
 			);
@@ -722,6 +750,7 @@ class LayerDrawing {
 			);
 			return;
 		}
+		console.log('vivek2 : is cache is updated?', this.slideCache);
 		if (!this.slideCache.has(this.requestedSlideHash)) {
 			const renderedSlide = this.offscreenCanvas.transferToImageBitmap();
 			this.slideCache.set(this.requestedSlideHash, renderedSlide);
