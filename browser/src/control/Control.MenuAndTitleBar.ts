@@ -214,90 +214,90 @@ namespace Control {
         }
 
         public setNotebookbar(enabled: boolean): void {
-    if (this.mainNav) {
-        this.mainNav.classList.toggle('hasnotebookbar', enabled);
-        this.applyMainNavStyles();
-    }
+            if (this.mainNav) {
+                this.mainNav.classList.toggle('hasnotebookbar', enabled);
+                this.applyMainNavStyles();
+            }
         }
-        
+
 
         public prependDocLogoHeader(docLogoHeader: HTMLElement): void {
-    if (this.mainNav) {
-        this.mainNav.insertBefore(docLogoHeader, this.mainNav.firstChild);
-    }
-}
-public removeDocumentHeader(): void {
-    const header = this.mainNav?.querySelector('#document-header');
-    if (header) {
-        header.remove();
-    }
-}
-public removeNotebookbarClass(): void {
-    this.mainNav?.classList.remove('hasnotebookbar');
-}
-public removeReadonlyClass(): void {
-    this.mainNav?.classList.remove('readonly');
-}
-public addReadonlyClass(): void {
-    this.mainNav?.classList.add('readonly');
-}
-
-        
-       public getMainNavWidth(): number | null {
-    if (!this.mainNav) return null;
-    const width = window.getComputedStyle(this.mainNav).width;
-    return parseInt(width, 10);
-}
-
-    public registerMainNavClick(map: any): void {
-    const mainNav = document.querySelector('.main-nav') as HTMLElement | null;
-    if (!mainNav) return;
-
-    mainNav.addEventListener('click', (event: MouseEvent) => {
-        const target = event.target as HTMLElement;
-
-        const isNavClick =
-            target.nodeName === 'NAV' ||
-            target.parentElement?.nodeName === 'NAV' ||
-            target.parentElement?.id === 'document-titlebar';
-
-        if (isNavClick) {
-            map.fire('editorgotfocus');
+            if (this.mainNav) {
+                this.mainNav.insertBefore(docLogoHeader, this.mainNav.firstChild);
+            }
         }
-    });
-        
-        
-}
+        public removeDocumentHeader(): void {
+            const header = this.mainNav?.querySelector('#document-header');
+            if (header) {
+                header.remove();
+            }
+        }
+        public removeNotebookbarClass(): void {
+            this.mainNav?.classList.remove('hasnotebookbar');
+        }
+        public removeReadonlyClass(): void {
+            this.mainNav?.classList.remove('readonly');
+        }
+        public addReadonlyClass(): void {
+            this.mainNav?.classList.add('readonly');
+        }
 
-        
+
+        public getMainNavWidth(): number | null {
+            if (!this.mainNav) return null;
+            const width = window.getComputedStyle(this.mainNav).width;
+            return parseInt(width, 10);
+        }
+
+        public registerMainNavClick(map: any): void {
+            const mainNav = document.querySelector('.main-nav') as HTMLElement | null;
+            if (!mainNav) return;
+
+            mainNav.addEventListener('click', (event: MouseEvent) => {
+                const target = event.target as HTMLElement;
+
+                const isNavClick =
+                    target.nodeName === 'NAV' ||
+                    target.parentElement?.nodeName === 'NAV' ||
+                    target.parentElement?.id === 'document-titlebar';
+
+                if (isNavClick) {
+                    map.fire('editorgotfocus');
+                }
+            });
+
+
+        }
+
+
         public getMainNav(): HTMLElement | null {
-    return document.querySelector('.main-nav');
-  }
+            return document.querySelector('.main-nav');
+        }
 
-        
-       
 
-  // Show main-nav
-  public showMainNav(): void {
-    if (this.mainNav) {
-      this.mainNav.style.display = 'block';
-    }
-  }
 
-  // Hide main-nav
-  public hideMainNav(): void {
-    if (this.mainNav) {
-      this.mainNav.style.display = 'none';
-    }
-  }
 
-  // Check if main-nav is hidden
-  public isMainNavHidden(): boolean {
-    if (this.mainNav) {
-      return getComputedStyle(this.mainNav).display === 'none';
-    }
-    return false;
-  }
+        // Show main-nav
+        public showMainNav(): void {
+            if (this.mainNav) {
+                this.mainNav.style.display = 'block';
+            }
+        }
+
+        // Hide main-nav
+        public hideMainNav(): void {
+            if (this.mainNav) {
+                this.mainNav.style.display = 'none';
+            }
+        }
+
+        // Check if main-nav is hidden
+        public isMainNavHidden(): boolean {
+            if (this.mainNav) {
+                return getComputedStyle(this.mainNav).display === 'none';
+            }
+            return false;
+        }
     }
 
     export const menuAndTitleBar = new MenuAndTitleBar();
