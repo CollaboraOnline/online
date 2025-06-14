@@ -249,18 +249,21 @@ class SlideShowNavigator {
 			return;
 		}
 
-		this.slideCompositor.fetchAndRun(nNewSlide, () => {
-			assert(
-				this instanceof SlideShowNavigator,
-				'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: ' +
-					'callback: this is not a SlideShowNavigator instance',
-			);
+		console.log('vivek2: Checking presenter obj', this.presenter);
 
+		const slideHash = this.theMetaPres.getSlideHash(nNewSlide);
+		if (slideHash && this.presenter._slideBitmapCache.has(slideHash)) {
 			this.prevSlide = this.currentSlide;
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
 
+			console.log(
+				'vivek3: prevSlide',
+				this.prevSlide,
+				' currentSlide',
+				this.currentSlide,
+			);
 			if (this.currentSlide === this.prevSlide) {
 				NAVDBG.print(
 					'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: this.currentSlide === this.prevSlide',
@@ -277,7 +280,43 @@ class SlideShowNavigator {
 				this.slideShowHandler.skipAllEffects();
 				this.isRewindingToPrevSlide = false;
 			}
-		});
+		} else {
+			this.slideCompositor.fetchAndRun(nNewSlide, () => {
+				assert(
+					this instanceof SlideShowNavigator,
+					'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: ' +
+						'callback: this is not a SlideShowNavigator instance',
+				);
+
+				this.prevSlide = this.currentSlide;
+				if (this.prevSlide >= this.theMetaPres.numberOfSlides)
+					this.prevSlide = undefined;
+				this.currentSlide = nNewSlide;
+
+				console.log(
+					'vivek2: prevSlide',
+					this.prevSlide,
+					' currentSlide',
+					this.currentSlide,
+				);
+				if (this.currentSlide === this.prevSlide) {
+					NAVDBG.print(
+						'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: this.currentSlide === this.prevSlide',
+					);
+					return;
+				}
+
+				this.slideShowHandler.displaySlide(
+					this.currentSlide,
+					this.prevSlide,
+					bSkipTransition,
+				);
+				if (this.isRewindingToPrevSlide) {
+					this.slideShowHandler.skipAllEffects();
+					this.isRewindingToPrevSlide = false;
+				}
+			});
+		}
 	}
 
 	startPresentation(nStartSlide: number, bSkipTransition: boolean) {

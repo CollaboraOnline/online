@@ -25,6 +25,7 @@ class LayersCompositor extends SlideCompositor {
 		slideShowPresenter: SlideShowPresenter,
 		metaPres: MetaPresentation,
 	) {
+		console.log('LayersCompositor.constructor', slideShowPresenter, metaPres);
 		super(slideShowPresenter);
 		this.metaPresentation = metaPres;
 	}
@@ -43,6 +44,7 @@ class LayersCompositor extends SlideCompositor {
 		this.layerDrawing.requestSlide(this._initialSlideNumber, () => {
 			const oldCallback = this._onGotSlideCallback;
 			this._onGotSlideCallback = null;
+			console.log('Old call back fucntion');
 			oldCallback();
 		});
 	}
@@ -128,7 +130,11 @@ class LayersCompositor extends SlideCompositor {
 	}
 
 	public getSlide(slideNumber: number): ImageBitmap {
-		return this.layerDrawing.getSlide(slideNumber);
+		const slideHash = this.metaPresentation.getSlideHash(slideNumber);
+		return slideHash &&
+			this._slideShowPresenter._slideBitmapCache.has(slideHash)
+			? this._slideShowPresenter._slideBitmapCache.get(slideHash)
+			: this.layerDrawing.getSlide(slideNumber);
 	}
 
 	public getLayerRendererContext(): RenderContext {
@@ -143,7 +149,11 @@ class LayersCompositor extends SlideCompositor {
 	}
 
 	public getAnimatedSlide(slideIndex: number): ImageBitmap {
-		return this.layerDrawing.getAnimatedSlide(slideIndex);
+		const slideHash = this.metaPresentation.getSlideHash(slideIndex);
+		return slideHash &&
+			this._slideShowPresenter._slideBitmapCache.has(slideHash)
+			? this._slideShowPresenter._slideBitmapCache.get(slideHash)
+			: this.layerDrawing.getAnimatedSlide(slideIndex);
 	}
 
 	public getAnimatedLayerInfo(
