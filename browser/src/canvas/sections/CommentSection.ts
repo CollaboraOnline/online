@@ -552,22 +552,6 @@ export class Comment extends CanvasSectionObject {
 			}
 			this.setShowSection(true);
 			var position: Array<number> = [Math.round(cellPos[0] * app.twipsToPixels), Math.round(cellPos[1] * app.twipsToPixels)];
-			var splitPosCore = {x: 0, y: 0};
-			if (app.map._docLayer.getSplitPanesContext())
-				splitPosCore = app.map._docLayer.getSplitPanesContext().getSplitPos();
-
-			splitPosCore.x *= app.dpiScale;
-			splitPosCore.y *= app.dpiScale;
-
-			if (position[0] < splitPosCore.x)
-				position[0] += this.documentTopLeft[0];
-			else if (position[0] - this.documentTopLeft[0] < splitPosCore.x)
-				this.setShowSection(false);
-
-			if (position[1] < splitPosCore.y)
-				position[1] += this.documentTopLeft[1];
-			else if (position[1] - this.documentTopLeft[1] < splitPosCore.y)
-				this.setShowSection(false);
 
 			this.setPosition(position[0], position[1]);
 		}
