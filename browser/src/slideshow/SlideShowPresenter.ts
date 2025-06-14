@@ -132,6 +132,9 @@ class SlideShowPresenter {
 	private _onImpressModeChanged: any = null;
 	private _startingPresentation: boolean = false;
 	private _hammer: HammerManager;
+	private _preFetchPresentationInfo: PresentationInfo = null;
+	private _isPrefetching: boolean = false;
+	private _previewUpdateTimeout: ReturnType<typeof setTimeout> | null = null;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -147,6 +150,8 @@ class SlideShowPresenter {
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
 		this._map.on('updateparts', this.onUpdateParts, this);
+		this._map.on('prefetchslides', this._onPreFetchSlides, this);
+		this._map.on('tilepreview', this._updatePreview, this);
 	}
 
 	removeHooks() {
@@ -160,6 +165,8 @@ class SlideShowPresenter {
 			this,
 		);
 		this._map.off('updateparts', this.onUpdateParts, this);
+		this._map.off('prefetchslides', this._onPreFetchSlides, this);
+		this._map.off('tilepreview', this._updatePreview, this);
 	}
 
 	private _init() {
@@ -174,9 +181,36 @@ class SlideShowPresenter {
 		);
 	}
 
+	private _onPreFetchSlides(e: any) {
+		this._isPrefetching = true;
+		app.socket.sendMessage('getpresentationinfo');
+	}
+
+	_slidePrefetching(data: PresentationInfo) {
+		this._preFetchPresentationInfo = data;
+		// TODO: more-prefetching work here?
+	}
+
 	private onUpdateParts() {
 		if (this._checkAlreadyPresenting() && !this._startingPresentation)
 			this.onSlideShowInfoChanged();
+	}
+
+	private _updatePreview(e: any) {
+		if (this._previewUpdateTimeout) {
+			clearTimeout(this._previewUpdateTimeout);
+		}
+
+		this._previewUpdateTimeout = setTimeout(() => {
+			this._preFetchPresentationInfo = null;
+			console.log('vivek: prefetching slides');
+			// ignore updates while we already presenting - handled by onUpdateParts
+			if (!this._checkAlreadyPresenting() && !this._startingPresentation) {
+				this._onPreFetchSlides(e);
+			}
+			// Optimize: Only fetch changed/Insert/Delete slides only!
+			this._previewUpdateTimeout = null;
+		}, 3000);
 	}
 
 	public getNavigator() {
@@ -732,6 +766,15 @@ class SlideShowPresenter {
 		// disable slide sorter or it will receive key events
 		this._map._docLayer._preview.partsFocused = false;
 		this._startingPresentation = true;
+		this._isPrefetching = false;
+		this._getPresentationInfo();
+	}
+
+	private _getPresentationInfo() {
+		if (this._preFetchPresentationInfo !== null) {
+			this.onSlideShowInfo(this._preFetchPresentationInfo);
+			return;
+		}
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
@@ -744,12 +787,19 @@ class SlideShowPresenter {
 		// disable present in console onStartInWindow
 		this._enablePresenterConsole(true);
 		this._startingPresentation = true;
-		app.socket.sendMessage('getpresentationinfo');
+		this._isPrefetching = false;
+		this._getPresentationInfo();
 	}
 
 	/// called as a response on getpresentationinfo
 	onSlideShowInfo(data: PresentationInfo) {
 		console.debug('SlideShow: received information about presentation');
+		if (this._isPrefetching) {
+			this._isPrefetching = false;
+			this._slidePrefetching(data);
+			return;
+		}
+
 		this._presentationInfo = data;
 
 		const numberOfSlides = this._getSlidesCount();
@@ -839,6 +889,7 @@ class SlideShowPresenter {
 		}
 
 		this._presentationInfoChanged = true;
+		this._isPrefetching = false;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 }
