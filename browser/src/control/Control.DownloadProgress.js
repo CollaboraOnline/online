@@ -39,7 +39,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_getDialogTitle: function () {
-		return _('Download Selection');
+		return _('Paste Selection');
 	},
 
 	_getLargeCopyPasteMessage: function () {
