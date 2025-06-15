@@ -135,6 +135,7 @@ class SlideShowPresenter {
 	private _preFetchPresentationInfo: PresentationInfo = null;
 	private _isPrefetching: boolean = false;
 	private _previewUpdateTimeout: ReturnType<typeof setTimeout> | null = null;
+	private NUM_OF_SLIDES_PRE_FETCH: number = 2;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -182,13 +183,117 @@ class SlideShowPresenter {
 	}
 
 	private _onPreFetchSlides(e: any) {
+		if (this._startingPresentation) return;
 		this._isPrefetching = true;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
 	_slidePrefetching(data: PresentationInfo) {
+		if (this._startingPresentation) return;
 		this._preFetchPresentationInfo = data;
-		// TODO: more-prefetching work here?
+		if (!this._slideCompositor) {
+			this._metaPresentation = new MetaPresentation(
+				data,
+				this._slideShowHandler,
+				this._slideShowNavigator,
+			);
+			this._slideCompositor = new SlideShow.LayersCompositor(
+				this,
+				this._metaPresentation,
+			);
+			this._slideShowHandler.setMetaPresentation(this._metaPresentation);
+
+			this._slideCompositor.onUpdatePresentationInfo();
+
+			const canvasSize: [number, number] = [
+				window.screen.width,
+				window.screen.height,
+			];
+
+			this._metaPresentation.getMetaSlides().forEach((metaSlide) => {
+				if (metaSlide.animationsHandler) {
+					const animElemMap =
+						metaSlide.animationsHandler.getAnimatedElementMap();
+					animElemMap.forEach((animatedElement) => {
+						animatedElement.updateCanvasSize(canvasSize);
+					});
+				}
+			});
+		}
+
+		const queue: SlideInfo[] = [];
+		const slides = this._preFetchPresentationInfo.slides;
+
+		const numSlidesToPrefetch = slides.length;
+		for (let i = 0; i < numSlidesToPrefetch; ++i) {
+			const currSlide = slides[i];
+			if (
+				currSlide &&
+				!currSlide.hidden &&
+				currSlide.masterPage &&
+				currSlide.masterPage !== '' &&
+				!this._slideCompositor.cachedMasterPages.has(currSlide.masterPage)
+			) {
+				console.log(
+					`${currSlide} does not exist in cachedMasterPages ${this._slideCompositor.cachedMasterPages}`,
+				);
+				queue.push(currSlide);
+			}
+		}
+
+		if (queue.length === 0) return;
+
+		const scheduleIdleCallback = (
+			callback: () => void,
+			timeout: number = 5000,
+		) => {
+			if ('requestIdleCallback' in window) {
+				window.requestIdleCallback(callback, { timeout });
+			} else {
+				setTimeout(callback, timeout);
+			}
+		};
+
+		const preFetchSlide = (currentIndex = 0) => {
+			if (currentIndex >= slides.length) {
+				afterPreFetch();
+				return;
+			}
+			if (this._slideCompositor == null) return;
+
+			scheduleIdleCallback(() => {
+				if (this._slideCompositor == null) return;
+
+				this._slideCompositor.fetchSlidesMasterLayers(currentIndex, () => {
+					console.log(
+						`Slide ${currentIndex} prefetched, master cache:`,
+						this._slideCompositor.cachedMasterPages,
+						`for slide ${slides[currentIndex]?.masterPage}`,
+					);
+
+					if (queue.length > 0) {
+						const nextSlide = queue.shift();
+						if (nextSlide) {
+							scheduleIdleCallback(() => {
+								preFetchSlide(nextSlide.index);
+							}, 3000);
+						}
+					}
+				});
+			}, 3000);
+		};
+
+		const firstSlide = queue.shift();
+		if (firstSlide) {
+			console.log('First  queue:', queue);
+			scheduleIdleCallback(() => {
+				preFetchSlide(firstSlide.index);
+			}, 3000);
+		}
+
+		const afterPreFetch = () => {
+			console.log('All slides prefetched');
+		};
 	}
 
 	private onUpdateParts() {
@@ -197,13 +302,18 @@ class SlideShowPresenter {
 	}
 
 	private _updatePreview(e: any) {
+		if (this._startingPresentation) {
+			clearTimeout(this._previewUpdateTimeout);
+			return;
+		}
+
 		if (this._previewUpdateTimeout) {
 			clearTimeout(this._previewUpdateTimeout);
 		}
 
 		this._previewUpdateTimeout = setTimeout(() => {
 			this._preFetchPresentationInfo = null;
-			console.log('vivek: prefetching slides');
+			console.log('vivek: _previewUpdateTimeout');
 			// ignore updates while we already presenting - handled by onUpdateParts
 			if (!this._checkAlreadyPresenting() && !this._startingPresentation) {
 				this._onPreFetchSlides(e);
@@ -772,7 +882,11 @@ class SlideShowPresenter {
 
 	private _getPresentationInfo() {
 		if (this._preFetchPresentationInfo !== null) {
+			this._isPrefetching = false;
+			this._slideCompositor = null;
+			this._metaPresentation = null;
 			this.onSlideShowInfo(this._preFetchPresentationInfo);
+			console.log('SlideShowPresenter: using pre-fetched presentation info');
 			return;
 		}
 		app.socket.sendMessage('getpresentationinfo');

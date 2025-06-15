@@ -20,6 +20,7 @@ declare var SlideShow: any;
 class LayersCompositor extends SlideCompositor {
 	private layerDrawing: LayerDrawing; // setup in constructor
 	private metaPresentation: MetaPresentation;
+	public cachedMasterPages: Map<string, Array<LayerEntry>> = new Map();
 
 	constructor(
 		slideShowPresenter: SlideShowPresenter,
@@ -45,6 +46,18 @@ class LayersCompositor extends SlideCompositor {
 			this._onGotSlideCallback = null;
 			oldCallback();
 		});
+	}
+
+	public fetchSlidesMasterLayers(slideNumber: number, callback: VoidFunction) {
+		super.fetchAndRun(slideNumber, callback);
+		this.layerDrawing.requestSlidesMasterLayers(
+			this._initialSlideNumber,
+			() => {
+				const oldCallback = this._onGotSlideCallback;
+				this._onGotSlideCallback = null;
+				oldCallback();
+			},
+		);
 	}
 
 	public getSlideInfo(slideHash: string): SlideInfo {
