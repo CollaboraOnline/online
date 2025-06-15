@@ -135,6 +135,7 @@ class SlideShowPresenter {
 	private _preFetchPresentationInfo: PresentationInfo = null;
 	private _isPrefetching: boolean = false;
 	private _previewUpdateTimeout: ReturnType<typeof setTimeout> | null = null;
+	private NUM_OF_SLIDES_PRE_FETCH: number = 2;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -189,6 +190,70 @@ class SlideShowPresenter {
 	_slidePrefetching(data: PresentationInfo) {
 		this._preFetchPresentationInfo = data;
 		// TODO: more-prefetching work here?
+		if (!this._slideCompositor) {
+			this._slideCompositor = new SlideShow.LayersCompositor(
+				this,
+				new MetaPresentation(
+					data,
+					this._slideShowHandler,
+					this._slideShowNavigator,
+				),
+			);
+			this._slideCompositor.onUpdatePresentationInfo();
+		}
+
+		const queue: SlideInfo[] = [];
+		const slides = this._preFetchPresentationInfo.slides;
+
+		const numSlidesToPrefetch = Math.max(
+			this.NUM_OF_SLIDES_PRE_FETCH,
+			slides.length,
+		);
+		for (let i = 0; i < numSlidesToPrefetch; ++i) {
+			const currSlide = slides[i];
+			if (
+				currSlide &&
+				!currSlide.hidden &&
+				currSlide.masterPage &&
+				currSlide.masterPage !== '' &&
+				!this._slideCompositor.cachedMasterPages.has(currSlide.masterPage)
+			) {
+				console.log(
+					`${currSlide} does not exist in cachedMasterPages ${this._slideCompositor.cachedMasterPages}`,
+				);
+				queue.push(currSlide);
+			}
+		}
+
+		if (queue.length === 0) return;
+
+		const preFetchSlide = (currentIndex = 0) => {
+			if (currentIndex >= slides.length) {
+				console.log('All slides prefetched');
+				return;
+			}
+
+			this._slideCompositor.fetchSlidesMasterLayers(currentIndex, () => {
+				console.log(
+					`Slide ${currentIndex} prefetched, master cache:`,
+					this._slideCompositor.cachedMasterPages,
+					`for slide ${slides[currentIndex]?.masterPage}`,
+				);
+
+				if (queue.length > 0) {
+					const nextSlide = queue.shift();
+					if (nextSlide) {
+						preFetchSlide(nextSlide.index);
+					}
+				}
+			});
+		};
+
+		const firstSlide = queue.shift();
+		if (firstSlide) {
+			console.log('First  queue:', queue);
+			preFetchSlide(firstSlide.index);
+		}
 	}
 
 	private onUpdateParts() {
@@ -773,6 +838,7 @@ class SlideShowPresenter {
 	private _getPresentationInfo() {
 		if (this._preFetchPresentationInfo !== null) {
 			this.onSlideShowInfo(this._preFetchPresentationInfo);
+			console.log('SlideShowPresenter: using pre-fetched presentation info');
 			return;
 		}
 		app.socket.sendMessage('getpresentationinfo');

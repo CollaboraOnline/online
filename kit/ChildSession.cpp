@@ -2552,11 +2552,18 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     if (tokens.size() > 7 && getTokenString(tokens[7], "devicePixelRatio", devicePixelRatioString))
         devicePixelRatio = std::stod(devicePixelRatioString);
 
+    bool renderOnlyMasterPage = true;
+    std::string renderOnlyMasterPageString;
+    if (tokens.size() > 8 && getTokenString(tokens[8], "renderOnlyMasterPage", renderOnlyMasterPageString))
+        renderOnlyMasterPage = std::stoi(renderOnlyMasterPageString) > 0;
+
+
+    LOG_DBG("VIVEK: " << renderOnlyMasterPage);
     unsigned bufferWidth = suggestedWidth;
     unsigned bufferHeight = suggestedHeight;
     bool success = getLOKitDocument()->createSlideRenderer(hash.c_str(), part,
                                                            &bufferWidth, &bufferHeight,
-                                                           renderBackground, renderMasterPage);
+                                                           renderBackground, renderMasterPage, renderOnlyMasterPage);
     if (!success) {
         sendTextFrame("sliderenderingcomplete: fail");
         return false;
@@ -2567,6 +2574,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     bool done = false;
     SlideCompressor scomp(_docManager->getSyncPool());
+    // todo: not render in case of renderOnlyMasterPage
     while (!done)
     {
         success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done);
