@@ -17,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,35 @@ public class COWebViewClient extends WebViewClient {
     public COWebViewClient() {
         super();
         mobileSocket = new MobileSocket();
+    }
+
+    public static WebResourceResponse response(int code, String reasonPhrase, InputStream data, Map<String, String> headers) {
+        return new WebResourceResponse(
+                null,
+                null,
+                code,
+                reasonPhrase,
+                headers,
+                data
+        );
+    }
+    public static WebResourceResponse response(int code, String reasonPhrase, InputStream data, long length) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
+        headers.put("Content-Length", Long.toString(length));
+
+        return response(code, reasonPhrase, data, headers);
+    }
+    public static WebResourceResponse response(int code, String reasonPhrase, InputStream data) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
+
+        return response(code, reasonPhrase, data, headers);
+    }
+    public static WebResourceResponse response(int code, String reasonPhrase) {
+        ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
+
+        return response(code, reasonPhrase, data, 0);
     }
 
     @Nullable
@@ -43,83 +73,30 @@ public class COWebViewClient extends WebViewClient {
         } else if (path != null && path.startsWith("/cool/mobilesocket/")) {
             return handleMobileSocketRequest(request);
         } else {
-            Map<String, String> responseHeaders = new HashMap<>();
-            responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
-            responseHeaders.put("Content-Length", "0");
-
-            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
-
-            return new WebResourceResponse(
-                    null,
-                    null,
-                    404,
-                    "Not Found",
-                    responseHeaders,
-                    data
-            );
+            return response(404, "Not Found");
         }
     }
 
     private WebResourceResponse handleMediaRequest(WebResourceRequest request) {
-        Map<String, String> responseHeaders = new HashMap<>();
-        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
-
         Uri uriDecoded = Uri.parse(Uri.decode(request.getUrl().toString())); // We have to do this weird-looking decoding step as presentation mode gives us a broken (i.e. parameters are encoded, including the & delimiter, etc.) URI
         String tag = uriDecoded.getQueryParameter("Tag");
 
         if (tag == null) {
-            responseHeaders.put("Content-Length", "0");
-
-            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
-
-            return new WebResourceResponse(
-                    null,
-                    null,
-                    404,
-                    "Not Found",
-                    responseHeaders,
-                    data
-            );
+            return response(404, "Not Found");
         }
 
         String mediaPath = getEmbeddedMediaPath(tag);
 
         if (mediaPath.isEmpty()) {
-            responseHeaders.put("Content-Length", "0");
-
-            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
-
-            return new WebResourceResponse(
-                    null,
-                    null,
-                    404,
-                    "Not Found",
-                    responseHeaders,
-                    data
-            );
+            return response(404, "Not Found");
         }
 
         File media = new File(mediaPath);
 
         if (!media.exists()) {
-            responseHeaders.put("Content-Length", "0");
-
-            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
-
-            return new WebResourceResponse(
-                    null,
-                    null,
-                    404,
-                    "Not Found",
-                    responseHeaders,
-                    data
-            );
+            return response(404, "Not Found");
         }
 
-        String reasonPhrase = "OK";
-
-       	responseHeaders.put("Content-Length", Long.toString(media.length()));
- 
         FileInputStream data;
         try {
             data = new FileInputStream(media);
@@ -127,14 +104,7 @@ public class COWebViewClient extends WebViewClient {
             throw new RuntimeException(e);
         }
 
-        return new WebResourceResponse(
-            null,
-            null,
-            200,
-            reasonPhrase,
-            responseHeaders,
-            data
-        );
+        return response(200, "OK", data, media.length());
     }
 
     private WebResourceResponse handleMobileSocketRequest(WebResourceRequest request) {
@@ -142,20 +112,7 @@ public class COWebViewClient extends WebViewClient {
         List<String> path = request.getUrl().getPathSegments();
 
         if (path.size() < 7) {
-            Map<String, String> responseHeaders = new HashMap<>();
-            responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
-           	responseHeaders.put("Content-Length", "0");
-
-            ByteArrayInputStream data = new ByteArrayInputStream(new byte[0]);
-
-            return new WebResourceResponse(
-                null,
-                null,
-                400,
-                "Bad Request",
-                responseHeaders,
-                data
-            );
+            return response(400, "Bad Request");
         }
 
         if (path.get(6).equals("open")) {
