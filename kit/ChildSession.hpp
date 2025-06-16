@@ -59,7 +59,7 @@ private:
     void logLine(LogUiCommandsLine &line, bool isUndoChange=false);
 };
 
-enum class LokEventTargetEnum
+enum class LokEventTargetEnum: std::uint8_t
 {
     Document,
     Window

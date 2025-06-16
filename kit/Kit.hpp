@@ -122,7 +122,7 @@ private:
 /// We have two types of password protected documents
 /// 1) Documents which require password to view
 /// 2) Document which require password to modify
-enum class DocumentPasswordType
+enum class DocumentPasswordType : std::uint8_t
 {
     ToView,
     ToModify

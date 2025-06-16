@@ -230,7 +230,7 @@ class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 
 public:
     /// How to prioritize this document.
-    enum class ChildType {
+    enum class ChildType : bool {
         Interactive, Batch
     };
 
@@ -411,7 +411,7 @@ public:
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void sendTileCombine(const TileCombined& tileCombined);
 
-    enum ClipboardRequest {
+    enum ClipboardRequest : std::uint8_t {
         CLIP_REQUEST_SET,
         CLIP_REQUEST_GET,
         CLIP_REQUEST_GET_RICH_HTML_ONLY,

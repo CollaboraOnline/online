@@ -292,7 +292,7 @@ namespace
     }
 
 #if !defined(BUILDING_TESTS) && !MOBILEAPP
-    enum class LinkOrCopyType
+    enum class LinkOrCopyType: std::uint8_t
     {
         All,
         LO
