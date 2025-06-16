@@ -70,7 +70,7 @@ public:
     class WOPIFileInfo : public FileInfo
     {
     public:
-        enum class TriState
+        enum class TriState : std::uint8_t
         {
             False,
             True,

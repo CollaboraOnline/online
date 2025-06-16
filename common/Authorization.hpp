@@ -30,7 +30,7 @@ class URI;
 class Authorization
 {
 public:
-    enum class Type
+    enum class Type : char
     {
         None, ///< Unlike Expired, this implies no Authorization needed.
         Token,

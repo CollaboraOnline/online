@@ -328,7 +328,7 @@ public:
     /// The state of an asynchronous lock request.
     using AsyncLockUpdate = AsyncRequest<LockUpdateResult>;
 
-    enum class COOLStatusCode
+    enum class COOLStatusCode : std::uint16_t
     {
         DOC_CHANGED = 1010 // Document changed externally in storage
     };

@@ -29,7 +29,7 @@
 
 namespace Log
 {
-    enum Level
+    enum Level : std::uint8_t
     {
         FTL = 1, // Fatal
         CTL,     // Critical
