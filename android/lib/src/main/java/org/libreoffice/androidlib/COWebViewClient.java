@@ -23,6 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Used to capture HTTP requests from mobile so we can use web requests without hosting a server
+ *
+ * Analogous to iOS's CoolURLSchemeHandler
+ */
 public class COWebViewClient extends WebViewClient {
     private MobileSocket mobileSocket;
 

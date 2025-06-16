@@ -19,6 +19,20 @@
 
 #import <wsd/DocumentBroker.hpp>
 
+/**
+ * Used to send messages to the webview from the native parts of the app
+ *
+ * This was previously done with evaluateJavaScript on @"window.TheFakeWebSocket.onmessage([...someData...])" but that was very slow
+ *
+ * This code connects to MobileSocket (a class based on ProxySocket which is used to workaround restrictive firewalls that do not
+ * allow websocket use). MobileSocket is also used on Android by the similarly-named MobileSocket Java class
+ *
+ * Return messages are still sent via calling native methods from JS rather than by sending through the MobileSocket. That's because in
+ * Android it is not possible to read the body of an intercepted request, which prevents you from implementing the other side of the
+ * ProxySocket protocol. Though there is no such technical restriction on iOS, it was deemed to be more helpful to keep the sending
+ * mechanisms the same between the mobile apps. Similarly, long-running HTTP requests which continually receive partial data were ruled
+ * out for similar reasons.
+ */
 @interface MobileSocket : NSObject
 - (void)open:(id<WKURLSchemeTask>)urlSchemeTask;
 - (void)write:(id<WKURLSchemeTask>)urlSchemeTask onFinish:(void (^)(void))callback;
