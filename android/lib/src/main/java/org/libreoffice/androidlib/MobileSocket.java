@@ -97,24 +97,18 @@ public class MobileSocket {
     }
 
     public WebResourceResponse open() {
-        Map<String, String> responseHeaders = new HashMap<>();
-        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
-
         this.serial = 0;
-        return new WebResourceResponse(
-                null,
-                null,
+
+        byte[] name = "mobile".getBytes();
+        return COWebViewClient.response(
                 200,
                 "OK",
-                responseHeaders,
-                new ByteArrayInputStream("mobile".getBytes())
+                new ByteArrayInputStream(name),
+                name.length
         );
     }
 
     public WebResourceResponse write() {
-        Map<String, String> responseHeaders = new HashMap<>();
-        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
-
         PipedInputStream data;
         try {
             PipedOutputStream output = new PipedOutputStream();
@@ -131,13 +125,6 @@ public class MobileSocket {
             throw new RuntimeException(e);
         }
 
-        return new WebResourceResponse(
-                null,
-                null,
-                200,
-                "OK",
-                responseHeaders,
-                data
-        );
+        return COWebViewClient.response(200, "OK", data);
     }
 }
