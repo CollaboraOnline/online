@@ -85,6 +85,7 @@ using Poco::Util::Application;
 // We have files that are at least 2.5 MB already.
 // WASM files are in the order of 30 MB, however,
 constexpr auto MaxFileSizeToCacheInBytes = 50 * 1024 * 1024;
+constexpr std::string_view MetaViewPort = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no\">";
 
 namespace
 {
@@ -1662,6 +1663,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     if (buyProduct.empty())
         buyProduct = form.get("buy_product", "");
     LOG_TRC("buy_product=" << buyProduct << " host_session_id=" << form.get("host_session_id", ""));
+
+    const std::string userAgent = request.get("User-Agent", "");
+    Poco::replaceInPlace(preprocess, std::string("%BROWSER_VIEWPORT%"),
+                         !userAgent.empty() && userAgent.find("Mobile") != std::string::npos ? std::string(MetaViewPort) : "");
 
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
