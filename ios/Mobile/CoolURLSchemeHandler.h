@@ -20,6 +20,11 @@
 
 #import <wsd/DocumentBroker.hpp>
 
+/**
+ * Used to capture HTTP requests from mobile so we can use web requests without hosting a server
+ *
+ * Analogous to Android's COWebViewClient
+ */
 @interface CoolURLSchemeHandler : NSObject<WKURLSchemeHandler>
 {
     NSMutableSet<id<WKURLSchemeTask>> *ongoingTasks;
