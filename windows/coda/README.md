@@ -70,6 +70,16 @@ suitable windowing system found, exiting".
 You can attempt to run "make check" but that will probably run into
 some false positives.
 
+### Buikding also LibreOffice using WSL
+
+Apparently it should be possible nowadays to build LibreOffice core
+for Windows using WSL, not Cygwin. That sounds like a great idea. But
+I haven't tried it. Possibly it works only in the current master
+branch, not in the coda-25.04 branch (which is based on the co-25.04
+branch, which is based on master some year ago, as far as I know). But
+if you experiment with it and notice that it works, by all means edit
+this file.
+
 ## Build direct dependencies of CODA-W
 
 Version numbers below are current at the time of writing this. Newer
