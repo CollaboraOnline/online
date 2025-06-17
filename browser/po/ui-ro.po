@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-03 16:01+0000\n"
+"PO-Revision-Date: 2025-06-16 16:23+0000\n"
 "Last-Translator: Ion Silvestru <ion.silvestru@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ro/>\n"
@@ -26,7 +26,7 @@ msgstr "Consolă administrativă"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
-msgstr "Opțiuni"
+msgstr "Setări"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
