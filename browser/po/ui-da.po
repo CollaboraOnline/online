@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
 "PO-Revision-Date: 2025-06-16 15:35+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -78,7 +78,7 @@ msgstr "Antal dokumenter"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr "Hukommelse opbrugt"
+msgstr "Anvendt hukommelse"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
@@ -176,7 +176,7 @@ msgstr "Stop session."
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
-"Maksimal virtuel hukommelse for dokumentprocesser (i MB) - Kan kun reduceres"
+"Maksimal virtuel hukommelse for dokumentprocesser (i MB) - kan kun reduceres"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
@@ -261,7 +261,7 @@ msgstr "Om"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr "CPU historik"
+msgstr "CPU-historik"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
