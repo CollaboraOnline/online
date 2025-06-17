@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
 "PO-Revision-Date: 2025-06-13 11:57+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -70,7 +70,7 @@ msgstr " brugere."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " dokument(er) åbnet"
+msgstr " document(s) åbnet."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -470,8 +470,9 @@ msgid "Adjust view settings."
 msgstr "Justér visningsindstillinger."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
+#, fuzzy
 msgid "Option"
-msgstr ""
+msgstr "Indstilling"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -1325,7 +1326,7 @@ msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:501
 msgid "Ellipsoid"
-msgstr "Ellipsoid"
+msgstr "Ellipsoide"
 
 #: src/control/Control.JSDialogBuilder.js:505
 msgid "Quadratic"
@@ -1593,7 +1594,7 @@ msgstr "Invertér baggrunden"
 #: src/control/Control.NotebookbarWriter.js:869
 #: src/control/Control.NotebookbarWriter.js:987
 msgid "Style list"
-msgstr ""
+msgstr "Stilliste"
 
 #: src/control/Control.Menubar.ts:231 src/control/Control.Menubar.ts:555
 #: src/control/Control.Menubar.ts:707 src/control/Control.Menubar.ts:859
@@ -1643,7 +1644,7 @@ msgstr "Tilføj citat"
 #: src/control/Control.Menubar.ts:391
 #: src/control/Control.NotebookbarWriter.js:2049
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Tilføj citatnote"
 
 #: src/control/Control.Menubar.ts:392
 #: src/control/Control.NotebookbarWriter.js:2022
@@ -1653,22 +1654,22 @@ msgstr "Tilføj bibliografi"
 #: src/control/Control.Menubar.ts:394
 #: src/control/Control.NotebookbarWriter.js:2068
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Opdatér citater"
 
 #: src/control/Control.Menubar.ts:395
 #: src/control/Control.NotebookbarWriter.js:2081
 #: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Frakobl citater"
 
 #: src/control/Control.Menubar.ts:396
 #: src/control/Control.NotebookbarWriter.js:2094
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Citatindstillinger"
 
 #: src/control/Control.Menubar.ts:424 src/control/Control.Menubar.ts:1380
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Indsæt formateret tekst"
 
 #: src/control/Control.Menubar.ts:425 src/control/Control.Menubar.ts:1381
 msgid "Insert Checkbox"
@@ -1785,52 +1786,52 @@ msgstr "HTML-dokument (.html)"
 #: src/control/Control.Menubar.ts:495
 #: src/control/Control.NotebookbarBuilder.js:456
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.ts:496
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.ts:497
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Aktuelt dias som Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:498
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Aktuelt dias som Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.ts:499
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Aktuelt dias som Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.ts:500
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Aktuelt dias som Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.ts:506
 #: src/control/Control.NotebookbarBuilder.js:654
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Dias i fuld side"
 
 #: src/control/Control.Menubar.ts:507
 #: src/control/Control.NotebookbarBuilder.js:658
 msgid "Notes Pages"
-msgstr ""
+msgstr "Notesider"
 
 #: src/control/Control.Menubar.ts:541
 #: src/control/Control.NotebookbarImpress.js:489
 msgid "Notes View"
-msgstr ""
+msgstr "Notevisning"
 
 #: src/control/Control.Menubar.ts:545
 #: src/control/Control.NotebookbarImpress.js:495
 msgid "Master View"
-msgstr ""
+msgstr "Mastervisning"
 
 #: src/control/Control.Menubar.ts:557
 msgid "Local Multimedia..."
@@ -1853,7 +1854,7 @@ msgstr "Præsentér i nyt vindue"
 #: src/control/Control.NotebookbarImpress.js:393
 #: src/slideshow/PresenterConsole.js:230
 msgid "Presenter Console"
-msgstr ""
+msgstr "Præsentationskonsol"
 
 #: src/control/Control.Menubar.ts:664 src/control/Control.Menubar.ts:1162
 #: src/control/Control.Menubar.ts:1223
@@ -1900,7 +1901,7 @@ msgstr "Alle ark"
 #: src/control/Control.Menubar.ts:851
 #: src/control/Control.NotebookbarCalc.js:1187
 msgid "Focus Cell"
-msgstr ""
+msgstr "Aktiv celle"
 
 #: src/control/Control.Menubar.ts:945
 #: src/control/jsdialog/Definitions.Menu.ts:310
@@ -1930,7 +1931,7 @@ msgstr "Værdier mellem..."
 #: src/control/Control.Menubar.ts:950
 #: src/control/jsdialog/Definitions.Menu.ts:329
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Værdier er duplikeret..."
 
 #: src/control/Control.Menubar.ts:951
 #: src/control/jsdialog/Definitions.Menu.ts:333
@@ -1946,37 +1947,37 @@ msgstr "Flere markeringer..."
 #: src/control/Control.Menubar.ts:955
 #: src/control/jsdialog/Definitions.Menu.ts:341
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Regler for største/mindste værdier..."
 
 #: src/control/Control.Menubar.ts:956
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "Top N elements..."
-msgstr ""
+msgstr "Øverste N elementer..."
 
 #: src/control/Control.Menubar.ts:957
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "Top N percent..."
-msgstr ""
+msgstr "Øverste N procent..."
 
 #: src/control/Control.Menubar.ts:958
 #: src/control/jsdialog/Definitions.Menu.ts:352
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Nederste N elementer..."
 
 #: src/control/Control.Menubar.ts:959
 #: src/control/jsdialog/Definitions.Menu.ts:356
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Nederste N procent..."
 
 #: src/control/Control.Menubar.ts:960
 #: src/control/jsdialog/Definitions.Menu.ts:360
 msgid "Above Average..."
-msgstr ""
+msgstr "Over gennemsnittet..."
 
 #: src/control/Control.Menubar.ts:961
 #: src/control/jsdialog/Definitions.Menu.ts:364
 msgid "Below Average..."
-msgstr ""
+msgstr "Under gennemsnittet..."
 
 #: src/control/Control.Menubar.ts:1078 src/control/Control.Menubar.ts:1144
 #: src/control/Control.Menubar.ts:1209 src/control/Control.Menubar.ts:1264
@@ -2507,10 +2508,12 @@ msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Anvendte forældet is_admin-felt, integrationen skulle anvende IsAdminUser-"
+"egenskaben istedet"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Brugeregenskaben IsAdminUser angives af integrationen"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
@@ -2522,11 +2525,11 @@ msgstr "Ingen problemer med SSL-verifikation identificeret"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API er initialiseret"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrator er ikke klar til PostMessage-kald"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
@@ -2587,7 +2590,7 @@ msgstr "Til"
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: src/control/Control.StatusBar.js:212
 #: src/control/jsdialog/Definitions.Menu.ts:24
@@ -2708,7 +2711,7 @@ msgstr "Indsæt figurer"
 
 #: src/control/Control.TopToolbar.js:188
 msgid "Insert connectors"
-msgstr ""
+msgstr "Indsæt forbindelseslinjer"
 
 #: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.ts:1069
 msgid "Hide Menu"
@@ -2863,7 +2866,7 @@ msgstr "Typografier"
 
 #: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Der opstod en fejl under hentning af stillisten"
 
 #: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
@@ -2929,6 +2932,8 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Hvis citaterne frakobles, vil Collabora Online ikke længere kunne opdatere "
+"citater og bibliografi i dette dokument."
 
 #: src/control/HRuler.ts:604
 msgid "Left Margin"
@@ -3134,7 +3139,7 @@ msgstr "Skrivebeskyttet"
 #: src/control/jsdialog/Widget.HTMLContent.ts:48
 #: src/control/jsdialog/Widget.HTMLContent.ts:56
 msgid "Permission Mode"
-msgstr ""
+msgstr "Rettighedstilstand"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Edit mode"
@@ -3220,7 +3225,7 @@ msgstr "Forkert server, genskaber forbindelse..."
 
 #: src/core/Socket.js:724
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD-version:"
 
 #: src/core/Socket.js:749
 msgid "Served by:"
@@ -3232,7 +3237,7 @@ msgstr "Ikke-understøttet serverversion."
 
 #: src/core/Socket.js:759
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit-version:"
 
 #: src/core/Socket.js:883
 msgid "Document is getting migrated"
@@ -3447,8 +3452,9 @@ msgstr ""
 "administrator hvis problemet fortsætter."
 
 #: src/errormessages.js:29
+#, fuzzy
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Godkendelsesfejl var: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -3529,12 +3535,19 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Det lykkedes ikke at oprette en socket-forbindelse, eller forbindelsen blev "
+"uventet lukket. Den omvendte proxy kan være forkert konfigureret – kontakt "
+"venligst administratoren. Du kan finde flere oplysninger om proxy-"
+"konfiguration her: https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Det lykkedes ikke at oprette en socket-forbindelse, eller socket-"
+"forbindelsen blev uventet lukket."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
@@ -3760,7 +3773,7 @@ msgstr "Brug venligst følgende kombination for at se flere valgmuligheder:"
 
 #: src/map/Clipboard.js:1433
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Luk pop up-vinduet for at ignorere indsæt speciel"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -3964,6 +3977,11 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Få adgang til de nyeste muligheder inden for online produktivitet – frit "
+"tilgængeligt for dig, til udforskning og samarbejde direkte i browseren. "
+"Flere forskellige <a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">apps</a> er også tilgængelige for mobil."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -4000,6 +4018,14 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Er du interesseret i at bidrage, men ved ikke, hvor du skal starte? Gå til "
+"<a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/build-code/\">trin-for-trin "
+"instruktioner</a> og byg CODE fra bunden. Du kan også hjælpe med <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/translate/\""
+">oversættelse</a> eller ved <a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">udfylde en fejlrapport</"
+"a> med alle de væsentlige trin for, hvordan man genskaber fejlen."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""

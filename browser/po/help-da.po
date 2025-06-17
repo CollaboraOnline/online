@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 20:58+0000\n"
+"PO-Revision-Date: 2025-06-13 11:57+0000\n"
 "Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
@@ -55,8 +55,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -105,8 +105,9 @@ msgstr ""
 "\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
+#, fuzzy
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Sæt fokus på Notebookbar-menuen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
 msgid ""
@@ -118,7 +119,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Sæt fokus på dokument fra menu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-92
 msgid "ESC"
@@ -126,7 +127,7 @@ msgstr "Esc"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-38
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Sæt fokus på den valgte kommentars menu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
@@ -672,7 +673,7 @@ msgstr "Marker til og gå til slutningen af linjen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End<</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -835,7 +836,7 @@ msgid ""
 "instead."
 msgstr ""
 "Indsætter et tabulatorstop (kun i tabeller). Afhængigt af den brugte "
-"vindueshåndtering kan  <kbd>Alt</kbd><span class=\"kbd--plus\""
+"vindueshåndtering kan <kbd>Alt</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>Tab</kbd> eventuelt bruges."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
@@ -868,7 +869,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt +Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Piletaster</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Piletaster</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-228
@@ -894,9 +896,9 @@ msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 sekunder i indsætningstilstand, piletasterne indsætter række/kolonne, "
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Piletaster</kbd> indsætter "
-"celle"
+"3 sekunder i indsætningstilstand, piletasterne indsætter række/kolonne,  "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Piletaster</kbd> "
+"indsætter celle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
@@ -908,9 +910,9 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 sekunder i slette-tilstand, piletaster sletter række/kolonne, Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Piletaster</kbd> fletter med "
-"nabocelle"
+"<kbd>3 sekunder i slette-tilstand, piletaster sletter række/kolonne, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Piletaster</kbd> "
+"fletter med nabocelle"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 msgid ""
@@ -975,7 +977,9 @@ msgstr "Indsæt slutnote"
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
-msgstr "<kbd>Ctrl +Alt</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1190,7 +1194,9 @@ msgstr "Gå til næste ark."
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "<kbd>Ctrl +Alt</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1229,9 +1235,8 @@ msgid "Moves one sheet to the left."
 msgstr "Rykker ét ark til venstre."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 #, fuzzy
@@ -1239,9 +1244,8 @@ msgid "Moves one screen page to the right."
 msgstr "Rykker ét ark til højre."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1254,13 +1258,12 @@ msgstr ""
 "ark. Gør det foregående ark til det aktuelle ark."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Skift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1273,13 +1276,12 @@ msgstr ""
 "ark. Gør det foregående ark til det aktuelle ark."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Skift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 #, fuzzy
@@ -1293,9 +1295,8 @@ msgstr ""
 "celleområde, der indeholder data og er afgrænset af tomme rækker og kolonner."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-38
 #, fuzzy
@@ -2334,8 +2335,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:531-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:536-31
+#, fuzzy
 msgid "data validate"
-msgstr ""
+msgstr "validering af data"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:532-11
 msgid ""
