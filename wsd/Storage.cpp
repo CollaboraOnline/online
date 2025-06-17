@@ -59,6 +59,8 @@
 #include "windows.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
+#elif defined(QTAPP)
+#include "qt.hpp"
 #elif WASMAPP
 #include "wasmapp.hpp"
 #endif
