@@ -276,6 +276,7 @@ class InitializerBase {
 		window.ThisIsTheGtkApp = false;
 		window.ThisIsTheAndroidApp = false;
 		window.ThisIsTheEmscriptenApp = false;
+		window.ThisIsTheQtApp = false;
 
 		window.bundlejsLoaded = false;
 		window.fullyLoadedAndReady = false;
@@ -548,6 +549,44 @@ class EMSCRIPTENAppInitializer extends MobileAppInitializer {
 	}
 }
 
+class QtAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+		window.ThisIsTheQtApp = true;
+
+		const messageQueue = [];
+
+		// Define safe stub functions that queue messages, as QWebChannel doesn't initialize immediately.
+		window.postMobileMessage = (msg) => messageQueue.push({ type: 'cool', msg });
+		window.postMobileError   = (msg) => messageQueue.push({ type: 'error', msg });
+		window.postMobileDebug   = (msg) => messageQueue.push({ type: 'debug', msg });
+
+		// Initialize QWebChannel and replace stubs when bridge is ready
+		// eslint-disable-next-line no-undef
+		new QWebChannel(qt.webChannelTransport, (channel) => {
+			const bridge = channel.objects.bridge;
+			window.bridge = bridge;
+
+			// Replace stubs with real implementations
+			window.postMobileMessage = (msg) => window.bridge.cool(msg);
+			window.postMobileError   = (msg) => window.bridge.error(msg);
+			window.postMobileDebug   = (msg) => window.bridge.debug(msg);
+
+			// Flush queued messages
+			for (const { type, msg } of messageQueue) {
+				if (typeof bridge[type] === 'function') {
+					bridge[type](msg);
+				}
+			}
+			messageQueue.length = 0;
+
+			if (bridge.debug) {
+				bridge.debug("Qt bridge initialized");
+			}
+		});
+	}
+}
+
 function getInitializerClass() {
 	window.appType = document.getElementById("init-app-type").value;
 
@@ -572,6 +611,8 @@ function getInitializerClass() {
 				return new AndroidAppInitializer();
 			else if (osType === "EMSCRIPTEN")
 				return new EMSCRIPTENAppInitializer();
+			else if (osType === "QT")
+				return new QtAppInitializer();
 		}
 	}
 }

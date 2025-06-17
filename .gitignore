@@ -176,6 +176,11 @@ gtk/mobile
 /wasm/soffice.data
 /wasm/soffice.data.js.metadata
 
+# CODA-Q app
+qt/coda-qt
+# CODA-Q generated files by Qt6's moc
+*.moc.cpp
+
 # backup and temporary editor files: the only convenience rules allowed here.
 *~
 .*sw?

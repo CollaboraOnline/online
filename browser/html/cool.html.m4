@@ -13,6 +13,7 @@ m4_ifelse(MACOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(WINDOWSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(QTAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_dnl
 m4_dnl# FIXME: This is temporary and not what we actually eventually want.
 m4_dnl# What we really want is not a separate HTML file (produced with M4 conditionals on the below
@@ -70,8 +71,10 @@ m4_ifelse(GTKAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" val
 m4_ifelse(WINDOWSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="WINDOWS" />])
 m4_ifelse(ANDROIDAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="ANDROID" />])
 m4_ifelse(EMSCRIPTENAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="EMSCRIPTEN" />])
+m4_ifelse(QTAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="QT" />])
 
 m4_ifelse(EMSCRIPTENAPP, [true], [<script type="text/javascript" src="online.js"></script>])
+m4_ifelse(QTAPP, [true], [<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->

@@ -183,6 +183,12 @@ AC_ARG_ENABLE([gtkapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view. See gtk/README.]))
 
+AC_ARG_ENABLE([qtapp],
+              AS_HELP_STRING([--enable-qtapp],
+                             [Use in a tree where the only purpose is to build the qt "app" that is supposed
+                              to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
+                              message plumbing point of view. See qt/README.]))
+
 AC_ARG_ENABLE(fuzzers,
     AS_HELP_STRING([--enable-fuzzers],
         [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
@@ -1104,6 +1110,13 @@ fi
 AC_SUBST(ENABLE_GTKAPP)
 AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 
+ENABLE_QTAPP=
+if test "$enable_qtapp" = "yes"; then
+   ENABLE_QTAPP=true
+fi
+AC_SUBST(ENABLE_QTAPP)
+AM_CONDITIONAL([ENABLE_QTAPP], [test "$ENABLE_QTAPP" = "true"])
+
 dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
 dnl capability. Compare to ENABLE_WASM.
 
@@ -1195,7 +1208,7 @@ AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.
 
 # Test for build environment
 
-AS_IF([test "$ENABLE_GTKAPP" != true],
+AS_IF([test "$ENABLE_GTKAPP" != true -a test "$ENABLE_QTAPP" != true],
       [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Woverloaded-virtual -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
@@ -1521,13 +1534,26 @@ AS_IF([test "$ENABLE_GTKAPP" = true],
 AS_IF([test "$webkit_try_older" = true],
       [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
+dnl config for qtapp frontend for cool
+AS_IF([test "$ENABLE_QTAPP" = true],
+      [PKG_CHECK_MODULES([QT6],[Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets],,)
+       dnl Qt6 moc executable is found at /usr/lib64/qt6/libexec/moc with
+       dnl qt-base-devel on fedora... TODO: check what is the story with other
+       dnl distros is it ever really in the PATH?
+       AC_PATH_PROG([MOC], [moc], [no], [$PATH$PATH_SEPARATOR/usr/lib64/qt6/libexec])
+       if test "x$MOC" = "xno"; then
+             AC_MSG_ERROR([moc not found. Please install Qt development tools.])
+       fi
+       AC_SUBST(MOC)
+])
+
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
 mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
 AC_MSG_CHECKING([whether this is a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_macosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_macosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" -o "$enable_qtapp" = "yes" ; then
      AC_MSG_RESULT([yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -1543,7 +1569,7 @@ AC_MSG_CHECKING([whether to enable the CODA build])
 if test "$enable_coda" = "yes"; then
     AC_MSG_RESULT([yes])
     if test "$ENABLE_MOBILEAPP" = "true" ; then
-        AC_MSG_ERROR([--enable-coda conflicts with --enable-(androidapp|gtkapp|iosapp|macosapp|windowsapp), please decide for one or the other.])
+        AC_MSG_ERROR([--enable-coda conflicts with --enable-(androidapp|gtkapp|iosapp|macosapp|windowsapp|qtapp), please decide for one or the other.])
     fi
     if test "$ENABLE_DEBUG" != "true" ; then
         AC_MSG_ERROR([--enable-coda currently depends on --enable-debug, please add it to ./configure. Many things haven't been updated to build a production CODA app yet.])
@@ -2131,6 +2157,7 @@ AM_CONDITIONAL([ENABLE_WASM_ZETAJS_EXAMPLE], [test "$ENABLE_WASM_ZETAJS_EXAMPLE"
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
                  gtk/Makefile
+                 qt/Makefile
                  wasm/Makefile
                  test/Makefile
                  browser/Makefile
