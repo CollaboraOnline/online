@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
 "PO-Revision-Date: 2025-06-16 09:41+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -121,7 +121,6 @@ msgid "WOPI host"
 msgstr "WOPI-vært"
 
 #: admin/admin.strings.js:40
-#, fuzzy
 msgid "Kill"
 msgstr "Dræb"
 
@@ -2085,7 +2084,6 @@ msgid "Slides"
 msgstr "Dias"
 
 #: src/control/Control.NavigatorPanel.ts:133
-#, fuzzy
 msgid "Outline"
 msgstr "Disposition"
 
@@ -3451,13 +3449,13 @@ msgstr ""
 "administrator hvis problemet fortsætter."
 
 #: src/errormessages.js:29
-#, fuzzy
 msgid "Authorization error was: '{errormessage}'."
-msgstr "Godkendelsesfejl var: '{errormessage}'."
+msgstr "Autoriseringsfejl var: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "Forkert eller manglende WOPISrc-parameter, kontakt venligst support."
+msgstr ""
+"Forkert eller manglende WOPISrc-parameter, kontakt venligst din IT-funktion."
 
 #: src/errormessages.js:31
 msgid ""
@@ -3702,9 +3700,8 @@ msgid "the View menu"
 msgstr "menuen Vis"
 
 #: src/layer/tile/CanvasTileLayer.js:1581
-#, fuzzy
 msgid "Functions"
-msgstr "Funktionsguide"
+msgstr "Funktioner"
 
 #: src/layer/tile/CanvasTileLayer.js:1842
 msgid "Named Range"
