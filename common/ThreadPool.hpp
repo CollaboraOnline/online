@@ -46,7 +46,7 @@ public:
     {
 #if WASMAPP
         // Leave it at that.
-#elif MOBILEAPP && !defined(GTKAPP)
+#elif MOBILEAPP && (!defined(GTKAPP) || !defined(QTAPP))
         _maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
         // coverity[tainted_data_return] - we trust the contents of this variable
