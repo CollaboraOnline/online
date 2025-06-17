@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-14 13:01+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-16 09:41+0000\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
 "Language: da\n"
@@ -97,6 +97,7 @@ msgid "Display the Keyboard shortcuts help"
 msgstr "Vis hjælp til tastaturgenveje"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-100
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>?</kbd>"
@@ -110,6 +111,7 @@ msgid "Focus to notebookbar menu"
 msgstr "Sæt fokus på Notebookbar-menuen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
+#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F1</kbd>"
@@ -130,6 +132,7 @@ msgid "Focus to selected comment's menu"
 msgstr "Sæt fokus på den valgte kommentars menu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
+#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
@@ -426,7 +429,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>venstrepil</kbd>"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:281-38
 msgid "Select to the left word by word"
-msgstr "Marker til venstre ord for ord"
+msgstr "Markér til venstre ord for ord"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-96
@@ -479,7 +482,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Højrepil</kbd>"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-38
 msgid "Select to the right word by word"
-msgstr "Marker mod højre ord for ord"
+msgstr "Markér mod højre ord for ord"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-97
@@ -507,13 +510,13 @@ msgstr "Pil Op"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-38
 msgid "Select lines in upwards direction"
-msgstr "Marker linjer i opadgående retning"
+msgstr "Markér linjer i opadgående retning"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-98
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Pil Op</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Pil op</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -525,13 +528,13 @@ msgstr "Flyt markøren til begyndelsen af det foregående afsnit"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:288-115
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pil Op</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pil op</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-38
 msgid "Select to beginning of paragraph"
-msgstr "Marker til begyndelsen af afsnit"
+msgstr "Markér til begyndelsen af afsnit"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-97
@@ -553,13 +556,13 @@ msgstr "Flyt markøren en linje ned"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-90
 msgid "Arrow Down"
-msgstr "Pil Ned"
+msgstr "Pil ned"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-38
 msgid "Select lines in downwards direction"
-msgstr "Markerer linjer i nedadgående retning"
+msgstr "Markér linjer i nedadgående retning"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-100
@@ -577,13 +580,13 @@ msgstr "Flyt markøren til begyndelsen af det næste afsnit"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-111
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pil Ned</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pil ned</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-38
 msgid "Select to end of paragraph"
-msgstr "Marker til slutningen af afsnittet"
+msgstr "Markér til slutningen af afsnittet"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-91
@@ -593,7 +596,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pil Ned</kbd>"
+"\"kbd--plus\">+</span><kbd>Pil ned</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -612,7 +615,7 @@ msgstr "Hjem"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-38
 msgid "Go and select to the beginning of a line"
-msgstr "Gå hen og vælg til begyndelsen af en linje"
+msgstr "Markér til begyndelsen af en linje"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
@@ -637,7 +640,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
-msgstr "Gå til og marker tekst til begyndelsen af dokumentet"
+msgstr "Markér tekst til begyndelsen af dokumentet"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-103
@@ -646,7 +649,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
@@ -666,7 +669,7 @@ msgstr "End"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-38
 msgid "Go and select to the end of a line"
-msgstr "Marker til og gå til slutningen af linjen"
+msgstr "Markér til slutningen af linjen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:77-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
@@ -700,7 +703,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
@@ -721,7 +724,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
-msgstr "Udvid markeringen med en side opad"
+msgstr "Udvid markeringen opad med en side"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
@@ -733,7 +736,7 @@ msgstr "Flyt visningen en side nedad"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-92
 msgid "PageDown"
-msgstr "PageDown"
+msgstr "Page Down"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-38
 msgid "Switch cursor between text and footer"
@@ -788,7 +791,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
@@ -855,7 +858,7 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Piletaster</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
@@ -884,7 +887,7 @@ msgid ""
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd--plus\""
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>Piletaster</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
@@ -919,7 +922,7 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Skift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-197
@@ -940,8 +943,8 @@ msgid ""
 "paragraph in the document."
 msgstr ""
 "Hvis ingen hele celler er valgt og markøren er ved slutningen af tabellen, "
-"vil afsnittet som følger efter tabellen blive slettet, med mindre det er det "
-"sidste afsnit i dokumentet."
+"vil afsnittet, som følger efter tabellen, blive slettet, med mindre det er "
+"det sidste afsnit i dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:107-1
 msgid ""
@@ -1012,7 +1015,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
@@ -1033,7 +1036,7 @@ msgstr "Indsæt linjeskift"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Skift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
@@ -1054,7 +1057,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
@@ -1073,7 +1076,7 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
-"Indsæt et nyt afsnit uden nummerering inde i en liste. Virker ikke når "
+"Indsæt et nyt afsnit uden nummerering inde i en liste. Det virker ikke, når "
 "markøren er ved slutningen af listen."
 
 #: html/cool-help.html%2Bdiv.div.div.h2:132-9
@@ -1170,7 +1173,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pil Op</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pil op</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 msgid ""
@@ -1228,7 +1231,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pil Op</kbd>"
+"\"kbd--plus\">+</span><kbd>Pil op</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
@@ -1317,7 +1320,7 @@ msgstr "Indsæt celler (som i menuen Indsæt - Celler)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus-tasten</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>+</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
@@ -1325,8 +1328,7 @@ msgstr "Slet celler (som i menuen Rediger - Slet celler)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus-tasten</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 msgid "Cell formatting"
@@ -1346,7 +1348,7 @@ msgstr "Udfyld nedad"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-38
 msgid "Set Optimal Column Width"
-msgstr "Sæt Optimal kolonnebredde"
+msgstr "Vælg optimal kolonnebredde"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-38
 msgid "Two decimal places, thousands separator"
@@ -1435,7 +1437,7 @@ msgstr "Tabulator"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:206-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-38
 msgid "Promote list item (list item has to be selected)"
-msgstr "Opgrader et listeelement (listeelementet skal være markeret)"
+msgstr "Opgradér et listeelement (listeelementet skal være markeret)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:206-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-127
@@ -1452,12 +1454,12 @@ msgstr "Tekstmarkering og navigation i en tekstboks"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-38
 msgid "Go and select text to start of textbox"
-msgstr "Marker til og gå til begyndelsen af en tekstboks"
+msgstr "Gå til og markér begyndelsen af en tekstboks"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-38
 msgid "Go and select text to end of textbox"
-msgstr "Marker teksten til og gå til slutningen af dokumentet"
+msgstr "Gå til og markér teksten til slutningen af dokumentet"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:240-9
 #, fuzzy
@@ -1482,12 +1484,12 @@ msgstr "Esc"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:243-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:308-38
 msgid "Select objects in the order in which they were created"
-msgstr "Marker objekter i den rækkefølge, som de blev oprettet"
+msgstr "Markér objekter i den rækkefølge, som de blev oprettet"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-38
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Marker objekter i den modsatte rækkefølge af den, de blev oprettet i"
+msgstr "Markér objekter i den modsatte rækkefølge af den, de blev oprettet i"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-38
 msgid "Move to next text object on slide"
@@ -1511,7 +1513,7 @@ msgstr "Markér alt på diasset / tegnesiden"
 
 #: html/cool-help.html%2Bdiv.h1:317-5
 msgid "<span class=\"productname\">{productname}</span> Help"
-msgstr "<span class=\"productname\">{productname}</span> Help"
+msgstr "<span class=\"productname\">{productname}</span> Hjælp"
 
 #: html/cool-help.html%2Bdiv.p:318-5
 #: html/cool-help.html%2Bdiv.div.h3:354-5
@@ -1630,10 +1632,10 @@ msgid ""
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
-"<span class=\"productname\">{productname}</span> lader dig oprette og "
-"redigere kontordokumenter, tekstdokumenter, regneark og præsentationer "
-"direkte i din netlæser, nemt og lige-ud-ad-vejen. Du kan arbejde alene på et "
-"dokument eller samredigere som del af et team."
+"Med <span class=\"productname\">{productname}</span> kan du oprette og "
+"redigere office-dokumenter, tekstdokumenter, regneark og præsentationer "
+"direkte i din browser, nemt og lige til. Du kan arbejde alene på et dokument "
+"eller samtidsredigere som en del af et team."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:357-11
 msgid ""
@@ -1642,7 +1644,7 @@ msgid ""
 "cursor, although others will see you with a different color."
 msgstr ""
 "Hver bruger får tildelt en farve. Hver brugers markør vil blive vist i den "
-"tildelte farve. OBS: du vil se din egen markør som en sort, blinkende "
+"tildelte farve. OBS: Du vil se din egen markør som en sort, blinkende "
 "markør, selv om andre vil se dig med en anden farve."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:358-11
@@ -1660,7 +1662,7 @@ msgid ""
 msgstr ""
 "<span class=\"productname\">{productname}</span> giver dig besked med en "
 "lille notifikation nederst, når en ny bruger kommer ind eller når en bruger "
-"går ud."
+"logger ud."
 
 #: html/cool-help.html%2Bdiv.div.div.p:366-30
 msgid ""
@@ -1669,7 +1671,7 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"<span class=\"productname\">{productname}</span> bruger moderne netlæser-"
+"<span class=\"productname\">{productname}</span> bruger moderne browser-"
 "ressourcer til at tilpasse brugergrænsefladen til den synlige areal, "
 "herunder små skærme på mobile enheder. Grænsefladen består af:"
 
@@ -1678,7 +1680,7 @@ msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
-"<span class=\"def\">Dokument-området:</span> Program-arealet viser "
+"<span class=\"def\">Dokument-området:</span> Programarealet viser "
 "dokumentindholdet, uanset om det er regneark, præsentationer eller "
 "tekstdokumenter."
 
@@ -1747,7 +1749,7 @@ msgstr "Søg fremad"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:388-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr "Annuller søgning (vises kun, når der er søgt en tekst)"
+msgstr "Annullér søgning (vises kun, når der er søgt en tekst)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:392-5
 msgid ""
@@ -1757,23 +1759,23 @@ msgid ""
 "affected. The current level of zoom is shown in this area."
 msgstr ""
 "<span class=\"def\">Zoomlinjen:</span> Til højre på statuslinjen er der et "
-"sæt knapper, som lader zoome til 100%, zoome ind og zoome ud. Zoom gælder "
-"dokumentområdet, brugergrænsefladen påvirkes ikke. Det aktuelle zoom-niveau "
-"vises i dette område."
+"sæt knapper, hvor du kan zoome til 100%, zoome ind og zoome ud. Zoom gælder "
+"kun dokumentområdet. Brugergrænsefladen påvirkes ikke. Det aktuelle zoom-"
+"niveau vises i dette område."
 
 #: html/cool-help.html%2Bdiv.div.div.p:393-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
-"Tekst, diagrammer, figurer og svg-billeder vil stå skarpt, når du zoomer "
-"ind. Du vil kun se pixels vise sig på indsatte billeder som for eksempel jpg-"
-"er og png-er."
+"Tekst, diagrammer, figurer og svg-billeder vil forblive skarpt, når du "
+"zoomer ind. Pixels vil kun være synlige på indsatte billeder som for "
+"eksempel JPG- og PNG-filer."
 
 #: html/cool-help.html%2Bdiv.div.div.p:394-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
-"Brug af netlæserens zoom påvirker dokumentet og områderne i "
+"Brug af browserens zoom-funktion påvirker både dokumentet og områderne i "
 "brugergrænsefladen."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
@@ -1784,7 +1786,7 @@ msgid ""
 msgstr ""
 "<span class=\"def\">Informationslinjen:</span> Til højre for søgelinjen "
 "vises et sæt af informationer om dokumentet. De aktuelle informationer "
-"afhænger af dokumentets natur."
+"afhænger af dokumentets type."
 
 #: html/cool-help.html%2Bdiv.div.p:404-5
 msgid ""
@@ -1801,17 +1803,17 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
-"For at downloade et dokument, downloader du det fra <span class=\"productname"
-"\">{productname}</span> programmet menu <span class=\"ui\">Filer</span>. De "
-"tilgængelige download-formater afhænger af programmet. Alle programmer "
-"eksporterer dokumenter i PDF-format."
+"For at downloade et dokument, skal du downloade det fra <span class="
+"\"productname\">{productname}</span> -programmets menu, <span class=\"ui\""
+">Filer</span>. De tilgængelige download-formater afhænger af programmet. "
+"Alle programmer eksporterer dokumenter i PDF-format."
 
 #: html/cool-help.html%2Bdiv.div.div.p:406-30
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">{productname}</span> module associated to the document format."
 msgstr ""
-"For at åbne et dokument klikker du på filen for at åbne det <span class="
+"For at åbne et dokument, skal du klikke på filen for at åbne det <span class="
 "\"productname\">{productname}</span>-modul, der er tilknyttet "
 "dokumentformatet."
 
@@ -1823,9 +1825,9 @@ msgid ""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
 "Dokumenter i <span class=\"productname\">{productname}</span> gemmes "
-"automatisk, men hvis du lægger vægt på, at et dokument synkroniseres "
-"hurtigst muligt, kan du også gennemtvinge lagring med menuen <span class=\"ui"
-"\">Filer</span>s <span class=\"ui\">Gem</span>-kommando."
+"automatisk, men hvis du vil sikre dig, at et dokument synkroniseres hurtigst "
+"muligt, kan du også gemme manuelt med menuen <span class=\"ui\">Filer</"
+"span>s <span class=\"ui\">Gem</span>-funktion."
 
 #: html/cool-help.html%2Bdiv.div.div.p:408-30
 msgid ""
@@ -1833,23 +1835,24 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
-"Afhængigt af din netlæsers kapacitet vises vinduet Udskriv eller et pop-op "
-"vindue \"Download PDF-eksport?\" Du kan udskrive denne PDF i din foretrukne "
-"PDF-læser."
+"Afhængigt af din browser vises vinduet Udskriv eller et pop-op vindue "
+"\"Download PDF-eksport?\" Du kan udskrive denne PDF i dit foretrukne PDF-"
+"program."
 
 #: html/cool-help.html%2Bdiv.div.div.p:409-30
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
-"Når du lukker et dokument, gemmes det automatisk, hvis det er blevet ændret."
+"Hvis du har foretaget ændringer, gemmes dokumentet automatisk, når du lukker "
+"det."
 
 #: html/cool-help.html%2Bdiv.div.p:414-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
-"Dokument-redigering skulle være kendt af alle, der tidligere har brugt et "
-"kontorprogram, men her er der nogle karakteristiske funktioner:"
+"Dokument-redigering er sikkert bekendt for alle, der tidligere har brugt et "
+"office-program, men her er nogle særlige funktioner:"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:416-5
 msgid "Copy and Paste"
@@ -1893,13 +1896,13 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
-"For at kopiere større indholdsstykker til andre programmer på din enhed er "
-"du nødt til at trykke på knappen <span class=\"ui\">Begynd download</span> "
-"og så genkopiere det til deres udklipsholder for at gøre det tilgængeligt "
-"for læsning af målprogrammet. Dette er muligt via en lille skærmbrik som "
-"popper op i nederste, højre hjørne, og det er kun nødvendigt at eksportere "
-"indholdet til indsætte i eksterne programmer. Dette trin konverterer også "
-"komplekse objekttyper til statiske billeder."
+"For at kopiere større indholdsdele til andre programmer på din enhed skal du "
+"trykke på knappen <span class=\"ui\">Begynd download</span> og genkopiere "
+"det til din udklipsholder for at gøre det tilgængeligt for læsning af det "
+"andet program. Dette er muligt via en lille widget, som popper op i "
+"nederste, højre hjørne. Den er kun nødvendig, når du skal eksportere "
+"indholdet for at indsætte det i eksterne programmer. Dette trin konverterer "
+"også komplekse objekttyper til statiske billeder."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:421-5
 msgid "Document repair"
@@ -1913,17 +1916,17 @@ msgid ""
 "to a previous state."
 msgstr ""
 "Når flere mennesker redigerer det samme dokument på én gang, er det muligt "
-"at deres ændringer kommer i konflikt og dette kan give nogen forvirring. "
-"Funktion Dokument-Reparation lader brugerne fortryde andre redaktørers "
-"ændringer i dokumentet til en tidligere tilstand."
+"at deres ændringer kommer i konflikt. Dette kan give anledning til "
+"forvirring. Funktionen \"Dokument-Reparation\" gør det muligt for brugere at "
+"fortryde andre redaktørers ændringer i dokumentet til en tidligere tilstand."
 
 #: html/cool-help.html%2Bdiv.div.div.p:423-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
-"For at hoppe tilbage til den markerede tilstand markerer du den med musen og "
-"trykker på <span class=\"ui\">Hop til tilstand</span>."
+"Vælg en tilstand med musen og tryk på <span class=\"ui\">Hop til tilstand</"
+"span> for at hoppe til den valgte tilstand."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:424-29
 msgid "document repair"
@@ -1936,10 +1939,10 @@ msgid ""
 ">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
 "you were concurrently editing."
 msgstr ""
-"Dette er særlig nyttigt -- når for eksempel en kollega utilsigtet markerede "
-"hele teksten i dokumentet med <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>A</kbd> og fortsætter med overskrive det og således ødelægger "
-"det – samtidig med at du redigerede."
+"Dette er særlig nyttigt, hvis fx en kollega utilsigtet markerer hele teksten "
+"i dokumentet med <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</"
+"kbd> og kommer til at overskrive det, samtidig med at du redigerer "
+"dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:428-5
 msgid "Inactive document"
@@ -1953,9 +1956,10 @@ msgid ""
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
 "Når <span class=\"productname\">{productname}</span> opdager, at der ikke "
-"har være nogen aktivitet i net-læseren i nogen tid, sætter det dokumentet i "
-"\"inaktiv\" tilstand. Dokumentet vises med en gennemsigtig, grå overlægning "
-"med beskeden \"Inaktivt dokument – klik venligst for at fortsætte redigering."
+"har være nogen aktivitet i browseren i et stykke tid, sætter det dokumentet "
+"i \"inaktiv\" tilstand. Dokumentet vises med en gennemsigtig, grå "
+"overlægning med beskeden "
+"\"Inaktivt dokument – klik for at fortsætte redigering\"."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:430-29
 msgid "inactive document"
@@ -1967,13 +1971,13 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
-"For at fortsætte redigering klikker du på dokumentet og overlejringen og "
-"beskeden forsvinder. Alle ændringer, der måske er foretaget af andre brugere "
-"– under samredigering af dokumentet – genindlæses."
+"Klik på dokumentet for at fortsætte redigering. Overlejringen og beskeden "
+"forsvinder. Alle ændringer, der måske er foretaget af andre brugere – under "
+"samredigering af dokumentet – genindlæses."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:434-5
 msgid "Pasting"
-msgstr "Indsætte"
+msgstr "Indsætter"
 
 #: html/cool-help.html%2Bdiv.div.div.p:435-5
 msgid ""
@@ -1982,10 +1986,10 @@ msgid ""
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
-"Når du indsætter indhold, der er kopieret fra dette samme dokument, bevares "
-"formatering og elementer. Hvis du kopierer fra et andet dokument, fra et "
-"andet faneblad eller vindue i netlæseren, eller uden for netlæseren, "
-"indsættes indholdet som Rich Text."
+"Når du indsætter indhold, der er kopieret fra det samme dokument, bevares "
+"formatering og elementer. Hvis du kopierer fra et andet dokument, et andet "
+"vindue/fane i browseren, eller uden for browseren, indsættes indholdet som "
+"formateret tekst."
 
 #: html/cool-help.html%2Bdiv.div.div.p:436-5
 msgid ""
@@ -1994,8 +1998,8 @@ msgid ""
 "plus\">+</span><kbd>V</kbd>"
 msgstr ""
 "Du kan indsætte som uformateret tekst med tastaturgenvejen: <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd>"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:437-5
 msgid ""
@@ -2003,9 +2007,9 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
-"Når du indsætter tekst inde fra dokumentet, bliver formateringen "
-"respekteret. Du kan også indsætte objekter, såsom bileder, hvis de er "
-"kopieret fra det dokument, du arbejder i."
+"Når du indsætter tekst fra samme dokument, bliver formateringen bevaret. Du "
+"kan også indsætte objekter, såsom bileder, hvis de er kopieret fra det "
+"dokument, du arbejder i."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
 msgid ""
@@ -2013,15 +2017,15 @@ msgid ""
 "a desktop application), it will be pasted as rich text."
 msgstr ""
 "Når du indsætter tekst fra et sted uden for dokumentet (et andet browser-"
-"vindue eller et skrivebordsprogram, bliver den indsat som rich text."
+"vindue eller et skrivebordsprogram), bliver den indsat som formateret tekst."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "using the context menu."
 msgstr ""
-"Når du har internt klippet eller kopieret indhold, kan du indsætte det med "
-"kontekstmenuen."
+"Når du har klippet eller kopieret indhold internt i dokumentet, kan du "
+"indsætte det med kontekstmenuen."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:446-5
 msgid "Adding charts"
@@ -2058,7 +2062,7 @@ msgstr "diagram"
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:454-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
-"Hvis der ikke var markeret en tabel eller et område, vises et prototype-"
+"Hvis der ikke er markeret en tabel eller et område, vises et prototype-"
 "diagram."
 
 #: html/cool-help.html%2Bdiv.div.div.p:458-28
@@ -2069,17 +2073,18 @@ msgid ""
 "Type</span> to edit chart data and select chart type."
 msgstr ""
 "<span class=\"def\">Diagram-redigering:</span> Dobbeltklik på diagrammet for "
-"at markere det. Brug kontekstmenuer til tilføje diagram-elementer som titel, "
-"akser med mere. Vælg <span class=\"ui\">Dataområde</span> og <span class=\"ui"
-"\">Diagramtype</span> for at redigere diagramdata og vælge diagramtype."
+"at markere det. Brug kontekstmenuer til at tilføje diagram-elementer som "
+"titel, akser og andet. Vælg <span class=\"ui\">Dataområde</span> og <span "
+"class=\"ui\">Diagramtype</span> for at redigere diagramdata og vælge "
+"diagramtype."
 
 #: html/cool-help.html%2Bdiv.div.div.p:459-28
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
-"<span class=\"def\">Diagram-formatering:</span> Den samme kontekstmenu "
-"bringer dig til diagrammets datatabel og valg af type."
+"<span class=\"def\">Diagram-formatering:</span> Den samme kontekstmenu fører "
+"dig til diagrammets datatabel og valg af type."
 
 #: html/cool-help.html%2Bdiv.div.div.p:460-28
 msgid ""
@@ -2110,7 +2115,7 @@ msgid ""
 "storage's folders and shares."
 msgstr ""
 "<span class=\"def\">Indsæt billede:</span> Klik på ikonet <span class=\"ui\""
-">Indsæt billede</span> lader dig vælge et billede fra dine mapper og delte "
+">Indsæt billede</span> for at vælge et billede fra dine mapper og delte "
 "mapper i lageret i skyen."
 
 #: html/cool-help.html%2Bdiv.div.div.p:465-5
@@ -2118,8 +2123,8 @@ msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
-"<span class=\"def\">Indsæt lokalt billede:</span> åbner netlæserens "
-"filvælger for at oploade billedet fra din lokale computer og indsætte det i "
+"<span class=\"def\">Indsæt lokalt billede:</span> åbner browserens filvælger "
+"for at kunne uploade billedet fra din lokale computer og indsætte det i "
 "dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.p:466-5
@@ -2128,9 +2133,9 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
-"Billeder kan få ændret størrelse, roteres og forankres. Tekst kan brydes "
-"omkring et billede. Marker billedet og åbn kontekstmenuen. Brug "
-"billedhåndtagene til ændre størrelse med musen."
+"Billeders størrelse kan justeres, roteres og låses. Tekst kan ombryde et "
+"billede. Marker billedet og åbn kontekstmenuen. Brug billedhåndtagene til "
+"ændre størrelse med musen."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:469-5
 msgid "Comments in documents"
@@ -2144,7 +2149,7 @@ msgid ""
 msgstr ""
 "Indsæt kommentarer i <span class=\"productname\">{productname}</span> på "
 "steder, der kræver læserens særlige opmærksomhed. Kommentarer vises i højre "
-"side og bærer navn og dato på den, der oprettede dem."
+"side og viser dato og navnet på den, der oprettede dem."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:471-29
 msgid "comment"
@@ -2170,9 +2175,9 @@ msgid ""
 "with suggested misspelling corrections."
 msgstr ""
 "<span class=\"productname\">{productname}</span> kan kontrollere stavning i "
-"tekstdokumenter, regneark og præsentationer. En rød bølgelinje viser forkert "
-"stavede ord. Klik på højre museknap for at åbne en kontekstmenu med forslag "
-"til rettelser af stavefejlen."
+"tekstdokumenter, regneark og præsentationer. En rød bølgelinje viser ord, "
+"der indeholder stavefejl. Klik på højre museknap for at åbne en kontekstmenu "
+"med forslag til rettelser af stavefejlen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:477-29
 msgid "spellchecking"
@@ -2183,8 +2188,9 @@ msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
-"Til systematisk stavekontrol af hele dokumentet bruger du menuen <span class="
-"\"ui\">Funktioner</span>s indstilling<span class=\"ui\">Stavekontrol</span>."
+"For at foretage en systematisk stavekontrol af hele dokumentet skal du bruge "
+"menuen <span class=\"ui\">Funktioner</span>s indstilling<span class=\"ui\""
+">Stavekontrol</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:487-30
 msgid ""
