@@ -81,6 +81,9 @@ function _iconViewEntry(
 		parentContainer,
 	);
 
+	//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
+	entryContainer.id = parentData.id + '_' + entry.row;
+
 	// By default `aria-presed` should be false
 	entryContainer.setAttribute('aria-pressed', 'false');
 
@@ -119,6 +122,8 @@ function _iconViewEntry(
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
+			entryContainer.setAttribute('tabindex', '0');
+			entryContainer.focus();
 			//avoid re-selecting already selected entry
 			if ($(entryContainer).hasClass('selected')) return;
 
