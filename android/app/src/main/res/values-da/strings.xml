@@ -35,7 +35,7 @@
     <string name="sort_largest">Største først</string>
     <string name="sort_smallest">Mindste først</string>
     <string name="sort">Sortér efter</string>
-    <string name="filter">Filtrer efter</string>
+    <string name="filter">Filtrér efter</string>
     <string name="default_document_name">uden navn</string>
     <string name="new_spreadsheet">Nyt regneark</string>
     <string name="new_textdocument">Nyt tekst-dokument</string>

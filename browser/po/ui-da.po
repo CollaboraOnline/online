@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-13 12:21+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-14 13:01+0000\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -470,7 +470,6 @@ msgid "Adjust view settings."
 msgstr "Justér visningsindstillinger."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:607
-#, fuzzy
 msgid "Option"
 msgstr "Indstilling"
 
@@ -3692,7 +3691,7 @@ msgstr "Find tilgængelighedsafsnittet i coolwsd.xml for serverindstillinger. "
 
 #: src/layer/marker/TextInput.js:454
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr "Tjek også voice-over indstillingen under {parentControl}."
+msgstr "Tjek også voice-over-indstillingen under {parentControl}."
 
 #: src/layer/marker/TextInput.js:456
 msgid "the Help tab"
