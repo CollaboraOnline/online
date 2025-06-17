@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-16 09:41+0000\n"
+"PO-Revision-Date: 2025-06-16 15:35+0000\n"
 "Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
@@ -97,27 +97,24 @@ msgid "Display the Keyboard shortcuts help"
 msgstr "Vis hjælp til tastaturgenveje"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-100
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>?</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>P</kbd>"
+"\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
-#, fuzzy
 msgid "Focus to notebookbar menu"
 msgstr "Sæt fokus på Notebookbar-menuen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F1</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -1462,9 +1459,8 @@ msgid "Go and select text to end of textbox"
 msgstr "Gå til og markér teksten til slutningen af dokumentet"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:240-9
-#, fuzzy
 msgid "Slide keyboard shortcuts"
-msgstr "Tastaturgenveje til diasshow"
+msgstr "Tastaturgenveje til slideshow"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
@@ -2203,15 +2199,15 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
-"Du redigerer et online regneark på samme måde, som du redigerer et lokalt "
-"regneark. Handlinger, som fx. indtastning af data, markering af områder, "
-"kolonner, rækker eller ark, er de samme. Brug tastaturet, menuerne og "
-"værktøjslinjerne til at foretage handlinger i regnearket. Du kan også trække "
-"celleindhold rundt for at udfylde celler. Funktionerne \"Kopier\", \"Klip\" "
-"og \"Indsæt\" er tilgængelige fra kontekstmenuen. Når du har indsat data, "
-"flytter <kbd>Tab</kbd> markøren til den næste celle til højre og <kbd>Enter</"
-"kbd> flytter markøren til cellen nedenunder for at lette videre indtastning "
-"af data."
+"Du redigerer et online regneark på samme måde, som du redigerer et "
+"desktopregneark. Handlinger, som fx. indtastning af data, markering af "
+"områder, kolonner, rækker eller ark, er de samme. Brug tastaturet, menuerne "
+"og værktøjslinjerne til at foretage handlinger på regnearket. Du kan også "
+"trække celleindhold rundt for at udfylde celler. Funktionerne \"Kopier\", "
+"\"Klip\" og \"Indsæt\" er tilgængelige fra kontekstmenuen. Når du har indsat "
+"data, flytter <kbd>Tab</kbd> markøren til den næste celle til højre og "
+"<kbd>Enter</kbd> flytter markøren til cellen nedenunder for at lette videre "
+"indtastning af data."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:493-5
 msgid ""
@@ -2220,7 +2216,7 @@ msgstr "Formler indtastes på formellinjen. Tast '=' og indsæt formlen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:494-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr "Alle regnearksfunktioner og matematike regler gælder."
+msgstr "Alle regnearksfunktioner og matematiske regler gælder."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:496-5
 msgid ""
@@ -2229,8 +2225,8 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\" target="
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
-"Formelsproget burde være særdeles velkendt for enhver bruger af regneark og "
-"er specificeret meget detaljeret i <a href=\"https://www.oasis-open.org/"
+"Formelsproget er sikkert velkendt for enhver bruger af regneark og er "
+"specificeret meget detaljeret i <a href=\"https://www.oasis-open.org/"
 "committees/download.php/16826/openformula-spec-20060221.html\" target="
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 
@@ -2244,13 +2240,14 @@ msgid ""
 "complex and custom number formatting, as well as font, complex border, "
 "background, cell protection and other options."
 msgstr ""
-"<span class=\"def\">Direkte formatering:</span> du kan formatere regnearks-"
+"<span class=\"def\">Direkte formatering:</span> Du kan formatere regnearks-"
 "celler, -kolonner, -rækker og -ark ved at formatere direkte fra menuer, "
 "værktøjslinjer eller kontekstmenuer. Direkte formatering gælder kun det "
-"aktuelt markerede objekt. For at formatere en celle bruger du enten menuen "
-"eller trykker på <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</"
-"kbd>. Dialogen tillader kompleks og tilpasset formatering, såvel skrifttype, "
-"kompleks kant, cellebeskyttelse og andre indstillinger."
+"aktuelt markerede objekt. For at formatere en celle skal du enten bruge "
+"menuen eller trykke på <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>1</kbd>. Dialogen giver adgang til kompleks og tilpasset "
+"formatering, samt skrifttype, kompleks kant, cellebeskyttelse og andre "
+"indstillinger."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:510-30
 msgid ""
@@ -2261,7 +2258,7 @@ msgid ""
 msgstr ""
 "<span class=\"def\">Sortering af data:</span> Du kan sortere en liste over "
 "tal eller tekst stigende eller faldende.<span class=\"productname\""
-">{productname}</span> opdager automatisk celler som er overskrifter og "
+">{productname}</span> opdager automatisk celler, som er overskrifter og "
 "tilstødende kolonner, for at udvide markeringen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:511-30
@@ -2271,19 +2268,19 @@ msgid ""
 "spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
-"<span class=\"def\">Filtrering af data:</span> Filtre og avencerede filtre "
-"lader dig arbejde på visse filtrerede rækker (dataposter) i et dataområde. "
-"På regnearkene i <span class=\"productname\">{productname}</span> er der "
-"forskellige muligheder for at bruge filtre."
+"<span class=\"def\">Filtrering af data:</span> Med filtre og avancerede "
+"filtre kan du arbejde på visse filtrerede rækker (dataposter) i et "
+"dataområde. På regnearkene i <span class=\"productname\">{productname}</"
+"span> er der forskellige muligheder for at bruge filtre."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:514-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
-"En anvendelse af funktionen <span class=\"ui\">Autofilter</span> er hurtigt "
-"at begrænse visningen til dataposter med identiske indtastninger i et "
-"datafelt."
+"Én af mulighederne med funktionen <span class=\"ui\">Autofilter</span> er at "
+"du hurtigt kan begrænse visningen til dataposter med identiske indtastninger "
+"i et datafelt."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:515-34
 msgid "filter"
@@ -2336,8 +2333,8 @@ msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
 "span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
-"Vælg <span class=\"ui\">Validering</span> i menuen <span class=\"ui\">Data</"
-"span>. Dialogen <span class=\"ui\">Validering</span>åbnes."
+"Vælg <span class=\"ui\">Validitet</span> på menuen <span class=\"ui\">Data</"
+"span>. Dialogen <span class=\"ui\">Validitet</span>åbnes."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:531-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:536-31
@@ -2351,8 +2348,9 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
-"Mmarker validitetskriteriet i rullefeltet <span class=\"ui\">Tillad</span>. "
-"Afhængigt af kriteriet vises flere indstillinger. Indtast de nødvendige data."
+"Markér validitetskriteriet i dropdown-menuen <span class=\"ui\">Tillad</"
+"span>. Afhængigt af kriteriet vises flere indstillinger. Indtast de "
+"nødvendige data."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:534-9
 msgid ""
@@ -2361,15 +2359,15 @@ msgid ""
 ">OK</span> to close the dialog."
 msgstr ""
 "Brug fanebladene<span class=\"ui\">Indtastningshjælp</span> og <span class="
-"\"ui\">Fejlmeddelelse</span> til af forberede interaktioner med brugeren. "
-"Klik på <span class=\"ui\">OK</span> for at lukke dialogen."
+"\"ui\">Fejlmeddelelse</span> til at forbedre brugerinteraktioner. Klik på "
+"<span class=\"ui\">OK</span> for at lukke dialogen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:537-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
-"For at fjerne en celles validering åbner du dialogen og sætter listen <span "
+"For at fjerne en celles valditet åbner du dialogen og sætter listen <span "
 "class=\"ui\">Tillad</span> til \"Alle værdier\"."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
@@ -2382,9 +2380,9 @@ msgid ""
 msgstr ""
 "<span class=\"def\">Kommentarer:</span>På et regneark kan du indsætte en "
 "kommentar i hver celle. Når du vælger <span class=\"ui\">Indsæt kommentar</"
-"span>, vises et pop-op-felt, der lader dig skrive kommentarens indhold. Der "
+"span>, vises et pop-op-felt, hvor du kan skrive kommentarens indhold. Der "
 "vises en rød prik i cellens øverste, højre hjørne, når den har en kommentar. "
-"Lad musen svæve over cellen, for at vise kommentarer."
+"Hold markøren over cellen for at vise kommentarer."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:545-5
 msgid ""
@@ -2396,7 +2394,7 @@ msgid ""
 msgstr ""
 "<span class=\"def\">Betinget formatering:</span> <span class=\"productname\""
 ">{productname}</span> tilføjer symboler i hver cellen i et område, der er "
-"baseret på celle-betingelser. Marker celleområdet og klik på ikonet <span "
+"baseret på cellebetingelser. Markér celleområdet og klik på ikonet <span "
 "class=\"ui\">Betinget formatering</span> på værktøjslinjen. Vælg det "
 "symbolsæt, der skal anvendes på området."
 
@@ -2411,13 +2409,14 @@ msgid ""
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
 "<span class=\"productname\">{productname}</span> redigerer tekstdokumenter "
-"på samme måde, som du redigerer et desktop dokument. Det tilbyder et What "
-"You See Is What You Get (WYSIWYG) layout – som bekvemt fremlægger "
-"dokumentet, som det udskrives. Handlinger som at indtaste teksten, klippe, "
-"kopiere og indsætte indhold, markere tekst, indsætte, ændre størrelse, "
-"forankre billeder, indsætte og håndtere tabeller og diagrammer ligner en "
-"desktop tekstbehandler. Brug tastaturet, menuer og værktøjslinjer til at "
-"interagere med dit dokument."
+"på samme måde, som hvis du redigerer et dokument i et lokalt program. "
+"{productname} har et \"What You See Is What You Get (WYSIWYG)\" layout. Det "
+"vil sige at det viser dokumentet, præcis som det ser ud, hvis det udskrives. "
+"Funktioner (som at kunne indtaste tekst, klippe-, kopiere- og indsætte "
+"indhold, markere tekst, ændre størrelse, forankre billeder, indsætte og "
+"håndtere tabeller og diagrammer) ligner velkendte skrivebordsprogrammer til "
+"tekstredigering. Brug tastaturet, menuer og værktøjslinjer til at arbejde "
+"med dit dokument."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:561-30
 msgid ""
@@ -2425,9 +2424,9 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
-"Kontekstmenuer er tilgængelige ved at klikke på højre museknap. Kommandoer, "
-"der tilgængelige i kontekstmenuer, har relation – ikke udstrakt – til det "
-"underliggende objekt i dokumentet."
+"Kontekstmenuer er tilgængelige ved at klikke på højreklikke på musen. "
+"Kommandoer, der tilgængelige i kontekstmenuer, har relation - ikke "
+"udelukkende - til det underliggende objekt i dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.h3:565-5
 msgid "Formatting text"
@@ -2446,12 +2445,12 @@ msgid ""
 msgstr ""
 "<span class=\"productname\">{productname}</span> understøtter moderne "
 "teknikker til formatering af afsnit med typografier. En typografi er et sæt "
-"af tekstegenskaber (skrifttype, farve, baggrund mm.) navngivet med en "
-"etiket, typografinavnet. Brug typografier til at anvende de samme egenskaber "
-"på flere afsnit i dokumenter og frembringe et ensartet og professionelt "
-"udseende. Hvis du ændrer en af typografiens formateringsegenskaber, vil alle "
-"afsnit med den samme typografi også ændre formatering. Det forenkler "
-"arbejdet, så du ikke skal formatere mange afsnit enkeltvis."
+"af tekstegenskaber (skrifttype, farve, baggrund med mere) navngivet med en "
+"etiket, typografinavnet. Brug typografier til at anvende det samme sæt "
+"egenskaber på mange afsnit i dokumenter og frembringe et ensartet, "
+"professionelt udseende. Hvis du ændrer du en af typografiens "
+"formateringsegenskaber, vil alle afsnit med den samme typografi også ændre "
+"formatering og forenkle arbejdet med at formatere mange afsnit enkeltvis."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:568-5
 msgid ""
@@ -2460,10 +2459,10 @@ msgid ""
 "in every text excerpt, turning text formatting a long task, subject to "
 "errors and delays."
 msgstr ""
-"Direkte formatering anvender derimod egenskaber på de udvalgte afsnit af "
-"dokumentindholdet. I et langt dokument er det nødvendigt at anvende direkte "
-"formatering på hvert enkelt tekstafsnit, hvilket gør tekstformatering til en "
-"langvarig opgave med risiko for fejl og forsinkelser."
+"Omvendt anvender direkte formatering egenskaber på udvalgte udsnit af "
+"dokumentindholdet. I et langt dokument skal direkte formatering anvendes på "
+"hvert enkelt tekst udsnit, hvilket gør tekstformatering til en langvarig "
+"opgave med tendens til fejl og forsinkelser."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:570-30
 msgid ""
@@ -2510,9 +2509,9 @@ msgid ""
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
-"<span class=\"def\">Formatering af celler:</span> Klik på cellen eller et "
-"celleområde og vælg menuen <span class=\"ui\">Tabel</span> → <span class=\"ui"
-"\">Egenskaber</span>. Finjuster tabellen med dialogen Egenskaber."
+"<span class=\"def\">Formatering af celler:</span> Klik på cellen, eller et "
+"celleområde, og vælg menuen <span class=\"ui\">Tabel</span> → <span class="
+"\"ui\">Egenskaber</span>. Finjuster tabellen med dialogen Egenskaber."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:588-5
 msgid "Track changes"
@@ -2540,7 +2539,7 @@ msgid ""
 "right. You can also add a comment there."
 msgstr ""
 "Ændringer foretaget af forskellige mennesker vises med forskellige farver og "
-"enhver sporet ændring kan accepteres eller afvises med feltet, der vises til "
+"enhver sporet ændring kan accepteres eller afvises med boksen, der vises til "
 "højre. Du kan også indsætte en kommentar dér."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:594-5
@@ -2561,8 +2560,8 @@ msgid ""
 "spaces are shown as marks to assisting text alignment, editing and "
 "formatting."
 msgstr ""
-"<span class=\"def\">Formatertingsmærker:</span> Paragraf, side og hårde "
-"mellemrum vises som mærker til hjælp ved tekstjustering, redigering og "
+"<span class=\"def\">Formatertingsmærker:</span> Afsnit, sider og hårde "
+"mellemrum vises som mærker for at hjælpe med tekstjustering, redigering og "
 "formatering."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:597-5
@@ -2570,8 +2569,8 @@ msgid ""
 "<span class=\"def\">Fields:</span> A basic set of fields is available to "
 "insert in the document."
 msgstr ""
-"<span class=\"def\">Felter:</span> Et basal sæt felter er tilgængeligt til "
-"indsættelse i dokumentet."
+"<span class=\"def\">Felter:</span> Et basalt sæt felter er tilgængelige til "
+"at indsætte i dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:598-5
 msgid ""
@@ -2609,10 +2608,10 @@ msgid ""
 "actions in your document."
 msgstr ""
 "<span class=\"productname\">{productname}</span> Impress redigerer "
-"præsentationer på en måde, som skulle være velkendt for alle. Handlinger som "
+"præsentationer på en måde, som sikkert er velkendt for alle. Handlinger som "
 "indtastning, kopiering og indsættelse af indhold, markering af tekst, "
 "indsættelse, ændring af størrelse, forankring af billeder, indsættelse og "
-"håndtering af tabeller ligner et desktop præsentationsprogram. Brug "
+"håndtering af tabeller ligner et typisk præsentationsprogram. Brug "
 "tastaturet, menuer og værktøjslinjer til foretage handlinger i dit dokument."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:616-5
@@ -2623,33 +2622,34 @@ msgid ""
 "the slide pane."
 msgstr ""
 "<span class=\"productname\">{productname}</span> viser præsentationer som "
-"diasshows, herunder et undersæt af diasovergange og objektanimationer. Vælg "
-"diasshowet på menuen eller klik på ikonet på værktøjslinjen nederst til "
-"venstre i diaspanelet."
+"slideshows, herunder et undersæt af slideovergange og objektanimationer. "
+"Vælg slideshowet på menuen eller klik på ikonet på værktøjslinjen nederst "
+"til venstre i slidepanelet."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:617-5
 msgid ""
 "To exit a <span class=\"productname\">{productname}</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
-"Tryk på <kbd>Esc</kbd> -tasten for at forlade en <span class=\"productname\""
-">{productname}</span> præsentation og vende tilbage til redigeringstilstand."
+"For at forlade en <span class=\"productname\">{productname}</span> "
+"præsentation, skal du trykke på <span class=\"productname\">Esc</span>-"
+"tasten for at vende tilbage til præsentationstilstand."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:624-5
 msgid ""
 "Click on any slide thumbnail in the pane to switch to this slide to view or "
 "edit it."
 msgstr ""
-"Klik på en vilkårlig miniature i sidepanalet for at skifte til den, for at "
-"se eller redigere den."
+"Klik på en vilkårlig miniature i sidepanelet for at skifte til den, så du "
+"kan se eller redigere den."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:625-5
 msgid ""
 "Use the slide pane toolbar in the bottom to start the slideshow, add slide, "
 "duplicate or delete the current slide."
 msgstr ""
-"Brug værktøjslinjen nederst i diaspanelet til at starte præsentationen, "
-"tilføje dias, duplikere eller slette det aktuelle dias."
+"Brug værktøjslinjen nederst i slidepanelet til at starte præsentationen, "
+"tilføje et slide, duplikere eller slette det aktuelle slide."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:632-5
 msgid ""
@@ -2657,17 +2657,18 @@ msgid ""
 ">{productname}</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
-"<span class=\"def\">Dias-layouts:</span><span class=\"productname\""
-">{productname}</span> Impress lader dig ændre diaslayout. Vælg det ønskede "
-"diaslayout på rullelisten Layout."
+"<span class=\"def\">Slide-layouts:</span><span class=\"productname\""
+">{productname}</span> Impress giver mulighed for at ændre slide-layoutet. "
+"Vælg det ønskede slide-layout på dropdown-menuen Layout."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:635-30
 msgid ""
 "<span class=\"def\">Master slide:</span> Select the master slide associated "
 "to the current slide. Format and arrange slide elements in the master slide."
 msgstr ""
-"<span class=\"def\">Masterdias:</span> Vælg det masterdias, der er knyttet "
-"til det aktuelle dias. Formater og arranger diaselementer på masterdiasset."
+"<span class=\"def\">Master-slide:</span> Vælg det master-slide, der er "
+"knyttet til det aktuelle slide. Formater og arranger slide-elementer på "
+"master-slidet."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:636-30
 msgid ""
@@ -2676,10 +2677,10 @@ msgid ""
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
-"<span class=\"def\">Diasovergange:</span> <span class=\"productname\""
-">{productname}</span> Impress tilbyder visuelle effekter, når et nyt dias "
-"vises i præsentationen. Diasovergange er en egenskab i diasset, brug "
-"sidepanelet til at indstille diasovergangen, mens den er i "
+"<span class=\"def\">Slide-overgange:</span> <span class=\"productname\""
+">{productname}</span> Impress tilbyder visuelle effekter, når et nyt slide "
+"vises i præsentationen. Slide-overgange er en egenskab på slidet. Brug "
+"sidepanelet til at indstille slide-overgangen, mens du er i "
 "redigeringstilstand."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:637-30
@@ -2688,8 +2689,8 @@ msgid ""
 "can have animation. Use the side bar to configure the slide transition for a "
 "selected object or set of objects."
 msgstr ""
-"<span class=\"def\">Objektanimation:</span> Enkeltobjekter på diasset kan "
-"have animation. Brug sidepanelet til at konfigurere diasovergangen for et "
+"<span class=\"def\">Objektanimation:</span> Enkeltobjekter på slidet kan "
+"have animation. Brug sidepanelet til at konfigurere slide-overgangen for et "
 "markeret objekt eller sæt af objekter."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:638-30
@@ -2705,7 +2706,7 @@ msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
 ">{productname}</span>?"
 msgstr ""
-"Hvilke dokumentfil-formater understøttes af <span class=\"productname\""
+"Hvilke dokument-filformater understøtter <span class=\"productname\""
 ">{productname}</span>?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:646-5
@@ -2738,7 +2739,7 @@ msgstr "Hvordan gemmer jeg et dokument med et andet navn?"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:656-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr "Lad musen svæve over dokumentnavnet på menulinjen."
+msgstr "Hold markøren over dokumentnavnet på menulinjen."
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:657-11
 msgid "Type the new file name in the text box and press <kbd>Enter</kbd>."
@@ -2746,7 +2747,7 @@ msgstr "Tast det nye filnavn i tekstfelet og tryk på <kbd>Enter</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:659-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr "En kopi af dokumentet gemmes sammen med nye navn i den samme folder."
+msgstr "En kopi af dokumentet gemmes med det nye navn i den samme mappe."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:662-5
 msgid ""
@@ -2754,7 +2755,7 @@ msgid ""
 "saving my edits?"
 msgstr ""
 "Hvordan kan jeg forlade <span class=\"productname\">{productname}</span> "
-"uden at gemme mine redigeringer?"
+"uden at gemme mine ændringer?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:663-5
 msgid ""
@@ -2764,17 +2765,18 @@ msgid ""
 ">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
 "<span class=\"productname\">{productname}</span> gemmer regelmæssigt "
-"dokumentet i baggrunden; du kan ikke bare lukke uden at gemme det. For at "
-"opgive dine ændringer, må du enten fortryde dem eller bruge <span class=\"ui"
-"\">Revisionshistore</span> på menuen <span class=\"ui\">Filer</span>."
+"dokumentet i baggrunden; du kan derfor ikke kassére ændringer ved blot at "
+"lukke uden at gemme. For at kassére dine ændringer, skal du enten aktivt "
+"fortryde dem eller bruge <span class=\"ui\">Revisionshistorie</span> på "
+"menuen <span class=\"ui\">Filer</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:666-5
 msgid ""
 "Can <span class=\"productname\">{productname}</span> open a password-"
 "protected document?"
 msgstr ""
-"Kan <span class=\"productname\">{productname}</span> åbne et "
-"kodeordsbeskyttet dokument?"
+"Kan <span class=\"productname\">{productname}</span> åbne et dokument der er "
+"beskyttet med en adgangskode?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:667-5
 msgid ""
@@ -2782,8 +2784,8 @@ msgid ""
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
-"Ja. <span class=\"productname\">{productname}</span> åbner adgangskode-"
-"beskyttede dokumenter, men det er nødvendigt at skrive adgangskoden i "
+"Ja. <span class=\"productname\">{productname}</span> åbner dokumenter "
+"beskyttet med adgangskode, men det er nødvendigt at skrive adgangskoden i "
 "promptet \"Indsæt adgangskode\" under indlæsningen."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:670-5
@@ -2797,12 +2799,12 @@ msgid ""
 "languages for the selected text and for the current paragraph."
 msgstr ""
 "Vælg menuen <span class=\"ui\">Funktioner</span> → <span class=\"ui\">Sprog</"
-"span> og vælge sprog til hele dokumentet. Valgfrit kan du indstille sprog "
-"til den markerede tekst og til det aktuelle afsnit."
+"span> for at vælge sprog for hele dokumentet. Du kan også indstille sproget "
+"for et markeret tekstområde eller kun det aktuelle afsnit."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:674-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr "Hvordan kan jeg fjerne røde bølgelinjer i mit dokument?"
+msgstr "Hvordan kan jeg fjerne de røde understregninger i mit dokument?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:675-5
 msgid ""
@@ -2823,10 +2825,9 @@ msgid ""
 "suggestions to correct the grammar error and the offended grammar rules. "
 "Select the right suggestion to change the text."
 msgstr ""
-"Grammatisk fejl i teksten markeres med de blå bølgelinjer. Klik på den "
-"understregede tekst med den højre museknap for at åbne en menu med forslag "
-"til at rette den grammatiske fejl og de overtrådte grammatiske regler. Vælg "
-"det rigtige forslag til ændring af teksten."
+"Grammatiske fejl i teksten markeres med blå bølgelinjer. Højreklik på den "
+"understregede tekst for at åbne en menu med forslag til at rette den "
+"grammatiske fejl. Vælg det rigtige forslag til ændring af teksten."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:682-5
 msgid "Is there a thesaurus?"
@@ -2838,7 +2839,7 @@ msgid ""
 "<span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions "
 "for replacements."
 msgstr ""
-"Ja.Klik på den ønskede ord og vælg <span class=\"ui\">Funktioner</span> → "
+"Ja. Klik på det ønskede ord, og vælg <span class=\"ui\">Funktioner</span> → "
 "<span class=\"ui\">Synonymordbog</span>. Der åbnes en dialog med mange "
 "forslag til erstatninger."
 
@@ -2847,8 +2848,8 @@ msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
 msgstr ""
-"Hvad betyder det blå <span class=\"blue\">¶</span>-symbol og hvordan kan jeg "
-"fjerne det fra mit tekstdokument?"
+"Hvad betyder det blå <span class=\"blue\">¶</span>-symbol, og hvordan kan "
+"jeg fjerne det fra mit tekstdokument?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:688-5
 msgid ""
@@ -2864,7 +2865,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:696-5
 msgid "How do I get a word count of my document?"
-msgstr "Hvordan tæller jeg antallet ord i mit dokument?"
+msgstr "Hvordan ser jeg en ordtælling i mit dokument?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:697-5
 msgid ""
@@ -2873,8 +2874,8 @@ msgid ""
 "whole document."
 msgstr ""
 "Ordtælling findes i<span class=\"ui\">Funktioner</span> → <span class=\"ui\""
-">Ordtælling</span>. En dialog viser ordtælling for markeringen og hele "
-"dokumentet."
+">Ordtælling</span>. En dialog viser både ordtælling for en markering og for "
+"hele dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:698-29
 msgid "word count"
@@ -2886,9 +2887,9 @@ msgid ""
 "word count is for the whole document. Otherwise the word count is for the "
 "selected text."
 msgstr ""
-"Ordtælling vises også i på statuslinjen. Hvis der ikke er markeret nogen "
-"tekst gælder ordtællingen hele dokumentet. Ellers er ordtællingen for den "
-"markerede tekst."
+"Ordtælling vises også på statuslinjen. Hvis der ikke er markeret nogen tekst "
+"gælder ordtællingen hele dokumentet. Hvis der er markeret tekst, gælder "
+"ordtællingen kun for det markerede område."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:702-5
 msgid ""
@@ -2930,9 +2931,9 @@ msgid ""
 "Unicode numeric code of the special character, enter in the boxes on the "
 "right."
 msgstr ""
-"Du kan enten gennembladre tegnene, der vises på rullelister, eller taste en "
-"søgenøgle ind i feltet <span class=\"ui\">Søg</span>. Hvis du kender "
-"specialtegnets Unicode numeriske kode, skriver du den i felterne til højre."
+"Du kan enten gennembladre tegnene, der vises på dropdown-lister, eller "
+"indtaste en søgning i feltet <span class=\"ui\">Søg</span>. Hvis du kender "
+"specialtegnets Unicode numeriske kode, kan du skriveden i felterne til højre."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:711-11
 msgid ""
@@ -2940,11 +2941,11 @@ msgid ""
 "<span class=\"ui\">Cancel</span>."
 msgstr ""
 "Tryk på knappen <span class=\"ui\">Indsæt</span>. For at lukke dialogen "
-"trykker du på <span class=\"ui\">Annuller</span>."
+"trykker du på <span class=\"ui\">Annullér</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr "Hvorfor kan jeg ikke slette tekst? Den bliver bare gennemstreget?"
+msgstr "Hvorfor kan jeg ikke slette tekst? Den bliver bare gennemstreget."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:716-5
 msgid ""
@@ -2954,12 +2955,12 @@ msgid ""
 "enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track "
 "Changes </span> → <span class=\"ui\">Record</span>."
 msgstr ""
-"Du har aktiveret funktionen \"Spor ændringer\" i dokumentet. \"Spor "
-"ændringer\" registrerer alle ændringer i teksten og viser redigeringerne til "
-"senere fennemgang. Nyttig til at foretage ændringer i tekster og regneark. "
-"\"Spor ændringer\" aktiveres ved at vælge <span class=\"ui\">Rediger</span> →"
-" <span class=\"ui\">Spor ændringer</span> → <span class=\"ui\""
-">Registrer</span>."
+"Du har aktiveret funktionen \"Spor ændringer\" i dokumentet. "
+"\"Spor ændringer\" registrerer alle ændringer i teksten og viser ændringerne "
+"til senere gennemgang. Det er nyttigt til at foretage ændringer i tekster og "
+"regneark. \"Spor ændringer\" aktiveres ved at vælge <span class=\"ui\""
+">Rediger</span> → <span class=\"ui\">Spor ændringer</span> → <span class="
+"\"ui\">Registrer</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:717-5
 msgid "With track changes enabled your document is shown the following manner:"
@@ -2986,7 +2987,7 @@ msgid ""
 "The color assigned to the changes depends on the user that changes the "
 "document."
 msgstr ""
-"Farven, som ændringer tildeles, afhænger af den bruger, der ændrer "
+"Den farve ændringerne er tildelt, afhænger af hvilken bruger, der ændrer "
 "dokumentet."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:726-5
@@ -3015,18 +3016,18 @@ msgid ""
 "shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
 "Ændringer kan accepteres eller afvises. For at acceptere eller afvise "
-"ændringer klikker du på de tilsvarende ikoner i kommentarfeltet til høre på "
-"dokumentet. Alternativt vælger du <span class=\"ui\">Rediger</span> → <span "
-"class=\"ui\">Spor ændringer</span> → <span class=\"ui\">Accepter</span> "
-"eller <span class=\"ui\">Afvis</span>. Hvis du derudover har brug for at "
+"ændringer klikker du på de tilsvarende ikoner i kommentarfeltet til højre "
+"for dokumentet. Alternativt kan du vælge <span class=\"ui\">Rediger</span> → "
+"<span class=\"ui\">Spor ændringer</span> → <span class=\"ui\">Accepter</"
+"span> eller <span class=\"ui\">Afvis</span>. Hvis du har brug for at "
 "filtrere ændringer, før du accepterer eller afviser, vælger du <span class="
 "\"ui\">Rediger</span> → <span class=\"ui\">Spor ændringer</span> → <span "
-"class=\"ui\">Håndter</span>. En dialog viser en liste over alle sporede "
+"class=\"ui\">Håndtér</span>. En dialog viser en liste over alle sporede "
 "ændringer. Brug dialogknapperne efer deres tekster."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:731-5
 msgid "How do I set the margins of the document?"
-msgstr "Hvordan sætter jeg marginer i dokumenter?"
+msgstr "Hvordan justerer jeg marginer i dokumenter?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:732-5
 msgid ""
@@ -3034,19 +3035,20 @@ msgid ""
 "margin, or the rightmost for the right margin."
 msgstr ""
 "På linealen trækker du den yderste venstre kant af linealen for at justere "
-"den venstre margen eller den yderste højre til højre margen."
+"den venstre margen eller den yderste højre kan for at justere den højre "
+"margen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:733-5
 msgid "Using the page style"
-msgstr "Med sidetypografien"
+msgstr "Bruger sidetypografien"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:735-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
-"Vælg <span class=\"ui\">Formater</span> → <span class=\"ui\">Side</span> og "
-"vælg fanebladet <span class=\"ui\">Side</span>"
+"Vælg <span class=\"ui\">Format</span> → <span class=\"ui\">Sidetypografi</"
+"span> og vælg fanebladet <span class=\"ui\">Side</span>"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:736-11
 msgid "Set the page margins in the dialog."
@@ -3069,10 +3071,11 @@ msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</"
 "span>, <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
-"Vælg <span class=\"ui\">Formater</span> → <span class=\"ui\">Afsnit</span>, "
+"Vælg <span class=\"ui\">Format</span> → <span class=\"ui\">Afsnit</span>, "
 "fanebladet <span class=\"ui\">Tekstforløb</span>"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:745-11
+#, fuzzy
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
@@ -3082,7 +3085,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:746-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Marker Liggende i \"Med sidetypografi\""
+msgstr "Vælg \"Liggende\" i \"Med sidetypografi\""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:747-11
 msgid "Select if you want to change page numbering."
@@ -3094,7 +3097,7 @@ msgid ""
 "in “With page style”."
 msgstr ""
 "For at vende tilbage til stående sideorientering, gentager du proceduren og "
-"vælger Stående i \"Med sidetypografi\"."
+"vælger \"Stående\" i \"Med sidetypografi\"."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:752-5
 msgid "How can I make the new text look like other existing text?"
@@ -3107,7 +3110,7 @@ msgstr "Direkte:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:755-11
 msgid "Select the text with the existing format"
-msgstr "Marker tekseten med det eksistende format"
+msgstr "Marker teksten med det eksisterende format"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
 msgid ""
@@ -3116,11 +3119,11 @@ msgid ""
 "bucket."
 msgstr ""
 "Klik på ikonet Klon formatering <img class=\"icon-size\" alt=\"\" src=\""
-"images/lc_formatpaintbrush.svg\" />. Musemarkøren bliver til en malerbøtte."
+"images/lc_formatpaintbrush.svg\" />. Markøren bliver til en malerbøtte."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
-msgstr "Marker den tekst, du vil anvende det nye format på."
+msgstr "Markér den tekst, du vil anvende det nye format på."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:761-5
 msgid "Applying a paragraph style:"
@@ -3128,22 +3131,22 @@ msgstr "Anvender en afsnitstypografi:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:763-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr "Placer markøren på afsnittet, der skal formateres"
+msgstr "Placér markøren på afsnittet, der skal formateres"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:764-11
 msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
 msgstr ""
-"Vælg typografien, der skal anvendes, på rullelisten Typografi. Afsnittet "
+"Vælg typografien, der skal anvendes, på dropdown-listen Typografi. Afsnittet "
 "viser typografiens attributter."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:768-5
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
 msgstr ""
-"Hvor ændrede teksten, jeg lige tastede, sig automatisk? Hvordan kan jeg få "
-"den tIlbage?"
+"Hvorfor ændrede den tekst, jeg lige tastede, sig automatisk? Hvordan kan jeg "
+"annullére det?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:769-5
 msgid ""
@@ -3153,16 +3156,16 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
 ">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
-"Du har aktiveret Autikorrektur. Autokorrektur ændrer teksten, der lige er "
-"tastet, til en intern tabel med korresponderende tekst. I de fleste tilfælde "
+"Du har aktiveret Autokorrektur. Autokorrektur ændrer den tekst, der lige er "
+"tastet, til en intern tabel over tilhørende tekst. I de fleste tilfælde "
 "retter Autokorrektur stavefejl, mens du skriver. Hvis Autokorrektur ikke er "
-"nødvendig, deaktiverer du den i <span class=\"ui\">Funktioner</span> → <span "
-"class=\"ui\">Autokorrektur</span> → <span class=\"ui\">Under "
+"nødvendig, kan du deaktivere den i <span class=\"ui\">Funktioner</span> → "
+"<span class=\"ui\">Autokorrektur</span> → <span class=\"ui\">Under "
 "skrivning</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:778-5
 msgid "How can I select data to print?"
-msgstr "Hvordan kan jeg markere data at udskrive?"
+msgstr "Hvordan kan jeg markere data til udskrift?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:779-5
 msgid ""
@@ -3170,28 +3173,28 @@ msgid ""
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
-"Indsæt kolonne- og række-skift i regnearket for at begrænse "
-"udskrivningsområdet og udskrive dokumenter til download. Efter at PDFen er "
-"udskrevet, udvælger du interessante sider."
+"Indsæt kolonne- og rækkeskift i regnearket for at indskrænke "
+"udskriftsområdet og udskrive dokumenter til download. Vælg de ønskede sider "
+"til udskrift af PDF'en."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:782-5
 msgid "How can I import CSV data?"
-msgstr "Hvardan kan jeg importere CSV-data?"
+msgstr "Hvordan importerer jeg CSV-data?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:784-11
 msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
-"Indlæs dine CSV-data i et program, der er standard på din platform, marker "
-"og kopier det til udklipsholderen"
+"Indlæs dine CSV-data i et standardprogram på din platform, markér og kopier "
+"det til udklipsholderen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:785-11
 msgid ""
 "Activate the <span class=\"productname\">{productname}</span> spreadsheet "
 "window."
 msgstr ""
-"Aktiver <span class=\"productname\">{productname}</span> regnearksvindue."
+"Aktivér <span class=\"productname\">{productname}</span>'s regnearksvindue."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:787-9
 msgid ""
@@ -3200,10 +3203,10 @@ msgid ""
 ">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
 "opens to let you describe the precise format of the CSV data."
 msgstr ""
-"Indsæt fra browser <span class=\"ui\">Rediger</span> → <span class=\"ui\""
-">Indsæt</span>, eller tryk på<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>. Dialogen <span class=\"ui\">Tekstimport</span> åbnes "
-"for at lade dig beskrive det præcise format på CSV-dataene."
+"Indsæt fra browseren<span class=\"ui\">Rediger</span> → <span class=\"ui\""
+">Indsæt</span> eller tryk på <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. Dialogen <span class=\"ui\">Tekstimport</span> åbner, "
+"hvor du kan beskrive det præcise format på dine CSV-data."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:789-31
 msgid "import"
@@ -3219,12 +3222,12 @@ msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
 msgstr ""
-"CSV-dataene indlæses i den valgte celle, hvor du indsatte dem i "
+"CSV-dataen indlæses i den valgte celle, hvor du indsatte dem i "
 "overensstemmelse med disse indstillinger."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:795-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr "Hvordan kan jeg kopiere formatering af eksisterende celler til nye?"
+msgstr "Hvordan kopierer jeg formatering fra eksisterende celler til nye?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:796-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
@@ -3232,7 +3235,7 @@ msgstr "Det er let af gøre med værktøjet Malerpensel på værktøjslinjen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:798-11
 msgid "Format the source cell with the font, color background and more."
-msgstr "Formater kildecellen med skrifttype, baggrundsfarve med mere."
+msgstr "Formatér kildecellen med skrifttype, baggrundsfarve med mere."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
 msgid ""
@@ -3240,18 +3243,18 @@ msgid ""
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
 "Klik på ikonet Klon formatering <img class=\"icon-size\" src="
-"\"images/lc_formatpaintbrush.svg\" />. . Musemarkøren bliver til en "
-"malerbøtte."
+"\"images/lc_formatpaintbrush.svg\" />. . Markøren bliver til en malerbøtte."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr "Marker de celler, du vil formatere. Slip museknappen."
+msgstr "Markér de celler, du vil formatere. Slip museknappen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:804-5
 msgid "What is “Clear Direct Formatting” icon?"
 msgstr "Hvad er ikonet \"Ryd direkte formatering\"?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:805-5
+#, fuzzy
 msgid ""
 "Direct formatting is formatting applied directly to the selected contents of "
 "a paragraph or a spreadsheet cell, and overlaps its assigned style "
@@ -3260,10 +3263,10 @@ msgid ""
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
 "Direkte formatering er formatering, der er anvendt direkte på det ønskede "
-"indhold i et afsnit eller en regnearkscelle, og som overlapper dens anvendte "
-"typografi-formatering. For at bringe formateringen tilbage til typografi-"
+"indhold i et afsnit eller en regnearkscelle, og som overlapper med dens "
+"tildelte typografi-formatering. For at gendanne formateringen til typografi-"
 "indstillingerne markerer du teksten eller regnearkscellen og vælger <span "
-"class=\"ui\">Formater</span> → <span class=\"ui\">Ryd direkte formatering</"
+"class=\"ui\">Format</span> → <span class=\"ui\">Ryd direkte formatering</"
 "span> eller brug knappen på værktøjslinjen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:808-5
@@ -3276,12 +3279,12 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
-"Omdøb et ark i regnearksdokumentet med kontekstsmenuen (brug højre musknap) "
-"over arkfanebladet nederst. Indtast det nye navn i den dialog, der følger."
+"Omdøb et ark i regnearksdokumentet med kontekstsmenuen (højreklik) over "
+"arkfanebladet nederst. Indtast det nye navn i den dialog, der følger."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:818-5
 msgid "How can I run my slide show?"
-msgstr "Hvordan kan jeg køre min præsentation?"
+msgstr "Hvordan starter jeg min præsentation?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:820-11
 msgid ""
@@ -3294,19 +3297,18 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
-"Vælg enten <span class=\"ui\">Diasshow</span> → <span class=\"ui\""
+"Vælg enten <span class=\"ui\">Slideshow</span> → <span class=\"ui\""
 ">Fuldskærmspræsentation</span> , eller klik på ikonet længst til venstre i "
-"bunden af diaspanelet:"
+"bunden af slidepanelet:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:825-5
 msgid "How can I change the line, area and position of a shape in my slides?"
 msgstr ""
-"Hvordan kan jeg ændre stregen, fladen og placeringen af en figur på mine "
-"dias?"
+"Hvordan ændrer jeg linjen, fladen og placeringen af en figur på mine slides?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:827-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr "Marker figuren på dit dias. Der vises et sæt håndtag."
+msgstr "Markér figuren på dit slide. Der vises nogle håndtag."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:829-9
 msgid ""
@@ -3314,12 +3316,11 @@ msgid ""
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
 "Size</span>). A dialog opens."
 msgstr ""
-"Vælg <span class=\"ui\">Formater</span> → <span class=\"ui\">Streg</span> ("
+"Vælg <span class=\"ui\">Format</span> → <span class=\"ui\">Streg</span> ("
 "eller <span class=\"ui\">Flade</span> eller <span class=\"ui\">Placering og "
 "størrelse</span>). Der åbnes en dialog."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:831-31
-#, fuzzy
 msgid "Position and Size"
 msgstr "Position og størrelse"
 
