@@ -84,7 +84,9 @@ abstract class RenderContext {
 class RenderContextGl extends RenderContext {
 	constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
 		super(canvas);
-		this.gl = this.canvas.getContext('webgl2') as WebGL2RenderingContext;
+		this.gl = this.canvas.getContext('webgl2', {
+			failIfMajorPerformanceCaveat: true,
+		}) as WebGL2RenderingContext;
 		if (!this.gl) {
 			console.error('WebGL2 not supported');
 			throw new Error('WebGL2 not supported');
