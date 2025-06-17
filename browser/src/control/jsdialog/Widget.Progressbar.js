@@ -42,6 +42,16 @@ JSDialog.progressbar = function (parentContainer, data, builder) {
 	else
 		progressbar.max = 100;
 
+	const isComplete = progressbar.value === progressbar.max;
+
+	if (data.infinite === true && !isComplete) {
+		L.DomUtil.addClass(div, 'infinite');
+		div.setAttribute('data-progress-type', 'infinite');
+	} else {
+		div.removeAttribute('data-progress-type');
+		div.classList.remove('infinite');
+	}
+
 	if (data.enabled === 'false' || data.enabled === false) {
 		$(progressbar).prop('disabled', true);
 	}
