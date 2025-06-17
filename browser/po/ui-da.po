@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-16 15:35+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-17 20:18+0000\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.12.1\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1736,7 +1736,7 @@ msgstr "Seneste opdateringer"
 #: src/control/Control.Menubar.ts:1259 src/control/Control.Menubar.ts:1334
 #: src/control/Control.NotebookbarWriter.js:476
 msgid "Send Feedback"
-msgstr "Send Feedback"
+msgstr "Send din feedback"
 
 #: src/control/Control.Menubar.ts:468 src/control/Control.Menubar.ts:644
 #: src/control/Control.Menubar.ts:781 src/control/Control.Menubar.ts:1071
