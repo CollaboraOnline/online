@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-14 13:01+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-16 09:08+0000\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -53,7 +53,7 @@ msgstr "Instrumentbræt"
 
 #: admin/admin.strings.js:23
 msgid "Users online"
-msgstr "Brugere tilkoblet"
+msgstr "Brugere online"
 
 #: admin/admin.strings.js:24
 msgid "User Name"
@@ -66,11 +66,11 @@ msgstr "Åbne dokumenter"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr " brugere."
+msgstr " bruger(e)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " document(s) åbnet."
+msgstr " dokument(er) åbnet."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -121,6 +121,7 @@ msgid "WOPI host"
 msgstr "WOPI-vært"
 
 #: admin/admin.strings.js:40
+#, fuzzy
 msgid "Kill"
 msgstr "Dræb"
 
@@ -155,7 +156,7 @@ msgstr "Gem"
 
 #: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
-msgstr "Mellemlagerets størrelse i hukommelsesstatistikken"
+msgstr "Cache-størrelse i hukommelsesstatistikken"
 
 #: admin/admin.strings.js:47
 msgid "Time interval of memory statistics (in ms)"
@@ -163,7 +164,7 @@ msgstr "Tidsinterval i hukommelsesstatistikken (i ms)"
 
 #: admin/admin.strings.js:48
 msgid "Cache size of CPU statistics"
-msgstr "Mellemlagerets størrelse i processorstatistikken"
+msgstr "Cache-størrelse i processorstatistikken"
 
 #: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
@@ -175,15 +176,17 @@ msgstr "Stop session."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Maksimum dokument processer virtuel hukommelse (i MB) - kun reducer"
+msgstr ""
+"Maksimal virtuel hukommelse for dokumentprocesser (i MB) - Kan kun reduceres"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Maksimum dokument processer stak hukommelse (i KB) - kun reducer"
+msgstr ""
+"Maksimal stack-hukommelse for dokumentprocesser (i KB) - kan kun reduceres"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Maksimum filstørrelse der kan skrives til disk (i MB) - kun reducer"
+msgstr "Maks. filstørrelse der kan skrives til disk (i MB) - kan kun reduceres"
 
 #: admin/admin.strings.js:54
 msgid "Documents:"
@@ -196,7 +199,7 @@ msgstr "Udløbet:"
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:213
 msgid "Refresh"
-msgstr "Opdater"
+msgstr "Opdatér"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
@@ -208,7 +211,7 @@ msgstr "Serverens oppetid"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
-msgstr "Opdatér Loggen"
+msgstr "Opdatér loggen"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
@@ -238,11 +241,11 @@ msgstr "Luk"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr "Opdater logningsniveauer"
+msgstr "Opdatér logningsniveauer"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr "Version Information"
+msgstr "Versionsinformation"
 
 #: admin/admin.strings.js:67
 msgid "License"
@@ -271,7 +274,7 @@ msgstr "Hukommelse"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr "Vent venligst kubernetes cluster skalerer ..."
+msgstr "Vent venligst, kubernetes cluster skalerer ..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -331,7 +334,7 @@ msgstr "OK"
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:835
 #: src/core/Socket.js:1423
 msgid "Cancel"
-msgstr "Annuller"
+msgstr "Annullér"
 
 #: admin/src/AdminSocketAnalytics.js:247
 msgid "Received"
@@ -343,11 +346,11 @@ msgstr "Afsendt"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr "Forbindelse"
+msgstr "Forbindelser"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr "Serveren er blevet lukket ned, venligst genindlæs siden."
+msgstr "Serveren er blevet lukket ned, genindlæs venligst siden."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
@@ -359,7 +362,7 @@ msgstr "Bekræftelse"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
-msgstr "Vil du virkelig afslutte denne session?"
+msgstr "Er du sikker på, du vil afslutte denne session?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -379,7 +382,7 @@ msgid ""
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
 "Upload genbrugelige tekst-stykker (.bau). For at indsætte teksten i dit "
-"dokument, tast genvejen til en Autotekst og tryk F3."
+"dokument, skal du taste genvejen til en Autotekst og trykke F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Upload Autotext"
@@ -420,7 +423,7 @@ msgstr "Dokumentindstillinger"
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr "Bestem Office-dokumenters opførsel."
+msgstr "Justér Office-dokumenters opførsel."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Upload Xcu"
@@ -476,8 +479,7 @@ msgstr "Indstilling"
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
-"(Advarsel: Serverens tilgængelighed skal være aktiveret for at kunne slå til/"
-"fra)"
+"(Advarsel: Servertilgængelighed skal være aktiveret for at kunne slå til/fra)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
@@ -634,16 +636,16 @@ msgstr "En kommentar bliver redigeret"
 
 #: src/canvas/sections/CommentListSection.ts:165
 msgid "Please save or discard the comment currently being edited."
-msgstr "Gem aller afvis venligst kommentaren der aktuelt bliver redigeret."
+msgstr "Gem eller kassér kommentaren, der aktuelt bliver redigeret."
 
 #: src/canvas/sections/CommentListSection.ts:1166
 msgid "Modify"
-msgstr "Ændre"
+msgstr "Ændr"
 
 #: src/canvas/sections/CommentListSection.ts:1172
 #: src/canvas/sections/CommentSection.ts:169
 msgid "Reply"
-msgstr "Svar"
+msgstr "Besvar"
 
 #: src/canvas/sections/CommentListSection.ts:1178
 msgid "Remove"
@@ -671,11 +673,11 @@ msgstr "Løs tråd"
 
 #: src/canvas/sections/CommentListSection.ts:1202
 msgid "Promote to top comment"
-msgstr "Promover til top kommentar"
+msgstr "Ryk til top kommentar"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Show on the side"
-msgstr "Vis på siden"
+msgstr "Vis i siden"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Open in full view"
@@ -702,7 +704,7 @@ msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
-"En anden bruger har opdateret kommentaren. Ønsker du a overskrive disse "
+"En anden bruger har opdateret kommentaren. Ønsker du at overskrive disse "
 "ændringer?"
 
 #: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1427
@@ -754,7 +756,7 @@ msgstr "Kopier linkplacering"
 
 #: src/canvas/sections/URLPopUpSection.ts:79
 msgid "Edit link"
-msgstr "Rediger link"
+msgstr "Redigér link"
 
 #: src/canvas/sections/URLPopUpSection.ts:94
 msgid "Remove link"
@@ -782,7 +784,7 @@ msgstr "Tidszone:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
-msgstr "Kopier al versionsinformation i engelsk"
+msgstr "Kopiér al versionsinformation i engelsk"
 
 #: src/control/Control.AddressInputField.ts:67
 msgid "cell address"
@@ -803,7 +805,7 @@ msgstr "Kopiering af eksterne kilder er ikke tilladt"
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
 msgstr ""
-"Det ser ud til at du har kopieret en markering som indeholder eksterne "
+"Det ser ud til, at du har kopieret en markering, som indeholder eksterne "
 "billeder."
 
 #: src/control/Control.AlertDialog.js:68
@@ -866,7 +868,7 @@ msgstr "Sti"
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
 msgid "Repair Document"
-msgstr "Reparer dokument"
+msgstr "Reparér dokument"
 
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:387
@@ -1002,7 +1004,7 @@ msgstr "Brasilien"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr "Hviderusland"
+msgstr "Belarus"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
@@ -1194,7 +1196,7 @@ msgstr "Serbien"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
-msgstr "Den Russiske Føderation"
+msgstr "Rusland"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
@@ -1287,7 +1289,7 @@ msgstr "Formel"
 #: src/control/Control.FormulaBarJSDialog.js:85
 #: src/control/Control.MobileTopBar.ts:42
 msgid "Accept"
-msgstr "Accepter"
+msgstr "Acceptér"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
@@ -1295,13 +1297,11 @@ msgstr "Skjul formellinje"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
-"Ledigt dokument - klik venligst for at genindlæse og genoptage redigering"
+msgstr "Inaktivt dokument - klik for at genindlæse og genoptage redigering"
 
 #: src/control/Control.IdleHandler.ts:45
 msgid "Idle document - please tap to reload and resume editing"
-msgstr ""
-"Ledigt dokument - tap venligst for at genindlæse og genoptage redigering"
+msgstr "Inaktivt dokument - tryk for at genindlæse og genoptage redigering"
 
 #: src/control/Control.JSDialog.js:318
 msgid "Close dialog"
@@ -1337,7 +1337,7 @@ msgstr "Kvadrat"
 
 #: src/control/Control.JSDialogBuilder.js:511
 msgid "Fixed size"
-msgstr "Fast størrelse"
+msgstr "Fastlåst størrelse"
 
 #: src/control/Control.JSDialogBuilder.js:1468
 msgid "From"
@@ -2931,8 +2931,8 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
-"Hvis citaterne frakobles, vil Collabora Online ikke længere kunne opdatere "
-"citater og bibliografi i dette dokument."
+"Hvis citaternes sammenkædning fjernes, vil Collabora Online ikke længere "
+"kunne opdatere citater og bibliografi i dette dokument."
 
 #: src/control/HRuler.ts:604
 msgid "Left Margin"
@@ -3750,8 +3750,8 @@ msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"Download er allerede begyndt på grund af en større kopiér/indsæt-aktion. "
-"Vent venligt på at den er færdig eller annuller, før du starter en ny"
+"Download af en større kopiér/indsæt-aktion er allerede påbegyndt. Vent "
+"venligst, på at den er færdig eller annuller, før du starter en ny"
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
@@ -3771,7 +3771,7 @@ msgstr "Brug venligst følgende kombination for at se flere valgmuligheder:"
 
 #: src/map/Clipboard.js:1433
 msgid "Close popup to ignore paste special"
-msgstr "Luk pop up-vinduet for at ignorere indsæt speciel"
+msgstr "Luk popup-vinduet for at ignorere indsæt speciel"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
