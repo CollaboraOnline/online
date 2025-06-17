@@ -27,6 +27,7 @@ cmake_list= \
             ../common/Log.cpp \
             ../common/TraceEvent.cpp \
             ../common/Protocol.cpp \
+            ../common/RegexUtil.cpp \
             ../common/Simd.cpp \
             ../common/StringVector.cpp \
             ../common/Session.cpp \
