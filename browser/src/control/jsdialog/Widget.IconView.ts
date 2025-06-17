@@ -89,17 +89,11 @@ function _iconViewEntry(
 		entryContainer.setAttribute('aria-pressed', 'true');
 	}
 
-	const icon = L.DomUtil.create(
-		'div',
-		builder.options.cssClass + ' ui-iconview-icon',
-		entryContainer,
-	);
-
 	if (entry.ondemand) {
 		const placeholder = L.DomUtil.create(
 			'span',
 			builder.options.cssClass,
-			icon,
+			entryContainer,
 		);
 		placeholder.innerText = entry.text;
 		if (entry.tooltip) placeholder.title = entry.tooltip;
@@ -113,13 +107,14 @@ function _iconViewEntry(
 			'iconview',
 			entry.row,
 			placeholder,
-			icon,
+			entryContainer,
 			entry.text,
 		);
 	} else {
-		_createEntryImage(icon, builder, entry, entry.image);
-		if (hasText) _createEntryText(icon, entry);
+		_createEntryImage(entryContainer, builder, entry, entry.image);
 	}
+
+	if (hasText) _createEntryText(entryContainer, entry);
 
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
