@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-16 09:41+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2025-06-16 15:35+0000\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
 "Language: da\n"
@@ -1652,7 +1652,7 @@ msgstr "Tilføj bibliografi"
 #: src/control/Control.Menubar.ts:394
 #: src/control/Control.NotebookbarWriter.js:2068
 msgid "Refresh Citations"
-msgstr "Opdatér citater"
+msgstr "Genindlæs citater"
 
 #: src/control/Control.Menubar.ts:395
 #: src/control/Control.NotebookbarWriter.js:2081
@@ -1720,7 +1720,7 @@ msgstr "Genvejstaster"
 #: src/control/Control.Menubar.ts:778 src/control/Control.Menubar.ts:1068
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Report an issue"
-msgstr "Rapporter et problem"
+msgstr "Rapportér et problem"
 
 #: src/control/Control.Menubar.ts:466 src/control/Control.Menubar.ts:642
 #: src/control/Control.Menubar.ts:779 src/control/Control.Menubar.ts:1069
@@ -1794,27 +1794,27 @@ msgstr "Scalable Vector Graphics (.svg)"
 #: src/control/Control.Menubar.ts:497
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Current slide as Bitmap (.bmp)"
-msgstr "Aktuelt dias som Bitmap (.bmp)"
+msgstr "Aktuelt slide som Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:498
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr "Aktuelt dias som Graphics Interchange Format (.gif)"
+msgstr "Aktuelt slide som Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.ts:499
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr "Aktuelt dias som Portable Network Graphics (.png)"
+msgstr "Aktuelt slide som Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.ts:500
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr "Aktuelt dias som Tag Image File Format (.tiff)"
+msgstr "Aktuelt slide som Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.ts:506
 #: src/control/Control.NotebookbarBuilder.js:654
 msgid "Full Page Slides"
-msgstr "Dias i fuld side"
+msgstr "Slide som fuld side"
 
 #: src/control/Control.Menubar.ts:507
 #: src/control/Control.NotebookbarBuilder.js:658
@@ -1842,7 +1842,7 @@ msgstr "Præsentation i fuldskærmsvisning"
 
 #: src/control/Control.Menubar.ts:625
 msgid "Present current slide"
-msgstr "Præsenter aktivt dias"
+msgstr "Præsenter aktivt slide"
 
 #: src/control/Control.Menubar.ts:626
 msgid "Present in new window"
@@ -1884,7 +1884,7 @@ msgstr "Excel-regneark (.xlsx)"
 
 #: src/control/Control.Menubar.ts:806
 msgid "CSV file (.csv)"
-msgstr "CSV fil (.csv)"
+msgstr "CSV-fil (.csv)"
 
 #: src/control/Control.Menubar.ts:812
 #: src/control/jsdialog/Definitions.Menu.ts:112
@@ -2029,7 +2029,7 @@ msgstr "Indsæt figur"
 
 #: src/control/Control.Menubar.ts:2199
 msgid "The signature line can now be moved or resized as needed."
-msgstr "Signaturlinjen kan nu flyttes eller ændres efter behov."
+msgstr "Underskriftslinjen kan nu flyttes eller ændres efter behov."
 
 #: src/control/Control.Menubar.ts:2201
 msgid "Finish electronic signing"
@@ -2037,7 +2037,7 @@ msgstr "Afslut elektronisk underskrift"
 
 #: src/control/Control.Menubar.ts:2398
 msgid "file type icon"
-msgstr "fil type ikon"
+msgstr "filtype-ikon"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -2063,10 +2063,12 @@ msgid "Background Color"
 msgstr "Baggrundsfarve"
 
 #: src/control/Control.MobileWizardBuilder.js:549
+#, fuzzy
 msgid "Gradient Start"
 msgstr "Begynd farveforløb"
 
 #: src/control/Control.MobileWizardBuilder.js:551
+#, fuzzy
 msgid "Gradient End"
 msgstr "Farveforløbets slutfarve"
 
@@ -2081,7 +2083,7 @@ msgstr "Luk navigation"
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr "Dias"
+msgstr "Slides"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
@@ -2118,7 +2120,7 @@ msgstr "HTML-fil (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:387
 msgid "CSV File (.csv)"
-msgstr "CSV Fil (.csv)"
+msgstr "CSV-fil (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:530
 msgid "Image (.png)"
@@ -2470,7 +2472,7 @@ msgstr "forhåndsvisning af side %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr "Dias%1"
+msgstr "Slide%1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -2490,11 +2492,11 @@ msgstr "Gemt"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr "Rul ned i kommentarer"
+msgstr "Scroll op i annoteringer"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr "Rul op i kommentarer"
+msgstr "Scroll ned i annoteringer"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
@@ -2562,19 +2564,19 @@ msgstr "ÅBN"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
-msgstr "Rul til det første ark"
+msgstr "Scroll til det første ark"
 
 #: src/control/Control.SheetsBar.js:55
 msgid "Scroll left"
-msgstr "Rul mod venstre"
+msgstr "Scroll mod venstre"
 
 #: src/control/Control.SheetsBar.js:63
 msgid "Scroll right"
-msgstr "Rul mod højre"
+msgstr "Scroll mod højre"
 
 #: src/control/Control.SheetsBar.js:71
 msgid "Scroll to the last sheet"
-msgstr "Rul til det sidste ark"
+msgstr "Scroll til det sidste ark"
 
 #: src/control/Control.SheetsBar.js:78
 msgid "Insert sheet"
@@ -2622,7 +2624,7 @@ msgstr "Antal i markering"
 
 #: src/control/Control.StatusBar.js:256
 msgid "Cancel the search"
-msgstr "Annullerer søgning"
+msgstr "Annullér søgningen"
 
 #: src/control/Control.StatusBar.js:419
 msgid ""
@@ -2672,7 +2674,7 @@ msgstr "Kopiér ark..."
 
 #: src/control/Control.Tabs.js:383
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "Er du sikker på, at du vil slette arket {sheet}?"
+msgstr "Er du sikker på, at du vil slette arket, {sheet}?"
 
 #: src/control/Control.Tabs.js:394
 msgid "Rename sheet"
@@ -2687,8 +2689,8 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
-"Konfliktende fortryd/genskab med mange brugere. Brug venligst "
-"dokumentreparation for at løse det"
+"Fortryd/Gendan-konflikt med flere brugere. Brug dokumentreparation for at "
+"løse det"
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
@@ -2724,11 +2726,11 @@ msgstr "Vis menu"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
-msgstr "{user} har meldt sig"
+msgstr "{user} har tilsluttet sig"
 
 #: src/control/Control.UserList.ts:57
 msgid "{user} has left"
-msgstr "{user} har forladt"
+msgstr "{user} er gået"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
@@ -2768,7 +2770,7 @@ msgstr "Følger"
 
 #: src/control/Control.UserList.ts:552
 msgid "Always follow the editor"
-msgstr "Tillader at følge redaktøren"
+msgstr "Følg altid redaktøren"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
@@ -2811,7 +2813,7 @@ msgstr "Sprog:"
 
 #: src/control/Control.Zotero.js:309
 msgid "Store as:"
-msgstr "Gem som:"
+msgstr "Lagres som:"
 
 #: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
@@ -2958,11 +2960,11 @@ msgstr "Redigér dokument"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr "Dokumentet kunne ikke låses og bliver åbnes i skrivebeskyttet tilstand."
+msgstr "Dokumentet kunne ikke låses og er åbnet i skrivebeskyttet tilstand."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr "Serveren returnerede denne grund:"
+msgstr "Serveren gav denne grund:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
@@ -2974,7 +2976,7 @@ msgstr "Indtast fil navn"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr "Gem i ODF format"
+msgstr "Gem i ODF-format"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
@@ -2982,7 +2984,7 @@ msgstr "Fortsæt redigering"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr "Fortsæt skrivebeskyttet tilstand"
+msgstr "Fortsæt i skrivebeskyttet tilstand"
 
 #: src/control/Permission.js:182
 msgid ""
@@ -3010,7 +3012,7 @@ msgstr "Underskriften var gyldig, men dokumentet er blevet ændret."
 
 #: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr "Signaturen er OK, men certifikatet kunne ikke valideres."
+msgstr "Underskriften er OK, men certifikatet kunne ikke valideres."
 
 #: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
@@ -3038,7 +3040,7 @@ msgstr "Gemmer..."
 
 #: src/control/Toolbar.js:299
 msgid "Renaming..."
-msgstr "Omdøb..."
+msgstr "Omdøber..."
 
 #: src/control/Toolbar.js:795
 msgid "Insert hyperlink"
@@ -3046,7 +3048,7 @@ msgstr "Indsæt hyperlink"
 
 #: src/control/Toolbar.js:819
 msgid "Link"
-msgstr "Hyperlink"
+msgstr "Link"
 
 #: src/control/VRuler.ts:359
 msgid "Top Margin"
@@ -3106,7 +3108,7 @@ msgstr "Fra start"
 
 #: src/control/jsdialog/Definitions.Menu.ts:440
 msgid "From Current Slide"
-msgstr "Fra nuværende dias"
+msgstr "Fra nuværende slide"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:119
 msgid "Dismiss"
@@ -3173,7 +3175,7 @@ msgstr "Funktionsvalg"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:145
 msgid "Number of Slides"
-msgstr "Antal dias"
+msgstr "Antal slides"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:163
 #: src/control/jsdialog/Widget.HTMLContent.ts:175
@@ -3194,7 +3196,8 @@ msgstr "Flere indstillinger for {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
-msgstr "Overskrifter og objekter, som du tilføjer til dokumentet, vil vises her"
+msgstr ""
+"Overskrifter og objekter, som du tilføjer til dokumentet, bliver vist her"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -3202,7 +3205,7 @@ msgstr "Ups, der opstod et problem med at forbinde til {productname}: "
 
 #: src/core/Socket.js:693
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Serveren er nu tilgængelig. Vi skal genindlæse siden nu."
+msgstr "Serveren er nu tilgængelig. Vi er nødt til at genindlæse siden."
 
 #: src/core/Socket.js:695
 msgid "Server is now reachable..."
@@ -3218,13 +3221,14 @@ msgstr ""
 
 #: src/core/Socket.js:715
 msgid "Wrong server, reconnecting..."
-msgstr "Forkert server, genskaber forbindelse..."
+msgstr "Forkert server, genetablerer forbindelse..."
 
 #: src/core/Socket.js:724
 msgid "COOLWSD version:"
 msgstr "COOLWSD-version:"
 
 #: src/core/Socket.js:749
+#, fuzzy
 msgid "Served by:"
 msgstr "Server drevet af:"
 
@@ -3250,7 +3254,7 @@ msgstr "Server lukker ned for vedligeholdelse (auto-gem)"
 
 #: src/core/Socket.js:927
 msgid "Oops, there is a problem connecting the document"
-msgstr "Ups, der er et problem med at forbinde til dokumentet"
+msgstr "Ups, der er et problem med at skabe forbindelse til dokumentet"
 
 #: src/core/Socket.js:931
 msgid "Server is down, restarting automatically. Please wait."
@@ -3278,15 +3282,15 @@ msgstr "Genindlæser dokumentet efter omdøbning"
 
 #: src/core/Socket.js:1129
 msgid "Document requires password to view."
-msgstr "Dokumentet kræver et kodeord for at kunne ses."
+msgstr "Dokumentet kræver en adgangskode for at blive vist."
 
 #: src/core/Socket.js:1132
 msgid "Document requires password to modify."
-msgstr "Dokumentet kræver et kodeord for at kunne ændres."
+msgstr "Dokumentet kræver en adgangskode for at kunne ændres."
 
 #: src/core/Socket.js:1134
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Klik på Annuller for at for at åbne i skrivebeskyttet tilstand."
+msgstr "Klik på Annullér for at for at åbne i skrivebeskyttet tilstand."
 
 #: src/core/Socket.js:1138
 msgid "Wrong password provided. Please try again."
@@ -3294,7 +3298,7 @@ msgstr "Forkert adgangskode. Prøv igen."
 
 #: src/core/Socket.js:1176
 msgid "Only the document owner can change the password."
-msgstr "Kun dokumentets ejer kan ændre kodeordet."
+msgstr "Kun dokumentets ejer kan ændre adgangskoden."
 
 #: src/core/Socket.js:1207 src/core/Socket.js:1212
 msgid "Missing Fonts"
@@ -3350,15 +3354,16 @@ msgstr "Dokumentet er blevet ændret"
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
-msgstr "Dokumentet i lageret er ændret. Hvad vil du gøre med dine ændringer?"
+msgstr ""
+"Dokumentet i lageret er ændret. Hvad vil du gøre med dine ugemte ændringer?"
 
 #: src/core/Socket.js:1712
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"Øhh, det er pinligt, vi kan ikke komme i forbindelse med dit dokument. Prøv "
-"venligst igen."
+"Øhh, det her er pinligt, men vi kan ikke skabe forbindelse til dit dokument. "
+"Prøv igen."
 
 #: src/core/Socket.js:1729
 msgid "Reconnecting..."
@@ -3370,7 +3375,7 @@ msgstr "Forbindelsen til serveren er blevet afbrudt."
 
 #: src/docdispatcher.ts:514
 msgid "Are you sure you want to delete this slide?"
-msgstr "Er du sikker på, at du vil slette dette dias?"
+msgstr "Er du sikker på, at du vil slette dette slide?"
 
 #: src/docdispatcher.ts:517
 msgid "Are you sure you want to delete this page?"
@@ -3405,8 +3410,8 @@ msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"Værtens URL er tom. Coolwsd-serveren er sandsynligvis fejlkonfigureret, "
-"kontakt venligst administratoren."
+"Host URL er tom. Coolwsd-serveren er sandsynligvis fejlkonfigureret, kontakt "
+"venligst administratoren."
 
 #: src/errormessages.js:24
 msgid ""
@@ -3429,24 +3434,24 @@ msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Denne service er begrænset af admin, til {0} dokumenter og {1} forbindelser "
-"i alt. Denne begrænsning er nået. Prøv venligst senere."
+"Administrator har begrænset adgangen til {0} dokumenter og {1} forbindelser "
+"i alt. Denne grænse er i øjeblikket nået. Prøv igen senere."
 
 #: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Servicen er utilgængelig. Prøv venligst igen senere eller rapporter til din "
-"administrator hvis problemet fortsætter."
+"Servicen er utilgængelig. Prøv venligst igen senere eller rapportér til din "
+"administrator, hvis problemet fortsætter."
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Uautoriseret WOPI-vært. Prøv venligst igen senere eller rapportér til din "
-"administrator hvis problemet fortsætter."
+"Uautoriseret WOPI-vært. Prøv igen senere eller rapportér til din "
+"administrator, hvis problemet fortsætter."
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
@@ -3462,7 +3467,7 @@ msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Din session vil udløbe om {time}. Gem venligst dit arbejde og genindlæs "
+"Din session vil udløbe om {time}. Gem venligst dit arbejde, og genindlæs "
 "sessionen (eller hjemmesiden) for at fortsætte. Du skal muligvis logge ind "
 "igen."
 
@@ -3473,7 +3478,7 @@ msgid ""
 "to login again."
 msgstr ""
 "Din session er udløbet. Yderligere dokumentændringer bliver muligvis ikke "
-"gemt. Opdatér venligst sessionen (eller websiden) for at fortsætte. Du skal "
+"gemt. Genindlæs sessionen (eller websiden) for at fortsætte. Du skal "
 "muligvis logge ind igen."
 
 #: src/errormessages.js:33
@@ -3481,7 +3486,7 @@ msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"Kunne ikke indlæse dokumentet. Kontroller venligst at filtypen er "
+"Kunne ikke indlæse dokumentet. Kontrollér venligst at filtypen er "
 "understøttet og ubeskadiget, og prøv igen."
 
 #: src/errormessages.js:34
@@ -3523,6 +3528,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
+"Din {productname}-klynge ser ud til at være konfigureret forkert eller i "
+"gang med hurtig skalering – kontakt venligst din systemadministrator. Hvis "
+"du fortsætter med at redigere, kan det medføre, at brugere ikke ser "
+"hinanden, at der opstår konflikter i dokumentlagringen og/eller problemer "
+"med kopier og indsæt. Forventet server-ID {0} for routeToken {1}, men der "
+"blev oprettet forbindelse til server-ID {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -3625,11 +3636,11 @@ msgstr "Dokumentet kan ikke eksporteres. Prøv igen."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
-msgstr "Upload af filen til server slog fejl, filen ikke fundet."
+msgstr "Upload af filen til serveren mislykkedes, filen blev ikke fundet."
 
 #: src/errormessages.js:65
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Upload af filen til server slog fejl, filen er for stor."
+msgstr "Upload af filen til serveren mislykkedes. Filen er for stor."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
@@ -3713,13 +3724,13 @@ msgstr "Ingen Kommentarer"
 
 #: src/main.js:141
 msgid "Warning! The browser you are using is not supported."
-msgstr "Advarsel! Du bruger en browser der ikke er understøttet."
+msgstr "Advarsel! Du bruger en browser, der ikke er understøttet."
 
 #: src/map/Clipboard.js:176
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"For at indsætte uden for {productname} klikker du først må knappen '"
+"For at indsætte uden for {productname} skal du først klikke på knappen '"
 "Download\""
 
 #: src/map/Clipboard.js:184
@@ -3814,7 +3825,7 @@ msgstr "Udskriftsdialog"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
 msgid "Empty Slide Show"
-msgstr "Tomt diasshow"
+msgstr "Tomt slideshow"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:692
@@ -3829,7 +3840,7 @@ msgid ""
 "sharing."
 msgstr ""
 "Præsentation blev blokeret. Tillad venligst pop-ups i din browser. Dette gør "
-"det muligt at vise dit diasshow i et særskilt vindue, og gør det nemt at "
+"det muligt at vise dit slideshow i et særskilt vindue, og gør det nemt at "
 "dele din skærm."
 
 #: src/map/handler/Map.SlideShow.js:172
@@ -3889,11 +3900,11 @@ msgstr "Filnavnet skal indeholde en filendelse."
 
 #: src/map/handler/Map.WOPI.js:699
 msgid "Creating copy..."
-msgstr "Oprette kopi..."
+msgstr "Opretter kopi..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr "Dialogen Velkommen"
+msgstr "Velkomstdialogen"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
@@ -3901,11 +3912,11 @@ msgstr "Pause... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr "Nuværende dias"
+msgstr "Nuværende slide"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
-msgstr "Næste dias"
+msgstr "Næste slide"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
@@ -3933,11 +3944,11 @@ msgstr "Zoom ud"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr "Preview dias {1}"
+msgstr "Preview slide {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
-msgstr "Dias {0} af {1}"
+msgstr "Slide {0} af {1}"
 
 #: src/slideshow/PresenterConsole.js:1242
 msgid "No Notes"
@@ -4029,6 +4040,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #, fuzzy
 #~ msgid "Please use the paste buttons on your on-screen keyboard."
