@@ -28,6 +28,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._complete = false;
 		this._closed = false;
 		this._isLargeCopy = false;
+		this._infinite = true;
 	},
 
 	_userAlreadyWarned: function () {
@@ -82,19 +83,19 @@ L.Control.DownloadProgress = L.Control.extend({
 		var buttonText = _('Cancel');
 
 		if (inSnackbar) {
-			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this));
+			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this), undefined, undefined, this._infinite);
 		} else if (this._isLargeCopy) {
 			// downloading for copy, next: show download complete dialog
 			buttonText = _('Copy') + app.util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
-				buttonText, this._onConfirmCopyAction.bind(this), 0, this._onClose.bind(this));
+				buttonText, this._onConfirmCopyAction.bind(this), 0, this._onClose.bind(this), this._infinite);
 
 			JSDialog.enableButtonInModal(modalId, modalId + '-response', false);
 		} else {
 			// downloading for paste, next: dialog will disappear
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
-				'', this._onClose.bind(this), 0, this._onClose.bind(this));
+				'', this._onClose.bind(this), 0, this._onClose.bind(this), this._infinite);
 		}
 	},
 
@@ -208,10 +209,10 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	setValue: function (value) {
 		if (this._userAlreadyWarned())
-			this._map.uiManager.setSnackbarProgress(Math.round(value));
+			this._map.uiManager.setSnackbarProgress(Math.round(value), this._infinite);
 		else {
 			var modalId = this._getDownloadProgressDialogId();
-			this._map.uiManager.setDialogProgress(modalId, Math.round(value));
+			this._map.uiManager.setDialogProgress(modalId, Math.round(value), this._infinite);
 		}
 	},
 

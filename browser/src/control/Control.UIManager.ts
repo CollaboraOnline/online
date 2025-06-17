@@ -1510,6 +1510,7 @@ class UIManager extends L.Control {
 	 * @param timeout - Duration before auto-dismiss.
 	 * @param hasProgress - Whether to show a progress bar.
 	 * @param withDismiss - Whether a dismiss button is included.
+	 * @param infinite - If true, shows an indeterminate progress bar.
 	 */
 	showSnackbar(
 		label: string,
@@ -1531,16 +1532,18 @@ class UIManager extends L.Control {
 		callback: any,
 		timeout?: number,
 		withDismiss?: boolean,
+		infinite?: boolean,
 	): void {
-		JSDialog.SnackbarController.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss);
+		JSDialog.SnackbarController.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss, infinite);
 	}
 
 	/**
 	 * Updates the progress value on the snackbar.
 	 * @param value - Progress value (0–100).
+	 * @param infinite - If true, shows an indeterminate progress bar.
 	 */
-	setSnackbarProgress(value: number): void {
-		JSDialog.SnackbarController.setSnackbarProgress(value);
+	setSnackbarProgress(value: number, infinite?: boolean): void {
+		JSDialog.SnackbarController.setSnackbarProgress(value, infinite);
 	}
 
 	// Modals
@@ -1744,6 +1747,7 @@ class UIManager extends L.Control {
 		callback: any,
 		value?: number,
 		cancelCallback?: any,
+		infinite: boolean = false,
 	): void {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';
@@ -1765,7 +1769,8 @@ class UIManager extends L.Control {
 				id: dialogId + '-progressbar',
 				type: 'progressbar',
 				value: (value !== undefined && value !== null ? value: 0),
-				maxValue: 100
+				maxValue: 100,
+				infinite: infinite
 			},
 			{
 				id: '',
@@ -1809,8 +1814,9 @@ class UIManager extends L.Control {
 	/**
 	 * Updates the progress value in a progress dialog.
 	 * @param value - Progress value (0–100).
+	 * @param infinite - If true, shows an indeterminate progress bar.
 	 */
-	setDialogProgress(id: string, value: number): void {
+	setDialogProgress(id: string, value: number, infinite: boolean): void {
 		if (!app.socket)
 			return;
 
@@ -1825,7 +1831,8 @@ class UIManager extends L.Control {
 				id: dialogId + '-progressbar',
 				type: 'progressbar',
 				value: value,
-				maxValue: 100
+				maxValue: 100,
+				infinite: infinite
 			}
 		};
 
