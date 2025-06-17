@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
 "PO-Revision-Date: 2025-06-13 12:21+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
 "Language: da\n"
@@ -2938,7 +2938,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr "Hvor kan jeg ikke slette tekst? Den bliver bare gennemstreget."
+msgstr "Hvorfor kan jeg ikke slette tekst? Den bliver bare gennemstreget."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:716-5
 msgid ""
@@ -3048,7 +3048,7 @@ msgstr "Indstil sidemarginerne i dialogen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:741-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "Hvordan ændrer jeg sideorienteringen til liggende i mit dokument."
+msgstr "Hvordan ændrer jeg sideorienteringen til liggende i mit dokument"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:743-11
 msgid ""
@@ -3109,7 +3109,7 @@ msgid ""
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Klik på ikonet Klon formatering  <img class=\"icon-size\" alt=\"\" src=\""
+"Klik på ikonet Klon formatering <img class=\"icon-size\" alt=\"\" src=\""
 "images/lc_formatpaintbrush.svg\" />. Musemarkøren bliver til en malerbøtte."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
@@ -3194,11 +3194,10 @@ msgid ""
 ">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
 "opens to let you describe the precise format of the CSV data."
 msgstr ""
-"Indsæt fra netlæseren <span class=\"ui\">Rediger</span> → <span class=\"ui\""
-">Indsæt</span> eller tryk på <span class=\"ui\">Ctrl</span></kbd><span class="
-"\"kbd--plus\">+</span><kbd><span class=\"ui\">V</span>. Dialogen <span class="
-"\"ui\">Tekstimport</span> åbnes for at lade dig beskrive det præcise format "
-"på CSV-dataene."
+"Indsæt fra browser <span class=\"ui\">Rediger</span> → <span class=\"ui\""
+">Indsæt</span>, eller tryk på<kbd>Ctr</kbd><span class=\"kbd--plus\""
+">+</span><kbd><kbd>V</kbd>. Dialogen <span class=\"ui\">Tekstimport</span> "
+"åbnes for at lade dig beskrive det præcise format på CSV-dataene."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:789-31
 msgid "import"
