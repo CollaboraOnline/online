@@ -20,11 +20,15 @@ SUBDIRS = gtk browser
 run:
 	gtk/mobile $(abs_top_builddir)/test/samples/writer-edit.fodt
 else
+if ENABLE_QTAPP
+SUBDIRS = qt browser
+else
 if ENABLE_WASM
 SUBDIRS = wasm browser
 else !ENABLE_WASM
 SUBDIRS = browser
 endif !ENABLE_WASM
+endif
 endif
 
 else
