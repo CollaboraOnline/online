@@ -21,7 +21,6 @@
 
 #if !MOBILEAPP
 #include "SigHandlerTrap.hpp"
-#include <dlfcn.h>
 #endif
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
@@ -50,6 +49,9 @@
 
 #if defined __GLIBC__
 #include <malloc.h>
+#if defined(M_TRIM_THRESHOLD)
+#include <dlfcn.h>
+#endif
 #endif
 
 #include <atomic>
