@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 18:27+0200\n"
+"POT-Creation-Date: 2025-06-17 22:32+0200\n"
 "PO-Revision-Date: 2025-05-28 20:18+0000\n"
 "Last-Translator: Kieli Puoli <kielipuoli@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1484,18 +1484,21 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:210-9
 #: html/cool-help.html%2Bdiv.div.div.h2:275-9
+#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "Tekstin valinta ja siirtyminen asiakirjassa"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-38
+#, fuzzy
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "Siirry ja valitse tekstiä asiakirjan alkuun"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-38
+#, fuzzy
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "Siirry ja valitse tekstiä asiakirjan loppuun"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:240-9
 msgid "Slide keyboard shortcuts"
@@ -2752,8 +2755,9 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:761-5
+#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr ""
+msgstr "Käytä Otsikko 1 -kappaletyyliä"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:763-11
 msgid "Place the cursor at the paragraph to be formatted"

@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 18:27+0200\n"
+"POT-Creation-Date: 2025-06-17 22:32+0200\n"
 "PO-Revision-Date: 2025-05-27 06:23+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: sv\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -216,7 +216,7 @@ msgstr "Uppdatera logg"
 msgid "Channel Filter:"
 msgstr "Kanalfilter:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:486
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "Ingen"
@@ -233,7 +233,7 @@ msgstr "Loggnivåer"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:435 src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:435 src/core/Socket.js:1208 src/core/Socket.js:1213
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Stäng"
@@ -291,7 +291,7 @@ msgstr "Varning"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:878 src/app/Debug.ts:1383
+#: admin/src/integrator/AdminIntegratorSettings.ts:921 src/app/Debug.ts:1383
 #: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
@@ -301,11 +301,11 @@ msgstr "Varning"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:480 src/control/Permission.js:89
+#: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:741 src/control/Toolbar.js:840
-#: src/core/Socket.js:712 src/core/Socket.js:1177 src/core/Socket.js:1247
-#: src/core/Socket.js:1398 src/core/Socket.js:1402 src/docdispatcher.ts:524
+#: src/core/Socket.js:713 src/core/Socket.js:1178 src/core/Socket.js:1248
+#: src/core/Socket.js:1399 src/core/Socket.js:1403 src/docdispatcher.ts:524
 #: src/main.js:86 src/main.js:89 src/main.js:142 src/map/Clipboard.js:1292
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
@@ -324,13 +324,13 @@ msgstr "OK"
 #: src/canvas/sections/CommentSection.ts:165
 #: src/canvas/sections/CommentSection.ts:168
 #: src/control/Control.DocumentRepair.js:71
-#: src/control/Control.DownloadProgress.js:82
+#: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1700 src/control/Control.UIManager.ts:1779
-#: src/control/Control.UIManager.ts:1931 src/control/Control.UIManager.ts:2109
+#: src/control/Control.UIManager.ts:1703 src/control/Control.UIManager.ts:1784
+#: src/control/Control.UIManager.ts:1938 src/control/Control.UIManager.ts:2116
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:835
-#: src/core/Socket.js:1423
+#: src/core/Socket.js:1424
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -370,11 +370,19 @@ msgstr "Är du säker på att du vill stänga av servern?"
 msgid "Accessibility"
 msgstr "Tillgänglighet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:146
+#: admin/src/integrator/AdminIntegratorSettings.ts:149
+msgid "Invalid JSON file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:153
+msgid "Error reading file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
 msgstr "Autotext"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:148
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -382,15 +390,15 @@ msgstr ""
 "Ladda upp återanvändbara textutdrag (.bau). För att infoga texten i "
 "dokumentet, skriv genvägen för en AutoText-post och tryck på F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:154
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
 msgstr "Ladda upp Autotext"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:158
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
 msgstr "Anpassade ordböcker"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -398,55 +406,61 @@ msgstr ""
 "Lägg till eller redigera ord i en egen ordlista. Ord i din ordlista (.dic) "
 "kommer att vara tillgänglig för stavningskontroll."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:166
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
 msgstr "Ladda upp Wordbook-ordlista"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:170
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:171
+#: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
 msgstr "Ställ in gränssnittspreferenser."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:177
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
 msgstr "Ladda upp konfiguration"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
 msgstr "Dokument inställningar"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:183
+#: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
 msgstr "Justera hur Office-dokument beter sig."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:189
+#: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
 msgstr "Ladda upp Xcu-inställningar"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:238
+#: admin/src/integrator/AdminIntegratorSettings.ts:252
+msgid ""
+"Interface settings file is not valid JSON. Please check the file and try "
+"again."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
 msgstr "Delad konfigurations-URL saknas i initiala variabler."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:244
+#: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
 msgstr "Access-token saknas i initiala variabler."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:273
+#: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Något gick fel. Prova att ladda om sidan."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:346
+#: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
 "Något gick fel vid hämtningen av inställningsfilen. Prova att ladda om sidan."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:371
+#: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
@@ -454,47 +468,47 @@ msgstr ""
 "Något gick fel vid hämtningen av en wordbook-ordlista. Prova att ladda om "
 "sidan."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:406
+#: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Något gick fel vid uppladdningen av filen. Försök igen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:532
+#: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr "Något gick fel vid borttagningen av filen. Prova att ladda om sidan."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:591
+#: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
 msgstr "Visa inställningar"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:595
+#: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
 msgstr "Justera vyinställningarna."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:607
+#: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
 msgstr "Alternativ"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:674
+#: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 "(Varning: För att byta läge behöver tillgänglighetsinställningen på servern "
 "aktiveras)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:717
+#: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
 msgstr "Återställ till standard Vyinställningar"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:731
+#: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
 msgstr "Är du säker på att du vill återställa vyinställningarna?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:749
+#: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
 msgstr "Spara vyinställningarna"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:866
+#: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
 msgstr "Fel"
@@ -607,15 +621,15 @@ msgstr " minuter"
 msgid " s"
 msgstr " sekunder"
 
-#: js/global.js:1547
+#: js/global.js:1570
 msgid "Cluster is scaling, retrying..."
 msgstr "Klustret skalas, försöker igen..."
 
-#: js/global.js:1549
+#: js/global.js:1572
 msgid "Document is migrating to new server, retrying..."
 msgstr "Dokumentet migreras till en ny server, försöker igen..."
 
-#: js/global.js:1551
+#: js/global.js:1574
 msgid "Failed to get RouteToken from controller"
 msgstr "Misslyckades att hämta Vägtoken från kontrollern"
 
@@ -685,7 +699,7 @@ msgid "Open in full view"
 msgstr "Öppna i helskärm"
 
 #: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1938
+#: src/control/Control.JSDialogBuilder.js:1946
 #: src/layer/tile/CanvasTileLayer.js:3525
 #: src/layer/tile/CanvasTileLayer.js:3536
 msgid "Comment"
@@ -708,7 +722,7 @@ msgstr ""
 "En annan användare har uppdaterat kommentaren. Vill du skriva över dessa "
 "ändringar?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1427
+#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1428
 msgid "Overwrite"
 msgstr "Skriv över"
 
@@ -747,7 +761,7 @@ msgstr "Avslå ändring"
 msgid "Resolved"
 msgstr "Löst"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:418
+#: src/canvas/sections/ShapeHandlesSection.ts:448
 msgid "Document contains unsupported media"
 msgstr "Dokumentet innehåller video-format som inte stöds"
 
@@ -902,11 +916,11 @@ msgstr "Gör om"
 msgid "Undo"
 msgstr "Ångra"
 
-#: src/control/Control.DownloadProgress.js:42
+#: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
 msgstr "Ladda ned vald"
 
-#: src/control/Control.DownloadProgress.js:47
+#: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
@@ -914,7 +928,7 @@ msgstr ""
 "Om du vill dela stora element utanför {productname} är det nödvändigt att "
 "först ladda ner dem."
 
-#: src/control/Control.DownloadProgress.js:60
+#: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:215
 #: src/control/Control.NotebookbarDraw.js:232
 #: src/control/Control.NotebookbarImpress.js:296
@@ -922,30 +936,30 @@ msgstr ""
 msgid "Download"
 msgstr "Ladda ner"
 
-#: src/control/Control.DownloadProgress.js:81
+#: src/control/Control.DownloadProgress.js:82
 msgid "Downloading clipboard content"
 msgstr "Laddar ner urklippsinnehåll"
 
-#: src/control/Control.DownloadProgress.js:88
-#: src/control/Control.DownloadProgress.js:113
+#: src/control/Control.DownloadProgress.js:89
+#: src/control/Control.DownloadProgress.js:114
 #: src/control/Control.PartsPreview.js:297
 msgid "Copy"
 msgstr "Kopiera"
 
-#: src/control/Control.DownloadProgress.js:111
+#: src/control/Control.DownloadProgress.js:112
 msgid "Download completed and ready to be copied to clipboard."
 msgstr "Nedladdningen är klar och redo att kopieras till urklipp."
 
-#: src/control/Control.DownloadProgress.js:112
+#: src/control/Control.DownloadProgress.js:113
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr "Från och med nu visas urklippsunderrättelser diskret längst ner."
 
-#: src/control/Control.DownloadProgress.js:272
+#: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
 msgstr "Innehållet har kopierats till urklipp"
 
-#: src/control/Control.DownloadProgress.js:302
+#: src/control/Control.DownloadProgress.js:303
 msgid "Download failed"
 msgstr "Nedladdningen misslyckades"
 
@@ -1303,95 +1317,95 @@ msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Inaktivt dokument - vänligen klicka för att ladda om och återuppta redigering"
 
-#: src/control/Control.JSDialog.js:318
+#: src/control/Control.JSDialog.js:322
 msgid "Close dialog"
 msgstr "Stäng dialogrutan"
 
-#: src/control/Control.JSDialogBuilder.js:489
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "Stabil"
 
-#: src/control/Control.JSDialogBuilder.js:492
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Linjär"
 
-#: src/control/Control.JSDialogBuilder.js:495
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Radiell"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Elliptisk"
 
-#: src/control/Control.JSDialogBuilder.js:505
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: src/control/Control.JSDialogBuilder.js:508
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Kvadrat"
 
-#: src/control/Control.JSDialogBuilder.js:511
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Fixerad storlek"
 
-#: src/control/Control.JSDialogBuilder.js:1468
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "From"
 msgstr "Från"
 
-#: src/control/Control.JSDialogBuilder.js:1471
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "To"
 msgstr "Till"
 
-#: src/control/Control.JSDialogBuilder.js:1474
+#: src/control/Control.JSDialogBuilder.js:1480
 msgid "Color"
 msgstr "Färg"
 
-#: src/control/Control.JSDialogBuilder.js:1550
+#: src/control/Control.JSDialogBuilder.js:1556
 msgid "Select range"
 msgstr "Välj intervall"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1675
 #: src/control/Control.NotebookbarBuilder.js:154
 msgid "Font Name"
 msgstr "Teckensnitt"
 
-#: src/control/Control.JSDialogBuilder.js:1669 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1677 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Teckensnittsstorlek"
 
-#: src/control/Control.JSDialogBuilder.js:1671
+#: src/control/Control.JSDialogBuilder.js:1679
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Format"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1932
 msgid "reply"
 msgstr "svara"
 
-#: src/control/Control.JSDialogBuilder.js:1927
+#: src/control/Control.JSDialogBuilder.js:1935
 msgid "replies"
 msgstr "svar"
 
-#: src/control/Control.JSDialogBuilder.js:2002
+#: src/control/Control.JSDialogBuilder.js:2010
 msgid "Insert Comment"
 msgstr "Infoga kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2586
+#: src/control/Control.JSDialogBuilder.js:2597
 #: src/control/Control.Menubar.ts:973
 msgid "Rows"
 msgstr "Rader"
 
-#: src/control/Control.JSDialogBuilder.js:2587
+#: src/control/Control.JSDialogBuilder.js:2598
 #: src/control/Control.Menubar.ts:976
 msgid "Columns"
 msgstr "Kolumner"
 
-#: src/control/Control.JSDialogBuilder.js:2607
+#: src/control/Control.JSDialogBuilder.js:2618
 msgid "Insert Table"
 msgstr "Infoga Tabell"
 
@@ -2059,15 +2073,15 @@ msgstr "Dölj sökfältet"
 msgid "Clear the search field"
 msgstr "Töm sökfältet"
 
-#: src/control/Control.MobileWizardBuilder.js:547
+#: src/control/Control.MobileWizardBuilder.js:546
 msgid "Background Color"
 msgstr "Bakgrundsfärg"
 
-#: src/control/Control.MobileWizardBuilder.js:549
+#: src/control/Control.MobileWizardBuilder.js:548
 msgid "Gradient Start"
 msgstr "Toning startfärg"
 
-#: src/control/Control.MobileWizardBuilder.js:551
+#: src/control/Control.MobileWizardBuilder.js:550
 msgid "Gradient End"
 msgstr "Toning slutfärg"
 
@@ -2089,7 +2103,6 @@ msgid "Outline"
 msgstr "Översikt"
 
 #: src/control/Control.NavigatorPanel.ts:158
-#: src/control/Control.NavigatorPanel.ts:164
 msgid "Navigator"
 msgstr "Navigatör"
 
@@ -2793,7 +2806,7 @@ msgstr ""
 "Dokumentet innehåller några citat som kan vara oåtkomliga genom webb-API. "
 "Det kan orsaka vissa problem när du redigerar citat eller bibliografi."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Läser in..."
 
@@ -2951,7 +2964,7 @@ msgstr "Infoga tabbstopp"
 msgid "Delete tabstop"
 msgstr "Ta bort tabbstopp"
 
-#: src/control/Parts.js:480
+#: src/control/Parts.js:483
 msgid "Show sheets"
 msgstr "Visa blad"
 
@@ -3111,7 +3124,7 @@ msgstr "Från början"
 msgid "From Current Slide"
 msgstr "Från aktuell bild"
 
-#: src/control/jsdialog/Util.SnackbarController.ts:119
+#: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
 msgstr "Avfärda"
 
@@ -3203,63 +3216,63 @@ msgstr "Rubriker och objekt som du lägger till i dokumentet visas här"
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Oj, det är problem med att ansluta {productname}: "
 
-#: src/core/Socket.js:693
+#: src/core/Socket.js:694
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Tjänsten är tillgänlig igen. Vi uppdaterar sidan nu."
 
-#: src/core/Socket.js:695
+#: src/core/Socket.js:696
 msgid "Server is now reachable..."
 msgstr "Tjänsten är tillgänglig igen ..."
 
-#: src/core/Socket.js:699
+#: src/core/Socket.js:700
 msgid "RELOAD"
 msgstr "LADDA OM"
 
-#: src/core/Socket.js:712
+#: src/core/Socket.js:713
 msgid "Cluster configuration warning"
 msgstr "Kluster-konfigurationsvarning"
 
-#: src/core/Socket.js:715
+#: src/core/Socket.js:716
 msgid "Wrong server, reconnecting..."
 msgstr "Fel server, försöker ansluta igen ..."
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:725
 msgid "COOLWSD version:"
 msgstr "COOLWSD-version:"
 
-#: src/core/Socket.js:749
+#: src/core/Socket.js:750
 msgid "Served by:"
 msgstr "Tjänsten tillhandahålls av:"
 
-#: src/core/Socket.js:755
+#: src/core/Socket.js:756
 msgid "Unsupported server version."
 msgstr "Serverversionen stöds ej."
 
-#: src/core/Socket.js:759
+#: src/core/Socket.js:760
 msgid "LOKit version:"
 msgstr "LOKit-version:"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:884
 msgid "Document is getting migrated"
 msgstr "Dokumentet håller på att migreras"
 
-#: src/core/Socket.js:910
+#: src/core/Socket.js:911
 msgid "Session terminated by document owner"
 msgstr "Sessionen har avslutats av dokumentets ägare"
 
-#: src/core/Socket.js:921
+#: src/core/Socket.js:922
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Servern stängs för underhåll (autosparar)"
 
-#: src/core/Socket.js:927
+#: src/core/Socket.js:928
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oj, det är problem med att ansluta dokumentet"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:932
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Tjänsten är nere och startas om automatiskt. Vänta lite."
 
-#: src/core/Socket.js:958
+#: src/core/Socket.js:959
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -3267,7 +3280,7 @@ msgstr ""
 "Dokumentet har ändrats på lagringen. Läser in det nya dokumentet. Din "
 "version finns tillgänglig som en revision."
 
-#: src/core/Socket.js:964
+#: src/core/Socket.js:965
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -3275,79 +3288,79 @@ msgstr ""
 "Återställer äldre omarbetning. Eventuella ändringar som inte sparats kommer "
 "att finnas tillgängliga i versionshistoriken"
 
-#: src/core/Socket.js:970
+#: src/core/Socket.js:971
 msgid "Reloading the document after rename"
 msgstr "Ladda om dokumentet efter att ha bytt namn"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Document requires password to view."
 msgstr "För att kunna visa dokumentet krävs ett lösenord."
 
-#: src/core/Socket.js:1132
+#: src/core/Socket.js:1133
 msgid "Document requires password to modify."
 msgstr "För att kunna redigera dokumentet krävs ett lösenord."
 
-#: src/core/Socket.js:1134
+#: src/core/Socket.js:1135
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klicka på avbryt för att öppna i skrivskyddat läge."
 
-#: src/core/Socket.js:1138
+#: src/core/Socket.js:1139
 msgid "Wrong password provided. Please try again."
 msgstr "Felaktigt lösenord. Försök igen."
 
-#: src/core/Socket.js:1176
+#: src/core/Socket.js:1177
 msgid "Only the document owner can change the password."
 msgstr "Endast dokumentägaren kan ändra lösenordet."
 
-#: src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:1208 src/core/Socket.js:1213
 msgid "Missing Fonts"
 msgstr "Saknar teckensnitt"
 
-#: src/core/Socket.js:1244
+#: src/core/Socket.js:1245
 msgid "Someone"
 msgstr "Någon"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1246
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} sparade detta dokument som {filename}. Vill du vara med?"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1263
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentet byter namn och laddas snart om"
 
-#: src/core/Socket.js:1265
+#: src/core/Socket.js:1266
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Dokumentet växlar till offlineläge och kommer att laddas om inom kort"
 
-#: src/core/Socket.js:1347
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Ansluter..."
 
-#: src/core/Socket.js:1362
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Servern stängs av"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Exported to storage"
 msgstr "Exporterad till lagring"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Successfully exported: "
 msgstr "Har exporterats: "
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1427
 msgid "Discard"
 msgstr "Glöm"
 
-#: src/core/Socket.js:1438
+#: src/core/Socket.js:1439
 msgid "Save to new file"
 msgstr "Spara i en ny fil"
 
-#: src/core/Socket.js:1448
+#: src/core/Socket.js:1449
 msgid "Document has been changed"
 msgstr "Dokumentet har ändrats"
 
-#: src/core/Socket.js:1449
+#: src/core/Socket.js:1450
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3355,17 +3368,17 @@ msgstr ""
 "Dokumented har ändrats på lagringen. Vad vill du göra med dina inte sparade "
 "ändringar?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1714
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1731
 msgid "Reconnecting..."
 msgstr "Ansluter ..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1741
 msgid "The server has been disconnected."
 msgstr "Tjänsten är bortkopplad."
 
@@ -3393,7 +3406,7 @@ msgstr "Dokumentfärger"
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", klusterkonfigurationsfel: server-id matchar inte"
 
-#: src/dom/NotebookbarAccessibility.js:240
+#: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
 msgstr "{0} fliken vald"
 
@@ -3779,11 +3792,11 @@ msgstr "Stäng popup-fönstret för att ignorera klistra in special"
 msgid "Initializing..."
 msgstr "Initierar..."
 
-#: src/map/Map.js:498 src/map/Map.js:501 src/map/Map.js:504 src/map/Map.js:507
+#: src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503 src/map/Map.js:506
 msgid "Last saved:"
 msgstr "Senast sparad:"
 
-#: src/map/Map.js:1483
+#: src/map/Map.js:1482
 msgid "Please wait!"
 msgstr "Vänligen vänta!"
 

@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 18:27+0200\n"
+"POT-Creation-Date: 2025-06-17 22:32+0200\n"
 "PO-Revision-Date: 2025-05-27 06:23+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: nl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -219,7 +219,7 @@ msgstr "Vernieuw gebeurtenisoverzicht"
 msgid "Channel Filter:"
 msgstr "Kanaal filter:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:486
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "Geen"
@@ -236,7 +236,7 @@ msgstr "Nivo gebeurtenisoverzicht"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:435 src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:435 src/core/Socket.js:1208 src/core/Socket.js:1213
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Sluiten"
@@ -293,7 +293,7 @@ msgstr "Waarschuwing"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:878 src/app/Debug.ts:1383
+#: admin/src/integrator/AdminIntegratorSettings.ts:921 src/app/Debug.ts:1383
 #: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
@@ -303,11 +303,11 @@ msgstr "Waarschuwing"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:480 src/control/Permission.js:89
+#: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:741 src/control/Toolbar.js:840
-#: src/core/Socket.js:712 src/core/Socket.js:1177 src/core/Socket.js:1247
-#: src/core/Socket.js:1398 src/core/Socket.js:1402 src/docdispatcher.ts:524
+#: src/core/Socket.js:713 src/core/Socket.js:1178 src/core/Socket.js:1248
+#: src/core/Socket.js:1399 src/core/Socket.js:1403 src/docdispatcher.ts:524
 #: src/main.js:86 src/main.js:89 src/main.js:142 src/map/Clipboard.js:1292
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
@@ -326,13 +326,13 @@ msgstr "OK"
 #: src/canvas/sections/CommentSection.ts:165
 #: src/canvas/sections/CommentSection.ts:168
 #: src/control/Control.DocumentRepair.js:71
-#: src/control/Control.DownloadProgress.js:82
+#: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1700 src/control/Control.UIManager.ts:1779
-#: src/control/Control.UIManager.ts:1931 src/control/Control.UIManager.ts:2109
+#: src/control/Control.UIManager.ts:1703 src/control/Control.UIManager.ts:1784
+#: src/control/Control.UIManager.ts:1938 src/control/Control.UIManager.ts:2116
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:835
-#: src/core/Socket.js:1423
+#: src/core/Socket.js:1424
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -372,25 +372,33 @@ msgstr "Weet u zeker dat u deze server wilt afsluiten?"
 msgid "Accessibility"
 msgstr "Toegankelijkheid"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:146
+#: admin/src/integrator/AdminIntegratorSettings.ts:149
+msgid "Invalid JSON file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:153
+msgid "Error reading file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
 msgstr "Autotekst"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:148
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr "Engels"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:154
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
 msgstr "Upload Autotekst"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:158
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
 msgstr "Aangepaste woordenboeken"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -398,48 +406,54 @@ msgstr ""
 "Woorden aan een spellingcontrolewoordenboek toevoegen, of bewerken. Woorden "
 "in jouw woordenboek (.dic) zullen beschikbaar zijn voor spellingcontrole."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:166
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
 msgstr "Upload woordenboek"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:170
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
 msgstr "Interface"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:171
+#: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
 msgstr "Standaard interfacevoorkeuren instellen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:177
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
 msgstr "Upload configuratie"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
 msgstr "Documentinstellingen"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:183
+#: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
 msgstr "Pas aan hoe kantoordocumenten zich gedragen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:189
+#: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
 msgstr "Upload Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:238
+#: admin/src/integrator/AdminIntegratorSettings.ts:252
+msgid ""
+"Interface settings file is not valid JSON. Please check the file and try "
+"again."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
 msgstr "Gedeelde Config URL ontbreekt in de beginvariabelen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:244
+#: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
 msgstr "Toegangstoken ontbreekt in beginvariabelen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:273
+#: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Er ging iets mis. Probeer de pagina te vernieuwen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:346
+#: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -447,7 +461,7 @@ msgstr ""
 "Er is iets misgegaan tijdens het ophalen van het instellingenbestand. "
 "Probeer de pagina te vernieuwen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:371
+#: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
@@ -455,13 +469,13 @@ msgstr ""
 "Er is iets misgegaan bij het ophalen van het woordenboek. Probeer de pagina "
 "te vernieuwen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:406
+#: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
 "Er is iets misgegaan tijdens het uploaden van het bestand. Probeer het "
 "opnieuw."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:532
+#: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
@@ -469,37 +483,37 @@ msgstr ""
 "Er is iets misgegaan tijdens het verwijderen van het bestand. Probeer de "
 "pagina te venieuwen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:591
+#: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
 msgstr "Instellingen weergeven"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:595
+#: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
 msgstr "Weergave-instellingen aanpassen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:607
+#: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
 msgstr "Optie"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:674
+#: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 "(Waarschuwing: De Server toegankelijkheid moet ingeschakeld zijn om in te "
 "kunnen stellen)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:717
+#: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
 msgstr "Standaard weergave-instellingen herstellen"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:731
+#: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
 msgstr "Weet je zeker dat je de weergave-instellingen opnieuw wilt instellen?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:749
+#: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
 msgstr "Weergave-instellingen opslaan"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:866
+#: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
 msgstr "Fout"
@@ -614,15 +628,15 @@ msgstr " minuten"
 msgid " s"
 msgstr " seconden"
 
-#: js/global.js:1547
+#: js/global.js:1570
 msgid "Cluster is scaling, retrying..."
 msgstr "Cluster is aan het schalen, opnieuw proberen..."
 
-#: js/global.js:1549
+#: js/global.js:1572
 msgid "Document is migrating to new server, retrying..."
 msgstr "Document wordt gemigreerd naar andere server, opnieuw proberen..."
 
-#: js/global.js:1551
+#: js/global.js:1574
 msgid "Failed to get RouteToken from controller"
 msgstr "Verkrijgen RouteToken van controller is niet gelukt"
 
@@ -693,7 +707,7 @@ msgid "Open in full view"
 msgstr "Beeldvullend openen"
 
 #: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1938
+#: src/control/Control.JSDialogBuilder.js:1946
 #: src/layer/tile/CanvasTileLayer.js:3525
 #: src/layer/tile/CanvasTileLayer.js:3536
 msgid "Comment"
@@ -716,7 +730,7 @@ msgstr ""
 "Een andere gebruiker heeft de opmerking bijgewerkt. Wil je deze wijzigingen "
 "overschrijven?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1427
+#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1428
 msgid "Overwrite"
 msgstr "Overschrijven"
 
@@ -755,7 +769,7 @@ msgstr "Wijziging afwijzen"
 msgid "Resolved"
 msgstr "Opgelost"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:418
+#: src/canvas/sections/ShapeHandlesSection.ts:448
 msgid "Document contains unsupported media"
 msgstr "Document bevat niet-ondersteunde media"
 
@@ -915,11 +929,11 @@ msgstr "Opnieuw"
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-#: src/control/Control.DownloadProgress.js:42
+#: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
 msgstr "Selectie downloaden"
 
-#: src/control/Control.DownloadProgress.js:47
+#: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
@@ -927,7 +941,7 @@ msgstr ""
 "Als u grote elementen buiten {productname} wilt delen, moet u deze eerst "
 "downloaden."
 
-#: src/control/Control.DownloadProgress.js:60
+#: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:215
 #: src/control/Control.NotebookbarDraw.js:232
 #: src/control/Control.NotebookbarImpress.js:296
@@ -935,30 +949,30 @@ msgstr ""
 msgid "Download"
 msgstr "Downloaden"
 
-#: src/control/Control.DownloadProgress.js:81
+#: src/control/Control.DownloadProgress.js:82
 msgid "Downloading clipboard content"
 msgstr "Inhoud van het klembord downloaden"
 
-#: src/control/Control.DownloadProgress.js:88
-#: src/control/Control.DownloadProgress.js:113
+#: src/control/Control.DownloadProgress.js:89
+#: src/control/Control.DownloadProgress.js:114
 #: src/control/Control.PartsPreview.js:297
 msgid "Copy"
 msgstr "Kopiëren"
 
-#: src/control/Control.DownloadProgress.js:111
+#: src/control/Control.DownloadProgress.js:112
 msgid "Download completed and ready to be copied to clipboard."
 msgstr "Download voltooid en klaar om naar het klembord te worden gekopieerd."
 
-#: src/control/Control.DownloadProgress.js:112
+#: src/control/Control.DownloadProgress.js:113
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr "Vanaf nu verschijnen klembordmeldingen discreet onderin het scherm."
 
-#: src/control/Control.DownloadProgress.js:272
+#: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
 msgstr "Inhoud gekopieerd naar klembord"
 
-#: src/control/Control.DownloadProgress.js:302
+#: src/control/Control.DownloadProgress.js:303
 msgid "Download failed"
 msgstr "Downloaden mislukt"
 
@@ -1315,95 +1329,95 @@ msgstr "Niet actief document - klik om het bewerken te hervatten"
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Niet actief document - tap om het bewerken te hervatten"
 
-#: src/control/Control.JSDialog.js:318
+#: src/control/Control.JSDialog.js:322
 msgid "Close dialog"
 msgstr "Venster sluiten"
 
-#: src/control/Control.JSDialogBuilder.js:489
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "Vast"
 
-#: src/control/Control.JSDialogBuilder.js:492
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Lineair"
 
-#: src/control/Control.JSDialogBuilder.js:495
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Axiaal"
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Radiaal"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Ellipsoide"
 
-#: src/control/Control.JSDialogBuilder.js:505
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Kwadratisch"
 
-#: src/control/Control.JSDialogBuilder.js:508
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Vierkant"
 
-#: src/control/Control.JSDialogBuilder.js:511
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Vaste afmeting"
 
-#: src/control/Control.JSDialogBuilder.js:1468
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "From"
 msgstr "Van"
 
-#: src/control/Control.JSDialogBuilder.js:1471
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "To"
 msgstr "tot"
 
-#: src/control/Control.JSDialogBuilder.js:1474
+#: src/control/Control.JSDialogBuilder.js:1480
 msgid "Color"
 msgstr "Kleur"
 
-#: src/control/Control.JSDialogBuilder.js:1550
+#: src/control/Control.JSDialogBuilder.js:1556
 msgid "Select range"
 msgstr "Bereik selecteren"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1675
 #: src/control/Control.NotebookbarBuilder.js:154
 msgid "Font Name"
 msgstr "Naam lettertype"
 
-#: src/control/Control.JSDialogBuilder.js:1669 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1677 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Lettergrootte"
 
-#: src/control/Control.JSDialogBuilder.js:1671
+#: src/control/Control.JSDialogBuilder.js:1679
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Opmaakprofiel"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1932
 msgid "reply"
 msgstr "beantwoorden"
 
-#: src/control/Control.JSDialogBuilder.js:1927
+#: src/control/Control.JSDialogBuilder.js:1935
 msgid "replies"
 msgstr "antwoorden"
 
-#: src/control/Control.JSDialogBuilder.js:2002
+#: src/control/Control.JSDialogBuilder.js:2010
 msgid "Insert Comment"
 msgstr "Notitie invoegen"
 
-#: src/control/Control.JSDialogBuilder.js:2586
+#: src/control/Control.JSDialogBuilder.js:2597
 #: src/control/Control.Menubar.ts:973
 msgid "Rows"
 msgstr "Rijen"
 
-#: src/control/Control.JSDialogBuilder.js:2587
+#: src/control/Control.JSDialogBuilder.js:2598
 #: src/control/Control.Menubar.ts:976
 msgid "Columns"
 msgstr "Kolommen"
 
-#: src/control/Control.JSDialogBuilder.js:2607
+#: src/control/Control.JSDialogBuilder.js:2618
 msgid "Insert Table"
 msgstr "Invoegen Tabel"
 
@@ -2073,15 +2087,15 @@ msgstr "Zoekbalk verbergen"
 msgid "Clear the search field"
 msgstr "Zoekveld wissen"
 
-#: src/control/Control.MobileWizardBuilder.js:547
+#: src/control/Control.MobileWizardBuilder.js:546
 msgid "Background Color"
 msgstr "Achtergrondkleur"
 
-#: src/control/Control.MobileWizardBuilder.js:549
+#: src/control/Control.MobileWizardBuilder.js:548
 msgid "Gradient Start"
 msgstr "Kleurverloop beginkleur"
 
-#: src/control/Control.MobileWizardBuilder.js:551
+#: src/control/Control.MobileWizardBuilder.js:550
 msgid "Gradient End"
 msgstr "Kleurverloop eindkleur"
 
@@ -2103,7 +2117,6 @@ msgid "Outline"
 msgstr "Schets"
 
 #: src/control/Control.NavigatorPanel.ts:158
-#: src/control/Control.NavigatorPanel.ts:164
 msgid "Navigator"
 msgstr "Navigator"
 
@@ -2807,7 +2820,7 @@ msgstr ""
 "Het document bevat enkele citaten die ontoegankelijk zijn via de web-API. "
 "Dit kan problemen veroorzaken bij het bewerken van citaten of bibliografie."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Laden…"
 
@@ -2964,7 +2977,7 @@ msgstr "Tabstop invoegen"
 msgid "Delete tabstop"
 msgstr "Tabstop verwijderen"
 
-#: src/control/Parts.js:480
+#: src/control/Parts.js:483
 msgid "Show sheets"
 msgstr "Bladen tonen"
 
@@ -3128,7 +3141,7 @@ msgstr "Vanaf het begin"
 msgid "From Current Slide"
 msgstr "Vanaf huidige dia"
 
-#: src/control/jsdialog/Util.SnackbarController.ts:119
+#: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
 msgstr "Verwerpen"
 
@@ -3220,63 +3233,63 @@ msgstr "Hier verschijnen koppen en objecten die je aan het document toevoegt"
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Oeps, er is een probleem met het verbinden met {productname}: "
 
-#: src/core/Socket.js:693
+#: src/core/Socket.js:694
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server is nu bereikbaar. We moeten de pagina nu bijwerken."
 
-#: src/core/Socket.js:695
+#: src/core/Socket.js:696
 msgid "Server is now reachable..."
 msgstr "Server is nu bereikbaar..."
 
-#: src/core/Socket.js:699
+#: src/core/Socket.js:700
 msgid "RELOAD"
 msgstr "OPNIEUW LADEN"
 
-#: src/core/Socket.js:712
+#: src/core/Socket.js:713
 msgid "Cluster configuration warning"
 msgstr "Waarschuwing clusterconfiguratie"
 
-#: src/core/Socket.js:715
+#: src/core/Socket.js:716
 msgid "Wrong server, reconnecting..."
 msgstr "Verkeerde server, opnieuw verbinden..."
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:725
 msgid "COOLWSD version:"
 msgstr "COOLWSD versie:"
 
-#: src/core/Socket.js:749
+#: src/core/Socket.js:750
 msgid "Served by:"
 msgstr "Ondersteund door:"
 
-#: src/core/Socket.js:755
+#: src/core/Socket.js:756
 msgid "Unsupported server version."
 msgstr "Niet ondersteunde serverversie."
 
-#: src/core/Socket.js:759
+#: src/core/Socket.js:760
 msgid "LOKit version:"
 msgstr "LOKit versie:"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:884
 msgid "Document is getting migrated"
 msgstr "Document wordt gemigreerd"
 
-#: src/core/Socket.js:910
+#: src/core/Socket.js:911
 msgid "Session terminated by document owner"
 msgstr "Sessie beëindigd door document eigenaar"
 
-#: src/core/Socket.js:921
+#: src/core/Socket.js:922
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
 
-#: src/core/Socket.js:927
+#: src/core/Socket.js:928
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oeps, er is een probleem met de toegang tot het document"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:932
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Server niet beschikbaar, automatisch herstarten. Even geduld a.u.b."
 
-#: src/core/Socket.js:958
+#: src/core/Socket.js:959
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -3284,7 +3297,7 @@ msgstr ""
 "Het document is in de opslag gewijzigd. Het document opnieuw laden. Uw "
 "versie is beschikbaar als revisie."
 
-#: src/core/Socket.js:964
+#: src/core/Socket.js:965
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -3292,81 +3305,81 @@ msgstr ""
 "Oudere revisie herstellen. Niet-opgeslagen wijzigingen zijn beschikbaar in "
 "de versiegeschiedenis"
 
-#: src/core/Socket.js:970
+#: src/core/Socket.js:971
 msgid "Reloading the document after rename"
 msgstr "Document opnieuw laden na hernoemen"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Document requires password to view."
 msgstr "Er is een wachtwoord nodig om dit document te bekijken."
 
-#: src/core/Socket.js:1132
+#: src/core/Socket.js:1133
 msgid "Document requires password to modify."
 msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
-#: src/core/Socket.js:1134
+#: src/core/Socket.js:1135
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik Cancel om het in alleen-lezen modus te openen."
 
-#: src/core/Socket.js:1138
+#: src/core/Socket.js:1139
 msgid "Wrong password provided. Please try again."
 msgstr "Verkeerd wachtwoord opgegeven. Probeer het opnieuw."
 
-#: src/core/Socket.js:1176
+#: src/core/Socket.js:1177
 msgid "Only the document owner can change the password."
 msgstr "Alleen de eigenaar van het document kan het wachtwoord wijzigen."
 
-#: src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:1208 src/core/Socket.js:1213
 msgid "Missing Fonts"
 msgstr "Ontbrekende lettertypes"
 
-#: src/core/Socket.js:1244
+#: src/core/Socket.js:1245
 msgid "Someone"
 msgstr "Iemand"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1246
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "{username} heeft dit document opgeslagen als {filename}. Wilt u meedoen?"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1263
 msgid "The document is being renamed and will reload shortly"
 msgstr "Het document wordt hernoemd en zal binnenkort opnieuw worden geladen"
 
-#: src/core/Socket.js:1265
+#: src/core/Socket.js:1266
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 "Het document schakelt over naar Offline modus en zal binnenkort herladen"
 
-#: src/core/Socket.js:1347
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Bezig met verbinden..."
 
-#: src/core/Socket.js:1362
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Server wordt afgesloten"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Exported to storage"
 msgstr "Geëxporteerd naar opslag"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Successfully exported: "
 msgstr "Succesvol geëxporteerd: "
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1427
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: src/core/Socket.js:1438
+#: src/core/Socket.js:1439
 msgid "Save to new file"
 msgstr "Als nieuw bestand opslaan"
 
-#: src/core/Socket.js:1448
+#: src/core/Socket.js:1449
 msgid "Document has been changed"
 msgstr "Document is gewijzigd"
 
-#: src/core/Socket.js:1449
+#: src/core/Socket.js:1450
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3374,7 +3387,7 @@ msgstr ""
 "Document is gewijzigd tijdens opslag. Wat zou wilt u doen met uw niet-"
 "opgeslagen wijzigingen?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1714
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -3382,11 +3395,11 @@ msgstr ""
 "Ach, dit is vervelend. We kunnen geen verbinding maken met uw document. "
 "Probeer het opnieuw."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1731
 msgid "Reconnecting..."
 msgstr "Opnieuw verbinden..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1741
 msgid "The server has been disconnected."
 msgstr "De verbinding met de server is verbroken."
 
@@ -3414,7 +3427,7 @@ msgstr "Documentkleuren"
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", fout in clusterconfiguratie: serverid komt niet overeen"
 
-#: src/dom/NotebookbarAccessibility.js:240
+#: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
 msgstr "{0} tabblad geselecteerd"
 
@@ -3807,11 +3820,11 @@ msgstr "Sluit popup om plakken speciaal te negeren"
 msgid "Initializing..."
 msgstr "Initialiseren…"
 
-#: src/map/Map.js:498 src/map/Map.js:501 src/map/Map.js:504 src/map/Map.js:507
+#: src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503 src/map/Map.js:506
 msgid "Last saved:"
 msgstr "Laatst opgeslagen:"
 
-#: src/map/Map.js:1483
+#: src/map/Map.js:1482
 msgid "Please wait!"
 msgstr "Een ogenblik geduld!"
 

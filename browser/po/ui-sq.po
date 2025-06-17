@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 18:27+0200\n"
+"POT-Creation-Date: 2025-06-17 22:32+0200\n"
 "PO-Revision-Date: 2025-05-27 23:12+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: sq\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -218,7 +218,7 @@ msgstr "Rifresko Regjistër"
 msgid "Channel Filter:"
 msgstr "Filtër Kanalesh:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:486
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "Asnjë"
@@ -235,7 +235,7 @@ msgstr "Shkallë Regjistrimi"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:435 src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:435 src/core/Socket.js:1208 src/core/Socket.js:1213
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Mbylle"
@@ -294,7 +294,7 @@ msgstr "Kujdes"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:878 src/app/Debug.ts:1383
+#: admin/src/integrator/AdminIntegratorSettings.ts:921 src/app/Debug.ts:1383
 #: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
@@ -304,11 +304,11 @@ msgstr "Kujdes"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:480 src/control/Permission.js:89
+#: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:741 src/control/Toolbar.js:840
-#: src/core/Socket.js:712 src/core/Socket.js:1177 src/core/Socket.js:1247
-#: src/core/Socket.js:1398 src/core/Socket.js:1402 src/docdispatcher.ts:524
+#: src/core/Socket.js:713 src/core/Socket.js:1178 src/core/Socket.js:1248
+#: src/core/Socket.js:1399 src/core/Socket.js:1403 src/docdispatcher.ts:524
 #: src/main.js:86 src/main.js:89 src/main.js:142 src/map/Clipboard.js:1292
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
@@ -327,13 +327,13 @@ msgstr "OK"
 #: src/canvas/sections/CommentSection.ts:165
 #: src/canvas/sections/CommentSection.ts:168
 #: src/control/Control.DocumentRepair.js:71
-#: src/control/Control.DownloadProgress.js:82
+#: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1700 src/control/Control.UIManager.ts:1779
-#: src/control/Control.UIManager.ts:1931 src/control/Control.UIManager.ts:2109
+#: src/control/Control.UIManager.ts:1703 src/control/Control.UIManager.ts:1784
+#: src/control/Control.UIManager.ts:1938 src/control/Control.UIManager.ts:2116
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:835
-#: src/core/Socket.js:1423
+#: src/core/Socket.js:1424
 msgid "Cancel"
 msgstr "Anuloje"
 
@@ -373,11 +373,19 @@ msgstr "Jeni i sigurt se doni të fiket shërbyesi?"
 msgid "Accessibility"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:146
+#: admin/src/integrator/AdminIntegratorSettings.ts:149
+msgid "Invalid JSON file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:153
+msgid "Error reading file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
 msgstr "Autotekst"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:148
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -386,15 +394,15 @@ msgstr ""
 "dokumenti juaj, shtypni shkurtoren për një zë AutoTeksti dhe shtypni tastin "
 "F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:154
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
 msgstr "Ngarkoni Autotekst"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:158
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
 msgstr "Fjalorë vetjakë"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -403,48 +411,54 @@ msgstr ""
 "librin tuaj të fjalëve (.dic) do të jenë të përdorshme për kontrolle "
 "drejtshkrimi."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:166
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
 msgstr "Ngarkoni Libër Fjalësh"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:170
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
 msgstr "Ndërfaqe"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:171
+#: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
 msgstr "Ujdisni parapëlqime parazgjedhje ndërfaqeje."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:177
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
 msgstr "Ngarkoni Formësim"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
 msgstr "Rregullime dokumenti"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:183
+#: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
 msgstr "Përimtoni si sillen dokumente zyre."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:189
+#: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
 msgstr "Ngarko Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:238
+#: admin/src/integrator/AdminIntegratorSettings.ts:252
+msgid ""
+"Interface settings file is not valid JSON. Please check the file and try "
+"again."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
 msgstr "URL-së së Formësimit të Dhënë i mungojnë ndryshore fillestare."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:244
+#: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
 msgstr "Token-it të hyrjeve i mungojnë ndryshore fillestare."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:273
+#: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Diç shkoi ters. Ju lutemi, provoni të rifreskoni faqen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:346
+#: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -452,7 +466,7 @@ msgstr ""
 "Diç shkoi ters teksa sillej kartelë formësimi. Ju lutemi, provoni të "
 "rifreskoni faqen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:371
+#: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
@@ -460,48 +474,48 @@ msgstr ""
 "Diç shkoi ters teksa sillej libër fjalësh. Ju lutemi, provoni të rifreskoni "
 "faqen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:406
+#: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Diç shkoi ters teksa ngarkohej kartela. Ju lutemi, riprovoni."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:532
+#: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
 "Diç shkoi ters teksa fshihej kartela. Ju lutemi, provoni të rifreskoni faqen."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:591
+#: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
 msgstr "Rregullime Parjeje"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:595
+#: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
 msgstr "Përimtoni rregullime parjeje."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:607
+#: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
 msgstr "Mundësi"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:674
+#: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:717
+#: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
 msgstr "Riktheji rregullime Parjeje te parazgjedhjet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:731
+#: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
 msgstr ""
 "Jeni i sigurt se dëshironi të kthehen Rregullime Parjeje te vlerat "
 "parazgjedhje?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:749
+#: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
 msgstr "Ruaj Rregullime Parjeje"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:866
+#: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
 msgstr "Gabim"
@@ -616,15 +630,15 @@ msgstr " min."
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1547
+#: js/global.js:1570
 msgid "Cluster is scaling, retrying..."
 msgstr ""
 
-#: js/global.js:1549
+#: js/global.js:1572
 msgid "Document is migrating to new server, retrying..."
 msgstr "Dokumenti po migrohet te një shërbyes i ri, po riprovohet…"
 
-#: js/global.js:1551
+#: js/global.js:1574
 msgid "Failed to get RouteToken from controller"
 msgstr "S’u arrit të merret RouteToken nga kontrollori"
 
@@ -694,7 +708,7 @@ msgid "Open in full view"
 msgstr "Hape në pamje të plotë"
 
 #: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1938
+#: src/control/Control.JSDialogBuilder.js:1946
 #: src/layer/tile/CanvasTileLayer.js:3525
 #: src/layer/tile/CanvasTileLayer.js:3536
 msgid "Comment"
@@ -717,7 +731,7 @@ msgstr ""
 "Këtë koment e ka përditësuar një tjetër përdorues. Doni të mbishkruhen ato "
 "ndryshime?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1427
+#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1428
 msgid "Overwrite"
 msgstr "Mbishkruaje"
 
@@ -756,7 +770,7 @@ msgstr "Hidhe poshtë ndryshimin"
 msgid "Resolved"
 msgstr "E zgjidhur"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:418
+#: src/canvas/sections/ShapeHandlesSection.ts:448
 msgid "Document contains unsupported media"
 msgstr "Dokumenti përmban media që s’mbulohet"
 
@@ -912,11 +926,11 @@ msgstr "Ribëje"
 msgid "Undo"
 msgstr "Zhbëje"
 
-#: src/control/Control.DownloadProgress.js:42
+#: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
 msgstr "Shkarko Përzgjedhjen"
 
-#: src/control/Control.DownloadProgress.js:47
+#: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
@@ -924,7 +938,7 @@ msgstr ""
 "Nëse doni të ndani me të tjerë elemente të mëdhenj jashtë {productname}, "
 "është e nevojshme që fillimisht t’i shkarkoni ata."
 
-#: src/control/Control.DownloadProgress.js:60
+#: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:215
 #: src/control/Control.NotebookbarDraw.js:232
 #: src/control/Control.NotebookbarImpress.js:296
@@ -932,32 +946,32 @@ msgstr ""
 msgid "Download"
 msgstr "Shkarkim"
 
-#: src/control/Control.DownloadProgress.js:81
+#: src/control/Control.DownloadProgress.js:82
 msgid "Downloading clipboard content"
 msgstr "Po shkarkohet lëndë e papastre"
 
-#: src/control/Control.DownloadProgress.js:88
-#: src/control/Control.DownloadProgress.js:113
+#: src/control/Control.DownloadProgress.js:89
+#: src/control/Control.DownloadProgress.js:114
 #: src/control/Control.PartsPreview.js:297
 msgid "Copy"
 msgstr "Kopjoje"
 
-#: src/control/Control.DownloadProgress.js:111
+#: src/control/Control.DownloadProgress.js:112
 msgid "Download completed and ready to be copied to clipboard."
 msgstr "Shkarkimi u plotësua dhe është gati për t’u kopjuar në të papastër."
 
-#: src/control/Control.DownloadProgress.js:112
+#: src/control/Control.DownloadProgress.js:113
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
 "Nga tani e tutje njoftimet lidhur me të papastrën do të shfaqen pa bujë te "
 "fundi."
 
-#: src/control/Control.DownloadProgress.js:272
+#: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
 msgstr "Lënda u kopjua në të papastër"
 
-#: src/control/Control.DownloadProgress.js:302
+#: src/control/Control.DownloadProgress.js:303
 msgid "Download failed"
 msgstr "Shkarkimi dështoi"
 
@@ -1317,95 +1331,95 @@ msgstr ""
 "Dokument i plogësht - ju lutemi, prekni që të ringarkohet dhe t’i riktheheni "
 "përpunimit"
 
-#: src/control/Control.JSDialog.js:318
+#: src/control/Control.JSDialog.js:322
 msgid "Close dialog"
 msgstr "Mbylle dialogun"
 
-#: src/control/Control.JSDialogBuilder.js:489
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "E plotë"
 
-#: src/control/Control.JSDialogBuilder.js:492
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Lineare"
 
-#: src/control/Control.JSDialogBuilder.js:495
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Aksiale"
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Radiale"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Elipsoidale"
 
-#: src/control/Control.JSDialogBuilder.js:505
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Kuadratike"
 
-#: src/control/Control.JSDialogBuilder.js:508
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Katrore"
 
-#: src/control/Control.JSDialogBuilder.js:511
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Madhësi e fiksuar"
 
-#: src/control/Control.JSDialogBuilder.js:1468
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "From"
 msgstr "Nga"
 
-#: src/control/Control.JSDialogBuilder.js:1471
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "To"
 msgstr "Në"
 
-#: src/control/Control.JSDialogBuilder.js:1474
+#: src/control/Control.JSDialogBuilder.js:1480
 msgid "Color"
 msgstr "Ngjyrë"
 
-#: src/control/Control.JSDialogBuilder.js:1550
+#: src/control/Control.JSDialogBuilder.js:1556
 msgid "Select range"
 msgstr "Përzgjidhni interval"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1675
 #: src/control/Control.NotebookbarBuilder.js:154
 msgid "Font Name"
 msgstr "Emër Shkronjash"
 
-#: src/control/Control.JSDialogBuilder.js:1669 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1677 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Madhësi Shkronjash"
 
-#: src/control/Control.JSDialogBuilder.js:1671
+#: src/control/Control.JSDialogBuilder.js:1679
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Stil"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1932
 msgid "reply"
 msgstr "përgjigjuni"
 
-#: src/control/Control.JSDialogBuilder.js:1927
+#: src/control/Control.JSDialogBuilder.js:1935
 msgid "replies"
 msgstr "përgjigje"
 
-#: src/control/Control.JSDialogBuilder.js:2002
+#: src/control/Control.JSDialogBuilder.js:2010
 msgid "Insert Comment"
 msgstr "Futni Koment"
 
-#: src/control/Control.JSDialogBuilder.js:2586
+#: src/control/Control.JSDialogBuilder.js:2597
 #: src/control/Control.Menubar.ts:973
 msgid "Rows"
 msgstr "Rreshta"
 
-#: src/control/Control.JSDialogBuilder.js:2587
+#: src/control/Control.JSDialogBuilder.js:2598
 #: src/control/Control.Menubar.ts:976
 msgid "Columns"
 msgstr "Shtylla"
 
-#: src/control/Control.JSDialogBuilder.js:2607
+#: src/control/Control.JSDialogBuilder.js:2618
 msgid "Insert Table"
 msgstr "Futni Tabelë"
 
@@ -2073,15 +2087,15 @@ msgstr "Fshihe shtyllën e kërkimeve"
 msgid "Clear the search field"
 msgstr "Spastro fushë kërkimesh"
 
-#: src/control/Control.MobileWizardBuilder.js:547
+#: src/control/Control.MobileWizardBuilder.js:546
 msgid "Background Color"
 msgstr "Ngjyrë Sfondi"
 
-#: src/control/Control.MobileWizardBuilder.js:549
+#: src/control/Control.MobileWizardBuilder.js:548
 msgid "Gradient Start"
 msgstr "Fillim Gradienti"
 
-#: src/control/Control.MobileWizardBuilder.js:551
+#: src/control/Control.MobileWizardBuilder.js:550
 msgid "Gradient End"
 msgstr "Fund Gradienti"
 
@@ -2103,9 +2117,9 @@ msgid "Outline"
 msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:158
-#: src/control/Control.NavigatorPanel.ts:164
+#, fuzzy
 msgid "Navigator"
-msgstr ""
+msgstr "Lëvizje"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2808,7 +2822,7 @@ msgstr ""
 "t web. Kjo mund të shkaktojë ca probleme teksa përpunohen citime, ose "
 "bibliografi."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Po ngarkohet…"
 
@@ -2965,7 +2979,7 @@ msgstr "Futni ndalesë Tab"
 msgid "Delete tabstop"
 msgstr "Fshije ndalesën Tab"
 
-#: src/control/Parts.js:480
+#: src/control/Parts.js:483
 msgid "Show sheets"
 msgstr "Shfaq fletë"
 
@@ -3126,7 +3140,7 @@ msgstr "Nga Fillimi"
 msgid "From Current Slide"
 msgstr "Nga Diapozitivi i Tanishëm"
 
-#: src/control/jsdialog/Util.SnackbarController.ts:119
+#: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
 msgstr "Hidhe tej"
 
@@ -3218,63 +3232,63 @@ msgstr "Krye dhe objekte që shtoni te dokumenti do të duken këtu"
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Oh, ka një problem në lidhjen me {productname}: "
 
-#: src/core/Socket.js:693
+#: src/core/Socket.js:694
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Shërbyesi tani është i kapshëm. Tani na duhet të rifreskojmë faqen."
 
-#: src/core/Socket.js:695
+#: src/core/Socket.js:696
 msgid "Server is now reachable..."
 msgstr "Shërbyesi tani është i kapshëm…"
 
-#: src/core/Socket.js:699
+#: src/core/Socket.js:700
 msgid "RELOAD"
 msgstr "RINGARKOJE"
 
-#: src/core/Socket.js:712
+#: src/core/Socket.js:713
 msgid "Cluster configuration warning"
 msgstr "Sinjalizim formësimi cluster-i"
 
-#: src/core/Socket.js:715
+#: src/core/Socket.js:716
 msgid "Wrong server, reconnecting..."
 msgstr "Shërbyes i gabuar, po rilidhet…"
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:725
 msgid "COOLWSD version:"
 msgstr "Version COOLWSD:"
 
-#: src/core/Socket.js:749
+#: src/core/Socket.js:750
 msgid "Served by:"
 msgstr "Shërbyer nga:"
 
-#: src/core/Socket.js:755
+#: src/core/Socket.js:756
 msgid "Unsupported server version."
 msgstr "Version i pambuluar shërbyesi."
 
-#: src/core/Socket.js:759
+#: src/core/Socket.js:760
 msgid "LOKit version:"
 msgstr "Version LOKit:"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:884
 msgid "Document is getting migrated"
 msgstr "Dokumenti po migrohet"
 
-#: src/core/Socket.js:910
+#: src/core/Socket.js:911
 msgid "Session terminated by document owner"
 msgstr "Sesioni i përfunduar nga i zoti i dokumentit"
 
-#: src/core/Socket.js:921
+#: src/core/Socket.js:922
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Shërbyesi po fiket për mirëmbajtje (po ruhet automatikish)"
 
-#: src/core/Socket.js:927
+#: src/core/Socket.js:928
 msgid "Oops, there is a problem connecting the document"
 msgstr "Hëm, ka një problem në lidhjen e dokumentit"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:932
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Shërbyesi është i fikur, po riniset automakisht. Ju lutemi, prisni."
 
-#: src/core/Socket.js:958
+#: src/core/Socket.js:959
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -3282,7 +3296,7 @@ msgstr ""
 "Dokumenti ka ndryshuar te depoja. Po ngarkohet dokumenti i ri. Versioni juaj "
 "mund të kihet si rishikim."
 
-#: src/core/Socket.js:964
+#: src/core/Socket.js:965
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -3290,80 +3304,80 @@ msgstr ""
 "Po rikthehet versioni i vjetër. Çfarëdo ndryshimesh të paruajtura do të "
 "shihen te historiku i versioneve"
 
-#: src/core/Socket.js:970
+#: src/core/Socket.js:971
 msgid "Reloading the document after rename"
 msgstr "Po ringarkohet dokumenti pas riemërtimit"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Document requires password to view."
 msgstr "Që të shihet, dokumenti lyp fjalëkalim."
 
-#: src/core/Socket.js:1132
+#: src/core/Socket.js:1133
 msgid "Document requires password to modify."
 msgstr "Që të ndryshohet, dokumenti lyp fjalëkalim."
 
-#: src/core/Socket.js:1134
+#: src/core/Socket.js:1135
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Shtypni “Anuloje” që të hapet nën mënyrën vetëm-parje."
 
-#: src/core/Socket.js:1138
+#: src/core/Socket.js:1139
 msgid "Wrong password provided. Please try again."
 msgstr "U dha fjalëkalim i gabuar. Ju lutemi, riprovoni."
 
-#: src/core/Socket.js:1176
+#: src/core/Socket.js:1177
 msgid "Only the document owner can change the password."
 msgstr "Fjalëkalimin mund ta ndryshojë vetëm i zoti i dokumentit."
 
-#: src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:1208 src/core/Socket.js:1213
 msgid "Missing Fonts"
 msgstr "Mungojnë Shkronja"
 
-#: src/core/Socket.js:1244
+#: src/core/Socket.js:1245
 msgid "Someone"
 msgstr "Dikush"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1246
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} e ruajti këtë dokument si {filename}. Doni të merrni pjesë?"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1263
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumenti po riemërtohet dhe do të ringarkohet pas pak"
 
-#: src/core/Socket.js:1265
+#: src/core/Socket.js:1266
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 "Dokumenti po kalohet nën mënyrën “Jashtë Linje” dhe do të ringarkohet pas pak"
 
-#: src/core/Socket.js:1347
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Po lidhet…"
 
-#: src/core/Socket.js:1362
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Shërbyesi po fiket"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Exported to storage"
 msgstr "U eksportua në depozitim"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Successfully exported: "
 msgstr "Eksportuar me sukses: "
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1427
 msgid "Discard"
 msgstr "Hidhe tej"
 
-#: src/core/Socket.js:1438
+#: src/core/Socket.js:1439
 msgid "Save to new file"
 msgstr "Ruaje në kartelë të re"
 
-#: src/core/Socket.js:1448
+#: src/core/Socket.js:1449
 msgid "Document has been changed"
 msgstr "Dokumenti u ndryshua"
 
-#: src/core/Socket.js:1449
+#: src/core/Socket.js:1450
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3371,7 +3385,7 @@ msgstr ""
 "Dokumenti ka ndryshuar te depoja. Ç’do të donit të bëhet me ndryshimet tuaja "
 "të paruajtura?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1714
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -3379,11 +3393,11 @@ msgstr ""
 "Hëm, kjo është turpëruese, s’lidhemi dot me dokumentin tuaj. Ju lutemi, "
 "riprovoni."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1731
 msgid "Reconnecting..."
 msgstr "Po rilidhet…"
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1741
 msgid "The server has been disconnected."
 msgstr "Shërbyesi është shkëputur."
 
@@ -3411,7 +3425,7 @@ msgstr "Ngjyra dokumenti"
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", gabim formësimi cluster-i: s’përkon serverid"
 
-#: src/dom/NotebookbarAccessibility.js:240
+#: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
 msgstr "{0} skedë e përzgjedhur"
 
@@ -3804,11 +3818,11 @@ msgstr "Që të shpërfillet ngjitja e posaçme, mbylleni dritaren flluskë"
 msgid "Initializing..."
 msgstr "Po gatitet…"
 
-#: src/map/Map.js:498 src/map/Map.js:501 src/map/Map.js:504 src/map/Map.js:507
+#: src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503 src/map/Map.js:506
 msgid "Last saved:"
 msgstr "Ruajtur së fundi më:"
 
-#: src/map/Map.js:1483
+#: src/map/Map.js:1482
 msgid "Please wait!"
 msgstr "Ju lutemi, prisni!"
 
