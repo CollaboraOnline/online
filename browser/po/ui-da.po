@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-26 18:27+0200\n"
-"PO-Revision-Date: 2025-06-12 20:58+0000\n"
+"PO-Revision-Date: 2025-06-13 11:57+0000\n"
 "Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
@@ -474,10 +474,10 @@ msgid "Option"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:674
-#, fuzzy
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
-"(Advarsel: Servertilgængelighed skal være aktiveret for at kunne slå til/fra)"
+"(Advarsel: Serverens tilgængelighed skal være aktiveret for at kunne slå til/"
+"fra)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "Reset to default View settings"
@@ -856,7 +856,6 @@ msgid "Copy Cells"
 msgstr "Kopiér celler"
 
 #: src/control/Control.ContextMenu.js:286
-#, fuzzy
 msgid "Fill Series"
 msgstr "Udfyld serie"
 
@@ -2170,7 +2169,6 @@ msgstr "Gennemse"
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:121
 #: src/control/Control.NotebookbarWriter.js:74
-#, fuzzy
 msgid "Format"
 msgstr "Format"
 
@@ -2454,7 +2452,7 @@ msgstr "Scroll ned"
 
 #: src/control/Control.NotebookbarWriter.js:1419
 msgid "Rich Text"
-msgstr ""
+msgstr "Formateret tekst"
 
 #: src/control/Control.NotebookbarWriter.js:1426
 msgid "Checkbox"
@@ -2559,7 +2557,6 @@ msgid "Check security warnings of your server"
 msgstr "Tjek sikkerhedsadvarsler på din server"
 
 #: src/control/Control.ServerAuditDialog.ts:277
-#, fuzzy
 msgid "OPEN"
 msgstr "ÅBN"
 
@@ -2739,7 +2736,7 @@ msgstr "Følger {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Følger redaktøren"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
@@ -2747,7 +2744,7 @@ msgstr "Stop med at følge"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "{user}'s avatar"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
@@ -2775,15 +2772,15 @@ msgstr "Tillader at følge redaktøren"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zoteri API-nøgle er ikke konfigureret"
 
 #: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API-nøgle er forkert"
 
 #: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero advarsel"
 
 #: src/control/Control.Zotero.js:192
 msgid ""
@@ -2850,19 +2847,19 @@ msgstr "Indlæsning af gruppe mislykkedes"
 
 #: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Indlæsning af samlinger mislykkedes"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Indlæser referencer"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
-msgstr ""
+msgstr "Citattypografi"
 
 #: src/control/Control.Zotero.js:829
 msgid "Styles"
-msgstr "Typografi"
+msgstr "Typografier"
 
 #: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
@@ -2870,7 +2867,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Kunne ikke indlæse typografier"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
@@ -2886,17 +2883,18 @@ msgstr "Dit bibliotek er tomt"
 
 #: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
-msgstr ""
+msgstr "Kunne ikke indlæse objekter"
 
 #: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
-msgstr ""
+msgstr "Citatadvarsel"
 
 #: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Når citater er indtastet, kan deres lagrings- og visningstype ikke ændres."
 
 #: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
@@ -2916,15 +2914,15 @@ msgstr "Der skete en fejl under hentning af noter"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
-msgstr ""
+msgstr "Opdaterede citater"
 
 #: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
-msgstr ""
+msgstr "Citatopdatering mislykkedes"
 
 #: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
-msgstr ""
+msgstr "Opdaterer citater"
 
 #: src/control/Control.Zotero.js:1534
 msgid ""
@@ -2982,7 +2980,7 @@ msgstr "Fortsæt redigering"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Fortsæt skrivebeskyttet tilstand"
 
 #: src/control/Permission.js:182
 msgid ""
@@ -3021,6 +3019,8 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Underskriften er OK, men certifikatet kunne ikke valideres, og dokumentet er "
+"kun delvist underskrevet."
 
 #: src/control/Toolbar.js:56
 msgid "Font"
@@ -3235,7 +3235,6 @@ msgid "LOKit version:"
 msgstr ""
 
 #: src/core/Socket.js:883
-#, fuzzy
 msgid "Document is getting migrated"
 msgstr "Dokument bliver migreret"
 
@@ -3327,10 +3326,9 @@ msgstr "Serveren lukker ned"
 
 #: src/core/Socket.js:1398
 msgid "Exported to storage"
-msgstr ""
+msgstr "Eksporteret til lager"
 
 #: src/core/Socket.js:1398
-#, fuzzy
 msgid "Successfully exported: "
 msgstr "Eksporteret succesfuldt: "
 
@@ -3365,7 +3363,6 @@ msgid "Reconnecting..."
 msgstr "Genetablerer forbindelse..."
 
 #: src/core/Socket.js:1739
-#, fuzzy
 msgid "The server has been disconnected."
 msgstr "Forbindelsen til serveren er blevet afbrudt."
 
@@ -3395,7 +3392,7 @@ msgstr ""
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "[0] tabs er valgt"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -3410,17 +3407,16 @@ msgstr ""
 "kontakt venligst administratoren."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Dette er en uunderstøttet version af {productname}. For at undgå det "
-"indtryk, at den egner sig til udrulning i virksomheder, ses denne besked, "
-"når mere end {docs} dokumenter eller {connections} forbindelser bruges "
-"samtidig."
+"Denne version af {productname} er ikke understøttet. Denne meddelelse vises, "
+"når flere end {docs} dokumenter eller {connections} forbindelser er i brug "
+"samtidigt, for at tydeliggøre, at den ikke egner sig til udrulning i "
+"virksomheder."
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -3578,12 +3574,15 @@ msgstr "Dokumentet kan ikke omdøbes."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Kunne ikke indlæse dokumentet fra lageret. Prøv at indlæse dokumentet igen."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Der er ikke plads nok til at gemme. Dokumentet bliver nu skrivebeskyttet. "
+"Prøv at gemme igen, når du har skabt nok plads på disken."
 
 #: src/errormessages.js:55
 msgid ""
@@ -3591,6 +3590,9 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Dokumentet er for stort til at gemme eller overskrider den tilgængelige "
+"lagerplads. Dokumentet bliver nu skrivebeskyttet, men du kan stadig "
+"downloade en lokal kopi."
 
 #: src/errormessages.js:56
 msgid ""
@@ -3654,11 +3656,11 @@ msgstr "{0} markeret"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Indeholder tekst: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} uvalgte"
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
@@ -3666,19 +3668,19 @@ msgstr "{0} slettet"
 
 #: src/layer/marker/TextInput.js:451
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Skærmlæserunderstøttelse af tekstindhold er deaktiveret. "
 
 #: src/layer/marker/TextInput.js:452
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "Det skal aktiveres på både serverniveau er i brugergrænsefladen. "
 
 #: src/layer/marker/TextInput.js:453
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
-msgstr ""
+msgstr "Find tilgængelighedsafsnittet i coolwsd.xml for serverindstillinger. "
 
 #: src/layer/marker/TextInput.js:454
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Tjek også voice-over indstillingen under {parentControl}"
 
 #: src/layer/marker/TextInput.js:456
 msgid "the Help tab"
@@ -3695,7 +3697,7 @@ msgstr "Funktionsguide"
 
 #: src/layer/tile/CanvasTileLayer.js:1842
 msgid "Named Range"
-msgstr ""
+msgstr "Navngivet område"
 
 #: src/layer/tile/CanvasTileLayer.js:3553
 msgid "No Comments"
@@ -3718,7 +3720,7 @@ msgstr "Kopiering fra dokumentet er slået fra"
 
 #: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "advarsel: anmodningen om at kopiére/indsætte er udløbet"
 
 #: src/map/Clipboard.js:329
 msgid "Failed to download clipboard, please re-copy"
@@ -3733,14 +3735,12 @@ msgstr ""
 "Sæt ind-knapperne på dit skærmtastatur i stedet."
 
 #: src/map/Clipboard.js:1366
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Download er allerede begyndt på grund af en stor kopier/indsæt-handling. "
-"Vent venligt på den aktuelle download eller annuller den, før du starter en "
-"ny</p>"
+"Download er allerede begyndt på grund af en større kopiér/indsæt-aktion. "
+"Vent venligt på at den er færdig eller annuller, før du starter en ny"
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
@@ -3802,7 +3802,7 @@ msgstr "Upload af filen til serveren slog fejl med status: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Udskriftsdialog"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
 msgid "Empty Slide Show"
@@ -3811,7 +3811,7 @@ msgstr "Tomt diasshow"
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:692
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Præsentation i vinduestilstand blev blokeret"
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:694
@@ -3820,11 +3820,14 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Præsentation blev blokeret. Tillad venligst pop-ups i din browser. Dette gør "
+"det muligt at vise dit diasshow i et særskilt vindue, og gør det nemt at "
+"dele din skærm."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:491
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Præsentation i vinduestilstand: "
 
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:534
@@ -3886,7 +3889,7 @@ msgstr "Dialogen Velkommen"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pause... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
@@ -3922,11 +3925,11 @@ msgstr "Zoom ud"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Preview dias {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Dias {0} af {1}"
 
 #: src/slideshow/PresenterConsole.js:1242
 msgid "No Notes"
@@ -3983,7 +3986,6 @@ msgid "Get Involved"
 msgstr "Bliv involveret"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
-#, fuzzy
 msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
