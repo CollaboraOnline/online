@@ -20,9 +20,9 @@ mkdir -p $CHROOT || exit 1
 # while INSTDIR is the physical one. Both will most likely be the same,
 # except on systems that have symlinks in the path. We must create
 # both paths (if they are different) inside the jail, hence we need both.
-CHROOT=`cd $CHROOT && /bin/pwd`
-INSTDIR_LOGICAL=`cd $INSTDIR && /bin/pwd -L`
-INSTDIR=`cd $INSTDIR && /bin/pwd -P`
+CHROOT=`cd $CHROOT && pwd`
+INSTDIR_LOGICAL=`cd $INSTDIR && pwd -L`
+INSTDIR=`cd $INSTDIR && pwd -P`
 
 if [ ! `uname -s` = "FreeBSD" ]; then
     CP=cp
@@ -155,6 +155,11 @@ if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "$0: Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME
     test -d $HOME/.fonts && ${CP} -r -p -L $HOME/.fonts $CHROOT/$HOME
+fi
+
+if test -d /nix; then
+    mkdir -p $CHROOT/nix
+    sudo mount --bind /nix $CHROOT/nix
 fi
 
 exit 0
