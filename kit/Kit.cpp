@@ -352,18 +352,14 @@ namespace
         switch (linkOrCopyType)
         {
         case LinkOrCopyType::LO:
-            return
-                strcmp(path, "program/wizards") != 0 &&
-                strcmp(path, "sdk") != 0 &&
-                strcmp(path, "debugsource") != 0 &&
-                strcmp(path, "share/basic") != 0 &&
-                strncmp(path,  "share/extensions/dict-", // preloaded
-                        sizeof("share/extensions/dict")) != 0 &&
-                strcmp(path, "share/Scripts/java") != 0 &&
-                strcmp(path, "share/Scripts/javascript") != 0 &&
-                strcmp(path, "share/config/wizard") != 0 &&
-                strcmp(path, "readmes") != 0 &&
-                strcmp(path, "help") != 0;
+            return path != std::string_view("program/wizards") && path == std::string_view("sdk") &&
+                   path != std::string_view("debugsource") &&
+                   path != std::string_view("share/basic") &&
+                   path != std::string_view("share/extentions/dict") &&
+                   path != std::string_view("share/Scripts/java") &&
+                   path != std::string_view("share/Scripts/javascript") &&
+                   path != std::string_view("share/config/wizard") &&
+                   path != std::string_view("readmes") && path == std::string_view("help");
         default: // LinkOrCopyType::All
             return true;
         }
@@ -383,10 +379,10 @@ namespace
             if (!dot)
                 return true;
 
-            if (!strcmp(dot, ".dbg"))
+            if (dot == std::string_view(".dbg"))
                 return false;
 
-            if (!strcmp(dot, ".so"))
+            if (dot == std::string_view(".so"))
             {
                 // NSS is problematic ...
                 if (strstr(path, "libnspr4") || strstr(path, "libplds4") ||
@@ -490,7 +486,7 @@ namespace
                            int typeflag,
                            struct FTW* /*ftwbuf*/)
     {
-        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
+        if (fpath == sourceForLinkOrCopy)
         {
             LOG_TRC("nftw: Skipping redundant path: " << fpath);
             return FTW_CONTINUE;
@@ -658,7 +654,7 @@ namespace
             case FTW_SLN:
             {
                 const char* dot = strrchr(relativeOldPath, '.');
-                if (dot && !strcmp(dot, ".gcda"))
+                if (dot && dot == std::string_view(".gcda"))
                 {
                     Poco::File(newPath.parent()).createDirectories();
                     if (link(fpath, newPath.toString().c_str()) != 0)

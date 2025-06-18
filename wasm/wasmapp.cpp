@@ -68,7 +68,7 @@ void handle_cool_message(const char *string_value)
 {
     std::cout << "================ handle_cool_message(): '" << string_value << "'" << std::endl;
 
-    if (strcmp(string_value, "HULLO") == 0)
+    if (string_value == std::string_view("HULLO"))
     {
         // Now we know that the JS has started completely
 
@@ -137,7 +137,7 @@ void handle_cool_message(const char *string_value)
         fakeSocketPoll(&pollfd, 1, -1);
         fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
     }
-    else if (strcmp(string_value, "BYE") == 0)
+    else if (string_value == std::string_view("BYE"))
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side. Closing our end of the socket.");
 
