@@ -70,7 +70,7 @@ function shouldShowAgain(id) {
 }
 
 function setShowAgain(id, state) {
-    window.prefs.set(`UIShowAgain_${id}`, !state);
+    window.prefs.set(`UIShowAgain_${id}`, state);
 }
 
 // helper to avoid using long list of optional parameters
