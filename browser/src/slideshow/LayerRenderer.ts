@@ -426,8 +426,13 @@ class LayerRenderer2d implements LayerRenderer {
 		}
 		if (imageInfo instanceof ImageBitmap) {
 			this.offscreenContext.drawImage(imageInfo, 0, 0);
-		} else if (imageInfo.type === 'png') {
+		} else if (
+			imageInfo.type === 'png' ||
+			imageInfo.data instanceof ImageBitmap
+		) {
 			this.offscreenContext.drawImage(imageInfo.data as HTMLImageElement, 0, 0);
+		} else {
+			throw 'No supported bitmap to draw found';
 		}
 	}
 
