@@ -1138,15 +1138,15 @@ private:
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(std::chrono::system_clock::time_point time)
+        void setLastModifiedLocalTime(std::chrono::system_clock::time_point time)
         {
-            _lastModifiedTime = time;
+            _lastModifiedLocalTime = time;
         }
 
         /// Returns the last modified time of the document.
-        std::chrono::system_clock::time_point getLastModifiedTime() const
+        std::chrono::system_clock::time_point getLastModifiedLocalTime() const
         {
-            return _lastModifiedTime;
+            return _lastModifiedLocalTime;
         }
 
         /// True iff a save is in progress (requested but not completed).
@@ -1226,7 +1226,7 @@ private:
             os << indent << "min time between saves: " << minTimeBetweenSaves();
 
             os << indent
-               << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
+               << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedLocalTime);
             os << indent << "saving-timeout: " << getSavingTimeout();
             os << indent << "last save timed-out: " << hasSavingTimedOut();
             os << indent << "last save successful: " << lastSaveSuccessful();
@@ -1238,7 +1238,7 @@ private:
         RequestManager _request;
 
         /// The document's last-modified time.
-        std::chrono::system_clock::time_point _lastModifiedTime;
+        std::chrono::system_clock::time_point _lastModifiedLocalTime;
 
         /// The number of milliseconds between idlesave checks for modification.
         const std::chrono::milliseconds _idleSaveInterval;
