@@ -138,12 +138,12 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 void DocumentBroker::broadcastLastModificationTime(
     const std::shared_ptr<ClientSession>& session) const
 {
-    if (_storageManager.getLastModifiedTime().empty())
+    if (_storageManager.getLastModifiedServerTimeString().empty())
         // No time from the storage (e.g., SharePoint 2013 and 2016) -> don't send
         return;
 
     std::ostringstream stream;
-    stream << "lastmodtime: " << _storageManager.getLastModifiedTime();
+    stream << "lastmodtime: " << _storageManager.getLastModifiedServerTimeString();
     const std::string message = stream.str();
 
     // While loading, the current session is not yet added to
@@ -1137,17 +1137,17 @@ bool DocumentBroker::download(
 
     if (firstInstance)
     {
-        _storageManager.setLastModifiedTime(fileInfo.getLastModifiedTime());
-        LOG_DBG("Document timestamp: " << _storageManager.getLastModifiedTime());
+        _storageManager.setLastModifiedServerTimeString(fileInfo.getLastModifiedTime());
+        LOG_DBG("Document timestamp: " << _storageManager.getLastModifiedServerTimeString());
     }
     else
     {
         // Check if document has been modified by some external action,
         // but only if *we* aren't uploading. Otherwise, it might be us.
         LOG_TRC("Document modified time: " << fileInfo.getLastModifiedTime());
-        if (!_storageManager.getLastModifiedTime().empty() &&
+        if (!_storageManager.getLastModifiedServerTimeString().empty() &&
             !fileInfo.getLastModifiedTime().empty() &&
-            _storageManager.getLastModifiedTime() != fileInfo.getLastModifiedTime())
+            _storageManager.getLastModifiedServerTimeString() != fileInfo.getLastModifiedTime())
         {
             if (_uploadRequest)
             {
@@ -1155,14 +1155,14 @@ bool DocumentBroker::download(
                         << _docKey
                         << "] timestamp checked for a match during an up-load, results may race, "
                            "so ignoring inconsistent timestamp. Expected: "
-                        << _storageManager.getLastModifiedTime()
+                        << _storageManager.getLastModifiedServerTimeString()
                         << ", Actual: " << fileInfo.getLastModifiedTime());
             }
             else
             {
                 LOG_WRN("Document [" << _docKey << "] has been modified behind our back. "
                                      << "Informing all clients. Expected: "
-                                     << _storageManager.getLastModifiedTime()
+                                     << _storageManager.getLastModifiedServerTimeString()
                                      << ", Actual: " << fileInfo.getLastModifiedTime());
 
                 handleDocumentConflict();
@@ -2843,7 +2843,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
         _saveManager.setLastModifiedLocalTime(_uploadRequest->newFileModifiedTime());
 
         // Save the storage timestamp.
-        _storageManager.setLastModifiedTime(_storage->getLastModifiedTime());
+        _storageManager.setLastModifiedServerTimeString(_storage->getLastModifiedTime());
 
         // Set the timestamp of the file we uploaded, to detect changes.
         _storageManager.setLastUploadedFileModifiedLocalTime(_uploadRequest->newFileModifiedTime());
@@ -2857,7 +2857,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
         LOG_DBG("Uploaded docKey ["
                 << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                 << "] and updated timestamps. Document modified timestamp: "
-                << _storageManager.getLastModifiedTime()
+                << _storageManager.getLastModifiedServerTimeString()
                 << ", newFileModifiedTime: " << _uploadRequest->newFileModifiedTime()
                 << ". Current Activity: " << DocumentState::name(_docState.activity()));
 
@@ -5271,11 +5271,11 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
                         << " last uploaded size: " << size
                         << " bytes. We will assume this is our last uploaded version and "
                            "synchronize the timestamp to: "
-                        << lastModifiedTime << "(from: " << _storageManager.getLastModifiedTime()
-                        << ')');
+                        << lastModifiedTime
+                        << "(from: " << _storageManager.getLastModifiedServerTimeString() << ')');
 
                 _storage->setLastModifiedTime(lastModifiedTime);
-                _storageManager.setLastModifiedTime(lastModifiedTime);
+                _storageManager.setLastModifiedServerTimeString(lastModifiedTime);
             }
             else
             {

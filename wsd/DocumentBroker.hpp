@@ -1373,10 +1373,16 @@ private:
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(const std::string& time) { _lastModifiedTime = time; }
+        void setLastModifiedServerTimeString(const std::string& time)
+        {
+            _lastModifiedServerTimeString = time;
+        }
 
         /// Returns the last modified time of the document.
-        const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
+        const std::string& getLastModifiedServerTimeString() const
+        {
+            return _lastModifiedServerTimeString;
+        }
 
         /// Set size of the document as we've downloaded it, or after a successful upload.
         void setSizeOnServer(std::size_t size) { _sizeOnServer = size; }
@@ -1423,7 +1429,7 @@ private:
                << Util::getTimeForLog(now, _request.lastResponseTime());
             os << indent << "last upload duration: " << lastUploadDuration();
             os << indent << "min time between uploads: " << minTimeBetweenUploads();
-            os << indent << "last modified time (on server): " << getLastModifiedTime();
+            os << indent << "last modified time (on server): " << getLastModifiedServerTimeString();
             os << indent << "file last modified: "
                << Util::getTimeForLog(now, _lastUploadedFileModifiedLocalTime);
             os << indent << "last upload was successful: " << lastUploadSuccessful();
@@ -1440,7 +1446,7 @@ private:
         std::chrono::system_clock::time_point _lastUploadedFileModifiedLocalTime;
 
         /// The modified time of the document in storage, as reported by the server.
-        std::string _lastModifiedTime;
+        std::string _lastModifiedServerTimeString;
 
         /// The size of the document, as we downloaded from the server,
         /// and after successfully uploading.
