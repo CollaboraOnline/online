@@ -1137,17 +1137,18 @@ bool DocumentBroker::download(
 
     if (firstInstance)
     {
-        _storageManager.setLastModifiedServerTimeString(fileInfo.getLastModifiedTime());
+        _storageManager.setLastModifiedServerTimeString(fileInfo.getLastModifiedServerTimeString());
         LOG_DBG("Document timestamp: " << _storageManager.getLastModifiedServerTimeString());
     }
     else
     {
         // Check if document has been modified by some external action,
         // but only if *we* aren't uploading. Otherwise, it might be us.
-        LOG_TRC("Document modified time: " << fileInfo.getLastModifiedTime());
+        LOG_TRC("Document modified time: " << fileInfo.getLastModifiedServerTimeString());
         if (!_storageManager.getLastModifiedServerTimeString().empty() &&
-            !fileInfo.getLastModifiedTime().empty() &&
-            _storageManager.getLastModifiedServerTimeString() != fileInfo.getLastModifiedTime())
+            !fileInfo.getLastModifiedServerTimeString().empty() &&
+            _storageManager.getLastModifiedServerTimeString() !=
+                fileInfo.getLastModifiedServerTimeString())
         {
             if (_uploadRequest)
             {
@@ -1156,14 +1157,14 @@ bool DocumentBroker::download(
                         << "] timestamp checked for a match during an up-load, results may race, "
                            "so ignoring inconsistent timestamp. Expected: "
                         << _storageManager.getLastModifiedServerTimeString()
-                        << ", Actual: " << fileInfo.getLastModifiedTime());
+                        << ", Actual: " << fileInfo.getLastModifiedServerTimeString());
             }
             else
             {
                 LOG_WRN("Document [" << _docKey << "] has been modified behind our back. "
                                      << "Informing all clients. Expected: "
                                      << _storageManager.getLastModifiedServerTimeString()
-                                     << ", Actual: " << fileInfo.getLastModifiedTime());
+                                     << ", Actual: " << fileInfo.getLastModifiedServerTimeString());
 
                 handleDocumentConflict();
             }
