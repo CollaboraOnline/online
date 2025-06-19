@@ -81,10 +81,13 @@ public:
         const std::string& getOwnerId() const { return _ownerId; }
 
         /// Set the last modified time as reported to the WOPI host.
-        void setLastModifiedTime(const std::string& modifiedTime) { _modifiedTime = modifiedTime; }
+        void setLastModifiedServerTimeString(const std::string& modifiedTime)
+        {
+            _modifiedTime = modifiedTime;
+        }
 
         /// Get the last modified time as reported by the WOPI host, empty if unsafe to rely on
-        const std::string& getLastModifiedTime() const { return _modifiedTime; }
+        const std::string& getLastModifiedServerTimeString() const { return _modifiedTime; }
 
         /// Sometimes an up-load fails, leaving our timestamp in an unknown state
         bool isLastModifiedTimeSafe() const { return !_modifiedTime.empty(); }
@@ -392,8 +395,14 @@ public:
     /// Returns the basic information about the file.
     const FileInfo& getFileInfo() const { return _fileInfo; }
 
-    const std::string& getLastModifiedTime() const { return _fileInfo.getLastModifiedTime(); }
-    void setLastModifiedTime(const std::string& modifiedTime) { _fileInfo.setLastModifiedTime(modifiedTime); }
+    const std::string& getLastModifiedTime() const
+    {
+        return _fileInfo.getLastModifiedServerTimeString();
+    }
+    void setLastModifiedTime(const std::string& modifiedTime)
+    {
+        _fileInfo.setLastModifiedServerTimeString(modifiedTime);
+    }
     bool isLastModifiedTimeSafe() const { return _fileInfo.isLastModifiedTimeSafe(); }
     void setLastModifiedTimeUnSafe() { _fileInfo.setLastModifiedTimeUnSafe(); }
 
