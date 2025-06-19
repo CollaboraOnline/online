@@ -1354,15 +1354,16 @@ private:
         std::size_t uploadFailureCount() const { return _request.lastRequestFailureCount(); }
 
         /// Get the modified-timestamp of the local file on disk we last uploaded.
-        std::chrono::system_clock::time_point getLastUploadedFileModifiedTime() const
+        std::chrono::system_clock::time_point getLastUploadedFileModifiedLocalTime() const
         {
-            return _lastUploadedFileModifiedTime;
+            return _lastUploadedFileModifiedLocalTime;
         }
 
         /// Set the modified-timestamp of the local file on disk we last uploaded.
-        void setLastUploadedFileModifiedTime(std::chrono::system_clock::time_point modifiedTime)
+        void
+        setLastUploadedFileModifiedLocalTime(std::chrono::system_clock::time_point modifiedTime)
         {
-            _lastUploadedFileModifiedTime = modifiedTime;
+            _lastUploadedFileModifiedLocalTime = modifiedTime;
         }
 
         /// Set the last modified time of the document.
@@ -1417,8 +1418,8 @@ private:
             os << indent << "last upload duration: " << lastUploadDuration();
             os << indent << "min time between uploads: " << minTimeBetweenUploads();
             os << indent << "last modified time (on server): " << getLastModifiedTime();
-            os << indent
-               << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
+            os << indent << "file last modified: "
+               << Util::getTimeForLog(now, _lastUploadedFileModifiedLocalTime);
             os << indent << "last upload was successful: " << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
             os << indent << "size on server: " << _sizeOnServer;
@@ -1430,7 +1431,7 @@ private:
         RequestManager _request;
 
         /// The modified-timestamp of the local file on disk we uploaded last.
-        std::chrono::system_clock::time_point _lastUploadedFileModifiedTime;
+        std::chrono::system_clock::time_point _lastUploadedFileModifiedLocalTime;
 
         /// The modified time of the document in storage, as reported by the server.
         std::string _lastModifiedTime;
