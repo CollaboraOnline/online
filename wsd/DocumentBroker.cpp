@@ -1299,14 +1299,16 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
     {
         // Invalid timestamp for templates, to force uploading once we save-after-loading.
         _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
-        _storageManager.setLastUploadedFileModifiedTime(std::chrono::system_clock::time_point());
+        _storageManager.setLastUploadedFileModifiedLocalTime(
+            std::chrono::system_clock::time_point());
     }
     else
     {
         // Use the local temp file's timestamp.
         const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
         _saveManager.setLastModifiedTime(timepoint);
-        _storageManager.setLastUploadedFileModifiedTime(timepoint); // Used to detect modifications.
+        _storageManager.setLastUploadedFileModifiedLocalTime(
+            timepoint); // Used to detect modifications.
     }
 
     const bool dontUseCache = Util::isMobileApp();
@@ -2357,7 +2359,7 @@ bool DocumentBroker::isStorageOutdated() const
 
     const std::chrono::system_clock::time_point currentModifiedTime = st.modifiedTimepoint();
     const std::chrono::system_clock::time_point lastModifiedTime =
-        _storageManager.getLastUploadedFileModifiedTime();
+        _storageManager.getLastUploadedFileModifiedLocalTime();
 
     LOG_TRC("File to upload to storage ["
             << _storage->getRootFilePathUploading() << "] was modified at " << currentModifiedTime
@@ -2365,11 +2367,12 @@ bool DocumentBroker::isStorageOutdated() const
             << (currentModifiedTime == lastModifiedTime ? "identical" : "different"));
 
 #if ENABLE_DEBUG
-    if (_storageManager.getLastUploadedFileModifiedTime() != _saveManager.getLastModifiedTime())
+    if (_storageManager.getLastUploadedFileModifiedLocalTime() !=
+        _saveManager.getLastModifiedTime())
     {
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         LOG_ERR("StorageManager's lastModifiedTime ["
-                << Util::getTimeForLog(now, _storageManager.getLastUploadedFileModifiedTime())
+                << Util::getTimeForLog(now, _storageManager.getLastUploadedFileModifiedLocalTime())
                 << "] doesn't match that of SaveManager's ["
                 << Util::getTimeForLog(now, _saveManager.getLastModifiedTime())
                 << "]. File lastModifiedTime: [" << Util::getTimeForLog(now, currentModifiedTime)
@@ -2710,7 +2713,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                 << "] is identical to the SaveManager's ["
                 << Util::getTimeForLog(now, _saveManager.getLastModifiedTime())
                 << "]. StorageManager's lastModifiedTime ["
-                << Util::getTimeForLog(now, _storageManager.getLastUploadedFileModifiedTime())
+                << Util::getTimeForLog(now, _storageManager.getLastUploadedFileModifiedLocalTime())
                 << ']');
     }
 
@@ -2823,7 +2826,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
         _storageManager.setLastModifiedTime(_storage->getLastModifiedTime());
 
         // Set the timestamp of the file we uploaded, to detect changes.
-        _storageManager.setLastUploadedFileModifiedTime(_uploadRequest->newFileModifiedTime());
+        _storageManager.setLastUploadedFileModifiedLocalTime(_uploadRequest->newFileModifiedTime());
 
         // After a successful save, we are sure that document in the storage is same as ours
         _documentChangedInStorage = false;
