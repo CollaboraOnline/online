@@ -1483,6 +1483,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.socket._logSocket('INCOMING', textMsg);
 			this.handleInvalidateTilesMsg(textMsg);
 			return true; // filter
+		} else if (textMsg.startsWith('slidelayer:')) {
+			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
+			this._map.fire('slidelayer', {
+				message: content,
+				image: evt.image
+			});
+			return true;
 		}
 
 		return false; // continue processing
