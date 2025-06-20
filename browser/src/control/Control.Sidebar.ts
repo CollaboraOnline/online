@@ -29,7 +29,6 @@ class Sidebar extends SidebarBase {
 	onAdd(map: ReturnType<typeof L.map>) {
 		super.onAdd(map);
 		this.map.on('sidebar', this.onSidebar, this);
-		this.map.on('jsdialogclick', this.onJSDialogClick, this);
 	}
 
 	onRemove() {
@@ -81,12 +80,6 @@ class Sidebar extends SidebarBase {
 		if (unoCommand !== null && unoCommand !== undefined)
 			app.socket.sendMessage('uno ' + unoCommand);
 		this.setupTargetDeck(unoCommand);
-	}
-
-	onJSDialogClick(e: any) {
-		if (e.uno === '.uno:SidebarDeck.PropertyDeck') {
-			this.enableFocus = true;
-		}
 	}
 
 	onSidebar(data: FireEvent) {
@@ -142,14 +135,12 @@ class Sidebar extends SidebarBase {
 				}
 
 				this.builder.build(this.container, [sidebarData]);
-				if (!this.isVisible()) $('#sidebar-dock-wrapper').addClass('visible');
-
-				if (this.enableFocus === true) {
+				if (!this.isVisible()) {
+					$('#sidebar-dock-wrapper').addClass('visible');
 					const focusables = JSDialog.GetFocusableElements(this.container);
 					if (focusables && focusables.length) {
 						focusables[0].focus();
 					}
-					this.enableFocus = false;
 				}
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
