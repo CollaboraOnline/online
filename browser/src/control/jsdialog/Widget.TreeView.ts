@@ -669,14 +669,14 @@ class TreeViewControl {
 		if (!this._singleClickActivate) {
 			if (window.ThisIsTheiOSApp) {
 				// TODO: remove this hack
-				tr.addEventListener('click', () => {
+				tr.addEventListener('click', event => {
 					if (L.DomUtil.hasClass(tr, 'disabled')) return;
 
 					if (
 						entry.row == lastClickHelperRow &&
 						treeViewData.id == lastClickHelperId
 					)
-						doubleClickFunction(undefined);
+						doubleClickFunction(event);
 					else {
 						lastClickHelperRow = entry.row;
 						lastClickHelperId = treeViewData.id;
