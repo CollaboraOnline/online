@@ -76,6 +76,7 @@ class TreeViewControl {
 	_hasIcon: boolean;
 	_isNavigator: boolean;
 	_singleClickActivate: boolean;
+	_doubleClickEdit: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
@@ -90,6 +91,7 @@ class TreeViewControl {
 		this._hasIcon = TreeViewControl.hasIcon(data);
 		this._isNavigator = this.isNavigator(data);
 		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+		this._doubleClickEdit = true;
 
 		this._tbody = this._container;
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
@@ -487,7 +489,7 @@ class TreeViewControl {
 	) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			builder.options.cssClass + ` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
 			parent,
 		);
 		cell.innerText =
@@ -598,8 +600,9 @@ class TreeViewControl {
 		var clickFunction = this.createClickFunction(
 			tr,
 			selectionElement,
-			true,
+			!this._doubleClickEdit,
 			this._singleClickActivate,
+			false,
 			builder,
 			treeViewData,
 			entry,
@@ -608,7 +611,8 @@ class TreeViewControl {
 			tr,
 			selectionElement,
 			false,
-			true,
+			!this._doubleClickEdit,
+			this._doubleClickEdit,
 			builder,
 			treeViewData,
 			entry,
@@ -669,14 +673,14 @@ class TreeViewControl {
 		if (!this._singleClickActivate) {
 			if (window.ThisIsTheiOSApp) {
 				// TODO: remove this hack
-				tr.addEventListener('click', () => {
+				tr.addEventListener('click', event => {
 					if (L.DomUtil.hasClass(tr, 'disabled')) return;
 
 					if (
 						entry.row == lastClickHelperRow &&
 						treeViewData.id == lastClickHelperId
 					)
-						doubleClickFunction(undefined);
+						doubleClickFunction(event);
 					else {
 						lastClickHelperRow = entry.row;
 						lastClickHelperId = treeViewData.id;
@@ -799,6 +803,7 @@ class TreeViewControl {
 		checkbox: HTMLInputElement,
 		select: boolean,
 		activate: boolean,
+		edit: boolean,
 		builder: JSBuilder,
 		treeViewData: TreeWidgetJSON,
 		entry: TreeEntryJSON,
@@ -838,7 +843,125 @@ class TreeViewControl {
 					entry.row,
 					builder,
 				);
+
+			if (edit)
+				this.startEditing(treeViewData, entry, e, builder);
 		};
+	}
+
+	startEditing(treeViewData: TreeWidgetJSON, entry: TreeEntryJSON, event: MouseEvent | KeyboardEvent | undefined, builder: JSBuilder) {
+		if (event === undefined) {
+			return;
+		}
+
+		if (!(event.target instanceof Element)) {
+			return;
+		}
+
+		const target: Element = event.target;
+		const editableCells = Array.from(target.getElementsByClassName('ui-treeview-cell-text-content'));
+
+		if (target.classList.contains('ui-treeview-cell-text-content')) {
+			editableCells.push(target);
+		}
+
+		if (editableCells.length !== 1) {
+			return;
+		}
+
+		const cell = editableCells[0];
+
+		let column: number | undefined;
+		for (const className of Array.from(cell.classList)) {
+			const prefix = `ui-treeview-${entry.row}-`;
+			if (className.startsWith(prefix)) {
+				column = parseInt(className.slice(prefix.length));
+			}
+		}
+		if (column === undefined || Number.isNaN(column)) {
+			throw new Error(`Failed to enter edit mode - could not parse out column number from ${Array.from(cell.classList)}`);
+		}
+		if (column >= entry.columns.length) {
+			throw new Error(`The column ${column} is not a valid column for row ${entry.row}`);
+		}
+		if (entry.columns[column].text === undefined) {
+			throw new Error(`Attempted to edit non-text column ${column} in row ${entry.row}`);
+			// FIXME: not sure if we can get here in normal situations - should this just be `return`?
+		}
+
+		for (const child of Array.from(cell.childNodes)) {
+			child.remove();
+		}
+
+		const input = document.createElement('input');
+
+		input.style.width = '100%';
+		input.style.boxSizing = 'border-box';
+
+		input.value = entry.columns[column].text;
+
+		input.enterKeyHint = 'done';
+
+		let cancelledUpdate = false;
+
+		input.addEventListener('keydown', (event) => {
+			if (event.code === 'Enter') {
+				input.blur();
+			} else if (event.code === 'Escape') {
+				cancelledUpdate = true;
+				input.blur();
+			}
+			event.stopPropagation(); // We need events to type and with some keys that doesn't happen (e.g. space which selects a different cell)
+		});
+		input.addEventListener('mousedown', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('mouseup', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('click', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('pointerdown', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('pointerup', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('touchend', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('touchstart', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('dblclick', (event) => {
+			event.stopPropagation(); // We need the event to select/move within the input field and something downstream stops it
+		});
+		input.addEventListener('blur', () => {
+			for (const child of Array.from(cell.childNodes)) {
+				child.remove();
+			}
+
+			if (cancelledUpdate) {
+				cell.append(entry.columns[column].text);
+				return;
+			}
+			
+			cell.append(input.value);
+			// This is changed on core too - but we may as well optimistically set the new value here anyway
+			// If core fails the update, it'll send us back the old value
+
+			builder.callback(
+				'treeview',
+				'edit',
+				treeViewData,
+				{ row: entry.row, column, value: input.value },
+				builder,
+			);
+		});
+
+		cell.appendChild(input);
+		input.focus();
 	}
 
 	filterEntries(filter: string) {
