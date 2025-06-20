@@ -16,7 +16,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Some app', function() {
 
 	it('Should see an empty slideshow', function () {
 		getSlideShowContent().should('be.visible');
-		//FIXME: remove explict wait. I tried to assert slideshow's canvas but for some reason cypress can't find slideshow iframe
+		//FIXME: remove explicit wait. I tried to assert slideshow's canvas but for some reason cypress can't find slideshow iframe
 		cy.wait(1000);
 		getSlideShowContent().compareSnapshot('slideshow', 0.15);
 	});

@@ -54,6 +54,7 @@ Keypresses
 Konqueror
 Linespacing
 Mailto
+Memoizes
 Menubar
 Mis
 Multithreading
@@ -86,6 +87,7 @@ Tracevent
 Transitionend
 Treeview
 Twips
+Un
 Unbuffered
 Uncomment
 Unencrypted
@@ -295,6 +297,7 @@ diskfull
 diskspace
 dismissable
 displaymasterobjects
+disrecommend
 divs
 dlclose
 dns
@@ -331,6 +334,7 @@ entrancy
 enum
 env
 envar
+eof
 ep
 epoll
 eps
@@ -352,6 +356,7 @@ expandtab
 explorable
 fallthrough
 favicon
+favour
 fd
 fds
 fff
@@ -375,6 +380,7 @@ fontcolor
 forcedtracevent
 forkit
 forkits
+formatname
 formulabar
 fowner
 fprintf
@@ -402,6 +408,7 @@ gh
 github
 globals
 glxinfo
+gmtime
 grey
 greyed
 greyish
@@ -435,6 +442,7 @@ ifdef
 iff
 iframe
 iframes
+ifstream
 ify
 img
 imgsize
@@ -480,6 +488,7 @@ jsdom
 json
 jwt
 kbd
+keybind
 keycode
 keycodes
 keydown
@@ -523,6 +532,7 @@ lookahead
 lookups
 lool
 loopback
+lstat
 lt
 lustre
 mailto
@@ -530,6 +540,7 @@ maj
 malloc
 maths
 mcollapsable
+memoized
 memproportion
 memrchr
 menubar
@@ -538,9 +549,11 @@ mergeable
 mimetype
 minification
 minireset
+mins
 mipmap
 mis
 mixin
+mkdir
 mobilebrowser
 mobiledrawing
 modalpopup
@@ -600,6 +613,7 @@ onerror
 onmessage
 onopen
 oom
+openoffice
 openssl
 optgroups
 optionscontainer
@@ -662,6 +676,7 @@ ptr
 pwd
 px
 py
+rcapacity
 readonly
 realhost
 realpath
@@ -706,6 +721,7 @@ routetoken
 rowheight
 rss
 rtl
+rtotal
 rulerupdate
 rw
 sallogoverride
@@ -792,6 +808,7 @@ substrings
 sudo
 svg
 svtools
+svxb
 sys
 syscall
 syscalls
@@ -857,6 +874,7 @@ treeview
 treeviews
 tri
 tristate
+ttb
 twips
 txt
 typeof
@@ -917,6 +935,7 @@ utf
 util
 utimensat
 valgrind
+vcl
 ve
 ver
 vgdb
@@ -935,6 +954,7 @@ waitpid
 wakeup
 wakeups
 wasm
+wcapacity
 webkit
 webserver
 websocket
@@ -952,6 +972,7 @@ wopiserver
 wrt
 ws
 wsd
+wtotal
 www
 xcu
 xhr
@@ -959,6 +980,7 @@ xlink
 xml
 xmlns
 yesno
+zesz
 zindex
 zoomend
 zoomimg
@@ -966,3 +988,4 @@ zotero
 zoterocategory
 zoterolist
 zstd
+zwo

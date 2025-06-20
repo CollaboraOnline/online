@@ -905,7 +905,7 @@ L.Clipboard = L.Class.extend({
 				'text/plain': this._parseClipboardFetchResult(text, 'text/plain', 'plain'),
 			});
 			// Again, despite fetch(url), this._parseClipboardFetchResult(...) and check_ all being promises, we need to let browser internals await them after we have safely succeeded in calling clipboard.write
-			// We throw an error if our checks fail before returning our text to cause these promises to reject - that way everything can be deffered for later, with failures causing the clipboard write to fail later
+			// We throw an error if our checks fail before returning our text to cause these promises to reject - that way everything can be deferred for later, with failures causing the clipboard write to fail later
 			// We define the text promise outside to allow us to reuse the fetch rather than fetching twice (as in Ic23f7f817cc855ff08f25a2afefcd73d6fc3472b)
 
 			let clipboard = navigator.clipboard;
@@ -928,7 +928,7 @@ L.Clipboard = L.Class.extend({
 					 window.app.console.warn('navigator.clipboard.write() failed due to a failing check');
 					 return;
 				}
-				
+
 				window.app.console.error('navigator.clipboard.write() failed: ' + error.message);
 				// Warn that the copy failed.
 				this._warnCopyPaste();

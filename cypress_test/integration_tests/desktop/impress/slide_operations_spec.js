@@ -53,7 +53,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	// Skip it for now will enable it after Despatch nav patch get merged in CORE 25.04
 	it('Navigator height test', function() {
 		var navigationContainer, navOptionContainer, presentationWrapper, navHeading;
 
