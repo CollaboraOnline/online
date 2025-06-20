@@ -338,6 +338,7 @@ body {
 
 #sidebar-dock-wrapper.visible {
 	display: block;
+	/* synchronize time with Sidebar.ts setting focus */
 	animation: 200ms ease-out appear-from-right;
 	border-inline-start: 1px solid var(--color-border);
 }

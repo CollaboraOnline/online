@@ -66,7 +66,7 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 	});
 
 	it('Focus on the first focusable child', function() {
-		cy.cGet('#sidebar-dock-wrapper').then(function(sidebar) {
+		cy.cGet('#sidebar-dock-wrapper.visible').then(function(sidebar) {
 			helper.containsFocusElement(sidebar[0], false);
 		});
 
@@ -79,7 +79,9 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.cGet('#sidebar-panel').should('be.visible');
 		cy.cGet('#sidebar-panel').should('not.be.empty');
 
-		cy.cGet('#sidebar-dock-wrapper').then(function(sidebar) {
+		cy.wait(1000);
+
+		cy.cGet('#sidebar-dock-wrapper.visible').then(function(sidebar) {
 			helper.containsFocusElement(sidebar[0], true)
 		});
 	});
