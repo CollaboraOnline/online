@@ -2841,13 +2841,14 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
     if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
     {
         // Saved and stored; update flags.
-        _saveManager.setLastModifiedLocalTime(_uploadRequest->newFileModifiedTime());
+        _saveManager.setLastModifiedLocalTime(_uploadRequest->newFileModifiedLocalTime());
 
         // Save the storage timestamp.
         _storageManager.setLastModifiedServerTimeString(_storage->getLastModifiedTime());
 
         // Set the timestamp of the file we uploaded, to detect changes.
-        _storageManager.setLastUploadedFileModifiedLocalTime(_uploadRequest->newFileModifiedTime());
+        _storageManager.setLastUploadedFileModifiedLocalTime(
+            _uploadRequest->newFileModifiedLocalTime());
 
         // After a successful save, we are sure that document in the storage is same as ours
         _documentChangedInStorage = false;
@@ -2859,7 +2860,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
                 << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                 << "] and updated timestamps. Document modified timestamp: "
                 << _storageManager.getLastModifiedServerTimeString()
-                << ", newFileModifiedTime: " << _uploadRequest->newFileModifiedTime()
+                << ", newFileModifiedTime: " << _uploadRequest->newFileModifiedLocalTime()
                 << ". Current Activity: " << DocumentState::name(_docState.activity()));
 
         // Handle activity-specific logic.

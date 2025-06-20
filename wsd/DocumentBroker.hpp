@@ -1264,12 +1264,12 @@ private:
     {
     public:
         UploadRequest(std::string uriAnonym,
-                      std::chrono::system_clock::time_point newFileModifiedTime,
+                      std::chrono::system_clock::time_point newFileModifiedLocalTime,
                       const std::shared_ptr<class ClientSession>& session, bool isSaveAs,
                       bool isExport, bool isRename)
             : _startTime(std::chrono::steady_clock::now())
             , _uriAnonym(std::move(uriAnonym))
-            , _newFileModifiedTime(newFileModifiedTime)
+            , _newFileModifiedLocalTime(newFileModifiedLocalTime)
             , _session(session)
             , _isSaveAs(isSaveAs)
             , _isExport(isExport)
@@ -1285,9 +1285,9 @@ private:
         }
 
         const std::string& uriAnonym() const { return _uriAnonym; }
-        const std::chrono::system_clock::time_point& newFileModifiedTime() const
+        const std::chrono::system_clock::time_point& newFileModifiedLocalTime() const
         {
-            return _newFileModifiedTime;
+            return _newFileModifiedLocalTime;
         }
 
         std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
@@ -1302,7 +1302,7 @@ private:
     private:
         const std::chrono::steady_clock::time_point _startTime; ///< The time we made the request.
         const std::string _uriAnonym;
-        const std::chrono::system_clock::time_point _newFileModifiedTime;
+        const std::chrono::system_clock::time_point _newFileModifiedLocalTime;
         const std::weak_ptr<class ClientSession> _session;
         const bool _isSaveAs;
         const bool _isExport;
