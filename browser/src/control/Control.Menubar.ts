@@ -2068,8 +2068,7 @@ class Menubar extends L.Control {
 					// Except the ones listed in allowedViewModeCommands:
 					const allowed = this.options.allowedViewModeCommands.includes(uno);
 					if (!allowed) {
-						$(aItem).addClass('disabled');
-						aItem.title = window._('Read-only mode');
+						$(aItem).hide();
 					}
 				} else if (type === 'action') { // disable all except allowedViewModeActions
 					var found = false;
