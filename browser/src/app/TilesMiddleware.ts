@@ -239,6 +239,8 @@ class Tile {
 	}
 }
 
+type AfterFirstTileTask = () => void;
+
 class TileManager {
 	private static _docLayer: any;
 	private static _zoom: number;
@@ -277,6 +279,12 @@ class TileManager {
 
 	//private static _debugTime: any = {}; Reserved for future.
 
+	// Did we ever get a reply for a tilecombine request?
+	private static receivedFirstTile: boolean = false;
+
+	// Tasks to be executed after we got our first tile.
+	private static afterFirstTileTasks: Array<AfterFirstTileTask> = [];
+
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
 			window.app.console.info('Creating CanvasTileWorker');
@@ -288,6 +296,14 @@ class TileManager {
 			);
 			this.worker.addEventListener('error', (e: any) => this.disableWorker(e));
 		}
+	}
+
+	public static isReceivedFirstTile(): boolean {
+		return this.receivedFirstTile;
+	}
+
+	public static appendAfterFirstTileTask(task: AfterFirstTileTask): void {
+		this.afterFirstTileTasks.push(task);
 	}
 
 	/// Called before frame rendering to update details
@@ -2010,6 +2026,15 @@ class TileManager {
 		}
 
 		this.queueAcknowledgement(tileMsgObj);
+
+		if (!this.receivedFirstTile) {
+			// This was the first tile, exec the queued tasks.
+			this.receivedFirstTile = true;
+			while (this.afterFirstTileTasks.length > 0) {
+				const task = this.afterFirstTileTasks.shift();
+				task();
+			}
+		}
 	}
 
 	// Returns a guess of how many tiles are yet to arrive
