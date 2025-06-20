@@ -1142,18 +1142,31 @@ bool DocumentBroker::download(
     }
     else
     {
-        // Check if document has been modified by some external action
+        // Check if document has been modified by some external action,
+        // but only if *we* aren't uploading. Otherwise, it might be us.
         LOG_TRC("Document modified time: " << fileInfo.getLastModifiedTime());
         if (!_storageManager.getLastModifiedTime().empty() &&
             !fileInfo.getLastModifiedTime().empty() &&
             _storageManager.getLastModifiedTime() != fileInfo.getLastModifiedTime())
         {
-            LOG_DBG("Document [" << _docKey << "] has been modified behind our back. "
-                                 << "Informing all clients. Expected: "
-                                 << _storageManager.getLastModifiedTime()
-                                 << ", Actual: " << fileInfo.getLastModifiedTime());
+            if (_uploadRequest)
+            {
+                LOG_DBG("Document ["
+                        << _docKey
+                        << "] timestamp checked for a match during an up-load, results may race, "
+                           "so ignoring inconsistent timestamp. Expected: "
+                        << _storageManager.getLastModifiedTime()
+                        << ", Actual: " << fileInfo.getLastModifiedTime());
+            }
+            else
+            {
+                LOG_WRN("Document [" << _docKey << "] has been modified behind our back. "
+                                     << "Informing all clients. Expected: "
+                                     << _storageManager.getLastModifiedTime()
+                                     << ", Actual: " << fileInfo.getLastModifiedTime());
 
-            handleDocumentConflict();
+                handleDocumentConflict();
+            }
         }
     }
 
