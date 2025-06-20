@@ -579,7 +579,9 @@ class UIManager extends L.Control {
 				this.map.sidebar.setupTargetDeck('.uno:SidebarDeck.StyleListDeck');
 			}
 
-			if (!showSidebar)
+			if (showSidebar)
+				this.map.sidebar.setAsInitialized();
+			else
 				app.socket.sendMessage('uno .uno:SidebarHide');
 		}
 		else if (window.mode.isChromebook()) {
