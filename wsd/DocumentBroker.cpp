@@ -499,6 +499,13 @@ void DocumentBroker::pollThread()
                 }
 #endif
 
+                if (_uploadRequest && _uploadRequest->isComplete())
+                {
+                    // We are done. Safe to reset.
+                    LOG_TRC("Resetting uploadRequest instance");
+                    _uploadRequest.reset();
+                }
+
                 // Check if there are queued activities.
                 if (!_renameFilename.empty() && !_renameSessionId.empty())
                 {
@@ -2725,6 +2732,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     StorageBase::AsyncUploadCallback asyncUploadCallback =
         [this](const StorageBase::AsyncUpload& asyncUp)
     {
+        assert(_uploadRequest && "Expected to have a valid UploadRequest instance");
+
         switch (asyncUp.state())
         {
             case StorageBase::AsyncUpload::State::Running:
@@ -2737,12 +2746,13 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                 LOG_TRC("Finished uploading [" << _docKey << "] during "
                                                << DocumentState::name(_docState.activity())
                                                << ", processing results.");
+                _uploadRequest->setComplete();
                 return handleUploadToStorageResponse(asyncUp.result());
             }
 
             case StorageBase::AsyncUpload::State::None: // Unexpected: fallback.
             case StorageBase::AsyncUpload::State::Error:
-            default:
+                _uploadRequest->setComplete();
                 broadcastSaveResult(false, "Could not upload document to storage");
                 // [[fallthrough]]
         }
@@ -2753,9 +2763,6 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
 
         switch (_docState.activity())
         {
-            case DocumentState::Activity::None:
-                break;
-
             case DocumentState::Activity::Rename:
             {
                 LOG_DBG("Failed to renameFile because uploading post-save failed.");
@@ -2980,12 +2987,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
 
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
 {
-    if (!_uploadRequest)
-    {
-        // We shouldn't get here if there is no active upload request.
-        LOG_ERR("No active upload request while handling upload result.");
-        return;
-    }
+    assert(_uploadRequest && "Expected to have a valid UploadRequest instance");
 
     // Storage upload is considered successful only when storage returns OK.
     const bool lastUploadSuccessful =
