@@ -487,7 +487,7 @@ class TreeViewControl {
 	) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			builder.options.cssClass + ' ui-treeview-cell-text ui-treeview-cell-text-content',
 			parent,
 		);
 		cell.innerText =
@@ -839,6 +839,24 @@ class TreeViewControl {
 					builder,
 				);
 		};
+	}
+
+	getTextCellForElement(element: Element): Element {
+		const textCells = Array.from(
+			element.getElementsByClassName('ui-treeview-cell-text-content'),
+		);
+
+		if (element.classList.contains('ui-treeview-cell-text-content')) {
+			textCells.push(element);
+		}
+
+		if (textCells.length !== 1) {
+			return null;
+		}
+
+		const cell = textCells[0];
+
+		return cell;
 	}
 
 	filterEntries(filter: string) {
