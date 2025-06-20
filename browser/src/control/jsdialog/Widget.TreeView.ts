@@ -487,7 +487,7 @@ class TreeViewControl {
 	) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			builder.options.cssClass + ` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
 			parent,
 		);
 		cell.innerText =
@@ -855,6 +855,25 @@ class TreeViewControl {
 		const cell = textCells[0];
 
 		return cell;
+	}
+
+	getColumnForCell(entry: TreeEntryJSON, cell: Element): number | null {		
+
+		let column: number | undefined;
+		for (const className of Array.from(cell.classList)) {
+			const prefix = `ui-treeview-${entry.row}-`;
+			if (className.startsWith(prefix)) {
+				column = parseInt(className.slice(prefix.length));
+			}
+		}
+		if (column === undefined || Number.isNaN(column)) {
+			return null;
+		}
+		if (column >= entry.columns.length) {
+			return null;
+		}
+
+		return column;
 	}
 
 	filterEntries(filter: string) {
