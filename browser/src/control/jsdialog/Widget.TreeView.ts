@@ -841,6 +841,22 @@ class TreeViewControl {
 		};
 	}
 
+	getTextCellForElement(element: Element): Element {
+		const textCells = Array.from(element.getElementsByClassName('ui-treeview-cell-text-content'));
+
+		if (element.classList.contains('ui-treeview-cell-text-content')) {
+			textCells.push(element);
+		}
+
+		if (textCells.length !== 1) {
+			return null;
+		}
+
+		const cell = textCells[0];
+
+		return cell;
+	}
+
 	filterEntries(filter: string) {
 		if (this._filterTimer) clearTimeout(this._filterTimer);
 
