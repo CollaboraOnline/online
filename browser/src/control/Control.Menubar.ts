@@ -193,10 +193,10 @@ class Menubar extends L.Control {
 					{uno: '.uno:AcceptTrackedChanges'},
 					{uno: '.uno:AcceptTrackedChange'},
 					{uno: '.uno:AcceptTrackedChangeToNext'},
-					{name: _UNO('.uno:AcceptAllTrackedChanges', 'text'), id: 'acceptalltrackedchanges', type: 'action'},
+					{type: 'action', id: 'acceptalltrackedchanges', uno: '.uno:AcceptAllTrackedChanges'},
 					{uno: '.uno:RejectTrackedChange'},
 					{uno: '.uno:RejectTrackedChangeToNext'},
-					{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
+					{type: 'action', id: 'rejectalltrackedchanges', uno: '.uno:RejectAllTrackedChanges'},
 					{uno: '.uno:ReinstateTrackedChange'},
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
@@ -1111,8 +1111,8 @@ class Menubar extends L.Control {
 				{uno: '.uno:TrackChanges'},
 				{uno: '.uno:ShowTrackedChanges'},
 				{type: 'separator'},
-				{name: _UNO('.uno:AcceptAllTrackedChanges', 'text'), id: 'acceptalltrackedchanges', type: 'action'},
-				{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
+				{type: 'action', id: 'acceptalltrackedchanges', uno: '.uno:AcceptAllTrackedChanges'},
+				{type: 'action', id: 'rejectalltrackedchanges', uno: '.uno:RejectAllTrackedChanges'},
 				{uno: '.uno:PreviousTrackedChange'},
 				{uno: '.uno:NextTrackedChange'}
 			]},
@@ -2041,8 +2041,7 @@ class Menubar extends L.Control {
 							}
 						}
 					} else if (id === 'acceptalltrackedchanges' || id === 'rejectalltrackedchanges') {
-						var command = id === 'acceptalltrackedchanges' ? '.uno:AcceptAllTrackedChanges' : '.uno:RejectAllTrackedChanges';
-						itemState = this._map['stateChangeHandler'].getItemValue(command);
+						itemState = this._map['stateChangeHandler'].getItemValue(uno);
 						if (itemState === 'disabled') {
 							$(aItem).addClass('disabled');
 						} else {
@@ -2140,17 +2139,19 @@ class Menubar extends L.Control {
 	 * @param itWizard - Optional wizard data.
 	 */
 	private _executeAction(itNode: any, itWizard?: any): void {
-		var id, postmessage, type;
+		var id, postmessage, type, command;
 		if (itNode === undefined)
 		{ // called from JSDialogBuilder
 			id = itWizard.id;
 			postmessage = false;
+			command = itWizard.command;
 		}
 		else
 		{ // called from
 			id = $(itNode).data('id');
 			type = $(itNode).data('type');
 			postmessage = ($(itNode).data('postmessage') === 'true');
+			command = $(itNode).data('uno');
 		}
 
 		if (id === 'save') {
@@ -2319,10 +2320,8 @@ class Menubar extends L.Control {
 			app.dispatcher.dispatch('hideslide');
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
-		} else if (id === 'acceptalltrackedchanges') {
-			app.dispatcher.dispatch('.uno:AcceptAllTrackedChanges');
-		} else if (id === 'rejectalltrackedchanges') {
-			app.dispatcher.dispatch('.uno:RejectAllTrackedChanges');
+		} else if (id === 'acceptalltrackedchanges' || id === 'rejectalltrackedchanges') {
+			app.dispatcher.dispatch(command);
 		} else if (id === 'columnrowhighlight') {
 			app.dispatcher.dispatch('columnrowhighlight');
 		}
@@ -2608,7 +2607,7 @@ class Menubar extends L.Control {
 					ulItem.appendChild(subitemList[idx]);
 				}
 				aItem.tabIndex = 0;
-			} else if (menu[i].type === 'unocommand' || menu[i].uno !== undefined) {
+			} else if (menu[i].type === 'unocommand' || (!menu[i].type && menu[i].uno !== undefined)) {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
 				$(aItem).data('tag', menu[i].tag);
@@ -2621,6 +2620,8 @@ class Menubar extends L.Control {
 					continue;
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
+				if (menu[i].uno !== undefined)
+					$(aItem).data('uno', menu[i].uno);
 				aItem.tabIndex = 0;
 			}
 
