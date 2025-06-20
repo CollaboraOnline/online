@@ -231,10 +231,9 @@ public:
 
     virtual AsyncUpload queryLocalFileToStorageAsyncUploadState() override
     {
-        if (_uploadHttpSession)
-            return AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK));
-        else
-            return AsyncUpload(AsyncUpload::State::None, UploadResult(UploadResult::Result::OK));
+        const AsyncUpload::State state =
+            _uploadHttpSession ? AsyncUpload::State::Running : AsyncUpload::State::None;
+        return AsyncUpload(state, UploadResult(UploadResult::Result::OK));
     }
 
 protected:
