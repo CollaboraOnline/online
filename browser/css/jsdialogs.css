@@ -894,6 +894,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	width: 100%;
 }
 
+:dir(rtl) .spinfield {
+	padding: 4px 4px 4px 0;
+}
+
 .spinfieldunit {
 	font-size: var(--default-font-size);
 	color: var(--color-text-dark);
