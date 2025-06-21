@@ -1188,6 +1188,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 40vh;
 }
 
+#BorderPage.jsdialog #presets, 
+#BorderPage.jsdialog #shadows {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* we want presets and shadows in a single row */
+	overflow: visible;
+}
+
 .ui-iconview.mobile-wizard {
 	justify-content: space-around;
 }
@@ -1206,7 +1212,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-self: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
-	padding-top: 5px;
 	text-wrap: nowrap;
 	font-family: var(--jquery-ui-font);
 }
@@ -1220,6 +1225,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-iconview-entry:hover {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker);
+}
+
+.ui-iconview-entry img {
+	vertical-align: middle;
+}
+
+[data-theme='dark'] .sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
+[data-theme='dark'] .sidebar-panel #transitions_icons .ui-iconview-entry img {
+	filter: invert(1);
+}
+
+.sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
+#FontworkGalleryDialog .ui-iconview-entry img {
+	padding: 5px 0;
 }
 
 .ui-iconview-separator {
