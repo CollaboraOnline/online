@@ -2,7 +2,7 @@
 <resources>
     <string name="failed_to_load_file">Nu s-a putut determina fișierul de încărcat</string>
     <string name="no_recent_items">Vă rugăm să deschideți un fișier folosind pictograma folderului din bara de instrumente.</string>
-    <string name="sort">Sortează după</string>
+    <string name="sort">Sortare</string>
     <string name="reason_required_to_read_documents">Este necesară permisiunea de stocare pentru citirea documentelor.</string>
     <string name="pref_sort_summary">Selectați cum doriți să ordonați fișierele: de la A la Z, după dimensiune sau după dată.</string>
     <string name="confirm_label">Confirmare</string>
@@ -12,7 +12,7 @@
     <string name="sort_largest">Mai întâi mai mari</string>
     <string name="filter_everything">Totul</string>
     <string name="about_license">Afișare licență</string>
-    <string name="filter">Filtrare după</string>
+    <string name="filter">Filtrare</string>
     <string name="title_browser">Toate fișierele</string>
     <string name="pref_filter_title">Filtru de fișiere implicit</string>
     <string name="current_dir">Director curent: %1$s</string>
