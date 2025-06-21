@@ -60,13 +60,7 @@ button.ui-tab.notebookbar {
 	box-shadow: inset 12px 0 var(--color-main-background), inset -12px 0 var(--color-main-background), inset 0 -2px var(--color-border);
 }
 
-/* Document Logo */
-.main-nav.hasnotebookbar #document-header {
-	height: 100%;
-	background: transparent;
-	align-items: center;
-	display: flex;
-}
+
 
 /* grid */
 .notebookbar.ui-grid {

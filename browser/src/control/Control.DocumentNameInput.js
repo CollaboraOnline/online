@@ -26,15 +26,15 @@ L.Control.DocumentNameInput = L.Control.extend({
 		map.on('wopiprops', this.onWopiProps, this);
 	},
 
-	documentNameConfirm: function(value) {
+	documentNameConfirm: function (value) {
 		if (value !== null && value != '' && value != this.map['wopi'].BaseFileName) {
 			this._renaming = true;
 			if (this.map['wopi'].UserCanRename && this.map['wopi'].SupportsRename) {
 				if (value.lastIndexOf('.') > 0) {
 					var fname = this.map['wopi'].BaseFileName;
-					var ext = fname.substr(fname.lastIndexOf('.')+1, fname.length);
+					var ext = fname.substr(fname.lastIndexOf('.') + 1, fname.length);
 					// check format conversion
-					if (ext != value.substr(value.lastIndexOf('.')+1, value.length)) {
+					if (ext != value.substr(value.lastIndexOf('.') + 1, value.length)) {
 						this.map.saveAs(value);
 					} else {
 						// same extension, just rename the file
@@ -55,7 +55,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		this.map._onGotFocus();
 	},
 
-	documentNameCancel: function() {
+	documentNameCancel: function () {
 		if (this._renaming)
 			return;
 
@@ -63,13 +63,13 @@ L.Control.DocumentNameInput = L.Control.extend({
 		this.map._onGotFocus();
 	},
 
-	disableDocumentNameInput : function() {
+	disableDocumentNameInput: function () {
 		$('#document-name-input').prop('disabled', true);
 		$('#document-name-input').removeClass('editable');
 		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
 	},
 
-	enableDocumentNameInput : function() {
+	enableDocumentNameInput: function () {
 		$('#document-name-input').prop('disabled', false);
 		$('#document-name-input').addClass('editable');
 		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
@@ -77,7 +77,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
 	},
 
-	onDocumentNameKeyPress: function(e) {
+	onDocumentNameKeyPress: function (e) {
 		if (e.keyCode === 13) { // Enter key
 			var value = $('#document-name-input').val();
 			this.documentNameConfirm(value);
@@ -86,7 +86,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
-	onDocumentNameFocus: function() {
+	onDocumentNameFocus: function () {
 		// hide the caret in the main document
 		delete this._renaming;
 		this.map._onLostFocus();
@@ -98,7 +98,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		$('#document-name-input')[0].setSelectionRange(0, extn);
 	},
 
-	onDocLayerInit: function() {
+	onDocLayerInit: function () {
 
 		var el = $('#document-name-input');
 
@@ -109,7 +109,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 				.pathname
 				.replace('/wopi/files', '');
 
-			var basePath = fileNameFullPath.replace(this.map['wopi'].BaseFileName , '').replace(/\/$/, '');
+			var basePath = fileNameFullPath.replace(this.map['wopi'].BaseFileName, '').replace(/\/$/, '');
 			var title = this.map['wopi'].BaseFileName + '\n' + _('Path') + ': ' + basePath;
 
 			el.prop('title', title);
@@ -128,14 +128,14 @@ L.Control.DocumentNameInput = L.Control.extend({
 			// We can now set the document name in the menu bar
 			el.prop('disabled', false);
 			el.removeClass('editable');
-			el.focus(function() { $(this).blur(); });
+			el.focus(function () { $(this).blur(); });
 			// Call decodeURIComponent twice: Reverse both our encoding and the encoding of
 			// the name in the file system.
 			el.val(decodeURIComponent(decodeURIComponent(this.map.options.doc.replace(/.*\//, '')))
-							  // To conveniently see the initial visualViewport scale and size, un-comment the following line.
-							  // + ' (' + window.visualViewport.scale + '*' + window.visualViewport.width + 'x' + window.visualViewport.height + ')'
-							  // TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
-							 );
+				// To conveniently see the initial visualViewport scale and size, un-comment the following line.
+				// + ' (' + window.visualViewport.scale + '*' + window.visualViewport.width + 'x' + window.visualViewport.height + ')'
+				// TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
+			);
 		}
 
 		if (this.map.isReadOnlyMode()) {
@@ -143,7 +143,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
-	onWopiProps: function(e) {
+	onWopiProps: function (e) {
 		if (e.BaseFileName !== null) {
 			// set the document name into the name field
 			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
@@ -159,33 +159,33 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
-	showProgressBar: function() {
+	showProgressBar: function () {
 		this.disableDocumentNameInput();
 		this.progressBar.style.display = 'block';
 	},
 
-	hideProgressBar: function() {
+	hideProgressBar: function () {
 		this.enableDocumentNameInput();
 		this.progressBar.style.display = 'none';
 	},
 
-	setProgressBarValue: function(value) {
+	setProgressBarValue: function (value) {
 		this.progressBar.value = value;
 	},
 
-	showLoadingAnimation : function() {
+	showLoadingAnimation: function () {
 		this.disableDocumentNameInput();
 		$('#document-name-input-loading-bar').css('display', 'block');
 	},
 
-	hideLoadingAnimation : function() {
+	hideLoadingAnimation: function () {
 		this.enableDocumentNameInput();
 		$('#document-name-input-loading-bar').css('display', 'none');
 	},
 
-	_getMaxAvailableWidth: function() {
+	_getMaxAvailableWidth: function () {
 		var x = $('#document-titlebar').prop('offsetLeft') + $('.document-title').prop('offsetLeft') + $('#document-name-input').prop('offsetLeft');
-		var containerWidth = parseInt($('.main-nav').css('width'));
+		const containerWidth = menuAndTitleBar.getMainNavWidth() ?? 0;
 		var maxWidth = Math.max(containerWidth - x - 30, 0);
 		maxWidth = Math.max(maxWidth, 300); // input field at least 300px
 		return maxWidth;
