@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-17 20:18+0000\n"
+"PO-Revision-Date: 2025-06-21 08:01+0000\n"
 "Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -81,7 +81,7 @@ msgid ""
 ">+</span><kbd>V</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Skift</kbd><span class=\"kbd--plus\""
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
@@ -221,7 +221,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
@@ -237,7 +237,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
@@ -289,7 +289,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:203-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:268-38
 msgid "Align Right"
-msgstr "Højrejuster"
+msgstr "Højrejusteret"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
@@ -408,7 +408,7 @@ msgstr "Flyt markøren med markering til venstre"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:214-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:279-103
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Skift</kbd><span class=\"kbd--plus\">+</span><kbd>Venstrepil</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Venstrepil</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-38
@@ -776,7 +776,7 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Skift</kbd><span class="
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
@@ -1489,7 +1489,7 @@ msgstr "Markér objekter i den modsatte rækkefølge af den, de blev oprettet i"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-38
 msgid "Move to next text object on slide"
-msgstr "Flyt til det næste tekstobjekt på diasset"
+msgstr "Flyt til det næste tekstobjekt på slidet"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:246-38
 msgid "Select all in slide"
@@ -1497,15 +1497,15 @@ msgstr "Markér alt i slide"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:305-9
 msgid "Draw page keyboard shortcuts"
-msgstr "Tastaturgenveje til dias / tegningsside"
+msgstr "Tastaturgenveje til slide / tegningsside"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
 msgid "Move to next text object on drawing page"
-msgstr "Flyt til det næste tekstobjekt på diasset / tegnesiden"
+msgstr "Flyt til det næste tekstobjekt på slidet / tegnesiden"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-38
 msgid "Select all in drawing page"
-msgstr "Markér alt på diasset / tegnesiden"
+msgstr "Markér alt på slidet / tegnesiden"
 
 #: html/cool-help.html%2Bdiv.h1:317-5
 msgid "<span class=\"productname\">{productname}</span> Help"
@@ -1609,7 +1609,7 @@ msgstr "Præsentantion"
 #: html/cool-help.html%2Bdiv.div.p:342-9
 #: html/cool-help.html%2Bdiv.div.div.h3:622-5
 msgid "Slide pane"
-msgstr "Diaspanel"
+msgstr "Slidepanel"
 
 #: html/cool-help.html%2Bdiv.div.p:344-9
 #: html/cool-help.html%2Bdiv.div.div.h3:816-5

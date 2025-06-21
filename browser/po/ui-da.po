@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-17 20:18+0000\n"
+"PO-Revision-Date: 2025-06-21 08:01+0000\n"
 "Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.1\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1606,7 +1606,7 @@ msgstr "Invertér baggrunden"
 #: src/control/Control.NotebookbarWriter.js:869
 #: src/control/Control.NotebookbarWriter.js:987
 msgid "Style list"
-msgstr "Stilliste"
+msgstr "Typografi-liste"
 
 #: src/control/Control.Menubar.ts:231 src/control/Control.Menubar.ts:555
 #: src/control/Control.Menubar.ts:707 src/control/Control.Menubar.ts:859
@@ -2878,7 +2878,7 @@ msgstr "Typografier"
 
 #: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
-msgstr "Der opstod en fejl under hentning af stillisten"
+msgstr "Der opstod en fejl under hentning af typografi-listen"
 
 #: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
