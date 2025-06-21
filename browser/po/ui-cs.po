@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-18 21:01+0000\n"
-"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"PO-Revision-Date: 2025-06-21 19:51+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.12.1\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -413,7 +413,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
-msgstr "Nahrát Slovník"
+msgstr "Nahrát slovník"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
@@ -438,19 +438,19 @@ msgstr "Upravte chování kancelářských dokumentů."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr "Nahrání Xcu"
+msgstr "Nahrát Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
-"Soubor s nastavením rozhraní není platný JSON. Zkontrolujte prosím soubor a "
-"zkuste to znovu."
+"Soubor s nastavením rozhraní není platný JSON. Zkontrolujte jej a zkuste to "
+"znovu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
-msgstr "V počátečních proměnných chybí sdílená URL adesa konfigurace."
+msgstr "V počátečních proměnných chybí URL adresa sdílené konfigurace."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
@@ -458,31 +458,30 @@ msgstr "V počátečních proměnných chybí přístupový token."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
-msgstr "Něco se pokazilo. Zkuste prosím stránku obnovit."
+msgstr "Něco se pokazilo. Zkuste stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
-"Při načítání souboru s nastavením se něco pokazilo. Zkuste prosím stránku "
-"obnovit."
+"Při načítání souboru s nastavením se něco pokazilo. Zkuste stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr "Při načítání slovníku se něco pokazilo. Zkuste prosím stránku obnovit."
+msgstr "Při načítání slovníku se něco pokazilo. Zkuste stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr "Při nahrávání souboru se něco pokazilo. Zkuste to prosím znovu."
+msgstr "Při nahrávání souboru se něco pokazilo. Zkuste to znovu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr "Při mazání souboru se něco pokazilo. Zkuste prosím obnovit stránku."
+msgstr "Při mazání souboru se něco pokazilo. Zkuste stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
