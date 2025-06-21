@@ -90,7 +90,7 @@ std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
 
-enum class AsyncConnectResult{
+enum class AsyncConnectResult : std::uint8_t {
     Ok = 0,
     SocketError,
     ConnectionError,

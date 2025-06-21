@@ -111,7 +111,7 @@ public:
     static std::unique_ptr<FileServerRequestHandler> FileRequestHandler;
 
     /// The WASM support/activation state.
-    enum class WASMActivationState
+    enum class WASMActivationState : std::uint8_t
     {
         Disabled,
         Enabled

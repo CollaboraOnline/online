@@ -99,7 +99,7 @@ class RequestDetails
 public:
 
     /// The fields of the URI.
-    enum class Field
+    enum class Field : std::uint8_t
     {
         Type,
         DocumentURI,

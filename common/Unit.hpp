@@ -69,7 +69,7 @@ class UnitBase
     friend UnitKit;
 
 public:
-    enum class UnitType
+    enum class UnitType: std::uint8_t
     {
         Wsd,
         Kit,
@@ -414,7 +414,7 @@ public:
     /// This is needed to initialize the logging subsystem early.
     static void defaultConfigure(Poco::Util::LayeredConfiguration& /* config */);
 
-    enum class TestRequest
+    enum class TestRequest : std::uint8_t
     {
         Client,
         Prisoner

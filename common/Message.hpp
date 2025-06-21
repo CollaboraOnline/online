@@ -28,8 +28,8 @@ class Message
 {
 public:
 
-    enum class Type { Text, JSON, Binary };
-    enum class Dir { In, Out };
+    enum class Type : std::uint8_t { Text, JSON, Binary };
+    enum class Dir : std::uint8_t { In, Out };
 
     /// Construct a text message.
     /// message must include the full first-line.

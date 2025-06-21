@@ -747,7 +747,7 @@ inline std::vector<char> getTileMessage(const std::shared_ptr<http::WebSocketSes
     return getResponseMessage(ws, "tile", testname);
 }
 
-enum SpecialKey { skNone=0, skShift=0x1000, skCtrl=0x2000, skAlt=0x4000 };
+enum SpecialKey : std::uint16_t { skNone=0, skShift=0x1000, skCtrl=0x2000, skAlt=0x4000 };
 
 inline int getCharChar(char ch, SpecialKey specialKeys)
 {
