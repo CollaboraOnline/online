@@ -29,6 +29,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Uri.hpp>
+#include <filesystem>
 #include <wopi/StorageConnectionManager.hpp>
 
 #include <Poco/Exception.h>
@@ -673,6 +674,36 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
     LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
                                         << getRootFilePathAnonym() << " in " << diff);
+
+    // input file sanity check
+    static std::array<std::string, 8> zippedFileExtensions{
+         "odt",
+         "ods",
+         "odg",
+         "otp",
+         "docx",
+         "xlsx",
+         "pptx",
+    };
+    std::filesystem::path path(getLocalRootPath());
+    auto it = std::find(std::cbegin(zippedFileExtensions), std::cend(zippedFileExtensions), path.filename().extension());
+    if (it != std::cend(zippedFileExtensions)) {
+        // magic bytes/signature for zip files are:
+        // 50 4B 03 04
+        // 50 4B 05 06
+        // 50 4B 07 08
+        // if the file is OASIS or OpenXML we expect a zip file (maybe zstandard one day)
+
+        char b[2];
+        std::ifstream fstr;
+        fstr.open(path);
+        fstr.read(b, 2);
+        fstr.close();
+
+        if (b[0] != 0x50 || b[1] != 0x4B) {
+            LOG_ERR("File does not look like a zipfile: " << getRootFilePathAnonym());
+        }
+    }
 
     if (!wopiCert.empty() && !subjectHash.empty())
     {
