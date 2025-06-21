@@ -610,7 +610,8 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
             http::Request req(url);
             ws->asyncRequest(req, socketPoll);
 
-            TST_LOG("Connected to " << uri.toString() << ", waiting for progress: id:find response");
+            TST_LOG("Requested " << url << " from " << uri.toString()
+                                 << ", waiting for progress: id:find response");
             std::string msg;
             if (!(msg = getResponseString(ws, "progress:", testname)).empty() &&
                 COOLProtocol::matchPrefix("progress:", msg) &&
