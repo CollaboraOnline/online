@@ -209,7 +209,7 @@ HostEntry syncResolveDNS(const std::string& addressToCheck)
 
     std::unique_lock<std::mutex> lock(mutex);
 
-    AsyncDNS::lookup(addressToCheck, callback, dumpState);
+    AsyncDNS::lookup(addressToCheck, std::move(callback), dumpState);
 
     cv.wait(lock, [&result]{ return static_cast<bool>(result); });
 
@@ -540,7 +540,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
         return state;
     };
 
-    AsyncDNS::lookup(host, callback, dumpState);
+    AsyncDNS::lookup(host, std::move(callback), dumpState);
 }
 
 std::shared_ptr<StreamSocket>
