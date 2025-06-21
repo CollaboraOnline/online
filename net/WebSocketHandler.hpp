@@ -154,6 +154,8 @@ public:
             return false;
         }
 
+        LOGA_TRC(WebSocket,
+                 "Connected #" << socket->getFD() << " to " << hostAndPort << ", sending request");
         onConnect(socket);
 
         req.set("Host", hostAndPort); // Make sure the host is set.
