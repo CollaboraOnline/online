@@ -22,6 +22,7 @@
 #include <pwd.h>
 #include <unistd.h>
 #include <string.h>
+#include <string>
 #include <stdio.h>
 
 #ifndef COOL_USER_ID
@@ -33,7 +34,7 @@
 inline int hasUID(const char *userId)
 {
     struct passwd *pw = getpwuid(getuid());
-    if (pw && pw->pw_name && !strcmp(pw->pw_name, userId))
+    if (pw && pw->pw_name && pw->pw_name == static_cast<std::string_view>(userId))
         return 1;
 
     return 0;
