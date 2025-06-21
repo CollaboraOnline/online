@@ -568,6 +568,21 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	visibility: hidden;
 }
 
+/* styles are always in natural color - print preview */
+.StyleListPanel .ui-treeview div.ui-treeview-icon-column img {
+	max-width: inherit;
+}
+.StyleListPanel #treeview .ui-treeview-entry img.ui-treeview-image {
+	filter: none !important;
+}
+.StyleListPanel #treeview.ui-treeview,
+.StyleListPanel #treeview.ui-treeview div {
+	background-color: white !important;
+}
+.StyleListPanel .ui-treeview-image {
+	outline: inherit;
+}
+
 #TemplatePanel #filter select {
 	width: 100%;
 }
