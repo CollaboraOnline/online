@@ -238,7 +238,7 @@ class RGBColor {
 		if (bClamped) {
 			aRGBColor = RGBColor.clamp(this);
 		} else {
-			aRGBColor = this;
+			aRGBColor = this.clone();
 		}
 
 		const nRed = Math.round(aRGBColor.nRed * 255);
