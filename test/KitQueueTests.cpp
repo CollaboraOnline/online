@@ -14,6 +14,7 @@
 #include <test/lokassert.hpp>
 
 #include <Common.hpp>
+#include <Globals.hpp>
 #include <Protocol.hpp>
 #include <Message.hpp>
 #include <kit/KitQueue.hpp>
