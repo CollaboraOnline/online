@@ -87,6 +87,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.lastDragDistance = [0, 0];
 		this.sectionProperties.pickedIndexX = 0; // Which corner of shape is closest to snap point when moving the shape.
 		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
+		this.sectionProperties.mathObjectBorderColor = 'red'; // Border color for Math objects.
 
 		// These are for snapping the objects to the same level with others' boundaries.
 		this.sectionProperties.closestX = null;
@@ -102,9 +103,21 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.convertToTileTwipsIfNeeded();
 		this.getHandles();
 		this.updateSize();
-		this.addSubSections();
-		this.sectionProperties.shapeRectangleProperties = this.getShapeRectangleProperties();
-		this.calculateInitialAnglesOfShapeHandlers();
+
+		if (GraphicSelection.extraInfo.isMathObject === false) {
+			this.addSubSections();
+			this.sectionProperties.shapeRectangleProperties = this.getShapeRectangleProperties();
+			this.calculateInitialAnglesOfShapeHandlers();
+			this.borderColor = null;
+		}
+		else {
+			// Math objects don't need handles. They are not resizable or rotateable.
+			// In this case, we want to draw a rectangle around it. So the user can be sure that they selected the object.
+
+			// For drawing the rectangle, use CanvasSectionContainer's awesome border drawing feature.
+			this.borderColor = this.sectionProperties.mathObjectBorderColor;
+		}
+
 	}
 
 	private convertToTileTwipsIfNeeded() {
