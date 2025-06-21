@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-05-27 06:23+0000\n"
+"PO-Revision-Date: 2025-06-18 21:01+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.12.1\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -375,11 +375,11 @@ msgstr "Akadálymentesítés"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Érvénytelen JSON-fájl"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Hiba a fájl olvasásakor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -444,6 +444,8 @@ msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"A felületbeállítási fájl nem érvényes JSON. Kérjük, ellenőrizze a fájlt, és "
+"próbálja meg újra."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
