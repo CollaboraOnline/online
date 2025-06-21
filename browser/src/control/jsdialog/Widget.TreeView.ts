@@ -288,21 +288,16 @@ class TreeViewControl {
 		builder: JSBuilder,
 		imageUrl: string,
 	) {
-		const colorPreviewButton = L.DomUtil.create(
+		const image = L.DomUtil.create(
 			'img',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			builder.options.cssClass + ' ui-treeview-checkbox ui-treeview-image',
 			parentContainer,
 		);
-		colorPreviewButton.src = imageUrl;
-		colorPreviewButton.style.setProperty(
-			'outline',
-			'1px solid var(--color-btn-border)',
-		);
-		colorPreviewButton.style.setProperty('vertical-align', 'middle');
-		colorPreviewButton.tabIndex = -1;
-		colorPreviewButton.alt = ''; //In this case, it is advisable to use an empty alt tag, as the information of the function is available in text form
+		image.src = imageUrl;
+		image.tabIndex = -1;
+		image.alt = ''; //In this case, it is advisable to use an empty alt tag, as the information of the function is available in text form
 
-		return colorPreviewButton;
+		return image;
 	}
 
 	isExpanded(entry: TreeEntryJSON) {
