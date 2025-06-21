@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
-"Last-Translator: Gokay Satir <gokaysatir@gmail.com>\n"
+"PO-Revision-Date: 2025-06-21 08:01+0000\n"
+"Last-Translator: ulahcherubim <rbinici@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -372,15 +372,15 @@ msgstr "Bu sunucuyu kapatmak istediğinize emin misiniz?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Erişilebilirlik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Geçersiz JSON dosyası"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Dosya okunurken hata oluştu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -391,117 +391,129 @@ msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Yeniden kullanılabilir metin parçacağı (.bau) yükleyin. Metni belgenize "
+"ekleyebilmek için, bir AutoText girdisi için kısayol tuşunu girin ve F3'e "
+"basın."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Autotext Yükle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Özel sözlükler"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Yazım denetimi sözlüğüne sözcük ekleyin veya düzenleyin. Sözcük "
+"defterinizdeki (.dic) sözcükler yazım denetiminde kullanılabilecektir."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Sözcük Defteri Yükle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
-msgstr ""
+msgstr "Arayüz"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Varsayılan arayüz tercihlerini ayarlayın."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Ayarları Yükle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
-msgstr ""
+msgstr "Belge ayarları"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Ofis belgelerinin nasıl davranacağını belirleyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Xcu Yükle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"Geçersiz arayüz ayarları JSON dosyası. Lütfen dosyayı kontrol ederek yeniden "
+"deneyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Başlangıç değişkenlerinde Config URL'leri eksik."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Başlangıç değişkenlerinden erişim belirteci eksik."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Bir hata oluştu. Lütfen sayfayı yenilemeyi deneyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Ayar dosyasını getirirken hata oluştu. Lütfen sayfayı yenilemeyi deneyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Sözcük defteri yüklenirken bir hata oluştu. Lütfen sayfayı yenilemeyi "
+"deneyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Dosya yüklenirken hata oluştu. Lütfen yeniden deneyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Dosya silinirken hata oluştu. Lütfen sayfayı yenilemeyi deneyin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Ayarları Görüntüle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Görünüm ayarlarını değiştir."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
-msgstr ""
+msgstr "Seçenek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Uyarı: Değiştirilebilmesi için sunucu erişilebilirliğinin devreye alınması "
+"gerekir.)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Varsayılan Görünüm ayarlarına sıfırla"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Görünüm Ayarlarını sıfırlamak istediğinize emin misiniz?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Görünüm Ayarlarını Kaydet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -510,63 +522,63 @@ msgstr "Hata"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standart sözlük"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Sözcükler yazım denetimince yoksayıldı"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "İstisnalar sözlüğü"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Yazım denetimi sırasında istisna sözcüklerin altı çizilir"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Sözcük Defteri Yükleniyor..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Sözcük eklemek için yazın"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Geçersiz sözlük biçimi. Lütfen dosyayı kontrol edin."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Sözlük dosyası yüklenirken bir hata oluştu"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Belge ayarları yüklenirken bir hata oluştu."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Belge Ayarları"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Ayarları görmek için bir sekme seçin."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Varsayılan Belge ayarlarına sıfırla"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Belge ayarlarını sıfırlamak istediğinize emin misiniz?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Belge ayarlarını kaydet"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -638,7 +650,7 @@ msgstr "Çıkmak için Ctrl+Shift+Alt+D"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Olay giderici beklenmeyen kadar uzun süre gecikti: {0}ms"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "A comment is being edited"
@@ -691,7 +703,7 @@ msgstr "Yan tarafta göster"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Open in full view"
-msgstr ""
+msgstr "Tam görünümde aç"
 
 #: src/canvas/sections/CommentListSection.ts:1236
 #: src/control/Control.JSDialogBuilder.js:1946
@@ -731,13 +743,12 @@ msgid "Autosaved"
 msgstr "Kaydedildi (Otomatik Kayıt)"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Belgeyi düzenle"
+msgstr "Yorumu düzenle"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Yorumu yanıtla"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -758,9 +769,8 @@ msgid "Resolved"
 msgstr "Çözüldü"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:448
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Belge desteklenmeyen görüntü formatı içeriyor"
+msgstr "Belge desteklenmeyen ortam biçimi içeriyor"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -792,7 +802,7 @@ msgstr "\"Yavaş Vekil Sunucu\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Saat dilimi:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1281,7 +1291,7 @@ msgstr "Elektronik İmza Ekleyin"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Formül Çubuğunu Genişlet"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1289,7 +1299,7 @@ msgstr "İşlev Sihirbazı"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Fonksiyonu Seç"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1304,7 +1314,7 @@ msgstr "Kabul Et"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Formül Çubuğunu Daralt"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1424,7 +1434,7 @@ msgstr "Dil"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Arama sonucu bulunamadı!"
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -1912,7 +1922,7 @@ msgstr "Tüm Sayfalar"
 #: src/control/Control.Menubar.ts:851
 #: src/control/Control.NotebookbarCalc.js:1187
 msgid "Focus Cell"
-msgstr ""
+msgstr "Hücreye Odaklan"
 
 #: src/control/Control.Menubar.ts:945
 #: src/control/jsdialog/Definitions.Menu.ts:310
@@ -2085,11 +2095,11 @@ msgstr "Gradyan Sonu"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Gezinti"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Gezintiyi Kapat"
 
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
@@ -2098,11 +2108,11 @@ msgstr "Sayfalar"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
-msgstr ""
+msgstr "Anahat"
 
 #: src/control/Control.NavigatorPanel.ts:158
 msgid "Navigator"
-msgstr ""
+msgstr "Gezinti"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2454,11 +2464,11 @@ msgstr "Çevrimdışı Ol"
 
 #: src/control/Control.NotebookbarWriter.js:855
 msgid "Scroll up"
-msgstr ""
+msgstr "Yukarı kaydır"
 
 #: src/control/Control.NotebookbarWriter.js:862
 msgid "Scroll down"
-msgstr ""
+msgstr "Aşağı kaydır"
 
 #: src/control/Control.NotebookbarWriter.js:1419
 msgid "Rich Text"
@@ -2477,13 +2487,12 @@ msgid "Picture"
 msgstr "Resim"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "sayfa önizleme "
+msgstr "sayfa %1'in önizlemesi"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Yansı %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -2563,7 +2572,7 @@ msgstr "Sorun bulunmadı"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Uyarılar:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2865,7 +2874,7 @@ msgstr "Koleksiyonlar yüklenemedi"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Atıflar yükleniyor"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -3108,11 +3117,11 @@ msgstr "Çok Gevşek"
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "All users"
-msgstr ""
+msgstr "Tüm kullanıcılar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "This user"
-msgstr ""
+msgstr "Bu kullanıcı"
 
 #: src/control/jsdialog/Definitions.Menu.ts:436
 msgid "From Beginning"
@@ -3129,7 +3138,7 @@ msgstr "Kapat"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Bilinmeyen renk"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
@@ -3203,9 +3212,8 @@ msgid "Cell borders"
 msgstr "Hücre kenarlıkları"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "{name} için daha fazla seçenek"
+msgstr "{1} için daha fazla seçenek"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
@@ -3649,7 +3657,7 @@ msgstr "Doya sunucuya yükleme başarısız oldu, dosya çok büyük."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Tablo dışı"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
@@ -3756,6 +3764,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Tarayıcınızın panoya erişimi oldukça kısıtlı olduğu için, lütfen ekran "
+"klavyenizdeki yapıştır butonlarını kullanın."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3949,7 +3959,7 @@ msgstr "Uzaklaş"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Görüntüle Yansı {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
