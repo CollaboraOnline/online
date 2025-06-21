@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-05-27 06:23+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2025-06-20 05:04+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.12.1\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -372,11 +372,11 @@ msgstr "Tillgänglighet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Ogiltig JSON-fil"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Fel vid läsning av fil"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -440,6 +440,8 @@ msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"Gränssnittsinställningsfilen är inte giltig JSON. Kontrollera filen och "
+"försök igen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
