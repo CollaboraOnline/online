@@ -2631,8 +2631,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
                         const std::string mediaUrl =
                             Uri::encode(createPublicURI("media", id, /*encode=*/false), "&");
+                        const std::string mediaVTT =
+                            Uri::encode(createPublicURI("mediavtt", id, /*encode=*/false), "&");
                         object->set("url", mediaUrl); // Replace the url with the public one.
                         object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
+                        object->set("srt", mediaVTT);
 
                         std::ostringstream mediaStr;
                         object->stringify(mediaStr);
