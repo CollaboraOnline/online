@@ -870,8 +870,9 @@ check-struct-packing:
 	fi
 	@echo coolwsd struct packing is acceptably optimal
 
-czech: check
-	@echo "This should do something much cooler"
+czech: all-local
+	@echo "Running unit-tests only"
+	$(MAKE) check -C test
 
 collabora-online-sbom.spdx.json: coolforkit-ns
 	$(QUIET_SBOM) python3 $(abs_top_srcdir)/scripts/create-sbom.py $(abs_top_builddir)
