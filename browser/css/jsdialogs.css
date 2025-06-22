@@ -1530,6 +1530,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-dark);
 }
 
+
+button.menubutton.sidebar > span {
+	box-shadow: none !important;
+	font-size: var(--default-font-size) !important;
+}
+
 .jsdialog .unobutton img {
 	width: var(--btn-img-size);
 	height: var(--btn-img-size);
@@ -1538,7 +1544,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .menubutton .arrow {
 	display: table-cell !important;
 	float: right;
-	margin: 5px 0px 5px 5px;
+	margin: 5px 0 0 5px;
 }
 
 .jsdialog.menubutton[disabled] {
