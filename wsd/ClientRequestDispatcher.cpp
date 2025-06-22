@@ -647,11 +647,13 @@ std::atomic<uint64_t> ClientRequestDispatcher::NextConnectionId(1);
 
 void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& socket)
 {
+    assert(socket && "Expected a valid socket in ClientRequestDispatcher::onConnect()");
     _id = Util::encodeId(NextConnectionId++, 3);
     _socket = socket;
     _lastSeenHTTPHeader = socket->getLastSeenTime();
     setLogContext(socket->getFD());
-    LOG_TRC("Connected to ClientRequestDispatcher");
+    LOG_TRC("Connected #" << socket->getFD() << " (connection " << _id
+                          << ") to ClientRequestDispatcher " << this);
 }
 
 /// Starts an asynchronous CheckFileInfo request in parallel to serving
