@@ -110,6 +110,7 @@ img.sidebar.ui-image {
 .sidebar.ui-grid.ui-grid-cell > div:not(.ui-treeview) {
 	justify-content: start;
 	display: flex;
+	align-items: center;
 }
 
 div.sidebar.ui-grid-cell.checkbutton,
@@ -134,9 +135,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.ui-grid.ui-grid-cell .menubutton {
 	justify-content: space-between;
-	padding: 0;
-	margin-right: 1px;
+	padding: 8px 10px;
+	margin: 5px 0 !important;
 }
+
 
 /* widget width */
 
@@ -169,6 +171,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 .sidebar.unotoolbutton {
 	border: 1px solid transparent;
 	margin-right: 3px;
+	padding: 0 !important;
 }
 .sidebar.jsdialog.checkbutton {
 	font-size: var(--default-font-size);
