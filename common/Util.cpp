@@ -32,6 +32,7 @@
 #  include <sys/syscall.h>
 #  include <sys/vfs.h>
 #  include <sys/resource.h>
+#  include <dlfcn.h>
 #elif defined __FreeBSD__
 #  include <sys/resource.h>
 #  include <sys/thr.h>
