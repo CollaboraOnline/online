@@ -56,6 +56,7 @@ window.app = {
 	},
 	file: {
 		editComment: false,
+		allowManageRedlines: false,
 		readOnly: true,
 		permission: 'readonly',
 		disableSidebar: false,

@@ -132,19 +132,29 @@ app.isCommentEditingAllowed = function () {
 	return app.file.editComment;
 };
 
+app.isRedlineManagementAllowed = function () {
+	return app.file.allowManageRedlines;
+};
+
 app.setPermission = function (permission) {
 	app.file.permission = permission;
 	if (permission === 'edit') {
 		app.file.readOnly = false;
 		app.file.editComment = true;
+		app.file.allowManageRedlines = true;
 	} else if (permission === 'readonly') {
 		app.file.readOnly = true;
 		app.file.editComment = false;
+		app.file.allowManageRedlines = false;
 	}
 };
 
 app.setCommentEditingPermission = function (isAllowed) {
 	app.file.editComment = isAllowed;
+};
+
+app.setRedlineManagementAllowed = function (isAllowed) {
+	app.file.allowManageRedlines = isAllowed;
 };
 
 app.getPermission = function () {
