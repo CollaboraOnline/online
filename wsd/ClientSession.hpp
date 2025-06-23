@@ -40,7 +40,7 @@ public:
 
     void setReadOnly(bool bValue = true) override;
 
-    void sendFileMode(bool readOnly, bool editComments);
+    void sendFileMode(bool readOnly, bool editComments, bool manageRedlines);
 
     void setLockFailed(const std::string& reason);
 

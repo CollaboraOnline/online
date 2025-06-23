@@ -87,6 +87,7 @@ public:
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
         bool getUserCanOnlyComment() const { return _userCanOnlyComment; }
+        bool getUserCanOnlyManageRedlines() const { return _userCanOnlyManageRedlines; }
 
         const std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
         const std::string& getIsAdminUserError() const { return _isAdminUserError; }
@@ -182,6 +183,8 @@ public:
         bool _userCanRename = false;
         /// If user is limited to only writing/modifiyng comments
         bool _userCanOnlyComment = false;
+        /// If user is limited to only managing redlines (accept/reject)
+        bool _userCanOnlyManageRedlines = false;
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
