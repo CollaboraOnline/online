@@ -452,7 +452,7 @@ window.L.Clipboard = window.L.Class.extend({
 		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
 		} else if (window.ThisIsTheWindowsApp) {
-			await window.postMobileMessage(`CLIPBOARDJS sendToInternal ${await content.text()}`);
+			await window.postMobileMessage(`CLIPBOARDSET ${await content.text()}`);
 		} else {
 			var formData = new FormData();
 			formData.append('file', content);
