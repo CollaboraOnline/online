@@ -51,6 +51,9 @@ namespace CODA
         [DllImport("CODALib.dll")]
         public static extern void do_other_message_handling_things([MarshalAs(UnmanagedType.LPStr)] string message);
 
+        [DllImport("CODALib.dll")]
+        public static extern void do_clipboard_write(int appDocId);
+
         // Keep a static reference so that the delegate doesn't get garbage collected. Or something
         // like that.
         // private static Send2JSDelegate _reference;
@@ -128,6 +131,18 @@ namespace CODA
                     {
                         PrintPdfDocument(s);
                     });
+                }
+                else if (s == "CLIPBOARDWRITE\"")
+                {
+                    do_clipboard_write(_appDocId);
+                }
+                else if (s == "CLIPBOARDREAD\"")
+                {
+                    ;
+                }
+                else if (s == "CLIPBOARDJS\"")
+                {
+                    ;
                 }
                 else if (s.StartsWith("downloadas "))
                 {
