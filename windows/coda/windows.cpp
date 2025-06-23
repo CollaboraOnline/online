@@ -18,6 +18,8 @@
 #include <net/FakeSocket.hpp>
 #include <wsd/COOLWSD.hpp>
 
+#include <tools/UnixWrappers.h>
+
 const char *user_name = nullptr;
 int coolwsd_server_socket_fd = -1;
 std::string app_installation_path;
@@ -229,6 +231,44 @@ void do_other_message_handling_things(const char *message)
         fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
         free(string_copy);
     }).detach();
+}
+
+EXPORT
+void do_clipboard_write(int appDocId)
+{
+    const char** mimeTypes = nullptr;
+    size_t outCount = 0;
+    char  **outMimeTypes = nullptr;
+    size_t *outSizes = nullptr;
+    char  **outStreams = nullptr;
+
+    DocumentData::get(appDocId).loKitDocument->getClipboard(mimeTypes,
+                                                            &outCount, &outMimeTypes,
+                                                            &outSizes, &outStreams);
+    for (int i = 0; i < outCount; i++)
+    {
+        if (strcmp(outMimeTypes[i], "text/plain;charset=utf-8") == 0)
+        {
+            if (!OpenClipboard(NULL))
+                break;
+
+            wchar_t *wtext = string_to_wide_string(outStreams[i]);
+            const int byteSize = 2 * wcslen(wtext) + 2;
+            HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
+            if (!hglData)
+            {
+                CloseClipboard();
+                break;
+            }
+            wchar_t *wcopy = (wchar_t*) GlobalLock(hglData);
+            memcpy(wcopy, wtext, byteSize);
+            GlobalUnlock(hglData);
+            free(wtext);
+            SetClipboardData(CF_UNICODETEXT, hglData);
+            CloseClipboard();
+            break;
+        }
+    }
 }
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
