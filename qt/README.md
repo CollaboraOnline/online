@@ -10,6 +10,8 @@ How to build this:
 Use a separate tree of "online". Do NOT use one where you build a
 normal Online.
 
+Requires Qt's tool Meta-Object Compiler (moc) to be in in the PATH.
+
 Run autogen.sh, then configure:
 
 ./configure --enable-qtapp --with-lo-path=/path/to/core/instdir --with-lokit-path=/path/to/core/include
