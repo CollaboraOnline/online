@@ -9,10 +9,16 @@
 #
 ETAGS=ctags -e
 
+build-samples:
+	$(QUIET_MKDIRP) mkdir -p $(abs_top_builddir)/test/samples
+	$(QUIET_SAMPLES) $(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
+
 if ENABLE_MOBILEAPP
 
 if ENABLE_GTKAPP
 SUBDIRS = gtk browser
+run:
+	gtk/mobile $(abs_top_builddir)/test/samples/writer-edit.fodt
 else
 if ENABLE_WASM
 SUBDIRS = wasm browser
@@ -629,11 +635,9 @@ QUIET_SBOM = $(QUIET_SBOM_$(V))
 QUIET_SBOM_ = $(QUIET_SBOM_$(AM_DEFAULT_VERBOSITY))
 QUIET_SBOM_0 = @echo "  SBOM    " $@;
 
-setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir
+setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir build-samples
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	$(QUIET_MKDIRP) mkdir -p $(abs_top_builddir)/test/samples
-	$(QUIET_SAMPLES) $(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
 	@echo
 
 COMMON_PARAMS = \
