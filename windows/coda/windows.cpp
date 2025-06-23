@@ -13,12 +13,13 @@
 #include <cstring>
 #include <thread>
 
+#include <Poco/MemoryStream.h>
+
+#include <common/Clipboard.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
 #include <net/FakeSocket.hpp>
 #include <wsd/COOLWSD.hpp>
-
-#include <tools/UnixWrappers.h>
 
 const char *user_name = nullptr;
 int coolwsd_server_socket_fd = -1;
@@ -252,8 +253,8 @@ void do_clipboard_write(int appDocId)
             if (!OpenClipboard(NULL))
                 break;
 
-            wchar_t *wtext = string_to_wide_string(outStreams[i]);
-            const int byteSize = 2 * wcslen(wtext) + 2;
+            std::wstring wtext = Util::string_to_wide_string(std::string(outStreams[i]));
+            const int byteSize = wtext.size() + 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
             if (!hglData)
             {
@@ -261,14 +262,87 @@ void do_clipboard_write(int appDocId)
                 break;
             }
             wchar_t *wcopy = (wchar_t*) GlobalLock(hglData);
-            memcpy(wcopy, wtext, byteSize);
+            memcpy(wcopy, wtext.c_str(), byteSize - 2);
+            wcopy[wtext.size()] = L'\0';
             GlobalUnlock(hglData);
-            free(wtext);
             SetClipboardData(CF_UNICODETEXT, hglData);
             CloseClipboard();
             break;
         }
     }
+}
+
+EXPORT
+void do_clipboard_read(int appDocId)
+{
+    if (!IsClipboardFormatAvailable(CF_UNICODETEXT))
+        return;
+
+    if (!OpenClipboard(NULL))
+        return;
+
+    HANDLE hglData = GetClipboardData(CF_UNICODETEXT);
+    if (!hglData)
+    {
+        CloseClipboard();
+        return;
+    }
+    wchar_t *wtext = (wchar_t*) GlobalLock(hglData);
+    if (!wtext)
+    {
+        GlobalUnlock(hglData);
+        CloseClipboard();
+        return;
+    }
+
+    std::string text = Util::wide_string_to_string(std::wstring(wtext));
+    GlobalUnlock(hglData);
+    CloseClipboard();
+
+    const char *mimeTypes[] { "text/plain;charset=utf-8" };
+    const size_t sizes[] { text.size() };
+    const char *streams[] { text.c_str() };
+    DocumentData::get(appDocId).loKitDocument->setClipboard(1, mimeTypes, sizes, streams);
+}
+
+EXPORT
+void do_clipboard_set(int appDocId, const char *text)
+{
+    size_t nData;
+    std::vector<size_t> sizes;
+    std::vector<const char*> mimeTypes;
+    std::vector<const char*> streams;
+    ClipboardData data;
+
+    if (memcmp(text, "<!DOCTYPE html>", 15) == 0)
+    {
+        nData = 1;
+        sizes.resize(1);
+        sizes[0] = strlen(text);
+        mimeTypes.resize(1);
+        mimeTypes[0] = "text/html";
+        streams.resize(1);
+        streams[0] = text;
+    }
+    else
+    {
+        Poco::MemoryInputStream stream(text, strlen(text));
+        data.read(stream);
+
+        nData = data.size();
+        sizes.resize(nData);
+        mimeTypes.resize(nData);
+        streams.resize(nData);
+
+        for (size_t i = 0; i < nData; ++i)
+        {
+            sizes[i] = data._content[i].length();
+            streams[i] = data._content[i].c_str();
+            mimeTypes[i] = data._mimeTypes[i].c_str();
+        }
+    }
+
+    DocumentData::get(appDocId).loKitDocument->setClipboard(nData, mimeTypes.data(), sizes.data(), streams.data());
 }
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:

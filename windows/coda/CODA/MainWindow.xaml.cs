@@ -54,6 +54,12 @@ namespace CODA
         [DllImport("CODALib.dll")]
         public static extern void do_clipboard_write(int appDocId);
 
+        [DllImport("CODALib.dll")]
+        public static extern void do_clipboard_read(int appDocId);
+
+        [DllImport("CODALib.dll")]
+        public static extern void do_clipboard_set(int appDocId, [MarshalAs(UnmanagedType.LPStr)] string message);
+
         // Keep a static reference so that the delegate doesn't get garbage collected. Or something
         // like that.
         // private static Send2JSDelegate _reference;
@@ -111,38 +117,38 @@ namespace CODA
 
         void WebView_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            string s = args.WebMessageAsJson;
+            string s = args.TryGetWebMessageAsString();
             Debug.WriteLine($"WebView_WebMessageReceived: {s}");
 
-            if (s.StartsWith("\"MSG "))
+            if (s.StartsWith("MSG "))
             {
-                s = s.Substring(5);
-                if (s == "HULLO\"")
+                s = s.Substring(4);
+                if (s == "HULLO")
                 {
                     do_hullo_handling_things(_fileURL, _appDocId);
                 }
-                else if (s == "BYE\"")
+                else if (s == "BYE")
                 {
                     do_bye_handling_things();
                 }
-                else if (s == "PRINT\"")
+                else if (s == "PRINT")
                 {
                     do_convert_to("pdf", _appDocId, s =>
                     {
                         PrintPdfDocument(s);
                     });
                 }
-                else if (s == "CLIPBOARDWRITE\"")
+                else if (s == "CLIPBOARDWRITE")
                 {
                     do_clipboard_write(_appDocId);
                 }
-                else if (s == "CLIPBOARDREAD\"")
+                else if (s == "CLIPBOARDREAD")
                 {
-                    ;
+                    do_clipboard_read(_appDocId);
                 }
-                else if (s == "CLIPBOARDJS\"")
+                else if (s.StartsWith("CLIPBOARDSET "))
                 {
-                    ;
+                    do_clipboard_set(_appDocId, s.Substring(13));
                 }
                 else if (s.StartsWith("downloadas "))
                 {
@@ -155,13 +161,13 @@ namespace CODA
                     do_other_message_handling_things(message);
                 }
             }
-            else if (s.StartsWith("\"ERR "))
+            else if (s.StartsWith("ERR "))
             {
                 string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
                 message = message.Substring(4);
                 Debug.WriteLine($"Error: {message}");
             }
-            else if (s.StartsWith("\"DBG "))
+            else if (s.StartsWith("DBG "))
             {
                 string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
                 message = message.Substring(4);
