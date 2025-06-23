@@ -910,6 +910,9 @@ window.L.Clipboard = window.L.Class.extend({
 
 			await window.webkit.messageHandlers.clipboard.postMessage(`write`);
 		} else if (window.ThisIsTheWindowsApp) {
+			// As above.
+			if (await check_ === null)
+				return;
 			await window.postMobileMessage(`CLIPBOARDWRITE`);
 		} else {
 			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
