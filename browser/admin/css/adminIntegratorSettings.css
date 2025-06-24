@@ -572,3 +572,38 @@ ul {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+.custom-compact-toggle {
+	margin: 1rem 0rem;
+}
+
+.toggle-options {
+	display: flex;
+	gap: 2rem;
+	margin-top: 0.5rem;
+}
+
+.toggle-option {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+}
+
+.toggle-image {
+	width: 300px;
+	height: auto;
+	border: 2px solid transparent;
+	border-radius: 6px;
+}
+
+.toggle-image.selected {
+	border-color: var(--co-border, #e5eff5);
+	background-color: rgba(0, 120, 212, 0.1);
+}
+
+.toggle-image-label {
+	margin-top: 1rem;
+	font-size: var(--default-font-size);
+	color: var(--settings-text);
+}
