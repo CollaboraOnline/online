@@ -380,6 +380,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'view-zoomin-break', orientation: 'vertical' },
 			{
 				'id': 'toggleuimode',
 				'class': 'unotoggleuimode',
@@ -424,6 +425,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'text': _('Collapse Tabs'),
 				'accessibility': { focusBack: true, combination: 'CT', de: null }
 			},
+			{ type: 'separator', id: 'view-collapsenotebookbar-break', orientation: 'vertical' },
 			{
 				'type': 'toolbox',
 				'children': [
@@ -444,6 +446,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'view-griduse-break', orientation: 'vertical' },
 			{
 				'id':'toggledarktheme',
 				'type': 'bigcustomtoolitem',
@@ -451,12 +454,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'DT', de: null }
 			},
 			{
-                'id':'invertbackground',
-                'class': 'unoinvertbackground',
-                'type': 'bigcustomtoolitem',
-                'text': _('Invert Background'),
-                'accessibility': { focusBack: true, combination: 'DT', de: null }
-            },
+				'id':'invertbackground',
+				'class': 'unoinvertbackground',
+				'type': 'bigcustomtoolitem',
+				'text': _('Invert Background'),
+				'accessibility': { focusBack: true, combination: 'DT', de: null }
+			},
+			{ type: 'separator', id: 'view-invertbackground-break', orientation: 'vertical' },
 			{
 				'id': 'view-sidebar',
 				'type': 'bigtoolitem',
@@ -499,6 +503,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-undoredo-break', orientation: 'vertical' },
 			{
 				'id': 'home-paste:PasteMenu',
 				'type': 'menubutton',
@@ -550,6 +555,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-setdefault-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -678,6 +684,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-font-combobox', orientation: 'vertical'},
 			{
 				'type': 'container',
 				'children': [
@@ -756,6 +763,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-justifypara-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -849,6 +857,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-pararighttoleft-break', orientation: 'vertical' },
 			{
 				'id': 'home-text',
 				'type': 'bigtoolitem',
@@ -856,6 +865,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:Text',
 				'accessibility': { focusBack: true, combination: 'DT', de: null }
 			},
+			{ type: 'separator', id: 'home-inserttext-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -890,6 +900,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-insertconnectorsmenu-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -924,6 +935,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-fillcolorpickermenu-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -977,6 +989,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-inserttablemenu-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1028,6 +1041,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:HeaderAndFooter',
 				'accessibility': { focusBack: true, combination: 'IH', de: null }
 			},
+			{ type: 'separator', id: 'layout-headerandfooter-break', orientation: 'vertical' },
 			{
 				'id': 'layout-insert-page',
 				'type': 'bigtoolitem',
@@ -1065,6 +1079,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-selectbackground-break', orientation: 'vertical' },
 			{
 				'id': 'layout-sidebar-deck',
 				'type': 'bigtoolitem',
@@ -1072,6 +1087,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:SidebarDeck.PropertyDeck',
 				'accessibility': { focusBack: true, combination: 'PL', de: null }
 			},
+			{ type: 'separator', id: 'layout-sidebardeck-break', orientation: 'vertical' },
 			{
 				'id': 'layout-select-all',
 				'type': 'bigtoolitem',
@@ -1079,6 +1095,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:SelectAll',
 				'accessibility': { focusBack: true, combination: 'SA', de: null }
 			},
+			{ type: 'separator', id: 'layout-selectall-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1137,6 +1154,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-aligndown-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1225,6 +1243,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-deletepage-break', orientation: 'vertical' },
 			{
 				'id': 'insert-insert-graphic:InsertImageMenu',
 				'type': 'menubutton',
@@ -1263,6 +1282,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-insertobjectchart-break', orientation: 'vertical' },
 			{
 				'id': 'HyperlinkDialog',
 				'class': 'unoHyperlinkDialog',
@@ -1271,6 +1291,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': 'hyperlinkdialog',
 				'accessibility': { focusBack: true, combination: 'HD', de: null }
 			},
+			{ type: 'separator', id: 'insert-hyperlinkdialog-break', orientation: 'vertical' },
 			(this.map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-remote-link',
 				'class': 'unoremotelink',
@@ -1352,6 +1373,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-pagetitlefield-break', orientation: 'vertical' },
 			{
 				'id': 'insert-text',
 				'type': 'bigtoolitem',
@@ -1453,6 +1475,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-insertannotation-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1493,6 +1516,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:ParagraphDialog',
 				'accessibility': { focusBack: true, combination: 'PD', de: null }
 			},
+			{ type: 'separator', id: 'font-paragraphdialog-break', orientation: 'vertical' },
 			{
 				'id': 'format-outline-bullet',
 				'type': 'bigtoolitem',
@@ -1500,6 +1524,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:OutlineBullet',
 				'accessibility': { focusBack: true, combination: 'OB', de: null }
 			},
+			{ type: 'separator', id: 'font-outlinebullet-break', orientation: 'vertical' },
 			{
 				'id': 'format-page-setup',
 				'type': 'bigtoolitem',
@@ -1507,6 +1532,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:PageSetup',
 				'accessibility': { focusBack: true, combination: 'PS', de: null }
 			},
+			{ type: 'separator', id: 'font-pagesetup-break', orientation: 'vertical' },
 			{
 				'id': 'format-line',
 				'type': 'bigtoolitem',
@@ -1521,6 +1547,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:FormatArea',
 				'accessibility': { focusBack: true, combination: 'FA', de: null }
 			},
+			{ type: 'separator', id: 'font-formatarea-break', orientation: 'vertical' },
 			{
 				'id': 'format-transform-dialog',
 				'type': 'bigtoolitem',
@@ -1528,6 +1555,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:TransformDialog',
 				'accessibility': { focusBack: true, combination: 'TD', de: null }
 			},
+			{ type: 'separator', id: 'font-transformdialog-break', orientation: 'vertical' },
 			{
 				'id': 'format-name-description',
 				'type': 'container',
@@ -1559,6 +1587,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'font-objecttitledescription-break', orientation: 'vertical' },
 			{
 				'id': 'format-theme-dialog',
 				'type': 'bigtoolitem',
