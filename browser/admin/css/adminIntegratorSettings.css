@@ -58,9 +58,10 @@ ul {
 }
 .section {
   display: block;
-  padding: 30px;
+  padding-top: 30px;
   margin-bottom: 24px;
   padding-left: 0px;
+  padding-bottom: 10px;
 }
 
 .section {
@@ -441,12 +442,12 @@ ul {
   height: var(--icon-height, 24px);
 }
 
-.xcu-editor-tabs-nav {
+.xcu-editor-tabs-nav, .browser-setting-tabs-nav {
   display: flex;
   border-bottom: 1px solid var(--settings-border);
 }
 
-.xcu-editor-tab {
+.xcu-editor-tab, .browser-setting-tab {
   flex: 1;
   background: transparent;
   border: none;
@@ -460,7 +461,8 @@ ul {
   min-height: 40px;
 }
 
-.xcu-editor-tab::after {
+.xcu-editor-tab::after, 
+.browser-setting-tab::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -471,11 +473,13 @@ ul {
   transition: background-color 0.2s ease;
 }
 
-.xcu-editor-tab.active {
+.xcu-editor-tab.active, 
+.browser-setting-tab.active {
   color: var(--settings-btn-primary);
 }
 
-.xcu-editor-tab.active::after {
+.xcu-editor-tab.active::after,
+.browser-setting-tab.active::after {
   background-color: var(--settings-btn-primary);
 }
 
@@ -552,16 +556,19 @@ ul {
   flex-shrink: 0;
 }
 
-.xcu-settings-grid {
+.xcu-settings-grid,
+.browser-settings-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-.xcu-editor-actions {
+.xcu-editor-actions,
+.browser-settings-editor-actions {
   display: flex;
   gap: 8px;
   margin-top: 16px;
   justify-content: flex-end;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
