@@ -254,7 +254,7 @@ void do_clipboard_write(int appDocId)
                 break;
 
             std::wstring wtext = Util::string_to_wide_string(std::string(outStreams[i]));
-            const int byteSize = wtext.size() + 2;
+            const int byteSize = wtext.size()*2 + 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
             if (!hglData)
             {
