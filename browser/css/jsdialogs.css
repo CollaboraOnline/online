@@ -1859,6 +1859,7 @@ button.menubutton.sidebar > span {
 
 .snackbar.jsdialog-container [id$='button'].ui-pushbutton.jsdialog {
 	padding: 8px;
+	justify-content: center;
 }
 
 #snackbar-container-progress .ui-progressbar {
