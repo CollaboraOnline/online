@@ -19,6 +19,8 @@ if ENABLE_GTKAPP
 SUBDIRS = gtk browser
 run:
 	gtk/mobile $(abs_top_builddir)/test/samples/writer-edit.fodt
+run-calc:
+	gtk/mobile $(abs_top_builddir)/test/samples/calc-edit.fods
 else
 if ENABLE_QTAPP
 SUBDIRS = qt browser
