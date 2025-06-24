@@ -135,6 +135,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.map.on('updateparts', this.showHideComments, this);
 		this.map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
+		this.map.on('docloaded', this.docLoaded, this);
 
 		this.map.on('commandstatechanged', function (event: any) {
 			if (event.commandName === '.uno:ShowResolvedAnnotations')
@@ -157,6 +158,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			this.setShowSection(false);
 			this.size[0] = 0;
 		}
+	}
+
+	private docLoaded() {
+		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 	}
 
 	public static showCommentEditingWarning (): void {
