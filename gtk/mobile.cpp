@@ -302,45 +302,45 @@ static void disable_a11y()
     setenv("NO_AT_BRIDGE", "1", 1);
 }
 
-int main(int argc, char* argv[])
+
+// arguments passed over dbus to our factory process, or passed internally
+static int
+command_line(GApplication *app, GApplicationCommandLine *cmdline, gpointer user_data)
 {
-    if (argc != 2)
+    int argc = 0;
+    gchar **argv;
+
+    argv = g_application_command_line_get_arguments(cmdline, &argc);
+
+    LOG_TRC("Passed args:\n");
+    for (size_t i = 1; i < argc; ++i)
+        LOG_TRC("  arg[" << i << " ]: " << argv[i] << "\n");
+
+    static bool mainThread = false;
+    if (!mainThread)
     {
-        fprintf(stderr, "Usage: %s document\n", argv[0]);
-        _exit(1); // avoid log cleanup
+        mainThread = true;
+        std::thread([]
+            {
+                assert(coolwsd == nullptr);
+                char *argv[2];
+                argv[0] = strdup("mobile");
+                argv[1] = nullptr;
+                Util::setThreadName("app");
+                while (true)
+                {
+                    coolwsd = new COOLWSD();
+                    coolwsd->run(1, argv);
+                    delete coolwsd;
+                    LOG_TRC("One run of COOLWSD completed");
+                }
+            }).detach();
     }
-
-    Log::initialize("Mobile", "trace");
-    Util::setThreadName("main");
-
-    fakeSocketSetLoggingCallback([](const std::string& line)
-                                 {
-                                     LOG_TRC_NOFILE(line);
-                                 });
-
-    std::thread([]
-    {
-        assert(coolwsd == nullptr);
-        char *argv[2];
-        argv[0] = strdup("mobile");
-        argv[1] = nullptr;
-        Util::setThreadName("app");
-        while (true)
-        {
-            coolwsd = new COOLWSD();
-            coolwsd->run(1, argv);
-            delete coolwsd;
-            LOG_TRC("One run of COOLWSD completed");
-        }
-    }).detach();
 
     fakeClientFd = fakeSocketSocket();
 
-    disable_a11y();
+    GtkWidget *mainWindow = gtk_application_window_new(GTK_APPLICATION(app));
 
-    gtk_init(&argc, &argv);
-
-    GtkWidget *mainWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(mainWindow), 720, 1600);
     g_signal_connect(mainWindow, "destroy", G_CALLBACK(gtk_main_quit), nullptr);
 
@@ -398,9 +398,47 @@ int main(int argc, char* argv[])
 
     gtk_widget_grab_focus(GTK_WIDGET(webView));
     gtk_widget_show_all(mainWindow);
-    gtk_main();
+
+    g_application_activate(app);
+
+    g_free(argv);
 
     return 0;
+}
+
+int main(int argc, char* argv[])
+{
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s document\n", argv[0]);
+        _exit(1); // avoid log cleanup
+    }
+
+    Log::initialize("Mobile", "trace");
+    Util::setThreadName("main");
+
+    fakeSocketSetLoggingCallback([](const std::string& line)
+                                 {
+                                     LOG_TRC_NOFILE(line);
+                                 });
+
+    disable_a11y();
+
+    gtk_init(&argc, &argv);
+
+    int status;
+    GtkApplication *app;
+
+    app = gtk_application_new("com.collabora.coda",
+                              (GApplicationFlags)(G_APPLICATION_DEFAULT_FLAGS |
+                                                  G_APPLICATION_HANDLES_COMMAND_LINE));
+
+    g_signal_connect(app, "command-line", G_CALLBACK(command_line), NULL);
+
+    status = g_application_run(G_APPLICATION(app), argc, argv);
+    g_object_unref(app);
+
+    return status;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
