@@ -237,39 +237,57 @@ void do_other_message_handling_things(const char *message)
 EXPORT
 void do_clipboard_write(int appDocId)
 {
-    const char** mimeTypes = nullptr;
-    size_t outCount = 0;
-    char  **outMimeTypes = nullptr;
-    size_t *outSizes = nullptr;
-    char  **outStreams = nullptr;
+    size_t count = 0;
+    char  **mimeTypes = nullptr;
+    size_t *sizes = nullptr;
+    char  **streams = nullptr;
 
-    DocumentData::get(appDocId).loKitDocument->getClipboard(mimeTypes,
-                                                            &outCount, &outMimeTypes,
-                                                            &outSizes, &outStreams);
-    for (int i = 0; i < outCount; i++)
+    if (!OpenClipboard(NULL))
+        return;
+
+    DocumentData::get(appDocId).loKitDocument->getClipboard(nullptr,
+                                                            &count, &mimeTypes,
+                                                            &sizes, &streams);
+    for (int i = 0; i < count; i++)
     {
-        if (strcmp(outMimeTypes[i], "text/plain;charset=utf-8") == 0)
-        {
-            if (!OpenClipboard(NULL))
-                break;
+        // We check whether there is a corresponding standard or well-known Windows clipboard
+        // format. It is either one using plain "narrow" chars or wide chars.
+        int format = 0;
+        int wformat = 0;
 
-            std::wstring wtext = Util::string_to_wide_string(std::string(outStreams[i]));
+        if (strcmp(mimeTypes[i], "text/plain;charset=utf-8") == 0)
+            wformat = CF_UNICODETEXT;
+        else if (strcmp(mimeTypes[i], "text/rtf") == 0)
+            format = RegisterClipboardFormatW(L"Rich Text Format");
+
+        if (wformat)
+        {
+            std::wstring wtext = Util::string_to_wide_string(std::string(streams[i]));
             const int byteSize = wtext.size()*2 + 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
-            if (!hglData)
+            if (hglData)
             {
-                CloseClipboard();
-                break;
+                wchar_t *wcopy = (wchar_t*) GlobalLock(hglData);
+                memcpy(wcopy, wtext.c_str(), byteSize - 2);
+                wcopy[wtext.size()] = L'\0';
+                GlobalUnlock(hglData);
+                SetClipboardData(wformat, hglData);
             }
-            wchar_t *wcopy = (wchar_t*) GlobalLock(hglData);
-            memcpy(wcopy, wtext.c_str(), byteSize - 2);
-            wcopy[wtext.size()] = L'\0';
-            GlobalUnlock(hglData);
-            SetClipboardData(CF_UNICODETEXT, hglData);
-            CloseClipboard();
-            break;
+        }
+        else if (format)
+        {
+            HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, sizes[i] + 1);
+            if (hglData)
+            {
+                char *copy = (char*) GlobalLock(hglData);
+                memcpy(copy, streams[i], sizes[i]);
+                copy[sizes[i]] = '\0';
+                GlobalUnlock(hglData);
+                SetClipboardData(format, hglData);
+            }
         }
     }
+    CloseClipboard();
 }
 
 EXPORT
