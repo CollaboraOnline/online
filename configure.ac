@@ -1540,7 +1540,7 @@ AS_IF([test "$ENABLE_QTAPP" = true],
        dnl Qt6 moc executable is found at /usr/lib64/qt6/libexec/moc with
        dnl qt-base-devel on fedora... TODO: check what is the story with other
        dnl distros is it ever really in the PATH?
-       AC_PATH_PROG([MOC], [moc], [no], [$PATH$PATH_SEPARATOR/usr/lib64/qt6/libexec])
+       AC_PATH_PROG([MOC], [moc], [no], [$PATH$PATH_SEPARATOR/usr/lib64/qt6/libexec$PATH_SEPARATOR/usr/lib/qt6])
        if test "x$MOC" = "xno"; then
              AC_MSG_ERROR([moc not found. Please install Qt development tools.])
        fi
