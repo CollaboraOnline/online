@@ -560,6 +560,7 @@ class QtAppInitializer extends MobileAppInitializer {
 		window.postMobileMessage = (msg) => messageQueue.push({ type: 'cool', msg });
 		window.postMobileError   = (msg) => messageQueue.push({ type: 'error', msg });
 		window.postMobileDebug   = (msg) => messageQueue.push({ type: 'debug', msg });
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
 
 		// Initialize QWebChannel and replace stubs when bridge is ready
 		// eslint-disable-next-line no-undef
