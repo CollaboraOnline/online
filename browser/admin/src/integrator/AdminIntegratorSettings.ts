@@ -66,7 +66,11 @@ const initTranslationStr = () => {
 };
 
 const defaultBrowserSetting: Record<string, any> = {
-	compactMode: false,
+	compactMode: {
+		value: false,
+		label: 'Compact layout',
+		customType: 'compactToggle',
+	},
 	darkTheme: false,
 	spreadsheet: {
 		ShowStatusbar: false,
@@ -460,7 +464,13 @@ class SettingIframe {
 		const commonTogglesData: Record<string, boolean> = {};
 
 		for (const [key, value] of Object.entries(this.browserSettingOptions)) {
-			if (typeof value !== 'object' || value === null) {
+			// Include:
+			// - plain booleans
+			// - objects that have a customType (like compactToggle)
+			if (
+				typeof value === 'boolean' ||
+				(typeof value === 'object' && value !== null && 'customType' in value)
+			) {
 				commonTogglesData[key] = value;
 			}
 		}
@@ -474,6 +484,7 @@ class SettingIframe {
 			const separator = document.createElement('hr');
 			separator.style.border = 'none';
 			separator.style.borderTop = '1px solid var(--settings-border)';
+			separator.style.marginTop = '1rem';
 			editorContainer.appendChild(separator);
 		}
 		tabs.forEach((tab) => {
@@ -608,6 +619,19 @@ class SettingIframe {
 				const uniqueId = pathPrefix ? `${pathPrefix}-${key}` : key;
 				if (
 					typeof value === 'object' &&
+					value?.customType &&
+					this.customRenderers[value.customType]
+				) {
+					const customElement = this.customRenderers[value.customType](
+						key,
+						value,
+						uniqueId,
+					);
+					container.appendChild(customElement);
+					continue;
+				}
+				if (
+					typeof value === 'object' &&
 					value !== null &&
 					!Array.isArray(value)
 				) {
@@ -725,6 +749,76 @@ class SettingIframe {
 				] = value;
 			}
 		});
+	}
+
+	private customRenderers: Record<
+		string,
+		(key: string, value: any, uniqueId: string) => HTMLElement
+	> = {
+		compactToggle: this.renderCompactModeToggle.bind(this),
+	};
+
+	private renderCompactModeToggle(
+		key: string,
+		setting: any,
+		uniqueId: string,
+	): HTMLElement {
+		const container = document.createElement('div');
+		container.className = 'custom-compact-toggle';
+
+		const inputCheckbox = document.createElement('input');
+		inputCheckbox.type = 'checkbox';
+		inputCheckbox.className = 'checkbox-radio-switch-input';
+		inputCheckbox.id = uniqueId + '-input';
+		inputCheckbox.checked = setting.value;
+		inputCheckbox.style.display = 'none'; // hidden input for logic
+		container.appendChild(inputCheckbox);
+
+		const options = document.createElement('div');
+		options.className = 'toggle-options'; // You can style with flex and gap
+
+		// Create option for Notebookbar
+		const notebookOption = document.createElement('div');
+		notebookOption.className = 'toggle-option';
+		const notebookImage = document.createElement('img');
+		notebookImage.src = 'images/Notebookbar.svg';
+		notebookImage.alt = 'Notebookbar';
+		notebookImage.className = `toggle-image ${!setting.value ? 'selected' : ''}`;
+		const notebookLabel = document.createElement('div');
+		notebookLabel.textContent = _('Notebookbar view');
+		notebookLabel.className = 'toggle-image-label';
+		notebookOption.appendChild(notebookImage);
+		notebookOption.appendChild(notebookLabel);
+
+		// Create option for Compact mode
+		const compactOption = document.createElement('div');
+		compactOption.className = 'toggle-option';
+		const compactImage = document.createElement('img');
+		compactImage.src = 'images/Compact.svg';
+		compactImage.alt = 'Compact';
+		compactImage.className = `toggle-image ${setting.value ? 'selected' : ''}`;
+		const compactLabel = document.createElement('div');
+		compactLabel.textContent = _('Compact view');
+		compactLabel.className = 'toggle-image-label';
+		compactOption.appendChild(compactImage);
+		compactOption.appendChild(compactLabel);
+
+		const select = (useCompact: boolean) => {
+			inputCheckbox.checked = useCompact;
+			setting.value = useCompact;
+
+			notebookImage.classList.toggle('selected', !useCompact);
+			compactImage.classList.toggle('selected', useCompact);
+		};
+
+		notebookImage.addEventListener('click', () => select(false));
+		compactImage.addEventListener('click', () => select(true));
+
+		options.appendChild(notebookOption);
+		options.appendChild(compactOption);
+		container.appendChild(options);
+
+		return container;
 	}
 
 	private async uploadFile(filePath: string, file: File): Promise<void> {
@@ -1160,11 +1254,12 @@ class SettingIframe {
 			if (data.browsersetting && data.browsersetting.length > 0) {
 				const fileId = data.browsersetting[0].uri;
 				const browserSettingContent = await this.fetchSettingFile(fileId);
-				if (browserSettingContent)
-					this.browserSettingOptions = this.mergeWithDefault(
-						defaultBrowserSetting,
-						JSON.parse(browserSettingContent),
-					);
+				this.browserSettingOptions = browserSettingContent
+					? this.mergeWithDefault(
+							defaultBrowserSetting,
+							JSON.parse(browserSettingContent),
+						)
+					: defaultBrowserSetting;
 			} else {
 				this.browserSettingOptions = defaultBrowserSetting;
 			}
