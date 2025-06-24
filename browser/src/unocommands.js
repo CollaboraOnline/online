@@ -51,6 +51,7 @@ var unoCommandsArray = {
 	'ArrowShapes.up-right-arrow':{global:{menu:_('Up and Right Arrow'),},},
 	'ArrowShapes.up-right-arrow-callout':{global:{menu:_('Up and Right Arrow Callout'),},},
 	'ArrowShapes.up-right-down-arrow':{global:{menu:_('Up, Right and Down Arrow'),},},
+	'AssignLayout':{presentation:{menu:_('Slide Layout'),},},
 	'AutoFill':{spreadsheet:{menu:_('AutoFill Data Series: automatic'),},},
 	'AutoFormatMenu':{text:{menu:_('AutoCorr~ect'),},},
 	'BackgroundColor':{global:{menu:_('Background Color'),},},
