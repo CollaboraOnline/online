@@ -133,9 +133,9 @@ endef
 
 COOL_ADMIN_TS = \
 	admin/src/ModalDialogCreator.ts \
+	admin/src/integrator/AdminIntegratorSettings.ts \
 	admin/src/integrator/WordBook.ts \
-	admin/src/integrator/Xcu.ts \
-	admin/src/integrator/AdminIntegratorSettings.ts
+	admin/src/integrator/Xcu.ts
 
 COOL_ADMIN_TS_JS = $(patsubst %.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(COOL_ADMIN_TS))
 
