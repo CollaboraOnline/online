@@ -65,12 +65,62 @@ const initTranslationStr = () => {
 		document.documentElement.getAttribute('lang') || String.defaultLocale;
 };
 
+const defaultBrowserSetting: Record<string, any> = {
+	compactMode: false,
+	darkTheme: false,
+	spreadsheet: {
+		ShowStatusbar: false,
+		A11yCheckDeck: false,
+		NavigatorDeck: false,
+		PropertyDeck: true,
+	},
+	text: {
+		ShowRuler: false,
+		ShowStatusbar: false,
+		A11yCheckDeck: false,
+		NavigatorDeck: false,
+		PropertyDeck: true,
+		StyleListDeck: false,
+	},
+	presentation: {
+		ShowRuler: false,
+		ShowStatusbar: false,
+		A11yCheckDeck: false,
+		NavigatorDeck: false,
+		PropertyDeck: true,
+		SdCustomAnimationDeck: false,
+		SdMasterPagesDeck: false,
+		SdSlideTransitionDeck: false,
+	},
+	drawing: {
+		ShowRuler: false,
+		ShowStatusbar: false,
+		A11yCheckDeck: false,
+		NavigatorDeck: false,
+		PropertyDeck: true,
+	},
+};
+
 class SettingIframe {
 	private wordbook;
 	private xcuEditor;
 	private _viewSetting;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
+	};
+	private readonly settingLabels: Record<string, string> = {
+		darkTheme: 'Dark mode',
+		compactMode: 'Compact layout',
+		ShowStatusbar: 'Show status bar',
+		ShowRuler: 'Show ruler',
+		A11yCheckDeck: 'Accessibility Checker',
+		NavigatorDeck: 'Navigator',
+		PropertyDeck: 'Show Sidebar',
+		SdCustomAnimationDeck: 'Custom Animation',
+		SdMasterPagesDeck: 'Master Pages',
+		SdSlideTransitionDeck: 'Slide Transition',
+		StyleListDeck: 'Style List',
+		// Add more as needed
 	};
 
 	private API_ENDPOINTS = {
@@ -90,6 +140,7 @@ class SettingIframe {
 		viewSettingsUpload: () => this.settingConfigBasePath() + '/viewsetting/',
 		XcuUpload: () => this.settingConfigBasePath() + '/xcu/',
 	};
+	private browserSettingOptions: Record<string, any> = {};
 
 	init(): void {
 		this.initWindowVariables();
@@ -186,18 +237,6 @@ class SettingIframe {
 				uploadPath: this.PATH.wordBookUpload(),
 			},
 			{
-				sectionTitle: _('Interface'),
-				sectionDesc: _('Set default interface preferences.'),
-				listId: 'BrowserSettingsList',
-				inputId: 'BrowserSettingsFile',
-				buttonId: 'uploadBrowserSettingsButton',
-				fileAccept: '.json',
-				// TODO: replace btn with rich interface (toggles)
-				buttonText: _('Upload Configuration'),
-				uploadPath: this.PATH.browserSettingsUpload(),
-				enabledFor: 'userconfig',
-			},
-			{
 				sectionTitle: _('Document settings'),
 				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
@@ -243,28 +282,6 @@ class SettingIframe {
 						} else {
 							let file = fileInput.files[0];
 
-							if (cfg.uploadPath === this.PATH.browserSettingsUpload()) {
-								try {
-									await this.validateJsonFile(file);
-								} catch (error) {
-									SettingIframe.showErrorModal(
-										_(
-											'Interface settings file is not valid JSON. Please check the file and try again.',
-										),
-									);
-
-									return;
-								}
-
-								// We don't allow users to upload the Interface (browser) settings file with a different name,
-								// as we use the static name 'browsersetting.json' on the coolwsd side to upload/update browser settings.
-								if (file.name !== 'browsersetting.json') {
-									file = new File([file], 'browsersetting.json', {
-										type: file.type,
-										lastModified: file.lastModified,
-									});
-								}
-							}
 							this.uploadFile(cfg.uploadPath, file);
 						}
 						fileInput.value = '';
@@ -416,6 +433,298 @@ class SettingIframe {
 			);
 			this.wordbook.stopLoader();
 		}
+	}
+	private createBrowserSettingForm(sharedConfigsContainer: HTMLElement): void {
+		const editorContainer = document.createElement('div');
+		editorContainer.id = 'browser-setting';
+		editorContainer.className = 'section';
+		// Main Title and Description
+		const mainTitle = document.createElement('h3');
+		mainTitle.textContent = _('Interface Settings');
+		editorContainer.appendChild(mainTitle);
+
+		const mainDescription = document.createElement('p');
+		mainDescription.textContent = _('Set default interface preferences.');
+		editorContainer.appendChild(mainDescription);
+
+		const navContainer = document.createElement('div');
+		navContainer.className = 'browser-setting-tabs-nav';
+
+		const tabs = [
+			{ id: 'spreadsheet', label: 'Calc' },
+			{ id: 'text', label: 'Writer' },
+			{ id: 'presentation', label: 'Impress' },
+			{ id: 'drawing', label: 'Draw' },
+		];
+
+		const commonTogglesData: Record<string, boolean> = {};
+
+		for (const [key, value] of Object.entries(this.browserSettingOptions)) {
+			if (typeof value !== 'object' || value === null) {
+				commonTogglesData[key] = value;
+			}
+		}
+
+		if (Object.keys(commonTogglesData).length > 0) {
+			const commonTogglesElement = this.renderSettingsOption(
+				commonTogglesData,
+				'common',
+			);
+			editorContainer.appendChild(commonTogglesElement);
+			const separator = document.createElement('hr');
+			separator.style.border = 'none';
+			separator.style.borderTop = '1px solid var(--settings-border)';
+			editorContainer.appendChild(separator);
+		}
+		tabs.forEach((tab) => {
+			const btn = document.createElement('button');
+			btn.type = 'button';
+			btn.className = '';
+			btn.id = `bs-tab-${tab.id}`; // bs => Browser Setting
+			btn.className = `browser-setting-tab`;
+			btn.textContent = _(tab.label);
+			btn.addEventListener('click', () => {
+				navContainer
+					.querySelectorAll('.browser-setting-tab')
+					.forEach((b) => b.classList.remove('active'));
+				btn.classList.add('active');
+
+				const contentsContainer = editorContainer.querySelector(
+					'#tab-contents-browserSetting',
+				) as HTMLElement;
+				contentsContainer.innerHTML = '';
+				if (this.browserSettingOptions && this.browserSettingOptions[tab.id]) {
+					const renderedTree = this.renderSettingsOption(
+						this.browserSettingOptions[tab.id],
+						tab.id,
+					);
+					renderedTree.classList.add('browser-settings-grid');
+					contentsContainer.appendChild(renderedTree);
+				} else {
+					contentsContainer.textContent = _(
+						`No settings available for ${tab.label}`,
+					);
+				}
+			});
+			navContainer.appendChild(btn);
+		});
+
+		const contentsContainer = document.createElement('div');
+		contentsContainer.id = 'tab-contents-browserSetting';
+		contentsContainer.textContent = _('Select a tab to browser settings.');
+		// Save and Reset Buttons
+		const actionsContainer = document.createElement('div');
+		actionsContainer.classList.add('browser-settings-editor-actions');
+
+		const resetButton = document.createElement('button');
+		resetButton.type = 'button';
+		resetButton.id = 'browser-settings-reset-button';
+		resetButton.classList.add('button', 'button--vue-secondary');
+		resetButton.title = _('Reset to default Document settings');
+		resetButton.innerHTML = `
+			<span class="button__wrapper">
+				<span class="button__icon xcu-reset-icon">
+				<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24">
+					<!-- Replace with your Reset icon SVG path -->
+					<path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"></path>
+				</svg>
+				</span>
+			</span>
+			`;
+
+		resetButton.addEventListener('click', async () => {
+			const confirmed = window.confirm(
+				_('Are you sure you want to reset Document settings?'),
+			);
+			if (!confirmed) {
+				return;
+			}
+			// Deep clone the default to avoid reference issues
+			this.browserSettingOptions = JSON.parse(
+				JSON.stringify(defaultBrowserSetting),
+			);
+			this.createBrowserSettingForm(sharedConfigsContainer);
+		});
+		actionsContainer.appendChild(resetButton);
+		const saveButton = document.createElement('button');
+		saveButton.type = 'button';
+		saveButton.id = 'browser-settings-save-button';
+		saveButton.classList.add('button', 'button-primary');
+		saveButton.title = _('Save Document settings');
+		saveButton.innerHTML = `
+			<span class="button__wrapper">
+				<span class="button--text-only">Save</span>
+			</span>
+			`;
+
+		saveButton.addEventListener('click', async () => {
+			saveButton.disabled = true;
+			this.collectBrowserSettingsFromUI(editorContainer);
+
+			const file = new File(
+				[JSON.stringify(this.browserSettingOptions)],
+				'browsersetting.json',
+				{
+					type: 'application/json',
+					lastModified: Date.now(),
+				},
+			);
+
+			// Replace `cfg.uploadPath` with the actual path you're using
+			await this.uploadFile(this.PATH.browserSettingsUpload(), file);
+			saveButton.disabled = false;
+		});
+		actionsContainer.appendChild(saveButton);
+
+		editorContainer.appendChild(navContainer);
+		editorContainer.appendChild(contentsContainer);
+		editorContainer.appendChild(actionsContainer);
+		// Find old editor if present
+		const oldEditor = sharedConfigsContainer.querySelector('#browser-setting');
+
+		if (oldEditor && oldEditor.parentNode === sharedConfigsContainer) {
+			sharedConfigsContainer.replaceChild(editorContainer, oldEditor);
+		} else {
+			sharedConfigsContainer.appendChild(editorContainer);
+		}
+		setTimeout(() => {
+			const defaultTab = navContainer.querySelector(
+				'#bs-tab-spreadsheet',
+			) as HTMLElement;
+			if (defaultTab) {
+				defaultTab.click();
+			}
+		}, 0);
+	}
+	public renderSettingsOption(data: any, pathPrefix: string = ''): HTMLElement {
+		const container = document.createElement('div');
+		if (typeof data !== 'object' || data === null) {
+			container.textContent = String(data);
+			return container;
+		}
+		for (const key in data) {
+			if (Object.prototype.hasOwnProperty.call(data, key)) {
+				const value = data[key];
+				const uniqueId = pathPrefix ? `${pathPrefix}-${key}` : key;
+				if (
+					typeof value === 'object' &&
+					value !== null &&
+					!Array.isArray(value)
+				) {
+					const fieldset = document.createElement('fieldset');
+					fieldset.classList.add('xcu-settings-fieldset');
+					const legend = document.createElement('legend');
+					legend.textContent = _(this.settingLabels[key] || key);
+					fieldset.appendChild(legend);
+					const childContent = this.renderSettingsOption(value, uniqueId);
+					fieldset.appendChild(childContent);
+					container.appendChild(fieldset);
+				} else {
+					const isCheck: boolean = value;
+					const checkboxWrapper = document.createElement('span');
+					checkboxWrapper.className = `checkbox-radio-switch checkbox-radio-switch-checkbox ${isCheck ? '' : 'checkbox-radio-switch--checked'} checkbox-wrapper`;
+					checkboxWrapper.id = uniqueId + '-container';
+
+					const inputCheckbox = document.createElement('input');
+					inputCheckbox.type = 'checkbox';
+					inputCheckbox.className = 'checkbox-radio-switch-input';
+					inputCheckbox.id = uniqueId + '-input';
+					inputCheckbox.checked = isCheck;
+					checkboxWrapper.appendChild(inputCheckbox);
+
+					const checkboxContent = document.createElement('span');
+					checkboxContent.className =
+						'checkbox-content checkbox-content-checkbox checkbox-content--has-text checkbox-radio-switch__content';
+					checkboxContent.id = uniqueId + '-content';
+					checkboxWrapper.appendChild(checkboxContent);
+
+					const checkboxContentIcon = document.createElement('span');
+					checkboxContentIcon.className = `checkbox-content-icon checkbox-radio-switch__icon ${isCheck ? '' : 'checkbox-content-icon--checked'}`;
+					checkboxContentIcon.ariaHidden = 'true';
+					checkboxContent.appendChild(checkboxContentIcon);
+
+					const materialIcon = document.createElement('span');
+					materialIcon.className = `material-design-icon ${isCheck ? 'checkbox-marked-icon' : 'checkbox-blank-outline-icon'}`;
+					materialIcon.ariaHidden = 'true';
+
+					const iconSvg = `
+					<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
+					${
+						isCheck
+							? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
+							<!---->
+						  </path>`
+							: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
+							<!---->
+						  </path>`
+					}
+					</svg>`;
+
+					checkboxContentIcon.appendChild(materialIcon);
+					materialIcon.innerHTML = iconSvg;
+
+					const textElement = document.createElement('span');
+					textElement.className =
+						'checkbox-content__text checkbox-radio-switch__text';
+					textElement.textContent = _(this.settingLabels[key] || key);
+					checkboxContent.appendChild(textElement);
+
+					checkboxWrapper.addEventListener('click', () => {
+						const currentChecked = !(inputCheckbox as HTMLInputElement).checked;
+						inputCheckbox.checked = currentChecked;
+						if (currentChecked) {
+							checkboxWrapper.classList.remove(
+								'checkbox-radio-switch--checked',
+							);
+						} else {
+							checkboxWrapper.classList.add('checkbox-radio-switch--checked');
+						}
+						materialIcon.innerHTML = `
+							<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
+							${
+								currentChecked
+									? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
+									<!---->
+								</path>`
+									: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
+									<!---->
+								</path>`
+							}
+							</svg>`;
+
+						data[key] = currentChecked;
+					});
+
+					container.appendChild(checkboxWrapper);
+				}
+			}
+		}
+		return container;
+	}
+
+	private collectBrowserSettingsFromUI(
+		browserSettingSection: HTMLElement,
+	): void {
+		const inputs = browserSettingSection.querySelectorAll<HTMLInputElement>(
+			'input.checkbox-radio-switch-input',
+		);
+
+		inputs.forEach((input) => {
+			// Expected ID: section-setting-input (e.g., "writer-ShowSidebar-input")
+			const parts = input.id.split('-');
+			if (parts.length !== 3 || parts[2] !== 'input') return;
+
+			const [sectionRaw, settingKey] = parts;
+			const value = input.checked;
+
+			if (sectionRaw === 'common') {
+				this.browserSettingOptions[settingKey] = value;
+			} else {
+				(this.browserSettingOptions[sectionRaw] as Record<string, boolean>)[
+					settingKey
+				] = value;
+			}
+		});
 	}
 
 	private async uploadFile(filePath: string, file: File): Promise<void> {
@@ -841,13 +1150,31 @@ class SettingIframe {
 			if (data.viewsetting && data.viewsetting.length > 0) {
 				const fileId = data.viewsetting[0].uri;
 				const fetchContent = await this.fetchSettingFile(fileId);
-				this.generateViewSettingUI(JSON.parse(fetchContent));
+				if (fetchContent) this.generateViewSettingUI(JSON.parse(fetchContent));
 			} else {
 				const defaultViewSetting = { accessibilityState: false };
 				this.generateViewSettingUI(defaultViewSetting);
 			}
+
+			// browser settings
+			if (data.browsersetting && data.browsersetting.length > 0) {
+				const fileId = data.browsersetting[0].uri;
+				const browserSettingContent = await this.fetchSettingFile(fileId);
+				if (browserSettingContent)
+					this.browserSettingOptions = this.mergeWithDefault(
+						defaultBrowserSetting,
+						JSON.parse(browserSettingContent),
+					);
+			} else {
+				this.browserSettingOptions = defaultBrowserSetting;
+			}
+			this.createBrowserSettingForm(
+				document.getElementById('allConfigSection')!,
+			);
 		}
 
+		const settingsContainer = document.getElementById('allConfigSection');
+		if (!settingsContainer) return;
 		if (data.xcu && data.xcu.length > 0) {
 			const fileId = data.xcu[0].uri;
 			const xcuFileContent = await this.fetchSettingFile(fileId);
@@ -855,9 +1182,6 @@ class SettingIframe {
 				this.getFilename(fileId, false),
 				xcuFileContent,
 			);
-
-			const settingsContainer = document.getElementById('allConfigSection');
-			if (!settingsContainer) return;
 
 			const existingXcuSection = document.getElementById('xcu-section');
 			if (existingXcuSection) {
@@ -881,13 +1205,35 @@ class SettingIframe {
 			this.populateList('autotextList', data.autotext, '/autotext');
 		if (data.wordbook)
 			this.populateList('wordbookList', data.wordbook, '/wordbook');
-		if (data.browsersetting)
-			this.populateList(
-				'BrowserSettingsList',
-				data.browsersetting,
-				'/browsersetting',
-			);
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
+	}
+
+	private mergeWithDefault(defaults: any, overrides: any): any {
+		const result: any = {};
+
+		for (const key in defaults) {
+			const value = defaults[key];
+			const override = overrides?.[key];
+
+			if (
+				typeof value === 'boolean' ||
+				(typeof value === 'object' && value !== null && 'customType' in value)
+			) {
+				// Use override directly for booleans or objects with customType (set value)
+				result[key] =
+					typeof override === 'boolean'
+						? typeof value === 'object'
+							? { ...value, value: override }
+							: override
+						: value;
+			} else if (typeof value === 'object' && value !== null) {
+				result[key] = this.mergeWithDefault(value, override);
+			} else {
+				result[key] = override !== undefined ? override : value;
+			}
+		}
+
+		return result;
 	}
 
 	private getConfigType(): string {
