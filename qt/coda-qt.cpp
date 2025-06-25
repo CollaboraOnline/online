@@ -14,15 +14,18 @@
 #include "COOLWSD.hpp"
 #include "FakeSocket.hpp"
 #include "Log.hpp"
+#include "MobileApp.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
 #include "qt.hpp"
 
 #include <QApplication>
 #include <QByteArray>
+#include <QClipboard>
 #include <QFileInfo>
 #include <QMainWindow>
 #include <QMetaObject>
+#include <QMimeData>
 #include <QObject>
 #include <QThread>
 #include <QTimer>
@@ -48,6 +51,72 @@ COOLWSD* coolwsd = nullptr;
 int fakeClientFd = -1;
 int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
 QWebEngineView* webView = nullptr;
+unsigned appDocId = 0;
+
+namespace
+{
+
+unsigned generateNewAppDocId()
+{
+    static unsigned appIdCounter = 60407;
+    DocumentData::allocate(appIdCounter);
+    return appIdCounter++;
+}
+
+}
+
+void getClipboardInternal()
+{
+    std::unique_ptr<QMimeData> mimeData(new QMimeData());
+
+    lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+    if (!loKitDoc)
+    {
+        LOG_DBG("Couldn't get the loKitDocument in getClipboardInternal");
+        return;
+    }
+
+    const char** mimeTypes = nullptr;
+    size_t outCount = 0;
+    char** outMimeTypes = nullptr;
+    size_t* outSizes = nullptr;
+    char** outStreams = nullptr;
+
+    if (!loKitDoc->getClipboard(mimeTypes, &outCount, &outMimeTypes, &outSizes, &outStreams))
+    {
+        LOG_DBG("Failed to fetch mime-types in getClipboardInternal");
+        return;
+    }
+
+    if (outCount == 0)
+        return;
+
+    for (size_t i = 0; i < outCount; ++i)
+    {
+        QString mimeType = QString::fromUtf8(outMimeTypes[i]);
+        QByteArray byteData(outStreams[i], static_cast<int>(outSizes[i]));
+
+        if (mimeType == "text/plain")
+        {
+            QString text = QString::fromUtf8(byteData);
+            mimeData->setText(text);
+        }
+        else if (mimeType.startsWith("image/"))
+        {
+            QImage image;
+            image.loadFromData(byteData);
+            if (!image.isNull())
+                mimeData->setImageData(image);
+        }
+
+        // Always include raw data as well
+        mimeData->setData(mimeType, byteData);
+    }
+
+    // Set the mime data to the system clipboard
+    QClipboard* clipboard = QGuiApplication::clipboard();
+    clipboard->setMimeData(mimeData.release());
+}
 
 void evalJS(const std::string& script)
 {
@@ -164,7 +233,8 @@ void Bridge::cool(const QString& msg)
                 p.fd = fakeClientFd;
                 p.events = POLLOUT;
                 fakeSocketPoll(&p, 1, -1);
-                fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+                std::string message(fileURL + (" " + std::to_string(appDocId)));
+                fakeSocketWrite(fakeClientFd, message.c_str(), message.size());
             })
             .detach();
     }
@@ -172,6 +242,10 @@ void Bridge::cool(const QString& msg)
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+    }
+    else if (utf8 == "CLIPBOARDWRITE")
+    {
+        getClipboardInternal();
     }
     else
     {
@@ -255,6 +329,7 @@ int main(int argc, char** argv)
     // Resolve absolute file URL to pass into Online
     fileURL = "file://" + FileUtil::realpath(argv[1]);
 
+    appDocId = generateNewAppDocId();
     const std::string urlAndQuery = std::string("file://") +
                                TOPSRCDIR "/browser/dist/cool.html" // same HTML frontend
                                          "?file_path=" +
@@ -262,6 +337,7 @@ int main(int argc, char** argv)
                                "&closebutton=1" // mirror original query-params
                                "&permission=edit"
                                "&lang=en-US"
+                               "&appdocid=" + std::to_string(appDocId) +
                                "&userinterfacemode=notebookbar";
 
     LOG_TRC("Open URL: " << urlAndQuery);

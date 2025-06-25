@@ -2093,7 +2093,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         const auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
         LOG_DBG("Returned lokit::documentLoad(" << anonymizeUrl(pURL) << ") in " << elapsed);
-#if defined(IOS) || defined(MACOS) || defined(_WIN32)
+#if defined(IOS) || defined(MACOS) || defined(_WIN32) || defined(QTAPP)
         DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
         {
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);

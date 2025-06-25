@@ -712,6 +712,7 @@ window.L.Clipboard = window.L.Class.extend({
 		if (!window.ThisIsTheiOSApp && // in mobile apps, we want to drop straight to navigatorClipboardRead as execCommand will require user interaction...
 			!window.ThisIsTheMacOSApp &&
 			!window.ThisIsTheWindowsApp &&
+			!window.ThisIsTheQtApp &&
 			document.execCommand(operation) &&
 			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
@@ -869,7 +870,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function(params) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp && !window.ThisIsTheQtApp) {
 			return false;
 		}
 
@@ -907,7 +908,7 @@ window.L.Clipboard = window.L.Class.extend({
 				return; // Either wrong command or a pending event.
 
 			await window.webkit.messageHandlers.clipboard.postMessage(`write`);
-		} else if (window.ThisIsTheWindowsApp) {
+		} else if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			// As above.
 			if (await check_ === null)
 				return;
