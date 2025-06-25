@@ -641,6 +641,8 @@ function getInitializerClass() {
 	global.prefs = {
 		_localStorageCache: {}, // TODO: change this to new Map() when JS version allows
 		_userBrowserSetting: new Map(),
+		_settingUpdateJSON: {},
+		_pendingSettingUpdate: undefined,
 		useBrowserSetting: false,
 		canPersist: (function() {
 			var str = 'localstorage_test';
@@ -767,17 +769,26 @@ function getInitializerClass() {
 			return defaultValue;
 		},
 
+		sendPendingBrowserSettingsUpdate: function() {
+			const isEmpty = (obj) => Object.keys(obj).length === 0;
+			if (!isEmpty(global.prefs._settingUpdateJSON)) {
+				global.socket.send('browsersetting action=update json=' + JSON.stringify(global.prefs._settingUpdateJSON));
+				global.prefs._settingUpdateJSON = {};
+			}
+			clearTimeout(global.prefs._pendingSettingUpdate);
+			global.prefs._pendingSettingUpdate = undefined;
+		},
+
 		// set multiple preference together and when browsersetting is enabled send
 		// update only once
 		setMultiple: function (prefsObject) {
-			const settingUpdateJSON = {};
 			const browserSettingEnabled = global.prefs.useBrowserSetting;
 			for (const [key, value] of Object.entries(prefsObject)) {
 				if (browserSettingEnabled) {
 					const oldValue = global.prefs._userBrowserSetting[key];
 					global.prefs._userBrowserSetting[key] = value;
 					if (oldValue !== value)
-						settingUpdateJSON[key] = value;
+						global.prefs._settingUpdateJSON[key] = value;
 				}
 				if (global.prefs.canPersist) {
 					global.localStorage.setItem(key, value);
@@ -786,8 +797,10 @@ function getInitializerClass() {
 			}
 
 			const isEmpty = (obj) => Object.keys(obj).length === 0;
-			if (browserSettingEnabled && !isEmpty(settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1)
-				global.socket.send('browsersetting action=update json=' + JSON.stringify(settingUpdateJSON));
+			if (browserSettingEnabled && !isEmpty(global.prefs._settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+				clearTimeout(global.prefs._pendingSettingUpdate);
+				global.prefs._pendingSettingUpdate = setTimeout(L.bind(this.sendPendingBrowserSettingsUpdate, this), 5000);
+			}
 		},
 
 		set: function(key, value) {
@@ -796,9 +809,9 @@ function getInitializerClass() {
 				const oldValue = global.prefs._userBrowserSetting[key];
 				global.prefs._userBrowserSetting[key] = value;
 				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1 && oldValue !== value) {
-					const tmpObject = {};
-					tmpObject[key] = value;
-					global.socket.send('browsersetting action=update json=' + JSON.stringify(tmpObject));
+					global.prefs._settingUpdateJSON[key] = value;
+					clearTimeout(global.prefs._pendingSettingUpdate);
+					global.prefs._pendingSettingUpdate = setTimeout(L.bind(this.sendPendingBrowserSettingsUpdate, this), 5000);
 				}
 			}
 			if (global.prefs.canPersist) {

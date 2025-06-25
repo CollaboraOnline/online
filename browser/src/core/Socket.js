@@ -112,6 +112,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	setUnloading: function() {
+		window.prefs.sendPendingBrowserSettingsUpdate();
 		if (this.socket.setUnloading)
 			this.socket.setUnloading();
 	},
