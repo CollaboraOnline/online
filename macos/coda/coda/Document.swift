@@ -208,6 +208,8 @@ class Document: NSDocument {
      * Clean up the temporary directory when the document closes.
      */
     override func close() {
+        NSLog("CollaboraOffice: Closing document")
+        COWrapper.bye(self)
         super.close()
         if let tempDir = self.tempDirectoryURL {
             try? FileManager.default.removeItem(at: tempDir)
