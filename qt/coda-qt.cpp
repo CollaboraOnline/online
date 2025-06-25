@@ -12,12 +12,15 @@
 #include <config.h>
 #include "bridge.hpp"
 #include "COOLWSD.hpp"
+#include "Clipboard.hpp"
 #include "FakeSocket.hpp"
 #include "Log.hpp"
 #include "MobileApp.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
 #include "qt.hpp"
+
+#include <Poco/MemoryStream.h>
 
 #include <QApplication>
 #include <QByteArray>
@@ -38,6 +41,7 @@
 #include <cstring>
 #include <poll.h>
 #include <string>
+#include <string_view>
 #include <thread>
 #include <vector>
 
@@ -63,9 +67,9 @@ unsigned generateNewAppDocId()
     return appIdCounter++;
 }
 
-}
+} // namespace
 
-void getClipboardInternal()
+void getClipboard()
 {
     std::unique_ptr<QMimeData> mimeData(new QMimeData());
 
@@ -116,6 +120,64 @@ void getClipboardInternal()
     // Set the mime data to the system clipboard
     QClipboard* clipboard = QGuiApplication::clipboard();
     clipboard->setMimeData(mimeData.release());
+}
+
+void setClipboard()
+{
+    QClipboard* clipboard = QApplication::clipboard();
+    if (!clipboard)
+        return;
+
+    const QString qText = clipboard->text(QClipboard::Clipboard);
+    if (qText.isEmpty())
+        return;
+
+    QByteArray utf8Text = qText.toUtf8();
+
+    const char* mimeTypes[] = { "text/plain;charset=utf-8" };
+    const size_t sizes[] = { static_cast<size_t>(utf8Text.size()) };
+    const char* streams[] = { utf8Text.constData() };
+
+    DocumentData::get(appDocId).loKitDocument->setClipboard(1, mimeTypes, sizes, streams);
+}
+
+void setClipboardFromContent(const std::string& content)
+{
+    std::vector<const char*> streams;
+    std::vector<const char*> mimeTypes;
+    std::vector<size_t> sizes;
+    ClipboardData data;
+
+    if (content.rfind("<!DOCTYPE html>", 0) == 0) // prefix test
+    {
+        streams.push_back(content.data());
+        mimeTypes.push_back("text/html");
+        sizes.push_back(content.length());
+    }
+    else
+    {
+        Poco::MemoryInputStream mis(content.data(), content.size());
+
+        data.read(mis); // parses into _content / _mimeTypes
+
+        const size_t n = data.size();
+        streams.reserve(n);
+        mimeTypes.reserve(n);
+        sizes.reserve(n);
+
+        for (size_t i = 0; i < n; ++i)
+        {
+            streams.push_back(data._content[i].c_str());
+            mimeTypes.push_back(data._mimeTypes[i].c_str());
+            sizes.push_back(data._content[i].length());
+        }
+    }
+
+    if (!streams.empty())
+    {
+        DocumentData::get(appDocId).loKitDocument->setClipboard(streams.size(), mimeTypes.data(),
+                                                                sizes.data(), streams.data());
+    }
 }
 
 void evalJS(const std::string& script)
@@ -175,8 +237,10 @@ void Bridge::debug(const QString& msg) { LOG_TRC_NOFILE("From JS: debug: " << ms
 
 void Bridge::error(const QString& msg) { LOG_TRC_NOFILE("From JS: error: " << msg.toStdString()); }
 
-void Bridge::cool(const QString& msg)
+QVariant Bridge::cool(const QString& msg)
 {
+    constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
+
     const std::string utf8 = msg.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << utf8);
 
@@ -245,7 +309,18 @@ void Bridge::cool(const QString& msg)
     }
     else if (utf8 == "CLIPBOARDWRITE")
     {
-        getClipboardInternal();
+        getClipboard();
+    }
+    else if (utf8 == "CLIPBOARDREAD")
+    {
+        // WARN: this is only cargo-culted and not tested yet.
+        setClipboard();
+        return "(internal)";
+    }
+    else if (utf8.starts_with(CLIPBOARDSET))
+    {
+        std::string content = utf8.substr(CLIPBOARDSET.size());
+        setClipboardFromContent(content);
     }
     else
     {
@@ -264,6 +339,7 @@ void Bridge::cool(const QString& msg)
             })
             .detach();
     }
+    return {};
 }
 
 Bridge* bridge = nullptr;
