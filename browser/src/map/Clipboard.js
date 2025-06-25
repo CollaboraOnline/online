@@ -1036,7 +1036,7 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_WindowsReadClipboard: async function() {
-		const encodedClipboardData = await window.postMobileMessage('CLIBOARDREAD');
+		const encodedClipboardData = await window.postMobileMessage('CLIPBOARDREAD');
 		// FIXME: Is the same code as for iOS OK? Will see.
 		return this._MobileAppReadClipboard(encodedClipboardData);
 	},
