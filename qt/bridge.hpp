@@ -12,6 +12,7 @@
 #pragma once
 
 #include <QObject>
+#include <QVariant>
 #include <string>
 
 // Helper: post JavaScript code safely on GUI thread
@@ -35,8 +36,15 @@ public slots: // called from JavaScript
     void debug(const QString& msg);
     // Called from JS via window.postMobileError
     void error(const QString& msg);
-    // Called from JS via window.postMobileMessage
-    void cool(const QString& msg);
+    /**
+    * Called from JS via window.postMobileMessage()
+    *
+    * If the function has a meaningful reply for JavaScript, return a valid QVariant holding a
+    * QString — this arrives in JS as that string. Otherwise return an *invalid* QVariant (e.g.
+    * `return {}` or `return QVariant{}`); the Qt-to-JS marshaller converts an invalid QVariant to
+    * the JavaScript value **undefined**.
+    */
+    QVariant cool(const QString& msg);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -451,7 +451,7 @@ window.L.Clipboard = window.L.Class.extend({
 	_sendToInternalClipboard: async function (content) {
 		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
-		} else if (window.ThisIsTheWindowsApp) {
+		} else if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			await window.postMobileMessage(`CLIPBOARDSET ${await content.text()}`);
 		} else {
 			var formData = new FormData();
@@ -994,7 +994,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp && !window.ThisIsTheQtApp) {
 			return false;
 		}
 
@@ -1041,6 +1041,11 @@ window.L.Clipboard = window.L.Class.extend({
 		return this._MobileAppReadClipboard(encodedClipboardData);
 	},
 
+	_QtReadClipboard: async function() {
+		const encodedClipboardData = await window.postMobileMessage('CLIPBOARDREAD');
+		return this._MobileAppReadClipboard(encodedClipboardData);
+	},
+
 	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
 		var clipboard = navigator.clipboard;
 		if (window.L.Browser.cypressTest) {
@@ -1052,6 +1057,8 @@ window.L.Clipboard = window.L.Class.extend({
 				clipboardContents = await this._iOSReadClipboard();
 			else if (window.ThisIsTheWindowsApp)
 				clipboardContents = await this._WindowsReadClipboard();
+			else if (window.ThisIsTheQtApp)
+				clipboardContents = await this._QtReadClipboard();
 			else
 				clipboardContents = await clipboard.read();
 
