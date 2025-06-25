@@ -561,7 +561,7 @@ app.definitions.Socket = L.Class.extend({
 			// text on iOS in jsdialogs when using languages like Greek and
 			// Japanese by only setting the image bytes for only the same set
 			// of message types.
-			if (window.ThisIsTheEmscriptenApp ||
+			if (
 					e.data.startsWith('tile:') ||
 					e.data.startsWith('tilecombine:') ||
 					e.data.startsWith('delta:') ||
