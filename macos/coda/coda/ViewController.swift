@@ -106,7 +106,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
         case "lok":
             if let body = message.body as? String {
-                COWrapper.LOG_DBG("To Online: \(message.body)")
+                COWrapper.LOG_DBG("To Online: '\(message.body)'")
 
                 if body == "HULLO" {
                     // Now we know that the JS has started completely
@@ -115,7 +115,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                 }
                 else if body == "BYE" {
                     COWrapper.LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.")
-                    //self.bye()
+                    view.window?.performClose(nil)
                     return (nil, nil)
                 }
                 else if body.hasPrefix("COMMANDSTATECHANGED ") {

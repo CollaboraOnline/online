@@ -154,6 +154,11 @@ static int closeNotificationPipeForForwardingThread[2];
     fakeSocketWrite(document.fakeClientFd, message.c_str(), message.size());
 }
 
++ (void)handleByeWith:(Document *_Nonnull)document {
+    // Close one end of the socket pair, that will wake up the forwarding thread
+    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+}
+
 + (void)handleMessageWith:(Document *)document message:(NSString *)message {
     const char *buf = [message UTF8String];
     struct pollfd p;
