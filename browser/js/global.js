@@ -1910,7 +1910,10 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (global.ThisIsTheGtkApp || global.ThisIsTheEmscriptenApp) {
+	// Create a WebSocket to the server
+	// FIXME The Android and iOS apps use the new approach, other apps should follow
+	if (global.ThisIsAMobileApp && !global.ThisIsTheAndroidApp && !global.ThisIsTheiOSApp) {
+		// FIXME Remove FakeWebSocket when the mobile apps are updated to use the new approach
 		global.socket = new global.FakeWebSocket();
 		global.TheFakeWebSocket = global.socket;
 	} else {
