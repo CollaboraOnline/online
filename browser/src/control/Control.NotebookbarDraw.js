@@ -458,7 +458,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'class': 'unoinvertbackground',
 				'type': 'bigcustomtoolitem',
 				'text': _('Invert Background'),
-				'accessibility': { focusBack: true, combination: 'DT', de: null }
+				'accessibility': { focusBack: true, combination: 'BG', de: null }
 			},
 			{ type: 'separator', id: 'view-invertbackground-break', orientation: 'vertical' },
 			{
