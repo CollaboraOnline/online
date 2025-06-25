@@ -20,6 +20,7 @@
 + (void)stopServer;
 
 + (void)handleHULLOWithDocument:(Document *_Nonnull)document;
++ (void)handleByeWith:(Document *_Nonnull)document NS_SWIFT_NAME(bye(_:));
 + (void)handleMessageWith:(Document *_Nonnull)document message:(NSString *_Nonnull)message;
 + (void)saveAsWith:(Document *_Nonnull)document url:(NSString *_Nonnull)url format:(NSString *_Nonnull)format filterOptions:(NSString *_Nullable)filterOptions;
 + (NSArray<id<NSPasteboardWriting>> * _Nullable) getClipboardWith:(Document *_Nonnull)document NS_SWIFT_NAME(getClipboard(_:));
