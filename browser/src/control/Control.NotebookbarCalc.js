@@ -926,6 +926,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:PageFormatDialog',
 				'accessibility': { focusBack: true,	combination: 'FD', de: null }
 			},
+			{ type: 'separator', id: 'layout-pageformatdialog-break', orientation: 'vertical' },
 			{
 				'id': 'layout-sheet-right-to-left',
 				'type': 'bigtoolitem',
@@ -933,6 +934,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SheetRightToLeft',
 				'accessibility': { focusBack: true,	combination: 'RL', de: null }
 			},
+			{ type: 'separator', id: 'layout-sheetrighttoleft-break', orientation: 'vertical' },
 			{
 				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
 				'class': 'unoData-PrintRangesMenu',
@@ -941,6 +943,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'PR', de: null }
 			},
+			{ type: 'separator', id: 'layout-printrangesmenu-break', orientation: 'vertical' },
 			{
 				'id': 'Data-RowMenuHeight:MenuRowHeight',
 				'class': 'unoData-RowMenuHeight',
@@ -957,6 +960,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'CW', de: null }
 			},
+			{ type: 'separator', id: 'layout-columnmenuwidth-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1015,6 +1019,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-deletecolumns-break', orientation: 'vertical' },
 			{
 				'id': 'layout-select-all',
 				'type': 'bigtoolitem',
@@ -1022,6 +1027,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SelectAll',
 				'accessibility': { focusBack: true,	combination: 'SA', de: null }
 			},
+			{ type: 'separator', id: 'layout-selectall-break', orientation: 'vertical' },
 			{
 				'id': 'Layout-Section-Align',
 				'type': 'container',
@@ -1083,6 +1089,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-aligndown-break', orientation: 'vertical' },
 			{
 				'id': 'Layout-Section-ForwardBackward',
 				'type': 'container',
@@ -1174,6 +1181,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-freezepanesrow-break', orientation: 'vertical' },
 			{
 				'id': 'view-togglegrid',
 				'type': 'bigtoolitem',
@@ -1188,6 +1196,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': 'columnrowhighlight',
 				'accessibility': { focusBack: true,	combination: 'HL', de: null }
 			},
+			{ type: 'separator', id: 'layout-colrowhighlight-break', orientation: 'vertical' },
 			(window.mode.isTablet()) ?
 				{
 					'id': 'closemobile',
@@ -1239,6 +1248,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-zoomin-break', orientation: 'vertical' },
 			{
 				'id': 'toggleuimode',
 				'class': 'unotoggleuimode',
@@ -1276,6 +1286,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'layout-showstatusbar-break', orientation: 'vertical' },
 			{
 				'id':'toggledarktheme',
 				'class': 'unotoggledarktheme',
@@ -1290,6 +1301,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'text': _('Invert Background'),
 				'accessibility': { focusBack: true, combination: 'DT', de: null }
 			},
+			{ type: 'separator', id: 'layout-invertbackground-break', orientation: 'vertical' },
 			{
 				'id': 'view-sidebardeck',
 				'type': 'bigtoolitem',
@@ -1351,6 +1363,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-deletepivottable-break', orientation: 'vertical' },
 			{
 				'id': 'insert-insert-object-chart',
 				'type': 'bigtoolitem',
@@ -1399,6 +1412,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-functiondialog-break', orientation: 'vertical' },
 			{
 				'id': 'HyperlinkDialog',
 				'class': 'unoHyperlinkDialog',
@@ -1423,6 +1437,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': 'remoteaicontent',
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
 			} : {},
+			{ type: 'separator', id: 'insert-remoteaicontent-break', orientation: 'vertical' },
             {
                 'type': 'container',
                 'children': [
@@ -1453,6 +1468,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
                 ],
                 'vertical': 'true'
             },
+			{ type: 'separator', id: 'insert-insertcurrenttime-break', orientation: 'vertical' },
 			{
 				'id': 'Insert-Section-NameRangesTable-Ext',
 				'type': 'container',
@@ -1484,6 +1500,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-definename-break', orientation: 'vertical' },
 			{
 				'id': 'insert-draw-text',
 				'type': 'bigtoolitem',
@@ -1560,6 +1577,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-verticaltext-break', orientation: 'vertical' },
 			{
 				'id': 'insert-edit-header-and-footer',
 				'type': 'bigtoolitem',
@@ -1567,6 +1585,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:EditHeaderAndFooter',
 				'accessibility': { focusBack: true,	combination: 'IH', de: null }
 			},
+			{ type: 'separator', id: 'insert-editheaderandfooter-break', orientation: 'vertical' },
 			{
 				'id': 'Insert-Charmap-Annotation',
 				'type': 'container',
@@ -1645,6 +1664,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'data-sortdescending-break', orientation: 'vertical' },
 			{
 				'id': 'data-data-filter-auto-filter',
 				'type': 'bigtoolitem',
@@ -1712,6 +1732,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'data-datafilterremovefilter-break', orientation: 'vertical' },
 			{
 				'id': 'data-group',
 				'type': 'bigtoolitem',
@@ -1749,6 +1770,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'data-clearoutline-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1779,6 +1801,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'data-hidedetail-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1839,6 +1862,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'data-validation-break', orientation: 'vertical' },
 			{
 				'id': 'Data-StatisticsMenu:Menu Statistic',
 				'class': 'unoData-StatisticsMenu',
@@ -1847,6 +1871,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'DS', de: null }
 			},
+			{ type: 'separator', id: 'data-statisticsmenu-break', orientation: 'vertical' },
 			{
 				'id': 'data-define-range',
 				'type': 'bigtoolitem',
@@ -1884,6 +1909,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'data-refreshrange-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -1968,6 +1994,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'review-hyphenate-break', orientation: 'vertical' },
 			{
 				'id': 'review-insert-annotation',
 				'type': 'bigtoolitem',
@@ -2008,6 +2035,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'review-deletenote-break', orientation: 'vertical' },
 			{
 				'type': 'toolbox',
 				'children': [
@@ -2055,6 +2083,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SidebarDeck.StyleListDeck',
 				'accessibility': { focusBack: false, combination: 'SD', de: null }
 			},
+			{ type: 'separator', id: 'format-styledialog-break', orientation: 'vertical' },
 			{
 				'id': 'format-page-format-dialog',
 				'type': 'bigtoolitem',
@@ -2076,6 +2105,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:ConditionalFormatMenu',
 				'accessibility': { focusBack: true,	combination: 'CF', de: null }
 			},
+			{ type: 'separator', id: 'format-conditionalformatmenu-break', orientation: 'vertical' },
 			{
 				'id': 'format-format-line',
 				'type': 'bigtoolitem',
@@ -2105,6 +2135,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'SM', de: null }
 			},
+			{ type: 'separator', id: 'format-sparklinemenu-break', orientation: 'vertical' },
 			{
 				'id': 'format-theme-dialog',
 				'type': 'bigtoolitem',
