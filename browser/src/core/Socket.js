@@ -518,7 +518,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 
 	_extractTextImg(e) {
 
-		if ((window.ThisIsTheiOSApp || window.ThisIsTheWindowsApp || window.ThisIsTheMacOSApp || window.ThisIsTheEmscriptenApp) && typeof (e.data) === 'string') {
+		if ((window.ThisIsTheiOSApp || window.ThisIsTheWindowsApp || window.ThisIsTheMacOSApp || window.ThisIsTheEmscriptenApp || window.ThisIsTheQtApp) && typeof (e.data) === 'string') {
 			// Another fix for issue #5843 limit splitting on the first newline
 			// to only certain message types on iOS. Also, fix mangled UTF-8
 			// text on iOS in jsdialogs when using languages like Greek and
