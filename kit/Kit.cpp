@@ -3567,8 +3567,9 @@ void lokit_main(
 
                 linkOrCopy(loTemplate, loJailDestPath, linkablePath, LinkOrCopyType::LO);
 
-                linkOrCopy(sharedTemplate, loJailDestImpressTemplatePath + "/", linkablePath,
-                           LinkOrCopyType::All);
+                if (!configId.empty())
+                    linkOrCopy(sharedTemplate, loJailDestImpressTemplatePath + "/", linkablePath,
+                               LinkOrCopyType::All);
 
 #if CODE_COVERAGE
                 // Link the .gcda files.
