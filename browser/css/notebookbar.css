@@ -401,6 +401,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	box-sizing: border-box;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
+	row-gap: 0;
 }
 
 #stylesview-btn {
