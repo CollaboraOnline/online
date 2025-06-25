@@ -1186,6 +1186,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	max-height: 40vh;
+	gap: 2px;
 }
 
 .ui-iconview.mobile-wizard {
@@ -1206,7 +1207,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-self: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
-	padding-top: 5px;
 	text-wrap: nowrap;
 	font-family: var(--jquery-ui-font);
 }
@@ -1222,6 +1222,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-darker);
 }
 
+.ui-iconview-entry img {
+	vertical-align: middle;
+}
+
 .ui-iconview-separator {
 	flex: 0 0 99%;
 }
@@ -1231,7 +1235,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 5px;
 	text-align: center;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
@@ -2432,4 +2435,26 @@ kbd,
 
 .status-hidden {
 	display: none !important;
+}
+
+/* Writer - Format - Page Style - Borders - Presets and Shadow Style - Position */
+/* Calc - Format - Format Page - Borders - Presets and Shadow Style - Position */
+#BorderPage.jsdialog #presets.ui-iconview,
+#BorderPage.jsdialog #shadows.ui-iconview {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* we want presets and shadows in a single row */
+	overflow: visible;
+}
+
+/* Impress - Sidebar - Layouts */
+/* Impress - Layout - Slide Transition */
+[data-theme='dark'] .sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
+[data-theme='dark'] .sidebar-panel #transitions_icons .ui-iconview-entry img {
+	filter: invert(1);
+}
+
+/* Impress - Sidebar - Layouts */
+/* Draw - Insert - Fontwork */
+.sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
+#FontworkGalleryDialog .ui-iconview-entry img {
+	padding: 5px 0;
 }
