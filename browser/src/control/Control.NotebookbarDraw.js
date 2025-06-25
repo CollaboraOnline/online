@@ -262,6 +262,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			}
 		);
 
+		content.push( { type: 'separator', id: 'file-exportpdf-break', orientation: 'vertical' } );
+
 		if (!this.map['wopi'].HideRepairOption) {
 			content.push(
 				{
