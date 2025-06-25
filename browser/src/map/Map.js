@@ -1407,6 +1407,7 @@ L.Map = L.Evented.extend({
 
 	// Our browser tab lost focus.
 	_onLostFocus: function () {
+		window.prefs.sendPendingBrowserSettingsUpdate();
 		// don't deactivate view while Drag and Drop in Pivot table dialog
 		if (!JSDialog.isDnDActive())
 			app.idleHandler._deactivate();
