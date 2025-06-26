@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager SlideBitmapManager*/
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -595,9 +595,10 @@ app.definitions.Socket = L.Class.extend({
 
 		var isTile = e.textMsg.startsWith('tile:');
 		var isDelta = e.textMsg.startsWith('delta:');
-		if (!isTile && !isDelta &&
+		var isSlideLayer = e.textMsg.startsWith('slidelayer:');
+		var isRenderComplete = e.textMsg.startsWith('sliderenderingcomplete:');
+		if (!isTile && !isDelta && !isSlideLayer && !isRenderComplete &&
 		    !e.textMsg.startsWith('renderfont:') &&
-			!e.textMsg.startsWith('slidelayer:') &&
 		    !e.textMsg.startsWith('windowpaint:'))
 			return;
 
@@ -611,6 +612,10 @@ app.definitions.Socket = L.Class.extend({
 			e.image = { rawData: e.imgBytes.subarray(e.imgIndex),
 				    isKeyframe: isTile };
 			e.imageIsComplete = true;
+			return;
+		}
+
+		if (isSlideLayer || isRenderComplete) {
 			return;
 		}
 
@@ -1302,8 +1307,12 @@ app.definitions.Socket = L.Class.extend({
 			// Switching modes.
 			window.location.reload(false);
 		}
+		else if (textMsg.startsWith('slidelayer:') || textMsg.startsWith('sliderenderingcomplete:')) {
+			SlideBitmapManager.handleRenderSlideEvent(e);
+			return;
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
-			     !textMsg.startsWith('renderfont:') && !textMsg.startsWith('slidelayer:') &&
+			     !textMsg.startsWith('renderfont:') &&
 			     !textMsg.startsWith('windowpaint:')) {
 
 			if (imgBytes !== undefined) {
