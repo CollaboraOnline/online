@@ -40,13 +40,7 @@ class SlideBitmapManager {
 				e.imgPromise.then((img: ImageBitmap) => {
 					e.image = img;
 					e.imageIsComplete = true;
-					const content = JSON.parse(
-						e.textMsg.substring('slidelayer:'.length + 1),
-					);
-					app.map.fire('slidelayer', {
-						message: content,
-						image: img,
-					});
+					app.socket._onMessage(e);
 				});
 			}
 		} else if (e.textMsg.startsWith('sliderenderingcomplete:')) {

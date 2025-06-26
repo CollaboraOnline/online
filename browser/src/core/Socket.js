@@ -493,7 +493,8 @@ app.definitions.Socket = L.Class.extend({
 	// buffer of web-socket messages in the client that we can't
 	// process so - slurp and then emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
-		this._extractTextImg(e);
+		if (!this._extractTextImg(e))
+			return;
 
 		// Some messages - we want to process & filter early.
 		var docLayer = this._map ? this._map._docLayer : undefined;
@@ -553,6 +554,8 @@ app.definitions.Socket = L.Class.extend({
 		return img;
 	},
 
+	// When this function returns true, the event will  added to the slurp queue
+	// Some events bypass slurp queue by returning false to process the image rendering faster
 	_extractTextImg: function (e) {
 
 		if ((window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) && typeof (e.data) === 'string') {
@@ -600,10 +603,10 @@ app.definitions.Socket = L.Class.extend({
 		if (!isTile && !isDelta && !isSlideLayer && !isRenderComplete &&
 		    !e.textMsg.startsWith('renderfont:') &&
 		    !e.textMsg.startsWith('windowpaint:'))
-			return;
+			return true;
 
 		if (e.textMsg.indexOf(' nopng') !== -1)
-			return;
+			return true;
 
 		// pass deltas through quickly.
 		if (e.imgBytes && (isTile || isDelta) && e.imgBytes[e.imgIndex] != 80 /* P(ng) */)
@@ -612,12 +615,14 @@ app.definitions.Socket = L.Class.extend({
 			e.image = { rawData: e.imgBytes.subarray(e.imgIndex),
 				    isKeyframe: isTile };
 			e.imageIsComplete = true;
-			return;
+			return true;
 		}
 
-		if (isSlideLayer || isRenderComplete) {
-			return;
-		}
+		if (isSlideLayer) {
+			SlideBitmapManager.handleRenderSlideEvent(e);
+			return false;
+		} else if (isRenderComplete)
+			return true;
 
 		// window.app.console.log('PNG preview');
 
@@ -626,7 +631,7 @@ app.definitions.Socket = L.Class.extend({
 		if (isTile) {
 			e.image = { src: img };
 			e.imageIsComplete = true;
-			return;
+			return true;
 		}
 
 		// PNG dialog bits
@@ -647,6 +652,7 @@ app.definitions.Socket = L.Class.extend({
 		};
 		e.image.completeTraceEvent = this.createAsyncTraceEvent('loadTile');
 		e.image.src = img;
+		return true;
 	},
 
 	_buildUnauthorizedMessage: function (command) {
@@ -1306,13 +1312,12 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('reload')) {
 			// Switching modes.
 			window.location.reload(false);
-		}
-		else if (textMsg.startsWith('slidelayer:') || textMsg.startsWith('sliderenderingcomplete:')) {
+		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
 			SlideBitmapManager.handleRenderSlideEvent(e);
 			return;
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
-			     !textMsg.startsWith('renderfont:') &&
+			     !textMsg.startsWith('renderfont:') && !textMsg.startsWith('slidelayer:') &&
 			     !textMsg.startsWith('windowpaint:')) {
 
 			if (imgBytes !== undefined) {
