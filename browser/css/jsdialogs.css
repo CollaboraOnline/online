@@ -1531,6 +1531,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding: 8px 10px;
 	margin: 2px 0px;
 	background-color: var(--color-background-dark);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 
