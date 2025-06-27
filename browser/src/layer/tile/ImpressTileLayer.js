@@ -77,6 +77,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			TileManager.refreshTilesInBackground();
 			TileManager.update();
 		}
+
+		app.socket.sendMessage('status');
+		this.invalidatePreviewsUponContextChange = true;
 	},
 
 	_isPCWInsideFlex: function () {
@@ -277,6 +280,11 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		if (app.file.fileBasedView)
 			TileManager.updateFileBasedView();
+
+		if (this.invalidatePreviewsUponContextChange === true) {
+			this._invalidateAllPreviews();
+			this.invalidatePreviewsUponContextChange = false;
+		}
 	},
 
 	_invalidateAllPreviews: function () {
