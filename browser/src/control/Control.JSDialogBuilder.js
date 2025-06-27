@@ -1017,7 +1017,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(tab).addClass('selected');
 					tab.setAttribute('aria-selected', 'true');
 					tab.tabIndex = '0';
-					tab.title = tabTooltip;
+					tab.setAttribute('data-cooltip', tabTooltip);
 					singleTabId = tabIdx;
 				} else {
 					tab.setAttribute('aria-selected', 'false');
@@ -1069,7 +1069,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					const currentIndex = tabs.indexOf(tab);
 					const diff = backwards ? -1 : 1;
 					const total = tabs.length;
-				
+
 					for (let i = 1; i <= total; i++) {
 						const nextIndex = (currentIndex + diff * i + total) % total;
 						const nextTab = tabs[nextIndex];
@@ -1077,7 +1077,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							return nextTab;
 						}
 					}
-				
+
 					// Fallback to current tab if no visible one is found (shouldn't happen)
 					return tab;
 				};
@@ -1253,7 +1253,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 								let visibleContainer = Array.from(container[0].children).find(child =>
 									!child.classList.contains('hidden') && child.offsetParent !== null
 								);
-								let focusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('[tabindex="-1"]:not([disabled])')) : [];								
+								let focusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('[tabindex="-1"]:not([disabled])')) : [];
 								if (focusables.length) {
 									let first = focusables[0];
 									let last = focusables[focusables.length - 1];
@@ -2253,7 +2253,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				// Arrow is just decoration
 				var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 				arrowbackground.setAttribute('aria-hidden', 'true');
-			}			
+			}
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrowbackground;
 		} else if (data.dropdown === true) {
@@ -2282,7 +2282,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (arrowbackground) {
 			div.setAttribute('aria-expanded', false);
-			// if main button element in split button works same as arrowbackground then make sure arrowbackground not focusable due to a11y conflicts 
+			// if main button element in split button works same as arrowbackground then make sure arrowbackground not focusable due to a11y conflicts
 			data.applyCallback ? arrowbackground.tabIndex = '0' : arrowbackground.tabIndex = '-1';
 		}
 
