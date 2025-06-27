@@ -81,6 +81,10 @@ L.Control.JSDialog = L.Control.extend({
 		return builder;
 	},
 
+	getDialog: function (id) {
+		return this.dialogs[id];
+	},
+
 	close: function(id, sendCloseEvent) {
 		if (id !== undefined && this.dialogs[id]) {
 			const dialog = this.dialogs[id];

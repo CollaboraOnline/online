@@ -168,6 +168,14 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	};
 	L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
 	L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
+
+	var dropDialog = L.Map.THIS.jsdialog.getDialog(dropdownWindowId);
+	if (dropDialog && dropDialog.container) {
+		var container = dropDialog.container.querySelector('#' + id + '-entries');
+		if (container) {
+			container.role = 'listbox';
+		}
+	}
 };
 
 JSDialog.CloseDropdown = function (id) {
