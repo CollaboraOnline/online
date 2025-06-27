@@ -140,7 +140,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#data-input').should('not.be.disabled');
 	});
 
-	it.only('QuerySelector Syntax error', function(){
+	it('QuerySelector Syntax error', function(){
 
 		cy.getFrameWindow().then(function(win) {
 			cy.spy(win.console, 'error').as('consoleError');
