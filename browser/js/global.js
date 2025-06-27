@@ -1066,25 +1066,6 @@ function getInitializerClass() {
 		},
 	};
 
-	if (global.L.Browser.safari) {
-		// Safari doesn't detect double taps as dblclicks properly, for compatibility we need to polyfill that...
-		global._iOSDblclickHammer = new Hammer();
-		global._iOSDblclickHammer.on('doubletap', global.touch.touchOnly((hammerEvent) => {			
-			const e = hammerEvent.srcEvent;
-			
-			const eOut = {
-				type: 'dblclick',
-				clientX: e.clientX,
-				clientY: e.clientY,
-				button: e.button,
-				pointerType: e.pointerType,
-				isMouseEvent: e instanceof MouseEvent
-			};
-
-			e.target.dispatchEvent(eOut);
-		}));
-	}
-
 	const registerTapOrClick = (e) => {
 		global.touch.lastEventWasTouch = global.touch.isTouchEvent(e);
 		global.touch.lastEventTime = Date.now();
