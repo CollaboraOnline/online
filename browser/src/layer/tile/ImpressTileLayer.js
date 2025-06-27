@@ -57,25 +57,32 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			For a better solution, we need to send the page kinds along with status messages. Then we will check the page kind and set the notes view toggle accordingly.
 		*/
 
-		const isDrawOrNotesPage = ['DrawPage', 'NotesPage'].includes(e.detail.context);
+		const newContext = e.detail.context;
+		const oldContext = e.detail.oldContext;
+		const isDrawOrNotesPage = ['DrawPage', 'NotesPage'].includes(newContext);
 
 		if (isDrawOrNotesPage)
-			app.impress.notesMode = e.detail.context === 'NotesPage';
+			app.impress.notesMode = newContext === 'NotesPage';
 
 		if (app.map.uiManager.getCurrentMode() === 'notebookbar' && isDrawOrNotesPage) {
 			const targetElement = document.getElementById('notesmode');
 			if (!targetElement) return;
 
-			if (e.detail.context === 'NotesPage')
+			if (newContext === 'NotesPage')
 				targetElement.classList.add('selected');
 			else
 				targetElement.classList.remove('selected');
 		}
 
 		if (isDrawOrNotesPage) {
-			this._selectedMode = e.detail.context === 'NotesPage' ? 2 : 0;
+			this._selectedMode = newContext === 'NotesPage' ? 2 : 0;
 			TileManager.refreshTilesInBackground();
 			TileManager.update();
+		}
+
+		if (newContext === 'MasterPage' || oldContext === 'MasterPage') {
+			app.socket.sendMessage('status');
+			this.invalidatePreviewsUponContextChange = true;
 		}
 	},
 
@@ -277,6 +284,11 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		if (app.file.fileBasedView)
 			TileManager.updateFileBasedView();
+
+		if (this.invalidatePreviewsUponContextChange === true) {
+			this._invalidateAllPreviews();
+			this.invalidatePreviewsUponContextChange = false;
+		}
 	},
 
 	_invalidateAllPreviews: function () {
