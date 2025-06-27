@@ -25,6 +25,7 @@ interface WidgetJSON {
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
 	labelledBy?: string;
+	allyRole?: string;
 }
 
 interface JSBuilderOptions {

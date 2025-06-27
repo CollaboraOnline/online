@@ -61,6 +61,10 @@ JSDialog.grid = function (
 	);
 	table.id = data.id;
 
+	if (data.allyRole) {
+		table.role = data.allyRole;
+	}
+
 	const gridRowColStyle =
 		'grid-template-rows: repeat(' +
 		rows +
