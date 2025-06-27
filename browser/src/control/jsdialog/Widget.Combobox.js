@@ -192,8 +192,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	if (data.aria) {
 		content.setAttribute('aria-label',data.aria.label);
 	}
-	container.setAttribute('aria-haspopup', true);
-	container.setAttribute('aria-expanded', false);
+	content.setAttribute('aria-haspopup', true);
+	content.setAttribute('aria-expanded', false);
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.tabIndex = '0';
@@ -201,6 +201,11 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
+
+	container._onDropDown = function(open) {
+		content.setAttribute('aria-expanded', open);
+		button.setAttribute('aria-expanded', open);
+	};
 
 	if (data.selectedCount > 0)
 		var selectedEntryPos = parseInt(data.selectedEntries[0]);
