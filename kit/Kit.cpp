@@ -152,7 +152,9 @@ int getCurrentThreadCount()
 _LibreOfficeKit* loKitPtr = nullptr;
 
 static bool EnableWebsocketURP = false;
+#if !MOBILEAPP
 static int URPStartCount = 0;
+#endif
 
 bool isURPEnabled() { return EnableWebsocketURP; }
 
@@ -171,8 +173,10 @@ bool isURPEnabled() { return EnableWebsocketURP; }
 /// system root, not the jail.
 static std::string JailRoot;
 
+#if !MOBILEAPP
 static int URPtoLoFDs[2] { -1, -1 };
 static int URPfromLoFDs[2] { -1, -1 };
+#endif
 
 // Abnormally we get LOK events from another thread, which must be
 // push safely into our main poll loop to process to keep all

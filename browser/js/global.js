@@ -1810,7 +1810,7 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (global.ThisIsTheGtkApp) {
+	if (global.ThisIsTheGtkApp || global.ThisIsTheEmscriptenApp) {
 		global.socket = new global.FakeWebSocket();
 		global.TheFakeWebSocket = global.socket;
 	} else {

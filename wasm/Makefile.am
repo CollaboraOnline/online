@@ -3,7 +3,7 @@ EXEEXT = .js
 
 AM_CXXFLAGS = \
 	-pthread -s USE_PTHREADS=1 \
-	-s DISABLE_EXCEPTION_CATCHING=0
+	-fwasm-exceptions
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
@@ -23,18 +23,23 @@ online_SOURCES = \
 	../common/ConfigUtil.cpp \
 	../common/Crypto-stub.cpp \
 	../common/FileUtil.cpp \
+	../common/FileUtil-unix.cpp \
 	../common/CommandControl.cpp \
 	../common/Log.cpp \
 	../common/TraceEvent.cpp \
 	../common/Protocol.cpp \
+	../common/RegexUtil.cpp \
 	../common/StringVector.cpp \
 	../common/Session.cpp \
 	../common/SigUtil-mobile.cpp \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/Unit.cpp \
+	../common/Unit-mobile.cpp \
+	../common/Uri.cpp \
 	../common/Util.cpp \
 	../common/Util-mobile.cpp \
+	../common/Util-unix.cpp \
 	../kit/ChildSession.cpp \
 	../kit/Kit.cpp \
 	../kit/KitQueue.cpp \
@@ -48,12 +53,14 @@ online_SOURCES = \
 	../wsd/COOLWSD.cpp \
 	../wsd/ClientRequestDispatcher.cpp \
 	../wsd/RequestDetails.cpp \
+	../wsd/RequestVettingStation.cpp \
 	../wsd/Storage.cpp \
 	../wsd/TileCache.cpp \
 	../wsd/coolwsd-fork.cpp
 
 online_DEPENDENCIES = \
-	@LOBUILDDIR@/instdir/program/soffice.html.linkdeps \
+	exports \
+	@LOBUILDDIR@/instdir/program/soffice.js.linkdeps \
 	soffice.data \
 	soffice.data.js.metadata
 
@@ -67,12 +74,17 @@ online_LDADD = \
 	${POCOLIB}/libPocoFoundation@POCODEBUG@.a \
 	${ZSTDLIB}/libzstd.a \
 	-L@LOBUILDDIR@/instdir/program \
-	$(shell cat @LOBUILDDIR@/instdir/program/soffice.html.linkdeps)
+	$(shell cat @LOBUILDDIR@/instdir/program/soffice.js.linkdeps) \
+	@LOBUILDDIR@/workdir/LinkTarget/StaticLibrary/libunoembind.a
 
 # TODO these are just copypasta from core
 online_LDFLAGS = \
-	-pthread -s MODULARIZE -s EXPORT_NAME=createOnlineModule -s USE_PTHREADS=1 -s TOTAL_MEMORY=1GB -s PTHREAD_POOL_SIZE=15 --bind -s FORCE_FILESYSTEM=1 -s WASM_BIGINT=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s FETCH=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=0 -s EXPORTED_RUNTIME_METHODS=["UTF16ToString","stringToUTF16","UTF8ToString","allocateUTF8","ccall","cwrap","FS"] -pthread -s USE_PTHREADS=1 -s DISABLE_EXCEPTION_CATCHING=0 -s EXPORTED_FUNCTIONS=["_main","_libreofficekit_hook","_libreofficekit_hook_2","_lok_preinit","_lok_preinit_2","_handle_cool_message"] \
+	-pthread -s MODULARIZE -s EXPORT_NAME=createOnlineModule -s USE_PTHREADS=1 -s TOTAL_MEMORY=1GB -s PTHREAD_POOL_SIZE=15 --bind -s FORCE_FILESYSTEM=1 -s WASM_BIGINT=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s FETCH=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=0 -s EXPORTED_RUNTIME_METHODS=["UTF16ToString","stringToUTF16","UTF8ToString","stringToNewUTF8","ccall","cwrap","FS","registerType"] -pthread -s USE_PTHREADS=1 -fwasm-exceptions -s EXPORTED_FUNCTIONS=@exports \
 	--pre-js @LOBUILDDIR@/workdir/CustomTarget/static/emscripten_fs_image/soffice.data.js.link
+
+# Silence "running limited binaryen optimizations because DWARF info requested (or indirectly
+# required)":
+online_LDFLAGS += $(if $(filter -g,$(CXXFLAGS)),-Wno-limited-postlink-optimizations)
 
 if ENABLE_DEBUG
 online_LDFLAGS += \
@@ -84,6 +96,9 @@ online_LDFLAGS += \
 	--preload-file $(WASM_ADDITIONAL_FILES)@
 endif
 
+exports: @LOBUILDDIR@/workdir/CustomTarget/desktop/soffice_bin-emscripten-exports/exports
+	cp $< $@
+	printf '_handle_cool_message\n' >>$@
 
 soffice.dat%: @LOBUILDDIR@/instdir/program/soffice.dat%
 	cp $< $@
