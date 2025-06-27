@@ -1044,15 +1044,6 @@ AS_IF([test "$ENABLE_GTKAPP" != true],
 
 CFLAGS="$CFLAGS -Wall -Wextra"
 
-AC_MSG_CHECKING([whether to turn warnings to errors])
-if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
-    AC_MSG_RESULT([yes])
-    CXXFLAGS="$CXXFLAGS -Werror"
-    CFLAGS="$CFLAGS -Werror"
-else
-    AC_MSG_RESULT([no])
-fi
-
 AC_MSG_CHECKING([whether to use extra compiler hardening flags])
 if test "$enable_hardening_flags" = no -o "$host_os" = "emscripten" -o "x$with_sanitizer" != "x"; then
     AC_MSG_RESULT([no])
@@ -1722,6 +1713,15 @@ if test -n "$with_dictionaries" -a "$with_dictionaries" != "no"; then
     ALLOWED_LANGUAGES="$with_dictionaries"
 else
     ALLOWED_LANGUAGES="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru"
+fi
+
+AC_MSG_CHECKING([whether to turn warnings to errors])
+if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
+    AC_MSG_RESULT([yes])
+    CXXFLAGS="$CXXFLAGS -Werror"
+    CFLAGS="$CFLAGS -Werror"
+else
+    AC_MSG_RESULT([no])
 fi
 
 AS_IF([test "$enable_feature_lock" = "yes"],
