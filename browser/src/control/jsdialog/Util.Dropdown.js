@@ -34,6 +34,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			{
 				id: id + '-entries',
 				type: 'grid',
+				allyRole: 'listbox',
 				cols: 1,
 				rows: entries.length,
 				children: []
