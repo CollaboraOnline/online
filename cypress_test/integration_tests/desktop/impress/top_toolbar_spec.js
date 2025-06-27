@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/top_toolbar.odp');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click().click().click().click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();

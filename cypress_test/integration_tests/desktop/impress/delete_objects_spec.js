@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Shapes', function() {
-		cy.cGet('#toolbar-up > .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
 		cy.wait(1000);
 		//insert
 		cy.cGet('#insertshapes').click();
@@ -37,8 +37,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
-		cy.cGet('#toolbar-up > .ui-scroll-right').click();
-		cy.cGet('#toolbar-up > .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
 		//insert
 		cy.cGet('#insertobjectchart').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');

@@ -262,12 +262,12 @@ function insertImage(docType) {
 
 	selectZoomLevel('50', false);
 
-	cy.cGet('#toolbar-up .ui-scroll-right').click().click().click();
+	cy.cGet('#toolbar-up #menuoverflow').click();
 
 	const mode = Cypress.env('USER_INTERFACE');
 
 	if (mode === 'notebookbar')
-		cy.cGet('#toolbar-up .ui-scroll-right').click().click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
 
 	if (docType === 'calc' &&  mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
@@ -288,11 +288,11 @@ function insertVideo() {
 
 	selectZoomLevel('50', false);
 
-	cy.cGet('#toolbar-up .ui-scroll-right').click();
+	cy.cGet('#toolbar-up #menuoverflow').click();
 
 	const mode = Cypress.env('USER_INTERFACE');
 
-	if (mode === 'notebookbar') cy.cGet('#toolbar-up .ui-scroll-right').click();
+	if (mode === 'notebookbar') cy.cGet('#toolbar-up #menuoverflow').click();
 
 	cy.cGet('#Insert-tab-label').click();
 	cy.cGet('#Insert-container .insertmultimedia').click();
