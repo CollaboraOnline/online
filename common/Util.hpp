@@ -1090,12 +1090,14 @@ int main(int argc, char**argv)
     template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
     {
         const auto elapsed = now - convertChronoClock<U>(time);
-        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed);
+        const auto elapsedM = std::chrono::duration_cast<std::chrono::minutes>(elapsed);
+        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed) - elapsedM;
         const auto elapsedMS =
             std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) - elapsedS;
 
         std::stringstream ss;
-        ss << getClockAsString(time) << " (" << elapsedS << ' ' << elapsedMS << " ago)";
+        ss << getClockAsString(time) << " (" << elapsedM << ' ' << elapsedS << ' ' << elapsedMS
+           << " ago)";
         return ss.str();
     }
 
