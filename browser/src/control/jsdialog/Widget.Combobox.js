@@ -194,6 +194,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	}
 	content.setAttribute('aria-haspopup', true);
 	content.setAttribute('aria-expanded', false);
+	content.setAttribute('aria-controls', data.id + '-entries');
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.tabIndex = '0';
