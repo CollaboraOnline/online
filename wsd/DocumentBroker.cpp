@@ -5357,7 +5357,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << "\n  still loading... "
            << std::chrono::duration_cast<std::chrono::seconds>(now - _createTime);
-    int childPid = _childProcess ? _childProcess->getPid() : 0;
+    os << "\n  now: " << Util::getClockAsString(now);
+    const int childPid = _childProcess ? _childProcess->getPid() : 0;
     os << "\n  child PID: " << childPid;
     os << "\n  sent: " << sent << " bytes";
     os << "\n  recv: " << recv << " bytes";
