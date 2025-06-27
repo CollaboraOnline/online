@@ -3414,7 +3414,9 @@ public:
         }
         else
 #endif // !MOBILEAPP
+        {
             os << "\nFetchHttpSession: null\n";
+        }
 
         os << "\nServer poll:\n";
         _acceptPoll.dumpState(os);
