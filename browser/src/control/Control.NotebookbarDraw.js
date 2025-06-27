@@ -139,8 +139,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getFileTab: function() {
 		var content = [];
+		var hasSave = !this.map['wopi'].HideSaveOption;
+		var hasSaveAs = !this.map['wopi'].UserCanNotWriteRelative;
+		var hasShare = this.map['wopi'].EnableShare;
+		var hasRevisionHistory = L.Params.revHistoryEnabled;
 
-		if (!this.map['wopi'].HideSaveOption) {
+		if (hasSave) {
 			content.push(
 				{
 					'type': 'toolbox',
@@ -156,7 +160,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				});
 			}
 
-		if (!this.map['wopi'].UserCanNotWriteRelative) {
+		if (hasSaveAs) {
 			content.push(
 				{
 					'id': 'file-saveas',
@@ -168,7 +172,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 		}
 
-		if (!this.map['wopi'].UserCanNotWriteRelative) {
+		if (hasSaveAs) {
 			content.push(
 				{
 					'id': 'exportas:ExportAsMenu',
@@ -181,12 +185,20 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 		}
 
+		if (hasSave || hasSaveAs) {
+			content.push({
+				'id': 'file-exportas-break',
+				'type': 'separator',
+				'orientation': 'vertical'
+			});
+		}
+
 		content.push(
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
 				'children': [
-					(this.map['wopi'].EnableShare) ?
+					(hasShare) ?
 						{
 							'id': 'ShareAs',
 							'class': 'unoShareAs',
@@ -196,7 +208,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'inlineLabel': true,
 							'accessibility': { focusBack: true, combination: 'SH', de: null }
 						} : {},
-					(L.Params.revHistoryEnabled) ?
+					(hasRevisionHistory) ?
 						{
 							'id': 'Rev-History',
 							'class': 'unoRev-History',
@@ -208,7 +220,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						} : {},
 				],
 				'vertical': 'true'
-			}
+			},
+			(hasShare || hasRevisionHistory) ?
+				{
+					'id': 'file-revhistory-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				} : {}
 		);
 
 		if (!this.map['wopi'].HidePrintOption) {

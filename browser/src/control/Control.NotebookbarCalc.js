@@ -104,8 +104,12 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 	getFileTab: function() {
 		var content = [];
+		var hasSave = !this.map['wopi'].HideSaveOption;
+		var hasSaveAs = !this.map['wopi'].UserCanNotWriteRelative;
+		var hasShare = this.map['wopi'].EnableShare;
+		var hasRevisionHistory = L.Params.revHistoryEnabled;
 
-		if (!this.map['wopi'].HideSaveOption) {
+		if (hasSave) {
 			content.push({
 				'type': 'toolbox',
 				'children': [
@@ -120,7 +124,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
-		if (!this.map['wopi'].UserCanNotWriteRelative) {
+		if (hasSaveAs) {
 			content.push(
 				(window.prefs.get('saveAsMode') === 'group') ? {
 					'id': 'saveas:SaveAsMenu',
@@ -140,7 +144,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			);
 		}
 
-		if (!this.map['wopi'].UserCanNotWriteRelative) {
+		if (hasSaveAs) {
 			content.push({
 				'id': 'exportas:ExportAsMenu',
 				'command': 'exportas',
@@ -151,12 +155,20 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
+		if (hasSave || hasSaveAs) {
+			content.push({
+				'id': 'file-exportas-break',
+				'type': 'separator',
+				'orientation': 'vertical'
+			});
+		}
+
 		content.push(
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
 				'children': [
-					this.map['wopi'].EnableShare ?
+					hasShare ?
 						{
 							'id': 'ShareAs',
 							'class': 'unoShareAs',
@@ -166,7 +178,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							'inlineLabel': true,
 							'accessibility': { focusBack: true,	combination: 'Z', de: null }
 						} : {},
-						L.Params.revHistoryEnabled ?
+					hasRevisionHistory ?
 						{
 							'id': 'Rev-History',
 							'class': 'unoRev-History',
@@ -178,7 +190,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						} : {},
 				],
 				'vertical': 'true'
-			}
+			},
+			(hasShare || hasRevisionHistory) ?
+				{
+					'id': 'file-revhistory-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				} : {}
 		);
 
 		if (!this.map['wopi'].HidePrintOption) {
