@@ -3043,7 +3043,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map._textInput.hideCursor();
 			// Maintain input if a dialog or search-box has the focus.
 			if (this._map.editorHasFocus() && !this._map.uiManager.isAnyDialogOpen() && !this._map.isSearching()
-				&& !JSDialog.IsAnyInputFocused())
+				&& !JSDialog.IsAnyInputFocused() && (this._map._docLayer._preview && !this._map._docLayer._preview.partsFocused))
 				this._map.focus(false);
 		}
 
