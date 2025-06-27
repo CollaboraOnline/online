@@ -255,7 +255,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			L.DomUtil.removeClass(overflowMenuButton, 'selected');
 		};
 
-		overflowMenuButton.addEventListener('click', () => {
+		const onButtonClick = () => {
 			if (
 				overflowMenu.style.opacity === '0' ||
 				overflowMenu.style.opacity === ''
@@ -264,6 +264,10 @@ class TopToolbar extends JSDialog.Toolbar {
 			} else {
 				hideOverflowMenu();
 			}
+		};
+
+		overflowMenuButton.addEventListener('click', () => {
+			app.layoutingService.appendLayoutingTask(onButtonClick);
 		});
 
 		const breakSidebar = this.parentContainer.querySelector('#breaksidebar');
@@ -283,56 +287,58 @@ class TopToolbar extends JSDialog.Toolbar {
 		const overflowMenuHandler = () => {
 			overflowMenuDebounced && clearTimeout(overflowMenuDebounced);
 
-			hideOverflowMenu();
-
 			overflowMenuDebounced = setTimeout(() => {
-				topBarMenu.replaceChildren(...originalTopbar);
+				app.layoutingService.appendLayoutingTask(() => {
+					hideOverflowMenu();
 
-				const topBarButtons = topBarMenu.querySelectorAll('.jsdialog:not(.hidden)');
-				const menuWidth = getMenuWidth();
+					topBarMenu.replaceChildren(...originalTopbar);
 
-				const overflowMenuOffscreen = document.createElement('div');
-				overflowMenuOffscreen.className = 'menu-overfow-vertical';
+					const topBarButtons = topBarMenu.querySelectorAll('.jsdialog:not(.hidden)');
+					const menuWidth = getMenuWidth();
 
-				let section = [];
-				let overflow = false;
+					const overflowMenuOffscreen = document.createElement('div');
+					overflowMenuOffscreen.className = 'menu-overfow-vertical';
 
-				const appendSection = () => {
-					for (const element of section) {
-						overflowMenuOffscreen.appendChild(element);
+					let section = [];
+					let overflow = false;
+
+					const appendSection = () => {
+						for (const element of section) {
+							overflowMenuOffscreen.appendChild(element);
+						}
+						section.length = 0;
+					};
+
+					for (const button of topBarButtons) {
+						if (button.id === 'topspacer' || button.id === 'menuoverflow') {
+							break;
+						}
+
+						if (button.offsetLeft > menuWidth || overflow) {
+							overflow = true;
+							appendSection();
+							overflowMenuOffscreen.appendChild(button);
+						} else if (button.className.includes('vertical')) {
+							section = [button];
+						} else {
+							section.push(button);
+						}
 					}
-					section.length = 0;
-				};
 
-				for (const button of topBarButtons) {
-					if (button.id === 'topspacer' || button.id === 'menuoverflow') {
-						break;
-					}
+					overflowMenu.replaceChildren(overflowMenuOffscreen);
 
-					if (button.offsetLeft > menuWidth || overflow) {
-						overflow = true;
-						appendSection();
-						overflowMenuOffscreen.appendChild(button);
-					} else if (button.className.includes('vertical')) {
-						section = [button];
+					if (overflowMenuOffscreen.children.length <= 0) {
+						overflowMenuButton.style.display = 'none';
 					} else {
-						section.push(button);
+						overflowMenuButton.style.display = 'revert';
 					}
-				}
 
-				overflowMenu.replaceChildren(overflowMenuOffscreen);
-
-				if (overflowMenuOffscreen.children.length <= 0) {
-					overflowMenuButton.style.display = 'none';
-				} else {
-					overflowMenuButton.style.display = 'revert';
-				}
-
-				overflowMenu.style.left =
-					overflowMenuButton.offsetLeft -
-					overflowMenu.clientWidth +
-					overflowMenuButton.offsetWidth +
-					'px';
+					overflowMenu.style.left =
+						overflowMenuButton.offsetLeft -
+						overflowMenu.clientWidth +
+						overflowMenuButton.offsetWidth +
+						'px';
+				});
 			}, 250);
 		};
 
