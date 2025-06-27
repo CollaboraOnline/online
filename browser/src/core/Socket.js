@@ -57,7 +57,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 		if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
 			this.socket = socket;
-		} else if (window.ThisIsTheGtkApp) {
+		} else if (window.ThisIsTheGtkApp || window.ThisIsTheEmscriptenApp) {
 			// We have already opened the FakeWebSocket over in global.js
 			// But do we then set this.socket at all? Is this case ever reached?
 		} else	{
