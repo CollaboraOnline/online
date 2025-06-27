@@ -81,6 +81,10 @@ online_LDFLAGS = \
 	-pthread -s MODULARIZE -s EXPORT_NAME=createOnlineModule -s USE_PTHREADS=1 -s TOTAL_MEMORY=1GB -s PTHREAD_POOL_SIZE=15 --bind -s FORCE_FILESYSTEM=1 -s WASM_BIGINT=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s FETCH=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=0 -s EXPORTED_RUNTIME_METHODS=["UTF16ToString","stringToUTF16","UTF8ToString","stringToNewUTF8","ccall","cwrap","FS","registerType"] -pthread -s USE_PTHREADS=1 -fwasm-exceptions -s EXPORTED_FUNCTIONS=@exports \
 	--pre-js @LOBUILDDIR@/workdir/CustomTarget/static/emscripten_fs_image/soffice.data.js.link
 
+# Silence "running limited binaryen optimizations because DWARF info requested (or indirectly
+# required)":
+online_LDFLAGS += $(if $(filter -g,$(CXXFLAGS)),-Wno-limited-postlink-optimizations)
+
 if ENABLE_DEBUG
 online_LDFLAGS += \
 	-gseparate-dwarf
