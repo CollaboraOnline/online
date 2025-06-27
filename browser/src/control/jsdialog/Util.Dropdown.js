@@ -43,10 +43,10 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 	if (popupParent && !popupParent._onClose) {
 		popupParent._onClose = () => {
-			popupParent.setAttribute('aria-expanded', false);
+			popupParent.firstChild.setAttribute('aria-expanded', false);
 		};
 	}
-	popupParent.setAttribute('aria-expanded', true);
+	popupParent.firstChild.setAttribute('aria-expanded', true);
 
 	var isChecked = function (unoCommand) {
 		var items = L.Map.THIS['stateChangeHandler'];
