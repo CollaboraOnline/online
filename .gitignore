@@ -164,6 +164,15 @@ BUNDLE-VERSION
 # gtk fake mobile app
 gtk/mobile
 
+# Wasm app build artifacts
+/wasm/exports
+/wasm/online.data
+/wasm/online.js
+/wasm/online.wasm
+/wasm/online.wasm.debug.wasm
+/wasm/soffice.data
+/wasm/soffice.data.js.metadata
+
 # backup and temporary editor files: the only convenience rules allowed here.
 *~
 .*sw?
