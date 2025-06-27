@@ -11,10 +11,10 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		helper.setupAndLoadDocument('impress/image_operation.odp');
 		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
 		cy.cGet('#sidebar-panel').should('not.be.visible');
+		desktopHelper.switchUIToNotebookbar();
 	});
 
 	it('Insert/Delete image',function() {
-		desktopHelper.switchUIToNotebookbar();
 		insertImage();
 
 		//make sure that image is in focus
@@ -25,13 +25,11 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	});
 
 	it("Insert multimedia", function () {
-		desktopHelper.switchUIToNotebookbar();
+		//desktopHelper.switchUIToNotebookbar();
 		insertVideo();
 	});
 
 	it.skip('Crop Image', function () {
-		// close sidebar
-		cy.cGet('.unospan-options-modify-page.unoModifyPage').click();
 		insertImage();
 		helper.assertImageSize(438, 111);
 
@@ -58,7 +56,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
-		desktopHelper.switchUIToNotebookbar();
+		//desktopHelper.switchUIToNotebookbar();
 		insertImage();
 		//when Keep ratio is unchecked
 		helper.assertImageSize(438, 111);
