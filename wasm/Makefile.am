@@ -35,6 +35,7 @@ online_SOURCES = \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/Unit.cpp \
+	../common/Unit-mobile.cpp \
 	../common/Uri.cpp \
 	../common/Util.cpp \
 	../common/Util-mobile.cpp \
