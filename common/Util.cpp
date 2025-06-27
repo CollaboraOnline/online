@@ -263,7 +263,7 @@ namespace Util
 #endif
     }
 
-    void killThreadById(int tid, int signal)
+    void killThreadById(int tid, [[maybe_unused]] int signal)
     {
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
@@ -902,7 +902,7 @@ namespace Util
         return false;
     }
 
-    Backtrace::Backtrace(const int maxFrames, const int skip)
+    Backtrace::Backtrace([[maybe_unused]] const int maxFrames, const int skip)
         : skipFrames(skip)
     {
 #if defined(__linux) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)

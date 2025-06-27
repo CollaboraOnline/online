@@ -49,15 +49,15 @@ namespace SigUtil
     {
     }
 
-    void setActivityHeader(const std::string &message)
+    void setActivityHeader([[maybe_unused]] const std::string &message)
     {
     }
 
-    void addActivity(const std::string &message)
+    void addActivity([[maybe_unused]] const std::string &message)
     {
     }
 
-    void addActivity(const std::string &viewId, const std::string &message)
+    void addActivity([[maybe_unused]] const std::string &viewId, [[maybe_unused]] const std::string &message)
     {
     }
 
@@ -77,15 +77,15 @@ namespace SigUtil
     {
     }
 
-    void signalLog(const char *message)
+    void signalLog([[maybe_unused]] const char *message)
     {
     }
 
-    void signalLogNumber(std::size_t num, int base)
+    void signalLogNumber([[maybe_unused]] std::size_t num, [[maybe_unused]] int base)
     {
     }
 
-    const char *signalName(const int signo)
+    const char *signalName([[maybe_unused]] const int signo)
     {
         return "SIGWTF";
     }
@@ -94,15 +94,15 @@ namespace SigUtil
     {
     }
 
-    void setVersionInfo(const std::string &versionInfo)
+    void setVersionInfo([[maybe_unused]] const std::string &versionInfo)
     {
     }
 
-    void setFatalSignals(const std::string &versionInfo)
+    void setFatalSignals([[maybe_unused]] const std::string &versionInfo)
     {
     }
 
-    void setSigChildHandler(SigChildHandler fn)
+    void setSigChildHandler([[maybe_unused]] SigChildHandler fn)
     {
     }
 
@@ -118,7 +118,7 @@ namespace SigUtil
     {
     }
 
-    bool killChild(const int pid, const int signal)
+    bool killChild([[maybe_unused]] const int pid, [[maybe_unused]] const int signal)
     {
         return true;
     }
