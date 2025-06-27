@@ -198,6 +198,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			});
 		}
 
+		if (hasSave || hasSaveAs) {
+			content.push({
+				'id': 'file-exportas-break',
+				'type': 'separator',
+				'orientation': 'vertical'
+			});
+		}
+
 		if (hasShare && hasRevisionHistory) {
 			content.push(
 				{
@@ -250,6 +258,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true, combination: 'RH' }
 					}
 				]
+			});
+		}
+
+		if (hasShare || hasRevisionHistory) {
+			content.push({
+				'id': 'file-revhistory-break',
+				'type': 'separator',
+				'orientation': 'vertical'
 			});
 		}
 
