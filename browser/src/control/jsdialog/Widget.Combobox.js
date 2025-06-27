@@ -196,9 +196,11 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.setAttribute('aria-expanded', false);
 	content.setAttribute('aria-controls', data.id + '-entries');
 
-	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
+	var button = L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.tabIndex = '0';
-	button.role = 'button';
+	button.setAttribute('aria-haspopup', true);
+	button.setAttribute('aria-expanded', false);
+	button.setAttribute('aria-controls', data.id + '-entries');
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
