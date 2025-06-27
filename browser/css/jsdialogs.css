@@ -990,7 +990,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px;
 	margin-top: 4px;
 	cursor: pointer;
-	pointer-events: none;
 }
 
 :dir(rtl) .ui-listbox-arrow {
