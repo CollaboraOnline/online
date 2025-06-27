@@ -951,7 +951,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-            servedSync = handleMediaRequest(request, disposition, socket);
+            servedSync = handleMediaRequest(request, disposition, socket, MediaType::Url);
+
+        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 requestDetails.equals(1, "mediavtt"))
+            servedSync = handleMediaRequest(request, disposition, socket, MediaType::Vtt);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
@@ -1634,7 +1638,8 @@ bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
 
 bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                                  SocketDisposition& /*disposition*/,
-                                                 const std::shared_ptr<StreamSocket>& socket)
+                                                 const std::shared_ptr<StreamSocket>& socket,
+                                                 MediaType type)
 {
     assert(socket && "Must have a valid socket");
 
@@ -1718,7 +1723,13 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         LOG_TRC_S("Move media request " << tag << " to docbroker thread");
 
         std::string range = request.get("Range", "none");
-        docBroker->handleMediaRequest(std::move(range), socket, tag);
+        std::string field;
+        if (type == MediaType::Url)
+            field = "url";
+        else if (type == MediaType::Vtt)
+            field = "srt";
+
+        docBroker->handleMediaRequest(std::move(range), socket, tag, field);
     }
     return false; // async
 }

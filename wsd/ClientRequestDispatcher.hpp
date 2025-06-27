@@ -23,6 +23,12 @@
 
 enum class CheckStatus : char;
 
+enum MediaType
+{
+    Url,
+    Vtt,
+};
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
 {
@@ -101,7 +107,8 @@ private:
     /// @return true if request has been handled synchronously and response sent, otherwise false
     static bool handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                    SocketDisposition& /*disposition*/,
-                                   const std::shared_ptr<StreamSocket>& socket);
+                                   const std::shared_ptr<StreamSocket>& socket,
+                                   MediaType type);
 
     static std::string getContentType(const std::string& fileName);
 
