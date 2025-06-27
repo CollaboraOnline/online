@@ -345,7 +345,12 @@ class TopToolbar extends JSDialog.Toolbar {
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
 
-		this.createOverflowMenu();
+		if (window.mode.isMobile()) {
+			JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
+			JSDialog.RefreshScrollables();
+		} else {
+			this.createOverflowMenu();
+		}
 
 		if (this.map.isRestrictedUser()) {
 			for (var i = 0; i < items.length; i++) {
