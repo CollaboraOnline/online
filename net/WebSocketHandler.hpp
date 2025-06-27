@@ -1013,7 +1013,7 @@ protected:
     template <typename T>
     void upgradeToWebSocket(const std::shared_ptr<StreamSocket>& socket,
                             [[maybe_unused]] const T& req,
-                            [[maybe_unused]] const std::string& expectedOrigin, bool allowedOrigin)
+                            [[maybe_unused]] const std::string& expectedOrigin, [[maybe_unused]] bool allowedOrigin)
     {
         assert(socket && "Must have a valid socket");
         LOGA_TRC(WebSocket, "Upgrading to WebSocket");
