@@ -667,28 +667,7 @@ class TreeViewControl {
 		tr.addEventListener('click', clickFunction as any);
 
 		if (!this._singleClickActivate) {
-			if (window.ThisIsTheiOSApp) {
-				// TODO: remove this hack
-				tr.addEventListener('click', event => {
-					if (L.DomUtil.hasClass(tr, 'disabled')) return;
-
-					if (
-						entry.row == lastClickHelperRow &&
-						treeViewData.id == lastClickHelperId
-					)
-						doubleClickFunction(event);
-					else {
-						lastClickHelperRow = entry.row;
-						lastClickHelperId = treeViewData.id;
-						setTimeout(() => {
-							lastClickHelperRow = -1;
-						}, 300);
-					}
-				});
-				// TODO: remove this hack
-			} else {
-				$(tr).dblclick(doubleClickFunction as any);
-			}
+			$(tr).dblclick(doubleClickFunction as any);
 		}
 
 		const toggleFunction = (e: MouseEvent) => {
