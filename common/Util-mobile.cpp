@@ -15,25 +15,25 @@
 namespace Util
 {
 /// No-op implementation of desktop only functions
-DirectoryCounter::DirectoryCounter(const char* procPath) { (void)_tasks; }
+DirectoryCounter::DirectoryCounter(const char*) { (void)_tasks; }
 DirectoryCounter::~DirectoryCounter() {}
 int DirectoryCounter::count() { return 0; }
-int spawnProcess(const std::string& cmd, const StringVector& args) { return 0; }
+int spawnProcess(const std::string&, const StringVector&) { return 0; }
 
-std::string getHumanizedBytes(unsigned long bytes) { return std::string(); }
+std::string getHumanizedBytes(unsigned long) { return std::string(); }
 size_t getTotalSystemMemoryKb() { return 0; }
-std::size_t getFromFile(const char* path) { return 0; }
+std::size_t getFromFile(const char*) { return 0; }
 std::size_t getCGroupMemLimit() { return 0; }
 std::size_t getCGroupMemSoftLimit() { return 0; }
-size_t getMemoryUsagePSS(const pid_t pid) { return 0; }
-size_t getMemoryUsageRSS(const pid_t pid) { return 0; }
+size_t getMemoryUsagePSS(pid_t) { return 0; }
+size_t getMemoryUsageRSS(pid_t) { return 0; }
 size_t getCurrentThreadCount() { return 0; }
-std::string getMemoryStats(FILE* file) { return std::string(); }
-std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file) { return std::make_pair(0, 0); }
-std::size_t getProcessTreePss(pid_t pid) { return 0; }
-size_t getCpuUsage(const pid_t pid) { return 0; }
-size_t getStatFromPid(const pid_t pid, int ind) { return 0; }
-void setProcessAndThreadPriorities(const pid_t pid, int prio) {}
+std::string getMemoryStats(FILE*) { return std::string(); }
+std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE*) { return std::make_pair(0, 0); }
+std::size_t getProcessTreePss(pid_t) { return 0; }
+size_t getCpuUsage(pid_t) { return 0; }
+size_t getStatFromPid(pid_t, int) { return 0; }
+void setProcessAndThreadPriorities(pid_t, int) {}
 
 std::string getLinuxVersion() { return "unknown"; }
 
