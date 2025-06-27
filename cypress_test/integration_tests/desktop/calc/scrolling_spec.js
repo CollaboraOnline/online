@@ -8,7 +8,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/scrolling.ods');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
 		cy.cGet('#sidebar').click({force: true});
 	});
 

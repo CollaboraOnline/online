@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #menuoverflow').click();
 		cy.cGet('#modifypage button').click({force: true});
 		cy.cGet('#sidebar-panel').should('not.be.visible');
 		cy.cGet('.close-navigation-button').click();
