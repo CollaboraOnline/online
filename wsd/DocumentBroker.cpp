@@ -1154,8 +1154,11 @@ bool DocumentBroker::download(
             if (_uploadRequest)
             {
                 LOG_DBG("Document ["
-                        << _docKey
-                        << "] timestamp checked for a match during an up-load, results may race, "
+                        << _docKey << "] timestamp checked for a match during an up-load (started "
+                        << Util::getTimeForLog(std::chrono::steady_clock::now(),
+                                               _uploadRequest->startTime())
+                        << ", " << (_uploadRequest->isComplete() ? "" : "in")
+                        << "complete), results may race, "
                            "so ignoring inconsistent timestamp. Expected: "
                         << _storageManager.getLastModifiedServerTimeString()
                         << ", Actual: " << fileInfo.getLastModifiedServerTimeString());
