@@ -1292,11 +1292,7 @@ private:
         {
         }
 
-        const std::chrono::milliseconds timeSinceRequest() const
-        {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - _startTime);
-        }
+        std::chrono::steady_clock::time_point startTime() const { return _startTime; }
 
         const std::string& uriAnonym() const { return _uriAnonym; }
         const std::chrono::system_clock::time_point& newFileModifiedLocalTime() const
