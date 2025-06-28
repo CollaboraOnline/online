@@ -4911,9 +4911,7 @@ void DocumentBroker::setInitialSetting(const std::string& name)
 
 bool DocumentBroker::forwardUrpToChild(const std::string& message)
 {
-    if (!_childProcess)
-        return false;
-    return _childProcess->sendUrpMessage(message);
+    return _childProcess && _childProcess->sendUrpMessage(message);
 }
 
 std::string DocumentBroker::applyViewAccessibility(const std::string& message,
@@ -4932,6 +4930,7 @@ std::string DocumentBroker::applyViewAccessibility(const std::string& message,
     // if it exists, append otherwise.
     bool accessibilityOverridden = false;
     std::string result;
+    result.reserve(message.size());
     const StringVector tokens = StringVector::tokenize(message);
     for (size_t i = 0; i < tokens.size(); ++i)
     {
