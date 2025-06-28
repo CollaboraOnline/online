@@ -105,6 +105,7 @@ public:
         {
             setReadOnly(true);
             setAllowChangeComments(false);
+            setAllowManageRedlines(false);
         }
     }
 
@@ -119,8 +120,12 @@ public:
     void setAllowChangeComments(bool allow) { _isAllowChangeComments = allow; }
     bool isAllowChangeComments() const { return _isAllowChangeComments; }
 
-    /// Returns true iff the view is either non-readonly or can change comments.
-    bool isEditable() const { return !isReadOnly() || isAllowChangeComments(); }
+    /// Controls whether redline (change tracking) management is enabled in this session.
+    void setAllowManageRedlines(bool allow) { _isAllowManageRedlines = allow; }
+    bool isAllowManageRedlines() const { return _isAllowManageRedlines; }
+
+    /// Returns true iff the view is either non-readonly or can change comments or manage redlines.
+    bool isEditable() const { return !isReadOnly() || isAllowChangeComments() || isAllowManageRedlines(); }
 
     /// if certification verification was disabled for the wopi server
     bool isDisableVerifyHost() const { return _disableVerifyHost; }
@@ -430,7 +435,8 @@ private:
     bool _writePermission;
 
     /// Whether the session can write in storage. May be disabled on error (e.g. low storage).
-    /// Note: A read-only document may still be writable (if _isAllowChangeComments is true), f.e. PDF.
+    /// Note: A read-only document may still be writable (if _isAllowChangeComments or
+    /// _isAllowManageRedlines is true), f.e. PDF.
     bool _isWritable;
 
     /// Whether the session can edit the document. Disabled when we fail to lock, for example.
@@ -439,6 +445,10 @@ private:
     /// Whether the session can add/change comments.
     /// Must have _isWritable=true, regardless of _isReadOnly.
     bool _isAllowChangeComments;
+
+    /// Whether the session can add/change comments.
+    /// Must have _isWritable=true, regardless of _isReadOnly.
+    bool _isAllowManageRedlines = false;
 
     /// If password is provided or not
     bool _haveDocPassword;

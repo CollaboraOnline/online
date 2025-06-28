@@ -134,6 +134,9 @@ class Menubar extends L.Control {
         allowedReadonlyMenus: string[];
         allowedViewModeCommands: string[];
         allowedViewModeActions: (string | (() => string | undefined))[];
+        allowedRedlineManagementMenus: string[];
+        allowedRedlineManagementModeCommands: string[];
+        allowedRedlineManagementModeActions: string[];
     } = {
 		initial: [
 			{name: _UNO('.uno:PickList')},
@@ -193,10 +196,10 @@ class Menubar extends L.Control {
 					{uno: '.uno:AcceptTrackedChanges'},
 					{uno: '.uno:AcceptTrackedChange'},
 					{uno: '.uno:AcceptTrackedChangeToNext'},
-					{name: _UNO('.uno:AcceptAllTrackedChanges', 'text'), id: 'acceptalltrackedchanges', type: 'action'},
+					{type: 'action', id: 'acceptalltrackedchanges', uno: '.uno:AcceptAllTrackedChanges'},
 					{uno: '.uno:RejectTrackedChange'},
 					{uno: '.uno:RejectTrackedChangeToNext'},
-					{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
+					{type: 'action', id: 'rejectalltrackedchanges', uno: '.uno:RejectAllTrackedChanges'},
 					{uno: '.uno:ReinstateTrackedChange'},
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
@@ -1111,8 +1114,8 @@ class Menubar extends L.Control {
 				{uno: '.uno:TrackChanges'},
 				{uno: '.uno:ShowTrackedChanges'},
 				{type: 'separator'},
-				{name: _UNO('.uno:AcceptAllTrackedChanges', 'text'), id: 'acceptalltrackedchanges', type: 'action'},
-				{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
+				{type: 'action', id: 'acceptalltrackedchanges', uno: '.uno:AcceptAllTrackedChanges'},
+				{type: 'action', id: 'rejectalltrackedchanges', uno: '.uno:RejectAllTrackedChanges'},
 				{uno: '.uno:PreviousTrackedChange'},
 				{uno: '.uno:NextTrackedChange'}
 			]},
@@ -1452,6 +1455,7 @@ class Menubar extends L.Control {
 
 		// Only these menu options will be visible in readonly mode
 		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help', 'print'],
+		allowedRedlineManagementMenus: ['editmenu', 'changesmenu', ],
 
 		math: ['.uno:ChangeFont', '.uno:ChangeFontSize', '.uno:ChangeDistance', '.uno:ChangeAlignment'],
 
@@ -1472,7 +1476,27 @@ class Menubar extends L.Control {
 			'insert-signatureline', // insert menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
-		]
+		],
+
+		// Only these UNO commands will be enabled in redline management mode
+		allowedRedlineManagementModeCommands: [
+			'.uno:ShowTrackedChanges',
+			'.uno:AcceptTrackedChanges',
+			'.uno:AcceptTrackedChange',
+			'.uno:RejectTrackedChange',
+			'.uno:AcceptAllTrackedChanges',
+			'.uno:RejectAllTrackedChanges',
+			'.uno:AcceptTrackedChangeToNext',
+			'.uno:RejectTrackedChangeToNext',
+			'.uno:CommentChangeTracking',
+			'.uno:PreviousTrackedChange',
+			'.uno:NextTrackedChange',
+		],
+
+		allowedRedlineManagementModeActions: [
+			'acceptalltrackedchanges',
+			'rejectalltrackedchanges',
+		],
 	}
 
 	// Private properties
@@ -2041,8 +2065,7 @@ class Menubar extends L.Control {
 							}
 						}
 					} else if (id === 'acceptalltrackedchanges' || id === 'rejectalltrackedchanges') {
-						var command = id === 'acceptalltrackedchanges' ? '.uno:AcceptAllTrackedChanges' : '.uno:RejectAllTrackedChanges';
-						itemState = this._map['stateChangeHandler'].getItemValue(command);
+						itemState = this._map['stateChangeHandler'].getItemValue(uno);
 						if (itemState === 'disabled') {
 							$(aItem).addClass('disabled');
 						} else {
@@ -2067,29 +2090,51 @@ class Menubar extends L.Control {
 			} else { // eslint-disable-next-line no-lonely-if
 				if (type === 'unocommand') { // disable all uno commands
 					// Except the ones listed in allowedViewModeCommands:
-					const allowed = this.options.allowedViewModeCommands.includes(uno);
+					var allowed = this.options.allowedViewModeCommands.includes(uno);
+					if (!allowed && app.isRedlineManagementAllowed()) {
+						allowed = this.options.allowedRedlineManagementModeCommands.includes(uno);
+					}
 					if (!allowed) {
-						$(aItem).addClass('disabled');
-						aItem.title = window._('Read-only mode');
+						$(aItem).hide();
+					} else {
+						var itemState = this._map['stateChangeHandler'].getItemValue(uno);
+						if (itemState === 'disabled') {
+							$(aItem).addClass('disabled');
+						} else {
+							$(aItem).removeClass('disabled');
+							if (itemState === 'true')
+								$(aItem).addClass(constChecked);
+							else
+								$(aItem).removeClass(constChecked);
+						}
 					}
 				} else if (type === 'action') { // disable all except allowedViewModeActions
-					var found = false;
+					var allowed = false;
 					for (var i in this.options.allowedViewModeActions) {
 						const action = this.options.allowedViewModeActions[i];
 						if (typeof action === "string" && action === id) {
-							found = true;
+							allowed = true;
 							break;
 						} else if (typeof action === "function" && action() === id) {
-							found = true;
+							allowed = true;
 							break;
 						}
 					}
+					if (!allowed && app.isRedlineManagementAllowed())
+						allowed = this.options.allowedRedlineManagementModeActions.includes(id);
 					if (id === 'insertcomment' && (this._map.getDocType() !== 'drawing' && !app.isCommentEditingAllowed()))
-						found = false;
+						allowed = false;
 					if (id === 'serveraudit' && (app.isAdminUser === false || !this._map.serverAuditDialog))
-						found = false;
-					if (!found) {
+						allowed = false;
+					if (!allowed) {
 						$(aItem).hide();
+					} else if (uno !== undefined) {
+						itemState = this._map['stateChangeHandler'].getItemValue(uno);
+						if (itemState === 'disabled') {
+							$(aItem).addClass('disabled');
+						} else {
+							$(aItem).removeClass('disabled');
+						}
 					}
 				}
 			}
@@ -2140,17 +2185,19 @@ class Menubar extends L.Control {
 	 * @param itWizard - Optional wizard data.
 	 */
 	private _executeAction(itNode: any, itWizard?: any): void {
-		var id, postmessage, type;
+		var id, postmessage, type, command;
 		if (itNode === undefined)
 		{ // called from JSDialogBuilder
 			id = itWizard.id;
 			postmessage = false;
+			command = itWizard.command;
 		}
 		else
 		{ // called from
 			id = $(itNode).data('id');
 			type = $(itNode).data('type');
 			postmessage = ($(itNode).data('postmessage') === 'true');
+			command = $(itNode).data('uno');
 		}
 
 		if (id === 'save') {
@@ -2319,10 +2366,8 @@ class Menubar extends L.Control {
 			app.dispatcher.dispatch('hideslide');
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
-		} else if (id === 'acceptalltrackedchanges') {
-			app.dispatcher.dispatch('.uno:AcceptAllTrackedChanges');
-		} else if (id === 'rejectalltrackedchanges') {
-			app.dispatcher.dispatch('.uno:RejectAllTrackedChanges');
+		} else if (id === 'acceptalltrackedchanges' || id === 'rejectalltrackedchanges') {
+			app.dispatcher.dispatch(command);
 		} else if (id === 'columnrowhighlight') {
 			app.dispatcher.dispatch('columnrowhighlight');
 		}
@@ -2424,13 +2469,9 @@ class Menubar extends L.Control {
 			return false;
 		}
 		if (this._map.isReadOnlyMode() && menuItem.type === 'menu') {
-			var found = false;
-			for (var j in this.options.allowedReadonlyMenus) {
-				if (this.options.allowedReadonlyMenus[j] === menuItem.id) {
-					found = true;
-					break;
-				}
-			}
+			var found = this.options.allowedReadonlyMenus.includes(menuItem.id);
+			if (!found && app.isRedlineManagementAllowed())
+				found = this.options.allowedRedlineManagementMenus.includes(menuItem.id);
 			if (!found)
 				return false;
 		}
@@ -2608,7 +2649,7 @@ class Menubar extends L.Control {
 					ulItem.appendChild(subitemList[idx]);
 				}
 				aItem.tabIndex = 0;
-			} else if (menu[i].type === 'unocommand' || menu[i].uno !== undefined) {
+			} else if (menu[i].type === 'unocommand' || (!menu[i].type && menu[i].uno !== undefined)) {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
 				$(aItem).data('tag', menu[i].tag);
@@ -2621,6 +2662,8 @@ class Menubar extends L.Control {
 					continue;
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
+				if (menu[i].uno !== undefined)
+					$(aItem).data('uno', menu[i].uno);
 				aItem.tabIndex = 0;
 			}
 

@@ -826,6 +826,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			app.setCommentEditingPermission(json.editComment); // May be allowed even in readonly mode.
+			app.setRedlineManagementAllowed(json.manageRedlines); // May be allowed even in readonly mode.
 		}
 		else if (textMsg.startsWith('lockfailed:')) {
 			this._map.onLockFailed(textMsg.substring('lockfailed:'.length).trim());

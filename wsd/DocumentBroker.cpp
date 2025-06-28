@@ -1085,7 +1085,7 @@ bool DocumentBroker::download(
 
                     // Related to fix for issue #5887: only send a read-only
                     // message for "view file extension" document types
-                    session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
+                    session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments(), session->isAllowManageRedlines());
                 }
                 else if constexpr (Util::isMobileApp())
                 {
@@ -1403,7 +1403,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 
     // We will send the client about information of the usage type of the file.
     // Some file types may be treated differently than others.
-    session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
+    session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments(), session->isAllowManageRedlines());
 
     // Construct a JSON containing relevant WOPI host properties
     Object::Ptr wopiInfo = new Object();
@@ -3818,6 +3818,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
                                      << " active). IsLive: " << session->isLive()
                                      << ", IsReadOnly: " << session->isReadOnly()
                                      << ", IsAllowChangeComments: " << session->isAllowChangeComments()
+                                     << ", IsAllowManageRedlines: " << session->isAllowManageRedlines()
                                      << ", IsEditable: " << session->isEditable()
                                      << ", Unloading: " << _docState.isUnloadRequested()
                                      << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
