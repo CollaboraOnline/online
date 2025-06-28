@@ -607,7 +607,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-coppy',
+								'id': 'home-copy',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:Copy'),
 								'command': '.uno:Copy',
@@ -623,6 +623,20 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							}
 						]
 					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'home-slidefunctions-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'home-assign-layout',
+						'type': 'toolitem',
+						'text': 'Reset Layout',
+						'command': '.uno:AssignLayout',
+						'accessibility': { focusBack: true, combination: 'RS', de: null }
+					},
 				],
 				'vertical': 'true'
 			},
