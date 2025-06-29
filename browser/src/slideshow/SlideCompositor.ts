@@ -18,6 +18,7 @@
 declare var SlideShow: any;
 
 abstract class SlideCompositor {
+	[x: string]: any;
 	_slideShowPresenter: SlideShowPresenter = null;
 	_initialSlideNumber: number = 0;
 	_onGotSlideCallback: VoidFunction = null;

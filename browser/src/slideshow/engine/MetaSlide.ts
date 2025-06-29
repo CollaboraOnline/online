@@ -33,10 +33,6 @@ class MetaSlide {
 			);
 			this._animationsHandler.importAnimations(slideInfo.animations.root);
 			this._animationsHandler.parseInfo();
-			console.debug(
-				`\x1B[1mSlide ${this._info.index} Animation Tree\x1B[m\n` +
-					this._animationsHandler.info(true),
-			);
 		}
 	}
 
