@@ -424,6 +424,7 @@ shared_headers = common/Anonymizer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
                  net/HttpRequest.hpp \
+                 net/HttpServer.hpp \
                  net/HttpHelper.hpp \
                  net/NetUtil.hpp \
                  net/ServerSocket.hpp \
