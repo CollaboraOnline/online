@@ -25,6 +25,7 @@
 #include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
 #include <net/HttpHelper.hpp>
+#include <net/HttpServer.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>

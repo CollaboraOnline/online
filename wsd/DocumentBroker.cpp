@@ -29,6 +29,7 @@
 #include <common/Unit.hpp>
 #include <common/Uri.hpp>
 #include <common/Util.hpp>
+#include <net/HttpServer.hpp>
 #include <net/Socket.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/CacheUtil.hpp>
