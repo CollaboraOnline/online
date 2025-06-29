@@ -3033,7 +3033,7 @@ private:
 #endif
 
         // Consume the incoming data by parsing and processing the body.
-        http::Request request;
+        http::RequestParser request;
 #if !MOBILEAPP
         const int64_t read = request.readData(data.data(), data.size());
         if (read < 0)
