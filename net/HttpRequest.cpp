@@ -302,10 +302,10 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     return FieldParseState::Valid;
 }
 
-int64_t Request::readData(const char* p, const int64_t len)
+int64_t RequestParser::readData(const char* p, const int64_t len)
 {
     uint64_t available = len;
-    if (_stage == Stage::Header)
+    if (stage() == Stage::Header)
     {
         // First line is the status line.
         // Fix infinite loop on mobile by skipping the minimum request header
@@ -325,7 +325,7 @@ int64_t Request::readData(const char* p, const int64_t len)
             return 0;
         }
 
-        _verb = std::string(&p[off], end - off);
+        setVerb(std::string(&p[off], end - off));
 
         // URL.
         off = skipSpaceAndTab(p, end, available);
@@ -336,7 +336,7 @@ int64_t Request::readData(const char* p, const int64_t len)
             return 0;
         }
 
-        _url = std::string(&p[off], end - off);
+        setUrl(std::string(&p[off], end - off));
 
         // Version.
         off = skipSpaceAndTab(p, end, available);
@@ -365,7 +365,7 @@ int64_t Request::readData(const char* p, const int64_t len)
             return -1;
         }
 
-        _version = std::string(version, VersionLen);
+        setVersion(std::string(version, VersionLen));
 
         off += VersionLen;
         end = findLineBreak(p, off, available);
@@ -378,14 +378,14 @@ int64_t Request::readData(const char* p, const int64_t len)
         ++end; // Skip the LF character.
 
         // LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
-        _stage = Stage::Body;
+        setStage(Stage::Body);
         p += end;
         available -= end;
     }
 
-    if (_stage == Stage::Body)
+    if (stage() == Stage::Body)
     {
-        const int64_t read = _header.parse(p, available);
+        const int64_t read = header().parse(p, available);
         if (read < 0)
         {
             return read;
@@ -403,14 +403,14 @@ int64_t Request::readData(const char* p, const int64_t len)
 #endif //DEBUG_HTTP
         }
 
-        if (_verb == VERB_GET)
+        if (getVerb() == VERB_GET)
         {
             // A payload in a GET request "has no defined semantics".
             return len - available;
         }
 
-        // TODO: Implement POST and HEAD support.
-        LOG_ERR("Unsupported HTTP Method [" << _verb << ']');
+        // TODO: Implement POSR and HEAD support.
+        LOG_ERR("Unsupported HTTP Method [" << getVerb() << ']');
         return -1;
     }
 

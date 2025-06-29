@@ -169,7 +169,7 @@ void HttpWhiteBoxTests::testRequestParserValidComplete()
     const std::string data = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "EmptyKey:\r\n"
                              + "Host: localhost.com\r\n\r\n";
 
-    http::Request req;
+    http::RequestParser req;
 
     LOK_ASSERT(req.readData(data.c_str(), data.size()) > 0);
     LOK_ASSERT_EQUAL(expVerb, req.getVerb());
@@ -190,7 +190,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     const std::string data
         = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "Host: " + expHost + "\r\n\r\n";
 
-    http::Request req;
+    http::RequestParser req;
 
     // Pass incomplete data to the reader.
     for (std::size_t i = 0; i < 33; ++i)

@@ -590,7 +590,7 @@ private:
 };
 
 /// An HTTP Request made over Session.
-class Request final
+class Request
 {
 public:
     static constexpr int64_t VersionLen = 8;
@@ -608,8 +608,8 @@ public:
 
     /// Create a Request given a @url, http @verb, @header, and http @version.
     /// All are optional, since they can be overwritten later.
-    explicit Request(std::string url = "/", std::string verb = VERB_GET, Header headerObj = Header(),
-                     std::string version = VERS_1_1)
+    explicit Request(std::string url = "/", std::string verb = VERB_GET,
+                     Header headerObj = Header(), std::string version = VERS_1_1)
         : _header(std::move(headerObj))
         , _url(std::move(url))
         , _verb(std::move(verb))
@@ -682,7 +682,7 @@ public:
         ifs->seekg(0, std::ios_base::beg);
 
         setBodySource(
-            [ ifs=std::move(ifs) ](char* buf, int64_t len) -> int64_t
+            [ifs = std::move(ifs)](char* buf, int64_t len) -> int64_t
             {
                 ifs->read(buf, len);
                 return ifs->gcount();
@@ -700,7 +700,7 @@ public:
         auto iss = std::make_shared<std::istringstream>(std::move(body), std::ios::binary);
 
         setBodySource(
-            [ iss=std::move(iss) ](char* buf, int64_t len) -> int64_t
+            [iss = std::move(iss)](char* buf, int64_t len) -> int64_t
             {
                 iss->read(buf, len);
                 return iss->gcount();
@@ -771,11 +771,6 @@ public:
         return true;
     }
 
-    /// Handles incoming data.
-    /// Returns the number of bytes consumed, or -1 for error
-    /// and/or to interrupt transmission.
-    int64_t readData(const char* p, int64_t len);
-
     void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
@@ -784,12 +779,16 @@ public:
         Util::joinPair(os, _header, indent + '\t');
     }
 
-    void setBasicAuth(std::string_view username, std::string_view password) {
-        std::string basicAuth{username};
+    void setBasicAuth(std::string_view username, std::string_view password)
+    {
+        std::string basicAuth{ username };
         basicAuth.append(":");
         basicAuth.append(password);
         _header.add("Authorization", "Basic " + Util::base64Encode(basicAuth));
     }
+
+protected:
+    void setStage(Stage stage) { _stage = stage; }
 
 private:
     Header _header;
@@ -798,6 +797,19 @@ private:
     std::string _version; ///< The protocol version, currently 1.1.
     IoReadFunc _bodyReaderCb;
     Stage _stage;
+};
+
+/// A server-side HTTP Request parser for incoming request.
+class RequestParser final : public Request
+{
+public:
+    /// Create a default RequestParser.
+    RequestParser() = default;
+
+    /// Handles incoming data.
+    /// Returns the number of bytes consumed, or -1 for error
+    /// and/or to interrupt transmission.
+    int64_t readData(const char* p, int64_t len);
 };
 
 /// HTTP Status Line is the first line of a response sent by a server.

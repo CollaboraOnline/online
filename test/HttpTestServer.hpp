@@ -54,7 +54,7 @@ private:
                 << HexUtil::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
 
         // Consume the incoming data by parsing and processing the body.
-        http::Request request;
+        http::RequestParser request;
         const int64_t read = request.readData(data.data(), data.size());
         if (read < 0)
         {
