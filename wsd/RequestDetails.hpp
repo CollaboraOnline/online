@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/URI.h>
-
 #include <common/Log.hpp>
 #include <common/StringVector.hpp>
 #include <common/Uri.hpp>
 #include <common/Util.hpp>
 #include <net/HttpRequest.hpp>
+
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/URI.h>
 
 /**
  * A class to encapsulate various useful pieces from the request.

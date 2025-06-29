@@ -13,40 +13,39 @@
 
 #include "ClientSession.hpp"
 
-#include <filesystem>
-#include <ios>
-#include <map>
-#include <sstream>
-#include <string>
-#include <string_view>
-#include <memory>
-#include <unordered_map>
-#include <cctype>
+#include <common/Clipboard.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/HexUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Session.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Util.hpp>
+#include <net/HttpHelper.hpp>
+#include <wopi/StorageConnectionManager.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <Poco/Base64Decoder.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-#include <Poco/JSON/Parser.h>
 
-#include "ConfigUtil.hpp"
-#include "DocumentBroker.hpp"
-#include "COOLWSD.hpp"
-#include "FileServer.hpp"
-#include <common/Common.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Log.hpp>
-#include <common/Protocol.hpp>
-#include <common/Clipboard.hpp>
-#include <common/Session.hpp>
-#include <common/TraceEvent.hpp>
-#include <common/HexUtil.hpp>
-#include <common/Util.hpp>
-#include <common/CommandControl.hpp>
-#include <wsd/TileDesc.hpp>
-#include <net/HttpHelper.hpp>
-#include <wopi/StorageConnectionManager.hpp>
+#include <cctype>
+#include <ios>
+#include <map>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <string_view>
+#include <unordered_map>
 
 using namespace COOLProtocol;
 

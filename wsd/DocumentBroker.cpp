@@ -14,6 +14,49 @@
 #include "DocumentBroker.hpp"
 
 #include <common/Anonymizer.hpp>
+#include <common/Authorization.hpp>
+#include <common/Clipboard.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Message.hpp>
+#include <common/Protocol.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/CacheUtil.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/PresetsInstall.hpp>
+#include <wsd/Process.hpp>
+#include <wsd/ProxyProtocol.hpp>
+#include <wsd/QuarantineUtil.hpp>
+#include <wsd/Storage.hpp>
+#include <wsd/TileCache.hpp>
+
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#include <wopi/CheckFileInfo.hpp>
+#include <wopi/StorageConnectionManager.hpp>
+#include <wsd/Admin.hpp>
+
+#include <sys/wait.h> // waitpid()
+#endif // !MOBILEAPP
+
+#include <Poco/DigestStream.h>
+#include <Poco/Exception.h>
+#include <Poco/Path.h>
+#include <Poco/SHA1Engine.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
 
 #include <atomic>
 #include <cassert>
@@ -23,54 +66,11 @@
 #include <ios>
 #include <memory>
 #include <sstream>
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
-#include <sysexits.h>
-
-#include <Poco/DigestStream.h>
-#include <Poco/Exception.h>
-#include <Poco/Path.h>
-#include <Poco/SHA1Engine.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/URI.h>
-
-#include "Authorization.hpp"
-#include "ClientSession.hpp"
-#include "Common.hpp"
-#include "Exceptions.hpp"
-#include "COOLWSD.hpp"
-#include "FileServer.hpp"
-#include "Socket.hpp"
-#include "Storage.hpp"
-#include "TileCache.hpp"
-#include "TraceEvent.hpp"
-#include "PresetsInstall.hpp"
-#include "ProxyProtocol.hpp"
-#include "Util.hpp"
-#include "QuarantineUtil.hpp"
-#include <common/ConfigUtil.hpp>
-#include <common/JailUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Log.hpp>
-#include <common/Message.hpp>
-#include <common/Clipboard.hpp>
-#include <common/Protocol.hpp>
-#include <common/Unit.hpp>
-#include <common/FileUtil.hpp>
-#include <common/Uri.hpp>
-#include <CommandControl.hpp>
-#include <wsd/CacheUtil.hpp>
-#include <wsd/Process.hpp>
-
-#if !MOBILEAPP
-#include "Admin.hpp"
-#include <wopi/CheckFileInfo.hpp>
-#include <wopi/StorageConnectionManager.hpp>
-#include <net/HttpHelper.hpp>
-#include <sys/wait.h>
-#endif
 #include <sys/types.h>
+#include <sysexits.h>
 
 using namespace COOLProtocol;
 
@@ -2091,7 +2091,7 @@ bool DocumentBroker::processPlugins(std::string& localPath)
 
     return true;
 }
-#endif //!MOBILEAPP
+#endif // !MOBILEAPP
 
 std::string DocumentBroker::handleRenameFileCommand(std::string sessionId,
                                                     std::string newFilename)
