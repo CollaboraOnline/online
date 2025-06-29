@@ -677,14 +677,14 @@ public:
             size);
     }
 
-    void setBody(const std::string& body, std::string contentType = "text/html;charset=utf-8")
+    void setBody(std::string body, std::string contentType = "text/html;charset=utf-8")
     {
         if (!body.empty()) // Type is only meaningful if there is a body.
             _header.setContentType(std::move(contentType));
 
         _header.add("Content-Length", std::to_string(body.size()));
 
-        auto iss = std::make_shared<std::istringstream>(body, std::ios::binary);
+        auto iss = std::make_shared<std::istringstream>(std::move(body), std::ios::binary);
 
         setBodySource(
             [ iss=std::move(iss) ](char* buf, int64_t len) -> int64_t
