@@ -41,7 +41,7 @@ RUN --mount=type=secret,id=secret_key \
 # Update repos before installing packages
     apt-get update && \
 # Install dependencies of installer of Collabora Online
-    apt-get -y install cpio tzdata libcap2-bin apt-transport-https gnupg2 ca-certificates curl && \
+    apt-get -y install cpio tzdata libcap2-bin apt-transport-https gnupg2 ca-certificates curl libnss-wrapper && \
 # Setup Collabora repo
     repourl="https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/"; \
     secret_key=$(cat /run/secrets/secret_key); \
@@ -122,6 +122,8 @@ RUN --mount=type=secret,id=secret_key \
     find /opt/cool -user cool -exec chown -h 1001:1001 {} \; && \
     usermod -u 1001 cool && groupmod -g 1001 cool && \
     chown cool:cool /etc/coolwsd/coolwsd.xml && \
+# Change permission so that other users and groups can read the config file
+    chmod 644 /etc/coolwsd/coolwsd.xml && \
 # Fix ownership of config directory that will be modified on start of the container by cool user
     chown cool:cool /etc/coolwsd && \
 # Remove perl-base, it's not needed and triggered some license scanner because of Paul Hsieh derivative license

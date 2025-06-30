@@ -26,5 +26,22 @@ cert_params="\
  --o:ssl.ca_file_path=/tmp/ssl/certs/ca/root.crt.pem"
 fi
 
+# OpenShift assign a random UID to container but Collabora Online expects
+# cool user do certain operation like spawning Forkit.
+# Build a tiny passwd file mapping this random assigned UID to "cool" if userId is not "1001"
+user_id=$(id -u)
+group_id=$(id -g)
+if [ "$user_id" -ne 1001 ]; then
+  echo "cool:x:${user_id}:${group_id}::/opt/cool:/usr/sbin/nologin" >/tmp/passwd
+
+  # Reuse the real /etc/group so group lookups still work
+  cp /etc/group /tmp/group
+
+  # Tell libc to use our files, via LD_PRELOAD
+  export NSS_WRAPPER_PASSWD=/tmp/passwd
+  export NSS_WRAPPER_GROUP=/tmp/group
+  export LD_PRELOAD=libnss_wrapper.so
+fi
+
 # Start coolwsd
 exec /usr/bin/coolwsd --version --use-env-vars ${cert_params} --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:cache_files.path=/opt/cool/cache --o:logging.color=false --o:stop_on_config_change=true ${extra_params} "$@"
