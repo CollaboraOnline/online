@@ -115,54 +115,6 @@ Then move all the headers into one place:
 	cp -a Net/include/Poco/* include/Poco
 	cp -a XML/include/Poco/* include/Poco
 
-Then apply this patch to get the proper names for the automatically
-imported static Poco libraries:
-
-```
---- Foundation/include/Poco/Foundation.h	2024-10-15 13:18:14.020114300 +0300
-+++ include/Poco/Foundation.h	2025-04-15 17:19:54.163644800 +0300
-@@ -29,11 +29,23 @@
- //
- // Ensure that POCO_DLL is default unless POCO_STATIC is defined
- //
-+
-+// TML: For some reason POCO_STATIC is not defined, even though I
-+// build statically, and also the POCO_LIB_SUFFIX seems to go wrong
-+// compared to what my build produces, so bypass this and just do what I want...
-+// I build it like this:
-+// powershell.exe -ExecutionPolicy Bypass -File buildwin.ps1 -action build -config both -linkmode static\_md -platform x64 -components Foundation,Util,JSON,Net,XML
-+
-+#define POCO_STATIC 1
-+#define POCO_LIB_SUFFIX "mdd.lib"
-+
-+#if 0
- #if defined(_WIN32) && defined(_DLL)
- 	#if !defined(POCO_DLL) && !defined(POCO_STATIC)
- 		#define POCO_DLL
- 	#endif
- #endif
-+#endif
- 
- 
- //
-@@ -66,6 +78,7 @@
- // Automatically link Foundation library.
- //
- #if defined(_MSC_VER)
-+	#if 0 // --tml
- 	#if defined(POCO_DLL)
- 		#if defined(_DEBUG)
- 			#define POCO_LIB_SUFFIX "d.lib"
-@@ -85,6 +98,7 @@
- 			#define POCO_LIB_SUFFIX "mt.lib"
- 		#endif
- 	#endif
-+	#endif // --tml
- 
- 	#if !defined(POCO_NO_AUTOMATIC_LIBS) && !defined(Foundation_EXPORTS)
- 		#pragma comment(lib, "PocoFoundation" POCO_LIB_SUFFIX)
-```
-
 ## Build CODA-W itself
 
 Clone the git@gitlab.collabora.com:productivity/libreoffice/online.git
