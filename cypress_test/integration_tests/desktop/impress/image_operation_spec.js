@@ -25,7 +25,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	});
 
 	it("Insert multimedia", function () {
-		//desktopHelper.switchUIToNotebookbar();
 		insertVideo();
 	});
 
@@ -56,7 +55,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
-		//desktopHelper.switchUIToNotebookbar();
 		insertImage();
 		//when Keep ratio is unchecked
 		helper.assertImageSize(438, 111);
