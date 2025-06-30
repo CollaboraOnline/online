@@ -607,7 +607,7 @@ AC_SUBST(ENABLE_EXOTIC_FILE_FORMATS)
 AC_SUBST(SERVER_SIGNATURE)
 
 dnl check for a file at a path with an env-var with a given suffix
-AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
+AC_DEFUN([CHK_FILE_VAR], dnl $1:env-var, $2:filename-to-match, $3:cleartext-name, $4:suffix
 [
    if test -n "$[$1][$4]" -o "z[$4]" = "z"; then
        if test -f "$[$1][$4]/[$2]"; then
