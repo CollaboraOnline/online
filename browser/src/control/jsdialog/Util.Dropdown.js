@@ -43,10 +43,12 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 	if (popupParent && !popupParent._onClose) {
 		popupParent._onClose = () => {
-			popupParent.setAttribute('aria-expanded', false);
+			popupParent.firstChild.setAttribute('aria-expanded', false);
+			popupParent.lastChild.setAttribute('aria-expanded', false);
 		};
 	}
-	popupParent.setAttribute('aria-expanded', true);
+	popupParent.firstChild.setAttribute('aria-expanded', true);
+	popupParent.lastChild.setAttribute('aria-expanded', true);
 
 	var isChecked = function (unoCommand) {
 		var items = L.Map.THIS['stateChangeHandler'];
@@ -168,6 +170,14 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	};
 	L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
 	L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
+
+	var dropDialog = L.Map.THIS.jsdialog.getDialog(dropdownWindowId);
+	if (dropDialog && dropDialog.container) {
+		var container = dropDialog.container.querySelector('#' + id + '-entries');
+		if (container) {
+			container.role = 'listbox';
+		}
+	}
 };
 
 JSDialog.CloseDropdown = function (id) {
