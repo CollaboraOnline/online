@@ -95,7 +95,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;ws2_32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
