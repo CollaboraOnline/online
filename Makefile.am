@@ -370,6 +370,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/ServerAuditUtil.hpp \
               wsd/ServerURL.hpp \
               wsd/SpecialBrokers.hpp \
+              wsd/SslConfig.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
