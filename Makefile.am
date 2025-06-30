@@ -459,6 +459,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/Common.hpp \
                  common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
+                 common/ClipboardData.hpp \
                  common/Crypto.hpp \
                  common/Globals.hpp \
                  common/HexUtil.hpp \
