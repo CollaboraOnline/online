@@ -1051,28 +1051,28 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					{
 						'type': 'toolbox',
 						'children': [
-								{
-									'id': 'home-search',
-									'class': 'unoSearch',
-									'type': 'customtoolitem',
-									'text': _('Search'),
-									'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' }
-								}
-							]
-						},
-						{
-							'type': 'toolbox',
-							'children': [
-								{
-									'id': 'home-search-dialog',
-									'type': 'toolitem',
-									'text': _('Replace'),
-									'command': '.uno:SearchDialog',
-									'accessibility': { focusBack: false, 	combination: 'FD',	de: null }
-								}
-							]
-						}
-					],
+							{
+								'id': 'home-search',
+								'class': 'unoSearch',
+								'type': 'customtoolitem',
+								'text': _('Search'),
+								'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'home-search-dialog',
+								'type': 'toolitem',
+								'text': _('Replace'),
+								'command': '.uno:SearchDialog',
+								'accessibility': { focusBack: false, 	combination: 'FD',	de: null }
+							}
+						]
+					}
+				],
 				'vertical': 'true'
 			},
 		];
