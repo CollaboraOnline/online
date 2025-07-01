@@ -61,23 +61,7 @@
 #include "CommandControl.hpp"
 #endif
 
-#if !MOBILEAPP
-
-#include <cerrno>
-#include <stdexcept>
-#include <unordered_map>
-
-#include "Admin.hpp"
-#include "Auth.hpp"
-#include "CacheUtil.hpp"
-#include "FileServer.hpp"
-#include "UserMessages.hpp"
-#include <wsd/PlatformUnix.hpp>
-#include <wsd/SslConfig.hpp>
-#include <wsd/RemoteConfig.hpp>
-#include <wsd/SpecialBrokers.hpp>
-
-#endif // !MOBILEAPP
+#include <wsd/PlatformDesktop.hpp>
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Exception.h>
@@ -104,11 +88,6 @@
 #include <wsd/Process.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
-
-#if !MOBILEAPP
-#include <common/JailUtil.hpp>
-#include <common/Watchdog.hpp>
-#endif
 
 #include <common/Log.hpp>
 #include <MobileApp.hpp>
