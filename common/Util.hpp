@@ -61,6 +61,13 @@ extern "C"
 #define THREAD_UNSAFE_DUMP_END
 #endif
 
+/// Format minutes with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::minutes& s)
+{
+    os << s.count() << "m";
+    return os;
+}
+
 /// Format seconds with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
 {
