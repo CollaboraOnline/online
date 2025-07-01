@@ -356,6 +356,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/HostUtil.hpp \
+              wsd/PlatformDesktop.hpp \
               wsd/PlatformMobile.hpp \
               wsd/PlatformUnix.hpp \
               wsd/PresetsInstall.hpp \

@@ -36,21 +36,13 @@
 #include <wsd/ClientSession.hpp>
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
+#include <wsd/PlatformDesktop.hpp>
 #include <wsd/PresetsInstall.hpp>
 #include <wsd/Process.hpp>
 #include <wsd/ProxyProtocol.hpp>
 #include <wsd/QuarantineUtil.hpp>
 #include <wsd/Storage.hpp>
 #include <wsd/TileCache.hpp>
-
-#if !MOBILEAPP
-#include <net/HttpHelper.hpp>
-#include <wopi/CheckFileInfo.hpp>
-#include <wopi/StorageConnectionManager.hpp>
-#include <wsd/Admin.hpp>
-
-#include <sys/wait.h> // waitpid()
-#endif // !MOBILEAPP
 
 #include <Poco/DigestStream.h>
 #include <Poco/Exception.h>
@@ -66,7 +58,6 @@
 #include <fstream>
 #include <ios>
 #include <memory>
-#include <sstream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
