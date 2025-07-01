@@ -1,4 +1,4 @@
-/* global describe it cy require Cypress expect */
+/* global describe it cy require expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -14,11 +14,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	function before(filePath) {
 		helper.setupAndLoadDocument(filePath);
 
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
-		} else {
-			desktopHelper.hideSidebar();
-		}
+		desktopHelper.hideSidebar();
 
 		cy.cGet('#menu-slide > a').click();
 		cy.cGet('#menu-fullscreen-presentation > a').click();

@@ -11,7 +11,7 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.showSidebarIfHidden();
+			desktopHelper.showSidebar();
 		}
 
 		writerHelper.selectAllTextOfDoc();

@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.showSidebarIfHidden();
+			desktopHelper.showSidebar();
 		}
 
 		writerHelper.selectAllTextOfDoc();

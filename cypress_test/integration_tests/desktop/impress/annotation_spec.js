@@ -14,7 +14,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 
 		cy.cGet('#options-modify-page').click();
@@ -92,7 +92,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 
 		// TODO: skip sidebar detection on reload
@@ -227,7 +227,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 
 		// TODO: skip sidebar detection on reload
 		// if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			// desktopHelper.hideSidebarIfVisible();
+			// desktopHelper.hideSidebar();
 		// }
 		// cy.cGet('#options-modify-page').click();
 

@@ -12,7 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('#toolbar-up .ui-scroll-right').click().click().click().click();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		} else {
 			desktopHelper.hideSidebarImpress();
 		}
