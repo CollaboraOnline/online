@@ -13,7 +13,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 		cy.cSetActiveFrame('#iframe1');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
@@ -21,7 +21,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 		cy.cSetActiveFrame('#iframe2');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
@@ -95,7 +95,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 
 		cy.cSetActiveFrame('#iframe1');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
@@ -103,7 +103,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 
 		cy.cSetActiveFrame('#iframe2');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
@@ -180,7 +180,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 		cy.cSetActiveFrame('#iframe1');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
@@ -188,7 +188,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 		cy.cSetActiveFrame('#iframe2');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
+			desktopHelper.hideSidebar();
 		}
 		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();

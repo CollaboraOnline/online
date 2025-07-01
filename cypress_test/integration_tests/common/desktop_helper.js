@@ -12,7 +12,7 @@ function showSidebar() {
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 	cy.cGet('#sidebar').click();
 	cy.cGet('#sidebar').should('have.class', 'selected');
-	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 
 	cy.log('<< showSidebar - end');
 }
@@ -23,7 +23,7 @@ function hideSidebar() {
 	cy.log('>> hideSidebar - start');
 
 	cy.cGet('#sidebar').should('have.class', 'selected');
-	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 	cy.cGet('#sidebar').click();
 	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
@@ -35,7 +35,7 @@ function hideSidebarImpress() {
 	cy.log('>> hideSidebarImpress - start');
 
 	cy.cGet('#modifypage').should('have.class', 'selected');
-	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 	cy.cGet('#modifypage button').click('left');
 	cy.cGet('#modifypage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
@@ -62,40 +62,6 @@ function showStatusBarIfHidden() {
 	cy.cGet('#toolbar-down').should('be.visible');
 
 	cy.log('<< showStatusBarIfHidden - end');
-}
-
-// Make the sidebar visible if it's hidden at the moment.
-function showSidebarIfHidden() {
-	cy.log('>> showSidebarIfHidden - start');
-
-	cy.get('#sidebar')
-		.then(function(sidebarItem) {
-			if (!sidebarItem.hasClass('checked')) {
-				showSidebar();
-			}
-		});
-
-	cy.get('#sidebar-dock-wrapper')
-		.should('be.visible');
-
-	cy.log('<< showSidebarIfHidden - end');
-}
-
-// Hide the sidebar if it's visible at the moment.
-function hideSidebarIfVisible() {
-	cy.log('>> hideSidebarIfVisible - start');
-
-	cy.get('#sidebar')
-		.then(function(sidebarItem) {
-			if (sidebarItem.hasClass('checked')) {
-				hideSidebar();
-			}
-		});
-
-	cy.get('#sidebar-dock-wrapper')
-		.should('not.be.visible');
-
-	cy.log('<< hideSidebarIfVisible - end');
 }
 
 // Select a color from colour palette widget used on top toolbar.
@@ -562,8 +528,6 @@ module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
-module.exports.showSidebarIfHidden = showSidebarIfHidden;
-module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;
