@@ -493,8 +493,7 @@ app.definitions.Socket = L.Class.extend({
 	// buffer of web-socket messages in the client that we can't
 	// process so - slurp and then emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
-		if (!this._extractTextImg(e))
-			return;
+		this._extractTextImg(e);
 
 		// Some messages - we want to process & filter early.
 		var docLayer = this._map ? this._map._docLayer : undefined;
@@ -554,8 +553,6 @@ app.definitions.Socket = L.Class.extend({
 		return img;
 	},
 
-	// When this function returns true, the event will  added to the slurp queue
-	// Some events bypass slurp queue by returning false to process the image rendering faster
 	_extractTextImg: function (e) {
 
 		if ((window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) && typeof (e.data) === 'string') {
@@ -618,10 +615,9 @@ app.definitions.Socket = L.Class.extend({
 			return true;
 		}
 
-		if (isSlideLayer) {
-			SlideBitmapManager.handleRenderSlideEvent(e);
-			return false;
-		} else if (isRenderComplete)
+		if (isSlideLayer)
+			return true;
+		else if (isRenderComplete)
 			return true;
 
 		// window.app.console.log('PNG preview');
@@ -1312,6 +1308,9 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('reload')) {
 			// Switching modes.
 			window.location.reload(false);
+		} else if (textMsg.startsWith('slidelayer:')) {
+			SlideBitmapManager.handleRenderSlideEvent(e);
+			return;
 		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
 			SlideBitmapManager.handleSlideRenderingComplete(e);
 			return;
