@@ -1613,8 +1613,10 @@ button.menubutton.sidebar > span {
 	height: 16px;
 }
 
-.ui-color-picker-entry:hover {
-	border: 1px solid var(--color-primary);
+.ui-color-picker-entry:hover,
+.ui-color-picker-entry:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 1px;
 }
 
 #ui-color-picker-custom,
