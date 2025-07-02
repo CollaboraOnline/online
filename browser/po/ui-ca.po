@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-02 08:48+0000\n"
+"PO-Revision-Date: 2025-06-28 13:06+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -375,11 +375,11 @@ msgstr "Accessibilitat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "El fitxer JSON no és vàlid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "S'ha produït un error en llegir el fitxer"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -393,10 +393,9 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Carrega text automàtic"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
-#, fuzzy
 msgid "Custom dictionaries"
 msgstr "Diccionaris personalitzats"
 
@@ -420,7 +419,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Carrega una configuració"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #, fuzzy
@@ -434,13 +433,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Carrega un XCU"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"El fitxer de paràmetres de la interfície no és JSON vàlid. Comproveu-lo i "
+"torneu-ho a intentar."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
@@ -452,13 +453,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Alguna cosa ha anat malament. Proveu d'actualitzar la pàgina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"S'ha produït un error en recuperar el fitxer de paràmetres. Proveu "
+"d'actualitzar la pàgina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
@@ -469,16 +472,18 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"S'ha produït un error en pujar el fitxer. Proveu d'actualitzar la pàgina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"S'ha produït un error en suprimir el fitxer. Proveu d'actualitzar la pàgina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Paràmetres de la visualització"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
@@ -502,7 +507,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Desa els paràmetres de la visualització"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -1000,7 +1005,7 @@ msgstr "Azerbaidjan"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bòsnia i Hercegovina"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
@@ -1016,7 +1021,7 @@ msgstr "Brasil"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr ""
+msgstr "Belarús"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
@@ -1200,11 +1205,11 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:186
 msgid "Romania"
-msgstr ""
+msgstr "Romania"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Serbia"
-msgstr ""
+msgstr "Sèrbia"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
@@ -1244,7 +1249,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ucraïna"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
@@ -1425,7 +1430,7 @@ msgstr "Llengua"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "No s'ha trobat cap resultat de cerca."
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -2312,7 +2317,7 @@ msgstr "Dolent"
 #: src/control/Control.NotebookbarImpress.js:1055
 #: src/control/Control.NotebookbarWriter.js:947
 msgid "Replace"
-msgstr ""
+msgstr "Reemplaça"
 
 #: src/control/Control.NotebookbarCalc.js:948
 msgid "Row Height"
@@ -2485,7 +2490,7 @@ msgstr "previsualització de la pàgina "
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Diapositiva %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -2497,7 +2502,7 @@ msgstr "Enganxa"
 
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
-msgstr ""
+msgstr "S'està desant"
 
 #: src/control/Control.SaveState.ts:53
 #, fuzzy
@@ -3468,7 +3473,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "L'error d'autorització és: «{errormessage}»."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -3789,7 +3794,7 @@ msgstr "Desat per darrer cop:"
 
 #: src/map/Map.js:1482
 msgid "Please wait!"
-msgstr ""
+msgstr "Espereu"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
@@ -3852,7 +3857,7 @@ msgstr "Presentar en finestra"
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:535
 msgid "Close Presentation"
-msgstr ""
+msgstr "Tanca la presentació"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
@@ -3917,7 +3922,7 @@ msgstr "Diapositiva següent"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
@@ -3933,11 +3938,11 @@ msgstr "Torna enrere"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Apropa"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Allunya"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"

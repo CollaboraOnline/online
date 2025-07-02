@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-02 08:48+0000\n"
+"PO-Revision-Date: 2025-06-26 11:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -374,11 +374,11 @@ msgstr "Accesibilidad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Archivo JSON no válido"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Error al leer el archivo"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -443,6 +443,8 @@ msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"El archivo de configuración de la interfaz no es JSON válido. Compruébelo y "
+"vuelva a intentarlo."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
@@ -485,11 +487,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Configuración de vista"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Ajuste las configuraciones de la vista."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
@@ -497,21 +499,19 @@ msgstr "Opción"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Atención: se debe activar antes la accesibilidad del servidor)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Restablecer configuración predeterminada del documento"
+msgstr "Restablecer configuración predeterminada de vista"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "¿Confirma que quiere restablecer la configuración del documento?"
+msgstr "¿Confirma que quiere restablecer la configuración de la vista?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Guardar configuración de vista"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691

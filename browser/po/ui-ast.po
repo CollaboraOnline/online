@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-02 08:48+0000\n"
+"PO-Revision-Date: 2025-06-28 13:06+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -946,7 +946,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
@@ -954,11 +954,11 @@ msgstr "Emiratos Árabes Xuníos"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Argentina"
@@ -978,7 +978,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaixán"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
@@ -1002,7 +1002,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
-msgstr ""
+msgstr "Canadá"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Switzerland"
@@ -1166,7 +1166,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:182
 msgid "Philippines"
-msgstr ""
+msgstr "Filipines"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Poland"
@@ -1226,7 +1226,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ucraína"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
@@ -1242,7 +1242,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Sudáfrica"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
@@ -1405,7 +1405,7 @@ msgstr "Llingua"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Nun s'alcontró nengún resultáu."
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -3418,7 +3418,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "L'error d'autorización ye: «{errormessage}»."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -3838,7 +3838,7 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Reaniciar"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
