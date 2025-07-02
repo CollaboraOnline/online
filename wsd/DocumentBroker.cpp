@@ -61,15 +61,9 @@
 #include <common/Uri.hpp>
 #include <CommandControl.hpp>
 #include <wsd/CacheUtil.hpp>
+#include <wsd/PlatformDesktop.hpp>
 #include <wsd/Process.hpp>
 
-#if !MOBILEAPP
-#include "Admin.hpp"
-#include <wopi/CheckFileInfo.hpp>
-#include <wopi/StorageConnectionManager.hpp>
-#include <net/HttpHelper.hpp>
-#include <sys/wait.h>
-#endif
 #include <sys/types.h>
 
 using namespace COOLProtocol;
