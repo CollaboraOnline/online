@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2024-11-25 04:00+0000\n"
-"Last-Translator: meshari alnaim <malnaim@safedecision.com.sa>\n"
+"PO-Revision-Date: 2025-06-28 13:06+0000\n"
+"Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -369,82 +369,87 @@ msgstr "أمتأكد من إطفاء الخادوم؟"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "إمكانية الوصول"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "ملف JSON غير صالح"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "خطأ في قراءة الملف"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
-msgstr ""
+msgstr "نص تلقائي"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"تحميل مقتطفات نصية متكررة الاستخدام (.bau). لإدخال النص في مستندك، أكتُب "
+"اختصار إدخالية النص التلقائي ثم اضغَط على F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr ""
+msgstr "رفع النص التلقائي"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "قواميس مخصصة"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"أضِف أو عدِّل كلمات في قاموس التدقيق الإملائي. الكلمات المدرجة في الملف (.dic) "
+"ستكون متاحة للتدقيق اللغوي."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "رفع ملف الكلمات للتدقيق اللغوي"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
-msgstr ""
+msgstr "واجهة"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "أنظُر تفضيلات الواجهة التلقائية."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr ""
+msgstr "رفع التهيئة"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
-msgstr ""
+msgstr "إعدادات المستند"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "تضبيط كيفية تصرف المستندات المكتبية."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr ""
+msgstr "رفع Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"ملف إعدادات الواجهة ليس ملف JSON صالح. رجاءً، إفحص الملف وحاول مرة أخرى."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "عنوان URL للتهيئة المشتركة ناقص في المتغيرات المبدئية."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "أَمَارَات الوصول ناقصة في المتغيرات المبدئية."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
