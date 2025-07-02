@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-05-28 20:18+0000\n"
-"Last-Translator: Kieli Puoli <kielipuoli@gmail.com>\n"
+"PO-Revision-Date: 2025-07-01 10:01+0000\n"
+"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fi/>\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -371,11 +371,11 @@ msgstr "Esteettömyys"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Epäkelvollinen JSON-tiedosto"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Virhe tiedostoa luettaessa"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -386,117 +386,124 @@ msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Lataa ulospäin uudelleenkäytettäviä tekstikatkelmia (.bau). Lisätäksesi "
+"tekstiä asiakirjaan, kirjoita AutoTextin merkinnän pikakuvake ja paina F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Lataa ulospäin AutoText"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Mukautetut sanakirjat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Lisää tai muokkaa sanoja oikolukusanakirjassa. Sanakirjasi (.dic) sanat ovat "
+"käytettävissä oikoluvussa."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Lataa ulospäin Sanojen kirja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
-msgstr ""
+msgstr "Käyttöliittymä"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Aseta käyttöliittymän oletusasetukset."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Lataa ulospäin kokoonpano"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
-msgstr ""
+msgstr "Asiakirja-asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Säädä toimistoasiakirjojen toimintaa."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Lataa ulospäin Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"Käyttöliittymän asetustiedosto ei ole kelvollinen JSON-tiedosto. Tarkista "
+"tiedosto ja yritä uudelleen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Jaetun määrityksen URL-osoite puuttuu alkumuuttujista."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Pääsypoletti puuttuu alkumuuttujista."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Jotain meni pieleen. Yritä virkistää sivu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Asetustiedoston noutamisessa tapahtui virhe. Yritä virkistää sivu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Sanojen kirjan noutamisessa tapahtui virhe. Yritä virkistää sivu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Tiedoston ulospäinlataamisessa tapahtui virhe. Yritä uudelleen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Jotain meni pieleen tiedostoa poistettaessa. Yritä virkistää sivu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Näytä asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Säädä näkymän asetuksia."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
-msgstr ""
+msgstr "Vaihtoehto"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Varoitus: Palvelimen esteettömyys on oltava käytössä, jotta voidaan vaihtaa)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Palauta oletusnäkymän asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Oletko varma, että haluat nollata näkymän asetukset?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Tallenna näkymän asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -505,63 +512,63 @@ msgstr "Virhe"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Vakiosanakirja"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Oikoluku jättää sanat huomiotta"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Poikkeusten sanakirja"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Poikkeussanat on alleviivattu oikoluvussa"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Sanojen kirjaa ladataan..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Kirjoita lisätäksesi sanan"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Lisää"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Epäkelvollinen sanakirjan muoto. Tarkista tiedosto."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Jotain meni pieleen ladattaessa ulospäin sanakirjatiedostoa"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Jotain meni pieleen ladattaessa asiakirja-asetuksia."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Asiakirja-asetukset"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Valitse välilehti asetusten tarkastelemiseksi."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Palauta oletusasiakirja-asetukset"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Oletko varma, että haluat nollata asiakirja-asetukset?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Tallenna asiakirja-asetukset"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -725,13 +732,12 @@ msgid "Autosaved"
 msgstr "Automaattisesti tallennettu"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Muokkaa asiakirjaa"
+msgstr "Muokkaa kommenttia"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Vastaa kommenttiin"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -752,9 +758,8 @@ msgid "Resolved"
 msgstr "Ratkaistu"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:448
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Asiakirja sisältää videota, jota ei tueta"
+msgstr "Asiakirja sisältää tukemattoman median"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -786,7 +791,7 @@ msgstr "\"Hidas välityspalvelin\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Aikavyöhyke:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1071,7 +1076,7 @@ msgstr "Georgia"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
@@ -1276,7 +1281,7 @@ msgstr "Lisää sähköinen allekirjoitus"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Laajenna kaavapalkki"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1284,7 +1289,7 @@ msgstr "Funktioapuri"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Valitse funktio"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1299,7 +1304,7 @@ msgstr "Hyväksy"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Kutista kaavapalkki"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1418,7 +1423,7 @@ msgstr "Kieli"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Hakutuloksia ei löytynyt!"
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -1910,7 +1915,7 @@ msgstr "Kaikki taulukot"
 #: src/control/Control.Menubar.ts:851
 #: src/control/Control.NotebookbarCalc.js:1187
 msgid "Focus Cell"
-msgstr ""
+msgstr "Tarkennussolu"
 
 #: src/control/Control.Menubar.ts:945
 #: src/control/jsdialog/Definitions.Menu.ts:310
@@ -2084,11 +2089,11 @@ msgstr "Liukuvärin loppu"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Navigointi"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Sulje Navigointi"
 
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
@@ -2097,11 +2102,11 @@ msgstr "Diat"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
-msgstr ""
+msgstr "Ääriviivat"
 
 #: src/control/Control.NavigatorPanel.ts:158
 msgid "Navigator"
-msgstr ""
+msgstr "Navigaattori"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2154,7 +2159,7 @@ msgstr "Home"
 #: src/control/Control.NotebookbarImpress.js:103
 #: src/control/Control.NotebookbarWriter.js:50
 msgid "Insert"
-msgstr "Lisää"
+msgstr "Sisällytä"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:76
@@ -2420,7 +2425,7 @@ msgstr "Sivuasetttelu"
 
 #: src/control/Control.NotebookbarImpress.js:141
 msgid "Master"
-msgstr ""
+msgstr "Mestari"
 
 #: src/control/Control.NotebookbarImpress.js:377
 #: src/control/Control.NotebookbarImpress.js:1029
@@ -2476,13 +2481,12 @@ msgid "Picture"
 msgstr "Kuva"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "Esikatselu sivusta "
+msgstr "sivun %1 esikatselu"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Dia %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3116,11 +3120,11 @@ msgstr "Hyvin väljä"
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "All users"
-msgstr ""
+msgstr "Kaikki käyttäjät"
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "This user"
-msgstr ""
+msgstr "Tämä käyttäjä"
 
 #: src/control/jsdialog/Definitions.Menu.ts:436
 msgid "From Beginning"
@@ -3137,7 +3141,7 @@ msgstr "Hylkää"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Tuntematon väri"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
@@ -3211,13 +3215,12 @@ msgid "Cell borders"
 msgstr "Solun reunat"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Lisää vaihtoehtoja {name}:lle"
+msgstr "Lisää vaihtoehtoja {1}:lle"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Asiakirjaan lisäämäsi otsikot ja objektit näkyvät tässä"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -3768,6 +3771,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Verkkoselaimellasi on rajoitettu pääsy leikepöydälle, joten käytä sen sijaan "
+"näyttönäppäimistön liitämispainikkeita."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3964,7 +3969,7 @@ msgstr "Loitonna"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Esikatsele diaa {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"

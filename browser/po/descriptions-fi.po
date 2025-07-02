@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-02-03 16:50+0000\n"
+"PO-Revision-Date: 2025-07-01 10:01+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fi/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -101,6 +101,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"Collabora Office Androidille käyttää samaa moottoria kuin LibreOffice "
+"Linuxille, Macille ja Windowsille. Tämä yhdistettynä uuteen Collabora "
+"Onlineen perustuvaan käyttöliittymään lukee ja tallentaa asiakirjoja samalla "
+"tavalla kuin LibreOffice-työpöytäversio."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
