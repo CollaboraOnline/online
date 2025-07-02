@@ -590,6 +590,38 @@ button.leaflet-control-search-next
 	margin: 0px;
 }
 
+/* slide layouts submenu */
+#slidelayoutmenu-grid {
+	display: grid;
+	grid-template-columns: repeat(4, auto);
+}
+
+#slidelayoutmenu-grid button:not(#iconsetoverlay) {
+	box-sizing: border-box;
+	position: relative;
+	padding: 3px;
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
+	margin: 3px;
+	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
+	min-width: initial;
+}
+
+#slidelayoutmenu-grid button:hover {
+	border: 1px solid var(--color-border-darker);
+	background-color: var(--color-background-darker) !important;
+}
+
+#slidelayoutmenu-grid #iconsetoverlay {
+	grid-column: 1/4;
+	width: 100%;
+	margin: 0px;
+}
+
+#home-assign-layout {
+	width: fit-content;
+}
+
 .w2ui-toolbar table.w2ui-button {
 	background-color: transparent;
 	border: 1px solid transparent;
@@ -951,6 +983,118 @@ button.leaflet-control-search-next
 	background-size: 32px 32px !important;
 	width: 32px !important;
 	height: 32px !important; }
+
+.w2ui-icon.slidelayout00 {
+	background: url('images/layout_empty.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout01 {
+	background: url('images/layout_head03.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout02 {
+	background: url('images/layout_head02.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout03 {
+	background: url('images/layout_head02a.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout04 {
+	background: url('images/layout_head01.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout05 {
+	background: url('images/layout_textonly.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout06 {
+	background: url('images/layout_head03b.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout07 {
+	background: url('images/layout_head03c.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout08 {
+	background: url('images/layout_head03a.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout09 {
+	background: url('images/layout_head02b.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout10 {
+	background: url('images/layout_head04.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout11 {
+	background: url('images/layout_head06.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout12 {
+	background: url('images/layout_vertical02.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout13 {
+	background: url('images/layout_vertical01.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout14 {
+	background: url('images/layout_head02.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
+
+.w2ui-icon.slidelayout15 {
+	background: url('images/layout_head02a.svg') no-repeat;
+	background-size: 64px 64px !important;
+	width: 64px !important;
+	height: 64px !important;
+}
 
 .w2ui-icon.print { background: url('images/lc_print.svg') no-repeat center; }
 .w2ui-icon.undo { background: url('images/lc_undo.svg') no-repeat center; }

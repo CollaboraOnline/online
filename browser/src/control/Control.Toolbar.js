@@ -210,6 +210,44 @@ function getConditionalFormatMenuElementsImpl(more, type, count, unoCommand, jsd
 	return table;
 }
 
+function sendUnoCommandWithSlideLayoutParam(num, unoCommand, jsdialogDropdown) {
+	var params = {
+		WhatLayout: {
+			type: 'long',
+			value: num,
+		}
+	};
+	map.sendUnoCommand(unoCommand, params);
+
+	if (jsdialogDropdown)
+		JSDialog.CloseAllDropdowns();
+	else
+		closePopup();
+}
+
+
+function getSlideLayoutPopup(type, unoCommand, jsdialogDropdown) {
+	const table = document.createElement('table');
+	table.id = 'slidelayoutmenu-grid';
+
+	// please see enum AutoLayout in autolayout.hxx. this is the actual WhatLayout sequence
+	// based on the visual position of the icons in the popup.
+	const buttonIndexToLayout = [20, 0, 1, 3, 19, 32, 15, 12, 16, 14, 18, 34, 27, 28, 29, 30,];
+
+	for (let i = 0; i < 16; i += 4) {
+		for (let j = i; j < i + 4; j++) {
+			const iconClass = type + (j < 10 ? '0' : '') + j;
+			const button = document.createElement('button');
+			button.className = 'w2ui-icon ' + iconClass;
+			button.onclick = function() {
+				sendUnoCommandWithSlideLayoutParam(buttonIndexToLayout[j], unoCommand, jsdialogDropdown);
+			}
+			table.append(button);
+		}
+	}
+	return table;
+}
+
 // for icon set conditional formatting
 function getConditionalFormatMenuElements(more, jsdialogDropdown) {
 	return getConditionalFormatMenuElementsImpl(more, 'iconset', 21, '.uno:IconSetFormatDialog', jsdialogDropdown);
@@ -230,6 +268,12 @@ function getConditionalDataBarMenuElements(more, jsdialogDropdown) {
 }
 
 global.getConditionalDataBarMenuElements = getConditionalDataBarMenuElements;
+
+function getSlideLayoutPopupElements(type, command, jsdialogDropdown) {
+	return getSlideLayoutPopup(type, command, jsdialogDropdown);
+}
+
+global.getSlideLayoutPopupElements = getSlideLayoutPopupElements;
 
 var sendInsertTableFunction = function(event) {
 	var col = $(event.target).index() + 1;

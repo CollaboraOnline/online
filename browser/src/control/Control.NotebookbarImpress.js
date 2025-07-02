@@ -628,15 +628,32 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'home-slidefunctions-break', orientation: 'vertical' },
 			{
+				'id': 'home-create-slide:NewSlideLayoutMenu',
+				'type': 'menubutton',
+				'text': 'New',
+				'command': '.uno:InsertPage',
+				'accessibility': { focusBack: true, combination: 'CS', de: null }
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
+						'id': 'home-change-layout:ChangeSlideLayoutMenu',
+						'type': 'menubutton',
+						'noLabel': true,
+						'text': 'Change Layout',
+						'icon': 'lc_changelayout.svg',
+						'command': '.uno:AssignLayout',
+						'accessibility': { focusBack: true, combination: 'CL', de: null }
+					},
+					{
 						'id': 'home-assign-layout',
-						'type': 'toolitem',
+						'noLabel': true,
 						'text': 'Reset Layout',
+						'type': 'toolitem',
 						'command': '.uno:AssignLayout',
 						'accessibility': { focusBack: true, combination: 'RS', de: null }
-					},
+					}
 				],
 				'vertical': 'true'
 			},

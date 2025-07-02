@@ -211,6 +211,18 @@ var getElementsFromId = function (
 			'iconsetoverlay',
 			true,
 		);
+	else if (id === 'newslidelayoutpopup')
+		return (window as any).getSlideLayoutPopupElements(
+			'slidelayout',
+			'.uno:InsertPage',
+			true,
+		);
+	else if (id === 'changeslidelayoutpopup')
+		return (window as any).getSlideLayoutPopupElements(
+			'slidelayout',
+			'.uno:AssignLayout',
+			true,
+		);
 	else if (id === 'inserttablepopup')
 		return (window as any).getInsertTablePopupElements(closeCallback);
 	else if (id === 'borderstylepopup')
