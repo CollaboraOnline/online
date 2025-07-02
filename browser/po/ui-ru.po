@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-05-20 14:25+0000\n"
+"PO-Revision-Date: 2025-07-02 04:05+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -373,15 +373,15 @@ msgstr "Вы уверены, что хотите остановить серве
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Средства доступности"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Некорректный файл JSON"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Ошибка при чтении файла"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -445,6 +445,8 @@ msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"Файл настроек интерфейса не является корректным JSON. Проверьте файл и "
+"попробуйте ещё раз."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
@@ -484,33 +486,33 @@ msgstr "Что-то пошло не так при удалении файла. �
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Настройки вида"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Настроить вид."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
-msgstr ""
+msgstr "Опция"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Внимание: чтобы переключить, средства доступности сервера должны быть "
+"активны)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "Сбросить к настройкам документа по умолчанию"
+msgstr "Сбросить к настройкам вида по умолчанию"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Вы уверены, что хотите сбросить настройки документа?"
+msgstr "Вы уверены, что хотите сбросить настройки вида?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Сохранить настройки вида"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -741,13 +743,12 @@ msgid "Autosaved"
 msgstr "Автоматически сохранён"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Редактировать документ"
+msgstr "Редактировать комментарий"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Ответить на комментарий"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -801,7 +802,7 @@ msgstr "\"Медленный прокси\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Часовой пояс:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
