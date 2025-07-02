@@ -442,4 +442,14 @@ menuDefinitions.set('Presentation', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('NewSlideLayoutMenu', [
+	{ htmlId: 'newslidelayoutpopup', type: 'html' },
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('ChangeSlideLayoutMenu', [
+	{ htmlId: 'changeslidelayoutpopup', type: 'html' },
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
