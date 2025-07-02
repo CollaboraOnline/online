@@ -584,13 +584,11 @@ bool ClientSession::handleSignatureAction(const StringVector& tokens)
     std::string secret;
     JsonUtil::findJSONValue(serverPrivateInfoObject, "ESignatureSecret", secret);
     requestBodyObject->set("secret", secret);
-    std::string requestBody;
     std::stringstream oss;
     requestBodyObject->stringify(oss);
-    requestBody = oss.str();
     http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
     httpRequest.setVerb(http::Request::VERB_POST);
-    httpRequest.setBody(requestBody, "application/json");
+    httpRequest.setBody(oss.str(), "application/json");
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     httpSession->asyncRequest(httpRequest, docBroker->getPoll());
     return true;
