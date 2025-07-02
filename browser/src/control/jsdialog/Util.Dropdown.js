@@ -64,7 +64,15 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 		var entry;
 
+		if (entries[i].type === 'json') {
+			// replace old grid with new widget
+			json.children[0] = entries[i].content;
+			if (json.children[0].type === 'grid') json.gridKeyboardNavigation = true;
+			break;
+		}
+
 		switch (entries[i].type) {
+			// DEPRECACTED: legacy plain HTML adapter
 			case 'html':
 				entry = {
 					id: id + '-entry-' + i,
@@ -75,12 +83,14 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				json.gridKeyboardNavigation = true;
 			break;
 
+			// dropdown is a colorpicker
 			case 'colorpicker':
 				entry = entries[i];
 				// for color picker we have a "KeyboardGridNavigation" function defined separately to handle custom cases
 				json.gridKeyboardNavigation = true;
 			break;
 
+			// menu and submenu entry
 			case 'action':
 			case 'menu':
 			default:
@@ -100,6 +110,13 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				};
 			break;
 
+			// allows to put regular JSDialog JSON into popup
+			case 'json':
+				entry = entries[i].content;
+				json.gridKeyboardNavigation = true;
+			break;
+
+			// horizontal separator in menu
 			case 'separator':
 				entry = {
 					id: id + '-entry-' + i,
@@ -164,6 +181,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 			if (eventType === 'selected')
 				JSDialog.CloseDropdown(id);
+			else
+				console.debug('Dropdown: unhandled action: "' + eventType + '"');
 		};
 	};
 	L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
