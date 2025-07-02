@@ -192,15 +192,17 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	if (data.aria) {
 		content.setAttribute('aria-label',data.aria.label);
 	}
+
+	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
 	content.setAttribute('aria-haspopup', true);
 	content.setAttribute('aria-expanded', false);
-	content.setAttribute('aria-controls', data.id + '-entries');
+	content.setAttribute('aria-controls', dropDownId);
 
 	var button = L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.tabIndex = '0';
 	button.setAttribute('aria-haspopup', true);
 	button.setAttribute('aria-expanded', false);
-	button.setAttribute('aria-controls', data.id + '-entries');
+	button.setAttribute('aria-controls', dropDownId);
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
