@@ -176,7 +176,7 @@ private:
     /// scratch dir that POSTs are streamed to
     std::unique_ptr<FileUtil::OwnedFile> _postFileDir;
     std::fstream _postStream;
-    std::streamsize _postContentPending;
+    std::streamsize _postContentPending = 0;
 
     /// The minimum number of RVS instances in flight to trigger cleanup.
     static constexpr std::size_t RvsLowWatermark = 1 * 1024;
