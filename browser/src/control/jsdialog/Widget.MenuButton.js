@@ -95,6 +95,11 @@ function _menubuttonControl (parentContainer, data, builder) {
 					builder.callback('menubutton', 'select', control.container, entry.id, builder);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
+				} else if (!entry){
+					// custom popup - execute generic action
+					builder.callback(objectType, eventType, object, data, builder);
+					JSDialog.CloseDropdown(dropdownId);
+					return true;
 				}
 
 				return false;
