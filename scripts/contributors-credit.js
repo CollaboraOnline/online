@@ -22,7 +22,7 @@ tags = [
     "make",
 ]
 images = [
-    "debug-code.jpg",
+    "beaver/contributors-copyrighted.png",
 ]
 showimage = false
 showtitle = true
