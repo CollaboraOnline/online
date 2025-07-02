@@ -1187,6 +1187,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-template-columns: 1fr 1fr 1fr;
 	max-height: 40vh;
 	gap: 2px;
+	padding: 2px;
 }
 
 .ui-iconview.mobile-wizard {
