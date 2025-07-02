@@ -1035,13 +1035,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-insert-slide',
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertSlide', 'presentation'),
-								'command': '.uno:InsertPage',
-								'accessibility': { focusBack: true, combination: 'IP', de: null }
-							},
-							{
 								'id': 'home-duplicate-slide',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DuplicateSlide', 'presentation'),
