@@ -95,23 +95,6 @@ button.jsdialog img {
 	flex-wrap: wrap;
 }
 
-:not(.main-nav) .button-secondary,
-:not(.main-nav) .button-secondary:not(.arrowbackground),
-:not(.main-nav) > div > button:not(.ui-tab):not(.ui-expander):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground) {
-	box-sizing: border-box;
-	height: 32px;
-	line-height: normal;
-	color: var(--color-main-text);
-	font-size: var(--default-font-size);
-	min-width: 62px;
-	background-color: var(--color-background-dark);
-	border: 1px solid var(--color-btn-border);
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-	margin: 5px;
-	vertical-align: middle;
-	width: max-content;
-}
 
 .button-primary {
 	height: 32px;

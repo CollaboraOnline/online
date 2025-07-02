@@ -290,10 +290,6 @@
 	background-color: var(--color-background-lighter);
 }
 
-.main-nav:not(.hasnotebookbar) #document-name-input.editable {
-	font-size: var(--default-font-size) !important;
-	padding-bottom: 2px;
-}
 
 #document-name-input.editable:focus {
 	border: none;
@@ -332,17 +328,6 @@
 	margin-inline-end: 5px;
 }
 
-.main-nav.hasnotebookbar #closebuttonwrapperseparator {
-	background: var(--color-background-darker);
-	width: 1px;
-	height: 14px;
-	/* same margin as sidebar buttons' padding */
-	margin-inline: 4px;
-}
-
-.main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper {
-	height: 38px;
-}
 
 #closebutton {
 	width: 100%;
@@ -354,9 +339,6 @@
 	filter: invert(1);
 }
 
-.main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper #closebutton {
-	background: url('images/closedoc.svg') no-repeat center/35px !important;
-}
 
 #closebutton:hover {
 	background-color: var(--color-background-darker) !important;
