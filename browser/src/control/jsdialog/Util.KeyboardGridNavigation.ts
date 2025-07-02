@@ -126,7 +126,7 @@ function moveFocus(
 
 function getRowColumn(element: HTMLElement): [number, number] {
 	const index = element.getAttribute('index');
-	if (!index) return [-1, -1]; // we will never have this kind of index this is why we are pssing nagative values here
+	if (!index) return [-1, -1]; // we will never have this kind of index this is why we are passing negative values here
 	const [row, column] = index.split(':').map(Number);
 	return [row, column];
 }
