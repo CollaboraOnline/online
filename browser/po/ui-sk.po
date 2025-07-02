@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"PO-Revision-Date: 2025-06-26 11:01+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sk/>\n"
-"Language: \n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -368,74 +368,80 @@ msgstr "Naozaj chcete vypnúť tento server?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Prístupnosť"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Neplatný súbor JSON"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Chyba čítania súboru"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
-msgstr ""
+msgstr "Automatický text"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Nahrať opakovane použiteľné textové výstrižky (.bau). Ak chcete takýto "
+"výstrižok vložiť do dokumentu, zadajte jeho skratku a stlačte F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Nahrať Automatický text"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Vlastné slovníky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Pridať alebo upraviť slová v slovníku pre kontrolu pravopisu. Slová vo vašom "
+"slovníku (.dic) budú k dispozícii pre kontrolu pravopisu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Nahrať Wordbook"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
-msgstr ""
+msgstr "Používateľské rozhranie"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Nastaviť predvolené predvoľby rozhrania."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Nahrať konfiguráciu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
-msgstr ""
+msgstr "Nastavenia dokumentu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Upraviť, ako sa správajú kancelárske dokumenty."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Nahrať Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"Súbor nastavení rozhrania nie je platný JSON. Skontrolujte súbor a skúste to "
+"znova."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
