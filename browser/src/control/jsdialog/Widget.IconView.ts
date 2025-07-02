@@ -188,6 +188,30 @@ JSDialog.iconView = function (
 		_iconViewEntry(container, data, data.entries[i], builder);
 	}
 
+	const updateAllIndexes = () => {
+		// Example: if gridTemplateColumns = "96px 96px 96px"
+		// Step 1: Split the string by spaces:           ["96px", "96px", "96px"]
+		// Step 2: Remove any empty entries (if any):    ["96px", "96px", "96px"]
+		// Step 3: The length of this array is the number of columns in the grid.
+		const gridTemplateColumns = getComputedStyle(container).gridTemplateColumns;
+		const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
+
+		if (columns > 0) {
+			const entries = container.querySelectorAll('.ui-iconview-entry');
+			entries.forEach((entry: HTMLElement, flatIndex: number) => {
+				const row = Math.floor(flatIndex / columns);
+				const column = flatIndex % columns;
+				entry.setAttribute('index', row + ':' + column);
+			});
+		}
+	};
+
+	// update indexes on resize
+	const resizeObserver = new ResizeObserver(() => {
+		updateAllIndexes();
+	});
+	resizeObserver.observe(container);
+
 	const firstSelected = $(container).children('.selected').get(0);
 	const blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
 	if (firstSelected)
