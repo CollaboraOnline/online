@@ -442,13 +442,52 @@ menuDefinitions.set('Presentation', [
 	},
 ] as Array<MenuDefinition>);
 
+function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
+	// please see enum AutoLayout in autolayout.hxx. this is the actual WhatLayout sequence
+	// based on the visual position of the icons in the popup.
+	const buttonIndexToLayout = [
+		20, 0, 1, 3, 19, 32, 15, 12, 16, 14, 18, 34, 27, 28, 29, 30,
+	];
+
+	const grid = {
+		id: 'slidelayoutgrid',
+		type: 'grid',
+		cols: 4,
+		rows: 4,
+		children: new Array<WidgetJSON>(),
+	};
+
+	for (let i = 0; i < 16; i += 4) {
+		for (let j = i; j < i + 4; j++) {
+			grid.children.push({
+				id: 'layout' + j,
+				type: 'toolitem',
+				command:
+					'.uno:' + unoCommand + '?WhatLayout:long=' + buttonIndexToLayout[j],
+				text: _('Layout %N').replace('%N', String(j)),
+				noLabel: true,
+				left: j % 4,
+				top: (i / 4) % 4,
+			} as any as WidgetJSON);
+		}
+	}
+
+	return grid as any as GridWidgetJSON;
+}
+
 menuDefinitions.set('NewSlideLayoutMenu', [
-	{ htmlId: 'newslidelayoutpopup', type: 'html' },
+	{
+		type: 'json',
+		content: generateLayoutPopupGrid('InsertPage'),
+	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('ChangeSlideLayoutMenu', [
-	{ htmlId: 'changeslidelayoutpopup', type: 'html' },
+	{
+		type: 'json',
+		content: generateLayoutPopupGrid('AssignLayout'),
+	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
