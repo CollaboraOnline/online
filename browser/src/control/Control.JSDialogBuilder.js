@@ -2144,7 +2144,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			var span;
-			if (builder.options.noLabelsForUnoButtons !== true && data.text) {
+			if (data.noLabel)
+				$(div).addClass('no-label');
+			else if (builder.options.noLabelsForUnoButtons !== true && data.text) {
 				span = L.DomUtil.create('span', 'ui-content unolabel', button);
 				span.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(span, button.accessKey);
