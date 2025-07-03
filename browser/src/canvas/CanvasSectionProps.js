@@ -55,6 +55,7 @@ L.CSections.DefaultForDocumentObjects = {                         zIndex: 9 };
 L.CSections.HTMLObject     =        {                             zIndex: 9 };
 
 L.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 };
+L.CSections.CalcValidityDropDown =  { name: 'calc validity dropdown', zIndex: 11 };
 
 L.CSections.Scroll =				{ name: 'scroll'			, zIndex: 13 };
 
