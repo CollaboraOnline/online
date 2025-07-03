@@ -590,34 +590,6 @@ button.leaflet-control-search-next
 	margin: 0px;
 }
 
-/* slide layouts submenu */
-#slidelayoutmenu-grid {
-	display: grid;
-	grid-template-columns: repeat(4, auto);
-}
-
-#slidelayoutmenu-grid button:not(#iconsetoverlay) {
-	box-sizing: border-box;
-	position: relative;
-	padding: 3px;
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-	margin: 3px;
-	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
-	min-width: initial;
-}
-
-#slidelayoutmenu-grid button:hover {
-	border: 1px solid var(--color-border-darker);
-	background-color: var(--color-background-darker) !important;
-}
-
-#slidelayoutmenu-grid #iconsetoverlay {
-	grid-column: 1/4;
-	width: 100%;
-	margin: 0px;
-}
-
 #home-assign-layout {
 	width: fit-content;
 }
