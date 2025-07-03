@@ -156,6 +156,17 @@ private:
     /// Keeps RVS instances in check.
     void CleanupRequestVettingStations();
 
+    void onDisconnect() override
+    {
+        LOG_TRC("ClientRequestDispatcher " << _id << " disconnected");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->asyncShutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->shutdownConnection(); // Immediately disconnect.
+        }
+    }
+
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
