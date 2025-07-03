@@ -569,6 +569,17 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	white-space: nowrap;
 }
 
+.ui-treeview-image {
+	outline: 1px solid var(--color-btn-border);
+	vertical-align: middle;
+}
+
+/* that rule is for custom rendering like font previews */
+.ui-treeview-entry img.ui-treeview-image {
+	border: 1px solid transparent;
+	max-height: 24px; /* required for hidpi*/
+}
+
 #ServerAuditDialog .ui-treeview-entry {
 	display: grid;
 	grid-template-columns: var(--btn-img-size-m) 6fr 3fr;
@@ -688,8 +699,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .ui-treeview-entry.selected {
-	background-color: var(--color-background-dark);
-	color: var(--color-text-dark);
+	background-color: var(--color-primary);
+	color: var(--color-text-darker);
+	border: 1px solid var(--color-primary);
 }
 
 .ui-treeview.disabled .ui-treeview-entry.selected {
@@ -699,6 +711,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-treeview-entry:hover {
 	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker);
+	border: 1px solid var(--color-background-darker);
+}
+
+.ui-treeview-entry {
+	border: 1px solid transparent;
 }
 
 #mobile-wizard tbody input[type='checkbox'] {

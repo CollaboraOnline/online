@@ -79,29 +79,11 @@ class TreeViewControl {
 	_filterTimer: ReturnType<typeof setTimeout>;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
-		this._isRealTree = this.isRealTree(data);
 		this._container = L.DomUtil.create(
 			'div',
 			builder.options.cssClass + ' ui-treeview',
 		);
 		this._container.id = data.id;
-		this._columns = TreeViewControl.countColumns(data);
-		this._hasState = TreeViewControl.hasState(data);
-		this._hasIcon = TreeViewControl.hasIcon(data);
-		this._isNavigator = this.isNavigator(data);
-		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
-
-		this._tbody = this._container;
-		(this._container as any).filterEntries = this.filterEntries.bind(this);
-
-		this.setupDragAndDrop(data, builder);
-		this.setupKeyEvents(data, builder);
-
-		if (this._isRealTree) {
-			this._container.setAttribute('role', 'treegrid');
-			if (!data.headers || data.headers.length === 0)
-				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
-		} else this._container.setAttribute('role', 'grid');
 	}
 
 	get Container() {
@@ -304,21 +286,16 @@ class TreeViewControl {
 		builder: JSBuilder,
 		imageUrl: string,
 	) {
-		const colorPreviewButton = L.DomUtil.create(
+		const image = L.DomUtil.create(
 			'img',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			builder.options.cssClass + ' ui-treeview-checkbox ui-treeview-image',
 			parentContainer,
 		);
-		colorPreviewButton.src = imageUrl;
-		colorPreviewButton.style.setProperty(
-			'outline',
-			'1px solid var(--color-btn-border)',
-		);
-		colorPreviewButton.style.setProperty('vertical-align', 'middle');
-		colorPreviewButton.tabIndex = -1;
-		colorPreviewButton.alt = ''; //In this case, it is advisable to use an empty alt tag, as the information of the function is available in text form
+		image.src = imageUrl;
+		image.tabIndex = -1;
+		image.alt = ''; //In this case, it is advisable to use an empty alt tag, as the information of the function is available in text form
 
-		return colorPreviewButton;
+		return image;
 	}
 
 	isExpanded(entry: TreeEntryJSON) {
@@ -480,6 +457,7 @@ class TreeViewControl {
 	}
 
 	createTextCell(
+		treeViewData: TreeWidgetJSON,
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
 		index: any,
@@ -493,6 +471,18 @@ class TreeViewControl {
 		cell.innerText =
 			builder._cleanText(entry.columns[index].text) ||
 			builder._cleanText(entry.text);
+
+		if (entry.columns[index].customEntryRenderer) {
+			JSDialog.OnDemandRenderer(
+				builder,
+				treeViewData.id,
+				'treeview',
+				entry.row,
+				cell,
+				parent,
+				entry.text,
+			);
+		}
 	}
 
 	createLinkCell(
@@ -582,7 +572,7 @@ class TreeViewControl {
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(text, entry, index, builder);
+				this.createTextCell(treeViewData, text, entry, index, builder);
 			}
 
 			// row sub-elements
@@ -1265,11 +1255,28 @@ class TreeViewControl {
 		builder: JSBuilder,
 		parentContainer: HTMLElement,
 	) {
+		this._isRealTree = this.isRealTree(data);
+		this._columns = TreeViewControl.countColumns(data);
+		this._hasState = TreeViewControl.hasState(data);
+		this._hasIcon = TreeViewControl.hasIcon(data);
+		this._isNavigator = this.isNavigator(data);
+		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+
+		this._tbody = this._container;
+		(this._container as any).filterEntries = this.filterEntries.bind(this);
+
+		this.setupDragAndDrop(data, builder);
+		this.setupKeyEvents(data, builder);
+
+		if (this._isRealTree) {
+			this._container.setAttribute('role', 'treegrid');
+			if (!data.headers || data.headers.length === 0)
+				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
+		} else this._container.setAttribute('role', 'grid');
+
 		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
-
-		parentContainer.appendChild(this._container);
 
 		return true;
 	}
@@ -1282,6 +1289,31 @@ JSDialog.treeView = function (
 ) {
 	var treeView = new TreeViewControl(data, builder);
 	treeView.build(data, builder, parentContainer);
+	parentContainer.appendChild(treeView._container);
+
+	const updateRenders: CustomEntryRenderCallback = (pos: number | string) => {
+		const row = treeView.findEntryWithRow(data.entries, pos);
+		if (!row) {
+			console.error('treeview updateRenders: row "' + pos + '" not found');
+			return;
+		}
+
+		const image = builder.rendersCache[data.id].images[pos];
+		if (!image) {
+			console.error(
+				'treeview updateRenders: image for row "' + pos + '" not found',
+			);
+			return;
+		}
+
+		row.columns[row.columns.length > 1 ? 1 : 0].collapsedimage = image;
+		row.columns[row.columns.length > 1 ? 1 : 0].expandedimage = image;
+
+		treeView._container.innerHTML = '';
+		treeView.build(data, builder, parentContainer);
+	};
+
+	(treeView._container as any).updateRenders = updateRenders;
 
 	return false;
 };
