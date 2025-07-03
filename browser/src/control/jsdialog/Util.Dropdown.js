@@ -24,9 +24,8 @@ JSDialog.CreateDropdownEntriesId = function(id) {
 }
 
 JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popupAnchor, isSubmenu) {
-	var dropdownWindowId = _createDropdownId(id);
 	var json = {
-		id: dropdownWindowId,
+		id: _createDropdownId(id),
 		type: 'dropdown',
 		isSubmenu: isSubmenu,
 		jsontype: 'dialog',
