@@ -71,6 +71,17 @@ private:
         LOG_TRC('#' << socket->getFD() << " Connected to ClientRequestDispatcher.");
     }
 
+    void onDisconnect() override
+    {
+        LOG_TRC("ClientRequestDispatcher disconnected");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->asyncShutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->shutdownConnection(); // Immediately disconnect.
+        }
+    }
+
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {

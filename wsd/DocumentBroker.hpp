@@ -67,6 +67,8 @@ public:
     UrpHandler(ChildProcess* process) : _childProcess(process)
     {
     }
+
+private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
@@ -79,6 +81,18 @@ public:
         return POLLIN;
     }
     void performWrites(std::size_t /*capacity*/) override {}
+
+    void onDisconnect() override
+    {
+        LOG_TRC("UrpHandler disconnected");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->asyncShutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->shutdownConnection(); // Immediately disconnect.
+        }
+    }
+
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;

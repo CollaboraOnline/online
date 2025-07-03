@@ -619,7 +619,7 @@ public:
 
     /// Called when the socket is disconnected and will be destroyed.
     /// Will be called exactly once.
-    virtual void onDisconnect() {}
+    virtual void onDisconnect() = 0;
 
     // -----------------------------------------------------------------
     //            Interface for external MessageHandlers
