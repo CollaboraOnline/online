@@ -38,8 +38,21 @@ L.Map.Mouse = L.Handler.extend({
 		right: 2
 	},
 
+	_isMouseOnValidityDropdown: function() {
+		if (app.sectionContainer) {
+			const section = app.sectionContainer.getSectionWithName(L.CSections.CalcValidityDropDown.name);
+			if (section)
+				return section.sectionProperties.mouseEntered;
+		}
+
+		return null;
+	},
+
 	_onMouseEvent: window.touch.mouseOnly(function (e) {
 		if (this._map.uiManager.isUIBlocked() || app.map.dontHandleMouse)
+			return;
+
+		if (this._isMouseOnValidityDropdown())
 			return;
 
 		app.idleHandler.notifyActive();
