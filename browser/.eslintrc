@@ -18,6 +18,7 @@
     "no-debugger": 1,
     "no-unreachable": 1,
     "no-unused-vars": 1,
+    "no-await-in-loop": 1,
   },
   "globals": {
     "L": true,
