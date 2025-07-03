@@ -716,7 +716,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 		$(control.button).unbind('click');
-$(control.label).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function (e) {
 			e.preventDefault();
 			var docLayer = builder.map._docLayer;
