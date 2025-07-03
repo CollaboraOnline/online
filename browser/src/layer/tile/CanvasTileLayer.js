@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array cool OtherViewCellCursorSection */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array cool OtherViewCellCursorSection CalcValidityDropDown */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -3490,19 +3490,19 @@ L.CanvasTileLayer = L.Layer.extend({
 			else
 				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - 16 * app.pixelsToTwips);
 
-			if (!app.sectionContainer.getSectionWithName('DropDownArrow')) {
-				let dropDownSection = new app.definitions.calcValidityDropDown('DropDownArrow', position);
+			if (!app.sectionContainer.getSectionWithName(L.CSections.CalcValidityDropDown.name)) {
+				let dropDownSection = new CalcValidityDropDown(position);
 				app.sectionContainer.addSection(dropDownSection);
 			}
 			else {
-				app.sectionContainer.getSectionWithName('DropDownArrow').setPosition(position.pX, position.pY);
+				app.sectionContainer.getSectionWithName(L.CSections.CalcValidityDropDown.name).setPosition(position.pX, position.pY);
 			}
 		}
 	},
 
 	_removeCellDropDownArrow: function () {
 		if (!this._validatedCellAddress)
-			app.sectionContainer.removeSection('DropDownArrow');
+			app.sectionContainer.removeSection(L.CSections.CalcValidityDropDown.name);
 	},
 
 	_onUpdateCellResizeMarkers: function () {
