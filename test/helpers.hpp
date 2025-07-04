@@ -36,6 +36,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <stdexcept>
 #include <string>
 #include <thread>
 
@@ -267,7 +268,13 @@ pocoGetRetry(const Poco::URI& uri, int retry = 3,
         try
         {
             LOG_INF("pocoGet #" << attempt << ": " << uri.toString());
-            return pocoGet(uri);
+            auto res = pocoGet(uri);
+            if (!res.first)
+            {
+                throw std::runtime_error("Server unavilable");
+            }
+
+            return res;
         }
         catch (const std::exception& ex)
         {
