@@ -99,7 +99,7 @@ void WopiProofTests::verifySignature(const std::string& access, const std::strin
     (void)access; (void)uri; (void)ticks;
     (void)discoveryModulus; (void)discoveryExponent;
     (void)msgProofStr;
-    LOG_TST("OpenSSL too old/new to verify keys easily "
+    TST_LOG("OpenSSL too old/new to verify keys easily "
             << OPENSSL_VERSION_TEXT << " needs to be at least 1.1.0, but not 3.0\n");
 #endif
 }

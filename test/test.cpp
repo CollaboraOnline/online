@@ -156,17 +156,6 @@ static std::mutex ErrorMutex;
 static bool IsVerbose = false;
 static std::ostringstream ErrorsStream;
 
-void tstLog(const std::ostringstream &stream)
-{
-    if (IsVerbose)
-        writeTestLog(stream.str() + '\n');
-    else
-    {
-        std::lock_guard<std::mutex> lock(ErrorMutex);
-        ErrorsStream << stream.str();
-    }
-}
-
 class TestProgressListener : public CppUnit::TestListener
 {
     TestProgressListener(const TestProgressListener& copy) = delete;
@@ -178,7 +167,7 @@ public:
 
     void startTest(CppUnit::Test* test)
     {
-        writeTestLog("\n=============== START " + test->getName() + '\n');
+        LOG_TST("=============== START " << test->getName());
         if (UnitBase::isUnitTesting()) // Only if we are in UnitClient.
             UnitBase::get().setTestname(test->getName());
         _startTime = std::chrono::steady_clock::now();
@@ -187,21 +176,22 @@ public:
     void addFailure(const CppUnit::TestFailure& failure)
     {
         if (failure.isError())
-            writeTestLog("\n>>>>>>>> ERROR " + failure.failedTestName() + " <<<<<<<<<\n");
+            LOG_TST(">>>>>>>> ERROR " << failure.failedTestName() << " <<<<<<<<<");
         else
-            writeTestLog("\n>>>>>>>> FAILED " + failure.failedTestName() + " <<<<<<<<<\n");
+            LOG_TST(">>>>>>>> FAILED " << failure.failedTestName() << " <<<<<<<<<");
 
         const auto ex = failure.thrownException();
         if (ex != nullptr)
         {
-            writeTestLog("\nException: " + ex->message().shortDescription() + '\n'
-                         + ex->message().details() + "\tat " + ex->sourceLine().fileName() + ':'
-                         + std::to_string(ex->sourceLine().lineNumber()) + '\n');
+            LOG_TST("Exception: " << ex->message().shortDescription() << '\n'
+                                  << ex->message().details() << "\tat "
+                                  << ex->sourceLine().fileName() << ':'
+                                  << std::to_string(ex->sourceLine().lineNumber()));
         }
         else
         {
-            writeTestLog("\tat " + failure.sourceLine().fileName() + ':'
-                         + std::to_string(failure.sourceLine().lineNumber()) + '\n');
+            LOG_TST("\tat " << failure.sourceLine().fileName() << ':'
+                            << std::to_string(failure.sourceLine().lineNumber()));
         }
     }
 
@@ -209,8 +199,8 @@ public:
     {
         const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - _startTime);
-        writeTestLog("\n=============== END " + test->getName() + " (" + std::to_string(ms.count())
-                     + "ms) ===============\n");
+        LOG_TST("=============== END " << test->getName() << " (" << std::to_string(ms.count())
+                                       << "ms) ===============");
     }
 
 private:
@@ -262,7 +252,7 @@ bool runClientTests(const char* cmd, bool standalone, bool verbose)
         if (!result.wasSuccessful())
         {
             std::lock_guard<std::mutex> lock(ErrorMutex);
-            writeTestLog(ErrorsStream.str() + '\n');
+            LOG_TST(ErrorsStream.str() + '\n');
         }
     }
     else

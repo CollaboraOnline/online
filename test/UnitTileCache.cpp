@@ -59,7 +59,7 @@ public:
         {
             TRANSITION_STATE(_phase, Phase::Tile);
 
-            LOG_TST("Load: initWebsocket");
+            TST_LOG("Load: initWebsocket");
             initWebsocket("/wopi/files/0?access_token=anything");
 
             WSD_CMD("load url=" + getWopiSrc());

@@ -47,12 +47,12 @@ public:
         std::string redirectUri2 = "/wopi/files/2/contents";
         Poco::RegularExpression regContentsRedirected(redirectUri2);
 
-        LOG_TST("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
+        TST_LOG("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - returns redirect response
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_TST("FakeWOPIHost: Handling CheckFileInfo (1/2)");
+            TST_LOG("FakeWOPIHost: Handling CheckFileInfo (1/2)");
 
             assertCheckFileInfoRequest(request);
 
@@ -68,7 +68,7 @@ public:
         // CheckFileInfo - for redirected URI
         else if (request.getMethod() == "GET" && regRedirected.match(uriReq.getPath()) && !regContents.match(uriReq.getPath()))
         {
-            LOG_TST("FakeWOPIHost: Handling CheckFileInfo: (2/2)");
+            TST_LOG("FakeWOPIHost: Handling CheckFileInfo: (2/2)");
 
             assertCheckFileInfoRequest(request);
 
@@ -95,7 +95,7 @@ public:
         // GetFile - first try
         else if (request.getMethod() == "GET" && regContents.match(uriReq.getPath()))
         {
-            LOG_TST("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
+            TST_LOG("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
 
             assertGetFileRequest(request);
 
@@ -111,7 +111,7 @@ public:
         // GetFile - redirected
         else if (request.getMethod() == "GET" && regContentsRedirected.match(uriReq.getPath()))
         {
-            LOG_TST("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
+            TST_LOG("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
 
             assertGetFileRequest(request);
 
@@ -178,12 +178,12 @@ public:
         Poco::RegularExpression regInfo("/wopi/files/[0-9]+");
         static unsigned redirectionCount = 0;
 
-        LOG_TST("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
+        TST_LOG("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - always returns redirect response
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_TST("FakeWOPIHost: Handling CheckFileInfo");
+            TST_LOG("FakeWOPIHost: Handling CheckFileInfo");
 
             assertCheckFileInfoRequest(request);
 

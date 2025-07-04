@@ -55,11 +55,13 @@ public:
             LOK_ASSERT_FAIL("Unexpected connection failure");
         });
 
-        httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>&) {
-            TST_LOG("Got a valid response from the proxy");
-            // any result short of server choking is fine - we may be off-line
-            exitTest(TestResult::Ok);
-        });
+        httpSession->setFinishedHandler(
+            [&](const std::shared_ptr<http::Session>&)
+            {
+                TST_LOG("Got a valid response from the proxy");
+                // any result short of server choking is fine - we may be off-line
+                exitTest(TestResult::Ok);
+            });
 
         httpSession->asyncRequest(_req, _poll);
 

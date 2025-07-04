@@ -55,9 +55,8 @@ void helpers::logKitProcesses(const std::string& testname)
 {
     std::set<pid_t> docKitPids = getDocKitPids();
     std::set<pid_t> spareKitPids = getSpareKitPids();
-    TST_LOG("Current kit processes: "
-            << "Doc Kits: " << getPidList(docKitPids)
-            << " Spare Kits: " << getPidList(spareKitPids));
+    TST_LOG("Current kit processes: " << "Doc Kits: " << getPidList(docKitPids)
+                                      << " Spare Kits: " << getPidList(spareKitPids));
 }
 
 void helpers::waitForKitPidsReady(
@@ -110,8 +109,8 @@ void helpers::killPid(const std::string& testname, const pid_t pid)
 {
     TST_LOG("Killing " << pid);
     if (kill(pid, SIGKILL) == -1)
-        TST_LOG("kill(" << pid << ", SIGKILL) failed: " <<
-                Util::symbolicErrno(errno) << ": " << std::strerror(errno));
+        TST_LOG("kill(" << pid << ", SIGKILL) failed: " << Util::symbolicErrno(errno) << ": "
+                        << std::strerror(errno));
 }
 
 void helpers::killAllKitProcesses(
@@ -147,8 +146,7 @@ void helpers::killAllKitProcesses(
     }
 
     TST_LOG("Finished waiting for all previous kit processes to close"
-            << " before: " << getPidList(before)
-            << " current: " << getPidList(getKitPids())
+            << " before: " << getPidList(before) << " current: " << getPidList(getKitPids())
             << " intersection: " << getPidList(inters));
 
     LOK_ASSERT_MESSAGE_SILENT("Timed out waiting for these kit processes to close", pass);

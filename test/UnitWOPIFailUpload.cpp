@@ -40,9 +40,9 @@ class UnitWOPIFailUpload : public WOPIUploadConflictCommon
 
     void startNewTest() override
     {
-        LOG_TST("===== Starting " << name(_scenario) << " test scenario =====");
+        TST_LOG("===== Starting " << name(_scenario) << " test scenario =====");
 
-        LOG_TST("Resetting the document in storage");
+        TST_LOG("Resetting the document in storage");
         setFileContent(OriginalDocContent); // Reset to test overwriting.
 
         resetCountCheckFileInfo();
@@ -125,7 +125,7 @@ public:
     std::unique_ptr<http::Response>
     assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST("Testing " << name(_scenario));
+        TST_LOG("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         assertGetFileCount();
@@ -141,7 +141,7 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("Testing " << name(_scenario));
+        TST_LOG("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         assertPutFileCount();
@@ -159,7 +159,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
+        TST_LOG("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
@@ -168,18 +168,18 @@ public:
         {
             case Scenario::Disconnect:
                 // Just disconnect.
-                LOG_TST("Disconnecting");
+                TST_LOG("Disconnecting");
                 deleteSocketAt(0);
                 break;
             case Scenario::SaveDiscard:
             case Scenario::SaveOverwrite:
                 // Save the document.
-                LOG_TST("Saving the document");
+                TST_LOG("Saving the document");
                 WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
                 break;
             case Scenario::CloseDiscard:
                 // Close the document.
-                LOG_TST("Closing the document");
+                TST_LOG("Closing the document");
                 WSD_CMD("closedocument");
                 break;
             case Scenario::VerifyOverwrite:
@@ -192,7 +192,7 @@ public:
 
     bool onDocumentError(const std::string& message) override
     {
-        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
+        TST_LOG("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         if (getCountCheckFileInfo() == 1)
@@ -209,7 +209,7 @@ public:
         }
 
         // Close the document.
-        LOG_TST("Closing the document");
+        TST_LOG("Closing the document");
         WSD_CMD("closedocument");
 
         return true;
@@ -218,7 +218,7 @@ public:
     // Called when we have modified document data at exit.
     bool onDataLoss(const std::string& reason) override
     {
-        LOG_TST("Modified document being unloaded: " << reason);
+        TST_LOG("Modified document being unloaded: " << reason);
 
         // We expect this to happen only with the disonnection test,
         // because only in that case there is no user input.
@@ -233,7 +233,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
+        TST_LOG("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         // Uploading fails and we can't have anything but the original.
@@ -262,7 +262,7 @@ public:
         // Expect PutFile after closing, since the document is modified.
         if (_phase == Phase::WaitPutFile)
         {
-            LOG_TST("assertPutFileRequest: First PutFile, which will fail");
+            TST_LOG("assertPutFileRequest: First PutFile, which will fail");
 
             TRANSITION_STATE(_phase, Phase::Done);
 
@@ -276,7 +276,7 @@ public:
         }
 
         // This during closing the document.
-        LOG_TST("assertPutFileRequest: Second PutFile, unexpected");
+        TST_LOG("assertPutFileRequest: Second PutFile, unexpected");
 
         LOK_ASSERT_FAIL("PutFile multiple times.");
         failTest("PutFile multiple times.");
@@ -287,7 +287,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitPutFile);
@@ -301,7 +301,7 @@ public:
 
     bool onDataLoss(const std::string& reason) override
     {
-        LOG_TST("Modified document being unloaded: " << reason);
+        TST_LOG("Modified document being unloaded: " << reason);
 
         // We expect this to happen, because there should be
         // no upload attempts with expired tockens. And we
@@ -322,7 +322,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/" + getTestname() + "?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -374,7 +374,7 @@ public:
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
                              Poco::JSON::Object::Ptr& fileInfo) override
     {
-        LOG_TST("CheckFileInfo: making read-only for " << name(_scenario));
+        TST_LOG("CheckFileInfo: making read-only for " << name(_scenario));
 
         fileInfo->set("UserCanWrite", "false");
         fileInfo->set("UserCanNotWriteRelative", "true");
@@ -404,7 +404,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Update before transitioning, to avoid triggering immediately.
@@ -419,7 +419,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Modified: [" << message << ']');
+        TST_LOG("Modified: [" << message << ']');
         failTest("Modified read-only document");
 
         return failed();
@@ -427,7 +427,7 @@ public:
 
     bool onDataLoss(const std::string& reason) override
     {
-        LOG_TST("Data-loss in " << name(_phase) << ": " << reason);
+        TST_LOG("Data-loss in " << name(_phase) << ": " << reason);
 
         // We expect this to happen, since we can't upload the document.
         LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
@@ -440,7 +440,7 @@ public:
 
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Destroyed dockey [" << docKey << ']');
+        TST_LOG("Destroyed dockey [" << docKey << ']');
         LOK_ASSERT_STATE(_phase, Phase::Done);
 
         passTest("No modification or unexpected PutFile on read-only doc");
@@ -454,7 +454,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/" + getTestname() + "?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -471,7 +471,7 @@ public:
                     std::chrono::duration_cast<std::chrono::milliseconds>(now - _eventTime);
                 if (elapsed >= std::chrono::seconds(2))
                 {
-                    LOG_TST("No modified status on read-only document after waiting for "
+                    TST_LOG("No modified status on read-only document after waiting for "
                             << elapsed);
                     _eventTime = std::chrono::steady_clock::now();
 
@@ -483,7 +483,7 @@ public:
                     else
                     {
                         TRANSITION_STATE(_phase, Phase::WaitDocClose);
-                        LOG_TST("Saving the document");
+                        TST_LOG("Saving the document");
                         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
                     }
                 }
@@ -498,7 +498,7 @@ public:
                     std::chrono::duration_cast<std::chrono::milliseconds>(now - _eventTime);
                 if (elapsed >= std::chrono::seconds(2))
                 {
-                    LOG_TST("No upload on read-only document after waiting for " << elapsed);
+                    TST_LOG("No upload on read-only document after waiting for " << elapsed);
                     TRANSITION_STATE(_phase, Phase::Done);
                     WSD_CMD("closedocument");
                 }
@@ -573,27 +573,27 @@ public:
         // We save twice. First right after loading, unmodified.
         if (getCountPutFile() == 1)
         {
-            LOG_TST("First PutFile, which will fail");
+            TST_LOG("First PutFile, which will fail");
 
-            LOG_TST("Modifying again");
+            TST_LOG("Modifying again");
             TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
             WSD_CMD("key type=input char=97 key=0");
             WSD_CMD("key type=up char=0 key=512");
 
             // Fail with error.
-            LOG_TST("Simulate PutFile failure");
+            TST_LOG("Simulate PutFile failure");
             return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         if (getCountPutFile() == 2)
         {
-            LOG_TST("Second PutFile, which will also fail");
+            TST_LOG("Second PutFile, which will also fail");
 
             TRANSITION_STATE(_phase, Phase::WaitDestroy);
-            LOG_TST("More than one upload attempted, closing the document");
+            TST_LOG("More than one upload attempted, closing the document");
             WSD_CMD("closedocument");
 
-            LOG_TST("Simulate PutFile failure (again)");
+            TST_LOG("Simulate PutFile failure (again)");
             return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
@@ -604,7 +604,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -617,7 +617,7 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
@@ -629,7 +629,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Destroyed dockey [" << docKey << ']');
+        TST_LOG("Destroyed dockey [" << docKey << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDestroy);
 
         passTest("Document uploaded on closing as expected.");
@@ -643,7 +643,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -690,19 +690,19 @@ public:
         // We save twice. First right after loading, unmodified.
         if (_phase == Phase::WaitFirstPutFile)
         {
-            LOG_TST("assertPutFileRequest: First PutFile, which will fail");
+            TST_LOG("assertPutFileRequest: First PutFile, which will fail");
 
             // Certainly not exiting yet.
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsExitSave"));
             LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsExitSave"));
 
             // Fail with error.
-            LOG_TST("Returning 500 to simulate PutFile failure");
+            TST_LOG("Returning 500 to simulate PutFile failure");
             return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         // This during closing the document.
-        LOG_TST("assertPutFileRequest: Second PutFile, which will succeed");
+        TST_LOG("assertPutFileRequest: Second PutFile, which will succeed");
         LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
 
         // Triggered while closing.
@@ -715,7 +715,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -729,7 +729,7 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("onDocumentModified: [" << message << ']');
+        TST_LOG("onDocumentModified: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitFirstPutFile);
@@ -742,7 +742,7 @@ public:
 
     void onDocumentUploaded(bool success) override
     {
-        LOG_TST("Uploaded: " << (success ? "success" : "failure"));
+        TST_LOG("Uploaded: " << (success ? "success" : "failure"));
 
         if (_phase == Phase::WaitFirstPutFile)
         {
@@ -755,7 +755,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Destroyed dockey [" << docKey << "] closed.");
+        TST_LOG("Destroyed dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
 
         TRANSITION_STATE(_phase, Phase::Done);
@@ -772,7 +772,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());

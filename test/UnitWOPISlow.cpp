@@ -62,7 +62,7 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("PutFile");
+        TST_LOG("PutFile");
         LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
 
         // Triggered while closing.
@@ -82,13 +82,13 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
+        TST_LOG("Doc (" << name(_phase) << "): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Modify and wait for the notification.
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
 
-        LOG_TST("Sending key input #" << ++_inputCount);
+        TST_LOG("Sending key input #" << ++_inputCount);
         WSD_CMD("key type=input char=97 key=0");
         WSD_CMD("key type=up char=0 key=512");
 
@@ -102,18 +102,18 @@ public:
         // Only the first time is handled here.
         if (_phase == Phase::WaitModifiedStatus)
         {
-            LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
+            TST_LOG("Doc (" << name(_phase) << "): [" << message << ']');
             LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
             // Save and immediately modify, then close the connection.
             WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
                     "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
-            LOG_TST("Sending key input #" << ++_inputCount);
+            TST_LOG("Sending key input #" << ++_inputCount);
             WSD_CMD("key type=input char=97 key=0");
             WSD_CMD("key type=up char=0 key=512");
 
-            LOG_TST("Closing the connection.");
+            TST_LOG("Closing the connection.");
             deleteSocketAt(0);
 
             // Don't transition to WaitPutFile until after closing the socket.
@@ -131,7 +131,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/large-six-hundred.odt?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -173,7 +173,7 @@ public:
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         ++_uploadCount;
-        LOG_TST("PutFile #" << _uploadCount);
+        TST_LOG("PutFile #" << _uploadCount);
 
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsExitSave"));
@@ -197,7 +197,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
+        TST_LOG("Doc (" << name(_phase) << "): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Modify and wait for the notification.
@@ -212,7 +212,7 @@ public:
     /// The document is modified. Save, modify, and close it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
+        TST_LOG("Doc (" << name(_phase) << "): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         _stopwatch.restart();
@@ -231,7 +231,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/" + getTestname() + "?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -244,7 +244,7 @@ public:
             case Phase::WaitPutFile:
             {
                 // Save while we're waiting.
-                LOG_TST("Sending key input #" << _saveCount);
+                TST_LOG("Sending key input #" << _saveCount);
                 WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
             }
             break;

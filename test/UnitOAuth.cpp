@@ -121,7 +121,7 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
+        TST_LOG("Doc (" << name(_phase) << "): [" << message << ']');
 
         LOK_ASSERT_EQUAL_MESSAGE("CheckFileInfo was not invoked", true, _checkFileInfoCalled);
         _checkFileInfoCalled = false;

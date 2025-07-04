@@ -51,7 +51,7 @@ public:
 
     void newSubForKit(const std::shared_ptr<ForKitProcess>& /*subforkit*/, const std::string& configId) override
     {
-        LOG_TST("New SubForKit: " << configId);
+        TST_LOG("New SubForKit: " << configId);
         if (configId.find(_configId) == std::string::npos)
             failTest("unexpected subforkit configId");
         LOK_ASSERT_STATE(_phase, Phase::WaitCreateSubForKit);
@@ -62,11 +62,11 @@ public:
     void killSubForKit(const std::string& configId) override
     {
         LOK_ASSERT_STATE(_phase, Phase::WaitKillSubForKit);
-        LOG_TST("Killed SubForKit: " << configId);
+        TST_LOG("Killed SubForKit: " << configId);
         if (_configId == "someconfigid")
         {
             _configId = "someotherconfig";
-            LOG_TST("reload with a different server config" << _configId);
+            TST_LOG("reload with a different server config" << _configId);
             TRANSITION_STATE(_phase, Phase::Load);
         }
         else
@@ -82,7 +82,7 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
 
@@ -109,7 +109,7 @@ public:
                              const std::shared_ptr<StreamSocket>& /*socket*/) override
     {
         std::string uri = Uri::decode(request.getURI());
-        LOG_TST("parallelizeCheckInfo requested: " << uri);
+        TST_LOG("parallelizeCheckInfo requested: " << uri);
         return std::map<std::string, std::string>{
             {"wopiSrc", "/wopi/files/0"},
             {"accessToken", "anything"},
@@ -130,10 +130,10 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::WaitCreateSubForKit);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Loading view");
+                TST_LOG("Loading view");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
                 break;
             }

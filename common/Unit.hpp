@@ -162,7 +162,7 @@ public:
     /// Returns true if we failed, false otherwise.
     virtual bool onDataLoss(const std::string& reason)
     {
-        LOG_TST("onDataLoss: " << reason);
+        TST_LOG("onDataLoss: " << reason);
         failTest(reason);
         return failed();
     }
@@ -290,7 +290,7 @@ public:
         if (isUnitTesting() && !isFinished() &&
             (elapsedTime - _startTimeMilliSeconds) > getTimeoutMilliSeconds())
         {
-            LOG_TST("ERROR Test exceeded its time limit of "
+            TST_LOG("ERROR Test exceeded its time limit of "
                     << getTimeoutMilliSeconds() << ". It's been running for " << elapsedTime);
             timeout();
         }
@@ -451,12 +451,12 @@ public:
         }
         catch (const std::exception& ex)
         {
-            LOG_TST("ERROR: unexpected exception while invoking WSD Test: " << ex.what());
+            TST_LOG("ERROR: unexpected exception while invoking WSD Test: " << ex.what());
             exitTest(TestResult::Failed);
         }
         catch (...)
         {
-            LOG_TST("ERROR: unexpected unknown exception while invoking WSD Test");
+            TST_LOG("ERROR: unexpected unknown exception while invoking WSD Test");
             exitTest(TestResult::Failed);
         }
     }
@@ -713,7 +713,7 @@ private:
 #define TRANSITION_STATE_MSG(VAR, STATE, MSG)                                                      \
     do                                                                                             \
     {                                                                                              \
-        LOG_TST(MSG << ' ' << name(VAR) << " -> " #STATE);                                         \
+        TST_LOG(MSG << ' ' << name(VAR) << " -> " #STATE);                                         \
         VAR = STATE;                                                                               \
         SocketPoll::wakeupWorld();                                                                 \
     } while (false)
