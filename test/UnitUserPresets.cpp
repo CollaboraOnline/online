@@ -57,9 +57,9 @@ public:
     // resolution until the document load is abandoned.
     void filterRegisterPresetAsset(std::string& uri) override
     {
-        LOG_TST("filterRegisterPresetAsset before: " << uri);
+        TST_LOG("filterRegisterPresetAsset before: " << uri);
         uri = Util::replace(uri, "localhost", "presetasset");
-        LOG_TST("filterRegisterPresetAsset after: " << uri);
+        TST_LOG("filterRegisterPresetAsset after: " << uri);
     }
 
     // delay the resolution of these queries so we can cancel
@@ -73,10 +73,11 @@ public:
             query = "localhost";
             if (_phase != Phase::Finish)
             {
-                LOG_TST("delaying dns resolution of preset host until document broker is destroyed");
+                TST_LOG(
+                    "delaying dns resolution of preset host until document broker is destroyed");
                 std::unique_lock<std::mutex> lock(_dns_mutex);
                 bool ok = _dns_cv.wait_for(lock, std::chrono::seconds(10), [this]() { return _phase == Phase::ResumeDNS; });
-                LOG_TST("dns resumed: " << ok);
+                TST_LOG("dns resumed: " << ok);
                 TRANSITION_STATE(_phase, Phase::Finish);
             }
         }
@@ -86,7 +87,7 @@ public:
     // document.
     void onDocBrokerPresetsInstallStart() override
     {
-        LOG_TST("onDocBrokerPresetsInstallStart");
+        TST_LOG("onDocBrokerPresetsInstallStart");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocPresetsInstallStart);
         TRANSITION_STATE(_phase, Phase::DocPresetsInstallStart);
         SocketPoll::wakeupWorld();
@@ -102,7 +103,7 @@ public:
     {
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
         TRANSITION_STATE(_phase, Phase::ResumeDNS);
-        LOG_TST("resume dns resolution after doc broker was destroyed");
+        TST_LOG("resume dns resolution after doc broker was destroyed");
         _dns_cv.notify_one();
         SocketPoll::wakeupWorld();
     }
@@ -112,7 +113,7 @@ public:
     // and cancel the load, so the doc should never get loaded
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         failTest("Document should not get loaded.");
         return true;
     }
@@ -134,7 +135,7 @@ public:
                              const std::shared_ptr<StreamSocket>& /*socket*/) override
     {
         std::string uri = Uri::decode(request.getURI());
-        LOG_TST("parallelizeCheckInfo requested: " << uri);
+        TST_LOG("parallelizeCheckInfo requested: " << uri);
         return std::map<std::string, std::string>{
             {"wopiSrc", "/wopi/files/0"},
             {"accessToken", "anything"},
@@ -155,16 +156,16 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::WaitDocPresetsInstallStart);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Loading view");
+                TST_LOG("Loading view");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
                 break;
             }
             case Phase::DocPresetsInstallStart:
                 TRANSITION_STATE(_phase, Phase::WaitDocClose);
-                LOG_TST("Close document just after preset install starts");
+                TST_LOG("Close document just after preset install starts");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "closedocument");
                 break;
             case Phase::WaitDocPresetsInstallStart:

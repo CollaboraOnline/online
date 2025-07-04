@@ -45,7 +45,7 @@ public:
     void testContinue()
     {
         //FIXME: use logging
-        LOG_TST("testContinue");
+        TST_LOG("testContinue");
         for (int i = 0; i < 3; ++i)
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(Poco::URI(helpers::getTestServerURI())));
@@ -82,7 +82,7 @@ public:
 
             if (sent != responseStr)
             {
-                LOG_TST("Test " << i << " failed - mismatching string '" << responseStr << "' vs. '"
+                TST_LOG("Test " << i << " failed - mismatching string '" << responseStr << "' vs. '"
                                 << sent << "'");
                 exitTest(TestResult::Failed);
                 return;
@@ -92,13 +92,13 @@ public:
 
     void writeString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
-        LOG_TST("Sending " << str.size() << " bytes:\n" << str);
+        TST_LOG("Sending " << str.size() << " bytes:\n" << str);
         socket->sendBytes(str.c_str(), str.size());
     }
 
     bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
-        LOG_TST("Expecting " << str.size() << " bytes:\n" << str);
+        TST_LOG("Expecting " << str.size() << " bytes:\n" << str);
 
         std::vector<char> buffer(str.size() + 64);
         const int got = socket->receiveBytes(buffer.data(), str.size());
@@ -107,7 +107,7 @@ public:
         if (got != (int)str.size() ||
             strncmp(buffer.data(), str.c_str(), got))
         {
-            LOG_TST("testChunks got " << got << " mismatching strings '" << buffer.data()
+            TST_LOG("testChunks got " << got << " mismatching strings '" << buffer.data()
                                       << " vs. expected '" << str << "'");
             exitTest(TestResult::Failed);
             return false;
@@ -129,7 +129,7 @@ public:
 
     void testChunks()
     {
-        LOG_TST("testChunks");
+        TST_LOG("testChunks");
 
         std::shared_ptr<Poco::Net::StreamSocket> socket = createRawSocket();
 
@@ -188,7 +188,7 @@ public:
 
         writeString(socket, START_CHUNK_HEX("0"));
 
-        LOG_TST("Receiving...");
+        TST_LOG("Receiving...");
         char buffer[4096] = { 0, };
         int got = socket->receiveBytes(buffer, 4096);
 
@@ -211,7 +211,7 @@ public:
         LOK_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), ptr);
         if (!ptr)
         {
-            LOG_TST("missing separator " << got << " '" << buffer);
+            TST_LOG("missing separator " << got << " '" << buffer);
             exitTest(TestResult::Failed);
             return;
         }
@@ -223,21 +223,21 @@ public:
         }
 
         // Oddly we need another read to get the content.
-        LOG_TST("Receiving...");
+        TST_LOG("Receiving...");
         got = socket->receiveBytes(buffer, 4096);
         LOK_ASSERT_MESSAGE("No content returned.", got >= 0);
         if (got >=0 )
             buffer[got] = '\0';
         else
         {
-            LOG_TST("No content returned " << got);
+            TST_LOG("No content returned " << got);
             exitTest(TestResult::Failed);
             return;
         }
 
         if (strcmp(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
         {
-            LOG_TST("unexpected file content " << got << " '" << buffer);
+            TST_LOG("unexpected file content " << got << " '" << buffer);
             exitTest(TestResult::Failed);
             return;
         }
@@ -247,7 +247,7 @@ public:
     {
         testChunks();
         testContinue();
-        LOG_TST("All tests passed.");
+        TST_LOG("All tests passed.");
         exitTest(TestResult::Ok);
     }
 };

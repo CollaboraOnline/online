@@ -53,12 +53,12 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Loaded #" << (_loadedIndex + 1) << ": [" << message << ']');
+        TST_LOG("Loaded #" << (_loadedIndex + 1) << ": [" << message << ']');
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
 
         // Modify the document.
-        LOG_TST("Modifying");
+        TST_LOG("Modifying");
         WSD_CMD_BY_CONNECTION_INDEX(_loadedIndex, "key type=input char=97 key=0");
         WSD_CMD_BY_CONNECTION_INDEX(_loadedIndex, "key type=up char=0 key=512");
 
@@ -68,12 +68,12 @@ public:
     /// The document is modified. Save, modify, and close it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Modified #" << (_loadedIndex + 1) << ": [" << message << ']');
+        TST_LOG("Modified #" << (_loadedIndex + 1) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
 
-        LOG_TST("Closing");
+        TST_LOG("Closing");
         WSD_CMD_BY_CONNECTION_INDEX(_loadedIndex, "closedocument");
 
         return true;
@@ -100,10 +100,10 @@ public:
                 // First time loading, transition.
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Loading through first connection");
+                TST_LOG("Loading through first connection");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
 
                 break;
@@ -114,9 +114,9 @@ public:
 
                 ++_loadedIndex;
 
-                LOG_TST("Creating connection #" << (_loadedIndex + 1));
+                TST_LOG("Creating connection #" << (_loadedIndex + 1));
                 addWebSocket();
-                LOG_TST("Loading through connection #" << (_loadedIndex + 1));
+                TST_LOG("Loading through connection #" << (_loadedIndex + 1));
                 WSD_CMD_BY_CONNECTION_INDEX(_loadedIndex, "load url=" + getWopiSrc());
 
                 break;

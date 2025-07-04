@@ -70,12 +70,11 @@ inline UnitBase::TestResult UnitServerSocketAcceptFailure1::testHttp()
 {
     const size_t fatal_iter = ExternalServerSocketAcceptFatalErrorInterval - ExternalServerSocketAcceptSimpleErrorInterval;
     setTestname(__func__);
-    TST_LOG("Starting Test: " << testname
-            << ": ServerSocketAcceptSimpleErrorInterval "
-            << ExternalServerSocketAcceptSimpleErrorInterval
-            << ", ServerSocketAcceptFatalErrorInterval "
-            << ExternalServerSocketAcceptFatalErrorInterval
-            << ", fatal_iter (client) " << fatal_iter);
+    TST_LOG("Starting Test: " << testname << ": ServerSocketAcceptSimpleErrorInterval "
+                              << ExternalServerSocketAcceptSimpleErrorInterval
+                              << ", ServerSocketAcceptFatalErrorInterval "
+                              << ExternalServerSocketAcceptFatalErrorInterval
+                              << ", fatal_iter (client) " << fatal_iter);
 
     const std::string documentURL = "/favicon.ico";
 
@@ -108,7 +107,8 @@ inline UnitBase::TestResult UnitServerSocketAcceptFailure1::testHttp()
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Test[" << iteration << "] Connected: " << session->isConnected());
             TST_LOG("Test[" << iteration << "] Response1: " << response->header().toString());
-            TST_LOG("Test[" << iteration << "] Response1 size: " << testname << ": `" << documentURL << "`: " << response->header().getContentLength());
+            TST_LOG("Test[" << iteration << "] Response1 size: " << testname << ": `" << documentURL
+                            << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 connected00 = true;
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
@@ -122,7 +122,8 @@ inline UnitBase::TestResult UnitServerSocketAcceptFailure1::testHttp()
         }
         bool connected01 = false;
         {
-            TST_LOG("Test[" << iteration << "] SessionA " << ": connected " << session->isConnected());
+            TST_LOG("Test[" << iteration << "] SessionA " << ": connected "
+                            << session->isConnected());
             if( session->isConnected() )
             {
                 connected01 = true;

@@ -49,7 +49,7 @@ public:
     {
         const bool firstView = _checkFileInfoCount++ == 0;
 
-        LOG_TST("CheckFileInfo: " << (firstView ? "User#1" : "User#2"));
+        TST_LOG("CheckFileInfo: " << (firstView ? "User#1" : "User#2"));
 
         fileInfo->set("UserCanWrite", "true");
     }
@@ -75,7 +75,7 @@ public:
     void onDocBrokerViewLoaded(const std::string&,
                                const std::shared_ptr<ClientSession>& session) override
     {
-        LOG_TST("View #" << _viewCount + 1 << " [" << session->getName() << "] loaded");
+        TST_LOG("View #" << _viewCount + 1 << " [" << session->getName() << "] loaded");
 
         ++_viewCount;
 
@@ -95,10 +95,10 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::WaitUser1Loaded);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Loading first view");
+                TST_LOG("Loading first view");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
                 break;
             }
@@ -122,10 +122,10 @@ public:
                     TRANSITION_STATE(_phase, Phase::DropUser2);
                 }
 
-                LOG_TST("Creating second connection");
+                TST_LOG("Creating second connection");
                 addWebSocket();
 
-                LOG_TST("Loading second view");
+                TST_LOG("Loading second view");
                 WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc());
                 break;
             }
@@ -138,7 +138,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::ModifyDoc);
 
-                LOG_TST("Disconnecting first view right after load start");
+                TST_LOG("Disconnecting first view right after load start");
                 deleteSocketAt(1);
                 break;
             }
@@ -147,7 +147,7 @@ public:
                 TRANSITION_STATE(_phase, Phase::Done);
 
                 // Modify the document.
-                LOG_TST("Modifying");
+                TST_LOG("Modifying");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "key type=input char=97 key=0");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "key type=up char=0 key=512");
                 break;

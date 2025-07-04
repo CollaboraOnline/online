@@ -40,12 +40,12 @@ public:
     /// A view loaded.
     bool onViewLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
+        TST_LOG("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::Save);
 
         if (_loaded_count == 1)
         {
-            LOG_TST("Loading second view (Hungarian)");
+            TST_LOG("Loading second view (Hungarian)");
             WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc() + " lang=hu");
         }
         else if (_loaded_count == 2)
@@ -61,11 +61,11 @@ public:
     {
         if (success || result == "unmodified")
         {
-            LOG_TST("Document saved as expected");
+            TST_LOG("Document saved as expected");
         }
         else
         {
-            LOG_TST("Document failed to save");
+            TST_LOG("Document failed to save");
             failTest("Failed to save the document (Core is out-of-date or it has a regression: " +
                      message);
         }
@@ -82,13 +82,13 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::Save);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Creating second connection");
+                TST_LOG("Creating second connection");
                 addWebSocket();
 
-                LOG_TST("Loading first view (English)");
+                TST_LOG("Loading first view (English)");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc() + " lang=en");
                 break;
             }
@@ -132,12 +132,12 @@ public:
     /// A view is loaded.
     bool onViewLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
+        TST_LOG("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::Load2);
 
         if (_loaded_count == 1)
         {
-            LOG_TST("Loading second view (Pacific/Auckland)");
+            TST_LOG("Loading second view (Pacific/Auckland)");
             WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc() +
                                                " lang=en timezone=Pacific/Auckland");
         }
@@ -217,13 +217,13 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::Load2);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Creating second connection");
+                TST_LOG("Creating second connection");
                 addWebSocket();
 
-                LOG_TST("Loading first view (default)");
+                TST_LOG("Loading first view (default)");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc() + " lang=hu");
                 break;
             }
@@ -259,12 +259,12 @@ public:
     /// A view is loaded.
     bool onViewLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
+        TST_LOG("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::Load2);
 
         if (_loaded_count == 1)
         {
-            LOG_TST("Loading second view (Pacific/Tarawa)");
+            TST_LOG("Loading second view (Pacific/Tarawa)");
             WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc() +
                                                " lang=en timezone=Pacific/Tarawa");
         }
@@ -343,13 +343,13 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::Load2);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Creating second connection");
+                TST_LOG("Creating second connection");
                 addWebSocket();
 
-                LOG_TST("Loading first view (default)");
+                TST_LOG("Loading first view (default)");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc() +
                                                    " lang=hu timezone=Pacific/Midway");
                 break;

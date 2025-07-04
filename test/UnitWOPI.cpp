@@ -46,18 +46,18 @@ public:
 
     bool isAutosave() override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase));
+        TST_LOG("In SavingPhase " << name(_savingPhase));
 
         // we fake autosave when saving the modified document
         const bool res = _savingPhase == SavingPhase::Modified;
-        LOG_TST("isAutosave: " << std::boolalpha << res);
+        TST_LOG("isAutosave: " << std::boolalpha << res);
         return res;
     }
 
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase));
+        TST_LOG("In SavingPhase " << name(_savingPhase));
 
         if (_savingPhase == SavingPhase::Unmodified)
         {
@@ -103,7 +103,7 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
+        TST_LOG("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
         LOK_ASSERT_STATE(_savingPhase, SavingPhase::Unmodified);
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
@@ -114,7 +114,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
+        TST_LOG("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_savingPhase, SavingPhase::Modified);
@@ -134,7 +134,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -181,13 +181,13 @@ public:
     void newChild(const std::shared_ptr<ChildProcess>& child) override
     {
         _children.emplace_back(child->getPid());
-        LOG_TST(">>> Child #" << _children.size());
+        TST_LOG(">>> Child #" << _children.size());
     }
 
     virtual std::unique_ptr<http::Response>
     assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST(">>> CheckFileInfo #" << _count << ", total memory: " << getMemoryUsage() << " KB");
+        TST_LOG(">>> CheckFileInfo #" << _count << ", total memory: " << getMemoryUsage() << " KB");
 
         SocketPoll::wakeupWorld();
         return std::make_unique<http::Response>(http::StatusCode::NotFound);
@@ -201,7 +201,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::Done);
                 ++_count;
-                LOG_TST("Open #" << _count);
+                TST_LOG("Open #" << _count);
                 initWebsocket("/wopi/files/" + std::to_string(_count) + "?access_token=anything");
             }
             break;
@@ -215,7 +215,7 @@ public:
                         for (;;)
                         {
                             ++_count;
-                            LOG_TST(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
+                            TST_LOG(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
                                                  << " KB");
 
                             const std::string wopiPath = "/wopi/files/invalid_" +
@@ -228,7 +228,7 @@ public:
                             const std::string documentURL = "/cool/" + wopiSrc + "/ws";
 
                             // This is just a client connection that is used from the tests.
-                            LOG_TST("Connecting test client to COOL (#"
+                            TST_LOG("Connecting test client to COOL (#"
                                     << _count << " connection): " << documentURL);
 
                             Poco::URI uri(helpers::getTestServerURI());
@@ -242,12 +242,12 @@ public:
                             if (ws->asyncRequest(req, socketPoll()))
                             {
                                 _webSessions.emplace_back(ws);
-                                LOG_TST("Load #" << _count);
+                                TST_LOG("Load #" << _count);
                                 helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
                             }
                             else
                             {
-                                LOG_TST("Failed async request #" << _count << " to "
+                                TST_LOG("Failed async request #" << _count << " to "
                                                                  << documentURL);
                             }
                         }

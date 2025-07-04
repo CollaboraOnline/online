@@ -175,7 +175,7 @@ void HTTPServerTest::testCoolPostPoco()
 
     std::string csp = response["Content-Security-Policy"];
     StringVector lines = StringVector::tokenize(csp, ';');
-    LOG_TST("CSP - " << csp << " tokens " << lines.size());
+    TST_LOG("CSP - " << csp << " tokens " << lines.size());
     for (size_t i = 0; i < lines.size(); ++i)
     {
         if(lines.startsWith(i, " connect-src") ||
@@ -190,7 +190,7 @@ void HTTPServerTest::testCoolPostPoco()
                     continue;
 
                 Poco::URI uri(split[j]);
-                LOG_TST("URL - " << split[j]);
+                TST_LOG("URL - " << split[j]);
                 LOK_ASSERT_EQUAL(std::string(""), uri.getUserInfo());
                 LOK_ASSERT(uri.getPath() == std::string("") ||
                            uri.getPath() == std::string("*"));
