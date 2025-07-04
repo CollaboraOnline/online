@@ -97,11 +97,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'T', de: null }
 			},
 			{
-				'id': 'Draw-tab-label',
-				'text': _('Draw'),
-				'name': 'Draw',
-				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork',
+				'id': 'Shape-tab-label',
+				'text': _('Shape'),
+				'name': 'Shape',
+				'context': 'Draw|DrawLine|3DObject|MultiObject|DrawFontwork',
 				'accessibility': { focusBack: true, combination: 'D', de: null }
+			},
+			{
+				'id': 'Picture-tab-label',
+				'text': _('Picture'),
+				'name': 'Picture',
+				'context': 'Graphic',
+				'accessibility': { focusBack: true, combination: 'G', de: null }
 			},
 			{
 				'id': 'View-tab-label',
@@ -127,7 +134,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			this.getReviewTab(),
 			this.getFormatTab(),
 			this.getTableTab(),
-			this.getDrawTab(),
+			this.getShapeTab(),
+			this.getPictureTab(),
 			this.getViewTab(),
 			this.getHelpTab()
 		];
