@@ -42,6 +42,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <thread>
 
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
@@ -517,6 +518,7 @@ void HttpRequestTests::test500GetStatuses()
     };
 
     int curStatusCodeClass = -1;
+    int retry = 0;
     for (unsigned statusCode = 100; statusCode < 512; ++statusCode)
     {
         auto httpSession = http::Session::create(_localUri);
@@ -547,9 +549,9 @@ void HttpRequestTests::test500GetStatuses()
         if (statusCode > 100)
         {
 #if ENABLE_SSL
-            pocoResponseExt = helpers::pocoGet(/*secure=*/true, "httpbin.org", 443, url);
+            pocoResponseExt = helpers::pocoGetRetry(Poco::URI("https://httpbin.org:443" + url));
 #else
-            pocoResponseExt = helpers::pocoGet(/*secure=*/false, "httpbin.org", 80, url);
+            pocoResponseExt = helpers::pocoGetRetry(Poco::URI("http://httpbin.org:80" + url));
 #endif // ENABLE_SSL
         }
 #endif
@@ -557,9 +559,32 @@ void HttpRequestTests::test500GetStatuses()
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         cv.wait_for(lock, DefTimeoutSeconds, [&]() { return httpResponse->done(); });
-        TST_LOG("Finished async GET: " << url);
+        TST_LOG("Finished async GET of [" << url << "]: " << httpResponse->state());
 
         httpSession->asyncShutdown(); // Request to shutdown.
+
+        if (httpResponse->state() != http::Response::State::Complete)
+        {
+            ++retry;
+            --statusCode;
+
+            if (httpResponse->statusLine().statusCode() == http::StatusCode::ServiceUnavailable ||
+                httpResponse->statusLine().statusCode() == http::StatusCode::BadGateway ||
+                retry < 5)
+            {
+                // Give up, eventually.
+                if (retry < 10)
+                {
+                    LOG_WRN("Retrying (#" << retry << ") of " << url << " due to status "
+                                          << httpResponse->statusLine().statusCode() << "...");
+                    std::this_thread::sleep_for(
+                        std::chrono::milliseconds(200 * retry)); // Cool off.
+                    continue;
+                }
+            }
+        }
+
+        retry = 0; // Reset, since we either succeed or fail, but never retry this one.
 
         LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
