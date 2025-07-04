@@ -19,6 +19,8 @@ declare var JSDialog: any;
 interface ColorPaletteWidgetData {
 	id: string;
 	command: string;
+	enablePreview?: boolean;
+	notifyPreview?: boolean;
 }
 
 interface ThemeColor {
@@ -73,6 +75,15 @@ function toW2Palette(corePalette: CoreColorPalette): ColorPalette {
 		pal.push(row);
 	}
 	return pal;
+}
+
+function isChartEnabled(): boolean {
+	// TODO Add support for line and text color
+	return !!document.querySelector('#sidebar-panel .ChartTypePanel');
+}
+
+function isPreviewSupportedForCommand(command: string): boolean {
+	return command === '.uno:FillColor';
 }
 
 function generatePalette(paletteName: string) {
@@ -147,6 +158,18 @@ function createColor(
 			widgetData, // Pass the widget data
 		);
 	});
+
+	if (widgetData.enablePreview) {
+		color.addEventListener('mouseenter', (event: MouseEvent) => {
+			handleColorSelection(
+				event.target as HTMLElement, // The clicked element
+				builder, // Pass the builder object
+				widgetData, // Pass the widget data
+				true, // for preview
+			);
+		});
+	}
+
 	color.addEventListener('keydown', (event: KeyboardEvent) => {
 		if (event.code === 'Enter') {
 			handleColorSelection(
@@ -165,36 +188,51 @@ function handleColorSelection(
 	target: HTMLElement,
 	builder: JSBuilder,
 	widgetData: ColorPaletteWidgetData,
+	isPreview: boolean = false,
 ) {
+	// if we need to notify color preview state changes and
+	// the color should be really applied and not just previewed (IisPreview)
+	// we need to notify the core that this is not a preview
+	if (widgetData.enablePreview && widgetData.notifyPreview && !isPreview) {
+		app.socket.sendMessage('colorpreviewstate', 'false');
+	}
+
 	const palette = generatePalette(getCurrentPaletteName());
 	const colorCode = target.getAttribute('name');
 	const themeData = target.getAttribute('theme');
 
 	if (colorCode != null) {
 		JSDialog.sendColorCommand(builder, widgetData, colorCode, themeData);
-		builder.callback(
-			'colorpicker',
-			'hidedropdown',
-			widgetData,
-			themeData ? themeData : colorCode,
-			builder,
-		);
+		if (!isPreview) {
+			builder.callback(
+				'colorpicker',
+				'hidedropdown',
+				widgetData,
+				themeData ? themeData : colorCode,
+				builder,
+			);
+		}
 	} else {
 		JSDialog.sendColorCommand(builder, widgetData, 'transparent');
-		builder.callback(
-			'colorpicker',
-			'hidedropdown',
-			widgetData,
-			'transparent',
-			builder,
-		);
+		if (!isPreview) {
+			builder.callback(
+				'colorpicker',
+				'hidedropdown',
+				widgetData,
+				'transparent',
+				builder,
+			);
+		}
 	}
-	// Update the recent colors list
-	const recentRow = palette[palette.length - 1];
-	if (recentRow.indexOf(colorCode) !== -1)
-		recentRow.splice(recentRow.indexOf(colorCode), 1);
-	recentRow.unshift(colorCode);
-	window.prefs.set('recentColor', JSON.stringify(recentRow));
+
+	if (!isPreview) {
+		// Update the recent colors list
+		const recentRow = palette[palette.length - 1];
+		if (recentRow.indexOf(colorCode) !== -1)
+			recentRow.splice(recentRow.indexOf(colorCode), 1);
+		recentRow.unshift(colorCode);
+		window.prefs.set('recentColor', JSON.stringify(recentRow));
+	}
 }
 
 function createAutoColorButton(
@@ -400,6 +438,73 @@ JSDialog.colorPicker = function (
 		'ui-color-picker-recent',
 		container,
 	);
+
+	data.enablePreview =
+		(data.enablePreview ?? true) && isPreviewSupportedForCommand(data.command);
+
+	if (data.enablePreview) {
+		// we need to notify color preview mode for allowing core to know if
+		// it has to reset current selected color palette for chart data series
+		data.notifyPreview = data.command === '.uno:FillColor' && isChartEnabled();
+		if (data.notifyPreview) {
+			container.addEventListener('mouseenter', (event: MouseEvent) => {
+				app.socket.sendMessage('colorpreviewstate true');
+			});
+			container.addEventListener('mouseleave', (event: MouseEvent) => {
+				app.socket.sendMessage('colorpreviewstate false');
+			});
+		}
+
+		const hexColor = JSDialog.getCurrentColor(data, builder);
+
+		const currentColor: ColorItem =
+			hexColor !== -1 ? String(hexColor).toUpperCase().replace('#', '') : null;
+
+		let themeData: any = undefined;
+		if (hexColor !== -1) {
+			const paletteName = getCurrentPaletteName();
+			const palette = generatePalette(paletteName);
+			const detailedPalette = window.app.colorPalettes[paletteName].colors;
+			for (let i = 0; i < palette.length - 2; i++) {
+				for (let j = 0; j < palette[i].length; j++) {
+					if (palette[i][j] === currentColor && detailedPalette[i][j].Data)
+						themeData = JSON.stringify(detailedPalette[i][j].Data);
+				}
+			}
+		}
+
+		// on exit a palette group reset to current color
+		const fakeTarget = L.DomUtil.create('div', '', null);
+		if (currentColor) fakeTarget.setAttribute('name', currentColor);
+		if (themeData) fakeTarget.setAttribute('theme', themeData);
+
+		paletteContainer.addEventListener('mouseleave', (event: MouseEvent) => {
+			handleColorSelection(
+				fakeTarget,
+				builder, // Pass the builder object
+				data, // Pass the widget data
+				true, // for preview
+			);
+		});
+
+		customContainer.addEventListener('mouseleave', (event: MouseEvent) => {
+			handleColorSelection(
+				fakeTarget,
+				builder, // Pass the builder object
+				data, // Pass the widget data
+				true, // for preview
+			);
+		});
+
+		recentContainer.addEventListener('mouseleave', (event: MouseEvent) => {
+			handleColorSelection(
+				fakeTarget,
+				builder, // Pass the builder object
+				data, // Pass the widget data
+				true, // for preview
+			);
+		});
+	}
 
 	updatePalette(
 		getCurrentPaletteName(),
