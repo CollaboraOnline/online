@@ -74,6 +74,9 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
     return haveTests;
 }
 
+#ifdef STANDALONE_CPPUNIT
+#include <common/Globals.hpp>
+
 static bool IsDebugrun = false;
 
 // coverity[root_function] : don't warn about uncaught exceptions
@@ -144,6 +147,7 @@ int main(int argc, char** argv)
 
     return runClientTests(argv[0], true, verbose) ? 0 : 1;
 }
+#endif
 
 static bool IsStandalone = false;
 
