@@ -2159,6 +2159,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:TransformDialog',
 				'accessibility': { focusBack: true,	combination: 'TD', de: null }
 			},
+			{ type: 'separator', id: 'draw-transformdialog-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2189,6 +2190,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-fliphorizontal-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2221,6 +2223,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-fillcolor-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2279,6 +2282,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-wrapright-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2337,6 +2341,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-aligndown-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2381,6 +2386,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-objectbackone-break', orientation: 'vertical' },
 			{
 				'id': 'draw-format-group',
 				'type': 'bigtoolitem',
@@ -2418,6 +2424,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-leavegroup-break', orientation: 'vertical' },
 			{
 				'id': 'draw-text',
 				'type': 'bigtoolitem',
@@ -2458,6 +2465,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-line-break', orientation: 'vertical' },
 			{
 				'id': 'Insert-Text-Fontwork',
 				'type': 'container',
@@ -2493,6 +2501,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'draw-verticaltext-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Crop'),

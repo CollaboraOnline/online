@@ -3044,7 +3044,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:FormatGroup'),
 				'command': '.uno:FormatGroup'
 			},
-			{ type: 'separator', id: 'draw-formatgroup-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
