@@ -173,6 +173,7 @@ interface TreeColumnJSON {
 	expanded?: string | boolean;
 	collapsedimage?: string;
 	expandedimage?: string;
+	editable?: boolean;
 }
 
 interface TreeEntryJSON {
