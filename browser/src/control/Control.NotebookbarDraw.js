@@ -139,8 +139,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getFileTab: function() {
 		var content = [];
+		var hasSave = !this.map['wopi'].HideSaveOption;
+		var hasSaveAs = !this.map['wopi'].UserCanNotWriteRelative;
+		var hasShare = this.map['wopi'].EnableShare;
+		var hasRevisionHistory = L.Params.revHistoryEnabled;
 
-		if (!this.map['wopi'].HideSaveOption) {
+		if (hasSave) {
 			content.push(
 				{
 					'type': 'toolbox',
@@ -156,7 +160,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				});
 			}
 
-		if (!this.map['wopi'].UserCanNotWriteRelative) {
+		if (hasSaveAs) {
 			content.push(
 				{
 					'id': 'file-saveas',
@@ -168,7 +172,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 		}
 
-		if (!this.map['wopi'].UserCanNotWriteRelative) {
+		if (hasSaveAs) {
 			content.push(
 				{
 					'id': 'exportas:ExportAsMenu',
@@ -181,35 +185,84 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 		}
 
-		content.push(
-			{
-				'id': 'file-shareas-rev-history',
-				'type': 'container',
-				'children': [
-					(this.map['wopi'].EnableShare) ?
+		if (hasShare && hasRevisionHistory) {
+			content.push(
+				{
+					'type': 'container',
+					'children': [
 						{
+							'id': 'file-exportas-break',
+							'type': 'separator',
+							'orientation': 'vertical'
+						}, {
 							'id': 'ShareAs',
 							'class': 'unoShareAs',
 							'type': 'customtoolitem',
 							'text': _('Share'),
 							'command': 'shareas',
 							'inlineLabel': true,
-							'accessibility': { focusBack: true, combination: 'SH', de: null }
-						} : {},
-					(L.Params.revHistoryEnabled) ?
-						{
+							'accessibility': { focusBack: true, combination: 'SH' }
+						}, {
 							'id': 'Rev-History',
 							'class': 'unoRev-History',
 							'type': 'customtoolitem',
 							'text': _('See history'),
 							'command': 'rev-history',
 							'inlineLabel': true,
-							'accessibility': { focusBack: true, combination: 'RH', de: null }
-						} : {},
-				],
-				'vertical': 'true'
-			}
-		);
+							'accessibility': { focusBack: true, combination: 'RH' }
+						}, {
+							'id': 'file-revhistory-break',
+							'type': 'separator',
+							'orientation': 'vertical'
+						}
+					],
+					'vertical': true
+				});
+		} else if (hasShare) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'file-exportas-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					}, {
+						'id': 'ShareAs',
+						'class': 'unoShareAs',
+						'type': 'bigcustomtoolitem',
+						'text': _('Share'),
+						'command': 'shareas',
+						'accessibility': { focusBack: true, combination: 'SH' }
+					}, {
+						'id': 'file-revhistory-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					}
+				]
+			});
+		} else if (hasRevisionHistory) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'file-exportas-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					}, {
+						'id': 'Rev-History',
+						'class': 'unoRev-History',
+						'type': 'bigcustomtoolitem',
+						'text': _('See history'),
+						'command': 'rev-history',
+						'accessibility': { focusBack: true, combination: 'RH' }
+					}, {
+						'id': 'file-revhistory-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					}
+				]
+			});
+		}
 
 		if (!this.map['wopi'].HidePrintOption) {
 			content.push(
