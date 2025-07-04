@@ -69,7 +69,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).addClass('menubutton');
-		control.container.setAttribute('aria-haspopup', true);
 
 		$(control.button).unbind('click');
 		$(control.label).unbind('click');
