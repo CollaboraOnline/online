@@ -24,7 +24,8 @@ var reviewTabName = 'Review';
 var formatTabName = 'Format';
 var formTabName = 'Form';
 var tableTabName = 'Table';
-var drawTabName = 'Draw';
+var shapeTabName = 'Shape';
+var pictureTabName = 'Picture';
 var viewTabName = 'View';
 var helpTabName = 'Help';
 var formulaTabName = 'Formula';
@@ -90,11 +91,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: true, combination: 'T' }
 			},
 			{
-				'text': _('Draw'),
-				'id': drawTabName + '-tab-label',
-				'name': drawTabName,
-				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork',
+				'text': _('Shape'),
+				'id': shapeTabName + '-tab-label',
+				'name': shapeTabName,
+				'context': 'Draw|DrawLine|3DObject|MultiObject|DrawFontwork',
 				'accessibility': { focusBack: true, combination: 'JI', de: 'JI' }
+			},
+			{
+				'text': _('Picture'),
+				'id': pictureTabName + '-tab-label',
+				'name': pictureTabName,
+				'context': 'Graphic',
+				'accessibility': { focusBack: true, combination: 'PI', de: 'PI' }
 			},
 			{
 				'text': _('View'),
@@ -129,7 +137,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			this.getFormatTab(),
 			this.getFormTab(),
 			this.getTableTab(),
-			this.getDrawTab(),
+			this.getShapeTab(),
+			this.getPictureTab(),
 			this.getViewTab(),
 			this.getHelpTab(),
 			this.getFormulaTab()
@@ -2841,7 +2850,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		return this.getTabPage(formulaTabName, content);
 	},
 
-	getDrawTab: function() {
+	getShapeTab: function() {
 		var isODF = app.LOUtil.isFileODF(this.map);
 		var content = [
 			{
@@ -2849,7 +2858,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:TransformDialog', 'text'),
 				'command': '.uno:TransformDialog'
 			},
-			{ type: 'separator', id: 'draw-transformdialog-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-transformdialog-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2876,7 +2885,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-fliphorizontal-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-fliphorizontal-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2884,7 +2893,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'draw-tab-xlinecolor:ColorPickerMenu',
+								'id': 'shape-tab-xlinecolor:ColorPickerMenu',
 								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
@@ -2896,7 +2905,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'draw-tab-fillcolor:ColorPickerMenu',
+								'id': 'shape-tab-fillcolor:ColorPickerMenu',
 								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
@@ -2907,7 +2916,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-fillcolor-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-fillcolor-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -2954,7 +2963,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-wrapright-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-wrapright-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3001,7 +3010,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-aligndown-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-aligndown-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3038,13 +3047,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-objectbackone-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-objectbackone-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FormatGroup'),
 				'command': '.uno:FormatGroup'
 			},
-			{ type: 'separator', id: 'draw-formatgroup-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-formatgroup-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3071,13 +3080,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-leavegroup-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-leavegroup-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Text'),
 				'command': '.uno:Text'
 			},
-			{ type: 'separator', id: 'draw-text-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-text-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3085,7 +3094,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'draw-tab-shapes:InsertShapesMenu',
+								'id': 'shape-tab-shapes:InsertShapesMenu',
 								'type': 'menubutton',
 								'noLabel': true,
 								'text': _('Shapes'),
@@ -3106,7 +3115,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-line-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'shape-line-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3135,7 +3144,306 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'draw-verticaltext-break', orientation: 'vertical' },
+		];
+
+		return this.getTabPage(shapeTabName, content);
+	},
+
+	getPictureTab: function() {
+		var isODF = app.LOUtil.isFileODF(this.map);
+		var content = [
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TransformDialog', 'text'),
+				'command': '.uno:TransformDialog'
+			},
+			{ type: 'separator', id: 'picture-transformdialog-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FlipVertical'),
+								'command': '.uno:FlipVertical'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FlipHorizontal'),
+								'command': '.uno:FlipHorizontal'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-fliphorizontal-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'picture-tab-xlinecolor:ColorPickerMenu',
+								'noLabel': true,
+								'type': 'toolitem',
+								'text': _UNO('.uno:XLineColor'),
+								'command': '.uno:XLineColor'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'picture-tab-fillcolor:ColorPickerMenu',
+								'noLabel': true,
+								'type': 'toolitem',
+								'text': _UNO('.uno:FillColor'),
+								'command': '.uno:FillColor'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:WrapOff', 'text'),
+								'command': '.uno:WrapOff'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:WrapOn', 'text'),
+								'command': '.uno:WrapOn'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:WrapIdeal', 'text'),
+								'command': '.uno:WrapIdeal'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:WrapLeft', 'text'),
+								'command': '.uno:WrapLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:WrapThrough', 'text'),
+								'command': '.uno:WrapThrough'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:WrapRight', 'text'),
+								'command': '.uno:WrapRight'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-wrapright-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignLeft'),
+								'command': '.uno:ObjectAlignLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignCenter'),
+								'command': '.uno:AlignCenter'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignRight'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp'),
+								'command': '.uno:AlignUp'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignMiddle'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-aligndown-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront'),
+								'command': '.uno:BringToFront'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack'),
+								'command': '.uno:SendToBack'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectBackOne'),
+								'command': '.uno:ObjectBackOne'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-objectbackone-break', orientation: 'vertical' },
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatGroup'),
+				'command': '.uno:FormatGroup'
+			},
+			{ type: 'separator', id: 'picture-formatgroup-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:EnterGroup'),
+								'command': '.uno:EnterGroup'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:LeaveGroup'),
+								'command': '.uno:LeaveGroup'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-leavegroup-break', orientation: 'vertical' },
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Text'),
+				'command': '.uno:Text'
+			},
+			{ type: 'separator', id: 'picture-text-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'picture-tab-shapes:InsertShapesMenu',
+								'type': 'menubutton',
+								'noLabel': true,
+								'text': _('Shapes'),
+								'command': '.uno:BasicShapes'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Line', 'text'),
+								'command': '.uno:Line'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-line-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FontworkGalleryFloater'),
+								'command': '.uno:FontworkGalleryFloater',
+								// Fontwork export/import not supported in other formats.
+								'visible': isODF ? 'true' : 'false',
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:VerticalText', 'text'),
+								'command': '.uno:VerticalText'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-verticaltext-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Crop'),
@@ -3144,7 +3452,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 		];
 
-		return this.getTabPage(drawTabName, content);
+		return this.getTabPage(pictureTabName, content);
 	},
 
 	getNotebookbar: function(tabPages, selectedPage) {
