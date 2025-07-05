@@ -44,14 +44,6 @@ function _sendSelection(edit, builder, id, event) {
 	var startElement = selection.anchorNode;
 	var endElement = selection.focusNode;
 
-	if (!window.mode.isDesktop()) {
-		var element = document.elementFromPoint(event.clientX, event.clientY);
-		startElement = element;
-		endElement = element;
-		anchorOffset = 0;
-		focusOffset = 0;
-	}
-
 	if (selection.anchorNode == edit) {
 		startPos = endPos = 0;
 		for (var i in edit.childNodes) {
@@ -250,7 +242,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		event.preventDefault();
 	};
 
-	['click', 'dblclick'].forEach(function (ev) {
+	['click', 'dblclick', 'contextmenu'].forEach(function (ev) {
 		textLayer.addEventListener(ev, textSelectionHandler);
 	});
 
