@@ -232,7 +232,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         logPrefix(oss_);                                                                           \
         oss_ << std::boolalpha << X;                                                               \
         LOG_END(oss_);                                                                             \
-        Log::log(Log::Level::INF, oss_.str());                                                     \
+        Log::log(Log::Level::FTL, oss_.str());                                                     \
     } while (false)
 
 /// Unconditionally log at INF level.
