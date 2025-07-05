@@ -1428,7 +1428,7 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
         }
     }
 
-    if (isWasm)
+    if (isWasm && path.find("/browser/dist/wasm/") == std::string::npos)
     {
         Poco::replaceInPlace(path, std::string("/browser/dist/"),
                              std::string("/browser/dist/wasm/"));

@@ -57,7 +57,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 		if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
 			this.socket = socket;
-		} else if (window.ThisIsTheGtkApp) {
+		} else if (window.ThisIsTheGtkApp || window.ThisIsTheEmscriptenApp) {
 			// We have already opened the FakeWebSocket over in global.js
 			// But do we then set this.socket at all? Is this case ever reached?
 		} else	{
@@ -561,7 +561,7 @@ app.definitions.Socket = L.Class.extend({
 			// text on iOS in jsdialogs when using languages like Greek and
 			// Japanese by only setting the image bytes for only the same set
 			// of message types.
-			if (window.ThisIsTheEmscriptenApp ||
+			if (
 					e.data.startsWith('tile:') ||
 					e.data.startsWith('tilecombine:') ||
 					e.data.startsWith('delta:') ||
