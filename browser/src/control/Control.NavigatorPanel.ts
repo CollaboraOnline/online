@@ -64,6 +64,12 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	initializeNavigator(docType: string) {
+		app.layoutingService.appendLayoutingTask(() => {
+			this.initializeImpl(docType);
+		});
+	}
+
+	initializeImpl(docType: string) {
 		// Create navigation container
 		const navContainer = L.DomUtil.create(
 			'div',
@@ -216,6 +222,7 @@ class NavigatorPanel extends SidebarBase {
 			// There is case where user can directly click navigator from notebookbar view option
 			// in that case we first show the navigation panel and then switch to tab view
 			this.showNavigationPanel();
+			// TODO: remove jQuery animation
 			$('#navigator-dock-wrapper').show(200);
 			app.showNavigator = true;
 			// this will update the indentation marks for elements like ruler
@@ -268,14 +275,18 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	showNavigationPanel() {
-		this.navigationPanel.classList.add('visible');
-		this.floatingNavIcon.classList.remove('visible');
+		app.layoutingService.appendLayoutingTask(() => {
+			this.navigationPanel.classList.add('visible');
+			this.floatingNavIcon.classList.remove('visible');
+		});
 	}
 
 	closeNavigation() {
-		this.navigationPanel.classList.remove('visible');
-		this.floatingNavIcon.classList.add('visible');
-		this.handleFloatingButtonVisibilityOnZoomChange(); // on close panel we should check if we can display nav icon or not based on zoom level
+		app.layoutingService.appendLayoutingTask(() => {
+			this.navigationPanel.classList.remove('visible');
+			this.floatingNavIcon.classList.add('visible');
+			this.handleFloatingButtonVisibilityOnZoomChange(); // on close panel we should check if we can display nav icon or not based on zoom level
+		});
 	}
 }
 
