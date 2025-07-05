@@ -11,15 +11,21 @@
 
 #pragma once
 
+#include "Anonymizer.hpp"
 #include "StaticLogHelper.hpp"
+
+// Order of construction is unspecified when static objects are defined in different translation units, so
+// put globals here and include this once to specify order of construction/destruction.
 
 namespace Log {
     /// Helper to avoid destruction ordering issues.
-    extern StaticHelper Static;
+    StaticHelper Static;
 
-    extern StaticUIHelper StaticUILog;
+    StaticUIHelper StaticUILog;
 
     thread_local GenericLogger* StaticHelper::_threadLocalLogger = nullptr;
 }
+
+std::unique_ptr<Anonymizer> Anonymizer::_instance;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
