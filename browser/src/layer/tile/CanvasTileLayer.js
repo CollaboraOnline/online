@@ -3247,7 +3247,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateTextSelection: function () {
 		this._onUpdateCellResizeMarkers();
 
-		if (this._map.editorHasFocus() && (!this._textCSelections.empty() || this._selectionHandles.active)) {
+		if ((this._map.editorHasFocus() || this._map._textInput._hasFormulaBarFocus()) && (!this._textCSelections.empty() || this._selectionHandles.active)) {
 			this._updateMarkers();
 		}
 		else {

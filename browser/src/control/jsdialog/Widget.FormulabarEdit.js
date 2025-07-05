@@ -29,7 +29,7 @@
 
 var scrollToCursorTimeout = null;
 
-function _sendSelection(edit, builder, id, event) {
+function _sendSelection(edit, builder, id) {
 	if (document.activeElement != edit)
 		return;
 
@@ -43,14 +43,6 @@ function _sendSelection(edit, builder, id, event) {
 
 	var startElement = selection.anchorNode;
 	var endElement = selection.focusNode;
-
-	if (!window.mode.isDesktop()) {
-		var element = document.elementFromPoint(event.clientX, event.clientY);
-		startElement = element;
-		endElement = element;
-		anchorOffset = 0;
-		focusOffset = 0;
-	}
 
 	if (selection.anchorNode == edit) {
 		startPos = endPos = 0;
@@ -241,7 +233,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		}
 
 		builder.callback('edit', 'grab_focus', container, null, builder);
-		_sendSelection(textLayer, builder, container.id, event);
+		_sendSelection(textLayer, builder, container.id);
 
 		builder.map.setWinId(0);
 		builder.map._textInput._emptyArea();
@@ -250,7 +242,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		event.preventDefault();
 	};
 
-	['click', 'dblclick'].forEach(function (ev) {
+	['click', 'dblclick', 'contextmenu'].forEach(function (ev) {
 		textLayer.addEventListener(ev, textSelectionHandler);
 	});
 
