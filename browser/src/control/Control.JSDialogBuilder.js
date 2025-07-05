@@ -2296,9 +2296,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// if main button element in split button works same as arrowbackground then make sure arrowbackground not focusable due to a11y conflicts
 			isSplitButton ? arrowbackground.tabIndex = '0' : arrowbackground.tabIndex = '-1';
 
-			if(isArrowInteractive)  {
+			if (isArrowInteractive)  {
 				const buttonText = data.aria && data.aria.label ? data.aria.label : builder._cleanText(data.text);
-				const dropdownAriaLabelText = _('Open ') + buttonText;
+				const dropdownAriaLabelText = _('Open %NAME').replace('%NAME', buttonText);
 				arrowbackground.setAttribute('aria-label', dropdownAriaLabelText);
 				arrowbackground.setAttribute('aria-haspopup', true);
 				arrowbackground.setAttribute('aria-expanded', false);
