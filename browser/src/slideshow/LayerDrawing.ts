@@ -95,7 +95,6 @@ class LayerDrawing {
 	private canvasHeight: number = 0;
 	private backgroundChecksums: Map<string, string> = new Map();
 	private cachedBackgrounds: Map<string, ImageInfo> = new Map();
-	private cachedMasterPages: Map<string, Array<LayerEntry>> = new Map();
 	private cachedDrawPages: Map<string, Array<LayerEntry>> = new Map();
 	private cachedTextFields: Map<string, TextFieldInfo> = new Map();
 	private slideTextFieldsMap: Map<string, Map<string, string>> = new Map();
@@ -301,7 +300,6 @@ class LayerDrawing {
 		this.slideTextFieldsMap.clear();
 		this.cachedTextFields.clear();
 		this.cachedBackgrounds.clear();
-		this.cachedMasterPages.clear();
 		this.cachedDrawPages.clear();
 		this.videoRenderers.clear();
 	}
@@ -320,6 +318,35 @@ class LayerDrawing {
 
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
 		this.requestSlideImpl(startSlideHash);
+	}
+
+	public requestSlidesMasterLayers(
+		slideNumber: number,
+		callback: VoidFunction,
+	) {
+		this.onSlideRenderingCompleteCallback = callback;
+		const startSlideHash = this.helper.getSlideHash(slideNumber);
+		this.reqMasterSlideLayer(startSlideHash);
+	}
+
+	private reqMasterSlideLayer(slideHash: string) {
+		if (this.isDisposed()) return;
+		const slideInfo = this.getSlideInfo(slideHash);
+		if (!slideInfo) {
+			window.app.console.log(
+				'LayerDrawing.requestSlideImpl: No info for requested slide: hash: ' +
+					slideHash,
+			);
+			return;
+		}
+
+		const masterPageRendered = this.drawMasterPage(slideHash);
+		if (masterPageRendered) return;
+
+		app.socket.sendMessage(
+			`getslide hash=${slideInfo.hash} part=${slideInfo.index} width=${this.canvasWidth} height=${this.canvasHeight} ` +
+				`renderBackground=0 renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio} renderSlideContent=0`,
+		);
 	}
 
 	private initializeCanvas() {
@@ -421,7 +448,7 @@ class LayerDrawing {
 
 		app.socket.sendMessage(
 			`getslide hash=${slideInfo.hash} part=${slideInfo.index} width=${this.canvasWidth} height=${this.canvasHeight} ` +
-				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio}`,
+				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio} renderSlideContent=1`,
 		);
 	}
 
@@ -453,7 +480,9 @@ class LayerDrawing {
 			);
 			return;
 		}
-
+		console.log(
+			'LayerDrawing.onSlideLayerMsg: ' + info.group + ', ' + info.slideHash,
+		);
 		switch (info.group) {
 			case 'Background':
 				this.handleBackgroundMsg(info, e.image);
@@ -510,10 +539,16 @@ class LayerDrawing {
 			return;
 		}
 
-		if (info.index === 0 || !this.cachedMasterPages.get(slideInfo.masterPage))
-			this.cachedMasterPages.set(slideInfo.masterPage, new Array<LayerEntry>());
+		if (
+			info.index === 0 ||
+			!this.helper.cachedMasterPages.get(slideInfo.masterPage)
+		)
+			this.helper.cachedMasterPages.set(
+				slideInfo.masterPage,
+				new Array<LayerEntry>(),
+			);
 
-		const layers = this.cachedMasterPages.get(slideInfo.masterPage);
+		const layers = this.helper.cachedMasterPages.get(slideInfo.masterPage);
 		if (layers.length !== info.index) {
 			window.app.console.log(
 				'LayerDrawing.handleMasterPageLayerMsg: missed any layers ?',
@@ -601,7 +636,7 @@ class LayerDrawing {
 		const slideInfo = this.getSlideInfo(slideHash);
 		if (!slideInfo.masterPageObjectsVisibility) return true;
 
-		const layers = this.cachedMasterPages.get(slideInfo.masterPage);
+		const layers = this.helper.cachedMasterPages.get(slideInfo.masterPage);
 		if (!layers || layers.length === 0) {
 			window.app.console.log(
 				'LayerDrawing: No layer cached for master page: ' +
@@ -710,7 +745,7 @@ class LayerDrawing {
 
 		this.cacheAndNotify();
 		// fetch next slide and draw it on offscreen canvas
-		if (reqSlideInfo.next && !this.slideCache.has(reqSlideInfo.next)) {
+		if (reqSlideInfo?.next && !this.slideCache.has(reqSlideInfo.next)) {
 			this.requestSlideImpl(reqSlideInfo.next, true);
 		}
 	}
