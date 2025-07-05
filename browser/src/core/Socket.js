@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager SlideBitmapManager*/
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -595,14 +595,15 @@ app.definitions.Socket = L.Class.extend({
 
 		var isTile = e.textMsg.startsWith('tile:');
 		var isDelta = e.textMsg.startsWith('delta:');
-		if (!isTile && !isDelta &&
+		var isSlideLayer = e.textMsg.startsWith('slidelayer:');
+		var isRenderComplete = e.textMsg.startsWith('sliderenderingcomplete:');
+		if (!isTile && !isDelta && !isSlideLayer && !isRenderComplete &&
 		    !e.textMsg.startsWith('renderfont:') &&
-			!e.textMsg.startsWith('slidelayer:') &&
 		    !e.textMsg.startsWith('windowpaint:'))
-			return;
+			return true;
 
 		if (e.textMsg.indexOf(' nopng') !== -1)
-			return;
+			return true;
 
 		// pass deltas through quickly.
 		if (e.imgBytes && (isTile || isDelta) && e.imgBytes[e.imgIndex] != 80 /* P(ng) */)
@@ -611,8 +612,13 @@ app.definitions.Socket = L.Class.extend({
 			e.image = { rawData: e.imgBytes.subarray(e.imgIndex),
 				    isKeyframe: isTile };
 			e.imageIsComplete = true;
-			return;
+			return true;
 		}
+
+		if (isSlideLayer)
+			return true;
+		else if (isRenderComplete)
+			return true;
 
 		// window.app.console.log('PNG preview');
 
@@ -621,7 +627,7 @@ app.definitions.Socket = L.Class.extend({
 		if (isTile) {
 			e.image = { src: img };
 			e.imageIsComplete = true;
-			return;
+			return true;
 		}
 
 		// PNG dialog bits
@@ -642,6 +648,7 @@ app.definitions.Socket = L.Class.extend({
 		};
 		e.image.completeTraceEvent = this.createAsyncTraceEvent('loadTile');
 		e.image.src = img;
+		return true;
 	},
 
 	_buildUnauthorizedMessage: function (command) {
@@ -1302,6 +1309,12 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('reload')) {
 			// Switching modes.
 			window.location.reload(false);
+		} else if (textMsg.startsWith('slidelayer:')) {
+			SlideBitmapManager.handleRenderSlideEvent(e);
+			return;
+		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
+			SlideBitmapManager.handleSlideRenderingComplete(e);
+			return;
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
 			     !textMsg.startsWith('renderfont:') && !textMsg.startsWith('slidelayer:') &&
