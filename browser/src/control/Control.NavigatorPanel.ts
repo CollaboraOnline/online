@@ -21,8 +21,8 @@ class NavigatorPanel extends SidebarBase {
 	navigatorDockWrapper: HTMLElement;
 	closeNavButton: HTMLElement;
 
-	constructor(map: any, options: SidebarOptions) {
-		super(map, options, SidebarType.Navigator);
+	constructor(map: any) {
+		super(map, SidebarType.Navigator);
 	}
 
 	onAdd(map: ReturnType<typeof L.map>) {
@@ -279,6 +279,6 @@ class NavigatorPanel extends SidebarBase {
 	}
 }
 
-JSDialog.NavigatorPanel = function (map: any, options: SidebarOptions) {
-	return new NavigatorPanel(map, options);
+JSDialog.NavigatorPanel = function (map: any) {
+	return new NavigatorPanel(map);
 };
