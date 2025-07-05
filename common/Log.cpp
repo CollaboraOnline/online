@@ -813,9 +813,11 @@ namespace Log
         Log::logger().doLog(l, text);
     }
 
-    const std::string levelList[] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
+    static const std::string levelList[] = { "none",        "fatal",   "critical",
+                                             "error",       "warning", "notice",
+                                             "information", "debug",   "trace" };
 
-    std::string getLogLevelName(const std::string &channel)
+    const std::string& getLogLevelName(const std::string& channel)
     {
         unsigned int wsdLogLevel =
             Log::logger().get(channel).getLevel();
