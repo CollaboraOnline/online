@@ -235,8 +235,8 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         Log::log(Log::Level::FTL, oss_.str());                                                     \
     } while (false)
 
-/// Unconditionally log at INF level.
-#define LOG_ANY(X) LOG_UNCONDITIONAL(INF, X)
+/// Unconditionally log at ANY level.
+#define LOG_ANY(X) LOG_UNCONDITIONAL(ANY, X)
 /// Unconditionally log at TST level. Used for tests only.
 #define LOG_TST(X) LOG_UNCONDITIONAL(TST, X)
 
