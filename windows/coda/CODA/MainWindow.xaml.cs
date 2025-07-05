@@ -203,19 +203,6 @@ namespace CODA
             menuXamlElement.Visibility = Visibility.Collapsed;
 
             _iWebView2.CoreWebView2.Navigate(new System.Uri(_exeLocation).AbsoluteUri + "cool/cool.html?file_path=" + _fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=" + _appDocId + "&userinterfacemode=notebookbar&dir=ltr");
-
-            _iWebView2.CoreWebView2.NewWindowRequested += delegate (
-                object webview2, CoreWebView2NewWindowRequestedEventArgs args)
-                {
-                    ProcessStartInfo startInfo = new ProcessStartInfo
-                    {
-                        FileName = args.Uri,
-                        // Open the URI in the default browser.
-                        UseShellExecute = true
-                    };
-                    Process.Start(startInfo);
-                    args.Handled = true;
-                };
         }
 
         private async void PrintPdfDocument(string path)
