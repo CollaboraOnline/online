@@ -48,26 +48,26 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 	it('Treelistbox focus', function() {
 		cy.cGet('#link_btn_2').click();
 		helper.assertFocus('id','link_btn_2');
-		// since no entry is selected the whole widget should get focused
+		// since no entry is selected the first entry should get focused
 		cy.realPress('Tab');
-		helper.assertFocus('id','contenttree');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(1)').should('have.focus');
 
 		// check that we can navigate inside the widget
 		cy.realPress('ArrowDown');
-		cy.cGet('#contenttree .ui-treeview-entry:nth-child(1)').should('have.focus');
-		cy.realPress('ArrowDown');
 		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.focus');
+		cy.realPress('ArrowDown');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.focus');
 
 		// select the second entry
 		cy.realPress('Space');
-		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.class', 'selected');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.class', 'selected');
 
 		// check that now the whole widget is no more focusable and
 		// that the next focusable element is the selected entry
 		cy.cGet('#link_btn_2').click();
 		helper.assertFocus('id','link_btn_2');
 		cy.realPress('Tab');
-		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.focus');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.focus');
 		cy.cGet('#contenttree').should('not.have.attr', 'tabindex');
 	});
 
