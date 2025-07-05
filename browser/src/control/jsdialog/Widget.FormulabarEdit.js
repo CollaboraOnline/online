@@ -29,7 +29,7 @@
 
 var scrollToCursorTimeout = null;
 
-function _sendSelection(edit, builder, id, event) {
+function _sendSelection(edit, builder, id) {
 	if (document.activeElement != edit)
 		return;
 
@@ -233,7 +233,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		}
 
 		builder.callback('edit', 'grab_focus', container, null, builder);
-		_sendSelection(textLayer, builder, container.id, event);
+		_sendSelection(textLayer, builder, container.id);
 
 		builder.map.setWinId(0);
 		builder.map._textInput._emptyArea();
