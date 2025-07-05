@@ -157,8 +157,8 @@ L.Control.JSDialog = L.Control.extend({
 		else {
 			// Close handler for Dropdown which requires to setup aria properties
 			const popupParent = this.dialogs[id].popupParent;
-			if (popupParent && typeof popupParent._onClose === 'function')
-				popupParent._onClose();
+			if (popupParent && typeof popupParent._onDropDown === 'function')
+				popupParent._onDropDown(false);
 
 			// Need to change focus to last element before we clear the current dialog
 			this.focusToLastElement(id);

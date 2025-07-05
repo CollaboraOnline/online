@@ -182,7 +182,6 @@ function _extractText(selectCommandData) {
 JSDialog.combobox = function (parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
-	container.role = 'listbox';
 
 	var content = L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
 	content.id = data.id + '-input';
@@ -193,15 +192,25 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	if (data.aria) {
 		content.setAttribute('aria-label',data.aria.label);
 	}
-	container.setAttribute('aria-haspopup', true);
-	container.setAttribute('aria-expanded', false);
 
-	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
+	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
+	content.setAttribute('aria-haspopup', true);
+	content.setAttribute('aria-expanded', false);
+	content.setAttribute('aria-controls', dropDownId);
+
+	var button = L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.tabIndex = '0';
-	button.role = 'button';
+	button.setAttribute('aria-haspopup', true);
+	button.setAttribute('aria-expanded', false);
+	button.setAttribute('aria-controls', dropDownId);
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
+
+	container._onDropDown = function(open) {
+		content.setAttribute('aria-expanded', open);
+		button.setAttribute('aria-expanded', open);
+	};
 
 	if (data.selectedCount > 0)
 		var selectedEntryPos = parseInt(data.selectedEntries[0]);
