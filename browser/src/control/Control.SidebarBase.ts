@@ -33,7 +33,6 @@ abstract class SidebarBase {
 	documentContainer: HTMLDivElement;
 	wrapper: HTMLElement;
 	builder: any;
-	enableFocus: boolean;
 
 	constructor(
 		map: any,
