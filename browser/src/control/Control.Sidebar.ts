@@ -18,13 +18,8 @@ class Sidebar extends SidebarBase {
 	targetDeckCommand: string;
 	isUserRequest: boolean; /// automatic or user request to show the sidebar
 
-	constructor(
-		map: any,
-		options: SidebarOptions = {
-			animSpeed: 1000,
-		} /* Default speed: to be used on load */,
-	) {
-		super(map, options, SidebarType.Sidebar);
+	constructor(map: any) {
+		super(map, SidebarType.Sidebar);
 		this.isUserRequest = true;
 	}
 
@@ -169,6 +164,6 @@ class Sidebar extends SidebarBase {
 	}
 }
 
-JSDialog.Sidebar = function (map: any, options: SidebarOptions) {
-	return new Sidebar(map, options);
+JSDialog.Sidebar = function (map: any) {
+	return new Sidebar(map);
 };

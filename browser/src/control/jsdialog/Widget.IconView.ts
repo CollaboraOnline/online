@@ -212,14 +212,12 @@ JSDialog.iconView = function (
 	});
 	resizeObserver.observe(container);
 
+	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
 	const firstSelected = $(container).children('.selected').get(0);
-	const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
-	if (firstSelected)
-		firstSelected.scrollIntoView({
-			behavior: 'smooth',
-			block: blockOption,
-			inline: 'nearest',
-		});
+	if (firstSelected) {
+		const offsetTop = firstSelected.offsetTop;
+		container.scrollTop = offsetTop;
+	}
 
 	container.onSelect = (position: number) => {
 		$(container).children('.selected').removeClass('selected');
@@ -231,12 +229,17 @@ JSDialog.iconView = function (
 
 		if (entry) {
 			L.DomUtil.addClass(entry, 'selected');
-			const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
-			entry.scrollIntoView({
-				behavior: 'smooth',
-				block: blockOption,
-				inline: 'nearest',
-			});
+			if (builder.options.useScrollAnimation !== false) {
+				const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
+				entry.scrollIntoView({
+					behavior: 'smooth',
+					block: blockOption,
+					inline: 'nearest',
+				});
+			} else {
+				const offsetTop = entry.offsetTop;
+				container.scrollTop = offsetTop;
+			}
 		} else if (position != -1)
 			console.warn(
 				'not found entry: "' + position + '" in: "' + container.id + '"',
