@@ -777,8 +777,6 @@ class TreeViewControl {
 	}
 
 	selectEntry(span: HTMLElement, checkbox: HTMLInputElement) {
-		this.makeTreeViewFocusable(false);
-
 		L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
@@ -1145,9 +1143,13 @@ class TreeViewControl {
 		}
 	}
 
+	// when no entry is selected - allow first one to be focusable
 	makeTreeViewFocusable(enable: boolean) {
-		if (enable) this._container.tabIndex = 0;
-		else this._container.removeAttribute('tabindex');
+		const firstElement = this._container.querySelector('.ui-treeview-entry');
+		if (firstElement) {
+			if (enable) (firstElement as HTMLElement).tabIndex = 0;
+			else firstElement.removeAttribute('tabindex');
+		}
 	}
 
 	fillEntries(
