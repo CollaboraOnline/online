@@ -185,7 +185,7 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 		// during one session of processing events where multiple setSelection actions
 		// can be found, profiling shows it is heavy operation
 		scrollToCursorTimeout = setTimeout(function () {
-			var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+			var blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
 			cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 			scrollToCursorTimeout = null;
 		}, 0);

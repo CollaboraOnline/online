@@ -20,11 +20,7 @@ enum SidebarType {
 	Sidebar = 'sidebar',
 	Navigator = 'navigator',
 }
-interface SidebarOptions {
-	animSpeed: number;
-}
 abstract class SidebarBase {
-	options: SidebarOptions;
 	type: SidebarType;
 
 	map: any;
@@ -35,15 +31,8 @@ abstract class SidebarBase {
 	builder: any;
 	enableFocus: boolean;
 
-	constructor(
-		map: any,
-		options: SidebarOptions = {
-			animSpeed: 1000,
-		} /* Default speed: to be used on load */,
-		type: SidebarType,
-	) {
+	constructor(map: any, type: SidebarType) {
 		this.type = type;
-		this.options = options;
 		this.onAdd(map);
 	}
 
@@ -56,6 +45,7 @@ abstract class SidebarBase {
 			mobileWizard: this,
 			map: map,
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
+			useScrollAnimation: false, // icon views cause jump on sidebar open
 		});
 		this.container = L.DomUtil.create(
 			'div',

@@ -427,6 +427,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Util.ModalHelper.js \
 	src/control/jsdialog/Util.OnDemandRenderer.ts \
 	src/control/jsdialog/Util.ScrollableBar.ts \
+	src/control/jsdialog/Util.ScrollIntoView.ts \
 	src/control/jsdialog/Util.SnackbarController.ts \
 	src/control/jsdialog/Util.StateChange.ts \
 	src/control/jsdialog/Widget.ButtonBox.ts \
