@@ -3053,18 +3053,6 @@ L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainM
 	return menuStructure;
 };
 
-JSDialog._scrollIntoViewBlockOption = function(option) {
-	if (option === 'nearest' || option === 'center') {
-		// compatibility with older firefox
-		var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
-		var firefoxVer = match ? parseInt(match[1]) : 58;
-		var blockOption = firefoxVer >= 58 ? option : 'start';
-		return blockOption;
-	}
-
-	return option;
-};
-
 L.control.jsDialogBuilder = function (options) {
 	var builder = new L.Control.JSDialogBuilder(options);
 	builder._setup(options);
