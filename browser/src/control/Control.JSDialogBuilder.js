@@ -2272,7 +2272,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrowbackground;
 
-			if (isDropdownButton) {
+			if (!hasDropdownArrow && isDropdownButton) {
 				// Attach both 'click' and 'keydown' event listeners for dropdown buttons only
 				arrowbackground.addEventListener('click', function (event) {
 					openToolBoxMenu(event);
