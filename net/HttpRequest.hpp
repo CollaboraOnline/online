@@ -590,7 +590,7 @@ private:
 };
 
 /// An HTTP Request made over Session.
-class Request
+class RequestCommon
 {
 public:
     static constexpr int64_t VersionLen = 8;
@@ -599,6 +599,11 @@ public:
     static constexpr const char* VERB_POST = "POST";
     static constexpr const char* VERS_1_1 = "HTTP/1.1";
 
+    RequestCommon()
+        : _stage(Stage::Header)
+    {
+    }
+
     /// The stages of processing the request.
     STATE_ENUM(Stage,
                Header, ///< Communicate the header.
@@ -606,42 +611,17 @@ public:
                Finished ///< Done.
     );
 
-    /// Create a Request given a @url, http @verb, @header, and http @version.
-    /// All are optional, since they can be overwritten later.
-    explicit Request(std::string url = "/", std::string verb = VERB_GET,
-                     Header headerObj = Header(), std::string version = VERS_1_1)
-        : _header(std::move(headerObj))
-        , _url(std::move(url))
-        , _verb(std::move(verb))
-        , _version(std::move(version))
-        , _bodyReaderCb([](const char*, int64_t) { return 0; })
-        , _stage(Stage::Header)
-    {
-    }
-
-    /// Set the request URL.
-    void setUrl(const std::string& url) { _url = url; }
     /// Get the request URL.
     const std::string& getUrl() const { return _url; }
 
-    /// Set the request verb (typically GET or POST).
-    void setVerb(const std::string& verb) { _verb = verb; }
     /// Get the request verb.
     const std::string& getVerb() const { return _verb; }
 
-    /// Set the protocol version (typically HTTP/1.1).
-    void setVersion(const std::string& version) { _version = version; }
     /// Get the protocol version.
     const std::string& getVersion() const { return _version; }
 
     /// The header object.
     const Header& header() const { return _header; }
-
-    /// Add an HTTP header field.
-    void add(std::string key, std::string value) { _header.add(std::move(key), std::move(value)); }
-
-    /// Set an HTTP header field, replacing an earlier value, if exists.
-    void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
 
     // Returns true if the HTTP header field exists (case insensitive)
     bool has(const std::string& key) const { return _header.has(key); }
@@ -652,9 +632,85 @@ public:
         return _header.get(key, def);
     }
 
-    void setConnectionToken(Header::ConnectionToken token) { _header.setConnectionToken(token); }
-    void setContentType(std::string type) { _header.setContentType(std::move(type)); }
-    void setContentLength(int64_t length) { _header.setContentLength(length); }
+    Stage stage() const { return _stage; }
+
+    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
+        os << indent << "\tstage: " << name(_stage);
+        os << indent << "\theaders: ";
+        Util::joinPair(os, _header, indent + '\t');
+    }
+
+protected:
+    RequestCommon(std::string url, std::string verb, Header header, std::string version)
+        : _header(std::move(header))
+        , _url(std::move(url))
+        , _verb(std::move(verb))
+        , _version(std::move(version))
+        , _stage(Stage::Header)
+    {
+    }
+
+    /// Set the request URL.
+    void setUrl(const std::string& url) { _url = url; }
+    /// Set the request verb (typically GET or POST).
+    void setVerb(const std::string& verb) { _verb = verb; }
+    /// Set the protocol version (typically HTTP/1.1).
+    void setVersion(const std::string& version) { _version = version; }
+    /// Add an HTTP header field.
+    void add(std::string key, std::string value) { _header.add(std::move(key), std::move(value)); }
+
+    Header& header() { return _header; }
+
+    /// Set an HTTP header field, replacing an earlier value, if exists.
+    void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
+
+    void setStage(Stage stage) { _stage = stage; }
+
+private:
+    Header _header;
+    std::string _url; ///< The URL to request, without hostname.
+    std::string _verb; ///< Used as-is, but only POST supported.
+    std::string _version; ///< The protocol version, currently 1.1.
+    Stage _stage;
+};
+
+/// An HTTP Request made over Session.
+class Request : public RequestCommon
+{
+public:
+    static constexpr int64_t VersionLen = 8;
+    static constexpr int64_t MinRequestHeaderLen = sizeof("GET / HTTP/0.0\r\n") - 1;
+    static constexpr const char* VERB_GET = "GET";
+    static constexpr const char* VERB_POST = "POST";
+    static constexpr const char* VERS_1_1 = "HTTP/1.1";
+
+    /// Create a Request given a @url, http @verb, @header, and http @version.
+    /// All are optional, since they can be overwritten later.
+    explicit Request(std::string url = "/", std::string verb = VERB_GET,
+                     Header headerObj = Header(), std::string version = VERS_1_1)
+        : RequestCommon(std::move(url), std::move(verb), std::move(headerObj), std::move(version))
+        , _bodyReaderCb([](const char*, int64_t) { return 0; })
+    {
+    }
+
+    using RequestCommon::add;
+    using RequestCommon::set;
+    using RequestCommon::setUrl;
+    using RequestCommon::setVerb;
+    using RequestCommon::setVersion;
+
+
+    void setConnectionToken(Header::ConnectionToken token) { header().setConnectionToken(token); }
+    void setContentType(std::string type) { header().setContentType(std::move(type)); }
+    void setContentLength(int64_t length) { header().setContentLength(length); }
+
+    /// Add an HTTP header field.
+    void add(std::string key, std::string value) { header().add(std::move(key), std::move(value)); }
+
+    /// Set an HTTP header field, replacing an earlier value, if exists.
+    void set(const std::string& key, std::string value) { header().set(key, std::move(value)); }
 
     /// True if we are a Keep-Alive request.
     bool isKeepAlive() const
@@ -666,14 +722,14 @@ public:
         }
 
         // 1.1 and newer are reusable by default (i.e. keep-alive).
-        return _version != "HTTP/1.0";
+        return getVersion() != "HTTP/1.0";
     }
 
     /// Set the request body source to upload some data. Meaningful for POST.
     /// Size is needed to set the Content-Length.
     void setBodySource(IoReadFunc bodyReaderCb, int64_t size)
     {
-        _header.setContentLength(size);
+        header().setContentLength(size);
         _bodyReaderCb = std::move(bodyReaderCb);
     }
 
@@ -698,9 +754,9 @@ public:
     void setBody(std::string body, std::string contentType = "text/html;charset=utf-8")
     {
         if (!body.empty()) // Type is only meaningful if there is a body.
-            _header.setContentType(std::move(contentType));
+            header().setContentType(std::move(contentType));
 
-        _header.add("Content-Length", std::to_string(body.size()));
+        header().add("Content-Length", std::to_string(body.size()));
 
         const size_t bodySize = body.size();
 
@@ -715,12 +771,10 @@ public:
             bodySize);
     }
 
-    Stage stage() const { return _stage; }
-
     bool writeData(Buffer& out, std::size_t capacity)
     {
         const std::size_t buffered_size = out.size();
-        if (_stage == Stage::Header)
+        if (stage() == Stage::Header)
         {
             LOG_TRC("performWrites (request header)");
 
@@ -731,13 +785,13 @@ public:
             out.append(getVersion());
             out.append("\r\n");
 
-            _header.writeData(out);
+            header().writeData(out);
             out.append("\r\n"); // End the header.
 
-            _stage = Stage::Body;
+            setStage(Stage::Body);
         }
 
-        if (_stage == Stage::Body)
+        if (stage() == Stage::Body)
         {
             LOG_TRC("performWrites (request body)");
 
@@ -759,7 +813,7 @@ public:
                 {
                     LOG_TRC("performWrites (request body): finished, total: " << out.size() -
                                                                                      buffered_size);
-                    _stage = Stage::Finished;
+                    setStage(Stage::Finished);
                     break;
                 }
 
@@ -778,38 +832,20 @@ public:
         return true;
     }
 
-    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
-    {
-        os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
-        os << indent << "\tstage: " << name(_stage);
-        os << indent << "\theaders: ";
-        Util::joinPair(os, _header, indent + '\t');
-    }
-
     void setBasicAuth(std::string_view username, std::string_view password)
     {
         std::string basicAuth{ username };
         basicAuth.append(":");
         basicAuth.append(password);
-        _header.add("Authorization", "Basic " + Util::base64Encode(basicAuth));
+        header().add("Authorization", "Basic " + Util::base64Encode(basicAuth));
     }
 
-protected:
-    void setStage(Stage stage) { _stage = stage; }
-
-    Header& header() { return _header; }
-
 private:
-    Header _header;
-    std::string _url; ///< The URL to request, without hostname.
-    std::string _verb; ///< Used as-is, but only POST supported.
-    std::string _version; ///< The protocol version, currently 1.1.
     IoReadFunc _bodyReaderCb;
-    Stage _stage;
 };
 
 /// A server-side HTTP Request parser for incoming request.
-class RequestParser final : public Request
+class RequestParser final : public RequestCommon
 {
 public:
     /// Create a default RequestParser.
