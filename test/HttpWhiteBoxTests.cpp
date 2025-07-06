@@ -223,7 +223,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     LOK_ASSERT_EQUAL(expVerb, req.getVerb());
     LOK_ASSERT_EQUAL(expUrl, req.getUrl());
     LOK_ASSERT_EQUAL(expVersion, req.getVersion());
-    LOK_ASSERT_EQUAL(expHost, req.header().get("Host"));
+    LOK_ASSERT_EQUAL(expHost, req.get("Host"));
 }
 
 void HttpWhiteBoxTests::testClipboardIsOwnFormat()

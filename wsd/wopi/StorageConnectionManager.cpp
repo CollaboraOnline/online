@@ -127,7 +127,7 @@ http::Request StorageConnectionManager::createHttpRequest(const Poco::URI& uri,
     // Copy the headers, including the cookies.
     for (const auto& pair : request)
     {
-        httpRequest.header().set(pair.first, pair.second);
+        httpRequest.set(pair.first, pair.second);
     }
 
     return httpRequest;

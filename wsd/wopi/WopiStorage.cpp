@@ -351,19 +351,18 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
         httpRequest.setVerb(http::Request::VERB_POST);
 
-        http::Header& httpHeader = httpRequest.header();
-
-        httpHeader.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
-        httpHeader.set("X-WOPI-Lock", lockCtx.lockToken());
+        httpRequest.set("X-WOPI-Override",
+                        lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
+        httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
         if (!attribs.getExtendedData().empty())
         {
-            httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+            httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
             if (isLegacyServer())
-                httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+                httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
         }
 
         // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
-        httpHeader.setContentLength(0);
+        httpRequest.setContentLength(0);
 
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
@@ -445,19 +444,17 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
     http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
     httpRequest.setVerb(http::Request::VERB_POST);
 
-    http::Header& httpHeader = httpRequest.header();
-
-    httpHeader.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
-    httpHeader.set("X-WOPI-Lock", lockCtx.lockToken());
+    httpRequest.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
+    httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
     if (!attribs.getExtendedData().empty())
     {
-        httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+        httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
         if (isLegacyServer())
-            httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+            httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
     }
 
     // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
-    httpHeader.setContentLength(0);
+    httpRequest.setContentLength(0);
 
     http::Session::FinishedCallback finishedCallback =
         [this, startTime, lock, wopiLog, asyncLockStateCallback,
@@ -512,7 +509,8 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
     _lockHttpSession->setFinishedHandler(std::move(finishedCallback));
 
-    LOG_DBG("Async " << wopiLog << " request: " << httpRequest.header().toString());
+    LOG_DBG("Async " << wopiLog
+                     << " request: " << static_cast<const http::Request&>(httpRequest).header());
 
     // Notify client via callback that the request is in progress...
     scopedInvokeCallback.setArg(AsyncLockUpdate(
@@ -601,7 +599,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     std::shared_ptr<http::Session> httpSession =
         StorageConnectionManager::getHttpSession(uriObject);
 
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
+    const http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
 
     setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
     setRootFilePathAnonym(COOLWSD::anonymizeUrl(getRootFilePath()));
@@ -768,45 +766,43 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
         http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
         httpRequest.setVerb(http::Request::VERB_POST);
 
-        http::Header& httpHeader = httpRequest.header();
-
         // must include this header except for SaveAs
         if (!isSaveAs && lockCtx.supportsLocks())
-            httpHeader.set("X-WOPI-Lock", lockCtx.lockToken());
+            httpRequest.set("X-WOPI-Lock", lockCtx.lockToken());
 
         if (!isSaveAs && !isRename)
         {
             // normal save
-            httpHeader.set("X-WOPI-Override", "PUT");
-            httpHeader.set("X-COOL-WOPI-IsModifiedByUser",
-                           attribs.isUserModified() ? "true" : "false");
-            httpHeader.set("X-COOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
-            httpHeader.set("X-COOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
+            httpRequest.set("X-WOPI-Override", "PUT");
+            httpRequest.set("X-COOL-WOPI-IsModifiedByUser",
+                            attribs.isUserModified() ? "true" : "false");
+            httpRequest.set("X-COOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
+            httpRequest.set("X-COOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
             if (isLegacyServer())
             {
-                httpHeader.set("X-LOOL-WOPI-IsModifiedByUser",
-                               attribs.isUserModified() ? "true" : "false");
-                httpHeader.set("X-LOOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
-                httpHeader.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
+                httpRequest.set("X-LOOL-WOPI-IsModifiedByUser",
+                                attribs.isUserModified() ? "true" : "false");
+                httpRequest.set("X-LOOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
+                httpRequest.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
             }
 
             if (attribs.isExitSave()) {
                 // Don't maintain the socket if we are exiting.
-                httpHeader.setConnectionToken(http::Header::ConnectionToken::Close);
+                httpRequest.setConnectionToken(http::Header::ConnectionToken::Close);
             }
             if (!attribs.getExtendedData().empty())
             {
-                httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+                httpRequest.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
                 if (isLegacyServer())
-                    httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+                    httpRequest.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
             }
 
             if (!attribs.isForced() && isLastModifiedTimeSafe())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                httpHeader.set("X-COOL-WOPI-Timestamp", getLastModifiedTime());
+                httpRequest.set("X-COOL-WOPI-Timestamp", getLastModifiedTime());
                 if (isLegacyServer())
-                    httpHeader.set("X-LOOL-WOPI-Timestamp", getLastModifiedTime());
+                    httpRequest.set("X-LOOL-WOPI-Timestamp", getLastModifiedTime());
             }
         }
         else
@@ -821,21 +817,21 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
             if (isRename)
             {
                 // rename file
-                httpHeader.set("X-WOPI-Override", "RENAME_FILE");
-                httpHeader.set("X-WOPI-RequestedName", std::move(suggestedTarget));
+                httpRequest.set("X-WOPI-Override", "RENAME_FILE");
+                httpRequest.set("X-WOPI-RequestedName", std::move(suggestedTarget));
             }
             else
             {
                 // save as
-                httpHeader.set("X-WOPI-Override", "PUT_RELATIVE");
-                httpHeader.set("X-WOPI-Size", std::to_string(size));
+                httpRequest.set("X-WOPI-Override", "PUT_RELATIVE");
+                httpRequest.set("X-WOPI-Size", std::to_string(size));
                 LOG_TRC("Save as: suggested target is '" << suggestedTarget << "'.");
-                httpHeader.set("X-WOPI-SuggestedTarget", std::move(suggestedTarget));
+                httpRequest.set("X-WOPI-SuggestedTarget", std::move(suggestedTarget));
             }
         }
 
-        httpHeader.setContentType("application/octet-stream");
-        httpHeader.setContentLength(size);
+        httpRequest.setContentType("application/octet-stream");
+        httpRequest.setContentLength(size);
 
         httpRequest.setBodyFile(filePath);
 
@@ -877,7 +873,8 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
 
         _uploadHttpSession->setFinishedHandler(std::move(finishedCallback));
 
-        LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
+        LOG_DBG(wopiLog << " async upload request: "
+                        << static_cast<const http::Request&>(httpRequest).header());
 
         _uploadHttpSession->setConnectFailHandler(
             [asyncUploadCallback,

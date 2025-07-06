@@ -31,7 +31,7 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
     _httpSession = StorageConnectionManager::getHttpSession(_url);
     Authorization auth = Authorization::create(_url);
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(_url, auth);
+    const http::Request httpRequest = StorageConnectionManager::createHttpRequest(_url, auth);
 
     const auto startTime = std::chrono::steady_clock::now();
 

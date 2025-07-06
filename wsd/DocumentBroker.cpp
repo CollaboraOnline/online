@@ -4230,7 +4230,7 @@ void DocumentBroker::uploadPresetsToWopiHost()
                                                 << uriObject.toString() << ']');
 
         httpRequest.setBodyFile(fileJailPath);
-        httpRequest.header().set("Content-Type", "application/octet-stream");
+        httpRequest.set("Content-Type", "application/octet-stream");
 
         auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
         auto httpResponse = httpSession->syncRequest(httpRequest);
