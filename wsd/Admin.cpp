@@ -1264,7 +1264,7 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
     std::ostringstream oss;
     getMetrics(oss);
 
-    response->header().setConnectionToken(http::Header::ConnectionToken::Close);
+    response->setConnectionToken(http::Header::ConnectionToken::Close);
     response->setBody(oss.str(), "text/plain");
 
     socket->send(*response);

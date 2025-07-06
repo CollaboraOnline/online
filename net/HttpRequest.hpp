@@ -983,7 +983,6 @@ public:
     const StatusLine& statusLine() const { return _statusLine; }
     StatusCode statusCode() const { return _statusLine.statusCode(); }
 
-    Header& header() { return _header; }
     const Header& header() const { return _header; }
 
     /// Add an HTTP header field.
@@ -992,11 +991,17 @@ public:
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
 
+    /// Set the Connection header.
+    void setConnectionToken(Header::ConnectionToken token) { _header.setConnectionToken(token); }
+
     /// Set the Content-Type header.
     void setContentType(std::string type) { _header.setContentType(std::move(type)); }
 
     /// Set the Content-Length header.
     void setContentLength(int64_t length) { _header.setContentLength(length); }
+
+    /// Adds a new "Cookie" header entry with the given content.
+    void addCookie(const std::string& cookie) { _header.addCookie(cookie); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
     std::string get(const std::string& key, const std::string& def = std::string()) const

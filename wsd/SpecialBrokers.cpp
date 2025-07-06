@@ -320,7 +320,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 // really not ideal that the response works only with std::string
                 httpResponse.setBody(std::string(_responseData.data(), _responseData.size()),
                                      "image/png");
-                httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
+                httpResponse.setConnectionToken(http::Header::ConnectionToken::Close);
 
                 std::shared_ptr<StreamSocket> socket(_socket.lock());
                 if (socket)
