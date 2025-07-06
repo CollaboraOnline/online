@@ -172,6 +172,7 @@ class LayerDrawing {
 
 		this.drawBackground(slideHash);
 		this.drawMasterPage(slideHash);
+		this.drawTextField(slideHash);
 		this.drawDrawPage(slideHash);
 		this.drawVideos(slideHash);
 	}
@@ -654,6 +655,27 @@ class LayerDrawing {
 
 		for (const layer of layers) {
 			this.drawDrawPageLayer(slideHash, layer);
+		}
+		return true;
+	}
+
+	private drawTextField(slideHash: string) {
+		const slideInfo = this.getSlideInfo(slideHash);
+		if (slideInfo.empty) {
+			return true;
+		}
+
+		const fields = this.slideTextFieldsMap.get(slideHash);
+		if (!fields) {
+			window.app.console.log(
+				'LayerDrawing: No layer cached text field for draw page: ' + slideHash,
+			);
+			return false;
+		}
+
+		for (const field of fields) {
+			const imageInfo = this.cachedTextFields.get(field[1]).content;
+			this.drawBitmap(imageInfo);
 		}
 		return true;
 	}
