@@ -69,6 +69,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidPoll);
     CPPUNIT_TEST(testOnFinished_Complete);
     CPPUNIT_TEST(testOnFinished_Timeout);
+    CPPUNIT_TEST(testPost);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -86,6 +87,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testInvalidPoll();
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
+    void testPost();
 
     static constexpr std::chrono::seconds DefTimeoutSeconds{ 5 };
 
@@ -781,6 +783,47 @@ void HttpRequestTests::testOnFinished_Timeout()
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
 }
+
+void HttpRequestTests::testPost()
+{
+    constexpr std::string_view testname = __func__;
+
+    constexpr auto URL = "/post";
+
+    http::Request httpRequest(URL, http::Request::VERB_POST);
+
+    // Write the test data to file.
+    const std::string data = Util::rng::getHexString(10 * 1024 * 1024);
+    const std::string path = FileUtil::getSysTempDirectoryPath() + "/test_http_post";
+    std::ofstream ofs(path, std::ios::binary);
+    ofs.write(data.data(), data.size());
+    ofs.close();
+
+    httpRequest.setBodyFile(path);
+
+    auto httpSession = http::Session::create(_localUri);
+    if (httpSession)
+    {
+        httpSession->setTimeout(std::chrono::seconds(5));
+        const std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(httpRequest);
+
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+        LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+        LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
+        LOK_ASSERT(httpResponse->statusLine().statusCategory() ==
+                   http::StatusLine::StatusCodeClass::Successful);
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL(std::string("text/html;charset=utf-8"),
+                         httpResponse->header().getContentType());
+
+        LOK_ASSERT_EQUAL_STR(data, httpResponse->getBody());
+    }
+}
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestTests);
 
