@@ -593,10 +593,11 @@ app.definitions.Socket = L.Class.extend({
 			return true;
 		};
 
-		// slide rendering is using zstd compressed images
+		// slide rendering is using zstd compressed images (EXPERIMENTAL)
 		var isSlideLayer = e.textMsg.startsWith('slidelayer:');
 		var isSlideRenderComplete = e.textMsg.startsWith('sliderenderingcomplete:');
-		if (isSlideLayer || isSlideRenderComplete)
+		var isZstdSlideshowEnabled = app.isExperimentalMode();
+		if (isZstdSlideshowEnabled && (isSlideLayer || isSlideRenderComplete))
 			return;
 
 		var isTile = e.textMsg.startsWith('tile:');
@@ -1309,10 +1310,25 @@ app.definitions.Socket = L.Class.extend({
 			// Switching modes.
 			window.location.reload(false);
 		} else if (textMsg.startsWith('slidelayer:')) {
-			SlideBitmapManager.handleRenderSlideEvent(e);
+			if (app.isExperimentalMode()) {
+				SlideBitmapManager.handleRenderSlideEvent(e);
+			} else {
+				const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
+				this._map.fire('slidelayer', {
+					message: content,
+					image: e.image
+				});
+			}
 			return;
 		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
-			SlideBitmapManager.handleSlideRenderingComplete(e);
+			if (app.isExperimentalMode()) {
+				SlideBitmapManager.handleSlideRenderingComplete(e);
+			} else {
+				const status = textMsg.substring('sliderenderingcomplete:'.length + 1);
+				this._map.fire('sliderenderingcomplete', {
+					success: status === 'success'
+				});
+			}
 			return;
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
