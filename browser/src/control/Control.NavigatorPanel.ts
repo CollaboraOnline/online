@@ -121,6 +121,7 @@ class NavigatorPanel extends SidebarBase {
 				if (app.showNavigator) {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
+				app.map.focus();
 			}.bind(this),
 		);
 
@@ -196,6 +197,8 @@ class NavigatorPanel extends SidebarBase {
 				} else {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
+				// TODO: handle properly keyboard navigation in navigator: ESC to exit, close button
+				app.map.focus();
 			}.bind(this),
 		);
 	}
