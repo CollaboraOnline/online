@@ -71,7 +71,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.initializeInCore();
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
-		$('.main-nav').addClass('hasnotebookbar');
+		menuAndTitleBar.setNotebookbar(true);
 		this.floatingNavIcon = document.querySelector('.navigator-btn-wrapper');
 		if (this.floatingNavIcon)
 			this.floatingNavIcon.classList.add('hasnotebookbar');
@@ -100,7 +100,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$(docLogo).data('type', 'action');
 		docLogo.setAttribute('data-cooltip', iconTooltip);
 		L.control.attachTooltipEventListener(docLogo, this.map);
-		$('.main-nav').prepend(docLogoHeader);
+		menuAndTitleBar.prependDocLogoHeader(docLogoHeader);
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
@@ -126,12 +126,12 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
 		app.events.off('contextchange', this.onContextChange);
-		$('.main-nav #document-header').remove();
-		$('.main-nav').removeClass('hasnotebookbar');
+		menuAndTitleBar.removeDocumentHeader();;
+		menuAndTitleBar.removeNotebookbarClass();
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
 		if (this.floatingNavIcon)
 			this.floatingNavIcon.classList.remove('hasnotebookbar');
-		$('.main-nav #document-header').remove();
+		menuAndTitleBar.removeDocumentHeader();
 		this.clearNotebookbar();
 	},
 
@@ -186,7 +186,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (e.detail.perm === 'edit') {
 			this._showNotebookbar = true;
 			this.showTabs();
-			$('.main-nav').removeClass('readonly');
+		menuAndTitleBar.removeReadonlyClass();
 		} else {
 			this.hideTabs();
 		}
@@ -208,7 +208,7 @@ L.Control.Notebookbar = L.Control.extend({
 	hideTabs: function() {
 		$('.ui-tabs.notebookbar').hide();
 		$('.notebookbar-shortcuts-bar').hide();
-		$('.main-nav').addClass('readonly');
+		menuAndTitleBar.addReadonlyClass();
 		this.collapse();
 	},
 

@@ -85,17 +85,6 @@ html[dir='rtl'] .sub-menu-arrow {
 	display: inline-block !important;
 }
 
-.main-nav {
-	height: 0;
-	width: 100%;
-	margin: 0;
-	-webkit-overflow-scrolling: touch;
-	overflow: scroll;
-	z-index: 1010;
-	bottom: 34px !important;
-	background-color: #00000050;
-	display: none !important;
-}
 
 #main-menu {
 	position: relative;
