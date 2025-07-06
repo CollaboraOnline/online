@@ -215,24 +215,23 @@ void HTTPServerTest::testCoolPost()
 
     http::Request httpRequest(pathAndQuery, http::Request::VERB_POST);
 
-    http::Header& httpHeader = httpRequest.header();
-    httpHeader.set("Cache-Control", "max-age=0");
-    httpHeader.set("sec-ch-ua",
-                   "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"");
-    httpHeader.set("sec-ch-ua-mobile", "?0");
-    httpHeader.set("sec-ch-ua-platform", "\"Linux\"");
-    httpHeader.set("Upgrade-Insecure-Requests", "1");
-    httpHeader.set("Origin", "null");
-    httpHeader.set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
-                                 "Gecko) Chrome/114.0.0.0 Safari/537.36");
-    httpHeader.set("Accept",
-                   "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/"
-                   "webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
-    httpHeader.set("Sec-Fetch-Site", "same-site");
-    httpHeader.set("Sec-Fetch-Mode", "navigate");
-    httpHeader.set("Sec-Fetch-Dest", "iframe");
-    httpHeader.set("Accept-Encoding", "gzip, deflate, br");
-    httpHeader.set("Accept-Language", "en-US,en;q=0.9");
+    httpRequest.set("Cache-Control", "max-age=0");
+    httpRequest.set("sec-ch-ua",
+                    "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"");
+    httpRequest.set("sec-ch-ua-mobile", "?0");
+    httpRequest.set("sec-ch-ua-platform", "\"Linux\"");
+    httpRequest.set("Upgrade-Insecure-Requests", "1");
+    httpRequest.set("Origin", "null");
+    httpRequest.set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like "
+                                  "Gecko) Chrome/114.0.0.0 Safari/537.36");
+    httpRequest.set("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/"
+                    "webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+    httpRequest.set("Sec-Fetch-Site", "same-site");
+    httpRequest.set("Sec-Fetch-Mode", "navigate");
+    httpRequest.set("Sec-Fetch-Dest", "iframe");
+    httpRequest.set("Accept-Encoding", "gzip, deflate, br");
+    httpRequest.set("Accept-Language", "en-US,en;q=0.9");
 
     httpRequest.setBody(
         "access_token=choMXq0rSMcsm0RoZZWDWsrgAcE5AHwc&ui_defaults=TextRuler%3Dfalse%3BTextSidebar%"

@@ -634,9 +634,7 @@ public:
     /// Get the protocol version.
     const std::string& getVersion() const { return _version; }
 
-    /// The header object to populate.
-    /// Deprecated: Use set and add directly.
-    Header& header() { return _header; }
+    /// The header object.
     const Header& header() const { return _header; }
 
     /// Add an HTTP header field.
@@ -645,11 +643,18 @@ public:
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
 
+    // Returns true if the HTTP header field exists (case insensitive)
+    bool has(const std::string& key) const { return _header.has(key); }
+
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
     std::string get(const std::string& key, const std::string& def = std::string()) const
     {
         return _header.get(key, def);
     }
+
+    void setConnectionToken(Header::ConnectionToken token) { _header.setConnectionToken(token); }
+    void setContentType(std::string type) { _header.setContentType(std::move(type)); }
+    void setContentLength(int64_t length) { _header.setContentLength(length); }
 
     /// True if we are a Keep-Alive request.
     bool isKeepAlive() const
@@ -791,6 +796,8 @@ public:
 
 protected:
     void setStage(Stage stage) { _stage = stage; }
+
+    Header& header() { return _header; }
 
 private:
     Header _header;

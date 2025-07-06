@@ -96,10 +96,10 @@ RequestDetails::RequestDetails(http::Request& request, const std::string& servic
     const std::string& method = request.getVerb();
     _isGet = method == "GET";
     _isHead = method == "HEAD";
-    _isProxy = request.header().has("ProxyPrefix");
+    _isProxy = request.has("ProxyPrefix");
     if (_isProxy)
-        _proxyPrefix = request.header().get("ProxyPrefix");
-    _isWebSocket = Util::iequal(request.header().get("Upgrade"), "websocket");
+        _proxyPrefix = request.get("ProxyPrefix");
+    _isWebSocket = Util::iequal(request.get("Upgrade"), "websocket");
     _closeConnection =
         !request.isKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
     // request.getHost fires an exception on mobile.

@@ -2109,7 +2109,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
     httpRequest.setVerb(http::Request::VERB_GET);
-    httpRequest.header().set("Content-Type", "application/json");
+    httpRequest.set("Content-Type", "application/json");
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
 
@@ -2184,7 +2184,7 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(dicUrl, auth);
     httpRequest.setVerb(http::Request::VERB_GET);
-    httpRequest.header().set("Content-Type", "text/plain");
+    httpRequest.set("Content-Type", "text/plain");
 
     auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
     auto httpResponse = httpSession->syncRequest(httpRequest);
@@ -2238,7 +2238,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
 
     httpRequest.setVerb("DELETE");
-    httpRequest.header().set("Content-Type", "application/json");
+    httpRequest.set("Content-Type", "application/json");
 
     LOG_DBG("Sending DELETE request to WopiURI[" << uriAnonym << "] for presetfile with fileId["
                                                  << fileId << ']');
@@ -2334,7 +2334,7 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
     auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
     httpRequest.setVerb(http::Request::VERB_POST);
 
-    httpRequest.header().set("Content-Type", "application/octet-stream");
+    httpRequest.set("Content-Type", "application/octet-stream");
     httpRequest.setBody(fileContent);
 
     auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
