@@ -96,8 +96,9 @@ static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std:
 
     response.add("X-Content-Type-Options", "nosniff");
 
-    if ( closeSocket ) {
-        response.header().setConnectionToken(http::Header::ConnectionToken::Close);
+    if (closeSocket)
+    {
+        response.setConnectionToken(http::Header::ConnectionToken::Close);
     }
 
     int bufferSize = std::min<std::size_t>(st.size(), Socket::MaximumSendBufferSize);

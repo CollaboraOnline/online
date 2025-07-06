@@ -1048,7 +1048,7 @@ protected:
 
         http::Response httpResponse(http::StatusCode::SwitchingProtocols, socket->getFD());
         httpResponse.set("Upgrade", "websocket");
-        httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Upgrade);
+        httpResponse.setConnectionToken(http::Header::ConnectionToken::Upgrade);
         httpResponse.set("Sec-WebSocket-Accept", computeAccept(wsKey));
         LOGA_TRC(WebSocket, "Sending WS Upgrade response: " << httpResponse.header().toString());
         socket->send(httpResponse);
