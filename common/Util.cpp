@@ -280,6 +280,14 @@ namespace Util
                 ThreadTid = tid;
         }
         return ThreadTid;
+#elif defined _WIN32
+        if (!ThreadTid)
+        {
+            DWORD tid = GetThreadId(GetCurrentThread());
+            if (tid)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
 #else
         static long threadCounter = 1;
         if (!ThreadTid)
@@ -327,12 +335,12 @@ namespace Util
                               << " is now called [" << s << ']');
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
-        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #elif defined __EMSCRIPTEN__
         emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
 #elif defined _WIN32
         SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
-        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
@@ -358,6 +366,11 @@ namespace Util
 #elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
             strncpy(ThreadName, name, sizeof(ThreadName) - 1);
+#elif defined _WIN32
+            PWSTR description;
+            if (SUCCEEDED(GetThreadDescription(GetCurrentThread(), &description)))
+                strncpy(ThreadName, wide_string_to_string(description).c_str(), sizeof(ThreadName) - 1);
+            LocalFree(description);
 #endif
             ThreadName[sizeof(ThreadName) - 1] = '\0';
         }
