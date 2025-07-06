@@ -67,8 +67,12 @@ private:
                 << HexUtil::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
 
         // Consume the incoming data by parsing and processing the body.
-        http::RequestParser request;
-        const int64_t read = request.readData(data.data(), data.size());
+        if (!_request)
+        {
+            _request.reset(new http::RequestParser());
+        }
+
+        const int64_t read = _request->readData(data.data(), data.size());
         if (read < 0)
         {
             // Interrupt the transfer.
@@ -92,8 +96,8 @@ private:
         LOG_TRC("HandleIncomingMessage: removed " << read << " bytes to have " << data.size()
                                                   << " in the buffer");
 
-        const std::string& verb = request.getVerb();
-        const std::string& url = request.getUrl();
+        const std::string& verb = _request->getVerb();
+        const std::string& url = _request->getUrl();
 
         if (verb == http::Request::VERB_GET)
         {
@@ -178,6 +182,20 @@ private:
                 socket->send(response);
             }
         }
+        else if (verb == http::Request::VERB_POST)
+        {
+            if (url.starts_with("/post"))
+            {
+                if (_request->header().hasContentLength() &&
+                    static_cast<int64_t>(_request->getBody().size()) ==
+                        _request->header().getContentLength())
+                {
+                    http::Response response(http::StatusCode::OK, fd);
+                    response.setBody(std::string(_request->getBody()));
+                    socket->send(response);
+                }
+            }
+        }
         else
         {
             http::Response response(http::StatusCode::NotImplemented, fd);
@@ -209,6 +227,7 @@ private:
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
+    std::unique_ptr<http::RequestParser> _request;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
