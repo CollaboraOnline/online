@@ -305,20 +305,35 @@ class LayerRendererGl implements LayerRenderer {
 		this.disposed = true;
 	}
 
-	hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+	hexToRgba(
+		hex: string,
+	): { r: number; g: number; b: number; a: number } | null {
 		hex = hex.replace(/^#/, '');
 		let bigint: number;
 		if (hex.length === 3) {
 			const r = parseInt(hex.charAt(0) + hex.charAt(0), 16);
 			const g = parseInt(hex.charAt(1) + hex.charAt(1), 16);
 			const b = parseInt(hex.charAt(2) + hex.charAt(2), 16);
-			return { r, g, b };
+			return { r, g, b, a: 0 };
 		} else if (hex.length === 6) {
 			bigint = parseInt(hex, 16);
 			const r = (bigint >> 16) & 255;
 			const g = (bigint >> 8) & 255;
 			const b = bigint & 255;
-			return { r, g, b };
+			return { r, g, b, a: 0 };
+		} else if (hex.length === 8) {
+			bigint = parseInt(hex, 16);
+			const r = (bigint >> 24) & 255;
+			const g = (bigint >> 16) & 255;
+			const b = (bigint >> 8) & 255;
+			const a = bigint & 255;
+			return { r, g, b, a };
+		} else if (hex.length === 4) {
+			const r = parseInt(hex.charAt(0) + hex.charAt(0), 16);
+			const g = parseInt(hex.charAt(1) + hex.charAt(1), 16);
+			const b = parseInt(hex.charAt(2) + hex.charAt(2), 16);
+			const a = parseInt(hex.charAt(3) + hex.charAt(2), 16);
+			return { r, g, b, a };
 		} else {
 			return null;
 		}
@@ -329,9 +344,14 @@ class LayerRendererGl implements LayerRenderer {
 
 		if (slideInfo.background && slideInfo.background.fillColor) {
 			const fillColor = slideInfo.background.fillColor;
-			const rgb = this.hexToRgb(fillColor);
-			if (rgb) {
-				this.gl.clearColor(rgb.r / 255, rgb.g / 255, rgb.b / 255, 1.0);
+			const rgba = this.hexToRgba(fillColor);
+			if (rgba) {
+				this.gl.clearColor(
+					rgba.r / 255,
+					rgba.g / 255,
+					rgba.b / 255,
+					rgba.a / 255,
+				);
 			} else {
 				this.gl.clearColor(1.0, 1.0, 1.0, 1.0);
 			}
