@@ -990,11 +990,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 4px solid transparent;
 	border-top: 5px solid var(--color-main-text);
 	display: inline-block !important;
-	margin-inline-start: -8px;
+	margin-inline-start: -16px;
 	margin-inline-end: 4px;
 	margin-top: 4px;
 	cursor: pointer;
 	pointer-events: none;
+}
+
+.ui-combobox .ui-listbox-arrow {
+	margin-inline-start: -8px;
 }
 
 :dir(rtl) .ui-listbox-arrow {
