@@ -87,5 +87,3 @@ class TextSelectionHandle extends HTMLObjectSection {
 		}
 	}
 }
-
-app.definitions.textSelectionHandleSection = TextSelectionHandle;
