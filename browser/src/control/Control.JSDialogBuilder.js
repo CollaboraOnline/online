@@ -2067,7 +2067,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		controls['container'] = div;
-		div.tabIndex = -1;
+
 		if (data.class)
 			div.classList.add(data.class);
 
