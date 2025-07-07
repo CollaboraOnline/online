@@ -127,6 +127,16 @@ class SettingIframe {
 		// Add more as needed
 	};
 
+	// SVG templates for icons that are small and always present (no async load needed)
+	private readonly SVG_ICONS = {
+		download: `<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"></path></svg>`,
+		delete: `<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path></svg>`,
+		edit: `<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>`,
+		reset: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"></path></svg>`,
+		checkboxMarked: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"></path></svg>`,
+		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
+	};
+
 	private API_ENDPOINTS = {
 		uploadSettings: window.enableDebug
 			? '/wopi/settings/upload'
@@ -344,23 +354,49 @@ class SettingIframe {
 		const sectionEl = document.createElement('div');
 		sectionEl.classList.add('section');
 
-		const headingEl = document.createElement('h3');
-		headingEl.textContent = config.sectionTitle;
+		sectionEl.appendChild(this.createHeading(config.sectionTitle, 'h3'));
+		sectionEl.appendChild(this.createParagraph(config.sectionDesc));
+		sectionEl.appendChild(this.createUnorderedList(config.listId));
+		sectionEl.appendChild(
+			this.createFileInput(config.inputId, config.fileAccept),
+		);
+		sectionEl.appendChild(
+			this.createButton(config.buttonId, config.buttonText),
+		);
 
-		const descEl = document.createElement('p');
-		descEl.textContent = config.sectionDesc;
+		return sectionEl;
+	}
 
+	private createHeading(text: string, level: 'h1' | 'h2' | 'h3' = 'h3') {
+		const headingEl = document.createElement(level);
+		headingEl.textContent = text;
+		return headingEl;
+	}
+
+	private createParagraph(text: string) {
+		const pEl = document.createElement('p');
+		pEl.textContent = text;
+		return pEl;
+	}
+
+	private createUnorderedList(id: string) {
 		const ulEl = document.createElement('ul');
-		ulEl.id = config.listId;
+		ulEl.id = id;
+		return ulEl;
+	}
 
+	private createFileInput(id: string, accept: string) {
 		const inputEl = document.createElement('input');
 		inputEl.type = 'file';
 		inputEl.classList.add('hidden');
-		inputEl.id = config.inputId;
-		inputEl.accept = config.fileAccept;
+		inputEl.id = id;
+		inputEl.accept = accept;
+		return inputEl;
+	}
 
+	private createButton(id: string, text: string) {
 		const buttonEl = document.createElement('button');
-		buttonEl.id = config.buttonId;
+		buttonEl.id = id;
 		buttonEl.type = 'button';
 		buttonEl.classList.add(
 			'inline-button',
@@ -368,19 +404,18 @@ class SettingIframe {
 			'button--text-only',
 			'button--vue-secondary',
 		);
-		buttonEl.innerHTML = `
-		  <span class="button__wrapper">
-			<span class="button__text">${config.buttonText}</span>
-		  </span>
-		`;
 
-		sectionEl.appendChild(headingEl);
-		sectionEl.appendChild(descEl);
-		sectionEl.appendChild(ulEl);
-		sectionEl.appendChild(inputEl);
-		sectionEl.appendChild(buttonEl);
+		const wrapperSpan = document.createElement('span');
+		wrapperSpan.classList.add('button__wrapper');
 
-		return sectionEl;
+		const textSpan = document.createElement('span');
+		textSpan.classList.add('button__text');
+		textSpan.textContent = text; // Safely set text content
+		wrapperSpan.appendChild(textSpan);
+
+		buttonEl.appendChild(wrapperSpan);
+
+		return buttonEl;
 	}
 
 	private async fetchSettingFile(fileId: string) {
@@ -442,24 +477,12 @@ class SettingIframe {
 		const editorContainer = document.createElement('div');
 		editorContainer.id = 'browser-setting';
 		editorContainer.className = 'section';
-		// Main Title and Description
-		const mainTitle = document.createElement('h3');
-		mainTitle.textContent = _('Interface Settings');
-		editorContainer.appendChild(mainTitle);
+		editorContainer.appendChild(this.createHeading(_('Interface Settings')));
+		editorContainer.appendChild(
+			this.createParagraph(_('Set default interface preferences.')),
+		);
 
-		const mainDescription = document.createElement('p');
-		mainDescription.textContent = _('Set default interface preferences.');
-		editorContainer.appendChild(mainDescription);
-
-		const navContainer = document.createElement('div');
-		navContainer.className = 'browser-setting-tabs-nav';
-
-		const tabs = [
-			{ id: 'spreadsheet', label: 'Calc' },
-			{ id: 'text', label: 'Writer' },
-			{ id: 'presentation', label: 'Impress' },
-			{ id: 'drawing', label: 'Draw' },
-		];
+		const navContainer = this.createBrowserSettingTabsNav(editorContainer);
 
 		const commonTogglesData: Record<string, boolean> = {};
 
@@ -487,12 +510,51 @@ class SettingIframe {
 			separator.style.marginTop = '1rem';
 			editorContainer.appendChild(separator);
 		}
+
+		const contentsContainer = this.createBrowserSettingContentsContainer();
+		const actionsContainer = this.createBrowserSettingActions(
+			sharedConfigsContainer,
+		);
+
+		editorContainer.appendChild(navContainer);
+		editorContainer.appendChild(contentsContainer);
+		editorContainer.appendChild(actionsContainer);
+
+		const oldEditor = sharedConfigsContainer.querySelector('#browser-setting');
+		if (oldEditor && oldEditor.parentNode === sharedConfigsContainer) {
+			sharedConfigsContainer.replaceChild(editorContainer, oldEditor);
+		} else {
+			sharedConfigsContainer.appendChild(editorContainer);
+		}
+
+		setTimeout(() => {
+			const defaultTab = navContainer.querySelector(
+				'#bs-tab-spreadsheet',
+			) as HTMLElement;
+			if (defaultTab) {
+				defaultTab.click();
+			}
+		}, 0);
+	}
+
+	private createBrowserSettingTabsNav(
+		editorContainer: HTMLElement,
+	): HTMLDivElement {
+		const navContainer = document.createElement('div');
+		navContainer.className = 'browser-setting-tabs-nav';
+
+		const tabs = [
+			{ id: 'spreadsheet', label: 'Calc' },
+			{ id: 'text', label: 'Writer' },
+			{ id: 'presentation', label: 'Impress' },
+			{ id: 'drawing', label: 'Draw' },
+		];
+
 		tabs.forEach((tab) => {
 			const btn = document.createElement('button');
 			btn.type = 'button';
-			btn.className = '';
-			btn.id = `bs-tab-${tab.id}`; // bs => Browser Setting
 			btn.className = `browser-setting-tab`;
+			btn.id = `bs-tab-${tab.id}`;
 			btn.textContent = _(tab.label);
 			btn.addEventListener('click', () => {
 				navContainer
@@ -519,94 +581,157 @@ class SettingIframe {
 			});
 			navContainer.appendChild(btn);
 		});
+		return navContainer;
+	}
 
+	private createBrowserSettingContentsContainer(): HTMLDivElement {
 		const contentsContainer = document.createElement('div');
 		contentsContainer.id = 'tab-contents-browserSetting';
 		contentsContainer.textContent = _('Select a tab to browser settings.');
-		// Save and Reset Buttons
+		return contentsContainer;
+	}
+
+	private createBrowserSettingActions(
+		sharedConfigsContainer: HTMLElement,
+	): HTMLDivElement {
 		const actionsContainer = document.createElement('div');
 		actionsContainer.classList.add('browser-settings-editor-actions');
 
-		const resetButton = document.createElement('button');
-		resetButton.type = 'button';
-		resetButton.id = 'browser-settings-reset-button';
-		resetButton.classList.add('button', 'button--vue-secondary');
-		resetButton.title = _('Reset to default Document settings');
-		resetButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button__icon xcu-reset-icon">
-				<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24">
-					<!-- Replace with your Reset icon SVG path -->
-					<path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"></path>
-				</svg>
-				</span>
-			</span>
-			`;
-
-		resetButton.addEventListener('click', async () => {
-			const confirmed = window.confirm(
-				_('Are you sure you want to reset Document settings?'),
-			);
-			if (!confirmed) {
-				return;
-			}
-			// Deep clone the default to avoid reference issues
-			this.browserSettingOptions = JSON.parse(
-				JSON.stringify(defaultBrowserSetting),
-			);
-			this.createBrowserSettingForm(sharedConfigsContainer);
-		});
+		const resetButton = this.createButtonWithIcon(
+			'browser-settings-reset-button',
+			'reset', // Use icon key
+			_('Reset to default Document settings'),
+			['button--vue-secondary', 'xcu-reset-icon'],
+			async (button) => {
+				const confirmed = window.confirm(
+					_('Are you sure you want to reset Document settings?'),
+				);
+				if (!confirmed) {
+					return;
+				}
+				this.browserSettingOptions = JSON.parse(
+					JSON.stringify(defaultBrowserSetting),
+				);
+				this.createBrowserSettingForm(sharedConfigsContainer);
+			},
+			true, // icon-only
+		);
 		actionsContainer.appendChild(resetButton);
-		const saveButton = document.createElement('button');
-		saveButton.type = 'button';
-		saveButton.id = 'browser-settings-save-button';
-		saveButton.classList.add('button', 'button-primary');
-		saveButton.title = _('Save Document settings');
-		saveButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button--text-only">Save</span>
-			</span>
-			`;
 
-		saveButton.addEventListener('click', async () => {
-			saveButton.disabled = true;
-			this.collectBrowserSettingsFromUI(editorContainer);
+		const saveButton = this.createButtonWithText(
+			'browser-settings-save-button',
+			_('Save'),
+			_('Save Document settings'),
+			['button-primary'],
+			async (button) => {
+				button.disabled = true;
+				this.collectBrowserSettingsFromUI(
+					sharedConfigsContainer.querySelector('#browser-setting')!,
+				);
 
-			const file = new File(
-				[JSON.stringify(this.browserSettingOptions)],
-				'browsersetting.json',
-				{
-					type: 'application/json',
-					lastModified: Date.now(),
-				},
-			);
+				const file = new File(
+					[JSON.stringify(this.browserSettingOptions)],
+					'browsersetting.json',
+					{
+						type: 'application/json',
+						lastModified: Date.now(),
+					},
+				);
 
-			// Replace `cfg.uploadPath` with the actual path you're using
-			await this.uploadFile(this.PATH.browserSettingsUpload(), file);
-			saveButton.disabled = false;
-		});
+				await this.uploadFile(this.PATH.browserSettingsUpload(), file);
+				button.disabled = false;
+			},
+		);
 		actionsContainer.appendChild(saveButton);
 
-		editorContainer.appendChild(navContainer);
-		editorContainer.appendChild(contentsContainer);
-		editorContainer.appendChild(actionsContainer);
-		// Find old editor if present
-		const oldEditor = sharedConfigsContainer.querySelector('#browser-setting');
-
-		if (oldEditor && oldEditor.parentNode === sharedConfigsContainer) {
-			sharedConfigsContainer.replaceChild(editorContainer, oldEditor);
-		} else {
-			sharedConfigsContainer.appendChild(editorContainer);
-		}
-		setTimeout(() => {
-			const defaultTab = navContainer.querySelector(
-				'#bs-tab-spreadsheet',
-			) as HTMLElement;
-			if (defaultTab) {
-				defaultTab.click();
-			}
-		}, 0);
+		return actionsContainer;
 	}
+
+	private createMaterialDesignIconContainer(
+		iconSvgString: string,
+	): HTMLSpanElement {
+		const materialIconContainer = document.createElement('span');
+		materialIconContainer.setAttribute('aria-hidden', 'true');
+		materialIconContainer.setAttribute('role', 'img'); // Add role for accessibility where appropriate
+		materialIconContainer.classList.add('material-design-icon');
+		materialIconContainer.innerHTML = iconSvgString; // Safe as it's from trusted SVG_ICONS
+
+		return materialIconContainer;
+	}
+	private createButtonWithIcon(
+		id: string,
+		iconKey: keyof typeof this.SVG_ICONS, // Use a type-safe key
+		title: string,
+		classes: string[],
+		onClickHandler: (button: HTMLButtonElement) => void,
+		isIconOnly: boolean = false,
+	): HTMLButtonElement {
+		const buttonEl = document.createElement('button');
+		if (id) {
+			buttonEl.id = id;
+		}
+		buttonEl.type = 'button';
+		buttonEl.classList.add('button', ...classes);
+		if (isIconOnly) {
+			buttonEl.classList.add('button--icon-only');
+		} else {
+			buttonEl.classList.add('button--text-only');
+		}
+		buttonEl.title = title;
+
+		const wrapperSpan = document.createElement('span');
+		wrapperSpan.classList.add('button__wrapper');
+		buttonEl.appendChild(wrapperSpan);
+
+		const iconSpan = document.createElement('span');
+		iconSpan.setAttribute('aria-hidden', 'true');
+		iconSpan.classList.add('button__icon');
+		wrapperSpan.appendChild(iconSpan);
+
+		// Now correctly creates the inner span and injects the SVG
+		iconSpan.appendChild(
+			this.createMaterialDesignIconContainer(this.SVG_ICONS[iconKey]),
+		);
+
+		if (!isIconOnly) {
+			const textSpan = document.createElement('span');
+			textSpan.classList.add('button__text');
+			textSpan.textContent = title;
+			wrapperSpan.appendChild(textSpan);
+		}
+
+		buttonEl.addEventListener('click', () => onClickHandler(buttonEl));
+		return buttonEl;
+	}
+
+	private createButtonWithText(
+		id: string,
+		text: string,
+		title: string,
+		classes: string[],
+		onClickHandler: (button: HTMLButtonElement) => void,
+	): HTMLButtonElement {
+		const buttonEl = document.createElement('button');
+		if (id) {
+			buttonEl.id = id;
+		}
+		buttonEl.type = 'button';
+		buttonEl.classList.add('button', 'button--text-only', ...classes);
+		buttonEl.title = title;
+
+		const wrapperSpan = document.createElement('span');
+		wrapperSpan.classList.add('button__wrapper');
+		buttonEl.appendChild(wrapperSpan);
+
+		const textSpan = document.createElement('span');
+		textSpan.classList.add('button__text');
+		textSpan.textContent = text;
+		wrapperSpan.appendChild(textSpan);
+
+		buttonEl.addEventListener('click', () => onClickHandler(buttonEl));
+		return buttonEl;
+	}
+
 	public renderSettingsOption(data: any, pathPrefix: string = ''): HTMLElement {
 		const container = document.createElement('div');
 		if (typeof data !== 'object' || data === null) {
@@ -635,95 +760,134 @@ class SettingIframe {
 					value !== null &&
 					!Array.isArray(value)
 				) {
-					const fieldset = document.createElement('fieldset');
-					fieldset.classList.add('xcu-settings-fieldset');
-					const legend = document.createElement('legend');
-					legend.textContent = _(this.settingLabels[key] || key);
-					fieldset.appendChild(legend);
-					const childContent = this.renderSettingsOption(value, uniqueId);
-					fieldset.appendChild(childContent);
-					container.appendChild(fieldset);
+					container.appendChild(this.createFieldset(key, value, uniqueId));
 				} else {
-					const isCheck: boolean = value;
-					const checkboxWrapper = document.createElement('span');
-					checkboxWrapper.className = `checkbox-radio-switch checkbox-radio-switch-checkbox ${isCheck ? '' : 'checkbox-radio-switch--checked'} checkbox-wrapper`;
-					checkboxWrapper.id = uniqueId + '-container';
-
-					const inputCheckbox = document.createElement('input');
-					inputCheckbox.type = 'checkbox';
-					inputCheckbox.className = 'checkbox-radio-switch-input';
-					inputCheckbox.id = uniqueId + '-input';
-					inputCheckbox.checked = isCheck;
-					checkboxWrapper.appendChild(inputCheckbox);
-
-					const checkboxContent = document.createElement('span');
-					checkboxContent.className =
-						'checkbox-content checkbox-content-checkbox checkbox-content--has-text checkbox-radio-switch__content';
-					checkboxContent.id = uniqueId + '-content';
-					checkboxWrapper.appendChild(checkboxContent);
-
-					const checkboxContentIcon = document.createElement('span');
-					checkboxContentIcon.className = `checkbox-content-icon checkbox-radio-switch__icon ${isCheck ? '' : 'checkbox-content-icon--checked'}`;
-					checkboxContentIcon.ariaHidden = 'true';
-					checkboxContent.appendChild(checkboxContentIcon);
-
-					const materialIcon = document.createElement('span');
-					materialIcon.className = `material-design-icon ${isCheck ? 'checkbox-marked-icon' : 'checkbox-blank-outline-icon'}`;
-					materialIcon.ariaHidden = 'true';
-
-					const iconSvg = `
-					<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-					${
-						isCheck
-							? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-							<!---->
-						  </path>`
-							: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-							<!---->
-						  </path>`
-					}
-					</svg>`;
-
-					checkboxContentIcon.appendChild(materialIcon);
-					materialIcon.innerHTML = iconSvg;
-
-					const textElement = document.createElement('span');
-					textElement.className =
-						'checkbox-content__text checkbox-radio-switch__text';
-					textElement.textContent = _(this.settingLabels[key] || key);
-					checkboxContent.appendChild(textElement);
-
-					checkboxWrapper.addEventListener('click', () => {
-						const currentChecked = !(inputCheckbox as HTMLInputElement).checked;
-						inputCheckbox.checked = currentChecked;
-						if (currentChecked) {
-							checkboxWrapper.classList.remove(
-								'checkbox-radio-switch--checked',
-							);
-						} else {
-							checkboxWrapper.classList.add('checkbox-radio-switch--checked');
-						}
-						materialIcon.innerHTML = `
-							<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-							${
-								currentChecked
-									? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-									<!---->
-								</path>`
-									: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-									<!---->
-								</path>`
-							}
-							</svg>`;
-
-						data[key] = currentChecked;
-					});
-
-					container.appendChild(checkboxWrapper);
+					container.appendChild(
+						this.createCheckboxToggle(key, value, uniqueId, data),
+					);
 				}
 			}
 		}
 		return container;
+	}
+
+	private createFieldset(
+		key: string,
+		value: any,
+		uniqueId: string,
+	): HTMLFieldSetElement {
+		const fieldset = document.createElement('fieldset');
+		fieldset.classList.add('xcu-settings-fieldset');
+		const legend = document.createElement('legend');
+		legend.textContent = _(this.settingLabels[key] || key);
+		fieldset.appendChild(legend);
+		const childContent = this.renderSettingsOption(value, uniqueId);
+		fieldset.appendChild(childContent);
+		return fieldset;
+	}
+
+	// Helper to create a checkbox input element.
+	private createCheckboxInput(
+		id: string,
+		isChecked: boolean,
+		isDisabled: boolean,
+	): HTMLInputElement {
+		const inputCheckbox = document.createElement('input');
+		inputCheckbox.type = 'checkbox';
+		inputCheckbox.className = 'checkbox-radio-switch-input';
+		inputCheckbox.id = id + '-input';
+		inputCheckbox.checked = isChecked;
+		inputCheckbox.disabled = isDisabled;
+		return inputCheckbox;
+	}
+
+	private createCheckbox(
+		id: string,
+		isChecked: boolean,
+		labelText: string,
+		onClickHandler: (
+			checkboxInput: HTMLInputElement,
+			checkboxWrapper: HTMLSpanElement,
+			materialIconContainer: HTMLSpanElement, // This is the inner span holding the SVG
+		) => void,
+		isDisabled: boolean = false,
+		warningText: string | null = null,
+	): HTMLSpanElement {
+		const checkboxWrapper = document.createElement('span');
+		checkboxWrapper.className = `checkbox-radio-switch checkbox-radio-switch-checkbox ${isChecked ? '' : 'checkbox-radio-switch--checked'} checkbox-wrapper`;
+		checkboxWrapper.id = id + '-container';
+
+		// Use the new helper here
+		const inputCheckbox = this.createCheckboxInput(id, isChecked, isDisabled);
+		checkboxWrapper.appendChild(inputCheckbox);
+
+		const checkboxContent = document.createElement('span');
+		checkboxContent.className =
+			'checkbox-content checkbox-content-checkbox checkbox-content--has-text checkbox-radio-switch__content';
+		checkboxContent.id = id + '-content';
+		checkboxWrapper.appendChild(checkboxContent);
+
+		const checkboxContentIcon = document.createElement('span');
+		checkboxContentIcon.className = `checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
+		checkboxContentIcon.ariaHidden = 'true';
+		checkboxContent.appendChild(checkboxContentIcon);
+
+		const materialIconContainer = this.createMaterialDesignIconContainer(
+			isChecked
+				? this.SVG_ICONS.checkboxMarked
+				: this.SVG_ICONS.checkboxBlankOutline,
+		);
+		checkboxContentIcon.appendChild(materialIconContainer);
+
+		const textElement = document.createElement('span');
+		textElement.className =
+			'checkbox-content__text checkbox-radio-switch__text';
+		textElement.textContent = labelText;
+		checkboxContent.appendChild(textElement);
+
+		if (warningText) {
+			const warningEl = document.createElement('span');
+			warningEl.className = 'ui-state-error-text';
+			warningEl.textContent = warningText;
+			checkboxContent.appendChild(warningEl);
+		}
+
+		if (!isDisabled) {
+			checkboxWrapper.addEventListener('click', () => {
+				onClickHandler(inputCheckbox, checkboxWrapper, materialIconContainer);
+			});
+		} else {
+			checkboxWrapper.classList.add('checkbox-radio-switch--disabled');
+		}
+
+		return checkboxWrapper;
+	}
+
+	private createCheckboxToggle(
+		key: string,
+		value: boolean,
+		uniqueId: string,
+		data: any,
+	): HTMLSpanElement {
+		const labelText = _(this.settingLabels[key] || key);
+
+		return this.createCheckbox(
+			uniqueId,
+			value,
+			labelText,
+			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
+				const currentChecked = !inputCheckbox.checked;
+				inputCheckbox.checked = currentChecked;
+				checkboxWrapper.classList.toggle(
+					'checkbox-radio-switch--checked',
+					!currentChecked,
+				);
+				materialIconContainer.innerHTML = currentChecked
+					? this.SVG_ICONS.checkboxMarked
+					: this.SVG_ICONS.checkboxBlankOutline;
+				data[key] = currentChecked;
+			},
+		);
 	}
 
 	private collectBrowserSettingsFromUI(
@@ -775,50 +939,68 @@ class SettingIframe {
 		container.appendChild(inputCheckbox);
 
 		const options = document.createElement('div');
-		options.className = 'toggle-options'; // You can style with flex and gap
-
-		// Create option for Notebookbar
-		const notebookOption = document.createElement('div');
-		notebookOption.className = 'toggle-option';
-		const notebookImage = document.createElement('img');
-		notebookImage.src = 'images/Notebookbar.svg';
-		notebookImage.alt = 'Notebookbar';
-		notebookImage.className = `toggle-image ${!setting.value ? 'selected' : ''}`;
-		const notebookLabel = document.createElement('div');
-		notebookLabel.textContent = _('Notebookbar view');
-		notebookLabel.className = 'toggle-image-label';
-		notebookOption.appendChild(notebookImage);
-		notebookOption.appendChild(notebookLabel);
-
-		// Create option for Compact mode
-		const compactOption = document.createElement('div');
-		compactOption.className = 'toggle-option';
-		const compactImage = document.createElement('img');
-		compactImage.src = 'images/Compact.svg';
-		compactImage.alt = 'Compact';
-		compactImage.className = `toggle-image ${setting.value ? 'selected' : ''}`;
-		const compactLabel = document.createElement('div');
-		compactLabel.textContent = _('Compact view');
-		compactLabel.className = 'toggle-image-label';
-		compactOption.appendChild(compactImage);
-		compactOption.appendChild(compactLabel);
+		options.className = 'toggle-options';
 
 		const select = (useCompact: boolean) => {
 			inputCheckbox.checked = useCompact;
 			setting.value = useCompact;
-
 			notebookImage.classList.toggle('selected', !useCompact);
 			compactImage.classList.toggle('selected', useCompact);
 		};
 
-		notebookImage.addEventListener('click', () => select(false));
-		compactImage.addEventListener('click', () => select(true));
+		const notebookOption = this.createCompactToggleOption(
+			'Notebookbar.svg',
+			'Notebookbar',
+			_('Notebookbar view'),
+			!setting.value,
+			() => select(false),
+		);
+		const compactOption = this.createCompactToggleOption(
+			'Compact.svg',
+			'Compact',
+			_('Compact view'),
+			setting.value,
+			() => select(true),
+		);
+
+		const notebookImage = notebookOption.querySelector(
+			'.toggle-image',
+		) as HTMLImageElement;
+		const compactImage = compactOption.querySelector(
+			'.toggle-image',
+		) as HTMLImageElement;
 
 		options.appendChild(notebookOption);
 		options.appendChild(compactOption);
 		container.appendChild(options);
 
 		return container;
+	}
+
+	private createCompactToggleOption(
+		imageSrc: string,
+		imageAlt: string,
+		labelText: string,
+		isSelected: boolean,
+		onClick: () => void,
+	): HTMLDivElement {
+		const optionDiv = document.createElement('div');
+		optionDiv.className = 'toggle-option';
+
+		const image = document.createElement('img');
+		image.src = `images/${imageSrc}`;
+		image.alt = imageAlt;
+		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
+		optionDiv.appendChild(image);
+
+		const label = document.createElement('div');
+		label.textContent = labelText;
+		label.className = 'toggle-image-label';
+		optionDiv.appendChild(label);
+
+		image.addEventListener('click', onClick);
+
+		return optionDiv;
 	}
 
 	private async uploadFile(filePath: string, file: File): Promise<void> {
@@ -866,155 +1048,126 @@ class SettingIframe {
 
 		items.forEach((item) => {
 			const fileName = this.getFilename(item.uri, false);
-
 			const li = document.createElement('li');
 			li.classList.add('list-item__wrapper');
 
 			const listItemDiv = document.createElement('div');
 			listItemDiv.classList.add('list-item');
 
-			const anchor = document.createElement('div');
-			anchor.classList.add('list-item__anchor');
-
-			const listItemContentDiv = document.createElement('div');
-			listItemContentDiv.classList.add('list-item-content');
-
-			const listItemContentMainDiv = document.createElement('div');
-			listItemContentMainDiv.classList.add('list-item-content__main');
-
-			const listItemContentNameDiv = document.createElement('div');
-			listItemContentNameDiv.classList.add('list-item-content__name');
-			listItemContentNameDiv.textContent = fileName;
-
-			listItemContentMainDiv.appendChild(listItemContentNameDiv);
-			listItemContentDiv.appendChild(listItemContentMainDiv);
-			anchor.appendChild(listItemContentDiv);
-
-			const extraActionsDiv = document.createElement('div');
-			extraActionsDiv.classList.add('list-item-content__extra-actions');
-
-			const downloadBtn = document.createElement('button');
-			downloadBtn.type = 'button';
-			downloadBtn.classList.add(
-				'button',
-				'button--icon-only',
-				'button--vue-secondary',
-				'download-icon',
+			listItemDiv.appendChild(this.createListItemAnchor(fileName));
+			listItemDiv.appendChild(
+				this.createListItemActions(item, category, fileName),
 			);
 
-			// todo : replace svg to css class?
-			downloadBtn.innerHTML = `
-				<span class="button__wrapper">
-					<span aria-hidden="true" class="button__icon">
-						<span aria-hidden="true" role="img" class="material-design-icon">
-							<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24" class="material-design-icon__svg">
-								<path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"></path>
-							</svg>
-						</span>
-					</span>
-				</span>
-			`;
-			downloadBtn.addEventListener('click', () => {
-				window.open(item.uri, '_blank');
-			});
-
-			const deleteBtn = document.createElement('button');
-			deleteBtn.type = 'button';
-			deleteBtn.classList.add(
-				'button',
-				'button--icon-only',
-				'button--vue-secondary',
-				'delete-icon',
-			);
-			deleteBtn.innerHTML = `
-				<span class="button__wrapper">
-					<span aria-hidden="true" class="button__icon">
-						<span aria-hidden="true" role="img" class="material-design-icon">
-							<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24" class="material-design-icon__svg">
-								<path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19
-									A2,2 0 0,0 8,21H16
-									A2,2 0 0,0 18,19V7H6V19Z"></path>
-							</svg>
-						</span>
-					</span>
-				</span>
-			`;
-			deleteBtn.addEventListener('click', async () => {
-				try {
-					if (!window.accessToken) {
-						throw new Error('Access token is missing.');
-					}
-					if (!window.wopiSettingBaseUrl) {
-						throw new Error('wopiSettingBaseUrl is missing.');
-					}
-
-					const fileId =
-						this.settingConfigBasePath() +
-						category +
-						'/' +
-						this.getFilename(item.uri, false);
-
-					const formData = new FormData();
-					formData.append('fileId', fileId);
-					formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
-					formData.append('accessToken', window.accessToken);
-
-					const response = await fetch(this.API_ENDPOINTS.deleteSharedConfig, {
-						method: 'POST',
-						headers: {
-							Authorization: `Bearer ${window.accessToken}`,
-						},
-						body: formData,
-					});
-
-					if (!response.ok) {
-						throw new Error(`Delete failed: ${response.statusText}`);
-					}
-
-					await this.fetchAndPopulateSharedConfigs();
-				} catch (error: unknown) {
-					SettingIframe.showErrorModal(
-						_(
-							'Something went wrong while deleting the file. Please try refreshing the page.',
-						),
-					);
-					console.error('Error deleting file:', error);
-				}
-			});
-
-			extraActionsDiv.append(downloadBtn, deleteBtn);
-
-			// Add an "Edit" button for wordbook file only
-			if (category === '/wordbook') {
-				const editBtn = document.createElement('button');
-				editBtn.type = 'button';
-				editBtn.classList.add(
-					'button',
-					'button--icon-only',
-					'button--vue-secondary',
-					'edit-icon',
-				);
-				editBtn.innerHTML = `
-					<span class="button__wrapper">
-						<span aria-hidden="true" class="button__icon">
-							<span aria-hidden="true" role="img" class="material-design-icon">
-								<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24">
-									<path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
-								</svg>
-							</span>
-						</span>
-					</span>
-				`;
-				editBtn.addEventListener('click', async () => {
-					await this.fetchWordbookFile(item.uri);
-				});
-				extraActionsDiv.appendChild(editBtn);
-			}
-
-			listItemDiv.append(anchor, extraActionsDiv);
 			li.appendChild(listItemDiv);
 			listEl.appendChild(li);
 		});
+	}
+
+	private createListItemAnchor(fileName: string): HTMLDivElement {
+		const anchor = document.createElement('div');
+		anchor.classList.add('list-item__anchor');
+
+		const listItemContentDiv = document.createElement('div');
+		listItemContentDiv.classList.add('list-item-content');
+
+		const listItemContentMainDiv = document.createElement('div');
+		listItemContentMainDiv.classList.add('list-item-content__main');
+
+		const listItemContentNameDiv = document.createElement('div');
+		listItemContentNameDiv.classList.add('list-item-content__name');
+		listItemContentNameDiv.textContent = fileName;
+
+		listItemContentMainDiv.appendChild(listItemContentNameDiv);
+		listItemContentDiv.appendChild(listItemContentMainDiv);
+		anchor.appendChild(listItemContentDiv);
+
+		return anchor;
+	}
+
+	private createListItemActions(
+		item: ConfigItem,
+		category: string,
+		fileName: string,
+	): HTMLDivElement {
+		const extraActionsDiv = document.createElement('div');
+		extraActionsDiv.classList.add('list-item-content__extra-actions');
+
+		extraActionsDiv.appendChild(
+			this.createButtonWithIcon(
+				'', // No specific ID needed for list item buttons
+				'download', // Use icon key
+				item.uri, // Use URI as title for download link
+				['button--vue-secondary', 'download-icon'],
+				(button) => window.open(item.uri, '_blank'),
+				true,
+			),
+		);
+		extraActionsDiv.appendChild(
+			this.createButtonWithIcon(
+				'',
+				'delete', // Use icon key
+				_('Delete'),
+				['button--vue-secondary', 'delete-icon'],
+				async (button) => {
+					try {
+						if (!window.accessToken) {
+							throw new Error('Access token is missing.');
+						}
+						if (!window.wopiSettingBaseUrl) {
+							throw new Error('wopiSettingBaseUrl is missing.');
+						}
+
+						const fileId =
+							this.settingConfigBasePath() + category + '/' + fileName;
+
+						const formData = new FormData();
+						formData.append('fileId', fileId);
+						formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
+						formData.append('accessToken', window.accessToken);
+
+						const response = await fetch(
+							this.API_ENDPOINTS.deleteSharedConfig,
+							{
+								method: 'POST',
+								headers: {
+									Authorization: `Bearer ${window.accessToken}`,
+								},
+								body: formData,
+							},
+						);
+
+						if (!response.ok) {
+							throw new Error(`Delete failed: ${response.statusText}`);
+						}
+
+						await this.fetchAndPopulateSharedConfigs();
+					} catch (error: unknown) {
+						SettingIframe.showErrorModal(
+							_(
+								'Something went wrong while deleting the file. Please try refreshing the page.',
+							),
+						);
+						console.error('Error deleting file:', error);
+					}
+				},
+				true,
+			),
+		);
+
+		if (category === '/wordbook') {
+			extraActionsDiv.appendChild(
+				this.createButtonWithIcon(
+					'',
+					'edit', // Use icon key
+					_('Edit'),
+					['button--vue-secondary', 'edit-icon'],
+					async (button) => await this.fetchWordbookFile(item.uri),
+					true,
+				),
+			);
+		}
+		return extraActionsDiv;
 	}
 
 	private generateViewSettingUI(data: any) {
@@ -1033,13 +1186,8 @@ class SettingIframe {
 		viewContainer.id = 'view-section';
 		viewContainer.classList.add('section');
 
-		let elem = document.createElement('h3');
-		elem.textContent = _('View Settings');
-		viewContainer.appendChild(elem);
-
-		elem = document.createElement('p');
-		elem.textContent = _('Adjust view settings.');
-		viewContainer.appendChild(elem);
+		viewContainer.appendChild(this.createHeading(_('View Settings')));
+		viewContainer.appendChild(this.createParagraph(_('Adjust view settings.')));
 
 		const divContainer = document.createElement('div');
 		divContainer.id = 'view-editor';
@@ -1049,9 +1197,7 @@ class SettingIframe {
 		fieldset.classList.add('view-settings-fieldset');
 		divContainer.appendChild(fieldset);
 
-		elem = document.createElement('legend');
-		elem.textContent = _('Option');
-		fieldset.appendChild(elem);
+		fieldset.appendChild(this.createLegend(_('Option')));
 
 		for (const key in data) {
 			if (typeof data[key] === 'boolean') {
@@ -1059,160 +1205,105 @@ class SettingIframe {
 				if (!label) {
 					continue;
 				}
-
-				const checkboxContainer = document.createElement('span');
-				checkboxContainer.className =
-					'checkbox-radio-switch checkbox-radio-switch-checkbox checkbox-wrapper';
-				fieldset.appendChild(checkboxContainer);
-
-				const checkbox = document.createElement('input');
-				checkbox.type = 'checkbox';
-				checkbox.className = 'checkbox-radio-switch-input';
-				checkbox.checked = data[key];
-				if (key === 'accessibilityState') {
-					checkbox.checked = checkbox.checked && window.enableAccessibility;
-					checkbox.disabled = !window.enableAccessibility;
-				}
-				checkboxContainer.appendChild(checkbox);
-
-				const checkboxContent = document.createElement('span');
-				checkboxContent.className =
-					'checkbox-content checkbox-content-checkbox checkbox-content--has-text checkbox-radio-switch__content';
-				checkboxContainer.appendChild(checkboxContent);
-
-				const checkboxIcon = document.createElement('span');
-				checkboxIcon.className = `checkbox-content-icon checkbox-radio-switch__icon`;
-				checkboxIcon.ariaHidden = 'true';
-				checkboxContent.appendChild(checkboxIcon);
-
-				const materialIcon = document.createElement('span');
-				materialIcon.className = 'material-design-icon checkbox-marked-icon';
-				materialIcon.ariaHidden = 'true';
-
-				const iconSvg = `
-					<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-					${
-						checkbox.checked
-							? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-						  </path>`
-							: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-						  </path>`
-					}
-					</svg>`;
-
-				materialIcon.innerHTML = iconSvg;
-				checkboxIcon.appendChild(materialIcon);
-
-				const checkboxText = document.createElement('span');
-				checkboxText.className =
-					'checkbox-content__text checkbox-radio-switch__text';
-				checkboxText.textContent = label;
-				checkboxContent.appendChild(checkboxText);
-
-				if (checkbox.disabled) {
-					if (key === 'accessibilityState') {
-						// This has no effect if coolwsd accessibility.enable is not set. So present as disabled,
-						// and warn that it cannot be toggled unless coolwsd accessibility is on so we don't have
-						// a situation of a checkbox that doesn't actually do anything.
-						const warningText = document.createElement('span');
-						warningText.className = 'ui-state-error-text';
-						warningText.textContent = _(
-							'(Warning: Server accessibility must be enabled to toggle)',
-						);
-						checkboxContent.appendChild(warningText);
-					}
-				} else {
-					checkboxContainer.addEventListener(
-						'click',
-						function () {
-							const currentChecked = !this.checked;
-							this.checked = currentChecked;
-							if (currentChecked) {
-								checkboxContainer.classList.remove(
-									'checkbox-radio-switch--checked',
-								);
-							} else {
-								checkboxContainer.classList.add(
-									'checkbox-radio-switch--checked',
-								);
-							}
-							materialIcon.innerHTML = `
-	<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-	${
-		currentChecked
-			? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-							</path>`
-			: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-							</path>`
-	}
-	</svg>`;
-							data[key] = currentChecked;
-						}.bind(checkbox),
-					);
-				}
+				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
 			}
 		}
 
+		viewContainer.appendChild(this.createViewSettingActions());
+		settingsContainer.appendChild(viewContainer);
+	}
+
+	private createLegend(text: string): HTMLLegendElement {
+		const legend = document.createElement('legend');
+		legend.textContent = text;
+		return legend;
+	}
+
+	private createViewSettingCheckbox(
+		key: string,
+		data: any,
+		label: string,
+	): HTMLSpanElement {
+		const isChecked = data[key];
+		let isDisabled = false;
+		let warningText: string | null = null;
+
+		if (key === 'accessibilityState') {
+			isDisabled = !window.enableAccessibility;
+			if (isDisabled) {
+				warningText = _(
+					'(Warning: Server accessibility must be enabled to toggle)',
+				);
+			}
+		}
+
+		// Replaced direct checkbox input creation with the new helper
+		return this.createCheckbox(
+			key,
+			isChecked && !isDisabled,
+			label,
+			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
+				const currentChecked = !inputCheckbox.checked;
+				inputCheckbox.checked = currentChecked;
+				checkboxWrapper.classList.toggle(
+					'checkbox-radio-switch--checked',
+					!currentChecked,
+				);
+				materialIconContainer.innerHTML = currentChecked
+					? this.SVG_ICONS.checkboxMarked
+					: this.SVG_ICONS.checkboxBlankOutline;
+				data[key] = currentChecked;
+			},
+			isDisabled,
+			warningText,
+		);
+	}
+
+	private createViewSettingActions(): HTMLDivElement {
 		const actionsContainer = document.createElement('div');
 		actionsContainer.classList.add('xcu-editor-actions');
 
-		const resetButton = document.createElement('button');
-		resetButton.type = 'button';
-		resetButton.id = 'xcu-reset-button';
-		resetButton.classList.add('button', 'button--vue-secondary');
-		resetButton.title = _('Reset to default View settings');
-		resetButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button__icon xcu-reset-icon">
-				<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24">
-					<!-- Replace with your Reset icon SVG path -->
-					<path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"></path>
-				</svg>
-				</span>
-			</span>
-			`;
-
-		resetButton.addEventListener('click', async () => {
-			const confirmed = window.confirm(
-				_('Are you sure you want to reset View Settings?'),
-			);
-			if (!confirmed) {
-				return;
-			}
-			resetButton.disabled = true;
-			const defaultViewSetting = { accessibilityState: false };
-			this.uploadViewSettingFile(
-				'viewsetting.json',
-				JSON.stringify(defaultViewSetting),
-			);
-			resetButton.disabled = false;
-		});
-
-		const saveButton = document.createElement('button');
-		saveButton.type = 'button';
-		saveButton.id = 'xcu-save-button';
-		saveButton.classList.add('button', 'button-primary');
-		saveButton.title = _('Save View Settings');
-		saveButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button--text-only">Save</span>
-			</span>
-			`;
-
-		saveButton.addEventListener('click', async () => {
-			saveButton.disabled = true;
-			this.uploadViewSettingFile(
-				'viewsetting.json',
-				JSON.stringify(this._viewSetting),
-			);
-			saveButton.disabled = false;
-		});
-
+		const resetButton = this.createButtonWithIcon(
+			'xcu-reset-button',
+			'reset', // Use icon key
+			_('Reset to default View settings'),
+			['button--vue-secondary', 'xcu-reset-icon'],
+			async (button) => {
+				const confirmed = window.confirm(
+					_('Are you sure you want to reset View Settings?'),
+				);
+				if (!confirmed) {
+					return;
+				}
+				button.disabled = true;
+				const defaultViewSetting = { accessibilityState: false };
+				await this.uploadViewSettingFile(
+					'viewsetting.json',
+					JSON.stringify(defaultViewSetting),
+				);
+				button.disabled = false;
+			},
+			true,
+		);
 		actionsContainer.appendChild(resetButton);
-		actionsContainer.appendChild(saveButton);
-		viewContainer.appendChild(actionsContainer);
 
-		settingsContainer.appendChild(viewContainer);
+		const saveButton = this.createButtonWithText(
+			'xcu-save-button',
+			_('Save'),
+			_('Save View Settings'),
+			['button-primary'],
+			async (button) => {
+				button.disabled = true;
+				await this.uploadViewSettingFile(
+					'viewsetting.json',
+					JSON.stringify(this._viewSetting),
+				);
+				button.disabled = false;
+			},
+		);
+		actionsContainer.appendChild(saveButton);
+
+		return actionsContainer;
 	}
 
 	private async populateSharedConfigUI(data: ConfigData): Promise<void> {
