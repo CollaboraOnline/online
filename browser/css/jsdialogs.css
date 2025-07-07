@@ -800,6 +800,15 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border-left: none;
 	border-right: none;
 }
+
+.autofilter #list.ui-treeview {
+	max-height: 250px;
+}
+
+.autofilter #list.ui-treeview,
+#check_list_box.autofilter.ui-treeview {
+	min-height: auto;
+}
 /* checkbox */
 
 .jsdialog.checkbutton {
