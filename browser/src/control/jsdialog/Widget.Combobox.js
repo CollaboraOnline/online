@@ -199,7 +199,6 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.setAttribute('aria-controls', dropDownId);
 
 	var button = L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
-	button.tabIndex = '0';
 	button.setAttribute('aria-haspopup', true);
 	button.setAttribute('aria-expanded', false);
 	button.setAttribute('aria-controls', dropDownId);
