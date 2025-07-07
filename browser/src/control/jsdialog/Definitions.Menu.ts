@@ -445,8 +445,23 @@ menuDefinitions.set('Presentation', [
 function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
 	// please see enum AutoLayout in autolayout.hxx. this is the actual WhatLayout sequence
 	// based on the visual position of the icons in the popup.
-	const buttonIndexToLayout = [
-		20, 0, 1, 3, 19, 32, 15, 12, 16, 14, 18, 34, 27, 28, 29, 30,
+	const layoutMap = [
+		{ layout: 20, text: _('Blank Slide') },
+		{ layout: 0, text: _('Title Slide') },
+		{ layout: 1, text: _('Title, Content') },
+		{ layout: 3, text: _('Title and 2 Content') },
+		{ layout: 19, text: _('Title Only') },
+		{ layout: 32, text: _('Centered Text') },
+		{ layout: 15, text: _('Title, 2 Content and Content') },
+		{ layout: 12, text: _('Title, Content and 2 Content') },
+		{ layout: 16, text: _('Title, 2 Content over Content') },
+		{ layout: 14, text: _('Title, Content over Content') },
+		{ layout: 18, text: _('Title, 4 Content') },
+		{ layout: 34, text: _('Title, 6 Content') },
+		{ layout: 27, text: _('Vertical Title, Text, Chart') },
+		{ layout: 28, text: _('Vertical Title, Vertical Text') },
+		{ layout: 29, text: _('Title, Vertical Text') },
+		{ layout: 30, text: _('Title, Vertical Text, Clipart') },
 	];
 
 	const grid = {
@@ -463,8 +478,8 @@ function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
 				id: 'layout' + j,
 				type: 'toolitem',
 				command:
-					'.uno:' + unoCommand + '?WhatLayout:long=' + buttonIndexToLayout[j],
-				text: _('Layout %N').replace('%N', String(j)),
+					'.uno:' + unoCommand + '?WhatLayout:long=' + layoutMap[j].layout,
+				text: layoutMap[j].text,
 				noLabel: true,
 				left: j % 4,
 				top: (i / 4) % 4,
