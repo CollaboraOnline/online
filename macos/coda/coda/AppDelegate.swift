@@ -27,4 +27,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
+    /**
+     * For convenience - quit when last doc window closes
+     */
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        true
+    }
 }
