@@ -188,13 +188,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		if (hasShare && hasRevisionHistory) {
 			content.push(
 				{
+					'id': 'file-exportas-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				}, {
 					'type': 'container',
 					'children': [
 						{
-							'id': 'file-exportas-break',
-							'type': 'separator',
-							'orientation': 'vertical'
-						}, {
 							'id': 'ShareAs',
 							'class': 'unoShareAs',
 							'type': 'customtoolitem',
@@ -210,58 +210,63 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'command': 'rev-history',
 							'inlineLabel': true,
 							'accessibility': { focusBack: true, combination: 'RH' }
-						}, {
-							'id': 'file-revhistory-break',
-							'type': 'separator',
-							'orientation': 'vertical'
 						}
 					],
 					'vertical': true
-				});
+				}, {
+					'id': 'file-revhistory-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				}
+			);
 		} else if (hasShare) {
-			content.push({
-				'type': 'container',
-				'children': [
-					{
-						'id': 'file-exportas-break',
-						'type': 'separator',
-						'orientation': 'vertical'
-					}, {
-						'id': 'ShareAs',
-						'class': 'unoShareAs',
-						'type': 'bigcustomtoolitem',
-						'text': _('Share'),
-						'command': 'shareas',
-						'accessibility': { focusBack: true, combination: 'SH' }
-					}, {
-						'id': 'file-revhistory-break',
-						'type': 'separator',
-						'orientation': 'vertical'
-					}
-				]
-			});
+			content.push(
+				{
+					'id': 'file-exportas-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				}, {
+					'type': 'container',
+					'children': [
+						{
+							'id': 'ShareAs',
+							'class': 'unoShareAs',
+							'type': 'bigcustomtoolitem',
+							'text': _('Share'),
+							'command': 'shareas',
+							'accessibility': { focusBack: true, combination: 'SH' }
+						}
+					]
+				}, {
+					'id': 'file-shareas-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				}
+			);
 		} else if (hasRevisionHistory) {
-			content.push({
+			content.push(
+				{
+					'id': 'file-exportas-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				}, {
 				'type': 'container',
 				'children': [
 					{
-						'id': 'file-exportas-break',
-						'type': 'separator',
-						'orientation': 'vertical'
-					}, {
 						'id': 'Rev-History',
 						'class': 'unoRev-History',
 						'type': 'bigcustomtoolitem',
 						'text': _('See history'),
 						'command': 'rev-history',
 						'accessibility': { focusBack: true, combination: 'RH' }
-					}, {
-						'id': 'file-revhistory-break',
-						'type': 'separator',
-						'orientation': 'vertical'
 					}
 				]
-			});
+				}, {
+					'id': 'file-revhistory-break',
+					'type': 'separator',
+					'orientation': 'vertical'
+				}
+			);
 		}
 
 		if (!this.map['wopi'].HidePrintOption) {
