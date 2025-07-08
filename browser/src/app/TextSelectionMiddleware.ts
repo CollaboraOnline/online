@@ -51,8 +51,12 @@ class TextSelections {
 		if (this.active) return;
 
 		this.active = true;
-		this.start.setShowSection(true);
-		this.end.setShowSection(true);
+
+		if (this.startRectangle && this.endRectangle) {
+			this.start.setShowSection(true);
+			this.end.setShowSection(true);
+			this.updateMarkers();
+		}
 	}
 
 	public static isActive(): boolean {
