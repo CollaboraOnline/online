@@ -4,13 +4,19 @@
 }
 
 #document-name-input-loading-bar {
-	width: 100%;
+	width: 90%;
 	height: 2px;
 	background-color: var(--color-background-dark);
 	overflow: hidden;
 	position: relative;
 	display: none;
-	margin-block-end: -7px;
+	margin: auto;
+}
+
+.loading-bar-container {
+	text-align: center;
+	width: 95%;
+	display: block;
 }
 
 #document-name-input-loading-bar::after {

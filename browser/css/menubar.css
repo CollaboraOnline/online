@@ -44,7 +44,6 @@
 	justify-content: center;
 	gap: 5px;
 	flex-direction: column;
-	width: fit-content;
 	flex: 1 1 auto;
 }
 
