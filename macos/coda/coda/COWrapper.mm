@@ -34,6 +34,7 @@
 COOLWSD *coolwsd = nullptr;
 
 static int closeNotificationPipeForForwardingThread[2];
+static std::thread coolwsdThread;
 
 /**
  * Wrapper to be able to call the C++ code from Swift.
@@ -59,7 +60,7 @@ static int closeNotificationPipeForForwardingThread[2];
 
     // Start the COOLWSD server in a detached thread
     NSLog(@"CollaboraOffice: Starting the thread");
-    std::thread([]{
+    coolwsdThread = std::thread([]{
         assert(coolwsd == nullptr);
 
         // Prepare arguments for COOLWSD
@@ -74,7 +75,7 @@ static int closeNotificationPipeForForwardingThread[2];
         delete coolwsd;
         coolwsd = nullptr; // Reset the pointer after deletion
         NSLog(@"CollaboraOffice: The COOLWSD thread completed");
-    }).detach();
+    });
 
     // Create a socket pair to notify the thread created in handleHULLOWithDocument:document when the document has been closed
     fakeSocketPipe2(closeNotificationPipeForForwardingThread);
@@ -84,6 +85,9 @@ static int closeNotificationPipeForForwardingThread[2];
     NSLog(@"CollaboraOffice: Requesting shutdown");
     SigUtil::requestShutdown();
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+
+    // wait until coolwsdThread is torn down, so that we don't start cleaning up too early
+    coolwsdThread.join();
 }
 
 + (void)handleHULLOWithDocument:(Document *)document {
