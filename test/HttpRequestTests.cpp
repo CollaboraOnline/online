@@ -576,6 +576,7 @@ void HttpRequestTests::test500GetStatuses()
                 {
                     LOG_WRN("Retrying (#" << retry << ") of " << url << " due to status "
                                           << httpResponse->statusLine().statusCode() << "...");
+                    // coverity[sleep : SUPPRESS] - don't report sleep with lock held
                     std::this_thread::sleep_for(
                         std::chrono::milliseconds(200 * retry)); // Cool off.
                     continue;
