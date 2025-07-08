@@ -598,7 +598,7 @@ ul {
 }
 
 .toggle-image.selected {
-	border-color: var(--co-border, #e5eff5);
+	border-color: var(--co-settings-text, #e5eff5);
 	background-color: rgba(0, 120, 212, 0.1);
 }
 
