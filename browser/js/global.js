@@ -541,7 +541,7 @@ function getInitializerClass() {
 	global.logServer = function (log) {
 		if (global.ThisIsAMobileApp) {
 			global.postMobileError(log);
-		} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+		} else if (global.socket && (global.socket instanceof WebSocket || global.socket instanceof global.IndirectSocket) && global.socket.readyState === 1) {
 			global.socket.send(log);
 		} else if (global.socket && global.L && global.app.definitions.Socket &&
 			   (global.socket instanceof global.app.definitions.Socket) && global.socket.connected()) {
@@ -797,7 +797,7 @@ function getInitializerClass() {
 			}
 
 			const isEmpty = (obj) => Object.keys(obj).length === 0;
-			if (browserSettingEnabled && !isEmpty(global.prefs._settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+			if (browserSettingEnabled && !isEmpty(global.prefs._settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket || global.socket instanceof global.IndirectSocket) && global.socket.readyState === 1) {
 				clearTimeout(global.prefs._pendingSettingUpdate);
 				global.prefs._pendingSettingUpdate = setTimeout(L.bind(this.sendPendingBrowserSettingsUpdate, this), 5000);
 			}
@@ -808,7 +808,7 @@ function getInitializerClass() {
 			if (global.prefs.useBrowserSetting) {
 				const oldValue = global.prefs._userBrowserSetting[key];
 				global.prefs._userBrowserSetting[key] = value;
-				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1 && oldValue !== value) {
+				if (global.socket && (global.socket instanceof WebSocket || global.socket instanceof global.IndirectSocket) && global.socket.readyState === 1 && oldValue !== value) {
 					global.prefs._settingUpdateJSON[key] = value;
 					clearTimeout(global.prefs._pendingSettingUpdate);
 					global.prefs._pendingSettingUpdate = setTimeout(L.bind(this.sendPendingBrowserSettingsUpdate, this), 5000);
