@@ -2652,7 +2652,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		switch (data.action_type) {
 		case 'grab_focus':
-			control.focus();
+			if (typeof control.onFocus === 'function')
+				control.onFocus();
+			else
+				control.focus();
 			break;
 		case 'select':
 			if (typeof control.onSelect === 'function')
