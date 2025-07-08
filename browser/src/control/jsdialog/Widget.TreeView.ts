@@ -829,7 +829,7 @@ class TreeViewControl {
 				editable = this.canEdit(entry, column);
 			}
 
-			if (!editable && select)
+			if (select)
 				builder.callback(
 					'treeview',
 					'select',
@@ -962,6 +962,14 @@ class TreeViewControl {
 		});
 
 		parentContainer.draggable = false;
+		(
+			parentContainer.parentElement as HTMLElement & { onFocus?: () => void }
+		).onFocus = () => {
+			/* no-op */
+		};
+		// We need to cancel focus events - which are used when we select - or we will blur our input and stop editing
+		// The grab_focus is on the grid we're already in - i.e. we're not changing anything about what is being selected - so there is no need to re-do a selection/etc. once editing is done
+
 		cell.appendChild(input);
 		input.focus();
 	}
@@ -978,6 +986,9 @@ class TreeViewControl {
 		treeViewData: TreeWidgetJSON,
 	) {
 		parentContainer.draggable = rowShouldBeDraggable;
+		(
+			parentContainer.parentElement as HTMLElement & { onFocus?: () => void }
+		).onFocus = undefined;
 
 		for (const child of Array.from(cell.childNodes)) {
 			child.remove();
@@ -999,8 +1010,6 @@ class TreeViewControl {
 			{ row: entry.row, column, value: input.value },
 			builder,
 		);
-
-		builder.callback('treeview', 'select', treeViewData, entry.row, builder);
 	}
 
 	filterEntries(filter: string) {
