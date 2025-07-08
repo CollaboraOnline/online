@@ -11,11 +11,14 @@
 class CellSelectionMarkers {
 	static start: CellSelectionHandle;
 	static end: CellSelectionHandle;
+	private static initiated: boolean = false;
 
 	public static initiate() {
 		if (app.map._docLayer._docType !== 'spreadsheet')
 			// Calc only.
 			return;
+
+		this.initiated = true;
 
 		// Cell selection handles (mobile & tablet).
 		this.start = new CellSelectionHandle('cell_selection_handle_start');
@@ -26,6 +29,8 @@ class CellSelectionMarkers {
 
 	public static update() {
 		if (window.mode.isDesktop()) return; // Not shown on desktop.
+
+		if (!this.initiated) return;
 
 		var showMarkers =
 			app.map._docLayer._cellSelectionArea || app.calc.cellCursorVisible;
