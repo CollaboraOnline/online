@@ -8,7 +8,7 @@ L.Map.mergeOptions({
 	touchGesture: true,
 });
 
-/* global Hammer app $ GraphicSelection TileManager */
+/* global Hammer app $ GraphicSelection TileManager TextSelections */
 L.Map.TouchGesture = L.Handler.extend({
 	statics: {
 		MAP: 1,
@@ -266,10 +266,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (app.calc.cellCursorVisible)
 			bContainsSel = docLayer.containsSelection(latlng);
 		var textSelection;
-		if (docLayer._selectionHandles.start.rectangle && docLayer._selectionHandles.end.rectangle) {
+		if (TextSelections.getStartRectangle() && TextSelections.getEndRectangle()) {
 			// Oversimplication. See "inBand" function.
-			textSelection = new app.definitions.simpleRectangle(0, docLayer._selectionHandles.end.rectangle.y1, app.file.size.x, 0);
-			textSelection.height = docLayer._selectionHandles.end.rectangle.y2 - docLayer._selectionHandles.start.rectangle.y1;
+			textSelection = new app.definitions.simpleRectangle(0, TextSelections.getEndRectangle().y1, app.file.size.x, 0);
+			textSelection.height = TextSelections.getEndRectangle().rectangle.y2 - TextSelections.getStartRectangle().y1;
 		}
 
 		if ((textSelection && textSelection.containsPoint(posInTwips.toArray()))
