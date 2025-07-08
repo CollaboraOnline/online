@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class CellSelectionHandle extends app.definitions.canvasSectionObject {
+class CellSelectionHandle extends CanvasSectionObject {
 	showSection: boolean = false;
 	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
@@ -22,7 +22,7 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		this.sectionProperties.circleRadius = 10 * app.dpiScale;
 		this.size = [this.sectionProperties.circleRadius * 2, this.sectionProperties.circleRadius * 2];
 
-		this.name = name; // There will be multiple instances of this class. For the viewer's cursor, name will be owncellcursor. Others will have viewId-cellcursor.
+		this.name = name;
 	}
 
 	private onDragEnd(point: number[]) {
@@ -34,7 +34,7 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		newPoint.pY = this.position[1] + point[1];
 
 		this.sharedOnDragAndEnd(newPoint);
-		app.map._docLayer._onUpdateCellResizeMarkers();
+		CellSelectionMarkers.update();
 		app.map.scrollingIsHandled = false;
 	}
 
@@ -84,5 +84,3 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		}
 	}
 }
-
-app.definitions.cellSelectionHandle = CellSelectionHandle;

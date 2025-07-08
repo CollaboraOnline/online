@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections CellSelectionMarkers */
 
 function clamp(num, min, max)
 {
@@ -3105,7 +3105,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// TODO: used only in calc: move to CalcTileLayer
 	_onUpdateCellCursor: function (scrollToCursor, sameAddress) {
-		this._onUpdateCellResizeMarkers();
+		CellSelectionMarkers.update();
+
 		if (app.calc.cellCursorVisible) {
 			if (scrollToCursor &&
 			    !this._map.calcInputBarHasFocus()) {
@@ -3186,35 +3187,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.sectionContainer.removeSection('DropDownArrow');
 	},
 
-	_onUpdateCellResizeMarkers: function () {
-		var selectionOnDesktop = window.mode.isDesktop() && (this._cellSelectionArea || app.calc.cellCursorVisible);
-
-		if (!selectionOnDesktop && (!this._cellCSelections.empty() || app.calc.cellCursorVisible)) {
-
-			if (!this._cellSelectionArea && !app.calc.cellCursorVisible)
-				return;
-
-			this._cellSelectionHandleStart.setShowSection(true);
-			this._cellSelectionHandleEnd.setShowSection(true);
-
-			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea.clone() : app.calc.cellCursorRectangle.clone();
-
-			const posStart = new app.definitions.simplePoint(cellRectangle.x1, cellRectangle.y1);
-			const posEnd = new app.definitions.simplePoint(cellRectangle.x2, cellRectangle.y2);
-
-			const offset = this._cellSelectionHandleStart.sectionProperties.circleRadius;
-			this._cellSelectionHandleStart.setPosition(posStart.pX - offset, posStart.pY - offset);
-			this._cellSelectionHandleEnd.setPosition(posEnd.pX - offset, posEnd.pY - offset);
-		}
-		else {
-			this._cellSelectionHandleStart.setShowSection(false);
-			this._cellSelectionHandleEnd.setShowSection(false);
-		}
-	},
-
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
-		this._onUpdateCellResizeMarkers();
+		CellSelectionMarkers.update(); // This shouldn't be here. But cell cursorvisibility state is not sent from core side. TODO: Move this to cell cursor visibility message.
 		this._removeSelection();
 	},
 
@@ -3753,11 +3728,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Initiate selection handles.
 		TextSelections.initiate();
 
-		// Cell selection handles (mobile & tablet).
-		this._cellSelectionHandleStart = new app.definitions.cellSelectionHandle('cell_selection_handle_start');
-		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
-		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
-		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
+		// Initiate cell selection handles.
+		CellSelectionMarkers.initiate();
 
 		if (this.isCalc()) {
 			var cursorStyle = new CStyleData(this._cursorDataDiv);
