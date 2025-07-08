@@ -1623,176 +1623,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'layout-selectbackground-break', orientation: 'vertical' },
 			{
-				'id': 'layout-modify-page',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ModifyPage', 'presentation'),
-				'command': '.uno:ModifyPage',
-				'accessibility': { focusBack: true, combination: 'MP', de: null }
-			},
-			{
 				'id': 'layout-master-slides-panel',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:MasterSlidesPanel', 'presentation'),
 				'command': '.uno:MasterSlidesPanel',
 				'accessibility': { focusBack: true, combination: 'MS', de: null }
-			},
-			{ type: 'separator', id: 'layout-masterslidespanel-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-slide-change-window',
-								'type': 'toolitem',
-								'text': _UNO('.uno:SlideChangeWindow', 'presentation'),
-								'command': '.uno:SlideChangeWindow',
-								'accessibility': { focusBack: true, combination: 'SC', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-custom-animation',
-								'type': 'toolitem',
-								'text': _UNO('.uno:CustomAnimation', 'presentation'),
-								'command': '.uno:CustomAnimation',
-								'accessibility': { focusBack: true, combination: 'CA', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'layout-interaction',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:AnimationEffects', 'presentation'),
-				'command': '.uno:AnimationEffects',
-				'accessibility': { focusBack: true, combination: 'IA', de: null }
-			},
-			{ type: 'separator', id: 'layout-interaction-break', orientation: 'vertical' },
-			{
-				'id': 'layout-navigator',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator',
-				'accessibility': { focusBack: true, combination: 'NV', de: null }
-			},
-			{ type: 'separator', id: 'layout-navigator-break', orientation: 'vertical' },
-			{
-				'id': 'layout-select-all',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SelectAll'),
-				'command': '.uno:SelectAll',
-				'accessibility': { focusBack: true, combination: 'SA', de: null }
-			},
-			{ type: 'separator', id: 'layout-selectall-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-object-align-left',
-								'type': 'toolitem',
-								'text': _UNO('.uno:ObjectAlignLeft'),
-								'command': '.uno:ObjectAlignLeft',
-								'accessibility': { focusBack: true, combination: 'AL', de: null }
-							},
-							{
-								'id': 'layout-align-center',
-								'type': 'toolitem',
-								'text': _UNO('.uno:AlignCenter'),
-								'command': '.uno:AlignCenter',
-								'accessibility': { focusBack: true, combination: 'AC', de: null }
-							},
-							{
-								'id': 'layout-align-right',
-								'type': 'toolitem',
-								'text': _UNO('.uno:ObjectAlignRight'),
-								'command': '.uno:ObjectAlignRight',
-								'accessibility': { focusBack: true, combination: 'AR', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-align-up',
-								'type': 'toolitem',
-								'text': _UNO('.uno:AlignUp'),
-								'command': '.uno:AlignUp',
-								'accessibility': { focusBack: true, combination: 'AU', de: null }
-							},
-							{
-								'id': 'layout-align-middle',
-								'type': 'toolitem',
-								'text': _UNO('.uno:AlignMiddle'),
-								'command': '.uno:AlignMiddle',
-								'accessibility': { focusBack: true, combination: 'AM', de: null }
-							},
-							{
-								'id': 'layout-align-down',
-								'type': 'toolitem',
-								'text': _UNO('.uno:AlignDown'),
-								'command': '.uno:AlignDown',
-								'accessibility': { focusBack: true, combination: 'AD', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'layout-aligndown-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-object-forward-one',
-								'type': 'toolitem',
-								'text': _UNO('.uno:ObjectForwardOne'),
-								'command': '.uno:ObjectForwardOne',
-								'accessibility': { focusBack: true, combination: 'FO', de: null }
-							},
-							{
-								'id': 'layout-bring-to-front',
-								'type': 'toolitem',
-								'text': _UNO('.uno:BringToFront'),
-								'command': '.uno:BringToFront',
-								'accessibility': { focusBack: true, combination: 'BF', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-object-back-one',
-								'type': 'toolitem',
-								'text': _UNO('.uno:ObjectBackOne'),
-								'command': '.uno:ObjectBackOne',
-								'accessibility': { focusBack: true, combination: 'BO', de: null }
-							},
-							{
-								'id': 'layout-send-to-back',
-								'type': 'toolitem',
-								'text': _UNO('.uno:SendToBack'),
-								'command': '.uno:SendToBack',
-								'accessibility': { focusBack: true, combination: 'SB', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
 			}
 		];
 
@@ -2580,6 +2415,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'insert-text-fontwork-break', orientation: 'vertical' },
+			{
+				'id': 'layout-interaction',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:AnimationEffects', 'presentation'),
+				'command': '.uno:AnimationEffects',
+				'accessibility': { focusBack: true, combination: 'IA', de: null }
+			}
 		];
 
 		return this.getTabPage('Shape', content);
@@ -2894,6 +2737,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Crop',
 				'context': 'Graphic'
 			},
+			{ type: 'separator', id: 'picture-crop-break', orientation: 'vertical' },
+			{
+				'id': 'layout-interaction',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:AnimationEffects', 'presentation'),
+				'command': '.uno:AnimationEffects',
+				'accessibility': { focusBack: true, combination: 'IA', de: null }
+			}
 		];
 
 		return this.getTabPage('Picture', content);
