@@ -187,7 +187,9 @@ private:
     /// scratch dir that POSTs are streamed to
     std::unique_ptr<FileUtil::OwnedFile> _postFileDir;
     std::fstream _postStream;
+#if !MOBILEAPP
     std::streamsize _postContentPending = 0;
+#endif // !MOBILEAPP
 
     /// The minimum number of RVS instances in flight to trigger cleanup.
     static constexpr std::size_t RvsLowWatermark = 1 * 1024;
