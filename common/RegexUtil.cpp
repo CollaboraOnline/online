@@ -12,8 +12,12 @@
 #include <config.h>
 #include <config_version.h>
 
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+#include <typeinfo>
+
 #include "RegexUtil.hpp"
 
+#include <Poco/Types.h>
 #include <Poco/RegularExpression.h>
 
 namespace RegexUtil
