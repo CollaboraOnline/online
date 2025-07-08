@@ -226,7 +226,6 @@ L.Map.include({
 		if (this._docLayer) {
 			this._docLayer._onUpdateCursor();
 			this._docLayer._clearSelections();
-			this._docLayer._onUpdateTextSelection();
 		}
 		app.events.fire('updatepermission', {perm : perm});
 		this.fire('closemobilewizard');

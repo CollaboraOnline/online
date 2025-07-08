@@ -327,7 +327,7 @@ class GraphicSelection {
 							this.rectangle.x2,
 							this.rectangle.y2,
 						])) &&
-					!app.map._docLayer._selectionHandles.active &&
+					!TextSelections.getEndRectangle() &&
 					!(app.isFollowingEditor() || app.isFollowingUser()) &&
 					!app.map.calcInputBarHasFocus()
 				) {
