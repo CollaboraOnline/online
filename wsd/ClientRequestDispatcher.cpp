@@ -711,6 +711,7 @@ void launchAsyncCheckFileInfo(
     }
 }
 
+#if !MOBILEAPP
 static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket,
                                      ssize_t headerSize,
                                      ssize_t contentSize,
@@ -728,6 +729,7 @@ static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket
         }
     }
 }
+#endif // !MOBILEAPP
 
 void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& disposition)
 {
