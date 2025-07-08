@@ -15,6 +15,9 @@
 
 #include <config.h>
 
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+#include <typeinfo>
+
 #include <Poco/URI.h>
 
 #ifndef _WIN32
