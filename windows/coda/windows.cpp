@@ -221,7 +221,7 @@ void do_other_message_handling_things(const char *message)
 {
     LOG_TRC_NOFILE("Handling other message:'" << message << "'");
 
-    char *string_copy = _strdup(message);
+    char *message_copy = _strdup(message);
     // As above, must do this in a thread
     std::thread([=]
     {
@@ -229,8 +229,8 @@ void do_other_message_handling_things(const char *message)
         pollfd.fd = fakeClientFd;
         pollfd.events = POLLOUT;
         fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
-        free(string_copy);
+        fakeSocketWrite(fakeClientFd, message_copy, strlen(message_copy));
+        std::free(message_copy);
     }).detach();
 }
 
