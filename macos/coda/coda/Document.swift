@@ -204,10 +204,20 @@ class Document: NSDocument {
         return op
     }
 
+    /*
+     * Guard against double call of close().
+     */
+    private var isClosing = false
+
     /**
      * Clean up the temporary directory when the document closes.
      */
     override func close() {
+        // there is no guarrantee that close() is called just once, see
+        // https://stackoverflow.com/questions/5627267/nsdocument-subclass-close-method-called-twice
+        if isClosing { return }
+        isClosing = true
+
         NSLog("CollaboraOffice: Closing document")
         COWrapper.bye(self)
         super.close()
