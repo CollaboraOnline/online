@@ -2154,7 +2154,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			var span;
-			if (data.noLabel)
+			// NOTE: menubutton handles the noLabel case differently from other types
+			// like toolitem, please see function `_menubuttonControl`
+			if (data.noLabel && data.type != 'menubutton')
 				$(div).addClass('no-label');
 			else if (builder.options.noLabelsForUnoButtons !== true && data.text) {
 				span = L.DomUtil.create('span', 'ui-content unolabel', button);
