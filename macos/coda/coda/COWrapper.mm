@@ -75,13 +75,15 @@ static int closeNotificationPipeForForwardingThread[2];
         coolwsd = nullptr; // Reset the pointer after deletion
         NSLog(@"CollaboraOffice: The COOLWSD thread completed");
     }).detach();
+
+    // Create a socket pair to notify the thread created in handleHULLOWithDocument:document when the document has been closed
+    fakeSocketPipe2(closeNotificationPipeForForwardingThread);
 }
 
 + (void)stopServer {
-    if (coolwsd) {
-        delete coolwsd;
-        coolwsd = nullptr;
-    }
+    NSLog(@"CollaboraOffice: Requesting shutdown");
+    SigUtil::requestShutdown();
+    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 }
 
 + (void)handleHULLOWithDocument:(Document *)document {
@@ -90,9 +92,6 @@ static int closeNotificationPipeForForwardingThread[2];
     assert(coolwsd_server_socket_fd != -1);
     int rc = fakeSocketConnect(document.fakeClientFd, coolwsd_server_socket_fd);
     assert(rc != -1);
-
-    // Create a socket pair to notify the below thread when the document has been closed
-    fakeSocketPipe2(closeNotificationPipeForForwardingThread);
 
     // Start another thread to read responses and forward them to the JavaScript
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
