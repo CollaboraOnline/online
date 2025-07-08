@@ -256,6 +256,7 @@ COOL_JS_LST =\
 	src/core/geometry.ts \
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/TextSelectionMiddleware.ts \
+	src/app/CellSelectionMarkerMiddleware.ts \
 	src/app/MultiPageViewLayout.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SlideshowMiddleware.ts \
