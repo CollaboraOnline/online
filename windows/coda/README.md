@@ -92,14 +92,16 @@ the static libraries already built there.
 
 Download and unpack the zstd-1.5.7 tarball. Open the Visual Studio
 solution zstd-1.5.7/build/VS2010/zstd.sln. Let Visual Studio retarget
-the projects. Build the solution.
+the projects. It is enough to build just the libzstd project of the
+solution.
 
-The binary that you are interested in is
-zstd-1.5.7/build/VS2010/bin/x64\_Debug/libzstd\_static.lib.
+The static libraries that you are interested end up as
+zstd-1.5.7/build/VS2010/bin/x64\_Debug/libzstd\_static.lib and
+zstd-1.5.7/build/VS2010/bin/x64\_Release/libzstd\_static.lib .
 
 ## Poco
 
-Download and unpack the poco-poco-1.13.3-release.tar.gz tarball.
+Download and unpack the poco-poco-1.13.3-release.zip archive.
 
 Then build it. Only a subset of it is needed. In a Ubuntu shell
 window, run:
@@ -124,7 +126,12 @@ In an Ubuntu shell, run
 
 	./autogen.sh
 
-then run the configure script:
+then run the configure script. Like this to use Debug build of zstd.
+
+(You will automatically get the Debug libraries of Poco when building a
+Debug configuration of the CODALib project, and the Release libraries
+in a Release configuration. There is some slightly questionable
+#pragmas in <Poco/Foundation.h> to take care of that.)
 
 	./configure --enable-windowsapp --enable-debug --with-app-name=CODA --with-lo-builddir=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug --with-lo-path=c:/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/instdir --with-poco-includes=/mnt/c/Users/tml/poco-poco-1.13.3-release/include --with-poco-libs=/mnt/c/Users/tml/poco-poco-1.13.3-release/lib64 --with-zstd-includes=/mnt/c/Users/tml/zstd-1.5.7/lib --with-zstd-libs=/mnt/c/Users/tml/zstd-1.5.7/build/VS2010/bin/x64\_Debug --with-libpng-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/workdir/UnpackedTarball/libpng --with-libpng-libs=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/workdir/LinkTarget/StaticLibrary --with-zlib-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/workdir/UnpackedTarball/zlib
 
