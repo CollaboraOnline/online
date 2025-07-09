@@ -291,6 +291,13 @@ int main(int, char**)
         return 0;
     }
 
+    // Initialize logging that LOK_ASSERT() uses.
+    std::string logLevel("fatal");
+    bool withColor = false;
+    bool logToFile = false;
+    std::map<std::string, std::string> logProperties;
+    Log::initialize("wsd", logLevel, withColor, logToFile, logProperties, false, {});
+
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;
     controller.addListener(&result);
