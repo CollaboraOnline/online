@@ -1,19 +1,14 @@
 // -*- tab-width: 4; indent-tabs-mode: nil; fill-column: 100 -*-
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
-using Microsoft.Win32;
+using System.Diagnostics;
+using System.Drawing.Printing;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.Json;
+using System.Windows;
 
 namespace CODA
 {
@@ -287,7 +282,7 @@ namespace CODA
                 System.Windows.MessageBox.Show($"WebView2 creation failed with exception = {e.InitializationException}");
         }
 
-        private bool _isMessageOfType(byte[] message, string type, int lengthOfMessage)
+        private bool _isMessageOfType(byte[] message, string type)
         {
             if (message.Length < type.Length + 2)
                 return false;
@@ -301,12 +296,12 @@ namespace CODA
         {
             byte[] s = new byte[length];
             Marshal.Copy(buffer, s, 0, length);
-            bool binaryMessage = (_isMessageOfType(s, "tile:", length) ||
-                                  _isMessageOfType(s, "tilecombine:", length) ||
-                                  _isMessageOfType(s, "delta:", length) ||
-                                  _isMessageOfType(s, "renderfont:", length) ||
-                                  _isMessageOfType(s, "rendersearchlist:", length) ||
-                                  _isMessageOfType(s, "windowpaint:", length));
+            bool binaryMessage = (_isMessageOfType(s, "tile:") ||
+                                  _isMessageOfType(s, "tilecombine:") ||
+                                  _isMessageOfType(s, "delta:") ||
+                                  _isMessageOfType(s, "renderfont:") ||
+                                  _isMessageOfType(s, "rendersearchlist:") ||
+                                  _isMessageOfType(s, "windowpaint:"));
 
             string pretext = binaryMessage
                 ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
@@ -332,9 +327,9 @@ namespace CODA
                     }
                 }
                 string subs = sb.ToString();
-                if (sb.Length > 100)
+                if (s.Length > 100)
                     subs += "...";
-                Debug.WriteLine($"Evaluating JavaScript: {subs}");
+                Debug.WriteLine($"Sending to JS: {subs}");
             }
 
             string js = pretext + System.Convert.ToBase64String(s) + posttext;
