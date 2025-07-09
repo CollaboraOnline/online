@@ -1,4 +1,13 @@
 /* Overlay for popups and dropdowns allowing to handle click outside */
+
+fieldset {
+	margin-inline: 0;
+	border-width: 0;
+	border-style: none;
+	padding-block: 0;
+	padding-inline: 0;
+}
+
 .jsdialog-overlay {
 	position: absolute;
 	background: transparent;
