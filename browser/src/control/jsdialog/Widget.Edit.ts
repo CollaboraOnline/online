@@ -104,14 +104,17 @@ class EditWidget {
 		if (this.callback) callbackToUse = this.callback;
 		if (typeof callbackToUse === 'function')
 			callbackToUse(this.edit.input.value);
-		else
+		else {
+			var eventType = 'change';
+			if (e.key === 'Enter') eventType = 'activate';
 			this.builder.callback(
 				'edit',
-				'change',
+				eventType,
 				this.edit.container,
 				this.edit.input.value,
 				this.builder,
 			);
+		}
 	}
 
 	protected onClick(e: MouseEvent) {
