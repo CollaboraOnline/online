@@ -494,6 +494,7 @@ var unoCommandsArray = {
 	'PreviousTrackedChange':{text:{context:_('Previous Track Change'),menu:_('Pr~evious'),},},
 	'Print':{global:{menu:_('~Print...'),},},
 	'PrintRangesMenu':{spreadsheet:{menu:_('Prin~t Ranges'),},},
+	'OrientationMenu':{spreadsheet:{menu:_('Orientation'),},},
 	'Protect':{spreadsheet:{menu:_('Protect ~Sheet...'),},text:{menu:_('Protect Cells'),},},
 	'RecalcPivotTable':{spreadsheet:{menu:_('~Refresh'),},},
 	'Redo':{global:{menu:_('~Redo'),},},
