@@ -860,6 +860,18 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-inline-start: 8px;
 }
 
+/* fieldset and legend - form grouping */
+
+.jsdialog .ui-fieldset {
+	border: none;
+	padding-inline: 0;
+	padding-block: 0;
+}
+
+.jsdialog .ui-legend {
+	padding-inline: 0;
+}
+
 /* spinfield */
 
 .spinfieldcontainer {
