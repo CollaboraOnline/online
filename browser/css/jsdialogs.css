@@ -849,7 +849,6 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .ui-dialog-content .jsdialog.ui-text {
 	padding-inline-start: 0;
-	margin: auto 5px;
 }
 
 .jsdialog.ui-grid-cell input[type='checkbox'] + label[for^='hidden-part-checkbox'] {
@@ -2480,4 +2479,10 @@ kbd,
 .sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
 #FontworkGalleryDialog .ui-iconview-entry img {
 	padding: 5px 0;
+}
+
+/* Writer - Format - Page Style - Area - Image */
+#ImageTabPage #frame1 .ui-grid-cell {
+	display: grid;
+	grid-gap: 4px;
 }
