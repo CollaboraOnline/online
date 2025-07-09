@@ -1689,6 +1689,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true, combination: 'K', de: 'V' }
 			},
+			{
+				'id': 'view-find-deck',
+				'type': 'bigtoolitem',
+				'text': _('Quick Find'),
+				'command': '.uno:QuickFind',
+				'accessibility': { focusBack: true, combination: 'QF', de: 'null' }
+			},
 		];
 
 		return this.getTabPage(viewTabName, content);
