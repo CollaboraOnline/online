@@ -729,7 +729,7 @@ class TreeViewControl {
 				event.preventDefault();
 				event.stopPropagation();
 			} else if (event.key === 'Enter' || event.key === ' ') {
-				clickFunction();
+				clickFunction(event);
 				if (selectionElement) selectionElement.click();
 				if (expander) {
 					expander.click();
