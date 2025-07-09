@@ -22,6 +22,11 @@ fieldset {
 	overflow: hidden;
 }
 
+legend {
+	display: inline;
+	padding-inline: 0;
+}
+
 .jsdialog-overlay.cancellable {
 	-webkit-animation: none;
 	animation: none;
@@ -141,7 +146,9 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	overflow: hidden;
 }
 
-.jsdialog.vertical label, .ui-frame-label {
+.jsdialog.vertical label,
+.jsdialog.vertical legend,
+ui-frame-label {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
