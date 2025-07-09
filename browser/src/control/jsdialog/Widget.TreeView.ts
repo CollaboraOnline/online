@@ -483,7 +483,7 @@ class TreeViewControl {
 					` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
 				parent,
 			);
-			const img = L.DomUtil.create('img', '', cell);
+			const img = L.DomUtil.create('img', 'ui-treeview-custom-render', cell);
 			img.src = image;
 		} else {
 			const cell = L.DomUtil.create(
