@@ -316,6 +316,7 @@ class LOUtil {
 			shadowpropertypanel: 'shadowed',
 			incrementlevel: 'outlineleft',
 			menurowheight: 'rowheight',
+			menuorientation: 'orientation',
 			setoptimalrowheight: 'rowheight',
 			cellverttop: 'aligntop',
 			scalignmentpropertypanel: 'aligntop',

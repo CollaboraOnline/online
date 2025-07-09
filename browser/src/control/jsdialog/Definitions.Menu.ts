@@ -108,6 +108,21 @@ menuDefinitions.set('MenuPrintRanges', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('MenuOrientation', [
+	{
+		id: 'portrait',
+		img: 'portrait',
+		text: _('Portrait'),
+		uno: '.uno:Orientation?isLandscape:bool=false',
+	},
+	{
+		id: 'landscape',
+		img: 'landscape',
+		text: _('Landscape'),
+		uno: '.uno:Orientation?isLandscape:bool=true',
+	},
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('Print', [
 	{ text: _('Active sheet'), action: 'print-active-sheet' },
 	{ text: _('All Sheets'), action: 'print-all-sheets' },
