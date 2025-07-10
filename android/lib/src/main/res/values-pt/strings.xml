@@ -3,9 +3,9 @@
     <string name="loading">A carregar...</string>
     <string name="cannot_open_file_chooser">Não foi possível abrir o seletor de ficheiros</string>
     <string name="failed_to_insert_image">Falha ao inserir a imagem</string>
-    <string name="failed_to_load_file">Falha ao determinar o ficheiro a carregar</string>
-    <string name="storage_permission_required">Requer permissão de acesso ao armazenamento</string>
-    <string name="temp_file_saving_disabled">Este ficheiro é apenas de leitura e não pode ser guardado.</string>
+    <string name="failed_to_load_file">Não foi possível determinar o ficheiro a carregar</string>
+    <string name="storage_permission_required">Permissão de armazenamento é obrigatória</string>
+    <string name="temp_file_saving_disabled">Este ficheiro é apenas de leitura, e o guardar está desativado.</string>
     <string name="preparing_for_the_first_start_after_an_update">Estamos a preparar o arranque após a atualização.</string>
     <string name="saving">A guardar...</string>
     <string name="exiting">A sair...</string>

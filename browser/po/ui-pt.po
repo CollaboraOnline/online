@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-04-06 08:37+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2025-07-10 17:01+0000\n"
+"Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -275,7 +275,7 @@ msgstr "Memória"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr "Aguarde, o cluster Kubernetes está a ser dimensionado..."
+msgstr "Por favor, aguarde, o cluster Kubernetes está a ser dimensionado..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -370,136 +370,152 @@ msgstr "Tem a certeza de que deseja encerrar este servidor?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Acessibilidade"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Ficheiro JSON inválido"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Erro ao ler o ficheiro"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
-msgstr ""
+msgstr "Texto Automático"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Envie trechos de texto reutilizáveis (.bau). Para inserir o texto no "
+"documento, digite o atalho para uma entrada de Texto Automático e pressione "
+"F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Enviar Texto Automático"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Dicionários personalizados"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Adicione ou edite palavras num dicionário de verificação ortográfica. As "
+"palavras do seu dicionário (.dic) estarão disponíveis para as verificações "
+"ortográficas."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Enviar Dicionário"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Interface"
-msgstr ""
+msgstr "Interface"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Definir preferências predefinidas da interface."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr ""
+msgstr "Enviar Configuração"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
-msgstr ""
+msgstr "Definições do documento"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: admin/src/integrator/Xcu.ts:403
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Ajustar o comportamento dos documentos do Office."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Enviar Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"O ficheiro das definições da interface não é um JSON válido. Por favor, "
+"verifique o ficheiro e tente novamente."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "O URL de Configuração partilhado está em falta nas variáveis iniciais."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "O código de acesso está em falta nas variáveis iniciais."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Ocorreu algo de errado. Por favor, tente atualizar a página."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Ocorreu algo de errado enquanto obtinha o ficheiro da definição. Por favor, "
+"tente atualizar a página."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Ocorreu algo de errado enquanto obtinha o dicionário. Por favor, tente "
+"atualizar a página."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"Ocorreu algo de errado enquanto enviava o ficheiro. Por favor, tente "
+"novamente."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Ocorreu algo de errado enquanto eliminava o ficheiro. Por favor, tente "
+"atualizar a página."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Definições de Visualização"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Ajustar definições da visualização."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
-msgstr ""
+msgstr "Opção"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Aviso: a acessibilidade do servidor deve estar ativada para alternar)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Reiniciar as definições de Visualização predefinidas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Tem a certeza de que deseja reinicias as Definições da Visualização?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Guardar Definições da Visualização"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -508,63 +524,64 @@ msgstr "Erro"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Dicionário padrão"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "As palavras são ignoradas pelo corretor ortográfico"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Dicionário de excessões"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
 msgstr ""
+"As palavras de exceção são sublinhadas durante a verificação ortográfica"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "A carregar o dicionário..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Digite para adicionar uma palavra"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Formato de dicionário inválido. Por favor, verifique o ficheiro."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Ocorreu algo de errado enquanto enviava o ficheiro do dicionário"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Ocorreu algo de errado enquanto carregava as definições do Documento."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr ""
+msgstr "Definições do Documento"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Selecione um separador para ver as definições."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Reiniciar para as definições predefinidas do Documento"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Tem a certeza de que deseja reiniciar as definições do Documento?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr ""
+msgstr "Guardar definições do Documento"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -625,11 +642,11 @@ msgstr ""
 
 #: js/global.js:1574
 msgid "Failed to get RouteToken from controller"
-msgstr "Falha ao obter o RouteToken do controlador"
+msgstr "Não foi possível obter o RouteToken do controlador"
 
 #: src/app/Debug.ts:135
 msgid "Debug Tools"
-msgstr "Ferramentas de depuração"
+msgstr "Ferramentas de Depuração"
 
 #: src/app/Debug.ts:137
 msgid "Ctrl+Shift+Alt+D to exit"
@@ -638,7 +655,7 @@ msgstr "Ctrl+Shift+Alt+D para sair"
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
-"O manuseio de eventos foi adiado por um tempo inesperadamente longo: {0}ms"
+"A manipulação do evento foi adiada por um tempo inesperadamente longo: {0}ms"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "A comment is being edited"
@@ -646,7 +663,8 @@ msgstr "Está a ser editado um comentário"
 
 #: src/canvas/sections/CommentListSection.ts:165
 msgid "Please save or discard the comment currently being edited."
-msgstr "Por favor, guarde ou descarte o comentário que está a ser editado."
+msgstr ""
+"Por favor, guarde ou ignore o comentário que está a ser atualmente editado."
 
 #: src/canvas/sections/CommentListSection.ts:1166
 msgid "Modify"
@@ -663,7 +681,7 @@ msgstr "Remover"
 
 #: src/canvas/sections/CommentListSection.ts:1184
 msgid "Remove Thread"
-msgstr "Remover tópico"
+msgstr "Remover Tópico"
 
 #: src/canvas/sections/CommentListSection.ts:1190
 msgid "Resolve"
@@ -675,11 +693,11 @@ msgstr "Não resolver"
 
 #: src/canvas/sections/CommentListSection.ts:1196
 msgid "Unresolve Thread"
-msgstr "Não resolver tópico"
+msgstr "Não Resolver Tópico"
 
 #: src/canvas/sections/CommentListSection.ts:1196
 msgid "Resolve Thread"
-msgstr "Resolver tópico"
+msgstr "Resolver Tópico"
 
 #: src/canvas/sections/CommentListSection.ts:1202
 msgid "Promote to top comment"
@@ -731,13 +749,12 @@ msgid "Autosaved"
 msgstr "Guardado automaticamente"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
 msgstr "Editar documento"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Responder ao comentário"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -758,7 +775,6 @@ msgid "Resolved"
 msgstr "Resolvido"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:448
-#, fuzzy
 msgid "Document contains unsupported media"
 msgstr "O documento contém um vídeo não suportado"
 
@@ -792,7 +808,7 @@ msgstr "Proxy lento"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Zona horária:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1284,7 +1300,7 @@ msgstr "Inserir assinatura eletrónica"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Expandir Barra da Fórmula"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1292,7 +1308,7 @@ msgstr "Assistente de funções"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Selecionar Função"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1307,7 +1323,7 @@ msgstr "Aceitar"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Ocultar Barra da Fórmula"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1426,7 +1442,7 @@ msgstr "Idioma"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Não foram encontrados resultados da pesquisa!"
 
 #: src/control/Control.Menubar.ts:149 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:1094
@@ -2089,11 +2105,11 @@ msgstr "Final do gradiente"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr ""
+msgstr "Navegação"
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr ""
+msgstr "Fechar Navegação"
 
 #: src/control/Control.NavigatorPanel.ts:128
 #: src/slideshow/PresenterConsole.js:34
@@ -2102,11 +2118,11 @@ msgstr "Apresentações"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Outline"
-msgstr ""
+msgstr "Contorno"
 
 #: src/control/Control.NavigatorPanel.ts:158
 msgid "Navigator"
-msgstr ""
+msgstr "Navegador"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2125,7 +2141,7 @@ msgstr "Clique para expandir"
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:270
 msgid "Tap to collapse"
-msgstr "Clique para recolher"
+msgstr "Clique para ocultar"
 
 #: src/control/Control.NotebookbarBuilder.js:362
 #: src/control/Control.NotebookbarBuilder.js:391
@@ -2481,13 +2497,12 @@ msgid "Picture"
 msgstr "Imagem"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "pré-visualização da página "
+msgstr "pré-visualização da página %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Diapositivo %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3135,7 +3150,7 @@ msgstr "Descartar"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Cor desconhecida"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
@@ -3209,9 +3224,8 @@ msgid "Cell borders"
 msgstr "Bordas da célula"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Mais opções para {name}"
+msgstr "Mais opções para {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1140
 msgid "Headings and objects that you add to the document will appear here"
@@ -3775,6 +3789,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"O seu navegador tem acesso muito limitado à área de transferência, por isso, "
+"utilize por favor, os botões de colar no teclado do ecrã."
 
 #: src/map/Clipboard.js:1366
 msgid ""
@@ -3973,7 +3989,7 @@ msgstr "Diminuir ampliação"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Pré-visualizar Diapositivo %1"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
