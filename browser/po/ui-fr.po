@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-07-05 11:01+0000\n"
-"Last-Translator: kevin10-26 <kevin.bento@free.fr>\n"
+"PO-Revision-Date: 2025-07-08 11:01+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -29,7 +29,7 @@ msgstr "Paramètres"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
-msgstr "Généralités"
+msgstr "Aperçu"
 
 #: admin/admin.strings.js:18
 msgid "(current)"
@@ -78,7 +78,7 @@ msgstr "Nombre de documents"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr "Mémoire consommée"
+msgstr "Mémoire utilisée"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
@@ -176,7 +176,7 @@ msgstr "Interrompre la session."
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
-"Mémoire virtuelle de processus de document maximum (en Mo) - réduire "
+"Mémoire virtuelle maximale du processus de document (en Mo) - réduire "
 "uniquement"
 
 #: admin/admin.strings.js:52
@@ -277,7 +277,8 @@ msgstr "Mémoire"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr "S'il vous plaît patientez, le cluster kubernetes se met à l'échelle..."
+msgstr ""
+"Veuillez patienter, le cluster Kubernetes est en cours de mise à l'échelle..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -287,7 +288,7 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
-msgstr "Échec de l'authentification de cette session sur le protocole {0}"
+msgstr "Échec de l'authentification de cette session via le protocole {0}"
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -365,7 +366,7 @@ msgstr "Confirmation"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
-msgstr "Voulez-vous vraiment terminer cette session ?"
+msgstr "Êtes-vous sûr de vouloir terminer cette session ?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -398,7 +399,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Upload Autotext"
-msgstr "Envoyer le Texte auto"
+msgstr "Envoyer le Texte Auto"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Custom dictionaries"
@@ -427,7 +428,7 @@ msgstr "Définir les préférences de l’interface par défaut."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Upload Configuration"
-msgstr "Envoyer la Configuration"
+msgstr "Envoyer la configuration"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Document settings"
@@ -452,7 +453,8 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
-msgstr "L’URL de Config partagée est manquante dans les variables initiales."
+msgstr ""
+"L'URL de configuration partagée est manquante dans les variables initiales."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:287
 msgid "Access token is missing in initial variables."
@@ -460,37 +462,36 @@ msgstr "Le token d’accès est manquant dans les variables initiales."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:316
 msgid "Something went wrong. Please try to refresh the page."
-msgstr "Quelque chose a mal fonctionné. Veuillez essayer de rafraichir la page."
+msgstr "Une erreur s'est produite. Veuillez rafraîchir la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:389
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
-"Quelque chose a mal fonctionné pendant le chargement du fichier de "
-"configuration. Veuillez essayer de rafraichir la page."
+"Une erreur s'est produite lors de la récupération du fichier de paramètres. "
+"Veuillez essayer d'actualiser la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
-"Quelque chose a mal fonctionné pendant le chargement du dictionnaire. "
-"Veuillez essayer de rafraichir la page."
+"Une erreur s'est produite lors de la récupération du vocabulaire. Veuillez "
+"essayer d'actualiser la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:449
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
-"Quelque chose a mal fonctionné pendant l’envoi du fichier. Veuillez "
-"réessayer."
+"Une erreur s'est produite lors de l'envoi du fichier. Veuillez réessayer."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:575
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
-"Quelque chose a mal fonctionné pendant la suppression du fichier. Veuillez "
-"essayer de rafraichir la page."
+"Une erreur s'est produite lors de la suppression du fichier. Veuillez "
+"essayer d'actualiser la page."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
@@ -511,15 +512,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
 msgid "Reset to default View settings"
-msgstr "Réinitialiser aux paramètres des documents par défaut"
+msgstr "Réinitialiser les paramètres d'affichage par défaut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
 msgid "Are you sure you want to reset View Settings?"
-msgstr "Êtes-vous sûr de vouloir réinitialiser les Paramètres du document ?"
+msgstr "Êtes-vous sûr de vouloir réinitialiser les paramètres d’affichage ?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr "Sauvegarder les Paramètres du document"
+msgstr "Enregistrer les paramètres d'affichage"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -544,7 +545,7 @@ msgstr "Les exceptions sont soulignées pendant la vérification orthographique"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr "Chargement du Lexique…"
+msgstr "Chargement du dictionnaire…"
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
@@ -552,7 +553,7 @@ msgstr "Tapez un mot pour l'ajouter"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr "Ajoutez"
+msgstr "Ajouter"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
@@ -560,18 +561,16 @@ msgstr "Le format du dictionnaire est incorrect. Veuillez vérifier le fichier."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
-"Quelque chose a mal fonctionné pendant le téléchargement du dictionnaire"
+msgstr "Quelque chose a mal fonctionné pendant l'envoi du dictionnaire"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
 msgstr ""
-"Quelque chose a mal fonctionné pendant le chargement des Paramètres du "
-"fichier."
+"Une erreur s'est produite lors du chargement des paramètres du document."
 
 #: admin/src/integrator/Xcu.ts:399
 msgid "Document Settings"
-msgstr "Paramètres des documents"
+msgstr "Paramètres du document"
 
 #: admin/src/integrator/Xcu.ts:448
 msgid "Select a tab to view settings."
@@ -579,15 +578,15 @@ msgstr "Veuillez sélectionner un onglet pour voir les paramètres."
 
 #: admin/src/integrator/Xcu.ts:461
 msgid "Reset to default Document settings"
-msgstr "Réinitialiser aux paramètres des documents par défaut"
+msgstr "Réinitialiser les paramètres du document par défaut"
 
 #: admin/src/integrator/Xcu.ts:475
 msgid "Are you sure you want to reset Document settings?"
-msgstr "Êtes-vous sûr de vouloir réinitialiser les Paramètres du document ?"
+msgstr "Êtes-vous sûr de vouloir réinitialiser les paramètres du document ?"
 
 #: admin/src/integrator/Xcu.ts:490
 msgid "Save Document settings"
-msgstr "Sauvegarder les Paramètres du document"
+msgstr "Enregistrer les paramètres du document"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -607,23 +606,23 @@ msgstr "To"
 
 #: admin/src/Util.js:26
 msgid "PB"
-msgstr "PB"
+msgstr "Po"
 
 #: admin/src/Util.js:26
 msgid "EB"
-msgstr "EB"
+msgstr "Eo"
 
 #: admin/src/Util.js:26
 msgid "ZB"
-msgstr "ZB"
+msgstr "Zo"
 
 #: admin/src/Util.js:26
 msgid "YB"
-msgstr "YB"
+msgstr "Yo"
 
 #: admin/src/Util.js:26
 msgid "BB"
-msgstr "BB"
+msgstr "Bo"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
@@ -647,21 +646,21 @@ msgstr "Le document est en train de migrer vers le nouveau serveur, réessaye...
 
 #: js/global.js:1574
 msgid "Failed to get RouteToken from controller"
-msgstr "Impossible d'obtenir le RouteToken du controlleur"
+msgstr "Impossible d'obtenir le RouteToken du contrôleur"
 
 #: src/app/Debug.ts:135
 msgid "Debug Tools"
-msgstr "Outils de deboggage"
+msgstr "Outils de débogage"
 
 #: src/app/Debug.ts:137
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr "Ctrl+Maj+Alt+D pour sortir"
+msgstr "Ctrl+Maj+Alt+D pour quitter"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
-"La manipulation de l'événement a été retardée pendant une période inattendue "
-": {0}ms"
+"La gestion des événements a été retardée pendant une durée inattendue : {0} "
+"ms"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "A comment is being edited"
@@ -669,7 +668,8 @@ msgstr "Un commentaire est en train d'être édité"
 
 #: src/canvas/sections/CommentListSection.ts:165
 msgid "Please save or discard the comment currently being edited."
-msgstr "Sauvez ou annulez le commentaire en train d'être édité."
+msgstr ""
+"Veuillez enregistrer ou supprimer le commentaire en cours de modification."
 
 #: src/canvas/sections/CommentListSection.ts:1166
 msgid "Modify"
@@ -730,14 +730,14 @@ msgstr "Commentaires mis à jour"
 
 #: src/canvas/sections/CommentListSection.ts:1457
 msgid "Another user has removed this comment."
-msgstr "Un autre utilisateur a éliminé ce commentaire."
+msgstr "Un autre utilisateur a supprimé ce commentaire."
 
 #: src/canvas/sections/CommentListSection.ts:1470
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
-"Un autre utilisateur a mis à jour le commentaire. Voulez-vous écraser ces "
+"Un autre utilisateur a mis à jour le commentaire. Souhaitez-vous écraser ces "
 "modifications ?"
 
 #: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1428
@@ -781,7 +781,7 @@ msgstr "Résolu"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:448
 msgid "Document contains unsupported media"
-msgstr "Le document contient un média au format non supporté"
+msgstr "Le document contient des médias non pris en charge"
 
 #: src/canvas/sections/URLPopUpSection.ts:65
 msgid "Copy link location"
@@ -789,11 +789,11 @@ msgstr "Copier l'emplacement du lien"
 
 #: src/canvas/sections/URLPopUpSection.ts:79
 msgid "Edit link"
-msgstr "Editer le lien"
+msgstr "Éditer le lien"
 
 #: src/canvas/sections/URLPopUpSection.ts:94
 msgid "Remove link"
-msgstr "Retirer le lien"
+msgstr "Supprimer le lien"
 
 #: src/control/ColorPicker.ts:270
 msgid "No color"
@@ -805,7 +805,7 @@ msgstr "Couleur automatique"
 
 #: src/control/Control.AboutDialog.ts:112
 msgid "This version of {productname} is powered by"
-msgstr "Cette version de {productname} est fournie par"
+msgstr "Cette version de {productname} est propulsée par"
 
 #: src/control/Control.AboutDialog.ts:135
 msgid "\"Slow Proxy\""
@@ -821,7 +821,7 @@ msgstr "Copier toutes les informations de version en anglais"
 
 #: src/control/Control.AddressInputField.ts:67
 msgid "cell address"
-msgstr "adresse cellulaire"
+msgstr "adresse de la cellule"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
@@ -847,7 +847,7 @@ msgid ""
 "it into the document instead."
 msgstr ""
 "Télécharger des ressources externes est interdit, mais coller des images est "
-"toujours possible. Cliquez-droit sur l'image, choisissez \"Copier Image\" et "
+"toujours possible. Cliquez-droit sur l'image, choisissez \"Copier image\" et "
 "collez la dans le document."
 
 #: src/control/Control.AlertDialog.js:72
@@ -868,7 +868,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr "Ne plus montrer à nouveau"
+msgstr "Ne plus afficher"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
@@ -889,11 +889,11 @@ msgstr "Collage spécial"
 
 #: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
-msgstr "Copier les Cellules"
+msgstr "Copier les cellules"
 
 #: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
-msgstr "Remplir série"
+msgstr "Remplir la série"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -902,7 +902,7 @@ msgstr "Chemin"
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
 msgid "Repair Document"
-msgstr "Restaurer le document"
+msgstr "Réparer le document"
 
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:387
@@ -931,7 +931,7 @@ msgstr "Vous n'avez encore rien fait qui nécessite de revenir en arrière…"
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
-msgstr "Rétablir"
+msgstr "Refaire"
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
@@ -980,7 +980,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
-msgstr "Contenu copié vers le presse-papiers"
+msgstr "Contenu copié dans le presse-papiers"
 
 #: src/control/Control.DownloadProgress.js:303
 msgid "Download failed"
@@ -1040,7 +1040,7 @@ msgstr "Brésil"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr "Bélarus"
+msgstr "Biélorussie"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
@@ -1064,7 +1064,7 @@ msgstr "Chypre"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
-msgstr "Tchéquie"
+msgstr "République tchèque"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Germany"
@@ -1176,7 +1176,7 @@ msgstr "Monaco"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr "République de Moldova"
+msgstr "Moldavie"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
@@ -1184,7 +1184,7 @@ msgstr "Monténégro"
 
 #: src/control/Control.ESignature.ts:176
 msgid "North Macedonia, Republic of"
-msgstr "Macédoine du Nord République"
+msgstr "Macédoine du Nord"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Malta"
@@ -1236,7 +1236,7 @@ msgstr "Fédération de Russie"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
-msgstr "Saudi Arabia"
+msgstr "Arabie Saoudite"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Sweden"
@@ -1264,7 +1264,7 @@ msgstr "Turquie"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr "Taiwan, Province de Chine"
+msgstr "Taïwan, Province de Chine"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
@@ -1305,15 +1305,15 @@ msgstr "Insérer une signature électronique"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr "Développer la barre des formules"
+msgstr "Développer la barre de formule"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
-msgstr "Assistant Fonctions"
+msgstr "Assistant de fonctions"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr "Sélectionner fonction"
+msgstr "Sélectionner une fonction"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:112
@@ -1328,7 +1328,7 @@ msgstr "Accepter"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr "Réduire barre des formules"
+msgstr "Réduire la barre des formules"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1342,7 +1342,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:322
 msgid "Close dialog"
-msgstr "Fermer la discussion"
+msgstr "Fermer la boîte de dialogue"
 
 #: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
@@ -1354,15 +1354,15 @@ msgstr "Linéaire"
 
 #: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
-msgstr "Axial"
+msgstr "Axiale"
 
 #: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
-msgstr "Radial"
+msgstr "Radiale"
 
 #: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
-msgstr "Ellipsoide"
+msgstr "Ellipsoïde"
 
 #: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
@@ -1408,7 +1408,7 @@ msgstr "Style"
 
 #: src/control/Control.JSDialogBuilder.js:1932
 msgid "reply"
-msgstr "réponse"
+msgstr "répondre"
 
 #: src/control/Control.JSDialogBuilder.js:1935
 msgid "replies"
@@ -1488,7 +1488,7 @@ msgstr "Texte riche (.rtf)"
 #: src/control/Control.Menubar.ts:1213 src/control/Control.Menubar.ts:1220
 #: src/control/Control.Menubar.ts:1268 src/control/Control.Menubar.ts:1278
 msgid "Export as"
-msgstr "Exporter comme"
+msgstr "Exporter en tant que"
 
 #: src/control/Control.Menubar.ts:155 src/control/Control.Menubar.ts:162
 #: src/control/Control.Menubar.ts:483 src/control/Control.Menubar.ts:489
@@ -1612,7 +1612,7 @@ msgstr "Masquer la barre de menus"
 #: src/control/Control.NotebookbarImpress.js:523
 #: src/control/Control.NotebookbarWriter.js:1572
 msgid "Dark Mode"
-msgstr "Mode Sombre"
+msgstr "Mode sombre"
 
 #: src/control/Control.Menubar.ts:221 src/control/Control.Menubar.ts:544
 #: src/control/Control.Menubar.ts:700 src/control/Control.Menubar.ts:845
@@ -1832,17 +1832,17 @@ msgstr "Scalable Vector Graphics (.svg)"
 #: src/control/Control.Menubar.ts:497
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Current slide as Bitmap (.bmp)"
-msgstr "Diapositive courante comme Bitmap (.bmp)"
+msgstr "Diapositive courante comme bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:498
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr "Diapositive courante comme format d'échange d'images (.gif)"
+msgstr "Diapositive courante comme GIF (.gif)"
 
 #: src/control/Control.Menubar.ts:499
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr "Diapositive courante comme Portable Network Graphics (.png)"
+msgstr "Diapositive courante comme PNG (.png)"
 
 #: src/control/Control.Menubar.ts:500
 #: src/control/Control.NotebookbarBuilder.js:516
@@ -2175,7 +2175,7 @@ msgstr "Fichier"
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Home"
-msgstr "Origine"
+msgstr "Accueil"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:70

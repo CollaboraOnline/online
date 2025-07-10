@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-04-26 20:14+0000\n"
-"Last-Translator: TransGecko <sigekos824@mongrec.com>\n"
+"PO-Revision-Date: 2025-07-08 11:01+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "help/fr/>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -32,7 +32,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
-msgstr "Rétablir"
+msgstr "Refaire"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
@@ -615,13 +615,13 @@ msgstr "Aller au début de la ligne"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-88
 msgid "Home"
-msgstr "Origine"
+msgstr "Accueil"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-38
 msgid "Go and select to the beginning of a line"
-msgstr "Aller et sélectionner au début de la ligne"
+msgstr "Allez et sélectionnez jusqu'au début d'une ligne"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
@@ -700,7 +700,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Fin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
-msgstr "Aller et sélectionne le texte à la fin du document"
+msgstr "Aller et sélectionner le texte à la fin du document"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-102
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-101
@@ -912,8 +912,8 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "3 secondes en mode Insertion, la flèche de direction insère une ligne/"
-"colonne, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flèche</kbd> "
-"de direction insère une cellule"
+"colonne, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>flèche de "
+"direction</kbd> insère une cellule"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
@@ -926,7 +926,7 @@ msgid ""
 "neighboring cell"
 msgstr ""
 "3 secondes en mode Suppression, la flèche de direction supprime une ligne/"
-"colonne, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flèche de "
+"colonne, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>flèche de "
 "direction</kbd> fusionne la cellule avec la cellule voisine"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
@@ -1070,7 +1070,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Entrée </kbd>"
+"\"kbd--plus\">+</span><kbd>Entrée</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1278,7 +1278,7 @@ msgstr "Déplace une page d'écran vers la droite."
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Maj</kbd> <span class=\"kbd--plus\">+</span> <kbd>Pave suivante</kbd>"
+"<kbd>Maj</kbd> <span class=\"kbd--plus\">+</span> <kbd>Page suivante</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1386,7 +1386,7 @@ msgstr "Définir une largeur de colonne optimale"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-38
 msgid "Two decimal places, thousands separator"
-msgstr "Deux décimales, séparateur des milliers"
+msgstr "Deux décimales, séparateur de milliers"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
 msgid ""
@@ -1505,9 +1505,8 @@ msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
-"Échappe le mode actif, i.e. à partir du mode d'édition bascule vers le mode "
-"sélection d'objet, à partir du mode sélection d'objet bascule vers le mode "
-"affichage."
+"Échapper au mode actuel, c'est-à-dire passer du mode édition au mode "
+"sélection d'objet, du mode sélection d'objet au mode affichage."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-186
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-186
@@ -1582,12 +1581,12 @@ msgstr "Fonctions avancées"
 #: html/cool-help.html%2Bdiv.div.p:324-9
 #: html/cool-help.html%2Bdiv.div.h2:483-5
 msgid "<span class=\"productname\">{productname}</span> spreadsheets"
-msgstr "Classeurs <span class=\"productname\">{productname}</span>"
+msgstr "Feuilles de calcul <span class=\"productname\">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:325-9
 #: html/cool-help.html%2Bdiv.div.div.h3:486-5
 msgid "Editing spreadsheets"
-msgstr "Édition des classeurs"
+msgstr "Édition de feuilles de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:326-9
 #: html/cool-help.html%2Bdiv.div.div.h3:491-5
@@ -1598,12 +1597,12 @@ msgstr "Formules"
 #: html/cool-help.html%2Bdiv.div.p:327-9
 #: html/cool-help.html%2Bdiv.div.div.h3:501-5
 msgid "Formatting spreadsheets"
-msgstr "Formatage des classeurs"
+msgstr "Formatage des feuilles de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:329-9
 #: html/cool-help.html%2Bdiv.div.div.h3:776-5
 msgid "Spreadsheets"
-msgstr "Classeurs"
+msgstr "Feuilles de calcul"
 
 #: html/cool-help.html%2Bdiv.div.p:332-9
 #: html/cool-help.html%2Bdiv.div.h2:552-5
@@ -1648,7 +1647,7 @@ msgstr "Diaporama"
 #: html/cool-help.html%2Bdiv.div.p:342-9
 #: html/cool-help.html%2Bdiv.div.div.h3:622-5
 msgid "Slide pane"
-msgstr "Volet Diapo"
+msgstr "Volet diapo"
 
 #: html/cool-help.html%2Bdiv.div.p:344-9
 #: html/cool-help.html%2Bdiv.div.div.h3:816-5
@@ -1668,9 +1667,10 @@ msgid ""
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
 "<span class=\"productname\">{productname}</span> permet de créer et d'éditer "
-"des documents bureautiques de type texte, classeurs et présentations "
-"directement dans le navigateur de façon simple et directe. Vous pouvez "
-"travailler seul sur un document ou de manière collaborative avec une équipe."
+"des documents bureautiques de type texte, feuilles de calcul et "
+"présentations directement dans le navigateur de façon simple et directe. "
+"Vous pouvez travailler seul sur un document ou de manière collaborative avec "
+"une équipe."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:357-11
 msgid ""
@@ -1718,8 +1718,8 @@ msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
-"<span class=\"def\">La zone du document :</span> la zone de l'application "
-"affiche le contenu du document, aussi bien pour les classeurs, les "
+"<span class=\"def\">La zone du document :</span> la zone de l'application "
+"affiche le contenu du document, aussi bien pour les feuilles de calcul, les "
 "présentations ou les documents texte."
 
 #: html/cool-help.html%2Bdiv.div.div.p:371-5
@@ -1809,9 +1809,9 @@ msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
-"Les textes, les graphiques, les formes et les images svg resteront nets, "
-"lors du zoom avant, vous ne verrez que des pixels apparaître sur les images "
-"insérées, telles que les jpeg ou les pngs."
+"Les textes, graphiques, formes et images svg resteront nets, lors du zoom "
+"avant, vous ne verrez que des pixels apparaître sur les images insérées, "
+"telles que les jpeg ou les png."
 
 #: html/cool-help.html%2Bdiv.div.div.p:394-5
 msgid "Using the browser zoom affects the document and user interface areas."
@@ -1916,19 +1916,20 @@ msgid ""
 "selecting text by double tapping, and using a long-tap to access copy/cut/"
 "paste via the context menu is required."
 msgstr ""
-"Le copié/coupé et collé de contenu riche est pris en charge, non seulement "
-"dans un document donné, mais également entre plusieurs documents sur le même "
-"<span class=\"productname\">{productname}</span>. Pour ces utilisations "
-"internes, les utilisateurs peuvent copier/couper du contenu, y compris des "
-"images et du contenu mixte, sur PC en utilisant directement les raccourcis "
-"clavier (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). Pour des raisons de "
-"sécurité, il est nécessaire d'utiliser <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> pour coller sur PC, mais les menus contextuels "
-"peuvent être utilisés pour couper et copier . Sur Android ou iOS, il est "
-"nécessaire de sélectionner du texte en appuyant deux fois et d'utiliser un "
-"appui long pour accéder au copier/couper/coller via le menu contextuel."
+"Le copier/couper et coller de contenu riche est pris en charge, non "
+"seulement dans un document donné, mais également entre plusieurs documents "
+"sur le même <span class=\"productname\">{productname}</span>. Pour ces "
+"utilisations internes, les utilisateurs peuvent copier/couper du contenu, y "
+"compris des images et du contenu mixte, sur PC en utilisant directement les "
+"raccourcis clavier (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
+"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). Pour des "
+"raisons de sécurité, il est nécessaire d'utiliser <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd> pour coller sur PC, mais les menus "
+"contextuels peuvent être utilisés pour couper et copier . Sur Android ou "
+"iOS, il est nécessaire de sélectionner du texte en appuyant deux fois et "
+"d'utiliser un appui long pour accéder au copier/couper/coller via le menu "
+"contextuel."
 
 #: html/cool-help.html%2Bdiv.div.div.p:418-5
 msgid ""
@@ -2017,10 +2018,10 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
-"Pour poursuivre l'édition, cliquez sur le document et la surcouche grise "
-"ainsi que le message disparaissent. Toutes modifications qui auraient été "
-"faites par d'autres utilisateurs - lors de l'édition collaborative du "
-"document - sont rechargées."
+"Pour poursuivre l'édition, cliquez sur le document; la surcouche grise et le "
+"message disparaîtront. Toutes les modifications éventuellement apportées par "
+"d'autres utilisateurs, lors de l'édition collaborative du document, sont "
+"rechargées."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:434-5
 msgid "Pasting"
@@ -2033,10 +2034,10 @@ msgid ""
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
-"Lorsque vous collez du contenu copiez à partir du même document, le format "
-"et les éléments sont maintenus. Si vous copiez à partir d'un autre document, "
-"d'un autre onglet ou d'un autre fenêtre du navigateur, ou en dehors du "
-"navigateur, le contenu collé conservera le texte riche."
+"Lorsque vous collez du contenu copié depuis le même document, le format et "
+"les éléments sont conservés. Si vous copiez depuis un autre document, dans "
+"un autre onglet ou une autre fenêtre de navigateur, ou depuis l'extérieur du "
+"navigateur, le contenu collé conservera le texte enrichi."
 
 #: html/cool-help.html%2Bdiv.div.div.p:436-5
 msgid ""
@@ -2054,18 +2055,18 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
-"Lorsque vous copiez du texte à partir du même document, le formatage sera "
-"respecté. Vous pouvez également coller des objets, tels que des images, "
-"s'ils sont copiés à partir du document sur lequel vous travaillez."
+"Lorsque vous collez du texte depuis le document, la mise en forme est "
+"respectée. Vous pouvez également coller des objets, comme des images, s'ils "
+"sont copiés depuis le document sur lequel vous travaillez."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
-"Lorsque vous collez du texte provenant de l'extérieur du document (d'une "
-"autre fenêtre de navigateur ou d'une application de bureau), il sera collé "
-"en tant que texte enrichi (Rich Text)."
+"Lorsque vous collez du texte depuis l’extérieur du document (une autre "
+"fenêtre de navigateur ou une application de bureau), il sera collé sous "
+"forme de texte enrichi."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2073,11 +2074,11 @@ msgid ""
 "using the context menu."
 msgstr ""
 "Lorsque vous avez du contenu interne coupé ou copié, vous pouvez coller ce "
-"contenu en utilisant le menu contextuel."
+"contenu à l'aide du menu contextuel."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:446-5
 msgid "Adding charts"
-msgstr "Ajout de diagrammes"
+msgstr "Ajout de graphiques"
 
 #: html/cool-help.html%2Bdiv.div.div.p:447-5
 msgid ""
@@ -2085,8 +2086,8 @@ msgid ""
 "visualization of charts in documents. To add a chart:"
 msgstr ""
 "<span class=\"productname\">{productname}</span> prend en charge l'insertion "
-"et la visualisation de diagrammes dans les documents. Pour ajouter un "
-"diagramme :"
+"et la visualisation de graphiques dans les documents. Pour ajouter un "
+"graphique :"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:449-11
 msgid ""
@@ -2102,11 +2103,11 @@ msgid ""
 "Customize your chart on the sidebar:"
 msgstr ""
 "Choisissez <span class=\"ui\">Insertion</span> → <span class=\"ui\""
-">Diagrammes</span>. Personnalisez le diagramme dans le volet latéral :"
+">Graphiques</span>. Personnalisez le graphique dans le volet latéral :"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:453-31
 msgid "chart"
-msgstr "graphique"
+msgstr "diagramme"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:454-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -2227,10 +2228,10 @@ msgid ""
 "with suggested misspelling corrections."
 msgstr ""
 "<span class=\"productname\">{productname}</span> peut vérifier l'orthographe "
-"des documents texte, classeur et présentation. Une ligne ondulée rouge "
-"indique une faute d'orthographe. Cliquez sur le mot avec le bouton droit de "
-"la souris pour ouvrir un menu contextuel contenant des suggestions de "
-"corrections."
+"des documents texte, feuilles de calcul et présentation. Une ligne ondulée "
+"rouge indique une faute d'orthographe. Cliquez sur le mot avec le bouton "
+"droit de la souris pour ouvrir un menu contextuel proposant des corrections "
+"orthographiques."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:477-29
 msgid "spellchecking"
@@ -2256,17 +2257,16 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
-"Vous modifiez une feuille de calcul en ligne de la même manière que vous "
-"modifiez une feuille de calcul dans votre environnement. Les opérations "
-"telles que la saisie de données, la sélection de plages, de colonnes, de "
-"lignes ou de feuilles sont les mêmes. Utilisez le clavier, les menus ou la "
-"barre d'outils pour réaliser des actions dans la feuille de calcul. Le "
-"déplacement du contenu des cellules pour remplir les cellules avec des "
-"données est également pris en charge. Les commandes Copier, Couper et Coller "
-"sont disponibles dans le menu contextuel. Faire suivre les données saisies "
-"par <kbd>Tab</kbd> déplacera le curseur vers la cellule suivante vers la "
-"droite, et par <kbd>Entrée</kbd> vers la cellule du dessous pour une saisie "
-"plus facile des données."
+"Vous modifiez un classeur en ligne de la même manière que vous modifiez un "
+"classeur dans votre environnement. Les opérations telles que la saisie de "
+"données, la sélection de plages, de colonnes, de lignes ou de feuilles sont "
+"les mêmes. Utilisez le clavier, les menus ou la barre d'outils pour réaliser "
+"des actions dans la feuille de calcul. Le déplacement du contenu des "
+"cellules pour remplir les cellules avec des données est également pris en "
+"charge. Les commandes Copier, Couper et Coller sont disponibles dans le menu "
+"contextuel. Faire suivre les données saisies par <kbd>Tab</kbd> déplacera le "
+"curseur vers la cellule suivante vers la droite, et par <kbd>Entrée</kbd> "
+"vers la cellule du dessous pour une saisie plus facile des données."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:493-5
 msgid ""
@@ -2288,10 +2288,10 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\" target="
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
-"Le langage des formules doit être très familier aux utilisateurs de "
-"classeurs et est spécifié de façon très détaillée dans la <a href=\"https"
-"://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221"
-".html\" target=\"_blank\" rel=\"noopener noreferrer\">Spécification OASIS "
+"Le langage des formules doit être très familier aux utilisateurs de feuilles "
+"de calcul et est spécifié de façon très détaillée dans la <a href=\"https://"
+"www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221."
+"html\" target=\"_blank\" rel=\"noopener noreferrer\">Spécification OASIS "
 "OpenFormula</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:503-5
@@ -2304,7 +2304,7 @@ msgid ""
 "complex and custom number formatting, as well as font, complex border, "
 "background, cell protection and other options."
 msgstr ""
-"<span class=\"def\">Formatage direct :</span> vous pouvez formater des "
+"<span class=\"def\">Formatage direct :</span> vous pouvez formater des "
 "cellules, des colonnes, des lignes et des feuilles de calcul en les "
 "formatant directement à partir des menus, de la barre d'outils ou des menus "
 "contextuels. La mise en forme directe s'applique uniquement à l'objet actuel "
@@ -2333,11 +2333,11 @@ msgid ""
 "spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
-"<span class=\"def\"> Filtrage des données :</span> les filtres et les "
-"filtres avancés vous permettent de travailler sur certaines lignes "
-"(enregistrements) filtrées d'une plage de données. Dans les feuilles de "
-"calcul de <span class=\"productname\">{productname}</span>, il existe "
-"différentes possibilités d'application de filtres."
+"<span class=\"def\">Filtrage des données :</span> les filtres et les filtres "
+"avancés vous permettent de travailler sur certaines lignes (enregistrements) "
+"filtrées d'une plage de données. Dans les feuilles de calcul de <span class="
+"\"productname\">{productname}</span>, il existe différentes possibilités "
+"d'application de filtres."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:514-10
 msgid ""
@@ -2746,7 +2746,7 @@ msgid ""
 "<span class=\"def\">Master slide:</span> Select the master slide associated "
 "to the current slide. Format and arrange slide elements in the master slide."
 msgstr ""
-"<span class=\"def\">Diapo maîtress :</span> sélectionnez la diapo maîtresse "
+"<span class=\"def\">Diapo maîtresse :</span> sélectionnez la diapo maîtresse "
 "associée à la diapo active. Formatez et organisez les éléments de la diapo "
 "dans la diapo maîtresse."
 
@@ -3387,9 +3387,9 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
-"Renommez une feuille dans un classeur à l'aide du menu contextuel (en "
-"cliquant avec le bouton droit de la souris) sur l'onglet de feuille en bas. "
-"Saisissez le nouveau nom de feuille dans la boîte de dialogue qui suit."
+"Renommez une feuille dans une feuille de calcul à l'aide du menu contextuel ("
+"en cliquant avec le bouton droit de la souris) sur l'onglet de feuille en "
+"bas. Saisissez le nouveau nom de feuille dans la boîte de dialogue qui suit."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:818-5
 msgid "How can I run my slide show?"
