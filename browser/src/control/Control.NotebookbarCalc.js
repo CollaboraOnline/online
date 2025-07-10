@@ -39,7 +39,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Layout-tab-label',
-				'text': _('Layout'),
+				'text': _('Page Layout'),
 				'name': 'Layout',
 				'accessibility': { focusBack: true,	combination: 'P', de: null }
 			},
