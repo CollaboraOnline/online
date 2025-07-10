@@ -4,13 +4,14 @@
 # J. Lavoie <j.lavoie@net-c.ca>, 2021.
 # Louis Morel <louismorel03@outlook.fr>, 2021.
 # "David D." <david.ducassou@free.fr>, 2024.
+# Anael Mobilia <contrib@anael.eu>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2024-09-02 13:58+0000\n"
-"Last-Translator: \"David D.\" <david.ducassou@free.fr>\n"
+"PO-Revision-Date: 2025-07-08 11:02+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fr/>\n"
 "Language: fr\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -31,8 +32,8 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"Éditeur basé sur LibreOffice pour les documents MS Office et Open/"
-"LibreOffice."
+"Éditeur basé sur LibreOffice pour les documents Office, LibreOffice et "
+"OpenOffice."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:13-1
@@ -42,18 +43,18 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
-"Collabora Office est un éditeur de texte, tableur et logiciel de "
+"Collabora Office est un éditeur de texte, un tableur et un logiciel de "
 "présentation basé sur LibreOffice, la suite bureautique Open Source la plus "
 "populaire au monde - et maintenant il est sur Android, améliorant vos "
-"possibilités de travailler sur mobile et pour la collaboration."
+"possibilités de travail sur mobile et de collaboration."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
 msgid ""
 "This app is in active development, feedback and bug reports are very welcome."
 msgstr ""
-"Cette app est en développement actif, les commentaires et les rapports de "
-"bogues sont très bienvenus."
+"Cette application est en développement actif, les commentaires et les "
+"rapports de bugs sont les bienvenus."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
@@ -79,7 +80,7 @@ msgstr "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr "Signalement d'incident :"
+msgstr "Signaler des problèmes :"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
@@ -88,9 +89,9 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
-"Utiliser le bugtracker et joindre les fichiers qui ont causé des problèmes "
-"via <a href=\"https://col.la/android\"> https://col.la/android</a>. Veuillez "
-"noter que tout ce que vous entrez dans le bugtracker sera public."
+"Utilisez le bugtracker et joignez tous les fichiers problématiques via <a "
+"href=\"https://col.la/android\"> https://col.la/android</a>. Veuillez noter "
+"que tout ce que vous saisissez dans le bugtracker sera public."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
@@ -105,9 +106,9 @@ msgid ""
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
 "Collabora Office pour Android utilise le même moteur que LibreOffice pour "
-"Windows, Mac et Linux. Ceci, combiné avec un nouveau front-end basé sur "
-"Collabora Online, lit et enregistre des documents de manière similaire à "
-"LibreOffice desktop."
+"Windows, Mac et Linux. Associé à une nouvelle interface utilisateur basée "
+"sur Collabora Online, il lit et enregistre les documents de manière "
+"similaire à la version bureau de LibreOffice."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
