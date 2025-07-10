@@ -208,7 +208,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'file-save',
 						'type': 'bigtoolitem',
-						'text': _('Save'),
+						'text': _UNO('.uno:Save'),
 						'command': '.uno:Save',
 						'accessibility': { focusBack: true, combination: 'SV', de: null }
 					}

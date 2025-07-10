@@ -16,6 +16,8 @@
 declare var JSDialog: any;
 
 class ShortcutsUtil {
+	private shortcutMap: Map<string, string> = new Map();
+
 	// Available Shortcuts
 	public SAVE = 'Ctrl + S';
 	public UNDO = 'Ctrl + Z';
@@ -42,7 +44,51 @@ class ShortcutsUtil {
 	public JUSTIFIED = 'Ctrl + J';
 	public KEYBOARD_SHORTCUTS = 'Ctrl + Shift + ?';
 
-	public getShortcut(text: string, shortcut: string): string {
+	constructor() {
+		this.shortcutMap.set('.uno:Save', this.SAVE);
+		this.shortcutMap.set('.uno:Undo', this.UNDO);
+		this.shortcutMap.set('.uno:Redo', this.REDO);
+		this.shortcutMap.set('.uno:Print', this.PRINT);
+		this.shortcutMap.set('.uno:Cut', this.CUT);
+		this.shortcutMap.set('.uno:Copy', this.COPY);
+		this.shortcutMap.set('.uno:Paste', this.PASTE);
+		this.shortcutMap.set('.uno:PasteSpecial', this.PASTE_SPECIAL);
+		this.shortcutMap.set('.uno:SelectAll', this.SELECT_ALL);
+		this.shortcutMap.set('.uno:InsertAnnotation', this.COMMENT);
+		this.shortcutMap.set('.uno:InsertFootnote', this.FOOTNOTE);
+		this.shortcutMap.set('.uno:InsertEndnote', this.ENDNOTE);
+		this.shortcutMap.set('.uno:Bold', this.BOLD);
+		this.shortcutMap.set('.uno:Italic', this.ITALIC);
+		this.shortcutMap.set('.uno:Underline', this.UNDERLINE);
+		this.shortcutMap.set('.uno:UnderlineDouble', this.DOUBLE_UNDERLINE);
+		this.shortcutMap.set('.uno:Strikeout', this.STRIKETHROUGH);
+		this.shortcutMap.set('.uno:SuperScript', this.SUPERSCRIPT);
+		this.shortcutMap.set('.uno:SubScript', this.SUBSCRIPT);
+		this.shortcutMap.set('.uno:LeftPara', this.LEFT);
+		this.shortcutMap.set('.uno:AlignLeft', this.LEFT);
+		this.shortcutMap.set('.uno:AlignHorizontalCenter', this.CENTERED);
+		this.shortcutMap.set('.uno:CenterPara', this.CENTERED);
+		this.shortcutMap.set('.uno:AlignRight', this.RIGHT);
+		this.shortcutMap.set('.uno:RightPara', this.RIGHT);
+		this.shortcutMap.set('.uno:AlignBlock', this.JUSTIFIED);
+		this.shortcutMap.set('.uno:JustifyPara', this.JUSTIFIED);
+		this.shortcutMap.set('.uno:KeyboardShortcuts', this.KEYBOARD_SHORTCUTS);
+	}
+
+	public hasShortcut(command: string): boolean {
+		return this.shortcutMap.has(command);
+	}
+
+	/**
+	 * Returns the text with appended shortcut for a given text and UNO Command.
+	 * @param {string} text - The text to localize.
+	 * @param {string} shortcut - The shortcut to localize.
+	 * @returns {string} - The localized text with the shortcut.
+	 */
+	public getShortcut(text: string, command: string): string {
+		let shortcut = this.shortcutMap.get(command);
+		if (!shortcut) return text;
+
 		// localize shortcut
 		if (
 			String.locale.startsWith('de') ||
