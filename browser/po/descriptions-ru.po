@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-05-04 05:44+0000\n"
+"PO-Revision-Date: 2025-07-05 11:01+0000\n"
 "Last-Translator: Yurt Page <yurtpage@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/ru/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -86,6 +86,9 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
+"Используйте багтрекер и прикрепляйте любые файлы, вызвавшие проблемы, через "
+"<a href=\"https://col.la/android\"> https://col.la/android</a>. Обратите "
+"внимание, что всё, что вы вводите в багтрекер, будет общедоступным."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
@@ -99,6 +102,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"Collabora Office для Android использует тот же движок, что и LibreOffice для "
+"Windows, Mac и Linux. Это, в сочетании с новым интерфейсом на основе "
+"Collabora Online, читает и сохраняет документы аналогично LibreOffice для "
+"настольных компьютеров."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -108,6 +115,10 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Разработчики Collabora Тор Лиллквист, Томаж Вайнгерл, Майкл Микс, Миклош "
+"Вайна, Ян Холешовски, Мерт Тюмер, Рашеш Падиа и Скайлер Грей разрабатывают "
+"поддержку Android с 2012 года при поддержке студентов Google Summer of Code "
+"Анджея Ханта, Иэна Билле и Кайшу Саху."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
@@ -117,12 +128,12 @@ msgstr "Лицензия:"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
-msgstr ""
+msgstr "Свободное ПО - лицензия Mozilla Public License v2 и другие"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr ""
+msgstr "Авторы:"
 
 #~ msgid "Major upgrade to the new 6.4 core."
 #~ msgstr "Крупное обновление на новое ядро 6.4."
