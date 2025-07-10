@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-05-09 19:55+0000\n"
-"Last-Translator: Dream X <nodem49316@daupload.com>\n"
+"PO-Revision-Date: 2025-07-05 11:01+0000\n"
+"Last-Translator: kevin10-26 <kevin.bento@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -373,15 +373,15 @@ msgstr "Êtes-vous sûr de vouloir arrêter le serveur ?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:73
 msgid "Accessibility"
-msgstr ""
+msgstr "Accessibilité"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Fichier JSON invalide"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Error reading file"
-msgstr ""
+msgstr "Erreur lors de la lecture du fichier"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Autotext"
@@ -447,6 +447,8 @@ msgid ""
 "Interface settings file is not valid JSON. Please check the file and try "
 "again."
 msgstr ""
+"Le fichier de paramètres de l'interface n'est pas un JSON valide. Veuillez "
+"vérifier le fichier puis réessayer."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:281
 msgid "Shared Config URL is missing in initial variables."
@@ -492,33 +494,32 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "View Settings"
-msgstr ""
+msgstr "Voir les paramètres"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Ajuster la vue des paramètres."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:650
 msgid "Option"
-msgstr ""
+msgstr "Option"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:717
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Attention : L'accessibilité du serveur doit être activée pour basculer)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:760
-#, fuzzy
 msgid "Reset to default View settings"
 msgstr "Réinitialiser aux paramètres des documents par défaut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:774
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
 msgstr "Êtes-vous sûr de vouloir réinitialiser les Paramètres du document ?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:792
 msgid "Save View Settings"
-msgstr ""
+msgstr "Sauvegarder les Paramètres du document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:909
 #: src/map/handler/Map.WOPI.js:691
@@ -753,13 +754,12 @@ msgid "Autosaved"
 msgstr "Enregistrement automatique"
 
 #: src/canvas/sections/CommentSection.ts:232
-#, fuzzy
 msgid "Edit comment"
-msgstr "Modifier le document"
+msgstr "Modifier le commentaire"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Répondre au commentaire"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -813,7 +813,7 @@ msgstr "\"Proxy lent\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Fuseau horaire :"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
