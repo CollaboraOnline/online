@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global describe it cy require expect beforeEach*/
+/* global describe it cy require beforeEach*/
 
 var helper = require('../../common/helper');
 
