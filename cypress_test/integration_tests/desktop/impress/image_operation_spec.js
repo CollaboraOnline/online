@@ -1,7 +1,6 @@
 /* global describe it require cy beforeEach */
 
 var helper = require('../../common/helper');
-var { insertImage, insertVideo, deleteImage } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 var { triggerNewSVGForShapeInTheCenter } = require('../../common/impress_helper');
 
@@ -9,27 +8,25 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/image_operation.odp');
-		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
-		cy.cGet('#sidebar-panel').should('not.be.visible');
 		desktopHelper.switchUIToNotebookbar();
 	});
 
 	it('Insert/Delete image',function() {
-		insertImage();
+		desktopHelper.insertImage();
 
 		//make sure that image is in focus
 		cy.cGet('#document-container svg g')
 			.should('exist');
 
-		deleteImage();
+		desktopHelper.deleteImage();
 	});
 
 	it("Insert multimedia", function () {
-		insertVideo();
+		desktopHelper.insertVideo();
 	});
 
 	it.skip('Crop Image', function () {
-		insertImage();
+		desktopHelper.insertImage();
 		helper.assertImageSize(438, 111);
 
 		cy.cGet('#Crop').should('be.visible');
@@ -55,7 +52,10 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
-		insertImage();
+		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
+		cy.cGet('#sidebar-panel').should('not.be.visible');
+
+		desktopHelper.insertImage();
 		//when Keep ratio is unchecked
 		helper.assertImageSize(438, 111);
 
