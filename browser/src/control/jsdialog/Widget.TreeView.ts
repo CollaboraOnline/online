@@ -470,6 +470,10 @@ class TreeViewControl {
 		index: any,
 		builder: JSBuilder,
 	) {
+		const text =
+			builder._cleanText(entry.columns[index].text) ||
+			builder._cleanText(entry.text);
+
 		const hasRenderer = entry.columns[index].customEntryRenderer;
 		const hasCache = hasRenderer && builder.rendersCache[treeViewData.id];
 		const hasCachedImage =
@@ -485,6 +489,7 @@ class TreeViewControl {
 			);
 			const img = L.DomUtil.create('img', 'ui-treeview-custom-render', cell);
 			img.src = image;
+			img.alt = text;
 		} else {
 			const cell = L.DomUtil.create(
 				'span',
@@ -492,9 +497,7 @@ class TreeViewControl {
 					` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
 				parent,
 			);
-			cell.innerText =
-				builder._cleanText(entry.columns[index].text) ||
-				builder._cleanText(entry.text);
+			cell.innerText = text;
 
 			if (hasRenderer) {
 				JSDialog.OnDemandRenderer(
