@@ -293,12 +293,18 @@ menuDefinitions.set('PasteMenu', [
 	{
 		text: _UNO('.uno:Paste', 'text'),
 		action: '.uno:Paste',
-		hint: JSDialog.ShortcutsUtil.PASTE,
+		hint: JSDialog.ShortcutsUtil.getShortcut(
+			_UNO('.uno:Paste', 'text'),
+			'.uno:Paste',
+		),
 	},
 	{
 		text: _UNO('.uno:PasteSpecial', 'text'),
 		action: '.uno:PasteSpecial',
-		hint: JSDialog.ShortcutsUtil.PASTE_SPECIAL,
+		hint: JSDialog.ShortcutsUtil.getShortcut(
+			_UNO('.uno:PasteSpecial', 'text'),
+			'.uno:PasteSpecial',
+		),
 	},
 ] as Array<MenuDefinition>);
 
