@@ -411,7 +411,6 @@ COOL_JS_LST =\
 	src/control/Control.Permission.js \
 	src/control/Control.Selection.js \
 	src/control/Control.ServerAuditDialog.ts \
-	src/control/Control.Shortcuts.js \
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/Control.Tooltip.js \
@@ -430,6 +429,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Util.OnDemandRenderer.ts \
 	src/control/jsdialog/Util.ScrollableBar.ts \
 	src/control/jsdialog/Util.ScrollIntoView.ts \
+	src/control/jsdialog/Util.Shortcuts.ts \
 	src/control/jsdialog/Util.SnackbarController.ts \
 	src/control/jsdialog/Util.StateChange.ts \
 	src/control/jsdialog/Widget.ButtonBox.ts \
