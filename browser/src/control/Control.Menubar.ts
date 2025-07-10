@@ -92,7 +92,7 @@ class Menubar extends L.Control {
 		],
 		text:  [
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Save', 'text'), JSDialog.ShortcutsUtil.SAVE), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: window.prefs.get('saveAsMode') === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF text document (.odt)'), id: 'saveas-odt', type: 'action'},
 					{name: _('Word 2003 Document (.doc)'), id: 'saveas-doc', type: 'action'},
@@ -118,19 +118,19 @@ class Menubar extends L.Control {
 				{name: _UNO('.uno:SetDocumentProperties', 'text'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{name: _UNO('.uno:Signature', 'text'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Print', 'text'), JSDialog.ShortcutsUtil.PRINT), id: 'print', type: 'action'},
+				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Undo', 'text'), JSDialog.ShortcutsUtil.UNDO), uno: '.uno:Undo'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Redo', 'text'), JSDialog.ShortcutsUtil.REDO), uno: '.uno:Redo'},
+				{name: _UNO('.uno:Undo', 'text'), uno: '.uno:Undo'},
+				{name: _UNO('.uno:Redo', 'text'), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Cut', 'text'), JSDialog.ShortcutsUtil.CUT), uno: '.uno:Cut'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Copy', 'text'), JSDialog.ShortcutsUtil.COPY), uno: '.uno:Copy'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Paste', 'text'), JSDialog.ShortcutsUtil.PASTE), uno: '.uno:Paste'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:PasteSpecial', 'text'), JSDialog.ShortcutsUtil.PASTE_SPECIAL), uno: '.uno:PasteSpecial'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SelectAll', 'text'), JSDialog.ShortcutsUtil.SELECT_ALL), uno: '.uno:SelectAll'},
+				{name: _UNO('.uno:Cut', 'text'), uno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy', 'text'), uno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste', 'text'), uno: '.uno:Paste'},
+				{name: _UNO('.uno:PasteSpecial', 'text'), uno: '.uno:PasteSpecial'},
+				{name: _UNO('.uno:SelectAll', 'text'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
 				{type: 'separator'},
@@ -178,7 +178,7 @@ class Menubar extends L.Control {
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:InsertAnnotation', 'text'), JSDialog.ShortcutsUtil.COMMENT), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 				{name: _UNO('.uno:DrawText'), uno: '.uno:DrawText'},
@@ -204,8 +204,8 @@ class Menubar extends L.Control {
 					{name: _UNO('.uno:InsertPageFooter', 'text'), type: 'menu', menu: [
 						{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?'}]}
 				]},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:InsertFootnote', 'text'), JSDialog.ShortcutsUtil.FOOTNOTE), uno: '.uno:InsertFootnote'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:InsertEndnote', 'text'), JSDialog.ShortcutsUtil.ENDNOTE), uno: '.uno:InsertEndnote'},
+				{name: _UNO('.uno:InsertFootnote', 'text'), uno: '.uno:InsertFootnote'},
+				{name: _UNO('.uno:InsertEndnote', 'text'), uno: '.uno:InsertEndnote'},
 				{type: 'separator'},
 				{uno: '.uno:InsertPagebreak'},
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
@@ -228,15 +228,15 @@ class Menubar extends L.Control {
 			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Bold', 'text'), JSDialog.ShortcutsUtil.BOLD), uno: '.uno:Bold'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Italic', 'text'), JSDialog.ShortcutsUtil.ITALIC), uno: '.uno:Italic'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Underline', 'text'), JSDialog.ShortcutsUtil.UNDERLINE), uno: '.uno:Underline'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:UnderlineDouble', 'text'), JSDialog.ShortcutsUtil.DOUBLE_UNDERLINE), uno: '.uno:UnderlineDouble'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Strikeout', 'text'), JSDialog.ShortcutsUtil.STRIKETHROUGH), uno: '.uno:Strikeout'},
+					{name: _UNO('.uno:Bold', 'text'), uno: '.uno:Bold'},
+					{name: _UNO('.uno:Italic', 'text'), uno: '.uno:Italic'},
+					{name: _UNO('.uno:Underline', 'text'), uno: '.uno:Underline'},
+					{name: _UNO('.uno:UnderlineDouble', 'text'), uno: '.uno:UnderlineDouble'},
+					{name: _UNO('.uno:Strikeout', 'text'), uno: '.uno:Strikeout'},
 					{uno: '.uno:Overline'},
 					{type: 'separator'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SuperScript', 'text'), JSDialog.ShortcutsUtil.SUPERSCRIPT), uno: '.uno:SuperScript'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SubScript', 'text'), JSDialog.ShortcutsUtil.SUBSCRIPT), uno: '.uno:SubScript'},
+					{name: _UNO('.uno:SuperScript', 'text'), uno: '.uno:SuperScript'},
+					{name: _UNO('.uno:SubScript', 'text'), uno: '.uno:SubScript'},
 					{type: 'separator'},
 					{uno: '.uno:Shadowed'},
 					{uno: '.uno:OutlineFont'},
@@ -267,10 +267,10 @@ class Menubar extends L.Control {
 					{uno: '.uno:IncrementIndent'},
 					{uno: '.uno:DecrementIndent'}]},
 				{name: _UNO('.uno:TextAlign', 'text'), type: 'menu', menu: [
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:CommonAlignLeft', 'text'), JSDialog.ShortcutsUtil.LEFT), uno: '.uno:CommonAlignLeft'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:CommonAlignHorizontalCenter', 'text'), JSDialog.ShortcutsUtil.CENTERED), uno: '.uno:CommonAlignHorizontalCenter'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:CommonAlignRight', 'text'), JSDialog.ShortcutsUtil.RIGHT), uno: '.uno:CommonAlignRight'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:CommonAlignJustified', 'text'), JSDialog.ShortcutsUtil.JUSTIFIED), uno: '.uno:CommonAlignJustified'},
+					{name: _UNO('.uno:CommonAlignLeft', 'text'), uno: '.uno:CommonAlignLeft'},
+					{name: _UNO('.uno:CommonAlignHorizontalCenter', 'text'), uno: '.uno:CommonAlignHorizontalCenter'},
+					{name: _UNO('.uno:CommonAlignRight', 'text'), uno: '.uno:CommonAlignRight'},
+					{name: _UNO('.uno:CommonAlignJustified', 'text'), uno: '.uno:CommonAlignJustified'},
 					{type: 'separator'},
 					{uno: '.uno:CommonAlignTop'},
 					{uno: '.uno:CommonAlignVerticalCenter'},
@@ -409,7 +409,7 @@ class Menubar extends L.Control {
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_('Keyboard shortcuts'), JSDialog.ShortcutsUtil.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
@@ -421,7 +421,7 @@ class Menubar extends L.Control {
 
 		presentation: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Save', 'presentation'), JSDialog.ShortcutsUtil.SAVE), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: window.prefs.get('saveAsMode') === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF presentation (.odp)'), id: 'saveas-odp', type: 'action'},
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'saveas-ppt', type: 'action'},
@@ -450,22 +450,22 @@ class Menubar extends L.Control {
 				{name: _UNO('.uno:SetDocumentProperties', 'presentation'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{name: _UNO('.uno:Signature', 'presentation'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Print', 'presentation'), JSDialog.ShortcutsUtil.PRINT), id: 'print', type: 'menu', menu: [
+				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'menu', menu: [
 					{name: _('Full Page Slides'), id: 'print', type: 'action'},
 					{name: _('Notes Pages'), id: 'print-notespages' , type: 'action'},
 				]},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Undo', 'presentation'), JSDialog.ShortcutsUtil.UNDO), uno: '.uno:Undo'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Redo', 'presentation'), JSDialog.ShortcutsUtil.REDO), uno: '.uno:Redo'},
+				{name: _UNO('.uno:Undo', 'presentation'), uno: '.uno:Undo'},
+				{name: _UNO('.uno:Redo', 'presentation'), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Cut', 'presentation'), JSDialog.ShortcutsUtil.CUT), uno: '.uno:Cut'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Copy', 'presentation'), JSDialog.ShortcutsUtil.COPY), uno: '.uno:Copy'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Paste', 'presentation'), JSDialog.ShortcutsUtil.PASTE), uno: '.uno:Paste'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:PasteSpecial', 'presentation'), JSDialog.ShortcutsUtil.PASTE_SPECIAL), uno: '.uno:PasteSpecial'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SelectAll', 'presentation'), JSDialog.ShortcutsUtil.SELECT_ALL), uno: '.uno:SelectAll'},
+				{name: _UNO('.uno:Cut', 'presentation'), uno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy', 'presentation'), uno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste', 'presentation'), uno: '.uno:Paste'},
+				{name: _UNO('.uno:PasteSpecial', 'presentation'), uno: '.uno:PasteSpecial'},
+				{name: _UNO('.uno:SelectAll', 'presentation'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
@@ -504,7 +504,7 @@ class Menubar extends L.Control {
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _('Local Multimedia...'), id: 'insertmultimedia', type: 'action'},
 				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:InsertAnnotation', 'presentation'), JSDialog.ShortcutsUtil.COMMENT), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 				{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
@@ -585,7 +585,7 @@ class Menubar extends L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_('Keyboard shortcuts'), JSDialog.ShortcutsUtil.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
@@ -597,7 +597,7 @@ class Menubar extends L.Control {
 
 		drawing: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Save', 'presentation'), JSDialog.ShortcutsUtil.SAVE), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
@@ -617,15 +617,15 @@ class Menubar extends L.Control {
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Undo', 'presentation'), JSDialog.ShortcutsUtil.UNDO), uno: '.uno:Undo'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Redo', 'presentation'), JSDialog.ShortcutsUtil.REDO), uno: '.uno:Redo'},
+				{name: _UNO('.uno:Undo', 'presentation'), uno: '.uno:Undo'},
+				{name: _UNO('.uno:Redo', 'presentation'), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Cut', 'presentation'), JSDialog.ShortcutsUtil.CUT), uno: '.uno:Cut'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Copy', 'presentation'), JSDialog.ShortcutsUtil.COPY), uno: '.uno:Copy'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Paste', 'presentation'), JSDialog.ShortcutsUtil.PASTE), uno: '.uno:Paste'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:PasteSpecial', 'presentation'), JSDialog.ShortcutsUtil.PASTE_SPECIAL), uno: '.uno:PasteSpecial'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SelectAll', 'presentation'), JSDialog.ShortcutsUtil.SELECT_ALL), uno: '.uno:SelectAll'},
+				{name: _UNO('.uno:Cut', 'presentation'), uno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy', 'presentation'), uno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste', 'presentation'), uno: '.uno:Paste'},
+				{name: _UNO('.uno:PasteSpecial', 'presentation'), uno: '.uno:PasteSpecial'},
+				{name: _UNO('.uno:SelectAll', 'presentation'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
@@ -655,7 +655,7 @@ class Menubar extends L.Control {
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:InsertAnnotation', 'presentation'), JSDialog.ShortcutsUtil.COMMENT), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
@@ -722,7 +722,7 @@ class Menubar extends L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_('Keyboard shortcuts'), JSDialog.ShortcutsUtil.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
@@ -734,7 +734,7 @@ class Menubar extends L.Control {
 
 		spreadsheet: [
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Save', 'spreadsheet'), JSDialog.ShortcutsUtil.SAVE), id: 'save', type: 'action'},
+				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: window.prefs.get('saveAsMode') === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF spreadsheet (.ods)'), id: 'saveas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'saveas-xls', type: 'action'},
@@ -756,22 +756,22 @@ class Menubar extends L.Control {
 				{name: _UNO('.uno:SetDocumentProperties', 'spreadsheet'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{name: _UNO('.uno:Signature', 'spreadsheet'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Print', 'spreadsheet'), JSDialog.ShortcutsUtil.PRINT), id: 'print', type: 'menu', menu: [
+				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'menu', menu: [
 					{name: _('Active sheet'), id: 'print-active-sheet', type: 'action'},
 					{name: _('All Sheets'), id: 'print-all-sheets', type: 'action'},
 				]},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'spreadsheet'), id: 'editmenu', type: 'menu', menu: [
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Undo', 'text'), JSDialog.ShortcutsUtil.UNDO), uno: '.uno:Undo'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Redo', 'text'), JSDialog.ShortcutsUtil.REDO), uno: '.uno:Redo'},
+				{name: _UNO('.uno:Undo', 'text'), uno: '.uno:Undo'},
+				{name: _UNO('.uno:Redo', 'text'), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Cut', 'text'), JSDialog.ShortcutsUtil.CUT), uno: '.uno:Cut'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Copy', 'text'), JSDialog.ShortcutsUtil.COPY), uno: '.uno:Copy'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Paste', 'text'), JSDialog.ShortcutsUtil.PASTE), uno: '.uno:Paste'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:PasteSpecial', 'text'), JSDialog.ShortcutsUtil.PASTE_SPECIAL), uno: '.uno:PasteSpecial'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SelectAll', 'text'), JSDialog.ShortcutsUtil.SELECT_ALL), uno: '.uno:SelectAll'},
+				{name: _UNO('.uno:Cut', 'text'), uno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy', 'text'), uno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste', 'text'), uno: '.uno:Paste'},
+				{name: _UNO('.uno:PasteSpecial', 'text'), uno: '.uno:PasteSpecial'},
+				{name: _UNO('.uno:SelectAll', 'text'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
@@ -808,7 +808,7 @@ class Menubar extends L.Control {
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:DataDataPilotRun', 'spreadsheet'), uno: '.uno:DataDataPilotRun'},
 				{name: _UNO('.uno:InsertSparkline', 'spreadsheet'), uno: '.uno:InsertSparkline'},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:InsertAnnotation', 'spreadsheet'), JSDialog.ShortcutsUtil.COMMENT), id: 'insertcomment', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 				{name: _UNO('.uno:DrawText'), uno: '.uno:DrawText'},
@@ -828,15 +828,15 @@ class Menubar extends L.Control {
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'spreadsheet'), type: 'menu', menu: [
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Bold', 'spreadsheet'), JSDialog.ShortcutsUtil.BOLD), uno: '.uno:Bold'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Italic', 'spreadsheet'), JSDialog.ShortcutsUtil.ITALIC), uno: '.uno:Italic'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Underline', 'spreadsheet'), JSDialog.ShortcutsUtil.UNDERLINE), uno: '.uno:Underline'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:UnderlineDouble', 'spreadsheet'), JSDialog.ShortcutsUtil.DOUBLE_UNDERLINE), uno: '.uno:UnderlineDouble'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:Strikeout', 'spreadsheet'), JSDialog.ShortcutsUtil.STRIKETHROUGH), uno: '.uno:Strikeout'},
+					{name: _UNO('.uno:Bold', 'spreadsheet'), uno: '.uno:Bold'},
+					{name: _UNO('.uno:Italic', 'spreadsheet'), uno: '.uno:Italic'},
+					{name: _UNO('.uno:Underline', 'spreadsheet'), uno: '.uno:Underline'},
+					{name: _UNO('.uno:UnderlineDouble', 'spreadsheet'), uno: '.uno:UnderlineDouble'},
+					{name: _UNO('.uno:Strikeout', 'spreadsheet'), uno: '.uno:Strikeout'},
 					{uno: '.uno:Overline'},
 					{type: 'separator'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SuperScript', 'spreadsheet'), JSDialog.ShortcutsUtil.SUPERSCRIPT), uno: '.uno:SuperScript'},
-					{name: JSDialog.ShortcutsUtil.getShortcut(_UNO('.uno:SubScript', 'spreadsheet'), JSDialog.ShortcutsUtil.SUBSCRIPT), uno: '.uno:SubScript'},
+					{name: _UNO('.uno:SuperScript', 'spreadsheet'), uno: '.uno:SuperScript'},
+					{name: _UNO('.uno:SubScript', 'spreadsheet'), uno: '.uno:SubScript'},
 					{type: 'separator'},
 					{uno: '.uno:Shadowed'},
 					{uno: '.uno:OutlineFont'},
@@ -1012,7 +1012,7 @@ class Menubar extends L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: JSDialog.ShortcutsUtil.getShortcut(_('Keyboard shortcuts'), JSDialog.ShortcutsUtil.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
@@ -2582,6 +2582,9 @@ class Menubar extends L.Control {
 				aItem.innerHTML = _UNO(menu[i].uno, docType);
 			} else {
 				aItem.replaceChildren();
+			}
+			if (menu[i].uno && JSDialog.ShortcutsUtil.hasShortcut(menu[i].uno)) {
+				aItem.innerHTML = JSDialog.ShortcutsUtil.getShortcut(aItem.innerHTML, menu[i].uno);
 			}
 
 			if (menu[i].type === 'menu') {
