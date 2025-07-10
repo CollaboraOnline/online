@@ -1556,6 +1556,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
+				'id': 'slide-size:SlideSizeMenu',
+				'class': 'unoSlideSize',
+				'type': 'menubutton',
+				'text': _('Slide Size'),
+				'command': 'slidesize',
+				'accessibility': { focusBack: true, combination: 'SS', de: null }
+			},
+			{
 				'id': 'layout-slide-setup',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SlideSetup', 'presentation'),
