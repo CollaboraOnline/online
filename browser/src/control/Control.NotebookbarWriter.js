@@ -994,6 +994,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									'class': 'unoSearch',
 									'type': 'customtoolitem',
 									'text': _('Search'),
+									'command': 'search',
 									'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' }
 								}
 							]
