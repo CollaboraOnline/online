@@ -43,4 +43,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'text-decoration', 'underline');
 	});
+
+	it('Sidebar menubutton visual test', function() {
+		cy.cGet('#fillstyle select').select('Color');
+		cy.cGet('#fillattr').should('be.visible');
+		cy.cGet('#fillattr').compareSnapshot('sidebar_menubutton_color', 0.1);
+	});
 });
