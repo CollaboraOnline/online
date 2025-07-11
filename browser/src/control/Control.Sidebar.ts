@@ -46,6 +46,7 @@ class Sidebar extends SidebarBase {
 			'NavigatorDeck',
 			'StyleListDeck',
 			'A11yCheckDeck',
+			'FindDeck',
 		];
 
 		const deckPref: { [key: string]: string } = {};
@@ -66,6 +67,7 @@ class Sidebar extends SidebarBase {
 			return '.uno:SidebarDeck.StyleListDeck';
 		else if (deckId === 'A11yCheckDeck')
 			return '.uno:SidebarDeck.A11yCheckDeck';
+		else if (deckId === 'FindDeck') return '.uno:SidebarDeck.FindDeck';
 		return '';
 	}
 
