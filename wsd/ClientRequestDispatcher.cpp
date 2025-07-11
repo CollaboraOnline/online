@@ -1044,7 +1044,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
             // Admin connections
             LOG_INF("Admin request: " << request.getURI());
             const ServerURL cnxDetails(requestDetails);
-            if (AdminSocketHandler::handleInitialRequest(_socket, request, cnxDetails.getWebServerUrl()))
+            if (AdminSocketHandler::handleInitialRequest(_socket, request, cnxDetails.expectedRequestWebServerURL()))
             {
                 // Hand the socket over to the Admin poll.
                 disposition.setTransfer(Admin::instance(),

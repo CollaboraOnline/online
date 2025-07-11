@@ -91,6 +91,14 @@ public:
         return schemeProtocol + "://" + _schemeAuthority;
     }
 
+    std::string expectedRequestWebServerURL() const
+    {
+        // if we are using SSL termination, the incoming request will use http/ws
+        return
+        ((_ssl && !ConfigUtil::isSSLTermination()) ? "https://" : "http://")
+        + _schemeAuthority;
+    }
+
     std::string getSubURLForEndpoint(const std::string &path) const
     {
 #if MOBILEAPP
