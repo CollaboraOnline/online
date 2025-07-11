@@ -30,6 +30,7 @@ window.app = {
 		otherCellCursors: {},
 		splitCoordinate: null, // SimplePoint.
 		partHashes: null, // hashes used to distinguish parts (we use sheet name)
+		autoFilterCell: null, // The cell of the current autofilter popup.
 	},
 	impress: {
 		partList: null, // Info for parts.
