@@ -516,7 +516,9 @@ L.Control.JSDialog = L.Control.extend({
 			} else if (instance.clickToCloseText && parent) {
 				var matchingElements;
 				if ((matchingElements = parent.querySelectorAll('span.ui-treeview-cell-text')).length) {// treeview entry for context menu
-					parent = Array.from(matchingElements).find((value) => value.innerText === instance.clickToCloseText);
+					parent = Array.from(matchingElements).find(
+						(value) => (value.innerText === instance.clickToCloseText) // text entry
+											|| (value.firstChild && value.firstChild.alt === instance.clickToCloseText)); // custom render
 				} else if ((matchingElements = parent.querySelectorAll('div.ui-iconview-entry > img')).length) {// iconview entry for context menu
 					parent = Array.from(matchingElements).find((img) => img.title === instance.clickToCloseText);
 				}
