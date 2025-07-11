@@ -22,3 +22,11 @@ data:
   aliasgroup{{ add $k 1 }}: {{ $alias }}
   {{- end }}
   {{- end }}
+  {{- if .Values.collabora.coolkitconfig_xcu_content }}
+  coolkitconfig.xcu: |
+    {{ .Values.collabora.coolkitconfig_xcu_content | nindent 4 }}
+  {{- end }}
+  {{- if .Values.collabora.coolwsd_xml_content }}
+  coolwsd.xml: |
+    {{ .Values.collabora.coolwsd_xml_content | nindent 4 }}
+  {{- end }}

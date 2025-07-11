@@ -52,6 +52,12 @@ collabora:
   # finally set proofKeysSecretRef to the name of the secret
   proofKeysSecretRef: ""
 
+  # Provide custom coolwsd configuration files here.
+  # Note: Content provided will override the default files (coolkitconfig.xcu, coolwsd.xml)
+  # in the container. Ensure you provide the complete file content, not just partial changes.
+  coolkitconfig_xcu_content: ""
+  coolwsd_xml_content: ""
+
 prometheus:
   servicemonitor:
     enabled: false
