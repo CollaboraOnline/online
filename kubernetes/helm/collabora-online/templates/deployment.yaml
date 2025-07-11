@@ -132,6 +132,16 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- if .Values.collabora.coolkitconfig_xcu_content }}
+            - name: coolwsd-config
+              mountPath: /etc/coolwsd/coolkitconfig.xcu
+              subPath: coolkitconfig.xcu
+            {{- end }}
+            {{- if .Values.collabora.coolwsd_xml_content }}
+            - name: coolwsd-config
+              mountPath: /etc/coolwsd/coolwsd.xml
+              subPath: coolwsd.xml
+            {{- end }}
             {{- if .Values.collabora.proofKeysSecretRef }}
             - name: wopi-proof
               mountPath: /etc/coolwsd/proof_key
@@ -163,6 +173,20 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- if or .Values.collabora.coolkitconfig_xcu_content .Values.collabora.coolwsd_xml_content }}
+        - name: coolwsd-config
+          configMap:
+            name: {{ include "collabora-online.fullname" . }}
+            items:
+              {{- if .Values.collabora.coolkitconfig_xcu_content }}
+              - key: coolkitconfig.xcu
+                path: coolkitconfig.xcu
+              {{- end }}
+              {{- if .Values.collabora.coolwsd_xml_content }}
+              - key: coolwsd.xml
+                path: coolwsd.xml
+              {{- end }}
+        {{- end }}
         {{- if .Values.collabora.proofKeysSecretRef }}
         - name: wopi-proof
           secret:
