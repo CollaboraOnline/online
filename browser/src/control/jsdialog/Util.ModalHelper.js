@@ -107,6 +107,27 @@ function isWidgetInModalPopup(widgetData) {
 	return false;
 }
 
+function findID(children, id) {
+	if (!children) {
+		return false;
+	}
+
+	let found = false;
+	for (let i = 0; i < children.length; i++) {
+		if (children[i].id === id) {
+			found = true;
+		} else {
+			found = findID(children[i].children, id);
+		}
+
+		if (found) {
+			break;
+		}
+	}
+
+	return found;
+}
+
 JSDialog.generateModalId = generateModalId;
 JSDialog.sendJSON = sendJSON;
 JSDialog.setMessageInModal = setMessageInModal;
@@ -115,3 +136,4 @@ JSDialog.shouldShowAgain = shouldShowAgain;
 JSDialog.setShowAgain = setShowAgain;
 JSDialog.showInfoModalWithOptions = showInfoModalWithOptions;
 JSDialog.isWidgetInModalPopup = isWidgetInModalPopup;
+JSDialog.findID = findID;
