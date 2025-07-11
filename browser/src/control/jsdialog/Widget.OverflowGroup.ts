@@ -23,19 +23,20 @@ function setupOverflowMenu(
 	const overflowMenuButton = parentContainer.querySelector(
 		'#menuoverflow',
 	) as HTMLElement;
-	const overflowMenuWrapper = L.DomUtil.create(
-		'div',
-		'menu-overflow-wrapper',
-		parentContainer,
-	);
+	overflowMenuButton.style.display = 'none';
+
+	const overflowMenuWrapper = L.DomUtil.create('div', 'menu-overflow-wrapper');
 
 	const showOverflowMenu = () => {
+		parentContainer.append(overflowMenuWrapper);
 		overflowMenuWrapper.style.opacity = '1';
 		overflowMenuWrapper.style.pointerEvents = 'revert';
 		L.DomUtil.addClass(overflowMenuButton, 'selected');
 	};
 
 	const hideOverflowMenu = () => {
+		if (overflowMenuWrapper.parentNode === parentContainer)
+			parentContainer.removeChild(overflowMenuWrapper);
 		overflowMenuWrapper.style.opacity = '0';
 		overflowMenuWrapper.style.pointerEvents = 'none';
 		L.DomUtil.removeClass(overflowMenuButton, 'selected');
@@ -58,82 +59,71 @@ function setupOverflowMenu(
 
 	// resizing
 
-	// returns available space for a container
+	// returns required width
 	const getMenuWidth = () => {
-		const minimalBuffer = 60;
-		const fullWidth = (overflowMenu.parentNode as HTMLElement).clientWidth;
-		const menuRequest = (overflowMenu as HTMLElement).clientWidth;
-		const staticWidth = fullWidth - menuRequest + minimalBuffer;
-		if (window.innerWidth > staticWidth) return window.innerWidth - staticWidth;
-		else return minimalBuffer; // at least show placeholder
+		return (overflowMenu as HTMLElement).clientWidth;
 	};
 
 	let overflowMenuDebounced: ReturnType<typeof setTimeout>;
-	const originalTopbar = overflowMenu.querySelectorAll('.jsdialog');
+	const originalTopbar = overflowMenu.querySelectorAll(':scope > *');
 
-	const overflowMenuHandler = () => {
-		overflowMenuDebounced && clearTimeout(overflowMenuDebounced);
+	const overflowMenuHandler = (overflow: boolean) => {
+		hideOverflowMenu();
 
-		overflowMenuDebounced = setTimeout(() => {
-			app.layoutingService.appendLayoutingTask(() => {
-				hideOverflowMenu();
+		overflowMenu.replaceChildren();
+		originalTopbar.forEach((element: Element) => {
+			overflowMenu.append(element);
+		});
 
-				overflowMenu.replaceChildren();
-				originalTopbar.forEach((element: Element) => {
-					overflowMenu.append(element);
-				});
+		const topBarButtons = overflowMenu.querySelectorAll(':scope > *');
+		const menuWidth = getMenuWidth();
 
-				const topBarButtons = overflowMenu.querySelectorAll(
-					'.jsdialog:not(.hidden)',
-				);
-				const menuWidth = getMenuWidth();
+		const overflowMenuOffscreen = document.createElement('div');
+		overflowMenuOffscreen.className = 'menu-overfow-vertical';
+		overflowMenuOffscreen.style.display = 'grid';
+		overflowMenuOffscreen.style.gridAutoFlow = 'column';
 
-				const overflowMenuOffscreen = document.createElement('div');
-				overflowMenuOffscreen.className = 'menu-overfow-vertical';
-				overflowMenuOffscreen.style.display = 'grid';
-				overflowMenuOffscreen.style.gridAutoFlow = 'column';
+		let section: Array<HTMLElement> = [];
 
-				let section: Array<HTMLElement> = [];
-				let overflow = false;
+		const appendSection = () => {
+			for (const element of section) {
+				overflowMenuOffscreen.appendChild(element);
+			}
+			section.length = 0;
+		};
 
-				const appendSection = () => {
-					for (const element of section) {
-						overflowMenuOffscreen.appendChild(element);
-					}
-					section.length = 0;
-				};
+		topBarButtons.forEach((button: Element) => {
+			const htmlButton = button as HTMLElement;
+			if (overflow) {
+				appendSection();
+				overflowMenuOffscreen.appendChild(htmlButton);
+			} else if (htmlButton.className.includes('vertical')) {
+				section = [htmlButton];
+			} else {
+				section.push(htmlButton);
+			}
+		});
 
-				topBarButtons.forEach((button: Element) => {
-					const htmlButton = button as HTMLElement;
-					if (htmlButton.offsetLeft > menuWidth || overflow) {
-						overflow = true;
-						appendSection();
-						overflowMenuOffscreen.appendChild(htmlButton);
-					} else if (htmlButton.className.includes('vertical')) {
-						section = [htmlButton];
-					} else {
-						section.push(htmlButton);
-					}
-				});
+		overflowMenuWrapper.append(overflowMenuOffscreen);
 
-				overflowMenuWrapper.append(overflowMenuOffscreen);
-
-				if (overflowMenuOffscreen.children.length <= 0) {
-					overflowMenuButton.style.display = 'none';
-				} else {
-					overflowMenuButton.style.display = 'revert';
-				}
-
-				overflowMenu.style.left =
-					overflowMenuButton.offsetLeft -
-					overflowMenu.clientWidth +
-					overflowMenuButton.offsetWidth +
-					'px';
-			});
-		}, 250);
+		overflowMenu.style.left =
+			overflowMenuButton.offsetLeft -
+			overflowMenu.clientWidth +
+			overflowMenuButton.offsetWidth +
+			'px';
 	};
 
-	window.addEventListener('resize', overflowMenuHandler);
+	(parentContainer as OverflowGroupContainer).foldGroup = function () {
+		console.debug('fold: ' + parentContainer.id);
+		overflowMenuHandler(true);
+		overflowMenuButton.style.display = 'revert';
+	};
+
+	(parentContainer as OverflowGroupContainer).unfoldGroup = function () {
+		console.debug('unfold: ' + parentContainer.id);
+		overflowMenuButton.style.display = 'none';
+		overflowMenuHandler(false);
+	};
 }
 
 JSDialog.OverflowGroup = function (

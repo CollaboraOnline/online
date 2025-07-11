@@ -69,6 +69,7 @@
 /* overflow menu */
 .menu-overflow-wrapper {
 	position: absolute;
+	z-index: 12;
 	height: var(--header-height);
 	top: var(--header-height);
 	display: flex;
