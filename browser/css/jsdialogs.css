@@ -1264,6 +1264,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* buttons: btns.css */
 
+/* Overflow group */
+
+.ui-overflow-group,
+.ui-overflow-group-content {
+	display: flex;
+}
+
 /* Icon View */
 
 .ui-iconview {
