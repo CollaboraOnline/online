@@ -1580,9 +1580,9 @@ function getInitializerClass() {
 		this.sendPostMsg = function(errorCode) {
 			var errorMsg;
 			if (errorCode === 0) {
-				errorMsg = _('Cluster is scaling, retrying...');
+				errorMsg = _('The system is currently adjusting resources. Please wait a moment while we retry your request..');
 			} else if (errorCode === 1) {
-				errorMsg = _('Document is migrating to new server, retrying...');
+				errorMsg = _('The document is being migrated to a new server. Retrying shortly..');
 			} else {
 				errorMsg = _('Failed to get RouteToken from controller');
 			}
