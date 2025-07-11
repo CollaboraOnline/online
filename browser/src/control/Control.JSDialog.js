@@ -605,26 +605,33 @@ L.Control.JSDialog = L.Control.extend({
 		// RTL mode: only difference is when file is RTL not UI
 		// var isViewRTL = document.documentElement.dir === 'rtl';
 		// var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
-		const autoFillSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 
 		if (this.isChildAutoFilter(instance)) {
 			this.calculateSubmenuAutoFilterPosition(instance, this.parentAutofilter);
 			return;
 		}
 
-		const markerCanvasPos = {
-			left: autoFillSection.myTopLeft[0],
-			top: autoFillSection.myTopLeft[1],
-			width: autoFillSection.size[0],
-			height: autoFillSection.size[1]
-		};
+		if (!app.calc.autoFilterCell || !app.map._docLayer.sheetGeometry) {
+			console.warn('AutoFilterInfo callback or sheet geometry is missing.');
+			return;
+		}
+
+		let cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
+			app.calc.autoFilterCell.column,
+			app.calc.autoFilterCell.row,
+			app.getScale()
+		);
+
+		const documentTopLeft = app.sectionContainer.getDocumentTopLeft();
+		const documentAnchor = app.sectionContainer.getDocumentAnchor();
+		cellRectangle.pX1 += documentAnchor[0] - documentTopLeft[0];
+		cellRectangle.pY1 += documentAnchor[1] - documentTopLeft[1];
+
+		app.calc.autoFilterCell = null; // Set to null after using to ensure it doesn't confuse consequent calls.
 
 		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
-
-		const left = ((markerCanvasPos.left + markerCanvasPos.width) / app.dpiScale) + canvasEl.left;
-
-		instance.posy = ((markerCanvasPos.top + markerCanvasPos.height) / app.dpiScale) + canvasEl.top;
-		instance.posx =  left - instance.container.offsetWidth;
+		instance.posy = cellRectangle.cY2 + canvasEl.top;
+		instance.posx =  cellRectangle.cX2 + canvasEl.left - instance.container.offsetWidth;
 
 		this.updateAutoPopPosition(instance.container, instance.posx, instance.posy);
 	},
@@ -940,6 +947,8 @@ L.Control.JSDialog = L.Control.extend({
 		var windowBottom = window.innerHeight;
 		if (newX + width > window.innerWidth)
 			newX = window.innerWidth - width;
+		else if (newX < 10)
+			newX = 10
 
 		// at this point we have un updated potion of autofilter instance.
 		// so to handle overlapping case of autofilter and toolbar we need some complex calculation
