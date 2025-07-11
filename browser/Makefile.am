@@ -452,6 +452,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
+	src/control/jsdialog/Widget.OverflowGroup.ts \
 	src/control/jsdialog/Widget.Progressbar.js \
 	src/control/jsdialog/Widget.ScrolledWindow.js \
 	src/control/jsdialog/Widget.SearchEdit.ts \
