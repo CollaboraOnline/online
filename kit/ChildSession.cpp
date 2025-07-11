@@ -2607,11 +2607,18 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     if (tokens.size() > 7 && getTokenString(tokens[7], "devicePixelRatio", devicePixelRatioString))
         devicePixelRatio = std::stod(devicePixelRatioString);
 
+    bool renderSlideContent = true;
+    std::string renderSlideContentString;
+    if (tokens.size() > 8 && getTokenString(tokens[8], "renderSlideContent", renderSlideContentString))
+    renderSlideContent = std::stoi(renderSlideContentString) > 0;
+
+
+    LOG_DBG("VIVEK: " << renderSlideContent);
     unsigned bufferWidth = suggestedWidth;
     unsigned bufferHeight = suggestedHeight;
     bool success = getLOKitDocument()->createSlideRenderer(hash.c_str(), part,
                                                            &bufferWidth, &bufferHeight,
-                                                           renderBackground, renderMasterPage);
+                                                           renderBackground, renderMasterPage, renderSlideContent);
     if (!success) {
         sendTextFrame("sliderenderingcomplete: fail");
         return false;
