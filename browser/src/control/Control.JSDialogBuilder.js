@@ -88,7 +88,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'scrollwindow', 'grid', 'tabcontrol', 'multilineedit', 'formulabaredit', 'frame'];
 
 		this._controlHandlers = {};
-		this._controlHandlers['overflowgroup'] = JSDialog.OverflowGroup
+		this._controlHandlers['overflowgroup'] = JSDialog.OverflowGroup;
+		this._controlHandlers['overflowmanager'] = JSDialog.OverflowManager;
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['progressbar'] = JSDialog.progressbar;
 		this._controlHandlers['pagemarginentry'] = JSDialog.pageMarginEntry;

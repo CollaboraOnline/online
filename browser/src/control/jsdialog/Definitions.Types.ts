@@ -141,6 +141,11 @@ interface ContainerWidgetJSON extends WidgetJSON {
 	vertical?: boolean; // is horizontal or vertical container
 }
 
+interface OverflowGroupContainer extends Element {
+	foldGroup?: () => void;
+	unfoldGroup?: () => void;
+}
+
 interface GridWidgetJSON extends ContainerWidgetJSON {
 	cols: number; // number of grid columns
 	rows: number; // numer of grid rows
