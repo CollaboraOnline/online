@@ -633,6 +633,7 @@ var unoCommandsArray = {
 	'TitlePageDialog':{text:{menu:_('Title Page...'),},},
 	'ToggleMergeCells':{spreadsheet:{context:_('Merge and center or unmerge cells depending on the current toggle state'),menu:_('M~erge and Center Cells'),},},
 	'ToggleSheetGrid':{spreadsheet:{menu:_('View Grid Lines'),},},
+	'TogglePrintGrid':{spreadsheet:{menu:_('Print Grid Lines'),},},
 	'ToolsMenu':{global:{menu:_('~Tools'),},},
 	'TrackChanges':{text:{context:_('Record Track Changes'),menu:_('~Record'),},},
 	'TransformDialog':{global:{menu:_('Position and Si~ze...'),},},
