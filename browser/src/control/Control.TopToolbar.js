@@ -100,7 +100,7 @@ class TopToolbar extends JSDialog.Toolbar {
 	// invisible means visibility:hidden
 
 	getToolItems() {
-		var items = [
+		var saveGroup = [
 			{type: 'customtoolitem',  id: 'closemobile', desktop: false, mobile: false, tablet: true, visible: false},
 			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save'},
 			{type: 'customtoolitem',  id: 'print', command: 'print', text: _UNO('.uno:Print'), mobile: false, tablet: false, lockUno: '.uno:Print'},
@@ -109,10 +109,14 @@ class TopToolbar extends JSDialog.Toolbar {
 					{id: 'print-active-sheet', action: 'print-active-sheet', text: _('Active Sheet')},
 					{id: 'print-all-sheets', action: 'print-all-sheets', text: _('All Sheets')},
 				]
-			},
+			}
+		];
+		var undoGroup = [
 			{type: 'separator', orientation: 'vertical', id: 'savebreak', mobile: false},
 			{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', mobile: false},
-			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false},
+			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false}
+		];
+		var fontGroup = [
 			{type: 'separator', orientation: 'vertical', id: 'redobreak', mobile: false, tablet: false,},
 			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), command: '.uno:FormatPaintbrush', mobile: false},
 			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false},
@@ -120,7 +124,9 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'separator', orientation: 'vertical', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
 			{type: 'listbox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false},
 			{type: 'listbox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false},
-			{type: 'listbox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false,},
+			{type: 'listbox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false,}
+		];
+		var formatGroup = [
 			{type: 'separator', orientation: 'vertical', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false},
 			{type: 'toolitem',  id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold'},
 			{type: 'toolitem',  id: 'italic', text: _UNO('.uno:Italic'), command: '.uno:Italic'},
@@ -161,7 +167,9 @@ class TopToolbar extends JSDialog.Toolbar {
 					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: '.uno:ParaspaceDecrease'}
 				],
 			},
-			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText'},
+			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText'}
+		];
+		var otherGroup = [
 			{type: 'separator', orientation: 'vertical', id: 'breakspacing', visible: false},
 			{type: 'toolitem',  id: 'defaultnumbering', text: _UNO('.uno:DefaultNumbering', '', true), visible: false, command: '.uno:DefaultNumbering'},
 			{type: 'toolitem',  id: 'defaultbullet', text: _UNO('.uno:DefaultBullet', '', true), visible: false, command: '.uno:DefaultBullet'},
@@ -193,8 +201,14 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'insertsymbol', text: _UNO('.uno:InsertSymbol', '', true), command: '.uno:InsertSymbol'},
 			];
 
-		items = [
-			{type: 'overflowgroup', id: 'overflow-toptoolbar', children: items},
+		var items = [
+			{type: 'overflowmanager', id: 'overflow-manager-toptoolbar', children: [
+				{type: 'overflowgroup', id: 'save-toptoolbar', children: saveGroup},
+				{type: 'overflowgroup', id: 'undo-toptoolbar', children: undoGroup},
+				{type: 'overflowgroup', id: 'font-toptoolbar', children: fontGroup},
+				{type: 'overflowgroup', id: 'format-toptoolbar', children: formatGroup},
+				{type: 'overflowgroup', id: 'other-toptoolbar', children: otherGroup},
+			]},
 			{type: 'spacer', id: 'topspacer'},
 			{type: 'separator', orientation: 'vertical', id: 'breaksidebar', visible: false},
 			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false},
