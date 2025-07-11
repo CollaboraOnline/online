@@ -604,49 +604,34 @@ L.Control.JSDialog = L.Control.extend({
 
 		// RTL mode: only difference is when file is RTL not UI
 		// var isViewRTL = document.documentElement.dir === 'rtl';
-		var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
-
-		var scale = this.map.zoomToFactor(this.map.getZoom());
-		var origin = this.map.getPixelOrigin();
-		var panePos = this.map._getMapPanePos();
-
-		var offsetX = isSpreadsheetRTL ? 0 : app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
-		var offsetY = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[1];
+		// var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
 
 		if (this.isChildAutoFilter(instance)) {
 			this.calculateSubmenuAutoFilterPosition(instance, this.parentAutofilter);
 			return;
 		}
-		this.parentAutofilter = instance.form;
-		const devicePixelRatio = app.dpiScale;
-		// Convert the server-provided px values to screen coordinates
-		instance.posx = instance.posx / devicePixelRatio;
-		instance.posy = instance.posy / devicePixelRatio;
-		var left = parseInt(instance.posx) * scale;
-		var top = parseInt(instance.posy) * scale;
 
-		var splitPanesContext = this.map.getSplitPanesContext();
-		var splitPos = new L.Point(0, 0);
+		if (!app.calc.autoFilterCell || !app.map._docLayer.sheetGeometry) {
+			console.warn('AutoFilterInfo callback or sheet geometry is missing.');
+			return;
+		}
 
-		if (splitPanesContext)
-			splitPos = splitPanesContext.getSplitPos();
+		let cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
+			app.calc.autoFilterCell.column,
+			app.calc.autoFilterCell.row,
+			app.getScale()
+		);
 
-		var newLeft = left + panePos.x - origin.x;
-		if (left >= splitPos.x && newLeft >= 0)
-			left = newLeft;
+		const documentTopLeft = app.sectionContainer.getDocumentTopLeft();
+		const documentAnchor = app.sectionContainer.getDocumentAnchor();
+		cellRectangle.pX1 += documentAnchor[0] - documentTopLeft[0];
+		cellRectangle.pY1 += documentAnchor[1] - documentTopLeft[1];
 
-		var newTop = top + panePos.y - origin.y;
-		if (top >= splitPos.y && newTop >= 0)
-			top = newTop;
+		app.calc.autoFilterCell = null; // Set to null after using to ensure it doesn't confuse consequent calls.
 
-		if (isSpreadsheetRTL)
-			left = this.map._size.x - left;
-
-		var canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
-
-		instance.posx = left + offsetX + canvasEl.left; // adding canvasEl.left in case we change sidebar to left of the screen
-		// make margin from canvas top and not from window top
-		instance.posy = top + offsetY + canvasEl.top;
+		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
+		instance.posy = cellRectangle.cY2 + canvasEl.top;
+		instance.posx =  cellRectangle.cX2 + canvasEl.left - instance.container.offsetWidth;
 
 		this.updateAutoPopPosition(instance.container, instance.posx, instance.posy);
 	},
