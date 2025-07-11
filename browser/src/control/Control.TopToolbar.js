@@ -191,7 +191,10 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'customtoolitem',  id: 'insertannotation', text: _UNO('.uno:InsertAnnotation', '', true), visible: false, lockUno: '.uno:InsertAnnotation'},
 			{type: 'customtoolitem',  id: 'inserthyperlink',  command: 'inserthyperlink', text: _UNO('.uno:HyperlinkDialog', '', true), lockUno: '.uno:HyperlinkDialog'},
 			{type: 'toolitem',  id: 'insertsymbol', text: _UNO('.uno:InsertSymbol', '', true), command: '.uno:InsertSymbol'},
-			{type: 'customtoolitem', id: 'menuoverflow', text: _('More'), desktop: true, mobile: false, visible: true},
+			];
+
+		items = [
+			{type: 'overflowgroup', id: 'overflow-toptoolbar', children: items},
 			{type: 'spacer', id: 'topspacer'},
 			{type: 'separator', orientation: 'vertical', id: 'breaksidebar', visible: false},
 			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false},
@@ -229,122 +232,6 @@ class TopToolbar extends JSDialog.Toolbar {
 		}
 	}
 
-	createOverflowMenu() {
-		const topBarMenu = this.parentContainer.querySelector(
-			'.root-container .vertical',
-		);
-
-		const overflowMenu = L.DomUtil.create(
-			'div',
-			'menu-overflow-wrapper',
-			this.parentContainer,
-		);
-
-		const overflowMenuButton =
-			this.parentContainer.querySelector('#menuoverflow');
-
-		const showOverflowMenu = () => {
-			overflowMenu.style.opacity = 1;
-			overflowMenu.style.pointerEvents = 'revert';
-			L.DomUtil.addClass(overflowMenuButton, 'selected');
-		};
-
-		const hideOverflowMenu = () => {
-			overflowMenu.style.opacity = 0;
-			overflowMenu.style.pointerEvents = 'none';
-			L.DomUtil.removeClass(overflowMenuButton, 'selected');
-		};
-
-		const onButtonClick = () => {
-			if (
-				overflowMenu.style.opacity === '0' ||
-				overflowMenu.style.opacity === ''
-			) {
-				showOverflowMenu();
-			} else {
-				hideOverflowMenu();
-			}
-		};
-
-		overflowMenuButton.addEventListener('click', () => {
-			app.layoutingService.appendLayoutingTask(onButtonClick);
-		});
-
-		const breakSidebar = this.parentContainer.querySelector('#breaksidebar');
-		const foldButton = this.parentContainer.querySelector('#fold');
-
-		const getMenuWidth = () => {
-			const splitPosition =
-				foldButton.offsetLeft +
-				foldButton.offsetWidth * 2 -
-				breakSidebar.offsetLeft;
-			return window.innerWidth - splitPosition;
-		};
-
-		let overflowMenuDebounced = 0;
-		const originalTopbar = topBarMenu.querySelectorAll('.jsdialog');
-
-		const overflowMenuHandler = () => {
-			overflowMenuDebounced && clearTimeout(overflowMenuDebounced);
-
-			overflowMenuDebounced = setTimeout(() => {
-				app.layoutingService.appendLayoutingTask(() => {
-					hideOverflowMenu();
-
-					topBarMenu.replaceChildren(...originalTopbar);
-
-					const topBarButtons = topBarMenu.querySelectorAll('.jsdialog:not(.hidden)');
-					const menuWidth = getMenuWidth();
-
-					const overflowMenuOffscreen = document.createElement('div');
-					overflowMenuOffscreen.className = 'menu-overfow-vertical';
-
-					let section = [];
-					let overflow = false;
-
-					const appendSection = () => {
-						for (const element of section) {
-							overflowMenuOffscreen.appendChild(element);
-						}
-						section.length = 0;
-					};
-
-					for (const button of topBarButtons) {
-						if (button.id === 'topspacer' || button.id === 'menuoverflow') {
-							break;
-						}
-
-						if (button.offsetLeft > menuWidth || overflow) {
-							overflow = true;
-							appendSection();
-							overflowMenuOffscreen.appendChild(button);
-						} else if (button.className.includes('vertical')) {
-							section = [button];
-						} else {
-							section.push(button);
-						}
-					}
-
-					overflowMenu.replaceChildren(overflowMenuOffscreen);
-
-					if (overflowMenuOffscreen.children.length <= 0) {
-						overflowMenuButton.style.display = 'none';
-					} else {
-						overflowMenuButton.style.display = 'revert';
-					}
-
-					overflowMenu.style.left =
-						overflowMenuButton.offsetLeft -
-						overflowMenu.clientWidth +
-						overflowMenuButton.offsetWidth +
-						'px';
-				});
-			}, 250);
-		};
-
-		window.addEventListener('resize', overflowMenuHandler);
-	}
-
 	create() {
 		this.reset();
 
@@ -354,8 +241,6 @@ class TopToolbar extends JSDialog.Toolbar {
 		if (window.mode.isMobile()) {
 			JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
 			JSDialog.RefreshScrollables();
-		} else {
-			this.createOverflowMenu();
 		}
 
 		if (this.map.isRestrictedUser()) {
