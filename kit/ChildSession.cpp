@@ -588,7 +588,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "geta11yfocusedparagraph") ||
                tokens.equals(0, "geta11ycaretposition") ||
                tokens.equals(0, "toggletiledumping") ||
-               tokens.equals(0, "getpresentationinfo"));
+               tokens.equals(0, "getpresentationinfo") ||
+               tokens.equals(0, "colorpreviewstate"));
 
         ProfileZone pz("ChildSession::_handleInput:" + tokens[0]);
         if (tokens.equals(0, "clientzoom"))
@@ -872,6 +873,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "getpresentationinfo"))
         {
             return getPresentationInfo();
+        }
+        else if (tokens.equals(0, "colorpreviewstate"))
+        {
+            return setColorPreviewState(tokens[1] == "true");
         }
         else
         {
@@ -3316,6 +3321,12 @@ bool ChildSession::getPresentationInfo()
     std::string data(info);
     free(info);
     sendTextFrame("presentationinfo: " + data);
+    return true;
+}
+
+bool ChildSession::setColorPreviewState(bool enable)
+{
+    getLOKitDocument()->setColorPreviewState(_viewId, enable);
     return true;
 }
 
