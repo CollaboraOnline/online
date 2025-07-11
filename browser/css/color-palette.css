@@ -24,7 +24,7 @@
 	--color-stylesview-background: var(--color-background-lighter);
 	--brightness-stylesview: 1;
 
-	--color-canvas: #f5f5f5;
+	--color-canvas: #f0f0f0;
 
 	--color-primary: #0b87e7; /* border-color */
 	--color-primary-text: #fff; /* text color when primary-lighter is background */
