@@ -427,6 +427,7 @@ class LOUtil {
 			cancelsearch: 'cancel',
 			printoptions: 'print',
 			togglesheetgrid: 'show',
+			toggleprintgrid: 'printgrid',
 			'hamburger-tablet': 'fold',
 			exportdirectpdf: 'exportpdf',
 			textcolumnspropertypanel: 'entirecolumn',
