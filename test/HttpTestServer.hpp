@@ -91,13 +91,15 @@ private:
         LOG_TRC("HandleIncomingMessage: removed " << read << " bytes to have " << data.size()
                                                   << " in the buffer");
 
-        if (request.getVerb() == http::Request::VERB_GET)
+        const std::string& verb = request.getVerb();
+        const std::string& url = request.getUrl();
+
+        if (verb == http::Request::VERB_GET)
         {
             // Return test data.
-            if (request.getUrl().starts_with("/status/"))
+            if (url.starts_with("/status/"))
             {
-                const auto statusCode
-                    = Util::i32FromString(request.getUrl().substr(sizeof("/status")));
+                const auto statusCode = Util::i32FromString(url.substr(sizeof("/status")));
                 const auto reason = http::getReasonPhraseForCode(statusCode.first);
                 LOG_TRC("HandleIncomingMessage: got StatusCode " << statusCode.first
                                                                  << ", sending back: " << reason);
@@ -124,15 +126,15 @@ private:
 
                 socket->send(response);
             }
-            else if (request.getUrl() == "/timeout")
+            else if (url == "/timeout")
             {
                 // Don't send anything back.
             }
-            else if (request.getUrl().starts_with("/inject"))
+            else if (url.starts_with("/inject"))
             {
                 // /inject/<hex data> sends back the data (in binary form)
                 // verbatim. It doesn't add headers or anything at all.
-                const std::string hex = request.getUrl().substr(sizeof("/inject"));
+                const std::string hex = url.substr(sizeof("/inject"));
                 const std::string bytes = HexUtil::hexStringToBytes(
                     reinterpret_cast<const uint8_t*>(hex.data()), hex.size());
                 socket->send(bytes);
@@ -141,12 +143,12 @@ private:
             else
             {
                 http::Response response(http::StatusCode::OK, fd);
-                if (request.getUrl().starts_with("/echo/"))
+                if (url.starts_with("/echo/"))
                 {
-                    if (request.getUrl().starts_with("/echo/chunked/"))
+                    if (url.starts_with("/echo/chunked/"))
                     {
                         response.set("transfer-encoding", "chunked");
-                        std::string body = request.getUrl().substr(sizeof("/echo/chunked"));
+                        std::string body = url.substr(sizeof("/echo/chunked"));
                         while (!body.empty())
                         {
                             if (body.size() < 5)
@@ -166,10 +168,10 @@ private:
                         response.appendChunk(std::string()); // Empty chunk to end.
                     }
                     else
-                        response.setBody(request.getUrl().substr(sizeof("/echo")));
+                        response.setBody(url.substr(sizeof("/echo")));
                 }
                 else
-                    response.setBody("You have reached HttpTestServer " + request.getUrl());
+                    response.setBody("You have reached HttpTestServer " + url);
                 socket->send(response);
             }
         }
