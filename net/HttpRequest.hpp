@@ -600,14 +600,15 @@ public:
     static constexpr const char* VERS_1_1 = "HTTP/1.1";
 
     RequestCommon()
-        : _stage(Stage::Header)
+        : _stage(Stage::RequestLine)
     {
     }
 
     /// The stages of processing the request.
     STATE_ENUM(Stage,
-               Header, ///< Communicate the header.
-               Body, ///< Communicate the body (if any).
+               RequestLine, ///< Sending/Parsing the request-line.
+               Header, ///< Sending/Parsing the header.
+               Body, ///< Sending/Parsing the body (if any).
                Finished ///< Done.
     );
 
@@ -648,7 +649,7 @@ protected:
         , _url(std::move(url))
         , _verb(std::move(verb))
         , _version(std::move(version))
-        , _stage(Stage::Header)
+        , _stage(Stage::RequestLine)
     {
     }
 
@@ -774,7 +775,7 @@ public:
     bool writeData(Buffer& out, std::size_t capacity)
     {
         const std::size_t buffered_size = out.size();
-        if (stage() == Stage::Header)
+        if (stage() == Stage::RequestLine)
         {
             LOG_TRC("performWrites (request header)");
 
@@ -788,7 +789,7 @@ public:
             header().writeData(out);
             out.append("\r\n"); // End the header.
 
-            setStage(Stage::Body);
+            setStage(Stage::Body); // We've written both request-line and header.
         }
 
         if (stage() == Stage::Body)
