@@ -390,6 +390,9 @@ public:
     ConstIterator begin() const { return _headers.begin(); }
     ConstIterator end() const { return _headers.end(); }
 
+    /// Returns the number of entries in the header.
+    std::size_t size() const { return _headers.size(); }
+
     /// Parse the given data as an HTTP header.
     /// Returns the number of bytes consumed (and must be removed from the input).
     int64_t parse(const char* p, int64_t len);

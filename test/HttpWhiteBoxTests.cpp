@@ -157,6 +157,7 @@ void HttpWhiteBoxTests::testHeader()
 
     const std::string data = "\r\na=\r\n\r\n";
     LOK_ASSERT_EQUAL(8L, header.parse(data.c_str(), data.size()));
+    LOK_ASSERT_EQUAL(0UL, header.size());
 }
 
 void HttpWhiteBoxTests::testRequestParserValidComplete()
@@ -177,6 +178,7 @@ void HttpWhiteBoxTests::testRequestParserValidComplete()
     LOK_ASSERT_EQUAL(expVersion, req.getVersion());
     LOK_ASSERT_EQUAL(std::string(), req.get("emptykey"));
     LOK_ASSERT_EQUAL(std::string("localhost.com"), req.get("Host"));
+    LOK_ASSERT_EQUAL(2UL, req.header().size());
 }
 
 void HttpWhiteBoxTests::testRequestParserValidIncomplete()
@@ -224,6 +226,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     LOK_ASSERT_EQUAL(expUrl, req.getUrl());
     LOK_ASSERT_EQUAL(expVersion, req.getVersion());
     LOK_ASSERT_EQUAL(expHost, req.get("Host"));
+    LOK_ASSERT_EQUAL(1UL, req.header().size());
 }
 
 void HttpWhiteBoxTests::testClipboardIsOwnFormat()
