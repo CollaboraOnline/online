@@ -68,11 +68,11 @@ void HttpWhiteBoxTests::testStatusLineParserValidComplete()
 
     int64_t len = data.size();
     LOK_ASSERT_EQUAL(http::FieldParseState::Valid, statusLine.parse(data.c_str(), len));
-    LOK_ASSERT_EQUAL(expVersion, statusLine.httpVersion());
+    LOK_ASSERT_EQUAL_STR(expVersion, statusLine.httpVersion());
     LOK_ASSERT_EQUAL(expVersionMajor, statusLine.versionMajor());
     LOK_ASSERT_EQUAL(expVersionMinor, statusLine.versionMinor());
     LOK_ASSERT_EQUAL(expStatusCode, statusLine.statusCode());
-    LOK_ASSERT_EQUAL(expReasonPhrase, statusLine.reasonPhrase());
+    LOK_ASSERT_EQUAL_STR(expReasonPhrase, statusLine.reasonPhrase());
 }
 
 void HttpWhiteBoxTests::testStatusLineParserValidComplete_NoReason()
@@ -95,11 +95,11 @@ void HttpWhiteBoxTests::testStatusLineParserValidComplete_NoReason()
 
     int64_t len = data.size();
     LOK_ASSERT_EQUAL(http::FieldParseState::Valid, statusLine.parse(data.c_str(), len));
-    LOK_ASSERT_EQUAL(expVersion, statusLine.httpVersion());
+    LOK_ASSERT_EQUAL_STR(expVersion, statusLine.httpVersion());
     LOK_ASSERT_EQUAL(expVersionMajor, statusLine.versionMajor());
     LOK_ASSERT_EQUAL(expVersionMinor, statusLine.versionMinor());
     LOK_ASSERT_EQUAL(expStatusCode, statusLine.statusCode());
-    LOK_ASSERT_EQUAL(expReasonPhrase, statusLine.reasonPhrase());
+    LOK_ASSERT_EQUAL_STR(expReasonPhrase, statusLine.reasonPhrase());
 }
 
 void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
@@ -131,11 +131,11 @@ void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
 
     int64_t len = data.size();
     LOK_ASSERT_EQUAL(http::FieldParseState::Valid, statusLine.parse(data.c_str(), len));
-    LOK_ASSERT_EQUAL(expVersion, statusLine.httpVersion());
+    LOK_ASSERT_EQUAL_STR(expVersion, statusLine.httpVersion());
     LOK_ASSERT_EQUAL(expVersionMajor, statusLine.versionMajor());
     LOK_ASSERT_EQUAL(expVersionMinor, statusLine.versionMinor());
     LOK_ASSERT_EQUAL(expStatusCode, statusLine.statusCode());
-    LOK_ASSERT_EQUAL(expReasonPhrase, statusLine.reasonPhrase());
+    LOK_ASSERT_EQUAL_STR(expReasonPhrase, statusLine.reasonPhrase());
 }
 
 void HttpWhiteBoxTests::testStatusLineSerialize()
@@ -146,7 +146,7 @@ void HttpWhiteBoxTests::testStatusLineSerialize()
     Buffer buf;
     statusLine.writeData(buf);
     const std::string out(buf.getBlock(), buf.getBlockSize());
-    LOK_ASSERT_EQUAL(std::string("HTTP/1.1 200 OK\r\n"), out);
+    LOK_ASSERT_EQUAL_STR("HTTP/1.1 200 OK\r\n", out);
 }
 
 void HttpWhiteBoxTests::testHeader()
@@ -173,11 +173,11 @@ void HttpWhiteBoxTests::testRequestParserValidComplete()
     http::RequestParser req;
 
     LOK_ASSERT(req.readData(data.c_str(), data.size()) > 0);
-    LOK_ASSERT_EQUAL(expVerb, req.getVerb());
-    LOK_ASSERT_EQUAL(expUrl, req.getUrl());
-    LOK_ASSERT_EQUAL(expVersion, req.getVersion());
-    LOK_ASSERT_EQUAL(std::string(), req.get("emptykey"));
-    LOK_ASSERT_EQUAL(std::string("localhost.com"), req.get("Host"));
+    LOK_ASSERT_EQUAL_STR(expVerb, req.getVerb());
+    LOK_ASSERT_EQUAL_STR(expUrl, req.getUrl());
+    LOK_ASSERT_EQUAL_STR(expVersion, req.getVersion());
+    LOK_ASSERT_EQUAL_STR(std::string(), req.get("emptykey"));
+    LOK_ASSERT_EQUAL_STR("localhost.com", req.get("Host"));
     LOK_ASSERT_EQUAL(2UL, req.header().size());
 }
 
@@ -208,6 +208,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     // Parse the first line.
     LOK_ASSERT_EQUAL_MESSAGE("Parsing the first line failed.", off,
                              req.readData(data.c_str(), off));
+    LOK_ASSERT_EQUAL(http::Request::Stage::Header, req.stage());
 
     // Skip the first line and parse the header.
     for (std::size_t i = off; i < data.size(); ++i)
@@ -222,10 +223,10 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
                              static_cast<int64_t>(expHost.size() + 10),
                              req.readData(data.c_str() + off, data.size() - off));
 
-    LOK_ASSERT_EQUAL(expVerb, req.getVerb());
-    LOK_ASSERT_EQUAL(expUrl, req.getUrl());
-    LOK_ASSERT_EQUAL(expVersion, req.getVersion());
-    LOK_ASSERT_EQUAL(expHost, req.get("Host"));
+    LOK_ASSERT_EQUAL_STR(expVerb, req.getVerb());
+    LOK_ASSERT_EQUAL_STR(expUrl, req.getUrl());
+    LOK_ASSERT_EQUAL_STR(expVersion, req.getVersion());
+    LOK_ASSERT_EQUAL_STR(expHost, req.get("Host"));
     LOK_ASSERT_EQUAL(1UL, req.header().size());
 }
 
