@@ -509,8 +509,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
     _lockHttpSession->setFinishedHandler(std::move(finishedCallback));
 
-    LOG_DBG("Async " << wopiLog
-                     << " request: " << static_cast<const http::Request&>(httpRequest).header());
+    LOG_DBG("Async " << wopiLog << " request: " << httpRequest.header());
 
     // Notify client via callback that the request is in progress...
     scopedInvokeCallback.setArg(AsyncLockUpdate(
@@ -873,8 +872,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
 
         _uploadHttpSession->setFinishedHandler(std::move(finishedCallback));
 
-        LOG_DBG(wopiLog << " async upload request: "
-                        << static_cast<const http::Request&>(httpRequest).header());
+        LOG_DBG(wopiLog << " async upload request: " << httpRequest.header());
 
         _uploadHttpSession->setConnectFailHandler(
             [asyncUploadCallback,

@@ -385,7 +385,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
 
     if (stage() == Stage::Header)
     {
-        const int64_t read = header().parse(p, available);
+        const int64_t read = editHeader().parse(p, available);
         if (read < 0)
         {
             return read;

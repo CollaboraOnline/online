@@ -662,7 +662,7 @@ protected:
     /// Add an HTTP header field.
     void add(std::string key, std::string value) { _header.add(std::move(key), std::move(value)); }
 
-    Header& header() { return _header; }
+    Header& editHeader() { return _header; }
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
@@ -702,16 +702,21 @@ public:
     using RequestCommon::setVerb;
     using RequestCommon::setVersion;
 
-
-    void setConnectionToken(Header::ConnectionToken token) { header().setConnectionToken(token); }
-    void setContentType(std::string type) { header().setContentType(std::move(type)); }
-    void setContentLength(int64_t length) { header().setContentLength(length); }
+    void setConnectionToken(Header::ConnectionToken token)
+    {
+        editHeader().setConnectionToken(token);
+    }
+    void setContentType(std::string type) { editHeader().setContentType(std::move(type)); }
+    void setContentLength(int64_t length) { editHeader().setContentLength(length); }
 
     /// Add an HTTP header field.
-    void add(std::string key, std::string value) { header().add(std::move(key), std::move(value)); }
+    void add(std::string key, std::string value)
+    {
+        editHeader().add(std::move(key), std::move(value));
+    }
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
-    void set(const std::string& key, std::string value) { header().set(key, std::move(value)); }
+    void set(const std::string& key, std::string value) { editHeader().set(key, std::move(value)); }
 
     /// True if we are a Keep-Alive request.
     bool isKeepAlive() const
@@ -730,7 +735,7 @@ public:
     /// Size is needed to set the Content-Length.
     void setBodySource(IoReadFunc bodyReaderCb, int64_t size)
     {
-        header().setContentLength(size);
+        editHeader().setContentLength(size);
         _bodyReaderCb = std::move(bodyReaderCb);
     }
 
@@ -755,9 +760,9 @@ public:
     void setBody(std::string body, std::string contentType = "text/html;charset=utf-8")
     {
         if (!body.empty()) // Type is only meaningful if there is a body.
-            header().setContentType(std::move(contentType));
+            editHeader().setContentType(std::move(contentType));
 
-        header().add("Content-Length", std::to_string(body.size()));
+        editHeader().add("Content-Length", std::to_string(body.size()));
 
         const size_t bodySize = body.size();
 
@@ -838,7 +843,7 @@ public:
         std::string basicAuth{ username };
         basicAuth.append(":");
         basicAuth.append(password);
-        header().add("Authorization", "Basic " + Util::base64Encode(basicAuth));
+        editHeader().add("Authorization", "Basic " + Util::base64Encode(basicAuth));
     }
 
 private:
