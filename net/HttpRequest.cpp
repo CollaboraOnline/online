@@ -305,7 +305,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
 int64_t RequestParser::readData(const char* p, const int64_t len)
 {
     uint64_t available = len;
-    if (stage() == Stage::Header)
+    if (stage() == Stage::RequestLine)
     {
         // First line is the status line.
         // Fix infinite loop on mobile by skipping the minimum request header
@@ -378,12 +378,12 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
         ++end; // Skip the LF character.
 
         // LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
-        setStage(Stage::Body);
+        setStage(Stage::Header);
         p += end;
         available -= end;
     }
 
-    if (stage() == Stage::Body)
+    if (stage() == Stage::Header)
     {
         const int64_t read = header().parse(p, available);
         if (read < 0)
@@ -393,8 +393,9 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
 
         if (read > 0)
         {
-            available -= read;
+            setStage(Stage::Body);
             p += read;
+            available -= read;
 
 #ifdef DEBUG_HTTP
             LOG_TRC("After Header: "
@@ -402,7 +403,10 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
                     << HexUtil::dumpHex(std::string(p, std::min(available, 1 * 1024UL))));
 #endif //DEBUG_HTTP
         }
+    }
 
+    if (stage() == Stage::Body)
+    {
         if (getVerb() == VERB_GET)
         {
             // A payload in a GET request "has no defined semantics".
