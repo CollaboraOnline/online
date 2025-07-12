@@ -1005,7 +1005,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px;
 	margin-top: 4px;
 	cursor: pointer;
-	pointer-events: none;
 }
 
 .ui-combobox .ui-listbox-arrow {
@@ -1193,6 +1192,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* buttons: btns.css */
+
+/* Overflow group */
+
+/*.ui-overflow-group,
+.ui-overflow-group-content,*/
+.ui-overflow-manager {
+	display: flex !important;
+	overflow-x: hidden;
+}
+
+.ui-overflow-group,
+.ui-overflow-group-content {
+	display: flex;
+}
 
 /* Icon View */
 

@@ -79,7 +79,7 @@ JSDialog.panel = function (
 				aria: { label: moreOptionsText },
 				icon: app.LOUtil.getIconNameOfCommand('morebutton'),
 				tooltip: moreOptionsText,
-			},
+			} as any as WidgetJSON, // FIXME: use toolitem JSON type
 			builder,
 		);
 	}
