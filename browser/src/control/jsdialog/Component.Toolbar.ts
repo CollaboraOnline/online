@@ -39,6 +39,7 @@ class Toolbar {
 			cssClass: 'jsdialog',
 			noLabelsForUnoButtons: true,
 			callback: this.callback ? this.callback.bind(this) : undefined,
+			suffix: 'toolbar',
 		});
 
 		this.reset();

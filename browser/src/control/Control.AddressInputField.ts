@@ -35,6 +35,7 @@ class AddressInputField {
 			map: this.map,
 			cssClass: 'addressInput jsdialog',
 			windowId: -4,
+			suffix: 'address',
 		});
 
 		this.createAddressInputField();
