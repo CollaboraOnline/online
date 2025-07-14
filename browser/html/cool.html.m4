@@ -4,7 +4,22 @@ m4_dnl# m4_foreachq(x, `item_1, item_2, ..., item_n', stmt)
 m4_dnl# quoted list, alternate improved version
 m4_define([m4_foreachq],[m4_ifelse([$2],[],[],[m4_pushdef([$1])_$0([$1],[$3],[],$2)m4_popdef([$1])])])m4_dnl
 m4_define([_m4_foreachq],[m4_ifelse([$#],[3],[],[m4_define([$1],[$4])$2[]$0([$1],[$2],m4_shift(m4_shift(m4_shift($@))))])])m4_dnl
-m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
+m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))m4_dnl
+m4_dnl------------------------------------------------------------------------
+m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the gtk+ "app" testbed
+m4_define([MOBILEAPP],[])m4_dnl
+m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_dnl
+m4_dnl# FIXME: This is temporary and not what we actually eventually want.
+m4_dnl# What we really want is not a separate HTML file (produced with M4 conditionals on the below
+m4_dnl# EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on demand to
+m4_dnl# instead run locally using WASM, if the connection to the COOL server breaks. (And then
+m4_dnl# re-connects to the COOL server when possible.)
+m4_dnl
+m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_dnl------------------------------------------------------------------------
 <!DOCTYPE html>
 m4_ifelse(IOSAPP,[true],
 <!-- Related to issue #5841: the iOS app sets the base text direction via the "dir" parameter -->
@@ -24,20 +39,6 @@ m4_ifelse(MOBILEAPP, [true],
 )
 <meta name="previewImg" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz4KICAgPGNpcmNsZSB0cmFuc2Zvcm09J3JvdGF0ZSgwKScgdHJhbnNmb3JtLW9yaWdpbj0nY2VudGVyJyBmaWxsPSdub25lJyBzdHJva2U9JyNCNkI2QjYnIHN0cm9rZS13aWR0aD0nMTUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWRhc2hhcnJheT0nMjMwIDEwMDAnIHN0cm9rZS1kYXNob2Zmc2V0PScwJyBjeD0nMTAwJyBjeT0nMTAwJyByPSc3MCc+CiAgICAgPGFuaW1hdGVUcmFuc2Zvcm0KICAgICAgICAgYXR0cmlidXRlTmFtZT0ndHJhbnNmb3JtJwogICAgICAgICB0eXBlPSdyb3RhdGUnCiAgICAgICAgIGZyb209JzAnCiAgICAgICAgIHRvPSczNjAnCiAgICAgICAgIGR1cj0nMicKICAgICAgICAgcmVwZWF0Q291bnQ9J2luZGVmaW5pdGUnPgogICAgICA8L2FuaW1hdGVUcmFuc2Zvcm0+CiAgIDwvY2lyY2xlPgo8L3N2Zz4=">
 <meta name="previewSmile" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjNWY2MzY4Ij48cGF0aCBkPSJtNDI0LTI5NiAyODItMjgyLTU2LTU2LTIyNiAyMjYtMTE0LTExNC01NiA1NiAxNzAgMTcwWm01NiAyMTZxLTgzIDAtMTU2LTMxLjVUMTk3LTE5N3EtNTQtNTQtODUuNS0xMjdUODAtNDgwcTAtODMgMzEuNS0xNTZUMTk3LTc2M3E1NC01NCAxMjctODUuNVQ0ODAtODgwcTgzIDAgMTU2IDMxLjVUNzYzLTc2M3E1NCA1NCA4NS41IDEyN1Q4ODAtNDgwcTAgODMtMzEuNSAxNTZUNzYzLTE5N3EtNTQgNTQtMTI3IDg1LjVUNDgwLTgwWm0wLTgwcTEzNCAwIDIyNy05M3Q5My0yMjdxMC0xMzQtOTMtMjI3dC0yMjctOTNxLTEzNCAwLTIyNyA5M3QtOTMgMjI3cTAgMTM0IDkzIDIyN3QyMjcgOTNabTAtMzIwWiIvPjwvc3ZnPg==">
-
-m4_dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
-m4_define([MOBILEAPP],[])
-m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
-m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
-m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
-
-m4_dnl# FIXME: This is temporary and not what we actually eventually want.
-m4_dnl# What we really want is not a separate HTML file (produced with M4 conditionals on the below
-m4_dnl# EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on demand to
-m4_dnl# instead run locally using WASM, if the connection to the COOL server breaks. (And then
-m4_dnl# re-connects to the COOL server when possible.)
-
-m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
 
 m4_ifelse(MOBILEAPP, [true],
 [
