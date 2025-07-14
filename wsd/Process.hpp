@@ -200,7 +200,7 @@ public:
                  const std::string& configId,
                  const std::shared_ptr<StreamSocket>& socket, const T& request)
         : WSProcess("ChildProcess", pid, socket,
-                    std::make_shared<WebSocketHandler>(socket, request))
+                    std::make_shared<WebSocketHandler>(socket, request, true))
         , _jailId(jailId)
         , _configId(configId)
         , _urpFromKitFD(socket->getIncomingFD(SharedFDType::URPFromKit))
@@ -287,7 +287,7 @@ class ForKitProcWSHandler final : public WebSocketHandler
 public:
     template <typename T>
     ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket, const T& request)
-        : WebSocketHandler(socket.lock(), request)
+        : WebSocketHandler(socket.lock(), request, true)
     {
     }
 
