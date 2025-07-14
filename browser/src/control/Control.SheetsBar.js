@@ -27,7 +27,8 @@ class SheetsBar {
 			{
 				mobileWizard: this,
 				map: this.map,
-				cssClass: 'jsdialog'
+				cssClass: 'jsdialog',
+				suffix: 'spreadsheet-toolbar',
 			});
 
 		this.create();
