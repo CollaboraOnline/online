@@ -3218,6 +3218,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'container',
 				'children': [
 					{
+						'id': 'picture-brightness:PictureBrightness',
+						'type': 'menubutton',
+						'command': '.uno:GrafLuminance',
+						'icon': 'lc_setbrightness.svg',
+						'accessibility': { focusBack: true, combination: 'BN', de: null }
+					},
+				]
+			},
+			{ type: 'separator', id: 'picture-transparency-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
 						'type': 'toolbox',
 						'children': [
 							{
