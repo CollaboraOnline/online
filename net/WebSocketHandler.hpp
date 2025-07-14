@@ -99,7 +99,7 @@ public:
     /// allowedOrigin: if origin is allowed using setting "indirection_endpoint.geolocation_setup.allowed_websocket_origins"
     template <typename T>
     WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request,
-                     const std::string& expectedOrigin = "", bool allowedOrigin = false)
+                     bool allowedOrigin)
         : WebSocketHandler(/*isClient=*/false, /*isMasking=*/false)
     {
         if (!socket)
@@ -110,7 +110,7 @@ public:
 
         // As a server, respond with 101 protocol-upgrade.
         assert(!_isClient);
-        upgradeToWebSocket(socket, request, expectedOrigin, allowedOrigin);
+        upgradeToWebSocket(socket, request, allowedOrigin);
     }
 
     /// Status codes sent to peer on shutdown.
@@ -1013,7 +1013,7 @@ protected:
     template <typename T>
     void upgradeToWebSocket(const std::shared_ptr<StreamSocket>& socket,
                             [[maybe_unused]] const T& req,
-                            [[maybe_unused]] const std::string& expectedOrigin, [[maybe_unused]] bool allowedOrigin)
+                            [[maybe_unused]] bool allowedOrigin)
     {
         assert(socket && "Must have a valid socket");
         LOGA_TRC(WebSocket, "Upgrading to WebSocket");
@@ -1033,11 +1033,9 @@ protected:
          * unacceptable to the server, then it SHOULD respond ... with a reply containing HTTP
          * 403 Forbidden status code.
          */
-        const std::string origin = req.get("Origin", "");
-        if (!allowedOrigin && !net::sameOrigin(expectedOrigin, origin))
+        if (!allowedOrigin)
         {
-            LOG_ERR("Rejecting WebSocket upgrade with: origin [" << origin << "] expected ["
-                                                                 << expectedOrigin << "] instead");
+            LOG_ERR("Rejecting WebSocket upgrade due to disallowed origin");
             HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
             return;
         }
