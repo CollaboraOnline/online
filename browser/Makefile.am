@@ -485,6 +485,7 @@ COOL_JS_LST =\
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
 	src/control/Control.NavigatorPanel.ts \
+	src/control/Control.QuickFindPanel.ts \
 	src/control/AutoCompletePopup.ts \
 	src/control/Control.Mention.ts \
 	src/control/Control.FormulaUsagePopup.ts \
@@ -1014,6 +1015,7 @@ pot:
 		src/control/Control.MobileTopBar.ts \
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.NavigatorPanel.ts \
+		src/control/Control.QuickFindPanel.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \

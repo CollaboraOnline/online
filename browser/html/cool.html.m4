@@ -164,6 +164,9 @@ m4_ifelse(MOBILEAPP,[true],
         <div id="navigator-dock-wrapper">
           <div id="navigator-panel" class="sidebar-panel"></div>
         </div>
+        <div id="quick-find-wrapper">
+          <div id="quick-find-panel"></div>
+        </div>
       </div>
       <div id="navigator-floating-icon"></div>
       <div id="document-container" class="readonly" dir="ltr">

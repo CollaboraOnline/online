@@ -583,5 +583,9 @@ L.Map.include({
 
 	isPresentationOrDrawing: function () {
 		return this.getDocType() === 'presentation' || this.getDocType() === 'drawing';
-	}
+	},
+
+	isText: function () {
+		return this.getDocType() === 'text';
+	},
 });
