@@ -1132,8 +1132,13 @@ public:
     }
 
     /// Append a chunk to the body. Must have Transfer-Encoding: chunked.
-    void appendChunk(const std::string& chunk)
+    void appendChunk(std::string_view chunk)
     {
+        assert(get("transfer-encoding").find("chunked") != std::string::npos &&
+               "Expected to have chunked transfer-encoding header");
+        assert(!_header.has("content-length") &&
+               "Unexpected to have content-length header with transfer-encoding defined");
+
         _body.reserve(_body.size() + chunk.size() + 32);
 
         std::stringstream ss;

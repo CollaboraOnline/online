@@ -37,6 +37,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestParserValidIncomplete);
     CPPUNIT_TEST(testRequestParserValidPostComplete);
     CPPUNIT_TEST(testRequestParserValidPostIncomplete);
+    CPPUNIT_TEST(testRequestParserChunkedPostComplete);
     CPPUNIT_TEST(testClipboardIsOwnFormat);
 
     CPPUNIT_TEST_SUITE_END();
@@ -51,6 +52,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRequestParserValidIncomplete();
     void testRequestParserValidPostComplete();
     void testRequestParserValidPostIncomplete();
+    void testRequestParserChunkedPostComplete();
     void testClipboardIsOwnFormat();
 };
 
@@ -371,6 +373,48 @@ void HttpWhiteBoxTests::testRequestParserValidPostIncomplete()
     LOK_ASSERT_EQUAL_MESSAGE("Parsing the data failed.", static_cast<int64_t>(data.size()),
                              req.readData(data.c_str(), data.size()));
     LOK_ASSERT_EQUAL(http::Request::Stage::Finished, req.stage());
+    LOK_ASSERT_EQUAL_STR(payload, req.getBody());
+}
+
+void HttpWhiteBoxTests::testRequestParserChunkedPostComplete()
+{
+    constexpr std::string_view testname = __func__;
+
+    const std::string expVerb = "POST";
+    const std::string expUrl = "/";
+    const std::string expVersion = "HTTP/1.1";
+    constexpr std::string_view payload =
+        "Some random string of data that has no particular purpose other "
+        "than being a test payload.";
+
+    constexpr std::string_view data = "POST / HTTP/1.1\r\n"
+                                      "Transfer-Encoding: chunked\r\n"
+                                      "Content-Type: text/html;charset=utf-8\r\n"
+                                      "Content-Length: 90\r\n"
+                                      "\r\n"
+                                      "5a\r\n"
+                                      "Some random string of data that has no particular purpose "
+                                      "other than being a test payload.\r\n"
+                                      "0\r\n"
+                                      "\r\n";
+
+    http::Request request;
+    request.setVerb(http::Request::VERB_POST);
+    request.set("Transfer-Encoding", "chunked");
+    request.setBody(std::string(payload));
+    Buffer out;
+    request.writeData(out, INT_MAX);
+    LOK_ASSERT_EQUAL_STR(data, std::string(out.data(), out.size()));
+
+    http::RequestParser req;
+    LOK_ASSERT(req.readData(data.data(), data.size()) > 0);
+    LOK_ASSERT_EQUAL(expVerb, req.getVerb());
+    LOK_ASSERT_EQUAL(expUrl, req.getUrl());
+    LOK_ASSERT_EQUAL(expVersion, req.getVersion());
+    LOK_ASSERT_EQUAL_STR("chunked", req.get("Transfer-Encoding"));
+    LOK_ASSERT_EQUAL_STR("text/html;charset=utf-8", req.get("Content-Type"));
+    LOK_ASSERT_EQUAL_STR(payload.size(), req.get("Content-Length"));
+    LOK_ASSERT_EQUAL(3UL, req.header().size());
     LOK_ASSERT_EQUAL_STR(payload, req.getBody());
 }
 
