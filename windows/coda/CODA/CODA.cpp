@@ -398,6 +398,46 @@ static void do_clipboard_set(int appDocId, const char *text)
     DocumentData::get(appDocId).loKitDocument->setClipboard(nData, mimeTypes.data(), sizes.data(), streams.data());
 }
 
+static void fileOpenDialog()
+{
+    IFileOpenDialog *dialog;
+
+    if (!SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
+                                    IID_IFileOpenDialog, reinterpret_cast<void**>(&dialog))))
+        std::abort();
+
+    COMDLG_FILTERSPEC filter[] =
+    {
+        { L"Text documents", L"*.odt;*.docx;*.doc" },
+        { L"Spreadsheets", L"*.ods;*.xlsx;*.xls" },
+        { L"Presentations", L"*.odp;*.pptx;*.ppt" },
+        { L"All files", L"*.*" }
+    };
+
+    if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter)/sizeof(filter[0]), &filter[0])))
+        std::abort();
+
+    if (!SUCCEEDED(dialog->SetTitle(L"Select document to edit")))
+        std::abort();
+
+    if (!SUCCEEDED(dialog->Show(NULL)))
+        std::abort();
+
+    IShellItem *item;
+    if (!SUCCEEDED(dialog->GetResult(&item)))
+        std::abort();
+
+    PWSTR path;
+    if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &path)))
+        std::abort();
+
+    document_uri = Poco::URI(Poco::Path(Util::wide_string_to_string(std::wstring(path)))).toString();
+
+    CoTaskMemFree(path);
+    item->Release();
+    dialog->Release();
+}
+
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -487,42 +527,10 @@ wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow)
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
         std::abort();
 
-    IFileOpenDialog *dialog;
-
-    if (!SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
-                                    IID_IFileOpenDialog, reinterpret_cast<void**>(&dialog))))
-        std::abort();
-
-    COMDLG_FILTERSPEC filter[] =
-    {
-        { L"Text documents", L"*.odt;*.docx;*.doc" },
-        { L"Spreadsheets", L"*.ods;*.xlsx;*.xls" },
-        { L"Presentations", L"*.odp;*.pptx;*.ppt" },
-        { L"All files", L"*.*" }
-    };
-
-    if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter)/sizeof(filter[0]), &filter[0])))
-        std::abort();
-
-    if (!SUCCEEDED(dialog->SetTitle(L"Select document to edit")))
-        std::abort();
-
-    if (!SUCCEEDED(dialog->Show(NULL)))
-        std::abort();
-
-    IShellItem *item;
-    if (!SUCCEEDED(dialog->GetResult(&item)))
-        std::abort();
-
-    PWSTR path;
-    if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &path)))
-        std::abort();
-
-    document_uri = Poco::URI(Poco::Path(Util::wide_string_to_string(std::wstring(path)))).toString();
-
-    CoTaskMemFree(path);
-    item->Release();
-    dialog->Release();
+    if (__argc == 1)
+        fileOpenDialog();
+    else
+        document_uri = Poco::URI(Poco::Path(Util::wide_string_to_string(__wargv[1]))).toString();
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
