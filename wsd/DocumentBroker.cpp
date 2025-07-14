@@ -276,8 +276,14 @@ void DocumentBroker::setupTransfer(SocketPoll& from, const std::weak_ptr<StreamS
 
 static std::chrono::seconds getLimitLoadSecs()
 {
+    // 0 = infinite.
     CONFIG_STATIC const auto value =
-        ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_load_secs", 100, 5);
+        ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_load_secs", 100, 0);
+    if (value < std::chrono::seconds::zero())
+    {
+        return std::chrono::seconds(100);
+    }
+
     return value;
 }
 
