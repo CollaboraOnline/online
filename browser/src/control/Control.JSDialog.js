@@ -349,7 +349,8 @@ L.Control.JSDialog = L.Control.extend({
 				mobileWizard: this,
 				map: this.map,
 				cssClass: 'jsdialog' + (instance.isAutoPopup ? ' autofilter' : '') + (instance.isOnlyChild ? ' one-child-popup' : ''),
-				callback: instance.callback
+				callback: instance.callback,
+				suffix: 'dialog',
 			});
 
 		instance.builder.build(instance.content, [instance]);
@@ -857,7 +858,8 @@ L.Control.JSDialog = L.Control.extend({
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'jsdialog',
-			callback: e.callback
+			callback: e.callback,
+			suffix: 'dialog',
 		});
 
 		builder.updateWidget(dialog, data.control);
