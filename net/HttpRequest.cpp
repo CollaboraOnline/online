@@ -331,6 +331,8 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
         // used to upload files, or other data.
         char buffer[64 * 1024];
         std::size_t wrote = 0;
+        const bool chunked =
+            Util::toLower(get("transfer-encoding")).find("chunked") != std::string::npos;
         do
         {
             const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
@@ -345,11 +347,30 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
                 LOG_TRC("performWrites (request body): finished, total: " << out.size() -
                                                                                  buffered_size);
                 setStage(Stage::Finished);
+                if (chunked)
+                {
+                    out.append("0\r\n\r\n"); // Ending chunck.
+                }
+
                 break;
             }
 
-            out.append(buffer, read);
-            wrote += read;
+            const auto before = out.size();
+            if (chunked)
+            {
+                std::stringstream ss;
+                ss << std::hex << read;
+                out.append(ss.str());
+                out.append("\r\n");
+                out.append(buffer, read);
+                out.append("\r\n");
+            }
+            else
+            {
+                out.append(buffer, read);
+            }
+
+            wrote += (out.size() - before);
             LOG_TRC("performWrites (request body): " << read << " bytes, total: "
                                                      << out.size() - buffered_size);
         } while (wrote < capacity);
