@@ -2746,7 +2746,12 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     StorageBase::AsyncUploadCallback asyncUploadCallback =
         [this](const StorageBase::AsyncUpload& asyncUp)
     {
-        assert(_uploadRequest && "Expected to have a valid UploadRequest instance");
+        // asyncUploadCallback called twice, 2nd time with onHandshakeFail/callOnConnectFail
+        if (!_uploadRequest)
+        {
+            LOG_WRN("Expected to have a valid UploadRequest instance");
+            return;
+        }
 
         switch (asyncUp.state())
         {
