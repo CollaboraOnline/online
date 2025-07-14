@@ -1038,6 +1038,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'PO', de: null }
 			},
+			{
+				'id': 'Layout-SizeMenu:MenuPageSizes',
+				'type': 'menubutton',
+				'text': _('Size'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PS', de: null }
+			},
 			{ type: 'separator', id: 'layout-printrangesmenu-break', orientation: 'vertical' },
 			{
 				'id': 'Data-RowMenuHeight:MenuRowHeight',
