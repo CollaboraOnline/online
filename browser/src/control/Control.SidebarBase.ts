@@ -45,6 +45,7 @@ abstract class SidebarBase {
 			map: map,
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
 			useScrollAnimation: false, // icon views cause jump on sidebar open
+			suffix: 'sidebar',
 		});
 		this.container = L.DomUtil.create(
 			'div',
