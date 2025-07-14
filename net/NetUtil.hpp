@@ -123,6 +123,20 @@ inline bool parseUri(std::string uri, std::string& scheme, std::string& host, st
     return parseUri(std::move(uri), scheme, host, port, pathAndQuery);
 }
 
+inline std::string getDefaultPortForScheme(const std::string& scheme)
+{
+    if (scheme == "https://" || scheme == "wss://")
+        return "443";
+    if (scheme == "http://" || scheme == "ws://")
+        return "80";
+    return std::string();
+}
+
+// Returns true if both URIs are equivalent for an origin check. Implicit
+// default port numbers are considered equivalent if explicitly included in the
+// compared against peer.
+bool sameOrigin(const std::string& expectedOrigin, const std::string& actualOrigin);
+
 /// Return the locator given a URI.
 inline std::string parseUrl(const std::string& uri)
 {
