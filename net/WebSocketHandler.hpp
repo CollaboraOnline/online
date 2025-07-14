@@ -1034,7 +1034,7 @@ protected:
          * 403 Forbidden status code.
          */
         const std::string origin = req.get("Origin", "");
-        if (!allowedOrigin && origin != expectedOrigin)
+        if (!allowedOrigin && !net::sameOrigin(expectedOrigin, origin))
         {
             LOG_ERR("Rejecting WebSocket upgrade with: origin [" << origin << "] expected ["
                                                                  << expectedOrigin << "] instead");

@@ -27,12 +27,14 @@ class NetUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseUri);
     CPPUNIT_TEST(testParseUriUrl);
     CPPUNIT_TEST(testParseUrl);
+    CPPUNIT_TEST(testSameOrigin);
     CPPUNIT_TEST_SUITE_END();
 
     void testBufferClass();
     void testParseUri();
     void testParseUriUrl();
     void testParseUrl();
+    void testSameOrigin();
 };
 
 void NetUtilWhiteBoxTests::testBufferClass()
@@ -271,6 +273,22 @@ void NetUtilWhiteBoxTests::testParseUrl()
 
     LOK_ASSERT_EQUAL(std::string("/some/path"),
                      net::parseUrl("https://sub.domain.com:80/some/path"));
+}
+
+void NetUtilWhiteBoxTests::testSameOrigin()
+{
+    constexpr std::string_view testname = __func__;
+
+    LOK_ASSERT(net::sameOrigin("", ""));
+    LOK_ASSERT(!net::sameOrigin("http://sub.domain.com", ""));
+    LOK_ASSERT(net::sameOrigin("http://sub.domain.com", "http://sub.domain.com"));
+    LOK_ASSERT(net::sameOrigin("https://sub.domain.com", "https://sub.domain.com"));
+    LOK_ASSERT(!net::sameOrigin("http://sub.domain.com", "https://sub.domain.com"));
+    LOK_ASSERT(net::sameOrigin("https://sub.domain.com", "https://sub.domain.com:443"));
+    LOK_ASSERT(net::sameOrigin("http://sub.domain.com", "http://sub.domain.com:80"));
+    LOK_ASSERT(!net::sameOrigin("https://sub.domain.com", "https://sub.domain.com:80"));
+    LOK_ASSERT(!net::sameOrigin("http://sub.domain.com", "http://sub.domain.com:443"));
+    LOK_ASSERT(!net::sameOrigin("http://sub.domain.com:88", "http://sub.domain.com:80"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NetUtilWhiteBoxTests);

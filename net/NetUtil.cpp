@@ -691,5 +691,37 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
     return !host.empty();
 }
 
+bool sameOrigin(const std::string& expectedOrigin, const std::string& actualOrigin)
+{
+    // common case, and allow empty string to be equivalent
+    if (expectedOrigin == actualOrigin)
+        return true;
+
+    std::string expectedScheme, expectedHostname, expectedPortString;
+    if (!net::parseUri(expectedOrigin, expectedScheme, expectedHostname, expectedPortString))
+    {
+        LOG_ERR("Invalid expected origin URI [" << expectedOrigin << "] to sameOrigin");
+        return false;
+    }
+
+    std::string actualScheme, actualHostname, actualPortString;
+    if (!net::parseUri(actualOrigin, actualScheme, actualHostname, actualPortString))
+    {
+        LOG_ERR("Invalid actual origin URI [" << actualOrigin << "] to sameOrigin");
+        return false;
+    }
+
+    if (expectedScheme != actualScheme || expectedHostname != actualHostname)
+        return false;
+
+    if (expectedPortString.empty())
+        expectedPortString = getDefaultPortForScheme(expectedScheme);
+
+    if (actualPortString.empty())
+        actualPortString = getDefaultPortForScheme(actualScheme);
+
+    return expectedPortString == actualPortString;
+}
+
 } // namespace net
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
