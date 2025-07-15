@@ -660,8 +660,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
                                                         std::string("cool/cool.html?file_path=") +
                                                         // FIXME hard-coded document
                                                         document_uri +
-                                                        std::string("&closebutton=1"
-                                                                    "&permission=edit"
+                                                        std::string("&permission=edit"
                                                                     "&lang=en-US"
                                                                     "&appdocid=") +
                                                         std::to_string(appDocId) +
