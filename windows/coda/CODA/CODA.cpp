@@ -43,12 +43,10 @@ static std::string document_uri;
 static int appDocId;
 
 // The main window class name.
-static wchar_t windowClass[] =L"CODA";
+static wchar_t windowClass[] = L"CODA";
 
 // The string that appears in the application's title bar.
 static wchar_t windowTitle[] = L"CODA";
-
-static HINSTANCE instanceHandle;
 
 static wil::com_ptr<ICoreWebView2Controller> webviewController;
 
@@ -163,6 +161,7 @@ static void do_hullo_handling_things(const char *fileURL, int appDocId)
     // Contact the permanently (during app lifetime) listening COOLWSD server "public" socket
     assert(coolwsd_server_socket_fd != -1);
     int rc = fakeSocketConnect(fakeClientFd, coolwsd_server_socket_fd);
+    (void) rc;
     assert(rc != -1);
 
     // Create a socket pair to notify the below thread when the document has been closed
@@ -515,7 +514,7 @@ static void processMessage(const wil::unique_cotaskmem_string& message)
 }
 
 int APIENTRY
-wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow)
+wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
     mainThreadId = GetCurrentThreadId();
 
@@ -589,9 +588,6 @@ wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow)
         return 1;
     }
 
-    // Store instance handle in our global variable
-    instanceHandle = hInstance;
-
     // The parameters to CreateWindow explained:
     // szWindowClass: the name of the application
     // szTitle: the text that appears in the title bar
@@ -608,7 +604,7 @@ wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow)
                               NULL, NULL, hInstance, NULL);
 
     mainWindow = hWnd;
-    ShowWindow(hWnd, nCmdShow);
+    ShowWindow(hWnd, showWindowMode);
     UpdateWindow(hWnd);
 
     CreateCoreWebView2EnvironmentWithOptions
