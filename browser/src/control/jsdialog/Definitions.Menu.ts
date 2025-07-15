@@ -442,6 +442,19 @@ menuDefinitions.set('Presentation', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('SlideSizeMenu', [
+	{
+		text: _('Standard (4:3)'),
+		img: 'standard-size',
+		uno: '.uno:AttributePageSize?AttributePageSize.Width:long=28000&AttributePageSize.Height:long=21000',
+	},
+	{
+		text: _('Widescreen (16:9)'),
+		img: 'widescreen-size',
+		uno: '.uno:AttributePageSize?AttributePageSize.Width:long=28000&AttributePageSize.Height:long=15750',
+	},
+] as Array<MenuDefinition>);
+
 function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
 	// please see enum AutoLayout in autolayout.hxx. this is the actual WhatLayout sequence
 	// based on the visual position of the icons in the popup.
