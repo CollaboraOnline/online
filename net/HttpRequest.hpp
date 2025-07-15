@@ -781,66 +781,8 @@ public:
             bodySize);
     }
 
-    bool writeData(Buffer& out, std::size_t capacity)
-    {
-        const std::size_t buffered_size = out.size();
-        if (stage() == Stage::RequestLine)
-        {
-            LOG_TRC("performWrites (request header)");
-
-            out.append(getVerb());
-            out.append(" ");
-            out.append(getUrl());
-            out.append(" ");
-            out.append(getVersion());
-            out.append("\r\n");
-
-            header().writeData(out);
-            out.append("\r\n"); // End the header.
-
-            setStage(Stage::Body); // We've written both request-line and header.
-        }
-
-        if (stage() == Stage::Body)
-        {
-            LOG_TRC("performWrites (request body)");
-
-            // Get the data to write into the socket
-            // from the client's callback. This is
-            // used to upload files, or other data.
-            char buffer[64 * 1024];
-            std::size_t wrote = 0;
-            do
-            {
-                const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
-                if (read < 0)
-                {
-                    LOG_ERR("Error reading the data to send as the HTTP request body: " << read);
-                    return false;
-                }
-
-                if (read == 0)
-                {
-                    LOG_TRC("performWrites (request body): finished, total: " << out.size() -
-                                                                                     buffered_size);
-                    setStage(Stage::Finished);
-                    break;
-                }
-
-                out.append(buffer, read);
-                wrote += read;
-                LOG_TRC("performWrites (request body): " << read << " bytes, total: "
-                                                         << out.size() - buffered_size);
-            } while (wrote < capacity);
-        }
-
-#ifdef DEBUG_HTTP
-        LOG_TRC("Request::writeData: " << buffered_size << " bytes buffered\n"
-                                       << HexUtil::dumpHex(out));
-#endif //DEBUG_HTTP
-
-        return true;
-    }
+    /// Serialize the Request into the buffer.
+    bool writeData(Buffer& out, std::size_t capacity);
 
     void setBasicAuth(std::string_view username, std::string_view password)
     {
