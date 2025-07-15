@@ -483,7 +483,6 @@ static void processMessage(const wil::unique_cotaskmem_string& message)
         s = s.substr(4);
         if (s == L"HULLO")
         {
-            // FIXME hard-coded document
             do_hullo_handling_things(document_uri.c_str(), appDocId);
         }
         else if (s == L"BYE")
@@ -658,7 +657,6 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
                             const std::string coolURL = app_installation_uri +
                                                         std::string("cool/cool.html?file_path=") +
-                                                        // FIXME hard-coded document
                                                         document_uri +
                                                         std::string("&permission=edit"
                                                                     "&lang=en-US"
