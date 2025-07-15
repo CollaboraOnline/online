@@ -373,7 +373,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
         // length check
         if (p == nullptr || (len < MinRequestHeaderLen && !Util::isMobileApp()))
         {
-            LOG_TRC("Request::readData: len < MinRequestHeaderLen");
+            LOG_TRC("RequestParser::readData: len < MinRequestHeaderLen");
             return 0;
         }
 
@@ -421,8 +421,8 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
             (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.' ||
             (versionMin < 0 || versionMin > 9) || !isWhitespace(version[VersionBreakPos]))
         {
-            LOG_ERR("Request::dataRead: Invalid HTTP version [" << std::string(version, VersionLen)
-                                                                << "]");
+            LOG_ERR("RequestParser::dataRead: Invalid HTTP version ["
+                    << std::string(version, VersionLen) << "]");
             return -1;
         }
 
@@ -487,7 +487,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
 /// and/or to interrupt transmission.
 int64_t Response::readData(const char* p, int64_t len)
 {
-    LOG_TRC("readData: " << len << " bytes");
+    LOG_TRC("Response::readData: " << len << " bytes");
 
     // We got some data.
     _state = State::Incomplete;
