@@ -433,10 +433,7 @@ static void fileOpenDialog()
     item->Release();
     dialog->Release();
 
-    document_filename = path.getBaseName();
-    if (path.getExtension() != "")
-        document_filename += "." + path.getExtension();
-
+    document_filename = path.getFileName();
     document_uri = Poco::URI(path).toString();
 }
 
