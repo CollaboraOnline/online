@@ -107,8 +107,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 							range.part,
 							docLayer._selectedMode,
 						);
-						var key = coords.key();
-						const tile: Tile = TileManager.get(key);
+						const tile: Tile = TileManager.get(coords);
 
 						if (!tile)
 							canvas.fillStyle = 'rgba(128, 128, 128, 0.5)'; // grey

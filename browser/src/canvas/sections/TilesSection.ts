@@ -239,11 +239,10 @@ export class TilesSection extends CanvasSectionObject {
 		var tileRanges = ctx.paneBoundsList.map(TileManager.pxBoundsToTileRange, TileManager);
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = TileManager.updateFileBasedView(true);
+			const coordList = TileManager.updateFileBasedView(true);
 
 			for (var k: number = 0; k < coordList.length; k++) {
-				var key = coordList[k].key();
-				const tile: Tile = TileManager.get(key);
+				const tile: Tile = TileManager.get(coordList[k]);
 				if (!callback(tile, coordList[k]))
 					return;
 			}
@@ -260,8 +259,7 @@ export class TilesSection extends CanvasSectionObject {
 							part,
 							mode);
 
-						const key = coords.key();
-						const tile: Tile = TileManager.get(key);
+						const tile: Tile = TileManager.get(coords);
 
 						if (!callback(tile, coords))
 							return;
@@ -406,7 +404,7 @@ export class TilesSection extends CanvasSectionObject {
 					const sY = Math.round(intersection[1] - coords.y);
 
 					this.drawTileToCanvasCrop(
-						TileManager.get(coords.key()),
+						TileManager.get(coords),
 						this.context,
 						sX, sY,
 						intersection[2],
@@ -501,15 +499,14 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private forEachTileInArea(area: any, zoom: number, part: number, mode: number, ctx: any,
-		callback: (tile: any, coords: any, section: TilesSection) => boolean) {
+		callback: (tile: any, coords: TileCoordData, section: TilesSection) => boolean) {
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = TileManager.updateFileBasedView(true, area, zoom);
+			const coordList = TileManager.updateFileBasedView(true, area, zoom);
 
 			for (var k: number = 0; k < coordList.length; k++) {
-				var coords = coordList[k];
-				var key = coords.key();
-				const tile: Tile = TileManager.get(key);
+				const coords = coordList[k];
+				const tile: Tile = TileManager.get(coords);
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -528,8 +525,7 @@ export class TilesSection extends CanvasSectionObject {
 					part,
 					mode);
 
-				const key = coords.key();
-				const tile: Tile = TileManager.get(key);
+				const tile: Tile = TileManager.get(coords);
 				if (tile)
 					callback(tile, coords, this);
 			}
