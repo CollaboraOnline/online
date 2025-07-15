@@ -335,7 +335,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tabpage.jsdialog {
-	width: 100%;
 	height: 100%;
 }
 
@@ -2582,4 +2581,9 @@ kbd,
 
 #ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {  
 	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
+}
+
+/* Writer - Format - Paragraph - Area */
+#area .ui-tabpage.jsdialog {
+	width: 100%;
 }
