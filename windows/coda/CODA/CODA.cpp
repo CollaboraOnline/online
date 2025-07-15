@@ -408,7 +408,7 @@ static void fileOpenDialog()
                                     reinterpret_cast<void**>(&dialog))))
         std::abort();
 
-    COMDLG_FILTERSPEC filter[] = { { L"Text documents", L"*.odt;*.docx;*.doc" },
+    COMDLG_FILTERSPEC filter[] = { { L"Text documents", L"*.odt;*.docx;*.doc;*.rtf;*.txt" },
                                    { L"Spreadsheets", L"*.ods;*.xlsx;*.xls" },
                                    { L"Presentations", L"*.odp;*.pptx;*.ppt" },
                                    { L"All files", L"*.*" } };
