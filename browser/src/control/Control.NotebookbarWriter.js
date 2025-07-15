@@ -928,7 +928,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolitem',
 						'text': _('Style list'),
 						'command': '.uno:SidebarDeck.StyleListDeck',
-						'icon': 'lc_morebutton.svg',
+						'icon': 'lc_stylepreviewmore.svg',
 						'accessibility': { focusBack: true, combination: 'SD', de: null }
 					},
 				],
