@@ -64,10 +64,10 @@ static int generate_new_app_doc_id()
     // like 0 or 1. Also make it obvious that this numeric "app doc id", used by the mobile apps and
     // CODA, is not related to the string document ids (usually with several leading zeroes) used in
     // the C++ bits of normal COOL.
-    static int appDocId = 42 + (std::time(nullptr) % 100);
+    static int id = 42 + (std::time(nullptr) % 100);
 
-    DocumentData::allocate(appDocId);
-    return appDocId++;
+    DocumentData::allocate(id);
+    return id++;
 }
 
 static bool isMessageOfType(const char* message, const std::string& type, int length)
@@ -450,9 +450,27 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 webviewController->put_Bounds(bounds);
             };
             break;
+
+        case WM_CLOSE:
+            // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
+
+            do_bye_handling_things();
+
+            // This seems to be what actually causes the document to be closed from a LO core point
+            // of view? At least the lock file disappears here.
+            DocumentData::get(appDocId).loKitDocument->destroyView(DocumentData::get(appDocId).loKitDocument->getView());
+
+            DocumentData::deallocate(appDocId);
+
+            DestroyWindow(hWnd);
+            break;
+
         case WM_DESTROY:
             PostQuitMessage(0);
+            // FIXME: We probably should not just do a blunt _Exit(). On the other hand, it works.
+            _Exit(0);
             break;
+
         case CODA_WM_EXECUTESCRIPT:
             webview->ExecuteScript(
                 Util::string_to_wide_string(std::string((char*)wParam)).c_str(),
@@ -463,7 +481,7 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                         return S_OK;
                     })
                     .Get());
-            // std::free((char*) wParam);
+            std::free((char*) wParam);
             break;
 
         default:
