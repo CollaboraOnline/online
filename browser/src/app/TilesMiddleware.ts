@@ -1187,7 +1187,7 @@ class TileManager {
 
 	private static removeAllTiles() {
 		this.tileBitmapList = [];
-		for (const key in Array.from(this.tiles.keys())) {
+		for (const key of Array.from(this.tiles.keys())) {
 			this.removeTile(key);
 		}
 	}
