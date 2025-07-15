@@ -40,13 +40,11 @@ static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 
 static std::string document_uri;
+static std::string document_filename;
 static int appDocId;
 
 // The main window class name.
 static wchar_t windowClass[] = L"CODA";
-
-// The string that appears in the application's title bar.
-static wchar_t windowTitle[] = L"CODA";
 
 static wil::com_ptr<ICoreWebView2Controller> webviewController;
 
@@ -426,16 +424,20 @@ static void fileOpenDialog()
     if (!SUCCEEDED(dialog->GetResult(&item)))
         std::abort();
 
-    PWSTR path;
-    if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &path)))
+    PWSTR fileSysPath;
+    if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
         std::abort();
 
-    document_uri =
-        Poco::URI(Poco::Path(Util::wide_string_to_string(std::wstring(path)))).toString();
-
-    CoTaskMemFree(path);
+    auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
+    CoTaskMemFree(fileSysPath);
     item->Release();
     dialog->Release();
+
+    document_filename = path.getBaseName();
+    if (path.getExtension() != "")
+        document_filename += "." + path.getExtension();
+
+    document_uri = Poco::URI(path).toString();
 }
 
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -458,7 +460,8 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
             // This seems to be what actually causes the document to be closed from a LO core point
             // of view? At least the lock file disappears here.
-            DocumentData::get(appDocId).loKitDocument->destroyView(DocumentData::get(appDocId).loKitDocument->getView());
+            DocumentData::get(appDocId).loKitDocument->destroyView(
+                DocumentData::get(appDocId).loKitDocument->getView());
 
             DocumentData::deallocate(appDocId);
 
@@ -481,7 +484,7 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                         return S_OK;
                     })
                     .Get());
-            std::free((char*) wParam);
+            std::free((char*)wParam);
             break;
 
         default:
@@ -607,18 +610,9 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         return 1;
     }
 
-    // The parameters to CreateWindow explained:
-    // szWindowClass: the name of the application
-    // szTitle: the text that appears in the title bar
-    // WS_OVERLAPPEDWINDOW: the type of window to create
-    // CW_USEDEFAULT, CW_USEDEFAULT: initial position (x, y)
-    // 500, 100: initial size (width, length)
-    // NULL: the parent of this window
-    // NULL: this application does not have a menu bar
-    // hInstance: the first parameter from WinMain
-    // NULL: not used in this application
-    HWND hWnd = CreateWindowW(windowClass, windowTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
-                              CW_USEDEFAULT, 1200, 900, NULL, NULL, hInstance, NULL);
+    HWND hWnd = CreateWindowW(
+        windowClass, Util::string_to_wide_string("CODA - " + document_filename).c_str(),
+        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1200, 900, NULL, NULL, hInstance, NULL);
 
     mainWindow = hWnd;
     ShowWindow(hWnd, showWindowMode);
