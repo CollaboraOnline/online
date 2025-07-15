@@ -520,7 +520,10 @@ function createShapesPanel(shapeType) {
 }
 
 var onShapeClickFunction = function(e) {
-	app.map.sendUnoCommand('.uno:' + $(e.target).data().uno);
+	let name = $(e.target).data().uno;
+	if (!name)
+		return;
+	app.map.sendUnoCommand('.uno:' + name);
 	closePopup();
 	e.stopPropagation();
 };
