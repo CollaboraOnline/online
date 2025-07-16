@@ -644,12 +644,12 @@ int64_t Response::readData(const char* p, int64_t len)
                     available -= off;
                     p += off;
 
-                    const int64_t read = _onBodyWriteCb(p, chunkLen);
-                    if (read != chunkLen)
+                    const int64_t wrote = _onBodyWriteCb(p, chunkLen);
+                    if (wrote != chunkLen)
                     {
                         LOG_ERR("Error writing http response payload. Write "
                                 "handler returned "
-                                << read << " instead of " << chunkLen);
+                                << wrote << " instead of " << chunkLen);
                         return -1;
                     }
 
