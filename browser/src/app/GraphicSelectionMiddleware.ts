@@ -238,7 +238,7 @@ class GraphicSelection {
 	}
 
 	public static onMessage(textMsg: string) {
-		app.definitions.urlPopUpSection.closeURLPopUp();
+		URLPopUpSection.closeURLPopUp();
 
 		if (textMsg.match('EMPTY')) {
 			this.resetSelectionRanges();
