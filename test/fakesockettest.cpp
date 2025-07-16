@@ -107,80 +107,106 @@ void FakeSocketTest::testBasic()
     rc = fakeSocketListen(s0);
     LOK_ASSERT(rc != -1);
 
-    // Start a thread that accepts two connections to s0, producing sockets s3 and s4.
-    int s3 = -1, s4 = -1;
-    std::thread t0([&] {
+    // Start threads that accept connections to s0
+    const int nthreads = 20;
+    int acceptedSockets[nthreads];
+    std::thread threads[nthreads];
+
+    for (int i = 0; i < nthreads; i++)
+    {
+        threads[i] = std::thread([i, s0, &acceptedSockets] {
             // Cannot use LOK_ASSERT here as that throws and this thread has no Cppunit
             // exception handler. We check below after joining this thread.
-            s3 = fakeSocketAccept4(s0);
-            s4 = fakeSocketAccept4(s0);
+            acceptedSockets[i] = fakeSocketAccept4(s0);
         });
+    }
 
-    // Connect s1 and s2 to s0 (that is, to the sockets produced by accepting connections to
-    // s0).
-    rc = fakeSocketConnect(s1, s0);
-    LOK_ASSERT(rc != -1);
+    int clientSockets[nthreads];
+    for (int i = 0; i < nthreads; i++)
+    {
+        clientSockets[i] = fakeSocketSocket();
+        fakeSocketConnect(clientSockets[i], s0);
+    }
 
-    rc = fakeSocketConnect(s2, s0);
-    LOK_ASSERT(rc != -1);
+    // Verify that we got all connected up
+    for (int i = 0; i < nthreads; i++)
+        threads[i].join();
 
-    // Verify that we got the accepts.
-    t0.join();
-    LOK_ASSERT(s3 != -1);
-    LOK_ASSERT(s4 != -1);
-
-    // s1 should now be connected to s3, and s2 to s4.
-    LOK_ASSERT(fakeSocketPeer(s1) == s3);
-    LOK_ASSERT(fakeSocketPeer(s3) == s1);
-    LOK_ASSERT(fakeSocketPeer(s2) == s4);
-    LOK_ASSERT(fakeSocketPeer(s4) == s2);
+    for (int i = 0; i < nthreads; i++)
+    {
+        bool haveMatch = false;
+        LOK_ASSERT(clientSockets[i] != -1);
+        LOK_ASSERT(acceptedSockets[i] != -1);
+        LOK_ASSERT(fakeSocketPeer(acceptedSockets[i]) != -1);
+        LOK_ASSERT(fakeSocketPeer(clientSockets[i]) != -1);
+        LOK_ASSERT(fakeSocketPeer(acceptedSockets[i]) != acceptedSockets[i]);
+        LOK_ASSERT(fakeSocketPeer(clientSockets[i]) != clientSockets[i]);
+        for (int j = 0; j < nthreads; j++)
+        {
+            LOK_ASSERT(clientSockets[i] != acceptedSockets[j]);
+            if (fakeSocketPeer(clientSockets[i]) == acceptedSockets[j])
+            {
+                LOK_ASSERT(fakeSocketPeer(acceptedSockets[j]) == clientSockets[i]);
+                LOK_ASSERT(!haveMatch);
+                haveMatch = true;
+            }
+        }
+        LOK_ASSERT(haveMatch);
+    }
 
     // Some writing and reading
-    rc = fakeSocketWrite(s1, "hello", 5);
+    rc = fakeSocketWrite(clientSockets[0], "hello", 5);
     LOK_ASSERT(rc != -1);
 
-    rc = fakeSocketWrite(s1, "greetings", 9);
+    rc = fakeSocketWrite(clientSockets[0], "greetings", 9);
     LOK_ASSERT(rc != -1);
 
-    rc = fakeSocketWrite(s2, "moin", 4);
+    rc = fakeSocketWrite(clientSockets[7], "moin", 4);
     LOK_ASSERT(rc != -1);
 
-    rc = fakeSocketAvailableDataLength(s3);
+    // fakeSocketAvailableDataLength() returns the length of the *first* buffer only, if any
+    rc = fakeSocketAvailableDataLength(fakeSocketPeer(clientSockets[0]));
     LOK_ASSERT(rc == 5);
 
-    rc = fakeSocketRead(s3, buf, 100);
+    rc = fakeSocketRead(fakeSocketPeer(clientSockets[0]), buf, 10);
     LOK_ASSERT(rc == 5);
+    LOK_ASSERT(memcmp(buf, "hello", 5) == 0);
 
-    rc = fakeSocketAvailableDataLength(s3);
+    rc = fakeSocketAvailableDataLength(fakeSocketPeer(clientSockets[0]));
     LOK_ASSERT(rc == 9);
 
-    rc = fakeSocketRead(s4, buf, 100);
+    rc = fakeSocketRead(fakeSocketPeer(clientSockets[0]), buf, 100);
+    LOK_ASSERT(rc == 9);
+    LOK_ASSERT(memcmp(buf, "greetings", 9) == 0);
+
+    rc = fakeSocketRead(fakeSocketPeer(clientSockets[7]), buf, 100);
     LOK_ASSERT(rc == 4);
+    LOK_ASSERT(memcmp(buf, "moin", 4) == 0);
 
-    rc = fakeSocketWrite(s3, "goodbye", 7);
+    rc = fakeSocketWrite(fakeSocketPeer(clientSockets[9]), "goodbye", 7);
     LOK_ASSERT(rc > 0);
 
-    rc = fakeSocketRead(s1, buf, 4);
+    rc = fakeSocketRead(clientSockets[9], buf, 4);
     LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EAGAIN); // Note: not really the right errno, but what else? See
-                                     // FakeSocket.cpp.
+    // Note: not really the right errno, but what else? See FakeSocket.cpp.
+    LOK_ASSERT(errno == EAGAIN);
 
-    rc = fakeSocketRead(s1, buf, 100);
-    LOK_ASSERT(rc > 0);
+    rc = fakeSocketRead(clientSockets[9], buf, 100);
+    LOK_ASSERT(rc == 7);
 
-    // Close s3. Reading from s1 should then return an EOF indication (0).
-    fakeSocketClose(s3);
+    // Close a socket. Reading from its peer should then return an EOF indication (0).
+    fakeSocketClose(fakeSocketPeer(clientSockets[5]));
 
-    rc = fakeSocketAvailableDataLength(s1);
+    rc = fakeSocketAvailableDataLength(clientSockets[5]);
     LOK_ASSERT(rc == 0);
 
-    rc = fakeSocketRead(s1, buf, 100);
+    rc = fakeSocketRead(clientSockets[5], buf, 100);
     LOK_ASSERT(rc == 0);
 
-    rc = fakeSocketAvailableDataLength(s1);
+    rc = fakeSocketAvailableDataLength(clientSockets[5]);
     LOK_ASSERT(rc == 0);
 
-    rc = fakeSocketRead(s1, buf, 100);
+    rc = fakeSocketRead(clientSockets[5], buf, 100);
     LOK_ASSERT(rc == 0);
 
     // Test the "pipe" functionality, that creates an already connected socket pair.
@@ -259,20 +285,24 @@ void FakeSocketTest::testBasic()
 
     pollfds[0].fd = s0;
     pollfds[0].events = POLLIN | POLLOUT;
-    pollfds[1].fd = s1;
+    pollfds[1].fd = clientSockets[5];
     pollfds[1].events = POLLIN | POLLOUT;
-    pollfds[2].fd = s2;
+    pollfds[2].fd = clientSockets[7];
     pollfds[2].events = POLLIN | POLLOUT;
-    pollfds[3].fd = 40;
+    pollfds[3].fd = 1234;
     pollfds[3].events = POLLIN | POLLOUT;
 
     rc = fakeSocketPoll(pollfds, 4, -1);
+    LOK_ASSERT(rc == 3);
+    // s0 is a listening socket, nothing.
     // Hmm, does a real poll() set POLLIN for a listening socket? Probably only if there is a
     // connection in progress, and that is not the case here for s0.
-    LOK_ASSERT(rc == 3);
     LOK_ASSERT(pollfds[0].revents == 0);
+    // clientSockets[5] has a closed peer, apparently POLLIN is what should be set then?
     LOK_ASSERT(pollfds[1].revents == POLLIN);
+    // clientSockets[7] has nothing to be read, but can be written to
     LOK_ASSERT(pollfds[2].revents == POLLOUT);
+    // 1234 is invalid
     LOK_ASSERT(pollfds[3].revents == POLLNVAL);
 }
 
