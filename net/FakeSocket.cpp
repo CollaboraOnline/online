@@ -26,22 +26,27 @@
 #include <thread>
 #include <vector>
 
-// A "fake socket" is represented by a number, a smallish integer, just like a real socket.
+// A "fake socket" is represented by a number, a smallish integer, just like a real socket on
+// Linux. Unlike real sockets, fake socket numbers are not file descriptors, they have nothing to do
+// with the funcitons open(), read() etc, and will overlap with file descriptors.
 //
-// There is one FakeSocketPair for each two sequential fake socket numbers. When you create one, you
-// will always get the lower (even) number in a pair. The higher number will be returned if you
-// successfully call fakeSocketConnect() from the lower number to some other fake socket.
+// There is one FakeSocketPair for each two sequential fake socket numbers. When you create a socket
+// with fakeSocketSocket(), you will always get the lower (even) number in a pair. When creating a
+// socket pair with fakeSocketPipe2() the two sequential numbers will be returned.
+//
+// An odd number will be returned from fakeSocketAccept4(). It is the number that is one higher than
+// the first parameter to the corresponding fakeSocketConnect().
 //
 // After you create a fake socket, there is basically just two things you can do with it:
 //
-// 1) Call fakeSocketConnect on it giving another fake socket number to connect to. Once the
-// connection is successful, you can call fakeSocketRead() and fakeSocketWrite() on your original
-// socket.
-//
-// 2) Call fakeSocketListen() on it, indicating it is a "server" socket. After that, keep calling
+// 1) Call fakeSocketListen() on it, indicating it is a "server" socket. After that, keep calling
 // fakeSocketAccept() and each time that returns successfully, it will return a new fake socket that
 // is connected to another fake socket that called fakeSocketConnect() to the server socket. You can
 // then call fakeSocketRead() and fakeSocketWrite() on it.
+//
+// 2) Call fakeSocketConnect() on it giving another fake socket number to connect to. That should be
+// a listening socket. Once the connection is successful, you can call fakeSocketRead() and
+// fakeSocketWrite() on your original socket.
 //
 // This all is complicated a bit by the fact that all the API is non-blocking.
 
