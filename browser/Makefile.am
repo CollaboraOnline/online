@@ -739,7 +739,8 @@ WASM_FILES= \
 
 if ENABLE_DEBUG
 WASM_FILES += \
-	$(DIST_FOLDER)/online.wasm.debug.wasm
+	$(DIST_FOLDER)/online.wasm.debug.wasm \
+	$(DIST_FOLDER)/online.wasm.debug.wasm.dwp
 endif
 
 endif
