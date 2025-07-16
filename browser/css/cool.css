@@ -960,9 +960,6 @@ body {
 	padding: 0px;
 }
 
-.lokdialog.ui-dialog-content [Id$='Page'] {
-	grid-column-gap: 24px;
-}
 
 .lokdialog_container:not(.jsdialog-container) .lokdialog.ui-dialog-content.ui-widget-content {
 	padding: 0px;
