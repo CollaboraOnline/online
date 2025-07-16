@@ -1423,7 +1423,8 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
         {
             isWasm = true;
         }
-        else if (endPoint == "online.wasm.debug.wasm" || endPoint == "soffice.data.js.metadata")
+        else if (endPoint == "online.wasm.debug.wasm" || endPoint == "online.wasm.debug.wasm.dwp" ||
+                 endPoint == "soffice.data.js.metadata")
         {
             isWasm = true;
         }
