@@ -77,12 +77,14 @@ function getStatusbarItemElements(
 }
 
 function getPageNumberElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	const element = getStatusbarItemElements(
 		'StatePageNumber',
 		_('Number of Pages'),
 		text,
 		builder,
 	);
+	element.onclick = () => app.map.sendUnoCommand('.uno:GotoPage');
+	return element;
 }
 
 function getWordCountElements(text: string, builder: any) {
@@ -140,21 +142,25 @@ function getStateTableCellElements(text: string, builder: any) {
 }
 
 function getSlideStatusElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	const element = getStatusbarItemElements(
 		'SlideStatus',
 		_('Number of Slides'),
 		text,
 		builder,
 	);
+	element.onclick = () => app.map.sendUnoCommand('.uno:GotoPage');
+	return element;
 }
 
 function getPageStatusElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	const element = getStatusbarItemElements(
 		'PageStatus',
 		_('Number of Pages'),
 		text,
 		builder,
 	);
+	element.onclick = () => app.map.sendUnoCommand('.uno:GotoPage');
+	return element;
 }
 
 function getDocumentStatusElements(text: string, builder: any) {
