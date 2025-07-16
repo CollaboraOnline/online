@@ -1,8 +1,14 @@
+coolwsd (25.04.4.1-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-25.04.4-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 16 Jul 2025 21:41:00 +0200
+
 coolwsd (25.04.3.2-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-25.04.3-2
 
- -- Thorsten Behrens <thorsten.behrens@collabora.com>  Wed Jul 2 07:22:02 AM CEST 202
+ -- Thorsten Behrens <thorsten.behrens@collabora.com>  Wed, 02 Jul 2025 07:22:02 +0200
 
 coolwsd (25.04.3.1-1) unstable; urgency=medium
 
