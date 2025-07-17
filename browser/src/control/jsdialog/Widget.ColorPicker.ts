@@ -125,7 +125,6 @@ function createColor(
 	color.name = 'color';
 	color.style.backgroundColor = '#' + colorItem;
 	color.setAttribute('index', index);
-	color.tabIndex = 0;
 	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
 	if (themeData) color.setAttribute('theme', themeData);
 
