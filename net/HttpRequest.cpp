@@ -471,10 +471,141 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
         if (getVerb() == VERB_GET)
         {
             // A payload in a GET request "has no defined semantics".
+            setStage(Stage::Finished);
             return len - available;
         }
 
-        // TODO: Implement POSR and HEAD support.
+        if (getVerb() == VERB_POST)
+        {
+            LOG_TRC("RequestParser::POST: " << available);
+
+            if (!header().hasContentLength() && !header().getChunkedTransferEncoding())
+            {
+                LOG_ERR("HTTP POST request must provide either content-length or chunked "
+                        "transfer-encoding");
+                return -1; // Fail.
+            }
+
+            if (header().getChunkedTransferEncoding())
+            {
+                // This is a chunked transfer.
+                // Find the start of the chunk, which is
+                // the length of the chunk in hex.
+                // each chunk is preceeded by its length in hex.
+                while (available)
+                {
+#ifdef DEBUG_HTTP
+                    LOG_TRC("New Chunk, "
+                            << available << " bytes available\n"
+                            << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
+#endif //DEBUG_HTTP
+
+                    // Read ahead to see if we have enough data
+                    // to consume the chunk length.
+                    int64_t off = findLineBreak(p, 0, available);
+                    if (off == static_cast<int64_t>(available))
+                    {
+                        LOG_TRC("Not enough data for chunk size");
+                        // Not enough data.
+                        return len - available; // Don't remove.
+                    }
+
+                    ++off; // Skip the LF itself.
+
+                    // Read the chunk length.
+                    int64_t chunkLen = 0;
+                    int chunkLenSize = 0;
+                    for (; chunkLenSize < static_cast<int64_t>(available); ++chunkLenSize)
+                    {
+                        const int digit = HexUtil::hexDigitFromChar(p[chunkLenSize]);
+                        if (digit < 0)
+                            break;
+
+                        // Can assume that digit is always less than 16.
+                        if (chunkLen >= std::numeric_limits<int64_t>::max() / 16)
+                        {
+                            // Would not fit into chunkLen.
+                            LOG_ERR("Unexpected chunk length: " << chunkLen);
+                            return -1;
+                        }
+                        chunkLen = chunkLen * 16 + digit;
+                    }
+
+                    LOG_TRC("ChunkLen: " << chunkLen);
+                    if (chunkLen > 0)
+                    {
+                        // Do we have enough data for this chunk?
+                        if (static_cast<int64_t>(available) - off < chunkLen + 2) // + CRLF.
+                        {
+                            // Not enough data.
+                            LOG_TRC("Not enough chunk data. Need "
+                                    << chunkLen + 2 << " but have only " << available - off);
+                            return len - available; // Don't remove.
+                        }
+
+                        // Skip the chunkLen bytes and any chunk extensions.
+                        available -= off;
+                        p += off;
+
+                        const int64_t wrote = _onBodyWriteCb(p, chunkLen);
+                        if (wrote != chunkLen)
+                        {
+                            LOG_ERR("Error writing http response payload. Write "
+                                    "handler returned "
+                                    << wrote << " instead of " << chunkLen);
+                            return -1;
+                        }
+
+                        available -= chunkLen;
+                        p += chunkLen;
+                        _recvBodySize += chunkLen;
+                        LOG_TRC("Wrote " << chunkLen << " bytes for a total of " << _recvBodySize);
+
+                        // Skip blank lines.
+                        off = skipCRLF(p, 0, available);
+                        p += off;
+                        available -= off;
+                    }
+                    else
+                    {
+                        // That was the last chunk!
+                        setStage(Stage::Finished);
+                        available = 0; // Consume all.
+                        LOG_TRC("Got LastChunk, finished.");
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // Non-chunked payload.
+                // Write the body into the output, returns the
+                // number of bytes read from the given buffer.
+                const int64_t wrote = _onBodyWriteCb(p, available);
+                if (wrote < 0)
+                {
+                    LOG_ERR("Error writing received http response payload into the body-callback. "
+                            "Write handler returned "
+                            << wrote << " instead of " << available);
+                    return wrote;
+                }
+
+                if (wrote > 0)
+                {
+                    available -= wrote;
+                    _recvBodySize += wrote;
+                    if (header().hasContentLength() && _recvBodySize >= header().getContentLength())
+                    {
+                        LOG_TRC("Wrote all received content into the body-callback, finished.");
+                        setStage(Stage::Finished);
+                    }
+                }
+            }
+
+            return len - available;
+        }
+
+        // TODO: Implement HEAD support.
         LOG_ERR("Unsupported HTTP Method [" << getVerb() << ']');
         return -1;
     }
