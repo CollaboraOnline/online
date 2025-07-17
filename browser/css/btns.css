@@ -64,7 +64,8 @@
 [data-theme='dark'] #toggledarktheme,
 [data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
 [data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
-[data-theme='dark'] .sidebar.unotoolbutton.selected {
+[data-theme='dark'] .sidebar.unotoolbutton.selected,
+[data-theme='dark'] #context-toolbar .unotoolbutton.selected {
 	background-color: var(--color-background-darker);
 	border-color: var(--color-border-darker);
 }

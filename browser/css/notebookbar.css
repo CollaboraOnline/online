@@ -681,3 +681,21 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 [class*='as-html-submenu-icon'] {
 	background: url('images/lc_downloadas-html.svg') center;
 }
+
+#context-toolbar {
+	position: absolute;
+	background: var(--color-background-lighter);
+	padding: 5px;
+	transform: translateY(-105%);
+	z-index: 12;
+	border: solid var(--color-toolbar-border) 1px;
+	display: grid;
+	opacity: 1;
+	transition: all 0.25s allow-discrete;
+}
+
+#context-toolbar.hidden {
+	display: none;
+	opacity: 0;
+	transition: all 0.25s allow-discrete;
+}
