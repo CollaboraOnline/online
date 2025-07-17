@@ -801,12 +801,71 @@ class RequestParser final : public RequestCommon
 {
 public:
     /// Create a default RequestParser.
-    RequestParser() = default;
+    RequestParser()
+        : _recvBodySize(0)
+    {
+        // By default we store the body in memory.
+        saveBodyToMemory();
+    }
 
     /// Handles incoming data.
     /// Returns the number of bytes consumed, or -1 for error
     /// and/or to interrupt transmission.
     int64_t readData(const char* p, int64_t len);
+
+    std::string_view getBody() const { return _body; }
+
+    /// Redirect the response body, if any, to a file.
+    /// If the server responds with a non-success status code (i.e. not 2xx)
+    /// the body is redirected to memory to be read via getBody().
+    /// Check the statusLine().statusCategory() for the status code.
+    void saveBodyToFile(const std::string& path)
+    {
+        _bodyFile.open(path, std::ios_base::out | std::ios_base::binary);
+        if (!_bodyFile.good())
+            LOG_ERR("Unable to open [" << path << "] for saveBodyToFile");
+        _onBodyWriteCb = [this](const char* p, int64_t len)
+        {
+            LOG_TRC("Writing " << len << " bytes");
+            if (_bodyFile.good())
+                _bodyFile.write(p, len);
+            return _bodyFile.good() ? len : -1;
+        };
+    }
+
+    /// Generic handler for the body payload.
+    /// See IoWriteFunc documentation for the contract.
+    void saveBodyToHandler(IoWriteFunc onBodyWriteCb) { _onBodyWriteCb = std::move(onBodyWriteCb); }
+
+    /// The response body, if any, is stored in memory.
+    /// Use getBody() to read it.
+    void saveBodyToMemory()
+    {
+        _onBodyWriteCb = [this](const char* p, int64_t len)
+        {
+            _body.insert(_body.end(), p, p + len);
+            // LOG_TRC("Body: " << len << "\n" << _body);
+            return len;
+        };
+    }
+
+    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        os << indent << "http::RequestParser: ";
+        RequestCommon::dumpState(os, indent);
+        os << indent << "\trecvBodySize: " << _recvBodySize;
+
+        std::string childIndent = indent + '\t';
+        os << indent;
+        HexUtil::dumpHex(os, _body, "\tbody:\n",
+                         Util::replace(std::move(childIndent), "\n", "").c_str());
+    }
+
+private:
+    std::string _body;
+    std::ofstream _bodyFile; ///< Used when _bodyHandling is OnDisk.
+    IoWriteFunc _onBodyWriteCb; ///< Used to handling body receipt in all cases.
+    int64_t _recvBodySize; ///< The amount of data we received (compared to the Content-Length).
 };
 
 /// HTTP Status Line is the first line of a response sent by a server.
