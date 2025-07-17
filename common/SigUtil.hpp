@@ -33,6 +33,10 @@ namespace SigUtil
     /// Set the flag to stop pump loops forcefully and request shutting down.
     void setTerminationFlag();
 
+    /// Reset the flags to stop pump loops forcefully.
+    /// Only necessary in Mobile.
+    void resetTerminationFlags();
+
     extern "C" { typedef void (*GlobalDumpStateFn)(void); }
 
     void checkDumpGlobalState(GlobalDumpStateFn dumpState);

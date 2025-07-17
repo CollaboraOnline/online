@@ -4201,6 +4201,8 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
 
 int COOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    SigUtil::resetTerminationFlags();
+
     int returnValue = EXIT_SOFTWARE;
 
     try {
