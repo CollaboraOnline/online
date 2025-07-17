@@ -108,6 +108,9 @@ type JSDialogCallback = (
 	builder: JSBuilder,
 ) => void;
 
+// callback triggered for custom rendered entries
+type CustomEntryRenderCallback = (pos: number | string) => void;
+
 // used to define menus
 type MenuDefinition = {
 	id?: string; // unique identifier
@@ -174,6 +177,7 @@ interface TreeColumnJSON {
 	link?: string;
 	collapsed?: string | boolean;
 	expanded?: string | boolean;
+	customEntryRenderer?: boolean; // has custome rendering enabled
 	collapsedimage?: string;
 	expandedimage?: string;
 	editable?: boolean;

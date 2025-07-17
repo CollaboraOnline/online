@@ -12,8 +12,12 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 	});
 
 	it('Style sidebar context menu on node with spaces', function() {
-		cy.cGet('#treeview .ui-treeview-cell-text').contains('Complimentary Close').click();
-		cy.cGet('#treeview .ui-treeview-cell-text').contains('Complimentary Close').rightclick();
+		cy.cGet('#treeview .ui-treeview-cell-text img.ui-treeview-custom-render[alt="Complimentary Close"]').click();
+		cy.cGet('#treeview .ui-treeview-cell-text img.ui-treeview-custom-render[alt="Complimentary Close"]').rightclick();
 		cy.cGet('#__MENU__').should('exist');
+
+		// visually check position and renders
+		cy.wait(500);
+		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_sidebar_context_menu', 0.1);
 	});
 });
