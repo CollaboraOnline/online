@@ -10,12 +10,26 @@
  */
 
 #include <config.h>
-
+#include <Socket.hpp>
 #include "SigUtil.hpp"
 
 #include <string>
 
 #include "Log.hpp"
+
+namespace
+{
+/// The valid states of the process.
+enum class RunState : char
+{
+    Run = 0, ///< Normal up-and-running state.
+    ShutDown, ///< Request to shut down gracefully.
+    Terminate ///< Immediate termination.
+};
+
+/// Single flag to control the current run state.
+static std::atomic<RunState> RunStateFlag(RunState::Run);
+} // namespace
 
 namespace SigUtil
 {
@@ -25,21 +39,35 @@ namespace SigUtil
 
     bool getShutdownRequestFlag()
     {
-        return false;
+        return RunStateFlag >= RunState::ShutDown;
     }
 
     bool getTerminationFlag()
     {
-        return false;
+        return RunStateFlag >= RunState::Terminate;
     }
 
     void setTerminationFlag()
     {
+        // While fuzzing, we never want to terminate.
+        if constexpr (!Util::isFuzzing())
+        {
+            // Set the forced-termination flag.
+            RunStateFlag = RunState::Terminate;
+        }
+
+        SocketPoll::wakeupWorld();
     }
 
     void requestShutdown()
     {
+        RunState oldState = RunState::Run;
+        if (RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown)) {
+            SocketPoll::wakeupWorld();
+        }
     }
+
+    void resetTerminationFlags() { RunStateFlag = RunState::Run; }
 
     void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {
