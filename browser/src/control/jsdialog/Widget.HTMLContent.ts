@@ -97,12 +97,14 @@ function getWordCountElements(text: string, builder: any) {
 }
 
 function getStatusDocPosElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	const element = getStatusbarItemElements(
 		'StatusDocPos',
 		_('Number of Sheets'),
 		text,
 		builder,
 	);
+	element.onclick = () => app.map.sendUnoCommand('.uno:JumpToTable');
+	return element;
 }
 
 function getInsertModeElements(text: string, builder: any) {
