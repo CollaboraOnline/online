@@ -91,10 +91,10 @@ class UIManager extends L.Control {
 
 			// Allow default scroll for Shift + scroll or if not horizontally scrollable
 			if (e.shiftKey || el.scrollWidth <= el.clientWidth) return;
-	  
+
 			// Scroll horizontally
 			this.scrollLeft += e.deltaY;
-	  
+
 			// Prevent vertical scroll only within this element
 			e.preventDefault();
 		  }, { passive: false });
@@ -545,6 +545,7 @@ class UIManager extends L.Control {
 				app.dispatcher.dispatch('presentation');
 			}
 		});
+		this.map.contextToolbar = L.control.ContextToolbar(this.map);
 	}
 
 	/**

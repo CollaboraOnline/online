@@ -2300,11 +2300,21 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._selectionContentRequest = setTimeout(L.bind(function () {
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');}, this), 100);
 			}
+
+			if (app.socket.inputEventType === 'mouse')
+			{
+				var topLeftTwips = new L.Point(rectArray[0].min.x, rectArray[0].min.y);
+				var position = this._twipsToPixels(topLeftTwips);
+				position.x -= ((app.sectionContainer.documentTopLeft[0] - app.sectionContainer.documentAnchor[0])/ app.dpiScale) - app.sectionContainer.getCanvasBoundingClientRect().x;
+				position.y -= ((app.sectionContainer.documentTopLeft[1] - app.sectionContainer.documentAnchor[1])/ app.dpiScale) - app.sectionContainer.getCanvasBoundingClientRect().y;
+				this._map.contextToolbar.showContextToolbar(position);
+			}
 		}
 		else {
 			TextSelections.deactivate();
 			this._textCSelections.clear();
 			this._selectedTextContent = '';
+			this._map.contextToolbar.hideContextToolbar();
 			if (this._map._clip && this._map._clip._selectionType === 'complex')
 				this._map._clip.clearSelection();
 		}
@@ -2721,6 +2731,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			y -= verticalOffset;
 		}
 
+		app.socket.inputEventType = "mouse";
+
 		app.socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
@@ -2808,6 +2820,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.TileSectionManager.postKeyboardEvent', { type: type, charCode: charCode });
 
+		app.socket.inputEventType = "key";
 		var winId = this._map.getWinId();
 		if (
 			this.isCalc() &&
@@ -4132,6 +4145,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			// Visible area is dirty, update it on the server
 			app.socket.sendMessage(newClientVisibleArea);
+			this._map.contextToolbar.hideContextToolbar(); // hide context toolbar when scroll/window resize etc...
 			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
 		}
