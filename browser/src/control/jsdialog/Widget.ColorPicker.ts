@@ -117,12 +117,13 @@ function createColor(
 	themeColors: ThemeColor[],
 ): Element {
 	const color = L.DomUtil.create(
-		'div',
+		'input',
 		builder.options.cssClass + ' ui-color-picker-entry',
 		parentContainer,
 	);
+	color.type = 'radio';
+	color.name = 'color';
 	color.style.backgroundColor = '#' + colorItem;
-	color.setAttribute('name', colorItem);
 	color.setAttribute('index', index);
 	color.tabIndex = 0;
 	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
