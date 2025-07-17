@@ -566,16 +566,29 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
-		if (!app.calc.autoFilterCell || !app.map._docLayer.sheetGeometry) {
-			console.warn('AutoFilterInfo callback or sheet geometry is missing.');
+		if (!app.map._docLayer.sheetGeometry)
 			return;
-		}
 
-		let cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
-			app.calc.autoFilterCell.column,
-			app.calc.autoFilterCell.row,
-			app.getScale()
-		);
+		/*
+			AutoFilter and Cell Dropdown dialogs both use this function.
+			Core side sends the column and row indexes for AutoFilter dialog. We use those indexes to determine the position of the dialog.
+			Cell DropDown (Data->Validity) doesn't get a row and column index message before opening.
+			But Cell DropDown can not be opened without first clicking on the cell. Therefore we can use current cell's rectangle for positioning of the dialog.
+		*/
+		let cellRectangle;
+
+		if (app.calc.autoFilterCell) {
+			// This is an AutoFilterDialog. We have the row and column indexes. Get cell rectangle with this info.
+			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
+				app.calc.autoFilterCell.column,
+				app.calc.autoFilterCell.row,
+				app.getScale()
+			);
+		}
+		else {
+			// This is a Cell DropDown. We will use current cell's rectangle.
+			cellRectangle = app.calc.cellCursorRectangle;
+		}
 
 		const documentTopLeft = app.sectionContainer.getDocumentTopLeft();
 		const documentAnchor = app.sectionContainer.getDocumentAnchor();
