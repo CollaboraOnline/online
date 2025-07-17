@@ -608,7 +608,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     }
 
     HWND hWnd = CreateWindowW(
-        windowClass, Util::string_to_wide_string("CODA - " + document_filename).c_str(),
+        windowClass, Util::string_to_wide_string(document_filename + " - CODA").c_str(),
         WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1200, 900, NULL, NULL, hInstance, NULL);
 
     mainWindow = hWnd;
