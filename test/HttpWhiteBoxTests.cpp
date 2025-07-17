@@ -35,6 +35,8 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testRequestParserValidComplete);
     CPPUNIT_TEST(testRequestParserValidIncomplete);
+    CPPUNIT_TEST(testRequestParserValidPostComplete);
+    CPPUNIT_TEST(testRequestParserValidPostIncomplete);
     CPPUNIT_TEST(testClipboardIsOwnFormat);
 
     CPPUNIT_TEST_SUITE_END();
@@ -47,6 +49,8 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testCookies();
     void testRequestParserValidComplete();
     void testRequestParserValidIncomplete();
+    void testRequestParserValidPostComplete();
+    void testRequestParserValidPostIncomplete();
     void testClipboardIsOwnFormat();
 };
 
@@ -256,6 +260,118 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     LOK_ASSERT_EQUAL_STR(expVersion, req.getVersion());
     LOK_ASSERT_EQUAL_STR(expHost, req.get("Host"));
     LOK_ASSERT_EQUAL(1UL, req.header().size());
+}
+
+void HttpWhiteBoxTests::testRequestParserValidPostComplete()
+{
+    constexpr std::string_view testname = __func__;
+
+    const std::string expVerb = "POST";
+    const std::string expUrl = "/path/to/data";
+    const std::string expVersion = "HTTP/1.1";
+    constexpr std::string_view payload =
+        "Some random string of data that has no particular purpose other "
+        "than being a test payload.";
+
+    std::ostringstream oss;
+    oss << expVerb << ' ' << expUrl << ' ' << expVersion << "\r\n"
+        << "EmptyKey:\r\n"
+        << "Content-Length: " << payload.size() << "\r\n"
+        << "Host: localhost.com\r\n\r\n"
+        << payload;
+    const std::string data = oss.str();
+
+    http::RequestParser req;
+
+    LOK_ASSERT(req.readData(data.c_str(), data.size()) > 0);
+    LOK_ASSERT_EQUAL_STR(expVerb, req.getVerb());
+    LOK_ASSERT_EQUAL_STR(expUrl, req.getUrl());
+    LOK_ASSERT_EQUAL_STR(expVersion, req.getVersion());
+    LOK_ASSERT_EQUAL_STR(std::string(), req.get("emptykey"));
+    LOK_ASSERT_EQUAL_STR("localhost.com", req.get("Host"));
+    LOK_ASSERT_EQUAL_STR(std::to_string(payload.size()), req.get("Content-Length"));
+    LOK_ASSERT_EQUAL(3UL, req.header().size());
+    LOK_ASSERT_EQUAL_STR(payload, req.getBody());
+}
+
+void HttpWhiteBoxTests::testRequestParserValidPostIncomplete()
+{
+    constexpr std::string_view testname = __func__;
+
+    const std::string expVerb = "POST";
+    const std::string expUrl = "/path/to/data";
+    const std::string expVersion = "HTTP/1.1";
+    constexpr std::string_view payload =
+        "Some random string of data that has no particular purpose other "
+        "than being a test payload.";
+
+    std::ostringstream oss;
+    oss << expVerb << ' ' << expUrl << ' ' << expVersion << "\r\n"
+        << "EmptyKey:\r\n"
+        << "Content-Length: " << payload.size() << "\r\n"
+        << "Host: localhost.com\r\n\r\n"
+        << payload;
+    std::string data = oss.str();
+
+    http::RequestParser req;
+
+    // Pass incomplete data to the reader.
+    const int64_t lenRequestLine = 29;
+    for (std::size_t i = 0; i < lenRequestLine; ++i)
+    {
+        // Should return 0 to signify that data is incomplete.
+        LOK_ASSERT_EQUAL(http::Request::Stage::RequestLine, req.stage());
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+                                 req.readData(data.c_str(), i));
+    }
+
+    // Parse the request-line.
+    LOK_ASSERT_EQUAL_MESSAGE("Parsing the request-line failed.", lenRequestLine,
+                             req.readData(data.c_str(), lenRequestLine));
+    LOK_ASSERT_EQUAL(http::Request::Stage::Header, req.stage());
+    LOK_ASSERT_EQUAL_STR(expVerb, req.getVerb());
+    LOK_ASSERT_EQUAL_STR(expUrl, req.getUrl());
+    LOK_ASSERT_EQUAL_STR(expVersion, req.getVersion());
+
+    // Continue by parsing the header. Simulate erasing read data (lenRequestLine).
+    data = data.substr(lenRequestLine);
+
+    // Pass incomplete data to the reader.
+    const int64_t lenHeader = 54;
+    for (std::size_t i = 0; i < lenHeader; ++i)
+    {
+        // Should return 0 to signify that data is incomplete.
+        LOK_ASSERT_EQUAL(http::Request::Stage::Header, req.stage());
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+                                 req.readData(data.c_str(), i));
+    }
+
+    // Parse the header.
+    LOK_ASSERT_EQUAL_MESSAGE("Parsing the header failed.", lenHeader,
+                             req.readData(data.c_str(), lenHeader));
+    LOK_ASSERT_EQUAL(http::Request::Stage::Body, req.stage());
+
+    LOK_ASSERT_EQUAL(std::string(), req.get("emptykey"));
+    LOK_ASSERT_EQUAL_STR("localhost.com", req.get("Host"));
+    LOK_ASSERT_EQUAL_STR(payload.size(), req.get("Content-Length"));
+    LOK_ASSERT_EQUAL(3UL, req.header().size());
+
+    // Continue by parsing the data. Simulate erasing read data (lenHeader).
+    data = data.substr(lenHeader);
+    for (int64_t i = 0; static_cast<uint64_t>(i) < data.size(); ++i)
+    {
+        // Should return the number of characters consumed.
+        LOK_ASSERT_EQUAL(http::Request::Stage::Body, req.stage());
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, i,
+                                 req.readData(data.c_str(), i));
+        data = data.substr(i);
+    }
+
+    // Parse the data.
+    LOK_ASSERT_EQUAL_MESSAGE("Parsing the data failed.", static_cast<int64_t>(data.size()),
+                             req.readData(data.c_str(), data.size()));
+    LOK_ASSERT_EQUAL(http::Request::Stage::Finished, req.stage());
+    LOK_ASSERT_EQUAL_STR(payload, req.getBody());
 }
 
 void HttpWhiteBoxTests::testClipboardIsOwnFormat()
