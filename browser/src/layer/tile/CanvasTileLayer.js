@@ -652,6 +652,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
+		this._canvas.style.visibility = 'hidden';
 		app.sectionContainer = new CanvasSectionContainer(this._canvas, this.isCalc() /* disableDrawing? */);
 		this._container.style.position = 'absolute';
 		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
