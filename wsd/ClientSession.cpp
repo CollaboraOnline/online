@@ -2053,12 +2053,6 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
 // seekg variant which uses seekoff which was implemented
 bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
 {
-    // back to start
-    std::string line;
-    std::getline(in, line);
-    in.clear();
-    in.seekg(0, std::ios::beg);
-
     constexpr std::string_view textPlain = "text/plain";
 
     char data[textPlain.size()];
