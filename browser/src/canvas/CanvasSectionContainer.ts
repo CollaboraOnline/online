@@ -661,6 +661,7 @@ class CanvasSectionContainer {
 
 		this.drawSections();
 		this.flushLayoutingTasks();
+		this.canvas.style.visibility = 'unset';
 	}
 
 	public requestReDraw() {
