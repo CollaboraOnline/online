@@ -847,7 +847,8 @@ L.Map.Keyboard = L.Handler.extend({
 		case this.keyCodes.RIGHTWINDOWKEY[MAC]: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
 			// slide operations are handled differently avoid changing focus
-			if (!this._map._docLayer._preview.partsFocused)
+			var slidePreviewFocused = this._map._docLayer._preview && this._map._docLayer._preview.partsFocused;
+			if (!slidePreviewFocused)
 				this._map.focus();
 			// Not sure if the commented code is still used, so I didn't remove it.
 			// Anyhow, by when editable area is populated with the focused paragraph
