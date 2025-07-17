@@ -2047,13 +2047,17 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
 }
 
 // Insert our meta origin if we can
+// Note: If @in is Poco::MemoryStream there is a bug in versions < 1.13.3 that
+// Poco::BasicMemoryStreamBuf doesn't implement seekpos, so use of the single
+// argument seekg fails, this can be worked around by using the double argument
+// seekg variant which uses seekoff which was implemented
 bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
 {
     // back to start
     std::string line;
     std::getline(in, line);
     in.clear();
-    in.seekg(0);
+    in.seekg(0, std::ios::beg);
 
     constexpr std::string_view textPlain = "text/plain";
 
@@ -2068,12 +2072,12 @@ bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
 
     // back to start
     in.clear();
-    in.seekg(0);
+    in.seekg(0, std::ios::beg);
 
     bool json = in.get() == '{';
 
     in.clear();
-    in.seekg(0);
+    in.seekg(0, std::ios::beg);
 
     // copy as far as body
     bool match = Util::copyToMatch(in, out, "<body");
