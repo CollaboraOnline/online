@@ -807,7 +807,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	display: inline-block;
 }
 
-/* 
+/*
 * Hide the spacer icon if the entire context menu list does not contain any <img>.
 * This prevents unnecessary visual gaps when no icons are present.
 */
@@ -815,7 +815,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	display: none;
 }
 
-/* 
+/*
  * Applies consistent spacing across all items in a mixed submenu.
  * 1. The entire context menu list has no <img> at all (icon-less menu)
  * 2. The submenu contains a checkmark but has no <img>
@@ -899,7 +899,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	justify-content: flex-start;
 }
 
-.jsdialog input[type='radio'] {
+.jsdialog input[type='radio']:not(.ui-color-picker-entry) {
 	margin: 1px 8px;
 	border: none;
 	height: 18px;
@@ -1724,6 +1724,9 @@ button.menubutton.sidebar > span {
 	cursor: pointer;
 	width: 16px;
 	height: 16px;
+	appearance: none;
+	webkit-appearance: none;
+	margin: 0;
 }
 
 .ui-color-picker-entry:hover,
@@ -2597,17 +2600,17 @@ kbd,
 	max-height: 19vh;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img {  
-	padding: 1px;  
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img {
+	padding: 1px;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected) {  
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected) {
 	outline: 2px solid var(--color-primary);
 	border: 1px solid transparent;
 	background-color: transparent;
 	border-radius: 0;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {  
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {
 	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
 }
