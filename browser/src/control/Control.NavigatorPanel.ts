@@ -19,6 +19,7 @@ class NavigatorPanel extends SidebarBase {
 	floatingNavIcon: HTMLElement;
 	presentationControlsWrapper: HTMLElement;
 	navigatorDockWrapper: HTMLElement;
+	quickFindWrapper: HTMLElement;
 	closeNavButton: HTMLElement;
 
 	constructor(map: any) {
@@ -36,6 +37,9 @@ class NavigatorPanel extends SidebarBase {
 		);
 		this.navigatorDockWrapper = this.navigationPanel.querySelector(
 			'#navigator-dock-wrapper',
+		);
+		this.quickFindWrapper = this.navigationPanel.querySelector(
+			'#quick-find-wrapper',
 		);
 		this.map.on(
 			'zoomend',
@@ -125,22 +129,43 @@ class NavigatorPanel extends SidebarBase {
 			}.bind(this),
 		);
 
-		if (this.map.isPresentationOrDrawing()) {
+		// build tabs if we are in an environment that supports them
+		// e.g. in writer we have navigator and quickfind tabs
+		// in impress/draw we have navigator and slide sorter tabs
+		if (this.map.isPresentationOrDrawing() || this.map.isText()) {
+			var navigationTabs = [];
+
 			var navOptions = L.DomUtil.create('div', 'navigation-tabs', navContainer);
 			navOptions.id = 'navigation-options';
 
-			// Create Slide Sorter tab
-			var slideSorterTab = L.DomUtil.create('div', 'tab selected', navOptions);
-			slideSorterTab.id = 'tab-slide-sorter';
-			slideSorterTab.textContent = _('Slides');
+			if (this.map.isPresentationOrDrawing()) {
+				// Create Slide Sorter tab
+				var slideSorterTab = L.DomUtil.create(
+					'div',
+					'tab selected',
+					navOptions,
+				);
+				slideSorterTab.id = 'tab-slide-sorter';
+				slideSorterTab.textContent = _('Slides');
+				navigationTabs.push(slideSorterTab);
+			}
 
 			// Create Navigator tab
 			var navigatorTab = L.DomUtil.create('div', 'tab', navOptions);
 			navigatorTab.id = 'tab-navigator';
 			navigatorTab.textContent = _('Outline');
+			navigationTabs.push(navigatorTab);
+
+			if (this.map.isText()) {
+				// Create Quick Find tab
+				var quickFindTab = L.DomUtil.create('div', 'tab', navOptions);
+				quickFindTab.id = 'tab-quick-find';
+				quickFindTab.textContent = _('Quick Find');
+				navigationTabs.push(quickFindTab);
+			}
 
 			// Tab Click Event Listener
-			[slideSorterTab, navigatorTab].forEach((tab) => {
+			navigationTabs.forEach((tab) => {
 				tab.addEventListener(
 					'click',
 					function () {
@@ -148,6 +173,11 @@ class NavigatorPanel extends SidebarBase {
 					}.bind(this),
 				);
 			});
+		}
+
+		if (this.map.isText()) {
+			// build quickfind panel container
+			// Fill container probably from CanvasTileLayer or
 		}
 
 		if (this.navigationPanel) {
@@ -256,12 +286,21 @@ class NavigatorPanel extends SidebarBase {
 
 		// Toggle visibility based on tabId
 		if (tabId === 'tab-slide-sorter') {
+			// todo: must be a better way to handle this
 			this.presentationControlsWrapper.style.display = 'block';
 			this.navigatorDockWrapper.style.display = 'none';
-		} else {
+			this.quickFindWrapper.style.display = 'none';
+		} else if (tabId === 'tab-navigator') {
 			if (!app.showNavigator) app.map.sendUnoCommand('.uno:Navigator');
 			this.presentationControlsWrapper.style.display = 'none';
 			this.navigatorDockWrapper.style.display = 'block';
+			this.quickFindWrapper.style.display = 'none';
+		} else if (tabId === 'tab-quick-find') {
+			if (!app.showQuickFind)
+				app.map.sendUnoCommand('.uno:SidebarDeck.FindDeck'); // todo add showQuickFind to other areas of app
+			this.presentationControlsWrapper.style.display = 'none';
+			this.navigatorDockWrapper.style.display = 'none';
+			this.quickFindWrapper.style.display = 'block';
 		}
 	}
 
