@@ -26,6 +26,7 @@ interface HtmlContentJson {
 	canUserWrite: boolean | undefined;
 	text: string | undefined;
 	enabled: boolean;
+	command: string | undefined;
 }
 
 function sanitizeString(text: string): string {
@@ -264,6 +265,9 @@ function htmlContent(
 		builder,
 	);
 
+	if (data.command) {
+		elements.onclick = () => app.dispatcher.dispatch(data.command);
+	}
 	parentContainer.appendChild(elements);
 
 	// TODO: remove this and create real widget for userslistpopup

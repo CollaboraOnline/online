@@ -332,6 +332,10 @@ class Dispatcher {
 				behavior: 'smooth',
 			}); // Scroll up based on stylepreview height
 		};
+
+		this.actionsMap['gotopage'] = () => {
+			app.map.sendUnoCommand('.uno:GotoPage');
+		};
 	}
 
 	private addExportCommands() {

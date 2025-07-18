@@ -181,7 +181,7 @@ class StatusBar extends JSDialog.Toolbar {
 		this.updateHtmlItem('ShowComments', state ? statemsg : ' ');
 	}
 
-	_generateHtmlItem(id, dataPriority) {
+	_generateHtmlItem(id, dataPriority, command) {
 		var isReadOnlyMode = app.map ? app.map.isReadOnlyMode() : true;
 		var canUserWrite = !app.isReadOnly();
 
@@ -194,6 +194,10 @@ class StatusBar extends JSDialog.Toolbar {
 			],
 			vertical: false,
 			visible: false
+		}
+
+		if (command) {
+			item.children[0].command = command;
 		}
 
 		if (dataPriority) {
@@ -257,13 +261,13 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'separator', id: 'searchbreak', orientation: 'vertical'},
 			this._generateHtmlItem('statusdocpos'), 					// spreadsheet
 			this._generateHtmlItem('rowcolselcount', 1), 					// spreadsheet
-			this._generateHtmlItem('statepagenumber'), 					// text
+			this._generateHtmlItem('statepagenumber', undefined, 'gotopage'), 		// text
 			this._generateHtmlItem('statewordcount', 1), 					// text
 			this._generateHtmlItem('insertmode', 5),						// spreadsheet, text
 			this._generateHtmlItem('showcomments', 4),					    // text
 			this._generateHtmlItem('statusselectionmode', 6),				// text
-			this._generateHtmlItem('slidestatus'),						// presentation
-			this._generateHtmlItem('pagestatus'),						// drawing
+			this._generateHtmlItem('slidestatus', undefined, 'gotopage'),			// presentation
+			this._generateHtmlItem('pagestatus', undefined, 'gotopage'),			// drawing
 			{type: 'menubutton', id: 'languagestatus:LanguageStatusMenu', dataPriority: 3},	// spreadsheet, text, presentation
 			{type: 'separator', id: 'languagestatusbreak', orientation: 'vertical', visible: false, dataPriority: 3}, // spreadsheet
 			this._generateHtmlItem('statetablecell', 4),					// spreadsheet

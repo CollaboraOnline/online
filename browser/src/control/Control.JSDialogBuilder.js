@@ -2841,9 +2841,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var backupGridSpan = control.style.gridColumn;
 
 		control.replaceWith(temporaryParent.firstChild)
+		let onclick = control.onclick;
 
 		var newControl = container.querySelector('[id=\'' + elementId + '\']');
 		if (newControl) {
+			if (onclick) {
+				newControl.onclick = onclick;
+			}
 			newControl.scrollTop = scrollTop;
 			newControl.style.gridColumn = backupGridSpan;
 
