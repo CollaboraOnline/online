@@ -2486,3 +2486,31 @@ kbd,
 	display: grid;
 	grid-gap: 4px;
 }
+
+/* Calc - Format - Format Cells - Background - Color */
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview {
+	grid-template-columns: repeat(12, 1fr);
+	width: max-content;
+	line-height: 0;
+	padding: 5px;
+}
+
+#ColorPage.jsdialog #iconview_colors.ui-iconview {
+	max-height: 19vh;
+}
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img {  
+	padding: 1px;  
+}
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected) {  
+	outline: 2px solid var(--color-primary);
+	border: 1px solid transparent;
+	background-color: transparent;
+	border-radius: 0;
+}
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {  
+	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
+}
