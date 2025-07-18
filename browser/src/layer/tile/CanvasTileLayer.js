@@ -2725,7 +2725,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
 
-		if (type === 'buttonup' && this._map['stateChangeHandler'].getItemValue('PageLinks')) {
+
+		const tempPageLinks = this._map['stateChangeHandler'].getItemValue('PageLinks');
+		const thereArePageLinks =  tempPageLinks && tempPageLinks.length > 0;
+		if (type === 'buttonup' && thereArePageLinks) {
 			app.definitions.urlPopUpSection.closeURLPopUp();
 			for (const link of this._map['stateChangeHandler'].getItemValue('PageLinks')) {
 				if (link.rectangle.containsPoint([x, y])) {
