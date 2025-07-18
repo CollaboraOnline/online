@@ -4134,6 +4134,10 @@ int COOLWSD::innerMain()
 
     SigUtil::addActivity("finished with status " + std::to_string(returnValue));
 
+#if MOBILEAPP
+    Util::forcedExit(returnValue);
+#endif
+
     return returnValue;
 #else // IOS
     return 0;
@@ -4201,6 +4205,8 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
 
 int COOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    SigUtil::resetTerminationFlags();
+
     int returnValue = EXIT_SOFTWARE;
 
     try {
