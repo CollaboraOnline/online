@@ -99,7 +99,7 @@ if (window.ThisIsTheEmscriptenApp) {
 	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
 
-	var Module = {
+	window.Module = {
 		onRuntimeInitialized: function() {
 			map.loadDocument(global.socket);
 		},
@@ -114,9 +114,9 @@ if (window.ThisIsTheEmscriptenApp) {
 		arguments_: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 	};
-	createOnlineModule(Module).then(() => {
-		app.HandleCOOLMessage = Module['_handle_cool_message'];
-		app.AllocateUTF8 = Module['stringToNewUTF8']; });
+	createOnlineModule(window.Module).then(() => {
+		app.HandleCOOLMessage = window.Module['_handle_cool_message'];
+		app.AllocateUTF8 = window.Module['stringToNewUTF8']; });
 } else {
 	map.loadDocument(global.socket);
 }
