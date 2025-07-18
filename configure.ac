@@ -257,6 +257,11 @@ AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
                            [Path to a working installation directory or instdir of LibreOffice]))
 
+AC_ARG_WITH([lo-sourcedir],
+            AS_HELP_STRING([--with-lo-sourcedir=<path>],
+                           [Mandatory, and relevant, only for a Wasm build.
+                            Path to a LibreOffice core source tree.]))
+
 AC_ARG_WITH([lo-builddir],
             AS_HELP_STRING([--with-lo-builddir=<path>],
                            [Mandatory, and relevant, in a tree where building the iOS or Android app.
@@ -577,6 +582,7 @@ AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
 # But not when just configuring for building the JS on Linux, for copying over
 # to the Mac.
 # Android: We need these to setup the CMakeLists.txt properly.
+LOSOURCEDIR=
 LOBUILDDIR=
 ANDROID_ABI="armeabi-v7a"
 ANDROID_ABI_SPLIT="'armeabi-v7a'"
@@ -615,6 +621,14 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
       ANDROID_ABI_SPLIT=`echo $ANDROID_ABI | sed "s/^/'/g;s/ /','/g;s/$/'/g"`
       AC_MSG_RESULT([$ANDROID_ABI])
+   fi
+
+   if test "$host_os" = emscripten; then
+      AC_MSG_CHECKING([for LibreOffice source tree to build against])
+      if test -z "$with_lo_sourcedir"; then
+         AC_MSG_ERROR([You MUST use the --with-lo-sourcedir option when configuring a Wasm build.])
+      fi
+      LOSOURCEDIR=$(readlink -f "$with_lo_sourcedir")
    fi
 
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
@@ -805,6 +819,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
 fi
 
+AC_SUBST(LOSOURCEDIR)
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(ANDROID_ABI)
 AC_SUBST(ANDROID_ABI_SPLIT)
