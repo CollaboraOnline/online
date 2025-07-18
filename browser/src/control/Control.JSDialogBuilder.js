@@ -331,7 +331,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		spinfield.dir = document.documentElement.dir;
 		spinfield.tabIndex = '0';
 		spinfield.setAttribute('autocomplete', 'off');
-		builder._addAriaLabel(spinfield, data, builder);
+
+		if (!data.labelledBy) {
+			builder._addAriaLabel(spinfield, data, builder);
+		}
 
 		controls['spinfield'] = spinfield;
 
