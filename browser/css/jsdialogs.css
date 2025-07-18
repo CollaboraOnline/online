@@ -828,7 +828,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	justify-content: flex-start;
 }
 
-.jsdialog input[type='radio'] {
+.jsdialog input[type='radio']:not(.ui-color-picker-entry) {
 	margin: 1px 8px;
 	border: none;
 	height: 18px;
@@ -1628,6 +1628,9 @@ button.menubutton.sidebar > span {
 	cursor: pointer;
 	width: 16px;
 	height: 16px;
+	appearance: none;
+	webkit-appearance: none;
+	margin: 0;
 }
 
 .ui-color-picker-entry:hover,

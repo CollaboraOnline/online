@@ -117,14 +117,14 @@ function createColor(
 	themeColors: ThemeColor[],
 ): Element {
 	const color = L.DomUtil.create(
-		'div',
+		'input',
 		builder.options.cssClass + ' ui-color-picker-entry',
 		parentContainer,
 	);
+	color.type = 'radio';
+	color.name = 'color';
 	color.style.backgroundColor = '#' + colorItem;
-	color.setAttribute('name', colorItem);
 	color.setAttribute('index', index);
-	color.tabIndex = 0;
 	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
 	if (themeData) color.setAttribute('theme', themeData);
 
@@ -137,7 +137,11 @@ function createColor(
 	else if (window.app.colorNames) colorTooltip = findColorName(colorItem);
 	else colorTooltip = _('Unknown color');
 
-	color.setAttribute('data-cooltip', colorTooltip);
+	if (window.enableAccessibility) {
+		color.setAttribute('aria-label', colorTooltip);
+	} else {
+		color.setAttribute('data-cooltip', colorTooltip);
+	}
 
 	// Assuming 'color' is your target HTMLElement
 	color.addEventListener('click', (event: MouseEvent) => {
