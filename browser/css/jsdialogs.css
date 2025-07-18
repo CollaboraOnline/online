@@ -335,7 +335,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tabpage.jsdialog {
-	width: 100%;
 	height: 100%;
 }
 
@@ -2485,4 +2484,9 @@ kbd,
 #ImageTabPage #frame1 .ui-grid-cell {
 	display: grid;
 	grid-gap: 4px;
+}
+
+/* Writer - Format - Paragraph - Area */
+#area .ui-tabpage.jsdialog {
+	width: 100%;
 }
