@@ -12,7 +12,7 @@
  * JSDialog.StatusBar - statusbar component
  */
 
-/* global $ app JSDialog _ _UNO  getPermissionModeElements */
+/* global $ app JSDialog _ _UNO  getPermissionModeElements URLPopUpSection */
 class StatusBar extends JSDialog.Toolbar {
 	constructor(map) {
 		super(map, 'toolbar-down');
@@ -476,9 +476,9 @@ class StatusBar extends JSDialog.Toolbar {
 			var isDefaultState = state === 'true' || state === '';
 			$('#insertmode-container').attr('default-state', isDefaultState || null);
 
-			if ((state === 'false' || !state) && app.definitions.urlPopUpSection.isOpen()) {
+			if ((state === 'false' || !state) && URLPopUpSection.isOpen()) {
 				this.map.hyperlinkUnderCursor = null;
-				app.definitions.urlPopUpSection.closeURLPopUp();
+				URLPopUpSection.closeURLPopUp();
 			}
 		}
 		else if (commandName === '.uno:StatusSelectionMode' || commandName === '.uno:SelectionMode') {

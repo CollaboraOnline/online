@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections CellSelectionMarkers */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections CellSelectionMarkers URLPopUpSection */
 
 function clamp(num, min, max)
 {
@@ -1865,9 +1865,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
-		app.definitions.urlPopUpSection.closeURLPopUp();
+		URLPopUpSection.closeURLPopUp();
 		if (obj.hyperlink && obj.hyperlink.link)
-			app.definitions.urlPopUpSection.showURLPopUP(obj.hyperlink.link, new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
+			URLPopUpSection.showURLPopUP(obj.hyperlink.link, new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 
 		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
@@ -2729,10 +2729,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		const tempPageLinks = this._map['stateChangeHandler'].getItemValue('PageLinks');
 		const thereArePageLinks =  tempPageLinks && tempPageLinks.length > 0;
 		if (type === 'buttonup' && thereArePageLinks) {
-			app.definitions.urlPopUpSection.closeURLPopUp();
+			URLPopUpSection.closeURLPopUp();
 			for (const link of this._map['stateChangeHandler'].getItemValue('PageLinks')) {
 				if (link.rectangle.containsPoint([x, y])) {
-					app.definitions.urlPopUpSection.showURLPopUP(link.uri, new app.definitions.simplePoint(x, y + this.getFiledBasedViewVerticalOffset()), undefined, /*linkIsClientSide:*/true);
+					URLPopUpSection.showURLPopUP(link.uri, new app.definitions.simplePoint(x, y + this.getFiledBasedViewVerticalOffset()), undefined, /*linkIsClientSide:*/true);
 				}
 			}
 		}
@@ -3154,7 +3154,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._removeCellDropDownArrow();
-		app.definitions.urlPopUpSection.closeURLPopUp();
+		URLPopUpSection.closeURLPopUp();
 	},
 
 	_onValidityListButtonMsg: function(textMsg) {
