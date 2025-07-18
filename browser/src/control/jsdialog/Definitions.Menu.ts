@@ -123,6 +123,159 @@ menuDefinitions.set('MenuOrientation', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('MenuPageSizes', [
+	{
+		id: 'A6',
+		text: _('A6'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=A6',
+	},
+	{
+		id: 'A5',
+		text: _('A5'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=A5',
+	},
+	{
+		id: 'A4',
+		text: _('A4'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=A4',
+	},
+	{
+		id: 'A3',
+		text: _('A3'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=A3',
+	},
+	{
+		id: 'B6ISO',
+		text: _('B6 (ISO)'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=B6%20(ISO)',
+	},
+	{
+		id: 'B5ISO',
+		text: _('B5 (ISO)'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=B5%20(ISO)',
+	},
+	{
+		id: 'B4ISO',
+		text: _('B4 (ISO)'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=B4%20(ISO)',
+	},
+	{
+		id: 'Letter',
+		text: _('Letter'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=Letter',
+	},
+	{
+		id: 'Legal',
+		text: _('Legal'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=Legal',
+	},
+	{
+		id: 'LongBond',
+		text: _('Long Bond'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=Long%20Bond',
+	},
+	{
+		id: 'Tabloid',
+		text: _('Tabloid'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=Tabloid',
+	},
+	{
+		id: 'B6JIS',
+		text: _('B6 (JIS)'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=B6%20(JIS)',
+	},
+	{
+		id: 'B5JIS',
+		text: _('B5 (JIS)'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=B5%20(JIS)',
+	},
+	{
+		id: 'B4JIS',
+		text: _('B4 (JIS)'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=B4%20(JIS)',
+	},
+	{
+		id: '16Kai',
+		text: _('16 Kai'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=16%20Kai',
+	},
+	{
+		id: '32Kai',
+		text: _('32 Kai'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=32%20Kai',
+	},
+	{
+		id: 'Big32Kai',
+		text: _('Big 32 Kai'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=Big%2032%20Kai',
+	},
+	{
+		id: 'User',
+		text: _('User'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=User',
+	},
+	{
+		id: 'DLEnvelope',
+		text: _('DL Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=DL%20Envelope',
+	},
+	{
+		id: 'C6Envelope',
+		text: _('C6 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=C6%20Envelope',
+	},
+	{
+		id: 'C6_5Envelope',
+		text: _('C6/5 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=C6/5%20Envelope',
+	},
+	{
+		id: 'C5Envelope',
+		text: _('C5 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=C5%20Envelope',
+	},
+	{
+		id: 'C4Envelope',
+		text: _('C4 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=C4%20Envelope',
+	},
+	{
+		id: 'No6_3_4Envelope',
+		text: _('#6¾ Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=%236%C2%BE%20Envelope',
+	},
+	{
+		id: 'No7_3_4MonarchEnvelope',
+		text: _('#7¾ (Monarch) Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=%237%C2%BE%20(Monarch)%20Envelope',
+	},
+	{
+		id: 'No9Envelope',
+		text: _('#9 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=%239%20Envelope',
+	},
+	{
+		id: 'No10Envelope',
+		text: _('#10 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=%2310%20Envelope',
+	},
+	{
+		id: 'No11Envelope',
+		text: _('#11 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=%2311%20Envelope',
+	},
+	{
+		id: 'No12Envelope',
+		text: _('#12 Envelope'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=%2312%20Envelope',
+	},
+	{
+		id: 'JapanesePostcard',
+		text: _('Japanese Postcard'),
+		uno: '.uno:CalcPageSize?PaperFormat:string=Japanese%20Postcard',
+	},
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('Print', [
 	{ text: _('Active sheet'), action: 'print-active-sheet' },
 	{ text: _('All Sheets'), action: 'print-all-sheets' },

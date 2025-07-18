@@ -495,6 +495,7 @@ var unoCommandsArray = {
 	'Print':{global:{menu:_('~Print...'),},},
 	'PrintRangesMenu':{spreadsheet:{menu:_('Prin~t Ranges'),},},
 	'OrientationMenu':{spreadsheet:{menu:_('Orientation'),},},
+	'SizeMenu':{spreadsheet:{menu:_('Size'),},},
 	'Protect':{spreadsheet:{menu:_('Protect ~Sheet...'),},text:{menu:_('Protect Cells'),},},
 	'RecalcPivotTable':{spreadsheet:{menu:_('~Refresh'),},},
 	'Redo':{global:{menu:_('~Redo'),},},

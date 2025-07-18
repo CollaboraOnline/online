@@ -108,7 +108,9 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
 }
-
+[data-docType='spreadsheet'] .jsdialog-container .ui-dialog-content {
+	max-height: calc( 90vh - 98px);
+}
 #SortKeyWindow {
 	/* As used in .jsdialog-container .ui-dialog-content 90 % of the viewport
 	   minus 352px:

@@ -987,6 +987,30 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
+				'id': 'Data-OrientationMenu:MenuOrientation',
+				'class': 'unoData-OrientationMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:OrientationMenu', 'spreadsheet'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PO', de: null }
+			},
+			{
+				'id': 'Data-SizeMenu:MenuPageSizes',
+				'class': 'unoData-SizeMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:SizeMenu', 'spreadsheet'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PS', de: null }
+			},
+			{
+				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
+				'class': 'unoData-PrintRangesMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PR', de: null }
+			},
+			{
 				'id': 'layout-page-format-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
@@ -1020,23 +1044,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'PG', de: null }
 					}
 				]
-			},
-			{ type: 'separator', id: 'layout-togglegrid-break', orientation: 'vertical' },
-			{
-				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
-				'class': 'unoData-PrintRangesMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PR', de: null }
-			},
-			{
-				'id': 'Data-OrientationMenu:MenuOrientation',
-				'class': 'unoData-OrientationMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:OrientationMenu', 'spreadsheet'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PO', de: null }
 			},
 			{ type: 'separator', id: 'layout-printrangesmenu-break', orientation: 'vertical' },
 			{
