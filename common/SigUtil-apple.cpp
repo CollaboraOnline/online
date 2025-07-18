@@ -17,20 +17,6 @@
 
 #include "Log.hpp"
 
-namespace
-{
-/// The valid states of the process.
-enum class RunState : char
-{
-    Run = 0, ///< Normal up-and-running state.
-    ShutDown, ///< Request to shut down gracefully.
-    Terminate ///< Immediate termination.
-};
-
-/// Single flag to control the current run state.
-static std::atomic<RunState> RunStateFlag(RunState::Run);
-} // namespace
-
 namespace SigUtil
 {
     void triggerDumpState([[maybe_unused]] const std::string &testname)
@@ -39,30 +25,25 @@ namespace SigUtil
 
     bool getShutdownRequestFlag()
     {
-        return RunStateFlag >= RunState::ShutDown;
+        return false;
     }
 
     bool getTerminationFlag()
     {
-        return RunStateFlag >= RunState::Terminate;
+        return false;
     }
 
     void setTerminationFlag()
     {
-        // While fuzzing, we never want to terminate.
-        if constexpr (!Util::isFuzzing())
-        {
-            // Set the forced-termination flag.
-            RunStateFlag = RunState::Terminate;
-        }
     }
 
     void requestShutdown()
     {
-        RunStateFlag = RunState::ShutDown;
     }
 
-    void resetTerminationFlags() { RunStateFlag = RunState::Run; }
+    void resetTerminationFlags()
+    {
+    }
 
     void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {

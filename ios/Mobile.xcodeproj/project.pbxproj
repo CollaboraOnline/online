@@ -34,7 +34,7 @@
 		BE5EB5C4214FE29900E0826C /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BC214FE29900E0826C /* Uri.cpp */; };
 		BE5EB5C5213FE29900E0826C /* KitQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BD213FE29900E0826C /* KitQueue.cpp */; };
 		BE5EB5C5214FE29900E0826C /* LogUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BD214FE29900E0826C /* LogUI.cpp */; };
-		BE5EB5C6213FE29900E0826C /* SigUtil-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BE213FE29900E0826C /* SigUtil-mobile.cpp */; };
+		BE5EB5C6213FE29900E0826C /* SigUtil-apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BE213FE29900E0826C /* SigUtil-apple.cpp */; };
 		BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BF213FE29900E0826C /* Protocol.cpp */; };
 		BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5C0213FE29900E0826C /* FileUtil.cpp */; };
 		BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */; };
@@ -598,7 +598,7 @@
 		BE5EB5BC214FE29900E0826C /* Uri.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Uri.cpp; sourceTree = "<group>"; };
 		BE5EB5BD213FE29900E0826C /* KitQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KitQueue.cpp; sourceTree = "<group>"; };
 		BE5EB5BD214FE29900E0826C /* LogUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogUI.cpp; sourceTree = "<group>"; };
-		BE5EB5BE213FE29900E0826C /* SigUtil-mobile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "SigUtil-mobile.cpp"; sourceTree = "<group>"; };
+		BE5EB5BE213FE29900E0826C /* SigUtil-apple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "SigUtil-apple.cpp"; sourceTree = "<group>"; };
 		BE5EB5BF213FE29900E0826C /* Protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Protocol.cpp; sourceTree = "<group>"; };
 		BE5EB5C0213FE29900E0826C /* FileUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtil.cpp; sourceTree = "<group>"; };
 		BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientSession.cpp; sourceTree = "<group>"; };
@@ -2230,7 +2230,7 @@
 				BE58E12F217F295B00249358 /* Session.hpp */,
 				BE5EB5BB213FE29900E0826C /* Session.cpp */,
 				BE58E12B217F295B00249358 /* SigUtil.hpp */,
-				BE5EB5BE213FE29900E0826C /* SigUtil-mobile.cpp */,
+				BE5EB5BE213FE29900E0826C /* SigUtil-apple.cpp */,
 				A5C2FA582AC1BB3800265946 /* Simd.hpp */,
 				A5C2FA592AC1BB3800265946 /* Simd.cpp */,
 				BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */,
@@ -3703,7 +3703,7 @@
 				BE5EB5D22140039100E0826D /* ClientRequestDispatcher.cpp in Sources */,
 				BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */,
 				BEDCC8992456FFAD00FB02BD /* SceneDelegate.mm in Sources */,
-				BE5EB5C6213FE29900E0826C /* SigUtil-mobile.cpp in Sources */,
+				BE5EB5C6213FE29900E0826C /* SigUtil-apple.cpp in Sources */,
 				3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */,
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
 				A5C2FA5A2AC1BB3900265946 /* Simd.cpp in Sources */,
