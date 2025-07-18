@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-17 22:32+0200\n"
-"PO-Revision-Date: 2025-06-26 11:01+0000\n"
+"PO-Revision-Date: 2025-07-18 11:04+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/cy/>\n"
@@ -27,6 +27,8 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
+"Golygydd LibreOffice ar gyfer ffeiliau Microsoft Office, LibreOffice ac "
+"OpenOffice."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:13-1
@@ -36,36 +38,44 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
+"Mae Collabora'n olygydd testun, taenlen a chyflwyno yn seiliedig ar "
+"LibreOffice, rhaglenni swyddfa Coda Agored mwyaf poblogaidd y byd - ac mae "
+"ar gael nawr ar Android, gan wella’ch posibiliadau ar gyfer gweithio ar "
+"ddyfeisiadau symudol ac ar gyfer cydweithio."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
 msgid ""
 "This app is in active development, feedback and bug reports are very welcome."
 msgstr ""
+"Mae'r ap wrthi'n cael ei datblygu ac mae croeso i chi anfon adborth ac "
+"adroddiadau chwalu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
 msgid "Supported files:"
-msgstr ""
+msgstr "Ffeiliau sy'n cael eu cefnogi:"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-5
 msgid "Open Document Format (.odt, .odp, .ods, .ots, .ott, .otp)"
-msgstr ""
+msgstr "Open Document Format (.odt, .odp, .ods, .ots, .ott, .otp)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-5
 msgid ""
 "Microsoft Office 2007/2010/2013/2016/2019 (.docx, .pptx, .xlsx, .dotx, ."
 "xltx, .ppsx)"
 msgstr ""
+"Microsoft Office 2007/2010/2013/2016/2019 (.docx, .pptx, .xlsx, .dotx, "
+".xltx, .ppsx)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-5
 msgid "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
-msgstr ""
+msgstr "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr ""
+msgstr "Adrodd ar faterion:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
@@ -74,11 +84,15 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
+"Defnyddiwch y traciwr gwallau ac atodi unrhyw ffeiliau sy'n achosi problemau "
+"drwy <a href=\"https://col.la/android\"> https://col.la/android</a>. Cofiwch "
+"y bydd unrhyw beth fyddwch yn ei roi yn y traciwr gwallau'n wybodaeth "
+"gyhoeddus."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr ""
+msgstr "Ynghylch yr ap:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
@@ -87,6 +101,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"Mae Collabora Office ar gyfer Android yn defnyddio'r u peiriant â "
+"LibreOffice ar gyfer Windows, Mac, a Linux. Mae hyn, ynghyd â blaen newydd "
+"wedi ei seilio ar Collabora Online, yn darllen a chadw dogfennau yn yr un "
+"modd a LibreOffice ar y bwrdd gwaith."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -96,18 +114,22 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Mae peirianwyr Collabora Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, "
+"Miklos Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia a Skyler Grey wedi "
+"bod yn datblygu cefnogaeth i Android ers 2012, gyda chymorth myfyrwyr Google "
+"Summer of Code Andrzej Hunt, Iain Billet a Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
 msgid "License:"
-msgstr ""
+msgstr "Trwydded:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
-msgstr ""
+msgstr "Cod Agored - Mozilla Public License v2 ac eraill"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr ""
+msgstr "Cydnabyddiaeth:"
