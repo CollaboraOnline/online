@@ -9,11 +9,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#modifypage button').click({force: true});
-		cy.cGet('#sidebar-panel').should('not.be.visible');
+
 		cy.cGet('.close-navigation-button').click();
 		cy.cGet('#navigator-sidebar').should('not.exist');
+
+		desktopHelper.hideSidebarImpress();
+		cy.wait(500);
 	});
 
 	function selectText() {
@@ -61,9 +62,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 	it('Apply default bulleting on selected text.', function() {
 		selectText();
+		cy.wait(500);
+
 		// We have no bulleting by default
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
+
+		cy.cGet('#toolbar-up #menuoverflow').click();
 
 		// Apply bulleting
 		cy.cGet('#toolbar-up #defaultbullet').click();
@@ -75,9 +80,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 	it('Apply default numbering on selected text.', function() {
 		selectText();
+		cy.wait(500);
+
 		// We have no bulleting by default
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
+
+		cy.cGet('#toolbar-up #menuoverflow').click();
 
 		// Apply numbering
 		cy.cGet('#toolbar-up #defaultnumbering').click();

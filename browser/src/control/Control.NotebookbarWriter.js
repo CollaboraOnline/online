@@ -778,7 +778,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'home-insertannotation-break', orientation: 'vertical' },
 			{
-				'type': 'container',
+				'type': 'overflowgroup',
 				'children': [
 					{
 						'type': 'container',
@@ -936,7 +936,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'home-stylesview-break', orientation: 'vertical' },
 			{
-				'type': 'container',
+				'type': 'overflowgroup',
 				'children': [
 					{
 						'type': 'toolbox',
@@ -3551,7 +3551,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'children': [
 				{
 					'id': tabName + '-container',
-					'type': 'container',
+					'type': 'overflowmanager',
 					'text': '',
 					'enabled': 'true',
 					'children': this.cleanOpts(content)
