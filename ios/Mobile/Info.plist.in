@@ -253,7 +253,7 @@
 	     weird, but at least isn't as bad as being completely misleading.
 	-->
 	<key>CFBundleShortVersionString</key>
-	<string>2504.2.2</string>
+	<string>2504.3.2</string>
 	<key>CFBundleVersion</key>
 	<string>@IOSAPP_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
