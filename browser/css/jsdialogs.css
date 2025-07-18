@@ -760,6 +760,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .context-menu-item {
 	color: var(--color-main-text);
 	background-color: transparent;
+	padding-left: 1em;
 }
 .context-menu-separator {
 	border-bottom: 1px solid var(--color-border-lighter);
@@ -769,6 +770,21 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-lighter);
 	background-color: var(--color-background-lighter);
 }
+
+.context-menu-item.context-menu-submenu::before {
+	content: '';
+}
+
+.context-menu-item.context-menu-submenu::before,
+.context-menu-icon-spacer,
+.context-menu-icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
 /* input text */
 
 .ui-dialog .jsdialog.ui-edit:focus-visible {

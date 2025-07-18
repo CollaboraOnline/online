@@ -251,6 +251,33 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 	},
 
+	_getContextMenuIcon: function(command, commandName) {
+		const commandsWithIcons = new Set([
+			'Cut', 'Copy', 'Paste', 'Delete', 'CompressGraphic', 'Crop', 'FormatPaintbrush', 'ResetAttributes',
+			'NextTrackedChange', 'PreviousTrackedChange', 'PageDialog', 'MergeCells', 'DeleteCell', 'InsertCell',
+			'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter', 'InsertColumnsMenu',
+			'DeleteRows', 'DeleteColumns', 'DeleteTable', 'SetOptimalColumnWidth', 'TableDialog', 'GraphicDialog',
+			'InsertAnnotation', 'SpellingAndGrammarDialog', 'DecrementLevel', 'TransformDialog', 'FormatLine',
+			'FormatArea', 'SetAnchorToPara', 'SetAnchorAtChar', 'SetAnchorToChar', 'WrapOff', 'WrapOn', 'WrapIdeal',
+			'WrapLeft', 'WrapRight', 'WrapThrough', 'WrapThroughTransparencyToggle', 'WrapAnchorOnly', 'WrapContour',
+			'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack', 'SetObjectToForeground',
+			'SetObjectToBackground', 'InsertCaptionDialog', 'OpenHyperlinkOnCursor', 'EditHyperlink',
+			'CopyHyperlinkLocation', 'RemoveHyperlink', 'RotateRight', 'RotateLeft', 'SetAnchorToCell',
+			'SetAnchorToCellResize', 'SetAnchorToPage', 'FormatCellDialog', 'InsertSparkline', 'AcceptTrackedChange',
+			'RejectTrackedChange', 'ReinstateTrackedChange'
+		]);
+
+		if (!commandsWithIcons.has(commandName)) {
+			return '<span class="context-menu-icon-spacer"></span>';
+		}
+
+		const iconName = app.LOUtil.getIconNameOfCommand(command);
+		const iconUrl = app.LOUtil.getImageURL(iconName);
+		const imgId = 'context-menu-icon-' + iconName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+
+		return '<img id="' + imgId + '" class="context-menu-icon" src="' + iconUrl + '" alt="' + iconName + '" />';
+	},
+
 	_createContextMenuStructure: function(obj) {
 		var docType = this._map.getDocType();
 		var contextMenu = {};
@@ -338,9 +365,12 @@ L.Control.ContextMenu = L.Control.extend({
 					return text.replace(/[ _]/gi, '-').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 				};
 
+				var iconHtml = this._getContextMenuIcon(item.command, commandName);
+				
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: (window.mode.isMobile() ? _(itemName) : '<a href="#" class="context-menu-link ' + toSnakeCase(commandName) + '">' + _(itemName) + '</a'),
+					name: (window.mode.isMobile() ? _(itemName) : 
+					'<a href="#" class="context-menu-link ' + toSnakeCase(commandName) + '">' + iconHtml + _(itemName) + '</a>'),
 					isHtmlName: true,
 				};
 
