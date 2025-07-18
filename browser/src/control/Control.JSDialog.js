@@ -604,49 +604,47 @@ L.Control.JSDialog = L.Control.extend({
 
 		// RTL mode: only difference is when file is RTL not UI
 		// var isViewRTL = document.documentElement.dir === 'rtl';
-		var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
-
-		var scale = this.map.zoomToFactor(this.map.getZoom());
-		var origin = this.map.getPixelOrigin();
-		var panePos = this.map._getMapPanePos();
-
-		var offsetX = isSpreadsheetRTL ? 0 : app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
-		var offsetY = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[1];
+		// var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
 
 		if (this.isChildAutoFilter(instance)) {
 			this.calculateSubmenuAutoFilterPosition(instance, this.parentAutofilter);
 			return;
 		}
-		this.parentAutofilter = instance.form;
-		const devicePixelRatio = app.dpiScale;
-		// Convert the server-provided px values to screen coordinates
-		instance.posx = instance.posx / devicePixelRatio;
-		instance.posy = instance.posy / devicePixelRatio;
-		var left = parseInt(instance.posx) * scale;
-		var top = parseInt(instance.posy) * scale;
 
-		var splitPanesContext = this.map.getSplitPanesContext();
-		var splitPos = new L.Point(0, 0);
+		if (!app.map._docLayer.sheetGeometry)
+			return;
 
-		if (splitPanesContext)
-			splitPos = splitPanesContext.getSplitPos();
+		/*
+			AutoFilter and Cell Dropdown dialogs both use this function.
+			Core side sends the column and row indexes for AutoFilter dialog. We use those indexes to determine the position of the dialog.
+			Cell DropDown (Data->Validity) doesn't get a row and column index message before opening.
+			But Cell DropDown can not be opened without first clicking on the cell. Therefore we can use current cell's rectangle for positioning of the dialog.
+		*/
+		let cellRectangle;
 
-		var newLeft = left + panePos.x - origin.x;
-		if (left >= splitPos.x && newLeft >= 0)
-			left = newLeft;
+		if (app.calc.autoFilterCell) {
+			// This is an AutoFilterDialog. We have the row and column indexes. Get cell rectangle with this info.
+			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
+				app.calc.autoFilterCell.column,
+				app.calc.autoFilterCell.row,
+				app.getScale()
+			);
+		}
+		else {
+			// This is a Cell DropDown. We will use current cell's rectangle.
+			cellRectangle = app.calc.cellCursorRectangle;
+		}
 
-		var newTop = top + panePos.y - origin.y;
-		if (top >= splitPos.y && newTop >= 0)
-			top = newTop;
+		const documentTopLeft = app.sectionContainer.getDocumentTopLeft();
+		const documentAnchor = app.sectionContainer.getDocumentAnchor();
+		cellRectangle.pX1 += documentAnchor[0] - documentTopLeft[0];
+		cellRectangle.pY1 += documentAnchor[1] - documentTopLeft[1];
 
-		if (isSpreadsheetRTL)
-			left = this.map._size.x - left;
+		app.calc.autoFilterCell = null; // Set to null after using to ensure it doesn't confuse consequent calls.
 
-		var canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
-
-		instance.posx = left + offsetX + canvasEl.left; // adding canvasEl.left in case we change sidebar to left of the screen
-		// make margin from canvas top and not from window top
-		instance.posy = top + offsetY + canvasEl.top;
+		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
+		instance.posy = cellRectangle.cY2 + canvasEl.top;
+		instance.posx =  cellRectangle.cX2 + canvasEl.left - instance.container.offsetWidth;
 
 		this.updateAutoPopPosition(instance.container, instance.posx, instance.posy);
 	},
@@ -962,6 +960,8 @@ L.Control.JSDialog = L.Control.extend({
 		var windowBottom = window.innerHeight;
 		if (newX + width > window.innerWidth)
 			newX = window.innerWidth - width;
+		else if (newX < 10)
+			newX = 10
 
 		// at this point we have un updated potion of autofilter instance.
 		// so to handle overlapping case of autofilter and toolbar we need some complex calculation
