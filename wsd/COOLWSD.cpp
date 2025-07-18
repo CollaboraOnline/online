@@ -4130,6 +4130,9 @@ int COOLWSD::innerMain()
 
     SigUtil::addActivity("finished with status " + std::to_string(returnValue));
 
+    if constexpr (Util::isMobileApp())
+        Util::forcedExit(returnValue);
+
     return returnValue;
 #else // IOS
     return 0;
