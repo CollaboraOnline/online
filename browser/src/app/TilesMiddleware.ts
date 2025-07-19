@@ -2014,11 +2014,11 @@ class TileManager {
 					'Unusual: attempt to append a delta when we have no keyframe.',
 				);
 			}
-
-			// Only decompress deltas for tiles that are current. This stops
-			// prefetching from blowing past GC limits.
-			if (tile.distanceFromView === 0) this.rehydrateTile(tile, true);
 		}
+
+		// Only decompress deltas for tiles that are current. This stops
+		// prefetching from blowing past GC limits.
+		if (tile.distanceFromView === 0) this.rehydrateTile(tile, true);
 
 		this.queueAcknowledgement(tileMsgObj);
 
