@@ -590,6 +590,44 @@ function generatePictureContrastGrid(unoCommand: string): GridWidgetJSON {
 	return grid as any as GridWidgetJSON;
 }
 
+function generatePictureTransparencyGrid(unoCommand: string): GridWidgetJSON {
+	const transparencyValues = [
+		{ value: 0, text: _('zero') },
+		{ value: 15, text: _('fifteen') },
+		{ value: 30, text: _('thirty') },
+		{ value: 50, text: _('fifty') },
+		{ value: 65, text: _('sixtyfive') },
+		{ value: 80, text: _('eighty') },
+		{ value: 95, text: _('ninetyfive') },
+	];
+
+	const grid = {
+		id: 'picturetranparencygrid',
+		type: 'grid',
+		cols: 7,
+		rows: 1,
+		children: new Array<WidgetJSON>(),
+	};
+
+	for (let i = 0; i < grid.cols; i++) {
+		grid.children.push({
+			id: transparencyValues[i].text,
+			type: 'toolitem',
+			command:
+				'.uno:' +
+				unoCommand +
+				'?Transparency:short=' +
+				transparencyValues[i].value,
+			text: '' + transparencyValues[i].value,
+			noLabel: false,
+			left: i,
+			top: 0,
+		} as any as WidgetJSON);
+	}
+
+	return grid as any as GridWidgetJSON;
+}
+
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
 		type: 'json',
@@ -618,6 +656,14 @@ menuDefinitions.set('PictureContrast', [
 	{
 		type: 'json',
 		content: generatePictureContrastGrid('GrafContrast'),
+	},
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('PictureTransparency', [
+	{
+		type: 'json',
+		content: generatePictureTransparencyGrid('GrafTransparence'),
 	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
