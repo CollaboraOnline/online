@@ -2301,7 +2301,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (isArrowInteractive)  {
 				const buttonText = data.aria && data.aria.label ? data.aria.label : builder._cleanText(data.text);
-				const dropdownAriaLabelText = _('Open %NAME').replace('%NAME', buttonText);
+				const dropdownAriaLabelText = _('Open {name}').replace('{name}', buttonText);
 				arrowbackground.setAttribute('aria-label', dropdownAriaLabelText);
 				arrowbackground.setAttribute('aria-haspopup', true);
 				arrowbackground.setAttribute('aria-expanded', false);
