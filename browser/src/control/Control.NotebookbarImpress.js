@@ -2552,6 +2552,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'icon': 'lc_setcontrast.svg',
 						'accessibility': { focusBack: true, combination: 'CN', de: null }
 					},
+					{
+						'id': 'picture-transparency:PictureTransparency',
+						'type': 'menubutton',
+						'command': '.uno:GrafTransparence',
+						'icon': 'lc_setgraphtransparency.svg',
+						'accessibility': { focusBack: true, combination: 'TP', de: null }
+					},
 				]
 			},
 			{ type: 'separator', id: 'picture-transparency-break', orientation: 'vertical' },
