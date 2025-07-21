@@ -107,6 +107,23 @@ enum Paper {
 	PAPER_ONSCREENSHOW_16_10, //PowerPoint On-screen Show (16:10)
 }
 
+const pageMarginOptions = {
+	normal: {
+		title: _('Normal'),
+		icon: 'pagemargin',
+		details: { Top: 0.79, Left: 0.79, Bottom: 0.79, Right: 0.79 },
+	},
+	wide: {
+		title: _('Wide'),
+		icon: 'pagemarginwide',
+		details: { Top: 1, Left: 2, Bottom: 1, Right: 2 },
+	},
+	narrow: {
+		title: _('Narrow'),
+		icon: 'pagemarginnarrow',
+		details: { Top: 0.5, Left: 0.5, Bottom: 0.5, Right: 0.5 },
+	},
+};
 menuDefinitions.set('AutoSumMenu', [
 	{ text: _('Sum'), uno: '.uno:AutoSum' },
 	{ text: _('Average'), uno: '.uno:AutoSum?Function:string=average' },
@@ -175,6 +192,17 @@ menuDefinitions.set('MenuPrintRanges', [
 		text: _UNO('.uno:DeletePrintArea', 'spreadsheet'),
 		uno: '.uno:DeletePrintArea',
 	},
+] as Array<MenuDefinition>);
+menuDefinitions.set('MenuMargins', [
+	{
+		type: 'json',
+		content: {
+			id: 'Layout-MarginMenu',
+			type: 'pagemarginentry',
+			options: pageMarginOptions,
+		},
+	},
+	{ type: 'separator' },
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('MenuOrientation', [

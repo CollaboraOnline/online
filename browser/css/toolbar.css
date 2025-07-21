@@ -27,6 +27,57 @@
 	background-color: var(--color-main-text);
 	animation: moveIndicator 2s linear infinite;
 }
+.margin-item {
+	display: flex;
+	align-items: center;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid transparent;
+}
+
+.margin-item:hover {
+	background-color: var(--color-background-dark); 
+}
+
+.margin-icon {
+	width: 48px;
+	height: 48px;
+	margin-right: 12px;
+	flex-shrink: 0;
+}
+
+.margin-text-content {
+	flex-grow: 1;
+}
+
+.margin-title {
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.margin-values {
+	display: flex;
+	font-size: 12px;
+	color: var(--color-text-dark);
+}
+
+.margin-col {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 50%;
+	margin-right: 5px;
+}
+
+.margin-col span {
+	white-space: nowrap;
+}
+
+.custom-margins-link {
+	justify-content: center;
+	padding: 4px;
+	font-size: var(--default-font-size);
+}
 
 @keyframes moveIndicator {
 	from { left: -25%; }
