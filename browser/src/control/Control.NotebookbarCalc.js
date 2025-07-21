@@ -2652,6 +2652,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true, combination: 'CN', de: null }
 					},
 					{
+						'id': 'picture-colormode:PictureColorMode',
+						'type': 'menubutton',
+						'command': '.uno:GrafMode',
+						'icon': 'lc_setgraphtransparency.svg',
+						'accessibility': { focusBack: true, combination: 'CO', de: null }
+					},
+					{
 						'id': 'picture-transparency:PictureTransparency',
 						'type': 'menubutton',
 						'command': '.uno:GrafTransparence',

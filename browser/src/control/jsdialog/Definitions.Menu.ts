@@ -628,6 +628,39 @@ function generatePictureTransparencyGrid(unoCommand: string): GridWidgetJSON {
 	return grid as any as GridWidgetJSON;
 }
 
+function generatePictureColorModeGrid(unoCommand: string): GridWidgetJSON {
+	//see enum GraphicDrawMode in include/vcl/GraphicAttributes.hxx
+	const colorModeValues = [
+		{ value: 0, text: _('Default') },
+		{ value: 1, text: _('Grayscale') },
+		{ value: 2, text: _('Black/White') },
+		{ value: 3, text: _('Watermark') },
+	];
+
+	const grid = {
+		id: 'picturecolormodegrid',
+		type: 'grid',
+		cols: 4,
+		rows: 1,
+		children: new Array<WidgetJSON>(),
+	};
+
+	for (let i = 0; i < grid.cols; i++) {
+		grid.children.push({
+			id: colorModeValues[i].text,
+			type: 'toolitem',
+			command:
+				'.uno:' + unoCommand + '?ColorMode:short=' + colorModeValues[i].value,
+			text: colorModeValues[i].text,
+			noLabel: false,
+			left: i,
+			top: 0,
+		} as any as WidgetJSON);
+	}
+
+	return grid as any as GridWidgetJSON;
+}
+
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
 		type: 'json',
@@ -664,6 +697,14 @@ menuDefinitions.set('PictureTransparency', [
 	{
 		type: 'json',
 		content: generatePictureTransparencyGrid('GrafTransparence'),
+	},
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('PictureColorMode', [
+	{
+		type: 'json',
+		content: generatePictureColorModeGrid('GrafMode'),
 	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
