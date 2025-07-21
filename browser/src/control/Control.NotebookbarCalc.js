@@ -986,6 +986,12 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 	getLayoutTab: function() {
 		var content = [
+			{	
+				'id': 'Layout-MarginMenu:MenuMargins',
+				'type': 'menubutton',
+				'text': _('Margin'),
+				'enabled': 'true',
+			},
 			{
 				'id': 'Layout-SizeMenu:MenuPageSizes',
 				'type': 'menubutton',
