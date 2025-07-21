@@ -1034,7 +1034,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'id': 'Data-OrientationMenu:MenuOrientation',
 				'class': 'unoData-OrientationMenu',
 				'type': 'menubutton',
-				'text': _UNO('.uno:OrientationMenu', 'spreadsheet'),
+				'text': _UNO('.uno:Orientation'),
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'PO', de: null }
 			},
