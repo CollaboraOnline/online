@@ -3184,9 +3184,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
 			let position;
 			if (this.sheetGeometry) {
-				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y, this._map.getZoomScale(this._map.getZoom(), this._map.options.defaultZoom));
-				const height = position.max.y - position.min.y;
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1 + (height - 16) * app.pixelsToTwips);
+				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y);
+				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, (position.max.y - 16) * app.pixelsToTwips);
 			}
 			else
 				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - 16 * app.pixelsToTwips);
