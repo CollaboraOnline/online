@@ -508,10 +508,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'text': _('Report an issue'),
 								'command': '.uno:ReportIssue',
 								'accessibility': { focusBack: true, combination: 'K', de: null }
-							}
+							},
+							{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
 						]
 					},
-					{ type: 'separator', id: 'help-reportissue-break', orientation: 'vertical' },
 					hasLatestUpdates ?
 						{
 							'type': 'toolbox',
