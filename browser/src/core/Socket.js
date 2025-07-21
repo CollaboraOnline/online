@@ -57,9 +57,10 @@ app.definitions.Socket = L.Class.extend({
 		}
 		if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
 			this.socket = socket;
-		} else if (window.ThisIsTheGtkApp || window.ThisIsTheEmscriptenApp) {
-			// We have already opened the FakeWebSocket over in global.js
-			// But do we then set this.socket at all? Is this case ever reached?
+		} else if (window.ThisIsAMobileApp) {
+			// We have already opened the FakeWebSocket or MobileSocket over in global.js
+			// With the FakeWebSocket do we then set this.socket at all?
+			// With the MobileSocket we definitely do - this is load-bearing for opening password protected documents
 		} else	{
 			try {
 				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
