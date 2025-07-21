@@ -524,7 +524,9 @@ function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
 	return grid as any as GridWidgetJSON;
 }
 
-function generatePictureBrightnessGrid(unoCommand: string): GridWidgetJSON {
+function generatePictureBrightnessMenu(
+	unoCommand: string,
+): Array<MenuDefinition> {
 	const brightnessValues = [
 		{ value: -40, text: _('minusforty') },
 		{ value: -20, text: _('minustwenty') },
@@ -533,31 +535,24 @@ function generatePictureBrightnessGrid(unoCommand: string): GridWidgetJSON {
 		{ value: 40, text: _('forty') },
 	];
 
-	const grid = {
-		id: 'picturebrightnessgrid',
-		type: 'grid',
-		cols: 5,
-		rows: 1,
-		children: new Array<WidgetJSON>(),
-	};
+	const menuItems: Array<MenuDefinition> = [];
 
-	for (let i = 0; i < grid.cols; i++) {
-		grid.children.push({
+	for (let i = 0; i < brightnessValues.length; i++) {
+		menuItems.push({
 			id: brightnessValues[i].text,
-			type: 'toolitem',
-			command:
+			uno:
 				'.uno:' + unoCommand + '?Brightness:short=' + brightnessValues[i].value,
 			text: '' + brightnessValues[i].value,
-			noLabel: false,
-			left: i,
-			top: 0,
-		} as any as WidgetJSON);
+			img: 'insertgraphic',
+		} as MenuDefinition);
 	}
 
-	return grid as any as GridWidgetJSON;
+	return menuItems;
 }
 
-function generatePictureContrastGrid(unoCommand: string): GridWidgetJSON {
+function generatePictureContrastMenu(
+	unoCommand: string,
+): Array<MenuDefinition> {
 	const contrastValues = [
 		{ value: -40, text: _('minusforty') },
 		{ value: -20, text: _('minustwenty') },
@@ -566,31 +561,23 @@ function generatePictureContrastGrid(unoCommand: string): GridWidgetJSON {
 		{ value: 40, text: _('forty') },
 	];
 
-	const grid = {
-		id: 'picturecontrastgrid',
-		type: 'grid',
-		cols: 5,
-		rows: 1,
-		children: new Array<WidgetJSON>(),
-	};
+	const menuItems: Array<MenuDefinition> = [];
 
-	for (let i = 0; i < grid.cols; i++) {
-		grid.children.push({
+	for (let i = 0; i < contrastValues.length; i++) {
+		menuItems.push({
 			id: contrastValues[i].text,
-			type: 'toolitem',
-			command:
-				'.uno:' + unoCommand + '?Contrast:short=' + contrastValues[i].value,
+			uno: '.uno:' + unoCommand + '?Contrast:short=' + contrastValues[i].value,
 			text: '' + contrastValues[i].value,
-			noLabel: false,
-			left: i,
-			top: 0,
-		} as any as WidgetJSON);
+			img: 'insertgraphic',
+		} as MenuDefinition);
 	}
 
-	return grid as any as GridWidgetJSON;
+	return menuItems;
 }
 
-function generatePictureTransparencyGrid(unoCommand: string): GridWidgetJSON {
+function generatePictureTransparencyMenu(
+	unoCommand: string,
+): Array<MenuDefinition> {
 	const transparencyValues = [
 		{ value: 0, text: _('zero') },
 		{ value: 15, text: _('fifteen') },
@@ -601,34 +588,27 @@ function generatePictureTransparencyGrid(unoCommand: string): GridWidgetJSON {
 		{ value: 95, text: _('ninetyfive') },
 	];
 
-	const grid = {
-		id: 'picturetranparencygrid',
-		type: 'grid',
-		cols: 7,
-		rows: 1,
-		children: new Array<WidgetJSON>(),
-	};
+	const menuItems: Array<MenuDefinition> = [];
 
-	for (let i = 0; i < grid.cols; i++) {
-		grid.children.push({
+	for (let i = 0; i < transparencyValues.length; i++) {
+		menuItems.push({
 			id: transparencyValues[i].text,
-			type: 'toolitem',
-			command:
+			uno:
 				'.uno:' +
 				unoCommand +
 				'?Transparency:short=' +
 				transparencyValues[i].value,
 			text: '' + transparencyValues[i].value,
-			noLabel: false,
-			left: i,
-			top: 0,
-		} as any as WidgetJSON);
+			img: 'insertgraphic',
+		} as MenuDefinition);
 	}
 
-	return grid as any as GridWidgetJSON;
+	return menuItems;
 }
 
-function generatePictureColorModeGrid(unoCommand: string): GridWidgetJSON {
+function generatePictureColorModeMenu(
+	unoCommand: string,
+): Array<MenuDefinition> {
 	//see enum GraphicDrawMode in include/vcl/GraphicAttributes.hxx
 	const colorModeValues = [
 		{ value: 0, text: _('Default') },
@@ -637,28 +617,19 @@ function generatePictureColorModeGrid(unoCommand: string): GridWidgetJSON {
 		{ value: 3, text: _('Watermark') },
 	];
 
-	const grid = {
-		id: 'picturecolormodegrid',
-		type: 'grid',
-		cols: 4,
-		rows: 1,
-		children: new Array<WidgetJSON>(),
-	};
+	const menuItems: Array<MenuDefinition> = [];
 
-	for (let i = 0; i < grid.cols; i++) {
-		grid.children.push({
+	for (let i = 0; i < colorModeValues.length; i++) {
+		menuItems.push({
 			id: colorModeValues[i].text,
-			type: 'toolitem',
-			command:
+			uno:
 				'.uno:' + unoCommand + '?ColorMode:short=' + colorModeValues[i].value,
-			text: colorModeValues[i].text,
-			noLabel: false,
-			left: i,
-			top: 0,
-		} as any as WidgetJSON);
+			text: '' + colorModeValues[i].text,
+			img: 'insertgraphic',
+		} as MenuDefinition);
 	}
 
-	return grid as any as GridWidgetJSON;
+	return menuItems;
 }
 
 menuDefinitions.set('NewSlideLayoutMenu', [
@@ -677,36 +648,24 @@ menuDefinitions.set('ChangeSlideLayoutMenu', [
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
-menuDefinitions.set('PictureBrightness', [
-	{
-		type: 'json',
-		content: generatePictureBrightnessGrid('GrafLuminance'),
-	},
-	{ type: 'separator' }, // required to show dropdown arrow
-] as Array<MenuDefinition>);
+menuDefinitions.set(
+	'PictureBrightness',
+	generatePictureBrightnessMenu('GrafLuminance'),
+);
 
-menuDefinitions.set('PictureContrast', [
-	{
-		type: 'json',
-		content: generatePictureContrastGrid('GrafContrast'),
-	},
-	{ type: 'separator' }, // required to show dropdown arrow
-] as Array<MenuDefinition>);
+menuDefinitions.set(
+	'PictureContrast',
+	generatePictureContrastMenu('GrafContrast'),
+);
 
-menuDefinitions.set('PictureTransparency', [
-	{
-		type: 'json',
-		content: generatePictureTransparencyGrid('GrafTransparence'),
-	},
-	{ type: 'separator' }, // required to show dropdown arrow
-] as Array<MenuDefinition>);
+menuDefinitions.set(
+	'PictureTransparency',
+	generatePictureTransparencyMenu('GrafTransparence'),
+);
 
-menuDefinitions.set('PictureColorMode', [
-	{
-		type: 'json',
-		content: generatePictureColorModeGrid('GrafMode'),
-	},
-	{ type: 'separator' }, // required to show dropdown arrow
-] as Array<MenuDefinition>);
+menuDefinitions.set(
+	'PictureColorMode',
+	generatePictureColorModeMenu('GrafMode'),
+);
 
 JSDialog.MenuDefinitions = menuDefinitions;
