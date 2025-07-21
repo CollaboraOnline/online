@@ -332,6 +332,7 @@ var unoCommandsArray = {
 	'FunctionDialog':{spreadsheet:{menu:_('~Function...'),},},
 	'GrafContrast':{global:{menu:_('Contrast'),},},
 	'GrafLuminance':{global:{menu:_('Brightness'),},},
+	'GrafMode':{global:{menu:_('Color Mode'),},},
 	'GrafTransparence':{global:{menu:_('Transparency'),},},
 	'GoalSeekDialog':{spreadsheet:{menu:_('~Goal Seek...'),},},
 	'GraphicDialog':{text:{menu:_('~Properties...'),},},
