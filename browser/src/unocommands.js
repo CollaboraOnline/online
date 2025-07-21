@@ -330,6 +330,7 @@ var unoCommandsArray = {
 	'FreezePanesRow':{spreadsheet:{menu:_('Freeze First Row'),},},
 	'FullScreen':{global:{menu:_('F~ull Screen'),},},
 	'FunctionDialog':{spreadsheet:{menu:_('~Function...'),},},
+	'GrafContrast':{global:{menu:_('Contrast'),},},
 	'GrafLuminance':{global:{menu:_('Brightness'),},},
 	'GoalSeekDialog':{spreadsheet:{menu:_('~Goal Seek...'),},},
 	'GraphicDialog':{text:{menu:_('~Properties...'),},},
