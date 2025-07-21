@@ -82,6 +82,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'W', de: null }
 			},
 			{
+				'id': 'Sparkline-tab-label',
+				'text': _('Sparkline'),
+				'name': 'Sparkline',
+				'context': 'Sparkline',
+				'accessibility': { focusBack: true,	combination: 'K', de: null }
+			},
+			{
 				'id': 'Help-tab-label',
 				'text': _('Help'),
 				'name': 'Help',
@@ -102,6 +109,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			this.getShapeTab(),
 			this.getPictureTab(),
 			this.getViewTab(),
+			this.getSparklineTab(),
 			this.getHelpTab()
 		]
 	},
@@ -1417,6 +1425,43 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getTabPage('View', content);
+	},
+
+	getSparklineTab: function() {
+		var content = [
+			{
+				'id': 'Sparkline-EditSparkline:EditSparklineMenu',
+				'class': 'unoData-EditSparkline',
+				'type': 'menubutton',
+				'text': _UNO('.uno:EditSparkline', 'spreadsheet'),
+				'accessibility': { focusBack: true,	combination: 'ES',	de: null }
+			},
+			{ type: 'separator', id: 'sparkline-edit-break', orientation: 'vertical' },
+			{
+				'id': 'groupsparklines',
+				'type': 'bigtoolitem',
+				'text': _('Group'),
+				'command': '.uno:GroupSparklines',
+				'accessibility': { focusBack: true, combination: 'GS', de: null }
+			},
+			{
+				'id': 'ungroupsparklines',
+				'type': 'bigtoolitem',
+				'text': _('Ungroup'),
+				'command': '.uno:UngroupSparklines',
+				'accessibility': { focusBack: true, combination: 'US', de: null },
+			},
+			{ type: 'separator', id: 'sparkline-group-break', orientation: 'vertical' },
+			{
+				'id': 'Sparkline-DeleteSparkline:DeleteSparklineMenu',
+				'class': 'unoData-DeleteSparkline',
+				'type': 'menubutton',
+				'text': _UNO('.uno:DeleteSparkline', 'spreadsheet'),
+				'accessibility': { focusBack: true,	combination: 'DS',	de: null }
+			},
+		];
+
+		return this.getTabPage('Sparkline', content);
 	},
 
 	getInsertTab: function() {
