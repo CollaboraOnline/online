@@ -381,6 +381,7 @@ var unoCommandsArray = {
 	'InsertGraphic':{global:{context:_('Insert Image...'),menu:_('~Image...'),},},
 	'InsertHardHyphen':{global:{menu:_('Non-breaking ~Hyphen'),},},
 	'InsertHeaderFooterMenu':{text:{menu:_('He~ader and Footer'),},},
+	'InsertHyperlink':{global:{context:_('Insert Hyperlink...'),menu:_('~Hyperlink'),},},
 	'InsertIndexesEntry':{text:{context:_('Insert Index Entry'),menu:_('~Index Entry...'),},},
 	'InsertLRM':{global:{menu:_('~Left-to-Right Mark'),},},
 	'InsertMajorGrid':{global:{menu:_('Insert Major Grid'),},},
