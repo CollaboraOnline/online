@@ -557,6 +557,39 @@ function generatePictureBrightnessGrid(unoCommand: string): GridWidgetJSON {
 	return grid as any as GridWidgetJSON;
 }
 
+function generatePictureContrastGrid(unoCommand: string): GridWidgetJSON {
+	const contrastValues = [
+		{ value: -40, text: _('minusforty') },
+		{ value: -20, text: _('minustwenty') },
+		{ value: 0, text: _('zero') },
+		{ value: 20, text: _('twenty') },
+		{ value: 40, text: _('forty') },
+	];
+
+	const grid = {
+		id: 'picturecontrastgrid',
+		type: 'grid',
+		cols: 5,
+		rows: 1,
+		children: new Array<WidgetJSON>(),
+	};
+
+	for (let i = 0; i < grid.cols; i++) {
+		grid.children.push({
+			id: contrastValues[i].text,
+			type: 'toolitem',
+			command:
+				'.uno:' + unoCommand + '?Contrast:short=' + contrastValues[i].value,
+			text: '' + contrastValues[i].value,
+			noLabel: false,
+			left: i,
+			top: 0,
+		} as any as WidgetJSON);
+	}
+
+	return grid as any as GridWidgetJSON;
+}
+
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
 		type: 'json',
@@ -577,6 +610,14 @@ menuDefinitions.set('PictureBrightness', [
 	{
 		type: 'json',
 		content: generatePictureBrightnessGrid('GrafLuminance'),
+	},
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('PictureContrast', [
+	{
+		type: 'json',
+		content: generatePictureContrastGrid('GrafContrast'),
 	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);

@@ -2644,6 +2644,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'icon': 'lc_setbrightness.svg',
 						'accessibility': { focusBack: true, combination: 'BN', de: null }
 					},
+					{
+						'id': 'picture-contrast:PictureContrast',
+						'type': 'menubutton',
+						'command': '.uno:GrafContrast',
+						'icon': 'lc_setcontrast.svg',
+						'accessibility': { focusBack: true, combination: 'CN', de: null }
+					},
 				]
 			},
 			{ type: 'separator', id: 'picture-transparency-break', orientation: 'vertical' },
