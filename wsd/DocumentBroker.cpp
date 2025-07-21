@@ -231,7 +231,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 
     if constexpr (!Util::isMobileApp())
         assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
     assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
 #endif
 

@@ -47,7 +47,7 @@ void lokit_main(
 #endif
     std::size_t numericIdentifier);
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
 void runKitLoopInAThread();
 #endif
 
@@ -177,7 +177,7 @@ public:
     static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
                                  void* data);
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
     static std::mutex KSPollsMutex;
     static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;

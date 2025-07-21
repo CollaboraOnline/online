@@ -12,6 +12,8 @@
 #include <config.h>
 #include "bridge.hpp"
 #include "COOLWSD.hpp"
+#include "SetupKitEnvironment.hpp"
+#include "Kit.hpp"
 #include "Clipboard.hpp"
 #include "FakeSocket.hpp"
 #include "Log.hpp"
@@ -56,6 +58,7 @@ int fakeClientFd = -1;
 int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
 QWebEngineView* webView = nullptr;
 unsigned appDocId = 0;
+LibreOfficeKit* lo_kit;
 
 namespace
 {

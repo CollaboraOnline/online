@@ -903,7 +903,7 @@ private:
 static std::shared_ptr<PrisonPoll> PrisonerPoll;
 
 #if MOBILEAPP
-#ifndef IOS
+#if !defined(IOS) && !defined(QTAPP)
 std::mutex COOLWSD::lokit_main_mutex;
 #endif
 #endif
@@ -941,13 +941,13 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
     assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
 #endif
 
     std::thread([&]
                 {
-#ifndef IOS
+#if !defined(IOS) && !defined(QTAPP)
                     std::lock_guard<std::mutex> lock(COOLWSD::lokit_main_mutex);
                     Util::setThreadName("lokit_main");
 #else
@@ -3918,7 +3918,7 @@ int COOLWSD::innerMain()
 #endif
     }
 
-#ifndef IOS // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
+#if !defined(IOS) && !defined(QTAPP) // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
             // loop never exits.
 
     COOLWSD::alertAllUsersInternal("close: shuttingdown");

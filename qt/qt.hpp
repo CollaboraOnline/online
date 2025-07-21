@@ -7,7 +7,11 @@
 
 #pragma once
 
+#define LIBO_INTERNAL_ONLY
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 extern int coolwsd_server_socket_fd;
-extern const char *user_name;
+extern const char* user_name;
+extern LibreOfficeKit* lo_kit;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

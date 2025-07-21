@@ -111,6 +111,11 @@
 #endif
 #endif
 
+#ifdef QTAPP
+#include "qt.hpp"
+#include "SetupKitEnvironment.hpp"
+#include "DocumentBroker.hpp"
+#endif
 #ifdef IOS
 #include "ios.h"
 #include "DocumentBroker.hpp"
@@ -846,7 +851,7 @@ Document::~Document()
         session.second->resetDocManager();
     }
 
-#if defined(IOS) || defined(MACOS) || defined(_WIN32)
+#if defined(IOS) || defined(MACOS) || defined(_WIN32) || defined(QTAPP)
     DocumentData::deallocate(_mobileAppDocId);
 #endif
 
@@ -2949,7 +2954,7 @@ std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly()
 
 KitSocketPoll::KitSocketPoll() : SocketPoll("kit")
 {
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
     terminationFlag = false;
 #endif
     mainPoll = this;
@@ -2981,7 +2986,7 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
 {
     std::shared_ptr<KitSocketPoll> result(new KitSocketPoll());
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
     {
         std::unique_lock<std::mutex> lock(KSPollsMutex);
         KSPolls.push_back(result);
@@ -3130,7 +3135,7 @@ bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *
     return KitSocketPoll::pushToMainThread(cb, type, p, data);
 }
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
 
 std::mutex KitSocketPoll::KSPollsMutex;
 std::condition_variable KitSocketPoll::KSPollsCV;
@@ -3151,7 +3156,7 @@ int pollCallback(void* data, int timeoutUs)
 
     if (timeoutUs < 0)
         timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
-#ifndef IOS
+#if !defined(IOS) && !defined(QTAPP)
     if (!data)
         return 0;
     else
@@ -3239,7 +3244,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 /// Called by LOK main-loop
 void wakeCallback(void* data)
 {
-#ifndef IOS
+#if !defined(IOS) && !defined(QTAPP)
     if (!data)
         return;
     else
@@ -4029,7 +4034,6 @@ void lokit_main(
         }
         Log::setDisabledAreas(LogDisabledAreas);
 #endif
-
 #ifndef IOS
         if (!LIBREOFFICEKIT_HAS(kit, runLoop))
         {
@@ -4081,7 +4085,7 @@ void lokit_main(
 #endif
 }
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP)
 
 // In the iOS app we can have several documents open in the app process at the same time, thus
 // several lokit_main() functions running at the same time. We want just one LO main loop, though,
@@ -4100,7 +4104,9 @@ void runKitLoopInAThread()
                     // Should never return
                     assert(false);
 
+#if defined(IOS)
                     NSLog(@"loKit->runLoop() unexpectedly returned");
+#endif
 
                     std::abort();
                 }).detach();
