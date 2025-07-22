@@ -902,12 +902,6 @@ private:
 /// And also cleans up and balances the correct number of children.
 static std::shared_ptr<PrisonPoll> PrisonerPoll;
 
-#if MOBILEAPP
-#if !defined(IOS) && !defined(QTAPP)
-std::mutex COOLWSD::lokit_main_mutex;
-#endif
-#endif
-
 std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPoll>& destPoll,
                                                  const std::string& configId,
                                                  unsigned mobileAppDocId)
@@ -941,18 +935,12 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
 
-#if defined(IOS) || defined(QTAPP)
-    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
-#endif
+    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the mobile build");
 
     std::thread([&]
                 {
-#if !defined(IOS) && !defined(QTAPP)
-                    std::lock_guard<std::mutex> lock(COOLWSD::lokit_main_mutex);
-                    Util::setThreadName("lokit_main");
-#else
                     Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
-#endif
+
                     // Ugly to have that static global COOLWSD::prisonerServerSocketFD, Otoh we know
                     // there is just one COOLWSD object. (Even in real Online.)
                     lokit_main(COOLWSD::prisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);

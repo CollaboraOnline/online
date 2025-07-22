@@ -31,13 +31,11 @@
 
 #if MOBILEAPP
 
+#include <future>
+
 #include "ClientSession.hpp"
 #include "DocumentBroker.hpp"
 
-#endif
-
-#ifdef QTAPP
-#include <future>
 #endif
 
 void lokit_main(
@@ -51,12 +49,8 @@ void lokit_main(
 #endif
     std::size_t numericIdentifier);
 
-#ifdef QTAPP
+#if MOBILEAPP
 std::future<LibreOfficeKit*> initKitRunLoopThread();
-#endif
-
-#ifdef IOS
-void runKitLoopInAThread();
 #endif
 
 bool globalPreinit(const std::string& loTemplate);
@@ -185,7 +179,7 @@ public:
     static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
                                  void* data);
 
-#if defined(IOS) || defined(QTAPP)
+#if MOBILEAPP
     static std::mutex KSPollsMutex;
     static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
