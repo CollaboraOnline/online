@@ -39,6 +39,7 @@ interface JSBuilderOptions {
 	// modifiers
 	noLabelsForUnoButtons: boolean; // create only icon without label
 	useInLineLabelsForUnoButtons: boolean; // create labels next to the icon
+	suffix: string; // add a suffix to the element ID to make it unique among different builder instances.
 }
 
 interface JSBuilder {
