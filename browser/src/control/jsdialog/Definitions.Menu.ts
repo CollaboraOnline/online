@@ -582,32 +582,6 @@ function generatePictureTransparencyMenu(
 	return menuItems;
 }
 
-function generatePictureColorModeMenu(
-	unoCommand: string,
-): Array<MenuDefinition> {
-	//see enum GraphicDrawMode in include/vcl/GraphicAttributes.hxx
-	const colorModeValues = [
-		{ value: 0, text: _('Default') },
-		{ value: 1, text: _('Grayscale') },
-		{ value: 2, text: _('Black/White') },
-		{ value: 3, text: _('Watermark') },
-	];
-
-	const menuItems: Array<MenuDefinition> = [];
-
-	for (let i = 0; i < colorModeValues.length; i++) {
-		menuItems.push({
-			id: colorModeValues[i].text,
-			uno:
-				'.uno:' + unoCommand + '?ColorMode:short=' + colorModeValues[i].value,
-			text: '' + colorModeValues[i].text,
-			img: 'insertgraphic',
-		} as MenuDefinition);
-	}
-
-	return menuItems;
-}
-
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
 		type: 'json',
@@ -639,9 +613,27 @@ menuDefinitions.set(
 	generatePictureTransparencyMenu('GrafTransparence'),
 );
 
-menuDefinitions.set(
-	'PictureColorMode',
-	generatePictureColorModeMenu('GrafMode'),
-);
+menuDefinitions.set('PictureColorMode', [
+	{
+		text: _('Default'),
+		img: 'insertgraphic',
+		uno: '.uno:GrafMode?ColorMode:short=0',
+	},
+	{
+		text: _('Grayscale'),
+		img: 'insertgraphic',
+		uno: '.uno:GrafMode?ColorMode:short=1',
+	},
+	{
+		text: _('Black/White'),
+		img: 'insertgraphic',
+		uno: '.uno:GrafMode?ColorMode:short=2',
+	},
+	{
+		text: _('Watermark'),
+		img: 'insertgraphic',
+		uno: '.uno:GrafMode?ColorMode:short=3',
+	},
+] as Array<MenuDefinition>);
 
 JSDialog.MenuDefinitions = menuDefinitions;
