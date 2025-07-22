@@ -3025,6 +3025,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			&& this._map.editorHasFocus()   // not when document is not focused
 			&& !this._map.isSearching()  	// not when searching within the doc
 			&& !this._isZooming             // not when zooming
+			&& this._map._permission !== 'readonly' // not when we don't have permission to edit
 		) {
 			this._updateCursorPos();
 
