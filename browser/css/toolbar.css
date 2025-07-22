@@ -1829,6 +1829,30 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	background: transparent;
 }
 
+#picture-brightness-entry-0 img { filter: brightness(0.6) }
+#picture-brightness-entry-1 img { filter: brightness(0.8) }
+#picture-brightness-entry-2 img { filter: brightness(1) }
+#picture-brightness-entry-3 img { filter: brightness(1.2) }
+#picture-brightness-entry-4 img { filter: brightness(1.4) }
+
+#picture-contrast-entry-0 img { filter: contrast(0.6) }
+#picture-contrast-entry-1 img { filter: contrast(0.8) }
+#picture-contrast-entry-2 img { filter: contrast(1) }
+#picture-contrast-entry-3 img { filter: contrast(1.2) }
+#picture-contrast-entry-4 img { filter: contrast(1.4) }
+
+#picture-colormode-entry-1 img { filter: grayscale(1) } /* grayscale */
+#picture-colormode-entry-2 img { filter: grayscale(1) contrast(5) } /* black/white */
+#picture-colormode-entry-3 img { filter: opacity(0.2) } /* watermark */
+
+#picture-transparency-entry-0 img { filter: opacity(1) }
+#picture-transparency-entry-1 img { filter: opacity(0.85) }
+#picture-transparency-entry-2 img { filter: opacity(0.7) }
+#picture-transparency-entry-3 img { filter: opacity(0.5) }
+#picture-transparency-entry-4 img { filter: opacity(0.35) }
+#picture-transparency-entry-5 img { filter: opacity(0.2) }
+#picture-transparency-entry-6 img { filter: opacity(0.05) }
+
 @media only screen and (max-width: 600px) {
 	#userListSummary,
 	#userListHeader {
