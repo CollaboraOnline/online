@@ -182,7 +182,7 @@
         <host desc="The IPv4 private 10.0.0.0/8 subnet (Podman).">10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
       </post_allow>
-      <lok_allow desc="Allowed hosts as an external data source inside edited files. All allowed post_allow.host and storage.wopi entries are also considered to be allowed as a data source. Used for example in: PostMessage Action_InsertGraphics, =WEBSERVICE() function, external reference in the cell.">
+      <lok_allow desc="Allowed hosts as an external data source inside edited files. All allowed post_allow.host and storage.wopi entries are also considered to be allowed as a data source. Used for example in: PostMessage Action_InsertGraphic, =WEBSERVICE() function, external reference in the cell.">
         <host desc="The IPv4 private 192.168 block as plain IPv4 dotted decimal addresses.">192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="The IPv4 loopback (localhost) address.">127\.0\.0\.1</host>
