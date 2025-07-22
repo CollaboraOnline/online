@@ -544,7 +544,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
         std::abort();
 
-    if (__argc == 1)
+    if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
         fileOpenDialog();
     else
         document_uri = Poco::URI(Poco::Path(Util::wide_string_to_string(__wargv[1]))).toString();
