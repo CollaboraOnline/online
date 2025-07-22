@@ -527,22 +527,15 @@ function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
 function generatePictureBrightnessMenu(
 	unoCommand: string,
 ): Array<MenuDefinition> {
-	const brightnessValues = [
-		{ value: -40, text: _('minusforty') },
-		{ value: -20, text: _('minustwenty') },
-		{ value: 0, text: _('zero') },
-		{ value: 20, text: _('twenty') },
-		{ value: 40, text: _('forty') },
-	];
+	const brightnessValues = [-40, -20, 0, 20, 40];
 
 	const menuItems: Array<MenuDefinition> = [];
 
 	for (let i = 0; i < brightnessValues.length; i++) {
 		menuItems.push({
-			id: brightnessValues[i].text,
-			uno:
-				'.uno:' + unoCommand + '?Brightness:short=' + brightnessValues[i].value,
-			text: '' + brightnessValues[i].value,
+			id: 'brightness' + brightnessValues[i],
+			uno: '.uno:' + unoCommand + '?Brightness:short=' + brightnessValues[i],
+			text: brightnessValues[i] + '%',
 			img: 'insertgraphic',
 		} as MenuDefinition);
 	}
@@ -553,21 +546,15 @@ function generatePictureBrightnessMenu(
 function generatePictureContrastMenu(
 	unoCommand: string,
 ): Array<MenuDefinition> {
-	const contrastValues = [
-		{ value: -40, text: _('minusforty') },
-		{ value: -20, text: _('minustwenty') },
-		{ value: 0, text: _('zero') },
-		{ value: 20, text: _('twenty') },
-		{ value: 40, text: _('forty') },
-	];
+	const contrastValues = [-40, -20, 0, 20, 40];
 
 	const menuItems: Array<MenuDefinition> = [];
 
 	for (let i = 0; i < contrastValues.length; i++) {
 		menuItems.push({
-			id: contrastValues[i].text,
-			uno: '.uno:' + unoCommand + '?Contrast:short=' + contrastValues[i].value,
-			text: '' + contrastValues[i].value,
+			id: 'contrast' + contrastValues[i],
+			uno: '.uno:' + unoCommand + '?Contrast:short=' + contrastValues[i],
+			text: contrastValues[i] + '%',
 			img: 'insertgraphic',
 		} as MenuDefinition);
 	}
@@ -578,27 +565,16 @@ function generatePictureContrastMenu(
 function generatePictureTransparencyMenu(
 	unoCommand: string,
 ): Array<MenuDefinition> {
-	const transparencyValues = [
-		{ value: 0, text: _('zero') },
-		{ value: 15, text: _('fifteen') },
-		{ value: 30, text: _('thirty') },
-		{ value: 50, text: _('fifty') },
-		{ value: 65, text: _('sixtyfive') },
-		{ value: 80, text: _('eighty') },
-		{ value: 95, text: _('ninetyfive') },
-	];
+	const transparencyValues = [0, 15, 30, 50, 65, 80, 95];
 
 	const menuItems: Array<MenuDefinition> = [];
 
 	for (let i = 0; i < transparencyValues.length; i++) {
 		menuItems.push({
-			id: transparencyValues[i].text,
+			id: 'transparency' + transparencyValues[i],
 			uno:
-				'.uno:' +
-				unoCommand +
-				'?Transparency:short=' +
-				transparencyValues[i].value,
-			text: '' + transparencyValues[i].value,
+				'.uno:' + unoCommand + '?Transparency:short=' + transparencyValues[i],
+			text: transparencyValues[i] + '%',
 			img: 'insertgraphic',
 		} as MenuDefinition);
 	}
