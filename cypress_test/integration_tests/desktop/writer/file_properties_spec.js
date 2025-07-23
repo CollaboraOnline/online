@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// Add property
 		cy.cGet('#add.ui-pushbutton').click();
-		cy.cGet('#namebox-input').type('Mailstop');
+		cy.cGet('#namebox-input-dialog').type('Mailstop');
 
 		cy.cGet('#valueedit-input').type('123 Address');
 		cy.cGet('#ok.ui-pushbutton').click();
@@ -59,7 +59,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// Add property
 		cy.cGet('#add.ui-pushbutton').click();
-		cy.cGet('#namebox-input').type('Received from');
+		cy.cGet('#namebox-input-dialog').type('Received from');
 		cy.cGet('#typebox-input').select('Duration');
 		cy.cGet('#durationbutton').click();
 		cy.cGet('#negative-input').check();
@@ -85,7 +85,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// Add property
 		cy.cGet('#add.ui-pushbutton').click();
-		cy.cGet('#namebox-input').type('Telephone number');
+		cy.cGet('#namebox-input-dialog').type('Telephone number');
 		cy.cGet('#typebox-input').select('Yes or no');
 		cy.cGet('#yes-input').check();
 		cy.cGet('#ok.ui-pushbutton').click();
