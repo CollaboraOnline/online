@@ -1266,16 +1266,28 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Overflow group */
 
-/*.ui-overflow-group,
-.ui-overflow-group-content,*/
 .ui-overflow-manager {
 	display: flex !important;
 	overflow-x: hidden;
 }
 
+.ui-overflow-group {
+	flex-flow: column;
+}
+
 .ui-overflow-group,
 .ui-overflow-group-content {
 	display: flex;
+}
+
+.ui-overflow-group-bottom {
+	text-align: center;
+}
+
+.ui-overflow-group-label {
+	font-family: var(--jquery-ui-font);
+	font-size: var(--default-font-size);
+	color: var(--color-text-lighter);
 }
 
 /* Icon View */
