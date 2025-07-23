@@ -2607,14 +2607,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
 			{
-				'id': 'picture-convert-curve',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ChangeBezier', 'presentation'),
-				'command': '.uno:ChangeBezier',
-				'accessibility': { focusBack: true, combination: 'CB', de: null }
-			},
-			{ type: 'separator', id: 'picture-convertcurve-break', orientation: 'vertical' },
-			{
 				'type': 'container',
 				'children': [
 					{
@@ -2756,85 +2748,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{ type: 'separator', id: 'picture-leavegroup-break', orientation: 'vertical' },
-			{
-				'id': 'picture-text',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Text'),
-				'command': '.uno:Text',
-				'accessibility': { focusBack: true, combination: 'DT', de: null }
-			},
-			{ type: 'separator', id: 'picture-text-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA6',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-basic-shapes:InsertShapesMenu',
-								'type': 'menubutton',
-								'noLabel': true,
-								'text': _('Shapes'),
-								'command': '.uno:BasicShapes',
-								'accessibility': { focusBack: true, combination: 'BS', de: null }
-							}
-						]
-					},
-					{
-						'id': 'LineB7',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-connector-toolbox:InsertConnectorsMenu',
-								'type': 'menubutton',
-								'noLabel': true,
-								'text': _UNO('.uno:ConnectorToolbox', 'presentation'),
-								'command': '.uno:ConnectorToolbox',
-								'accessibility': { focusBack: true, combination: 'CT', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'picture-connectortoolbox-break', orientation: 'vertical' },
-			{
-				'id': 'Insert-Text-Fontwork',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA153',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-fontwork-gallery-floater',
-								'type': 'toolitem',
-								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater',
-								// Fontwork export/import not supported in other formats.
-								'visible': (app.LOUtil.isFileODF(this.map)) ? 'true' : 'false',
-								'accessibility': { focusBack: true, combination: 'FW', de: null }
-							}
-						]
-					},
-					{
-						'id': 'LineB163',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-vertical-text',
-								'type': 'toolitem',
-								'text': _UNO('.uno:VerticalText', 'text'),
-								'command': '.uno:VerticalText',
-								'accessibility': { focusBack: true, combination: 'VT', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'picture-verticaltext-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Crop'),
