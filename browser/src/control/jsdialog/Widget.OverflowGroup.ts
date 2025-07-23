@@ -26,6 +26,10 @@ function setupOverflowMenu(
 	) as HTMLElement;
 	overflowMenuButton.style.display = 'none';
 
+	const groupLabel = parentContainer.querySelector(
+		'.ui-overflow-group-label',
+	) as HTMLElement;
+
 	const overflowMenuWrapper = L.DomUtil.create('div', 'menu-overflow-wrapper');
 
 	const showOverflowMenu = () => {
@@ -111,11 +115,13 @@ function setupOverflowMenu(
 	(parentContainer as OverflowGroupContainer).foldGroup = function () {
 		console.debug('overflow manager: fold group: ' + id);
 		overflowMenuHandler(true);
+		groupLabel.style.display = 'none';
 		overflowMenuButton.style.display = 'revert';
 	};
 
 	(parentContainer as OverflowGroupContainer).unfoldGroup = function () {
 		console.debug('overflow manager: unfold group: ' + id);
+		groupLabel.style.display = 'revert';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
 	};
@@ -123,7 +129,7 @@ function setupOverflowMenu(
 
 JSDialog.OverflowGroup = function (
 	parentContainer: Element,
-	data: ContainerWidgetJSON,
+	data: OverflowGroupWidgetJSON,
 	builder: JSBuilder,
 ) {
 	const container = L.DomUtil.create(
@@ -135,17 +141,38 @@ JSDialog.OverflowGroup = function (
 
 	const innerContainer = L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' ui-overflow-group-content',
+		builder.options.cssClass + ' ui-overflow-group-inner',
 		container,
+	);
+	innerContainer.id = data.id + '-inner';
+
+	const contentContainer = L.DomUtil.create(
+		'div',
+		builder.options.cssClass + ' ui-overflow-group-content',
+		innerContainer,
 	);
 	innerContainer.id = data.id + '-content';
 
+	const bottomBar = L.DomUtil.create(
+		'div',
+		builder.options.cssClass + ' ui-overflow-group-bottom',
+		container,
+	);
+	bottomBar.id = data.id + '-bottom';
+
+	const label = L.DomUtil.create(
+		'span',
+		builder.options.cssClass + ' ui-overflow-group-label',
+		bottomBar,
+	);
+	if (data.name) label.innerText = data.name;
+
 	// content
-	builder.build(innerContainer, data.children, false);
+	builder.build(contentContainer, data.children, false);
 
 	// button
 	builder.build(
-		container,
+		innerContainer,
 		[
 			{
 				type: 'bigcustomtoolitem',
@@ -158,7 +185,7 @@ JSDialog.OverflowGroup = function (
 		false,
 	);
 
-	setupOverflowMenu(container, innerContainer, data.id);
+	setupOverflowMenu(container, contentContainer, data.id);
 
 	return false;
 } as JSWidgetHandler;
