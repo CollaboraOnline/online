@@ -326,36 +326,97 @@ static void do_clipboard_write(int appDocId)
     CloseClipboard();
 }
 
+static std::wstring get_clipboard_format_name(UINT format)
+{
+    const int NNAME{ 1000 };
+    wchar_t name[NNAME];
+    int nwc = GetClipboardFormatNameW(format, name, NNAME);
+    if (nwc)
+    {
+        name[nwc] = 0;
+        return name;
+    }
+    return L"";
+}
+
 static void do_clipboard_read(int appDocId)
 {
-    if (!IsClipboardFormatAvailable(CF_UNICODETEXT))
-        return;
-
     if (!OpenClipboard(NULL))
         return;
 
-    HANDLE hglData = GetClipboardData(CF_UNICODETEXT);
-    if (!hglData)
+    std::vector<const char*> mimeTypes;
+    std::vector<size_t> sizes;
+    std::vector<const char*> streams;
+
+    UINT format = 0;
+
+    while (format = EnumClipboardFormats(format))
     {
-        CloseClipboard();
-        return;
-    }
-    wchar_t* wtext = (wchar_t*)GlobalLock(hglData);
-    if (!wtext)
-    {
-        GlobalUnlock(hglData);
-        CloseClipboard();
-        return;
+        if (format == CF_UNICODETEXT)
+        {
+            HANDLE data = GetClipboardData(format);
+            if (!data)
+                continue;
+            wchar_t* wtext = (wchar_t*)GlobalLock(data);
+            if (!wtext)
+            {
+                GlobalUnlock(data);
+                continue;
+            }
+            std::string text = Util::wide_string_to_string(std::wstring(wtext));
+            GlobalUnlock(data);
+
+            mimeTypes.push_back(_strdup("text/plain;charset=utf-8"));
+            sizes.push_back(text.size());
+            streams.push_back(_strdup(text.c_str()));
+        }
+        else
+        {
+            auto name = get_clipboard_format_name(format);
+
+            std::string mimeType;
+
+            if (name == L"Star Embed Source (XML)")
+                mimeType = "application/x-openoffice-embed-source-xml";
+            else if (name == L"PNG")
+                mimeType = "image/png";
+            else if (name == L"Rich Text Format")
+                mimeType = "text/rtf";
+
+            if (mimeType != "")
+            {
+                HANDLE data = GetClipboardData(format);
+                if (!data)
+                    continue;
+                size_t size = GlobalSize(data);
+                const char* source = (const char*)GlobalLock(data);
+                if (!source)
+                {
+                    GlobalUnlock(data);
+                    continue;
+                }
+                char* copy = (char*)std::malloc(size);
+                std::memcpy(copy, source, size);
+
+                GlobalUnlock(data);
+
+                mimeTypes.push_back(_strdup(mimeType.c_str()));
+                sizes.push_back(size);
+                streams.push_back(copy);
+            }
+        }
     }
 
-    std::string text = Util::wide_string_to_string(std::wstring(wtext));
-    GlobalUnlock(hglData);
+    DocumentData::get(appDocId).loKitDocument->setClipboard(mimeTypes.size(), mimeTypes.data(),
+                                                            sizes.data(), streams.data());
+
+    for (int i = 0; i < mimeTypes.size(); i++)
+    {
+        std::free((void*)mimeTypes[i]);
+        std::free((void*)streams[i]);
+    }
+
     CloseClipboard();
-
-    const char* mimeTypes[]{ "text/plain;charset=utf-8" };
-    const size_t sizes[]{ text.size() };
-    const char* streams[]{ text.c_str() };
-    DocumentData::get(appDocId).loKitDocument->setClipboard(1, mimeTypes, sizes, streams);
 }
 
 static void do_clipboard_set(int appDocId, const char* text)
