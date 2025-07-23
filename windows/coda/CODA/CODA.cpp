@@ -467,8 +467,11 @@ static void fileOpenDialog()
                                     reinterpret_cast<void**>(&dialog))))
         std::abort();
 
-    COMDLG_FILTERSPEC filter[] = { { L"Typical documents", L"*.odt;*.docx;*.doc;*.rtf;*.txt;*.ods;*.xlsx;*.xls;*.odp;*.pptx;*.ppt" },
-                                   { L"All files", L"*.*" } };
+    COMDLG_FILTERSPEC filter[] = {
+        { L"Typical documents",
+          L"*.odt;*.docx;*.doc;*.rtf;*.txt;*.ods;*.xlsx;*.xls;*.odp;*.pptx;*.ppt" },
+        { L"All files", L"*.*" }
+    };
 
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
         std::abort();
