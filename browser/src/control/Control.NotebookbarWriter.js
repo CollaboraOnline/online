@@ -3181,6 +3181,34 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getPictureTab: function() {
 		var content = [
 			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'picture-tab-xlinecolor:ColorPickerMenu',
+								'type': 'menubutton',
+								'text': _UNO('.uno:XLineColor'),
+								'command': '.uno:XLineColor'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'picture-tab-fillcolor:ColorPickerMenu',
+								'type': 'menubutton',
+								'text': _UNO('.uno:FillColor'),
+								'command': '.uno:FillColor'
+							}
+						]
+					}
+				],
+			},
+			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog', 'text'),
 				'command': '.uno:TransformDialog'
@@ -3251,37 +3279,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				]
 			},
 			{ type: 'separator', id: 'picture-transparency-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-tab-xlinecolor:ColorPickerMenu',
-								'noLabel': true,
-								'type': 'toolitem',
-								'text': _UNO('.uno:XLineColor'),
-								'command': '.uno:XLineColor'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-tab-fillcolor:ColorPickerMenu',
-								'noLabel': true,
-								'type': 'toolitem',
-								'text': _UNO('.uno:FillColor'),
-								'command': '.uno:FillColor'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
