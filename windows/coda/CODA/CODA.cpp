@@ -477,7 +477,7 @@ static void fileOpenDialog()
         std::abort();
 
     if (!SUCCEEDED(dialog->Show(NULL)))
-        std::abort();
+        std::exit(0);
 
     IShellItem* item;
     if (!SUCCEEDED(dialog->GetResult(&item)))
