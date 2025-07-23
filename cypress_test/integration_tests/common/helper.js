@@ -400,8 +400,8 @@ function documentChecks(skipInitializedCheck = false) {
 		// Check also that the inputbar is drawn in Calc.
 		doIfInCalc(() => {
 			cy.cGet('#sc_input_window.formulabar').should('exist');
-			cy.cGet('#pos_window-input.addressInput').should('exist');
-			//cy.cGet('#pos_window-input.addressInput').should('not.be.empty');
+			cy.cGet('#pos_window-input-address.addressInput').should('exist');
+			//cy.cGet('#pos_window-input-address.addressInput').should('not.be.empty');
 		});
 	}
 
