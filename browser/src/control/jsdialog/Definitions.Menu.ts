@@ -73,25 +73,6 @@ menuDefinitions.set('Menu Statistic', [
 	},
 ] as Array<MenuDefinition>);
 
-menuDefinitions.set('FormatSparklineMenu', [
-	{ text: _UNO('.uno:InsertSparkline', 'spreadsheet'), uno: 'InsertSparkline' },
-	{ text: _UNO('.uno:DeleteSparkline', 'spreadsheet'), uno: 'DeleteSparkline' },
-	{
-		text: _UNO('.uno:DeleteSparklineGroup', 'spreadsheet'),
-		uno: 'DeleteSparklineGroup',
-	},
-	{
-		text: _UNO('.uno:EditSparklineGroup', 'spreadsheet'),
-		uno: 'EditSparklineGroup',
-	},
-	{ text: _UNO('.uno:EditSparkline', 'spreadsheet'), uno: 'EditSparkline' },
-	{ text: _UNO('.uno:GroupSparklines', 'spreadsheet'), uno: 'GroupSparklines' },
-	{
-		text: _UNO('.uno:UngroupSparklines', 'spreadsheet'),
-		uno: 'UngroupSparklines',
-	},
-] as Array<MenuDefinition>);
-
 menuDefinitions.set('MenuPrintRanges', [
 	{
 		text: _UNO('.uno:DefinePrintArea', 'spreadsheet'),

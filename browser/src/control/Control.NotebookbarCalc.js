@@ -2216,14 +2216,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'TD', de: null }
 			},
 			{
-				'id': 'Format-SparklineMenu:FormatSparklineMenu',
-				'class': 'unoFormat-SparklineMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:FormatSparklineMenu', 'spreadsheet'),
+				'id': 'Format-Sparkline',
+				'type': 'bigtoolitem',
+				'text': _('Sparkline'),
+				'command': '.uno:InsertSparkline',
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'SM', de: null }
 			},
-			{ type: 'separator', id: 'format-sparklinemenu-break', orientation: 'vertical' },
+			{ type: 'separator', id: 'format-sparkline-break', orientation: 'vertical' },
 			{
 				'id': 'format-theme-dialog',
 				'type': 'bigtoolitem',
