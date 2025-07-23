@@ -350,6 +350,8 @@ static void do_clipboard_read(int appDocId)
 
     UINT format = 0;
 
+    std::set<std::string> doneMimeTypes;
+
     while (format = EnumClipboardFormats(format))
     {
         if (format == CF_UNICODETEXT)
@@ -367,6 +369,7 @@ static void do_clipboard_read(int appDocId)
             GlobalUnlock(data);
 
             mimeTypes.push_back(_strdup("text/plain;charset=utf-8"));
+            doneMimeTypes.insert("text/plain;charset=utf-8");
             sizes.push_back(text.size());
             streams.push_back(_strdup(text.c_str()));
         }
@@ -382,8 +385,13 @@ static void do_clipboard_read(int appDocId)
                 mimeType = "image/png";
             else if (name == L"Rich Text Format")
                 mimeType = "text/rtf";
+            else if (name == L"text/rtf" || name == L"image/png" ||
+                     // Not handled yet if ever by the rest of the code here and in core, I think,
+                     // but why not be future-safe.
+                     name == L"image/svg+xml")
+                mimeType = Util::wide_string_to_string(name);
 
-            if (mimeType != "")
+            if (mimeType != "" && doneMimeTypes.count(mimeType) == 0)
             {
                 HANDLE data = GetClipboardData(format);
                 if (!data)
@@ -395,6 +403,9 @@ static void do_clipboard_read(int appDocId)
                     GlobalUnlock(data);
                     continue;
                 }
+
+                doneMimeTypes.insert(mimeType);
+
                 char* copy = (char*)std::malloc(size);
                 std::memcpy(copy, source, size);
 
