@@ -80,9 +80,23 @@ window.L.Clipboard = window.L.Class.extend({
 		var that = this;
 		var beforeSelect = function(ev) { return that._beforeSelect(ev); };
 
-		document.oncut = function(ev)   { return that.cut(ev); };
-		document.oncopy = function(ev)  { return that.copy(ev); };
-		document.onpaste = function(ev) { return that.paste(ev); };
+		if (window.ThisIsTheWindowsApp)
+		{
+			// We can have very trivial implementations, native code does everything
+			document.oncut = function() {
+				window.postMobileMessage('CUT');
+			};
+			document.oncopy = function() {
+				window.postMobileMessage('COPY');
+			};
+			document.onpaste = function() {
+				window.postMobileMessage('PASTE');
+			};
+		} else {
+			document.oncut = function(ev)   { return that.cut(ev); };
+			document.oncopy = function(ev)  { return that.copy(ev); };
+			document.onpaste = function(ev) { return that.paste(ev); };
+		}
 		document.onbeforecut = beforeSelect;
 		document.onbeforecopy = beforeSelect;
 		document.onbeforepaste = beforeSelect;
@@ -1137,6 +1151,20 @@ window.L.Clipboard = window.L.Class.extend({
 			return true;
 		}
 
+		if (window.ThisIsTheWindowsApp) {
+			// Here, too, just let native code handle it
+			if (cmd === '.uno:Cut') {
+				window.postMobileMessage('CUT');
+				return;
+			} else if (cmd === '.uno:Copy') {
+				window.postMobileMessage('COPY');
+				return;
+			} else if (cmd === '.uno:Paste') {
+				window.postMobileMessage('PASTE');
+				return;
+			}
+		}
+
 		if (cmd === '.uno:Copy' || cmd === '.uno:CopyHyperlinkLocation' || cmd === '.uno:CopySlide') {
 			this._execCopyCutPaste('copy', cmd, params);
 		} else if (cmd === '.uno:Cut') {
@@ -1451,6 +1479,12 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_openPasteSpecialPopup: function () {
+		if (window.ThisIsTheWindowsApp) {
+			// No warning dialog necessary, just do it
+			app.socket.sendMessage('uno .uno:PasteSpecial');
+			return;
+		}
+
 		// We will use this for closing the dialog.
 		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
 
