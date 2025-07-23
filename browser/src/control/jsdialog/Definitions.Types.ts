@@ -140,6 +140,10 @@ interface ContainerWidgetJSON extends WidgetJSON {
 	vertical?: boolean; // is horizontal or vertical container
 }
 
+interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
+	name: string; // visible name of a group
+}
+
 interface OverflowGroupContainer extends Element {
 	foldGroup?: () => void;
 	unfoldGroup?: () => void;
