@@ -54,7 +54,16 @@ static wil::com_ptr<ICoreWebView2> webview;
 static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
 
 static HWND mainWindow;
+static bool beingDebugged;
 static DWORD mainThreadId;
+
+enum class ClipboardOp
+{
+    CUT,
+    COPY,
+    PASTE,
+    READ
+};
 
 static int generate_new_app_doc_id()
 {
@@ -272,29 +281,45 @@ static void do_other_message_handling_things(const char* message)
         .detach();
 }
 
-static void do_clipboard_write(int appDocId)
+static void do_cut_or_copy(ClipboardOp op, int appDocId)
 {
+    // Tell core to copy the selexction into its internal clipboard
+    DocumentData::get(appDocId).loKitDocument->postUnoCommand(".uno:Copy");
+
     size_t count = 0;
     char** mimeTypes = nullptr;
     size_t* sizes = nullptr;
     char** streams = nullptr;
 
+    // Get core's internal clipboard
+    DocumentData::get(appDocId).loKitDocument->getClipboard(nullptr, &count, &mimeTypes, &sizes,
+                                                            &streams);
     if (!OpenClipboard(NULL))
         return;
 
-    DocumentData::get(appDocId).loKitDocument->getClipboard(nullptr, &count, &mimeTypes, &sizes,
-                                                            &streams);
+    if (!EmptyClipboard())
+    {
+        CloseClipboard();
+        return;
+    }
+
     for (int i = 0; i < count; i++)
     {
         // We check whether there is a corresponding standard or well-known Windows clipboard
         // format. It is either one using plain "narrow" chars or wide chars.
         int format = 0;
+        int format2 = 0;
         int wformat = 0;
 
         if (strcmp(mimeTypes[i], "text/plain;charset=utf-8") == 0)
             wformat = CF_UNICODETEXT;
         else if (strcmp(mimeTypes[i], "text/rtf") == 0)
             format = RegisterClipboardFormatW(L"Rich Text Format");
+        else if (strcmp(mimeTypes[i], "image/png") == 0)
+        {
+            format = RegisterClipboardFormatW(L"image/png");
+            format2 = RegisterClipboardFormatW(L"PNG");
+        }
 
         if (wformat)
         {
@@ -320,10 +345,15 @@ static void do_clipboard_write(int appDocId)
                 copy[sizes[i]] = '\0';
                 GlobalUnlock(hglData);
                 SetClipboardData(format, hglData);
+                if (format2)
+                    SetClipboardData(format2, hglData);
             }
         }
     }
     CloseClipboard();
+
+    if (op == ClipboardOp::CUT)
+        DocumentData::get(appDocId).loKitDocument->postUnoCommand(".uno:Cut");
 }
 
 static std::wstring get_clipboard_format_name(UINT format)
@@ -339,7 +369,7 @@ static std::wstring get_clipboard_format_name(UINT format)
     return L"";
 }
 
-static void do_clipboard_read(int appDocId)
+static void do_paste_or_read(ClipboardOp op, int appDocId)
 {
     if (!OpenClipboard(NULL))
         return;
@@ -380,6 +410,7 @@ static void do_clipboard_read(int appDocId)
             std::string mimeType;
 
             if (name == L"Star Embed Source (XML)")
+                // This doesn't seem to work, sadly
                 mimeType = "application/x-openoffice-embed-source-xml";
             else if (name == L"PNG")
                 mimeType = "image/png";
@@ -418,6 +449,7 @@ static void do_clipboard_read(int appDocId)
         }
     }
 
+    // Populate core's internal clipboard
     DocumentData::get(appDocId).loKitDocument->setClipboard(mimeTypes.size(), mimeTypes.data(),
                                                             sizes.data(), streams.data());
 
@@ -428,6 +460,12 @@ static void do_clipboard_read(int appDocId)
     }
 
     CloseClipboard();
+
+    if (op == ClipboardOp::PASTE)
+    {
+        // Tell core to paste from its internal clipboard into the document
+        DocumentData::get(appDocId).loKitDocument->postUnoCommand(".uno:Paste");
+    }
 }
 
 static void do_clipboard_set(int appDocId, const char* text)
@@ -568,7 +606,8 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 static void processMessage(const wil::unique_cotaskmem_string& message)
 {
     std::wstring s(message.get());
-    fprintf(stderr, "%S\n", s.c_str());
+    if (beingDebugged)
+        OutputDebugString((s + L"\n").c_str());
     if (s.starts_with(L"MSG "))
     {
         s = s.substr(4);
@@ -584,13 +623,21 @@ static void processMessage(const wil::unique_cotaskmem_string& message)
         {
             do_convert_to("pdf", appDocId);
         }
-        else if (s == L"CLIPBOARDWRITE")
+        else if (s == L"CUT")
         {
-            do_clipboard_write(appDocId);
+            do_cut_or_copy(ClipboardOp::CUT, appDocId);
+        }
+        else if (s == L"COPY")
+        {
+            do_cut_or_copy(ClipboardOp::COPY, appDocId);
+        }
+        else if (s == L"PASTE")
+        {
+            do_paste_or_read(ClipboardOp::PASTE, appDocId);
         }
         else if (s == L"CLIPBOARDREAD")
         {
-            do_clipboard_read(appDocId);
+            do_paste_or_read(ClipboardOp::READ, appDocId);
         }
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
@@ -609,6 +656,8 @@ static void processMessage(const wil::unique_cotaskmem_string& message)
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
+    beingDebugged = IsDebuggerPresent();
+
     mainThreadId = GetCurrentThreadId();
 
     Log::initialize("CODA", "trace");
