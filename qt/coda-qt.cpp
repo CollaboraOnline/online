@@ -12,12 +12,10 @@
 #include <config.h>
 #include "bridge.hpp"
 #include "COOLWSD.hpp"
-#include "SetupKitEnvironment.hpp"
-#include "Kit.hpp"
-#include "Clipboard.hpp"
 #include "FakeSocket.hpp"
 #include "Log.hpp"
 #include "MobileApp.hpp"
+#include "Clipboard.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
 #include "qt.hpp"
@@ -46,33 +44,17 @@
 #include <string_view>
 #include <thread>
 #include <vector>
+#include "WebView.hpp"
 
 const char* user_name = "Dummy";
 
 const int SHOW_JS_MAXLEN = 300;
 
 int coolwsd_server_socket_fd = -1;
-std::string fileURL; // absolute document URL passed to Online
-COOLWSD* coolwsd = nullptr;
-int fakeClientFd = -1;
-int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
-QWebEngineView* webView = nullptr;
-unsigned appDocId = 0;
-LibreOfficeKit* lo_kit;
+static COOLWSD* coolwsd = nullptr;
+static int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
 
-namespace
-{
-
-unsigned generateNewAppDocId()
-{
-    static unsigned appIdCounter = 60407;
-    DocumentData::allocate(appIdCounter);
-    return appIdCounter++;
-}
-
-} // namespace
-
-void getClipboard()
+void getClipboard(unsigned appDocId)
 {
     std::unique_ptr<QMimeData> mimeData(new QMimeData());
 
@@ -125,7 +107,7 @@ void getClipboard()
     clipboard->setMimeData(mimeData.release());
 }
 
-void setClipboard()
+void setClipboard(unsigned appDocId)
 {
     QClipboard* clipboard = QApplication::clipboard();
     if (!clipboard)
@@ -144,7 +126,7 @@ void setClipboard()
     DocumentData::get(appDocId).loKitDocument->setClipboard(1, mimeTypes, sizes, streams);
 }
 
-void setClipboardFromContent(const std::string& content)
+void setClipboardFromContent(unsigned appDocId, const std::string& content)
 {
     std::vector<const char*> streams;
     std::vector<const char*> mimeTypes;
@@ -183,17 +165,17 @@ void setClipboardFromContent(const std::string& content)
     }
 }
 
-void evalJS(const std::string& script)
+void Bridge::evalJS(const std::string& script)
 {
-    if (!webView)
-        return;
     // Ensure execution on GUI thread – queued if needed
     QMetaObject::invokeMethod(
-        webView, [script] { webView->page()->runJavaScript(QString::fromStdString(script)); },
+        // TODO: fix needless `this` captures...
+        _webView.webEngineView(), [this, script]
+        { _webView.webEngineView()->page()->runJavaScript(QString::fromStdString(script)); },
         Qt::QueuedConnection);
 }
 
-void send2JS(const std::vector<char>& buffer)
+void Bridge::send2JS(const std::vector<char>& buffer)
 {
     LOG_TRC_NOFILE(
         "Send to JS: " << COOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
@@ -251,20 +233,20 @@ QVariant Bridge::cool(const QString& msg)
     {
         // JS side fully initialised – open our fake WebSocket to COOLWSD
         assert(coolwsd_server_socket_fd != -1);
-        int rc = fakeSocketConnect(fakeClientFd, coolwsd_server_socket_fd);
+        int rc = fakeSocketConnect(_document._fakeClientFd, coolwsd_server_socket_fd);
         assert(rc != -1);
 
         fakeSocketPipe2(closeNotificationPipeForForwardingThread);
 
         // Thread pumping Online → JS
         std::thread(
-            []
+            [this]
             {
                 Util::setThreadName("app2js");
                 while (true)
                 {
                     struct pollfd pfd[2];
-                    pfd[0].fd = fakeClientFd;
+                    pfd[0].fd = _document._fakeClientFd;
                     pfd[0].events = POLLIN;
                     pfd[1].fd = closeNotificationPipeForForwardingThread[1];
                     pfd[1].events = POLLIN;
@@ -273,16 +255,16 @@ QVariant Bridge::cool(const QString& msg)
                         if (pfd[1].revents & POLLIN)
                         {
                             fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
-                            fakeSocketClose(fakeClientFd);
+                            fakeSocketClose(_document._fakeClientFd);
                             return; // document closed
                         }
                         if (pfd[0].revents & POLLIN)
                         {
-                            int n = fakeSocketAvailableDataLength(fakeClientFd);
+                            int n = fakeSocketAvailableDataLength(_document._fakeClientFd);
                             if (n == 0)
                                 return;
                             std::vector<char> buf(n);
-                            fakeSocketRead(fakeClientFd, buf.data(), n);
+                            fakeSocketRead(_document._fakeClientFd, buf.data(), n);
                             send2JS(buf);
                         }
                     }
@@ -292,16 +274,17 @@ QVariant Bridge::cool(const QString& msg)
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
         std::thread(
-            []
+            [this]
             {
                 struct pollfd p
                 {
                 };
-                p.fd = fakeClientFd;
+                p.fd = _document._fakeClientFd;
                 p.events = POLLOUT;
                 fakeSocketPoll(&p, 1, -1);
-                std::string message(fileURL + (" " + std::to_string(appDocId)));
-                fakeSocketWrite(fakeClientFd, message.c_str(), message.size());
+                std::string message(_document._fileURL +
+                                    (" " + std::to_string(_document._appDocId)));
+                fakeSocketWrite(_document._fakeClientFd, message.c_str(), message.size());
             })
             .detach();
     }
@@ -312,33 +295,33 @@ QVariant Bridge::cool(const QString& msg)
     }
     else if (utf8 == "CLIPBOARDWRITE")
     {
-        getClipboard();
+        getClipboard(_document._appDocId);
     }
     else if (utf8 == "CLIPBOARDREAD")
     {
         // WARN: this is only cargo-culted and not tested yet.
-        setClipboard();
+        setClipboard(_document._appDocId);
         return "(internal)";
     }
     else if (utf8.starts_with(CLIPBOARDSET))
     {
         std::string content = utf8.substr(CLIPBOARDSET.size());
-        setClipboardFromContent(content);
+        setClipboardFromContent(_document._appDocId, content);
     }
     else
     {
         // Forward arbitrary payload from JS → Online
         std::string copy = utf8; // make lifetime explicit
         std::thread(
-            [copy]
+            [this, copy]
             {
                 struct pollfd p
                 {
                 };
-                p.fd = fakeClientFd;
+                p.fd = _document._fakeClientFd;
                 p.events = POLLOUT;
                 fakeSocketPoll(&p, 1, -1);
-                fakeSocketWrite(fakeClientFd, copy.c_str(), copy.size());
+                fakeSocketWrite(_document._fakeClientFd, copy.c_str(), copy.size());
             })
             .detach();
     }
@@ -352,9 +335,9 @@ void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 
 int main(int argc, char** argv)
 {
-    if (argc != 2)
+    if (argc != 3)
     {
-        fprintf(stderr, "Usage: %s /path/to/document\n", argv[0]);
+        fprintf(stderr, "Usage: %s /path/to/document /path/to/document2\n", argv[0]);
         _exit(1);
     }
 
@@ -368,76 +351,29 @@ int main(int argc, char** argv)
         []
         {
             Util::setThreadName("app");
-            char* argv_local[2] = { strdup("mobile"), nullptr };
-            while (true)
-            {
-                coolwsd = new COOLWSD();
-                coolwsd->run(1, argv_local);
-                delete coolwsd;
-                LOG_TRC("One run of COOLWSD completed");
-            }
+            char* argv_local[2] = { strdup("coda"), nullptr };
+            coolwsd = new COOLWSD();
+            coolwsd->run(1, argv_local);
+            delete coolwsd;
+            LOG_TRC("One run of COOLWSD completed");
         })
         .detach();
 
-    fakeClientFd = fakeSocketSocket();
-
-    disableA11y();
-
     QApplication app(argc, argv);
-    QApplication::setApplicationName("COOLQt");
-
-    QMainWindow mainWin;
-    mainWin.resize(720, 1600);
-
-    // WebView + profile
-    webView = new QWebEngineView(&mainWin);
-    QWebEngineProfile* profile = webView->page()->profile();
-    profile->setHttpUserAgent(
-        "Mozilla/5.0 (Linux; U; Android 2.3.5; en-us; HTC Vision Build/GRI40) "
-        "AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
-
-    // WebChannel for JS ⇄ C++ communication
-    QWebChannel* channel = new QWebChannel(webView->page());
-    bridge = new Bridge(channel);
-    channel->registerObject("bridge", bridge);
-    webView->page()->setWebChannel(channel);
-
-    mainWin.setCentralWidget(webView);
-    mainWin.show();
+    QApplication::setApplicationName("CODA-Q");
 
     // Resolve absolute file URL to pass into Online
-    fileURL = "file://" + FileUtil::realpath(argv[1]);
+    std::string fileURL = "file://" + FileUtil::realpath(argv[1]);
+    WebView firstView(nullptr);
+    firstView.load(fileURL);
 
-    appDocId = generateNewAppDocId();
-    const std::string urlAndQuery = std::string("file://") +
-                               TOPSRCDIR "/browser/dist/cool.html" // same HTML frontend
-                                         "?file_path=" +
-                               fileURL +
-                               "&closebutton=1" // mirror original query-params
-                               "&permission=edit"
-                               "&lang=en-US"
-                               "&appdocid=" + std::to_string(appDocId) +
-                               "&userinterfacemode=notebookbar";
+    fileURL = "file://" + FileUtil::realpath(argv[2]);
+    WebView secondView(nullptr);
 
-    LOG_TRC("Open URL: " << urlAndQuery);
-    webView->load(QUrl(QString::fromStdString(urlAndQuery)));
-
-    // Show DevTools after 5 seconds
-    QTimer::singleShot(5000,
-                       []()
-                       {
-                           // Create a new view for DevTools
-                           QWebEngineView* devToolsView = new QWebEngineView;
-                           devToolsView->resize(800, 600);
-                           devToolsView->setWindowTitle("DevTools");
-                           devToolsView->show();
-
-                           // Set it as the DevTools page for the main web view
-                           QWebEnginePage* devToolsPage =
-                               new QWebEnginePage(webView->page()->profile());
-                           devToolsView->setPage(devToolsPage);
-                           webView->page()->setDevToolsPage(devToolsPage);
-                       });
+    // there seems to be some race conditions going on -> need to debug. on top of that the second
+    // file only loads properly if the first document is interacted with..
+    // could it be some idle logic somewhere?
+    QTimer::singleShot(10000, [&]() { secondView.load(fileURL); });
 
     return app.exec();
 }

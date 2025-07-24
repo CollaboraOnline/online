@@ -64,4 +64,4 @@ bridge.moc.cpp: bridge.hpp
 
 CLEANFILES = $(BUILT_SOURCES)
 
-coda_qt_SOURCES = coda-qt.cpp $(BUILT_SOURCES) $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp WebView.cpp $(BUILT_SOURCES) $(cmake_list)
