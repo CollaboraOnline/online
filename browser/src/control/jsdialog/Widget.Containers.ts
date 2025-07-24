@@ -53,9 +53,17 @@ JSDialog.grid = function (
 	const cols = builder._getGridColumns(data.children);
 
 	const processedChildren = [];
+	let hasLabel = false;
+
+	for (let child = 0; child < (data.children || []).length; child++) {
+		if (data.children[child].type === 'fixedtext') {
+			hasLabel = true;
+			break;
+		}
+	}
 
 	const table = L.DomUtil.create(
-		'div',
+		(hasLabel ? 'fieldset' : 'div'),
 		builder.options.cssClass + ' ui-grid',
 		parentContainer,
 	);
