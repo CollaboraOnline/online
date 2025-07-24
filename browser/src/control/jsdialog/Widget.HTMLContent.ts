@@ -221,8 +221,6 @@ var getElementsFromId = function (
 		);
 	else if (id === 'inserttablepopup')
 		return (window as any).getInsertTablePopupElements(closeCallback);
-	else if (id === 'borderstylepopup')
-		return (window as any).getBorderStyleMenuElements(closeCallback);
 	else if (id === 'insertshapespopup')
 		return (window as any).getShapesPopupElements(closeCallback);
 	else if (id === 'insertconnectorspopup')

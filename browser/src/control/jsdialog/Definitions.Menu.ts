@@ -687,9 +687,97 @@ menuDefinitions.set('ConditionalFormatMenu', [
 		uno: '.uno:ConditionalFormatManagerDialog',
 	},
 ] as Array<MenuDefinition>);
-
 menuDefinitions.set('BorderStyleMenu', [
-	{ type: 'html', htmlId: 'borderstylepopup' },
+	{
+		id: 'noborders',
+		img: 'fr01',
+		text: _('No Borders'),
+		uno: (window as any).getBorderStyleUNOCommand(0, 0, 0, 0, 0, 0, 0),
+	},
+	{
+		id: 'leftborder',
+		img: 'fr02',
+		text: _('Left Border'),
+		uno: (window as any).getBorderStyleUNOCommand(1, 0, 0, 0, 0, 0, 0),
+	},
+	{
+		id: 'rightborder',
+		img: 'fr03',
+		text: _('Right Border'),
+		uno: (window as any).getBorderStyleUNOCommand(0, 1, 0, 0, 0, 0, 0),
+	},
+	{
+		id: 'leftandrightborders',
+		img: 'fr04',
+		text: _('Left And Right Borders'),
+		uno: (window as any).getBorderStyleUNOCommand(1, 1, 0, 0, 0, 0, 0),
+	},
+	{
+		id: 'topborder',
+		img: 'fr05',
+		text: _('Top Border'),
+		uno: (window as any).getBorderStyleUNOCommand(0, 0, 0, 1, 0, 0, 0),
+	},
+	{
+		id: 'bottomborder',
+		img: 'fr06',
+		text: _('Bottom Border'),
+		uno: (window as any).getBorderStyleUNOCommand(0, 0, 1, 0, 0, 0, 0),
+	},
+	{
+		id: 'topandbottomborder',
+		img: 'fr07',
+		text: _('Top And Bottom Border'),
+		uno: (window as any).getBorderStyleUNOCommand(0, 0, 1, 1, 0, 0, 0),
+	},
+	{
+		id: 'outerborder',
+		img: 'fr08',
+		text: _('Outer Border'),
+		uno: (window as any).getBorderStyleUNOCommand(1, 1, 1, 1, 0, 0, 0),
+	},
+	{
+		id: 'allhorizontallines',
+		img: 'fr09',
+		text: _('All Horizontal Lines'),
+		uno: (window as any).getBorderStyleUNOCommand(0, 0, 1, 1, 1, 0, 0),
+	},
+	{
+		id: 'outerborderandhorizontallines',
+		img: 'fr010',
+		text: _('Outer Border And Horizontal Lines'),
+		uno: (window as any).getBorderStyleUNOCommand(1, 1, 1, 1, 1, 0, 0),
+	},
+	{
+		id: 'outerborderandverticallines',
+		img: 'fr011',
+		text: _('Outer Border and Vertical Lines'),
+		uno: (window as any).getBorderStyleUNOCommand(1, 1, 1, 1, 0, 1, 0),
+	},
+	{
+		id: 'outerbordersandalllines',
+		img: 'fr012',
+		text: _('Outer Borders And All Inner lines'),
+		uno: (window as any).getBorderStyleUNOCommand(1, 1, 1, 1, 1, 1, 0),
+	},
+	{ type: 'separator' },
+	{
+		text: _('Line color'),
+		items: [
+			{
+				id: 'colorpickerwidget',
+				type: 'colorpicker',
+				command: '.uno:FrameLineColor',
+			},
+			{ type: 'separator' }, // required to show dropdown arrow
+		],
+	},
+	{ type: 'separator' },
+	{
+		id: 'more',
+		text: _('More...'),
+		uno: '.uno:FormatCellBorders',
+	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 

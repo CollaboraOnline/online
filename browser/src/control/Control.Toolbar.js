@@ -37,35 +37,113 @@ function getUNOCommand(unoData) {
 }
 
 function _setBorders(left, right, bottom, top, horiz, vert, color) {
-	var params = {
-		OuterBorder: {
-			type : '[]any',
-			value : [
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : left }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : right }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : bottom }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : top }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 }
-			]
-		},
-		InnerBorder: {
-			type : '[]any',
-			value : [
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : horiz }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : vert }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'short', value : 0 },
-				{ type : 'short', value : 127 },
-				{ type : 'long', value : 0 }
-			]
-		}};
-	map.sendUnoCommand('.uno:SetBorderStyle', params);
+	map.sendUnoCommand(
+		getBorderStyleUNOCommand(left, right, bottom, top, horiz, vert, color),
+	);
 }
 
-// close the popup
+function getBorderStyleUNOCommand(
+	left,
+	right,
+	bottom,
+	top,
+	horiz,
+	vert,
+	color,
+) {
+	const params = {
+		OuterBorder: {
+			type: '[]any',
+			value: [
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: left },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: right },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: bottom },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: top },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+			],
+		},
+		InnerBorder: {
+			type: '[]any',
+			value: [
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: horiz },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: vert },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{ type: 'short', value: 0 },
+				{ type: 'short', value: 127 },
+				{ type: 'long', value: 0 },
+			],
+		},
+	};
+
+	const jsonParams = JSON.stringify(params);
+
+	return `.uno:SetBorderStyle ${jsonParams}`;
+}
+
+global.getBorderStyleUNOCommand = getBorderStyleUNOCommand;
 
 var lastClosePopupCallback = undefined;
 
@@ -110,43 +188,6 @@ function setBorderStyle(num, color) {
 }
 
 global.setBorderStyle = setBorderStyle;
-
-function getBorderStyleMenuElements(closeCallback) {
-	lastClosePopupCallback = closeCallback;
-
-	const table = document.createElement('table');
-	table.id = 'setborderstyle-grid';
-
-	for (let i = 0; i < 12; i++) {
-		let tr = document.createElement('tr');
-		table.appendChild(tr);
-		for (let j = 0; j < 4; j++) {
-			let td = document.createElement('td');
-			tr.appendChild(td);
-			const num = String(i + j + 1);
-			td.className = 'w2ui-tb-image w2ui-icon ' + (i + j < 9 ? 'frame0' + String(i + j + 1): 'frame' + String(i + j + 1));
-			td.onclick = function() { setBorderStyle(parseInt(num)); };
-		}
-		i += 3;
-	}
-
-	let tr = document.createElement('tr');
-	let td = document.createElement('td');
-	td.setAttribute('colspan', 4);
-	td.onclick = function() { setBorderStyle(0); };
-
-	let div = document.createElement('div');
-	div.id = 'div-frame13';
-	div.textContent = _('More...');
-
-	td.appendChild(div);
-	tr.appendChild(td);
-	table.appendChild(tr);
-
-	return table;
-}
-
-global.getBorderStyleMenuElements = getBorderStyleMenuElements;
 
 function setConditionalFormat(num, unoCommand, jsdialogDropdown) {
 	var params = {
