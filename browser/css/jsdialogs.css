@@ -757,10 +757,14 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	-webkit-box-shadow: 0 0 3px var(--color-box-shadow);
 	box-shadow: 0 0 3px var(--color-box-shadow);
 }
+
 .context-menu-item {
 	color: var(--color-main-text);
 	background-color: transparent;
+	padding-left: 1em;
+	font-size: var(--medium-font-size) !important;
 }
+
 .context-menu-separator {
 	border-bottom: 1px solid var(--color-border-lighter);
 }
@@ -769,6 +773,45 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-lighter);
 	background-color: var(--color-background-lighter);
 }
+
+.context-menu-item.context-menu-submenu::before {
+	content: '';
+}
+
+.context-menu-item.context-menu-submenu::before,
+.context-menu-icon-spacer,
+.context-menu-icon {
+	width: 1rem;
+	height: 1rem;
+	margin-right: 8px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+/* 
+* Hide the spacer icon if the entire context menu list does not contain any <img>.
+* This prevents unnecessary visual gaps when no icons are present.
+*/
+.context-menu-list:not(:has(img)) .context-menu-icon-spacer {
+	display: none;
+}
+
+/* 
+ * Applies consistent spacing across all items in a mixed submenu.
+ * 1. The entire context menu list has no <img> at all (icon-less menu)
+ * 2. The submenu contains a checkmark but has no <img>
+ * 3. The submenu contains a radio but has no <img>
+ * 4. The submenu contains a checkmark and also contains <img>
+ * 5. The submenu contains a radio and also contains <img>
+ */
+.context-menu-list:not(:has(img)) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-lo-checkmark):not(:has(img)) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-radio):not(:has(img)) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-lo-checkmark):has(img) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-radio):has(img) .context-menu-item {
+	padding-left: 2em;
+}
+
 /* input text */
 
 .ui-dialog .jsdialog.ui-edit:focus-visible {
