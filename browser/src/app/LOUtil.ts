@@ -466,6 +466,12 @@ class LOUtil {
 			insertpage3fwhatlayout3along3d28: 'layout13',
 			insertpage3fwhatlayout3along3d29: 'layout02',
 			insertpage3fwhatlayout3along3d30: 'layout03',
+			graphicfilterinvert: 'graphicfilterinvert',
+			graphicfilterpopart: 'graphicfilterpopart',
+			graphicfilterremovenoise: 'graphicfilterremovenoise',
+			graphicfiltersharpen: 'graphicfiltersharpen',
+			graphicfiltersobel: 'graphicfiltersobel',
+			effects: 'pictureeffectsmenu',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
