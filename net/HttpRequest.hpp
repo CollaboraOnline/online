@@ -34,10 +34,11 @@
 #include <netdb.h>
 #endif
 
-#include <Common.hpp>
+#include <common/Common.hpp>
 #include <common/StateEnum.hpp>
-#include <NetUtil.hpp>
+#include <net/NetUtil.hpp>
 #include <net/Socket.hpp>
+#include <net/Uri.hpp>
 
 #if ENABLE_SSL
 #include <net/SslSocket.hpp>

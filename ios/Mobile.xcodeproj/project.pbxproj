@@ -104,6 +104,7 @@
 		3F3B54DC2A39288500063C01 /* HttpRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };
 		3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetUtil.cpp; sourceTree = "<group>"; };
 		3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NetUtil.hpp; sourceTree = "<group>"; };
+		3F3B54DF2A392C9C00063C02 /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Uri.hpp; sourceTree = "<group>"; };
 		92414564BE942221FB823CF9 /* AsyncDNS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsyncDNS.hpp; sourceTree = "<group>"; };
 		A5C2FA582AC1BB3800265946 /* Simd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Simd.hpp; sourceTree = "<group>"; };
 		A5C2FA592AC1BB3800265946 /* Simd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simd.cpp; sourceTree = "<group>"; };
@@ -2975,6 +2976,7 @@
 				3F3B54DC2A39288500063C01 /* HttpRequest.hpp */,
 				3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */,
 				3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */,
+				3F3B54DF2A392C9C00063C02 /* Uri.hpp */,
 				BEA2835C21498AD400848631 /* Socket.cpp */,
 				BEA2835E214A8E2000848631 /* Socket.hpp */,
 				BE636210215101D000F4237E /* WebSocketHandler.hpp */,

@@ -23,7 +23,6 @@
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
-#include <NetUtil.hpp>
 #include <JsonUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>
@@ -33,6 +32,8 @@
 #include <Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
+#include <net/NetUtil.hpp>
+#include <net/Uri.hpp>
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>

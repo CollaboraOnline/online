@@ -13,6 +13,7 @@
 
 #include <net/Buffer.hpp>
 #include <net/NetUtil.hpp>
+#include <net/Uri.hpp>
 
 #include <test/lokassert.hpp>
 
