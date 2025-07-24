@@ -1599,6 +1599,9 @@ tr.useritem > td > img {
 	text-decoration: none;
 	color: var(--color-main-text);
 	width: 100%;
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
 }
 .menu-entry-icon {
 	width: 32px;
