@@ -3227,6 +3227,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'picture-tab-xlinecolor:ColorPickerMenu',
 								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor'
 							}
@@ -3238,12 +3239,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'picture-tab-fillcolor:ColorPickerMenu',
 								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor'
 							}
 						]
 					}
 				],
+				'vertical': 'true'
 			},
 			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
 			{

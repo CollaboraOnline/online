@@ -2543,6 +2543,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'picture-xline-color:ColorPickerMenu',
 								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor',
 								'accessibility': { focusBack: true, combination: 'LC', de: null }
@@ -2555,6 +2556,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'picture-fill-color:ColorPickerMenu',
 								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor',
 								'accessibility': { focusBack: true, combination: 'FC', de: null }
@@ -2562,6 +2564,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					}
 				],
+				'vertical': 'true'
 			},
 			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
 			{
