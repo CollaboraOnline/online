@@ -866,8 +866,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .autofilter #list.ui-treeview,
-#check_list_box.autofilter.ui-treeview {
-	min-height: auto;
+.modalpopup #check_list_box.ui-treeview {
+	min-height: inherit !important;
 }
 /* checkbox */
 
