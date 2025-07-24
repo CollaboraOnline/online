@@ -14,22 +14,31 @@
 #include <QObject>
 #include <QVariant>
 #include <string>
-
-// Helper: post JavaScript code safely on GUI thread
-void evalJS(const std::string& script);
-
-// send Online → JS
-void send2JS(const std::vector<char>& buffer);
+#include "Document.hpp"
+#include "WebView.hpp"
 
 // Qt ⇄ JavaScript bridge
 class Bridge : public QObject
 {
     Q_OBJECT
+
+    coda::DocumentData& _document;
+    WebView& _webView;
+
 public:
-    explicit Bridge(QObject* parent = nullptr)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, WebView& webView)
         : QObject(parent)
+        , _document(document)
+        , _webView(webView)
     {
     }
+
+    // TODO: move these to webview...
+    // Helper: post JavaScript code safely on GUI thread
+    void evalJS(const std::string& script);
+
+    // send Online → JS
+    void send2JS(const std::vector<char>& buffer);
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage
