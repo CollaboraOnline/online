@@ -15,6 +15,7 @@
 #include "AsyncDNS.hpp"
 #include <common/Util.hpp>
 #include <common/Unit.hpp>
+#include <net/Uri.hpp>
 
 #include "Socket.hpp"
 #if ENABLE_SSL && !MOBILEAPP
@@ -648,48 +649,6 @@ bool HostEntry::isLocalhost() const
 }
 
 #endif //!MOBILEAPP
-
-bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
-              std::string& pathAndQuery)
-{
-    const auto itScheme = uri.find("://");
-    if (itScheme != uri.npos)
-    {
-        scheme = uri.substr(0, itScheme + 3); // Include the last slash.
-        uri = uri.substr(scheme.size()); // Remove the scheme.
-    }
-    else
-    {
-        // No scheme.
-        scheme.clear();
-    }
-
-    const auto itUrl = uri.find('/');
-    if (itUrl != uri.npos)
-    {
-        pathAndQuery = uri.substr(itUrl); // Including the first slash.
-        uri = uri.substr(0, itUrl);
-    }
-    else
-    {
-        pathAndQuery.clear();
-    }
-
-    const auto itPort = uri.find(':');
-    if (itPort != uri.npos)
-    {
-        host = uri.substr(0, itPort);
-        port = uri.substr(itPort + 1); // Skip the colon.
-    }
-    else
-    {
-        // No port, just hostname.
-        host = std::move(uri);
-        port.clear();
-    }
-
-    return !host.empty();
-}
 
 bool sameOrigin(const std::string& expectedOrigin, const std::string& actualOrigin)
 {
