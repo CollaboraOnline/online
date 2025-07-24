@@ -927,6 +927,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-inline-start: 8px;
 }
 
+.jsdialog.ui-frame-label {
+	font-weight: bold;
+}
+
 /* fieldset and legend - form grouping */
 
 .jsdialog .ui-fieldset {
@@ -937,6 +941,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .jsdialog .ui-legend {
 	padding-inline: 0;
+	font-weight: bold;
 }
 
 /* spinfield */
@@ -1447,7 +1452,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Word count dialog */
 
-#label9, #documentlabel-mobile {
+#label9:not(#Line-frame.jsdialog #label9),
+#documentlabel-mobile {
 	color: #636363 !important;
 }
 
@@ -2568,18 +2574,18 @@ kbd,
 	max-height: 19vh;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img {  
-	padding: 1px;  
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img {
+	padding: 1px;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected) {  
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected) {
 	outline: 2px solid var(--color-primary);
 	border: 1px solid transparent;
 	background-color: transparent;
 	border-radius: 0;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {  
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {
 	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
 }
 
