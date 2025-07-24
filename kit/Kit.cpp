@@ -112,9 +112,9 @@
 #endif
 
 #ifdef QTAPP
-#include "qt.hpp"
 #include "SetupKitEnvironment.hpp"
 #include "DocumentBroker.hpp"
+#include <future>
 #endif
 #ifdef IOS
 #include "ios.h"
@@ -3947,13 +3947,13 @@ void lokit_main(
 
 #else // MOBILEAPP
 
-#ifndef IOS
+#if !defined(IOS) && !defined(QTAPP)
         // Was not done by the preload.
         // For iOS we call it in -[AppDelegate application: didFinishLaunchingWithOptions:]
         setupKitEnvironment(userInterface);
 #endif
 
-#if (defined(__linux__) && !defined(__ANDROID__)) || defined(__FreeBSD__)
+#if (defined(__linux__) && !defined(__ANDROID__) && !defined(QTAPP)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #elif defined(MACOS)
@@ -3961,6 +3961,8 @@ void lokit_main(
         LibreOfficeKit *kit = lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
 #elif defined(IOS) // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
+#elif defined(QTAPP)
+        static LibreOfficeKit* kit = initKitRunLoopThread().get();
 #elif defined(_WIN32)
         LibreOfficeKit *kit = lok_init_2
             ((app_installation_path + "lo\\program").c_str(),
@@ -4034,7 +4036,8 @@ void lokit_main(
         }
         Log::setDisabledAreas(LogDisabledAreas);
 #endif
-#ifndef IOS
+
+#if !defined(IOS) && !defined(QTAPP)
         if (!LIBREOFFICEKIT_HAS(kit, runLoop))
         {
             LOG_FTL("Kit is missing Unipoll API");
@@ -4085,7 +4088,38 @@ void lokit_main(
 #endif
 }
 
-#if defined(IOS) || defined(QTAPP)
+#ifdef QTAPP
+// with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
+// lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
+// and runLoop in the same thread.
+// note: at this point in time, it is unclear (to quwex) if lok_init_2 not being in the "main"
+// thread will distrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
+// manually?
+std::future<LibreOfficeKit*> initKitRunLoopThread()
+{
+        std::promise<LibreOfficeKit*> promise;
+        std::future<LibreOfficeKit*> future = promise.get_future();
+        std::thread(
+            [p = std::move(promise)]() mutable
+            {
+                Util::setThreadName("lokit_runloop");
+                setupKitEnvironment("notebookbar");
+                Poco::URI userInstallationURI("file", LO_PATH);
+                LibreOfficeKit* kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
+                p.set_value(kit);
+
+                std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
+                int dummy;
+                loKit->runLoop(pollCallback, wakeCallback, &dummy);
+
+                // Should never return
+                std::abort();
+            }).detach();
+        return future;
+}
+#endif // QTAPP
+
+#ifdef IOS
 
 // In the iOS app we can have several documents open in the app process at the same time, thus
 // several lokit_main() functions running at the same time. We want just one LO main loop, though,
