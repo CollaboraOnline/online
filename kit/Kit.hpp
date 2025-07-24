@@ -36,6 +36,10 @@
 
 #endif
 
+#ifdef QTAPP
+#include <future>
+#endif
+
 void lokit_main(
 #if !MOBILEAPP
     const std::string& childRoot, const std::string& jailId, const std::string& configId,
@@ -47,7 +51,11 @@ void lokit_main(
 #endif
     std::size_t numericIdentifier);
 
-#if defined(IOS) || defined(QTAPP)
+#ifdef QTAPP
+std::future<LibreOfficeKit*> initKitRunLoopThread();
+#endif
+
+#ifdef IOS
 void runKitLoopInAThread();
 #endif
 
