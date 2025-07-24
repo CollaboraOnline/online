@@ -987,6 +987,27 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
+				'id': 'Layout-SizeMenu:MenuPageSizes',
+				'type': 'menubutton',
+				'text': _('Size'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PS', de: null }
+			},
+			{
+				'id': 'Layout-OrientationMenu:MenuOrientation',
+				'type': 'menubutton',
+				'text': _UNO('.uno:Orientation'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PO', de: null }
+			},
+			{
+				'id': 'Layout-PrintRangesMenu:MenuPrintRanges',
+				'type': 'menubutton',
+				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PR', de: null }
+			},
+			{
 				'id': 'layout-page-format-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
@@ -1020,30 +1041,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'PG', de: null }
 					}
 				]
-			},
-			{ type: 'separator', id: 'layout-togglegrid-break', orientation: 'vertical' },
-			{
-				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
-				'class': 'unoData-PrintRangesMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PR', de: null }
-			},
-			{
-				'id': 'Data-OrientationMenu:MenuOrientation',
-				'class': 'unoData-OrientationMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:Orientation'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PO', de: null }
-			},
-			{
-				'id': 'Layout-SizeMenu:MenuPageSizes',
-				'type': 'menubutton',
-				'text': _('Size'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PS', de: null }
 			},
 			{ type: 'separator', id: 'layout-printrangesmenu-break', orientation: 'vertical' },
 			{
