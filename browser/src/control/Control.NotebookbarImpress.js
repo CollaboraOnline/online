@@ -2496,6 +2496,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true, combination: 'CO', de: null }
 					},
 					{
+						'id': 'picture-effects:PictureEffectsMenu',
+						'type': 'menubutton',
+						'text': _('Effects'),
+						'accessibility': { focusBack: true, combination: 'EF', de: null }
+					},
+					{
 						'id': 'picture-transparency:PictureTransparency',
 						'type': 'menubutton',
 						'command': '.uno:GrafTransparence',

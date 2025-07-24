@@ -908,4 +908,32 @@ menuDefinitions.set('PictureColorMode', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('PictureEffectsMenu', [
+	{
+		text: _UNO('.uno:GraphicFilterInvert'),
+		uno: '.uno:GraphicFilterInvert',
+		img: 'graphicfilterinvert',
+	},
+	{
+		text: _UNO('.uno:GraphicFilterSharpen'),
+		uno: '.uno:GraphicFilterSharpen',
+		img: 'graphicfiltersharpen',
+	},
+	{
+		text: _UNO('.uno:GraphicFilterRemoveNoise'),
+		uno: '.uno:GraphicFilterRemoveNoise',
+		img: 'graphicfilterremovenoise',
+	},
+	{
+		text: _UNO('.uno:GraphicFilterPopart'),
+		uno: '.uno:GraphicFilterPopart',
+		img: 'graphicfilterpopart',
+	},
+	{
+		text: _UNO('.uno:GraphicFilterSobel'),
+		uno: '.uno:GraphicFilterSobel',
+		img: 'graphicfiltersobel',
+	},
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
