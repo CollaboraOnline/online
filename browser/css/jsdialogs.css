@@ -1949,6 +1949,7 @@ button.menubutton.sidebar > span {
 	background-color: transparent !important;
 	border: none !important;
 	margin: 0 !important;
+	justify-content: center;
 }
 
 .snackbar.jsdialog-container [id$='button'].ui-pushbutton.jsdialog {
