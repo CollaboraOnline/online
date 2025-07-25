@@ -3179,41 +3179,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	},
 
 	getPictureTab: function() {
-		var isODF = app.LOUtil.isFileODF(this.map);
 		var content = [
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TransformDialog', 'text'),
-				'command': '.uno:TransformDialog'
-			},
-			{ type: 'separator', id: 'picture-transformdialog-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:FlipVertical'),
-								'command': '.uno:FlipVertical'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:FlipHorizontal'),
-								'command': '.uno:FlipHorizontal'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'picture-fliphorizontal-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3260,8 +3226,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'picture-tab-xlinecolor:ColorPickerMenu',
+								'type': 'menubutton',
 								'noLabel': true,
-								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor'
 							}
@@ -3272,8 +3238,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'picture-tab-fillcolor:ColorPickerMenu',
+								'type': 'menubutton',
 								'noLabel': true,
-								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor'
 							}
@@ -3283,6 +3249,39 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{ type: 'separator', id: 'picture-fillcolor-break', orientation: 'vertical' },
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TransformDialog', 'text'),
+				'command': '.uno:TransformDialog'
+			},
+			{ type: 'separator', id: 'picture-transformdialog-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FlipVertical'),
+								'command': '.uno:FlipVertical'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FlipHorizontal'),
+								'command': '.uno:FlipHorizontal'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'picture-fliphorizontal-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -3446,70 +3445,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{ type: 'separator', id: 'picture-leavegroup-break', orientation: 'vertical' },
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Text'),
-				'command': '.uno:Text'
-			},
-			{ type: 'separator', id: 'picture-text-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'picture-tab-shapes:InsertShapesMenu',
-								'type': 'menubutton',
-								'noLabel': true,
-								'text': _('Shapes'),
-								'command': '.uno:BasicShapes'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Line', 'text'),
-								'command': '.uno:Line'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'picture-line-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater',
-								// Fontwork export/import not supported in other formats.
-								'visible': isODF ? 'true' : 'false',
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:VerticalText', 'text'),
-								'command': '.uno:VerticalText'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'picture-verticaltext-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Crop'),
