@@ -2151,6 +2151,9 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
 
         clientResponse.setBody(httpResponse->getBody());
 
+        LOG_DBG("WopiHost[" << uriAnonym << "] response body: "
+                            << clientResponse.getBody());
+
         destSocket->sendAndShutdown(clientResponse);
         LOG_DBG("Successfully fetched wopi settings config from wopiHost[" << uriAnonym << ']');
     };

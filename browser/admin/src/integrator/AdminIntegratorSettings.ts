@@ -325,15 +325,22 @@ class SettingIframe {
 		formData.append('type', this.getConfigType());
 
 		try {
-			const response = await fetch(this.API_ENDPOINTS.fetchSharedConfig, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${window.accessToken}`,
+			const response: Response = await fetch(
+				this.API_ENDPOINTS.fetchSharedConfig,
+				{
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${window.accessToken}`,
+					},
+					body: formData,
 				},
-				body: formData,
-			});
+			);
 
 			if (!response.ok) {
+				console.error(
+					'something wend wrong shared config response',
+					response.text(),
+				);
 				throw new Error(
 					`Could not fetch shared config: ${response.statusText}`,
 				);
