@@ -79,7 +79,7 @@ function getStatusbarItemElements(
 function getPageNumberElements(text: string, builder: any) {
 	const element = getStatusbarItemElements(
 		'StatePageNumber',
-		_('Number of Pages'),
+		_('Number of Pages. Click to open the Go to Page dialog box.'),
 		text,
 		builder,
 	);
