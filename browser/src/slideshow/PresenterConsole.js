@@ -237,29 +237,17 @@ class PresenterConsole {
 		this._currentSlideContext =
 			this._currentSlideCanvas.getContext('bitmaprenderer');
 
-		this._proxyPresenter.addEventListener(
-			'resize',
-			L.bind(this._onResize, this),
-		);
+		this._proxyPresenter.addEventListener('resize', this._onResize);
 
 		if (this._presenter._slideShowWindowProxy) {
 			this._presenter._slideShowWindowProxy.addEventListener(
 				'unload',
-				L.bind(this._onWindowClose, this),
+				this._onWindowClose,
 			);
-			window.addEventListener(
-				'beforeunload',
-				L.bind(this._onWindowClose, this),
-			);
+			window.addEventListener('beforeunload', this._onWindowClose);
 		}
-		this._proxyPresenter.addEventListener(
-			'unload',
-			L.bind(this._onConsoleClose, this),
-		);
-		this._proxyPresenter.addEventListener(
-			'keydown',
-			L.bind(this._onKeyDown, this),
-		);
+		this._proxyPresenter.addEventListener('unload', this._onConsoleClose);
+		this._proxyPresenter.addEventListener('keydown', this._onKeyDown);
 
 		// Declare some basic elements that we will use often in next function calls
 		this._prevButton = this._proxyPresenter.document.querySelector('#prev');
@@ -760,9 +748,9 @@ class PresenterConsole {
 		this._timerReset = false;
 	}
 
-	_onKeyDown(e) {
+	_onKeyDown = (e) => {
 		this._presenter.getNavigator().onKeyDown(e);
-	}
+	};
 
 	_onClickPreview(e) {
 		this._presenter.getNavigator().onClick(e);
@@ -1103,33 +1091,24 @@ class PresenterConsole {
 		});
 	}
 
-	_onWindowClose() {
+	_onWindowClose = () => {
 		if (this._proxyPresenter && !this._proxyPresenter.closed)
 			this._proxyPresenter.close();
 
-		window.removeEventListener(
-			'beforeunload',
-			L.bind(this._onWindowClose, this),
-		);
+		window.removeEventListener('beforeunload', this._onWindowClose);
 
 		this._presenter._stopFullScreen();
-	}
+	};
 
-	_onConsoleClose() {
+	_onConsoleClose = () => {
 		if (
 			this._presenter._slideShowWindowProxy &&
 			!this._presenter._slideShowWindowProxy.closed
 		)
 			this._presenter.slideshowWindowCleanUp();
 
-		this._proxyPresenter.removeEventListener(
-			'resize',
-			L.bind(this._onResize, this),
-		);
-		this._proxyPresenter.removeEventListener(
-			'keydown',
-			L.bind(this._onKeyDown, this),
-		);
+		this._proxyPresenter.removeEventListener('resize', this._onResize);
+		this._proxyPresenter.removeEventListener('keydown', this._onKeyDown);
 		this._proxyPresenter.clearInterval(this._timer);
 		this._proxyPresenter.close();
 
@@ -1142,7 +1121,7 @@ class PresenterConsole {
 		this._map.off('transitionstart', this._onTransitionStart, this);
 		this._map.off('transitionend', this._onTransitionEnd, this);
 		this._map.off('tilepreview', this._onTilePreview, this);
-	}
+	};
 
 	_resizeSlideView(viewContainerId, slideViewId) {
 		let container = this._proxyPresenter.document.querySelector(
@@ -1165,7 +1144,7 @@ class PresenterConsole {
 		}
 	}
 
-	_onResize() {
+	_onResize = () => {
 		if (!this._proxyPresenter) {
 			return;
 		}
@@ -1204,7 +1183,7 @@ class PresenterConsole {
 			}.bind(this),
 			800,
 		);
-	}
+	};
 
 	_onTransitionStart(e) {
 		if (!this._proxyPresenter) {

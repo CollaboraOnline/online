@@ -63,9 +63,9 @@ class Cursor {
 		else
 			this.map.on('move', this.update, this);
 
-		window.addEventListener('blur', this.onFocusBlur.bind(this));
-		window.addEventListener('focus', this.onFocusBlur.bind(this));
-		window.addEventListener('resize', this.onResize.bind(this));
+		window.addEventListener('blur', this.onFocusBlur);
+		window.addEventListener('focus', this.onFocusBlur);
+		window.addEventListener('resize', this.onResize);
 	}
 
 	setMouseCursor() {
@@ -99,9 +99,9 @@ class Cursor {
 		this.visible = false;
 		this.domAttached = false;
 
-		window.removeEventListener('blur', this.onFocusBlur.bind(this));
-		window.removeEventListener('focus', this.onFocusBlur.bind(this));
-		window.removeEventListener('resize', this.onResize.bind(this));
+		window.removeEventListener('blur', this.onFocusBlur);
+		window.removeEventListener('focus', this.onFocusBlur);
+		window.removeEventListener('resize', this.onResize);
 	}
 
 	isDomAttached(): boolean {
@@ -119,11 +119,11 @@ class Cursor {
 		return this.visible;
 	}
 
-	onFocusBlur(ev: FocusEvent) {
+	onFocusBlur = (ev: FocusEvent) => {
 		this.addCursorClass(ev.type !== 'blur');
 	}
 
-	onResize() {
+	onResize = () => {
 		if (window.devicePixelRatio !== 1 )
 			this.cursor.style.width = this.width / window.devicePixelRatio + 'px';
 		else
