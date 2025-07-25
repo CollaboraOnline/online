@@ -170,6 +170,7 @@ gtk/mobile
 /wasm/online.js
 /wasm/online.wasm
 /wasm/online.wasm.debug.wasm
+/wasm/online.wasm.debug.wasm.dwp
 /wasm/soffice.data
 /wasm/soffice.data.js.metadata
 
