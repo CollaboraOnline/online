@@ -438,6 +438,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.Calendar.js \
 	src/control/jsdialog/Widget.ColorPickerButton.js \
 	src/control/jsdialog/Widget.ColorPicker.ts \
+	src/control/jsdialog/Widget.PageMarginEntry.ts \
 	src/control/jsdialog/Widget.Combobox.js \
 	src/control/jsdialog/Widget.Containers.ts \
 	src/control/jsdialog/Widget.DropDown.ts \
@@ -1043,6 +1044,7 @@ pot:
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
+		src/control/jsdialog/Widget.PageMarginEntry.ts \
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
