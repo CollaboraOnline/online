@@ -66,6 +66,7 @@ html[dir='rtl'] .sub-menu-arrow {
 .document-logo {
 	width: 35px;
 	height: 38px;
+	background-size: 35px 35px;
 }
 
 #document-titlebar {
@@ -104,18 +105,6 @@ html[dir='rtl'] .sub-menu-arrow {
 	float: right;
 	background-color: var(--color-background-lighter);
 	height: 100%;
-}
-
-.writer-icon-img {
-	background-size: 35px 35px;
-}
-
-.calc-icon-img {
-	background-size: 35px 35px;
-}
-
-.impress-icon-img {
-	background-size: 35px 35px;
 }
 
 #document-name-input {
