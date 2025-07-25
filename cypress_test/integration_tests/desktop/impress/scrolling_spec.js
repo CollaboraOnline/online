@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.switchUIToCompact();
 		// close the default slide-sorter navigation sidebar
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#toolbar-up #menuoverflow').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
 		cy.cGet('#modifypage').click({force: true});
 		desktopHelper.selectZoomLevel('200', false);
 	});
