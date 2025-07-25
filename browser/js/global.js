@@ -371,7 +371,7 @@ class BrowserInitializer extends InitializerBase {
 		window.WOPIpostMessageReady = false;
 
 		// Start listening for Host_PostmessageReady message and save the result for future
-		window.addEventListener('message', this.postMessageHandler.bind(this), false);
+		window.addEventListener('message', this.postMessageHandler, false);
 
 		const element = document.getElementById("initial-variables");
 
@@ -412,7 +412,7 @@ class BrowserInitializer extends InitializerBase {
 		window.canvasSlideshowEnabled = element.dataset.canvasSlideshowEnabled.toLowerCase().trim() === "true";
 	}
 
-	postMessageHandler(e) {
+	postMessageHandler = (e) => {
 		if (!(e && e.data))
 			return;
 
