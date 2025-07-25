@@ -297,6 +297,10 @@ class InitializerBase {
 		if (typeof productURL === 'string' && productURL.length) {
 			window.brandProductURL = productURL;
 		}
+		let logoURL = document.getElementById("init-logo-url").value;
+		if (typeof logoURL === 'string' && logoURL.length) {
+			window.logoURL= logoURL;
+		}
 
 		this.initiateCoolParams();
 	}

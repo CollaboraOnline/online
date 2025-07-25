@@ -318,6 +318,7 @@ interface Window {
 	wopiSettingBaseUrl: string;
 	socketProxy: boolean;
 	langParam: string;
+	logoURL?: string;
 
 	socket: SockInterface;
 	errorMessages: ErrorMessages;
