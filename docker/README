@@ -51,6 +51,7 @@ Check build.sh for more build options!
 
 Runtime
 
-At runtime use the provided cool-seccomp-profile.json as seccomp profile (Ref: https://docs.docker.com/engine/security/seccomp/)
+At runtime use the provided `cool-seccomp-profile.json` as seccomp profile (Ref: https://docs.docker.com/engine/security/seccomp/)
+It improves security and performance, allowing the coolwsd process to better containerize documents processes:
 
    docker run --security-opt cool-seccomp-profile.json
