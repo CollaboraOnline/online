@@ -22,6 +22,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply bold on text shape.', function() {
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
 		cy.cGet('#bold').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -30,6 +31,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply italic on text shape.', function() {
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
 		cy.cGet('#italic').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -38,6 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply underline on text shape.', function() {
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
 		cy.cGet('#underline').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -46,6 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply strikethrough on text shape.', function() {
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
 		cy.cGet('#strikeout').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -54,7 +58,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply font color on text shape.', function() {
-		cy.cGet('#toolbar-up #menuoverflow').click();
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
 		cy.cGet('#fontcolor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('FFFF00');
 
@@ -64,7 +68,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply highlight color on text shape.', function() {
-		cy.cGet('#toolbar-up #menuoverflow').click();
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
 		cy.cGet('#backcolor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('FFBF00');
 

@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.viewport(1400, 600);
 		helper.setupAndLoadDocument('writer/track_changes.odt');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#sidebar').click({force: true}); // Hide sidebar.
+		cy.cGet('#sidebar').click(); // Hide sidebar.
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -40,7 +40,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Accept All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#insertannotation').click({force: true});
+			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -48,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#insertannotation').click({force: true});
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -81,7 +82,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#insertannotation').click({force: true});
+			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -89,7 +91,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#insertannotation').click({force: true});
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -123,6 +125,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
+			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
 			cy.cGet('#insertannotation').click({force: true});
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
