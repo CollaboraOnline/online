@@ -371,7 +371,8 @@ class BrowserInitializer extends InitializerBase {
 		window.WOPIpostMessageReady = false;
 
 		// Start listening for Host_PostmessageReady message and save the result for future
-		window.addEventListener('message', this.postMessageHandler.bind(this), false);
+		this._boundPostMessageHandler = this.postMessageHandler.bind(this);
+		window.addEventListener('message', this._boundPostMessageHandler, false);
 
 		const element = document.getElementById("initial-variables");
 
@@ -424,7 +425,7 @@ class BrowserInitializer extends InitializerBase {
 
 		if (msg.MessageId === 'Host_PostmessageReady') {
 			window.WOPIPostmessageReady = true;
-			window.removeEventListener('message', this.postMessageHandler, false);
+			window.removeEventListener('message', this._boundPostMessageHandler, false);
 			console.log('Received Host_PostmessageReady.');
 		}
 	}

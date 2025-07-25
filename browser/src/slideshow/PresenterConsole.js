@@ -142,7 +142,8 @@ class PresenterConsole {
 		this._map.on('transitionstart', this._onTransitionStart, this);
 		this._map.on('transitionend', this._onTransitionEnd, this);
 		this._map.on('tilepreview', this._onTilePreview, this);
-		this._map.on('presentinwindowclose', this._onWindowClose, this);
+		this._boundOnWindowClose = this._onWindowClose.bind(this);
+		this._map.on('presentinwindowclose', this._boundOnWindowClose, this);
 
 		// safe check for current-presentation element
 		const currentPresentationCanvas =
@@ -237,29 +238,22 @@ class PresenterConsole {
 		this._currentSlideContext =
 			this._currentSlideCanvas.getContext('bitmaprenderer');
 
-		this._proxyPresenter.addEventListener(
-			'resize',
-			L.bind(this._onResize, this),
-		);
+		this._boundOnResize = this._onResize.bind(this);
+		this._proxyPresenter.addEventListener('resize', this._boundOnResize);
 
 		if (this._presenter._slideShowWindowProxy) {
 			this._presenter._slideShowWindowProxy.addEventListener(
 				'unload',
-				L.bind(this._onWindowClose, this),
+				this._boundOnWindowClose,
 			);
-			window.addEventListener(
-				'beforeunload',
-				L.bind(this._onWindowClose, this),
-			);
+			window.addEventListener('beforeunload', this._boundOnWindowClose);
 		}
 		this._proxyPresenter.addEventListener(
 			'unload',
 			L.bind(this._onConsoleClose, this),
 		);
-		this._proxyPresenter.addEventListener(
-			'keydown',
-			L.bind(this._onKeyDown, this),
-		);
+		this._boundOnKeyDown = this._onKeyDown.bind(this);
+		this._proxyPresenter.addEventListener('keydown', this._boundOnKeyDown);
 
 		// Declare some basic elements that we will use often in next function calls
 		this._prevButton = this._proxyPresenter.document.querySelector('#prev');
@@ -1107,10 +1101,7 @@ class PresenterConsole {
 		if (this._proxyPresenter && !this._proxyPresenter.closed)
 			this._proxyPresenter.close();
 
-		window.removeEventListener(
-			'beforeunload',
-			L.bind(this._onWindowClose, this),
-		);
+		window.removeEventListener('beforeunload', this._boundOnWindowClose);
 
 		this._presenter._stopFullScreen();
 	}
@@ -1122,14 +1113,8 @@ class PresenterConsole {
 		)
 			this._presenter.slideshowWindowCleanUp();
 
-		this._proxyPresenter.removeEventListener(
-			'resize',
-			L.bind(this._onResize, this),
-		);
-		this._proxyPresenter.removeEventListener(
-			'keydown',
-			L.bind(this._onKeyDown, this),
-		);
+		this._proxyPresenter.removeEventListener('resize', this._boundOnResize);
+		this._proxyPresenter.removeEventListener('keydown', this._boundOnKeyDown);
 		this._proxyPresenter.clearInterval(this._timer);
 		this._proxyPresenter.close();
 
