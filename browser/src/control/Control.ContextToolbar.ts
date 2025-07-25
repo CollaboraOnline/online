@@ -19,6 +19,8 @@ class ContextToolbar {
 	builder: any;
 	map: any;
 	initialized: boolean = false;
+	// roughly twice the height(76px) of default context toolbar in each direction from boundary
+	disappearingBoundary: number = 150; // px
 
 	constructor(map: any) {
 		this.map = map;
@@ -45,12 +47,78 @@ class ContextToolbar {
 
 		this.builder.map.on('jsdialogaction', this.onJSAction, this);
 		this.builder.map.on('jsdialogupdate', this.onJSUpdate, this);
+		document.addEventListener('pointermove', this.pointerMove);
+		this.changeOpacity(1);
 		this.showHideToolbarImp(true, pos);
+	}
+
+	calculateOpacity(e: PointerEvent): number {
+		const clientRect: DOMRect = this.container.getBoundingClientRect();
+
+		// hover over toolbar
+		if (
+			clientRect.left < e.clientX &&
+			e.clientX < clientRect.right &&
+			clientRect.top < e.clientY &&
+			e.clientY < clientRect.bottom
+		) {
+			return 1;
+		}
+
+		const minX = clientRect.left - this.disappearingBoundary;
+		const maxX = clientRect.right + this.disappearingBoundary;
+		const minY = clientRect.top - this.disappearingBoundary;
+		const maxY = clientRect.bottom + this.disappearingBoundary;
+
+		let xDistance: number = 0;
+		// left of toolbar
+		if (minX < e.clientX && e.clientX < clientRect.left)
+			xDistance = e.clientX - minX;
+		// right of toolbar
+		else if (clientRect.right < e.clientX && e.clientX < maxX)
+			xDistance = maxX - e.clientX;
+
+		let yDistance: number = 0;
+		// top of toolbar
+		if (minY < e.clientY && e.clientY < clientRect.top)
+			yDistance = e.clientY - minY;
+		// bottom of toolbar
+		else if (clientRect.bottom < e.clientY && e.clientY < maxY)
+			yDistance = maxY - e.clientY;
+
+		return (xDistance + yDistance) / (2 * this.disappearingBoundary);
+	}
+
+	pointerMove = (e: PointerEvent): void => {
+		console.log('pranam:: move');
+		const opacity: number = this.calculateOpacity(e);
+
+		if (opacity === 1) {
+			this.makeContextToolbarConstant();
+			return;
+		} else if (opacity === 0) {
+			this.hideContextToolbar();
+			return;
+		}
+
+		this.changeOpacity(opacity);
+	};
+
+	makeContextToolbarConstant(): void {
+		document.removeEventListener('pointermove', this.pointerMove);
+		this.changeOpacity(1);
+	}
+
+	changeOpacity(opacity: number) {
+		app.layoutingService.appendLayoutingTask(() => {
+			this.container.style.opacity = opacity.toString();
+		});
 	}
 
 	hideContextToolbar(): void {
 		this.builder.map.off('jsdialogaction', this.onJSAction, this);
 		this.builder.map.off('jsdialogupdate', this.onJSUpdate, this);
+		document.removeEventListener('pointermove', this.pointerMove);
 		this.showHideToolbarImp(false);
 	}
 
