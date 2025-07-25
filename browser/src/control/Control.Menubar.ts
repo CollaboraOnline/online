@@ -2392,21 +2392,27 @@ class Menubar extends window.L.Control {
 	 * Creates the file icon in the menubar header.
 	 */
 	private _createFileIcon(): void {
-		var liItem = window.L.DomUtil.create('li', '');
-		liItem.id = 'document-header';
-		liItem.setAttribute('role', 'menuitem');
-		var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
-		$(aItem).data('id', 'document-logo');
-		$(aItem).data('type', 'action');
-		aItem.setAttribute('role', 'img');
-		aItem.setAttribute('aria-label', _('file type icon'));
+		if (!(window.logoURL && window.logoURL == "none")) {
+			var liItem = window.L.DomUtil.create('li', '');
+			liItem.id = 'document-header';
+			liItem.setAttribute('role', 'menuitem');
+			var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
+			$(aItem).data('id', 'document-logo');
+			$(aItem).data('type', 'action');
+			aItem.setAttribute('role', 'img');
+			aItem.setAttribute('aria-label', _('file type icon'));
 
-		if (this._menubarCont != null)
-			this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
+			if (window.logoURL) {
+				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
+			}
 
-		var $docLogo = $(aItem);
-		$docLogo.bind('click', {self: this}, this._createDocument);
-		$docLogo.bind('click', this._createDocument.bind(this));
+			if (this._menubarCont != null)
+				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
+
+			var $docLogo = $(aItem);
+			$docLogo.bind('click', {self: this}, this._createDocument);
+			$docLogo.bind('click', this._createDocument.bind(this));
+		}
 	}
 
 	/**
