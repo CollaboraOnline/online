@@ -210,6 +210,7 @@ class Menubar extends L.Control {
 				{name: _UNO('.uno:InsertEndnote', 'text'), uno: '.uno:InsertEndnote'},
 				{type: 'separator'},
 				{uno: '.uno:InsertPagebreak'},
+				{uno: '.uno:InsertBreak'},
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
