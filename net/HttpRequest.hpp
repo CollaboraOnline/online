@@ -618,6 +618,8 @@ public:
 
     /// Get the request URL.
     const std::string& getUrl() const { return _url; }
+    /// Set the request URL. Necessary to decode hexified URLs.
+    void setUrl(const std::string& url) { _url = url; }
 
     /// Get the request verb.
     const std::string& getVerb() const { return _verb; }
@@ -670,8 +672,6 @@ protected:
     {
     }
 
-    /// Set the request URL.
-    void setUrl(const std::string& url) { _url = url; }
     /// Set the request verb (typically GET or POST).
     void setVerb(const std::string& verb) { _verb = verb; }
     /// Set the protocol version (typically HTTP/1.1).
