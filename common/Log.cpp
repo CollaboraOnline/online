@@ -84,7 +84,7 @@ public:
 
         if (getLevel() < prio)
             return;
-#if POCO_VERSION >= 0x010D0000
+#if POCO_VERSION >= 0x010C0501
         Poco::Channel* pChannel = getChannel().get();
 #else
         auto pChannel = getChannel();
