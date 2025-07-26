@@ -83,7 +83,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     processURI();
 }
 
-RequestDetails::RequestDetails(http::Request& request, const std::string& serviceRoot)
+RequestDetails::RequestDetails(http::RequestParser& request, const std::string& serviceRoot)
 {
     // Check and remove the ServiceRoot from the request.getURI()
     if (!request.getUrl().starts_with(serviceRoot))

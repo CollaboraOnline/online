@@ -131,7 +131,7 @@ private:
 
 public:
     RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot);
-    RequestDetails(http::Request& request, const std::string& serviceRoot);
+    RequestDetails(http::RequestParser& request, const std::string& serviceRoot);
     RequestDetails(const std::string &mobileURI);
 
     /// Constructs from its components.

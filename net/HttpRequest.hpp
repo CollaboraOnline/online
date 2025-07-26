@@ -808,6 +808,21 @@ public:
         saveBodyToMemory();
     }
 
+    /// Construct a parser from a Request instance.
+    /// Typically used for testing.
+    RequestParser(http::Request& request)
+        : _recvBodySize(0)
+    {
+        // By default we store the body in memory.
+        saveBodyToMemory();
+
+        Buffer out;
+        request.writeData(out, INT_MAX);
+        [[maybe_unused]] const auto read = readData(out.getBlock(), out.getBlockSize());
+        assert(read == static_cast<int64_t>(out.getBlockSize()) &&
+               "Expected to read all the serialized data");
+    }
+
     /// Handles incoming data.
     /// Returns the number of bytes consumed, or -1 for error
     /// and/or to interrupt transmission.
