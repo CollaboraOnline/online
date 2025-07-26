@@ -813,6 +813,9 @@ class UIManager extends L.Control {
 		this.map.fire('rulerchanged');
 		this.map.fire('statusbarchanged');
 		this.map.fire('a11ystatechanged');
+
+		// be sure we hide old scrollable markers
+		JSDialog.RefreshScrollables();
 	}
 
 	// UI modification

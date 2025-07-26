@@ -36,7 +36,7 @@ function hideSidebarImpress() {
 
 	cy.cGet('#modifypage').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
-	cy.cGet('#modifypage button').click('left');
+	cy.cGet('#modifypage button').click();
 	cy.cGet('#modifypage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
@@ -223,24 +223,21 @@ function resetZoomLevel() {
 	cy.log('<< resetZoomLevel - end');
 }
 
-function insertImage(docType) {
+function insertImage() {
 	cy.log('>> insertImage - start');
 
 	selectZoomLevel('50', false);
 
-	cy.cGet('#toolbar-up .ui-scroll-right').click().click().click();
-
 	const mode = Cypress.env('USER_INTERFACE');
 
-	if (mode === 'notebookbar')
-		cy.cGet('#toolbar-up .ui-scroll-right').click().click();
-
-	if (docType === 'calc' &&  mode === 'notebookbar') {
+	if (mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#Insert-container .unoInsertGraphic').click();
-	}
-	else {
-		cy.cGet('#Home-container .unoInsertGraphic').click();
+	} else {
+		cy.cGet('#toolbar-up .unoInsertGraphic').click();
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
@@ -254,11 +251,13 @@ function insertVideo() {
 
 	selectZoomLevel('50', false);
 
-	cy.cGet('#toolbar-up .ui-scroll-right').click();
-
 	const mode = Cypress.env('USER_INTERFACE');
 
-	if (mode === 'notebookbar') cy.cGet('#toolbar-up .ui-scroll-right').click();
+	if (mode === 'notebookbar') {
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+	}
 
 	cy.cGet('#Insert-tab-label').click();
 	cy.cGet('#Insert-container .insertmultimedia').click();
@@ -331,7 +330,7 @@ function switchUIToNotebookbar() {
 		var userInterfaceMode = win['0'].userInterfaceMode;
 		if (userInterfaceMode !== 'notebookbar') {
 			cy.cGet('#menu-view').click();
-			cy.cGet('#menu-toggleuimode').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+			cy.cGet('#menu-toggleuimode').click();
 		}
 		Cypress.env('USER_INTERFACE', 'notebookbar');
 	});

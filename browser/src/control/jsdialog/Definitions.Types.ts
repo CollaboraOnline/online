@@ -43,7 +43,7 @@ interface JSBuilderOptions {
 
 interface JSBuilder {
 	_currentDepth: number; // mobile-wizard only FIXME: encapsulate
-	_controlHandlers: any; // handlers for widget types
+	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
 
 	options: JSBuilderOptions; // current state
 	map: any; // reference to map
@@ -66,6 +66,23 @@ interface JSBuilder {
 	_cleanText: (text: string) => string;
 	_expanderHandler: any; // FIXME: use handlers getter instead
 }
+
+// widget handler, returns true if child nodes should be still processed by the builder
+type JSWidgetHandler = (
+	parentContainer: Element,
+	data: WidgetJSON,
+	builder: JSBuilder,
+	customCallback?: () => void,
+) => boolean;
+
+// callback triggered by user actions
+type JSDialogCallback = (
+	objectType: string,
+	eventType: string,
+	object: any,
+	data: any,
+	builder: JSBuilder,
+) => void;
 
 interface DialogResponse {
 	id: string;
@@ -99,15 +116,6 @@ interface PopupData extends JSDialogJSON {
 	posy: number;
 }
 
-// callback triggered by user actions
-type JSDialogCallback = (
-	objectType: string,
-	eventType: string,
-	object: any,
-	data: any,
-	builder: JSBuilder,
-) => void;
-
 // callback triggered for custom rendered entries
 type CustomEntryRenderCallback = (pos: number | string) => void;
 
@@ -130,6 +138,15 @@ type MenuDefinition = {
 interface ContainerWidgetJSON extends WidgetJSON {
 	layoutstyle?: string | 'start' | 'end'; // describes alignment of the elements
 	vertical?: boolean; // is horizontal or vertical container
+}
+
+interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
+	name: string; // visible name of a group
+}
+
+interface OverflowGroupContainer extends Element {
+	foldGroup?: () => void;
+	unfoldGroup?: () => void;
 }
 
 interface GridWidgetJSON extends ContainerWidgetJSON {
