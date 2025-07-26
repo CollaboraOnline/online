@@ -44,6 +44,12 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'P', de: null }
 			},
 			{
+				'id': 'Formula-tab-label',
+				'text': _('Formulas'),
+				'name': 'Formulas',
+				'accessibility': { focusBack: true,	combination: 'Z', de: null }
+			},
+			{
 				'id': 'Data-tab-label',
 				'text': _('Data'),
 				'name': 'Data',
@@ -96,6 +102,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			this.getHomeTab(),
 			this.getInsertTab(),
 			this.getLayoutTab(),
+			this.getFormulaTab(),
 			this.getDataTab(),
 			this.getReviewTab(),
 			this.getFormatTab(),
@@ -1713,6 +1720,243 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		return this.getTabPage('Insert', content);
 	},
 
+	getFormulaTab: function() {
+		var content = [
+			{
+				'id': 'Formula-InsertFunction',
+				'type': 'bigtoolitem',
+				'text': _('Insert Function'),
+				'command': '.uno:FunctionDialog',
+				'accessibility': { focusBack: true,	combination: 'ZF', de: null }
+			},
+			{ type: 'separator', id: 'formula-insertformula-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-AutoSumMenu:AutoSumMenu',
+								type: 'menubutton',
+								class: 'AutoSumMenu',
+								noLabel: true,
+								text: _('AutoSum'),
+								command: '.uno:AutoSumMenu',
+								'accessibility': { focusBack: true,	combination: 'ZA', de: null }
+							},
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-FinancialFunctions:FinancialFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('Financial'),
+								'accessibility': { focusBack: true,	combination: 'ZR', de: null }
+							},
+						]
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-LogicalFunctions:LogicalFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('Logical'),
+								'accessibility': { focusBack: true,	combination: 'ZL', de: null }
+							},
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-TextFunctions:TextFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('Text'),
+								'accessibility': { focusBack: true,	combination: 'ZT', de: null }
+							},
+						]
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-DateAndTimeFunctions:DateAndTimeFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('Date & Time'),
+								'accessibility': { focusBack: true,	combination: 'ZD', de: null }
+							},
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-LookupAndRefFunctions:LookupAndRefFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('Lookup & Reference'),
+								'accessibility': { focusBack: true,	combination: 'ZK', de: null }
+							},
+						]
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-MathAndTrigFunctions:MathAndTrigFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('Math & Trig'),
+								'accessibility': { focusBack: true,	combination: 'ZM', de: null }
+							},
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								id: 'Formula-MoreFunctions:MoreFunctionsMenu',
+								type: 'menubutton',
+								noLabel: true,
+								text: _('More Functions'),
+								'accessibility': { focusBack: true,	combination: 'ZX', de: null }
+							},
+						]
+					},
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'formula-section-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'formula-add-name',
+								'type': 'toolitem',
+								'text': _UNO('.uno:AddName', 'spreadsheet'),
+								'command': '.uno:AddName',
+								'accessibility': { focusBack: true,	combination: 'ZD', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'data-define-name',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DefineName', 'spreadsheet'),
+								'command': '.uno:DefineName',
+								'accessibility': { focusBack: true,	combination: 'ZN', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'formula-nameoperations-break', orientation: 'vertical' },
+			{
+				'id': 'formula-define-range',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DefineDBName', 'spreadsheet'),
+				'command': '.uno:DefineDBName',
+				'accessibility': { focusBack: true,	combination: 'DR', de: null }
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'formula-select-range',
+								'type': 'toolitem',
+								'text': _UNO('.uno:SelectDB', 'spreadsheet'),
+								'command': '.uno:SelectDB',
+								'accessibility': { focusBack: true, combination: 'SR', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'formula-refresh-range',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataAreaRefresh', 'spreadsheet'),
+								'command': '.uno:DataAreaRefresh',
+								'accessibility': { focusBack: true, combination: 'DE', de: null }
+							},
+						]
+					},
+				],
+				'vertical': 'true'
+			},
+			{ type: 'separator', id: 'formula-rangeoperations-break', orientation: 'vertical' },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'formula-convert-formula-to-value',
+								'type': 'toolitem',
+								'text': _UNO('.uno:ConvertFormulaToValue', 'spreadsheet'),
+								'command': '.uno:ConvertFormulaToValue',
+								'accessibility': { focusBack: true,	combination: 'R', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'formula-calculate',
+								'type': 'toolitem',
+								'text': _UNO('.uno:Calculate', 'spreadsheet'),
+								'command': '.uno:Calculate',
+								'accessibility': { focusBack: true,	combination: 'R', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+		];
+
+		return this.getTabPage('Formulas', content);
+	},
+
 	getDataTab: function() {
 		var content = [
 			{
@@ -1897,36 +2141,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'data-calculate',
-								'type': 'toolitem',
-								'text': _UNO('.uno:Calculate', 'spreadsheet'),
-								'command': '.uno:Calculate',
-								'accessibility': { focusBack: true,	combination: 'R', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'data-convert-formula-to-value',
-								'type': 'toolitem',
-								'text': _UNO('.uno:ConvertFormulaToValue', 'spreadsheet'),
-								'command': '.uno:ConvertFormulaToValue',
-								'accessibility': { focusBack: true,	combination: 'R', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
 								'id': 'data-goal-seek-dialog',
 								'type': 'toolitem',
 								'text': _UNO('.uno:GoalSeekDialog', 'spreadsheet'),
@@ -1958,75 +2172,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'DS', de: null }
-			},
-			{ type: 'separator', id: 'data-statisticsmenu-break', orientation: 'vertical' },
-			{
-				'id': 'data-define-range',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:DefineDBName', 'spreadsheet'),
-				'command': '.uno:DefineDBName',
-				'accessibility': { focusBack: true,	combination: 'DR', de: null }
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'data-select-range',
-								'type': 'toolitem',
-								'text': _UNO('.uno:SelectDB', 'spreadsheet'),
-								'command': '.uno:SelectDB',
-								'accessibility': { focusBack: true, combination: 'SR', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'data-refresh-range',
-								'type': 'toolitem',
-								'text': _UNO('.uno:DataAreaRefresh', 'spreadsheet'),
-								'command': '.uno:DataAreaRefresh',
-								'accessibility': { focusBack: true, combination: 'DE', de: null }
-							},
-						]
-					},
-				],
-				'vertical': 'true'
-			},
-			{ type: 'separator', id: 'data-refreshrange-break', orientation: 'vertical' },
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'data-add-name',
-								'type': 'toolitem',
-								'text': _UNO('.uno:AddName', 'spreadsheet'),
-								'command': '.uno:AddName',
-								'accessibility': { focusBack: true,	combination: 'DD', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'data-define-name',
-								'type': 'toolitem',
-								'text': _UNO('.uno:DefineName', 'spreadsheet'),
-								'command': '.uno:DefineName',
-								'accessibility': { focusBack: true,	combination: 'NN', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
 			},
 		];
 
