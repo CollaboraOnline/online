@@ -319,7 +319,7 @@ void RequestDetailsTests::testLocalHexified()
     const std::string fileUrlHex = "0x" + HexUtil::dataToHexString(fileUrl, 0, fileUrl.size());
 
     {
-        const std::string URI = "/cool/" + fileUrlHex + "/ws/open/open/0";
+        static const std::string URI = "/cool/" + fileUrlHex + "/ws/open/open/0";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
