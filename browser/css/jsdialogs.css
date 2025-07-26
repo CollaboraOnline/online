@@ -2450,6 +2450,10 @@ kbd,
 	height: 16px;
 }
 
+#findreplacetabbox {
+	justify-content: start;
+}
+
 /* text-area overflow on function wizard window */
 
 #FormulaDialog #ed_formula.ui-textarea {
