@@ -49,6 +49,7 @@ class ShortcutsUtil {
 	public INSERT_PAGEBREAK = 'Ctrl + Return';
 	public FIND = 'Ctrl + F';
 	public FIND_REPLACE = 'Ctrl + H';
+	public FORMAT_CELL = 'Ctrl + 1';
 
 	constructor() {
 		this.shortcutMap.set('.uno:Save', this.SAVE);
@@ -94,6 +95,7 @@ class ShortcutsUtil {
 		this.shortcutMap.set('.uno:InsertPagebreak', this.INSERT_PAGEBREAK);
 		this.shortcutMap.set('search', this.FIND);
 		this.shortcutMap.set('.uno:SearchDialog', this.FIND_REPLACE);
+		this.shortcutMap.set('.uno:FormatCellDialog', this.FORMAT_CELL);
 	}
 
 	public hasShortcut(command: string): boolean {
