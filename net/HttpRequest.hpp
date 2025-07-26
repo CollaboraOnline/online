@@ -639,6 +639,19 @@ public:
 
     Stage stage() const { return _stage; }
 
+    /// True if we are a Keep-Alive request.
+    bool isKeepAlive() const
+    {
+        const std::string token = get(Header::CONNECTION);
+        if (!token.empty())
+        {
+            return !Util::iequal("close", token);
+        }
+
+        // 1.1 and newer are reusable by default (i.e. keep-alive).
+        return getVersion() != "HTTP/1.0";
+    }
+
     void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
@@ -721,19 +734,6 @@ public:
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { editHeader().set(key, std::move(value)); }
-
-    /// True if we are a Keep-Alive request.
-    bool isKeepAlive() const
-    {
-        const std::string token = get(Header::CONNECTION);
-        if (!token.empty())
-        {
-            return !Util::iequal("close", token);
-        }
-
-        // 1.1 and newer are reusable by default (i.e. keep-alive).
-        return getVersion() != "HTTP/1.0";
-    }
 
     /// Set the request body source to upload some data. Meaningful for POST.
     /// Size is needed to set the Content-Length.
