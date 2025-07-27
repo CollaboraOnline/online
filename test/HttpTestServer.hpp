@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <net/HttpRequest.hpp>
-#include <net/Socket.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
 
 #include <chrono>
+#include <cstdint>
 #include <string>
 
 /// Handles incoming connections and dispatches to the appropriate handler.
