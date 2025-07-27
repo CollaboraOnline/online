@@ -24,11 +24,11 @@
 /* global JSDialog $ */
 
 JSDialog.progressbar = function (parentContainer, data, builder) {
-	var div = L.DomUtil.createWithId('div', data.id, parentContainer);
+	const div = L.DomUtil.createWithId('div', data.id, parentContainer);
 	L.DomUtil.addClass(div, 'ui-progressbar');
 	L.DomUtil.addClass(div, builder.options.cssClass);
 
-	var progressbar = L.DomUtil.create('progress', builder.options.cssClass, div);
+	const progressbar = L.DomUtil.create('progress', builder.options.cssClass, div);
 	progressbar.id = data.id + '-progress';
 	progressbar.tabIndex = '0';
 
