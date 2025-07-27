@@ -123,7 +123,9 @@ private:
 
                 if (response.getBody().empty() && statusCode.first >= 200 && statusCode.first != 204
                     && statusCode.first != 304) // No Content for other tags.
-                    response.set("Content-Length", "0");
+                {
+                    response.setContentLength(0);
+                }
 
                 socket->send(response);
             }
@@ -179,7 +181,7 @@ private:
         else
         {
             http::Response response(http::StatusCode::NotImplemented, fd);
-            response.set("Content-Length", "0");
+            response.setContentLength(0);
             socket->send(response);
         }
     }

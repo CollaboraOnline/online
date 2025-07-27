@@ -1256,7 +1256,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         // Bad request.
         // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
         http::Response httpResponse(http::StatusCode::BadRequest);
-        httpResponse.set("Content-Length", "0");
+        httpResponse.setContentLength(0);
         socket->sendAndShutdown(httpResponse);
         socket->ignoreInput();
         return MessageResult::Ignore;
@@ -1297,7 +1297,7 @@ bool ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDet
 
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
-    httpResponse.set("Content-Length", std::to_string(responseString.size()));
+    httpResponse.setContentLength(responseString.size());
     httpResponse.set("Content-Type", "text/plain");
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     if( requestDetails.closeConnection() )
@@ -1780,7 +1780,7 @@ bool handleStaticRequest(const Poco::Net::HTTPRequest& request,
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-    httpResponse.set("Content-Length", std::to_string(responseString.size()));
+    httpResponse.setContentLength(responseString.size());
     httpResponse.set("Content-Type", contentType);
     if( !request.getKeepAlive() )
         httpResponse.setConnectionToken(http::Header::ConnectionToken::Close);
@@ -1868,7 +1868,7 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
 
         // we got the wrong request.
         http::Response httpResponse(http::StatusCode::BadRequest);
-        httpResponse.set("Content-Length", "0");
+        httpResponse.setContentLength(0);
         socket->sendAndShutdown(httpResponse);
         socket->ignoreInput();
         return true;
@@ -1896,7 +1896,7 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
                                                         << "] in media URL: " + request.getURI());
 
             http::Response httpResponse(http::StatusCode::BadRequest);
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
             return true;
@@ -2152,7 +2152,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 {
                     LOG_ERR("Wrong PDF type: " << pdfVer << ". Conversion aborted.");
                     http::Response httpResponse(http::StatusCode::BadRequest);
-                    httpResponse.set("Content-Length", "0");
+                    httpResponse.setContentLength(0);
                     socket->sendAndShutdown(httpResponse);
                     socket->ignoreInput();
                     return true;
@@ -2203,7 +2203,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         {
             LOG_INF("Missing parameters for conversion request.");
             http::Response httpResponse(http::StatusCode::BadRequest);
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
             return true;
@@ -2260,7 +2260,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
-                httpResponse.set("Content-Length", "0");
+                httpResponse.setContentLength(0);
                 socket->sendAndShutdown(httpResponse);
                 socket->ignoreInput();
                 return true;
@@ -2354,7 +2354,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 LOG_ERR("Download with id [" << downloadId << "] not found.");
 
             http::Response httpResponse(http::StatusCode::NotFound);
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             socket->sendAndShutdown(httpResponse);
             return true;
         }

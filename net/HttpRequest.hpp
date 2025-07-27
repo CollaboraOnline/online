@@ -766,7 +766,7 @@ public:
         if (!body.empty()) // Type is only meaningful if there is a body.
             editHeader().setContentType(std::move(contentType));
 
-        editHeader().add("Content-Length", std::to_string(body.size()));
+        editHeader().setContentLength(body.size());
 
         const size_t bodySize = body.size();
 
