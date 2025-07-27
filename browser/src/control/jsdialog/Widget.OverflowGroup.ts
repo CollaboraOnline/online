@@ -116,15 +116,34 @@ function setupOverflowMenu(
 		console.debug('overflow manager: fold group: ' + id);
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
-		overflowMenuButton.style.display = 'revert';
+		overflowMenuButton.style.display = '';
 	};
 
 	(parentContainer as OverflowGroupContainer).unfoldGroup = function () {
 		console.debug('overflow manager: unfold group: ' + id);
-		groupLabel.style.display = 'revert';
+		groupLabel.style.display = '';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
 	};
+}
+
+function findFirstToolitem(items: Array<WidgetJSON>): WidgetJSON | null {
+	for (const item of items) {
+		if (item.type.indexOf('toolitem') >= 0) return item;
+		else if (item.children && item.children.length) {
+			const innerItem = findFirstToolitem(item.children);
+			if (innerItem !== null) return innerItem;
+		}
+	}
+	return null;
+}
+
+// TODO: add correct type
+function getToolitemIcon(item: WidgetJSON | null): string {
+	if (!item) return 'lc_menuoverflow.svg';
+
+	if ((item as any).icon !== undefined) return (item as any).icon;
+	else return app.LOUtil.getIconNameOfCommand((item as any).command);
 }
 
 JSDialog.OverflowGroup = function (
@@ -170,6 +189,8 @@ JSDialog.OverflowGroup = function (
 	// content
 	builder.build(contentContainer, data.children, false);
 
+	const firstItem = findFirstToolitem(data.children);
+
 	// button
 	builder.build(
 		innerContainer,
@@ -178,8 +199,10 @@ JSDialog.OverflowGroup = function (
 				type: 'bigcustomtoolitem',
 				id: 'overflow-button-' + data.id,
 				text: data.name ? data.name : '',
-				icon: 'lc_menuoverflow.svg',
+				icon: getToolitemIcon(firstItem),
+				// TODO: command: (firstItem as any).command, // call on main button click
 				noLabel: !data.name,
+				// TODO: dropdown: true, // show dropdown arrow
 			} as any as WidgetJSON,
 		],
 		false,
