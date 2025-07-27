@@ -467,7 +467,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
 
             // FIXME: work harder for error detection ?
             http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             httpResponse.set("Connection", "close");
             socket->send(httpResponse);
             socket->asyncShutdown();
@@ -3007,7 +3007,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 if (error)
                 {
                     http::Response httpResponse(http::StatusCode::InternalServerError);
-                    httpResponse.set("Content-Length", "0");
+                    httpResponse.setContentLength(0);
                     saveAsSocket->sendAndShutdown(httpResponse);
                 }
             }

@@ -212,7 +212,7 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
             http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTimeNow());
             httpResponse.add("X-Content-Type-Options", "nosniff");
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             streamSocket->send(httpResponse);
         }
         else
@@ -342,7 +342,7 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
     http::Response httpResponse(http::StatusCode::OK);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.add("X-Content-Type-Options", "nosniff");
-    httpResponse.set("Content-Length", std::to_string(totalSize));
+    httpResponse.setContentLength(totalSize);
     httpResponse.set("Content-Type", "application/json; charset=utf-8");
     socket->send(httpResponse);
 

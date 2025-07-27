@@ -264,7 +264,7 @@ private:
                 http::Response httpResponse(_statusCode);
                 for (const auto& header : _responseHeaders)
                     httpResponse.set(header.first, header.second);
-                httpResponse.set("Content-Length", std::to_string(getSendSize()));
+                httpResponse.setContentLength(getSendSize());
                 httpResponse.set("Accept-Ranges", "bytes");
                 httpResponse.set("Content-Range", "bytes " + std::to_string(getStart()) + "-" +
                                                       std::to_string(getEnd() - 1) + '/' +
@@ -276,7 +276,7 @@ private:
 
             LOG_DBG("Has no data to send back");
             http::Response httpResponse(http::StatusCode::BadRequest);
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             socket->sendAndShutdown(httpResponse);
         }
         else
