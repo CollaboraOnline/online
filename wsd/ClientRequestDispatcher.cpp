@@ -754,7 +754,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
     Poco::Net::HTTPRequest request;
     ssize_t headerSize;
-
     if (_postContentPending)
     {
         std::streamsize available = std::min<std::streamsize>(_postContentPending,
@@ -780,7 +779,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
         else
         {
-            socket->handleExpect(request);
+            socket->handleExpect(request.get("Expect", std::string()));
 
             _postStream.seekg(0);
             handleFullMessage(request, _postStream, disposition, socket, headerSize, messageSize - headerSize, false, now);
@@ -841,7 +840,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     if (!socket->parseHeader("Client", headerSize, inBufferSize, request, delayMs, map))
         return;
 
-    socket->handleExpect(request);
+    socket->handleExpect(request.get("Expect", std::string()));
 
     if (!socket->checkChunks(request, headerSize, map, delayMs))
         return;
