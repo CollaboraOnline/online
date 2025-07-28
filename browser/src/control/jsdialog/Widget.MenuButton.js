@@ -36,8 +36,12 @@ function _menubuttonControl (parentContainer, data, builder) {
 	}
 	else if (data.id.includes('-')) {
 		ids = data.id.split('-');
-		menuId = ids[1];
-		data.id = ids[0];
+		if (ids.length === 2) {
+			menuId = ids[1];
+			data.id = ids[0];
+		} else {
+			console.error('Menubutton without correct menu id');
+		}
 	}
 	else
 		menuId = data.id;
