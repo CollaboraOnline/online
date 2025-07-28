@@ -174,13 +174,7 @@ class Cursor {
 		var canvasOffset = this.position.subtract(origin);
 
 		if (inDocCursor) {
-			var cursorOffset = new cool.Point(
-				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
-				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
-			var paneBounds = new cool.Bounds(new cool.Point(0, 0), paneSize);
-			var cursorBounds = new cool.Bounds(cursorOffset, cursorOffset.add(this.size));
-
-			if (!paneBounds.contains(cursorBounds)) {
+			if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
 				this.container.style.visibility = 'hidden';
 				this.visible = false;
 				this.addCursorClass(this.visible);
