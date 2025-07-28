@@ -22,7 +22,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply bold on text shape.', function() {
-		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar .arrowbackground').click();
 		cy.cGet('#bold').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -31,7 +31,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply italic on text shape.', function() {
-		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar .arrowbackground').click();
 		cy.cGet('#italic').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply underline on text shape.', function() {
-		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar .arrowbackground').click();
 		cy.cGet('#underline').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -49,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply strikethrough on text shape.', function() {
-		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar .arrowbackground').click();
 		cy.cGet('#strikeout').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -58,7 +58,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply font color on text shape.', function() {
-		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-fontcolor-toptoolbar .arrowbackground').click();
 		cy.cGet('#fontcolor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('FFFF00');
 
@@ -68,7 +68,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply highlight color on text shape.', function() {
-		cy.cGet('#toolbar-up #overflow-button-format-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-fontcolor-toptoolbar .arrowbackground').click();
 		cy.cGet('#backcolor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('FFBF00');
 

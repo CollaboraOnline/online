@@ -68,10 +68,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 
 		// Apply bulleting
-		cy.cGet('#toolbar-up #defaultbullet').click();
+		cy.cGet('#defaultbullet').click();
 
 		selectText();
 		cy.cGet('#document-container g.Page .BulletChars')
@@ -86,10 +86,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 
 		// Apply numbering
-		cy.cGet('#toolbar-up #defaultnumbering').click();
+		cy.cGet('#defaultnumbering').click();
 
 		selectText();
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
