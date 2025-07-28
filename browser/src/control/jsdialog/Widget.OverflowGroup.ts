@@ -93,7 +93,11 @@ function setupOverflowMenu(
 
 function findFirstToolitem(items: Array<WidgetJSON>): WidgetJSON | null {
 	for (const item of items) {
-		if (item.type.indexOf('toolitem') >= 0) return item;
+		if (
+			item.type.indexOf('toolitem') >= 0 ||
+			item.type.indexOf('colorlistbox') >= 0
+		)
+			return item;
 		else if (item.children && item.children.length) {
 			const innerItem = findFirstToolitem(item.children);
 			if (innerItem !== null) return innerItem;
@@ -155,6 +159,7 @@ JSDialog.OverflowGroup = function (
 
 	// first toolitem in the group
 	const firstItem = findFirstToolitem(data.children);
+	console.assert(firstItem, 'First toolitem inside overflow group not found');
 
 	// placeholder menu for a dropdown
 	const builtMenu = [
@@ -178,17 +183,19 @@ JSDialog.OverflowGroup = function (
 			{
 				type: 'menubutton',
 				id: id,
-				text: data.name ? data.name : (firstItem as any).text,
+				text: data.name ? data.name : firstItem ? (firstItem as any).text : '',
 				icon: getToolitemIcon(firstItem),
-				command: (firstItem as any).command, // call on main button click
+				command: firstItem ? (firstItem as any).command : '',
 				noLabel: !data.name,
 				menu: builtMenu,
-				applyCallback: () => {
-					if (!firstItem) return;
-					firstItem.type.includes('custom')
-						? app.dispatcher.dispatch((firstItem as any).command)
-						: app.map.sendUnoCommand((firstItem as any).command);
-				},
+				applyCallback:
+					firstItem && firstItem.type === 'toolitem'
+						? () => {
+								firstItem.type.includes('custom')
+									? app.dispatcher.dispatch((firstItem as any).command)
+									: app.map.sendUnoCommand((firstItem as any).command);
+							}
+						: undefined,
 			} as any as WidgetJSON,
 		],
 		false,
