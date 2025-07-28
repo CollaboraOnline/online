@@ -237,12 +237,12 @@ void HttpRequestTests::testGoodResponse()
     // Inject the following response:
     // HTTP/1.1 200 OK
     // Date: Wed, 02 Jun 2021 02:30:52 GMT
-    // Content-Type: text/html; charset=utf-8
+    // Content-Type: text/html;charset=utf-8
     // Content-Length: 0
     constexpr auto URL =
         "/inject/"
         "485454502F312E3120323030204F4B0D0A446174653A205765642C203032204A756E20323032312030323A3330"
-        "3A353220474D540D0A436F6E74656E742D547970653A20746578742F68746D6C3B20636861727365743D757466"
+        "3A353220474D540D0A436F6E74656E742D547970653A20746578742F68746D6C3B636861727365743D757466"
         "2D380D0A436F6E74656E742D4C656E6774683A20300D0A0D0A";
 
     http::Request httpRequest(URL);
@@ -263,7 +263,7 @@ void HttpRequestTests::testGoodResponse()
                    http::StatusLine::StatusCodeClass::Successful);
         LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
         LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
-        LOK_ASSERT_EQUAL(std::string("text/html; charset=utf-8"),
+        LOK_ASSERT_EQUAL(std::string("text/html;charset=utf-8"),
                          httpResponse->header().getContentType());
         LOK_ASSERT_EQUAL(std::string("Wed, 02 Jun 2021 02:30:52 GMT"),
                          httpResponse->header().get("Date"));
