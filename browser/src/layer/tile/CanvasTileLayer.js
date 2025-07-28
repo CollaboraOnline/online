@@ -3185,10 +3185,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			let position;
 			if (this.sheetGeometry) {
 				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y);
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, (position.max.y - 16) * app.pixelsToTwips);
+				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, (position.max.y - CalcValidityDropDown.dropDownArrowSize * app.dpiScale) * app.pixelsToTwips);
 			}
 			else
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - 16 * app.pixelsToTwips);
+				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - CalcValidityDropDown.dropDownArrowSize * app.dpiScale * app.pixelsToTwips);
 
 			if (!app.sectionContainer.getSectionWithName(L.CSections.CalcValidityDropDown.name)) {
 				let dropDownSection = new CalcValidityDropDown(position);
