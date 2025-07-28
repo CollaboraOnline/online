@@ -16,6 +16,15 @@
 
 declare var JSDialog: any;
 
+function migrateItems(from: HTMLElement, to: HTMLElement) {
+	const items = from.querySelectorAll(':scope > *');
+
+	items.forEach((button: Element) => {
+		const htmlButton = button as HTMLElement;
+		to.appendChild(htmlButton);
+	});
+}
+
 function setupOverflowMenu(
 	parentContainer: HTMLElement,
 	overflowMenu: HTMLElement,
@@ -31,43 +40,54 @@ function setupOverflowMenu(
 	) as HTMLElement;
 
 	// keeps hidden items
-	const overflowMenuWrapper = L.DomUtil.create('div', 'menu-overflow-wrapper');
+	const hiddenItems = L.DomUtil.create('div', 'hidden-overflow-container');
 
-	// resizing
+	// keeps original content
 	const originalTopbar = overflowMenu.querySelectorAll(':scope > *');
 
-	const overflowMenuHandler = (overflow: boolean) => {
+	// hide/show content on resize
+	const overflowMenuHandler = (hideContent: boolean) => {
 		overflowMenu.replaceChildren();
 		originalTopbar.forEach((element: Element) => {
 			overflowMenu.append(element);
 		});
 
-		const topBarButtons = overflowMenu.querySelectorAll(':scope > *');
-
-		topBarButtons.forEach((button: Element) => {
-			const htmlButton = button as HTMLElement;
-			if (overflow) overflowMenuWrapper.appendChild(htmlButton);
-		});
-
-		overflowMenu.style.left =
-			overflowMenuButton.offsetLeft -
-			overflowMenu.clientWidth +
-			overflowMenuButton.offsetWidth +
-			'px';
+		if (hideContent) migrateItems(overflowMenu, hiddenItems);
 	};
 
-	(parentContainer as OverflowGroupContainer).foldGroup = function () {
+	(parentContainer as OverflowGroupContainer).foldGroup = () => {
 		console.debug('overflow manager: fold group: ' + id);
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
 		overflowMenuButton.style.display = '';
 	};
 
-	(parentContainer as OverflowGroupContainer).unfoldGroup = function () {
+	(parentContainer as OverflowGroupContainer).unfoldGroup = () => {
 		console.debug('overflow manager: unfold group: ' + id);
 		groupLabel.style.display = '';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
+	};
+
+	// fill the updated menu after it is open
+	(overflowMenuButton as any)._onDropDown = (opened: boolean) => {
+		if (opened) {
+			// we need to schedule it 2 times as the first one happens just before
+			// layouting task adds menu container to the DOM
+			app.layoutingService.appendLayoutingTask(() => {
+				app.layoutingService.appendLayoutingTask(() => {
+					const menu = JSDialog.GetDropdown('overflow-button-' + id);
+					menu?.replaceChildren();
+					menu?.classList.add('ui-toolbar');
+					menu?.classList.add('ui-overflow-group-popup');
+
+					migrateItems(hiddenItems, menu);
+				});
+			});
+		} else {
+			const menu = JSDialog.GetDropdown('overflow-button-' + id);
+			migrateItems(menu, hiddenItems);
+		}
 	};
 }
 
@@ -133,15 +153,17 @@ JSDialog.OverflowGroup = function (
 	// content
 	builder.build(contentContainer, data.children, false);
 
+	// first toolitem in the group
 	const firstItem = findFirstToolitem(data.children);
 
+	// placeholder menu for a dropdown
 	const builtMenu = [
 		{
 			type: 'json',
 			content: {
-				id: 'menu-overflow-wrapper',
+				id: 'overflow-group-placeholder-' + data.id,
 				type: 'toolbox',
-				children: data.children,
+				children: [],
 			} as WidgetJSON,
 		},
 		{ type: 'separator' },
@@ -155,7 +177,7 @@ JSDialog.OverflowGroup = function (
 		[
 			{
 				type: 'menubutton',
-				id: 'overflow-button-' + id,
+				id: id,
 				text: data.name ? data.name : (firstItem as any).text,
 				icon: getToolitemIcon(firstItem),
 				command: (firstItem as any).command, // call on main button click
