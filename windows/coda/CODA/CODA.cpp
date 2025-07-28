@@ -323,7 +323,7 @@ static void do_cut_or_copy(ClipboardOp op, int appDocId)
 
         if (wformat)
         {
-            std::wstring wtext = Util::string_to_wide_string(std::string(streams[i]));
+            std::wstring wtext = sizes[i] ? Util::string_to_wide_string(std::string(streams[i])) : L"";
             const int byteSize = wtext.size() * 2 + 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
             if (hglData)
