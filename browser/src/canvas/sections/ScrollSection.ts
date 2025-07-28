@@ -542,6 +542,17 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
+	private doMove() {
+		app.layoutingService.appendLayoutingTask(() => {
+			this.map.panBy(new L.Point(this.sectionProperties.moveMapBy[0], this.sectionProperties.moveMapBy[1]));
+			this.sectionProperties.moveMapBy = null;
+			this.onUpdateScrollOffset();
+
+			if (app && app.file.fileBasedView === true)
+				app.map._docLayer._checkSelectedPart();
+		});
+	}
+
 	public onDraw (frameCount: number, elapsedTime: number): void {
 		if (this.isAnimating && frameCount >= 0)
 			this.calculateCurrentAlpha(elapsedTime);
@@ -558,12 +569,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		if (this.sectionProperties.moveMapBy !== null) {
-			this.map.panBy(new L.Point(this.sectionProperties.moveMapBy[0], this.sectionProperties.moveMapBy[1]));
-			this.sectionProperties.moveMapBy = null;
-			this.onUpdateScrollOffset();
-
-			if (app && app.file.fileBasedView === true)
-				app.map._docLayer._checkSelectedPart();
+			this.doMove();
 		}
 	}
 
@@ -794,15 +800,20 @@ export class ScrollSection extends CanvasSectionObject {
 	public scrollVerticalWithOffset (offset: number): boolean {
 		this.calculateYMinMax();
 
+		let control = offset;
+
+		if (this.sectionProperties.moveMapBy)
+			control += this.sectionProperties.moveMapBy[1]; // Add pending offset.
+
 		if (offset > 0) {
-			if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
-				offset = this.sectionProperties.yMax - this.documentTopLeft[1];
+			if (this.documentTopLeft[1] + control > this.sectionProperties.yMax)
+				offset = this.sectionProperties.yMax - this.documentTopLeft[1] - control;
 			if (offset <= 0)
 				return false;
 		}
 		else {
-			if (this.documentTopLeft[1] + offset < this.sectionProperties.yMin)
-				offset = this.sectionProperties.yMin - this.documentTopLeft[1];
+			if (this.documentTopLeft[1] + control < this.sectionProperties.yMin)
+				offset = this.sectionProperties.yMin - this.documentTopLeft[1] - control;
 			if (offset >= 0)
 				return false;
 		}
@@ -826,17 +837,22 @@ export class ScrollSection extends CanvasSectionObject {
 	public scrollHorizontalWithOffset (offset: number): boolean {
 		this.calculateXMinMax();
 
+		let control = offset;
+
+		if (this.sectionProperties.moveMapBy)
+			control += this.sectionProperties.moveMapBy[0]; // Add pending offset.
+
 		if (this.isRTL()) offset = -offset;
 
 		if (offset > 0) {
-			if (this.documentTopLeft[0] + offset > this.sectionProperties.xMax)
-				offset = this.sectionProperties.xMax - this.documentTopLeft[0];
+			if (this.documentTopLeft[0] + control > this.sectionProperties.xMax)
+				offset = this.sectionProperties.xMax - this.documentTopLeft[0] - control;
 			if (offset <= 0)
 				return false;
 		}
 		else {
-			if (this.documentTopLeft[0] + offset < this.sectionProperties.xMin)
-				offset = this.sectionProperties.xMin - this.documentTopLeft[0];
+			if (this.documentTopLeft[0] + control < this.sectionProperties.xMin)
+				offset = this.sectionProperties.xMin - this.documentTopLeft[0] - control;
 			if (offset >= 0)
 				return false;
 		}
