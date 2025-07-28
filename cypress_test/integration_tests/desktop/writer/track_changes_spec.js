@@ -40,18 +40,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Accept All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
-			cy.cGet('#annotation-save-new').click();
+			cy.cGet('#annotation-save-new').click({force: true});
+			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
 			cy.wait(500);
 		}
 		enableRecord();
 
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
-		cy.cGet('#annotation-save-new').click();
+		cy.cGet('#annotation-save-new').click({force: true});
+		cy.cGet('.jsdialog-overlay').click();
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -82,18 +85,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
-			cy.cGet('#annotation-save-new').click();
+			cy.cGet('#annotation-save-new').click({force: true});
+			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
 			cy.wait(500);
 		}
 		enableRecord();
 
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
-		cy.cGet('#annotation-save-new').click();
+		cy.cGet('#annotation-save-new').click({force: true});
+		cy.cGet('.jsdialog-overlay').click();
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -125,16 +131,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
-			cy.cGet('#insertannotation').click({force: true});
+			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
+			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
 			cy.wait(500);
 		}
 		enableRecord();
 
-		cy.cGet('#insertannotation').click({force: true});
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);

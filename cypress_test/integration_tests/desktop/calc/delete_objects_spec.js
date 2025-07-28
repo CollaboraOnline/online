@@ -22,7 +22,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Shapes', function() {
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
@@ -38,9 +38,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		//insert
 		cy.cGet('#insertobjectchart').click();
+		cy.cGet('.jsdialog-overlay').click();
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		//delete
