@@ -1690,11 +1690,9 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
     return headerSize;
 }
 
-void StreamSocket::handleExpect(const Poco::Net::HTTPRequest& request)
+void StreamSocket::handleExpect(const std::string_view expect)
 {
-    const std::string expect = request.get("Expect", "");
-    const bool getExpectContinue = Util::iequal(expect, "100-continue");
-    if (getExpectContinue && !_sentHTTPContinue)
+    if (!_sentHTTPContinue && Util::iequal(expect, "100-continue"))
     {
         LOG_TRC("parseHeader: Got Expect: 100-continue, sending Continue");
         // FIXME: should validate authentication headers early too.

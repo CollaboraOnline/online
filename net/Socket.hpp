@@ -1606,7 +1606,7 @@ public:
                      std::chrono::duration<float, std::milli> delayMs,
                      MessageMap& map);
 
-    void handleExpect(const Poco::Net::HTTPRequest& request);
+    void handleExpect(const std::string_view expect);
 
     bool checkChunks(const Poco::Net::HTTPRequest& request, size_t headerSize, MessageMap& map,
                      std::chrono::duration<float, std::milli> delayMs);
