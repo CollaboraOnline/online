@@ -725,7 +725,8 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
                     _recvBodySize += wrote;
                     if (header().hasContentLength() && _recvBodySize >= header().getContentLength())
                     {
-                        LOG_TRC("Wrote all received content into the body-callback, finished.");
+                        LOG_TRC("Wrote all received content ("
+                                << _recvBodySize << " bytes) into the body-callback, finished.");
                         setStage(Stage::Finished);
                     }
                 }
