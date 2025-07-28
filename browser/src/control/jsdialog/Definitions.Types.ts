@@ -44,6 +44,7 @@ interface JSBuilderOptions {
 interface JSBuilder {
 	_currentDepth: number; // mobile-wizard only FIXME: encapsulate
 	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
+	_menus: Map<string, Array<MenuDefinition>>;
 
 	options: JSBuilderOptions; // current state
 	map: any; // reference to map
@@ -128,7 +129,7 @@ type MenuDefinition = {
 	uno?: string; // uno command
 	action?: string; // dispatch command
 	htmlId?: string; // DEPRECATED: id of HTMLContent - used in html type
-	content?: Array<WidgetJSON>; // custom content - used in json type
+	content?: WidgetJSON; // custom content - used in json type
 	img?: string; // icon name
 	icon?: string; // icon name FIXME: duplicated property, used in exportMenuButton
 	checked?: boolean; // state of check mark

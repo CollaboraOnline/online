@@ -30,46 +30,13 @@ function setupOverflowMenu(
 		'.ui-overflow-group-label',
 	) as HTMLElement;
 
+	// keeps hidden items
 	const overflowMenuWrapper = L.DomUtil.create('div', 'menu-overflow-wrapper');
 
-	const showOverflowMenu = () => {
-		parentContainer.append(overflowMenuWrapper);
-		overflowMenuWrapper.style.opacity = '1';
-		overflowMenuWrapper.style.pointerEvents = 'revert';
-		L.DomUtil.addClass(overflowMenuButton, 'selected');
-	};
-
-	const hideOverflowMenu = () => {
-		if (overflowMenuWrapper.parentNode === parentContainer)
-			parentContainer.removeChild(overflowMenuWrapper);
-		overflowMenuWrapper.style.opacity = '0';
-		overflowMenuWrapper.style.pointerEvents = 'none';
-		L.DomUtil.removeClass(overflowMenuButton, 'selected');
-	};
-
-	const onButtonClick = () => {
-		if (
-			overflowMenuWrapper.style.opacity === '0' ||
-			overflowMenuWrapper.style.opacity === ''
-		) {
-			showOverflowMenu();
-		} else {
-			hideOverflowMenu();
-		}
-	};
-
-	overflowMenuButton?.addEventListener('click', () => {
-		app.layoutingService.appendLayoutingTask(onButtonClick);
-	});
-
 	// resizing
-
-	let overflowMenuDebounced: ReturnType<typeof setTimeout>;
 	const originalTopbar = overflowMenu.querySelectorAll(':scope > *');
 
 	const overflowMenuHandler = (overflow: boolean) => {
-		hideOverflowMenu();
-
 		overflowMenu.replaceChildren();
 		originalTopbar.forEach((element: Element) => {
 			overflowMenu.append(element);
@@ -77,33 +44,10 @@ function setupOverflowMenu(
 
 		const topBarButtons = overflowMenu.querySelectorAll(':scope > *');
 
-		const overflowMenuOffscreen = document.createElement('div');
-		overflowMenuOffscreen.className = 'menu-overfow-vertical';
-		overflowMenuOffscreen.style.display = 'grid';
-		overflowMenuOffscreen.style.gridAutoFlow = 'column';
-
-		let section: Array<HTMLElement> = [];
-
-		const appendSection = () => {
-			for (const element of section) {
-				overflowMenuOffscreen.appendChild(element);
-			}
-			section.length = 0;
-		};
-
 		topBarButtons.forEach((button: Element) => {
 			const htmlButton = button as HTMLElement;
-			if (overflow) {
-				appendSection();
-				overflowMenuOffscreen.appendChild(htmlButton);
-			} else if (htmlButton.className.includes('vertical')) {
-				section = [htmlButton];
-			} else {
-				section.push(htmlButton);
-			}
+			if (overflow) overflowMenuWrapper.appendChild(htmlButton);
 		});
-
-		overflowMenuWrapper.append(overflowMenuOffscreen);
 
 		overflowMenu.style.left =
 			overflowMenuButton.offsetLeft -
@@ -191,18 +135,38 @@ JSDialog.OverflowGroup = function (
 
 	const firstItem = findFirstToolitem(data.children);
 
+	const builtMenu = [
+		{
+			type: 'json',
+			content: {
+				id: 'menu-overflow-wrapper',
+				type: 'toolbox',
+				children: data.children,
+			} as WidgetJSON,
+		},
+		{ type: 'separator' },
+	] as Array<MenuDefinition>;
+	builder._menus.set(data.id, builtMenu);
+
 	// button
+	const id = 'overflow-button-' + data.id;
 	builder.build(
 		innerContainer,
 		[
 			{
-				type: 'bigcustomtoolitem',
-				id: 'overflow-button-' + data.id,
-				text: data.name ? data.name : '',
+				type: 'menubutton',
+				id: 'overflow-button-' + id,
+				text: data.name ? data.name : (firstItem as any).text,
 				icon: getToolitemIcon(firstItem),
-				// TODO: command: (firstItem as any).command, // call on main button click
+				command: (firstItem as any).command, // call on main button click
 				noLabel: !data.name,
-				// TODO: dropdown: true, // show dropdown arrow
+				menu: builtMenu,
+				applyCallback: () => {
+					if (!firstItem) return;
+					firstItem.type.includes('custom')
+						? app.dispatcher.dispatch((firstItem as any).command)
+						: app.map.sendUnoCommand((firstItem as any).command);
+				},
 			} as any as WidgetJSON,
 		],
 		false,
