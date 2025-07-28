@@ -3958,13 +3958,9 @@ void lokit_main(
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #elif defined(IOS) // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
-#elif defined(QTAPP) || defined(MACOS)
+#elif defined(QTAPP) || defined(MACOS) || defined(_WIN32)
         // For macOS, this is the MOBILEAPP case
         static LibreOfficeKit* kit = initKitRunLoopThread().get();
-#elif defined(_WIN32)
-        LibreOfficeKit *kit = lok_init_2
-            ((app_installation_path + "lo\\program").c_str(),
-             (app_installation_uri + "lo").c_str());
 #else
         // FIXME: I wonder for which platform this is supposed to be? Android?
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
@@ -4082,7 +4078,7 @@ void lokit_main(
 #endif
 }
 
-#if defined(QTAPP) || defined(MACOS)
+#if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
 // with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
 // lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
 // and runLoop in the same thread.
@@ -4104,6 +4100,9 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
                     lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #elif defined(MACOS)
                     lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
+#elif defined(_WIN32)
+                    lok_init_2((app_installation_path + "lo\\program").c_str(),
+                               (app_installation_uri + "lo").c_str());
 #endif
                 p.set_value(kit);
 
