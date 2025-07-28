@@ -99,7 +99,9 @@
 }
 .ui-toolbar .unotoolbutton:not(.notebookbar),
 .ui-toolbar .menubutton:not(.notebookbar),
+.toolbox .menubutton:not(.notebookbar),
 .ui-toolbar .ui-listbox-container:not(.notebookbar),
+.toolbox .ui-listbox-container:not(.notebookbar),
 .ui-toolbar .ui-pushbutton:not(.notebookbar),
 .ui-toolbar .ui-badge:not(.notebookbar) {
 	margin: auto 2px;
