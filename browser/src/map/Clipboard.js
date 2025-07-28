@@ -83,14 +83,19 @@ window.L.Clipboard = window.L.Class.extend({
 		if (window.ThisIsTheWindowsApp)
 		{
 			// We can have very trivial implementations, native code does everything
-			document.oncut = function() {
-				window.postMobileMessage('CUT');
+			document.oncut = function(ev) {
+				if (ev.srcElement['id'] === this._dummyDivName)
+					window.postMobileMessage('CUT');
 			};
-			document.oncopy = function() {
-				window.postMobileMessage('COPY');
+			document.oncopy = function(ev) {
+				if (ev.srcElement['id'] === this._dummyDivName)
+					window.postMobileMessage('COPY');
 			};
-			document.onpaste = function() {
-				window.postMobileMessage('PASTE');
+			document.onpaste = function(ev) {
+				if (ev.srcElement['id'] === 'pre-space' || ev.srcElement['id'] === 'clipboard-area') {
+					ev.preventDefault();
+					window.postMobileMessage('PASTE');
+				}
 			};
 		} else {
 			document.oncut = function(ev)   { return that.cut(ev); };
