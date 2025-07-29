@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-06-28 13:06+0000\n"
+"PO-Revision-Date: 2025-07-28 06:02+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -390,6 +390,9 @@ msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Pugeu fragments de text reutilitzables (.bau). Per a inserir el text en el "
+"document, escriviu la drecera per a una entrada de text automàtic i premeu "
+"F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:238
 msgid "Upload Autotext"
@@ -417,7 +420,7 @@ msgstr "Paràmetres dels documents"
 #: admin/src/integrator/AdminIntegratorSettings.ts:255
 #: admin/src/integrator/Xcu.ts:297
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Ajusteu com es comporten els documents d'oficina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:261
 msgid "Upload Xcu"
@@ -425,7 +428,7 @@ msgstr "Carrega un XCU"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:312
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Falta l'URL de configuració compartida a les variables inicials."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:318
 msgid "Access token is missing in initial variables."
@@ -454,7 +457,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Paràmetres de la interfície"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
@@ -483,7 +486,7 @@ msgstr "Paràmetres dels documents"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Visualització de barra de fitxes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -536,7 +539,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1273
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Segur que voleu reinicialitzar els paràmetres de la visualització?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1293
 msgid "Save View Settings"
@@ -661,7 +664,7 @@ msgstr "Eines de depuració"
 
 #: src/app/Debug.ts:137
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Maj+Alt+D per a sortir"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
@@ -734,13 +737,15 @@ msgstr "Comentaris actualitzats"
 
 #: src/canvas/sections/CommentListSection.ts:1457
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Un altre usuari ha eliminat aquest comentari."
 
 #: src/canvas/sections/CommentListSection.ts:1470
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Un altre usuari ha actualitzat el comentari. Voleu sobreescriure aquests "
+"canvis?"
 
 #: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1458
 msgid "Overwrite"
@@ -761,7 +766,7 @@ msgstr "Edita el comentari"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Respon al comentari"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -1285,7 +1290,7 @@ msgstr "Sud-àfrica"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "El document s'està signant i en breu estarà disponible"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1310,7 +1315,7 @@ msgstr "Auxiliar de funcions"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Seleccioneu una funció"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:120
@@ -1417,7 +1422,7 @@ msgstr "Insereix un comentari"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "Obre {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2208,9 +2213,8 @@ msgstr "Format"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Formes"
+msgstr "Forma"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2408,9 +2412,8 @@ msgstr "Minidiagrama"
 #: src/control/Control.NotebookbarDraw.js:1375
 #: src/control/Control.NotebookbarImpress.js:1409
 #: src/control/Control.NotebookbarWriter.js:1266
-#, fuzzy
 msgid "Assistant"
-msgstr "Assistent d'IA"
+msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1611
 #: src/control/Control.NotebookbarCalc.js:2533
@@ -2467,32 +2470,31 @@ msgstr "Presentació"
 
 #: src/control/Control.NotebookbarImpress.js:460
 msgid "Present in Window"
-msgstr "Presentar en finestra"
+msgstr "Presenta en finestra"
 
 #: src/control/Control.NotebookbarImpress.js:590
 msgid "Show Grid"
-msgstr "Mostra la quadrícula"
+msgstr "Mostra la graella"
 
 #: src/control/Control.NotebookbarImpress.js:597
 msgid "Snap to Grid"
-msgstr "Ajusta a la quadrícula"
+msgstr "Ajusta a la graella"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Nou"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Compaginació"
+msgstr "Canvia la disposició"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Reinicialitza la disposició"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Mida de diapositiva"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2610,7 +2612,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Alertes:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2618,7 +2620,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:277
 msgid "OPEN"
-msgstr ""
+msgstr "OBRE"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2912,7 +2914,7 @@ msgstr "No s'han pogut carregar les col·leccions"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "S'estan carregant les referències"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -3210,7 +3212,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:488
 msgid "Centered Text"
-msgstr ""
+msgstr "Text centrat"
 
 #: src/control/jsdialog/Definitions.Menu.ts:489
 msgid "Title, 2 Content and Content"
@@ -3804,7 +3806,7 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Té el text: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
@@ -3878,14 +3880,13 @@ msgid ""
 msgstr ""
 
 #: src/map/Clipboard.js:1366
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Ja s'ha iniciat una baixada per una operació de copiat o enganxat gran. "
+"Ja s'ha iniciat una baixada per una operació de còpia o enganxament gran. "
 "Espereu que la baixada actual finalitzi o cancel·leu-la abans de començar-ne "
-"una altra</p>"
+"una altra"
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
@@ -3947,7 +3948,7 @@ msgstr "Ha fallat la pujada del fitxer al servidor amb l'estat: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Diàleg Imprimeix"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
 msgid "Empty Slide Show"
@@ -3987,9 +3988,8 @@ msgid "Presenting in fullscreen"
 msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:231
-#, fuzzy
 msgid "End Presentation"
-msgstr "Presentació"
+msgstr "Finalitza la presentació"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:679
