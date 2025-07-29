@@ -29,11 +29,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 
-		this._controlHandlers['pushbutton'] = function() { return false; };
-		this._controlHandlers['spinfield'] = function() { return false; };
-		this._controlHandlers['formattedfield'] = function() { return false; };
-		this._controlHandlers['metricfield'] = function() { return false; };
-
 		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
 		this._toolitemHandlers['.uno:FontColor'] = JSDialog.colorPickerButton;
 		this._toolitemHandlers['.uno:CharBackColor'] = JSDialog.colorPickerButton;
