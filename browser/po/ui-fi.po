@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-07-01 10:01+0000\n"
+"PO-Revision-Date: 2025-07-24 04:10+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fi/>\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -448,16 +448,15 @@ msgstr "Sanojen kirjan noutamisessa tapahtui virhe. Yritä virkistää sivu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Käyttöliittymän asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
 msgstr "Aseta käyttöliittymän oletusasetukset."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:590
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Valitse välilehti asetusten tarkastelemiseksi."
+msgstr "Valitse välilehti selaimen asetuksiin."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:603
 #: admin/src/integrator/Xcu.ts:357
@@ -476,7 +475,7 @@ msgstr "Tallenna asiakirja-asetukset"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Muistikirjapalkkinäkymä"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -1407,7 +1406,7 @@ msgstr "Lisää Kommentti"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "Avaa {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2203,9 +2202,8 @@ msgstr "Muoto"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Muodot"
+msgstr "Muoto"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2448,7 +2446,7 @@ msgstr "Viivoitin"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Diaesitys"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2473,20 +2471,19 @@ msgstr "Kiinnitä ruudukkoon"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Uusi"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Sivuasetttelu"
+msgstr "Muuta asettelua"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Nollaa asettelu"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Dian koko"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3184,75 +3181,75 @@ msgstr "Nykyisestä diasta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Vakio (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:473
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Laajakuva (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:483
 msgid "Blank Slide"
-msgstr ""
+msgstr "Tyhjä dia"
 
 #: src/control/jsdialog/Definitions.Menu.ts:484
 msgid "Title Slide"
-msgstr ""
+msgstr "Otsikkodia"
 
 #: src/control/jsdialog/Definitions.Menu.ts:485
 msgid "Title, Content"
-msgstr ""
+msgstr "Otsikko, sisältö"
 
 #: src/control/jsdialog/Definitions.Menu.ts:486
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Otsikko ja 2 Sisältö"
 
 #: src/control/jsdialog/Definitions.Menu.ts:487
 msgid "Title Only"
-msgstr ""
+msgstr "Vain otsikko"
 
 #: src/control/jsdialog/Definitions.Menu.ts:488
 msgid "Centered Text"
-msgstr ""
+msgstr "Keskitetty teksti"
 
 #: src/control/jsdialog/Definitions.Menu.ts:489
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Otsikko, 2 sisältö ja sisältö"
 
 #: src/control/jsdialog/Definitions.Menu.ts:490
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Otsikko, sisältö ja 2 sisältö"
 
 #: src/control/jsdialog/Definitions.Menu.ts:491
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Otsikko, 2 sisältö sisällön päälle"
 
 #: src/control/jsdialog/Definitions.Menu.ts:492
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Otsikko, sisältö sisällön päälle"
 
 #: src/control/jsdialog/Definitions.Menu.ts:493
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Otsikko, 4 sisältö"
 
 #: src/control/jsdialog/Definitions.Menu.ts:494
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Otsikko, 6 sisältö"
 
 #: src/control/jsdialog/Definitions.Menu.ts:495
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Pystysuuntainen otsikko, teksti, kaavio"
 
 #: src/control/jsdialog/Definitions.Menu.ts:496
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Pystysuuntainen otsikko, pystysuuntainen teksti"
 
 #: src/control/jsdialog/Definitions.Menu.ts:497
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Otsikko, pystysuuntainen teksti"
 
 #: src/control/jsdialog/Definitions.Menu.ts:498
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Otsikko, pystysuuntainen teksti, clipart-leikekuva"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
