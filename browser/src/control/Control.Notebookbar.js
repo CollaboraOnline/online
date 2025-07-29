@@ -682,6 +682,7 @@ L.Control.Notebookbar = L.Control.extend({
 				'type': 'customtoolitem',
 				'text': _('Share'),
 				'command': 'shareas',
+				'inlineLabel': true,
 				'accessibility': { focusBack: false, combination: 'ZS', de: null }
 			});
 		}
