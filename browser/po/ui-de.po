@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-06-25 10:49+0000\n"
+"PO-Revision-Date: 2025-07-21 22:34+0000\n"
 "Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -465,7 +465,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Benutzeroberflächen-Einstellungen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
@@ -494,7 +494,7 @@ msgstr "Dokumenteinstellungen speichern"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Ansicht der Notizbuchleiste"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -1439,7 +1439,7 @@ msgstr "Kommentar einfügen"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "{Name} öffnen"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2477,7 +2477,7 @@ msgstr "Lineal"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Diashow"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2502,7 +2502,7 @@ msgstr "Am Raster einrasten"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #: src/control/Control.NotebookbarImpress.js:723
 #, fuzzy
@@ -2511,11 +2511,11 @@ msgstr "Seitenlayout"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Reset layout"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Größe der Folie"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3156,11 +3156,11 @@ msgstr "Max"
 
 #: src/control/jsdialog/Definitions.Menu.ts:115
 msgid "Portrait"
-msgstr ""
+msgstr "Hochformat"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Landscape"
-msgstr ""
+msgstr "Querformat"
 
 #: src/control/jsdialog/Definitions.Menu.ts:275
 msgid "Insert Local Image"
@@ -3208,71 +3208,71 @@ msgstr "Start mit aktueller Folie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Standardmäßig (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:473
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Breitbild (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:483
 msgid "Blank Slide"
-msgstr ""
+msgstr "Leere Folie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:484
 msgid "Title Slide"
-msgstr ""
+msgstr "Titel Folie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:485
 msgid "Title, Content"
-msgstr ""
+msgstr "Überschrift, Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:486
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Überschrift und 2 Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:487
 msgid "Title Only"
-msgstr ""
+msgstr "Nur Titel"
 
 #: src/control/jsdialog/Definitions.Menu.ts:488
 msgid "Centered Text"
-msgstr ""
+msgstr "Text zentriert"
 
 #: src/control/jsdialog/Definitions.Menu.ts:489
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Titel, 2 Inhalt und Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:490
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Titel, Inhalt und 2 Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:491
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Titel, 2 Inhalt über Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:492
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Titel, Inhalt über Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:493
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Titel, 4 Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:494
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Titel, 6 Inhalt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:495
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Vertikaler Titel, Text, Diagramm"
 
 #: src/control/jsdialog/Definitions.Menu.ts:496
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Vertikaler Titel, vertikaler Text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:497
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Titel, Vertikaler Text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:498
 msgid "Title, Vertical Text, Clipart"
