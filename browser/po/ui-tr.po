@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-06-21 08:01+0000\n"
-"Last-Translator: ulahcherubim <rbinici@gmail.com>\n"
+"PO-Revision-Date: 2025-07-25 00:19+0000\n"
+"Last-Translator: Gokay Satir <gokaysatir@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -384,7 +384,7 @@ msgstr "Dosya okunurken hata oluştu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:230
 msgid "Autotext"
-msgstr ""
+msgstr "Hazır Metin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:232
 msgid ""
@@ -457,14 +457,13 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Arayüz Ayarları"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
 msgstr "Varsayılan arayüz tercihlerini ayarlayın."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:590
-#, fuzzy
 msgid "Select a tab to browser settings."
 msgstr "Ayarları görmek için bir sekme seçin."
 
@@ -485,7 +484,7 @@ msgstr "Belge ayarlarını kaydet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Sekmeli görünüm"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -1418,7 +1417,7 @@ msgstr "Yorum Ekle"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "Aç {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2209,9 +2208,8 @@ msgstr "Biçim"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Şekiller"
+msgstr "Şekil"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2454,7 +2452,7 @@ msgstr "Cetvel"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Slayt Sunumu"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2479,20 +2477,19 @@ msgstr "Izgarayı Yakala"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Sayfa düzeni"
+msgstr "Yerleşimi Değiştir"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Yerleşimi Sıfırla"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Sayfa Boyutu"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3129,11 +3126,11 @@ msgstr "Azami"
 
 #: src/control/jsdialog/Definitions.Menu.ts:115
 msgid "Portrait"
-msgstr ""
+msgstr "Portre"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Landscape"
-msgstr ""
+msgstr "Yatay"
 
 #: src/control/jsdialog/Definitions.Menu.ts:275
 msgid "Insert Local Image"
@@ -3181,75 +3178,75 @@ msgstr "Geçerli Sunumdan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Standart (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:473
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Geniş Ekran (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:483
 msgid "Blank Slide"
-msgstr ""
+msgstr "Boş Sayfa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:484
 msgid "Title Slide"
-msgstr ""
+msgstr "Başlık Sayfası"
 
 #: src/control/jsdialog/Definitions.Menu.ts:485
 msgid "Title, Content"
-msgstr ""
+msgstr "Başlık, İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:486
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Başlık ve 2 İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:487
 msgid "Title Only"
-msgstr ""
+msgstr "Sadece Başlık"
 
 #: src/control/jsdialog/Definitions.Menu.ts:488
 msgid "Centered Text"
-msgstr ""
+msgstr "Ortalanmış Metin"
 
 #: src/control/jsdialog/Definitions.Menu.ts:489
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Başlık, 2 İçerik ve İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:490
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Başlık, İçerik ve 2 İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:491
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Başlık, 2 İçerik + İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:492
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Başlık, Üst Üste İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:493
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Başlık, 4 İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:494
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Başlık, 6 İçerik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:495
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Dikey Başlık, Metin, Tablo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:496
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Dikey Başlık, Dikey Metin"
 
 #: src/control/jsdialog/Definitions.Menu.ts:497
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Başlık, Dikey Metin"
 
 #: src/control/jsdialog/Definitions.Menu.ts:498
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Başlık, Dikey Metin, Küçük Resim"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
