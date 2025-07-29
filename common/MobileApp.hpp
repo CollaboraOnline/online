@@ -56,6 +56,7 @@ public:
     static DocumentData &allocate(unsigned docId);
     static DocumentData &get(unsigned docId);
     static void deallocate(unsigned docId);
+    static int count();
 
 #ifdef IOS
     CODocument *coDocument;
