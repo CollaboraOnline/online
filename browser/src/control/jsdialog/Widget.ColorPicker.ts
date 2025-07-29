@@ -123,6 +123,7 @@ function createColor(
 	);
 	color.type = 'radio';
 	color.name = 'color';
+	color.value = colorItem;
 	color.style.backgroundColor = '#' + colorItem;
 	color.setAttribute('index', index);
 	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
@@ -171,7 +172,7 @@ function handleColorSelection(
 	widgetData: ColorPaletteWidgetData,
 ) {
 	const palette = generatePalette(getCurrentPaletteName());
-	const colorCode = target.getAttribute('name');
+	const colorCode = target.getAttribute('value');
 	const themeData = target.getAttribute('theme');
 
 	if (colorCode != null) {
