@@ -85,11 +85,11 @@ window.L.Clipboard = window.L.Class.extend({
 				if (ev.srcElement['id'] === this._dummyDivName)
 					window.postMobileMessage('CUT');
 			};
-			document.oncopy = function() {
+			document.oncopy = function(ev) {
 				if (ev.srcElement['id'] === this._dummyDivName)
 					window.postMobileMessage('COPY');
 			};
-			document.onpaste = function() {
+			document.onpaste = function(ev) {
 				if (ev.srcElement['id'] === 'pre-space' || ev.srcElement['id'] === 'clipboard-area') {
 					ev.preventDefault();
 					window.postMobileMessage('PASTE');
