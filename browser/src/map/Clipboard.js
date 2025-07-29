@@ -28,7 +28,6 @@ window.L.Clipboard = window.L.Class.extend({
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
 		this._failedTimer = null;
-		this._dummyDivName = 'copy-paste-container';
 		this._unoCommandForCopyCutPaste = null;
 		// Tracks if we're in paste special mode for the navigator.clipboard case
 		this._navigatorClipboardPasteSpecial = false;
@@ -45,7 +44,7 @@ window.L.Clipboard = window.L.Class.extend({
 		this._map.on('commandresult', this._onCommandResult, this);
 		this._map.on('clipboardchanged', this._onCommandResult, this);
 
-		div.setAttribute('id', this._dummyDivName);
+		div.setAttribute('id', 'copy-paste-container');
 		div.style.userSelect = 'text !important';
 		div.style.opacity = '0';
 		div.setAttribute('contenteditable', 'true');
@@ -84,11 +83,11 @@ window.L.Clipboard = window.L.Class.extend({
 		{
 			// We can have very trivial implementations, native code does everything
 			document.oncut = function(ev) {
-				if (ev.srcElement['id'] === this._dummyDivName)
+				if (ev.srcElement['id'] === 'copy-paste-container')
 					window.postMobileMessage('CUT');
 			};
 			document.oncopy = function(ev) {
-				if (ev.srcElement['id'] === this._dummyDivName)
+				if (ev.srcElement['id'] === 'copy-paste-container')
 					window.postMobileMessage('COPY');
 			};
 			document.onpaste = function(ev) {
