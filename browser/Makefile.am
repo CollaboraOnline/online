@@ -191,7 +191,8 @@ COOL_CSS_LST =\
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
-	$(srcdir)/css/tooltip.css
+	$(srcdir)/css/tooltip.css \ 
+	$(srcdir)/css/progressbar.css
 
 COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
