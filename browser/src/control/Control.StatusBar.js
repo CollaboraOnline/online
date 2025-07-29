@@ -125,33 +125,8 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	onZoomEnd() {
-		var zoomPercent = 100;
-		var zoomSelected = null;
-		switch (this.map.getZoom()) {
-			case 1:  zoomPercent =  20; zoomSelected = 'zoom20'; break;  // 0.2102
-			case 2:  zoomPercent =  25; zoomSelected = 'zoom25'; break;  // 0.2500
-			case 3:  zoomPercent =  30; zoomSelected = 'zoom30'; break;  // 0.2973
-			case 4:  zoomPercent =  35; zoomSelected = 'zoom35'; break;  // 0.3535
-			case 5:  zoomPercent =  40; zoomSelected = 'zoom40'; break;  // 0.4204
-			case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;  // 0.5
-			case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;  // 0.5946
-			case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;  // 0.7071
-			case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;  // 0.8409
-			case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break; // 1
-			case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break; // 1.1892
-			// Why do we call this 150% even if it is actually closer to 140%
-			case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break; // 1.4142
-			case 13: zoomPercent = 170; zoomSelected = 'zoom170'; break; // 1.6818
-			case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break; // 2
-			case 15: zoomPercent = 235; zoomSelected = 'zoom235'; break; // 2.3784
-			case 16: zoomPercent = 280; zoomSelected = 'zoom280'; break; // 2.8284
-			case 17: zoomPercent = 335; zoomSelected = 'zoom335'; break; // 3.3636
-			case 18: zoomPercent = 400; zoomSelected = 'zoom400'; break; // 4
-			default:
-				var zoomRatio = this.map.getZoomScale(this.map.getZoom(), this.map.options.zoom);
-				zoomPercent = Math.round(zoomRatio * 100);
-			break;
-		}
+		var zoomPercent = this.map.getZoomPercent();
+		var zoomSelected = 'zoom' + zoomPercent;
 
 		this.builder.updateWidget(this.parentContainer,
 			{
