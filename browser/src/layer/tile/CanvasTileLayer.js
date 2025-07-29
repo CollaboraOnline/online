@@ -883,7 +883,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		    'tiletwipwidth=' + app.tile.size.x + ' ' +
 		    'tiletwipheight=' + app.tile.size.y + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
-		    'zoom=' + this._map.getZoom()
+		    'zoompercent=' + this._map.getZoomPercent()
 
 		if (this._clientZoom !== newClientZoom || forceUpdate) {
 			// the zoom level has changed
