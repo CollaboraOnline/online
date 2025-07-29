@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-06-21 08:01+0000\n"
+"PO-Revision-Date: 2025-07-25 00:19+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -454,16 +454,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Socruithe Comhéadain"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
 msgstr "Socraigh roghanna comhéadain réamhshocraithe."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:590
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Roghnaigh cluaisín chun socruithe a fheiceáil."
+msgstr "Roghnaigh cluaisín chuig socruithe an bhrabhsálaí."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:603
 #: admin/src/integrator/Xcu.ts:357
@@ -482,7 +481,7 @@ msgstr "Socruithe Sábháil Doiciméid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Radharc barra leabhar nótaí"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -511,7 +510,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1163
 msgid "Edit"
-msgstr ""
+msgstr "Cuir in Eagar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1189
 msgid "View Settings"
@@ -1424,7 +1423,7 @@ msgstr "Ionsáigh Nóta"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "Oscail {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2215,9 +2214,8 @@ msgstr "Formáid"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Cruthanna"
+msgstr "Cruth"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2460,7 +2458,7 @@ msgstr "Rialóir"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Taispeántas Sleamhnán"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2485,20 +2483,19 @@ msgstr "Léim go Greille"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Nua"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Leagan Amach an Leathanaigh"
+msgstr "Athraigh Leagan Amach"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Athshocraigh Leagan Amach"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Méid Sleamhnáin"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3143,11 +3140,11 @@ msgstr "Uasmhéid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:115
 msgid "Portrait"
-msgstr ""
+msgstr "Portráid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Landscape"
-msgstr ""
+msgstr "Tírdhreach"
 
 #: src/control/jsdialog/Definitions.Menu.ts:275
 msgid "Insert Local Image"
@@ -3195,75 +3192,75 @@ msgstr "Ón Sleamhnán Reatha"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Caighdeánach (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:473
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Scáileán Leathan (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:483
 msgid "Blank Slide"
-msgstr ""
+msgstr "Sleamhnán Bán"
 
 #: src/control/jsdialog/Definitions.Menu.ts:484
 msgid "Title Slide"
-msgstr ""
+msgstr "Sleamhnán Teidil"
 
 #: src/control/jsdialog/Definitions.Menu.ts:485
 msgid "Title, Content"
-msgstr ""
+msgstr "Teideal, Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:486
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Teideal agus 2 Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:487
 msgid "Title Only"
-msgstr ""
+msgstr "Teideal Amháin"
 
 #: src/control/jsdialog/Definitions.Menu.ts:488
 msgid "Centered Text"
-msgstr ""
+msgstr "Téacs Láraithe"
 
 #: src/control/jsdialog/Definitions.Menu.ts:489
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Teideal, 2 Ábhar agus Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:490
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Teideal, Ábhar agus 2 Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:491
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Teideal, 2 Ábhar thar Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:492
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Teideal, Ábhar thar Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:493
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Teideal, 4 Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:494
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Teideal, 6 Ábhar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:495
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Teideal Ingearach, Téacs, Cairt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:496
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Teideal Ingearach, Téacs Ingearach"
 
 #: src/control/jsdialog/Definitions.Menu.ts:497
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Teideal, Téacs Ingearach"
 
 #: src/control/jsdialog/Definitions.Menu.ts:498
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Teideal, Téacs Ingearach, Clipart"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
