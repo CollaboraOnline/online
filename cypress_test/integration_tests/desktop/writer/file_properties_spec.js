@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -49,6 +50,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		writerHelper.openFileProperties();
 		cy.cGet('#tabcontrol-3').click();
 		cy.cGet('#valueedit-input').should('have.value', '123 Address');
+		cy.cGet('#namebox-input-dialog').should('have.value', 'Mailstop');
 
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});
@@ -76,6 +78,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		writerHelper.openFileProperties();
 		cy.cGet('#tabcontrol-3').click();
 		cy.cGet('#duration-input').should('have.value', '- Y: 1 M: 0 D: 2 H: 0 M: 0 S: 3');
+		cy.cGet('#namebox-input-dialog').should('have.value', 'Received from');
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
@@ -94,6 +97,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		writerHelper.openFileProperties();
 		cy.cGet('#tabcontrol-3').click();
 		cy.cGet('#yes-input').should('be.checked');
+		cy.cGet('#namebox-input-dialog').should('have.value', 'Telephone number');
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 });
