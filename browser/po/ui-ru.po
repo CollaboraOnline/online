@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-20 10:16+0200\n"
+"POT-Creation-Date: 2025-07-29 23:05+0200\n"
 "PO-Revision-Date: 2025-07-23 00:05+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: ru\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
@@ -142,12 +142,12 @@ msgid "Network Graph"
 msgstr "График сети"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:623
-#: admin/src/integrator/AdminIntegratorSettings.ts:1292
+#: admin/src/integrator/AdminIntegratorSettings.ts:630
+#: admin/src/integrator/AdminIntegratorSettings.ts:1299
 #: admin/src/integrator/WordBook.ts:394
 #: src/canvas/sections/CommentListSection.ts:512
 #: src/canvas/sections/CommentSection.ts:166
-#: src/control/Control.Notebookbar.js:291
+#: src/control/Control.Notebookbar.js:298
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -221,7 +221,7 @@ msgstr "Обновить журнал"
 msgid "Channel Filter:"
 msgstr "Фильтр каналов:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:490
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:496
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "Нет"
@@ -238,7 +238,7 @@ msgstr "Уровни логирования"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:436 src/core/Socket.js:1217 src/core/Socket.js:1222
+#: src/core/Socket.js:437 src/core/Socket.js:1218 src/core/Socket.js:1223
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Закрыть"
@@ -255,11 +255,11 @@ msgstr "Информация о версии"
 msgid "License"
 msgstr "Лицензионное соглашение"
 
-#: admin/admin.strings.js:68 src/control/Control.Menubar.ts:417
-#: src/control/Control.Menubar.ts:593 src/control/Control.Menubar.ts:730
-#: src/control/Control.Menubar.ts:1020 src/control/Control.Menubar.ts:1088
-#: src/control/Control.Menubar.ts:1153 src/control/Control.Menubar.ts:1208
-#: src/control/Control.Menubar.ts:1283
+#: admin/admin.strings.js:68 src/control/Control.Menubar.ts:419
+#: src/control/Control.Menubar.ts:597 src/control/Control.Menubar.ts:735
+#: src/control/Control.Menubar.ts:1027 src/control/Control.Menubar.ts:1095
+#: src/control/Control.Menubar.ts:1160 src/control/Control.Menubar.ts:1215
+#: src/control/Control.Menubar.ts:1290
 #: src/control/Control.NotebookbarWriter.js:549
 msgid "About"
 msgstr "О программе"
@@ -296,7 +296,7 @@ msgstr "Предупреждение"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1453 src/app/Debug.ts:1383
+#: admin/src/integrator/AdminIntegratorSettings.ts:1460 src/app/Debug.ts:1383
 #: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
@@ -309,8 +309,8 @@ msgstr "Предупреждение"
 #: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:746 src/control/Toolbar.js:845
-#: src/core/Socket.js:721 src/core/Socket.js:1187 src/core/Socket.js:1257
-#: src/core/Socket.js:1429 src/core/Socket.js:1433 src/docdispatcher.ts:524
+#: src/core/Socket.js:722 src/core/Socket.js:1188 src/core/Socket.js:1258
+#: src/core/Socket.js:1430 src/core/Socket.js:1434 src/docdispatcher.ts:524
 #: src/main.js:86 src/main.js:89 src/main.js:142 src/map/Clipboard.js:1292
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
@@ -332,10 +332,10 @@ msgstr "ОК"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1705 src/control/Control.UIManager.ts:1786
-#: src/control/Control.UIManager.ts:1940 src/control/Control.UIManager.ts:2118
+#: src/control/Control.UIManager.ts:1708 src/control/Control.UIManager.ts:1789
+#: src/control/Control.UIManager.ts:1943 src/control/Control.UIManager.ts:2121
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:840
-#: src/core/Socket.js:1454
+#: src/core/Socket.js:1455
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -436,11 +436,11 @@ msgstr "В переменных инициализации отсутствуе�
 msgid "Access token is missing in initial variables."
 msgstr "В переменных инициализации отсутствует URL токена доступа."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:347
+#: admin/src/integrator/AdminIntegratorSettings.ts:354
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Что-то пошло не так. Попробуйте обновить страницу."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:445
+#: admin/src/integrator/AdminIntegratorSettings.ts:452
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
@@ -448,101 +448,101 @@ msgstr ""
 "Что-то пошло не так при загрузке файла настроек. Попробуйте обновить "
 "страницу."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:470
+#: admin/src/integrator/AdminIntegratorSettings.ts:477
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr "Что-то пошло не так при загрузке словаря. Попробуйте обновить страницу."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:480
+#: admin/src/integrator/AdminIntegratorSettings.ts:487
 msgid "Interface Settings"
 msgstr "Настройки интерфейса"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:482
+#: admin/src/integrator/AdminIntegratorSettings.ts:489
 msgid "Set default interface preferences."
 msgstr "Установить предпочтения интерфейса по умолчанию."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:590
+#: admin/src/integrator/AdminIntegratorSettings.ts:597
 msgid "Select a tab to browser settings."
 msgstr "Выберите вкладку настроек."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:603
+#: admin/src/integrator/AdminIntegratorSettings.ts:610
 #: admin/src/integrator/Xcu.ts:357
 msgid "Reset to default Document settings"
 msgstr "Сбросить к настройкам документа по умолчанию"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:607
+#: admin/src/integrator/AdminIntegratorSettings.ts:614
 #: admin/src/integrator/Xcu.ts:371
 msgid "Are you sure you want to reset Document settings?"
 msgstr "Вы уверены, что хотите сбросить настройки документа?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:624
+#: admin/src/integrator/AdminIntegratorSettings.ts:631
 #: admin/src/integrator/Xcu.ts:386
 msgid "Save Document settings"
 msgstr "Сохранить настройки документа"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:954
+#: admin/src/integrator/AdminIntegratorSettings.ts:961
 msgid "Notebookbar view"
 msgstr "Вид панели блокнота"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:961
-#: src/control/Control.NotebookbarCalc.js:1344
+#: admin/src/integrator/AdminIntegratorSettings.ts:968
+#: src/control/Control.NotebookbarCalc.js:1362
 #: src/control/Control.NotebookbarDraw.js:456
-#: src/control/Control.NotebookbarImpress.js:528
+#: src/control/Control.NotebookbarImpress.js:542
 #: src/control/Control.NotebookbarWriter.js:1623
 msgid "Compact view"
 msgstr "Компактный вид"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1034
+#: admin/src/integrator/AdminIntegratorSettings.ts:1041
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Что-то пошло не так при загрузке файла. Попробуйте обновить страницу."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1110
-#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:521
+#: admin/src/integrator/AdminIntegratorSettings.ts:1117
+#: src/control/Control.ContextMenu.js:264 src/docdispatcher.ts:521
 msgid "Delete"
 msgstr "Удалить"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1148
+#: admin/src/integrator/AdminIntegratorSettings.ts:1155
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr "Что-то пошло не так при удалении файла. Попробуйте обновить страницу."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1163
+#: admin/src/integrator/AdminIntegratorSettings.ts:1170
 msgid "Edit"
 msgstr "Правка"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1189
+#: admin/src/integrator/AdminIntegratorSettings.ts:1196
 msgid "View Settings"
 msgstr "Настройки вида"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1190
+#: admin/src/integrator/AdminIntegratorSettings.ts:1197
 msgid "Adjust view settings."
 msgstr "Настроить вид."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1200
+#: admin/src/integrator/AdminIntegratorSettings.ts:1207
 msgid "Option"
 msgstr "Опция"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1235
+#: admin/src/integrator/AdminIntegratorSettings.ts:1242
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 "(Внимание: чтобы переключить, средства доступности сервера должны быть "
 "активны)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1269
+#: admin/src/integrator/AdminIntegratorSettings.ts:1276
 msgid "Reset to default View settings"
 msgstr "Сбросить к настройкам вида по умолчанию"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1273
+#: admin/src/integrator/AdminIntegratorSettings.ts:1280
 msgid "Are you sure you want to reset View Settings?"
 msgstr "Вы уверены, что хотите сбросить настройки вида?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1293
+#: admin/src/integrator/AdminIntegratorSettings.ts:1300
 msgid "Save View Settings"
 msgstr "Сохранить настройки вида"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1441
+#: admin/src/integrator/AdminIntegratorSettings.ts:1448
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
 msgstr "Ошибка"
@@ -643,15 +643,15 @@ msgstr " мин"
 msgid " s"
 msgstr " с"
 
-#: js/global.js:1583
+#: js/global.js:1585
 msgid "Cluster is scaling, retrying..."
 msgstr "Кластер масштабируется, повторная попытка..."
 
-#: js/global.js:1585
+#: js/global.js:1587
 msgid "Document is migrating to new server, retrying..."
 msgstr "Документ переносится на новый сервер, повторная попытка..."
 
-#: js/global.js:1587
+#: js/global.js:1589
 msgid "Failed to get RouteToken from controller"
 msgstr "Не удалось получить RouteToken от контроллера"
 
@@ -722,9 +722,9 @@ msgid "Open in full view"
 msgstr "Открыть полностью"
 
 #: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1944
-#: src/layer/tile/CanvasTileLayer.js:3422
-#: src/layer/tile/CanvasTileLayer.js:3433
+#: src/control/Control.JSDialogBuilder.js:1950
+#: src/layer/tile/CanvasTileLayer.js:3421
+#: src/layer/tile/CanvasTileLayer.js:3432
 msgid "Comment"
 msgstr "Примечание"
 
@@ -745,7 +745,7 @@ msgstr ""
 "Другой пользователь обновил этот комментарий. Вы хотите перезаписать его "
 "изменения?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1458
+#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1459
 msgid "Overwrite"
 msgstr "Перезаписать"
 
@@ -788,15 +788,15 @@ msgstr "Решено"
 msgid "Document contains unsupported media"
 msgstr "Документ содержит неподдерживаемое медиа"
 
-#: src/canvas/sections/URLPopUpSection.ts:65
+#: src/canvas/sections/URLPopUpSection.ts:66
 msgid "Copy link location"
 msgstr "Копировать ссылку"
 
-#: src/canvas/sections/URLPopUpSection.ts:79
+#: src/canvas/sections/URLPopUpSection.ts:80
 msgid "Edit link"
 msgstr "Изменить ссылку"
 
-#: src/canvas/sections/URLPopUpSection.ts:94
+#: src/canvas/sections/URLPopUpSection.ts:95
 msgid "Remove link"
 msgstr "Удалить ссылку"
 
@@ -824,7 +824,7 @@ msgstr "Часовой пояс:"
 msgid "Copy all version information in English"
 msgstr "Скопировать всю информацию о версии на английском языке"
 
-#: src/control/Control.AddressInputField.ts:67
+#: src/control/Control.AddressInputField.ts:68
 msgid "cell address"
 msgstr "адрес ячейки"
 
@@ -882,15 +882,15 @@ msgstr "Сервер столкнулся с ошибкой {0} при анал�
 msgid "Unlock"
 msgstr "Разблокировать"
 
-#: src/control/Control.ContextMenu.js:274
+#: src/control/Control.ContextMenu.js:300
 msgid "Paste Special"
 msgstr "Вставить как"
 
-#: src/control/Control.ContextMenu.js:281
+#: src/control/Control.ContextMenu.js:307
 msgid "Copy Cells"
 msgstr "Копировать ячейки"
 
-#: src/control/Control.ContextMenu.js:286
+#: src/control/Control.ContextMenu.js:312
 msgid "Fill Series"
 msgstr "Заполнить ряды"
 
@@ -949,7 +949,7 @@ msgstr ""
 "необходимо сначала загрузить их."
 
 #: src/control/Control.DownloadProgress.js:61
-#: src/control/Control.NotebookbarCalc.js:280
+#: src/control/Control.NotebookbarCalc.js:288
 #: src/control/Control.NotebookbarDraw.js:298
 #: src/control/Control.NotebookbarImpress.js:369
 #: src/control/Control.NotebookbarWriter.js:326
@@ -1308,22 +1308,22 @@ msgstr "Раскрыть панель формул"
 msgid "Function Wizard"
 msgstr "Мастер функций"
 
-#: src/control/Control.FormulaBarJSDialog.js:73
+#: src/control/Control.FormulaBarJSDialog.js:74
 msgid "Select Function"
 msgstr "Выбор функции"
 
-#: src/control/Control.FormulaBarJSDialog.js:79
+#: src/control/Control.FormulaBarJSDialog.js:80
 #: src/control/Control.NotebookbarWriter.js:120
 #: src/control/Control.NotebookbarWriter.js:1488
 msgid "Formula"
 msgstr "Формула"
 
-#: src/control/Control.FormulaBarJSDialog.js:85
+#: src/control/Control.FormulaBarJSDialog.js:86
 #: src/control/Control.MobileTopBar.ts:42
 msgid "Accept"
 msgstr "Принять"
 
-#: src/control/Control.FormulaBarJSDialog.js:169
+#: src/control/Control.FormulaBarJSDialog.js:170
 msgid "Collapse Formula Bar"
 msgstr "Свернуть панель формул"
 
@@ -1343,102 +1343,102 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Закрыть диалог"
 
-#: src/control/Control.JSDialogBuilder.js:493
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Solid"
 msgstr "Сплошной"
 
-#: src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Linear"
 msgstr "Линейный"
 
-#: src/control/Control.JSDialogBuilder.js:499
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Axial"
 msgstr "Осевой"
 
-#: src/control/Control.JSDialogBuilder.js:502
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Radial"
 msgstr "Радиальный"
 
-#: src/control/Control.JSDialogBuilder.js:505
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Ellipsoid"
 msgstr "Эллипсоидный"
 
-#: src/control/Control.JSDialogBuilder.js:509
+#: src/control/Control.JSDialogBuilder.js:515
 msgid "Quadratic"
 msgstr "Квадратный"
 
-#: src/control/Control.JSDialogBuilder.js:512
+#: src/control/Control.JSDialogBuilder.js:518
 msgid "Square"
 msgstr "Прямоугольный"
 
-#: src/control/Control.JSDialogBuilder.js:515
+#: src/control/Control.JSDialogBuilder.js:521
 msgid "Fixed size"
 msgstr "Фиксированный размер"
 
-#: src/control/Control.JSDialogBuilder.js:1472
+#: src/control/Control.JSDialogBuilder.js:1478
 msgid "From"
 msgstr "От"
 
-#: src/control/Control.JSDialogBuilder.js:1475
+#: src/control/Control.JSDialogBuilder.js:1481
 msgid "To"
 msgstr "До"
 
-#: src/control/Control.JSDialogBuilder.js:1478
+#: src/control/Control.JSDialogBuilder.js:1484
 msgid "Color"
 msgstr "Цвет"
 
-#: src/control/Control.JSDialogBuilder.js:1554
+#: src/control/Control.JSDialogBuilder.js:1560
 msgid "Select range"
 msgstr "Выбрать диапазон"
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1679
 #: src/control/Control.NotebookbarBuilder.js:153
 msgid "Font Name"
 msgstr "Шрифт"
 
-#: src/control/Control.JSDialogBuilder.js:1675 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1681 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Кегль"
 
-#: src/control/Control.JSDialogBuilder.js:1677
-#: src/control/Control.TopToolbar.js:460
+#: src/control/Control.JSDialogBuilder.js:1683
+#: src/control/Control.TopToolbar.js:486
 msgid "Style"
 msgstr "Стиль"
 
-#: src/control/Control.JSDialogBuilder.js:1930
+#: src/control/Control.JSDialogBuilder.js:1936
 msgid "reply"
 msgstr "ответить"
 
-#: src/control/Control.JSDialogBuilder.js:1933
+#: src/control/Control.JSDialogBuilder.js:1939
 msgid "replies"
 msgstr "ответы"
 
-#: src/control/Control.JSDialogBuilder.js:2008
+#: src/control/Control.JSDialogBuilder.js:2014
 msgid "Insert Comment"
 msgstr "Вставить комментарий"
 
-#: src/control/Control.JSDialogBuilder.js:2304
+#: src/control/Control.JSDialogBuilder.js:2310
 msgid "Open {name}"
 msgstr "Открыть {name}"
 
-#: src/control/Control.JSDialogBuilder.js:2626
-#: src/control/Control.Menubar.ts:921
+#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.Menubar.ts:926
 msgid "Rows"
 msgstr "Строки"
 
-#: src/control/Control.JSDialogBuilder.js:2627
-#: src/control/Control.Menubar.ts:924
+#: src/control/Control.JSDialogBuilder.js:2633
+#: src/control/Control.Menubar.ts:929
 msgid "Columns"
 msgstr "Столбцы"
 
-#: src/control/Control.JSDialogBuilder.js:2647
+#: src/control/Control.JSDialogBuilder.js:2653
 msgid "Insert Table"
 msgstr "Вставить таблицу"
 
-#: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:389
-#: src/control/Control.Menubar.ts:391 src/control/Control.Menubar.ts:393
-#: src/control/Control.Menubar.ts:581 src/control/Control.Menubar.ts:721
-#: src/control/Control.Menubar.ts:1007 src/control/Control.StatusBar.js:548
+#: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:391
+#: src/control/Control.Menubar.ts:393 src/control/Control.Menubar.ts:395
+#: src/control/Control.Menubar.ts:585 src/control/Control.Menubar.ts:726
+#: src/control/Control.Menubar.ts:1014 src/control/Control.StatusBar.js:548
 msgid "None (Do not check spelling)"
 msgstr "Нет (не проверять орфографию)"
 
@@ -1455,52 +1455,52 @@ msgid "No search results found!"
 msgstr "Результаты поиска не найдены!"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
-#: src/control/Control.Menubar.ts:1042
+#: src/control/Control.Menubar.ts:1049
 #: src/control/Control.NotebookbarBuilder.js:336
 #: src/control/Control.NotebookbarBuilder.js:549
 msgid "ODF text document (.odt)"
 msgstr "ODF текстовый документ (.odt)"
 
 #: src/control/Control.Menubar.ts:98 src/control/Control.Menubar.ts:113
-#: src/control/Control.Menubar.ts:1043
+#: src/control/Control.Menubar.ts:1050
 #: src/control/Control.NotebookbarBuilder.js:348
 #: src/control/Control.NotebookbarBuilder.js:561
 msgid "Word 2003 Document (.doc)"
 msgstr "Документ Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.ts:99 src/control/Control.Menubar.ts:114
-#: src/control/Control.Menubar.ts:1044
+#: src/control/Control.Menubar.ts:1051
 #: src/control/Control.NotebookbarBuilder.js:344
 #: src/control/Control.NotebookbarBuilder.js:557
 msgid "Word Document (.docx)"
 msgstr "Документ Word (.docx)"
 
 #: src/control/Control.Menubar.ts:100 src/control/Control.Menubar.ts:115
-#: src/control/Control.Menubar.ts:1045
+#: src/control/Control.Menubar.ts:1052
 #: src/control/Control.NotebookbarBuilder.js:340
 #: src/control/Control.NotebookbarBuilder.js:553
 msgid "Rich Text (.rtf)"
 msgstr "Форматированный текст (.rtf)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
-#: src/control/Control.Menubar.ts:430 src/control/Control.Menubar.ts:436
-#: src/control/Control.Menubar.ts:602 src/control/Control.Menubar.ts:609
-#: src/control/Control.Menubar.ts:743 src/control/Control.Menubar.ts:748
-#: src/control/Control.Menubar.ts:1030 src/control/Control.Menubar.ts:1039
-#: src/control/Control.Menubar.ts:1096 src/control/Control.Menubar.ts:1104
-#: src/control/Control.Menubar.ts:1161 src/control/Control.Menubar.ts:1168
-#: src/control/Control.Menubar.ts:1216 src/control/Control.Menubar.ts:1226
+#: src/control/Control.Menubar.ts:432 src/control/Control.Menubar.ts:438
+#: src/control/Control.Menubar.ts:606 src/control/Control.Menubar.ts:613
+#: src/control/Control.Menubar.ts:748 src/control/Control.Menubar.ts:753
+#: src/control/Control.Menubar.ts:1037 src/control/Control.Menubar.ts:1046
+#: src/control/Control.Menubar.ts:1103 src/control/Control.Menubar.ts:1111
+#: src/control/Control.Menubar.ts:1168 src/control/Control.Menubar.ts:1175
+#: src/control/Control.Menubar.ts:1223 src/control/Control.Menubar.ts:1233
 msgid "Export as"
 msgstr "Экспортировать как"
 
 #: src/control/Control.Menubar.ts:103 src/control/Control.Menubar.ts:110
-#: src/control/Control.Menubar.ts:431 src/control/Control.Menubar.ts:437
-#: src/control/Control.Menubar.ts:603 src/control/Control.Menubar.ts:610
-#: src/control/Control.Menubar.ts:744 src/control/Control.Menubar.ts:749
-#: src/control/Control.Menubar.ts:1031 src/control/Control.Menubar.ts:1040
-#: src/control/Control.Menubar.ts:1097 src/control/Control.Menubar.ts:1105
-#: src/control/Control.Menubar.ts:1162 src/control/Control.Menubar.ts:1169
-#: src/control/Control.Menubar.ts:1217 src/control/Control.Menubar.ts:1227
+#: src/control/Control.Menubar.ts:433 src/control/Control.Menubar.ts:439
+#: src/control/Control.Menubar.ts:607 src/control/Control.Menubar.ts:614
+#: src/control/Control.Menubar.ts:749 src/control/Control.Menubar.ts:754
+#: src/control/Control.Menubar.ts:1038 src/control/Control.Menubar.ts:1047
+#: src/control/Control.Menubar.ts:1104 src/control/Control.Menubar.ts:1112
+#: src/control/Control.Menubar.ts:1169 src/control/Control.Menubar.ts:1176
+#: src/control/Control.Menubar.ts:1224 src/control/Control.Menubar.ts:1234
 #: src/control/Control.NotebookbarBuilder.js:357
 #: src/control/Control.NotebookbarBuilder.js:395
 #: src/control/Control.NotebookbarBuilder.js:431
@@ -1513,7 +1513,7 @@ msgid "PDF Document (.pdf)"
 msgstr "Документ PDF (.pdf)"
 
 #: src/control/Control.Menubar.ts:104 src/control/Control.Menubar.ts:116
-#: src/control/Control.Menubar.ts:1032 src/control/Control.Menubar.ts:1046
+#: src/control/Control.Menubar.ts:1039 src/control/Control.Menubar.ts:1053
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "EPUB (.epub)"
@@ -1523,211 +1523,211 @@ msgstr "EPUB (.epub)"
 msgid "Rename Document"
 msgstr "Переименовать документ"
 
-#: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:434
-#: src/control/Control.Menubar.ts:606 src/control/Control.Menubar.ts:746
-#: src/control/Control.Menubar.ts:1034 src/control/Control.Menubar.ts:1099
-#: src/control/Control.Menubar.ts:1164 src/control/Control.Menubar.ts:1219
+#: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:436
+#: src/control/Control.Menubar.ts:610 src/control/Control.Menubar.ts:751
+#: src/control/Control.Menubar.ts:1041 src/control/Control.Menubar.ts:1106
+#: src/control/Control.Menubar.ts:1171 src/control/Control.Menubar.ts:1226
 msgid "Share..."
 msgstr "Поделиться..."
 
-#: src/control/Control.Menubar.ts:108 src/control/Control.Menubar.ts:435
-#: src/control/Control.Menubar.ts:608 src/control/Control.Menubar.ts:747
-#: src/control/Control.Menubar.ts:1035 src/control/Control.Menubar.ts:1100
-#: src/control/Control.Menubar.ts:1166 src/control/Control.Menubar.ts:1220
+#: src/control/Control.Menubar.ts:108 src/control/Control.Menubar.ts:437
+#: src/control/Control.Menubar.ts:612 src/control/Control.Menubar.ts:752
+#: src/control/Control.Menubar.ts:1042 src/control/Control.Menubar.ts:1107
+#: src/control/Control.Menubar.ts:1173 src/control/Control.Menubar.ts:1227
 msgid "See revision history"
 msgstr "Журнал редакций"
 
-#: src/control/Control.Menubar.ts:109 src/control/Control.Menubar.ts:436
-#: src/control/Control.Menubar.ts:609 src/control/Control.Menubar.ts:748
-#: src/control/Control.Menubar.ts:1039 src/control/Control.Menubar.ts:1104
-#: src/control/Control.Menubar.ts:1168 src/control/Control.Menubar.ts:1226
+#: src/control/Control.Menubar.ts:109 src/control/Control.Menubar.ts:438
+#: src/control/Control.Menubar.ts:613 src/control/Control.Menubar.ts:753
+#: src/control/Control.Menubar.ts:1046 src/control/Control.Menubar.ts:1111
+#: src/control/Control.Menubar.ts:1175 src/control/Control.Menubar.ts:1233
 msgid "Download as"
 msgstr "Загрузить как"
 
-#: src/control/Control.Menubar.ts:111 src/control/Control.Menubar.ts:438
-#: src/control/Control.Menubar.ts:611 src/control/Control.Menubar.ts:750
-#: src/control/Control.Menubar.ts:1041 src/control/Control.Menubar.ts:1106
-#: src/control/Control.Menubar.ts:1170 src/control/Control.Menubar.ts:1228
+#: src/control/Control.Menubar.ts:111 src/control/Control.Menubar.ts:440
+#: src/control/Control.Menubar.ts:615 src/control/Control.Menubar.ts:755
+#: src/control/Control.Menubar.ts:1048 src/control/Control.Menubar.ts:1113
+#: src/control/Control.Menubar.ts:1177 src/control/Control.Menubar.ts:1235
 #: src/control/Control.NotebookbarBuilder.js:367
 #: src/control/Control.NotebookbarBuilder.js:401
 #: src/control/Control.NotebookbarBuilder.js:443
 msgid "PDF Document (.pdf) as..."
 msgstr "Документ PDF (.pdf) как..."
 
-#: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:755
+#: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:760
 msgid "HTML file (.html)"
 msgstr "Файл HTML (.html)"
 
-#: src/control/Control.Menubar.ts:122 src/control/Control.Menubar.ts:457
-#: src/control/Control.Menubar.ts:617 src/control/Control.Menubar.ts:763
+#: src/control/Control.Menubar.ts:122 src/control/Control.Menubar.ts:459
+#: src/control/Control.Menubar.ts:621 src/control/Control.Menubar.ts:768
 #: src/control/Control.Toolbar.js:1128
 msgid "Close document"
 msgstr "Закрыть документ"
 
-#: src/control/Control.Menubar.ts:127 src/control/Control.Menubar.ts:462
-#: src/control/Control.Menubar.ts:622 src/control/Control.Menubar.ts:768
-#: src/control/Control.Menubar.ts:1051 src/control/Control.Menubar.ts:1115
-#: src/control/Control.Menubar.ts:1176 src/control/Control.Menubar.ts:1236
-#: src/control/Control.NotebookbarCalc.js:295
+#: src/control/Control.Menubar.ts:127 src/control/Control.Menubar.ts:464
+#: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:773
+#: src/control/Control.Menubar.ts:1058 src/control/Control.Menubar.ts:1122
+#: src/control/Control.Menubar.ts:1183 src/control/Control.Menubar.ts:1243
+#: src/control/Control.NotebookbarCalc.js:303
 #: src/control/Control.NotebookbarDraw.js:342
 #: src/control/Control.NotebookbarImpress.js:384
 #: src/control/Control.NotebookbarWriter.js:341
 msgid "Repair"
 msgstr "Восстановить"
 
-#: src/control/Control.Menubar.ts:155 src/control/Control.Menubar.ts:161
-#: src/control/Control.Menubar.ts:474 src/control/Control.Menubar.ts:480
-#: src/control/Control.Menubar.ts:634 src/control/Control.Menubar.ts:640
-#: src/control/Control.Menubar.ts:780 src/control/Control.Menubar.ts:786
-#: src/control/Control.NotebookbarCalc.js:1306
+#: src/control/Control.Menubar.ts:157 src/control/Control.Menubar.ts:163
+#: src/control/Control.Menubar.ts:476 src/control/Control.Menubar.ts:482
+#: src/control/Control.Menubar.ts:638 src/control/Control.Menubar.ts:644
+#: src/control/Control.Menubar.ts:785 src/control/Control.Menubar.ts:791
+#: src/control/Control.NotebookbarCalc.js:1324
 #: src/control/Control.NotebookbarDraw.js:418
-#: src/control/Control.NotebookbarImpress.js:490
+#: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1585
 #: src/control/Control.StatusBar.js:280
 msgid "Reset zoom"
 msgstr "Сбросить масштаб"
 
-#: src/control/Control.Menubar.ts:164 src/control/Control.Menubar.ts:486
-#: src/control/Control.Menubar.ts:646 src/control/Control.Menubar.ts:789
+#: src/control/Control.Menubar.ts:166 src/control/Control.Menubar.ts:488
+#: src/control/Control.Menubar.ts:650 src/control/Control.Menubar.ts:794
 msgid "Toggle UI Mode"
 msgstr "Переключить режим интерфейса"
 
-#: src/control/Control.Menubar.ts:165 src/control/Control.Menubar.ts:487
+#: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:489
 msgid "Show Ruler"
 msgstr "Показать линейку"
 
-#: src/control/Control.Menubar.ts:166 src/control/Control.Menubar.ts:488
-#: src/control/Control.Menubar.ts:651 src/control/Control.Menubar.ts:790
+#: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:490
+#: src/control/Control.Menubar.ts:655 src/control/Control.Menubar.ts:795
 msgid "Show Status Bar"
 msgstr "Показать строку состояния"
 
-#: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:490
-#: src/control/Control.Menubar.ts:652 src/control/Control.Menubar.ts:791
+#: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:492
+#: src/control/Control.Menubar.ts:656 src/control/Control.Menubar.ts:796
 msgid "Hide Menu Bar"
 msgstr "Скрыть строку меню"
 
-#: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:491
-#: src/control/Control.Menubar.ts:647 src/control/Control.Menubar.ts:792
-#: src/control/Control.Menubar.ts:1072 src/control/Control.Menubar.ts:1125
-#: src/control/Control.Menubar.ts:1186 src/control/Control.Menubar.ts:1246
-#: src/control/Control.NotebookbarCalc.js:1382
+#: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:493
+#: src/control/Control.Menubar.ts:651 src/control/Control.Menubar.ts:797
+#: src/control/Control.Menubar.ts:1079 src/control/Control.Menubar.ts:1132
+#: src/control/Control.Menubar.ts:1193 src/control/Control.Menubar.ts:1253
+#: src/control/Control.NotebookbarCalc.js:1400
 #: src/control/Control.NotebookbarDraw.js:521
-#: src/control/Control.NotebookbarImpress.js:609
+#: src/control/Control.NotebookbarImpress.js:623
 #: src/control/Control.NotebookbarWriter.js:1668
 msgid "Dark Mode"
 msgstr "Темная тема"
 
-#: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:492
-#: src/control/Control.Menubar.ts:648 src/control/Control.Menubar.ts:793
-#: src/control/Control.Menubar.ts:1073 src/control/Control.Menubar.ts:1126
-#: src/control/Control.Menubar.ts:1187 src/control/Control.Menubar.ts:1247
-#: src/control/Control.NotebookbarCalc.js:1389
+#: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:494
+#: src/control/Control.Menubar.ts:652 src/control/Control.Menubar.ts:798
+#: src/control/Control.Menubar.ts:1080 src/control/Control.Menubar.ts:1133
+#: src/control/Control.Menubar.ts:1194 src/control/Control.Menubar.ts:1254
+#: src/control/Control.NotebookbarCalc.js:1407
 #: src/control/Control.NotebookbarDraw.js:528
-#: src/control/Control.NotebookbarImpress.js:616
+#: src/control/Control.NotebookbarImpress.js:630
 #: src/control/Control.NotebookbarWriter.js:1675
 msgid "Invert Background"
 msgstr "Инвертировать фон"
 
-#: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:796
-#: src/control/Control.NotebookbarCalc.js:2170
+#: src/control/Control.Menubar.ts:173 src/control/Control.Menubar.ts:801
+#: src/control/Control.NotebookbarCalc.js:2225
 #: src/control/Control.NotebookbarWriter.js:929
 #: src/control/Control.NotebookbarWriter.js:1048
 msgid "Style list"
 msgstr "Список стилей"
 
-#: src/control/Control.Menubar.ts:179 src/control/Control.Menubar.ts:503
-#: src/control/Control.Menubar.ts:655 src/control/Control.Menubar.ts:807
-#: src/control/Control.Menubar.ts:1289 src/control/Control.Menubar.ts:1339
-#: src/control/Control.Menubar.ts:1353 src/control/Control.Menubar.ts:1376
+#: src/control/Control.Menubar.ts:181 src/control/Control.Menubar.ts:505
+#: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:812
+#: src/control/Control.Menubar.ts:1296 src/control/Control.Menubar.ts:1346
+#: src/control/Control.Menubar.ts:1360 src/control/Control.Menubar.ts:1383
 msgid "Local Image..."
 msgstr "Локальное изображение..."
 
-#: src/control/Control.Menubar.ts:203 src/control/Control.Menubar.ts:205
-#: src/control/Control.Menubar.ts:1306 src/control/Control.Menubar.ts:1308
+#: src/control/Control.Menubar.ts:205 src/control/Control.Menubar.ts:207
+#: src/control/Control.Menubar.ts:1313 src/control/Control.Menubar.ts:1315
 msgid "All"
 msgstr "Все"
 
-#: src/control/Control.Menubar.ts:214 src/control/Control.Menubar.ts:514
-#: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:819
-#: src/control/Control.NotebookbarCalc.js:1516
+#: src/control/Control.Menubar.ts:216 src/control/Control.Menubar.ts:516
+#: src/control/Control.Menubar.ts:666 src/control/Control.Menubar.ts:824
+#: src/control/Control.NotebookbarCalc.js:1571
 #: src/control/Control.NotebookbarDraw.js:1367
-#: src/control/Control.NotebookbarImpress.js:1388
+#: src/control/Control.NotebookbarImpress.js:1394
 #: src/control/Control.NotebookbarWriter.js:1245
 msgid "Smart Picker"
 msgstr "Умный подбор"
 
-#: src/control/Control.Menubar.ts:215 src/control/Control.Menubar.ts:515
-#: src/control/Control.Menubar.ts:663 src/control/Control.Menubar.ts:820
+#: src/control/Control.Menubar.ts:217 src/control/Control.Menubar.ts:517
+#: src/control/Control.Menubar.ts:667 src/control/Control.Menubar.ts:825
 msgid "AI Assistant"
 msgstr "ИИ ассистент"
 
-#: src/control/Control.Menubar.ts:256
+#: src/control/Control.Menubar.ts:258
 msgid "Text orientation"
 msgstr "Ориентация текста"
 
-#: src/control/Control.Menubar.ts:326
+#: src/control/Control.Menubar.ts:328
 #: src/control/Control.NotebookbarWriter.js:63
 msgid "References"
 msgstr "~Ссылки"
 
-#: src/control/Control.Menubar.ts:329
+#: src/control/Control.Menubar.ts:331
 #: src/control/Control.NotebookbarWriter.js:2045
 msgid "Update Index"
 msgstr "Обновить указатель"
 
-#: src/control/Control.Menubar.ts:338
+#: src/control/Control.Menubar.ts:340
 #: src/control/Control.NotebookbarWriter.js:2145
 msgid "Add Citation"
 msgstr "Добавить цитату"
 
-#: src/control/Control.Menubar.ts:339
+#: src/control/Control.Menubar.ts:341
 #: src/control/Control.NotebookbarWriter.js:2158
 msgid "Add Citation Note"
 msgstr "Добавить сноску цитаты"
 
-#: src/control/Control.Menubar.ts:340
+#: src/control/Control.Menubar.ts:342
 #: src/control/Control.NotebookbarWriter.js:2131
 msgid "Add Bibliography"
 msgstr "Добавить библиографию"
 
-#: src/control/Control.Menubar.ts:342
+#: src/control/Control.Menubar.ts:344
 #: src/control/Control.NotebookbarWriter.js:2177
 msgid "Refresh Citations"
 msgstr "Обновить цитаты"
 
-#: src/control/Control.Menubar.ts:343
+#: src/control/Control.Menubar.ts:345
 #: src/control/Control.NotebookbarWriter.js:2190
 #: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
 msgstr "Разорвать связи цитат"
 
-#: src/control/Control.Menubar.ts:344
+#: src/control/Control.Menubar.ts:346
 #: src/control/Control.NotebookbarWriter.js:2203
 msgid "Citation Preferences"
 msgstr "Настройки цитат"
 
-#: src/control/Control.Menubar.ts:372 src/control/Control.Menubar.ts:1328
+#: src/control/Control.Menubar.ts:374 src/control/Control.Menubar.ts:1335
 msgid "Insert Rich Text"
 msgstr "Вставить форматированный текст"
 
-#: src/control/Control.Menubar.ts:373 src/control/Control.Menubar.ts:1329
+#: src/control/Control.Menubar.ts:375 src/control/Control.Menubar.ts:1336
 msgid "Insert Checkbox"
 msgstr "Вставить флажок"
 
-#: src/control/Control.Menubar.ts:374 src/control/Control.Menubar.ts:1330
+#: src/control/Control.Menubar.ts:376 src/control/Control.Menubar.ts:1337
 msgid "Insert Dropdown"
 msgstr "Вставить выпадающий список"
 
-#: src/control/Control.Menubar.ts:375 src/control/Control.Menubar.ts:1331
+#: src/control/Control.Menubar.ts:377 src/control/Control.Menubar.ts:1338
 msgid "Insert Picture"
 msgstr "Вставить изображение"
 
-#: src/control/Control.Menubar.ts:376 src/control/Control.Menubar.ts:1332
+#: src/control/Control.Menubar.ts:378 src/control/Control.Menubar.ts:1339
 msgid "Insert Date"
 msgstr "Вставить дату"
 
-#: src/control/Control.Menubar.ts:377 src/control/Control.Menubar.ts:1333
-#: src/control/Control.NotebookbarCalc.js:310
+#: src/control/Control.Menubar.ts:379 src/control/Control.Menubar.ts:1340
+#: src/control/Control.NotebookbarCalc.js:318
 #: src/control/Control.NotebookbarDraw.js:356
 #: src/control/Control.NotebookbarImpress.js:399
 #: src/control/Control.NotebookbarWriter.js:356
@@ -1735,344 +1735,344 @@ msgstr "Вставить дату"
 msgid "Properties"
 msgstr "Свойства"
 
-#: src/control/Control.Menubar.ts:397 src/control/Control.Menubar.ts:1077
+#: src/control/Control.Menubar.ts:399 src/control/Control.Menubar.ts:1084
 #: src/control/Control.NotebookbarWriter.js:466
 msgid "Screen Reading"
 msgstr "Чтение вслух"
 
-#: src/control/Control.Menubar.ts:410
+#: src/control/Control.Menubar.ts:412
 #: src/control/Control.NotebookbarWriter.js:430
 msgid "Forum"
 msgstr "Форум"
 
-#: src/control/Control.Menubar.ts:411 src/control/Control.Menubar.ts:587
-#: src/control/Control.Menubar.ts:724 src/control/Control.Menubar.ts:1014
+#: src/control/Control.Menubar.ts:413 src/control/Control.Menubar.ts:591
+#: src/control/Control.Menubar.ts:729 src/control/Control.Menubar.ts:1021
 #: src/control/Control.NotebookbarWriter.js:442
 msgid "Online Help"
 msgstr "Справка"
 
-#: src/control/Control.Menubar.ts:412 src/control/Control.Menubar.ts:588
-#: src/control/Control.Menubar.ts:725 src/control/Control.Menubar.ts:1015
+#: src/control/Control.Menubar.ts:414 src/control/Control.Menubar.ts:592
+#: src/control/Control.Menubar.ts:730 src/control/Control.Menubar.ts:1022
 #: src/control/Control.NotebookbarWriter.js:455
 msgid "Keyboard shortcuts"
 msgstr "Комбинации клавиш"
 
-#: src/control/Control.Menubar.ts:413 src/control/Control.Menubar.ts:589
-#: src/control/Control.Menubar.ts:726 src/control/Control.Menubar.ts:1016
+#: src/control/Control.Menubar.ts:415 src/control/Control.Menubar.ts:593
+#: src/control/Control.Menubar.ts:731 src/control/Control.Menubar.ts:1023
 #: src/control/Control.NotebookbarWriter.js:508
 msgid "Report an issue"
 msgstr "Сообщить о проблеме"
 
-#: src/control/Control.Menubar.ts:414 src/control/Control.Menubar.ts:590
-#: src/control/Control.Menubar.ts:727 src/control/Control.Menubar.ts:1017
-#: src/control/Control.Menubar.ts:1086 src/control/Control.Menubar.ts:1151
-#: src/control/Control.Menubar.ts:1206 src/control/Control.Menubar.ts:1281
+#: src/control/Control.Menubar.ts:416 src/control/Control.Menubar.ts:594
+#: src/control/Control.Menubar.ts:732 src/control/Control.Menubar.ts:1024
+#: src/control/Control.Menubar.ts:1093 src/control/Control.Menubar.ts:1158
+#: src/control/Control.Menubar.ts:1213 src/control/Control.Menubar.ts:1288
 #: src/control/Control.NotebookbarWriter.js:522
 msgid "Latest Updates"
 msgstr "Последние обновления"
 
-#: src/control/Control.Menubar.ts:415 src/control/Control.Menubar.ts:591
-#: src/control/Control.Menubar.ts:728 src/control/Control.Menubar.ts:1018
-#: src/control/Control.Menubar.ts:1087 src/control/Control.Menubar.ts:1152
-#: src/control/Control.Menubar.ts:1207 src/control/Control.Menubar.ts:1282
+#: src/control/Control.Menubar.ts:417 src/control/Control.Menubar.ts:595
+#: src/control/Control.Menubar.ts:733 src/control/Control.Menubar.ts:1025
+#: src/control/Control.Menubar.ts:1094 src/control/Control.Menubar.ts:1159
+#: src/control/Control.Menubar.ts:1214 src/control/Control.Menubar.ts:1289
 #: src/control/Control.NotebookbarWriter.js:536
 msgid "Send Feedback"
 msgstr "Отправить отзыв"
 
-#: src/control/Control.Menubar.ts:416 src/control/Control.Menubar.ts:592
-#: src/control/Control.Menubar.ts:729 src/control/Control.Menubar.ts:1019
+#: src/control/Control.Menubar.ts:418 src/control/Control.Menubar.ts:596
+#: src/control/Control.Menubar.ts:734 src/control/Control.Menubar.ts:1026
 #: src/control/Control.NotebookbarWriter.js:491
 #: src/control/Control.ServerAuditDialog.ts:196
 #: src/control/Control.ServerAuditDialog.ts:197
 msgid "Server audit"
 msgstr "Аудит сервера"
 
-#: src/control/Control.Menubar.ts:419 src/control/Control.Menubar.ts:595
-#: src/control/Control.Menubar.ts:732 src/control/Control.Menubar.ts:1022
+#: src/control/Control.Menubar.ts:421 src/control/Control.Menubar.ts:599
+#: src/control/Control.Menubar.ts:737 src/control/Control.Menubar.ts:1029
 msgid "Last modification"
 msgstr "Последнее изменение"
 
-#: src/control/Control.Menubar.ts:426 src/control/Control.Menubar.ts:439
-#: src/control/Control.Menubar.ts:1107
+#: src/control/Control.Menubar.ts:428 src/control/Control.Menubar.ts:441
+#: src/control/Control.Menubar.ts:1114
 #: src/control/Control.NotebookbarBuilder.js:409
 #: src/control/Control.NotebookbarBuilder.js:583
 msgid "ODF presentation (.odp)"
 msgstr "ODF презентация (.odp)"
 
-#: src/control/Control.Menubar.ts:427 src/control/Control.Menubar.ts:440
-#: src/control/Control.Menubar.ts:1108
+#: src/control/Control.Menubar.ts:429 src/control/Control.Menubar.ts:442
+#: src/control/Control.Menubar.ts:1115
 #: src/control/Control.NotebookbarBuilder.js:421
 #: src/control/Control.NotebookbarBuilder.js:591
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Презентация PowerPoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.ts:428 src/control/Control.Menubar.ts:441
-#: src/control/Control.Menubar.ts:1109
+#: src/control/Control.Menubar.ts:430 src/control/Control.Menubar.ts:443
+#: src/control/Control.Menubar.ts:1116
 #: src/control/Control.NotebookbarBuilder.js:417
 #: src/control/Control.NotebookbarBuilder.js:587
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Презентация PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.ts:433 src/control/Control.Menubar.ts:605
+#: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:609
 msgid "Save Comments"
 msgstr "Сохранить примечания"
 
-#: src/control/Control.Menubar.ts:442
+#: src/control/Control.Menubar.ts:444
 #: src/control/Control.NotebookbarBuilder.js:425
 msgid "HTML Document (.html)"
 msgstr "Документ HTML (.html)"
 
-#: src/control/Control.Menubar.ts:443
+#: src/control/Control.Menubar.ts:445
 #: src/control/Control.NotebookbarBuilder.js:456
 msgid "Shockwave Flash (.swf)"
 msgstr "Shockwave Flash (.swf)"
 
-#: src/control/Control.Menubar.ts:444
+#: src/control/Control.Menubar.ts:446
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Scalable Vector Graphics (.svg)"
 msgstr "Масштабируемая векторная графика (.svg)"
 
-#: src/control/Control.Menubar.ts:445
+#: src/control/Control.Menubar.ts:447
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Current slide as Bitmap (.bmp)"
 msgstr "Текущий слайд как BMP (.bmp)"
 
-#: src/control/Control.Menubar.ts:446
+#: src/control/Control.Menubar.ts:448
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Graphics Interchange Format (.gif)"
 msgstr "Текущий слайд как GIF (.gif)"
 
-#: src/control/Control.Menubar.ts:447
+#: src/control/Control.Menubar.ts:449
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Portable Network Graphics (.png)"
 msgstr "Текущий слайд как PNG (.png)"
 
-#: src/control/Control.Menubar.ts:448
+#: src/control/Control.Menubar.ts:450
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Tag Image File Format (.tiff)"
 msgstr "Текущий слайд как TIFF (.tiff)"
 
-#: src/control/Control.Menubar.ts:454
+#: src/control/Control.Menubar.ts:456
 #: src/control/Control.NotebookbarBuilder.js:654
 msgid "Full Page Slides"
 msgstr "Слайды на всю страницу"
 
-#: src/control/Control.Menubar.ts:455
+#: src/control/Control.Menubar.ts:457
 #: src/control/Control.NotebookbarBuilder.js:658
 msgid "Notes Pages"
 msgstr "Страницы примечаний"
 
-#: src/control/Control.Menubar.ts:489
-#: src/control/Control.NotebookbarImpress.js:573
+#: src/control/Control.Menubar.ts:491
+#: src/control/Control.NotebookbarImpress.js:587
 msgid "Notes View"
 msgstr "Примечания"
 
-#: src/control/Control.Menubar.ts:493
-#: src/control/Control.NotebookbarImpress.js:579
+#: src/control/Control.Menubar.ts:495
+#: src/control/Control.NotebookbarImpress.js:593
 msgid "Master View"
 msgstr "Мастер-слайд"
 
-#: src/control/Control.Menubar.ts:505
+#: src/control/Control.Menubar.ts:507
 msgid "Local Multimedia..."
 msgstr "Мультимедиа на локальном устройстве..."
 
-#: src/control/Control.Menubar.ts:572 src/control/Control.Menubar.ts:1150
-#: src/control/Control.PresentationBar.js:127
+#: src/control/Control.Menubar.ts:576 src/control/Control.Menubar.ts:1157
+#: src/control/Control.PresentationBar.js:128
 msgid "Fullscreen presentation"
 msgstr "Полноэкранная презентация"
 
-#: src/control/Control.Menubar.ts:573
+#: src/control/Control.Menubar.ts:577
 msgid "Present current slide"
 msgstr "Показать текущий слайд"
 
-#: src/control/Control.Menubar.ts:574
+#: src/control/Control.Menubar.ts:578
 msgid "Present in new window"
 msgstr "Презентация в новом окне"
 
-#: src/control/Control.Menubar.ts:575
+#: src/control/Control.Menubar.ts:579
 #: src/control/Control.NotebookbarImpress.js:468
 #: src/slideshow/PresenterConsole.js:230
 msgid "Presenter Console"
 msgstr "Консоль презентации"
 
-#: src/control/Control.Menubar.ts:612 src/control/Control.Menubar.ts:1110
-#: src/control/Control.Menubar.ts:1171
+#: src/control/Control.Menubar.ts:616 src/control/Control.Menubar.ts:1117
+#: src/control/Control.Menubar.ts:1178
 #: src/control/Control.NotebookbarBuilder.js:413
 #: src/control/Control.NotebookbarBuilder.js:526
 msgid "ODF Drawing (.odg)"
 msgstr "ODF рисунок (.odg)"
 
-#: src/control/Control.Menubar.ts:739 src/control/Control.Menubar.ts:751
-#: src/control/Control.Menubar.ts:1229
+#: src/control/Control.Menubar.ts:744 src/control/Control.Menubar.ts:756
+#: src/control/Control.Menubar.ts:1236
 #: src/control/Control.NotebookbarBuilder.js:375
 #: src/control/Control.NotebookbarBuilder.js:568
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF эл.таблица (.ods)"
 
-#: src/control/Control.Menubar.ts:740 src/control/Control.Menubar.ts:752
-#: src/control/Control.Menubar.ts:1230
+#: src/control/Control.Menubar.ts:745 src/control/Control.Menubar.ts:757
+#: src/control/Control.Menubar.ts:1237
 #: src/control/Control.NotebookbarBuilder.js:383
 #: src/control/Control.NotebookbarBuilder.js:576
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Таблица Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.ts:741 src/control/Control.Menubar.ts:753
-#: src/control/Control.Menubar.ts:1231
+#: src/control/Control.Menubar.ts:746 src/control/Control.Menubar.ts:758
+#: src/control/Control.Menubar.ts:1238
 #: src/control/Control.NotebookbarBuilder.js:379
 #: src/control/Control.NotebookbarBuilder.js:572
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Таблица Excel (.xlsx)"
 
-#: src/control/Control.Menubar.ts:754
+#: src/control/Control.Menubar.ts:759
 msgid "CSV file (.csv)"
 msgstr "Файл CSV (.csv)"
 
-#: src/control/Control.Menubar.ts:760
-#: src/control/jsdialog/Definitions.Menu.ts:127
+#: src/control/Control.Menubar.ts:765
+#: src/control/jsdialog/Definitions.Menu.ts:399
 msgid "Active sheet"
 msgstr "Активный лист"
 
-#: src/control/Control.Menubar.ts:761 src/control/Control.TopToolbar.js:110
-#: src/control/jsdialog/Definitions.Menu.ts:128
+#: src/control/Control.Menubar.ts:766 src/control/Control.TopToolbar.js:110
+#: src/control/jsdialog/Definitions.Menu.ts:400
 msgid "All Sheets"
 msgstr "Все листы"
 
-#: src/control/Control.Menubar.ts:799
-#: src/control/Control.NotebookbarCalc.js:1283
+#: src/control/Control.Menubar.ts:804
+#: src/control/Control.NotebookbarCalc.js:1301
 msgid "Focus Cell"
 msgstr "Фокус на ячейку"
 
-#: src/control/Control.Menubar.ts:893
-#: src/control/jsdialog/Definitions.Menu.ts:331
+#: src/control/Control.Menubar.ts:898
+#: src/control/jsdialog/Definitions.Menu.ts:603
 msgid "Highlight cells with..."
 msgstr "Выделить ячейки с..."
 
-#: src/control/Control.Menubar.ts:894
-#: src/control/jsdialog/Definitions.Menu.ts:334
+#: src/control/Control.Menubar.ts:899
+#: src/control/jsdialog/Definitions.Menu.ts:606
 msgid "Values greater than..."
 msgstr "Значения больше чем..."
 
-#: src/control/Control.Menubar.ts:895
-#: src/control/jsdialog/Definitions.Menu.ts:338
+#: src/control/Control.Menubar.ts:900
+#: src/control/jsdialog/Definitions.Menu.ts:610
 msgid "Values less than..."
 msgstr "Значения меньше чем..."
 
-#: src/control/Control.Menubar.ts:896
-#: src/control/jsdialog/Definitions.Menu.ts:342
+#: src/control/Control.Menubar.ts:901
+#: src/control/jsdialog/Definitions.Menu.ts:614
 msgid "Values equal to..."
 msgstr "Значения, равные..."
 
-#: src/control/Control.Menubar.ts:897
-#: src/control/jsdialog/Definitions.Menu.ts:346
+#: src/control/Control.Menubar.ts:902
+#: src/control/jsdialog/Definitions.Menu.ts:618
 msgid "Values between..."
 msgstr "Значения между..."
 
-#: src/control/Control.Menubar.ts:898
-#: src/control/jsdialog/Definitions.Menu.ts:350
+#: src/control/Control.Menubar.ts:903
+#: src/control/jsdialog/Definitions.Menu.ts:622
 msgid "Values duplicate..."
 msgstr "Дублирующиеся значения..."
 
-#: src/control/Control.Menubar.ts:899
-#: src/control/jsdialog/Definitions.Menu.ts:354
+#: src/control/Control.Menubar.ts:904
+#: src/control/jsdialog/Definitions.Menu.ts:626
 msgid "Containing text..."
 msgstr "Содержит текст..."
 
-#: src/control/Control.Menubar.ts:901 src/control/Control.Menubar.ts:911
-#: src/control/jsdialog/Definitions.Menu.ts:358
-#: src/control/jsdialog/Definitions.Menu.ts:389
+#: src/control/Control.Menubar.ts:906 src/control/Control.Menubar.ts:916
+#: src/control/jsdialog/Definitions.Menu.ts:630
+#: src/control/jsdialog/Definitions.Menu.ts:661
 msgid "More highlights..."
 msgstr "Другие варианты выделения..."
 
-#: src/control/Control.Menubar.ts:903
-#: src/control/jsdialog/Definitions.Menu.ts:362
+#: src/control/Control.Menubar.ts:908
+#: src/control/jsdialog/Definitions.Menu.ts:634
 msgid "Top/Bottom Rules..."
 msgstr "Правила первых/последних..."
 
-#: src/control/Control.Menubar.ts:904
-#: src/control/jsdialog/Definitions.Menu.ts:365
+#: src/control/Control.Menubar.ts:909
+#: src/control/jsdialog/Definitions.Menu.ts:637
 msgid "Top N elements..."
 msgstr "В первых N элементах..."
 
-#: src/control/Control.Menubar.ts:905
-#: src/control/jsdialog/Definitions.Menu.ts:369
+#: src/control/Control.Menubar.ts:910
+#: src/control/jsdialog/Definitions.Menu.ts:641
 msgid "Top N percent..."
 msgstr "В первых N процентах..."
 
-#: src/control/Control.Menubar.ts:906
-#: src/control/jsdialog/Definitions.Menu.ts:373
+#: src/control/Control.Menubar.ts:911
+#: src/control/jsdialog/Definitions.Menu.ts:645
 msgid "Bottom N elements..."
 msgstr "В нижних N элементах..."
 
-#: src/control/Control.Menubar.ts:907
-#: src/control/jsdialog/Definitions.Menu.ts:377
+#: src/control/Control.Menubar.ts:912
+#: src/control/jsdialog/Definitions.Menu.ts:649
 msgid "Bottom N percent..."
 msgstr "В нижних N процентах..."
 
-#: src/control/Control.Menubar.ts:908
-#: src/control/jsdialog/Definitions.Menu.ts:381
+#: src/control/Control.Menubar.ts:913
+#: src/control/jsdialog/Definitions.Menu.ts:653
 msgid "Above Average..."
 msgstr "Выше среднего..."
 
-#: src/control/Control.Menubar.ts:909
-#: src/control/jsdialog/Definitions.Menu.ts:385
+#: src/control/Control.Menubar.ts:914
+#: src/control/jsdialog/Definitions.Menu.ts:657
 msgid "Below Average..."
 msgstr "Ниже среднего..."
 
-#: src/control/Control.Menubar.ts:1026 src/control/Control.Menubar.ts:1092
-#: src/control/Control.Menubar.ts:1157 src/control/Control.Menubar.ts:1212
+#: src/control/Control.Menubar.ts:1033 src/control/Control.Menubar.ts:1099
+#: src/control/Control.Menubar.ts:1164 src/control/Control.Menubar.ts:1219
 #: src/control/Control.MobileSearchBar.ts:30
-#: src/control/Control.NotebookbarCalc.js:928
+#: src/control/Control.NotebookbarCalc.js:936
 #: src/control/Control.NotebookbarDraw.js:1071
-#: src/control/Control.NotebookbarImpress.js:1155
+#: src/control/Control.NotebookbarImpress.js:1169
 #: src/control/Control.NotebookbarWriter.js:996
 #: src/control/Control.StatusBar.js:253 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:580 src/control/Toolbar.js:581
 msgid "Search"
 msgstr "Поиск"
 
-#: src/control/Control.Menubar.ts:1079
+#: src/control/Control.Menubar.ts:1086
 msgid "Page Setup"
 msgstr "Параметры страницы"
 
-#: src/control/Control.Menubar.ts:1223
+#: src/control/Control.Menubar.ts:1230
 msgid "Define print area"
 msgstr "Выберите область печати"
 
-#: src/control/Control.Menubar.ts:1224
+#: src/control/Control.Menubar.ts:1231
 msgid "Remove print area"
 msgstr "Убрать область печати"
 
-#: src/control/Control.Menubar.ts:1580 src/control/Control.StatusBar.js:547
+#: src/control/Control.Menubar.ts:1587 src/control/Control.StatusBar.js:547
 msgid "Reset to Default Language"
 msgstr "Установить язык по умолчанию"
 
-#: src/control/Control.Menubar.ts:1611 src/control/Control.Menubar.ts:1612
-#: src/control/Control.Menubar.ts:1613 src/control/Control.Toolbar.js:140
+#: src/control/Control.Menubar.ts:1618 src/control/Control.Menubar.ts:1619
+#: src/control/Control.Menubar.ts:1620 src/control/Control.Toolbar.js:140
 #: src/control/Control.Toolbar.js:206
 msgid "More..."
 msgstr "Больше..."
 
-#: src/control/Control.Menubar.ts:1955
+#: src/control/Control.Menubar.ts:1962
 msgid "Use Compact view"
 msgstr "Использовать компактный вид"
 
-#: src/control/Control.Menubar.ts:1957
+#: src/control/Control.Menubar.ts:1964
 msgid "Use Tabbed view"
 msgstr "Использовать представление вкладками"
 
-#: src/control/Control.Menubar.ts:2111
+#: src/control/Control.Menubar.ts:2118
 msgid "Insert Shape"
 msgstr "Вставить фигуру"
 
-#: src/control/Control.Menubar.ts:2191
+#: src/control/Control.Menubar.ts:2198
 msgid "The signature line can now be moved or resized as needed."
 msgstr "Теперь можно перемещать строку подписи и изменять её размер."
 
-#: src/control/Control.Menubar.ts:2193
+#: src/control/Control.Menubar.ts:2200
 msgid "Finish electronic signing"
 msgstr "Завершить создание электронной подписи"
 
-#: src/control/Control.Menubar.ts:2388
+#: src/control/Control.Menubar.ts:2395
 msgid "file type icon"
 msgstr "значок типа файла"
 
@@ -2083,7 +2083,7 @@ msgid "Show the search bar"
 msgstr "Показать панель поиска"
 
 #: src/control/Control.MobileBottomBar.js:37
-#: src/control/Control.TopToolbar.js:140
+#: src/control/Control.TopToolbar.js:150
 msgid "Borders"
 msgstr "Обрамления"
 
@@ -2128,9 +2128,9 @@ msgstr "Контур"
 msgid "Navigator"
 msgstr "Навигатор"
 
-#: src/control/Control.Notebookbar.js:683
-#: src/control/Control.NotebookbarCalc.js:179
-#: src/control/Control.NotebookbarCalc.js:213
+#: src/control/Control.Notebookbar.js:690
+#: src/control/Control.NotebookbarCalc.js:187
+#: src/control/Control.NotebookbarCalc.js:221
 #: src/control/Control.NotebookbarDraw.js:209
 #: src/control/Control.NotebookbarDraw.js:243
 #: src/control/Control.NotebookbarImpress.js:78
@@ -2228,6 +2228,12 @@ msgid "View"
 msgstr "Вид"
 
 #: src/control/Control.NotebookbarCalc.js:86
+#: src/control/Control.NotebookbarCalc.js:1520
+#: src/control/Control.NotebookbarCalc.js:2276
+msgid "Sparkline"
+msgstr "Спарклайн"
+
+#: src/control/Control.NotebookbarCalc.js:93
 #: src/control/Control.NotebookbarDraw.js:121
 #: src/control/Control.NotebookbarImpress.js:167
 #: src/control/Control.NotebookbarWriter.js:114
@@ -2235,22 +2241,22 @@ msgstr "Вид"
 msgid "Help"
 msgstr "Справка"
 
-#: src/control/Control.NotebookbarCalc.js:142
+#: src/control/Control.NotebookbarCalc.js:150
 #: src/control/Control.NotebookbarImpress.js:227
 #: src/control/Control.NotebookbarWriter.js:185
 #: src/control/Control.NotebookbarWriter.js:326
 msgid "Save As"
 msgstr "Сохранить как"
 
-#: src/control/Control.NotebookbarCalc.js:161
+#: src/control/Control.NotebookbarCalc.js:169
 #: src/control/Control.NotebookbarDraw.js:190
 #: src/control/Control.NotebookbarImpress.js:247
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "Export As"
 msgstr "Экспортировать как"
 
-#: src/control/Control.NotebookbarCalc.js:187
-#: src/control/Control.NotebookbarCalc.js:236
+#: src/control/Control.NotebookbarCalc.js:195
+#: src/control/Control.NotebookbarCalc.js:244
 #: src/control/Control.NotebookbarDraw.js:217
 #: src/control/Control.NotebookbarDraw.js:267
 #: src/control/Control.NotebookbarImpress.js:274
@@ -2260,14 +2266,14 @@ msgstr "Экспортировать как"
 msgid "See history"
 msgstr "Просмотр истории"
 
-#: src/control/Control.NotebookbarCalc.js:323
+#: src/control/Control.NotebookbarCalc.js:331
 #: src/control/Control.NotebookbarDraw.js:370
 #: src/control/Control.NotebookbarImpress.js:412
 #: src/control/Control.NotebookbarWriter.js:369
 msgid "Signature"
 msgstr "Подпись"
 
-#: src/control/Control.NotebookbarCalc.js:339
+#: src/control/Control.NotebookbarCalc.js:347
 #: src/control/Control.NotebookbarDraw.js:387
 #: src/control/Control.NotebookbarImpress.js:428
 #: src/control/Control.NotebookbarWriter.js:385
@@ -2275,160 +2281,169 @@ msgstr "Подпись"
 msgid "Rename"
 msgstr "Переименовать"
 
-#: src/control/Control.NotebookbarCalc.js:684
+#: src/control/Control.NotebookbarCalc.js:692
 msgid "General"
 msgstr "Общий"
 
-#: src/control/Control.NotebookbarCalc.js:685
+#: src/control/Control.NotebookbarCalc.js:693
 msgid "Number"
 msgstr "Числовой"
 
-#: src/control/Control.NotebookbarCalc.js:686
+#: src/control/Control.NotebookbarCalc.js:694
 msgid "Percent"
 msgstr "Процентный"
 
-#: src/control/Control.NotebookbarCalc.js:687
+#: src/control/Control.NotebookbarCalc.js:695
 msgid "Currency"
 msgstr "Денежный"
 
-#: src/control/Control.NotebookbarCalc.js:688
+#: src/control/Control.NotebookbarCalc.js:696
 #: src/control/Control.NotebookbarWriter.js:1539
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
 msgstr "Дата"
 
-#: src/control/Control.NotebookbarCalc.js:689
+#: src/control/Control.NotebookbarCalc.js:697
 msgid "Time"
 msgstr "Время"
 
-#: src/control/Control.NotebookbarCalc.js:690
+#: src/control/Control.NotebookbarCalc.js:698
 msgid "Scientific"
 msgstr "Научный"
 
-#: src/control/Control.NotebookbarCalc.js:691
+#: src/control/Control.NotebookbarCalc.js:699
 msgid "Fraction"
 msgstr "Дробь"
 
-#: src/control/Control.NotebookbarCalc.js:692
+#: src/control/Control.NotebookbarCalc.js:700
 msgid "Boolean Value"
 msgstr "Логический"
 
-#: src/control/Control.NotebookbarCalc.js:693 src/control/Toolbar.js:812
+#: src/control/Control.NotebookbarCalc.js:701 src/control/Toolbar.js:812
 msgid "Text"
 msgstr "Текст"
 
-#: src/control/Control.NotebookbarCalc.js:867
+#: src/control/Control.NotebookbarCalc.js:875
+#: src/control/jsdialog/Definitions.Menu.ts:890
 msgid "Default"
 msgstr "По умолчанию"
 
-#: src/control/Control.NotebookbarCalc.js:874
+#: src/control/Control.NotebookbarCalc.js:882
 msgid "Heading 1"
 msgstr "Заголовок 1"
 
-#: src/control/Control.NotebookbarCalc.js:881
+#: src/control/Control.NotebookbarCalc.js:889
 msgid "Heading 2"
 msgstr "Заголовок 2"
 
-#: src/control/Control.NotebookbarCalc.js:894
+#: src/control/Control.NotebookbarCalc.js:902
 msgid "Good"
 msgstr "Хорошо"
 
-#: src/control/Control.NotebookbarCalc.js:901
+#: src/control/Control.NotebookbarCalc.js:909
 msgid "Neutral"
 msgstr "Neutral"
 
-#: src/control/Control.NotebookbarCalc.js:908
+#: src/control/Control.NotebookbarCalc.js:916
 msgid "Bad"
 msgstr "Плохо"
 
-#: src/control/Control.NotebookbarCalc.js:939
+#: src/control/Control.NotebookbarCalc.js:947
 #: src/control/Control.NotebookbarDraw.js:1082
-#: src/control/Control.NotebookbarImpress.js:1166
+#: src/control/Control.NotebookbarImpress.js:1180
 #: src/control/Control.NotebookbarWriter.js:1008
 msgid "Replace"
 msgstr "Заменить"
 
-#: src/control/Control.NotebookbarCalc.js:1046
+#: src/control/Control.NotebookbarCalc.js:1000
+msgid "Margin"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1006
+msgid "Size"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1064
 msgid "Row Height"
 msgstr "Высота строки"
 
-#: src/control/Control.NotebookbarCalc.js:1054
+#: src/control/Control.NotebookbarCalc.js:1072
 msgid "Column Width"
 msgstr "Ширина колонки"
 
-#: src/control/Control.NotebookbarCalc.js:1068
+#: src/control/Control.NotebookbarCalc.js:1086
 msgid "Insert Rows Above"
 msgstr "Вставить строки выше"
 
-#: src/control/Control.NotebookbarCalc.js:1075
+#: src/control/Control.NotebookbarCalc.js:1093
 msgid "Insert Columns Before"
 msgstr "Вставить столбцы слева"
 
-#: src/control/Control.NotebookbarCalc.js:1082
+#: src/control/Control.NotebookbarCalc.js:1100
 msgid "Delete Rows"
 msgstr "Удалить строки"
 
-#: src/control/Control.NotebookbarCalc.js:1094
+#: src/control/Control.NotebookbarCalc.js:1112
 msgid "Insert Rows Below"
 msgstr "Вставить строки ниже"
 
-#: src/control/Control.NotebookbarCalc.js:1101
+#: src/control/Control.NotebookbarCalc.js:1119
 msgid "Insert Columns After"
 msgstr "Вставить столбцы справа"
 
-#: src/control/Control.NotebookbarCalc.js:1108
+#: src/control/Control.NotebookbarCalc.js:1126
 msgid "Delete Columns"
 msgstr "Удалить столбцы"
 
-#: src/control/Control.NotebookbarCalc.js:1292
+#: src/control/Control.NotebookbarCalc.js:1310
 #: src/control/Control.NotebookbarDraw.js:404
 #: src/control/Control.NotebookbarImpress.js:445
 #: src/control/Control.NotebookbarWriter.js:1563
 msgid "Read mode"
 msgstr "Режим чтения"
 
-#: src/control/Control.NotebookbarCalc.js:1357
+#: src/control/Control.NotebookbarCalc.js:1375
 #: src/control/Control.NotebookbarDraw.js:493
-#: src/control/Control.NotebookbarImpress.js:565
+#: src/control/Control.NotebookbarImpress.js:579
 #: src/control/Control.NotebookbarWriter.js:1660
 msgid "Collapse Tabs"
 msgstr "Свернуть вкладки"
 
-#: src/control/Control.NotebookbarCalc.js:1369
+#: src/control/Control.NotebookbarCalc.js:1387
 #: src/control/Control.NotebookbarDraw.js:481
-#: src/control/Control.NotebookbarImpress.js:553
+#: src/control/Control.NotebookbarImpress.js:567
 #: src/control/Control.NotebookbarWriter.js:1648
 msgid "Status Bar"
 msgstr "Строка состояния"
 
-#: src/control/Control.NotebookbarCalc.js:1465
-msgid "Sparkline"
-msgstr "Спарклайн"
+#: src/control/Control.NotebookbarCalc.js:1443
+msgid "Group"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1524
+#: src/control/Control.NotebookbarCalc.js:1450
+msgid "Ungroup"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1579
 #: src/control/Control.NotebookbarDraw.js:1375
-#: src/control/Control.NotebookbarImpress.js:1409
+#: src/control/Control.NotebookbarImpress.js:1415
 #: src/control/Control.NotebookbarWriter.js:1266
 msgid "Assistant"
 msgstr "Ассистент"
 
-#: src/control/Control.NotebookbarCalc.js:1611
-#: src/control/Control.NotebookbarCalc.js:2533
-#: src/control/Control.NotebookbarCalc.js:2890
+#: src/control/Control.NotebookbarCalc.js:1666
+#: src/control/Control.NotebookbarCalc.js:2588
 #: src/control/Control.NotebookbarDraw.js:948
 #: src/control/Control.NotebookbarDraw.js:1462
-#: src/control/Control.NotebookbarImpress.js:1066
-#: src/control/Control.NotebookbarImpress.js:1504
-#: src/control/Control.NotebookbarImpress.js:2425
-#: src/control/Control.NotebookbarImpress.js:2740
+#: src/control/Control.NotebookbarImpress.js:1080
+#: src/control/Control.NotebookbarImpress.js:1510
+#: src/control/Control.NotebookbarImpress.js:2396
 #: src/control/Control.NotebookbarWriter.js:1200
 #: src/control/Control.NotebookbarWriter.js:3129
-#: src/control/Control.NotebookbarWriter.js:3427
 msgid "Shapes"
 msgstr "Фигуры"
 
 #: src/control/Control.NotebookbarDraw.js:76
-#: src/control/Control.NotebookbarImpress.js:109
 #: src/control/Control.NotebookbarWriter.js:57
 msgid "Layout"
 msgstr "Макет"
@@ -2436,7 +2451,7 @@ msgstr "Макет"
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1332
 #: src/control/Control.NotebookbarImpress.js:133
-#: src/control/Control.NotebookbarImpress.js:1343
+#: src/control/Control.NotebookbarImpress.js:1349
 #: src/control/Control.NotebookbarWriter.js:87
 #: src/control/Control.NotebookbarWriter.js:1178
 msgid "Table"
@@ -2447,10 +2462,14 @@ msgid "PDF Document (.pdf) - Expert"
 msgstr "Документ PDF (.pdf) - экспертный режим"
 
 #: src/control/Control.NotebookbarDraw.js:469
-#: src/control/Control.NotebookbarImpress.js:541
+#: src/control/Control.NotebookbarImpress.js:555
 #: src/control/Control.NotebookbarWriter.js:1636
 msgid "Ruler"
 msgstr "Линейка"
+
+#: src/control/Control.NotebookbarImpress.js:109
+msgid "Design"
+msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
@@ -2461,7 +2480,7 @@ msgid "Master"
 msgstr "Мастер"
 
 #: src/control/Control.NotebookbarImpress.js:452
-#: src/control/Control.NotebookbarImpress.js:1140
+#: src/control/Control.NotebookbarImpress.js:1154
 msgid "Presentation"
 msgstr "Презентация"
 
@@ -2469,29 +2488,33 @@ msgstr "Презентация"
 msgid "Present in Window"
 msgstr "Презентация в окне"
 
-#: src/control/Control.NotebookbarImpress.js:590
+#: src/control/Control.NotebookbarImpress.js:604
 msgid "Show Grid"
 msgstr "Показать сетку"
 
-#: src/control/Control.NotebookbarImpress.js:597
+#: src/control/Control.NotebookbarImpress.js:611
 msgid "Snap to Grid"
 msgstr "Привязка к сетке"
 
-#: src/control/Control.NotebookbarImpress.js:712
+#: src/control/Control.NotebookbarImpress.js:726
 msgid "New"
 msgstr "Новый"
 
-#: src/control/Control.NotebookbarImpress.js:723
+#: src/control/Control.NotebookbarImpress.js:737
 msgid "Change Layout"
 msgstr "Изменить разметку"
 
-#: src/control/Control.NotebookbarImpress.js:731
+#: src/control/Control.NotebookbarImpress.js:745
 msgid "Reset Layout"
 msgstr "Сбросить макет"
 
-#: src/control/Control.NotebookbarImpress.js:1620
+#: src/control/Control.NotebookbarImpress.js:1634
 msgid "Slide Size"
 msgstr "Размер слайда"
+
+#: src/control/Control.NotebookbarImpress.js:1657
+msgid "Background Image"
+msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2621,23 +2644,23 @@ msgstr "Проверьте предупреждения безопасности
 msgid "OPEN"
 msgstr "ОТКРЫТЬ"
 
-#: src/control/Control.SheetsBar.js:48
+#: src/control/Control.SheetsBar.js:49
 msgid "Scroll to the first sheet"
 msgstr "Прокрутить к первому листу"
 
-#: src/control/Control.SheetsBar.js:55
+#: src/control/Control.SheetsBar.js:56
 msgid "Scroll left"
 msgstr "Прокрутить влево"
 
-#: src/control/Control.SheetsBar.js:63
+#: src/control/Control.SheetsBar.js:64
 msgid "Scroll right"
 msgstr "Прокрутить вправо"
 
-#: src/control/Control.SheetsBar.js:71
+#: src/control/Control.SheetsBar.js:72
 msgid "Scroll to the last sheet"
 msgstr "Прокрутить к последнему листу"
 
-#: src/control/Control.SheetsBar.js:78
+#: src/control/Control.SheetsBar.js:79
 msgid "Insert sheet"
 msgstr "Вставить лист"
 
@@ -2646,12 +2669,12 @@ msgid "On"
 msgstr "Вкл"
 
 #: src/control/Control.StatusBar.js:179
-#: src/control/jsdialog/Definitions.Menu.ts:314
+#: src/control/jsdialog/Definitions.Menu.ts:586
 msgid "Off"
 msgstr "Выкл"
 
 #: src/control/Control.StatusBar.js:212
-#: src/control/jsdialog/Definitions.Menu.ts:24
+#: src/control/jsdialog/Definitions.Menu.ts:129
 msgid "Average"
 msgstr "Среднее"
 
@@ -2660,7 +2683,7 @@ msgid "CountA"
 msgstr "Количество2"
 
 #: src/control/Control.StatusBar.js:214
-#: src/control/jsdialog/Definitions.Menu.ts:27
+#: src/control/jsdialog/Definitions.Menu.ts:132
 msgid "Count"
 msgstr "Количество"
 
@@ -2673,7 +2696,7 @@ msgid "Minimum"
 msgstr "Минимум"
 
 #: src/control/Control.StatusBar.js:217
-#: src/control/jsdialog/Definitions.Menu.ts:23
+#: src/control/jsdialog/Definitions.Menu.ts:128
 msgid "Sum"
 msgstr "Сумма"
 
@@ -2757,23 +2780,23 @@ msgstr ""
 msgid "Active Sheet"
 msgstr "Активный лист"
 
-#: src/control/Control.TopToolbar.js:121
+#: src/control/Control.TopToolbar.js:125
 msgid "Default Style"
 msgstr "Базовый"
 
-#: src/control/Control.TopToolbar.js:183
+#: src/control/Control.TopToolbar.js:195
 msgid "Insert table"
 msgstr "Вставить таблицу"
 
-#: src/control/Control.TopToolbar.js:186
+#: src/control/Control.TopToolbar.js:198
 msgid "Insert shapes"
 msgstr "Вставить фигуры"
 
-#: src/control/Control.TopToolbar.js:188
+#: src/control/Control.TopToolbar.js:200
 msgid "Insert connectors"
 msgstr "Вставить соединители"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.ts:1071
+#: src/control/Control.TopToolbar.js:225 src/control/Control.UIManager.ts:1074
 msgid "Hide Menu"
 msgstr "Скрыть меню"
 
@@ -2781,7 +2804,7 @@ msgstr "Скрыть меню"
 msgid "Enter new name"
 msgstr "Введите новое имя"
 
-#: src/control/Control.UIManager.ts:1098
+#: src/control/Control.UIManager.ts:1101
 msgid "Show Menu"
 msgstr "Показать меню"
 
@@ -2854,7 +2877,7 @@ msgstr ""
 "API. Это может вызвать некоторые проблемы при редактировании цитат или "
 "библиографии."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1378
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1379
 msgid "Loading..."
 msgstr "Загрузка…"
 
@@ -3095,7 +3118,7 @@ msgstr "Шрифт"
 msgid "Downloading..."
 msgstr "Загрузка…"
 
-#: src/control/Toolbar.js:280 src/control/jsdialog/Widget.HTMLContent.ts:168
+#: src/control/Toolbar.js:280 src/control/jsdialog/Widget.HTMLContent.ts:176
 msgid "Saving..."
 msgstr "Сохранение…"
 
@@ -3119,137 +3142,286 @@ msgstr "Верхнее поле"
 msgid "Bottom Margin"
 msgstr "Нижнее поле"
 
-#: src/control/jsdialog/Definitions.Menu.ts:25
-msgid "Min"
-msgstr "Минимальное"
-
-#: src/control/jsdialog/Definitions.Menu.ts:26
-msgid "Max"
-msgstr "Максимальное"
-
-#: src/control/jsdialog/Definitions.Menu.ts:115
-msgid "Portrait"
-msgstr "Книжная"
-
-#: src/control/jsdialog/Definitions.Menu.ts:121
-msgid "Landscape"
-msgstr "Альбомная"
-
-#: src/control/jsdialog/Definitions.Menu.ts:275
-msgid "Insert Local Image"
-msgstr "Вставить изображение с компьютера"
-
-#: src/control/jsdialog/Definitions.Menu.ts:280
-msgid "Insert Local Multimedia"
-msgstr "Вставить мультимедиа с компьютера"
-
-#: src/control/jsdialog/Definitions.Menu.ts:285
-msgid "Very Tight"
-msgstr "Очень плотно"
-
-#: src/control/jsdialog/Definitions.Menu.ts:286
-msgid "Tight"
-msgstr "Плотно"
-
-#: src/control/jsdialog/Definitions.Menu.ts:287
+#: src/control/jsdialog/Definitions.Menu.ts:112
+#: src/control/jsdialog/Definitions.Menu.ts:559
 msgid "Normal"
 msgstr "Нормально"
 
+#: src/control/jsdialog/Definitions.Menu.ts:117
+msgid "Wide"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:122
+msgid "Narrow"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:130
+msgid "Min"
+msgstr "Минимальное"
+
+#: src/control/jsdialog/Definitions.Menu.ts:131
+msgid "Max"
+msgstr "Максимальное"
+
+#: src/control/jsdialog/Definitions.Menu.ts:187
+msgid "Edit Single Sparkline"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:198
+msgid "Delete Single Sparkline"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:234
+msgid "Portrait"
+msgstr "Книжная"
+
+#: src/control/jsdialog/Definitions.Menu.ts:240
+msgid "Landscape"
+msgstr "Альбомная"
+
+#: src/control/jsdialog/Definitions.Menu.ts:248
+msgid "A6"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:253
+msgid "A5"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:258
+msgid "A4"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:263
+msgid "A3"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:268
+msgid "B6 (ISO)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:273
+msgid "B5 (ISO)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:278
+msgid "B4 (ISO)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:283
+msgid "Letter"
+msgstr ""
+
 #: src/control/jsdialog/Definitions.Menu.ts:288
+msgid "Legal"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:293
+msgid "Long Bond"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:298
+msgid "Tabloid"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:303
+msgid "B6 (JIS)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:308
+msgid "B5 (JIS)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:313
+msgid "B4 (JIS)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:318
+msgid "16 Kai"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:323
+msgid "32 Kai"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:328
+msgid "Big 32 Kai"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:333
+msgid "User"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:338
+msgid "DL Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:343
+msgid "C6 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:348
+msgid "C6/5 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:353
+msgid "C5 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:358
+msgid "C4 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:363
+msgid "#6¾ Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:368
+msgid "#7¾ (Monarch) Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:373
+msgid "#9 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:378
+msgid "#10 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:383
+msgid "#11 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:388
+msgid "#12 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:393
+msgid "Japanese Postcard"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:547
+msgid "Insert Local Image"
+msgstr "Вставить изображение с компьютера"
+
+#: src/control/jsdialog/Definitions.Menu.ts:552
+msgid "Insert Local Multimedia"
+msgstr "Вставить мультимедиа с компьютера"
+
+#: src/control/jsdialog/Definitions.Menu.ts:557
+msgid "Very Tight"
+msgstr "Очень плотно"
+
+#: src/control/jsdialog/Definitions.Menu.ts:558
+msgid "Tight"
+msgstr "Плотно"
+
+#: src/control/jsdialog/Definitions.Menu.ts:560
 msgid "Loose"
 msgstr "Неплотно"
 
-#: src/control/jsdialog/Definitions.Menu.ts:289
+#: src/control/jsdialog/Definitions.Menu.ts:561
 msgid "Very Loose"
 msgstr "Очень свободно"
 
-#: src/control/jsdialog/Definitions.Menu.ts:319
+#: src/control/jsdialog/Definitions.Menu.ts:591
 msgid "All users"
 msgstr "Все пользователи"
 
-#: src/control/jsdialog/Definitions.Menu.ts:324
+#: src/control/jsdialog/Definitions.Menu.ts:596
 msgid "This user"
 msgstr "Этот пользователь"
 
-#: src/control/jsdialog/Definitions.Menu.ts:457
+#: src/control/jsdialog/Definitions.Menu.ts:729
 msgid "From Beginning"
 msgstr "С начала"
 
-#: src/control/jsdialog/Definitions.Menu.ts:461
+#: src/control/jsdialog/Definitions.Menu.ts:733
 msgid "From Current Slide"
 msgstr "С текущего слайда"
 
-#: src/control/jsdialog/Definitions.Menu.ts:468
+#: src/control/jsdialog/Definitions.Menu.ts:740
 msgid "Standard (4:3)"
 msgstr "Стандартный (4:3)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:473
+#: src/control/jsdialog/Definitions.Menu.ts:745
 msgid "Widescreen (16:9)"
 msgstr "Широкоэкранный (16:9)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:483
+#: src/control/jsdialog/Definitions.Menu.ts:755
 msgid "Blank Slide"
 msgstr "Пустой слайд"
 
-#: src/control/jsdialog/Definitions.Menu.ts:484
+#: src/control/jsdialog/Definitions.Menu.ts:756
 msgid "Title Slide"
 msgstr "Титульный слайд"
 
-#: src/control/jsdialog/Definitions.Menu.ts:485
+#: src/control/jsdialog/Definitions.Menu.ts:757
 msgid "Title, Content"
 msgstr "Название, содержание"
 
-#: src/control/jsdialog/Definitions.Menu.ts:486
+#: src/control/jsdialog/Definitions.Menu.ts:758
 msgid "Title and 2 Content"
 msgstr "Название и 2 элемента содержания"
 
-#: src/control/jsdialog/Definitions.Menu.ts:487
+#: src/control/jsdialog/Definitions.Menu.ts:759
 msgid "Title Only"
 msgstr "Только заголовок"
 
-#: src/control/jsdialog/Definitions.Menu.ts:488
+#: src/control/jsdialog/Definitions.Menu.ts:760
 msgid "Centered Text"
 msgstr "Центрированный текст"
 
-#: src/control/jsdialog/Definitions.Menu.ts:489
+#: src/control/jsdialog/Definitions.Menu.ts:761
 msgid "Title, 2 Content and Content"
 msgstr "Название, 2 элемента содержания и содержание"
 
-#: src/control/jsdialog/Definitions.Menu.ts:490
+#: src/control/jsdialog/Definitions.Menu.ts:762
 msgid "Title, Content and 2 Content"
 msgstr "Название, содержание и 2 элемента содержания"
 
-#: src/control/jsdialog/Definitions.Menu.ts:491
+#: src/control/jsdialog/Definitions.Menu.ts:763
 msgid "Title, 2 Content over Content"
 msgstr "Название, 2 элемента содержания над содержанием"
 
-#: src/control/jsdialog/Definitions.Menu.ts:492
+#: src/control/jsdialog/Definitions.Menu.ts:764
 msgid "Title, Content over Content"
 msgstr "Название, содержание над содержанием"
 
-#: src/control/jsdialog/Definitions.Menu.ts:493
+#: src/control/jsdialog/Definitions.Menu.ts:765
 msgid "Title, 4 Content"
 msgstr "Название, 4 элемента содержания"
 
-#: src/control/jsdialog/Definitions.Menu.ts:494
+#: src/control/jsdialog/Definitions.Menu.ts:766
 msgid "Title, 6 Content"
 msgstr "Название, 6 элементов содержания"
 
-#: src/control/jsdialog/Definitions.Menu.ts:495
+#: src/control/jsdialog/Definitions.Menu.ts:767
 msgid "Vertical Title, Text, Chart"
 msgstr "Вертикальный заголовок, текст, диаграмма"
 
-#: src/control/jsdialog/Definitions.Menu.ts:496
+#: src/control/jsdialog/Definitions.Menu.ts:768
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикальный заголовок, вертикальный текст"
 
-#: src/control/jsdialog/Definitions.Menu.ts:497
+#: src/control/jsdialog/Definitions.Menu.ts:769
 msgid "Title, Vertical Text"
 msgstr "Заголовок, вертикальный текст"
 
-#: src/control/jsdialog/Definitions.Menu.ts:498
+#: src/control/jsdialog/Definitions.Menu.ts:770
 msgid "Title, Vertical Text, Clipart"
 msgstr "Заголовок, вертикальный текст, клипарт"
+
+#: src/control/jsdialog/Definitions.Menu.ts:895
+msgid "Grayscale"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:900
+msgid "Black/White"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:905
+msgid "Watermark"
+msgstr ""
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3272,6 +3444,26 @@ msgstr "Автоматически"
 msgid "Recent"
 msgstr "Недавние"
 
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:82
+msgid "Top: {top}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:87
+msgid "Left: {left}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:97
+msgid "Bottom: {bottom}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:102
+msgid "Right: {right}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:126
+msgid "Custom Margins…"
+msgstr ""
+
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
 msgstr "Только чтение"
@@ -3286,44 +3478,44 @@ msgid "Edit mode"
 msgstr "Режим редактирования"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
-#: src/control/jsdialog/Widget.HTMLContent.ts:154
+#: src/control/jsdialog/Widget.HTMLContent.ts:160
 msgid "Number of Pages"
 msgstr "Число страниц"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:91
+#: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
 msgstr "Число слов"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:100
+#: src/control/jsdialog/Widget.HTMLContent.ts:102
 msgid "Number of Sheets"
 msgstr "Число листов"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:109
+#: src/control/jsdialog/Widget.HTMLContent.ts:113
 msgid "Entering text mode"
 msgstr "Текстовый режим"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:118
+#: src/control/jsdialog/Widget.HTMLContent.ts:122
 msgid "Selection Mode"
 msgstr "Режим выбора"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:127
+#: src/control/jsdialog/Widget.HTMLContent.ts:131
 msgid "Selected range of cells"
 msgstr "Выделенные ячейки"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:136
+#: src/control/jsdialog/Widget.HTMLContent.ts:140
 msgid "Choice of functions"
 msgstr "Выбор функций"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:145
+#: src/control/jsdialog/Widget.HTMLContent.ts:149
 msgid "Number of Slides"
 msgstr "Число слайдов"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:163
-#: src/control/jsdialog/Widget.HTMLContent.ts:175
+#: src/control/jsdialog/Widget.HTMLContent.ts:171
+#: src/control/jsdialog/Widget.HTMLContent.ts:183
 msgid "Your changes have been saved"
 msgstr "Изменения сохранены"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:187
+#: src/control/jsdialog/Widget.HTMLContent.ts:195
 msgid "Show Comments"
 msgstr "Показать комментарии"
 
@@ -3335,71 +3527,71 @@ msgstr "Обрамление ячеек"
 msgid "More options for {1}"
 msgstr "Больше настроек для {1}"
 
-#: src/control/jsdialog/Widget.TreeView.ts:1311
+#: src/control/jsdialog/Widget.TreeView.ts:1328
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Заголовки и объекты, которые вы добавите в документ, появятся здесь"
 
-#: src/core/Socket.js:68
+#: src/core/Socket.js:69
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Упс, неполадки при подключении к {productname}: "
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Сервер теперь доступен. Теперь нужно обновить страницу."
 
-#: src/core/Socket.js:704
+#: src/core/Socket.js:705
 msgid "Server is now reachable..."
 msgstr "Сервер теперь доступен..."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "RELOAD"
 msgstr "ПЕРЕЗАГРУЗИТЬ"
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:722
 msgid "Cluster configuration warning"
 msgstr "Предупреждение конфигурации кластера"
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:725
 msgid "Wrong server, reconnecting..."
 msgstr "Неверный сервер, переподключение..."
 
-#: src/core/Socket.js:733
+#: src/core/Socket.js:734
 msgid "COOLWSD version:"
 msgstr "Версия COOLWSD:"
 
-#: src/core/Socket.js:758
+#: src/core/Socket.js:759
 msgid "Served by:"
 msgstr "Работает на:"
 
-#: src/core/Socket.js:764
+#: src/core/Socket.js:765
 msgid "Unsupported server version."
 msgstr "Версия сервера не поддерживается."
 
-#: src/core/Socket.js:768
+#: src/core/Socket.js:769
 msgid "LOKit version:"
 msgstr "Версия LOKit:"
 
-#: src/core/Socket.js:893
+#: src/core/Socket.js:894
 msgid "Document is getting migrated"
 msgstr "Документ переносится"
 
-#: src/core/Socket.js:920
+#: src/core/Socket.js:921
 msgid "Session terminated by document owner"
 msgstr "Сеанс завершён владельцем документа"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:932
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сервер выключается для техобслуживания (Автоматическое сохранение)"
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:938
 msgid "Oops, there is a problem connecting the document"
 msgstr "Упс, неполадки при подключении к документу"
 
-#: src/core/Socket.js:941
+#: src/core/Socket.js:942
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Сервер отключён, автоматический перезапуск. Подождите."
 
-#: src/core/Socket.js:968
+#: src/core/Socket.js:969
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -3407,7 +3599,7 @@ msgstr ""
 "Документ в хранилище изменился. Загружается новый документ. Ваш вариант "
 "сохранён в виде версии."
 
-#: src/core/Socket.js:974
+#: src/core/Socket.js:975
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -3415,81 +3607,81 @@ msgstr ""
 "Восстановление старой версии. Все несохранённые изменения будут доступны в "
 "истории версий"
 
-#: src/core/Socket.js:980
+#: src/core/Socket.js:981
 msgid "Reloading the document after rename"
 msgstr "Перезагрузка документа после переименования"
 
-#: src/core/Socket.js:1139
+#: src/core/Socket.js:1140
 msgid "Document requires password to view."
 msgstr "Документ требует пароль для просмотра."
 
-#: src/core/Socket.js:1142
+#: src/core/Socket.js:1143
 msgid "Document requires password to modify."
 msgstr "Документ требует пароль для редактирования."
 
-#: src/core/Socket.js:1144
+#: src/core/Socket.js:1145
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Отмена для открытия в режиме просмотра."
 
-#: src/core/Socket.js:1148
+#: src/core/Socket.js:1149
 msgid "Wrong password provided. Please try again."
 msgstr "Неправильный пароль. Попробуйте снова."
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1187
 msgid "Only the document owner can change the password."
 msgstr "Только владелец документа может изменить пароль."
 
-#: src/core/Socket.js:1217 src/core/Socket.js:1222
+#: src/core/Socket.js:1218 src/core/Socket.js:1223
 msgid "Missing Fonts"
 msgstr "Отсутствуют шрифты"
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1255
 msgid "Someone"
 msgstr "Кто-то"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1256
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "{username} сохранил(а) этот документ как {filename}. Вы хотите "
 "присоединиться?"
 
-#: src/core/Socket.js:1272
+#: src/core/Socket.js:1273
 msgid "The document is being renamed and will reload shortly"
 msgstr "Документ переименовывается и вскоре перезагрузится"
 
-#: src/core/Socket.js:1275
+#: src/core/Socket.js:1276
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Документ переключается в режим офлайн и скоро будет перезагружен"
 
-#: src/core/Socket.js:1378
+#: src/core/Socket.js:1379
 msgid "Connecting..."
 msgstr "Соединение..."
 
-#: src/core/Socket.js:1393
+#: src/core/Socket.js:1394
 msgid "Server is shutting down"
 msgstr "Сервер выключается"
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1430
 msgid "Exported to storage"
 msgstr "Экспортировано в хранилище"
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1430
 msgid "Successfully exported: "
 msgstr "Успешно экспортировано: "
 
-#: src/core/Socket.js:1457
+#: src/core/Socket.js:1458
 msgid "Discard"
 msgstr "Отклонить"
 
-#: src/core/Socket.js:1469
+#: src/core/Socket.js:1470
 msgid "Save to new file"
 msgstr "Сохранить в новый файл"
 
-#: src/core/Socket.js:1479
+#: src/core/Socket.js:1480
 msgid "Document has been changed"
 msgstr "Документ был изменен"
 
-#: src/core/Socket.js:1480
+#: src/core/Socket.js:1481
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3497,17 +3689,17 @@ msgstr ""
 "Документ был изменён в хранилище. Что сделать со своими несохранёнными "
 "изменениями?"
 
-#: src/core/Socket.js:1744
+#: src/core/Socket.js:1745
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Не удалось подключиться к документу. Попробуйте снова."
 
-#: src/core/Socket.js:1761
+#: src/core/Socket.js:1762
 msgid "Reconnecting..."
 msgstr "Переподключение..."
 
-#: src/core/Socket.js:1771
+#: src/core/Socket.js:1772
 msgid "The server has been disconnected."
 msgstr "Сервер был отключен."
 
@@ -3519,15 +3711,15 @@ msgstr "Действительно удалить этот слайд?"
 msgid "Are you sure you want to delete this page?"
 msgstr "Действительно удалить эту страницу?"
 
-#: src/docstate.js:101
+#: src/docstate.js:102
 msgid "Standard"
 msgstr "Стандартная"
 
-#: src/docstate.js:114
+#: src/docstate.js:115
 msgid "Theme colors"
 msgstr "Цвета темы"
 
-#: src/docstate.js:115
+#: src/docstate.js:116
 msgid "Document colors"
 msgstr "Цвета документа"
 
@@ -3854,7 +4046,7 @@ msgstr "Функции"
 msgid "Named Range"
 msgstr "Именованный диапазон"
 
-#: src/layer/tile/CanvasTileLayer.js:3450
+#: src/layer/tile/CanvasTileLayer.js:3449
 msgid "No Comments"
 msgstr "Нет комментариев"
 
