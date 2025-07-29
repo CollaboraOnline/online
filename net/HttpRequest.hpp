@@ -353,11 +353,11 @@ using IoReadFunc = std::function<int64_t(char*, int64_t)>;
 class Header
 {
 public:
-    static constexpr const char* CONTENT_TYPE = "Content-Type";
-    static constexpr const char* CONTENT_LENGTH = "Content-Length";
-    static constexpr const char* TRANSFER_ENCODING = "Transfer-Encoding";
-    static constexpr const char* COOKIE = "Cookie";
-    static constexpr const char* HOST = "Host";
+    static constexpr std::string_view CONTENT_TYPE = "Content-Type";
+    static constexpr std::string_view CONTENT_LENGTH = "Content-Length";
+    static constexpr std::string_view TRANSFER_ENCODING = "Transfer-Encoding";
+    static constexpr std::string_view COOKIE = "Cookie";
+    static constexpr std::string_view HOST = "Host";
 
     static constexpr int64_t MaxNumberFields = 128; // Arbitrary large number.
     static constexpr int64_t MaxNameLen = 512;
@@ -406,7 +406,7 @@ public:
     }
 
     /// Set an HTTP header field, replacing an earlier value, if exists (case insensitive).
-    void set(const std::string& key, std::string value)
+    void set(const std::string_view key, std::string value)
     {
         const Iterator end = _headers.end();
         const Iterator it = std::find_if(_headers.begin(), end, [&key](const Pair& pair) -> bool
@@ -422,7 +422,7 @@ public:
     }
 
     // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string& key) const
+    bool has(const std::string_view key) const
     {
         const ConstIterator end = this->end();
         return std::find_if(begin(), end, [&key](const Pair& pair) -> bool
@@ -430,7 +430,7 @@ public:
     }
 
     /// Remove the first matching HTTP header field (case insensitive), returning true if found and removed.
-    bool remove(const std::string& key)
+    bool remove(const std::string_view key)
     {
         const ConstIterator end = this->end();
         const ConstIterator it = std::find_if(begin(), end, [&key](const Pair& pair) -> bool
@@ -445,7 +445,7 @@ public:
     }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string& key, const std::string& def = std::string()) const
+    std::string get(const std::string_view key, const std::string& def = std::string()) const
     {
         // There are typically half a dozen header
         // entries, rarely much more. A map would
@@ -502,6 +502,7 @@ public:
 
         return ConnectionToken::None;
     }
+
     void setConnectionToken(ConnectionToken token)
     {
         std::string value;
@@ -520,11 +521,12 @@ public:
                 remove(CONNECTION);
                 return;
         }
+
         set(CONNECTION, std::move(value));
     }
 
     /// Adds a new "Cookie" header entry with the given content.
-    void addCookie(const std::string& cookie) { add(COOKIE, cookie); }
+    void addCookie(std::string cookie) { add(std::string(COOKIE), std::move(cookie)); }
 
     /// Adds a new "Cookie" header entry with the given pairs.
     void addCookie(const Container& pairs)
@@ -540,7 +542,7 @@ public:
             s += pair.second;
         }
 
-        add(COOKIE, s);
+        add(std::string(COOKIE), std::move(s));
     }
 
     /// Gets the name=value pairs of all "Cookie" header entries.
@@ -603,9 +605,9 @@ class RequestCommon
 public:
     static constexpr int64_t VersionLen = 8;
     static constexpr int64_t MinRequestHeaderLen = sizeof("GET / HTTP/0.0\r\n") - 1;
-    static constexpr const char* VERB_GET = "GET";
-    static constexpr const char* VERB_POST = "POST";
-    static constexpr const char* VERS_1_1 = "HTTP/1.1";
+    static constexpr std::string_view VERB_GET = "GET";
+    static constexpr std::string_view VERB_POST = "POST";
+    static constexpr std::string_view VERS_1_1 = "HTTP/1.1";
 
     RequestCommon()
         : _stage(Stage::RequestLine)
