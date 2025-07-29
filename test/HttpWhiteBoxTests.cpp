@@ -31,6 +31,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStatusLineSerialize);
 
     CPPUNIT_TEST(testHeader);
+    CPPUNIT_TEST(testCookies);
 
     CPPUNIT_TEST(testRequestParserValidComplete);
     CPPUNIT_TEST(testRequestParserValidIncomplete);
@@ -43,6 +44,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testStatusLineParserValidIncomplete();
     void testStatusLineSerialize();
     void testHeader();
+    void testCookies();
     void testRequestParserValidComplete();
     void testRequestParserValidIncomplete();
     void testClipboardIsOwnFormat();
@@ -158,6 +160,32 @@ void HttpWhiteBoxTests::testHeader()
     const std::string data = "\r\na=\r\n\r\n";
     LOK_ASSERT_EQUAL(8L, header.parse(data.c_str(), data.size()));
     LOK_ASSERT_EQUAL(0UL, header.size());
+}
+
+void HttpWhiteBoxTests::testCookies()
+{
+    constexpr std::string_view testname = __func__;
+
+    http::Header header;
+
+    header.addCookie("Expire=Now");
+    header.addCookie("Why=Question;When=Not");
+
+    for (const auto& cookie : header.getCookies())
+    {
+        if (cookie.first == "Expire")
+        {
+            LOK_ASSERT_EQUAL_STR("Now", cookie.second);
+        }
+        else if (cookie.first == "Why")
+        {
+            LOK_ASSERT_EQUAL_STR("Question", cookie.second);
+        }
+        else if (cookie.first == "When")
+        {
+            LOK_ASSERT_EQUAL_STR("Not", cookie.second);
+        }
+    }
 }
 
 void HttpWhiteBoxTests::testRequestParserValidComplete()
