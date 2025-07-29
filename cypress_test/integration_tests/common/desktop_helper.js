@@ -71,7 +71,7 @@ function selectColorFromPalette(color) {
 	cy.log('>> selectColorFromPalette - start');
 
 	cy.cGet('.ui-color-picker').should('be.visible');
-	cy.cGet('.ui-color-picker-entry[name="' + color + '"]').click();
+	cy.cGet('.ui-color-picker-entry[value="' + color + '"]').click();
 	cy.cGet('.ui-color-picker').should('not.exist');
 
 	cy.log('<< selectColorFromPalette - end');
