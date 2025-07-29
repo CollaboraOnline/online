@@ -232,7 +232,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     if constexpr (!Util::isMobileApp())
         assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
 #if MOBILEAPP
-    assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
+    assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in a mobile app");
 #endif
 
     LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString())
