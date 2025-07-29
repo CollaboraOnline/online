@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-06-21 19:51+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
+"PO-Revision-Date: 2025-07-23 00:05+0000\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -455,16 +455,15 @@ msgstr "Při načítání slovníku se něco pokazilo. Zkuste stránku obnovit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Nastavení rozhraní"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
 msgstr "Nastavení výchozích předvoleb rozhraní."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:590
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Výběrem karty zobrazíte nastavení."
+msgstr "Vyberte kartu nastavení prohlížeče."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:603
 #: admin/src/integrator/Xcu.ts:357
@@ -483,7 +482,7 @@ msgstr "Uložit nastavení dokumentu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Zobrazení panelu poznámek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -1417,7 +1416,7 @@ msgstr "Vložit komentář"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "Otevřít {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2209,9 +2208,8 @@ msgstr "Formát"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Tvary"
+msgstr "Tvar"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2454,7 +2452,7 @@ msgstr "Pravítka"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Prohlížení obrázků"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2479,20 +2477,19 @@ msgstr "Přichytit k mřížce"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Nový"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Rozvržení stránky"
+msgstr "Změna rozvržení"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Obnovit rozvržení"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Velikost snímku"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3129,11 +3126,11 @@ msgstr "Maximum"
 
 #: src/control/jsdialog/Definitions.Menu.ts:115
 msgid "Portrait"
-msgstr ""
+msgstr "Na výšku"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Landscape"
-msgstr ""
+msgstr "Na šířku"
 
 #: src/control/jsdialog/Definitions.Menu.ts:275
 msgid "Insert Local Image"
@@ -3181,11 +3178,11 @@ msgstr "Od aktuálního snímku"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Standard (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:473
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Širokoúhlý (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:483
 msgid "Blank Slide"
