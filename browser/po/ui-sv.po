@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-06-20 05:04+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2025-07-21 09:07+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.1\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -452,16 +452,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid "Interface Settings"
-msgstr ""
+msgstr "Inställningar för användargränssnitt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:482
 msgid "Set default interface preferences."
 msgstr "Ställ in gränssnittspreferenser."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:590
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Välj en flik för att visa inställningar."
+msgstr "Välj en flik till webbläsarens inställningar."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:603
 #: admin/src/integrator/Xcu.ts:357
@@ -480,7 +479,7 @@ msgstr "Spara dokumentinställningar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:954
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Vy med verktygsrader typ Notebook"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:961
 #: src/control/Control.NotebookbarCalc.js:1344
@@ -1412,7 +1411,7 @@ msgstr "Infoga kommentar"
 
 #: src/control/Control.JSDialogBuilder.js:2304
 msgid "Open {name}"
-msgstr ""
+msgstr "Öppna {namn}"
 
 #: src/control/Control.JSDialogBuilder.js:2626
 #: src/control/Control.Menubar.ts:921
@@ -2203,9 +2202,8 @@ msgstr "Format"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Former"
+msgstr "Form"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2448,7 +2446,7 @@ msgstr "Linjal"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Bildspel"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2473,20 +2471,19 @@ msgstr "Fäst till rutnät"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Nytt"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Sidlayout"
+msgstr "Ändra layout"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Återställ layout"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Bildstorlek"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3176,75 +3173,75 @@ msgstr "Från aktuell bild"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Standard (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:473
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Bredbild (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:483
 msgid "Blank Slide"
-msgstr ""
+msgstr "Tom bild"
 
 #: src/control/jsdialog/Definitions.Menu.ts:484
 msgid "Title Slide"
-msgstr ""
+msgstr "Titelbild"
 
 #: src/control/jsdialog/Definitions.Menu.ts:485
 msgid "Title, Content"
-msgstr ""
+msgstr "Titel, innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:486
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Titel och 2 innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:487
 msgid "Title Only"
-msgstr ""
+msgstr "Endast titel"
 
 #: src/control/jsdialog/Definitions.Menu.ts:488
 msgid "Centered Text"
-msgstr ""
+msgstr "Centrerad text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:489
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Titel, 2 innehåll och innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:490
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Titel, innehåll och 2 innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:491
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Titel, 2 innehåll över innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:492
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Titel, innehåll över innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:493
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Titel, 4 innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:494
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Titel, 6 innehåll"
 
 #: src/control/jsdialog/Definitions.Menu.ts:495
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Vertikal titel, text, diagram"
 
 #: src/control/jsdialog/Definitions.Menu.ts:496
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Vertikal titel, vertikal text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:497
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Titel, vertikal text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:498
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Titel, vertikal text, clipart-bild"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
