@@ -11,6 +11,18 @@
 
 #pragma once
 
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/StateEnum.hpp>
+#include <common/Util.hpp>
+#include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
+#include <net/Uri.hpp>
+
+#if ENABLE_SSL
+#include <net/SslSocket.hpp>
+#endif
+
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
@@ -28,24 +40,8 @@
 
 #if !MOBILEAPP
 #include <sys/socket.h>
-#endif
-
-#if !MOBILEAPP
 #include <netdb.h>
 #endif
-
-#include <common/Common.hpp>
-#include <common/StateEnum.hpp>
-#include <net/NetUtil.hpp>
-#include <net/Socket.hpp>
-#include <net/Uri.hpp>
-
-#if ENABLE_SSL
-#include <net/SslSocket.hpp>
-#endif
-
-#include "Log.hpp"
-#include "Util.hpp"
 
 // This is a partial implementation of RFC 7230
 // and its related RFCs, with focus on the core
