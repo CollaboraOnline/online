@@ -30,33 +30,6 @@
 #include "Resource.h"
 #include "windows.hpp"
 
-const char* user_name = nullptr;
-int coolwsd_server_socket_fd = -1;
-std::string app_installation_path;
-std::string app_installation_uri;
-
-static COOLWSD* coolwsd = nullptr;
-static int fakeClientFd;
-static int closeNotificationPipeForForwardingThread[2];
-
-static std::string document_uri;
-static std::string document_filename;
-static int appDocId;
-
-// The main window class name.
-static wchar_t windowClass[] = L"CODA";
-
-static wil::com_ptr<ICoreWebView2Controller> webviewController;
-
-// Pointer to WebView window
-static wil::com_ptr<ICoreWebView2> webview;
-
-static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
-
-static HWND mainWindow;
-static bool beingDebugged;
-static DWORD mainThreadId;
-
 enum class ClipboardOp
 {
     CUT,
@@ -64,6 +37,44 @@ enum class ClipboardOp
     PASTE,
     READ
 };
+
+struct FilenameAndUri
+{
+    std::string filename;
+    std::string uri;
+};
+
+struct WindowData
+{
+    HWND hWnd;
+    int fakeClientFd;
+    int closeNotificationPipeForForwardingThread[2];
+    std::string documentUri;
+    int appDocId;
+    wil::com_ptr<ICoreWebView2Controller> webViewController;
+    wil::com_ptr<ICoreWebView2> webView;
+};
+
+static std::map<HWND, WindowData> windowData;
+
+static HINSTANCE appInstance;
+static int appShowMode;
+
+const char* user_name = nullptr;
+int coolwsd_server_socket_fd = -1;
+std::string app_installation_path;
+std::string app_installation_uri;
+
+static COOLWSD* coolwsd = nullptr;
+
+// The main window class name.
+static const wchar_t windowClass[] = L"CODA";
+
+static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
+
+static bool beingDebugged;
+
+static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message);
 
 static int generate_new_app_doc_id()
 {
@@ -87,7 +98,7 @@ static bool isMessageOfType(const char* message, const std::string& type, int le
     return true;
 }
 
-static void send2JS(const char* buffer, int length)
+static void send2JS(const HWND hWnd, const char* buffer, int length)
 {
     const bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
                                 isMessageOfType(buffer, "tilecombine:", length) ||
@@ -152,10 +163,10 @@ static void send2JS(const char* buffer, int length)
 
     char* wparam = _strdup((pretext + std::string(base64.data()) + posttext).c_str());
 
-    PostMessageW(mainWindow, CODA_WM_EXECUTESCRIPT, (WPARAM)wparam, 0);
+    PostMessageW(hWnd, CODA_WM_EXECUTESCRIPT, (WPARAM)wparam, 0);
 }
 
-static void do_hullo_handling_things(const char* fileURL, int appDocId)
+static void do_hullo_handling_things(WindowData& data)
 {
     // FIXME: Code snippet shared with gtk/mobile.cpp, factor out into separate file.
 
@@ -163,26 +174,26 @@ static void do_hullo_handling_things(const char* fileURL, int appDocId)
 
     // Contact the permanently (during app lifetime) listening COOLWSD server "public" socket
     assert(coolwsd_server_socket_fd != -1);
-    int rc = fakeSocketConnect(fakeClientFd, coolwsd_server_socket_fd);
+    int rc = fakeSocketConnect(data.fakeClientFd, coolwsd_server_socket_fd);
     (void)rc;
     assert(rc != -1);
 
     // Create a socket pair to notify the below thread when the document has been closed
-    fakeSocketPipe2(closeNotificationPipeForForwardingThread);
+    fakeSocketPipe2(data.closeNotificationPipeForForwardingThread);
 
     // Start another thread to read responses and forward them to the JavaScript
     std::thread(
-        []
+        [data]
         {
             Log::setThreadLocalLogLevel("trace");
-            Util::setThreadName("app2js");
+            Util::setThreadName("app2js " + std::to_string(data.appDocId));
             LOG_ERR("Why does this not show up even as ERR?");
             while (true)
             {
                 struct pollfd pollfd[2];
-                pollfd[0].fd = fakeClientFd;
+                pollfd[0].fd = data.fakeClientFd;
                 pollfd[0].events = POLLIN;
-                pollfd[1].fd = closeNotificationPipeForForwardingThread[1];
+                pollfd[1].fd = data.closeNotificationPipeForForwardingThread[1];
                 pollfd[1].events = POLLIN;
                 if (fakeSocketPoll(pollfd, 2, -1) > 0)
                 {
@@ -192,25 +203,25 @@ static void do_hullo_handling_things(const char* fileURL, int appDocId)
                         // end of the closeNotificationPipeForForwardingThread. Let's close the other
                         // end too just for cleanliness, even if a FakeSocket as such is not a system
                         // resource so nothing is saved by closing it.
-                        fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
+                        fakeSocketClose(data.closeNotificationPipeForForwardingThread[1]);
 
                         // Close our end of the fake socket connection to the ClientSession thread, so
                         // that it terminates.
-                        fakeSocketClose(fakeClientFd);
+                        fakeSocketClose(data.fakeClientFd);
 
                         return;
                     }
                     if (pollfd[0].revents == POLLIN)
                     {
-                        int n = fakeSocketAvailableDataLength(fakeClientFd);
+                        int n = fakeSocketAvailableDataLength(data.fakeClientFd);
                         // I don't want to check for n being -1 here, even if that will lead to a crash,
                         // as n being -1 is a sign of something being wrong elsewhere anyway, and I
                         // prefer to fix the root cause. Let's see how well this works out.
                         if (n == 0)
                             return;
                         std::vector<char> buf(n);
-                        n = fakeSocketRead(fakeClientFd, buf.data(), n);
-                        send2JS(buf.data(), n);
+                        n = fakeSocketRead(data.fakeClientFd, buf.data(), n);
+                        send2JS(data.hWnd, buf.data(), n);
                     }
                 }
                 else
@@ -224,32 +235,32 @@ static void do_hullo_handling_things(const char* fileURL, int appDocId)
 
     // First we simply send it the URL. This corresponds to the GET request with Upgrade to
     // WebSocket.
-    LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
+    LOG_TRC_NOFILE("Actually sending to Online:" << data.documentUri);
 
     // Must do this in a thread, too, so that we can return to the main loop
     // Must duplicate fileURL as it exists only while this function is called from C#.
-    char* fileURLcopy = _strdup(fileURL);
+    char* fileURLcopy = _strdup(data.documentUri.c_str());
     std::thread(
-        [fileURLcopy, appDocId]
+        [data, fileURLcopy]
         {
             struct pollfd pollfd;
-            pollfd.fd = fakeClientFd;
+            pollfd.fd = data.fakeClientFd;
             pollfd.events = POLLOUT;
             fakeSocketPoll(&pollfd, 1, -1);
-            std::string message(fileURLcopy + (" " + std::to_string(appDocId)));
-            fakeSocketWrite(fakeClientFd, message.c_str(), message.size());
+            std::string message(fileURLcopy + (" " + std::to_string(data.appDocId)));
+            fakeSocketWrite(data.fakeClientFd, message.c_str(), message.size());
             std::free(fileURLcopy);
         })
         .detach();
 }
 
-static void do_bye_handling_things()
+static void do_bye_handling_things(const WindowData& data)
 {
     LOG_TRC_NOFILE(
         "Document window terminating on JavaScript side. Closing our end of the socket.");
 
     // Close one end of the socket pair, that will wake up the forwarding thread above
-    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+    fakeSocketClose(data.closeNotificationPipeForForwardingThread[0]);
 }
 
 static void do_convert_to(const char* type, int appDocId)
@@ -262,7 +273,7 @@ static void do_convert_to(const char* type, int appDocId)
     // etc
 }
 
-static void do_other_message_handling_things(const char* message)
+static void do_other_message_handling_things(const WindowData& data, const char* message)
 {
     LOG_TRC_NOFILE("Handling other message:'" << message << "'");
 
@@ -272,10 +283,10 @@ static void do_other_message_handling_things(const char* message)
         [=]
         {
             struct pollfd pollfd;
-            pollfd.fd = fakeClientFd;
+            pollfd.fd = data.fakeClientFd;
             pollfd.events = POLLOUT;
             fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(fakeClientFd, message_copy, strlen(message_copy));
+            fakeSocketWrite(data.fakeClientFd, message_copy, strlen(message_copy));
             std::free(message_copy);
         })
         .detach();
@@ -323,7 +334,8 @@ static void do_cut_or_copy(ClipboardOp op, int appDocId)
 
         if (wformat)
         {
-            std::wstring wtext = sizes[i] ? Util::string_to_wide_string(std::string(streams[i])) : L"";
+            std::wstring wtext =
+                sizes[i] ? Util::string_to_wide_string(std::string(streams[i])) : L"";
             const int byteSize = wtext.size() * 2 + 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
             if (hglData)
@@ -382,7 +394,7 @@ static void do_paste_or_read(ClipboardOp op, int appDocId)
 
     std::set<std::string> doneMimeTypes;
 
-    while (format = EnumClipboardFormats(format))
+    while ((format = EnumClipboardFormats(format)) != 0)
     {
         if (format == CF_UNICODETEXT)
         {
@@ -508,7 +520,7 @@ static void do_clipboard_set(int appDocId, const char* text)
                                                             streams.data());
 }
 
-static void fileOpenDialog()
+static FilenameAndUri fileOpenDialog()
 {
     IFileOpenDialog* dialog;
 
@@ -529,7 +541,7 @@ static void fileOpenDialog()
         std::abort();
 
     if (!SUCCEEDED(dialog->Show(NULL)))
-        std::exit(0);
+        return {};
 
     IShellItem* item;
     if (!SUCCEEDED(dialog->GetResult(&item)))
@@ -544,8 +556,7 @@ static void fileOpenDialog()
     item->Release();
     dialog->Release();
 
-    document_filename = path.getFileName();
-    document_uri = Poco::URI(path).toString();
+    return { path.getFileName(), Poco::URI(path).toString() };
 }
 
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -553,37 +564,41 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
     switch (message)
     {
         case WM_SIZE:
-            if (webviewController != nullptr)
+            if (windowData[hWnd].webViewController != nullptr)
             {
                 RECT bounds;
                 GetClientRect(hWnd, &bounds);
-                webviewController->put_Bounds(bounds);
+                windowData[hWnd].webViewController->put_Bounds(bounds);
             };
             break;
 
         case WM_CLOSE:
             // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
-
-            do_bye_handling_things();
+            do_bye_handling_things(windowData[hWnd]);
 
             // This seems to be what actually causes the document to be closed from a LO core point
             // of view? At least the lock file disappears here.
-            DocumentData::get(appDocId).loKitDocument->destroyView(
-                DocumentData::get(appDocId).loKitDocument->getView());
+            DocumentData::get(windowData[hWnd].appDocId)
+                .loKitDocument->destroyView(
+                    DocumentData::get(windowData[hWnd].appDocId).loKitDocument->getView());
 
-            DocumentData::deallocate(appDocId);
-
+            DocumentData::deallocate(windowData[hWnd].appDocId);
             DestroyWindow(hWnd);
             break;
 
         case WM_DESTROY:
-            PostQuitMessage(0);
-            // FIXME: We probably should not just do a blunt _Exit(). On the other hand, it works.
-            _Exit(0);
+            if (DocumentData::count() == 0)
+            {
+                // PostQuitMessage(0);
+                // FIXME: We probably should not just do a blunt _Exit(). On the other hand, it works.
+                if (beingDebugged)
+                    OutputDebugString(L"DocumentData::count() is ZERO, bluntly exiting\n");
+                _Exit(0);
+            }
             break;
 
         case CODA_WM_EXECUTESCRIPT:
-            webview->ExecuteScript(
+            windowData[hWnd].webView->ExecuteScript(
                 Util::string_to_wide_string(std::string((char*)wParam)).c_str(),
                 Microsoft::WRL::Callback<ICoreWebView2ExecuteScriptCompletedHandler>(
                     [](HRESULT errorCode, LPCWSTR resultObjectAsJson) -> HRESULT
@@ -603,7 +618,95 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
     return 0;
 }
 
-static void processMessage(const wil::unique_cotaskmem_string& message)
+static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
+{
+    HWND hWnd = CreateWindowW(
+        windowClass, Util::string_to_wide_string(filenameAndUri.filename + " - CODA").c_str(),
+        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1200, 900, NULL, NULL, appInstance,
+        NULL);
+
+    auto& data = windowData[hWnd];
+    data.hWnd = hWnd;
+    data.fakeClientFd = fakeSocketSocket();
+    data.appDocId = generate_new_app_doc_id();
+    data.documentUri = filenameAndUri.uri;
+
+    ShowWindow(hWnd, appShowMode);
+    UpdateWindow(hWnd);
+
+    CreateCoreWebView2EnvironmentWithOptions(
+        nullptr, nullptr, nullptr,
+        Microsoft::WRL::Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
+            [&data](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
+            {
+                // Create a CoreWebView2Controller and get the associated CoreWebView2 whose parent is the main window hWnd
+                env->CreateCoreWebView2Controller(
+                    data.hWnd,
+                    Microsoft::WRL::Callback<
+                        ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
+                        [&data](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
+                        {
+                            if (!controller)
+                                return E_FAIL;
+
+                            ICoreWebView2* webView;
+                            controller->get_CoreWebView2(&webView);
+                            data.webView = wil::com_ptr<ICoreWebView2>(webView);
+                            data.webViewController = controller;
+
+                            // Add a few settings for the webview
+                            // The demo step is redundant since the values are the default settings
+                            wil::com_ptr<ICoreWebView2Settings> settings;
+                            webView->get_Settings(&settings);
+                            settings->put_IsScriptEnabled(TRUE);
+                            settings->put_AreDefaultScriptDialogsEnabled(TRUE);
+                            settings->put_IsWebMessageEnabled(TRUE);
+
+                            // Resize WebView to fit the bounds of the parent window
+                            RECT bounds;
+                            GetClientRect(data.hWnd, &bounds);
+                            data.webViewController->put_Bounds(bounds);
+
+                            EventRegistrationToken token;
+
+                            // Communication between host and web content
+                            // Set an event handler for the host to return received message back to the web content
+                            webView->add_WebMessageReceived(
+                                Microsoft::WRL::Callback<
+                                    ICoreWebView2WebMessageReceivedEventHandler>(
+                                    [&data](
+                                        ICoreWebView2* webView,
+                                        ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT
+                                    {
+                                        wil::unique_cotaskmem_string message;
+                                        args->TryGetWebMessageAsString(&message);
+                                        processMessage(data, message);
+                                        return S_OK;
+                                    })
+                                    .Get(),
+                                &token);
+
+                            const std::string coolURL = app_installation_uri +
+                                                        std::string("cool/cool.html?file_path=") +
+                                                        data.documentUri +
+                                                        std::string("&permission=edit"
+                                                                    "&lang=en-US"
+                                                                    "&appdocid=") +
+                                                        std::to_string(data.appDocId) +
+                                                        std::string("&userinterfacemode=notebookbar"
+                                                                    "&dir=ltr");
+
+                            webView->Navigate(Util::string_to_wide_string(coolURL).c_str());
+
+                            return S_OK;
+                        })
+                        .Get());
+                return S_OK;
+            })
+            .Get());
+}
+
+static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message)
 {
     std::wstring s(message.get());
     if (beingDebugged)
@@ -613,43 +716,49 @@ static void processMessage(const wil::unique_cotaskmem_string& message)
         s = s.substr(4);
         if (s == L"HULLO")
         {
-            do_hullo_handling_things(document_uri.c_str(), appDocId);
+            do_hullo_handling_things(data);
         }
         else if (s == L"BYE")
         {
-            do_bye_handling_things();
+            do_bye_handling_things(data);
         }
         else if (s == L"PRINT")
         {
-            do_convert_to("pdf", appDocId);
+            do_convert_to("pdf", data.appDocId);
         }
         else if (s == L"CUT")
         {
-            do_cut_or_copy(ClipboardOp::CUT, appDocId);
+            do_cut_or_copy(ClipboardOp::CUT, data.appDocId);
         }
         else if (s == L"COPY")
         {
-            do_cut_or_copy(ClipboardOp::COPY, appDocId);
+            do_cut_or_copy(ClipboardOp::COPY, data.appDocId);
         }
         else if (s == L"PASTE")
         {
-            do_paste_or_read(ClipboardOp::PASTE, appDocId);
+            do_paste_or_read(ClipboardOp::PASTE, data.appDocId);
         }
         else if (s == L"CLIPBOARDREAD")
         {
-            do_paste_or_read(ClipboardOp::READ, appDocId);
+            do_paste_or_read(ClipboardOp::READ, data.appDocId);
         }
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
-            do_clipboard_set(appDocId, Util::wide_string_to_string(s.substr(13)).c_str());
+            do_clipboard_set(data.appDocId, Util::wide_string_to_string(s.substr(13)).c_str());
         }
         else if (s.starts_with(L"downloadas "))
         {
             fprintf(stderr, "Not yet implemented: Save As");
         }
+        else if (s == L"uno .uno:Open")
+        {
+            auto filenameAndUri = fileOpenDialog();
+            if (filenameAndUri.filename != "")
+                openCOOLWindow(filenameAndUri);
+        }
         else
         {
-            do_other_message_handling_things(Util::wide_string_to_string(s).c_str());
+            do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
         }
     }
 }
@@ -658,7 +767,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
     beingDebugged = IsDebuggerPresent();
 
-    mainThreadId = GetCurrentThreadId();
+    appInstance = hInstance;
+    appShowMode = showWindowMode;
 
     Log::initialize("CODA", "trace");
     Util::setThreadName("main");
@@ -668,10 +778,19 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
         std::abort();
 
+    FilenameAndUri filenameAndUri;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
-        fileOpenDialog();
+    {
+        filenameAndUri = fileOpenDialog();
+        // If initial dialog is cancelled, just quit
+        if (filenameAndUri.filename == "")
+            std::exit(0);
+    }
     else
-        document_uri = Poco::URI(Poco::Path(Util::wide_string_to_string(__wargv[1]))).toString();
+    {
+        auto path = Poco::Path(Util::wide_string_to_string(__wargv[1]));
+        filenameAndUri = { Poco::URI(path).toString(), path.getFileName() };
+    }
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
@@ -697,9 +816,6 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
             }
         })
         .detach();
-
-    fakeClientFd = fakeSocketSocket();
-    appDocId = generate_new_app_doc_id();
 
     wchar_t fileName[1000];
     GetModuleFileNameW(NULL, fileName, sizeof(fileName) / sizeof(fileName[0]));
@@ -729,81 +845,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         return 1;
     }
 
-    HWND hWnd = CreateWindowW(
-        windowClass, Util::string_to_wide_string(document_filename + " - CODA").c_str(),
-        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1200, 900, NULL, NULL, hInstance, NULL);
-
-    mainWindow = hWnd;
-    ShowWindow(hWnd, showWindowMode);
-    UpdateWindow(hWnd);
-
-    CreateCoreWebView2EnvironmentWithOptions(
-        nullptr, nullptr, nullptr,
-        Microsoft::WRL::Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
-            [hWnd](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
-            {
-                // Create a CoreWebView2Controller and get the associated CoreWebView2 whose parent is the main window hWnd
-                env->CreateCoreWebView2Controller(
-                    hWnd,
-                    Microsoft::WRL::Callback<
-                        ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
-                        [hWnd](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
-                        {
-                            if (controller)
-                            {
-                                webviewController = controller;
-                                webviewController->get_CoreWebView2(&webview);
-                            }
-
-                            // Add a few settings for the webview
-                            // The demo step is redundant since the values are the default settings
-                            wil::com_ptr<ICoreWebView2Settings> settings;
-                            webview->get_Settings(&settings);
-                            settings->put_IsScriptEnabled(TRUE);
-                            settings->put_AreDefaultScriptDialogsEnabled(TRUE);
-                            settings->put_IsWebMessageEnabled(TRUE);
-
-                            // Resize WebView to fit the bounds of the parent window
-                            RECT bounds;
-                            GetClientRect(hWnd, &bounds);
-                            webviewController->put_Bounds(bounds);
-
-                            EventRegistrationToken token;
-
-                            // Communication between host and web content
-                            // Set an event handler for the host to return received message back to the web content
-                            webview->add_WebMessageReceived(
-                                Microsoft::WRL::Callback<
-                                    ICoreWebView2WebMessageReceivedEventHandler>(
-                                    [](ICoreWebView2* webview,
-                                       ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT
-                                    {
-                                        wil::unique_cotaskmem_string message;
-                                        args->TryGetWebMessageAsString(&message);
-                                        processMessage(message);
-                                        return S_OK;
-                                    })
-                                    .Get(),
-                                &token);
-
-                            const std::string coolURL = app_installation_uri +
-                                                        std::string("cool/cool.html?file_path=") +
-                                                        document_uri +
-                                                        std::string("&permission=edit"
-                                                                    "&lang=en-US"
-                                                                    "&appdocid=") +
-                                                        std::to_string(appDocId) +
-                                                        std::string("&userinterfacemode=notebookbar"
-                                                                    "&dir=ltr");
-
-                            webview->Navigate(Util::string_to_wide_string(coolURL).c_str());
-
-                            return S_OK;
-                        })
-                        .Get());
-                return S_OK;
-            })
-            .Get());
+    openCOOLWindow(filenameAndUri);
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
