@@ -344,6 +344,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 .unotoolbutton.notebookbar.has-label:not(.inline) img {
 	width: 24px !important;
+	height: 24px !important;
+	box-sizing: border-box;
 	margin: auto !important;
 	display: block;
 }
