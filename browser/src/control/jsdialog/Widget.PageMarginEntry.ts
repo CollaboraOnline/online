@@ -79,13 +79,13 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		const col1 = document.createElement('div');
 		col1.className = 'margin-col';
 		const topSpan = document.createElement('span');
-		topSpan.textContent = _('Top: %TOP%').replace(
-			'%TOP%',
+		topSpan.textContent = _('Top: {top}').replace(
+			'{top}',
 			`${opt.details.Top}"`,
 		);
 		const leftSpan = document.createElement('span');
-		leftSpan.textContent = _('Left: %LEFT%').replace(
-			'%LEFT%',
+		leftSpan.textContent = _('Left: {left}').replace(
+			'{left}',
 			`${opt.details.Left}"`,
 		);
 		col1.appendChild(topSpan);
@@ -94,13 +94,13 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		const col2 = document.createElement('div');
 		col2.className = 'margin-col';
 		const bottomSpan = document.createElement('span');
-		bottomSpan.textContent = _('Bottom: %BOTTOM%').replace(
-			'%BOTTOM%',
+		bottomSpan.textContent = _('Bottom: {bottom}').replace(
+			'{bottom}',
 			`${opt.details.Bottom}"`,
 		);
 		const rightSpan = document.createElement('span');
-		rightSpan.textContent = _('Right: %RIGHT%').replace(
-			'%RIGHT%',
+		rightSpan.textContent = _('Right: {right}').replace(
+			'{right}',
 			`${opt.details.Right}"`,
 		);
 		col2.appendChild(bottomSpan);
