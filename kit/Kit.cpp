@@ -4079,6 +4079,17 @@ void lokit_main(
 }
 
 #if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+
+/**
+ * Callback that tells LO's Yield if it should go ahead and handle the LOKit's poll.
+ * FIXME: This is a temporary implementation that always assumes there are events; we should do better.
+ */
+bool alwaysHasEventsCallback(void* data, int mostUrgentPriority)
+{
+    // FIXME - return true only if there is any input in any of the Kits
+    return true;
+}
+
 // with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
 // lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
 // and runLoop in the same thread.
@@ -4107,6 +4118,10 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
                 p.set_value(kit);
 
                 std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
+
+                loKit->registerAnyInputCallback(alwaysHasEventsCallback, nullptr);
+                LOG_INF("Kit unipoll loop run");
+
                 int dummy;
                 loKit->runLoop(pollCallback, wakeCallback, &dummy);
 
