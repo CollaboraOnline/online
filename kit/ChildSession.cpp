@@ -1252,7 +1252,7 @@ bool ChildSession::clientZoom(const StringVector& tokens)
 
     if (tokens.size() == 7 &&
         getTokenString(tokens[5], "dpiscale", dpiScale) &&
-        getTokenString(tokens[6], "zoom", zoom))
+        getTokenString(tokens[6], "zoompercent", zoom))
     {
         getLOKitDocument()->setViewOption("dpiscale", dpiScale.c_str());
         getLOKitDocument()->setViewOption("zoom", zoom.c_str());
