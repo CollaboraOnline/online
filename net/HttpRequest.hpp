@@ -357,6 +357,7 @@ public:
     static constexpr const char* CONTENT_LENGTH = "Content-Length";
     static constexpr const char* TRANSFER_ENCODING = "Transfer-Encoding";
     static constexpr const char* COOKIE = "Cookie";
+    static constexpr const char* HOST = "Host";
 
     static constexpr int64_t MaxNumberFields = 128; // Arbitrary large number.
     static constexpr int64_t MaxNameLen = 512;
@@ -456,6 +457,9 @@ public:
             return it->second;
         return def;
     }
+
+    /// Return the HOST header.
+    std::string getHost() const { return get(HOST); }
 
     /// Set the Content-Type header.
     void setContentType(std::string type) { set(CONTENT_TYPE, std::move(type)); }
@@ -626,6 +630,9 @@ public:
 
     /// Get the protocol version.
     const std::string& getVersion() const { return _version; }
+
+    /// Return the HOST header.
+    std::string getHost() const { return _header.getHost(); }
 
     /// The header object.
     const Header& header() const { return _header; }
