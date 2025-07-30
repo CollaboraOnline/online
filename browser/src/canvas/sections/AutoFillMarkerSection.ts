@@ -26,7 +26,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	selectionBorderWidth: number = 1;
 
 	_showSection: boolean = true; // Store the internal show/hide section through forced readonly hides...
-	super_setShowSection: (show: boolean) => void; // HACK: used when dealing with CanvasSectionContainer only having setShowSection via addSectionFunctions
 
 	constructor () {
 		super();
@@ -58,14 +57,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.size = [Math.round(16 * app.dpiScale), Math.round(16 * app.dpiScale)];
 		}
 
-		app.events.on('updatepermission', this.setMaybeReadonlyShowSection.bind(this));
-
-		// HACK: used when dealing with CanvasSectionContainer only having setShowSection via addSectionFunctions
-		// we need to rename the property otherwise
-		// (1) we will not be able to call it again via super, since as it's not a real superclass function
-		// (2) we will not be able to call our own setShowSection as, since as it's set directly on the object, it'll override everything in the prototype...
-		this.super_setShowSection = this.setShowSection;
-		delete this.setShowSection;
+		app.events.on('updatepermission', this.setShowSection.bind(this));
 	}
 
 	private setMarkerPosition () {
@@ -150,14 +142,11 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 	setShowSection(show: boolean) {
 		this._showSection = show;
-		this.setMaybeReadonlyShowSection();
-	}
 
-	setMaybeReadonlyShowSection() {
 		if (app.map._permission === 'readonly') {
-			this.super_setShowSection(false);
+			super.setShowSection(false);
 		} else {
-			this.super_setShowSection(this._showSection);
+			super.setShowSection(this._showSection);
 		}
 	}
 
