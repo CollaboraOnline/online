@@ -1167,7 +1167,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.onMouseMove(point, null, e);
 	}
 
-	public onClick(point: Array<number>, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.isAnimating && this.sectionProperties.animatingWheelScrollVertical)
 			this.containerObject.stopAnimating();
 	}

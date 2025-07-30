@@ -37,7 +37,7 @@ export interface GroupEntryStrings {
 	This class is an extended version of "CanvasSectionObject".
 */
 
-export abstract class GroupBase extends app.definitions.canvasSectionObject {
+export abstract class GroupBase extends CanvasSectionObject {
 	_map: any;
 	_textColor: string;
 	_getFont: () => string;
@@ -337,7 +337,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		return;
 	}
 
-	onClick (point: number[]): void {
+	onClick (point: cool.SimplePoint): void {
 		// User may have clicked on one of the level headers.
 		const level = this.findClickedLevel(point);
 		if (level !== -1) {

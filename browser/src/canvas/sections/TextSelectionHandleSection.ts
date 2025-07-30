@@ -67,7 +67,7 @@ class TextSelectionHandle extends HTMLObjectSection {
 			this.sectionProperties.objectDiv.style.display = 'none';
 	}
 
-	onClick(point: number[], e: MouseEvent): void {
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}

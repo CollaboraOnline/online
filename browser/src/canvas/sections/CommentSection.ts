@@ -1315,7 +1315,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onClick (point: Array<number>, e: MouseEvent): void {
+	public onClick (point: cool.SimplePoint, e: MouseEvent): void {
 		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 			e.stopPropagation();

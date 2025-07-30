@@ -21,7 +21,7 @@
 
 namespace cool {
 
-export class CornerHeader extends app.definitions.canvasSectionObject {
+export class CornerHeader extends CanvasSectionObject {
 	name: string = L.CSections.CornerHeader.name;
 	anchor: any = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
 	size: number[] = [48 * app.dpiScale, 19 * app.dpiScale]; // These values are static.
@@ -37,7 +37,7 @@ export class CornerHeader extends app.definitions.canvasSectionObject {
 
 	onInitialize():void {
 		this._map = L.Map.THIS;
-		
+
 		this._map.on('darkmodechanged', this._initCornerHeaderStyle, this);
 		this._initCornerHeaderStyle();
 	}

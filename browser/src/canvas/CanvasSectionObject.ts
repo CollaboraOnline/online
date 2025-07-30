@@ -70,7 +70,7 @@ class CanvasSectionObject {
 	onDocumentObjectVisibilityChange(): void { return; }
 	onMouseEnter(point: Array<number>, e: MouseEvent): void { return; }
 	onMouseLeave(point: Array<number>, e: MouseEvent): void { return; }
-	onClick(point: Array<number>, e: MouseEvent): void { return; }
+	onClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onDoubleClick(point: Array<number>, e: MouseEvent): void { return; }
 	onContextMenu(e?: MouseEvent): void { return; }
 	onMouseWheel(point: Array<number>, delta: Array<number>, e: WheelEvent): void { return; }
