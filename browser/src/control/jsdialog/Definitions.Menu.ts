@@ -124,6 +124,41 @@ const pageMarginOptions = {
 		details: { Top: 0.5, Left: 0.5, Bottom: 0.5, Right: 0.5 },
 	},
 };
+
+enum LO_BorderLineWidth {
+	Hairline = 1, // 0.05pt
+	VeryThin = 10, // 0.50pt
+	Thin = 15, // 0.75pt
+	Medium = 30, // 1.50pt
+	Thick = 45, // 2.25pt
+	ExtraThick = 90, // 4.50pt
+}
+
+enum UNO_BorderLineStyle {
+	// Matches table::BorderLineStyle::DOUBLE in UNO IDL
+	NONE = 32767,
+	SOLID = 1,
+	DOUBLE = 3,
+}
+
+function getLineStyleModificationCommand(
+	LineStyle: UNO_BorderLineStyle,
+	n1: number, // Corresponds to SvxBorderLineWidth
+	n2: number,
+	n3: number,
+): string {
+	const borderLine2Properties = {
+		LineStyle: { type: 'short', value: LineStyle },
+		InnerLineWidth: { type: 'short', value: n1 },
+		OuterLineWidth: { type: 'short', value: n2 },
+		LineDistance: { type: 'short', value: n3 },
+	};
+
+	const jsonParams = JSON.stringify(borderLine2Properties);
+
+	// The UNO command name itself, from `scslots.hxx`
+	return `.uno:LineStyle ${jsonParams}`;
+}
 menuDefinitions.set('AutoSumMenu', [
 	{ text: _('Sum'), uno: '.uno:AutoSum' },
 	{ text: _('Average'), uno: '.uno:AutoSum?Function:string=average' },
@@ -1339,6 +1374,111 @@ menuDefinitions.set('BorderStyleMenu', [
 				id: 'colorpickerwidget',
 				type: 'colorpicker',
 				command: '.uno:FrameLineColor',
+			},
+			{ type: 'separator' }, // required to show dropdown arrow
+		],
+	},
+	{
+		text: _('Line style'),
+		items: [
+			{
+				text: _('Hairline (0.05 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.SOLID,
+					LO_BorderLineWidth.Hairline,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Very thin (0.50 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.SOLID,
+					LO_BorderLineWidth.VeryThin,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Thin (0.75 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.SOLID,
+					LO_BorderLineWidth.Thin,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Medium (1.50 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.SOLID,
+					LO_BorderLineWidth.Medium,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Thick (2.25 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.SOLID,
+					LO_BorderLineWidth.Thick,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Extra thick (4.50 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.SOLID,
+					LO_BorderLineWidth.ExtraThick,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Double Hairline (1.10 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.DOUBLE,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Medium,
+				),
+			},
+			{
+				text: _('Double Hairline (2.35 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.DOUBLE,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Thick,
+				),
+			},
+			{
+				text: _('Thin/Medium (3.00 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.DOUBLE,
+					LO_BorderLineWidth.Thin,
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Thin,
+				),
+			},
+			{
+				text: _('Medium/Hairline (3.05 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.DOUBLE,
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Medium,
+				),
+			},
+			{
+				text: _('Medium/Medium (4.50 pt)'),
+				uno: getLineStyleModificationCommand(
+					UNO_BorderLineStyle.DOUBLE,
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Medium,
+				),
 			},
 			{ type: 'separator' }, // required to show dropdown arrow
 		],
