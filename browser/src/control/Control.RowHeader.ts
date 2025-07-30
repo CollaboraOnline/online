@@ -64,35 +64,43 @@ export class RowHeader extends cool.Header {
 
 		this._menuItem = {
 			'.uno:InsertRowsBefore': {
-				name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:InsertRowsBefore', 'spreadsheet', true), 'InsertRowsBefore'),
+				isHtmlName: true,
 				callback: (this._insertRowAbove).bind(this)
 			},
 			'.uno:InsertRowsAfter': {
-				name: _UNO('.uno:InsertRowsAfter', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:InsertRowsAfter', 'spreadsheet', true), 'InsertRowsAfter'),
+				isHtmlName: true,
 				callback: (this._insertRowBelow).bind(this)
 			},
 			'.uno:DeleteRows': {
-				name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:DeleteRows', 'spreadsheet', true), 'DeleteRows'),
+				isHtmlName: true,
 				callback: (this._deleteSelectedRow).bind(this)
 			},
 			'.uno:RowHeight': {
-				name: _UNO('.uno:RowHeight', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:RowHeight', 'spreadsheet', true), 'RowHeight'),
+				isHtmlName: true,
 				callback: (this._rowHeight).bind(this)
 			},
 			'.uno:SetOptimalRowHeight': {
-				name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true), 'SetOptimalRowHeight'),
+				isHtmlName: true,
 				callback: (this._optimalHeight).bind(this)
 			},
 			'.uno:HideRow': {
-				name: _UNO('.uno:HideRow', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:HideRow', 'spreadsheet', true), 'HideRow'),
+				isHtmlName: true,
 				callback: (this._hideRow).bind(this)
 			},
 			'.uno:ShowRow': {
-				name: _UNO('.uno:ShowRow', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:ShowRow', 'spreadsheet', true), 'ShowRow'),
+				isHtmlName: true,
 				callback: (this._showRow).bind(this)
 			},
 			'.uno:FreezePanes': {
-				name: _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:FreezePanes', 'spreadsheet', true), 'FreezePanes'),
+				isHtmlName: true,
 				callback: (this._freezePanes).bind(this)
 			}
 		};
