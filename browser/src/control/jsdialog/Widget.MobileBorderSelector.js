@@ -69,7 +69,7 @@ function _borderControlItem(parentContainer, data, builder, i, selected) {
 
 	var buttonId = 'border-' + i;
 	button = L.DomUtil.create('img', 'ui-content borderbutton', div);
-	app.LOUtil.setImage(button, 'fr0' + i + '.svg', builder.map);
+	app.LOUtil.setImage(button, 'lc_fr0' + i + '.svg', builder.map);
 	button.id = buttonId;
 	if (selected)
 		$(button).addClass('selected');
