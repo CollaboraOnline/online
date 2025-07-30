@@ -184,7 +184,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseLeave(point: number[], e: MouseEvent) {
+	onMouseLeave(point: cool.SimplePoint, e: MouseEvent) {
 		app.map.dontHandleMouse = false;
 		e.stopPropagation();
 		this.stopPropagating();
