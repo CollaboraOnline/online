@@ -64,7 +64,7 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 	}
 
 	onMouseMove(
-		point: Array<number>,
+		point: cool.SimplePoint,
 		dragDistance: Array<number>,
 		e: MouseEvent,
 	): void {

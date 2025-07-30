@@ -759,12 +759,12 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	private isMouseOnScrollBar (point: Array<number>): void {
+	private isMouseOnScrollBar (point: cool.SimplePoint): void {
 		const mirrorX = this.isRTL();
 		if (this.documentTopLeft[1] >= 0) {
-			if ((!mirrorX && point[0] >= this.size[0] - this.sectionProperties.usableThickness)
-				|| (mirrorX && point[0] <= this.sectionProperties.usableThickness)) {
-				if (point[1] > this.sectionProperties.yOffset) {
+			if ((!mirrorX && point.pX >= this.size[0] - this.sectionProperties.usableThickness)
+				|| (mirrorX && point.pX <= this.sectionProperties.usableThickness)) {
+				if (point.pY > this.sectionProperties.yOffset) {
 					this.showVerticalScrollBar();
 				}
 				else {
@@ -777,9 +777,9 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		if (this.documentTopLeft[0] >= 0) {
-			if (point[1] >= this.size[1] - this.sectionProperties.usableThickness) {
-				if ((!mirrorX && point[0] <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset && point[0] >= this.sectionProperties.xOffset)
-					|| (mirrorX && point[0] >= this.sectionProperties.horizontalScrollRightOffset && point[0] >= this.sectionProperties.xOffset)) {
+			if (point.pY >= this.size[1] - this.sectionProperties.usableThickness) {
+				if ((!mirrorX && point.pX <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset && point.pX >= this.sectionProperties.xOffset)
+					|| (mirrorX && point.pX >= this.sectionProperties.horizontalScrollRightOffset && point.pX >= this.sectionProperties.xOffset)) {
 					this.showHorizontalScrollBar();
 				}
 				else {
@@ -871,13 +871,13 @@ export class ScrollSection extends CanvasSectionObject {
 		return true;
 	}
 
-	private isMouseInsideDocumentAnchor (point: Array<number>): boolean {
+	private isMouseInsideDocumentAnchor (point: cool.SimplePoint): boolean {
 		var docSection = this.containerObject.getDocumentAnchorSection();
 		return this.containerObject.doesSectionIncludePoint(docSection, point);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private isMousePointerSyncedWithVerticalScrollBar (scrollProps: any, position: Array<number>): boolean {
+	private isMousePointerSyncedWithVerticalScrollBar (scrollProps: any, position: cool.SimplePoint): boolean {
 		// Keep this desktop-only for now.
 		if (!(<any>window).mode.isDesktop())
 			return true;
@@ -889,17 +889,17 @@ export class ScrollSection extends CanvasSectionObject {
 
 		var pointerIsSyncWithScrollBar = false;
 		if (this.sectionProperties.pointerSyncWithVerticalScrollBar) {
-			pointerIsSyncWithScrollBar = scrollProps.startY < position[1] && scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness > position[1];
+			pointerIsSyncWithScrollBar = scrollProps.startY < position.pX && scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness > position.pY;
 			pointerIsSyncWithScrollBar = pointerIsSyncWithScrollBar || (this.isMouseInsideDocumentAnchor(position) && spacer === 0);
 		}
 		else {
 			// See if the scroll bar is on top or bottom.
 			var docAncSectionY = this.containerObject.getDocumentAnchorSection().myTopLeft[1];
 			if (scrollProps.startY < 30 * window.app.roundedDpiScale + docAncSectionY) {
-				pointerIsSyncWithScrollBar = scrollProps.startY + spacer < position[1];
+				pointerIsSyncWithScrollBar = scrollProps.startY + spacer < position.pY;
 			}
 			else {
-				pointerIsSyncWithScrollBar = scrollProps.startY + spacer > position[1];
+				pointerIsSyncWithScrollBar = scrollProps.startY + spacer > position.pY;
 			}
 		}
 
@@ -908,7 +908,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private isMousePointerSyncedWithHorizontalScrollBar (scrollProps: any, position: Array<number>): boolean {
+	private isMousePointerSyncedWithHorizontalScrollBar (scrollProps: any, position: cool.SimplePoint): boolean {
 		// Keep this desktop-only for now.
 		if (!(<any>window).mode.isDesktop())
 			return true;
@@ -925,17 +925,17 @@ export class ScrollSection extends CanvasSectionObject {
 
 		var pointerIsSyncWithScrollBar = false;
 		if (this.sectionProperties.pointerSyncWithHorizontalScrollBar) {
-			pointerIsSyncWithScrollBar = position[0] > startX && position[0] < endX;
+			pointerIsSyncWithScrollBar = position.pX > startX && position.pX < endX;
 			pointerIsSyncWithScrollBar = pointerIsSyncWithScrollBar || (this.isMouseInsideDocumentAnchor(position) && spacer === 0);
 		}
 		else {
 			// See if the scroll bar is on left or right.
 			var docAncSectionX = this.containerObject.getDocumentAnchorSection().myTopLeft[0];
 			if (startX < 30 * window.app.roundedDpiScale + docAncSectionX) {
-				pointerIsSyncWithScrollBar = startX + spacer < position[0];
+				pointerIsSyncWithScrollBar = startX + spacer < position.pX;
 			}
 			else {
-				pointerIsSyncWithScrollBar = startX + spacer > position[0];
+				pointerIsSyncWithScrollBar = startX + spacer > position.pX;
 			}
 		}
 
@@ -943,7 +943,7 @@ export class ScrollSection extends CanvasSectionObject {
 		return pointerIsSyncWithScrollBar;
 	}
 
-	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent): void {
+	public onMouseMove (position: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void {
 		this.clearQuickScrollTimeout();
 
 		if (this.sectionProperties.clickScrollVertical && this.containerObject.isDraggingSomething()) {

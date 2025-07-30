@@ -43,14 +43,13 @@ class CellSelectionHandle extends CanvasSectionObject {
 		app.map._docLayer._postSelectTextEvent(type, point.x, point.y);
 	}
 
-	private onDrag(point: number[]) {
-		const newPoint = new cool.SimplePoint(0, 0);
-		newPoint.pX = this.position[0] + point[0];
-		newPoint.pY = this.position[1] + point[1];
+	private onDrag(point: cool.SimplePoint) {
+		point.pX += this.position[0];
+		point.pY += this.position[1];
 
-		app.map.fire('handleautoscroll', { pos: { x: newPoint.cX, y: newPoint.cY }, map: app.map });
+		app.map.fire('handleautoscroll', { pos: { x: point.cX, y: point.cY }, map: app.map });
 
-		this.sharedOnDragAndEnd(newPoint);
+		this.sharedOnDragAndEnd(point);
 	}
 
 	public onDraw() {
@@ -62,7 +61,7 @@ class CellSelectionHandle extends CanvasSectionObject {
 		this.context.stroke();
 	}
 
-	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {
+	onMouseMove(point: cool.SimplePoint, dragDistance: number[], e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			app.map.scrollingIsHandled = true;

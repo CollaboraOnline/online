@@ -15,10 +15,10 @@ class TextSelectionHandle extends HTMLObjectSection {
 		super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, showSection);
 	}
 
-	onDrag(point: number[]) {
+	onDrag(point: cool.SimplePoint) {
 		(<any>window).IgnorePanning = true;
-		const candidateX = Math.round((this.myTopLeft[0] + point[0]) / app.dpiScale);
-		const candidateY = Math.round((this.myTopLeft[1] + point[1]) / app.dpiScale);
+		const candidateX = Math.round((this.myTopLeft[0] + point.pX) / app.dpiScale);
+		const candidateY = Math.round((this.myTopLeft[1] + point.pY) / app.dpiScale);
 
 		this.sectionProperties.objectDiv.style.left = candidateX + 'px';
 		this.sectionProperties.objectDiv.style.top = candidateY + 'px';
@@ -52,7 +52,7 @@ class TextSelectionHandle extends HTMLObjectSection {
 		}
 	}
 
-	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {
+	onMouseMove(point: cool.SimplePoint, dragDistance: number[], e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();

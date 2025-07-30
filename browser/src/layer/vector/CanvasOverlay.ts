@@ -136,8 +136,8 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		this.draw();
 	}
 
-	onMouseMove(position: Array<number>): void {
-		var mousePos = new cool.Point(position[0], position[1]);
+	onMouseMove(position: cool.SimplePoint): void {
+		var mousePos = new cool.Point(position.pX, position.pY);
 		var overlaySectionBounds = this.bounds.clone();
 		var splitPos = this.tsManager.getSplitPos();
 		if (this.isCalcRTL()) {

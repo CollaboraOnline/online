@@ -936,7 +936,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseMove(position: number[], dragDistance: number[]) {
+	onMouseMove(position: cool.SimplePoint, dragDistance: number[]) {
 		let canDrag = !app.file.textCursor.visible;
 
 		if (canDrag && app.map.getDocType() === 'presentation') {
