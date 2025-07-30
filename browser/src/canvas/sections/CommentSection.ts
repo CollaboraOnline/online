@@ -1375,10 +1375,6 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseMove (point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void {
-		return;
-	}
-
 	public onMouseUp (point: cool.SimplePoint, e: MouseEvent): void {
 		// Hammer.js doesn't fire onClick event after touchEnd event.
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
@@ -1390,10 +1386,6 @@ export class Comment extends CanvasSectionObject {
 			this.onMouseEnter();
 			this.onClick(point, e);
 		}
-	}
-
-	public onMouseDown (point: cool.SimplePoint, e: MouseEvent): void {
-		return;
 	}
 
 	private calcContinueWithMouseEvent (): boolean {

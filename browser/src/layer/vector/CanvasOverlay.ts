@@ -120,10 +120,6 @@ class CanvasOverlay extends CanvasSectionObject {
 		this.updateCanvasBounds();
 	}
 
-	onInitialize(): void {
-		return;
-	}
-
 	onResize(): void {
 		this.paths.forEach(function (path: CPath) {
 			path.onResize();

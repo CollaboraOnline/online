@@ -86,6 +86,7 @@ export class CornerGroup extends GroupBase {
 		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
 
+	// These 2 overwrites are required.
 	onDraw(): void { return; }
 	onDoubleClick(): void { return;}
 
