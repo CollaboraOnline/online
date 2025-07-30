@@ -60,7 +60,7 @@ namespace cool {
 
 export class CommentSection extends CanvasSectionObject {
 	name: string = L.CSections.CommentList.name;
-	backgroundColor: string = app.sectionContainer.clearColor;
+	backgroundColor: string = app.sectionContainer.getClearColor();
 	expand: string[] = ['bottom'];
 	processingOrder: number = L.CSections.CommentList.processingOrder;
 	drawingOrder: number = L.CSections.CommentList.drawingOrder;

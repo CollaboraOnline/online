@@ -180,7 +180,7 @@ class CanvasSectionContainer {
 	private multiTouch: boolean = false;
 	private touchCenter: Array<number> = null;
 	private longPressTimer: any = null;
-	clearColor: string = '#f8f9fa';
+	private clearColor: string = '#f8f9fa';
 	private documentBackgroundColor = '#ffffff'; // This is the background color of the document
 	private useCSSForBackgroundColor = true;
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
@@ -264,7 +264,7 @@ class CanvasSectionContainer {
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
-	getContext () {
+	public getContext () {
 		return this.context;
 	}
 
@@ -297,20 +297,20 @@ class CanvasSectionContainer {
 		this.useCSSForBackgroundColor = useCSSVars;
 	}
 
-	setClearColor (color: string) {
+	public setClearColor (color: string) {
 		if (!this.useCSSForBackgroundColor)
 			this.clearColor = color;
 	}
 
-	getClearColor () {
+	public getClearColor () {
 		return this.clearColor;
 	}
 
-	setDocumentBackgroundColor (color: string) {
+	public setDocumentBackgroundColor (color: string) {
 		this.documentBackgroundColor = color;
 	}
 
-	getDocumentBackgroundColor () {
+	public getDocumentBackgroundColor () {
 		return this.documentBackgroundColor;
 	}
 
@@ -318,23 +318,23 @@ class CanvasSectionContainer {
 		return this.canvas.style;
 	}
 
-	setInZoomAnimation (inZoomAnimation: boolean) {
+	public setInZoomAnimation (inZoomAnimation: boolean) {
 		this.inZoomAnimation = inZoomAnimation;
 	}
 
-	isInZoomAnimation (): boolean {
+	public isInZoomAnimation (): boolean {
 		return this.inZoomAnimation;
 	}
 
-	setZoomChanged (zoomChanged: boolean) {
+	public setZoomChanged (zoomChanged: boolean) {
 		this.zoomChanged = zoomChanged;
 	}
 
-	isZoomChanged (): boolean {
+	public isZoomChanged (): boolean {
 		return this.zoomChanged;
 	}
 
-	drawingAllowed (): boolean {
+	public drawingAllowed (): boolean {
 		return this.drawingEnabled && this.drawingPaused <= 0;
 	}
 
@@ -342,7 +342,7 @@ class CanvasSectionContainer {
 	// Socket._emitSlurpedEvents(). Currently this is used in Calc to disable rendering
 	// from docload till we get tiles of the correct view area to render.
 	// After calling this, only enableDrawing() can undo this call.
-	disableDrawing () {
+	private disableDrawing () {
 		if (this.drawRequest) {
 			cancelAnimationFrame(this.drawRequest);
 			this.drawRequest = null;
@@ -350,7 +350,7 @@ class CanvasSectionContainer {
 		this.drawingEnabled = false;
 	}
 
-	enableDrawing () {
+	public enableDrawing () {
 		if (this.drawingEnabled)
 			return;
 
@@ -361,7 +361,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	pauseDrawing () {
+	public pauseDrawing () {
 		if (this.drawRequest) {
 			cancelAnimationFrame(this.drawRequest);
 			this.drawRequest = null;
@@ -372,7 +372,7 @@ class CanvasSectionContainer {
 	// set topLevel if we are sure that we are the top of call nesting
 	// eg. in a browser event handler. Avoids JS exceptions poisoning
 	// the count, since we have no RAII helpers here.
-	resumeDrawing(topLevel?: boolean) {
+	public resumeDrawing(topLevel?: boolean) {
 		var wasNonZero: boolean = this.drawingPaused !== 0;
 		if (topLevel)
 		   this.drawingPaused = 0;
@@ -447,7 +447,7 @@ class CanvasSectionContainer {
 		return [Math.round(x * app.dpiScale), Math.round(y * app.dpiScale)];
 	}
 
-	getSectionWithName (name: string): CanvasSectionObject {
+	public getSectionWithName (name: string): CanvasSectionObject {
 		if (name) {
 			for (var i: number = 0; i < this.sections.length; i++) {
 				if (this.sections[i].name === name) {
@@ -1024,7 +1024,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	onClick (e: MouseEvent) {
+	public onClick (e: MouseEvent) {
 		if (!this.draggingSomething) { // Prevent click event after dragging.
 			if (this.positionOnMouseDown !== null && this.positionOnMouseUp !== null) {
 				this.positionOnClick = this.convertPositionToCanvasLocale(e);
@@ -1042,7 +1042,7 @@ class CanvasSectionContainer {
 		this.clearMousePositions();
 	}
 
-	onDoubleClick (e: MouseEvent) {
+	public onDoubleClick (e: MouseEvent) {
 		this.positionOnDoubleClick = this.convertPositionToCanvasLocale(e);
 
 		var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnDoubleClick);
@@ -1128,7 +1128,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	onMouseDown (e: MouseEvent) { // Ignore this event, just rely on this.draggingSomething variable.
+	public onMouseDown (e: MouseEvent) { // Ignore this event, just rely on this.draggingSomething variable.
 		if (e.button === 0 && !this.touchEventInProgress) { // So, we only handle left button.
 			this.clearMousePositions();
 			this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
@@ -1170,7 +1170,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	onContextMenu (e: MouseEvent) {
+	public onContextMenu (e: MouseEvent) {
 		var mousePosition = this.convertPositionToCanvasLocale(e);
 		var section: CanvasSectionObject = this.findSectionContainingPoint(mousePosition);
 		if (section) {
@@ -1216,7 +1216,7 @@ class CanvasSectionContainer {
 		app.idleHandler.notifyActive();
 	}
 
-	onMouseLeave (e: MouseEvent) {
+	public onMouseLeave (e: MouseEvent) {
 		// While dragging something, we don't clear the event information even if the mouse is outside of the canvas area.
 		// We catch the mouse move and mouse up events even when the mouse pointer is outside the canvas area.
 		// This feature is enabled to create a better dragging experience.
@@ -1233,7 +1233,7 @@ class CanvasSectionContainer {
 		this.mouseIsInside = false;
 	}
 
-	onMouseEnter (e: MouseEvent) {
+	public onMouseEnter (e: MouseEvent) {
 		this.mouseIsInside = true;
 
 		for (var i: number = 0; i < this.windowSectionList.length; i++) {
@@ -1243,7 +1243,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
+	public onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
 		if (e.touches.length === 1) {
 			this.clearMousePositions();
 			this.startLongPress(e);
@@ -1264,7 +1264,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	onTouchMove (e: TouchEvent) {
+	public onTouchMove (e: TouchEvent) {
 		// Sometimes onTouchStart is fired for another element. In this case, we return.
 		if (this.positionOnMouseDown === null)
 			return;
@@ -1301,7 +1301,7 @@ class CanvasSectionContainer {
 		app.idleHandler.notifyActive();
 	}
 
-	onTouchEnd (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
+	public onTouchEnd (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
 		this.stopLongPress();
 		if (!this.multiTouch) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
@@ -1326,12 +1326,12 @@ class CanvasSectionContainer {
 		this.touchEventInProgress = true;
 	}
 
-	onTouchCancel (e: TouchEvent) {
+	public onTouchCancel (e: TouchEvent) {
 		this.clearMousePositions();
 		this.stopLongPress();
 	}
 
-	onResize (newWidth: number, newHeight: number) {
+	public onResize (newWidth: number, newHeight: number) {
 		var container: HTMLElement = <HTMLElement> this.canvas.parentNode;
 		var cRect: ClientRect =	container.getBoundingClientRect();
 		if (!newWidth)
@@ -1481,7 +1481,7 @@ class CanvasSectionContainer {
 			return minY - app.roundedDpiScale; // Don't overlap with the section on the bottom.
 	}
 
-	createUpdateSingleDivElement (section: CanvasSectionObject) {
+	public createUpdateSingleDivElement (section: CanvasSectionObject) {
 		var bcr: ClientRect = this.canvas.getBoundingClientRect();
 		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + section.name);
 
@@ -1511,7 +1511,7 @@ class CanvasSectionContainer {
 			element.remove(); // Remove test-div if section is not visible.
 	}
 
-	createUpdateDivElements () {
+	private createUpdateDivElements () {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.createUpdateSingleDivElement(this.sections[i]);
 		}
@@ -1758,7 +1758,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	setPenPosition (section: CanvasSectionObject) {
+	public setPenPosition (section: CanvasSectionObject) {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 		this.context.translate(section.myTopLeft[0], section.myTopLeft[1]);
 	}
@@ -1810,7 +1810,7 @@ class CanvasSectionContainer {
 		//this.drawSectionBorders();
 	}
 
-	doesSectionExist (name: string): boolean {
+	public doesSectionExist (name: string): boolean {
 		if (name && typeof name === 'string') {
 			for (var i: number = 0; i < this.sections.length; i++) {
 				if (this.sections[i].name === name) {
@@ -1878,7 +1878,7 @@ class CanvasSectionContainer {
 			return true;
 	}
 
-	addSectionFunctions(section: CanvasSectionObject) {
+	private addSectionFunctions(section: CanvasSectionObject) {
 		// This is to be removed to a better place.
 		section.isCalcRTL = function(): boolean {
 			const docLayer = this.sectionProperties.docLayer;
@@ -1889,7 +1889,7 @@ class CanvasSectionContainer {
 		}.bind(section);
 	}
 
-	addSection (newSection: CanvasSectionObject) {
+	public addSection (newSection: CanvasSectionObject) {
 		if (this.newSectionChecks(newSection)) {
 			this.pushSection(newSection);
 			return true;
@@ -1915,7 +1915,7 @@ class CanvasSectionContainer {
 			this.sectionsDirty = true;
 	}
 
-	removeSection (name: string) {
+	public removeSection (name: string) {
 		var found: boolean = false;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].name === name) {
