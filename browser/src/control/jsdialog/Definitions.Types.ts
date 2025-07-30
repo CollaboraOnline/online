@@ -102,6 +102,9 @@ interface JSDialogJSON extends DialogJSON {
 	jsontype: string; // specifies target component, on root level only
 	action?: string; // optional name of an action
 	control?: WidgetJSON;
+	drawingarea?: string;
+	itemwidth?: number;
+	itemheight?: number;
 }
 
 // JSDialog message for popup

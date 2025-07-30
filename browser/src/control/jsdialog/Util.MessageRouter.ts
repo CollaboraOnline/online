@@ -42,6 +42,14 @@ class JSDialogMessageRouter {
 				return false;
 			};
 
+			if (msgData.jsontype === 'valueset' && msgData.drawingarea) {
+				app.valuesets[msgData.drawingarea] = {
+					innerWidth: msgData.itemwidth,
+					innerHeight: msgData.itemheight,
+				};
+				return;
+			}
+
 			var isNotebookbarInitialized =
 				app.socket._map.uiManager && app.socket._map.uiManager.notebookbar;
 			if (
