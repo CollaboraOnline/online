@@ -799,7 +799,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .context-menu-item.context-menu-submenu::before,
 .context-menu-icon-spacer,
-.context-menu-icon {
+img.context-menu-icon {
 	width: 1rem;
 	height: 1rem;
 	margin-right: 8px;
