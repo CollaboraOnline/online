@@ -59,7 +59,7 @@ class CanvasSectionObject {
 	boundsList: Array<CanvasSectionObject> = []; // The sections those this section can propagate events to. Updated by container.
 
 	onInitialize(): void { return; }
-	onCursorPositionChanged(newPosition: any): void { return; }
+	onCursorPositionChanged(newPosition: cool.SimpleRectangle): void { return; }
 	onCellAddressChanged(): void { return; }
 	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void { return; }
 	onMouseDown(point: Array<number>, e: MouseEvent): void { return; }
