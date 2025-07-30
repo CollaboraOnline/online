@@ -644,10 +644,6 @@ export class Header extends CanvasSectionObject {
 			this._dragEntry = null;
 		}
 	}
-
-	onNewDocumentTopLeft(): void {
-		return;
-	}
 }
 
 export interface HeaderEntryData {
