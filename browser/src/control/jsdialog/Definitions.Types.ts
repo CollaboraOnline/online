@@ -160,6 +160,13 @@ interface ToolboxWidgetJSON extends WidgetJSON {
 	hasVerticalParent: boolean;
 }
 
+interface ToolItemWidgetJSON extends WidgetJSON {
+	class?: string; // css class
+	noLabel?: boolean;
+	command: string; // command to trigger options for a panel
+	text: string; // title to show or for tooltip
+}
+
 interface PanelWidgetJSON extends WidgetJSON {
 	hidden: boolean; // is hidden
 	command: string; // command to trigger options for a panel
@@ -189,6 +196,15 @@ interface ButtonBoxWidget extends WidgetJSON {
 // type: 'listbox'
 interface ListBoxWidget extends WidgetJSON {
 	entries: Array<string>;
+}
+
+interface ComboBoxWidget extends WidgetJSON {
+	text?: string;
+	entries?: Array<string | number>;
+	selectedCount?: number;
+	selectedEntries?: Array<number>;
+	command?: string;
+	customEntryRenderer?: boolean;
 }
 
 interface TreeColumnJSON {
@@ -252,4 +268,8 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+}
+
+interface SeparatorWidgetJSON extends WidgetJSON {
+	orientation: string;
 }
