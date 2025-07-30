@@ -1879,77 +1879,7 @@ class CanvasSectionContainer {
 	}
 
 	addSectionFunctions(section: CanvasSectionObject) {
-		section.isSectionShown = function() { return this.showSection; }.bind(section);
-
-		section.setDrawingOrder = function(drawingOrder: number): void {
-			this.drawingOrder = drawingOrder;
-			this.containerObject.updateBoundSectionLists();
-			this.containerObject.reNewAllSections();
-		}.bind(section);
-
-		section.setZIndex = function(zIndex: number): void {
-			this.zIndex = zIndex;
-			this.containerObject.updateBoundSectionLists();
-			this.containerObject.reNewAllSections();
-		}.bind(section);
-
-		section.bindToSection = function(sectionName: string) {
-			this.boundToSection = sectionName;
-			this.containerObject.updateBoundSectionLists();
-			this.containerObject.reNewAllSections();
-		}.bind(section);
-
-		section.stopPropagating = function() { this.containerObject.lowestPropagatedBoundSection = this.name; }.bind(section);
-
-		section.startAnimating = function(options: any): boolean { return this.containerObject.startAnimating(this.name, options); }.bind(section);
-
-		section.resetAnimation = function() { this.containerObject.resetAnimation(this.name); }.bind(section);
-
-		section.setPosition = function(x: number, y: number) {
-			if (this.documentObject !== true || !this.containerObject)
-				return;
-
-			x = Math.round(x);
-			y = Math.round(y);
-			let sectionXcoord = x;
-			const positionAddition = this.containerObject.getDocumentTopLeft();
-
-			if (this.isCalcRTL()) {
-				// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
-				const docLayer = this.sectionProperties.docLayer;
-				const docSize = docLayer._map.getPixelBoundsCore().getSize();
-				sectionXcoord = docSize.x - sectionXcoord - this.size[0];
-			}
-
-			if (app.isXOrdinateInFrozenPane(sectionXcoord))
-				positionAddition[0] = 0;
-
-			if (app.isYOrdinateInFrozenPane(y))
-				positionAddition[1] = 0;
-
-			this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition[0];
-			this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition[1];
-
-			this.position[0] = sectionXcoord;
-			this.position[1] = y;
-			const isVisible = this.containerObject.isDocumentObjectVisible(this);
-			if (isVisible !== this.isVisible) {
-				this.isVisible = isVisible;
-				this.onDocumentObjectVisibilityChange();
-			}
-
-			if (this.containerObject.testing)
-				this.containerObject.createUpdateSingleDivElement(this);
-		}.bind(section);
-
-		section.getTestDiv = function(): HTMLDivElement {
-			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
-			if (element)
-				return element;
-
-			return null;
-		}.bind(section);
-
+		// This is to be removed to a better place.
 		section.isCalcRTL = function(): boolean {
 			const docLayer = this.sectionProperties.docLayer;
 			if (docLayer && docLayer.isCalcRTL())
@@ -1957,22 +1887,6 @@ class CanvasSectionContainer {
 
 			return false;
 		}.bind(section);
-
-		section.setShowSection = function(show: boolean) {
-			this.showSection = show;
-			if (this.onSectionShowStatusChange)
-				this.onSectionShowStatusChange();
-
-			if (this.containerObject) { // Is section added to container.
-				this.isVisible = this.containerObject.isDocumentObjectVisible(this);
-				this.onDocumentObjectVisibilityChange();
-			}
-
-			if (this.containerObject.testing) {
-				this.containerObject.createUpdateSingleDivElement(this);
-			}
-		}.bind(section);
-
 	}
 
 	addSection (newSection: CanvasSectionObject) {

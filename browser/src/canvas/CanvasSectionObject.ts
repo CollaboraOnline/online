@@ -47,9 +47,29 @@ class CanvasSectionObject {
 	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void { return; }
 	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	setShowSection(show: boolean): void { return; }
+
+	setShowSection(show: boolean): void {
+		this.showSection = show;
+
+		if (this.onSectionShowStatusChange)
+			this.onSectionShowStatusChange();
+
+		if (this.containerObject) { // Is section added to container.
+			this.isVisible = this.containerObject.isDocumentObjectVisible(this);
+			this.onDocumentObjectVisibilityChange();
+		}
+
+		if (this.containerObject.testing) {
+			this.containerObject.createUpdateSingleDivElement(this);
+		}
+	}
+
 	onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
-	isSectionShown(): boolean { return; }
+
+	isSectionShown(): boolean {
+		return this.showSection;
+	}
+
 	onDocumentObjectVisibilityChange(): void { return; }
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void { return; }
@@ -68,14 +88,82 @@ class CanvasSectionObject {
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft(size: Array<number>): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
-	setDrawingOrder(drawingOrder: number): void { return; }
-	setZIndex(zIndex: number): void { return; }
-	bindToSection(sectionName: string): void { return; }
-	stopPropagating(): void { return; }
-	startAnimating(options: any): boolean { return; }
-	resetAnimation(): void { return; }
-	getTestDiv(): HTMLDivElement { return; }
-	setPosition(x: number, y: number): void { return; } // Document objects only.
+
+	setDrawingOrder(drawingOrder: number): void {
+		this.drawingOrder = drawingOrder;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
+
+	setZIndex(zIndex: number): void {
+		this.zIndex = zIndex;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
+
+	bindToSection(sectionName: string): void {
+		this.boundToSection = sectionName;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
+
+	stopPropagating(): void {
+		this.containerObject.lowestPropagatedBoundSection = this.name;
+	}
+
+	startAnimating(options: any): boolean {
+		return this.containerObject.startAnimating(this.name, options);
+	}
+
+	resetAnimation(): void {
+		this.containerObject.resetAnimation(this.name);
+	}
+
+	getTestDiv(): HTMLDivElement {
+		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
+		if (element)
+			return element;
+
+		return null;
+	}
+
+	// Document objects only.
+	setPosition(x: number, y: number): void {
+		if (this.documentObject !== true || !this.containerObject)
+			return;
+
+		x = Math.round(x);
+		y = Math.round(y);
+		let sectionXcoord = x;
+		const positionAddition = this.containerObject.getDocumentTopLeft();
+
+		if (this.isCalcRTL()) {
+			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
+			const docLayer = this.sectionProperties.docLayer;
+			const docSize = docLayer._map.getPixelBoundsCore().getSize();
+			sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+		}
+
+		if (app.isXOrdinateInFrozenPane(sectionXcoord))
+			positionAddition[0] = 0;
+
+		if (app.isYOrdinateInFrozenPane(y))
+			positionAddition[1] = 0;
+
+		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition[0];
+		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition[1];
+
+		this.position[0] = sectionXcoord;
+		this.position[1] = y;
+		const isVisible = this.containerObject.isDocumentObjectVisible(this);
+		if (isVisible !== this.isVisible) {
+			this.isVisible = isVisible;
+			this.onDocumentObjectVisibilityChange();
+		}
+
+		if (this.containerObject.testing)
+			this.containerObject.createUpdateSingleDivElement(this);
+	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.
 	isCalcRTL(): boolean { return; }
