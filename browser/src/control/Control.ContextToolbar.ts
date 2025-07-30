@@ -16,7 +16,7 @@
 
 class ContextToolbar {
 	container: HTMLElement;
-	builder: any;
+	builder: JSBuilder;
 	map: any;
 	initialized: boolean = false;
 	lastIinputEvent?: any = {};
@@ -32,7 +32,7 @@ class ContextToolbar {
 			map: this.map,
 			cssClass: 'notebookbar',
 			suffix: 'context-toolbar',
-		});
+		} as JSBuilderOptions);
 		this.container = L.DomUtil.createWithId(
 			'div',
 			'context-toolbar',
@@ -96,7 +96,7 @@ class ContextToolbar {
 		});
 	}
 
-	getWriterTextContext(): Array<Record<string, unknown>> {
+	getWriterTextContext(): WidgetJSON[] {
 		return [
 			{
 				type: 'container',
@@ -114,14 +114,14 @@ class ContextToolbar {
 										'.uno:CharFontName'
 									],
 								),
-								selectedCount: '1',
+								selectedCount: 1,
 								selectedEntries: [
 									(document.getElementById('fontnamecombobox-input') as any)
 										.selectionStart,
 								],
 								command: '.uno:CharFontName',
 								customEntryRenderer: true,
-							},
+							} as ComboBoxWidget,
 							{
 								id: 'fontsizecombobox',
 								type: 'combobox',
@@ -131,28 +131,28 @@ class ContextToolbar {
 									6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20, 21, 22,
 									24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96,
 								],
-								selectedCount: '1',
+								selectedCount: 1,
 								selectedEntries: [
 									(document.getElementById('fontsizecombobox-input') as any)
 										.selectionStart,
 								],
 								command: '.uno:FontHeight',
-							},
+							} as ComboBoxWidget,
 							{
 								id: 'home-grow',
 								type: 'toolitem',
 								text: _UNO('.uno:Grow'),
 								command: '.uno:Grow',
-							},
+							} as ToolItemWidgetJSON,
 							{
 								id: 'home-shrink',
 								type: 'toolitem',
 								text: _UNO('.uno:Shrink'),
 								command: '.uno:Shrink',
-							},
+							} as ToolItemWidgetJSON,
 						],
-						vertical: 'false',
-					},
+						vertical: false,
+					} as ContainerWidgetJSON,
 					{
 						type: 'container',
 						children: [
@@ -164,44 +164,44 @@ class ContextToolbar {
 										type: 'toolitem',
 										text: _UNO('.uno:Bold'),
 										command: '.uno:Bold',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-italic',
 										type: 'toolitem',
 										text: _UNO('.uno:Italic'),
 										command: '.uno:Italic',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-underline',
 										type: 'toolitem',
 										text: _UNO('.uno:Underline'),
 										command: '.uno:Underline',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-strikeout',
 										type: 'toolitem',
 										text: _UNO('.uno:Strikeout'),
 										command: '.uno:Strikeout',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-subscript',
 										type: 'toolitem',
 										text: _UNO('.uno:SubScript'),
 										command: '.uno:SubScript',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-superscript',
 										type: 'toolitem',
 										text: _UNO('.uno:SuperScript'),
 										command: '.uno:SuperScript',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-spacing:CharSpacingMenu',
 										type: 'menubutton',
 										noLabel: true,
 										text: _UNO('.uno:Spacing'),
 										command: '.uno:CharSpacing',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-back-color:ColorPickerMenu',
 										class: 'unospan-CharBackColor',
@@ -209,7 +209,7 @@ class ContextToolbar {
 										noLabel: true,
 										text: _UNO('.uno:CharBackColor', 'text'),
 										command: '.uno:CharBackColor',
-									},
+									} as ToolItemWidgetJSON,
 									{
 										id: 'home-color:ColorPickerMenu',
 										class: 'unospan-FontColor',
@@ -217,26 +217,26 @@ class ContextToolbar {
 										noLabel: true,
 										text: _UNO('.uno:Color'),
 										command: '.uno:Color',
-									},
+									} as ToolItemWidgetJSON,
 								],
 							},
 						],
-						vertical: 'false',
+						vertical: false,
 					},
 				],
-				vertical: 'true',
-			},
+				vertical: true,
+			} as ContainerWidgetJSON,
 			{
 				type: 'separator',
 				id: 'home-fontcombobox-break',
 				orientation: 'vertical',
-			},
+			} as SeparatorWidgetJSON,
 			{
 				id: 'home-insert-annotation',
 				type: 'bigtoolitem',
 				text: _UNO('.uno:InsertAnnotation'),
 				command: '.uno:InsertAnnotation',
-			},
+			} as ToolItemWidgetJSON,
 		];
 	}
 
