@@ -102,6 +102,10 @@ export class SimplePoint {
 	public cDistanceTo(point: number[]): number { return Math.sqrt(Math.pow(this.cX - point[0], 2) + Math.pow(this.cY - point[1], 2)); }
 
 	public clone(): SimplePoint { return new SimplePoint(this._x, this._y); }
+
+	public static fromCorePixels(point: Array<number>): SimplePoint {
+		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips));
+	}
 }
 
 /**
@@ -235,6 +239,10 @@ export class SimpleRectangle {
 	public cMoveBy (point: number[]): void { this._x1 += Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 += Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 
 	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height); }
+
+	public static fromCorePixels(rectangle: Array<number>): SimpleRectangle {
+		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips));
+	}
 }
 
 /*
