@@ -124,6 +124,63 @@ const pageMarginOptions = {
 		details: { Top: 0.5, Left: 0.5, Bottom: 0.5, Right: 0.5 },
 	},
 };
+
+enum LO_BorderLineWidth {
+	Hairline = 1, // 0.05pt
+	VeryThin = 10, // 0.50pt
+	Thin = 15, // 0.75pt
+	Medium = 30, // 1.50pt
+	Thick = 45, // 2.25pt
+	ExtraThick = 90, // 4.50pt
+}
+
+enum UNO_BorderLineStyle {
+	NONE = 0,
+	SOLID = 1,
+	DOUBLE = 4, // Matches table::BorderLineStyle::DOUBLE in UNO IDL
+}
+
+function getLineStyleModificationCommand(
+	n1: number, // Corresponds to SvxBorderLineWidth
+	n2: number,
+	n3: number,
+): string {
+	let unoLineStyle: UNO_BorderLineStyle;
+	let totalWidth: number;
+
+	// Logic to determine UNO_BorderLineStyle and totalWidth based on n1, n2, n3
+	// This mimics SvxBorderLine::GuessLinesWidths for simple cases
+	if (n2 === 0 && n3 === 0) {
+		unoLineStyle = UNO_BorderLineStyle.SOLID;
+		totalWidth = n1;
+	} else {
+		unoLineStyle = UNO_BorderLineStyle.DOUBLE; // Assume double for any complex combination
+		totalWidth = n1 + n2 + n3; // Sum all parts for total width
+	}
+
+	const borderLine2Properties = {
+		Color: { type: 'com.sun.star.util.Color', value: 0x000000 },
+		LineStyle: { type: 'short', value: unoLineStyle },
+		LineWidth: { type: 'unsigned long', value: totalWidth },
+		InnerLineWidth: { type: 'short', value: 0 },
+		OuterLineWidth: { type: 'short', value: 0 },
+		LineDistance: { type: 'short', value: 0 },
+	};
+
+	// The `params` object containing the single top-level parameter named "LineStyle".
+	// Its `value` is the `borderLine2Properties` object, and its `type` is explicitly `com.sun.star.table.BorderLine2`.
+	const params = {
+		LineStyle: {
+			type: 'com.sun.star.table.BorderLine2',
+			value: borderLine2Properties,
+		},
+	};
+
+	const jsonParams = JSON.stringify(params);
+
+	// The UNO command name itself, from `scslots.hxx`
+	return `.uno:LineStyle ${jsonParams}`;
+}
 menuDefinitions.set('AutoSumMenu', [
 	{ text: _('Sum'), uno: '.uno:AutoSum' },
 	{ text: _('Average'), uno: '.uno:AutoSum?Function:string=average' },
@@ -1262,7 +1319,86 @@ menuDefinitions.set('ConditionalFormatMenu', [
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('BorderStyleMenu', [
-	{ type: 'html', htmlId: 'borderstylepopup' },
+	{
+		text: _('Line style'),
+		items: [
+			{
+				text: _('Hairline (0.05 pt)'),
+				uno: getLineStyleModificationCommand(LO_BorderLineWidth.Hairline, 0, 0),
+			},
+			{
+				text: _('Very thin (0.50 pt)'),
+				uno: getLineStyleModificationCommand(LO_BorderLineWidth.VeryThin, 0, 0),
+			},
+			{
+				text: _('Thin (0.75 pt)'),
+				uno: getLineStyleModificationCommand(LO_BorderLineWidth.Thin, 0, 0),
+			},
+			{
+				text: _('Medium (1.50 pt)'),
+				uno: getLineStyleModificationCommand(LO_BorderLineWidth.Medium, 0, 0),
+			},
+			{
+				text: _('Thick (2.25 pt)'),
+				uno: getLineStyleModificationCommand(LO_BorderLineWidth.Thick, 0, 0),
+			},
+			{
+				text: _('Extra thick (4.50 pt)'),
+				uno: getLineStyleModificationCommand(
+					LO_BorderLineWidth.ExtraThick,
+					0,
+					0,
+				),
+			},
+			{
+				text: _('Double Hairline (1.10 pt)'),
+				uno: getLineStyleModificationCommand(
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Medium,
+				),
+			},
+			{
+				text: _('Double Hairline (2.35 pt)'),
+				uno: getLineStyleModificationCommand(
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Thick,
+				),
+			},
+			{
+				text: _('Thin/Medium (3.00 pt)'),
+				uno: getLineStyleModificationCommand(
+					LO_BorderLineWidth.Thin,
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Thin,
+				),
+			},
+			{
+				text: _('Medium/Hairline (3.05 pt)'),
+				uno: getLineStyleModificationCommand(
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Hairline,
+					LO_BorderLineWidth.Medium,
+				),
+			},
+			{
+				text: _('Medium/Medium (4.50 pt)'),
+				uno: getLineStyleModificationCommand(
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Medium,
+					LO_BorderLineWidth.Medium,
+				),
+			},
+			{ type: 'separator' }, // required to show dropdown arrow
+		],
+	},
+	{ type: 'separator' },
+	{
+		id: 'more',
+		text: _('More...'),
+		uno: '.uno:FormatCellBorders',
+	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
