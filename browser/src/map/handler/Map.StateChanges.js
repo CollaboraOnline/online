@@ -33,13 +33,18 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		if (typeof (e.state) == 'object') {
 			state = e.state;
 		} else if (typeof (e.state) == 'string') {
-			var firstIndex = e.state.indexOf('{');
-			var lastIndex = e.state.lastIndexOf('}');
+			state = e.state; // fallback if we don't find JSON
+
+			var firstIndex = state.indexOf('{');
+			var lastIndex = state.lastIndexOf('}');
 
 			if (firstIndex !== -1 && lastIndex !== -1) {
-				state = JSON.parse(e.state.substring(firstIndex, lastIndex + 1));
-			} else {
-				state = e.state;
+				const substring = state.substring(firstIndex, lastIndex + 1);
+				try {
+					state = JSON.parse(substring);
+				} catch (e) {
+					console.error('Failed to parse state JSON: "' + substring + '" : ' + e);
+				}
 			}
 		}
 		const commandName = this.ensureUnoCommandPrefix(e.commandName);
