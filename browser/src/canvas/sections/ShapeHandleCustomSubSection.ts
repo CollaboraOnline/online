@@ -65,16 +65,16 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseDown(point: Array<number>, e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		(window as any).IgnorePanning = true;
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			const parameters = {
 				HandleNum: { type: 'long', value: this.sectionProperties.ownInfo.id },
-				NewPosX: { type: 'long', value: Math.round((point[0] + this.position[0]) * app.pixelsToTwips) },
-				NewPosY: { type: 'long', value: Math.round((point[1] + this.position[1]) * app.pixelsToTwips) }
+				NewPosX: { type: 'long', value: Math.round((point.pX + this.position[0]) * app.pixelsToTwips) },
+				NewPosY: { type: 'long', value: Math.round((point.pY + this.position[1]) * app.pixelsToTwips) }
 			};
 
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);

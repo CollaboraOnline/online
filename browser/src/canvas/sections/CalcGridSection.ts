@@ -10,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class CalcGridSection extends app.definitions.canvasSectionObject {
+class CalcGridSection extends CanvasSectionObject {
 	constructor () {
         super();
 

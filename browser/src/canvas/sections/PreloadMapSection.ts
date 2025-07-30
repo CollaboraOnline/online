@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class PreloadMapSection extends app.definitions.canvasSectionObject {
+class PreloadMapSection extends CanvasSectionObject {
 	name: string = L.CSections.Debug.PreloadMap.name;
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
@@ -20,7 +20,6 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 
 	constructor() {
 		super();
-		this._map = L.Map.THIS;
 	}
 
 	onDraw(
@@ -28,10 +27,10 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 		elapsedTime?: number,
 		subsetBounds?: Bounds,
 	): void {
-		var docLayer = this._map._docLayer;
+		var docLayer = app.map._docLayer;
 		var ctx = docLayer._painter._paintContext();
 
-		var zoom = Math.round(this._map.getZoom());
+		var zoom = Math.round(app.map.getZoom());
 		var part = docLayer._selectedPart;
 		var tileRanges = ctx.paneBoundsList.map(
 			TileManager.pxBoundsToTileRange,
@@ -47,11 +46,11 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 
 		// stop annoying jitter as the view fits different numbers of tiles.
 		var viewWidth = Math.floor(
-			(this._map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
+			(app.map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 		var viewHeight = Math.floor(
-			(this._map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
+			(app.map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 

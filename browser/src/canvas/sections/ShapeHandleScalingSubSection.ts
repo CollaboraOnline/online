@@ -217,7 +217,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		return [handle.id, handle.x, handle.y];
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
@@ -226,8 +226,8 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			let handleId = this.sectionProperties.ownInfo.id;
 			const parentHandlerSection = this.sectionProperties.parentHandlerSection;
 
-			let x = parentHandlerSection.sectionProperties.closestX ?? point[0] + this.position[0];
-			let y = parentHandlerSection.sectionProperties.closestY ?? point[1] + this.position[1];
+			let x = parentHandlerSection.sectionProperties.closestX ?? point.pX + this.position[0];
+			let y = parentHandlerSection.sectionProperties.closestY ?? point.pY + this.position[1];
 
 			if (keepRatio) {
 				[handleId, x, y] = this.overrideHandle(this.sectionProperties.ownInfo.kind);

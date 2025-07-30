@@ -38,7 +38,7 @@ class CanvasSectionObject {
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null; // Default is null (no borders).
 	boundToSection: string = null;
-	anchor: Array<string> = [];
+	anchor: Array<string> | Array<Array<string>> = [];
 	documentObject: boolean; // If true, the section is a document object.
 	// When section is a document object, its position should be the real position inside the document, in core pixels.
 	isVisible: boolean = false; // Is section visible on the viewed area of the document? This property is valid for document objects. This is managed by the section container.
@@ -62,8 +62,8 @@ class CanvasSectionObject {
 	onCursorPositionChanged(newPosition: cool.SimpleRectangle): void { return; }
 	onCellAddressChanged(): void { return; }
 	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void { return; }
-	onMouseDown(point: Array<number>, e: MouseEvent): void { return; }
-	onMouseUp(point: Array<number>, e: MouseEvent): void { return; }
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void { return; }
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	setShowSection(show: boolean): void { return; }
 	onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
 	isSectionShown(): boolean { return; }
@@ -73,9 +73,9 @@ class CanvasSectionObject {
 	onClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onContextMenu(e?: MouseEvent): void { return; }
-	onMouseWheel(point: Array<number>, delta: Array<number>, e: WheelEvent): void { return; }
+	onMouseWheel(point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void { return; }
 	onMultiTouchStart(e: TouchEvent): void { return; }
-	onMultiTouchMove(point: Array<number>, dragDistance: number, e: TouchEvent): void { return; }
+	onMultiTouchMove(point: cool.SimplePoint, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
 	onResize(): void { return; }
 	onDraw(frameCount?: number, elapsedTime?: number): void { return; }
@@ -132,5 +132,3 @@ class CanvasSectionObject {
 		}
 	}
 }
-
-app.definitions.canvasSectionObject = CanvasSectionObject;

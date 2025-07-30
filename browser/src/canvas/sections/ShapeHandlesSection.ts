@@ -718,7 +718,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		return x !== null ? x: y;
 	}
 
-	sendTransformCommand(point: number[]) {
+	sendTransformCommand(point: cool.SimplePoint) {
 		let x = this.sectionProperties.closestX;
 		if (!x) x = this.sectionProperties.lastDragDistance[0] + this.position[0];
 		else x = this.adjustSnapTransformCoordinate(x, null);
@@ -751,7 +751,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		docLayer.requestNewFiledBasedViewTiles();
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.sectionProperties.svg)
 			this.sectionProperties.svg.style.opacity = 1;
 

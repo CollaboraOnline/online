@@ -8,7 +8,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class PixelGridSection extends app.definitions.canvasSectionObject {
+class PixelGridSection extends CanvasSectionObject {
 	name: string = L.CSections.Debug.TilePixelGrid.name;
     interactable: boolean = false;
     anchor: string[] = ['top', 'left'];
