@@ -28,19 +28,16 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		this.sectionProperties.mouseEntered = false;
 	}
 
-	public onClick(point: Array<number>, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		e.preventDefault();
 		this.stopPropagating();
 
 		// Calculate the center position of the section. We will send this to core side.
-		point[0] = this.position[0] + this.size[0] / 2;
-		point[1] = this.position[1] + this.size[1] / 2;
+		point.pX = this.position[0] + this.size[0] / 2;
+		point.pY = this.position[1] + this.size[1] / 2;
 
-		point[0] *= app.pixelsToTwips;
-		point[1] *= app.pixelsToTwips;
-
-		app.map._docLayer._postMouseEvent('buttondown', point[0], point[1], 1, 1, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point[0], point[1], 1, 1, 0);
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
 	}
 }

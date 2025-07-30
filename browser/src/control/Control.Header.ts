@@ -24,7 +24,7 @@ export interface SelectionRange {
 	end: number,
 }
 
-export class Header extends app.definitions.canvasSectionObject {
+export class Header extends CanvasSectionObject {
 	_map: any;
 	_textColor: string;
 	_backgroundColor: string;

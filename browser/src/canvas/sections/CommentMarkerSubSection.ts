@@ -98,7 +98,7 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 		this.sendAnnotationPositionChange(twips);
 	}
 
-	onClick(point: number[], e: MouseEvent): void {
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 		this.sectionProperties.parentSection.sectionProperties.commentListSection.selectById(

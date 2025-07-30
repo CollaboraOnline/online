@@ -21,7 +21,7 @@
 */
 namespace cool {
 
-export class CornerGroup extends app.definitions.canvasSectionObject {
+export class CornerGroup extends CanvasSectionObject {
 	name: string = L.CSections.CornerGroup.name;
 	anchor: string[] = ['top', 'left'];
 	processingOrder: number = L.CSections.CornerGroup.processingOrder;

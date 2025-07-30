@@ -470,7 +470,7 @@ export class TilesSection extends CanvasSectionObject {
 		}.bind(this));
 	}
 
-	public onClick(point: Array<number>, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		// Slides pane is not focusable, we are using a variable to follow its focused state.
 		// Until the pane is focusable, we will need to keep below check here.
 		if (this.map._docLayer._docType === 'presentation' || this.map._docLayer._docType === 'drawing')
