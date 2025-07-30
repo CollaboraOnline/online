@@ -10,23 +10,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Used to initialize a new anonymous CanvasSectionObject from its properties.
-interface SectionInitProperties {
-	name: string;
-	backgroundColor?: string;
-	borderColor?: string;
-	anchor?: string | Array<any>;
-	position: Array<number>;
-	size: Array<number>;
-	expand: string;
-	processingOrder: number;
-	drawingOrder: number;
-	zIndex: number;
-	interactable: boolean;
-	showSection?: boolean;
-	sectionProperties?: any;
-}
-
 // This class will be used internally by CanvasSectionContainer.
 class CanvasSectionObject {
 	context: CanvasRenderingContext2D;
