@@ -258,7 +258,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 	public onMouseWheel () { return; }
 	public onClick () { return; }
-	public onDoubleClick (point: Array<number>, e: MouseEvent) {
+	public onDoubleClick (point: cool.SimplePoint, e: MouseEvent) {
 		this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
 		var pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
 		pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);

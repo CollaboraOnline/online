@@ -301,9 +301,9 @@ export abstract class GroupBase extends CanvasSectionObject {
 	 * startX, startY, endX, endY. If mirrorX is true then point is horizontally
 	 * mirrored before checking.
 	 */
-	isPointInRect (point: number[], startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
-		const x = mirrorX ? this.size[0] - point[0] : point[0];
-		const y = point[1];
+	isPointInRect (point: cool.SimplePoint, startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
+		const x = mirrorX ? this.size[0] - point.pX : point.pX;
+		const y = point.pY;
 
 		return (x > startX && x < endX && y > startY && y < endY);
 	}
@@ -358,7 +358,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 		return [0, 0, 0, 0];
 	}
 
-	findTailsGroup (point: number[]): GroupEntry {
+	findTailsGroup (point: cool.SimplePoint): GroupEntry {
 		const mirrorX = this.isCalcRTL();
 		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -381,7 +381,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 	}
 
 	/* Double clicking on a group's tail closes it. */
-	onDoubleClick (point: number[]): void {
+	onDoubleClick (point: cool.SimplePoint): void {
 		const group = this.findTailsGroup(point);
 		if (group)
 			this._updateOutlineState(group);
