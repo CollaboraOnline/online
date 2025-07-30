@@ -769,7 +769,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseLeave(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		this.targetSection = section.name;
 
-		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		if (!windowPosition) { // This event is valid only if the windowPosition is null for window sections. Otherwise mouse cannot leave from a section that is covering entire canvas element.
 			for (var j: number = 0; j < this.windowSectionList.length; j++) {
 				var windowSection = this.windowSectionList[j];
@@ -781,7 +781,7 @@ class CanvasSectionContainer {
 
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseLeave((position ? [position[0], position[1]]: null), e);
+				section.boundsList[i].onMouseLeave((position ? cool.SimplePoint.fromCorePixels([position[0], position[1]]): null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.

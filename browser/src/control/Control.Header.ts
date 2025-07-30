@@ -483,7 +483,7 @@ export class Header extends CanvasSectionObject {
 		this._bindContextMenu();
 	}
 
-	onMouseLeave (point: number[]): void {
+	onMouseLeave (point: cool.SimplePoint): void {
 		if (point === null) { // This means that the mouse pointer is outside the canvas.
 			if (this.containerObject.isDraggingSomething() && this._dragEntry) { // Were we resizing a row / column before mouse left.
 				this.onDragEnd(this.containerObject.getDragDistance());

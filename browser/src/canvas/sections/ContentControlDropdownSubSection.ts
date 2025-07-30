@@ -130,7 +130,7 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		app.map.dontHandleMouse = true;
 	}
 
-	onMouseLeave(point: Array<number>, e: MouseEvent): void {
+	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = false;
 	}
 

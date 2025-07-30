@@ -1440,7 +1440,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseLeave (point: Array<number>): void {
+	public onMouseLeave (point: cool.SimplePoint): void {
 		if (this.calcContinueWithMouseEvent()) {
 			if (parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
