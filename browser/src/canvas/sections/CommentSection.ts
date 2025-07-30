@@ -1375,7 +1375,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void {
+	public onMouseMove (point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void {
 		return;
 	}
 

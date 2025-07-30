@@ -83,7 +83,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		L.DomUtil.remove(elem);
 	}
 
-	public static getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {	
+	public static getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 		const isDark = window.prefs.getBoolean('darkTheme');
@@ -313,15 +313,15 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		this.drawLevelHeaders();
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: cool.SimplePoint): GroupEntry {
 		return null;
 	}
 
-	findClickedLevel (point: number[]): number {
+	findClickedLevel (point: cool.SimplePoint): number {
 		return -1;
 	}
 
-	onMouseMove (point: number[]): void {
+	onMouseMove (point: cool.SimplePoint): void {
 		// If mouse is above a group header or a group control, we change the cursor.
 		if (this.findClickedGroup(point) !== null || this.findClickedLevel(point) !== -1)
 			this.context.canvas.style.cursor = 'pointer';

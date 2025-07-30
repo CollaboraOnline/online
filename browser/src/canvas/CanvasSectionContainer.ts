@@ -806,7 +806,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -819,7 +819,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
-					section.boundsList[i].onMouseMove((position ? [position[0], position[1]]: null), dragDistance, e);
+					section.boundsList[i].onMouseMove((position ? cool.SimplePoint.fromCorePixels([position[0], position[1]]): null), dragDistance, e);
 
 				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 					break; // Stop propagation.
@@ -1374,8 +1374,8 @@ class CanvasSectionContainer {
 		return null;
 	}
 
-	public doesSectionIncludePoint (section: any, point: Array<number>): boolean { // No ray casting here, it is a rectangle.
-		return ((point[0] >= section.myTopLeft[0] && point[0] <= section.myTopLeft[0] + section.size[0]) && (point[1] >= section.myTopLeft[1] && point[1] <= section.myTopLeft[1] + section.size[1]));
+	public doesSectionIncludePoint (section: any, point: cool.SimplePoint): boolean { // No ray casting here, it is a rectangle.
+		return ((point.pX >= section.myTopLeft[0] && point.pX <= section.myTopLeft[0] + section.size[0]) && (point.pY >= section.myTopLeft[1] && point.pY <= section.myTopLeft[1] + section.size[1]));
 	}
 
 	private doSectionsIntersectOnYAxis (section1: any, section2: any): boolean {

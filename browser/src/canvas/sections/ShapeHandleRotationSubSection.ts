@@ -134,7 +134,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		(window as any).IgnorePanning = false;
 	}
 
-	onMouseMove(position: number[], distance: number[]) {
+	onMouseMove(position: cool.SimplePoint, distance: number[]) {
 		if (this.containerObject.isDraggingSomething()) {
 			this.sectionProperties.lastDraggingDistance = distance;
 

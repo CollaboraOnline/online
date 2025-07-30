@@ -169,7 +169,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.drawWhiteOuterBorders();
 	}
 
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	public onMouseMove (point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if ((<any>window).mode.isDesktop())
 			return;
 
@@ -186,11 +186,10 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
 		}
 
-		point[0] = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
-		point[1] = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
-		pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
+		point.pX = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
+		point.pY = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
 
-		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
+		this.sectionProperties.docLayer._postMouseEvent('move', point.x, point.y, 1, 1, 0);
 
 		this.map.scrollingIsHandled = true;
 		this.stopPropagating(); // Stop propagating to sections.

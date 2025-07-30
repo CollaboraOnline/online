@@ -88,7 +88,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		}
 	}
 
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
 			// Show preview in its final position.
 			let svg;

@@ -351,10 +351,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	// While dragging a handle, we want to simulate handles to their final positions.
-	moveHandlesOnDrag(point: number[], e: MouseEvent) {
+	moveHandlesOnDrag(point: cool.SimplePoint, e: MouseEvent) {
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
-			point[0] + this.myTopLeft[0] + this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0],
-			point[1] + this.myTopLeft[1] + this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]
+			point.pX + this.myTopLeft[0] + this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0],
+			point.pY + this.myTopLeft[1] + this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]
 		], e);
 
 		this.sectionProperties.parentHandlerSection.calculateInitialAnglesOfShapeHandlers(shapeRecProps);
@@ -379,7 +379,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.adjustSVGProperties(shapeRecProps);
 	}
 
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
 			(window as any).IgnorePanning = true;
 			this.stopPropagating();

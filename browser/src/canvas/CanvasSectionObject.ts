@@ -61,7 +61,7 @@ class CanvasSectionObject {
 	onInitialize(): void { return; }
 	onCursorPositionChanged(newPosition: any): void { return; }
 	onCellAddressChanged(): void { return; }
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void { return; }
+	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void { return; }
 	onMouseDown(point: Array<number>, e: MouseEvent): void { return; }
 	onMouseUp(point: Array<number>, e: MouseEvent): void { return; }
 	setShowSection(show: boolean): void { return; }

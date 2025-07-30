@@ -435,12 +435,12 @@ export class Header extends app.definitions.canvasSectionObject {
 		this._map.sendUnoCommand('.uno:FreezePanes');
 	}
 
-	_entryAtPoint(point: number[]): PointEntryQueryResult {
+	_entryAtPoint(point: cool.SimplePoint): PointEntryQueryResult {
 		if (!this._headerInfo)
 			return undefined;
 
 		const isColumn = this._headerInfo._isColumn;
-		const position = isColumn ? point[0]: point[1];
+		const position = isColumn ? point.pX: point.pY;
 
 		let result:PointEntryQueryResult  = null;
 		const isRTL = isColumn && this.isCalcRTL();
@@ -543,7 +543,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		this.context.stroke();
 	}
 
-	onMouseMove (point: number[], dragDistance?: number[]): void {
+	onMouseMove (point: cool.SimplePoint, dragDistance?: number[]): void {
 		const result = this._entryAtPoint(point); // Data related to current entry that the mouse is over now.
 		if (result) { // Is mouse over an entry.
 			this._prevMouseOverEntry = this._mouseOverEntry;
