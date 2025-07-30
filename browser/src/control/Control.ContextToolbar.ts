@@ -58,6 +58,11 @@ class ContextToolbar {
 		this.builder.map.on('jsdialogaction', this.onJSAction, this);
 		this.builder.map.on('jsdialogupdate', this.onJSUpdate, this);
 		document.addEventListener('pointermove', this.pointerMove);
+		this.builder.map.on(
+			'commandstatechanged',
+			this.onCommandStateChanged,
+			this,
+		);
 		this.changeOpacity(1);
 		this.showHideToolbar(true);
 	}
@@ -66,6 +71,11 @@ class ContextToolbar {
 		this.builder.map.off('jsdialogaction', this.onJSAction, this);
 		this.builder.map.off('jsdialogupdate', this.onJSUpdate, this);
 		document.removeEventListener('pointermove', this.pointerMove);
+		this.builder.map.off(
+			'commandstatechanged',
+			this.onCommandStateChanged,
+			this,
+		);
 		this.showHideToolbar(false);
 	}
 
@@ -97,6 +107,45 @@ class ContextToolbar {
 	}
 
 	getWriterTextContext(): WidgetJSON[] {
+		const fontEntries = Object.keys(
+			this.builder.map._docLayer._toolbarCommandValues['.uno:CharFontName'],
+		);
+		const sizeEntries = [
+			'6',
+			'7',
+			'8',
+			'9',
+			'10',
+			'10.5',
+			'11',
+			'12',
+			'13',
+			'14',
+			'15',
+			'16',
+			'18',
+			'20',
+			'21',
+			'22',
+			'24',
+			'26',
+			'28',
+			'32',
+			'36',
+			'40',
+			'44',
+			'48',
+			'54',
+			'60',
+			'66',
+			'72',
+			'80',
+			'88',
+			'96',
+		];
+		const currentFontName = this.map._getCurrentFontName();
+		const currentFontSize =
+			this.map['stateChangeHandler'].getItemValue('.uno:FontHeight');
 		return [
 			{
 				type: 'container',
@@ -107,17 +156,13 @@ class ContextToolbar {
 							{
 								id: 'fontnamecombobox',
 								type: 'combobox',
-								text: (document.getElementById('fontnamecombobox-input') as any)
-									.value,
-								entries: Object.keys(
-									this.builder.map._docLayer._toolbarCommandValues[
-										'.uno:CharFontName'
-									],
-								),
+								text: currentFontName,
+								entries: fontEntries,
 								selectedCount: 1,
 								selectedEntries: [
-									(document.getElementById('fontnamecombobox-input') as any)
-										.selectionStart,
+									fontEntries.findIndex(
+										(element) => element === currentFontName,
+									),
 								],
 								command: '.uno:CharFontName',
 								customEntryRenderer: true,
@@ -125,16 +170,13 @@ class ContextToolbar {
 							{
 								id: 'fontsizecombobox',
 								type: 'combobox',
-								text: (document.getElementById('fontsizecombobox-input') as any)
-									.value,
-								entries: [
-									6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20, 21, 22,
-									24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96,
-								],
+								text: currentFontSize,
+								entries: sizeEntries,
 								selectedCount: 1,
 								selectedEntries: [
-									(document.getElementById('fontsizecombobox-input') as any)
-										.selectionStart,
+									sizeEntries.findIndex(
+										(element) => element === currentFontSize,
+									),
 								],
 								command: '.uno:FontHeight',
 							} as ComboBoxWidget,
@@ -320,6 +362,21 @@ class ContextToolbar {
 
 	changeOpacity(opacity: number) {
 		this.container.style.opacity = opacity.toString();
+	}
+
+	onCommandStateChanged(e: any): void {
+		var commandName = e.commandName;
+		if (commandName === '.uno:CharFontName') {
+			const control: any = this.container.querySelector('#fontnamecombobox');
+			if (control && typeof control.onSetText === 'function') {
+				control.onSetText(e.state);
+			}
+		} else if (commandName === '.uno:FontHeight') {
+			const control: any = this.container.querySelector('#fontsizecombobox');
+			if (control && typeof control.onSetText === 'function') {
+				control.onSetText(e.state);
+			}
+		}
 	}
 }
 
