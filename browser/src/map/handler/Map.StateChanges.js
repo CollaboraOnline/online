@@ -37,7 +37,11 @@ L.Map.StateChangeHandler = L.Handler.extend({
 			var lastIndex = e.state.lastIndexOf('}');
 
 			if (firstIndex !== -1 && lastIndex !== -1) {
-				state = JSON.parse(e.state.substring(firstIndex, lastIndex + 1));
+				try {
+					state = JSON.parse(e.state.substring(firstIndex, lastIndex + 1));
+				} catch (err) {
+					state = e.state; // Not valid JSON, keep as plain text, e.g. "English (Netherlands) {en-NL};en-NL"
+				}
 			} else {
 				state = e.state;
 			}
