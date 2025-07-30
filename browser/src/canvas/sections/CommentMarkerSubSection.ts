@@ -106,12 +106,12 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 		);
 	}
 
-	onMouseDown(point: number[], e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();

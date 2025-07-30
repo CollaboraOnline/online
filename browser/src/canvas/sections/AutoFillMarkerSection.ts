@@ -196,13 +196,12 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		e.stopPropagation(); // Stop native event.
 	}
 
-	public onMouseUp (point: Array<number>, e: MouseEvent) {
+	public onMouseUp (point: cool.SimplePoint, e: MouseEvent) {
 		if (this.sectionProperties.draggingStarted) {
 			this.sectionProperties.draggingStarted = false;
-			point[0] += this.myTopLeft[0] + this.size[0] * 0.5;
-			point[1] += this.myTopLeft[1] + this.size[1] * 0.5;
-			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
-			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
+			point.pX += this.myTopLeft[0] + this.size[0] * 0.5;
+			point.pY += this.myTopLeft[1] + this.size[1] * 0.5;
+			this.sectionProperties.docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
 		}
 
 		this.map.scrollingIsHandled = false;
@@ -211,7 +210,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		(<any>window).IgnorePanning = false;
 	}
 
-	public onMouseDown (point: Array<number>, e: MouseEvent) {
+	public onMouseDown (point: cool.SimplePoint, e: MouseEvent) {
 		if ((<any>window).mode.isDesktop()) {
 			if (this.sectionProperties.inMouseDown)
 				return;
@@ -221,12 +220,12 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			// revert coordinates to global and fire event again with position in the center
 			// inverse of convertPositionToCanvasLocale
 			var canvasClientRect = this.containerObject.getCanvasBoundingClientRect();
-			point[0] = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
-			point[1] = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
+			point.pX = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
+			point.pY = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
 
 			var newPoint = {
-				clientX: point[0],
-				clientY: point[1],
+				clientX: point.pX,
+				clientY: point.pY,
 			};
 
 			var newEvent = this.sectionProperties.docLayer._createNewMouseEvent('mousedown', newPoint);
@@ -253,8 +252,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.setMarkerPosition();
 	}
 
-	public onMouseWheel () { return; }
-	public onClick () { return; }
 	public onDoubleClick (point: cool.SimplePoint, e: MouseEvent) {
 		this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
 		var pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
@@ -263,8 +260,4 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.stopPropagating(); // Stop propagating to sections.
 		e.stopPropagation(); // Stop native event.
 	}
-	public onContextMenu () { return; }
-	public onMultiTouchStart () { return; }
-	public onMultiTouchMove () { return; }
-	public onMultiTouchEnd () { return; }
 };

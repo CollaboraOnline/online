@@ -102,11 +102,11 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		return initialAngle - newAngle;
 	}
 
-	onMouseDown(point: Array<number>, e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		(window as any).IgnorePanning = true;
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
 				const center = GraphicSelection.rectangle.center;

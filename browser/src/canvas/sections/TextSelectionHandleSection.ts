@@ -30,11 +30,11 @@ class TextSelectionHandle extends HTMLObjectSection {
 		this.getHTMLObject().style.opacity = value;
 	}
 
-	onDragEnd(point: number[]) {
+	onDragEnd(point: cool.SimplePoint) {
 		(<any>window).IgnorePanning = undefined;
 
-		let x = this.position[0] + point[0];
-		const y = this.position[1] + point[1];
+		let x = this.position[0] + point.pX;
+		const y = this.position[1] + point.pY;
 		this.setPosition(x, y);
 
 		app.map.fire('scrollvelocity', {vx: 0, vy: 0});
@@ -72,12 +72,12 @@ class TextSelectionHandle extends HTMLObjectSection {
 		this.stopPropagating();
 	}
 
-	onMouseDown(point: number[], e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();

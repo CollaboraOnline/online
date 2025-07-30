@@ -88,7 +88,7 @@ export class RowGroup extends GroupBase {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		let startY = this.getRelativeY(group.startPos);
 		const endY = this.getEndPosition(group.endPos);
-		const strokeColor = GroupBase.getColors().strokeColor;
+		const strokeColor = this.getColors().strokeColor;
 
 		if (this.isGroupHeaderVisible(startY, group.startPos)) {
 			// draw head
@@ -148,7 +148,7 @@ export class RowGroup extends GroupBase {
 		const startX = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 		const startY = Math.round((this._cornerHeaderHeight - ctrlHeadSize) * 0.5);
 
-		ctx.strokeStyle = GroupBase.getColors().strokeColor;
+		ctx.strokeStyle = this.getColors().strokeColor;
 		ctx.lineWidth = 1.0;
 		ctx.strokeRect(this.transformRectX(startX + 0.5, ctrlHeadSize), startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
@@ -168,9 +168,9 @@ export class RowGroup extends GroupBase {
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
-	findClickedLevel (point: number[]): number {
-		if (point[1] < this._cornerHeaderHeight) {
-			let index = (this.transformX(point[0]) / this.size[0]) * 100; // Percentage.
+	findClickedLevel (point: cool.SimplePoint): number {
+		if (point.pY < this._cornerHeaderHeight) {
+			let index = (this.transformX(point.pX) / this.size[0]) * 100; // Percentage.
 			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
@@ -178,7 +178,7 @@ export class RowGroup extends GroupBase {
 		return -1;
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: cool.SimplePoint): GroupEntry {
 		const mirrorX = this.isCalcRTL();
 		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {

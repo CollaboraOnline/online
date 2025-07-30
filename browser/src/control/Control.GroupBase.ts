@@ -83,7 +83,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 		L.DomUtil.remove(elem);
 	}
 
-	public static getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {
+	public getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 		const isDark = window.prefs.getBoolean('darkTheme');
@@ -102,7 +102,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 	}
 
 	private _groupBaseColors(): void {
-		const colors = GroupBase.getColors();
+		const colors = this.getColors();
 		this.backgroundColor = colors.backgroundColor;
 		this.borderColor = colors.borderColor;
 		this._textColor = colors.textColor;

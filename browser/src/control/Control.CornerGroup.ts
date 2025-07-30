@@ -21,7 +21,7 @@
 */
 namespace cool {
 
-export class CornerGroup extends CanvasSectionObject {
+export class CornerGroup extends GroupBase {
 	name: string = L.CSections.CornerGroup.name;
 	anchor: string[] = ['top', 'left'];
 	processingOrder: number = L.CSections.CornerGroup.processingOrder;
@@ -43,7 +43,7 @@ export class CornerGroup extends CanvasSectionObject {
 	}
 
 	private _cornerGroupColors(): void {
-		const colors = GroupBase.getColors();
+		const colors = this.getColors();
 		this.backgroundColor = colors.backgroundColor;
 		this.borderColor = colors.borderColor;
 	}
@@ -85,6 +85,9 @@ export class CornerGroup extends CanvasSectionObject {
 	onMouseLeave(): void {
 		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
+
+	onDraw(): void { return; }
+	onDoubleClick(): void { return;}
 
 	/* Only background and border drawings are needed for this section. And they are handled by CanvasSectionContainer. */
 }

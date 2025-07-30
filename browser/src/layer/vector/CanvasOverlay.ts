@@ -93,7 +93,7 @@ class TransformationsList {
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
-class CanvasOverlay extends app.definitions.canvasSectionObject {
+class CanvasOverlay extends CanvasSectionObject {
 	name: string = L.CSections.Overlays.name;
 	processingOrder: number = L.CSections.Overlays.processingOrder;
 	drawingOrder: number = L.CSections.Overlays.drawingOrder;

@@ -609,7 +609,7 @@ export class Header extends CanvasSectionObject {
 		this._isColumn ? this.setOptimalWidthAuto(): this.setOptimalHeightAuto();
 	}
 
-	onMouseDown (point: number[]): void {
+	onMouseDown (point: cool.SimplePoint): void {
 		this.onMouseMove(point);
 
 		if (this._hitResizeArea) {

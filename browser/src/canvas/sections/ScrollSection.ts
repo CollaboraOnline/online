@@ -873,7 +873,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 	private isMouseInsideDocumentAnchor (point: cool.SimplePoint): boolean {
 		var docSection = this.containerObject.getDocumentAnchorSection();
-		return this.containerObject.doesSectionIncludePoint(docSection, point);
+		return this.containerObject.doesSectionIncludePoint(docSection, point.pToArray());
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -993,7 +993,7 @@ export class ScrollSection extends CanvasSectionObject {
 		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
 		we quickly scroll the document to that position.
 	*/
-	private quickScrollVertical (point: Array<number>, originalSign?: number): void {
+	private quickScrollVertical (point: cool.SimplePoint, originalSign?: number): void {
 		// Desktop only for now.
 		if (!(<any>window).mode.isDesktop())
 			return;
@@ -1003,8 +1003,8 @@ export class ScrollSection extends CanvasSectionObject {
 		var midY = (props.startY + props.startY + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
 
 		if (this.stepByStepScrolling) {
-			var sign = (point[1] - (props.startY + props.scrollSize)) > 0
-				? 1 : ((point[1] - props.startY) < 0 ? -1 : 0);
+			var sign = (point.pY - (props.startY + props.scrollSize)) > 0
+				? 1 : ((point.pY - props.startY) < 0 ? -1 : 0);
 			var offset = props.verticalScrollStep * sign;
 
 			if (this.sectionProperties.quickScrollVerticalTimer)
@@ -1016,7 +1016,7 @@ export class ScrollSection extends CanvasSectionObject {
 					}
 				}, this.sectionProperties.stepDuration);
 		} else {
-			offset = Math.round((point[1] - midY) * props.ratio);
+			offset = Math.round((point.pY - midY) * props.ratio);
 		}
 
 		this.scrollVerticalWithOffset(offset);
@@ -1026,7 +1026,7 @@ export class ScrollSection extends CanvasSectionObject {
 		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
 		we quickly scroll the document to that position.
 	*/
-	private quickScrollHorizontal (point: Array<number>, originalSign?: number): void {
+	private quickScrollHorizontal (point: cool.SimplePoint, originalSign?: number): void {
 		// Desktop only for now.
 		if (!(<any>window).mode.isDesktop())
 			return;
@@ -1039,8 +1039,8 @@ export class ScrollSection extends CanvasSectionObject {
 		var midX = startX + sizeX * 0.5;
 
 		if (this.stepByStepScrolling) {
-			var sign = (point[0] - (startX + sizeX)) > 0
-				? 1 : ((point[0] - startX) < 0 ? -1 : 0);
+			var sign = (point.pX - (startX + sizeX)) > 0
+				? 1 : ((point.pX - startX) < 0 ? -1 : 0);
 			var offset = props.horizontalScrollStep * sign;
 
 			if (this.sectionProperties.quickScrollHorizontalTimer)
@@ -1052,20 +1052,20 @@ export class ScrollSection extends CanvasSectionObject {
 					}
 				}, this.sectionProperties.stepDuration);
 		} else {
-			offset = Math.round((point[0] - midX) * props.ratio);
+			offset = Math.round((point.pX - midX) * props.ratio);
 		}
 
 		this.scrollHorizontalWithOffset(offset);
 	}
 
-	private getLocalYOnVerticalScrollBar (point: Array<number>): number {
+	private getLocalYOnVerticalScrollBar (point: cool.SimplePoint): number {
 		var props = this.getVerticalScrollProperties();
-		return point[1] - props.startY;
+		return point.pY - props.startY;
 	}
 
-	private getLocalXOnHorizontalScrollBar (point: Array<number>): number {
+	private getLocalXOnHorizontalScrollBar (point: cool.SimplePoint): number {
 		var props = this.getHorizontalScrollProperties();
-		return point[0] - props.startX;
+		return point.pX - props.startX;
 	}
 
 	private clearQuickScrollTimeout() {
@@ -1079,7 +1079,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseDown (point: Array<number>, e: MouseEvent): void {
+	public onMouseDown (point: cool.SimplePoint, e: MouseEvent): void {
 		this.clearQuickScrollTimeout();
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
@@ -1087,9 +1087,9 @@ export class ScrollSection extends CanvasSectionObject {
 		const mirrorX = this.isRTL();
 
 		if (this.documentTopLeft[1] >= 0) {
-			if ((!mirrorX && point[0] >= this.size[0] - this.sectionProperties.usableThickness)
-				|| (mirrorX && point[0] <= this.sectionProperties.usableThickness)) {
-				if (point[1] > this.sectionProperties.yOffset) {
+			if ((!mirrorX && point.pX >= this.size[0] - this.sectionProperties.usableThickness)
+				|| (mirrorX && point.pY <= this.sectionProperties.usableThickness)) {
+				if (point.pY > this.sectionProperties.yOffset) {
 					this.sectionProperties.clickScrollVertical = true;
 					this.map.scrollingIsHandled = true;
 					this.quickScrollVertical(point);
@@ -1107,9 +1107,9 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		if (this.documentTopLeft[0] >= 0) {
-			if (point[1] >= this.size[1] - this.sectionProperties.usableThickness) {
-				if ((!mirrorX && point[0] >= this.sectionProperties.xOffset && point[0] <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset)
-					|| (mirrorX && point[0] >= this.sectionProperties.xOffset && point[0] >= this.sectionProperties.horizontalScrollRightOffset)) {
+			if (point.pY >= this.size[1] - this.sectionProperties.usableThickness) {
+				if ((!mirrorX && point.pX >= this.sectionProperties.xOffset && point.pX <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset)
+					|| (mirrorX && point.pX >= this.sectionProperties.xOffset && point.pX >= this.sectionProperties.horizontalScrollRightOffset)) {
 					this.sectionProperties.clickScrollHorizontal = true;
 					this.map.scrollingIsHandled = true;
 					this.quickScrollHorizontal(point);
@@ -1127,7 +1127,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseUp (point: Array<number>, e: MouseEvent): void {
+	public onMouseUp (point: cool.SimplePoint, e: MouseEvent): void {
 		L.DomUtil.removeClass(document.documentElement, 'prevent-select');
 		this.map.scrollingIsHandled = false;
 		this.clearQuickScrollTimeout();
@@ -1198,7 +1198,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseWheel (point: Array<number>, delta: Array<number>, e: WheelEvent): void {
+	public onMouseWheel (point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void {
 		if (e.ctrlKey) return;
 
 		this.map.fire('closepopups'); // close all popups when scrolling

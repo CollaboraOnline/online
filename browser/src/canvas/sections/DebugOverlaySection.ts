@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class DebugOverlaySection extends app.definitions.canvasSectionObject {
+class DebugOverlaySection extends CanvasSectionObject {
 	name: string = L.CSections.Debug.DebugOverlay.name;
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];

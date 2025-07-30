@@ -88,7 +88,7 @@ export class ColumnGroup extends GroupBase {
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this.getRelativeX(group.startPos);
 		let startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		const strokeColor = GroupBase.getColors().strokeColor;
+		const strokeColor = this.getColors().strokeColor;
 		const endX = this.getEndPosition(group.endPos);
 
 		if (this.isGroupHeaderVisible(startX, group.startPos)) {
@@ -147,7 +147,7 @@ export class ColumnGroup extends GroupBase {
 		const startX = Math.round((this._cornerHeaderWidth - ctrlHeadSize) * 0.5);
 		const startY = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 
-		ctx.strokeStyle = GroupBase.getColors().strokeColor;
+		ctx.strokeStyle = this.getColors().strokeColor;
 		ctx.lineWidth = 1.0;
 		ctx.strokeRect(this.transformRectX(startX + 0.5, ctrlHeadSize), startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
@@ -167,11 +167,11 @@ export class ColumnGroup extends GroupBase {
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
-	findClickedLevel (point: number[]): number {
+	findClickedLevel (point: cool.SimplePoint): number {
 		const mirrorX = this.isCalcRTL();
-		if ((!mirrorX && point[0] < this._cornerHeaderWidth)
-			|| (mirrorX && point[0] > this.size[0] - this._cornerHeaderWidth)) {
-			let index = (point[1] / this.size[1]) * 100; // Percentage.
+		if ((!mirrorX && point.pX < this._cornerHeaderWidth)
+			|| (mirrorX && point.pX > this.size[0] - this._cornerHeaderWidth)) {
+			let index = (point.pY / this.size[1]) * 100; // Percentage.
 			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
@@ -179,7 +179,7 @@ export class ColumnGroup extends GroupBase {
 		return -1;
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: cool.SimplePoint): GroupEntry {
 		const mirrorX = this.isCalcRTL();
 		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
