@@ -49,58 +49,70 @@ L.Control.Tabs = L.Control.extend({
 		}
 
 		this._menuItem = {
-			'insertsheetbefore': {name: _('Insert sheet before this'),
+			'insertsheetbefore': {
+				name: app.IconUtil.createMenuItemLink(_('Insert sheet before this'), 'InsertSheetBefore'),
+				isHtmlName: true,
 				callback: (this._insertSheetBefore).bind(this)
 			},
-			'insertsheetafter': {name: _('Insert sheet after this'),
+			'insertsheetafter': {
+				name: app.IconUtil.createMenuItemLink(_('Insert sheet after this'), 'InsertSheetAfter'),
+				isHtmlName: true,
 				callback: (this._insertSheetAfter).bind(this)
 			},
 			'.uno:Remove': {
-				name: _UNO('.uno:Remove', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:Remove', 'spreadsheet', true), 'Remove'),
+				isHtmlName: true,
 				callback: (this._deleteSheet).bind(this),
 				visible: function() {
 					return areTabsMultiple() && !this._isProtectedSheet(this._tabForContextMenu);
 				}.bind(this)
 			},
-			'.uno:Name': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
-				      callback: (this._renameSheet).bind(this),
-				      visible: function() {
-					      return !this._isProtectedSheet(this._tabForContextMenu);
-				      }.bind(this)
+			'.uno:Name': {
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:RenameTable', 'spreadsheet', true), 'Name'),
+				callback: (this._renameSheet).bind(this),
+				visible: function() {
+					return !this._isProtectedSheet(this._tabForContextMenu);
+				}.bind(this)
 			},
 			'.uno:Protect': {
-				name: _UNO('.uno:Protect', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:Protect', 'spreadsheet', true), 'Protect'),
+				isHtmlName: true,
 				callback: (this._protectSheet).bind(this),
 			},
 			'.uno:Show': {
-				name: _UNO('.uno:Show', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:Show', 'spreadsheet', true), 'Show'),
+				isHtmlName: true,
 				callback: (this._showSheet).bind(this),
 				visible: function() {
 					return app.calc.isAnyPartHidden();
 				}
 			},
 			'.uno:Hide': {
-				name: _UNO('.uno:Hide', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:Hide', 'spreadsheet', true), 'Hide'),
+				isHtmlName: true,
 				callback: (this._hideSheet).bind(this),
 				visible: areTabsMultiple
 			},
 			'movesheetleft': {
-				name: _('Move Sheet Left'),
+				name: app.IconUtil.createMenuItemLink(_('Move Sheet Left'), 'MoveSheetLeft'),
+				isHtmlName: true,
 				callback: (this._moveSheetLeft).bind(this),
 				visible: areTabsMultiple
 			},
 			'movesheetright': {
-				name: _('Move Sheet Right'),
+				name: app.IconUtil.createMenuItemLink(_('Move Sheet Right'), 'MoveSheetRight'),
+				isHtmlName: true,
 				callback: (this._moveSheetRight).bind(this),
 				visible: areTabsMultiple
 			},
 			'.uno:Move': {
-				name: _UNO('.uno:Move', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:Move', 'spreadsheet', true), 'Move'),
 				callback: (this._moveOrCopySheet).bind(this),
 				visible: areTabsMultiple
 			},
 			'.uno:CopyTab': {
-				name: _('Copy Sheet...'),
+				name: app.IconUtil.createMenuItemLink(_('Copy Sheet...'), 'CopyTab'),
+				isHtmlName: true,
 				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this),
 				visible: function() {
 					return !areTabsMultiple();

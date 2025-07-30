@@ -266,6 +266,7 @@ COOL_JS_LST =\
 	src/app/Rectangle.ts \
 	src/app/Util.ts \
 	src/app/LOUtil.ts \
+	src/app/IconUtil.ts \
 	src/app/iface/DocLayer.Interface.ts \
 	src/app/iface/Map.Interface.ts \
 	src/app/iface/Control.Interface.ts \
@@ -992,6 +993,7 @@ pot:
 		admin/src/Util.js \
 		js/global.js \
 		src/app/Debug.ts \
+		src/app/IconUtil.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \

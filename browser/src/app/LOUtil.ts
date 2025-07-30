@@ -247,7 +247,7 @@ class LOUtil {
 		return defaultImageURL;
 	}
 
-	public static getIconNameOfCommand(name: string, noCommad: boolean) {
+	public static getIconNameOfCommand(name: string, noCommad?: boolean) {
 		if (!name) return '';
 
 		var alreadyClean = noCommad;

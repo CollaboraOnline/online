@@ -105,20 +105,6 @@ L.Control.ContextMenu = L.Control.extend({
 			'GroupSparklines', 'UngroupSparklines', 'AutoFill'
 		],
 
-		commandsWithIcons: [
-			'Cut', 'Copy', 'Paste', 'Delete', 'CompressGraphic', 'Crop', 'FormatPaintbrush', 'ResetAttributes',
-			'NextTrackedChange', 'PreviousTrackedChange', 'PageDialog', 'MergeCells', 'DeleteCell', 'InsertCell',
-			'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter', 'InsertColumnsMenu',
-			'DeleteRows', 'DeleteColumns', 'DeleteTable', 'SetOptimalColumnWidth', 'TableDialog', 'GraphicDialog',
-			'InsertAnnotation', 'SpellingAndGrammarDialog', 'DecrementLevel', 'TransformDialog', 'FormatLine',
-			'FormatArea', 'SetAnchorToPara', 'SetAnchorAtChar', 'SetAnchorToChar', 'WrapOff', 'WrapOn', 'WrapIdeal',
-			'WrapLeft', 'WrapRight', 'WrapThrough', 'WrapThroughTransparencyToggle', 'WrapAnchorOnly', 'WrapContour',
-			'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack', 'SetObjectToForeground',
-			'SetObjectToBackground', 'InsertCaptionDialog', 'OpenHyperlinkOnCursor', 'EditHyperlink',
-			'CopyHyperlinkLocation', 'RemoveHyperlink', 'RotateRight', 'RotateLeft', 'SetAnchorToCell',
-			'SetAnchorToCellResize', 'SetAnchorToPage', 'FormatCellDialog', 'InsertSparkline', 'AcceptTrackedChange',
-			'RejectTrackedChange', 'ReinstateTrackedChange', 'SetDefault', 'AnimationEffects'
-		],
 	},
 
 
@@ -266,17 +252,6 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 	},
 
-	_getContextMenuIcon: function(command, commandName) {
-		if (!this.options.commandsWithIcons.includes(commandName)) {
-			return '<span class="context-menu-icon-spacer"></span>';
-		}
-
-		const iconName = app.LOUtil.getIconNameOfCommand(command);
-		const iconUrl = app.LOUtil.getImageURL(iconName);
-
-		return '<img class="context-menu-icon" src="' + iconUrl + '" alt/>';
-	},
-
 	_createContextMenuStructure: function(obj) {
 		var docType = this._map.getDocType();
 		var contextMenu = {};
@@ -359,16 +334,10 @@ L.Control.ContextMenu = L.Control.extend({
 					// Get the translated text associated with the command
 					itemName = _UNO(item.command, docType, true);
 				}
-				var toSnakeCase = function (text) {
-					return text.replace(/[ _]/gi, '-').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-				};
-
-				var iconHtml = this._getContextMenuIcon(item.command, commandName);
-				var contextMenuItem = '<a href="#" class="context-menu-link ' + toSnakeCase(commandName) + '">' + iconHtml + _(itemName) + '</a>';
 				
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: (window.mode.isMobile() ? _(itemName) : app.LOUtil.sanitize(contextMenuItem)),
+					name: (window.mode.isMobile() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, commandName)),
 					isHtmlName: true,
 				};
 

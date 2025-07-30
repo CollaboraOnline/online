@@ -260,7 +260,8 @@ L.Control.PartsPreview = L.Control.extend({
 				className: 'cool-font',
 				items: {
 					paste: {
-						name: _('Paste Slide'),
+						name: app.IconUtil.createMenuItemLink(_('Paste Slide'), 'Paste'),
+						isHtmlName: true,
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
@@ -273,7 +274,8 @@ L.Control.PartsPreview = L.Control.extend({
 						}
 					},
 					newslide: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink( _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'), 'InsertPage'),
+						isHtmlName: true,
 						callback: function() { that._map.insertPage(nPos); }
 					}
 				}
@@ -289,12 +291,14 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 			$trigger.contextMenu(true);
 			that._setPart(e);
+
 			$.contextMenu({
 				selector: '#' + img.id,
 				className: 'cool-font',
 				items: {
 					copy: {
-						name: _('Copy'),
+						name: app.IconUtil.createMenuItemLink(_('Copy'), 'Copy'),
+						isHtmlName: true,
 						callback: function() {
 							that.copiedSlide = e;
 							that._map._clip._execCopyCutPaste('CopySlide');
@@ -304,34 +308,40 @@ L.Control.PartsPreview = L.Control.extend({
 						}
 					},
 					paste: {
-						name: _('Paste'),
+						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
+						isHtmlName: true,
 						callback: function() {
 							that._map._clip._execCopyCutPaste('Paste')
 						},
 					},
 					newslide: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'), 'InsertPage'),
+						isHtmlName: true,
 						callback: function() { that._map.insertPage(); }
 					},
 					duplicateslide: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DuplicateSlide' : '.uno:DuplicatePage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DuplicateSlide' : '.uno:DuplicatePage', 'presentation'), 'DuplicatePage'),
+						isHtmlName: true,
 						callback: function() { that._map.duplicatePage(); }
 					},
 					delete: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DeleteSlide' : '.uno:DeletePage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DeleteSlide' : '.uno:DeletePage', 'presentation'), 'DeletePage'),
+						isHtmlName: true,
 						callback: function() { app.dispatcher.dispatch('deletepage'); },
 						visible: function() {
 							return that._map._docLayer._parts > 1;
 						}
 					},
 					slideproperties: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:SlideSetup' : '.uno:PageSetup', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:SlideSetup' : '.uno:PageSetup', 'presentation'), 'PageSetup'),
+						isHtmlName: true,
 						callback: function() {
 							app.socket.sendMessage('uno .uno:PageSetup');
 						}
 					},
 					showslide: {
-						name: _UNO('.uno:ShowSlide', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO('.uno:ShowSlide', 'presentation'), 'ShowSlide'),
+						isHtmlName: true,
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
@@ -344,7 +354,8 @@ L.Control.PartsPreview = L.Control.extend({
 						}
 					},
 					hideslide: {
-						name: _UNO('.uno:HideSlide', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO('.uno:HideSlide', 'presentation'), 'Hideslide'),
+						isHtmlName: true,
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
