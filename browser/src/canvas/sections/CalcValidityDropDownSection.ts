@@ -20,7 +20,7 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		this.sectionProperties.mouseEntered = false;
 	}
 
-	public onMouseEnter(point: Array<number>, e: MouseEvent): void {
+	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
 		this.sectionProperties.mouseEntered = true;
 	}
 

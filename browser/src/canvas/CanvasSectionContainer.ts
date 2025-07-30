@@ -795,7 +795,7 @@ class CanvasSectionContainer {
 
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseEnter((position ? [position[0], position[1]]: null), e);
+				section.boundsList[i].onMouseEnter((position ? cool.SimplePoint.fromCorePixels([position[0], position[1]]): null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.

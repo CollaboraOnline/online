@@ -172,7 +172,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.sectionProperties.mousePointerType = 'nwse-resize';
 	}
 
-	onMouseEnter(point: number[], e: MouseEvent) {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
 		app.map.dontHandleMouse = true;
 		e.stopPropagation();
 		this.stopPropagating();

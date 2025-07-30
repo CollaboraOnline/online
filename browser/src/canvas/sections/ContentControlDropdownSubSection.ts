@@ -126,7 +126,7 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		return json;
 	}
 
-	onMouseEnter(point: Array<number>, e: MouseEvent): void {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = true;
 	}
 
