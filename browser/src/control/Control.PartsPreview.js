@@ -643,6 +643,7 @@ L.Control.PartsPreview = L.Control.extend({
 			L.DomUtil.remove(selectedFrame);
 
 			this._previewTiles.splice(e.selectedPart, 1);
+			this.focusCurrentSlide();
 		}
 	},
 
