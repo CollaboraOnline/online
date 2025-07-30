@@ -64,7 +64,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
 	}
 
-	onMouseEnter(point: Array<number>, e: MouseEvent): void {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = true;
 		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.cursorStyle;

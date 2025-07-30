@@ -68,7 +68,7 @@ class CanvasSectionObject {
 	onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
 	isSectionShown(): boolean { return; }
 	onDocumentObjectVisibilityChange(): void { return; }
-	onMouseEnter(point: Array<number>, e: MouseEvent): void { return; }
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void { return; }

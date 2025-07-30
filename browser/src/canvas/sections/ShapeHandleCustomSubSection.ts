@@ -48,7 +48,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
 	}
 
-	onMouseEnter(point: number[], e: MouseEvent) {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
 		app.map.dontHandleMouse = true;
 		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
