@@ -680,7 +680,7 @@ class CanvasSectionContainer {
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
-				windowSection.onCursorPositionChanged(app.file.textCursor.rectangle.clone());
+				windowSection.onCursorPositionChanged(app.file.textCursor.rectangle.clone() as cool.SimpleRectangle);
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -689,7 +689,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = this.sections.length - 1; i > -1; i--) {
 				if (this.sections[i].interactable)
-					this.sections[i].onCursorPositionChanged(app.file.textCursor.rectangle.clone());
+					this.sections[i].onCursorPositionChanged(app.file.textCursor.rectangle.clone() as cool.SimpleRectangle);
 			}
 		}
 	}
