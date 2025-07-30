@@ -57,7 +57,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.size = [Math.round(16 * app.dpiScale), Math.round(16 * app.dpiScale)];
 		}
 
-		app.events.on('updatepermission', this.setShowSection.bind(this));
+		app.events.on('updatepermission', this.showHideOnPermissionChange.bind(this));
 	}
 
 	private setMarkerPosition () {
@@ -140,8 +140,13 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.context.stroke();
 	}
 
+	showHideOnPermissionChange() {
+		this.setShowSection(null);
+	}
+
 	setShowSection(show: boolean) {
-		this._showSection = show;
+		if (show !== null)
+			this._showSection = show;
 
 		if (app.map._permission === 'readonly') {
 			super.setShowSection(false);
