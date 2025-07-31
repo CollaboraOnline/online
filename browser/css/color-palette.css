@@ -64,6 +64,8 @@
 	--color-grid-helper-line-solid: #e6e6e6;
 	--color-grid-helper-line-dashed: #191919;
 	--color-smart-guides-helper-line: #f36d4f;
+	--color-insert-marker-background: #e8e8e8;
+	--color-insert-marker-background-dark: #c0bfbc;
 }
 
 [data-bg-theme='light'] {
