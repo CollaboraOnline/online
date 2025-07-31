@@ -40,33 +40,7 @@ void DocumentBroker::handleProxyRequest(
 {
     std::shared_ptr<ClientSession> clientSession;
     if (requestDetails.equals(RequestDetails::Field::Command, "open"))
-    {
-        bool isLocal = socket->isLocal();
-        LOG_TRC("proxy: validate that socket is from localhost: " << isLocal);
-        if (!isLocal)
-            throw BadRequestException("invalid host - only connect from localhost");
-
-        LOG_TRC("proxy: Create session for " << _docKey);
-        clientSession = createNewClientSession(
-                std::make_shared<ProxyProtocolHandler>(),
-                id, uriPublic, isReadOnly, requestDetails);
-        addSession(clientSession);
-        COOLWSD::checkDiskSpaceAndWarnClients(true);
-        COOLWSD::checkSessionLimitsAndWarnClients();
-
-        const std::string &sessionId = clientSession->getOrCreateProxyAccess();
-        LOG_TRC("proxy: Returning sessionId " << sessionId);
-
-        http::Response httpResponse(http::StatusCode::OK);
-        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-        httpResponse.add("X-Content-Type-Options", "nosniff");
-        httpResponse.set("Connection", "close");
-        httpResponse.setBody(sessionId, "application/json; charset=utf-8");
-
-        socket->send(httpResponse);
-        socket->asyncShutdown();
-        return;
-    }
+        return proxyOpenRequest(socket, clientSession, id, uriPublic, isReadOnly, requestDetails);
     else
     {
         const std::string sessionId = requestDetails.getField(RequestDetails::Field::SessionId);
@@ -102,6 +76,37 @@ void DocumentBroker::handleProxyRequest(
 
     const bool isWaiting = requestDetails.equals(RequestDetails::Field::Command, "wait");
     proxy->handleRequest(isWaiting, socket);
+}
+
+void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socket,
+                                      std::shared_ptr<ClientSession>& clientSession,
+                                      const std::string& id, const Poco::URI& uriPublic,
+                                      const bool isReadOnly, const RequestDetails& requestDetails)
+{
+    bool isLocal = socket->isLocal();
+    LOG_TRC("proxy: validate that socket is from localhost: " << isLocal);
+    if (!isLocal)
+        throw BadRequestException("invalid host - only connect from localhost");
+
+    LOG_TRC("proxy: Create session for " << _docKey);
+    clientSession = createNewClientSession(std::make_shared<ProxyProtocolHandler>(), id,
+                                            uriPublic, isReadOnly, requestDetails);
+    addSession(clientSession);
+    COOLWSD::checkDiskSpaceAndWarnClients(true);
+    COOLWSD::checkSessionLimitsAndWarnClients();
+
+    const std::string& sessionId = clientSession->getOrCreateProxyAccess();
+    LOG_TRC("proxy: Returning sessionId " << sessionId);
+
+    http::Response httpResponse(http::StatusCode::OK);
+    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+    httpResponse.add("X-Content-Type-Options", "nosniff");
+    httpResponse.set("Connection", "close");
+    httpResponse.setBody(sessionId, "application/json; charset=utf-8");
+
+    socket->send(httpResponse);
+    socket->asyncShutdown();
+    return;
 }
 
 bool ProxyProtocolHandler::parseEmitIncoming(

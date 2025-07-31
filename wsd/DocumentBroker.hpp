@@ -291,6 +291,11 @@ public:
                             const RequestDetails& requestDetails,
                             const std::shared_ptr<StreamSocket>& socket);
 
+    void proxyOpenRequest(const std::shared_ptr<StreamSocket>& socket,
+                          std::shared_ptr<ClientSession>& clientSession, const std::string& id,
+                          const Poco::URI& uriPublic, const bool isReadOnly,
+                          const RequestDetails& requestDetails);
+
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
 
