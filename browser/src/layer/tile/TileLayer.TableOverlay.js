@@ -12,7 +12,7 @@
  * Table Overlay
  */
 
-/* global app ShapeHandleAnchorSubSection */
+/* global app ShapeHandleAnchorSubSection cool TableInsertMarkerSection */
 
 L.CanvasTileLayer.include({
 	_initializeTableOverlay: function () {
@@ -23,6 +23,7 @@ L.CanvasTileLayer.include({
 		this._tableSelectionRowMarkers = [];
 		this._selectionHeaderDistanceFromTable = 6;
 		this._selectionHeaderHeight = 16;
+		this._tableAddMarkers = [];
 	},
 	_setupTableOverlay: function() {
 		this._map.on('messagesdone', this._updateTableMarkers, this);
@@ -148,6 +149,11 @@ L.CanvasTileLayer.include({
 		}
 		this._tableSelectionRowMarkers = [];
 
+		for (markerIndex = 0; markerIndex < this._tableAddMarkers.length; markerIndex++) {
+			app.sectionContainer.removeSection(this._tableAddMarkers[markerIndex].section.name);
+		}
+		this._tableAddMarkers = [];
+
 		this._removeMoveMarker();
 	},
 
@@ -225,6 +231,9 @@ L.CanvasTileLayer.include({
 			this._tableRowMarkers.push(markerX);
 
 			this._addSelectionMarkers('row', rowPositions, firstColumnPosition, lastColumnPosition);
+
+			this._addInsertMarkers('column', firstRowPosition);
+			this._addInsertMarkers('row', firstColumnPosition);
 
 			if (this._map.getDocType() === 'presentation' && this._currentTableData.rectangle) {
 				this._addMoveMarker();
@@ -322,6 +331,49 @@ L.CanvasTileLayer.include({
 	_onSelectRowColumnDrag: function(e) {
 		e.target.dragging.freezeX(true);
 		e.target.dragging.freezeY(true);
+	},
+
+	_addInsertMarkers: function(type, start) {
+		const markersDistanceFromTable = 10;
+		const delta1 = this._convertPixelToTwips(markersDistanceFromTable);
+		
+		let documentPosition;
+		let markerWidth;
+		let markerHeight;
+		
+		if (type === 'column') {
+			const tableRightEdge = parseInt(this._currentTableData.columns.right);
+			const columnPosition = this._tablePositionColumnOffset + tableRightEdge + delta1;
+			documentPosition = new cool.SimplePoint(columnPosition, start);
+
+			// Total column height and width for insert column marker
+			const rowStart = this._tablePositionRowOffset + parseInt(this._currentTableData.rows.left);
+			const rowEnd = this._tablePositionRowOffset + parseInt(this._currentTableData.rows.right);
+			const totalHeightTwips = rowEnd - rowStart;
+			markerHeight = this._convertTwipsToPixels(new L.Point(0, totalHeightTwips)).y;
+			markerWidth = 16;
+
+		} else {
+			const tableBottomEdge = parseInt(this._currentTableData.rows.right);
+			const rowPosition = this._tablePositionRowOffset + tableBottomEdge + delta1;
+			documentPosition = new cool.SimplePoint(start, rowPosition);
+
+			// Total row width and height for insert row marker
+			const colStart = this._tablePositionColumnOffset + parseInt(this._currentTableData.columns.left);
+			const colEnd = this._tablePositionColumnOffset + parseInt(this._currentTableData.columns.right);
+			const totalWidthTwips = colEnd - colStart;
+			markerWidth = this._convertTwipsToPixels(new L.Point(totalWidthTwips, 0)).x;
+			markerHeight = 16;
+		}
+
+		const markerSection = new TableInsertMarkerSection(type, documentPosition);
+		markerSection.setMarkerSize(markerWidth, markerHeight);
+		app.sectionContainer.addSection(markerSection);
+		
+		this._tableAddMarkers.push({ 
+			type: type,
+			section: markerSection 
+		});
 	},
 
 	// Update dragged text selection.

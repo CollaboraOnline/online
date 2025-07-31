@@ -1,4 +1,3 @@
-/* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -12,31 +11,20 @@
 class TableInsertMarkerSection extends HTMLObjectSection {
 	static readonly namePrefix: string = 'TableInsertMarker_';
 
-	constructor(
-		type: 'row' | 'column',
-		documentPosition: { pX: number; pY: number },
-		onClickCallback: () => void,
-	) {
-		const simplePoint = new cool.SimplePoint(
-			documentPosition.pX,
-			documentPosition.pY,
-		);
-
+	constructor(type: 'row' | 'column', documentPosition: cool.SimplePoint) {
 		super(
 			TableInsertMarkerSection.namePrefix + type,
 			0,
 			0,
-			simplePoint,
+			documentPosition,
 			'table-add-col-row-marker',
 			true,
 		);
 
 		this.sectionProperties.markerType = type;
-		this.sectionProperties.onClickCallback = onClickCallback;
 		this.sectionProperties.mouseEntered = false;
 
 		const div = this.getHTMLObject();
-
 		div.classList.add('table-add-col-row-marker');
 	}
 
@@ -50,18 +38,18 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
-	public onMouseDown(point: number[], e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+		e.preventDefault();
 		this.stopPropagating();
 		e.stopPropagation();
 	}
 
-	public onClick(point: number[], e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+		e.preventDefault();
 		this.stopPropagating();
 		e.stopPropagation();
 
-		if (this.sectionProperties.onClickCallback) {
-			this.sectionProperties.onClickCallback();
-		}
+		this.handleClick();
 	}
 
 	public getMarkerType(): string {
@@ -76,6 +64,12 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 			container.style.height = `${height}px`;
 		}
 	}
-}
 
-app.definitions.tableInsertMarkerSection = TableInsertMarkerSection;
+	private handleClick(): void {
+		if (this.sectionProperties.markerType === 'column') {
+			app.socket.sendMessage('uno .uno:InsertColumnsAfter');
+		} else {
+			app.socket.sendMessage('uno .uno:InsertRowsAfter');
+		}
+	}
+}
