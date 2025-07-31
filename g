@@ -5,8 +5,7 @@
 # './g review [name]' to submit a pull request, assuming:
 # 1) You have 'gh' installed.
 # 2) You are a committer, so you have the permission to push to a private/nick/name branch.
-# 3) You delete this branch after the PR is merged.
-# 4) "name" is the name of part of the private/user/name remote branch, defaults to the current
+# 3) "name" is the name of part of the private/user/name remote branch, defaults to the current
 #    branch. You have to specify this explicitly if you want to update an existing PR.
 #
 # './g backport <branch> <PR number> [name]' to submit a pull request for a different branch:
