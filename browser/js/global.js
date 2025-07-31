@@ -1088,11 +1088,6 @@ function getInitializerClass() {
 	document.addEventListener('mouseover', registerGuessEmulatedFromTouch, { capture: true });
 	document.addEventListener('mouseout', registerGuessEmulatedFromTouch, { capture: true });
 
-	if (!global.prefs.getBoolean('clipboardApiAvailable', true)) {
-		// navigator.clipboard.write failed on us once, don't even try it.
-		global.L.Browser.clipboardApiAvailable = false;
-	}
-
 	global.deviceFormFactor = global.mode.getDeviceFormFactor();
 
 	if (global.ThisIsTheiOSApp) {
