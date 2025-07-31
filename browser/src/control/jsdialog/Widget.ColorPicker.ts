@@ -75,21 +75,30 @@ function toW2Palette(corePalette: CoreColorPalette): ColorPalette {
 	return pal;
 }
 
+function sanitizePaletteRow(row: string) {
+	if (row !== undefined) {
+		try {
+			const json = JSON.parse(row);
+			return json.filter((color: string | null) => color !== null);
+		} catch (e) {
+			console.error('Cannot parse palette row from cache: "' + row + '" :' + e);
+		}
+	}
+	return null;
+}
+
 function generatePalette(paletteName: string) {
 	const colorPalette = toW2Palette(
 		window.app.colorPalettes[paletteName].colors,
 	);
-	const customColorRow = window.prefs.get('customColor');
-	const recentRow = window.prefs.get('recentColor');
+	const customColorRow = sanitizePaletteRow(window.prefs.get('customColor'));
+	const recentRow = sanitizePaletteRow(window.prefs.get('recentColor'));
 
-	if (customColorRow !== undefined) {
-		colorPalette.push(JSON.parse(customColorRow));
-	} else {
-		colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']); // custom colors (up to 4)
-	}
+	if (customColorRow) colorPalette.push(customColorRow);
+	else colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']); // custom colors (up to 4)
 
-	if (recentRow !== undefined) {
-		colorPalette.push(JSON.parse(recentRow));
+	if (recentRow) {
+		colorPalette.push(recentRow);
 	} else {
 		colorPalette.push([
 			'F2F2F2',
