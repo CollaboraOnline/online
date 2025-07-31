@@ -83,7 +83,7 @@ L.Control.AlertDialog = L.Control.extend({
 					],
 					buttons: [
 						{
-							text: _('Don\'t show this again'),
+							text: _('Don’t show this again'),
 							callback: function() {
 								JSDialog.setShowAgain(alertId, false);
 								return false; // Close modal
