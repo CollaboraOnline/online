@@ -190,6 +190,9 @@ export class RowHeader extends cool.Header {
 		if (!this._mouseOverEntry)
 			return;
 
+		if (this._hitResizeArea)
+			return;
+
 		const row = this._mouseOverEntry.index;
 
 		let modifier = 0;
@@ -260,17 +263,20 @@ export class RowHeader extends cool.Header {
 
 	setOptimalHeightAuto(): void {
 		if (this._mouseOverEntry) {
-			const row = this._mouseOverEntry.index;
-			const command = {
-				Row: {
-					type: 'long',
-					value: row
-				},
-				Modifier: {
-					type: 'unsigned short',
-					value: 0
-				}
-			};
+			if (!this._hitResizeArea) {
+				const row = this._mouseOverEntry.index;
+				const command = {
+					Row: {
+						type: 'long',
+						value: row
+					},
+					Modifier: {
+						type: 'unsigned short',
+						value: 0
+					}
+				};
+				this._map.sendUnoCommand('.uno:SelectRow', command);
+			}
 
 			const extra = {
 				aExtraHeight: {
@@ -279,7 +285,6 @@ export class RowHeader extends cool.Header {
 				}
 			};
 
-			this._map.sendUnoCommand('.uno:SelectRow', command);
 			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
 		}
 	}
