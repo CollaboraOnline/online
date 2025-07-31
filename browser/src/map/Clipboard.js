@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool */
+/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool JSDialog */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -932,9 +932,6 @@ L.Clipboard = L.Class.extend({
 				window.app.console.error('navigator.clipboard.write() failed: ' + error.message);
 				// Warn that the copy failed.
 				this._warnCopyPaste();
-				// Once broken, always broken.
-				L.Browser.clipboardApiAvailable = false;
-				window.prefs.set('clipboardApiAvailable', false);
 				// Prefetch selection, so next time copy will work with the keyboard.
 				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 			}
@@ -1289,7 +1286,18 @@ L.Clipboard = L.Class.extend({
 
 	_warnCopyPaste: function() {
 		var id = 'copy_paste_warning';
-		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
+		if (!JSDialog.shouldShowAgain(id))
+			return;
+
+		this._map.uiManager.showYesNoButton(
+				id + '-box',
+				/*title=*/'',
+				/*message=*/'',
+				/*yesButtonText=*/_('OK'),
+				/*noButtonText=*/_('Don’t show this again'),
+				/*yesFunction=*/null,
+				/*noFunction=*/function () {JSDialog.setShowAgain(id, false);},
+				/*cancellable=*/true);
 		this._warnCopyPasteImpl(id);
 	},
 
