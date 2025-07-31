@@ -349,6 +349,7 @@ COOL_JS_LST =\
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
 	src/canvas/sections/CursorHeaderSection.ts \
+	src/canvas/sections/TableInsertMarkerSection.ts \
 	src/canvas/sections/ContentControlDropdownSubSection.ts \
 	src/canvas/sections/ContentControlSection.ts \
 	src/layer/marker/ProgressOverlay.js \
@@ -1000,6 +1001,7 @@ pot:
 		src/canvas/sections/CommentSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
+		src/canvas/sections/TableInsertMarkerSection.ts \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AddressInputField.ts \

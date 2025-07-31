@@ -1333,3 +1333,16 @@ body {
 	z-index: 1000000;
 	background-color: black;
 }
+
+.table-add-col-row-marker {
+	border-radius: 4px;
+	background-color: var(--color-insert-marker-background) !important;
+	box-shadow: 1px var(--color-box-shadow);
+	background: url('images/insert-plus-marker.svg') no-repeat center center /20px;
+}
+
+.table-add-col-row-marker.hovered {
+	cursor: pointer;
+	background-color: var(--color-insert-marker-background-dark) !important;
+}
+
