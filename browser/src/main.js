@@ -111,7 +111,6 @@ if (window.ThisIsTheEmscriptenApp) {
 			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
 			console.error(text);
 		},
-		arguments_: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 	};
 	createOnlineModule(window.Module).then(() => {
