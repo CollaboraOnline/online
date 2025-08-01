@@ -195,7 +195,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: block;
 }
 
-.jsdialog.ui-grid {
+.ui-grid {
 	border-spacing: 0px;
 	width: 100%;
 	display: grid;

@@ -523,6 +523,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Review Tab */
 
+/* Transition Tab */
+
+#transitions_icons.ui-iconview {
+	max-height: 75px;
+}
 
 /* Table Tab */
 
