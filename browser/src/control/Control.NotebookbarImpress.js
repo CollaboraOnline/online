@@ -13,7 +13,7 @@
  * L.Control.NotebookbarImpress - definition of notebookbar content in Impress
  */
 
-/* global _ _UNO app */
+/* global _ _UNO app JSDialog */
 
 L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
@@ -111,6 +111,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'name': 'Design',
 				'accessibility': { focusBack: false, combination: 'P', de: null }
 			},
+			JSDialog.ImpressTransitionTab.getEntry(),
 			{
 				'id': 'Slideshow-tab-label',
 				'text': _('Slide Show'),
@@ -178,6 +179,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			this.getHomeTab(),
 			this.getInsertTab(),
 			this.getDesignTab(),
+			this.getTransitionTab(),
 			this.getSlideshowTab(),
 			this.getReviewTab(),
 			this.getFormatTab(),
@@ -435,6 +437,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		}
 
 		return this.getTabPage('File', content);
+	},
+
+	getTransitionTab: function() {
+		const tab = JSDialog.ImpressTransitionTab;
+		return this.getTabPage(tab.getName(), tab.getContent());
 	},
 
 	getSlideshowTab: function() {

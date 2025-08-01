@@ -18,6 +18,8 @@ declare var JSDialog: any;
 class JSDialogMessageRouter {
 	// show labels instead of editable fields in message boxes
 	private _preProcessMessageDialog(msgData: WidgetJSON) {
+		if (!msgData.children) return;
+
 		for (var i in msgData.children) {
 			var child = msgData.children[i];
 			if (child.type === 'multilineedit') child.type = 'fixedtext';

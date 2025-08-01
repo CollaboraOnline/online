@@ -19,8 +19,9 @@ interface WidgetJSON {
 	type: string; // type of widget
 	enabled?: boolean; // enabled state
 	visible?: boolean; // visibility state
-	children: Array<WidgetJSON>; // child nodes
+	children?: Array<WidgetJSON>; // child nodes
 	title?: string;
+	text?: string; // TODO: remove, its for not yet defined widget types
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
@@ -117,6 +118,29 @@ interface PopupData extends JSDialogJSON {
 	persistKeyboard?: boolean;
 	posx: number;
 	posy: number;
+}
+
+// Notebookbar
+
+type NotebookbarAccessibilityDescriptor = {
+	focusBack: boolean;
+	combination: string;
+	de?: string | null; // combination specific for german
+};
+
+type NotebookbarTabEntry = {
+	id: string;
+	text: string; // visible in the UI
+	name: string; // identifier for tab widget
+	accessibility: NotebookbarAccessibilityDescriptor;
+};
+
+type NotebookbarTabContent = Array<WidgetJSON>;
+
+interface NotebookbarTab {
+	getName: () => string;
+	getEntry: () => NotebookbarTabEntry;
+	getContent: () => NotebookbarTabContent;
 }
 
 // callback triggered for custom rendered entries

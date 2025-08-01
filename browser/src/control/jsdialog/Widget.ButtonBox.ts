@@ -33,10 +33,12 @@ JSDialog.buttonBox = function (
 	var leftAlignButtons = [];
 	var rightAlignButton = [];
 
-	for (var i in data.children) {
-		var child = data.children[i];
-		if (child.id === 'help') leftAlignButtons.push(child);
-		else rightAlignButton.push(child);
+	if (data.children) {
+		for (const i in data.children) {
+			const child = data.children[i];
+			if (child.id === 'help') leftAlignButtons.push(child);
+			else rightAlignButton.push(child);
+		}
 	}
 
 	var left = L.DomUtil.create(
@@ -45,8 +47,8 @@ JSDialog.buttonBox = function (
 		container,
 	);
 
-	for (i in leftAlignButtons) {
-		child = leftAlignButtons[i];
+	for (const i in leftAlignButtons) {
+		const child = leftAlignButtons[i];
 		if (builder._controlHandlers[child.type]) {
 			builder._controlHandlers[child.type](left, child, builder);
 			builder.postProcess(left, child);
@@ -61,8 +63,8 @@ JSDialog.buttonBox = function (
 	if (data.layoutstyle && data.layoutstyle === 'end')
 		L.DomUtil.addClass(container, 'end');
 
-	for (i in rightAlignButton) {
-		child = rightAlignButton[i];
+	for (const i in rightAlignButton) {
+		const child = rightAlignButton[i];
 		if (builder._controlHandlers[child.type]) {
 			builder._controlHandlers[child.type](right, child, builder);
 			builder.postProcess(right, child);

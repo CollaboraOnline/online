@@ -91,7 +91,11 @@ function setupOverflowMenu(
 	};
 }
 
-function findFirstToolitem(items: Array<WidgetJSON>): WidgetJSON | null {
+function findFirstToolitem(
+	items: Array<WidgetJSON> | undefined,
+): WidgetJSON | null {
+	if (!items) return null;
+
 	for (const item of items) {
 		if (
 			item.type.indexOf('toolitem') >= 0 ||
@@ -155,7 +159,8 @@ JSDialog.OverflowGroup = function (
 	if (data.name) label.innerText = data.name;
 
 	// content
-	builder.build(contentContainer, data.children, false);
+	if (data.children) builder.build(contentContainer, data.children, false);
+	else console.error('OverflowGroup: no content provided');
 
 	// first toolitem in the group
 	const firstItem = findFirstToolitem(data.children);
