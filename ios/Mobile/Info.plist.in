@@ -238,22 +238,8 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<!--
-	     Why not use COOLWSD_VERSION (surrounded by atsigns) here, you ask? Because in case one
-	     build has been approved for release on the App Store, when you want to release a
-	     following version, it has to have a different version number here in Info.plist. And we
-	     don't necessarily want to bump the version number in configure.ac for something that
-	     perhaps is just a minor iOS-specific fix.
-
-	     Also, currently the version in configure.ac is four numbers. This
-	     CFBundleShortVersionString must, however, be three numbers.
-
-	     To avoid us getting as out-of-sync, we merge the year and major into Apple's "major"
-	     version, allowing us to bump patch without it becoming a new release. This looks slightly
-	     weird, but at least isn't as bad as being completely misleading.
-	-->
 	<key>CFBundleShortVersionString</key>
-	<string>2504.2.2</string>
+	<string>@IOSAPP_BUNDLE_SHORT_VERSION@</string>
 	<key>CFBundleVersion</key>
 	<string>@IOSAPP_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
