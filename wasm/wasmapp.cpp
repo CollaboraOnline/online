@@ -234,40 +234,42 @@ int main(int argc, char* argv_main[])
     std::thread(
         [&]
         {
-            const std::string docURL = std::string(argv_main[1]);
-            const std::string encodedWOPI = std::string(argv_main[2]);
-            const std::string isWOPI = std::string(argv_main[3]);
+            if ((false)) { //TODO: clarify which configuration wants to use this
+                const std::string docURL = std::string(argv_main[1]);
+                const std::string encodedWOPI = std::string(argv_main[2]);
+                const std::string isWOPI = std::string(argv_main[3]);
 
-            std::string url;
-            if (isWOPI == "true")
-                url = "/wasm/" + encodedWOPI;
-            else
-                url = docURL + "/contents";
+                std::string url;
+                if (isWOPI == "true")
+                    url = "/wasm/" + encodedWOPI;
+                else
+                    url = docURL + "/contents";
 
-            printf("isWOPI is %s: Fetching from url %s\n", isWOPI.c_str(), url.c_str());
+                printf("isWOPI is %s: Fetching from url %s\n", isWOPI.c_str(), url.c_str());
 
-            emscripten_fetch_attr_t attr;
-            emscripten_fetch_attr_init(&attr);
-            strcpy(attr.requestMethod, "GET");
-            attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
-            emscripten_fetch_t* fetch = emscripten_fetch(
-                &attr, url.data()); // Blocks here until the operation is complete.
-            if (fetch->status == 200)
-            {
-                printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
-                       fetch->url);
-                // For now, we have a hard-coded filename that we open. Clobber it.
-                FILE* f = fopen(FILE_PATH, "w");
-                const int wrote = fwrite(fetch->data, 1, fetch->numBytes, f);
-                fclose(f);
-                printf("Wrote %d bytes into " FILE_PATH "\n", wrote);
+                emscripten_fetch_attr_t attr;
+                emscripten_fetch_attr_init(&attr);
+                strcpy(attr.requestMethod, "GET");
+                attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
+                emscripten_fetch_t* fetch = emscripten_fetch(
+                    &attr, url.data()); // Blocks here until the operation is complete.
+                if (fetch->status == 200)
+                {
+                    printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
+                           fetch->url);
+                    // For now, we have a hard-coded filename that we open. Clobber it.
+                    FILE* f = fopen(FILE_PATH, "w");
+                    const int wrote = fwrite(fetch->data, 1, fetch->numBytes, f);
+                    fclose(f);
+                    printf("Wrote %d bytes into " FILE_PATH "\n", wrote);
+                }
+                else
+                {
+                    printf("Downloading %s failed, HTTP failure status code: %d.\n", fetch->url,
+                           fetch->status);
+                }
+                emscripten_fetch_close(fetch);
             }
-            else
-            {
-                printf("Downloading %s failed, HTTP failure status code: %d.\n", fetch->url,
-                       fetch->status);
-            }
-            emscripten_fetch_close(fetch);
 
             coolwsd = new COOLWSD();
             coolwsd->run(1, argv);
