@@ -10,6 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* global globalThis */
 /* global errorMessages accessToken accessTokenTTL noAuthHeader accessHeader createOnlineModule */
 /* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
@@ -99,7 +100,7 @@ if (window.ThisIsTheEmscriptenApp) {
 	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
 
-	window.Module = {
+	globalThis.Module = {
 		onRuntimeInitialized: function() {
 			map.loadDocument(global.socket);
 		},
@@ -114,9 +115,9 @@ if (window.ThisIsTheEmscriptenApp) {
 		arguments_: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 	};
-	createOnlineModule(window.Module).then(() => {
-		app.HandleCOOLMessage = window.Module['_handle_cool_message'];
-		app.AllocateUTF8 = window.Module['stringToNewUTF8']; });
+	createOnlineModule(globalThis.Module).then(() => {
+		app.HandleCOOLMessage = globalThis.Module['_handle_cool_message'];
+		app.AllocateUTF8 = globalThis.Module['stringToNewUTF8']; });
 } else {
 	map.loadDocument(global.socket);
 }
