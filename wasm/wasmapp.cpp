@@ -46,13 +46,13 @@ static void send2JS(const std::vector<char>& buffer)
     if (newline != nullptr)
     {
         // The data needs to be an ArrayBuffer
-        js = "window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
+        js = "globalThis.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
         js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
         js = js + "')});";
     }
     else
     {
-        js = "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
+        js = "globalThis.TheFakeWebSocket.onmessage({'data': globalThis.b64d('";
         js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
         js = js + "')});";
     }
