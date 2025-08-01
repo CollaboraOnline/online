@@ -2555,3 +2555,26 @@ kbd,
 #ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span {
 	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
 }
+
+/* Writer - Format - Character */
+/* Writer - Format - Paragraph */
+/* Writer - Format - Page Style */
+
+#ParagraphPropertiesDialog #ParaIndentSpacing #maingrid,
+#ParagraphPropertiesDialog #labelTP_NUMPARA #NumParaPage,
+#ParagraphPropertiesDialog #labelTP_DROPCAPS #maingrid52,
+#ParagraphPropertiesDialog #transparence #box1,
+#CharacterPropertiesDialog #fonteffects #FontColor,
+#CharacterPropertiesDialog #fonteffects #TextDecoration,
+#CharacterPropertiesDialog #fonteffects #Effects,
+#TemplateDialog8 #Footnote #FootnoteAreaPage {
+	width: fit-content;
+}
+
+#TemplateDialog8 #Footnote #FootnoteAreaPage .menubutton {
+	margin: 0;
+}
+
+#CharacterPropertiesDialog :is(#font, #fonteffects, #position, #asianlayout) img.jsdialog.ui-drawing-area {
+	width: 650px;
+}
