@@ -190,6 +190,8 @@ interface ToolItemWidgetJSON extends WidgetJSON {
 	noLabel?: boolean;
 	command: string; // command to trigger options for a panel
 	text: string; // title to show or for tooltip
+	icon: string; // url to an svg
+	postmessage?: boolean; // postmessage to WOPI in case the toolitem is added via postmessage
 }
 
 interface PanelWidgetJSON extends WidgetJSON {

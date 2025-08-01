@@ -23,6 +23,7 @@ class ContextToolbar {
 	pendingShow: boolean = false;
 	// roughly twice the height(76px) of default context toolbar in each direction from boundary
 	disappearingBoundary: number = 150; // px
+	additionalContextButtons: Array<WidgetJSON> = [];
 
 	constructor(map: any) {
 		this.map = map;
@@ -51,13 +52,23 @@ class ContextToolbar {
 
 	showContextToolbarImpl(): void {
 		this.pendingShow = false;
+
 		if (!this.initialized) {
-			this.builder.build(this.container, this.getWriterTextContext(), false);
+			const contextToolbarItems = this.getWriterTextContext();
+
+			for (const i in this.additionalContextButtons) {
+				const item = this.additionalContextButtons[i];
+				contextToolbarItems.push(item);
+			}
+
+			this.builder.build(this.container, contextToolbarItems, false);
+
 			if (
 				!this.builder.map.uiManager.notebookbar ||
 				!this.builder.map.uiManager.notebookbar.isInitializedInCore()
 			)
 				this.builder.map.uiManager.initializeNotebookbarInCore();
+
 			this.initialized = true;
 		}
 
@@ -286,6 +297,40 @@ class ContextToolbar {
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
 		];
+	}
+
+	insertAdditionalContextButton(button: any) {
+		for (const i in this.additionalContextButtons) {
+			const item = this.additionalContextButtons[i];
+			if (item.id === button.id) return;
+		}
+
+		if (this.additionalContextButtons.length === 0) {
+			this.additionalContextButtons.push({
+				type: 'separator',
+				id: 'home-insertannotation-break',
+				orientation: 'vertical',
+			} as SeparatorWidgetJSON);
+		}
+
+		const isUnoCommand =
+			button.unoCommand && button.unoCommand.indexOf('.uno:') >= 0;
+		if (button.unoCommand && !isUnoCommand)
+			button.unoCommand = '.uno:' + button.unoCommand;
+
+		const contextButton = {
+			id: button.id,
+			type: 'bigtoolitem',
+			text: button.label ? button.label : button.hint ? _(button.hint) : ' ',
+			command: button.unoCommand,
+			icon: button.imgurl,
+			postmessage: button.unoCommand ? undefined : true,
+		} as ToolItemWidgetJSON;
+
+		this.additionalContextButtons.push(contextButton);
+
+		// update context toolbar
+		this.initialized = false;
 	}
 
 	onJSAction(e: any): any {
