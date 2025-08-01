@@ -462,7 +462,13 @@ L.Map.WOPI = L.Handler.extend({
 			msg.Values && msg.Values.id) {
 			this._map.uiManager.insertButton(msg.Values);
 			return;
-		} else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {
+		}
+		else if (msg.MessageId === 'Insert_ContextualButton' &&
+			msg.Values && msg.Values.id) {
+			this._map.uiManager.map.contextToolbar.insertAdditionalContextButton(msg.Values);
+			return;
+		}
+		else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {
 			this._map.sendUnoCommand(msg.Values.Command, msg.Values.Args || '');
 			return;
 		}
