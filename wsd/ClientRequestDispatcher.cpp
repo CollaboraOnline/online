@@ -903,9 +903,10 @@ bool allowedOriginByHost(const std::string& host, const std::string& actualOrigi
     return false;
 }
 
-bool allowedOrigin(const std::string& actualOrigin, const std::string& host,
-                   const RequestDetails& requestDetails)
+bool allowedOrigin(const Poco::Net::HTTPRequest& request, const RequestDetails& requestDetails)
 {
+    const std::string actualOrigin = request.get("Origin");
+
     const ServerURL cnxDetails(requestDetails);
 
     if (net::sameOrigin(cnxDetails.getWebServerUrl(), actualOrigin))
@@ -923,6 +924,7 @@ bool allowedOrigin(const std::string& actualOrigin, const std::string& host,
         }
     }
 
+    const std::string host = request.get("Host");
     if (allowedOriginByHost(host, actualOrigin))
     {
         LOG_DBG("Allowed Origin: " << actualOrigin << " to match against host: " << host);
@@ -940,9 +942,7 @@ bool allowedOrigin(const std::string& actualOrigin, const std::string& host,
     return false;
 }
 #else
-bool allowedOrigin([[maybe_unused]] const std::string& actualOrigin,
-                   [[maybe_unused]] const std::string& host,
-                   const RequestDetails& /*requestDetails*/)
+bool allowedOrigin(const Poco::Net::HTTPRequest& /*request*/, const RequestDetails& /*requestDetails*/)
 {
     return true;
 }
@@ -1104,9 +1104,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         {
             // Admin connections
             LOG_INF("Admin request: " << request.getURI());
-            const bool allowed =
-                allowedOrigin(request.get("Origin"), request.get("Host"), requestDetails);
-            if (AdminSocketHandler::handleInitialRequest(_socket, request, allowed))
+            if (AdminSocketHandler::handleInitialRequest(_socket, request, allowedOrigin(request, requestDetails)))
             {
                 // Hand the socket over to the Admin poll.
                 disposition.setTransfer(Admin::instance(),
@@ -2503,8 +2501,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
                                   << socket->getFD());
 
     // First Upgrade.
-    const bool allowed = allowedOrigin(request.get("Origin"), request.get("Host"), requestDetails);
-    auto ws = std::make_shared<WebSocketHandler>(socket, request, allowed);
+    auto ws = std::make_shared<WebSocketHandler>(socket, request, allowedOrigin(request, requestDetails));
 
     // Response to clients beyond this point is done via WebSocket.
     try
