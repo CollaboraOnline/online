@@ -25,7 +25,7 @@
 /* global JSDialog $ */
 
 function _calendarControl(parentContainer, data, builder) {
-	var container = L.DomUtil.create('div', 'ui-calendar ' + builder.options.cssClass, parentContainer);
+	const container = L.DomUtil.create('div', 'ui-calendar ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
 
 	$.datepicker.setDefaults($.datepicker.regional[window.langParamLocale.language]);
@@ -44,6 +44,6 @@ function _calendarControl(parentContainer, data, builder) {
 }
 
 JSDialog.calendar = function (parentContainer, data, builder) {
-	var buildInnerData = _calendarControl(parentContainer, data, builder);
+	const buildInnerData = _calendarControl(parentContainer, data, builder);
 	return buildInnerData;
 };
