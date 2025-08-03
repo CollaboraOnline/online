@@ -89,7 +89,7 @@ class ContextToolbar {
 			let statRect;
 			if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
 				return;
-			const pos = { x: statRect.pX1, y: statRect.pY1 };
+			const pos = { x: statRect.cX1, y: statRect.cY1 };
 			pos.x -=
 				(app.sectionContainer.getDocumentTopLeft()[0] -
 					app.sectionContainer.getDocumentAnchor()[0]) /
