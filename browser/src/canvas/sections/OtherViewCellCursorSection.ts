@@ -47,9 +47,14 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 
         this.adjustPopUpPosition();
 
+        const tempSizePos = CellCursorSection.adjustSizePos([this.position[0], this.position[1], this.size[0], this.size[1]]);
+
+        const x: number = (tempSizePos[0] - this.position[0]);
+        const y: number = (tempSizePos[1] - this.position[1]);
+
         this.context.strokeStyle = this.sectionProperties.color;
         this.context.lineWidth = 2;
-        this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
+        this.context.strokeRect(x - 0.5, y - 0.5, tempSizePos[2], tempSizePos[3]);
     }
 
     checkMyVisibility() {
