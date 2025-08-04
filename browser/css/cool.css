@@ -53,6 +53,9 @@
 
 	/* Ruler */
 	--ruler-height: 20px;
+
+	/* Page Scale */
+	--page-scale: 1;
 }
 
 html {
