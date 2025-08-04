@@ -244,7 +244,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-scrollwindow:not(.formulabar) {
 	overflow: auto;
 	max-height: 500px;
-	max-width: 700px;
+	max-width: 650px;
 }
 /* - Also used in SpellingDialog where suggestion come in form
      of an image*/
@@ -2579,6 +2579,11 @@ kbd,
 
 #CharacterPropertiesDialog :is(#font, #fonteffects, #position, #asianlayout) img.jsdialog.ui-drawing-area {
 	width: 650px;
+}
+
+#CharacterPropertiesDialog #position #box7,
+#CharacterPropertiesDialog #FontColor #grid3 {
+	align-items: center;
 }
 
 /* Writer - Format - Paragraph - Text Flow */
