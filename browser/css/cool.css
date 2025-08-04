@@ -187,6 +187,7 @@ body {
 	flex: 1;
 	display: block;
 	height: 100%;
+	overflow: clip;
 }
 
 .color-palette-selector {
