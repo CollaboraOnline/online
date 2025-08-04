@@ -1989,7 +1989,8 @@ function getInitializerClass() {
 		var visualViewport = event.target;
 
 		window.scroll(0, 0);
-		document.body.style.height = visualViewport.height + 'px';
+		if (!global.mode.isDesktop())
+			document.body.style.height = visualViewport.height + 'px';
 	}
 
 	if (window.visualViewport !== undefined) {
