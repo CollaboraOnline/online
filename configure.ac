@@ -1731,6 +1731,8 @@ if test -n "$with_dictionaries" -a "$with_dictionaries" != "no"; then
 else
     ALLOWED_LANGUAGES="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru"
 fi
+AC_MSG_RESULT([$ALLOWED_LANGUAGES])
+AC_SUBST(ALLOWED_LANGUAGES)
 
 AC_MSG_CHECKING([whether to turn warnings to errors])
 if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
@@ -1867,9 +1869,6 @@ fi
 
 AC_SUBST(FEATURE_RESTRICTION_CONFIGURATION)
 AM_SUBST_NOTMAKE(FEATURE_RESTRICTION_CONFIGURATION)
-
-AC_MSG_RESULT([$ALLOWED_LANGUAGES])
-AC_SUBST(ALLOWED_LANGUAGES)
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
