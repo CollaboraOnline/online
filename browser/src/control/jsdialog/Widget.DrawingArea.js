@@ -25,6 +25,8 @@
 
 /* global JSDialog $ UNOKey UNOModifier */
 
+// All builder.callback calls are wrapped via a local `callback` function
+// to ensure container.id is always correctly set.
 function _drawingAreaControl (parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
 	container.id = data.id;
@@ -96,7 +98,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		clearTimeout(moveTimer);
 		moveTimer = null;
 		moveFunc = null;
-		builder.callback('drawingarea', 'dblclick', container, coordinates, builder);
+		callback('drawingarea', 'dblclick', container, coordinates, builder);
 	}, this);
 
 	L.DomEvent.on(image, 'click touchend', function(e) {
@@ -107,7 +109,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		moveTimer = null;
 		moveFunc = null;
 
-		builder.callback('drawingarea', 'click', container, coordinates, builder);
+		callback('drawingarea', 'click', container, coordinates, builder);
 	}, this);
 
 	var onMove = function (e) {
@@ -120,7 +122,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
-		builder.callback('drawingarea', 'mousemove', container, coordinates, builder);
+		callback('drawingarea', 'mousemove', container, coordinates, builder);
 	};
 
 	var endMove = function (e) {
@@ -133,14 +135,14 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
-		builder.callback('drawingarea', 'mouseup', container, coordinates, builder);
+		callback('drawingarea', 'mouseup', container, coordinates, builder);
 	};
 
 	image.addEventListener('mousedown', function (e) {
 		moveFunc = function () {
 			var pos = getCoordinatesFromEvent(e);
 			var coordinates = pos[0] + ';' + pos[1];
-			builder.callback('drawingarea', 'mousedown', container, coordinates, builder);
+			callback('drawingarea', 'mousedown', container, coordinates, builder);
 		};
 
 		moveTimer = setTimeout(function () {
@@ -157,40 +159,40 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 	image.addEventListener('keydown', function(event) {
 		if (event.key === 'Enter') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.RETURN | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.RETURN | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Escape' || event.key === 'Esc') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.ESCAPE | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.ESCAPE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.LEFT | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.LEFT | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Right' || event.key === 'ArrowRight') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.RIGHT | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.RIGHT | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Up' || event.key === 'ArrowUp') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.UP | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.UP | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Down' || event.key === 'ArrowDown') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.DOWN | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.DOWN | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Home') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.HOME | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.HOME | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'End') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.END | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.END | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Backspace') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.BACKSPACE | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.BACKSPACE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Delete') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.DELETE | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.DELETE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Space') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.SPACE | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.SPACE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Tab') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.TAB | modifier, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.TAB | modifier, builder);
 		} else if (event.key === 'Shift') {
 			modifier = modifier | UNOModifier.SHIFT;
 			event.preventDefault();
@@ -198,7 +200,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 			modifier = modifier | UNOModifier.CTRL;
 			event.preventDefault();
 		} else if (event.key === 'a' && event.ctrlKey) {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.A | UNOModifier.CTRL, builder);
+			callback('drawingarea', 'keypress', container, UNOKey.A | UNOModifier.CTRL, builder);
 		}
 	});
 
@@ -243,11 +245,24 @@ function _drawingAreaControl (parentContainer, data, builder) {
 				keyCode |= UNOModifier.CTRL;
 			}
 
-			builder.callback('drawingarea', 'keypress', container, keyCode, builder);
+			callback('drawingarea', 'keypress', container, keyCode, builder);
 		}
 
 		event.preventDefault();
 	});
+
+	// Fix for LibreOfficeKit crash: "sendDialogEvent: no widget id set"
+	// Problem: During rapid mouse interactions on drawing areas (Writer->Format->Page Style->Area->Pattern->Pattern Editor),
+	// the JSDialog system's _updateWidgetImpl function can clear container.id (set to '') during
+	// widget updates, creating a race condition. When event handlers then call builder.callback()
+	// with the container object, it has an empty ID, causing dialog events to be sent with
+	// empty widget IDs to the core, which triggers an assertion failure.
+	// This wrapper ensures container.id is restored from the original data.id before
+	// any callback is made, preventing empty widget IDs from being sent in dialog events.
+	function callback(...args) {
+		if(!container.id) container.id = data.id; // Ensure the container has a valid Id
+		builder.callback(...args);
+	}
 
 	return false;
 }
