@@ -585,7 +585,7 @@ class UIManager extends L.Control {
 			else
 				app.socket.sendMessage('uno .uno:SidebarHide');
 		}
-		else if (window.mode.isChromebook()) {
+		else if (window.mode.isChromebook() || window.mode.isMobile()) {
 			// HACK - currently the sidebar shows when loaded,
 			// with the exception of mobile phones & tablets - but
 			// there, it does not show only because they start
@@ -711,20 +711,6 @@ class UIManager extends L.Control {
 	refreshMenubar(): void {
 		if (this.map.menubar)
 			this.map.menubar._onRefresh();
-	}
-
-	/**
-	 * Refreshes the sidebar after a delay.
-	 * @param ms - Milliseconds to delay the refresh (default 400ms).
-	 */
-	refreshSidebar(ms?: number): void {
-		ms = ms !== undefined ? ms : 400;
-		setTimeout(function () {
-			var message = 'dialogevent ' +
-				(window.sidebarId !== undefined ? window.sidebarId : -1) +
-				' {"id":"-1"}';
-			app.socket.sendMessage(message);
-		}, ms);
 	}
 
 	/**
