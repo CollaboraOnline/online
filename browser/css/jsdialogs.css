@@ -2578,3 +2578,24 @@ kbd,
 #CharacterPropertiesDialog :is(#font, #fonteffects, #position, #asianlayout) img.jsdialog.ui-drawing-area {
 	width: 650px;
 }
+
+/* Writer - Format - Paragraph - Text Flow */
+/* Writer - Format - Paragraph - Tabs */
+#ParagraphPropertiesDialog #textflow #checkAcrossPage.checkbutton,
+#ParagraphPropertiesDialog #labelTP_TABULATOR #ParagraphTabsPage {
+	grid-column-gap: 0;
+}
+
+/* Writer - Format - Paragraph - Tabs */
+/* Writer - Format - Paragraph - Area - Color */
+#ParagraphPropertiesDialog #labelTP_TABULATOR #entryED_TABTYPE_DECCHAR-input,
+#ParagraphPropertiesDialog #labelTP_TABULATOR #entryED_FILLCHAR_OTHER-input,
+#ColorPage.jsdialog #rgbpreset input,
+#ColorPage.jsdialog #rgbcustom input {
+	max-width: 100px;
+}
+
+/* Writer - Format - Paragraph - Area - Color */
+#ColorPage.jsdialog #rgbpreset {
+	width: max-content;
+}
