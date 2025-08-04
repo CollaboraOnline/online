@@ -341,6 +341,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 100%;
 }
 
+.ui-toggle button,
 .ui-tab.jsdialog {
 	float: left !important;
 	font-size: var(--default-font-size) !important;
@@ -351,6 +352,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 24px !important;
 	display: flex !important;
 	align-items: center !important;
+	justify-content: center;
 	padding: 0px 1em !important;
 	border: solid 1px transparent !important;
 	border-radius: var(--border-radius) !important;
@@ -363,6 +365,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	visibility: hidden !important;
 }
 
+.ui-toggle.checked button,
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter) !important;
 	color: var(--color-text-darker) !important;
@@ -2477,6 +2480,7 @@ kbd,
 #findreplacetabbox {
 	justify-content: start;
 }
+
 
 /* text-area overflow on function wizard window */
 
