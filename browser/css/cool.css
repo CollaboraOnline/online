@@ -74,10 +74,11 @@ body {
 	background: var(--color-main-background);
 	touch-action: none;
 	line-height: normal;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	user-select: none;
+	width: calc(100vw * var(--page-scale));
+	height: calc(100vh * var(--page-scale));
 }
 
 #insertgraphic, #insertmultimedia {
