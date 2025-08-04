@@ -93,6 +93,7 @@ class ShortcutsUtil {
 		this.shortcutMap.set('.uno:InsertTable', this.INSERT_TABLE);
 		this.shortcutMap.set('.uno:InsertPagebreak', this.INSERT_PAGEBREAK);
 		this.shortcutMap.set('search', this.FIND);
+		this.shortcutMap.set('home-search', this.FIND);
 		this.shortcutMap.set('.uno:SearchDialog', this.FIND_REPLACE);
 	}
 
