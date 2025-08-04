@@ -933,6 +933,10 @@ img.context-menu-icon {
 	padding-inline-start: 8px;
 }
 
+.jsdialog.ui-frame-label {
+	font-weight: bold;
+}
+
 /* fieldset and legend - form grouping */
 
 .jsdialog .ui-fieldset {
@@ -943,6 +947,7 @@ img.context-menu-icon {
 
 .jsdialog .ui-legend {
 	padding-inline: 0;
+	font-weight: bold;
 }
 
 /* spinfield */
@@ -1478,7 +1483,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Word count dialog */
 
-#label9, #documentlabel-mobile {
+#WordCountDialog #label10,
+#WordCountDialog #documentlabel-mobile {
 	color: #636363 !important;
 }
 
