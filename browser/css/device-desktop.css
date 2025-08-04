@@ -20,7 +20,7 @@
 
 /* btns hover status
    Rules not intended for touch devices */
-
+.ui-toggle button:hover,
 .button-secondary:hover,
 button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.notebookbar.ui-tab):not(.ui-expander):not(.arrowbackground):not(.ui-combobox-button):hover {
 	cursor: pointer;
