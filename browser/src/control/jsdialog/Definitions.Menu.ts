@@ -421,6 +421,13 @@ menuDefinitions.set('BorderStyleMenu', [
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set(
+	'BorderStyleMenuWriter',
+	(menuDefinitions.get('BorderStyleMenu') || []).filter(
+		(item) => item.uno !== '.uno:FormatCellBorders',
+	),
+);
+
 menuDefinitions.set('InsertShapesMenu', [
 	{ type: 'html', htmlId: 'insertshapespopup' },
 	{ type: 'separator' }, // required to show dropdown arrow
