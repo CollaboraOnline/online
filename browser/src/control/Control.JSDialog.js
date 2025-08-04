@@ -355,7 +355,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.builder.build(instance.content, [instance]);
 		instance.builder.setContainer(instance.content);
-		var primaryBtn = instance.content.querySelector('#' + instance.defaultButtonId);
+		var primaryBtn = instance.content.querySelector('#' + instance.defaultButtonId + ' button');
 		if (primaryBtn)
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
