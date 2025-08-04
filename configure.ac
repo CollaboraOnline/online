@@ -1527,6 +1527,17 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
                          [AC_MSG_RESULT([OK])],
                          [AC_MSG_ERROR([The POCO version is too old])])
 
+       # Poco headers from distro packages may need -DPOCO_UNBUNDLED
+       AC_CHECK_HEADERS([Poco/XML/ParserEngine.h])
+       if test "x$ac_cv_header_Poco_XML_ParserEngine_h" != xyes; then
+            unset ac_cv_header_Poco_XML_ParserEngine_h
+            CXXFLAGS="$CXXFLAGS -DPOCO_UNBUNDLED"
+            CPPFLAGS="$CPPFLAGS -DPOCO_UNBUNDLED"
+            AC_CHECK_HEADERS([Poco/XML/ParserEngine.h],
+                                        [AC_MSG_RESULT([... with POCO_UNBUNDLED])],
+                                        [AC_MSG_ERROR([header Poco/XML/ParserEngine.h not found, perhaps you want to use --with-poco-includes])])
+       fi
+
        # If poco is built with --unbundled, it uses the system pcre library
        AC_MSG_CHECKING([if we need to link with -lpcre])
        AC_LINK_IFELSE([AC_LANG_SOURCE([
