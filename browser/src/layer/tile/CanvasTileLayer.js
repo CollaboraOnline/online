@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown CellCursorSection */
 
 function clamp(num, min, max)
 {
@@ -3748,7 +3748,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var cursorStyle = new CStyleData(this._cursorDataDiv);
 			var weight = cursorStyle.getFloatPropWithoutUnit('border-top-width') * app.dpiScale;
 			var color = cursorStyle.getPropValue('border-top-color');
-			this._cellCursorSection = new app.definitions.cellCursorSection(color, weight);
+			this._cellCursorSection = new CellCursorSection(color, weight);
 			app.sectionContainer.addSection(this._cellCursorSection);
 		}
 
