@@ -15,7 +15,7 @@
  */
 
 class ContextToolbar {
-	container: HTMLElement;
+	container!: HTMLElement;
 	builder: JSBuilder;
 	map: any;
 	initialized: boolean = false;
@@ -34,6 +34,10 @@ class ContextToolbar {
 			cssClass: 'notebookbar',
 			suffix: 'context-toolbar',
 		} as JSBuilderOptions);
+		this.createContextToolbarElement();
+	}
+
+	createContextToolbarElement(): void {
 		this.container = L.DomUtil.createWithId(
 			'div',
 			'context-toolbar',
@@ -330,6 +334,8 @@ class ContextToolbar {
 		this.additionalContextButtons.push(contextButton);
 
 		// update context toolbar
+		document.getElementById('context-toolbar')?.remove();
+		this.createContextToolbarElement();
 		this.initialized = false;
 	}
 
