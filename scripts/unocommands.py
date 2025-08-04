@@ -207,6 +207,17 @@ def extractToolbarCommands(path):
     # may the list unique
     return set(commands)
 
+def extractMenubuttonCommands(path):
+    commands = []
+
+    f = open(path + '/browser/src/control/jsdialog/Definitions.Menu.ts', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    # may the list unique
+    return set(commands)
+
 
 # Create mapping between the commands and appropriate strings
 def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
@@ -251,7 +262,7 @@ def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
 
 # Print commands from all the XCU files, and collect them too
 def writeUnocommandsJS(
-        onlineDir, lofficeDir, menuCommands, contextCommands, toolbarCommands):
+        onlineDir, lofficeDir, menuCommands, contextCommands, toolbarCommands, menubuttonCommands):
 
     descriptions = {}
     dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
@@ -301,6 +312,10 @@ def writeUnocommandsJS(
             descriptions = collectCommandsFromXCU(os.path.join(dir, file),
                                                   descriptions,
                                                   toolbarCommands,
+                                                  'Label', type)
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file),
+                                                  descriptions,
+                                                  menubuttonCommands,
                                                   'Label', type)
 
     # output the unocommands.js
@@ -467,6 +482,7 @@ if __name__ == "__main__":
     menuCommands = extractMenuCommands(onlineDir)
     contextCommands = extractContextCommands(onlineDir)
     toolbarCommands = extractToolbarCommands(onlineDir)
+    menubuttonCommands = extractMenubuttonCommands(onlineDir)
 
     processedCommands = set([])
     parsed = {}
@@ -475,11 +491,11 @@ if __name__ == "__main__":
         processedCommands = set(parsed.keys())
     else:
         written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands,
-                                     contextCommands, toolbarCommands)
+                                     contextCommands, toolbarCommands, menubuttonCommands)
         processedCommands = set(written.keys())
 
     # check that we have translations for everything
-    requiredCommands = (menuCommands | contextCommands | toolbarCommands)
+    requiredCommands = (menuCommands | contextCommands | toolbarCommands | menubuttonCommands)
     dif = requiredCommands - processedCommands
 
     if len(dif) > 0:
