@@ -1568,8 +1568,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		var wrapperClass = window.mode.isMobile() ? '' : 'd-flex justify-content-center';
 		var wrapper = L.DomUtil.create('div', wrapperClass, parentContainer); // need for locking overlay
+		wrapper.id = data.id;
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
-		pushbutton.id = data.id;
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
 		var image;
@@ -1609,10 +1609,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (customCallback)
 			pushbutton.onclick = customCallback;
-		else if (builder._responses[pushbutton.id] !== undefined)
-			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[pushbutton.id], builder);
+		else if (builder._responses[data.id] !== undefined)
+			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[data.id], builder);
 		else
-			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', pushbutton, data.command, builder);
+			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', wrapper, data.command, builder);
 
 
 		if (data.labelledBy) {
@@ -2862,8 +2862,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			newControl.style.gridColumn = backupGridSpan;
 
 			// todo: is that needed? should be in widget impl?
-			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
-				L.DomUtil.addClass(newControl, 'button-primary');
+			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton')) {
+				const buttonNode = newControl.querySelector('button');
+				if (buttonNode) L.DomUtil.addClass(buttonNode, 'button-primary');
+			}
 		}
 
 		if (focusedId) {
