@@ -1601,6 +1601,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			pushbutton.setAttribute('aria-disabled', true);
 		}
 
+		if (data.isToggle) {
+			wrapper.classList.add('ui-toggle');
+			if (data.checked === true)
+				wrapper.classList.add('checked');
+		}
+
 		if (customCallback)
 			pushbutton.onclick = customCallback;
 		else if (builder._responses[pushbutton.id] !== undefined)
