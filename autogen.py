@@ -14,9 +14,10 @@
 import os
 import re
 import subprocess
+import sys
 
 def main():
-    cmdline = ["./autogen.sh"]
+    cmdline = [sys.argv[0].replace(".py", ".sh")]
     with open("autogen.input") as stream:
         for line in stream.readlines():
             line = line.strip()

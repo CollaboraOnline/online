@@ -3,6 +3,7 @@
 srcdir=`dirname $0`
 test -n "$srcdir" || srcdir=.
 
+builddir=`pwd`
 cd "$srcdir"
 
 function failed {
@@ -30,6 +31,8 @@ automake --add-missing || failed "automake"
 autoreconf || failed "autoreconf"
 
 scripts/refresh-git-hooks || failed "refresh-git-hooks"
+
+cd "${builddir}"
 
 if [ $# -gt 0 ]; then
     # If we got parameters, we can execute configure directly.
