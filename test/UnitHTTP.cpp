@@ -235,7 +235,7 @@ public:
             return;
         }
 
-        if (strcmp(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
+        if (buffer != std::string_view("\357\273\277This is some text.\nAnd some more.\n"))
         {
             TST_LOG("unexpected file content " << got << " '" << buffer);
             exitTest(TestResult::Failed);
