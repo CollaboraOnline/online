@@ -2814,6 +2814,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:NumberFormatDate', 'text'),
 								'command': '.uno:NumberFormatDate'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:NumberFormatPercent', 'text'),
+								'command': '.uno:NumberFormatPercent'
 							}
 						]
 					},
@@ -2826,9 +2831,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'command': '.uno:TableCellBackgroundColor',
 							},
 							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:NumberFormatPercent', 'text'),
-								'command': '.uno:NumberFormatPercent'
+								'id': 'set-border-style:BorderStyleMenuWriter',
+								'type': 'menubutton',
+								'noLabel': true,
+								'text': _UNO('.uno:SetBorderStyle', 'text'),
+								'command': '.uno:SetBorderStyle'
 							}
 						]
 					}
