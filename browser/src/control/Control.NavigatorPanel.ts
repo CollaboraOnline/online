@@ -231,7 +231,7 @@ class NavigatorPanel extends SidebarBase {
 	onNavigator(data: FireEvent) {
 		var navigatorData = data.data;
 		this.builder.setWindowId(navigatorData.id);
-		$(this.container).empty();
+		this.container.innerHTML = '';
 
 		if (
 			navigatorData.action === 'close' ||
@@ -256,6 +256,8 @@ class NavigatorPanel extends SidebarBase {
 			// this will update the indentation marks for elements like ruler
 			app.map.fire('fixruleroffset');
 			if (app.map.isPresentationOrDrawing()) {
+				this.switchNavigationTab('tab-slide-sorter');
+			} else {
 				this.switchNavigationTab('tab-navigator');
 			}
 		} else {
