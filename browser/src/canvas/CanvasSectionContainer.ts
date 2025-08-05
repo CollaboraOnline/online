@@ -586,23 +586,29 @@ class CanvasSectionContainer {
 		while (layoutingService.runTheTopTask());
 	}
 
+	private resizeCanvas() {
+		if (!this.needsResize) {
+			return;
+		}
+
+		this.needsResize = false;
+		this.canvas.width = this.width;
+		this.canvas.height = this.height;
+
+		// CSS pixels can be fractional, but need to round to the same real pixels
+		var cssWidth: number = this.width / app.dpiScale; // NB. beware
+		var cssHeight: number = this.height / app.dpiScale;
+		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
+		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
+
+		// Avoid black default background.
+		this.clearCanvas();
+	}
+
 	private redrawCallback(timestamp: number) {
 		this.drawRequest = null;
 
-		if (this.needsResize) {
-			this.needsResize = false;
-			this.canvas.width = this.width;
-			this.canvas.height = this.height;
-
-			// CSS pixels can be fractional, but need to round to the same real pixels
-			var cssWidth: number = this.width / app.dpiScale; // NB. beware
-			var cssHeight: number = this.height / app.dpiScale;
-			this.canvas.style.width = cssWidth.toFixed(4) + 'px';
-			this.canvas.style.height = cssHeight.toFixed(4) + 'px';
-
-			// Avoid black default background.
-			this.clearCanvas();
-		}
+		this.resizeCanvas();
 
 		this.drawSections();
 		this.flushLayoutingTasks();
@@ -1506,6 +1512,8 @@ class CanvasSectionContainer {
 			this.createUpdateDivElements();
 		if (redraw && this.drawingAllowed())
 			this.requestReDraw();
+		else if (window.L && window.L.Browser.safari && window.L.Browser.mobile)
+			this.resizeCanvas(); // HACK: On Mobile/Tablet Safari, not resizing the canvas here causes it to blur later... I have seen no evidence that this is a problem on Desktop Safari
 	}
 
 	private roundPositionAndSize(section: CanvasSectionObject) {
