@@ -814,7 +814,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     const bool canStreamToFile =
         request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST &&
         request.getContentLength() != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH &&
-        !request.getChunkedTransferEncoding(); // ignore chunked transfer for now
+        !request.getChunkedTransferEncoding() && // ignore chunked transfer for now
+        request.find("ProxyPrefix") == request.end(); // proxy mode assumes nothing consumed
 
     if (canStreamToFile && request.getContentLength() > 0)
     {
