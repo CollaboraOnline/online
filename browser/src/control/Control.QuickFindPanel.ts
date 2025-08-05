@@ -13,75 +13,34 @@
  */
 
 /* global app */
-class QuickFindPanel {
-	map: any;
-	container: HTMLElement | null;
-	builder: any;
-
+class QuickFindPanel extends SidebarBase {
 	constructor(map: any) {
-		this.map = map;
-		this.container = document.querySelector('#quick-find-wrapper');
+		super(map, SidebarType.QuickFind);
 	}
 
 	onAdd(map: any) {
-		// this.map = map;
-		this.map.on('quickfind', this.onQuickFind, this);
-		this.map.on('jsdialogupdate', this.onJSUpdate, this);
-		this.map.on('jsdialogaction', this.onJSAction, this);
+		super.onAdd(map);
+		this.builder.setWindowId(-5);
 
-		this.builder = new L.control.jsDialogBuilder({
-			mobileWizard: this,
-			map: map,
-			cssClass: `jsdialog sidebar`, // use sidebar css for now, have quickfind css later
-			windowId: -5,
-		});
+		this.map = map;
+		this.map.on('quickfind', this.onQuickFind, this);
 	}
 
 	onRemove() {
 		this.map.off('quickfind', this.onQuickFind, this);
-		this.map.off('jsdialogupdate', this.onJSUpdate, this);
-		this.map.off('jsdialogaction', this.onJSAction, this);
 	}
 
 	onQuickFind(data: any) {
-		var quickFindData = data.data;
-		this.builder.setWindowId(quickFindData.id);
-		if (this.container) {
-			this.container.innerHTML = '';
-		}
+		const quickFindData = data.data;
 
-		this.builder.build(this.container, [quickFindData]);
+		if (this.container) this.container.innerHTML = '';
+		else console.error('QuickFind: no container');
+
+		this.builder.build(this.container, [quickFindData], false);
 
 		app.showQuickFind = true;
 		// this will update the indentation marks for elements like ruler
 		app.map.fire('fixruleroffset');
-	}
-
-	onJSUpdate(data: any) {
-		var data = data.data;
-
-		if (data.jsontype !== 'quickfind') return;
-
-		if (!this.container) return;
-
-		if (!this.builder) return;
-
-		this.builder.updateWidget(this.container, data.control);
-	}
-
-	onJSAction(data: any) {
-		var data = data.data;
-
-		if (data.jsontype !== 'quickfind') return;
-
-		if (!this.builder) return;
-
-		if (!this.container) return;
-
-		var innerData = data.data;
-		if (!innerData) return;
-
-		this.builder.executeAction(this.container, innerData);
 	}
 }
 
