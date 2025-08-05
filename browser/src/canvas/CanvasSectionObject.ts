@@ -14,7 +14,6 @@
 class CanvasSectionObject {
 	context: CanvasRenderingContext2D;
 	myTopLeft: Array<number> = [0, 0];
-	documentTopLeft: Array<number> = [0, 0]; // Document top left will be updated by container.
 	containerObject: CanvasSectionContainer = null;
 	name: string = null;
 	backgroundColor: string = null; // Default is null (container's background color will be used).
@@ -86,7 +85,7 @@ class CanvasSectionObject {
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.
 	onAnimate(frameCount: number, elapsedTime: number): void { return; }
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
-	onNewDocumentTopLeft(size: Array<number>): void { return; }
+	onNewDocumentTopLeft(): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
 
 	setDrawingOrder(drawingOrder: number): void {
@@ -135,7 +134,7 @@ class CanvasSectionObject {
 		x = Math.round(x);
 		y = Math.round(y);
 		let sectionXcoord = x;
-		const positionAddition = this.containerObject.getDocumentTopLeft();
+		const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
 
 		if (this.isCalcRTL()) {
 			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
@@ -145,13 +144,13 @@ class CanvasSectionObject {
 		}
 
 		if (app.isXOrdinateInFrozenPane(sectionXcoord))
-			positionAddition[0] = 0;
+			positionAddition.pX1 = 0;
 
 		if (app.isYOrdinateInFrozenPane(y))
-			positionAddition[1] = 0;
+			positionAddition.pY1 = 0;
 
-		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition[0];
-		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition[1];
+		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition.pX1;
+		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition.pY1;
 
 		this.position[0] = sectionXcoord;
 		this.position[1] = y;

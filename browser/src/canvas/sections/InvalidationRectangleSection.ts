@@ -51,8 +51,8 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 		this.context.strokeStyle = 'red';
 
 		const anchor: number[] = this.containerObject.getDocumentAnchor();
-		const xDiff = anchor[0] - this.documentTopLeft[0];
-		const yDiff = anchor[1] - this.documentTopLeft[1];
+		const xDiff = anchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
+		const yDiff = anchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;
 
 		for (let i = 0; i < rectangleList.length; i++) {
 			this.context.globalAlpha = 1 - 0.15 * i;

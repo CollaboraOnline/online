@@ -47,7 +47,7 @@ class TextSelectionHandle extends HTMLObjectSection {
 			app.map._docLayer._postSelectTextEvent(type, Math.round(x * app.pixelsToTwips), Math.round(y * app.pixelsToTwips));
 		}
 		else {
-			const referenceX = app.file.viewedRectangle.pX1 + (app.file.viewedRectangle.pX2 - this.position[0]);
+			const referenceX = app.activeDocument.activeView.viewedRectangle.pX1 + (app.activeDocument.activeView.viewedRectangle.pX2 - this.position[0]);
 			app.map._docLayer._postSelectTextEvent(type, Math.round(referenceX * app.pixelsToTwips), Math.round(y * app.pixelsToTwips));
 		}
 	}

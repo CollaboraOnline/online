@@ -147,7 +147,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
 		if (this.map.panBy) {
-			this.moveMapBy(e.x - app.file.viewedRectangle.cX1, e.y - app.file.viewedRectangle.cY1, true);
+			this.moveMapBy(e.x - app.activeDocument.activeView.viewedRectangle.cX1, e.y - app.activeDocument.activeView.viewedRectangle.cY1, true);
 		}
 	}
 
@@ -170,24 +170,23 @@ export class ScrollSection extends CanvasSectionObject {
 			this.scrollHorizontalWithOffset(e.x);
 		} else {
 			// For Calc, top position shouldn't be below zero, for others, we can activate a similar check if needed (while keeping in mind that top position may be below zero for others).
-			var docTopLef = this.containerObject.getDocumentTopLeft();
 
 			// Some early exits.
-			if (e.y < 0 && docTopLef[1] === 0) // Don't scroll to negative values.
+			if (e.y < 0 && app.activeDocument.activeView.viewedRectangle.pY1 === 0) // Don't scroll to negative values.
 				return;
 
-			if (e.x < 0 && docTopLef[0] === 0)
+			if (e.x < 0 && app.activeDocument.activeView.viewedRectangle.pX1 === 0)
 				return;
 
 			var diff = Math.round(e.y * app.dpiScale);
 
-			if (docTopLef[1] + diff < 0) {
-				e.y = Math.round(-1 * docTopLef[1] / app.dpiScale);
+			if (app.activeDocument.activeView.viewedRectangle.pY1 + diff < 0) {
+				e.y = Math.round(-1 * app.activeDocument.activeView.viewedRectangle.cY1);
 			}
 
 			diff = Math.round(e.x * app.dpiScale);
-			if (docTopLef[0] + diff < 0) {
-				e.x = Math.round(-1 * docTopLef[0] / app.dpiScale);
+			if (app.activeDocument.activeView.viewedRectangle.pX1 + diff < 0) {
+				e.x = Math.round(-1 * app.activeDocument.activeView.viewedRectangle.cX1);
 			}
 
 			this.moveMapBy(e.x, e.y);
@@ -215,8 +214,7 @@ export class ScrollSection extends CanvasSectionObject {
 				&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
 					var temp = [e.pos.x, e.pos.y];
 					var tempPos = [(this.isRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
-					var docTopLeft = app.sectionContainer.getDocumentTopLeft();
-					tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
+					tempPos = [tempPos[0] + app.activeDocument.activeView.viewedRectangle.pX1, tempPos[1] + app.activeDocument.activeView.viewedRectangle.pY1];
 					tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
 					L.Map.THIS._docLayer._postMouseEvent('move', tempPos[0], tempPos[1], 1, 1, 0);
 				}
@@ -305,7 +303,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		result.ratio = app.view.size.pY / result.scrollLength; // 1px scrolling = xpx document height.
-		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.yOffset);
+		result.startY = Math.round(app.activeDocument.activeView.viewedRectangle.pY1 / result.ratio + this.sectionProperties.yOffset);
 
 		result.verticalScrollStep = this.size[1] / 2;
 
@@ -371,7 +369,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		result.ratio = app.view.size.pX / result.scrollLength;
-		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.xOffset);
+		result.startX = Math.round(app.activeDocument.activeView.viewedRectangle.pX1 / result.ratio + this.sectionProperties.xOffset);
 
 		result.horizontalScrollStep = this.size[0] / 2;
 
@@ -761,7 +759,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 	private isMouseOnScrollBar (point: cool.SimplePoint): void {
 		const mirrorX = this.isRTL();
-		if (this.documentTopLeft[1] >= 0) {
+		if (app.activeDocument.activeView.viewedRectangle.pY1 >= 0) {
 			if ((!mirrorX && point.pX >= this.size[0] - this.sectionProperties.usableThickness)
 				|| (mirrorX && point.pX <= this.sectionProperties.usableThickness)) {
 				if (point.pY > this.sectionProperties.yOffset) {
@@ -776,7 +774,7 @@ export class ScrollSection extends CanvasSectionObject {
 			}
 		}
 
-		if (this.documentTopLeft[0] >= 0) {
+		if (app.activeDocument.activeView.viewedRectangle.pX1 >= 0) {
 			if (point.pY >= this.size[1] - this.sectionProperties.usableThickness) {
 				if ((!mirrorX && point.pX <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset && point.pX >= this.sectionProperties.xOffset)
 					|| (mirrorX && point.pX >= this.sectionProperties.horizontalScrollRightOffset && point.pX >= this.sectionProperties.xOffset)) {
@@ -806,14 +804,14 @@ export class ScrollSection extends CanvasSectionObject {
 			control += this.sectionProperties.moveMapBy[1]; // Add pending offset.
 
 		if (offset > 0) {
-			if (this.documentTopLeft[1] + control > this.sectionProperties.yMax)
-				offset = this.sectionProperties.yMax - this.documentTopLeft[1] - control;
+			if (app.activeDocument.activeView.viewedRectangle.pY1 + control > this.sectionProperties.yMax)
+				offset = this.sectionProperties.yMax - app.activeDocument.activeView.viewedRectangle.pY1 - control;
 			if (offset <= 0)
 				return false;
 		}
 		else {
-			if (this.documentTopLeft[1] + control < this.sectionProperties.yMin)
-				offset = this.sectionProperties.yMin - this.documentTopLeft[1] - control;
+			if (app.activeDocument.activeView.viewedRectangle.pY1 + control < this.sectionProperties.yMin)
+				offset = this.sectionProperties.yMin - app.activeDocument.activeView.viewedRectangle.pY1 - control;
 			if (offset >= 0)
 				return false;
 		}
@@ -845,14 +843,14 @@ export class ScrollSection extends CanvasSectionObject {
 		if (this.isRTL()) offset = -offset;
 
 		if (offset > 0) {
-			if (this.documentTopLeft[0] + control > this.sectionProperties.xMax)
-				offset = this.sectionProperties.xMax - this.documentTopLeft[0] - control;
+			if (app.activeDocument.activeView.viewedRectangle.pX1 + control > this.sectionProperties.xMax)
+				offset = this.sectionProperties.xMax - app.activeDocument.activeView.viewedRectangle.pX1 - control;
 			if (offset <= 0)
 				return false;
 		}
 		else {
-			if (this.documentTopLeft[0] + control < this.sectionProperties.xMin)
-				offset = this.sectionProperties.xMin - this.documentTopLeft[0] - control;
+			if (app.activeDocument.activeView.viewedRectangle.pX1 + control < this.sectionProperties.xMin)
+				offset = this.sectionProperties.xMin - app.activeDocument.activeView.viewedRectangle.pX1 - control;
 			if (offset >= 0)
 				return false;
 		}
@@ -1086,7 +1084,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		const mirrorX = this.isRTL();
 
-		if (this.documentTopLeft[1] >= 0) {
+		if (app.activeDocument.activeView.viewedRectangle.pY1 >= 0) {
 			if ((!mirrorX && point.pX >= this.size[0] - this.sectionProperties.usableThickness)
 				|| (mirrorX && point.pY <= this.sectionProperties.usableThickness)) {
 				if (point.pY > this.sectionProperties.yOffset) {
@@ -1106,7 +1104,7 @@ export class ScrollSection extends CanvasSectionObject {
 			}
 		}
 
-		if (this.documentTopLeft[0] >= 0) {
+		if (app.activeDocument.activeView.viewedRectangle.pX1 >= 0) {
 			if (point.pY >= this.size[1] - this.sectionProperties.usableThickness) {
 				if ((!mirrorX && point.pX >= this.sectionProperties.xOffset && point.pX <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset)
 					|| (mirrorX && point.pX >= this.sectionProperties.xOffset && point.pX >= this.sectionProperties.horizontalScrollRightOffset)) {
@@ -1155,8 +1153,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 			var temp = this.containerObject.getPositionOnMouseUp();
 			var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
-			var docTopLeft = app.sectionContainer.getDocumentTopLeft();
-			tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
+			tempPos = [tempPos[0] + app.activeDocument.activeView.viewedRectangle.pX1, tempPos[1] + app.activeDocument.activeView.viewedRectangle.pY1];
 			tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
 			this.onScrollVelocity({ vx: 0, vy: 0 }); // Cancel auto scrolling.
 			L.Map.THIS.mouse._mouseDown = false;

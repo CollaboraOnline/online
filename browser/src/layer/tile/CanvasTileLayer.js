@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase */
 
 function clamp(num, min, max)
 {
@@ -653,7 +653,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
 		this._canvas.style.visibility = 'hidden';
+
 		app.sectionContainer = new CanvasSectionContainer(this._canvas, this.isCalc() /* disableDrawing? */);
+		app.activeDocument = new DocumentBase();
+
 		this._container.style.position = 'absolute';
 		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
 		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
@@ -771,7 +774,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// because the server needs new data even if the client is unmodified.
 	_resetClientVisArea: function ()  {
 		this._clientZoom = '';
-		this._clientVisibleArea = '';
+		app.activeDocument.activeView.resetClientVisibleArea();
 	},
 
 	_resetCanonicalIdStatus: function() {
@@ -2479,19 +2482,19 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this.isCalc() && oldSelection) {
-			if (!app.file.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
+			if (!app.activeDocument.activeView.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
 				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
 				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
 
 				var scrollX = 0, scrollY = 0;
-				if (newSelection.pX2 > app.file.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
-					scrollX = newSelection.pX2 - app.file.viewedRectangle.pX2 + spacingX;
-				else if (newSelection.pX1 < app.file.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
-					scrollX = newSelection.pX1 - app.file.viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY2 > app.file.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
-					scrollY = newSelection.pY2 - app.file.viewedRectangle.pY2 + spacingY;
-				else if (newSelection.pY1 < app.file.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
-					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 - spacingY;
+				if (newSelection.pX2 > app.activeDocument.activeView.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
+					scrollX = newSelection.pX2 - app.activeDocument.activeView.viewedRectangle.pX2 + spacingX;
+				else if (newSelection.pX1 < app.activeDocument.activeView.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
+					scrollX = newSelection.pX1 - app.activeDocument.activeView.viewedRectangle.pX1 - spacingX;
+				if (newSelection.pY2 > app.activeDocument.activeView.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
+					scrollY = newSelection.pY2 - app.activeDocument.activeView.viewedRectangle.pY2 + spacingY;
+				else if (newSelection.pY1 < app.activeDocument.activeView.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
+					scrollY = newSelection.pY1 - app.activeDocument.activeView.viewedRectangle.pY1 - spacingY;
 				if (scrollX !== 0 || scrollY !== 0) {
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.querySelector('#addressInput input').value;
@@ -2922,7 +2925,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// If x coordinate is already within visible area, we won't scroll to that direction.
 		if (app.isXVisibleInTheDisplayedArea(Math.round(center.x * CSSPixelsToTwips)))
-			center.x = app.file.viewedRectangle.cX1;
+			center.x = app.activeDocument.activeView.viewedRectangle.cX1;
 		else {
 			center.x -= this._map.getSize().divideBy(2).x;
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
@@ -2937,7 +2940,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
 
 		if (app.isYVisibleInTheDisplayedArea(Math.round(controlYDown * CSSPixelsToTwips)) && app.isYVisibleInTheDisplayedArea(Math.round(controlYUp * CSSPixelsToTwips)))
-			center.y = app.file.viewedRectangle.cY1;
+			center.y = app.activeDocument.activeView.viewedRectangle.cY1;
 		else {
 			center.y -= this._map.getSize().divideBy(2).y;
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
@@ -3566,9 +3569,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		var documentBounds = this._map.getPixelBoundsCore();
 		var documentPos = documentBounds.min;
 		var documentEndPos = documentBounds.max;
-		app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
-		if (app.file.writer.multiPageView)
-			MultiPageViewLayout.reset();
+
+		const size = [documentEndPos.x - documentPos.x, documentEndPos.y - documentPos.y];
+
+		app.activeDocument.activeView.setViewedRectangle(new cool.SimpleRectangle(
+			documentPos.x * app.pixelsToTwips, documentPos.y * app.pixelsToTwips, size[0] * app.pixelsToTwips, size[1] * app.pixelsToTwips
+		));
 	},
 
 	pauseDrawing: function () {
@@ -4068,7 +4074,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var rectangle;
 		var maxArea = -1;
 		var mostVisiblePart = 0;
-		const viewedRectangle = app.file.viewedRectangle.pToArray();
+		const viewedRectangle = app.activeDocument.activeView.viewedRectangle.pToArray();
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
 			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, viewedRectangle);
@@ -4106,47 +4112,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.highlightCurrentPart(partToSelect);
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			}
-		}
-	},
-
-	_sendClientVisibleArea: function (forceUpdate) {
-		if (!this._map._docLoaded)
-			return;
-
-		if (app.file.writer.multiPageView)
-			return; // This view mode sends the client visible area after modifying the document position.
-
-		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
-
-		var visibleArea = this._map.getPixelBounds();
-		visibleArea = new L.Bounds(
-			this._pixelsToTwips(visibleArea.min),
-			this._pixelsToTwips(visibleArea.max)
-		);
-		splitPos = this._corePixelsToTwips(splitPos);
-		var size = visibleArea.getSize();
-		var visibleTopLeft = visibleArea.min;
-		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x)
-					+ ' y=' + Math.round(visibleTopLeft.y)
-					+ ' width=' + Math.round(size.x)
-					+ ' height=' + Math.round(size.y)
-					+ ' splitx=' + Math.round(splitPos.x)
-					+ ' splity=' + Math.round(splitPos.y);
-
-		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
-			// Only update on some change
-			if (this._ySplitter) {
-				this._ySplitter.onPositionChange();
-			}
-			if (this._xSplitter) {
-				this._xSplitter.onPositionChange();
-			}
-			// Visible area is dirty, update it on the server
-			app.socket.sendMessage(newClientVisibleArea);
-			if (this._map.contextToolbar)
-				this._map.contextToolbar.hideContextToolbar(); // hide context toolbar when scroll/window resize etc...
-			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
-				this._clientVisibleArea = newClientVisibleArea;
 		}
 	},
 

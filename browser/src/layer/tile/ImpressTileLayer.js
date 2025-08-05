@@ -115,10 +115,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (commentData) {
-		let docTopLeft = app.sectionContainer.getDocumentTopLeft();
-		docTopLeft = [docTopLeft[0] * app.pixelsToTwips, docTopLeft[1] * app.pixelsToTwips];
-		commentData.anchorPos = [docTopLeft[0], docTopLeft[1]];
-		commentData.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
+		commentData.anchorPos = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1];
+		commentData.rectangle = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1, 566, 566];
 
 		commentData.parthash = app.impress.partList[this._selectedPart].hash;
 

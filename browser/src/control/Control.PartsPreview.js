@@ -426,7 +426,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * app.twipsToPixels);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
-		var currentScrollX = (app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).containerObject.getDocumentTopLeft()[0] / app.dpiScale);
+		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
 
 		if (viewHeight > partHeightPixels && partNumber > 0)
 			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
@@ -447,8 +447,8 @@ L.Control.PartsPreview = L.Control.extend({
 		var viewHeight = Math.floor(app.sectionContainer.getViewSize()[1]);
 		var viewHeightScaled = Math.round(Math.floor(viewHeight) / app.dpiScale);
 		var scrollBySize = Math.floor(viewHeightScaled * 0.75);
-		var topPx = (app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).containerObject.getDocumentTopLeft()[1] / app.dpiScale);
-		var currentScrollX = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).containerObject.getDocumentTopLeft()[0] / app.dpiScale;
+		var topPx = app.activeDocument.activeView.viewedRectangle.cY1;
+		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
 
 		if (buttonType === 'prev') {
 			if (this._map.getCurrentPartNumber() == 0) {
