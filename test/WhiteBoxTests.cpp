@@ -33,6 +33,7 @@
 #include <cstddef>
 #include <fstream>
 #include <sstream>
+#include <unistd.h>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture

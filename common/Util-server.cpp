@@ -20,6 +20,8 @@
 #include <sys/resource.h>
 #elif defined __FreeBSD__
 #include <sys/resource.h>
+#include <unistd.h>
+extern char** environ;
 #endif
 
 #include <dirent.h>
