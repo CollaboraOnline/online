@@ -56,7 +56,8 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 		const rootContainer = scrollable.querySelector('div');
 		if (!rootContainer) return;
 
-		if (rootContainer.scrollWidth > window.innerWidth) {
+		const availableWidth = rootContainer.parentElement.offsetWidth;
+		if (rootContainer.scrollWidth > availableWidth) {
 			// we have overflowed content
 			const direction = isRTL ? -1 : 1;
 			if (direction * scrollable.scrollLeft > 0) {
@@ -67,7 +68,7 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 
 			if (
 				direction * scrollable.scrollLeft <
-				rootContainer.scrollWidth - window.innerWidth - 1
+				rootContainer.scrollWidth - availableWidth - 1
 			) {
 				if (isRTL) showArrow(left, true);
 				else showArrow(right, true);
@@ -130,7 +131,7 @@ function setupPriorityStatusHandler(scrollable: Element, toolItems: any[]) {
 			item.classList.remove('status-hidden');
 		});
 
-		const availableWidth = window.innerWidth;
+		const availableWidth = rootContainer.parentElement.offsetWidth;
 		let contentWidth = rootContainer.scrollWidth;
 
 		if (contentWidth > availableWidth) {
