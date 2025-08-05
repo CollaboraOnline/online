@@ -10,6 +10,7 @@
  */
 
 class ViewLayoutBase {
+	public readonly type: string = 'ViewLayoutBase';
 	protected _viewedRectangle: cool.SimpleRectangle;
 	private lastViewedRectangle: cool.SimpleRectangle;
 	protected clientVisibleAreaCommand: string = '';
