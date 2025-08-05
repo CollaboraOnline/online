@@ -1092,7 +1092,7 @@ body {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	border-top-color: var(--cell-cursor-selection-border-color); /* color */
+	border-top-color: rgba(var(--doc-type), 1); /* color */
 	border-top-width: 2px; /* weight */
 }
 
@@ -1100,7 +1100,7 @@ body {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	background-color: var(--cell-cursor-selection-border-color); /* fill color */
+	background-color: rgba(var(--doc-type), 1); /* fill color */
 	opacity: 0.25; /* opacity */
 	border-top-width: 1px; /* weight */
 }
