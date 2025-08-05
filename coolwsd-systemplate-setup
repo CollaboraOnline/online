@@ -157,4 +157,9 @@ if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     test -d $HOME/.fonts && ${CP} -r -p -L $HOME/.fonts $CHROOT/$HOME
 fi
 
+# Create a mount point for /nix/store if we will need to mount it
+if test -d /nix/store; then
+    mkdir -p $CHROOT/nix/store
+fi
+
 exit 0
