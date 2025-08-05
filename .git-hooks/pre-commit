@@ -133,14 +133,24 @@ sub check_prettier()
 {
     my $red = "\033[0;31m";
     my $reset = "\033[0m";
+    my $hasmake = system("which make > /dev/null") == 0;
+    my $hasgmake = system("which gmake > /dev/null") == 0;
 
-    system("make prettier >/dev/null 2>&1") == 0
+    my $make = $hasgmake? "gmake" : $hasmake? "make" : die  $red .
+                "\n===============================================\n" .
+                "  ERROR: Code formatting check failed\n" .
+                "===============================================\n" .
+                "Please install (gnu) make as `gmake` or `make`\n" .
+                "===============================================\n" .
+                $reset . "\n";
+
+    system("$make prettier >/dev/null 2>&1") == 0
         or die $red .
                 "\n===============================================\n" .
                 "  ERROR: Code formatting check failed\n" .
                 "===============================================\n" .
                 "Your code is not properly formatted.\n" .
-                "Please run 'make prettier-write' before committing.\n" .
+                "Please run '$make prettier-write' before committing.\n" .
                 "===============================================\n" .
                 $reset . "\n";
 }
