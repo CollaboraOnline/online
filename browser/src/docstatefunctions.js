@@ -32,7 +32,6 @@ window.addEventListener('load', function () {
 		0,
 		0,
 	);
-	app.view.size = new app.definitions.simplePoint(0, 0);
 	app.file.size = new app.definitions.simplePoint(0, 0);
 	app.tile.size = new app.definitions.simplePoint(0, 0);
 	app.pixelsToTwips = 15;

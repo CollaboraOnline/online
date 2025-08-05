@@ -349,13 +349,11 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawPageBackgroundsMultiPageView() {
-		if (MultiPageViewLayout === undefined) return;
-
 		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
 		this.context.strokeStyle = "red";
 
-		for (let i = 0; i < MultiPageViewLayout.layoutRectangles.length; i++) {
-			const rectangle = MultiPageViewLayout.layoutRectangles[i];
+		for (let i = 0; i < app.activeDocument.activeView.layoutRectangles.length; i++) {
+			const rectangle = app.activeDocument.activeView.layoutRectangles[i];
 			const coords = [rectangle.layoutX - app.activeDocument.activeView.viewedRectangle.pX1, rectangle.layoutY - app.activeDocument.activeView.viewedRectangle.pY1, rectangle.pWidth, rectangle.pHeight];
 			this.context.strokeRect(coords[0], coords[1], coords[2], coords[3]);
 			this.context.fillRect(coords[0], coords[1], coords[2], coords[3]);
@@ -384,14 +382,14 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawForMultiPageView() {
-		const visibleCoordList: Array<TileCoordData> = TileManager.getVisibleCoordList(MultiPageViewLayout.getVisibleAreaRectangle());
+		const visibleCoordList: Array<TileCoordData> = TileManager.getVisibleCoordList(app.activeDocument.activeView.getVisibleAreaRectangle());
 
 		for (let i = 0; i < visibleCoordList.length; i++) {
 			const coords = visibleCoordList[i];
 
 			let firstIntersection = -1;
-			for (let j = 0; j < MultiPageViewLayout.layoutRectangles.length; j++) {
-				const layoutRectangle = MultiPageViewLayout.layoutRectangles[j];
+			for (let j = 0; j < app.activeDocument.activeView.layoutRectangles.length; j++) {
+				const layoutRectangle = app.activeDocument.activeView.layoutRectangles[j];
 				const coordsRectangle = [coords.x, coords.y, TileManager.tileSize, TileManager.tileSize];
 				const intersection = LOUtil._getIntersectionRectangle(layoutRectangle.pToArray(), coordsRectangle);
 

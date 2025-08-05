@@ -10,13 +10,15 @@
  */
 
 class ViewLayoutBase {
-	private _viewedRectangle: cool.SimpleRectangle;
+	protected _viewedRectangle: cool.SimpleRectangle;
 	private lastViewedRectangle: cool.SimpleRectangle;
-	private clientVisibleAreaCommand: string = '';
+	protected clientVisibleAreaCommand: string = '';
+	protected _viewSize: cool.SimplePoint;
 
 	constructor() {
 		this._viewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 		this.lastViewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+		this._viewSize = new cool.SimplePoint(0, 0);
 	}
 
 	public resetClientVisibleArea(): void {
@@ -87,5 +89,13 @@ class ViewLayoutBase {
 
 		app.sectionContainer.onNewDocumentTopLeft();
 		app.sectionContainer.requestReDraw();
+	}
+
+	public get viewSize() {
+		return this._viewSize;
+	}
+
+	public set viewSize(size: cool.SimplePoint) {
+		this._viewSize = size;
 	}
 }
