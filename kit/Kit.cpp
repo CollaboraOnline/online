@@ -3366,10 +3366,14 @@ void lokit_main(
         const std::string jailPathStr = jailPath.toString();
         JailUtil::createJailPath(jailPathStr);
 
+#ifdef THREADCOUNT_USABLE
         // initialize while we have access to /proc/self/task
         threadCounter.reset(new Util::ThreadCounter());
+#endif
+#ifdef FDCOUNT_USABLE
         // initialize while we have access to /proc/self/fd
         fdCounter.reset(new Util::FDCounter());
+#endif
 
         if (!ChildSession::NoCapsForKit)
         {
