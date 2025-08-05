@@ -21,8 +21,7 @@ describe.skip('Repair Document', function() {
 		cy.cGet('#DocumentRepairDialog').should('exist');
 		cy.cGet('#versions').should('exist');
 		cy.cGet('body').contains('#versions .ui-treeview-entry div', 'Input').click();
-		cy.cGet('#ok.ui-pushbutton.jsdialog').should('exist');
-		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
+		cy.cGet('#ok.ui-pushbutton-wrapper.jsdialog').should('exist').click();
 		cy.wait(500);
 		calcHelper.selectEntireSheet();
 		helper.expectTextForClipboard('');
