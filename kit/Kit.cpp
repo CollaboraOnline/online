@@ -125,7 +125,10 @@ using Poco::Path;
 using namespace COOLProtocol;
 using JsonUtil::makePropertyValue;
 
-extern "C" { void dump_kit_state(void); /* easy for gdb */ }
+extern "C"
+{
+    void dump_kit_state(void); /* easy for gdb */
+}
 
 #if MOBILEAPP
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
@@ -136,7 +139,7 @@ extern std::mutex DocBrokersMutex;
 
 // A Kit process hosts only a single document in its lifetime.
 class Document;
-static Document *singletonDocument = nullptr;
+static Document* singletonDocument = nullptr;
 static std::unique_ptr<Util::ThreadCounter> threadCounter;
 static std::unique_ptr<Util::FDCounter> fdCounter;
 
@@ -174,14 +177,14 @@ bool isURPEnabled() { return EnableWebsocketURP; }
 static std::string JailRoot;
 
 #if !MOBILEAPP
-static int URPtoLoFDs[2] { -1, -1 };
-static int URPfromLoFDs[2] { -1, -1 };
+static int URPtoLoFDs[2]{ -1, -1 };
+static int URPfromLoFDs[2]{ -1, -1 };
 #endif
 
 // Abnormally we get LOK events from another thread, which must be
 // push safely into our main poll loop to process to keep all
 // socket buffer & event processing in a single, thread.
-bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data);
+bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char* p, void* data);
 
 [[maybe_unused]]
 static LokHookFunction2* initFunction = nullptr;
@@ -193,7 +196,7 @@ public:
     BackgroundSaveWatchdog(unsigned mobileAppDocId, int savingTid)
         : _saveCompleted(false)
         , _watchdogThread(
-            // mobileAppDocId is on the stack, so capture it by value.
+              // mobileAppDocId is on the stack, so capture it by value.
               [mobileAppDocId, savingTid, this]()
               {
                   Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
@@ -214,11 +217,13 @@ public:
                   }
                   else
                   {
-                      auto saveDuration = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - saveStart);
+                      auto saveDuration = std::chrono::duration_cast<std::chrono::seconds>(
+                          std::chrono::steady_clock::now() - saveStart);
 
                       // Failed!
-                      LOG_WRN("BgSave timed out and will self-destroy process " << getpid() <<
-                              " (config timeout: " << timeout << ", real timeout: " << saveDuration << ")");
+                      LOG_WRN("BgSave timed out and will self-destroy process "
+                              << getpid() << " (config timeout: " << timeout
+                              << ", real timeout: " << saveDuration << ")");
                       Log::shutdown(); // Flush logs.
                       // this attempts to get the saving-thread to generate a backtrace
                       Util::killThreadById(savingTid, SIGABRT);
@@ -229,7 +234,9 @@ public:
                       // raise(3) will exit the current thread, not the process.
                       // coverity[sleep : SUPPRESS] - don't report sleep with lock held
                       sleep(30); // long enough for a trace ?
-                      std::cerr << "BgSave failed to terminate after SIGABRT - will hard self-destroy process " << getpid() << std::endl;
+                      std::cerr << "BgSave failed to terminate after SIGABRT - will hard "
+                                   "self-destroy process "
+                                << getpid() << std::endl;
                       ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
                   }
               })
@@ -261,122 +268,121 @@ void Document::shutdownBackgroundWatchdog()
 
 namespace
 {
-    // for later consistency checking.
-    static std::string UserDirPath;
-    static std::string InstDirPath;
+// for later consistency checking.
+static std::string UserDirPath;
+static std::string InstDirPath;
 
-    std::string pathFromFileURL(const std::string &uri)
+std::string pathFromFileURL(const std::string& uri)
+{
+    const std::string decoded = Uri::decode(uri);
+    if (decoded.rfind("file://", 0) != 0)
     {
-        const std::string decoded = Uri::decode(uri);
-        if (decoded.rfind("file://", 0) != 0)
-        {
-            LOG_ERR("Asked to load a very unusual file path: '" << uri << "' -> '" << decoded << "'");
-            return std::string();
-        }
-        return decoded.substr(7);
+        LOG_ERR("Asked to load a very unusual file path: '" << uri << "' -> '" << decoded << "'");
+        return std::string();
     }
+    return decoded.substr(7);
+}
 
-    [[maybe_unused]]
-    void consistencyCheckFileExists(const std::string &uri)
-    {
-        std::string path = pathFromFileURL(uri);
-        if (path.empty())
-            return;
-        FileUtil::Stat stat(path);
-        if (!stat.good() && stat.isFile())
-            LOG_ERR("Fatal system error: created file passed into document doesn't exist: '" << path << "'");
-        else
-            LOG_TRC("File path '" << path << "' exists of length " << stat.size());
+[[maybe_unused]]
+void consistencyCheckFileExists(const std::string& uri)
+{
+    std::string path = pathFromFileURL(uri);
+    if (path.empty())
+        return;
+    FileUtil::Stat stat(path);
+    if (!stat.good() && stat.isFile())
+        LOG_ERR("Fatal system error: created file passed into document doesn't exist: '" << path
+                                                                                         << "'");
+    else
+        LOG_TRC("File path '" << path << "' exists of length " << stat.size());
 
-        consistencyCheckJail();
-    }
+    consistencyCheckJail();
+}
 
 #if !defined(BUILDING_TESTS) && !MOBILEAPP
-    enum class LinkOrCopyType: std::uint8_t
-    {
-        All,
-        LO
-    };
-    LinkOrCopyType linkOrCopyType;
-    std::string sourceForLinkOrCopy;
-    Poco::Path destinationForLinkOrCopy;
-    bool forceInitialCopy; // some stackable file-systems have very slow first hard link creation
-    std::string linkableForLinkOrCopy; // Place to stash copies that we can hard-link from
-    std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
-    bool linkOrCopyVerboseLogging = false;
-    unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
-    constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
+enum class LinkOrCopyType : std::uint8_t
+{
+    All,
+    LO
+};
+LinkOrCopyType linkOrCopyType;
+std::string sourceForLinkOrCopy;
+Poco::Path destinationForLinkOrCopy;
+bool forceInitialCopy; // some stackable file-systems have very slow first hard link creation
+std::string linkableForLinkOrCopy; // Place to stash copies that we can hard-link from
+std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
+bool linkOrCopyVerboseLogging = false;
+unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
+constexpr unsigned SlowLinkOrCopyLimitInSecs =
+    2; // After this many seconds, start spamming the logs.
 
-    bool detectSlowStackingFileSystem([[maybe_unused]] const std::string& directory)
-    {
+bool detectSlowStackingFileSystem([[maybe_unused]] const std::string& directory)
+{
 #ifdef __linux__
 #ifndef OVERLAYFS_SUPER_MAGIC
 // From linux/magic.h.
-#define OVERLAYFS_SUPER_MAGIC   0x794c7630
+#define OVERLAYFS_SUPER_MAGIC 0x794c7630
 #endif
-        struct statfs fs;
-        if (::statfs(directory.c_str(), &fs) != 0)
-        {
-            LOG_SYS("statfs failed on '" << directory << "'");
-            return false;
-        }
-        switch (fs.f_type) {
-//        case FUSE_SUPER_MAGIC: ?
+    struct statfs fs;
+    if (::statfs(directory.c_str(), &fs) != 0)
+    {
+        LOG_SYS("statfs failed on '" << directory << "'");
+        return false;
+    }
+    switch (fs.f_type)
+    {
+            //        case FUSE_SUPER_MAGIC: ?
         case OVERLAYFS_SUPER_MAGIC:
             return true;
         default:
             return false;
-        }
+    }
 #else
-        return false;
+    return false;
 #endif
-    }
+}
 
-    /// Returns the LinkOrCopyType as a human-readable string (for logging).
-    std::string linkOrCopyTypeString(LinkOrCopyType type)
+/// Returns the LinkOrCopyType as a human-readable string (for logging).
+std::string linkOrCopyTypeString(LinkOrCopyType type)
+{
+    switch (type)
     {
-        switch (type)
-        {
-            case LinkOrCopyType::LO:
-                return "LibreOffice";
-            case LinkOrCopyType::All:
-                return "all";
-            default:
-                assert(!"Unknown LinkOrCopyType.");
-                return "unknown";
-        }
-    }
-
-    bool shouldCopyDir(const char *path)
-    {
-        switch (linkOrCopyType)
-        {
         case LinkOrCopyType::LO:
-            return
-                strcmp(path, "program/wizards") != 0 &&
-                strcmp(path, "sdk") != 0 &&
-                strcmp(path, "debugsource") != 0 &&
-                strcmp(path, "share/basic") != 0 &&
-                strncmp(path,  "share/extensions/dict-", // preloaded
-                        sizeof("share/extensions/dict")) != 0 &&
-                strcmp(path, "share/Scripts/java") != 0 &&
-                strcmp(path, "share/Scripts/javascript") != 0 &&
-                strcmp(path, "share/config/wizard") != 0 &&
-                strcmp(path, "readmes") != 0 &&
-                strcmp(path, "help") != 0;
+            return "LibreOffice";
+        case LinkOrCopyType::All:
+            return "all";
+        default:
+            assert(!"Unknown LinkOrCopyType.");
+            return "unknown";
+    }
+}
+
+bool shouldCopyDir(const char* path)
+{
+    switch (linkOrCopyType)
+    {
+        case LinkOrCopyType::LO:
+            return strcmp(path, "program/wizards") != 0 && strcmp(path, "sdk") != 0 &&
+                   strcmp(path, "debugsource") != 0 && strcmp(path, "share/basic") != 0 &&
+                   strncmp(path, "share/extensions/dict-", // preloaded
+                           sizeof("share/extensions/dict")) != 0 &&
+                   strcmp(path, "share/Scripts/java") != 0 &&
+                   strcmp(path, "share/Scripts/javascript") != 0 &&
+                   strcmp(path, "share/config/wizard") != 0 && strcmp(path, "readmes") != 0 &&
+                   strcmp(path, "help") != 0;
         default: // LinkOrCopyType::All
             return true;
-        }
     }
+}
 
-    bool shouldLinkFile(const char *path)
+bool shouldLinkFile(const char* path)
+{
+    switch (linkOrCopyType)
     {
-        switch (linkOrCopyType)
-        {
         case LinkOrCopyType::LO:
         {
-            if (strstr(path, "LICENSE") || strstr(path, "EULA") || strstr(path, "CREDITS")
-                || strstr(path, "NOTICE"))
+            if (strstr(path, "LICENSE") || strstr(path, "EULA") || strstr(path, "CREDITS") ||
+                strstr(path, "NOTICE"))
                 return false;
 
             const char* dot = strrchr(path, '.');
@@ -403,10 +409,10 @@ namespace
                 // otherwise drop the rest of the code.
                 return false;
             }
-            const char *vers;
+            const char* vers;
             if ((vers = strstr(path, ".so."))) // .so.[digit]+
             {
-                for(int i = sizeof (".so."); vers[i] != '\0'; ++i)
+                for (int i = sizeof(".so."); vers[i] != '\0'; ++i)
                     if (!isdigit(vers[i]) && vers[i] != '.')
                         return true;
                 return false;
@@ -415,106 +421,109 @@ namespace
         }
         default: // LinkOrCopyType::All
             return true;
-        }
     }
+}
 
-    void linkOrCopyFile(const char* fpath, const std::string& newPath)
+void linkOrCopyFile(const char* fpath, const std::string& newPath)
+{
+    ++linkOrCopyFileCount;
+    if (linkOrCopyVerboseLogging)
+        LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath << '"');
+
+    if (!forceInitialCopy)
     {
-        ++linkOrCopyFileCount;
-        if (linkOrCopyVerboseLogging)
-            LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath << '"');
+        // first try a simple hard-link
+        if (link(fpath, newPath.c_str()) == 0)
+            return;
+    }
+    // else always copy before linking to linkable/
 
+    // incrementally build our 'linkable/' copy nearby
+    static bool canChown = true; // only if we can get permissions right
+    if ((forceInitialCopy || errno == EXDEV) && canChown)
+    {
+        // then copy somewhere closer and hard link from there
         if (!forceInitialCopy)
+            LOG_TRC("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
+                              << ". Will try to link template.");
+
+        std::string linkableCopy = linkableForLinkOrCopy + fpath;
+        if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
+            return;
+
+        if (errno == ENOENT)
         {
-            // first try a simple hard-link
-            if (link(fpath, newPath.c_str()) == 0)
-                return;
-        }
-        // else always copy before linking to linkable/
-
-        // incrementally build our 'linkable/' copy nearby
-        static bool canChown = true; // only if we can get permissions right
-        if ((forceInitialCopy || errno == EXDEV) && canChown)
-        {
-            // then copy somewhere closer and hard link from there
-            if (!forceInitialCopy)
-                LOG_TRC("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
-                        << ". Will try to link template.");
-
-            std::string linkableCopy = linkableForLinkOrCopy + fpath;
-            if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
-                return;
-
-            if (errno == ENOENT)
+            File(Path(linkableCopy).parent()).createDirectories();
+            if (!FileUtil::copy(fpath, linkableCopy, /*log=*/false, /*throw_on_error=*/false))
+                LOG_TRC("Failed to create linkable copy [" << fpath << "] to ["
+                                                           << linkableCopy.c_str() << "]");
+            else
             {
-                File(Path(linkableCopy).parent()).createDirectories();
-                if (!FileUtil::copy(fpath, linkableCopy, /*log=*/false, /*throw_on_error=*/false))
-                    LOG_TRC("Failed to create linkable copy [" << fpath << "] to [" << linkableCopy.c_str() << "]");
-                else {
-                    // Match system permissions, so a file we can write is not shared across jails.
-                    struct stat ownerInfo;
-                    if (::stat(fpath, &ownerInfo) != 0 ||
-                        ::chown(linkableCopy.c_str(), ownerInfo.st_uid, ownerInfo.st_gid) != 0)
-                    {
-                        LOG_ERR("Failed to stat or chown " << ownerInfo.st_uid << ":" << ownerInfo.st_gid <<
-                                " " << linkableCopy << ": " << strerror(errno) << " missing cap_chown?, disabling linkable");
-                        unlink(linkableCopy.c_str());
-                        canChown = false;
-                    }
-                    else if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
-                        return;
+                // Match system permissions, so a file we can write is not shared across jails.
+                struct stat ownerInfo;
+                if (::stat(fpath, &ownerInfo) != 0 ||
+                    ::chown(linkableCopy.c_str(), ownerInfo.st_uid, ownerInfo.st_gid) != 0)
+                {
+                    LOG_ERR("Failed to stat or chown "
+                            << ownerInfo.st_uid << ":" << ownerInfo.st_gid << " " << linkableCopy
+                            << ": " << strerror(errno)
+                            << " missing cap_chown?, disabling linkable");
+                    unlink(linkableCopy.c_str());
+                    canChown = false;
                 }
+                else if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
+                    return;
             }
-            LOG_TRC("link(\"" << linkableCopy << "\", \"" << newPath << "\") failed: " << strerror(errno)
-                    << ". Cannot create linkable copy.");
         }
+        LOG_TRC("link(\"" << linkableCopy << "\", \"" << newPath
+                          << "\") failed: " << strerror(errno) << ". Cannot create linkable copy.");
+    }
 
-        static bool warned = false;
-        if (!warned)
+    static bool warned = false;
+    if (!warned)
+    {
+        LOG_ERR("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: "
+                          << strerror(errno) << ". Very slow copying path triggered.");
+        warned = true;
+    }
+    else
+        LOG_TRC("link(\"" << fpath << "\", \"" << newPath.c_str()
+                          << "\") failed: " << strerror(errno) << ". Will copy.");
+    if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
+    {
+        LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
+        Util::forcedExit(EX_SOFTWARE);
+    }
+}
+
+int linkOrCopyFunction(const char* fpath, const struct stat* sb, int typeflag,
+                       struct FTW* /*ftwbuf*/)
+{
+    if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
+    {
+        LOG_TRC("nftw: Skipping redundant path: " << fpath);
+        return FTW_CONTINUE;
+    }
+
+    if (!linkOrCopyVerboseLogging)
+    {
+        const auto durationInSecs = std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::steady_clock::now() - linkOrCopyStartTime);
+        if (durationInSecs.count() > SlowLinkOrCopyLimitInSecs)
         {
-            LOG_ERR("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
-                    << ". Very slow copying path triggered.");
-            warned = true;
-        } else
-            LOG_TRC("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
-                    << ". Will copy.");
-        if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
-        {
-            LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
-            Util::forcedExit(EX_SOFTWARE);
+            LOG_WRN("Linking/copying files from "
+                    << sourceForLinkOrCopy << " to " << destinationForLinkOrCopy.toString()
+                    << " is taking too much time. Enabling verbose link/copy logging.");
+            linkOrCopyVerboseLogging = true;
         }
     }
 
-    int linkOrCopyFunction(const char *fpath,
-                           const struct stat* sb,
-                           int typeflag,
-                           struct FTW* /*ftwbuf*/)
+    assert(fpath[sourceForLinkOrCopy.size()] == '/');
+    const char* relativeOldPath = fpath + sourceForLinkOrCopy.size() + 1;
+    const Poco::Path newPath(destinationForLinkOrCopy, Poco::Path(relativeOldPath));
+
+    switch (typeflag)
     {
-        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
-        {
-            LOG_TRC("nftw: Skipping redundant path: " << fpath);
-            return FTW_CONTINUE;
-        }
-
-        if (!linkOrCopyVerboseLogging)
-        {
-            const auto durationInSecs = std::chrono::duration_cast<std::chrono::seconds>(
-                std::chrono::steady_clock::now() - linkOrCopyStartTime);
-            if (durationInSecs.count() > SlowLinkOrCopyLimitInSecs)
-            {
-                LOG_WRN("Linking/copying files from "
-                        << sourceForLinkOrCopy << " to " << destinationForLinkOrCopy.toString()
-                        << " is taking too much time. Enabling verbose link/copy logging.");
-                linkOrCopyVerboseLogging = true;
-            }
-        }
-
-        assert(fpath[sourceForLinkOrCopy.size()] == '/');
-        const char* relativeOldPath = fpath + sourceForLinkOrCopy.size() + 1;
-        const Poco::Path newPath(destinationForLinkOrCopy, Poco::Path(relativeOldPath));
-
-        switch (typeflag)
-        {
         case FTW_F:
         case FTW_SLN:
             Poco::File(newPath.parent()).createDirectories();
@@ -523,245 +532,245 @@ namespace
                 linkOrCopyFile(fpath, newPath.toString());
             break;
         case FTW_D:
+        {
+            struct stat st;
+            if (stat(fpath, &st) == -1)
             {
-                struct stat st;
-                if (stat(fpath, &st) == -1)
-                {
-                    LOG_SYS("nftw: stat(\"" << fpath << "\") failed");
-                    return FTW_STOP;
-                }
-                if (!shouldCopyDir(relativeOldPath))
-                {
-                    LOG_TRC("nftw: Skipping redundant path: " << relativeOldPath);
-                    return FTW_SKIP_SUBTREE;
-                }
-
-                Poco::File(newPath).createDirectories();
-                struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = st.st_mtime;
-                if (utime(newPath.toString().c_str(), &ut) == -1)
-                {
-                    LOG_SYS("nftw: utime(\"" << newPath.toString() << "\") failed");
-                    return FTW_STOP;
-                }
+                LOG_SYS("nftw: stat(\"" << fpath << "\") failed");
+                return FTW_STOP;
             }
-            break;
+            if (!shouldCopyDir(relativeOldPath))
+            {
+                LOG_TRC("nftw: Skipping redundant path: " << relativeOldPath);
+                return FTW_SKIP_SUBTREE;
+            }
+
+            Poco::File(newPath).createDirectories();
+            struct utimbuf ut;
+            ut.actime = st.st_atime;
+            ut.modtime = st.st_mtime;
+            if (utime(newPath.toString().c_str(), &ut) == -1)
+            {
+                LOG_SYS("nftw: utime(\"" << newPath.toString() << "\") failed");
+                return FTW_STOP;
+            }
+        }
+        break;
         case FTW_SL:
+        {
+            const std::size_t size = sb->st_size;
+            std::vector<char> target(size + 1);
+            char* target_data = target.data();
+            const ssize_t written = readlink(fpath, target_data, size);
+            if (written <= 0 || static_cast<std::size_t>(written) > size)
             {
-                const std::size_t size = sb->st_size;
-                std::vector<char> target(size + 1);
-                char* target_data = target.data();
-                const ssize_t written = readlink(fpath, target_data, size);
-                if (written <= 0 || static_cast<std::size_t>(written) > size)
-                {
-                    LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
-                    Util::forcedExit(EX_SOFTWARE);
-                }
-                target_data[written] = '\0';
-
-                Poco::File(newPath.parent()).createDirectories();
-                if (symlink(target_data, newPath.toString().c_str()) == -1)
-                {
-                    LOG_SYS("nftw: symlink(\"" << target_data << "\", \"" << newPath.toString()
-                                               << "\") failed");
-                    return FTW_STOP;
-                }
+                LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
+                Util::forcedExit(EX_SOFTWARE);
             }
+            target_data[written] = '\0';
+
+            Poco::File(newPath.parent()).createDirectories();
+            if (symlink(target_data, newPath.toString().c_str()) == -1)
+            {
+                LOG_SYS("nftw: symlink(\"" << target_data << "\", \"" << newPath.toString()
+                                           << "\") failed");
+                return FTW_STOP;
+            }
+        }
+        break;
+        case FTW_DNR:
+            LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
+            return FTW_STOP;
+        case FTW_NS:
+            LOG_ERR("nftw: stat failed for '" << fpath << '\'');
+            return FTW_STOP;
+        default:
+            LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
+            assert(!"nftw: unexpected typeflag.");
             break;
-            case FTW_DNR:
-                LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
-                return FTW_STOP;
-            case FTW_NS:
-                LOG_ERR("nftw: stat failed for '" << fpath << '\'');
-                return FTW_STOP;
-            default:
-                LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
-                assert(!"nftw: unexpected typeflag.");
-                break;
-        }
-
-        return FTW_CONTINUE;
     }
 
-    void linkOrCopy(const std::string& source, const Poco::Path& destination, const std::string& linkable,
-                    LinkOrCopyType type)
+    return FTW_CONTINUE;
+}
+
+void linkOrCopy(const std::string& source, const Poco::Path& destination,
+                const std::string& linkable, LinkOrCopyType type)
+{
+    std::string resolved = FileUtil::realpath(source);
+    if (resolved != source)
     {
-        std::string resolved = FileUtil::realpath(source);
-        if (resolved != source)
-        {
-            LOG_DBG("linkOrCopy: Using real path [" << resolved << "] instead of original link ["
-                                                    << source << "].");
-        }
-
-        LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << resolved << "] to ["
-                              << destination.toString() << "].");
-
-        linkOrCopyType = type;
-        sourceForLinkOrCopy = resolved;
-        if (sourceForLinkOrCopy.back() == '/')
-            sourceForLinkOrCopy.pop_back();
-        destinationForLinkOrCopy = destination;
-        linkableForLinkOrCopy = linkable;
-        linkOrCopyFileCount = 0;
-        linkOrCopyStartTime = std::chrono::steady_clock::now();
-        forceInitialCopy = detectSlowStackingFileSystem(destination.toString());
-
-        if (nftw(resolved.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
-        {
-            LOG_ERR("linkOrCopy: nftw() failed for '" << resolved << '\'');
-        }
-
-        if (linkOrCopyVerboseLogging)
-        {
-            linkOrCopyVerboseLogging = false;
-            const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - linkOrCopyStartTime).count();
-            const double seconds = (ms + 1) / 1000.; // At least 1ms to avoid div-by-zero.
-            const auto rate = linkOrCopyFileCount / seconds;
-            LOG_INF("Linking/Copying of " << linkOrCopyFileCount << " files from " << resolved
-                                          << " to " << destinationForLinkOrCopy.toString()
-                                          << " finished in " << seconds << " seconds, or " << rate
-                                          << " files / second.");
-        }
+        LOG_DBG("linkOrCopy: Using real path [" << resolved << "] instead of original link ["
+                                                << source << "].");
     }
+
+    LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << resolved << "] to ["
+                          << destination.toString() << "].");
+
+    linkOrCopyType = type;
+    sourceForLinkOrCopy = resolved;
+    if (sourceForLinkOrCopy.back() == '/')
+        sourceForLinkOrCopy.pop_back();
+    destinationForLinkOrCopy = destination;
+    linkableForLinkOrCopy = linkable;
+    linkOrCopyFileCount = 0;
+    linkOrCopyStartTime = std::chrono::steady_clock::now();
+    forceInitialCopy = detectSlowStackingFileSystem(destination.toString());
+
+    if (nftw(resolved.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL | FTW_PHYS) == -1)
+    {
+        LOG_ERR("linkOrCopy: nftw() failed for '" << resolved << '\'');
+    }
+
+    if (linkOrCopyVerboseLogging)
+    {
+        linkOrCopyVerboseLogging = false;
+        const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                            std::chrono::steady_clock::now() - linkOrCopyStartTime)
+                            .count();
+        const double seconds = (ms + 1) / 1000.; // At least 1ms to avoid div-by-zero.
+        const auto rate = linkOrCopyFileCount / seconds;
+        LOG_INF("Linking/Copying of " << linkOrCopyFileCount << " files from " << resolved << " to "
+                                      << destinationForLinkOrCopy.toString() << " finished in "
+                                      << seconds << " seconds, or " << rate << " files / second.");
+    }
+}
 
 #if CODE_COVERAGE
-    std::string childRootForGCDAFiles;
-    std::string sourceForGCDAFiles;
-    std::string destForGCDAFiles;
+std::string childRootForGCDAFiles;
+std::string sourceForGCDAFiles;
+std::string destForGCDAFiles;
 
-    int linkGCDAFilesFunction(const char* fpath, const struct stat*, int typeflag,
-                              struct FTW* /*ftwbuf*/)
+int linkGCDAFilesFunction(const char* fpath, const struct stat*, int typeflag,
+                          struct FTW* /*ftwbuf*/)
+{
+    const std::string path = fpath;
+    if (path == sourceForGCDAFiles)
     {
-        const std::string path = fpath;
-        if (path == sourceForGCDAFiles)
-        {
-            LOG_TRC("nftw: Skipping redundant path: " << fpath);
-            return FTW_CONTINUE;
-        }
-
-        if (path.starts_with(childRootForGCDAFiles))
-        {
-            LOG_TRC("nftw: Skipping childRoot subtree: " << fpath);
-            return FTW_SKIP_SUBTREE;
-        }
-
-        assert(path.size() >= sourceForGCDAFiles.size());
-        assert(fpath[sourceForGCDAFiles.size()] == '/');
-        const char* relativeOldPath = fpath + sourceForGCDAFiles.size() + 1;
-        const Poco::Path newPath(destForGCDAFiles, Poco::Path(relativeOldPath));
-
-        switch (typeflag)
-        {
-            case FTW_F:
-            case FTW_SLN:
-            {
-                const char* dot = strrchr(relativeOldPath, '.');
-                if (dot && !strcmp(dot, ".gcda"))
-                {
-                    Poco::File(newPath.parent()).createDirectories();
-                    if (link(fpath, newPath.toString().c_str()) != 0)
-                    {
-                        LOG_SYS("nftw: Failed to link [" << fpath << "] -> [" << newPath.toString()
-                                                         << ']');
-                    }
-                }
-            }
-            break;
-            case FTW_D:
-            case FTW_SL:
-                break;
-            case FTW_DNR:
-                LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
-                break;
-            case FTW_NS:
-                LOG_ERR("nftw: stat failed for '" << fpath << '\'');
-                break;
-            default:
-                LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
-                assert(!"nftw: unexpected typeflag.");
-                break;
-        }
-
+        LOG_TRC("nftw: Skipping redundant path: " << fpath);
         return FTW_CONTINUE;
     }
 
-    /// Link .gcda (gcov) files from the src directory into the jail.
-    /// We need this so we can easily extract the profile data from within
-    /// the jail. Otherwise, we lose coverage info of the kit process.
-    void linkGCDAFiles(const std::string& destPath)
+    if (path.starts_with(childRootForGCDAFiles))
     {
-        Poco::Path sourcePathInJail(destPath);
-        const auto sourcePath = std::string(DEBUG_ABSSRCDIR);
-        sourcePathInJail.append(sourcePath);
-        Poco::File(sourcePathInJail).createDirectories();
-        LOG_INF("Linking .gcda files from " << sourcePath << " -> " << sourcePathInJail.toString());
-
-        const auto childRootPtr = std::getenv("BASE_CHILD_ROOT");
-        if (childRootPtr == nullptr || strlen(childRootPtr) == 0)
-        {
-            LOG_ERR("Cannot collect code-coverage stats for the Kit processes. BASE_CHILD_ROOT "
-                    "envar missing.");
-            return;
-        }
-
-        // Trim the trailing /.
-        const std::string childRoot = childRootPtr;
-        const size_t last = childRoot.find_last_not_of('/');
-        if (last != std::string::npos)
-            childRootForGCDAFiles = childRoot.substr(0, last + 1);
-        else
-            childRootForGCDAFiles = childRoot;
-
-        sourceForGCDAFiles = sourcePath;
-        destForGCDAFiles = sourcePathInJail.toString() + '/';
-        LOG_INF("nftw .gcda files from " << sourceForGCDAFiles << " -> " << destForGCDAFiles << " ("
-                                         << childRootForGCDAFiles << ')');
-
-        if (nftw(sourcePath.c_str(), linkGCDAFilesFunction, 10, FTW_ACTIONRETVAL | FTW_PHYS) == -1)
-        {
-            LOG_ERR("linkGCDAFiles: nftw() failed for '" << sourcePath << '\'');
-        }
+        LOG_TRC("nftw: Skipping childRoot subtree: " << fpath);
+        return FTW_SKIP_SUBTREE;
     }
+
+    assert(path.size() >= sourceForGCDAFiles.size());
+    assert(fpath[sourceForGCDAFiles.size()] == '/');
+    const char* relativeOldPath = fpath + sourceForGCDAFiles.size() + 1;
+    const Poco::Path newPath(destForGCDAFiles, Poco::Path(relativeOldPath));
+
+    switch (typeflag)
+    {
+        case FTW_F:
+        case FTW_SLN:
+        {
+            const char* dot = strrchr(relativeOldPath, '.');
+            if (dot && !strcmp(dot, ".gcda"))
+            {
+                Poco::File(newPath.parent()).createDirectories();
+                if (link(fpath, newPath.toString().c_str()) != 0)
+                {
+                    LOG_SYS("nftw: Failed to link [" << fpath << "] -> [" << newPath.toString()
+                                                     << ']');
+                }
+            }
+        }
+        break;
+        case FTW_D:
+        case FTW_SL:
+            break;
+        case FTW_DNR:
+            LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
+            break;
+        case FTW_NS:
+            LOG_ERR("nftw: stat failed for '" << fpath << '\'');
+            break;
+        default:
+            LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
+            assert(!"nftw: unexpected typeflag.");
+            break;
+    }
+
+    return FTW_CONTINUE;
+}
+
+/// Link .gcda (gcov) files from the src directory into the jail.
+/// We need this so we can easily extract the profile data from within
+/// the jail. Otherwise, we lose coverage info of the kit process.
+void linkGCDAFiles(const std::string& destPath)
+{
+    Poco::Path sourcePathInJail(destPath);
+    const auto sourcePath = std::string(DEBUG_ABSSRCDIR);
+    sourcePathInJail.append(sourcePath);
+    Poco::File(sourcePathInJail).createDirectories();
+    LOG_INF("Linking .gcda files from " << sourcePath << " -> " << sourcePathInJail.toString());
+
+    const auto childRootPtr = std::getenv("BASE_CHILD_ROOT");
+    if (childRootPtr == nullptr || strlen(childRootPtr) == 0)
+    {
+        LOG_ERR("Cannot collect code-coverage stats for the Kit processes. BASE_CHILD_ROOT "
+                "envar missing.");
+        return;
+    }
+
+    // Trim the trailing /.
+    const std::string childRoot = childRootPtr;
+    const size_t last = childRoot.find_last_not_of('/');
+    if (last != std::string::npos)
+        childRootForGCDAFiles = childRoot.substr(0, last + 1);
+    else
+        childRootForGCDAFiles = childRoot;
+
+    sourceForGCDAFiles = sourcePath;
+    destForGCDAFiles = sourcePathInJail.toString() + '/';
+    LOG_INF("nftw .gcda files from " << sourceForGCDAFiles << " -> " << destForGCDAFiles << " ("
+                                     << childRootForGCDAFiles << ')');
+
+    if (nftw(sourcePath.c_str(), linkGCDAFilesFunction, 10, FTW_ACTIONRETVAL | FTW_PHYS) == -1)
+    {
+        LOG_ERR("linkGCDAFiles: nftw() failed for '" << sourcePath << '\'');
+    }
+}
 #endif
 
 #if HAVE_LIBCAP
-    void dropCapability(cap_value_t capability)
+void dropCapability(cap_value_t capability)
+{
+    cap_t caps;
+    cap_value_t cap_list[] = { capability };
+
+    caps = cap_get_proc();
+    if (caps == nullptr)
     {
-        cap_t caps;
-        cap_value_t cap_list[] = { capability };
-
-        caps = cap_get_proc();
-        if (caps == nullptr)
-        {
-            LOG_SFL("cap_get_proc() failed");
-            Util::forcedExit(EX_SOFTWARE);
-        }
-
-        char *capText = cap_to_text(caps, nullptr);
-        LOG_TRC("Capabilities first: " << capText);
-        cap_free(capText);
-
-        if (cap_set_flag(caps, CAP_EFFECTIVE, N_ELEMENTS(cap_list), cap_list, CAP_CLEAR) == -1 ||
-            cap_set_flag(caps, CAP_PERMITTED, N_ELEMENTS(cap_list), cap_list, CAP_CLEAR) == -1)
-        {
-            LOG_SFL("cap_set_flag() failed");
-            Util::forcedExit(EX_SOFTWARE);
-        }
-
-        if (cap_set_proc(caps) == -1)
-        {
-            LOG_SFL("cap_set_proc() failed");
-            Util::forcedExit(EX_SOFTWARE);
-        }
-
-        capText = cap_to_text(caps, nullptr);
-        LOG_TRC("Capabilities now: " << capText);
-        cap_free(capText);
-
-        cap_free(caps);
+        LOG_SFL("cap_get_proc() failed");
+        Util::forcedExit(EX_SOFTWARE);
     }
+
+    char* capText = cap_to_text(caps, nullptr);
+    LOG_TRC("Capabilities first: " << capText);
+    cap_free(capText);
+
+    if (cap_set_flag(caps, CAP_EFFECTIVE, N_ELEMENTS(cap_list), cap_list, CAP_CLEAR) == -1 ||
+        cap_set_flag(caps, CAP_PERMITTED, N_ELEMENTS(cap_list), cap_list, CAP_CLEAR) == -1)
+    {
+        LOG_SFL("cap_set_flag() failed");
+        Util::forcedExit(EX_SOFTWARE);
+    }
+
+    if (cap_set_proc(caps) == -1)
+    {
+        LOG_SFL("cap_set_proc() failed");
+        Util::forcedExit(EX_SOFTWARE);
+    }
+
+    capText = cap_to_text(caps, nullptr);
+    LOG_TRC("Capabilities now: " << capText);
+    cap_free(capText);
+
+    cap_free(caps);
+}
 #endif // __FreeBSD__
 #endif // BUILDING_TESTS
 } // namespace
@@ -794,9 +803,8 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _duringLoad(0)
     , _bgSavesOngoing(0)
 {
-    LOG_INF("Document ctor for [" << _docKey <<
-            "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
-            "] and id [" << _docId << "].");
+    LOG_INF("Document ctor for [" << _docKey << "] url [" << anonymizeUrl(_url) << "] on child ["
+                                  << _jailId << "] and id [" << _docId << "].");
     assert(_loKit);
 #if !MOBILEAPP
     assert(singletonDocument == nullptr);
@@ -811,10 +819,9 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
 
 Document::~Document()
 {
-    LOG_INF("~Document dtor for [" << _docKey <<
-            "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
-            "] and id [" << _docId << "]. There are " <<
-            _sessions.size() << " views.");
+    LOG_INF("~Document dtor for [" << _docKey << "] url [" << anonymizeUrl(_url) << "] on child ["
+                                   << _jailId << "] and id [" << _docId << "]. There are "
+                                   << _sessions.size() << " views.");
 
     // Wait for the callback worker to finish.
     _stop = true;
@@ -827,7 +834,6 @@ Document::~Document()
 #ifdef IOS
     DocumentData::deallocate(_mobileAppDocId);
 #endif
-
 }
 
 /// Post the message - in the unipoll world we're in the right thread anyway
@@ -838,10 +844,12 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
         auto socket = _saveProcessParent.lock();
         if (socket)
         {
-            LOG_TRC("postMessage forwarding to parent of save process: " << getAbbreviatedMessage(data, size));
+            LOG_TRC("postMessage forwarding to parent of save process: "
+                    << getAbbreviatedMessage(data, size));
             if (code != WSOpCode::Text)
             {
-                LOG_WRN("save process unexpectedly sending binary message to parent: " << getAbbreviatedMessage(data, size));
+                LOG_WRN("save process unexpectedly sending binary message to parent: "
+                        << getAbbreviatedMessage(data, size));
                 assert(false);
                 return false;
             }
@@ -856,7 +864,8 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
     LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
     if (!_websocketHandler)
     {
-        LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(data, size) << "].");
+        LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(data, size)
+                                                        << "].");
         return false;
     }
 
@@ -874,17 +883,17 @@ bool Document::createSession(const std::string& sessionId)
     {
         if (_sessions.find(sessionId) != _sessions.end())
         {
-            LOG_ERR("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
+            LOG_ERR("Session [" << sessionId << "] on url [" << anonymizeUrl(_url)
+                                << "] already exists.");
             return true;
         }
 
-        LOG_INF("Creating " << (_sessions.empty() ? "first" : "new") <<
-                " session for url: " << anonymizeUrl(_url) << " for sessionId: " <<
-                sessionId << " on jailId: " << _jailId);
+        LOG_INF("Creating " << (_sessions.empty() ? "first" : "new")
+                            << " session for url: " << anonymizeUrl(_url)
+                            << " for sessionId: " << sessionId << " on jailId: " << _jailId);
 
-        auto session = std::make_shared<ChildSession>(
-            _websocketHandler, sessionId,
-            _jailId, JailRoot, *this);
+        auto session =
+            std::make_shared<ChildSession>(_websocketHandler, sessionId, _jailId, JailRoot, *this);
         if (!Util::isMobileApp())
             UnitKit::get().postKitSessionCreated(session.get());
         _sessions.emplace(sessionId, session);
@@ -902,8 +911,8 @@ bool Document::createSession(const std::string& sessionId)
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Exception while creating session [" << sessionId <<
-                "] on url [" << anonymizeUrl(_url) << "] - '" << ex.what() << "'.");
+        LOG_ERR("Exception while creating session ["
+                << sessionId << "] on url [" << anonymizeUrl(_url) << "] - '" << ex.what() << "'.");
         return false;
     }
 #endif
@@ -918,7 +927,7 @@ std::size_t Document::purgeSessions()
         // bluntly exit, no need to clean up our own data structures. Also, there is a bug that
         // causes the deadSessions.clear() call below to crash in some situations when the last
         // session is being removed.
-        for (auto it = _sessions.cbegin(); it != _sessions.cend(); )
+        for (auto it = _sessions.cbegin(); it != _sessions.cend();)
         {
             if (it->second->isCloseFrame())
             {
@@ -942,10 +951,9 @@ std::size_t Document::purgeSessions()
 #endif
     }
 
-    if (deadSessions.size() > 0 )
-        LOG_TRC("Purging " << deadSessions.size() <<
-                " dead sessions, with " << num_sessions <<
-                " active sessions.");
+    if (deadSessions.size() > 0)
+        LOG_TRC("Purging " << deadSessions.size() << " dead sessions, with " << num_sessions
+                           << " active sessions.");
 
     // Don't destroy sessions while holding our lock.
     // We may deadlock if a session is waiting on us
@@ -960,8 +968,8 @@ std::size_t Document::purgeSessions()
 void Document::setDocumentPassword(int passwordType)
 {
     // Log whether the document is password protected and a password is provided
-    LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
-            " passwordProvided=" << _haveDocPassword);
+    LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected
+                                                      << " passwordProvided=" << _haveDocPassword);
 
     if (_isDocPasswordProtected && _haveDocPassword)
     {
@@ -985,7 +993,7 @@ void Document::setDocumentPassword(int passwordType)
     LOG_INF("setDocumentPassword returned.");
 }
 
-void Document::renderTiles(TileCombined &tileCombined)
+void Document::renderTiles(TileCombined& tileCombined)
 {
     // Find a session matching our view / render settings.
     const auto session = _sessions.findByCanonicalId(tileCombined.getCanonicalViewId());
@@ -1012,20 +1020,20 @@ void Document::renderTiles(TileCombined &tileCombined)
         _loKitDocument->setView(session->getViewId());
 
     const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
-                                 std::size_t pixmapWidth, std::size_t pixmapHeight,
-                                 int pixelWidth, int pixelHeight, LibreOfficeKitTileMode mode) {
+                                 std::size_t pixmapWidth, std::size_t pixmapHeight, int pixelWidth,
+                                 int pixelHeight, LibreOfficeKitTileMode mode)
+    {
         if (session->watermark())
             session->watermark()->blending(data, offsetX, offsetY, pixmapWidth, pixmapHeight,
                                            pixelWidth, pixelHeight, mode);
     };
 
-    const auto postMessageFunc = [&](const char* buffer, std::size_t length) {
-        postMessage(buffer, length, WSOpCode::Binary);
-    };
+    const auto postMessageFunc = [&](const char* buffer, std::size_t length)
+    { postMessage(buffer, length, WSOpCode::Binary); };
 
-    if (!RenderTiles::doRender(_loKitDocument, *_deltaGen, tileCombined, _deltaPool,
-                               blenderFunc, postMessageFunc, _mobileAppDocId,
-                               session->getCanonicalViewId(), session->getDumpTiles()))
+    if (!RenderTiles::doRender(_loKitDocument, *_deltaGen, tileCombined, _deltaPool, blenderFunc,
+                               postMessageFunc, _mobileAppDocId, session->getCanonicalViewId(),
+                               session->getDumpTiles()))
     {
         LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
         return;
@@ -1040,8 +1048,9 @@ bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode)
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("Document::sendFrame: Exception: " << exc.displayText() <<
-                (exc.nested() ? "( " + exc.nested()->displayText() + ')' : ""));
+        LOG_ERR("Document::sendFrame: Exception: "
+                << exc.displayText()
+                << (exc.nested() ? "( " + exc.nested()->displayText() + ')' : ""));
     }
 
     return false;
@@ -1095,8 +1104,8 @@ void Document::trimAfterInactivity()
     if (_isBgSaveProcess || _bgSavesOngoing)
         return;
 
-    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
-                                                         _lastMemTrimTime) < std::chrono::seconds(30))
+    if (std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::steady_clock::now() - _lastMemTrimTime) < std::chrono::seconds(30))
     {
         return;
     }
@@ -1142,17 +1151,17 @@ void Document::trimAfterInactivity()
     {
         // We must send the trace data to the WSD process for output
 
-        LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << ": " << payload.length() << " bytes.");
+        LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << ": "
+                                            << payload.length() << " bytes.");
 
         self->sendTextFrame("traceevent: \n" + payload);
         return;
     }
 
-    LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) <<
-            " [" << payload << "].");
+    LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << " [" << payload
+                                        << "].");
 
-    if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
-        type == LOK_CALLBACK_DOCUMENT_PASSWORD)
+    if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY || type == LOK_CALLBACK_DOCUMENT_PASSWORD)
     {
         // Mark the document password type.
         self->setDocumentPassword(type);
@@ -1207,13 +1216,13 @@ void Document::trimAfterInactivity()
     assert(descriptor && "Null callback data.");
     assert(descriptor->getDoc() && "Null Document instance.");
 
-    std::unique_ptr<KitQueue> &queue = descriptor->getDoc()->_queue;
+    std::unique_ptr<KitQueue>& queue = descriptor->getDoc()->_queue;
     assert(queue && "Null KitQueue.");
 
     const std::string payload = p ? p : "(nil)";
-    LOG_TRC("Document::ViewCallback [" << descriptor->getViewId() <<
-            "] [" << lokCallbackTypeToString(type) <<
-            "] [" << payload << "].");
+    LOG_TRC("Document::ViewCallback [" << descriptor->getViewId() << "] ["
+                                       << lokCallbackTypeToString(type) << "] [" << payload
+                                       << "].");
 
     if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
     {
@@ -1236,7 +1245,8 @@ void Document::trimAfterInactivity()
         Document* document = dynamic_cast<Document*>(descriptor->getDoc());
         if (document)
         {
-            std::shared_ptr<ChildSession> session = document->findSessionByViewId(descriptor->getViewId());
+            std::shared_ptr<ChildSession> session =
+                document->findSessionByViewId(descriptor->getViewId());
             if (session)
             {
                 if (!payload.empty())
@@ -1271,12 +1281,11 @@ void Document::trimAfterInactivity()
 }
 
 /// Load a document (or view) and register callbacks.
-bool Document::onLoad(const std::string& sessionId,
-                      const std::string& uriAnonym,
+bool Document::onLoad(const std::string& sessionId, const std::string& uriAnonym,
                       const std::string& renderOpts)
 {
-    LOG_INF("Loading url [" << uriAnonym << "] for session [" << sessionId <<
-            "] which has " << (_sessions.size() - 1) << " sessions.");
+    LOG_INF("Loading url [" << uriAnonym << "] for session [" << sessionId << "] which has "
+                            << (_sessions.size() - 1) << " sessions.");
 
     Util::ReferenceHolder duringLoad(_duringLoad);
 
@@ -1296,10 +1305,10 @@ bool Document::onLoad(const std::string& sessionId,
             return false;
         }
     }
-    catch (const std::exception &exc)
+    catch (const std::exception& exc)
     {
-        LOG_ERR("Exception while loading url [" << uriAnonym <<
-                "] for session [" << sessionId << "]: " << exc.what());
+        LOG_ERR("Exception while loading url [" << uriAnonym << "] for session [" << sessionId
+                                                << "]: " << exc.what());
         session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
         return false;
     }
@@ -1417,7 +1426,7 @@ void Document::startThreads()
 #endif
 }
 
-void Document::handleSaveMessage(const std::string &)
+void Document::handleSaveMessage(const std::string&)
 {
     LOG_TRC("Check save message");
 
@@ -1506,7 +1515,8 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
             if (countDown < 1)
             {
                 LOG_WRN("Failed to ensure we have just one thread for bgsave, "
-                        "we have: " << threads << " synchronously saving");
+                        "we have: "
+                        << threads << " synchronously saving");
                 return false;
             }
         }
@@ -1562,8 +1572,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
                             Util::encodeId(numSaves, 3));
         _isBgSaveProcess = true;
 
-        SigUtil::addActivity("forked background save process: " +
-                             std::to_string(pid));
+        SigUtil::addActivity("forked background save process: " + std::to_string(pid));
 
         threadGuard.clear();
 
@@ -1576,7 +1585,8 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 
 #if !MOBILEAPP
         assert(!BgSaveWatchdog && "Unexpected to have BackgroundSaveWatchdog instance");
-        BgSaveWatchdog = std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
+        BgSaveWatchdog =
+            std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
 #endif
 
         UnitKit::get().postBackgroundSaveFork();
@@ -1612,8 +1622,10 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
         getLOKit()->setForkedChild(true);
 
         const auto now = std::chrono::steady_clock::now();
-        LOG_TRC("Background save process " << getpid() << " fork took " <<
-                std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms");
+        LOG_TRC("Background save process "
+                << getpid() << " fork took "
+                << std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count()
+                << "ms");
 
         childSave();
 
@@ -1632,8 +1644,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
         forceDocUnmodifiedForBgSave(viewId);
 
         auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>(
-            "bgsv_kit_ws", pid, shared_from_this(),
-            findSessionByViewId(viewId));
+            "bgsv_kit_ws", pid, shared_from_this(), findSessionByViewId(viewId));
         childSocket->setHandler(bgSaveChild);
         childSocket->setWebSocket(); // avoid http upgrade.
         KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);
@@ -1698,12 +1709,12 @@ void replaceKeysWithPlaceholder(std::string& json, std::initializer_list<std::st
             json = jsonStream.str();
         }
     }
-    catch(const Poco::BadCastException& exception)
+    catch (const Poco::BadCastException& exception)
     {
         LOG_DBG("user private data is not a dictionary: " << exception.what());
     }
 }
-}
+} // namespace
 
 void Document::notifyViewInfo()
 {
@@ -1734,7 +1745,8 @@ void Document::notifyViewInfo()
         }
         else
         {
-            oss << "\"userid\":\"" << JsonUtil::escapeJSONValue(itView->second.getUserId()) << "\",";
+            oss << "\"userid\":\"" << JsonUtil::escapeJSONValue(itView->second.getUserId())
+                << "\",";
             const std::string username = itView->second.getUserName();
             oss << "\"username\":\"" << JsonUtil::escapeJSONValue(username) << "\",";
             if (!itView->second.getUserExtraInfo().empty())
@@ -1832,8 +1844,8 @@ void Document::invalidateCanonicalId(const std::string& sessionId)
         stateName = "Empty";
     }
     std::string message = "canonicalidchange: viewid=" + std::to_string(session->getViewId()) +
-        " canonicalid=" + std::to_string(to_underlying(newCanonicalId)) +
-        " viewrenderedstate=" + stateName;
+                          " canonicalid=" + std::to_string(to_underlying(newCanonicalId)) +
+                          " viewrenderedstate=" + stateName;
     session->sendTextFrame(message);
 }
 
@@ -1856,7 +1868,8 @@ void Document::updateEditorSpeeds(int id, int speed)
         int sessionId = session->getViewId();
 
         auto duration = (_lastUpdatedAt[id] - now);
-        std::chrono::milliseconds::rep durationInMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        std::chrono::milliseconds::rep durationInMs =
+            std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
         if (_speedCount[sessionId] != 0 && durationInMs > 5000)
         {
             _speedCount[sessionId] = session->getSpeed();
@@ -1870,7 +1883,8 @@ void Document::updateEditorSpeeds(int id, int speed)
     }
     // 0 for preventing selection of the first always
     // 1 for preventing new users from directly becoming editors
-    if (_editorId != fastestUser && (maxSpeed != 0 && maxSpeed != 1)) {
+    if (_editorId != fastestUser && (maxSpeed != 0 && maxSpeed != 1))
+    {
         if (!_editorChangeWarning && _editorId != -1)
         {
             _editorChangeWarning = true;
@@ -1887,7 +1901,6 @@ void Document::updateEditorSpeeds(int id, int speed)
         _editorChangeWarning = false;
 }
 
-
 // Get the color value for all author names from the core
 std::map<std::string, int> Document::getViewColors()
 {
@@ -1901,13 +1914,16 @@ std::map<std::string, int> Document::getViewColors()
         if (!colorValues.empty())
         {
             Poco::JSON::Parser parser;
-            Poco::JSON::Object::Ptr root = parser.parse(colorValues).extract<Poco::JSON::Object::Ptr>();
+            Poco::JSON::Object::Ptr root =
+                parser.parse(colorValues).extract<Poco::JSON::Object::Ptr>();
             if (root->get("authors").type() == typeid(Poco::JSON::Array::Ptr))
             {
-                Poco::JSON::Array::Ptr authorsArray = root->get("authors").extract<Poco::JSON::Array::Ptr>();
-                for (auto& authorVar: *authorsArray)
+                Poco::JSON::Array::Ptr authorsArray =
+                    root->get("authors").extract<Poco::JSON::Array::Ptr>();
+                for (auto& authorVar : *authorsArray)
                 {
-                    Poco::JSON::Object::Ptr authorObj = authorVar.extract<Poco::JSON::Object::Ptr>();
+                    Poco::JSON::Object::Ptr authorObj =
+                        authorVar.extract<Poco::JSON::Object::Ptr>();
                     std::string authorName = authorObj->get("name").convert<std::string>();
                     int colorValue = authorObj->get("color").convert<int>();
                     viewColors[authorName] = colorValue;
@@ -1915,10 +1931,11 @@ std::map<std::string, int> Document::getViewColors()
             }
         }
     }
-    catch(const Exception& exc)
+    catch (const Exception& exc)
     {
-        LOG_ERR("Poco Exception: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
+        LOG_ERR("Poco Exception: "
+                << exc.displayText()
+                << (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
 
     return viewColors;
@@ -2009,16 +2026,15 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     if (!_loKitDocument)
     {
         // This is the first time we are loading the document
-        LOG_INF("Loading new document from URI: [" << uriAnonym << "] for session [" << sessionId << "].");
+        LOG_INF("Loading new document from URI: [" << uriAnonym << "] for session [" << sessionId
+                                                   << "].");
 
         _loKit->registerCallback(GlobalCallback, this);
 
-        const int flags = LOK_FEATURE_DOCUMENT_PASSWORD
-            | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
-            | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK
-            | LOK_FEATURE_NO_TILED_ANNOTATIONS
-            | LOK_FEATURE_RANGE_HEADERS
-            | LOK_FEATURE_VIEWID_IN_VISCURSOR_INVALIDATION_CALLBACK;
+        const int flags = LOK_FEATURE_DOCUMENT_PASSWORD | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY |
+                          LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK |
+                          LOK_FEATURE_NO_TILED_ANNOTATIONS | LOK_FEATURE_RANGE_HEADERS |
+                          LOK_FEATURE_VIEWID_IN_VISCURSOR_INVALIDATION_CALLBACK;
         _loKit->setOptionalFeatures(flags);
 
         std::string loadUri = uri;
@@ -2033,7 +2049,8 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
             Poco::Path newPath(pocoUri.getPath()), templatePath(templateUri.getPath());
             newPath.setExtension(templatePath.getExtension());
             if (::rename(pocoUri.getPath().c_str(), newPath.toString().c_str()) < 0)
-                LOG_SYS("Failed to rename [" << pocoUri.getPath() << "] to [" << newPath.toString() << ']');
+                LOG_SYS("Failed to rename [" << pocoUri.getPath() << "] to [" << newPath.toString()
+                                             << ']');
             pocoUri.setPath(newPath.toString());
             loadUri = pocoUri.toString();
         }
@@ -2079,7 +2096,8 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
                 LOG_INF("Document [" << uriAnonym << "] is password protected.");
                 if (!_haveDocPassword)
                 {
-                    LOG_INF("No password provided for password-protected document [" << uriAnonym << "].");
+                    LOG_INF("No password provided for password-protected document [" << uriAnonym
+                                                                                     << "].");
                     std::string passwordFrame = "passwordrequired:";
                     if (_docPasswordType == DocumentPasswordType::ToView)
                         passwordFrame += "to-view";
@@ -2089,7 +2107,8 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
                 }
                 else
                 {
-                    LOG_INF("Wrong password for password-protected document [" << uriAnonym << "].");
+                    LOG_INF("Wrong password for password-protected document [" << uriAnonym
+                                                                               << "].");
                     session->sendTextFrameAndLogError("error: cmd=load kind=wrongpassword");
                 }
                 return nullptr;
@@ -2109,7 +2128,9 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     }
     else
     {
-        LOG_INF("Document with url [" << uriAnonym << "] already loaded. Need to create new view for session [" << sessionId << "].");
+        LOG_INF("Document with url [" << uriAnonym
+                                      << "] already loaded. Need to create new view for session ["
+                                      << sessionId << "].");
 
         // Check if this document requires password
         if (_isDocPasswordProtected)
@@ -2131,29 +2152,32 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
             }
         }
 
-        LOG_INF("Creating view to url [" << uriAnonym << "] for session [" << sessionId << "] with " << options << '.');
+        LOG_INF("Creating view to url [" << uriAnonym << "] for session [" << sessionId << "] with "
+                                         << options << '.');
         _loKitDocument->createView(options.c_str());
         LOG_TRC("View to url [" << uriAnonym << "] created.");
 
         switch (_loKitDocument->getDocumentType())
         {
-        case LOK_DOCTYPE_TEXT:
-        case LOK_DOCTYPE_SPREADSHEET:
-            // writer and calc can have different spell checking settings per view, so use this users
-            // preference
-            break;
-        case LOK_DOCTYPE_PRESENTATION:
-        case LOK_DOCTYPE_DRAWING:
-        default:
-            // impress/draw currently cannot, so use the current document state
-            // so simply joining doesn't toggle that shared spelling state
-            if (char* viewRenderState = _loKitDocument->getCommandValues(".uno:ViewRenderState"))
-            {
-                StringVector tokens(StringVector::tokenize(viewRenderState, strlen(viewRenderState), ';'));
-                spellOnline = tokens[0] == "S" ? "true" : "false";
-                free(viewRenderState);
-            }
-            break;
+            case LOK_DOCTYPE_TEXT:
+            case LOK_DOCTYPE_SPREADSHEET:
+                // writer and calc can have different spell checking settings per view, so use this users
+                // preference
+                break;
+            case LOK_DOCTYPE_PRESENTATION:
+            case LOK_DOCTYPE_DRAWING:
+            default:
+                // impress/draw currently cannot, so use the current document state
+                // so simply joining doesn't toggle that shared spelling state
+                if (char* viewRenderState =
+                        _loKitDocument->getCommandValues(".uno:ViewRenderState"))
+                {
+                    StringVector tokens(
+                        StringVector::tokenize(viewRenderState, strlen(viewRenderState), ';'));
+                    spellOnline = tokens[0] == "S" ? "true" : "false";
+                    free(viewRenderState);
+                }
+                break;
         }
     }
     std::string theme = getDefaultTheme(session);
@@ -2161,12 +2185,16 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     std::string backgroundTheme = getDefaultBackgroundTheme(session);
 
     // Avoid logging userPrivateInfo till it's not anonymized.
-    LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
-            anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme, backgroundTheme, "") << "].");
+    LOG_INF(
+        "Initializing for rendering session ["
+        << sessionId << "] on document url [" << anonymizeUrl(_url) << "] with: ["
+        << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme, backgroundTheme, "")
+        << "].");
 
     // initializeForRendering() should be called before
     // registerCallback(), as the previous creates a new view in Impress.
-    const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme, backgroundTheme, userPrivateInfo);
+    const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme,
+                                                      backgroundTheme, userPrivateInfo);
 
     _loKitDocument->initializeForRendering(renderParams.c_str());
 
@@ -2174,8 +2202,8 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     session->setViewId(viewId);
 
     _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
-                                        session->getViewUserExtraInfo(), session->getViewUserPrivateInfo(),
-                                        session->isReadOnly());
+                                        session->getViewUserExtraInfo(),
+                                        session->getViewUserPrivateInfo(), session->isReadOnly());
 
     _loKitDocument->setViewLanguage(viewId, lang.c_str());
     _loKitDocument->setViewTimezone(viewId, userTimezone.c_str());
@@ -2194,14 +2222,14 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     }
 
     // viewId's monotonically increase, and CallbackDescriptors are never freed.
-    _viewIdToCallbackDescr.emplace(viewId,
-                                   std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
+    _viewIdToCallbackDescr.emplace(
+        viewId, std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
     _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
 
     const int viewCount = _loKitDocument->getViewsCount();
-    LOG_INF("Document url [" << anonymizeUrl(_url) << "] for session [" <<
-            sessionId << "] loaded view [" << viewId << "]. Have " <<
-            viewCount << " view" << (viewCount != 1 ? "s." : "."));
+    LOG_INF("Document url [" << anonymizeUrl(_url) << "] for session [" << sessionId
+                             << "] loaded view [" << viewId << "]. Have " << viewCount << " view"
+                             << (viewCount != 1 ? "s." : "."));
 
     session->initWatermark();
 
@@ -2216,10 +2244,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     return _loKitDocument;
 }
 
-int Document::getViewsCount() const
-{
-    return _loKitDocument ? _loKitDocument->getViewsCount() : 0;
-}
+int Document::getViewsCount() const { return _loKitDocument ? _loKitDocument->getViewsCount() : 0; }
 
 bool Document::forwardToChild(const std::string_view prefix, const std::vector<char>& payload)
 {
@@ -2227,7 +2252,7 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
 
     // Remove the prefix and trim.
     std::size_t index = prefix.size();
-    for ( ; index < payload.size(); ++index)
+    for (; index < payload.size(); ++index)
     {
         if (payload[index] != ' ')
         {
@@ -2251,7 +2276,8 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
             if (size == disconnect.size() &&
                 strncmp(data, disconnect.data(), disconnect.size()) == 0)
             {
-                if(session->getViewId() == _editorId) {
+                if (session->getViewId() == _editorId)
+                {
                     _editorId = -1;
                 }
                 LOG_INF("Removing ChildSession [" << sessionId << "].");
@@ -2261,8 +2287,8 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
 
                 _sessions.erase(it);
                 const std::size_t count = _sessions.size();
-                LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
-                        " after removing ChildSession [" << sessionId << "].");
+                LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren")
+                                << " after removing ChildSession [" << sessionId << "].");
 
                 _deltaGen->setSessionCount(count);
 
@@ -2296,7 +2322,8 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
         {
             abbrMessage = getAbbreviatedMessage(data, size);
         }
-        LOG_ERR("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
+        LOG_ERR("Child session [" << sessionId
+                                  << "] not found to forward message: " << abbrMessage);
     }
     else
     {
@@ -2306,10 +2333,10 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
     return false;
 }
 
-/* static */ std::string Document::makeRenderParams(const std::string& renderOpts, const std::string& userName,
-                                                    const std::string& spellOnline, const std::string& theme,
-                                                    const std::string& backgroundTheme,
-                                                    const std::string& userPrivateInfo)
+/* static */ std::string
+Document::makeRenderParams(const std::string& renderOpts, const std::string& userName,
+                           const std::string& spellOnline, const std::string& theme,
+                           const std::string& backgroundTheme, const std::string& userPrivateInfo)
 {
     Object::Ptr renderOptsObj;
 
@@ -2382,14 +2409,14 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
     return std::string();
 }
 
-TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
+TilePrioritizer::Priority Document::getTilePriority(const TileDesc& desc) const
 {
     TilePrioritizer::Priority maxPrio = TilePrioritizer::Priority::NONE;
 
     assert(_sessions.size() > 0);
     for (const auto& it : _sessions)
     {
-        const std::shared_ptr<ChildSession> &session = it.second;
+        const std::shared_ptr<ChildSession>& session = it.second;
 
         // only interested in sessions that match our viewId
         if (session->getCanonicalViewId() != desc.getCanonicalViewId())
@@ -2412,24 +2439,22 @@ std::vector<TilePrioritizer::ViewIdInactivity> Document::getViewIdsByInactivity(
     assert(_sessions.size() > 0);
     for (const auto& it : _sessions)
     {
-        const std::shared_ptr<ChildSession> &session = it.second;
+        const std::shared_ptr<ChildSession>& session = it.second;
 
         double sessionInactivity = session->getInactivityMS(now);
         CanonicalViewId viewId = session->getCanonicalViewId();
 
-        auto found = std::find_if(viewIds.begin(), viewIds.end(),
-                                  [viewId](const auto& entry)->bool {
-                                    return entry.first == viewId;
-                                  });
+        auto found =
+            std::find_if(viewIds.begin(), viewIds.end(),
+                         [viewId](const auto& entry) -> bool { return entry.first == viewId; });
         if (found == viewIds.end())
             viewIds.emplace_back(viewId, sessionInactivity);
         else if (sessionInactivity < found->second)
             found->second = sessionInactivity;
     }
 
-    std::sort(viewIds.begin(), viewIds.end(), [](const auto& a, const auto& b) {
-                                                return a.second < b.second;
-                                              });
+    std::sort(viewIds.begin(), viewIds.end(),
+              [](const auto& a, const auto& b) { return a.second < b.second; });
 
     return viewIds;
 }
@@ -2462,7 +2487,7 @@ void Document::drainCallbacks()
         bool broadcast = cb._view == -1;
 
         const int type = cb._type;
-        const std::string &payload = cb._payload;
+        const std::string& payload = cb._payload;
 
         // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
         bool isFound = false;
@@ -2480,9 +2505,8 @@ void Document::drainCallbacks()
                 {
                     LOG_ERR("Session-thread of session ["
                             << session.getId() << "] for view [" << viewId
-                            << "] is not running. Dropping ["
-                            << lokCallbackTypeToString(type) << "] payload ["
-                            << COOLProtocol::getAbbreviatedMessage(payload)
+                            << "] is not running. Dropping [" << lokCallbackTypeToString(type)
+                            << "] payload [" << COOLProtocol::getAbbreviatedMessage(payload)
                             << ']');
                 }
 
@@ -2491,10 +2515,11 @@ void Document::drainCallbacks()
             }
         }
         if (!isFound)
-            LOG_ERR("Document::ViewCallback. Session [" << viewId <<
-                    "] is no longer active to process [" << lokCallbackTypeToString(type) <<
-                    "] [" << COOLProtocol::getAbbreviatedMessage(payload) <<
-                    "] message to Master Session.");
+            LOG_ERR("Document::ViewCallback. Session ["
+                    << viewId << "] is no longer active to process ["
+                    << lokCallbackTypeToString(type) << "] ["
+                    << COOLProtocol::getAbbreviatedMessage(payload)
+                    << "] message to Master Session.");
     }
 
     if (_websocketHandler)
@@ -2515,8 +2540,8 @@ void Document::drainQueue()
             drainCallbacks();
 
         if (hasQueueItems())
-            LOG_TRC("drainQueue with " << _queue->size() <<
-                    " items: " << (processInputEnabled() ? "processing" : "blocked") );
+            LOG_TRC("drainQueue with " << _queue->size() << " items: "
+                                       << (processInputEnabled() ? "processing" : "blocked"));
 
         // FIXME: do we really want to process all of these items ?
         while (processInputEnabled() && hasQueueItems())
@@ -2555,7 +2580,8 @@ void Document::drainQueue()
             }
             else
             {
-                LOG_ERR("Unexpected request: [" << COOLProtocol::getAbbreviatedMessage(input) << "].");
+                LOG_ERR("Unexpected request: [" << COOLProtocol::getAbbreviatedMessage(input)
+                                                << "].");
             }
         }
 
@@ -2566,7 +2592,8 @@ void Document::drainQueue()
             while (!_queue->isTileQueueEmpty() && prio >= TilePrioritizer::Priority::VERYHIGH)
             {
                 TileCombined tileCombined = _queue->popTileQueue(prio);
-                LOG_TRC("Tile priority is " << static_cast<int>(prio) << " for " << tileCombined.serialize());
+                LOG_TRC("Tile priority is " << static_cast<int>(prio) << " for "
+                                            << tileCombined.serialize());
 
                 renderTiles(tileCombined);
             }
@@ -2609,9 +2636,8 @@ void Document::postForceModifiedCommand(bool modified)
     LOG_TRC("post force modified command: .uno:Modified " << args);
 
     // Interestingly this seems not to notify the modified state change.
-    getLOKitDocument()->postUnoCommand(
-        ".uno:Modified", args.c_str(),
-        false /* avoid an un-necessary unocommandresult */);
+    getLOKitDocument()->postUnoCommand(".uno:Modified", args.c_str(),
+                                       false /* avoid an un-necessary unocommandresult */);
 }
 
 void Document::forceDocUnmodifiedForBgSave(int viewId)
@@ -2649,7 +2675,7 @@ void Document::notifySyntheticUnmodifiedState()
     }
 }
 
-bool Document::trackDocModifiedState(const std::string &stateChanged)
+bool Document::trackDocModifiedState(const std::string& stateChanged)
 {
     bool filter = false;
 
@@ -2658,30 +2684,31 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
     ModifiedState newState = _modified;
     // NB. since 'modified' state is (oddly) notified per view we get
     // several duplicate transitions from state A -> A again.
-    switch (_modified) {
-    case ModifiedState::Modified:
-        if (!modified)
-            newState = ModifiedState::UnModified;
-        // else duplicate
-        break;
-    // Only present in background save mode
-    case ModifiedState::UnModifiedButSaving:
-        if (modified)
-        {
-            // now we're really modified
-            newState = ModifiedState::Modified;
-        }
-        else // ignore being notified of our own force unmodification.
-        {
-            LOG_TRC("Ignore self generated unmodified notification");
-            filter = true;
-        }
-        break;
-    case ModifiedState::UnModified:
-        if (modified)
-            newState = ModifiedState::Modified;
-        // else duplicate
-        break;
+    switch (_modified)
+    {
+        case ModifiedState::Modified:
+            if (!modified)
+                newState = ModifiedState::UnModified;
+            // else duplicate
+            break;
+        // Only present in background save mode
+        case ModifiedState::UnModifiedButSaving:
+            if (modified)
+            {
+                // now we're really modified
+                newState = ModifiedState::Modified;
+            }
+            else // ignore being notified of our own force unmodification.
+            {
+                LOG_TRC("Ignore self generated unmodified notification");
+                filter = true;
+            }
+            break;
+        case ModifiedState::UnModified:
+            if (modified)
+                newState = ModifiedState::Modified;
+            // else duplicate
+            break;
     }
     if (_modified != newState)
         LOG_TRC("Transition modified state from " << name(_modified) << " to " << name(newState));
@@ -2690,7 +2717,7 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
     return filter;
 }
 
-void Document::disableBgSave(const std::string &reason)
+void Document::disableBgSave(const std::string& reason)
 {
     LOG_WRN("Disabled background save " + reason);
     _isBgSaveDisabled = true;
@@ -2710,28 +2737,20 @@ void Document::flushAndExit(int code)
 void Document::dumpState(std::ostream& oss)
 {
     oss << "Kit Document:\n"
-        << "\n\tpid: " << Util::getProcessId()
-        << "\n\tstop: " << _stop
-        << "\n\tjailId: " << _jailId
-        << "\n\tdocKey: " << _docKey
-        << "\n\tdocId: " << _docId
-        << "\n\turl: " << _url
+        << "\n\tpid: " << Util::getProcessId() << "\n\tstop: " << _stop << "\n\tjailId: " << _jailId
+        << "\n\tdocKey: " << _docKey << "\n\tdocId: " << _docId << "\n\turl: " << _url
         << "\n\tobfuscatedFileId: " << _obfuscatedFileId
-        << "\n\tjailedUrl: " << anonymizeUrl(_jailedUrl)
-        << "\n\trenderOpts: " << _renderOpts
+        << "\n\tjailedUrl: " << anonymizeUrl(_jailedUrl) << "\n\trenderOpts: " << _renderOpts
         << "\n\thaveDocPassword: " << _haveDocPassword // not the pwd itself
         << "\n\tisDocPasswordProtected: " << _isDocPasswordProtected
-        << "\n\tdocPasswordType: " << (int)_docPasswordType
-        << "\n\teditorId: " << _editorId
+        << "\n\tdocPasswordType: " << (int)_docPasswordType << "\n\teditorId: " << _editorId
         << "\n\teditorChangeWarning: " << _editorChangeWarning
         << "\n\tmobileAppDocId: " << _mobileAppDocId
         << "\n\tinputProcessingEnabled: " << processInputEnabled()
-        << "\n\tduringLoad: " << _duringLoad
-        << "\n\tmodified: " << name(_modified)
-        << "\n\tbgSaveProc: " << _isBgSaveProcess
-        << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled;
+        << "\n\tduringLoad: " << _duringLoad << "\n\tmodified: " << name(_modified)
+        << "\n\tbgSaveProc: " << _isBgSaveProcess << "\n\tbgSaveDisabled: " << _isBgSaveDisabled;
     if (!_isBgSaveProcess)
-        oss << "\n\tbgSavesOnging: "<< _bgSavesOngoing;
+        oss << "\n\tbgSavesOnging: " << _bgSavesOngoing;
 
     std::string smap;
     if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
@@ -2744,10 +2763,9 @@ void Document::dumpState(std::ostream& oss)
     // TODO: _websocketHandler - but this is an odd one.
     _queue->dumpState(oss);
     oss << "\tviewIdToCallbackDescr:";
-    for (const auto &it : _viewIdToCallbackDescr)
+    for (const auto& it : _viewIdToCallbackDescr)
     {
-        oss << "\n\t\tviewId: " << it.first
-            << " editorId: " << it.second->getDoc()->getEditorId()
+        oss << "\n\t\tviewId: " << it.first << " editorId: " << it.second->getDoc()->getEditorId()
             << " mobileAppDocId: " << it.second->getDoc()->getMobileAppDocId();
     }
     oss << '\n';
@@ -2758,40 +2776,39 @@ void Document::dumpState(std::ostream& oss)
     _deltaGen->dumpState(oss);
 
     oss << "\tlastUpdatedAt:";
-    for (const auto &it : _lastUpdatedAt)
+    for (const auto& it : _lastUpdatedAt)
     {
-        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-            it.second.time_since_epoch()).count();
-        oss << "\n\t\tviewId: " << it.first
-            << " last update time(ms): " << ms;
+        auto ms =
+            std::chrono::duration_cast<std::chrono::milliseconds>(it.second.time_since_epoch())
+                .count();
+        oss << "\n\t\tviewId: " << it.first << " last update time(ms): " << ms;
     }
     oss << '\n';
 
     oss << "\tspeedCount:";
-    for (const auto &it : _speedCount)
+    for (const auto& it : _speedCount)
     {
-        oss << "\n\t\tviewId: " << it.first
-            << " speed: " << it.second;
+        oss << "\n\t\tviewId: " << it.first << " speed: " << it.second;
     }
     oss << "\n";
 
     /// For showing disconnected user info in the doc repair dialog.
     oss << "\tsessionUserInfo:";
-    for (const auto &it : _sessionUserInfo)
+    for (const auto& it : _sessionUserInfo)
     {
         oss << "\n\t\tviewId: " << it.first
             << " userId: " << Anonymizer::anonymize(it.second.getUserId())
             << " userName: " << Anonymizer::anonymize(it.second.getUserName())
             << " userExtraInfo: " << it.second.getUserExtraInfo()
-            << " readOnly: " << it.second.isReadOnly()
-            << " connected: " << it.second.isConnected();
+            << " readOnly: " << it.second.isReadOnly() << " connected: " << it.second.isConnected();
     }
     oss << '\n';
 
-    char *pState = nullptr;
+    char* pState = nullptr;
     _loKit->dumpState("", &pState);
     oss << "lok state:\n";
-    if (pState) {
+    if (pState)
+    {
         std::string stateStr(pState);
         std::string fileId = Uri::getFilenameFromURL(Uri::decode(_jailedUrl));
         Util::replaceAllSubStr(stateStr, fileId, _obfuscatedFileId);
@@ -2815,20 +2832,20 @@ void flushTraceEventRecordings()
 
     for (size_t n = 0; n < 2; ++n)
     {
-        std::vector<std::string> &r = traceEventRecords[n];
+        std::vector<std::string>& r = traceEventRecords[n];
 
         if (r.empty())
             continue;
 
         std::size_t totalLength = 32; // Provision for the command name.
-        for (const auto& i: r)
+        for (const auto& i : r)
             totalLength += i.length();
 
         std::string recordings;
         recordings.reserve(totalLength);
 
         recordings.append(n == 0 ? "forcedtraceevent: \n" : "traceevent: \n");
-        for (const auto& i: r)
+        for (const auto& i : r)
             recordings += i;
 
         singletonDocument->sendTextFrame(recordings);
@@ -2836,7 +2853,7 @@ void flushTraceEventRecordings()
     }
 }
 
-static void addRecording(const std::string &recording, bool force)
+static void addRecording(const std::string& recording, bool force)
 {
     // This can be called before the config system is initialized. Guard against that, as calling
     // ConfigUtil::getBool() would cause an assertion failure.
@@ -2864,27 +2881,23 @@ static void addRecording(const std::string &recording, bool force)
     traceEventRecords[force ? 0 : 1].push_back(recording + "\n");
 }
 
-void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+void TraceEvent::emitOneRecordingIfEnabled(const std::string& recording)
 {
     addRecording(recording, true);
 }
 
-void TraceEvent::emitOneRecording(const std::string &recording)
-{
-    addRecording(recording, false);
-}
+void TraceEvent::emitOneRecording(const std::string& recording) { addRecording(recording, false); }
 
 #else
 
-void flushTraceEventRecordings()
-{
-}
+void flushTraceEventRecordings() {}
 
 #endif
 
 #ifdef __ANDROID__
 
-std::shared_ptr<lok::Document> Document::_loKitDocumentForAndroidOnly = std::shared_ptr<lok::Document>();
+std::shared_ptr<lok::Document> Document::_loKitDocumentForAndroidOnly =
+    std::shared_ptr<lok::Document>();
 std::weak_ptr<DocumentBroker> Document::_documentBrokerForAndroidOnly;
 
 std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly()
@@ -2899,7 +2912,8 @@ std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly()
 
 #endif
 
-KitSocketPoll::KitSocketPoll() : SocketPoll("kit")
+KitSocketPoll::KitSocketPoll()
+    : SocketPoll("kit")
 {
 #ifdef IOS
     terminationFlag = false;
@@ -2975,7 +2989,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
 
 #if ENABLE_DEBUG
 #if !MOBILEAPP
-    auto &unitKit = UnitKit::get();
+    auto& unitKit = UnitKit::get();
     if (unitKit.isFinished())
     {
         static bool sentResult = false;
@@ -3057,8 +3071,8 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
 }
 
 // unusual LOK event from another thread, push into our loop to process.
-bool KitSocketPoll::pushToMainThread(LibreOfficeKitCallback callback, int type,
-                                     const char* p, void* data) // static
+bool KitSocketPoll::pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
+                                     void* data) // static
 {
     if (mainPoll && mainPoll->getThreadOwner() != std::this_thread::get_id())
     {
@@ -3066,18 +3080,20 @@ bool KitSocketPoll::pushToMainThread(LibreOfficeKitCallback callback, int type,
         std::shared_ptr<std::string> copy;
         if (p)
             copy = std::make_shared<std::string>(p, strlen(p));
-        mainPoll->addCallback([callback, type, data, copy = std::move(copy)] {
-            LOG_TRC("Unusual process callback in main thread");
-            callback(type, copy ? copy->c_str() : nullptr, data);
-        });
+        mainPoll->addCallback(
+            [callback, type, data, copy = std::move(copy)]
+            {
+                LOG_TRC("Unusual process callback in main thread");
+                callback(type, copy ? copy->c_str() : nullptr, data);
+            });
         return true;
     }
     return false;
 }
 
-KitSocketPoll *KitSocketPoll::mainPoll = nullptr;
+KitSocketPoll* KitSocketPoll::mainPoll = nullptr;
 
-bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data)
+bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char* p, void* data)
 {
     return KitSocketPoll::pushToMainThread(cb, type, p, data);
 }
@@ -3111,7 +3127,7 @@ int pollCallback(void* data, int timeoutUs)
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     std::vector<std::shared_ptr<KitSocketPoll>> v;
-    for (const auto &i : KitSocketPoll::KSPolls)
+    for (const auto& i : KitSocketPoll::KSPolls)
     {
         auto p = i.lock();
         if (p)
@@ -3122,12 +3138,12 @@ int pollCallback(void* data, int timeoutUs)
         // Remove any stale elements from KitSocketPoll::KSPolls and
         // block until an element is added to KitSocketPoll::KSPolls
         KitSocketPoll::KSPolls.clear();
-        KitSocketPoll::KSPollsCV.wait(lock, []{ return KitSocketPoll::KSPolls.size(); });
+        KitSocketPoll::KSPollsCV.wait(lock, [] { return KitSocketPoll::KSPolls.size(); });
     }
     else
     {
         lock.unlock();
-        for (const auto &p : v)
+        for (const auto& p : v)
             p->kitPoll(timeoutUs);
     }
 
@@ -3191,14 +3207,14 @@ void wakeCallback(void* data)
         return;
 
     std::vector<std::shared_ptr<KitSocketPoll>> v;
-    for (const auto &i : KitSocketPoll::KSPolls)
+    for (const auto& i : KitSocketPoll::KSPolls)
     {
         auto p = i.lock();
         if (p)
             v.push_back(p);
     }
     lock.unlock();
-    for (const auto &p : v)
+    for (const auto& p : v)
         p->wakeup();
 #endif
 }
@@ -3228,7 +3244,8 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 
         if (!fileStat.exists() || !fileStat.isDirectory())
         {
-            LOG_WRN("Certificate database wasn't copied into the jail as path '" << certificatePathString << "' doesn't exist");
+            LOG_WRN("Certificate database wasn't copied into the jail as path '"
+                    << certificatePathString << "' doesn't exist");
             return;
         }
 
@@ -3240,18 +3257,21 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
         bool bCopied = false;
         for (const char* filename : { "cert8.db", "cert9.db", "secmod.db", "key3.db", "key4.db" })
         {
-            bool bResult = FileUtil::copy(Poco::Path(certificatePath, filename).toString(),
-                                Poco::Path(jailedCertDBPath, filename).toString(), false, false);
+            bool bResult =
+                FileUtil::copy(Poco::Path(certificatePath, filename).toString(),
+                               Poco::Path(jailedCertDBPath, filename).toString(), false, false);
             bCopied |= bResult;
         }
         if (bCopied)
         {
-            LOG_INF("Certificate database files found in '" << certificatePathString << "' and were copied to the jail");
+            LOG_INF("Certificate database files found in '" << certificatePathString
+                                                            << "' and were copied to the jail");
             ::setenv("LO_CERTIFICATE_DATABASE_PATH", "/tmp/certdb", 1);
         }
         else
         {
-            LOG_WRN("No Certificate database files could be found in path '" << certificatePathString << "'");
+            LOG_WRN("No Certificate database files could be found in path '"
+                    << certificatePathString << "'");
         }
     }
 }
@@ -3262,23 +3282,14 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 
 void lokit_main(
 #if !MOBILEAPP
-                const std::string& childRoot,
-                const std::string& jailId,
-                const std::string& configId,
-                const std::string& sysTemplate,
-                const std::string& loTemplate,
-                bool noCapabilities,
-                bool noSeccomp,
-                bool useMountNamespaces,
-                bool queryVersion,
-                bool displayVersion,
-                bool sysTemplateIncomplete,
+    const std::string& childRoot, const std::string& jailId, const std::string& configId,
+    const std::string& sysTemplate, const std::string& loTemplate, bool noCapabilities,
+    bool noSeccomp, bool useMountNamespaces, bool queryVersion, bool displayVersion,
+    bool sysTemplateIncomplete,
 #else
-                int docBrokerSocket,
-                const std::string& userInterface,
+    int docBrokerSocket, const std::string& userInterface,
 #endif
-                std::size_t numericIdentifier
-                )
+    std::size_t numericIdentifier)
 {
 #if !MOBILEAPP
 
@@ -3323,8 +3334,10 @@ void lokit_main(
                     logProperties, logToFileUICmd, logPropertiesUICmd);
     if (bTraceStartup && LogLevel != LogLevelStartup)
     {
-        LOG_INF("Setting log-level to [" << LogLevelStartup << "] and delaying "
-                "setting to [" << LogLevel << "] until after Kit initialization.");
+        LOG_INF("Setting log-level to [" << LogLevelStartup
+                                         << "] and delaying "
+                                            "setting to ["
+                                         << LogLevel << "] until after Kit initialization.");
     }
     const std::string LogDisabledAreas = logDisabledAreas ? logDisabledAreas : "";
 
@@ -3366,15 +3379,19 @@ void lokit_main(
         const std::string jailPathStr = jailPath.toString();
         JailUtil::createJailPath(jailPathStr);
 
+#ifdef THREADCOUNTER_USABLE
         // initialize while we have access to /proc/self/task
         threadCounter.reset(new Util::ThreadCounter());
+#endif
+#ifdef FDCOUNTER_USABLE
         // initialize while we have access to /proc/self/fd
         fdCounter.reset(new Util::FDCounter());
+#endif
 
         if (!ChildSession::NoCapsForKit)
         {
-            std::chrono::time_point<std::chrono::steady_clock> jailSetupStartTime
-                = std::chrono::steady_clock::now();
+            std::chrono::time_point<std::chrono::steady_clock> jailSetupStartTime =
+                std::chrono::steady_clock::now();
 
             userdir_url = "file:///tmp/user";
             instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/program";
@@ -3388,19 +3405,25 @@ void lokit_main(
             const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
             const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
 
-            const std::string sharedPresets = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
-            const std::string configIdPresets = Poco::Path(sharedPresets, Uri::encode(configId)).toString();
+            const std::string sharedPresets =
+                Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+            const std::string configIdPresets =
+                Poco::Path(sharedPresets, Uri::encode(configId)).toString();
 
             const std::string sharedAutotext = Poco::Path(configIdPresets, "autotext").toString();
-            const std::string loJailDestAutotextPath = Poco::Path(loJailDestPath, "share/autotext/common").toString();
+            const std::string loJailDestAutotextPath =
+                Poco::Path(loJailDestPath, "share/autotext/common").toString();
 
             const std::string sharedWordbook = Poco::Path(configIdPresets, "wordbook").toString();
-            const std::string loJailDestWordbookPath = Poco::Path(loJailDestPath, "share/wordbook").toString();
+            const std::string loJailDestWordbookPath =
+                Poco::Path(loJailDestPath, "share/wordbook").toString();
 
             const std::string sharedTemplate = Poco::Path(configIdPresets, "template").toString();
-            const std::string loJailDestImpressTemplatePath = Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
+            const std::string loJailDestImpressTemplatePath =
+                Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
 
-            const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
+            const std::string sysTemplateSubDir =
+                Poco::Path(tempRoot, "systemplate-" + jailId).toString();
             const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
 
             if (sysTemplateIncomplete && JailUtil::isBindMountingEnabled())
@@ -3418,11 +3441,12 @@ void lokit_main(
 
             // The bind-mount implementation: inlined here to mirror
             // the fallback link/copy version bellow.
-            const auto mountJail = [&]() -> bool {
+            const auto mountJail = [&]() -> bool
+            {
                 // Mount sysTemplate for the jail directory.
                 LOG_INF("Mounting " << sysTemplate << " -> " << jailPathStr);
-                if (!JailUtil::bind(sysTemplate, jailPathStr)
-                    || !JailUtil::remountReadonly(sysTemplate, jailPathStr))
+                if (!JailUtil::bind(sysTemplate, jailPathStr) ||
+                    !JailUtil::remountReadonly(sysTemplate, jailPathStr))
                 {
                     LOG_ERR("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
                                                 << "], will link/copy contents.");
@@ -3434,8 +3458,8 @@ void lokit_main(
                 if (sysTemplateIncomplete)
                 {
                     LOG_INF("Mounting " << sysTemplateSubDir << " -> " << jailEtcDir);
-                    if (!JailUtil::bind(sysTemplateSubDir, jailEtcDir)
-                        || !JailUtil::remountReadonly(sysTemplateSubDir, jailEtcDir))
+                    if (!JailUtil::bind(sysTemplateSubDir, jailEtcDir) ||
+                        !JailUtil::remountReadonly(sysTemplateSubDir, jailEtcDir))
                     {
                         LOG_ERR("Failed to mount [" << sysTemplateSubDir << "] -> [" << jailEtcDir
                                                     << "], will link/copy contents.");
@@ -3451,20 +3475,19 @@ void lokit_main(
                                                 << "] doesn't exist. Binding will likely fail");
                 }
 
-                if (!JailUtil::bind(loTemplate, loJailDestPath)
-                    || !JailUtil::remountReadonly(loTemplate, loJailDestPath))
+                if (!JailUtil::bind(loTemplate, loJailDestPath) ||
+                    !JailUtil::remountReadonly(loTemplate, loJailDestPath))
                 {
                     LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loJailDestPath
                                                 << "], will link/copy contents");
                     return false;
                 }
 
-
                 if (!configId.empty())
                 {
                     // mount the shared autotext over the lo shared autotext's 'common' dir
-                    if (!JailUtil::bind(sharedAutotext, loJailDestAutotextPath)
-                        || !JailUtil::remountReadonly(sharedAutotext, loJailDestAutotextPath))
+                    if (!JailUtil::bind(sharedAutotext, loJailDestAutotextPath) ||
+                        !JailUtil::remountReadonly(sharedAutotext, loJailDestAutotextPath))
                     {
                         // TODO: actually do this link on failure
                         LOG_WRN("Failed to mount [" << sharedAutotext << "] -> ["
@@ -3474,14 +3497,14 @@ void lokit_main(
                     }
 
                     // mount the shared wordbook over the lo shared wordbook
-                    if (!JailUtil::bind(sharedWordbook, loJailDestWordbookPath)
-                        || !JailUtil::remountReadonly(sharedWordbook, loJailDestWordbookPath))
+                    if (!JailUtil::bind(sharedWordbook, loJailDestWordbookPath) ||
+                        !JailUtil::remountReadonly(sharedWordbook, loJailDestWordbookPath))
                     {
                         // TODO: actually do this link on failure
-                        LOG_WRN("Failed to mount [" << sharedWordbook << "] -> [" << loJailDestWordbookPath
+                        LOG_WRN("Failed to mount [" << sharedWordbook << "] -> ["
+                                                    << loJailDestWordbookPath
                                                     << "], will link contents");
                         return false;
-
                     }
 
                     // mount the shared templates over the lo shared templates' 'common' dir
@@ -3542,7 +3565,6 @@ void lokit_main(
                     bindMount = false;
                     JailUtil::disableBindMounting();
                 }
-
             }
 
 #ifndef __FreeBSD__
@@ -3600,7 +3622,8 @@ void lokit_main(
                     Poco::File(tempRoot).createDirectories();
                     if (symlink(jailTmpDir.c_str(), tmpSubDir.c_str()) == -1)
                     {
-                        LOG_SFL("Failed to create symlink [" << tmpSubDir << " -> " << jailTmpDir << "] " << strerror(errno));
+                        LOG_SFL("Failed to create symlink [" << tmpSubDir << " -> " << jailTmpDir
+                                                             << "] " << strerror(errno));
                         Util::forcedExit(EX_SOFTWARE);
                     }
                 }
@@ -3662,7 +3685,7 @@ void lokit_main(
                 dropCapability(CAP_CHOWN);
             }
 
-            char *capText = cap_to_text(cap_get_proc(), nullptr);
+            char* capText = cap_to_text(cap_get_proc(), nullptr);
             LOG_DBG("Initialized jail nodes, dropped caps. Final caps are: " << capText);
             cap_free(capText);
 #endif
@@ -3705,8 +3728,8 @@ void lokit_main(
 
         LibreOfficeKit* kit = nullptr;
         {
-            const char *instdir = instdir_path.c_str();
-            const char *userdir = userdir_url.c_str();
+            const char* instdir = instdir_path.c_str();
+            const char* userdir = userdir_url.c_str();
 
             if (!initFunction)
                 initFunction = lok_init_2;
@@ -3739,17 +3762,20 @@ void lokit_main(
 
         rlimit rlim = { 0, 0 };
         if (getrlimit(RLIMIT_AS, &rlim) == 0)
-            LOG_INF("RLIMIT_AS is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
+            LOG_INF("RLIMIT_AS is " << Util::getHumanizedBytes(rlim.rlim_max) << " ("
+                                    << rlim.rlim_max << " bytes)");
         else
             LOG_SYS("Failed to get RLIMIT_AS");
 
         if (getrlimit(RLIMIT_STACK, &rlim) == 0)
-            LOG_INF("RLIMIT_STACK is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
+            LOG_INF("RLIMIT_STACK is " << Util::getHumanizedBytes(rlim.rlim_max) << " ("
+                                       << rlim.rlim_max << " bytes)");
         else
             LOG_SYS("Failed to get RLIMIT_STACK");
 
         if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
-            LOG_INF("RLIMIT_FSIZE is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
+            LOG_INF("RLIMIT_FSIZE is " << Util::getHumanizedBytes(rlim.rlim_max) << " ("
+                                       << rlim.rlim_max << " bytes)");
         else
             LOG_SYS("Failed to get RLIMIT_FSIZE");
 
@@ -3780,16 +3806,15 @@ void lokit_main(
             LOG_INF("Kit core version is " << versionString);
 
             // Extend the list on new releases
-            static const char *denyVersions[] = {
-                "\"22.05\"", "\"23.05\""
-            };
-            for (auto const &deny: denyVersions)
+            static const char* denyVersions[] = { "\"22.05\"", "\"23.05\"" };
+            for (auto const& deny : denyVersions)
             {
-                if (Util::findSubArray(versionString.c_str(), versionString.length(),
-                                       deny, strlen(deny)) >= 0)
+                if (Util::findSubArray(versionString.c_str(), versionString.length(), deny,
+                                       strlen(deny)) >= 0)
                 {
                     LOG_FTL("Mis-matching, obsolete core version, "
-                            "please update your packages: " << versionString);
+                            "please update your packages: "
+                            << versionString);
                     Util::forcedExit(EX_SOFTWARE);
                 }
             }
@@ -3798,8 +3823,10 @@ void lokit_main(
             // the configuration parameters from COOLWSD.cpp's initialize() or coolwsd.xml here, so
             // oh well, just have the value hardcoded in KitHelper.hpp. It isn't really useful to
             // "tune" it at end-user installations anyway, I think.
-            auto versionJSON = Poco::JSON::Parser().parse(versionString).extract<Poco::JSON::Object::Ptr>();
-            versionJSON->set("tunnelled_dialog_image_cache_size", std::to_string(LOKitHelper::tunnelledDialogImageCacheSize));
+            auto versionJSON =
+                Poco::JSON::Parser().parse(versionString).extract<Poco::JSON::Object::Ptr>();
+            versionJSON->set("tunnelled_dialog_image_cache_size",
+                             std::to_string(LOKitHelper::tunnelledDialogImageCacheSize));
             std::stringstream ss;
             versionJSON->stringify(ss);
             versionString = ss.str();
@@ -3821,13 +3848,14 @@ void lokit_main(
 
 #if (defined(__linux__) && !defined(__ANDROID__)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
-        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
+        LibreOfficeKit* kit =
+            lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #else
 
 #ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts
-        static LibreOfficeKit *kit = lo_kit;
+        static LibreOfficeKit* kit = lo_kit;
 #else
-        static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
+        static LibreOfficeKit* kit = lok_init_2(nullptr, nullptr);
 #endif
 
 #endif
@@ -3848,7 +3876,8 @@ void lokit_main(
         mainKit->runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<KitWebSocketHandler> websocketHandler =
-            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit, numericIdentifier);
+            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit,
+                                                  numericIdentifier);
 
 #if !MOBILEAPP
 
@@ -3858,7 +3887,8 @@ void lokit_main(
 
         if (isURPEnabled())
         {
-            if (pipe2(URPtoLoFDs, O_CLOEXEC) != 0 || pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
+            if (pipe2(URPtoLoFDs, O_CLOEXEC) != 0 ||
+                pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
                 LOG_ERR("Failed to create urp pipe " << strerror(errno));
             else
             {
@@ -3891,7 +3921,8 @@ void lokit_main(
 
         if (bTraceStartup && LogLevel != LogLevelStartup)
         {
-            LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
+            LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel
+                                                                          << "] as configured.");
             Log::setLevel(LogLevel);
         }
         Log::setDisabledAreas(LogDisabledAreas);
@@ -3925,13 +3956,14 @@ void lokit_main(
 
 #else // IOS
         std::unique_lock<std::mutex> lock(mainKit->terminationMutex);
-        mainKit->terminationCV.wait(lock,[&]{ return mainKit->terminationFlag; } );
+        mainKit->terminationCV.wait(lock, [&] { return mainKit->terminationFlag; });
 #endif // !IOS
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("Poco Exception: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
+        LOG_ERR("Poco Exception: "
+                << exc.displayText()
+                << (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
     catch (const std::exception& exc)
     {
@@ -3956,21 +3988,23 @@ void lokit_main(
 
 void runKitLoopInAThread()
 {
-    std::thread([&]
-                {
-                    Util::setThreadName("lokit_runloop");
+    std::thread(
+        [&]
+        {
+            Util::setThreadName("lokit_runloop");
 
-                    std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(lo_kit);
-                    int dummy;
-                    loKit->runLoop(pollCallback, wakeCallback, &dummy);
+            std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(lo_kit);
+            int dummy;
+            loKit->runLoop(pollCallback, wakeCallback, &dummy);
 
-                    // Should never return
-                    assert(false);
+            // Should never return
+            assert(false);
 
-                    NSLog(@"loKit->runLoop() unexpectedly returned");
+            NSLog(@"loKit->runLoop() unexpectedly returned");
 
-                    std::abort();
-                }).detach();
+            std::abort();
+        })
+        .detach();
 }
 
 #endif // IOS
@@ -3989,11 +4023,13 @@ void consistencyCheckJail()
 
         FileUtil::Stat lo(InstDirPath + "/unorc");
         if ((failedLo = (!lo.good() || !lo.isFile())))
-            LOG_ERR("Fatal system error: Kit jail is missing its LibreOfficeKit directory at '" << InstDirPath << "'");
+            LOG_ERR("Fatal system error: Kit jail is missing its LibreOfficeKit directory at '"
+                    << InstDirPath << "'");
 
         FileUtil::Stat user(UserDirPath);
         if ((failedUser = (!user.good() || !user.isDirectory())))
-            LOG_ERR("Fatal system error: Kit jail is missing its user directory at '" << UserDirPath << "'");
+            LOG_ERR("Fatal system error: Kit jail is missing its user directory at '" << UserDirPath
+                                                                                      << "'");
 
         if (failedTmp || failedLo || failedUser)
         {
@@ -4011,10 +4047,7 @@ void consistencyCheckJail()
 }
 
 /// Fetch the latest monotonically incrementing wire-id
-TileWireId getCurrentWireId(bool increment)
-{
-    return RenderTiles::getCurrentWireId(increment);
-}
+TileWireId getCurrentWireId(bool increment) { return RenderTiles::getCurrentWireId(increment); }
 
 std::string anonymizeUrl(const std::string& url)
 {
@@ -4029,7 +4062,7 @@ std::string anonymizeUrl(const std::string& url)
 
 static int receiveURPData(void* context, const signed char* buffer, size_t bytesToWrite)
 {
-    const signed char *ptr = buffer;
+    const signed char* ptr = buffer;
     while (bytesToWrite > 0)
     {
         ssize_t bytes = ::write(reinterpret_cast<intptr_t>(context), ptr, bytesToWrite);
@@ -4043,7 +4076,7 @@ static int receiveURPData(void* context, const signed char* buffer, size_t bytes
 
 static size_t sendURPData(void* context, signed char* buffer, size_t bytesToRead)
 {
-    signed char *ptr = buffer;
+    signed char* ptr = buffer;
     while (bytesToRead > 0)
     {
         ssize_t bytes = ::read(reinterpret_cast<intptr_t>(context), ptr, bytesToRead);
@@ -4081,9 +4114,9 @@ bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
         return false;
     }
 
-    *ppURPContext = LOKit->startURP(reinterpret_cast<void*>(URPfromLoFDs[1]),
-                                    reinterpret_cast<void*>(URPtoLoFDs[0]),
-                                    receiveURPFromLO, sendURPToLO);
+    *ppURPContext =
+        LOKit->startURP(reinterpret_cast<void*>(URPfromLoFDs[1]),
+                        reinterpret_cast<void*>(URPtoLoFDs[0]), receiveURPFromLO, sendURPToLO);
 
     if (!*ppURPContext)
     {
@@ -4096,17 +4129,17 @@ bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
 }
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
-bool globalPreinit(const std::string &loTemplate)
+bool globalPreinit(const std::string& loTemplate)
 {
     std::string loadedLibrary;
     // we deliberately don't dlclose handle on success, make it
     // static so static analysis doesn't see this as a leak
-    static void *handle;
+    static void* handle;
     std::string libMerged = loTemplate + "/program/libmergedlo.so";
     if (File(libMerged).exists())
     {
         LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
-        handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
+        handle = dlopen(libMerged.c_str(), RTLD_GLOBAL | RTLD_NOW);
         if (!handle)
         {
             LOG_FTL("Failed to load " << libMerged << ": " << dlerror());
@@ -4120,7 +4153,7 @@ bool globalPreinit(const std::string &loTemplate)
         if (File(libSofficeapp).exists())
         {
             LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
-            handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
+            handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL | RTLD_NOW);
             if (!handle)
             {
                 LOG_FTL("Failed to load " << libSofficeapp << ": " << dlerror());
@@ -4135,7 +4168,7 @@ bool globalPreinit(const std::string &loTemplate)
         }
     }
 
-    LokHookPreInit2* preInit = reinterpret_cast<LokHookPreInit2 *>(dlsym(handle, "lok_preinit_2"));
+    LokHookPreInit2* preInit = reinterpret_cast<LokHookPreInit2*>(dlsym(handle, "lok_preinit_2"));
     if (!preInit)
     {
         LOG_FTL("No lok_preinit_2 symbol in " << loadedLibrary << ": " << dlerror());
@@ -4143,7 +4176,7 @@ bool globalPreinit(const std::string &loTemplate)
         return false;
     }
 
-    initFunction = reinterpret_cast<LokHookFunction2 *>(dlsym(handle, "libreofficekit_hook_2"));
+    initFunction = reinterpret_cast<LokHookFunction2*>(dlsym(handle, "libreofficekit_hook_2"));
     if (!initFunction)
     {
         LOG_FTL("No libreofficekit_hook_2 symbol in " << loadedLibrary << ": " << dlerror());
