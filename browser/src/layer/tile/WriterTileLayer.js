@@ -103,16 +103,15 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
 
-		var sizeChanged = statusJSON.width !== app.file.size.x || statusJSON.height !== app.file.size.y;
+		var sizeChanged = statusJSON.width !== app.activeDocument.fileSize.x || statusJSON.height !== app.activeDocument.fileSize.y;
 
 		if (statusJSON.viewid !== undefined) this._viewId = statusJSON.viewid;
 
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
 		if (sizeChanged) {
-			app.file.size.x = statusJSON.width;
-			app.file.size.y = statusJSON.height;
-			app.activeDocument.activeView.viewSize = app.file.size.clone();
+			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
+			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
 		}

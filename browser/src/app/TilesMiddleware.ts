@@ -1755,8 +1755,8 @@ class TileManager {
 		var validTileRange = new L.Bounds(
 			new L.Point(0, 0),
 			new L.Point(
-				Math.floor((app.file.size.x - 1) / app.tile.size.x),
-				Math.floor((app.file.size.y - 1) / app.tile.size.y),
+				Math.floor((app.activeDocument.fileSize.x - 1) / app.tile.size.x),
+				Math.floor((app.activeDocument.fileSize.y - 1) / app.tile.size.y),
 			),
 		);
 
@@ -2066,8 +2066,8 @@ class TileManager {
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
 		} else if (
-			coords.x * app.pixelsToTwips > app.file.size.x ||
-			coords.y * app.pixelsToTwips > app.file.size.y
+			coords.x * app.pixelsToTwips > app.activeDocument.fileSize.x ||
+			coords.y * app.pixelsToTwips > app.activeDocument.fileSize.y
 		) {
 			return false;
 		} else return true;

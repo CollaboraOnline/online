@@ -814,8 +814,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// cells downwards and to the right, like we have on desktop
 		var viewSize = this._map.getSize();
 		var scale = this._map.getZoomScale(newZoom);
-		var width = app.file.size.x / app.tile.size.x * TileManager.tileSize * scale;
-		var height = app.file.size.y / app.tile.size.y * TileManager.tileSize * scale;
+		var width = app.activeDocument.fileSize.x / app.tile.size.x * TileManager.tileSize * scale;
+		var height = app.activeDocument.fileSize.y / app.tile.size.y * TileManager.tileSize * scale;
 		if (width < viewSize.x || height < viewSize.y) {
 			// if after zoomimg the document becomes smaller than the viewing area
 			width = Math.max(width, viewSize.x);
@@ -1460,8 +1460,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					+ ' ';
 			}
 			msg += 'x=0 y=0 ';
-			msg += 'width=' + app.file.size.x + ' ';
-			msg += 'height=' + app.file.size.y;
+			msg += 'width=' + app.activeDocument.fileSize.x + ' ';
+			msg += 'height=' + app.activeDocument.fileSize.y;
 			if (wireIdToken !== undefined)
 				msg += ' ' + wireIdToken;
 			this._onInvalidateTilesMsg(msg);
@@ -3256,7 +3256,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isCalc())
 			return;
 
-		if (app.file.size.x === 0) { return; }
+		if (app.activeDocument.fileSize.x === 0) { return; }
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
 
@@ -3268,7 +3268,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
 
 		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
-		var ratio = widthTwips / app.file.size.x;
+		var ratio = widthTwips / app.activeDocument.fileSize.x;
 
 		maxZoom = maxZoom ? maxZoom : 10;
 		var zoom = this._map.getScaleZoom(ratio, 10);
@@ -4032,11 +4032,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateMaxBounds: function (sizeChanged) {
-		if (app.file.size.x === 0 || app.file.size.y === 0) {
+		if (app.activeDocument.fileSize.x === 0 || app.activeDocument.fileSize.y === 0) {
 			return;
 		}
 
-		var docPixelLimits = new L.Point(app.file.size.pX / app.dpiScale, app.file.size.pY / app.dpiScale);
+		var docPixelLimits = new L.Point(app.activeDocument.fileSize.pX / app.dpiScale, app.activeDocument.fileSize.pY / app.dpiScale);
 		var scrollPixelLimits = new L.Point(app.activeDocument.activeView.viewSize.pX / app.dpiScale, app.activeDocument.activeView.viewSize.pY / app.dpiScale);
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 

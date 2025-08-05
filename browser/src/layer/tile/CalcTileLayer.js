@@ -192,8 +192,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		var maxDocSize = this.sheetGeometry.getSize('tiletwips');
-		var newDocWidth = Math.min(maxDocSize.x, app.file.size.x);
-		var newDocHeight = Math.min(maxDocSize.y, app.file.size.y);
+		var newDocWidth = Math.min(maxDocSize.x, app.activeDocument.fileSize.x);
+		var newDocHeight = Math.min(maxDocSize.y, app.activeDocument.fileSize.y);
 
 		var lastCellPixel = this.sheetGeometry.getCellRect(this._lastColumn, this._lastRow);
 		var isCalcRTL = this._map._docLayer.isCalcRTL();
@@ -224,18 +224,18 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var extendedLimit = false;
 
-		if (!limitWidth && maxDocSize.x > app.file.size.x) {
-			newDocWidth = Math.min(app.file.size.x + mapSizeTwips.x, maxDocSize.x);
+		if (!limitWidth && maxDocSize.x > app.activeDocument.fileSize.x) {
+			newDocWidth = Math.min(app.activeDocument.fileSize.x + mapSizeTwips.x, maxDocSize.x);
 			extendedLimit = true;
 		}
 
-		if (!limitHeight && maxDocSize.y > app.file.size.y) {
-			newDocHeight = Math.min(app.file.size.y + mapSizeTwips.y, maxDocSize.y);
+		if (!limitHeight && maxDocSize.y > app.activeDocument.fileSize.y) {
+			newDocHeight = Math.min(app.activeDocument.fileSize.y + mapSizeTwips.y, maxDocSize.y);
 			extendedLimit = true;
 		}
 
-		var shouldRestrict = (newDocWidth !== app.file.size.x ||
-				newDocHeight !== app.file.size.y);
+		var shouldRestrict = (newDocWidth !== app.activeDocument.fileSize.x ||
+				newDocHeight !== app.activeDocument.fileSize.y);
 
 		if (!shouldRestrict) {
 			return;
@@ -248,8 +248,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var bottomRight = this._map.unproject(newSizePx);
 
 		this._docPixelSize = newSizePx.clone();
-		app.file.size = new cool.SimplePoint(newDocWidth, newDocHeight);
-		app.activeDocument.activeView.viewSize = app.file.size.clone();
+		app.activeDocument.fileSize = new cool.SimplePoint(newDocWidth, newDocHeight);
+		app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
 		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
@@ -335,7 +335,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		let newMapSize = availableSpace.slice();
 		let newCanvasSize = documentContainerSize.slice();
 
-		const fileSizePixels = app.file.size.pToArray();
+		const fileSizePixels = app.activeDocument.fileSize.pToArray();
 
 		// If we don't need that much space.
 		if (fileSizePixels[0] < availableSpace[0]) {
@@ -442,10 +442,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			if (statusJSON.readonly) this._map.setPermission('readonly');
 
-			app.file.size.x = statusJSON.width;
-			app.file.size.y = statusJSON.height;
-
-			app.activeDocument.activeView.viewSize = app.file.size.clone();
+			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
+			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
 			if (app.map._docLoaded)
 				this._syncTileContainerSize();
@@ -475,7 +473,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
 			var mapSize = this._map.getSize();
-			var sizePx = this._twipsToPixels(new L.Point(app.file.size.x, app.file.size.y));
+			var sizePx = this._twipsToPixels(new L.Point(app.activeDocument.fileSize.x, app.activeDocument.fileSize.y));
 			var width = sizePx.x;
 			var height = sizePx.y;
 
@@ -1186,7 +1184,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return this.sheetGeometry.getSize('corepixels');
 		}
 
-		return this._twipsToPixels(new L.Point(app.file.size.x, app.file.size.y));
+		return this._twipsToPixels(new L.Point(app.activeDocument.fileSize.x, app.activeDocument.fileSize.y));
 	},
 
 	_calculateScrollForNewCellCursor: function () {

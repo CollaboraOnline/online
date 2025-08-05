@@ -228,8 +228,8 @@ L.Map.include({
 
 		if (docLayer._docType === 'text') return;
 
-		const tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: app.file.size.x;
-		const tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: app.file.size.y;
+		const tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: app.activeDocument.fileSize.x;
+		const tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: app.activeDocument.fileSize.y;
 
 		const docRatio = tileWidth / tileHeight;
 		const imgRatio = maxWidth / maxHeight;
