@@ -517,6 +517,46 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	/* bg set in #sidebar-dock-wrapper, #navigator-dock-wrapper */
 }
 
+/* Quick Find Panel */
+#quickfind-dock-wrapper #box {
+	display: grid;
+	grid-template-rows: 36px 36px auto;
+	margin: 4px 0px;
+	grid-gap: 10px;
+}
+
+/* dynamic size is set in parent node in JS */
+#quickfind-container,
+#QuickFindPanel,
+#quickfind-dock-wrapper #box {
+	height: inherit;
+}
+
+/* search field box */
+#quickfind-dock-wrapper #box > div:nth-child(1) {
+	justify-content: space-evenly;
+	height: min-content;
+}
+
+/* matched count on top */
+#quickfind-dock-wrapper #box .ui-text {
+	grid-row: 2;
+	font-weight: bold;
+	height: min-content;
+}
+
+/* results */
+#quickfind-dock-wrapper .ui-treeview {
+	grid-row: 3;
+	border-width: 1px 0px 0px;
+	border-radius: 0px;
+	margin-bottom: 100px; /* reduce size by size of controls above in the panel */
+}
+
+#quickfind-dock-wrapper .ui-treeview.empty {
+	border: none;
+}
+
 #navigation-sidebar.visible {
 	display: flex;
 	flex-direction: column;
