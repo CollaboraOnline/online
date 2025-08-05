@@ -11,6 +11,7 @@
  */
 
 class DocumentBase {
+	public readonly type: string = 'DocumentBase';
 	public activeView: ViewLayoutBase;
 	protected _fileSize: cool.SimplePoint;
 
