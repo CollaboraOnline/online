@@ -3459,6 +3459,17 @@ void lokit_main(
                     return false;
                 }
 
+                if (FileUtil::Stat("/nix/store").exists()) {
+                    // Bind-mount /nix/store to the jail as otherwise we will likely get missing fonts/etc.
+                    // We won't quit if we fail (e.g. the non-nixos case could work) but unless we're doing something special COOLWSD is unlikely to work without this on nixos
+                    const std::string jailNixDir = Poco::Path(jailPath, "nix/store").toString();
+                    if (!JailUtil::bind("/nix/store", jailNixDir)
+                        || !JailUtil::remountReadonly("/nix/store", jailNixDir))
+                    {
+                        LOG_WRN("Failed to mount [/nix/store] -> [" << jailNixDir
+                                                    << "], ignoring. If you have used nix for dependencies COOLWSD is likely to fail");
+                    }
+                }
 
                 if (!configId.empty())
                 {
