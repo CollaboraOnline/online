@@ -1621,7 +1621,7 @@ ssize_t StreamSocket::readHeader(const std::string_view clientName, std::istream
     }
 
     // Skip the marker.
-    ssize_t headerSize = message.tellg() + static_cast<std::streamsize>(marker.size());
+    ssize_t headerSize = static_cast<ssize_t>(message.tellg()) + marker.size();
     message.seekg(0, std::ios_base::beg);
 
     try
