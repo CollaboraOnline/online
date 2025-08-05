@@ -108,7 +108,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			.click();
 
 		cy.cGet('#FontworkGalleryDialog').should('exist');
-		cy.cGet('#ok').click();
+		cy.cGet('#FontworkGalleryDialog #ok.ui-pushbutton-wrapper button').click();
+		cy.cGet('#FontworkGalleryDialog').should('not.exist');
 
 		cy.wait(200);
 

@@ -301,8 +301,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		cy.cGet('.unospan-split_merge.unoSplitCell').click();
 		cy.cGet('.lokdialog.ui-dialog-content.ui-widget-content').should('exist');
 		cy.cGet('.lokdialog.ui-dialog-content.ui-widget-content').click();
-		cy.cGet('#ok.ui-pushbutton.jsdialog').should('exist');
-		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
+		cy.cGet('#ok.ui-pushbutton-wrapper.jsdialog').should('exist').click();
 
 		helper.typeIntoDocument('{ctrl}{a}');
 		helper.copy();

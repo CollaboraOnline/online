@@ -42,9 +42,9 @@ function rollbackPastChange(selector, mobile = false) {
 		.click();
 
 	if (mobile) {
-		cy.cGet('#ok.ui-pushbutton.mobile-wizard').click();
+		cy.cGet('#ok.ui-pushbutton-wrapper.mobile-wizard').click();
 	} else {
-		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
+		cy.cGet('#ok.ui-pushbutton-wrapper.jsdialog').click();
 	}
 
 	cy.log('<< rollbackPastChange - end');

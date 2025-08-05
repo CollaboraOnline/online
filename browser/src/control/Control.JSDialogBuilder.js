@@ -267,6 +267,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType === 'responsebutton' && data === 1 && !builder.reportValidity())
 			return;
 
+		console.assert(object.id, 'Trying to send command without valid id');
+
 		window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 		// if user does action - enter following own cursor mode
@@ -1567,7 +1569,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.enabled = false;
 		}
 		var wrapperClass = window.mode.isMobile() ? '' : 'd-flex justify-content-center';
-		var wrapper = L.DomUtil.create('div', wrapperClass, parentContainer); // need for locking overlay
+		var wrapper = L.DomUtil.create('div', wrapperClass + ' ui-pushbutton-wrapper ' + builder.options.cssClass, parentContainer); // need for locking overlay
 		wrapper.id = data.id;
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
@@ -1597,9 +1599,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		const isDisabled = data.enabled === false;
 		if (isDisabled) {
-			pushbutton.setAttribute('disabled', 'disabled');
-			pushbutton.setAttribute('aria-disabled', true);
+			wrapper.setAttribute('disabled', 'disabled');
+			wrapper.setAttribute('aria-disabled', true);
 		}
+
+		JSDialog.SynchronizeDisabledState(wrapper, [pushbutton]);
 
 		if (data.isToggle) {
 			wrapper.classList.add('ui-toggle');
@@ -1610,7 +1614,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (customCallback)
 			pushbutton.onclick = customCallback;
 		else if (builder._responses[data.id] !== undefined)
-			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[data.id], builder);
+			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: data.id }, builder._responses[data.id], builder);
 		else
 			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', wrapper, data.command, builder);
 
