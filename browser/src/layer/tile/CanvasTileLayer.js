@@ -3572,9 +3572,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		const size = [documentEndPos.x - documentPos.x, documentEndPos.y - documentPos.y];
 
-		app.activeDocument.activeView.setViewedRectangle(new cool.SimpleRectangle(
+		app.activeDocument.activeView.viewedRectangle = new cool.SimpleRectangle(
 			documentPos.x * app.pixelsToTwips, documentPos.y * app.pixelsToTwips, size[0] * app.pixelsToTwips, size[1] * app.pixelsToTwips
-		));
+		);
 	},
 
 	pauseDrawing: function () {

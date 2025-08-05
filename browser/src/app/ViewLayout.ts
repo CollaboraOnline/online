@@ -10,12 +10,12 @@
  */
 
 class ViewLayoutBase {
-	viewedRectangle: cool.SimpleRectangle;
-	lastViewedRectangle: cool.SimpleRectangle;
+	private _viewedRectangle: cool.SimpleRectangle;
+	private lastViewedRectangle: cool.SimpleRectangle;
 	private clientVisibleAreaCommand: string = '';
 
 	constructor() {
-		this.viewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+		this._viewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 		this.lastViewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 	}
 
@@ -69,17 +69,21 @@ class ViewLayoutBase {
 	}
 
 	public getLastPanDirection(): Array<number> {
-		var dx: number = this.viewedRectangle.pX1 - this.lastViewedRectangle.pX1;
-		var dy: number = this.viewedRectangle.pY1 - this.lastViewedRectangle.pY1;
+		var dx: number = this._viewedRectangle.pX1 - this.lastViewedRectangle.pX1;
+		var dy: number = this._viewedRectangle.pY1 - this.lastViewedRectangle.pY1;
 		return [Math.sign(dx), Math.sign(dy)];
 	}
 
-	public setViewedRectangle(rectangle: cool.SimpleRectangle): void {
-		this.viewedRectangle = rectangle;
+	public get viewedRectangle() {
+		return this._viewedRectangle;
+	}
+
+	public set viewedRectangle(rectangle: cool.SimpleRectangle) {
+		this._viewedRectangle = rectangle;
 
 		// maintain a view of where we're panning to.
-		if (!this.viewedRectangle.equals(this.lastViewedRectangle.toArray()))
-			this.lastViewedRectangle = this.viewedRectangle.clone();
+		if (!this._viewedRectangle.equals(this.lastViewedRectangle.toArray()))
+			this.lastViewedRectangle = this._viewedRectangle.clone();
 
 		app.sectionContainer.onNewDocumentTopLeft();
 		app.sectionContainer.requestReDraw();
