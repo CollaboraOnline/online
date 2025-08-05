@@ -241,7 +241,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				app.file.size.y = totalHeight;
 			}
 
-			app.view.size = app.file.size.clone();
+			app.activeDocument.activeView.viewSize = app.file.size.clone();
 
 			app.impress.partList = Object.assign([], statusJSON.parts);
 

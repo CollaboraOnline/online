@@ -112,7 +112,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		if (sizeChanged) {
 			app.file.size.x = statusJSON.width;
 			app.file.size.y = statusJSON.height;
-			app.view.size = app.file.size.clone();
+			app.activeDocument.activeView.viewSize = app.file.size.clone();
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
 		}

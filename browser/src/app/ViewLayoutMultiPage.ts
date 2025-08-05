@@ -17,13 +17,17 @@ class LayoutPageRectangle extends cool.SimpleRectangle {
 	part: number;
 }
 
-class MultiPageViewLayout {
-	public static gapBetweenPages = 20; // Core pixels.
-	public static availableWidth = 0;
-	private static maxRowsSize = 2;
-	public static layoutRectangles = Array<LayoutPageRectangle>();
+class MultiPageViewLayout extends ViewLayoutBase {
+	public gapBetweenPages = 20; // Core pixels.
+	public availableWidth = 0;
+	private maxRowsSize = 2;
+	public layoutRectangles = Array<LayoutPageRectangle>();
 
-	private static sendClientVisibleArea() {
+	constructor() {
+		super();
+	}
+
+	public sendClientVisibleArea() {
 		const visibleArea = this.getVisibleAreaRectangle();
 
 		const visibleAreaCommand =
@@ -45,7 +49,7 @@ class MultiPageViewLayout {
 		);
 	}
 
-	private static resetViewLayout() {
+	private resetViewLayout() {
 		this.layoutRectangles.length = 0;
 
 		if (app.file.writer.pageRectangleList.length === 0) return;
@@ -64,7 +68,7 @@ class MultiPageViewLayout {
 		}
 
 		let lastY = this.gapBetweenPages;
-		app.view.size.pX = canvasSize[0];
+		this._viewSize.pX = canvasSize[0];
 
 		for (let i = 0; i < this.layoutRectangles.length; i++) {
 			let x = 0;
@@ -107,8 +111,8 @@ class MultiPageViewLayout {
 
 				lastY += maxY + this.gapBetweenPages;
 			} else {
-				if (x > app.view.size.pX)
-					app.view.size.pX = x + this.gapBetweenPages * 2;
+				if (x > this._viewSize.pX)
+					this._viewSize.pX = x + this.gapBetweenPages * 2;
 
 				this.layoutRectangles[i].layoutX = this.gapBetweenPages;
 				this.layoutRectangles[i].layoutY = lastY;
@@ -118,10 +122,10 @@ class MultiPageViewLayout {
 			i = j - 1;
 		}
 
-		app.view.size.pY = Math.max(lastY, canvasSize[1]);
+		this._viewSize.pY = Math.max(lastY, canvasSize[1]);
 	}
 
-	private static getContainingPageRectangle(point: cool.SimplePoint) {
+	private getContainingPageRectangle(point: cool.SimplePoint) {
 		for (let i = 0; i < this.layoutRectangles.length; i++) {
 			if (this.layoutRectangles[i].containsPoint(point.toArray()))
 				return this.layoutRectangles[i];
@@ -130,7 +134,7 @@ class MultiPageViewLayout {
 		return null;
 	}
 
-	public static viewPixelsToTwips(x: number, y: number): number[] {
+	public viewPixelsToTwips(x: number, y: number): number[] {
 		for (let i = 0; i < this.layoutRectangles.length; i++) {
 			const rectangle = this.layoutRectangles[i];
 			const bounds = [
@@ -166,7 +170,7 @@ class MultiPageViewLayout {
 	}
 
 	// Returns view coordinate of given document coordinate.
-	public static twipsToViewPixels(x: number, y: number): number[] {
+	public twipsToViewPixels(x: number, y: number): number[] {
 		const point = new cool.SimplePoint(x, y);
 		const containingRectangle = this.getContainingPageRectangle(point);
 
@@ -182,11 +186,11 @@ class MultiPageViewLayout {
 		} else return [0, 0];
 	}
 
-	public static getVisibleAreaRectangle() {
+	public getVisibleAreaRectangle() {
 		const viewedRectangle =
 			app.activeDocument.activeView.viewedRectangle.clone();
-		viewedRectangle.pWidth = app.view.size.pX;
-		viewedRectangle.pHeight = app.view.size.pY;
+		viewedRectangle.pWidth = this._viewSize.pX;
+		viewedRectangle.pHeight = this._viewSize.pY;
 		const resultingRectangle = new cool.SimpleRectangle(
 			Number.POSITIVE_INFINITY,
 			Number.POSITIVE_INFINITY,
@@ -230,7 +234,7 @@ class MultiPageViewLayout {
 		return resultingRectangle;
 	}
 
-	public static reset() {
+	public reset() {
 		if (
 			!app.file.writer.multiPageView ||
 			!app.file.writer.pageRectangleList.length
