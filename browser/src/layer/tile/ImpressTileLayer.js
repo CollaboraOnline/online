@@ -44,7 +44,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			app.file.partBasedView = true; // For Writer and Calc, this one should always be "true".
 
 		this._partHeightTwips = 0; // Single part's height.
-		this._partWidthTwips = 0; // Single part's width. These values are equal to app.file.size.x & app.file.size.y when app.file.partBasedView is true.
+		this._partWidthTwips = 0; // Single part's width. These values are equal to app.activeDocument.fileSize.x & app.activeDocument.fileSize.y when app.file.partBasedView is true.
 
 		app.events.on('contextchange', this._onContextChange.bind(this));
 	},
@@ -225,23 +225,23 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		textMsg = textMsg.replace('status: ', '');
 		textMsg = textMsg.replace('statusupdate: ', '');
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
-			app.file.size.x = statusJSON.width;
-			app.file.size.y = statusJSON.height;
+			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
+
 			this._docType = statusJSON.type;
 			if (this._docType === 'drawing') {
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
 			this._parts = statusJSON.partscount;
-			this._partHeightTwips = app.file.size.y;
-			this._partWidthTwips = app.file.size.x;
+			this._partHeightTwips = app.activeDocument.fileSize.y;
+			this._partWidthTwips = app.activeDocument.fileSize.x;
 
 			if (app.file.fileBasedView) {
-				var totalHeight = this._parts * app.file.size.y; // Total height in twips.
+				var totalHeight = this._parts * app.activeDocument.fileSize.y; // Total height in twips.
 				totalHeight += (this._parts) * this._spaceBetweenParts; // Space between parts.
-				app.file.size.y = totalHeight;
+				app.activeDocument.fileSize.y = totalHeight;
 			}
 
-			app.activeDocument.activeView.viewSize = app.file.size.clone();
+			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
 			app.impress.partList = Object.assign([], statusJSON.parts);
 

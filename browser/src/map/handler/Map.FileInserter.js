@@ -148,8 +148,8 @@ L.Map.FileInserter = L.Handler.extend({
 				};
 
 				const maxSize = {
-					width: app.file.size.cX * map.getZoomScale(10),
-					height: app.file.size.cY * map.getZoomScale(10),
+					width: app.activeDocument.fileSize.cX * map.getZoomScale(10),
+					height: app.activeDocument.fileSize.cY * map.getZoomScale(10),
 				};
 
 				const shrinkToFitFactor = Math.min(

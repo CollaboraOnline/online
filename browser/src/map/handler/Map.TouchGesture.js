@@ -268,7 +268,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		var textSelection;
 		if (TextSelections.getStartRectangle() && TextSelections.getEndRectangle()) {
 			// Oversimplication. See "inBand" function.
-			textSelection = new app.definitions.simpleRectangle(0, TextSelections.getEndRectangle().y1, app.file.size.x, 0);
+			textSelection = new app.definitions.simpleRectangle(0, TextSelections.getEndRectangle().y1, app.activeDocument.fileSize.x, 0);
 			textSelection.height = TextSelections.getEndRectangle().rectangle.y2 - TextSelections.getStartRectangle().y1;
 		}
 
