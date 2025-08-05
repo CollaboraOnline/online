@@ -20,9 +20,9 @@ mkdir -p $CHROOT || exit 1
 # while INSTDIR is the physical one. Both will most likely be the same,
 # except on systems that have symlinks in the path. We must create
 # both paths (if they are different) inside the jail, hence we need both.
-CHROOT=`cd $CHROOT && /bin/pwd`
-INSTDIR_LOGICAL=`cd $INSTDIR && /bin/pwd -L`
-INSTDIR=`cd $INSTDIR && /bin/pwd -P`
+CHROOT=`cd $CHROOT && pwd`
+INSTDIR_LOGICAL=`cd $INSTDIR && pwd -L`
+INSTDIR=`cd $INSTDIR && pwd -P`
 
 if [ ! `uname -s` = "FreeBSD" ]; then
     CP=cp
