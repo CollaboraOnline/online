@@ -19,6 +19,7 @@ declare var JSDialog: any;
 enum SidebarType {
 	Sidebar = 'sidebar',
 	Navigator = 'navigator',
+	QuickFind = 'quickfind',
 }
 abstract class SidebarBase {
 	type: SidebarType;
@@ -28,7 +29,7 @@ abstract class SidebarBase {
 	container: HTMLDivElement;
 	documentContainer: HTMLDivElement;
 	wrapper: HTMLElement;
-	builder: any;
+	builder: JSBuilder;
 
 	constructor(map: any, type: SidebarType) {
 		this.type = type;
@@ -47,11 +48,13 @@ abstract class SidebarBase {
 			useScrollAnimation: false, // icon views cause jump on sidebar open
 			suffix: 'sidebar',
 		});
-		this.container = L.DomUtil.create(
-			'div',
-			`${this.type}-container`,
-			$(`#${this.type}-panel`).get(0),
-		);
+		if (!this.container) {
+			this.container = L.DomUtil.createWithId(
+				'div',
+				`${this.type}-container`,
+				$(`#${this.type}-panel`).get(0),
+			);
+		}
 		this.wrapper = document.getElementById(`${this.type}-dock-wrapper`);
 		this.documentContainer = document.querySelector('#document-container');
 
@@ -150,6 +153,10 @@ abstract class SidebarBase {
 	onResize() {
 		this.wrapper.style.maxHeight =
 			this.documentContainer.getBoundingClientRect().height + 'px';
+		if (this.container) {
+			this.container.style.height =
+				this.documentContainer.getBoundingClientRect().height + 'px';
+		}
 	}
 }
 JSDialog.SidebarBase = SidebarBase;

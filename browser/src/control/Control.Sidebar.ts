@@ -135,7 +135,7 @@ class Sidebar extends SidebarBase {
 					}
 				}
 
-				this.builder.build(this.container, [sidebarData]);
+				this.builder.build(this.container, [sidebarData], false);
 				if (!this.isVisible()) {
 					$('#sidebar-dock-wrapper').addClass('visible');
 
