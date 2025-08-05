@@ -1441,7 +1441,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     }
 
     http::Session::Protocol protocol = http::Session::Protocol::HttpSsl;
-    ulong port = 443;
+    unsigned long port = 443;
     if (scheme == "https://" || scheme.empty()) {
         // empty scheme assumes https
     } else if (scheme == "http://") {
