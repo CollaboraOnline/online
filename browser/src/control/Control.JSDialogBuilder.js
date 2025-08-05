@@ -2293,8 +2293,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var clickFunction = function (e) {
 			if (!div.hasAttribute('disabled')) {
 				builder.refreshSidebar = true;
-				if (data.postmessage)
-					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
+				if (data.postmessage) {
+					let isContextualButton = e.target.offsetParent.id === 'context-toolbar';
+					const msgId = isContextualButton ? 'Clicked_ContextualButton' : 'Clicked_Button';
+					builder.map.fire('postMessage', {msgId: msgId, args: {Id: data.id} });
+				}
 				else if (isRealUnoCommand && data.dropdown !== true)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 				else {
