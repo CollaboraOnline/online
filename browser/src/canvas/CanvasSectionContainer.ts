@@ -160,8 +160,6 @@ class CanvasSectionContainer {
 	*/
 
 	private sections: Array<any> = new Array(0);
-	private lastDocumentTopLeft: Array<number> = [0, -1];
-	private documentTopLeft: Array<number> = [0, 0];
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
 	private width: number;
@@ -284,12 +282,6 @@ class CanvasSectionContainer {
 
 	public getViewSize (): Array<number> {
 		return [this.width, this.height];
-	}
-
-	public getLastPanDirection() : Array<number> {
-		var dx : number = this.documentTopLeft[0] - this.lastDocumentTopLeft[0];
-		var dy : number = this.documentTopLeft[1] - this.lastDocumentTopLeft[1];
-		return [ Math.sign(dx), Math.sign(dy) ];
 	}
 
 	public setBackgroundColorMode(useCSSVars: boolean = true) {
@@ -460,10 +452,6 @@ class CanvasSectionContainer {
 		}
 	}
 
-	public getDocumentTopLeft (): Array<number> {
-		return [this.documentTopLeft[0], this.documentTopLeft[1]];
-	}
-
 	public getDocumentAnchor(): Array<number> {
 		return [this.documentAnchor[0], this.documentAnchor[1]];
 	}
@@ -523,48 +511,6 @@ class CanvasSectionContainer {
 			}
 			else
 				return false;
-		}
-	}
-
-	public setDocumentBounds (points: Array<number>) {
-		var x: number = Math.round(points[0]);
-		var y: number = Math.round(points[1]);
-
-		// maintain a view of where we're panning to.
-		if (this.documentTopLeft[0] != x ||
-		    this.documentTopLeft[1] != y) {
-			this.lastDocumentTopLeft[0] = this.documentTopLeft[0];
-			this.lastDocumentTopLeft[1] = this.documentTopLeft[1];
-		}
-
-		this.documentTopLeft[0] = x;
-		this.documentTopLeft[1] = y;
-
-		app.file.viewedRectangle.pX1 = points[0];
-		app.file.viewedRectangle.pY1 = points[1];
-		app.file.viewedRectangle.pWidth = points[2] - points[0];
-		app.file.viewedRectangle.pHeight = points[3] - points[1];
-
-		for (var i: number = 0; i < this.sections.length; i++) {
-			var section: CanvasSectionObject = this.sections[i];
-
-			if (section.documentObject === true) {
-				section.myTopLeft =[
-					this.documentAnchor[0] + section.position[0] - (app.isXOrdinateInFrozenPane(section.position[0]) ? 0: this.documentTopLeft[0]),
-					this.documentAnchor[1] + section.position[1] - (app.isYOrdinateInFrozenPane(section.position[1]) ? 0: this.documentTopLeft[1])
-				];
-
-				const isVisible = this.isDocumentObjectVisible(section);
-				if (isVisible !== section.isVisible) {
-					section.isVisible = isVisible;
-					section.onDocumentObjectVisibilityChange();
-				}
-
-				if (this.testing)
-					this.createUpdateSingleDivElement(section);
-			}
-
-			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
 		}
 	}
 
@@ -1008,6 +954,38 @@ class CanvasSectionContainer {
 		if (app.map._docLayer._docType === 'text') {
 			// Global state holder should already have the latest information: app.file.textCursor.rectangle.
 			this.propagateCursorPositionChanged();
+		}
+	}
+
+	// Called when document position is changed.
+	public onNewDocumentTopLeft() {
+		for (var i: number = 0; i < this.sections.length; i++) {
+			var section: CanvasSectionObject = this.sections[i];
+
+			if (section.documentObject === true) {
+				section.myTopLeft = [
+					this.documentAnchor[0] +
+						section.position[0] -
+						(app.isXOrdinateInFrozenPane(section.position[0])
+							? 0
+							: app.activeDocument.activeView.viewedRectangle.pX1),
+					this.documentAnchor[1] +
+						section.position[1] -
+						(app.isYOrdinateInFrozenPane(section.position[1])
+							? 0
+							: app.activeDocument.activeView.viewedRectangle.pY1),
+				];
+
+				const isVisible = this.isDocumentObjectVisible(section);
+				if (isVisible !== section.isVisible) {
+					section.isVisible = isVisible;
+					section.onDocumentObjectVisibilityChange();
+				}
+
+				if (this.testing) this.createUpdateSingleDivElement(section);
+			}
+
+			this.sections[i].onNewDocumentTopLeft();
 		}
 	}
 
@@ -1499,8 +1477,8 @@ class CanvasSectionContainer {
 			if (section.name === 'tiles') {
 				// For tiles section add document coordinates of top and left too.
 				element.innerText = JSON.stringify({
-					top: Math.round(section.documentTopLeft[1]),
-					left: Math.round(section.documentTopLeft[0]),
+					top: Math.round(app.activeDocument.activeView.viewedRectangle.pY1),
+					left: Math.round(app.activeDocument.activeView.viewedRectangle.pX1),
 					width: Math.round(section.size[0]),
 					height: Math.round(section.size[1])
 				});
@@ -1654,8 +1632,8 @@ class CanvasSectionContainer {
 				if (section.size && section.position) {
 					section.isLocated = true;
 					section.myTopLeft = [
-						this.documentAnchor[0] + section.position[0] - (app.isXOrdinateInFrozenPane(section.position[0]) ? 0 : this.documentTopLeft[0]),
-						this.documentAnchor[1] + section.position[1] - (app.isYOrdinateInFrozenPane(section.position[1]) ? 0 : this.documentTopLeft[1])
+						this.documentAnchor[0] + section.position[0] - (app.isXOrdinateInFrozenPane(section.position[0]) ? 0 : app.activeDocument.activeView.viewedRectangle.pX1),
+						this.documentAnchor[1] + section.position[1] - (app.isYOrdinateInFrozenPane(section.position[1]) ? 0 : app.activeDocument.activeView.viewedRectangle.pY1)
 					];
 				}
 			}
@@ -1900,7 +1878,6 @@ class CanvasSectionContainer {
 	private pushSection (newSection: CanvasSectionObject) {
 		// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 		newSection.context = this.context;
-		newSection.documentTopLeft = this.documentTopLeft;
 		newSection.containerObject = this;
 		newSection.sectionProperties.section = newSection;
 		this.sections.push(newSection);

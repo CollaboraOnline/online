@@ -48,6 +48,8 @@ class MultiPageViewLayout {
 	private static resetViewLayout() {
 		this.layoutRectangles.length = 0;
 
+		if (app.file.writer.pageRectangleList.length === 0) return;
+
 		const canvasSize = app.sectionContainer.getViewSize();
 
 		// Copy the page rectangle array.
@@ -93,7 +95,8 @@ class MultiPageViewLayout {
 				const rowItemCount = j - i;
 				const gap = (rowItemCount - 1) * this.gapBetweenPages;
 				const margin = (canvasSize[0] - totalWidth + gap) * 0.5;
-				let currentX = margin + app.file.viewedRectangle.pX1;
+				let currentX =
+					margin + app.activeDocument.activeView.viewedRectangle.pX1;
 				let maxY = 0;
 				for (let k = i; k < j; k++) {
 					this.layoutRectangles[k].layoutX = currentX;
@@ -118,8 +121,70 @@ class MultiPageViewLayout {
 		app.view.size.pY = Math.max(lastY, canvasSize[1]);
 	}
 
+	private static getContainingPageRectangle(point: cool.SimplePoint) {
+		for (let i = 0; i < this.layoutRectangles.length; i++) {
+			if (this.layoutRectangles[i].containsPoint(point.toArray()))
+				return this.layoutRectangles[i];
+		}
+
+		return null;
+	}
+
+	public static viewPixelsToTwips(x: number, y: number): number[] {
+		for (let i = 0; i < this.layoutRectangles.length; i++) {
+			const rectangle = this.layoutRectangles[i];
+			const bounds = [
+				rectangle.layoutX - app.activeDocument.activeView.viewedRectangle.pX1,
+				rectangle.layoutY - app.activeDocument.activeView.viewedRectangle.pY1,
+				rectangle.pWidth,
+				rectangle.pHeight,
+			];
+
+			if (x > bounds[0] && x < bounds[0] + bounds[2]) {
+				if (y > bounds[1] && y < bounds[1] + bounds[3]) {
+					return [
+						Math.round(
+							(rectangle.pX1 +
+								(x -
+									rectangle.layoutX +
+									app.activeDocument.activeView.viewedRectangle.pX1)) *
+								app.pixelsToTwips,
+						),
+						Math.round(
+							(rectangle.pY1 +
+								(y -
+									rectangle.layoutY +
+									app.activeDocument.activeView.viewedRectangle.pY1)) *
+								app.pixelsToTwips,
+						),
+					];
+				}
+			}
+		}
+
+		return [-1, -1];
+	}
+
+	// Returns view coordinate of given document coordinate.
+	public static twipsToViewPixels(x: number, y: number): number[] {
+		const point = new cool.SimplePoint(x, y);
+		const containingRectangle = this.getContainingPageRectangle(point);
+
+		if (containingRectangle) {
+			return [
+				containingRectangle.layoutX +
+					(point.pX - containingRectangle.pX1) -
+					app.activeDocument.activeView.viewedRectangle.pX1,
+				containingRectangle.layoutY +
+					(point.pY - containingRectangle.pY1) -
+					app.activeDocument.activeView.viewedRectangle.pY1,
+			];
+		} else return [0, 0];
+	}
+
 	public static getVisibleAreaRectangle() {
-		const viewedRectangle = app.file.viewedRectangle.clone();
+		const viewedRectangle =
+			app.activeDocument.activeView.viewedRectangle.clone();
 		viewedRectangle.pWidth = app.view.size.pX;
 		viewedRectangle.pHeight = app.view.size.pY;
 		const resultingRectangle = new cool.SimpleRectangle(

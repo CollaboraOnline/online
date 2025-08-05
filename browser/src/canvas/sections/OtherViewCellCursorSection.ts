@@ -71,7 +71,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             this.hideUsernamePopUp();
     }
 
-    onNewDocumentTopLeft(size: Array<number>): void {
+    onNewDocumentTopLeft(): void {
         this.adjustPopUpPosition();
     }
 

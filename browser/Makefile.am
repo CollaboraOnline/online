@@ -258,7 +258,9 @@ COOL_JS_LST =\
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/TextSelectionMiddleware.ts \
 	src/app/CellSelectionMarkerMiddleware.ts \
-	src/app/MultiPageViewLayout.ts \
+	src/app/ViewLayout.ts \
+	src/app/ViewLayoutMultiPage.ts \
+	src/app/DocumentBase.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SlideshowMiddleware.ts \
 	src/app/SearchService.ts \

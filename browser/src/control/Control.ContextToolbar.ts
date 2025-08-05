@@ -92,12 +92,12 @@ class ContextToolbar {
 				return;
 			const pos = { x: statRect.cX1, y: statRect.cY1 };
 			pos.x -=
-				(app.sectionContainer.getDocumentTopLeft()[0] -
+				(app.activeDocument.activeView.viewedRectangle.pX1 -
 					app.sectionContainer.getDocumentAnchor()[0]) /
 					app.dpiScale -
 				app.sectionContainer.getCanvasBoundingClientRect().x;
 			pos.y -=
-				(app.sectionContainer.getDocumentTopLeft()[1] -
+				(app.activeDocument.activeView.viewedRectangle.pY1 -
 					app.sectionContainer.getDocumentAnchor()[1]) /
 					app.dpiScale -
 				app.sectionContainer.getCanvasBoundingClientRect().y;

@@ -16,6 +16,7 @@
 		* var autoFillSection = new app.definitions.AutoFillMarkerSection();
 */
 window.app = {
+	activeDocument: null, // Active document manager.
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
@@ -74,7 +75,6 @@ window.app = {
 			rectangle: null // SimpleRectangle.
 		},
 		size: null, // SimplePoint. Size of the document.
-		viewedRectangle: null, // Visible part of the file - SimpleRectangle.
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		writer: {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.

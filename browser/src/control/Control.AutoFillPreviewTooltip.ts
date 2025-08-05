@@ -63,10 +63,10 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 			parseInt(ev.data.celladdress[1]),
 		);
 		ev.data.celladdress.pX -=
-			app.sectionContainer.getDocumentTopLeft()[0] -
+			app.activeDocument.activeView.viewedRectangle.pX1 -
 			app.sectionContainer.getDocumentAnchor()[0];
 		ev.data.celladdress.pY -=
-			app.sectionContainer.getDocumentTopLeft()[1] -
+			app.activeDocument.activeView.viewedRectangle.pY1 -
 			app.sectionContainer.getDocumentAnchor()[1];
 
 		const entry = ev.data.text;

@@ -66,7 +66,7 @@ export class ColumnGroup extends GroupBase {
 			return startX > this._splitPos.x + this._cornerHeaderWidth;
 		}
 		else {
-			return startX >= this._cornerHeaderWidth && (startX > this.documentTopLeft[0] || startX < this._splitPos.x);
+			return startX >= this._cornerHeaderWidth && (startX > app.activeDocument.activeView.viewedRectangle.pX1 || startX < this._splitPos.x);
 		}
 	}
 
@@ -74,7 +74,7 @@ export class ColumnGroup extends GroupBase {
 		if (endPos <= this._splitPos.x)
 			return endPos;
 		else {
-			return Math.max(endPos + this._cornerHeaderWidth - this.documentTopLeft[0], this._splitPos.x + this._cornerHeaderWidth);
+			return Math.max(endPos + this._cornerHeaderWidth - app.activeDocument.activeView.viewedRectangle.pX1, this._splitPos.x + this._cornerHeaderWidth);
 		}
 	}
 
@@ -82,7 +82,7 @@ export class ColumnGroup extends GroupBase {
 		if (docPos < this._splitPos.x)
 			return docPos + this._cornerHeaderWidth;
 		else
-			return Math.max(docPos - this.documentTopLeft[0], this._splitPos.x) + this._cornerHeaderWidth;
+			return Math.max(docPos - app.activeDocument.activeView.viewedRectangle.pX1, this._splitPos.x) + this._cornerHeaderWidth;
 	}
 
 	drawGroupControl (group: GroupEntry): void {
@@ -205,7 +205,7 @@ export class ColumnGroup extends GroupBase {
 	getTailsGroupRect (group: GroupEntry): number[] {
 		const startX = this.getRelativeX(group.startPos);
 		const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		const endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+		const endX = group.endPos + this._cornerHeaderWidth - app.activeDocument.activeView.viewedRectangle.pX1;
 		const endY = startY + this._groupHeadSize;
 		return [startX, endX, startY, endY];
 	}

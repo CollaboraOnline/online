@@ -646,7 +646,7 @@ export class Comment extends CanvasSectionObject {
 
 		if (rectangles) {
 			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+			var diff = [documentAnchorSection.myTopLeft[0] - app.activeDocument.activeView.viewedRectangle.pX1, documentAnchorSection.myTopLeft[1] - app.activeDocument.activeView.viewedRectangle.pY1];
 
 			for (var i = 0; i < rectangles.length; i++) {
 				pos = [

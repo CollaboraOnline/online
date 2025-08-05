@@ -73,7 +73,7 @@ export class RowGroup extends GroupBase {
 		if (endPos <= this._splitPos.y)
 			return endPos;
 		else {
-			return Math.max(endPos + this._cornerHeaderHeight - this.documentTopLeft[1], this._splitPos.y + this._cornerHeaderHeight);
+			return Math.max(endPos + this._cornerHeaderHeight - app.activeDocument.activeView.viewedRectangle.pY1, this._splitPos.y + this._cornerHeaderHeight);
 		}
 	}
 
@@ -81,7 +81,7 @@ export class RowGroup extends GroupBase {
 		if (docPos < this._splitPos.y)
 			return docPos + this._cornerHeaderHeight;
 		else
-			return Math.max(docPos - this.documentTopLeft[1], this._splitPos.y) + this._cornerHeaderHeight;
+			return Math.max(docPos - app.activeDocument.activeView.viewedRectangle.pY1, this._splitPos.y) + this._cornerHeaderHeight;
 	}
 
 	drawGroupControl (group: GroupEntry): void {
@@ -205,7 +205,7 @@ export class RowGroup extends GroupBase {
 		const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		const startY = this.getRelativeY(group.startPos);
 		const endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
-		const endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
+		const endY = group.endPos + this._cornerHeaderHeight - app.activeDocument.activeView.viewedRectangle.pY1;
 		return [startX, endX, startY, endY];
 	}
 

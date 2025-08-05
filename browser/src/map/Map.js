@@ -558,7 +558,7 @@ L.Map = L.Evented.extend({
 
 		if (app.calc.cellCursorRectangle) {
 			const twipsTopLeft = [app.calc.cellCursorRectangle.x1, app.calc.cellCursorRectangle.y1];
-			const cursorInBounds = app.file.viewedRectangle.containsPoint(twipsTopLeft);
+			const cursorInBounds = app.activeDocument.activeView.viewedRectangle.containsPoint(twipsTopLeft);
 
 			if (cursorInBounds) {
 				return new L.Point(...twipsTopLeft);
@@ -567,7 +567,7 @@ L.Map = L.Evented.extend({
 
 		if (docLayer._cellSelectionArea) {
 			const twipsCenter = docLayer._cellSelectionArea.center;
-			const selectionInBounds = app.file.viewedRectangle.containsPoint(twipsCenter);
+			const selectionInBounds = app.activeDocument.activeView.viewedRectangle.containsPoint(twipsCenter);
 
 			if (selectionInBounds) {
 				return new L.Point(...twipsCenter);
@@ -705,7 +705,7 @@ L.Map = L.Evented.extend({
 		var cssBounds = this.getPixelBounds();
 		var mapUpdater;
 		var runAtFinish;
-		if (this._docLayer && app.file.textCursor.visible && app.file.viewedRectangle.containsPoint(app.file.textCursor.rectangle.center)) {
+		if (this._docLayer && app.file.textCursor.visible && app.activeDocument.activeView.viewedRectangle.containsPoint(app.file.textCursor.rectangle.center)) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
 			var zoomScale = 1.0 / this.getZoomScale(zoom, this._zoom);

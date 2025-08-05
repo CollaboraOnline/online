@@ -636,7 +636,8 @@ class HRuler extends Ruler {
 		if (!this._map.options.docBounds) return;
 
 		const rulerOffset =
-			-app.file.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
+			-app.activeDocument.activeView.viewedRectangle.cX1 +
+			this.options.tileMargin * app.getScale();
 
 		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 

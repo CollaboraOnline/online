@@ -638,10 +638,9 @@ L.Control.JSDialog = L.Control.extend({
 			cellRectangle = app.calc.cellCursorRectangle;
 		}
 
-		const documentTopLeft = app.sectionContainer.getDocumentTopLeft();
 		const documentAnchor = app.sectionContainer.getDocumentAnchor();
-		cellRectangle.pX1 += documentAnchor[0] - documentTopLeft[0];
-		cellRectangle.pY1 += documentAnchor[1] - documentTopLeft[1];
+		cellRectangle.pX1 += documentAnchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
+		cellRectangle.pY1 += documentAnchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;
 
 		app.calc.autoFilterCell = null; // Set to null after using to ensure it doesn't confuse consequent calls.
 
