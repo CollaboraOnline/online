@@ -411,6 +411,13 @@ AC_ARG_ENABLE([wasm-embindtest],
                               LibreOffice to be built with --enable-dbgutil. Relevant only for a
                               Wasm build.]))
 
+AC_ARG_WITH([wasm-zetajs],
+            AS_HELP_STRING([--with-wasm-zetajs=<path>],
+                           [Include zetajs scripting support in the app. (Together with
+                            --enable-wasm-embindtest, also run the zetajs smoketest as part of
+                            running the app.) Relevant only for a Wasm build. Path to a zetajs
+                            source tree.]))
+
 AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
                              [Enable experimental features and behavior]))
@@ -1920,7 +1927,24 @@ if test "$host_os" = emscripten; then
         AC_MSG_RESULT([no])
     fi
 fi
+AC_SUBST([ENABLE_WASM_EMBINDTEST])
 AM_CONDITIONAL([ENABLE_WASM_EMBINDTEST], [test "$ENABLE_WASM_EMBINDTEST" = true])
+
+ENABLE_WASM_ZETAJS=
+WITH_WASM_ZETAJS=
+if test "$host_os" = emscripten; then
+    AC_MSG_CHECKING([whether to include zetajs scripting support])
+    if test -n "$with_wasm_zetajs"; then
+        AC_MSG_RESULT([yes])
+        ENABLE_WASM_ZETAJS=true
+        WITH_WASM_ZETAJS=$with_wasm_zetajs
+    else
+        AC_MSG_RESULT([no])
+    fi
+fi
+AC_SUBST([ENABLE_WASM_ZETAJS])
+AC_SUBST([WITH_WASM_ZETAJS])
+AM_CONDITIONAL([ENABLE_WASM_ZETAJS], [test "$ENABLE_WASM_ZETAJS" = true])
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile

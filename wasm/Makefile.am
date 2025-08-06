@@ -1,3 +1,6 @@
+QUIET_M4 = $(QUIET_M4_$(V))
+QUIET_M4_ = $(QUIET_M4_$(AM_DEFAULT_VERBOSITY))
+QUIET_M4_0 = @echo "  M4      " $@;
 
 EXEEXT = .js
 
@@ -125,6 +128,13 @@ exports: @LOBUILDDIR@/workdir/CustomTarget/desktop/soffice_bin-emscripten-export
 soffice.dat%: @LOBUILDDIR@/instdir/program/soffice.dat%
 	cp $< $@
 
+emscripten-module.js: emscripten-module.js.m4
+	$(QUIET_M4) m4 -PE -DENABLE_WASM_EMBINDTEST=$(ENABLE_WASM_EMBINDTEST) \
+		-DENABLE_WASM_ZETAJS=$(ENABLE_WASM_ZETAJS) $< >$@
+
+all-local: emscripten-module.js
+
 clean-local:
 	rm -f \
+		emscripten-module.js \
 		online.wasm.debug.wasm.dwp
