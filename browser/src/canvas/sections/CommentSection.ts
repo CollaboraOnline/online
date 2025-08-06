@@ -321,7 +321,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.annotation = this;
 	}
 
-	private createReplyHint() : void {
+	private createReplyHint (): void {
 		this.sectionProperties.replyHint = L.DomUtil.create('p', '', this.sectionProperties.nodeModify);
 		var small = document.createElement('small');
 		small.classList.add('cool-font');
