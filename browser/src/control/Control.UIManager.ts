@@ -529,6 +529,8 @@ class UIManager extends L.Control {
 			// setup quickfind panel
 			this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
 			this.map.addControl(this.map.quickFindPanel);
+			// Initialize QuickFindPanel in core
+			app.socket.sendMessage('uno .uno:QuickFind');
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
