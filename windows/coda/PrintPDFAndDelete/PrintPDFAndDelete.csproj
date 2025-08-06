@@ -9,6 +9,7 @@
     <Platforms>x64;ARM64</Platforms>
     <UseWPF>True</UseWPF>
     <StartupObject>PrintPDFAndDelete.PrintPDFAndDelete</StartupObject>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
