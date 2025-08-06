@@ -239,8 +239,6 @@ L.Control.Notebookbar = L.Control.extend({
 
 		this.container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
 
-		JSDialog.MakeScrollable(this.parentContainer, this.container);
-
 		this.builder.build(this.container, [tabJSON]);
 
 		if (this._showNotebookbar === false)
