@@ -598,11 +598,11 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         case WM_DESTROY:
             if (DocumentData::count() == 0)
             {
-                // PostQuitMessage(0);
-                // FIXME: We probably should not just do a blunt _Exit(). On the other hand, it works.
+                // FIXME: We probably should not just do a blunt TerminateProcess(). On the other
+                // hand, it works.
                 if (beingDebugged)
                     OutputDebugString(L"DocumentData::count() is ZERO, bluntly exiting\n");
-                _Exit(0);
+                TerminateProcess(GetCurrentProcess(), 0);
             }
             break;
 
