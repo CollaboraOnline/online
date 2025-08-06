@@ -22,6 +22,8 @@ class SlideShowNavigator {
 	private prevSlide: number;
 	private isEnabled: boolean;
 	private isRewindingToPrevSlide: boolean;
+	private lastClickTime: number = 0;
+	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -77,9 +79,25 @@ class SlideShowNavigator {
 	}
 
 	dispatchEffect() {
+		const currentTime = Date.now();
+		const timeDiff = currentTime - this.lastClickTime;
 		NAVDBG.print(
-			'SlideShowNavigator.dispatchEffect: current index: ' + this.currentSlide,
+			'SlideShowNavigator.dispatchEffect: current index: ' +
+				this.currentSlide +
+				', time diff: ' +
+				timeDiff +
+				'ms',
 		);
+		this.lastClickTime = currentTime;
+
+		if (timeDiff < this.RAPID_CLICK_THRESHOLD && timeDiff > 0) {
+			const bRet = this.slideShowHandler.skipPlayingOrNextEffect();
+			if (!bRet) {
+				this.switchSlide(1, true);
+			}
+			return;
+		}
+
 		const bRet = this.slideShowHandler.nextEffect();
 		if (!bRet) {
 			this.switchSlide(1, false);
