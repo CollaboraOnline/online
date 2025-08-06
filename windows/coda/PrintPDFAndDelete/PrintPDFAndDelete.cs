@@ -22,9 +22,9 @@ using System.IO;
 using System.Windows;
 using Application = System.Windows.Forms.Application;
 
-namespace PrintPDF
+namespace PrintPDFAndDelete
 {
-    internal static class PrintPDF
+    internal static class PrintPDFAndDelete
     {
         private static string[] _args;
         private static Form _dummy;
