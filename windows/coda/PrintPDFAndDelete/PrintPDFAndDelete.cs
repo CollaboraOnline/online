@@ -126,6 +126,7 @@ namespace PrintPDFAndDelete
                     printDocument.Print();
                 }
 
+                File.Delete(path);
                 Application.Exit();
             }
             catch (System.Exception ex)
