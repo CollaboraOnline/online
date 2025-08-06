@@ -733,6 +733,10 @@ ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 if ENABLE_WASM
+$(DIST_FOLDER)/emscripten-module.js: $(abs_top_srcdir)/wasm/emscripten-module.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
 $(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
 	@mkdir -p $(dir $@)
 	@cp $< $@
@@ -742,6 +746,7 @@ $(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
 	@cp $< $@
 
 WASM_FILES= \
+	$(DIST_FOLDER)/emscripten-module.js \
 	$(DIST_FOLDER)/online.data \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
@@ -752,6 +757,24 @@ if ENABLE_DEBUG
 WASM_FILES += \
 	$(DIST_FOLDER)/online.wasm.debug.wasm \
 	$(DIST_FOLDER)/online.wasm.debug.wasm.dwp
+endif
+
+if ENABLE_WASM_ZETAJS
+
+$(DIST_FOLDER)/smoketest.js: $(WITH_WASM_ZETAJS)/test/smoketest.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(DIST_FOLDER)/zeta.js: $(WITH_WASM_ZETAJS)/source/zeta.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+WASM_FILES += $(DIST_FOLDER)/zeta.js
+
+if ENABLE_WASM_EMBINDTEST
+WASM_FILES += $(DIST_FOLDER)/smoketest.js
+endif
+
 endif
 
 endif

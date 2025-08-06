@@ -13,6 +13,7 @@
 /* global globalThis */
 /* global errorMessages accessToken accessTokenTTL noAuthHeader accessHeader createOnlineModule */
 /* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
+/* global createEmscriptenModule */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function (global) {
@@ -103,11 +104,9 @@ if (window.ThisIsTheEmscriptenApp) {
 	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
 
-	globalThis.Module = {
-		onRuntimeInitialized: function() {
-			map.loadDocument(global.socket);
-		},
-		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
+	globalThis.Module = createEmscriptenModule(docURL, encodedWOPI, isWopi);
+	globalThis.Module.onRuntimeInitialized = function() {
+		map.loadDocument(global.socket);
 	};
 	createOnlineModule(globalThis.Module);
 } else {
