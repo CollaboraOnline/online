@@ -405,6 +405,12 @@ AC_ARG_ENABLE([feature-restriction],
               AS_HELP_STRING([--enable-feature-restriction],
                              [Enable control over which uno-commands/feature to disable completely.]))
 
+AC_ARG_ENABLE([wasm-embindtest],
+              AS_HELP_STRING([--enable-wasm-embindtest],
+                             [Run the LibreOffice embindtest as part of running the app. Requires
+                              LibreOffice to be built with --enable-dbgutil. Relevant only for a
+                              Wasm build.]))
+
 AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
                              [Enable experimental features and behavior]))
@@ -1892,6 +1898,29 @@ fi
 
 AC_SUBST(FEATURE_RESTRICTION_CONFIGURATION)
 AM_SUBST_NOTMAKE(FEATURE_RESTRICTION_CONFIGURATION)
+
+ENABLE_WASM_EMBINDTEST=
+if test "$host_os" = emscripten; then
+    AC_MSG_CHECKING([whether to run the LibreOffice embindtest])
+    if test "$enable_wasm_embindtest" = yes; then
+        AC_MSG_RESULT([yes])
+        AC_MSG_CHECKING([whether the LibreOffice installation includes embindtest])
+        if test ! -f "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps; then
+            AC_MSG_ERROR([cannot find $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
+        elif ! LC_ALL=POSIX grep -E -q -e '(^|[[[:space:]]])-lembindtestlo($|[[[:space:]]])' \
+                "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps
+        then
+            AC_MSG_ERROR(
+                [cannot find -lembindtestlo in $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
+        else
+            AC_MSG_RESULT([yes])
+        fi
+        ENABLE_WASM_EMBINDTEST=true
+    else
+        AC_MSG_RESULT([no])
+    fi
+fi
+AM_CONDITIONAL([ENABLE_WASM_EMBINDTEST], [test "$ENABLE_WASM_EMBINDTEST" = true])
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
