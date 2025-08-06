@@ -67,6 +67,10 @@ online_DEPENDENCIES = \
 	@LOBUILDDIR@/workdir/CustomTarget/static/unoembind/bindings_uno.js \
 	@LOSOURCEDIR@/static/emscripten/uno.js
 
+if ENABLE_WASM_EMBINDTEST
+online_DEPENDENCIES += @LOSOURCEDIR@/unotest/source/embindtest/embindtest.js
+endif
+
 # note cannot add content of .linkdeps to DEPENDENCIES because it contains -lFoo
 online_LDADD = \
 	${POCOLIB}/libPocoEncodings@POCODEBUG@.a \
@@ -86,6 +90,10 @@ online_LDFLAGS = \
 	--pre-js @LOBUILDDIR@/workdir/CustomTarget/static/emscripten_fs_image/soffice.data.js.link \
 	--post-js @LOBUILDDIR@/workdir/CustomTarget/static/unoembind/bindings_uno.js \
 	--post-js @LOSOURCEDIR@/static/emscripten/uno.js
+
+if ENABLE_WASM_EMBINDTEST
+online_LDFLAGS += --post-js @LOSOURCEDIR@/unotest/source/embindtest/embindtest.js
+endif
 
 # Silence "running limited binaryen optimizations because DWARF info requested (or indirectly
 # required)":
