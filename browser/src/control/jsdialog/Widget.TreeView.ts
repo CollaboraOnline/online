@@ -1064,6 +1064,40 @@ class TreeViewControl {
 		}, 100);
 	}
 
+	highlightEntries(searchTerm: string) {
+		if (this._filterTimer) clearTimeout(this._filterTimer);
+		var entriesToHighlight: Array<HTMLElement> = [];
+		var allEntries = this._container.querySelectorAll('.ui-treeview-entry');
+
+		searchTerm = searchTerm.trim();
+
+		allEntries.forEach((entry: HTMLElement) => {
+			if (searchTerm === '') return;
+
+			var cells = entry.querySelectorAll('div');
+			for (var i in cells) {
+				var entryText = cells[i].innerText;
+				if (
+					entryText &&
+					entryText.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
+				) {
+					entriesToHighlight.push(entry);
+				}
+			}
+
+			return;
+		});
+
+		this._filterTimer = setTimeout(() => {
+			allEntries.forEach((entry) => {
+				L.DomUtil.removeClass(entry, 'highlighted');
+			});
+			entriesToHighlight.forEach((entry) => {
+				L.DomUtil.addClass(entry, 'highlighted');
+			});
+		}, 100);
+	}
+
 	setupKeyEvents(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container.addEventListener('keydown', (event) => {
 			const listElements =
@@ -1474,6 +1508,8 @@ class TreeViewControl {
 
 		this._tbody = this._container;
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
+		(this._container as any).highlightEntries =
+			this.highlightEntries.bind(this);
 
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);

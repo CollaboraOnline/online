@@ -352,6 +352,10 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-block-end: 8px;
 }
 
+#NavigatorPanel .ui-treeview-entry.highlighted {
+	background-color: orange;
+}
+
 #NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
 	/* good to move this into css var*/
 	font-size: 17px;
@@ -519,7 +523,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Quick Find Panel */
 #quickfind-dock-wrapper #box {
 	display: grid;
-	grid-template-rows: 36px 36px auto;
+	grid-template-rows: 20px auto;
 	margin: 4px 0px;
 	grid-gap: 10px;
 }
@@ -539,14 +543,14 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 /* matched count on top */
 #quickfind-dock-wrapper #box .ui-text {
-	grid-row: 2;
+	grid-row: 1;
 	font-weight: bold;
 	height: min-content;
 }
 
 /* results */
 #quickfind-dock-wrapper .ui-treeview {
-	grid-row: 3;
+	grid-row: 2;
 	border-width: 1px 0px 0px;
 	border-radius: 0px;
 	margin-bottom: 100px; /* reduce size by size of controls above in the panel */
