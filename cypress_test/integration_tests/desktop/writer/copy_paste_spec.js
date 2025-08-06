@@ -1,4 +1,4 @@
-/* global describe it cy require expect */
+/* global describe it cy require */
 
 var helper = require('../../common/helper');
 
@@ -9,14 +9,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		// Select some text
 		helper.selectAllText();
 
-		cy.cGet('.html-object-section')
-			.then(function(marker) {
-				expect(marker).to.have.lengthOf(2);
-				var XPos =  (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
-				var YPos = marker[0].getBoundingClientRect().top - 5;
-
-				cy.cGet('body').rightclick(XPos, YPos);
-			});
+		cy.getFrameWindow().then(win => {
+			const selectionStart = win.TextSelections.getStartRectangle();
+			cy.cGet('#map').rightclick(selectionStart.pX1, selectionStart.pY1);
+		});
 
 		helper.setDummyClipboardForCopy();
 
