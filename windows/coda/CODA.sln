@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CODA", "CODA\CODA.vcxproj",
 		{EBBCBF6F-920A-48C4-B304-193E6B55284E} = {EBBCBF6F-920A-48C4-B304-193E6B55284E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintPDF", "PrintPDF\PrintPDF.csproj", "{EBBCBF6F-920A-48C4-B304-193E6B55284E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintPDFAndDelete", "PrintPDFAndDelete\PrintPDFAndDelete.csproj", "{EBBCBF6F-920A-48C4-B304-193E6B55284E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
