@@ -104,7 +104,7 @@
 #undef LOK_LOG_ASSERTIONS
 
 /* Path to LibreOffice installation */
-#define LO_PATH "@LO_PATH@"
+#define LO_PATH "/should/not/be/used"
 
 /* Limit the maximum number of open connections */
 #define MAX_CONNECTIONS 100
