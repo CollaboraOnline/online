@@ -199,6 +199,15 @@ interface ListBoxWidget extends WidgetJSON {
 	entries: Array<string>;
 }
 
+// type: 'radiobutton'
+interface RadioButtonWidget extends WidgetJSON {
+	text: string;
+	image?: string; // replacement image
+	group?: string; // identifier of radio group
+	checked?: boolean;
+	hidden?: boolean;
+}
+
 interface ComboBoxWidget extends WidgetJSON {
 	text?: string;
 	entries?: Array<string | number>;
