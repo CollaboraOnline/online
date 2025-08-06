@@ -90,7 +90,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers = {};
 		this._controlHandlers['overflowgroup'] = JSDialog.OverflowGroup;
 		this._controlHandlers['overflowmanager'] = JSDialog.OverflowManager;
-		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
+		this._controlHandlers['radiobutton'] = JSDialog.RadioButton;
 		this._controlHandlers['progressbar'] = JSDialog.progressbar;
 		this._controlHandlers['pagemarginentry'] = JSDialog.pageMarginEntry;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
@@ -1288,57 +1288,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var child = item.children[0];
 			builder.build(parentContainer, [child]);
 		}
-		return false;
-	},
-
-	_radiobuttonControl: function(parentContainer, data, builder) {
-		var container = L.DomUtil.createWithId('div', data.id, parentContainer);
-		L.DomUtil.addClass(container, 'radiobutton');
-		L.DomUtil.addClass(container, builder.options.cssClass);
-
-		var radiobutton = L.DomUtil.create('input', '', container);
-		radiobutton.type = 'radio';
-		radiobutton.id = data.id + '-input';
-		radiobutton.tabIndex = '0';
-
-		if (data.image) {
-			var image = L.DomUtil.create('img', '', radiobutton);
-			image.src = data.image;
-			L.DomUtil.addClass(container, 'has-image');
-		}
-
-		if (data.group)
-			radiobutton.name = data.group;
-
-		var radiobuttonLabel = L.DomUtil.createWithId('label', data.id + '-label', container);
-		radiobuttonLabel.textContent = builder._cleanText(data.text);
-		radiobuttonLabel.htmlFor = data.id + '-input';
-
-		var toggleFunction = function() {
-			builder.callback('radiobutton', 'change', container, this.checked, builder);
-		};
-
-		$(radiobuttonLabel).click(() => {
-			if (radiobutton.hasAttribute('disabled')) return;
-
-			$(radiobutton).prop('checked', true);
-			toggleFunction.bind({checked: true})();
-		});
-
-		const isDisabled = data.enabled === false;
-		if (isDisabled) {
-			radiobutton.setAttribute('disabled', 'disabled');
-			radiobutton.setAttribute('aria-disabled', isDisabled);
-		}
-
-		if (data.checked === 'true' || data.checked === true)
-			$(radiobutton).prop('checked', true);
-
-		radiobutton.addEventListener('change', toggleFunction);
-
-		if (data.hidden)
-			$(radiobutton).hide();
-
 		return false;
 	},
 
