@@ -75,7 +75,7 @@ L.Control.Notebookbar = L.Control.extend({
 			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
 		}
 
-		this.initializeInCore();
+		this.map.uiManager.initializeNotebookbarInCore();
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
@@ -117,7 +117,7 @@ L.Control.Notebookbar = L.Control.extend({
 			if (!that.isInitializedInCore()) {
 				// if notebookbar doesn't have any welded controls it can trigger false alarm here
 				window.app.console.warn('notebookbar might be not initialized, retrying');
-				that.initializeInCore();
+				that.map.uiManager.initializeNotebookbarInCore();
 				that.retry = setTimeout(retryNotebookbarInit, 3000);
 			}
 		};
@@ -144,10 +144,6 @@ L.Control.Notebookbar = L.Control.extend({
 
 	isInitializedInCore: function() {
 		return this._isNotebookbarLoadedOnCore;
-	},
-
-	initializeInCore: function() {
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 	},
 
 	resetInCore: function() {
