@@ -128,6 +128,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+        xcopy ..\..\..\browser\dist $(OutDir)cool\ /s /f /y
+        xcopy $(LO_PATH) $(OutDir)lo\ /s /f /y /exclude:..\xcopy.excludes
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
@@ -210,8 +216,4 @@
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.3351.48\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.3351.48\build\native\Microsoft.Web.WebView2.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets'))" />
   </Target>
-  <ItemGroup>
-    <Content Include="..\..\..\browser\dist\**\*.*" CopyToOutputDirectory="PreserveNewest" TargetPath="cool\%(RecursiveDir)%(Filename)%(Extension)" />
-    <Content Include="$(LO_PATH)\**\*.*" CopyToOutputDirectory="PreserveNewest" TargetPath="lo\%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
 </Project>
