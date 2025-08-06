@@ -263,14 +263,23 @@ static void do_bye_handling_things(const WindowData& data)
     fakeSocketClose(data.closeNotificationPipeForForwardingThread[0]);
 }
 
-static void do_convert_to(const char* type, int appDocId)
+static void do_print(int appDocId)
 {
-    const std::string tempFile = FileUtil::createRandomTmpDir() + "/haha." + std::string(type);
+    const std::string tempFile = FileUtil::createRandomTmpDir() + "\\p.pdf";
     const std::string tempFileUri = Poco::URI(Poco::Path(tempFile)).toString();
 
-    DocumentData::get(appDocId).loKitDocument->saveAs(tempFileUri.c_str(), type, nullptr);
+    DocumentData::get(appDocId).loKitDocument->saveAs(tempFileUri.c_str(), "pdf", nullptr);
 
-    // etc
+    STARTUPINFOW startupInfo{ sizeof(STARTUPINFOW) };
+    PROCESS_INFORMATION processInformation;
+
+    if (!CreateProcessW(
+            Util::string_to_wide_string(app_installation_path + "PrintPDFAndDelete.exe").c_str(),
+            Util::string_to_wide_string("PrintPDFAndDelete " + tempFileUri).data(), NULL, NULL,
+            TRUE, 0, NULL, NULL, &startupInfo, &processInformation))
+        if (beingDebugged)
+            OutputDebugString(
+                (L"CreateProcess failed: " + std::to_wstring(GetLastError())).c_str());
 }
 
 static void do_other_message_handling_things(const WindowData& data, const char* message)
@@ -724,7 +733,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s == L"PRINT")
         {
-            do_convert_to("pdf", data.appDocId);
+            do_print(data.appDocId);
         }
         else if (s == L"CUT")
         {
