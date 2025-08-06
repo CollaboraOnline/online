@@ -51,13 +51,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true, combination: 'ZL', de: null }
 			},
 			{
-				'id': 'options-slide-change-window',
-				'type': 'toolitem',
-				'text': _UNO('.uno:SlideChangeWindow', 'presentation', true),
-				'command': '.uno:SlideChangeWindow',
-				'accessibility': { focusBack: true, combination: 'ZT', de: null }
-			},
-			{
 				'id': 'options-custom-animation',
 				'type': 'toolitem',
 				'text': _UNO('.uno:CustomAnimation', 'presentation', true),
