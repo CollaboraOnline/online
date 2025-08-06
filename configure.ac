@@ -1416,9 +1416,11 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
           else
               # LO_PATH is the path used at run-time to find the
               # LibreOffice shared libraries. When running configure
-              # for the CODA-W app it is not used at configure or
-              # build time. Thus it should be a Windows path and not a
-              # WSL one.
+              # for CODA-W, LO_PATH will be used only at compilation
+              # time. Thus it should be a Windows path and not a WSL
+              # one. Additionally, because it is used by the Visual
+              # Studio project in an xcopy command line, it should use
+              # backslashes as path separators.
               LO_PATH="$with_lo_path"
           fi
           AC_MSG_RESULT([found])
