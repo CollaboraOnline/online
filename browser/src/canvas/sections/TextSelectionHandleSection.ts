@@ -11,6 +11,8 @@
 */
 
 class TextSelectionHandle extends HTMLObjectSection {
+	_showSection: boolean = true; // Store the internal show/hide section through forced non-touchscreen hides...
+
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", showSection: boolean = false) {
 		super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, showSection);
 	}
@@ -24,6 +26,16 @@ class TextSelectionHandle extends HTMLObjectSection {
 		this.sectionProperties.objectDiv.style.top = candidateY + 'px';
 
 		app.map.fire('handleautoscroll', {pos: { x: candidateX, y: candidateY }, map: app.map});
+	}
+
+	setShowSection(show: boolean) {
+		this._showSection = show;
+
+		if (!window.touch.currentlyUsingTouchscreen()) {
+			super.setShowSection(false);
+		} else {
+			super.setShowSection(this._showSection);
+		}
 	}
 
 	setOpacity(value: number) {

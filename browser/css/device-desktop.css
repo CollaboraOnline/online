@@ -1,13 +1,5 @@
 /* CSS specific for desktop browsers. */
 
-/* Hide text droplets if accurate pointing device such as a mouse is detected */
-@media (pointer: fine) {
-	.text-selection-handle-start,
-	.text-selection-handle-end {
-		display: none;
-	}
-}
-
 #coolwsd-version span:before,
 #lokit-version > span:before {
 	content: ' (';
