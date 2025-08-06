@@ -128,6 +128,11 @@ namespace PrintPDFAndDelete
                 }
 
                 File.Delete(path);
+                // This is called by CODA to print a PDF that is the only file in a temporary
+                // directory. But if you when testing or otherwise happen to call it with a file
+                // that is not the only one in its directory, Directory.Delete() will not do
+                // anything, you won't accidentally lose other files.
+                Directory.Delete(Path.GetDirectoryName(path));
                 Application.Exit();
             }
             catch (System.Exception ex)
