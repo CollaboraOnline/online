@@ -192,7 +192,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .notebookbar.ui-separator.vertical {
 	width: 1px;
 	background-color: var(--color-toolbar-border);
-	height: 100%;
+	height: 4rem;
 	margin: 0 2px;
 	box-sizing: border-box;
 }
@@ -259,7 +259,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin-top: 10px;
 }
 
-.ui-tabs-content .unobutton > img {
+.ui-tabs-content .unobutton > img,
+.ui-overflow-group-popup .unotoolbutton.notebookbar .unobutton > img {
 	width: var(--btn-img-size);
 	height: var(--btn-img-size);
 }

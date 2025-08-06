@@ -142,6 +142,7 @@ JSDialog.OverflowGroup = function (
 		builder.options.cssClass + ' ui-overflow-group-content',
 		innerContainer,
 	);
+	contentContainer.classList.add(data.vertical ? 'vertical' : 'horizontal');
 	innerContainer.id = data.id + '-content';
 
 	const bottomBar = L.DomUtil.create(
