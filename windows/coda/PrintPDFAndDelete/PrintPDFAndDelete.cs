@@ -4,7 +4,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-// A program that prints the PDF file given as the single command-line argument.
+// A program that prints the PDF file given as the single command-line argument. The argument is the
+// file: URI for the file.
 //
 // Written as a Windows Forms application because I found simple sample code for how to print a PDF
 // document from C#, and a Windows Forms application apparently is the simplest way to have a
@@ -33,7 +34,6 @@ namespace PrintPDFAndDelete
         static void Main(string[] args)
         {
             _args = args;
-            Console.WriteLine(args.Length);
             Application.AddMessageFilter(new StupidMessageFilter());
             _dummy = new Form();
             // We don't want to see any flashing window border
@@ -84,10 +84,11 @@ namespace PrintPDFAndDelete
             return images;
         }
 
-       static private async void PrintPdfDocument(string path)
+       static private async void PrintPdfDocument(string uri)
         {
             try
             {
+                var path = new Uri(uri).LocalPath;
                 var images = await PdfToImage(path);
                 int index = 0;
 
