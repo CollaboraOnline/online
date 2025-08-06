@@ -53,6 +53,11 @@ class ContextToolbar {
 		this.pendingShow = false;
 		if (!this.initialized) {
 			this.builder.build(this.container, this.getWriterTextContext(), false);
+			if (
+				!this.builder.map.uiManager.notebookbar ||
+				!this.builder.map.uiManager.notebookbar.isInitializedInCore()
+			)
+				this.builder.map.uiManager.initializeNotebookbarInCore();
 			this.initialized = true;
 		}
 

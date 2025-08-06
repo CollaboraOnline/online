@@ -1626,7 +1626,7 @@ app.definitions.Socket = L.Class.extend({
 			var uiMode = this._map.uiManager.getCurrentMode();
 			if (uiMode === 'notebookbar' && this._map.uiManager.notebookbar) {
 				this._map.uiManager.notebookbar.resetInCore();
-				this._map.uiManager.notebookbar.initializeInCore();
+				this._map.uiManager.initializeNotebookbarInCore();
 			}
 			// close all the popups otherwise document textArea will not get focus
 			this._map.uiManager.closeAll();
