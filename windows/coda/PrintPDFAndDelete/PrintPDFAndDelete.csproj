@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x64;ARM64</Platforms>
     <UseWPF>True</UseWPF>
-    <StartupObject>PrintPDF.PrintPDF</StartupObject>
+    <StartupObject>PrintPDFAndDelete.PrintPDFAndDelete</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
