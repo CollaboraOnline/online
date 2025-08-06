@@ -10,6 +10,9 @@
     <UseWPF>True</UseWPF>
     <StartupObject>PrintPDFAndDelete.PrintPDFAndDelete</StartupObject>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <BaseOutputPath>..\</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
