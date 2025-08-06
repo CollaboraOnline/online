@@ -108,7 +108,6 @@
 	height: inherit;
 }
 .ui-toolbar .unotoolbutton:not(.notebookbar):not(.has-dropdown) button {
-	width: inherit;
 	display: flex;
 }
 .ui-toolbar .unotoolbutton:not(.notebookbar) .w2ui-icon {
