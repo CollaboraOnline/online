@@ -121,12 +121,15 @@ class SlideShowPresenter {
 	_slideRenderer: SlideRenderer = null;
 	_canvasLoader: CanvasLoader | null = null;
 	_progressBarContainer: HTMLDivElement | null = null;
+	_slideNavContainer: HTMLDivElement | null = null;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
+	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
 	private _slideShowNavigator: SlideShowNavigator;
 	private _metaPresentation: MetaPresentation;
 	private _startSlide: number;
 	private _presentationInfoChanged: boolean = false;
+	private _navigateSkipTransition: boolean = false;
 	_skipNextSlideShowInfoChangedMsg: boolean = false;
 	private _cypressSVGPresentationTest: boolean = false;
 	private _onKeyDownHandler: (e: KeyboardEvent) => void;
@@ -414,6 +417,7 @@ class SlideShowPresenter {
 		canvas.style.position = 'absolute';
 
 		this._progressBarContainer = this._createProgressBar(parent);
+		this._slideNavContainer = this._createSlideNav(parent);
 
 		canvas.addEventListener(
 			'click',
@@ -423,6 +427,7 @@ class SlideShowPresenter {
 			'mousemove',
 			this._slideShowNavigator.onMouseMove.bind(this._slideShowNavigator),
 		);
+		canvas.addEventListener('mousemove', this._showSlideControls.bind(this));
 
 		if (this._hammer) {
 			this._hammer.off('swipe');
@@ -495,6 +500,106 @@ class SlideShowPresenter {
 		};
 
 		JSDialog.progressbar(container, progressData, builderOptions);
+	}
+
+	private _createSlideNav(parent: Element): HTMLDivElement {
+		const slideNavContainer = L.DomUtil.create(
+			'div',
+			'slideshow-nav-container',
+			parent,
+		);
+		this._configureSlideNavStyles(slideNavContainer);
+		this._initializeSlideNavWidget(slideNavContainer);
+		return slideNavContainer;
+	}
+
+	private _configureSlideNavStyles(container: HTMLDivElement): void {
+		container.style.position = 'absolute';
+		container.style.bottom = '0';
+		container.style.left = '0';
+		container.style.width = '200px';
+		container.style.height = '50px';
+		container.style.zIndex = '1000000000000';
+		container.style.display = 'flex';
+	}
+
+	private _onPrevSlide = (e: Event) => {
+		this._slideShowNavigator.switchSlide(-1, this._navigateSkipTransition);
+	};
+
+	private _onNextSlide = (e: Event) => {
+		this._slideShowNavigator.switchSlide(1, this._navigateSkipTransition);
+	};
+
+	private _onQuit = (e: Event) => {
+		this.endPresentation(true);
+	};
+
+	_hideSlideControls() {
+		this._slideNavContainer.style.visibility = 'hidden';
+		this._slideNavContainer.style.opacity = '0';
+		this._slideNavContainer.style.transition =
+			'visibility 0s 1s, opacity 1s linear';
+	}
+
+	_showSlideControls() {
+		this._slideNavContainer.style.visibility = 'visible';
+		this._slideNavContainer.style.opacity = '1';
+		this._slideNavContainer.style.transition = 'opacity 1s linear';
+
+		clearTimeout(this._slideControlsTimer);
+		this._slideControlsTimer = setTimeout(
+			this._hideSlideControls.bind(this),
+			3000,
+		);
+	}
+
+	private _initializeSlideNavWidget(container: HTMLDivElement): void {
+		const closeImg = L.DomUtil.create('img', 'left-img', container);
+		app.LOUtil.setImage(closeImg, 'closedoc.svg', this._map);
+		closeImg.addEventListener('click', this._onQuit);
+		closeImg.style.flex = '25%';
+		closeImg.style.paddingLeft = '5px';
+		closeImg.style.paddingBottom = '5px';
+		closeImg.style.maxWidth = '100%';
+
+		const leftImg = L.DomUtil.create('img', 'left-img', container);
+		app.LOUtil.setImage(
+			leftImg,
+			'presenterscreen-ButtonSlidePreviousSelected.svg',
+			this._map,
+		);
+		leftImg.addEventListener('click', this._onPrevSlide);
+		leftImg.style.flex = '25%';
+		leftImg.style.paddingBottom = '5px';
+		leftImg.style.maxWidth = '100%';
+
+		const rightImg = L.DomUtil.create('img', 'right-img', container);
+		app.LOUtil.setImage(
+			rightImg,
+			'presenterscreen-ButtonEffectNextSelected.svg',
+			this._map,
+		);
+		rightImg.addEventListener('click', this._onNextSlide);
+		rightImg.style.flex = '25%';
+		rightImg.style.paddingBottom = '5px';
+		rightImg.style.maxWidth = '100%';
+
+		const animationsImage = L.DomUtil.create(
+			'img',
+			'animations-img',
+			container,
+		);
+		app.LOUtil.setImage(animationsImage, 'lc_down.svg', this._map);
+		animationsImage.addEventListener(
+			'click',
+			function (this: SlideShowPresenter) {
+				this._navigateSkipTransition = !this._navigateSkipTransition;
+			}.bind(this),
+		);
+		animationsImage.style.flex = '25%';
+		animationsImage.style.paddingBottom = '5px';
+		animationsImage.style.maxWidth = '100%';
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
