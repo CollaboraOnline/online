@@ -406,6 +406,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin: auto !important;
 	display: block;
 }
+
+.ui-pushbutton.notebookbar img {
+	height: 24px;
+}
+
 .has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
@@ -621,6 +626,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 #transitions_icons.ui-iconview.notebookbar > * {
 	scroll-snap-align: start;
+}
+
+/* Animation Tab */
+#Animation.notebookbar #custom_animation_list {
+	min-height: initial;
+	height: var(--notebookbar-element-height)
 }
 
 /* Table Tab */
