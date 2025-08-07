@@ -485,6 +485,7 @@ COOL_JS_LST =\
 	src/control/Control.SaveState.ts \
 	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
+	src/control/Notebookbar.ImpressAnimationTab.ts \
 	src/control/Notebookbar.ImpressTransitionTab.ts \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
@@ -1058,6 +1059,7 @@ pot:
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.QuickFindPanel.ts \
+		src/control/Notebookbar.ImpressAnimationTab.ts \
 		src/control/Notebookbar.ImpressTransitionTab.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
