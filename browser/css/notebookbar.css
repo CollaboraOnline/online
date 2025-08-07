@@ -706,3 +706,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	opacity: 0;
 	transition: all 0.25s allow-discrete;
 }
+
+#context-toolbar .unobutton > img {
+	width: var(--btn-img-size);
+	height: var(--btn-img-size);
+}
