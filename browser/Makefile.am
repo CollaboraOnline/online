@@ -733,7 +733,7 @@ ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 if ENABLE_WASM
-$(DIST_FOLDER)/emscripten-module.js: $(abs_top_srcdir)/wasm/emscripten-module.js
+$(DIST_FOLDER)/emscripten-%.js: $(abs_top_srcdir)/wasm/emscripten-%.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
@@ -775,6 +775,10 @@ if ENABLE_WASM_EMBINDTEST
 WASM_FILES += $(DIST_FOLDER)/smoketest.js
 endif
 
+endif
+
+if ENABLE_WASM_ZETAJS_EXAMPLE
+WASM_FILES += $(DIST_FOLDER)/emscripten-zetajs-example.js
 endif
 
 endif
