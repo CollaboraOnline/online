@@ -1604,4 +1604,15 @@ menuDefinitions.set('PictureEffectsMenu', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('AnnotationMenu', [
+	{
+		text: _('Insert comment'),
+		action: 'insertcomment',
+	},
+	{
+		text: _('Comments list'),
+		action: 'showcommentsnavigator',
+	},
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
