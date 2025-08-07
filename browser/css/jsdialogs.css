@@ -2140,6 +2140,7 @@ button.menubutton.sidebar > span {
 
 .ui-custom-textarea,
 .ui-custom-textarea-cursor-layer,
+.ui-custom-textarea-handle-layer,
 .ui-custom-textarea-text-layer {
 	font-family: monospace;
 	line-height: 1.2;
@@ -2149,6 +2150,7 @@ button.menubutton.sidebar > span {
 }
 
 .ui-custom-textarea-cursor-layer,
+.ui-custom-textarea-handle-layer,
 .ui-custom-textarea-text-layer {
 	padding: 4px;
 	grid-column: 1;
@@ -2160,6 +2162,10 @@ button.menubutton.sidebar > span {
 .ui-custom-textarea-cursor-layer {
 	color: transparent;
 	pointer-events: none;
+}
+
+.ui-custom-textarea-handle-layer {
+	position: absolute; /* both lets us position handles absolute to this and pulls us out of the overflow: auto */
 }
 
 .ui-custom-textarea.focused .ui-custom-textarea-cursor-layer span.cursor:not(.hidden) {
