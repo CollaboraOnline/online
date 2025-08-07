@@ -586,6 +586,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	flex-grow: 1;
 }
 
+/* Animation Tab */
+#Animation.notebookbar #custom_animation_list {
+	min-height: initial;
+	height: 70px;
+}
+
 /* Table Tab */
 
 /* Draw Tab */
