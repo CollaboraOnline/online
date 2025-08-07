@@ -1,0 +1,151 @@
+/* -*- js-indent-level: 8 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*
+ * Util.FormulaBarSelectionHandle - a selection handle for the calc formulabar
+ * Contrast with TextSelectionHandle section
+ */
+
+namespace L {
+	export type Draggable = any;
+	export type Point = {
+		x: number;
+		y: number;
+		[key: string]: any;
+	};
+}
+
+interface DraggableDragEvent {
+	originalEvent: MouseEvent | TouchEvent;
+}
+
+type FormulaBarSelectionHandleSide = 'start' | 'end';
+class FormulaBarSelectionHandle {
+	readonly width: number = 30;
+	private visible: boolean = false;
+	private side: FormulaBarSelectionHandleSide;
+
+	private element: HTMLDivElement;
+	private wrapper: HTMLDivElement;
+
+	private draggable: L.Draggable;
+
+	onDrag?: (point: L.Point) => void;
+	onDragEnd?: (event: L.Point) => void;
+
+	/**
+	 * @param selectionLayer The layer that the formulabar's custom selections are placed in - we'll display relative to this element
+	 * @param side The side of the formula bar that this handle is on
+	 */
+	constructor(
+		wrapper: HTMLDivElement,
+		handleLayer: HTMLDivElement,
+		side: FormulaBarSelectionHandleSide,
+	) {
+		this.side = side;
+		this.element = L.DomUtil.create(
+			'div',
+			`formulabar-selection-handle-${side}`,
+			handleLayer,
+		);
+		this.wrapper = wrapper;
+		this.wrapper.addEventListener('scroll', () => this.requestVisible());
+
+		this.draggable = new L.Draggable(
+			this.element,
+			this.element,
+			true,
+			true, // no3d - required because we're doing some weird relative positioning and a 3d transform will end up in the wrong place
+		);
+		this.draggable
+			.on(
+				{
+					dragstart: this.onDragStart.bind(this),
+					drag: this._onDrag.bind(this),
+					dragend: this._onDragEnd.bind(this),
+				},
+				this,
+			)
+			.enable();
+	}
+
+	setPosition(point: cool.SimplePoint) {
+		let offsetX = 0;
+		if (this.side === 'start') {
+			offsetX = -this.width;
+		}
+
+		const lPoint = new L.Point(point.x + offsetX, point.y); // "what you're doing is gross and horrible Skyler and I hate it", "yeah well, Draggable doesn't work with SimplePoints so ig we both have to deal..."
+		// also for some reason the twips value is correct here? I'm not going to fix what ain't...
+		L.DomUtil.setPosition(this.element, lPoint, true);
+		// Not using 3d transforms since as we're doing weird relative position hacks to get here :)
+		// Using DomUtil as we need to in order to be draggable later
+	}
+
+	onDragStart() {
+		(<any>window).IgnorePanning = true;
+	}
+
+	_onDrag(event: DraggableDragEvent) {
+		// update selection position, set in Widget.FormulabarEdit.js so it can be repeatedly overidden...
+		if (this.onDrag) {
+			const point = L.DomUtil.getPosition(this.element);
+			this.onDrag(point);
+		}
+	}
+
+	_onDragEnd(_: unknown) {
+		// update selection position, set in Widget.FormulabarEdit.js so it can be repeatedly overidden...
+		(<any>window).IgnorePanning = undefined;
+		if (this.onDragEnd) {
+			const point = L.DomUtil.getPosition(this.element);
+			this.onDragEnd(point);
+		}
+	}
+
+	/**
+	 * This is 'requestVisible' rather than 'setVisible' because it doesn't provide a guarentee that or when the element
+	 * will become visible
+	 *
+	 * It, for example, *will not* become visible if the touchscreen is not being used or if the document is read-only
+	 *
+	 * If the 'visible' parameter is not specified, this will recalculate visibility based on the most recent provided
+	 * visibility and the current state of the world (e.g. for if this scrolls into view). Most of the time you won't need
+	 * to do this manually
+	 *
+	 * @param visible Whether the handle should be visible. Leave undefined to recalculate visibility based on the previously specified value
+	 */
+	requestVisible(visible?: boolean) {
+		if (visible !== undefined) {
+			this.visible = visible;
+		}
+
+		app.layoutingService.appendLayoutingTask(() => {
+			if (!this.visible) {
+				this.element.style.visibility = 'hidden';
+				return;
+			}
+
+			const wrapperRect = this.wrapper.getBoundingClientRect();
+			const elementRect = this.element.getBoundingClientRect();
+			// Handles are hidden if the top of the selection handle is outside of the formula bar
+			if (
+				wrapperRect.top > elementRect.top ||
+				wrapperRect.bottom < elementRect.top
+			) {
+				this.element.style.visibility = 'hidden';
+				return;
+			}
+
+			this.element.style.visibility = 'visible';
+		});
+	}
+}
