@@ -529,6 +529,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	max-height: 75px;
 }
 
+/* Animation Tab */
+#Animation.notebookbar #custom_animation_list {
+	min-height: initial;
+	height: 70px;
+}
+
 /* Table Tab */
 
 /* Draw Tab */

@@ -565,15 +565,18 @@ class UIManager extends L.Control {
 			}
 
 			if (this.map.getDocType() === 'presentation') {
-				if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
-					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:SlideChangeWindow');
-					this.map.sidebar.setupTargetDeck('.uno:SlideChangeWindow');
-				} else if (this.getBooleanDocTypePref('SdCustomAnimationDeck', false)) {
-					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:CustomAnimation');
-					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
-				} else if (this.getBooleanDocTypePref('SdMasterPagesDeck', false)) {
+				// no longer used:
+				// if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
+				// 	 app.socket.sendMessage('uno .uno:SidebarShow');
+				//  	app.socket.sendMessage('uno .uno:SlideChangeWindow');
+				// 	 this.map.sidebar.setupTargetDeck('.uno:SlideChangeWindow');
+				// } else if (this.getBooleanDocTypePref('SdCustomAnimationDeck', false)) {
+				//	 app.socket.sendMessage('uno .uno:SidebarShow');
+				//	 app.socket.sendMessage('uno .uno:CustomAnimation');
+				//	 this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
+				// }
+
+				if (this.getBooleanDocTypePref('SdMasterPagesDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
 					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
