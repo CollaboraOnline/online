@@ -225,6 +225,19 @@ class Dispatcher {
 			app.map.insertComment();
 		};
 
+		this.actionsMap['showcommentsnavigator'] = function (data?: any) {
+			if (
+				!document
+					.getElementById('navigation-sidebar')
+					.classList.contains('visible')
+			)
+				app.map.sendUnoCommand('.uno:Navigator');
+			app.map.sendUnoCommand(
+				'.uno:NavigatorSelectComment?CommentId:short=' +
+					(data ? (data as number) : 0),
+			);
+		};
+
 		this.actionsMap['zoomin'] = () => {
 			app.map.zoomIn(1, null, true /* animate? */);
 		};
@@ -750,7 +763,7 @@ class Dispatcher {
 		if (window.mode.isMobile()) this.addMobileCommands();
 	}
 
-	public dispatch(action: string) {
+	public dispatch(action: string, data?: any) {
 		// Don't allow to execute new actions while any dialog is visible.
 		// It prevents launching multiple instances of the same dialog.
 		if (
@@ -792,7 +805,7 @@ class Dispatcher {
 		}
 
 		if (this.actionsMap[action] !== undefined) {
-			this.actionsMap[action]();
+			this.actionsMap[action](data);
 			return;
 		}
 

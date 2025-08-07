@@ -985,6 +985,12 @@ export class CommentSection extends CanvasSectionObject {
 		this.update();
 	}
 
+	public showInNavigator(comment: Comment) {
+		if (app.map.getDocType() === 'text') {
+			app.dispatcher.dispatch('showcommentsnavigator', comment.sectionProperties.data.id);
+		}
+	}
+
 	public saveReply (annotation: any): void {
 		var comment = {
 			Id: {
@@ -1207,6 +1213,12 @@ export class CommentSection extends CanvasSectionObject {
 							name: isShownBig ? _('Show on the side') : _('Open in full view'),
 							callback: function (key: any, options: any) {
 								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
+							}.bind(this)
+						},
+						showInNavigator: docLayer._docType !== 'text' || (<any>window).mode.isMobile() ? undefined : {
+							name: _('Show in navigator'),
+							callback: function (key: any, options: any) {
+								this.showInNavigator.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						}
 					},
