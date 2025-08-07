@@ -338,9 +338,17 @@ class TreeViewControl {
 		level: number,
 		parent: HTMLElement,
 	): HTMLElement {
+		var highlight = false;
+		if (data.highlightTerm && data.highlightTerm.trim().length > 0) {
+			highlight =
+				entry.text &&
+				entry.text.toLowerCase().indexOf(data.highlightTerm.toLowerCase()) >= 0;
+		}
 		const tr: HTMLElement = L.DomUtil.create(
 			'div',
-			builder.options.cssClass + ' ui-treeview-entry',
+			builder.options.cssClass +
+				' ui-treeview-entry' +
+				(highlight ? ' highlighted' : ''),
 			parent,
 		);
 		this._rows.set(String(entry.row), tr);
@@ -1065,37 +1073,36 @@ class TreeViewControl {
 	}
 
 	highlightEntries(searchTerm: string) {
-		if (this._filterTimer) clearTimeout(this._filterTimer);
-		var entriesToHighlight: Array<HTMLElement> = [];
-		var allEntries = this._container.querySelectorAll('.ui-treeview-entry');
+		app.layoutingService.appendLayoutingTask(() => {
+			var entriesToHighlight: Array<HTMLElement> = [];
+			var allEntries = this._container.querySelectorAll('.ui-treeview-entry');
 
-		searchTerm = searchTerm.trim();
+			searchTerm = searchTerm.trim();
 
-		allEntries.forEach((entry: HTMLElement) => {
-			if (searchTerm === '') return;
+			allEntries.forEach((entry: HTMLElement) => {
+				if (searchTerm === '') return;
 
-			var cells = entry.querySelectorAll('div');
-			for (var i in cells) {
-				var entryText = cells[i].innerText;
-				if (
-					entryText &&
-					entryText.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
-				) {
-					entriesToHighlight.push(entry);
+				var cells = entry.querySelectorAll('div');
+				for (var i in cells) {
+					var entryText = cells[i].innerText;
+					if (
+						entryText &&
+						entryText.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
+					) {
+						entriesToHighlight.push(entry);
+					}
 				}
-			}
 
-			return;
-		});
+				return;
+			});
 
-		this._filterTimer = setTimeout(() => {
 			allEntries.forEach((entry) => {
 				L.DomUtil.removeClass(entry, 'highlighted');
 			});
 			entriesToHighlight.forEach((entry) => {
 				L.DomUtil.addClass(entry, 'highlighted');
 			});
-		}, 100);
+		});
 	}
 
 	setupKeyEvents(data: TreeWidgetJSON, builder: JSBuilder) {

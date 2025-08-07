@@ -22,7 +22,7 @@ class NavigatorPanel extends SidebarBase {
 	quickFindWrapper: HTMLElement;
 	closeNavButton: HTMLElement;
 
-	_filterTimer: ReturnType<typeof setTimeout>;
+	highlightTerm: string;
 
 	constructor(map: any) {
 		super(map, SidebarType.Navigator);
@@ -275,6 +275,13 @@ class NavigatorPanel extends SidebarBase {
 		}
 	}
 
+	onJSUpdate(e: FireEvent): void {
+		if (this.highlightTerm && this.highlightTerm.trim().length > 0) {
+			e.data.control.highlightTerm = this.highlightTerm;
+		}
+		super.onJSUpdate(e);
+	}
+
 	closeSidebar() {
 		this.closeNavigation();
 		app.showNavigator = false;
@@ -362,18 +369,23 @@ class NavigatorPanel extends SidebarBase {
 		builder: JSBuilder,
 	): void {
 		if (object.id === 'navigator-search') {
+			var searchTerm = data;
 			// For quickfind
-			super.callback(objectType, eventType, { id: 'Find' }, data, builder);
-			// app.socket.sendMessage(
-			// 	`dialogevent ${QUICKFIND_WINDOW_ID} {"id":"Find", "cmd": "${eventType}", "data": "${data}", "type": "edit"}`,
-			// );
+			super.callback(
+				objectType,
+				eventType,
+				{ id: 'Find' },
+				searchTerm,
+				builder,
+			);
 
 			// Unify search updates on activate event only (enter key pressed).
 			// Note that QuickFind needs changed and activated events to be sent to core to function properly.
 			if (eventType === 'activate') {
 				// For outline
 				var treeContainer = document.getElementById('contenttree') as any;
-				treeContainer.highlightEntries(data);
+				treeContainer.highlightEntries(searchTerm);
+				this.highlightTerm = searchTerm;
 			}
 			return;
 		}
