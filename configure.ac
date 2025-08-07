@@ -418,6 +418,11 @@ AC_ARG_WITH([wasm-zetajs],
                             running the app.) Relevant only for a Wasm build. Path to a zetajs
                             source tree.]))
 
+AC_ARG_ENABLE([wasm-zetajs-example],
+              AS_HELP_STRING([--enable-wasm-zetajs-example],
+                             [Inclue a zetajs scripting example in the app. Requires
+                              --with-wasm-zetajs. Relevant only for a Wasm build.]))
+
 AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
                              [Enable experimental features and behavior]))
@@ -1945,6 +1950,23 @@ fi
 AC_SUBST([ENABLE_WASM_ZETAJS])
 AC_SUBST([WITH_WASM_ZETAJS])
 AM_CONDITIONAL([ENABLE_WASM_ZETAJS], [test "$ENABLE_WASM_ZETAJS" = true])
+
+ENABLE_WASM_ZETAJS_EXAMPLE=
+if test "$host_os" = emscripten; then
+    AC_MSG_CHECKING([whether to include a zetajs scripting example])
+    if test "$enable_wasm_zetajs_example" = yes; then
+        if test "$ENABLE_WASM_ZETAJS" != true; then
+            AC_MSG_ERROR([requires --with-wasm-zetajs])
+        else
+            AC_MSG_RESULT([yes])
+        fi
+        ENABLE_WASM_ZETAJS_EXAMPLE=true
+    else
+        AC_MSG_RESULT([no])
+    fi
+fi
+AC_SUBST([ENABLE_WASM_ZETAJS_EXAMPLE])
+AM_CONDITIONAL([ENABLE_WASM_ZETAJS_EXAMPLE], [test "$ENABLE_WASM_ZETAJS_EXAMPLE" = true])
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile

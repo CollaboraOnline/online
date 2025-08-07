@@ -130,7 +130,8 @@ soffice.dat%: @LOBUILDDIR@/instdir/program/soffice.dat%
 
 emscripten-module.js: emscripten-module.js.m4
 	$(QUIET_M4) m4 -PE -DENABLE_WASM_EMBINDTEST=$(ENABLE_WASM_EMBINDTEST) \
-		-DENABLE_WASM_ZETAJS=$(ENABLE_WASM_ZETAJS) $< >$@
+		-DENABLE_WASM_ZETAJS=$(ENABLE_WASM_ZETAJS) \
+		-DENABLE_WASM_ZETAJS_EXAMPLE=$(ENABLE_WASM_ZETAJS_EXAMPLE) $< >$@
 
 all-local: emscripten-module.js
 
