@@ -106,12 +106,15 @@ function _multiLineEditControl(
 		(edit as HTMLTextAreaElement).disabled = true;
 	}
 
-	function _keyupChangeHandler(): void {
+	function _keyupChangeHandler(
+		this: HTMLTextAreaElement | HTMLDivElement,
+	): void {
+		const value = (this as HTMLTextAreaElement).value ?? this.textContent ?? '';
 		if (callback) {
-			callback(this.value);
+			callback(value);
 		}
 
-		builder.callback('edit', 'change', edit, this.value, builder);
+		builder.callback('edit', 'change', edit, value, builder);
 		setTimeout(() => {
 			_sendSimpleSelection(edit, builder);
 		}, 0);
@@ -120,14 +123,14 @@ function _multiLineEditControl(
 	edit.addEventListener('keyup', _keyupChangeHandler);
 	edit.addEventListener('change', _keyupChangeHandler); // required despite keyup as, e.g., iOS paste does not trigger keyup
 
-	edit.addEventListener('mouseup', (event: MouseEvent) => {
+	edit.addEventListener('mouseup', ((event: MouseEvent) => {
 		if ((edit as HTMLTextAreaElement).disabled) {
 			event.preventDefault();
 			return;
 		}
 
 		_sendSimpleSelection(event.target as HTMLTextAreaElement, builder);
-	});
+	}) as EventListener);
 
 	if (data.hidden) {
 		L.DomUtil.addClass(edit, 'hidden');
