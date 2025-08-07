@@ -2123,7 +2123,14 @@ button.menubutton.sidebar > span {
 }
 
 .ui-custom-textarea {
+	position: relative;
+}
+
+.ui-custom-textarea-overflow-wrapper {
 	overflow: auto;
+	overscroll-behavior: none;
+	width: 100%;
+	height: 100%;
 	display: grid;
 }
 
