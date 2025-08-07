@@ -81,9 +81,15 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 
 	// handler for toolbar and statusbar
 	// runs if shift + mouse wheel up/down are used
-	const shiftHandler = (e: MouseEvent) => {
+	const wheelHandler = (e: WheelEvent) => {
 		const rootContainer = scrollable.querySelector('div');
-		if (!rootContainer || !e.shiftKey) return;
+		if (
+			!rootContainer ||
+			(!e.shiftKey &&
+				// let horizontal scrolling through
+				e.deltaX == 0)
+		)
+			return;
 
 		clearTimeout(timer);
 		// wait until mouse wheel stops scrolling
@@ -94,7 +100,7 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 
 	window.addEventListener('resize', handler);
 	window.addEventListener('scroll', handler);
-	scrollable.addEventListener('wheel', shiftHandler);
+	scrollable.addEventListener('wheel', wheelHandler);
 }
 
 function setupPriorityStatusHandler(scrollable: Element, toolItems: any[]) {
