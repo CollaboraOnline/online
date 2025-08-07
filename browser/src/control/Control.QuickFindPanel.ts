@@ -16,6 +16,8 @@
 const QUICKFIND_WINDOW_ID = -5;
 class QuickFindPanel extends SidebarBase {
 	constructor(map: any) {
+		// Initialize QuickFindPanel in core
+		app.socket.sendMessage('uno .uno:QuickFind');
 		super(map, SidebarType.QuickFind);
 	}
 
