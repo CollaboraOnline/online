@@ -47,7 +47,7 @@ class ContextToolbar {
 	}
 
 	showContextToolbar(): void {
-		if (this.builder.map.isReadOnlyMode()) return;
+		if (this.builder.map.isReadOnlyMode() || !window.mode.isDesktop()) return;
 		if (this.lastIinputEvent.input === 'mouse') this.pendingShow = true;
 		if (this.lastIinputEvent.type !== 'buttonup') return;
 
