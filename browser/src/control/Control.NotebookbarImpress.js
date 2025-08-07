@@ -447,13 +447,20 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'command': 'closetablet'
 				} : {},
 			{
-				'id': 'slide-presentation:Presentation',
-				'class': 'unoPresentation',
-				'type': 'menubutton',
-				'text': _('Presentation'),
-				'command': 'presentation',
-				'accessibility': { focusBack: true, combination: 'PR', de: null }
+				'id': 'slide-fullscreen-presentation',
+				'type': 'bigcustomtoolitem',
+				'text': _('From Beginning'),
+				'command': 'fullscreen-presentation',
+				'accessibility': { focusBack: true, combination: 'FB', de: null }
 			},
+			{
+				'id': 'slide-presentation-currentslide',
+				'type': 'bigcustomtoolitem',
+				'text':  _('From Current Slide'),
+				'command': 'presentation-currentslide',
+				'accessibility': { focusBack: true, combination: 'FC', de: null }
+			},
+			{ type: 'separator', id: 'slide-show-presentation', orientation: 'vertical' },
 			!window.ThisIsAMobileApp ?
 				{
 					'id': 'slide-presentation-in-window',

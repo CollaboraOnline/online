@@ -1392,17 +1392,6 @@ menuDefinitions.set('LanguageStatusMenu', [
 	// dynamically updated in Control.StatusBar
 ] as Array<MenuDefinition>);
 
-menuDefinitions.set('Presentation', [
-	{
-		text: _('From Beginning'),
-		action: 'fullscreen-presentation',
-	},
-	{
-		text: _('From Current Slide'),
-		action: 'presentation-currentslide',
-	},
-] as Array<MenuDefinition>);
-
 menuDefinitions.set('SlideSizeMenu', [
 	{
 		text: _('Standard (4:3)'),
