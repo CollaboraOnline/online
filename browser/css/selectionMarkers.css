@@ -1,15 +1,19 @@
-.text-selection-handle-start {
+.text-selection-handle-start, .formulabar-selection-handle-start {
 	position: absolute;
 	width: 30px;
 	height: 44px;
 	background-image: url('images/handle_start.svg');
 }
 
-.text-selection-handle-end {
+.text-selection-handle-end, .formulabar-selection-handle-end {
 	position: absolute;
 	width: 30px;
 	height: 44px;
 	background-image: url('images/handle_end.svg');
+}
+
+.formulabar-selection-handle-start, .formulabar-selection-handle-end {
+	touch-action: none;
 }
 
 .leaflet-cursor-handler {
