@@ -1512,7 +1512,10 @@ app.definitions.Socket = L.Class.extend({
 					if (accessTokenTtl === undefined) {
 						accessTokenTtl = 0;
 					}
-					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl, 'no_auth_header': noAuthHeader };
+					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
+					if (noAuthHeader == "1" || noAuthHeader == "true") {
+						this._map.options.docParams.no_auth_header = noAuthHeader;
+					}
 				}
 				else {
 					this._map.options.docParams = {};
