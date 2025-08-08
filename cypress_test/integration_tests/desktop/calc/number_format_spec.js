@@ -8,6 +8,7 @@ describe(['tagdesktop'], 'Number format Tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/number_format.ods');
 		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
 		helper.setDummyClipboardForCopy();
 	});
 
@@ -21,7 +22,7 @@ describe(['tagdesktop'], 'Number format Tests', function() {
 		cy.cGet('.notebookbar .unoNumberFormatCurrency').should('not.have.class', 'selected');
 
 		// set USD currency
-		cy.cGet('.notebookbar .unoNumberFormatCurrency .arrowbackground').click();
+		cy.cGet('.notebookbar .unoNumberFormatCurrency .arrowbackground').filter(':visible').click();
 		cy.cGet('.jsdialog-overlay .modalpopup').should('be.visible');
 		cy.cGet('.jsdialog-overlay .modalpopup .ui-treeview-cell-text').contains('USA').click();
 		cy.cGet('.jsdialog-overlay .modalpopup').should('not.exist');
@@ -32,7 +33,7 @@ describe(['tagdesktop'], 'Number format Tests', function() {
 		cy.cGet('.notebookbar .unoNumberFormatCurrency').should('have.class', 'selected');
 
 		// set GBP currency
-		cy.cGet('.notebookbar .unoNumberFormatCurrency .arrowbackground').click();
+		cy.cGet('.notebookbar .unoNumberFormatCurrency .arrowbackground').filter(':visible').click();
 		cy.cGet('.jsdialog-overlay .modalpopup').should('be.visible');
 		cy.cGet('.jsdialog-overlay .modalpopup .ui-treeview-cell-text').contains('UK').click();
 		cy.cGet('.jsdialog-overlay .modalpopup').should('not.exist');
@@ -43,7 +44,7 @@ describe(['tagdesktop'], 'Number format Tests', function() {
 		cy.cGet('.notebookbar .unoNumberFormatCurrency').should('have.class', 'selected');
 
 		// turn off currency
-		cy.cGet('.notebookbar .unoNumberFormatCurrency').click();
+		cy.cGet('.notebookbar .unoNumberFormatCurrency').filter(':visible').click();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', '100');
 		cy.cGet('.notebookbar .unoNumberFormatCurrency').should('not.have.class', 'selected');

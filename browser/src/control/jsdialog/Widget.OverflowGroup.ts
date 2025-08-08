@@ -40,7 +40,12 @@ function setupOverflowMenu(
 	) as HTMLElement;
 
 	// keeps hidden items
-	const hiddenItems = L.DomUtil.create('div', 'hidden-overflow-container');
+	const hiddenItems = L.DomUtil.create(
+		'div',
+		'hidden-overflow-container',
+		parentContainer,
+	);
+	hiddenItems.style.display = 'none';
 
 	// keeps original content
 	const originalTopbar = overflowMenu.querySelectorAll(':scope > *');
@@ -77,6 +82,11 @@ function setupOverflowMenu(
 			app.layoutingService.appendLayoutingTask(() => {
 				app.layoutingService.appendLayoutingTask(() => {
 					const menu = JSDialog.GetDropdown('overflow-button-' + id);
+					// move overflow to the NB structure to be targeted by onJSUpdate and onJSAction
+					const overflowNode = menu.parentNode;
+					overflowNode.style.position = 'fixed';
+					overflowNode.style.zIndex = '20000';
+					parentContainer.appendChild(menu.parentNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
 					menu?.classList.add('ui-overflow-group-popup');
@@ -142,6 +152,7 @@ JSDialog.OverflowGroup = function (
 		builder.options.cssClass + ' ui-overflow-group-content',
 		innerContainer,
 	);
+	contentContainer.classList.add(data.vertical ? 'vertical' : 'horizontal');
 	innerContainer.id = data.id + '-content';
 
 	const bottomBar = L.DomUtil.create(

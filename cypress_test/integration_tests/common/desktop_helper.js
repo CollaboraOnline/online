@@ -232,10 +232,7 @@ function insertImage() {
 
 	if (mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#Insert-container .unoInsertGraphic').click();
+		cy.cGet('#Insert-container .unoInsertGraphic').filter(':visible').click();
 	} else {
 		cy.cGet('#toolbar-up .unoInsertGraphic').click();
 	}
@@ -250,14 +247,6 @@ function insertVideo() {
 	cy.log('>> insertVideo - start');
 
 	selectZoomLevel('50', false);
-
-	const mode = Cypress.env('USER_INTERFACE');
-
-	if (mode === 'notebookbar') {
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-	}
 
 	cy.cGet('#Insert-tab-label').click();
 	cy.cGet('#Insert-container .insertmultimedia').click();

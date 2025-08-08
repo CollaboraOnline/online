@@ -8,6 +8,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/cell_appearance.ods');
+		cy.viewport(1920,1080);
 	});
 
 	it('Apply background color', function() {

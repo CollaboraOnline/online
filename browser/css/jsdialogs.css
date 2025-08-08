@@ -1294,10 +1294,23 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	text-align: center;
 }
 
+.notebookbar.ui-overflow-group-bottom {
+	display: flex;
+	padding: 0 5px;
+	margin-top: 4px;
+}
+
+.notebookbar .ui-overflow-group-inner {
+	height: 4rem;
+	align-content: center;
+}
+
 .ui-overflow-group-label {
 	font-family: var(--jquery-ui-font);
 	font-size: var(--default-font-size);
 	color: var(--color-text-lighter);
+	flex-grow: 1;
+	text-align: center;
 }
 
 /* Icon View */

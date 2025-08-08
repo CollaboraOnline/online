@@ -7,6 +7,7 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/focus.ods');
+		cy.viewport(1920,1080);
 	});
 
 	it('Formula-bar focus', function() {
@@ -62,7 +63,7 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 
 	it('On Tabcontrol dialog open', function() {
 		cy.cGet('#Layout-tab-label').click();
-		cy.cGet('#Layout-container .unoPageFormatDialog').click();
+		cy.cGet('#Layout-container .unoPageFormatDialog').filter(':visible').click();
 		// focus should be on selected tab if current dialog is tabcontrol dialog
 		cy.cGet('.ui-tab.jsdialog.selected').should('have.focus');
 	});
