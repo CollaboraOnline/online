@@ -1850,8 +1850,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		const grid = document.querySelector('.leaflet-layer');
-		grid.style.cursor = 'text';
+		var grid = document.querySelector('.leaflet-layer');
+		if (this.isCalc() && grid.style.cursor != 'text') {
+			grid.classList.remove('spreadsheet-cursor');
+			grid.style.cursor = 'text';
+		}
 
 		// tells who trigerred cursor invalidation, but recCursors is still "ours"
 		var modifierViewId = parseInt(obj.viewId);

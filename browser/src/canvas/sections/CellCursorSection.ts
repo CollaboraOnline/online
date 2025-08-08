@@ -88,6 +88,7 @@ class CellCursorSection extends CanvasSectionObject {
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+		if (!app.file.textCursor.visible) return;
 		const grid: any = document.querySelector('.leaflet-layer');
 		grid.classList.remove('spreadsheet-cursor');
 		grid.style.cursor = 'text';
