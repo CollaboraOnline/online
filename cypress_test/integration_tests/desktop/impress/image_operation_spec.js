@@ -9,6 +9,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/image_operation.odp');
 		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
 	});
 
 	it('Insert/Delete image',function() {
@@ -52,12 +53,13 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
-		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
+		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();	
 		cy.cGet('#sidebar-panel').should('not.be.visible');
-
+		
 		desktopHelper.insertImage();
 		//when Keep ratio is unchecked
 		helper.assertImageSize(438, 111);
+		cy.viewport(1000,660);
 
 		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
 		cy.cGet('#sidebar-panel').should('be.visible');

@@ -8,6 +8,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/image_operation.ods');
 		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
 	});
 
 	it('Insert/Delete Image',function() {
@@ -42,7 +43,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		});
 
 		cy.wait(1000);
-		helper.assertImageSize(198, 63);
+		helper.assertImageSize(660, 63);
 	});
 
 	it.skip('Resize image when keep ratio option enabled and disabled', function() {

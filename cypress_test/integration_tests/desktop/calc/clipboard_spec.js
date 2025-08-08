@@ -12,6 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();
 		}
+		cy.viewport(1920,1080);
 		desktopHelper.shouldHaveZoomLevel('100');
 
 		// make it more complex and prevent form initial being A1
@@ -185,6 +186,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 	});
 
 	it('Copy Hyperlink from pop-up', function () {
+		desktopHelper.selectZoomLevel('100', false);
 		helper.setDummyClipboardForCopy();
 
 		calcHelper.dblClickOnFirstCell();

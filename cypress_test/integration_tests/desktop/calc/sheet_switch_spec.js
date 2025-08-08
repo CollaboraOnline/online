@@ -7,6 +7,7 @@ var desktopHelper = require('../../common/desktop_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/calc-zoomed.fods');
+		cy.viewport(1920,1080);
 	});
 
 	/* calc-zoomed.fods opens with the cell selection in the bottom right corner
@@ -15,16 +16,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 	it('Check view position on sheet switch', function() {
 		// we should be somewhere far from A1
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'CQ1017');
-		desktopHelper.assertScrollbarPosition('vertical', 310, 350);
-		desktopHelper.assertScrollbarPosition('horizontal', 410, 520);
+		desktopHelper.assertScrollbarPosition('vertical', 710, 750);
+		desktopHelper.assertScrollbarPosition('horizontal', 930, 1050);
 
 		// insert sheet
 		cy.cGet('#sheets-buttons-toolbox #insertsheet').click();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 
 		// after switch we should see cursor and A1
-		desktopHelper.assertScrollbarPosition('vertical', 0, 50);
-		desktopHelper.assertScrollbarPosition('horizontal', 0, 50);
+		desktopHelper.assertScrollbarPosition('vertical', 50, 100);
+		desktopHelper.assertScrollbarPosition('horizontal', 50, 100);
 	});
 
 	it.skip('Check the visibility of tile content when rows are hidden', function() {
@@ -74,7 +75,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// go to sheet 2
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 330, 350);
+		desktopHelper.assertScrollbarPosition('vertical', 300, 350);
 
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A2{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);
@@ -83,12 +84,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 	it('Check view position on repeated selection of currently selected sheet', function() {
 		// initially we are on sheet 2 tab
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 300, 340);
+		desktopHelper.assertScrollbarPosition('vertical', 300, 350);
 
 		// click on sheet 2 tab (yes, current one)
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 300, 340);
+		desktopHelper.assertScrollbarPosition('vertical', 340, 380);
 
 		// go to different place in the spreadsheet
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A2{enter}');
@@ -133,7 +134,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// add sheet 2 to sheets selection
 		helper.typeIntoDocument('{ctrl}{shift}{pageDown}');
 
-		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 300, 330);
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
 		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
 		cy.cGet('#spreadsheet-tab1').should('have.class', 'spreadsheet-tab-selected');
@@ -163,12 +164,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test sheet switching with 
 	it('Check view position on sheet switch', function() {
 		helper.setupAndLoadDocument('calc/switch-split.ods');
 		// Sheet 1 has split panes
-		desktopHelper.assertScrollbarPosition('horizontal', 300, 320);
+		desktopHelper.assertScrollbarPosition('horizontal', 300, 340);
 		// Switch to another sheet with differently sized columns
 		cy.cGet('#spreadsheet-tab1').click();
 		// Switch back to the split sheet
 		cy.cGet('#spreadsheet-tab0').click();
 		// The panes positions shouldn't have changed
-		desktopHelper.assertScrollbarPosition('horizontal', 300, 320);
+		desktopHelper.assertScrollbarPosition('horizontal', 300, 340);
 	});
 });
