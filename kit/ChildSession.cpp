@@ -38,7 +38,7 @@
 #include <androidapp.hpp>
 #endif
 
-#include <wasm/base64.hpp>
+#include <common/base64.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>

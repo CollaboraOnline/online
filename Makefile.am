@@ -417,6 +417,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/Simd.hpp \
                  common/ThreadPool.hpp \
                  common/Watchdog.hpp \
+                 common/base64.hpp \
                  kit/KitQueue.hpp \
                  kit/LogUI.hpp \
                  net/AsyncDNS.hpp \
@@ -431,8 +432,7 @@ shared_headers = common/Anonymizer.hpp \
                  net/Socket.hpp \
                  net/Uri.hpp \
                  net/WebSocketHandler.hpp \
-                 tools/Replay.hpp \
-		 wasm/base64.hpp
+                 tools/Replay.hpp
 if ENABLE_SSL
 shared_headers += net/Ssl.hpp \
                   net/SslSocket.hpp
