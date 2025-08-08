@@ -1,5 +1,42 @@
 
+/* stretch the fields */
+.notebookbar.ui-listbox,
+.notebookbar.ui-combobox,
+.notebookbar.ui-spinfields,
+.notebookbar.ui-radiobutton {
+	width: 100%;
+}
+
+/* center text vertically */
+
+.notebookbar.ui-radiobutton,
+.notebookbar.ui-radiobutton input {
+	height: var(--default-font-size);
+	margin: auto 4px;
+}
+
+label.notebookbar,
+.notebookbar.ui-radiobutton label {
+	line-height: var(--default-font-size);
+	font-family: var(--cool-font);
+	font-size: var(--default-font-size);
+	margin: auto 4px;
+}
+
 /* tabs */
+
+/* stretch the tabs so we can assign width dynamically for some widgets */
+.notebookbar.root-container,
+.notebookbar#NotebookBar,
+.notebookbar#ContextContainer,
+.notebookbar.ui-tabs-root,
+.notebookbar.ui-tabs-content,
+.notebookbar.ui-tabs-content > .notebookbar.ui-content,
+.notebookbar.ui-tabpage {
+	width: 100%;
+	justify-items: start;
+	max-width: initial;
+}
 
 .notebookbar-tabs-container {
 	display: inline-flex;
@@ -526,8 +563,15 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Transition Tab */
 
-#transitions_icons.ui-iconview {
+#Transition-container.notebookbar {
+	width: 100%;
+	justify-items: stretch;
+	grid-template-columns: 1fr 0 auto 0 auto 30px;
+}
+
+#transitions_icons.ui-iconview.notebookbar {
 	max-height: 75px;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
 
 /* Table Tab */
