@@ -550,6 +550,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* search field box */
+#navigator-search {
+	padding: 16px 16px 0px;
+}
+#navigator-search-input {
+	height: 24px;
+}
 #quickfind-dock-wrapper #box > div:nth-child(1) {
 	justify-content: space-evenly;
 	height: min-content;
