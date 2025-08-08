@@ -985,6 +985,15 @@ export class CommentSection extends CanvasSectionObject {
 		this.update();
 	}
 
+	public showInNavigator(comment: Comment) {
+		const id = comment.sectionProperties.data.id - 1;
+		if (app.map._docLayer._docType === 'text') {
+			if (!document.getElementById('navigation-sidebar').classList.contains('visible'))
+				this.map.sendUnoCommand('.uno:Navigator');
+			this.map.sendUnoCommand('.uno:NavigatorSelectComment?CommentNumber:short=' + id);
+		}
+	}
+
 	public saveReply (annotation: any): void {
 		var comment = {
 			Id: {
@@ -1207,6 +1216,12 @@ export class CommentSection extends CanvasSectionObject {
 							name: isShownBig ? _('Show on the side') : _('Open in full view'),
 							callback: function (key: any, options: any) {
 								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
+							}.bind(this)
+						},
+						showInNavigator: docLayer._docType !== 'text' || (<any>window).mode.isMobile() ? undefined : {
+							name: _('Show in navigator'),
+							callback: function (key: any, options: any) {
+								this.showInNavigator.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						}
 					},

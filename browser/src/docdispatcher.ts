@@ -227,6 +227,20 @@ class Dispatcher {
 			app.map.insertComment();
 		};
 
+		this.actionsMap['showcommentsnavigator'] = function () {
+			if (app.map._docLayer._docType === 'text') {
+				if (
+					!document
+						.getElementById('navigation-sidebar')
+						.classList.contains('visible')
+				)
+					app.map.sendUnoCommand('.uno:Navigator');
+				app.map.sendUnoCommand(
+					'.uno:NavigatorSelectComment?CommentNumber:short=0',
+				);
+			}
+		};
+
 		this.actionsMap['zoomin'] = () => {
 			app.map.zoomIn(1, null, true /* animate? */);
 		};

@@ -770,8 +770,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'home-fontcombobox-break', orientation: 'vertical' },
 			{
-				'id': 'home-insert-annotation',
-				'type': 'bigtoolitem',
+				'id': 'home-insert-annotation:AnnotationMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:InsertAnnotation'),
 				'command': '.uno:InsertAnnotation',
 				'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
