@@ -32,6 +32,7 @@
 #include <wopi/StorageConnectionManager.hpp>
 #include <common/Authorization.hpp>
 #include <common/LangUtil.hpp>
+#include <common/base64.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -72,8 +73,6 @@
 #include <unistd.h>
 #include <zlib.h>
 #include <security/pam_appl.h>
-
-#include <wasm/base64.hpp>
 
 #include <openssl/evp.h>
 

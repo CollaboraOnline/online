@@ -23,11 +23,11 @@
 #if !MOBILEAPP
 #include <common/Watchdog.hpp>
 #endif
+#include <common/base64.hpp>
 #include <net/HttpRequest.hpp>
 #include <net/NetUtil.hpp>
 #include <net/ServerSocket.hpp>
 #include <net/WebSocketHandler.hpp>
-#include <wasm/base64.hpp>
 
 #if !MOBILEAPP && ENABLE_SSL
 #include <net/SslSocket.hpp>
