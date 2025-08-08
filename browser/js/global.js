@@ -13,7 +13,7 @@ window.app = {
 
 // For typings (including the global object), please see browser/src/global.d.ts
 
-// This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
+// This function may look unused, but it's needed in Android to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
 var Base64ToArrayBuffer = function(base64Str) {
@@ -28,7 +28,7 @@ var Base64ToArrayBuffer = function(base64Str) {
 
 // Written and named as a sort of analog to plain atob ... except this one supports non-ascii
 // Nothing is perfect so this also mangles binary - don't decode tiles with it
-// This function may look unused, but it's needed in WASM and mobile to send data through the fake websocket. Please
+// This function may look unused, but it's needed in mobile to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
 var b64d = function(base64Str) {
