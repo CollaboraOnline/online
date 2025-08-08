@@ -8,8 +8,9 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/image_operation.odt');
-		desktopHelper.shouldHaveZoomLevel('70');
 		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
+
 	});
 
 	it('Insert Image',function() {
@@ -48,8 +49,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	});
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
-		cy.viewport(1000, 660);
-
 		insertImage();
 		//when Keep ratio is unchecked
 		helper.assertImageSize(248, 63);

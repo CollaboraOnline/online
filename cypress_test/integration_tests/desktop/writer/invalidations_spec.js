@@ -12,6 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		// when available, currently adds an extra empty update when
 		// grammar checking kicks in at server-side idle after a change.
 		localStorage.setItem('SpellOnline', false);
+		cy.viewport(1920,1080);
 	});
 
 	// Clicking in an empty header area shouldn't invalidate anything
@@ -91,7 +92,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
-		cy.cGet('.notebookbar > .unoDefaultBullet > button').click();
+		cy.cGet('.notebookbar > .unoDefaultBullet > button').filter(':visible').click();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
 		cy.cGet('.empty-deltas').then(($before) => {

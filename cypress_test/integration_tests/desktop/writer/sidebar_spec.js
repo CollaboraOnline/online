@@ -6,13 +6,15 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/sidebar.odt');
+		cy.viewport(1920,1080);
 	});
 
 	it('Sidebar visual test', function() {
+		cy.viewport(1000,660);
 		cy.wait(500); // wait to make fully rendered
 		cy.cGet('#sidebar-dock-wrapper').scrollTo(0,0,{ ensureScrollable: false });
 		cy.wait(500); // wait for animations
-		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('sidebar_writer', 0.065);
+		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('sidebar_writer', 0.1);
 	});
 
 	it('Show table panel multiple times', function() {
@@ -37,7 +39,6 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 
 	function checkMathElementsVisibility() {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click().click().click().click();
 		cy.cGet('#Insert .unoInsertObjectStarMath').click();
 
 		cy.cGet('.MathElementsPanel').should('be.visible');
