@@ -731,6 +731,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'home-create-slide:NewSlideLayoutMenu',
 				'type': 'menubutton',
+				'applyCallback':function () {
+					app.map.sendUnoCommand('.uno:InsertPage') // this will make this as split button
+				},
 				'text': _('New'),
 				'command': '.uno:InsertPage',
 				'accessibility': { focusBack: true, combination: 'CS', de: null }
