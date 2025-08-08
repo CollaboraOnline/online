@@ -67,6 +67,7 @@
 	--color-insert-marker-background: #DDDD;
 	--color-insert-marker-background-dark: #1c99e0;
 
+	--color-treeview-highlight: #FFEE80;
 }
 
 [data-bg-theme='light'] {
