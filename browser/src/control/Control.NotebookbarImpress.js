@@ -51,13 +51,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true, combination: 'ZL', de: null }
 			},
 			{
-				'id': 'options-custom-animation',
-				'type': 'toolitem',
-				'text': _UNO('.uno:CustomAnimation', 'presentation', true),
-				'command': '.uno:CustomAnimation',
-				'accessibility': { focusBack: true, combination: 'ZA', de: null }
-			},
-			{
 				'id': 'options-master-slides-panel',
 				'type': 'toolitem',
 				'text': _UNO('.uno:MasterSlidesPanel', 'presentation', true),
@@ -105,6 +98,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: false, combination: 'P', de: null }
 			},
 			JSDialog.ImpressTransitionTab.getEntry(),
+			JSDialog.ImpressAnimationTab.getEntry(),
 			{
 				'id': 'Slideshow-tab-label',
 				'text': _('Slide Show'),
@@ -173,6 +167,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			this.getInsertTab(),
 			this.getDesignTab(),
 			this.getTransitionTab(),
+			this.getAnimationTab(),
 			this.getSlideshowTab(),
 			this.getReviewTab(),
 			this.getFormatTab(),
@@ -434,6 +429,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 	getTransitionTab: function() {
 		const tab = JSDialog.ImpressTransitionTab;
+		return this.getTabPage(tab.getName(), tab.getContent());
+	},
+
+	getAnimationTab: function() {
+		const tab = JSDialog.ImpressAnimationTab;
 		return this.getTabPage(tab.getName(), tab.getContent());
 	},
 
