@@ -18,13 +18,11 @@
 #include <COOLWSD.hpp>
 #include <Util.hpp>
 
-#include "base64.hpp"
 #include <emscripten/fetch.h>
 
 int coolwsd_server_socket_fd = -1;
 
 const char* user_name;
-constexpr std::size_t SHOW_JS_MAXLEN = 200;
 
 #define FILE_PATH "/sample.docx"
 static std::string fileURL = "file://" FILE_PATH;
@@ -34,33 +32,27 @@ static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
 
 static void send2JS(const std::vector<char>& buffer)
 {
-    std::string js;
+    MAIN_THREAD_EM_ASM({
+        // Check if the message is binary. We say that any message that isn't just a single line is
+        // "binary" even if that strictly speaking isn't the case; for instance the commandvalues:
+        // message has a long bunch of non-binary JSON on multiple lines. But _onMessage() in
+        // Socket.js handles it fine even if such a message, too, comes in as an ArrayBuffer. (Look
+        // for the "textMsg = String.fromCharCode.apply(null, imgBytes);".)
 
-    // Check if the message is binary. We say that any message that isn't just a single line is
-    // "binary" even if that strictly speaking isn't the case; for instance the commandvalues:
-    // message has a long bunch of non-binary JSON on multiple lines. But _onMessage() in Socket.js
-    // handles it fine even if such a message, too, comes in as an ArrayBuffer. (Look for the
-    // "textMsg = String.fromCharCode.apply(null, imgBytes);".)
+        let newline = false;
+        for (let i = 0; i != $1; ++i) {
+            if (HEAPU8[$0 + i] === 0x0A) {
+                newline = true;
+                break;
+            }
+        }
+        let data = HEAPU8.slice($0, $0 + $1);
+        if (!newline) {
+            data = new TextDecoder().decode(data);
+        }
 
-    const char *newline = (const char *)memchr(buffer.data(), '\n', buffer.size());
-    if (newline != nullptr)
-    {
-        // The data needs to be an ArrayBuffer
-        js = "globalThis.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
-        js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
-        js = js + "')});";
-    }
-    else
-    {
-        js = "globalThis.TheFakeWebSocket.onmessage({'data': globalThis.b64d('";
-        js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
-        js = js + "')});";
-    }
-
-    LOG_TRC_NOFILE("Evaluating JavaScript: " << js.substr(0, std::min(SHOW_JS_MAXLEN, js.size()))
-                                             << (js.size() > SHOW_JS_MAXLEN ? "..." : ""));
-
-    MAIN_THREAD_EM_ASM(eval(UTF8ToString($0)), js.c_str());
+        globalThis.TheFakeWebSocket.onmessage({data});
+    }, buffer.data(), buffer.size());
 }
 
 extern "C"
