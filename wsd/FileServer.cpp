@@ -73,7 +73,7 @@
 #include <zlib.h>
 #include <security/pam_appl.h>
 
-#include <wasm/base64.hpp>
+#include <tools/base64.hpp>
 
 #include <openssl/evp.h>
 
