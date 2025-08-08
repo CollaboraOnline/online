@@ -61,6 +61,8 @@
 	--color-grid-helper-line-solid: #e6e6e6;
 	--color-grid-helper-line-dashed: #191919;
 	--color-smart-guides-helper-line: #f36d4f;
+
+	--color-treeview-highlight: #544b13;
 }
 
 [data-bg-theme='dark'] {

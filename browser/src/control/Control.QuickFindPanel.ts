@@ -13,14 +13,17 @@
  */
 
 /* global app */
+const QUICKFIND_WINDOW_ID = -5;
 class QuickFindPanel extends SidebarBase {
 	constructor(map: any) {
+		// Initialize QuickFindPanel in core
+		app.socket.sendMessage('uno .uno:QuickFind');
 		super(map, SidebarType.QuickFind);
 	}
 
 	onAdd(map: any) {
 		super.onAdd(map);
-		this.builder.setWindowId(-5);
+		this.builder.setWindowId(QUICKFIND_WINDOW_ID);
 
 		this.map = map;
 		this.map.on('quickfind', this.onQuickFind, this);

@@ -47,6 +47,7 @@ abstract class SidebarBase {
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
 			useScrollAnimation: false, // icon views cause jump on sidebar open
 			suffix: 'sidebar',
+			callback: this.callback.bind(this),
 		});
 		if (!this.container) {
 			this.container = L.DomUtil.createWithId(
@@ -157,6 +158,22 @@ abstract class SidebarBase {
 			this.container.style.height =
 				this.documentContainer.getBoundingClientRect().height + 'px';
 		}
+	}
+
+	callback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		builder._defaultCallbackHandler(
+			objectType,
+			eventType,
+			object,
+			data,
+			builder,
+		);
 	}
 }
 JSDialog.SidebarBase = SidebarBase;

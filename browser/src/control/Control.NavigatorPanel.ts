@@ -22,6 +22,8 @@ class NavigatorPanel extends SidebarBase {
 	quickFindWrapper: HTMLElement;
 	closeNavButton: HTMLElement;
 
+	highlightTerm: string;
+
 	constructor(map: any) {
 		super(map, SidebarType.Navigator);
 	}
@@ -99,6 +101,12 @@ class NavigatorPanel extends SidebarBase {
 		var navTitle = L.DomUtil.create('span', 'navigation-title', navHeader);
 		navTitle.textContent = _('Navigation');
 
+		// Create wrapper for search
+		const navSearchWrapper = L.DomUtil.create(
+			'div',
+			'navigation-search-wrapper',
+		);
+
 		// Create a wrapper div
 		const closeNavWrapper = L.DomUtil.create(
 			'div',
@@ -160,7 +168,7 @@ class NavigatorPanel extends SidebarBase {
 				// Create Quick Find tab
 				var quickFindTab = L.DomUtil.create('div', 'tab', navOptions);
 				quickFindTab.id = 'tab-quick-find';
-				quickFindTab.textContent = _('Quick Find');
+				quickFindTab.textContent = _('Results');
 				navigationTabs.push(quickFindTab);
 			}
 
@@ -178,6 +186,8 @@ class NavigatorPanel extends SidebarBase {
 		if (this.navigationPanel) {
 			// Insert navigation container as the first child & navHeader as next-child of navigator-panel
 			this.navigationPanel.prepend(navContainer);
+			this.navigationPanel.prepend(navSearchWrapper);
+			this.createSearchBar(navSearchWrapper);
 			this.navigationPanel.prepend(navHeader);
 		}
 	}
@@ -265,6 +275,13 @@ class NavigatorPanel extends SidebarBase {
 		}
 	}
 
+	onJSUpdate(e: FireEvent): void {
+		if (this.highlightTerm && this.highlightTerm.trim().length > 0) {
+			e.data.control.highlightTerm = this.highlightTerm;
+		}
+		super.onJSUpdate(e);
+	}
+
 	closeSidebar() {
 		this.closeNavigation();
 		app.showNavigator = false;
@@ -325,6 +342,54 @@ class NavigatorPanel extends SidebarBase {
 			this.floatingNavIcon.classList.add('visible');
 			this.handleFloatingButtonVisibilityOnZoomChange(); // on close panel we should check if we can display nav icon or not based on zoom level
 		});
+	}
+
+	createSearchBar(wrapper: HTMLElement) {
+		var data = {
+			id: '',
+			type: 'container',
+			children: [
+				{
+					id: 'navigator-search',
+					type: 'edit',
+					placeholder: _('Search...'),
+					text: '',
+				} as EditWidgetJSON,
+			],
+		} as WidgetJSON;
+
+		this.builder.build(wrapper, [data], false);
+	}
+
+	override callback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	): void {
+		if (object.id === 'navigator-search') {
+			var searchTerm = data;
+			// For quickfind
+			super.callback(
+				objectType,
+				eventType,
+				{ id: 'Find' },
+				searchTerm,
+				builder,
+			);
+
+			// Unify search updates on activate event only (enter key pressed).
+			// Note that QuickFind needs changed and activated events to be sent to core to function properly.
+			if (eventType === 'activate') {
+				// For outline
+				var treeContainer = document.getElementById('contenttree') as any;
+				treeContainer.highlightEntries(searchTerm);
+				this.highlightTerm = searchTerm;
+			}
+			return;
+		}
+		super.callback(objectType, eventType, object, data, builder);
 	}
 }
 

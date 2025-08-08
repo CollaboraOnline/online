@@ -353,6 +353,14 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-block-end: 8px;
 }
 
+#NavigatorPanel .ui-treeview-entry.highlighted > *:not(.ui-treeview-expander-column) {
+	background-color: var(--color-treeview-highlight);
+}
+
+.ui-treeview-expandable.highlighted .ui-treeview-cell-text {
+	color: rgb(var(--doc-type)) !important;
+}
+
 #NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
 	/* good to move this into css var*/
 	font-size: 17px;
@@ -486,18 +494,26 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Navigation Tabs */
 #navigation-options {
 	display: flex;
-	padding: 0;
+	padding: 0 8px;
 }
 
 /* Tab Style */
 #navigation-options .tab {
-	flex: 1;
-	padding: 10px;
+	flex: 0 1 auto;
+	padding: 6px 8px;
+	margin-block-start: 14px;
 	cursor: pointer;
-	font-size: 0.875rem;
+	font-size: 0.83rem;
 	border-bottom: none;
 	color: var(--color-main-text);
 	transition: background-color 0.3s, border-color 0.3s;
+}
+#navigation-options .tab:after {
+	content: '';
+	display: block;
+	margin-top: 4px;
+	transition: border-color 0.3s;
+	border-bottom: 2px solid transparent;
 }
 
 /* Hover Effect */
@@ -508,7 +524,9 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Active/Selected Tab */
 #navigation-options .tab.selected {
 	color: rgba(var(--doc-type), 1);
-	border-bottom: 2px solid rgba(var(--doc-type), 1);
+}
+#navigation-options .tab.selected:after {
+	border-bottom-color: rgba(var(--doc-type), 1);
 }
 #navigation-sidebar {
 	width: 250px;
@@ -520,7 +538,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Quick Find Panel */
 #quickfind-dock-wrapper #box {
 	display: grid;
-	grid-template-rows: 36px 36px auto;
+	grid-template-rows: 20px auto;
 	margin: 4px 0px;
 	grid-gap: 10px;
 }
@@ -533,6 +551,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* search field box */
+#navigator-search {
+	padding: 16px 16px 0px;
+}
+#navigator-search-input {
+	height: 24px;
+}
 #quickfind-dock-wrapper #box > div:nth-child(1) {
 	justify-content: space-evenly;
 	height: min-content;
@@ -540,14 +564,14 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 /* matched count on top */
 #quickfind-dock-wrapper #box .ui-text {
-	grid-row: 2;
+	grid-row: 1;
 	font-weight: bold;
 	height: min-content;
 }
 
 /* results */
 #quickfind-dock-wrapper .ui-treeview {
-	grid-row: 3;
+	grid-row: 2;
 	border-width: 1px 0px 0px;
 	border-radius: 0px;
 	margin-bottom: 100px; /* reduce size by size of controls above in the panel */

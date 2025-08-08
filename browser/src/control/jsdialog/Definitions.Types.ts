@@ -60,6 +60,7 @@ interface JSBuilder {
 	updateWidget: (parentContainer: Element, updateJSON: any) => void;
 	executeAction: (parentContainer: Element, actionJSON: any) => void;
 	callback: JSDialogCallback;
+	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
 	setWindowId: (id: number) => void;
 
@@ -280,6 +281,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	draggable?: boolean; // indicates if we can drag entries to another treeview
 	entries: Array<TreeEntryJSON>;
 	headers: Array<TreeHeaderJSON>; // header columns
+	highlightTerm?: string; // what, if any, entries are we highlighting?
 }
 
 interface IconViewEntry {
