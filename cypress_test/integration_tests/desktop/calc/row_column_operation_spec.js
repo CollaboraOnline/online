@@ -8,10 +8,10 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/row_column_operation.ods');
 		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 	});
 
 	it('Insert/Delete row' , function() {

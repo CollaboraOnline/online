@@ -8,7 +8,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/table_operation.odp');
-		desktopHelper.selectZoomLevel('50', false);
+		cy.viewport(1920,1080);
 	});
 
 	function selectOptionNotebookbar(optionId) {
