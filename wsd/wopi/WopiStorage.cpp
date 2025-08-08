@@ -29,6 +29,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Uri.hpp>
+#include <filesystem>
 #include <wopi/StorageConnectionManager.hpp>
 
 #include <Poco/Exception.h>
@@ -49,6 +50,7 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <array>
 
 bool isTemplate(const std::string& filename)
 {
@@ -57,6 +59,28 @@ bool isTemplate(const std::string& filename)
                                                  ".xltx", ".xltm", ".sti", ".otp",
                                                  ".potx", ".potm", ".std", ".otg" };
     for (auto& extension : templateExtensions)
+        if (filename.ends_with(extension))
+            return true;
+    return false;
+}
+
+bool isZippedFormat(std::string_view filename)
+{
+    constexpr auto zippedFileExtensions = std::to_array<std::string_view>({
+            ".odt",
+            ".ods",
+            ".odg",
+            ".otp",
+            ".ott",
+            ".ots",
+            ".docx",
+            ".xlsx",
+            ".pptx",
+            ".docm",
+            ".pptm",
+            ".xlsm"
+        });
+    for (auto& extension : zippedFileExtensions)
         if (filename.ends_with(extension))
             return true;
     return false;
@@ -667,10 +691,41 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     }
 
     // Successful
+
+    // basic checks
     const FileUtil::Stat fileStat(getRootFilePath());
-    const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
-    LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
-                                        << getRootFilePathAnonym() << " in " << diff);
+    if (!fileStat.good()) {
+        LOG_ERR("WOPI::GetFile, Could not Open downloaded file from [" << uriAnonym << "] -> "
+                                            << getRootFilePathAnonym() << " in " << diff );
+    } else if (fileStat.size() == 0) {
+        LOG_ERR("WOPI::GetFile, Empty file received from [" << uriAnonym << "] -> "
+                                            << getRootFilePathAnonym() << " in " << diff );
+    } else {
+        const std::size_t filesize = fileStat.size();
+        LOG_TRC("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
+                                            << getRootFilePathAnonym() << " in " << diff);
+
+        // zip file sanity check
+        // if the file is OASIS or OpenXML formats we expect a zip file
+        if (isZippedFormat(getLocalRootPath())) {
+            // magic bytes/signature for zip files are:
+            // 50 4B 03 04
+            // 50 4B 05 06 // Empty
+            // 50 4B 07 08 // Spanned
+
+            char b[2];
+            std::ifstream fstr;
+            fstr.open(getLocalRootPath());
+            fstr.read(b, 2);
+            fstr.close();
+
+            const bool isValidZip = b[0] == 0x50 && b[1] == 0x4B;
+            if (!isValidZip) {
+                LOG_ERR("WOPI::GetFile, File does not look like a zipfile expected for file extension from [" << uriAnonym << "] -> "
+                                            << getRootFilePathAnonym() );
+            }
+        }
+    }
 
     if (!wopiCert.empty() && !subjectHash.empty())
     {
