@@ -175,6 +175,7 @@ class LayerDrawing {
 		this.drawTextField(slideHash);
 		this.drawDrawPage(slideHash);
 		this.drawVideos(slideHash);
+		this.drawNavigationButtons(slideHash);
 	}
 
 	private handleVideos(slideHash: string) {
@@ -263,6 +264,24 @@ class LayerDrawing {
 			}
 		});
 		VideoRendererGl.deleteProgram(this.layerRenderer.getRenderContext());
+	}
+
+	private drawNavigationButtons(slideHash: string) {
+		console.log('LayerDrawing.drawNavigationButtons: slideHash: ' + slideHash);
+		const slideInfo = this.getSlideInfo(slideHash);
+		if (slideInfo.next) {
+			console.log('slideInfo.next');
+			var image = new Image();
+			image.onload = () => {
+				console.log('image loaded');
+				createImageBitmap(image).then((imageInfo) => {
+					console.log('image created');
+					console.log(imageInfo);
+					this.drawBitmap(imageInfo);
+				});
+			};
+			image.src = 'http://localhost:9980/browser/99d3c9c049/images/lc_next.svg';
+		}
 	}
 
 	public getAnimatedLayerInfo(
