@@ -11,15 +11,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		desktopHelper.switchUIToCompact();
 	});
 
-	it.skip('Switch to slide transition Deck', function() {
-		cy.cGet('#slidechangewindow .w2ui-button').should('not.have.class', 'checked');
-		cy.cGet('#layoutvalueset').should('be.visible');
-		cy.cGet('#slidechangewindow .w2ui-button').click({force: true});
-		cy.cGet('#slidechangewindow .w2ui-button').should('have.class', 'checked');
-		cy.cGet('#layoutvalueset').should('not.exist');
-		cy.cGet('#transitions_iconswin').should('be.visible');
-	});
-
 	it('Set gradient background color', function() {
 		cy.cGet('#fillattr2').should('not.be.visible');
 
