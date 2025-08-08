@@ -18,7 +18,7 @@
 
 #include <cctype>
 
-#include <wasm/base64.hpp>
+#include <tools/base64.hpp>
 
 PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data)
     : _filename(std::move(filename))

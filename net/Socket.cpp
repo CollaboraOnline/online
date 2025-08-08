@@ -27,7 +27,7 @@
 #include <net/NetUtil.hpp>
 #include <net/ServerSocket.hpp>
 #include <net/WebSocketHandler.hpp>
-#include <wasm/base64.hpp>
+#include <tools/base64.hpp>
 
 #if !MOBILEAPP && ENABLE_SSL
 #include <net/SslSocket.hpp>

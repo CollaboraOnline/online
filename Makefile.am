@@ -432,7 +432,7 @@ shared_headers = common/Anonymizer.hpp \
                  net/Uri.hpp \
                  net/WebSocketHandler.hpp \
                  tools/Replay.hpp \
-		 wasm/base64.hpp
+		 tools/base64.hpp
 if ENABLE_SSL
 shared_headers += net/Ssl.hpp \
                   net/SslSocket.hpp
