@@ -2036,7 +2036,7 @@ button.menubutton.sidebar > span {
 
 /* Writer - Table of Contents, Index or Bibliography dialog, Columns tab */
 [data-theme='dark'] #ColumnPage #pageexample-img,
-[data-theme='dark'] #ColumnPage #valueset-img {
+[data-theme='dark'] #ColumnPage #column-iconview img {
 	filter: invert(.9)
 }
 
@@ -2581,11 +2581,11 @@ kbd,
 #CharacterPropertiesDialog #fonteffects #FontColor,
 #CharacterPropertiesDialog #fonteffects #TextDecoration,
 #CharacterPropertiesDialog #fonteffects #Effects,
-#TemplateDialog8 #Footnote #FootnoteAreaPage {
+[id^='TemplateDialog'] #Footnote #FootnoteAreaPage {
 	width: fit-content;
 }
 
-#TemplateDialog8 #Footnote #FootnoteAreaPage .menubutton {
+[id^='TemplateDialog'] #Footnote #FootnoteAreaPage .menubutton {
 	margin: 0;
 }
 
@@ -2617,4 +2617,15 @@ kbd,
 /* Writer - Format - Paragraph - Area - Color */
 #ColorPage.jsdialog #rgbpreset {
 	width: max-content;
+}
+
+/* Writer - Format - Page Style - Columns - Settings */
+
+#ColumnPage.jsdialog #grid4 {
+	align-items: center;
+}
+
+#ColumnPage.jsdialog #column-iconview.ui-iconview {
+	grid-template-columns: repeat(5, 1fr);
+	overflow: visible;
 }
