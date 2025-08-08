@@ -65,19 +65,12 @@ JSDialog.grid = function (
 		table.role = data.allyRole;
 	}
 
-	const gridRowColStyle =
-		'grid-template-rows: repeat(' +
-		rows +
-		', auto); \
-		grid-template-columns: repeat(' +
-		cols +
-		', auto);';
+	const gridRowStyle = 'grid-template-rows: repeat(' + rows + ', auto);';
 
-	table.style = gridRowColStyle;
-
+	let gridColStyle: string = '';
 	for (let row = 0; row < rows; row++) {
 		let prevChild = null;
-
+		let tmpColStyle: string = '';
 		for (let col = 0; col < cols; col++) {
 			const child = _getGridChild(data.children, row, col);
 			const isMergedCell =
@@ -93,6 +86,12 @@ JSDialog.grid = function (
 				const sandbox = L.DomUtil.create('div');
 				builder.build(sandbox, [child], false);
 
+				if (child.type === 'fixedtext') {
+					tmpColStyle += 'max-content ';
+				} else {
+					tmpColStyle += 'auto ';
+				}
+
 				const control = sandbox.firstChild;
 				if (control) {
 					L.DomUtil.addClass(control, 'ui-grid-cell');
@@ -104,9 +103,18 @@ JSDialog.grid = function (
 			} else if (!isMergedCell) {
 				// empty placeholder to keep correct order
 				L.DomUtil.create('div', 'ui-grid-cell', table);
+				tmpColStyle += 'auto ';
 			}
 		}
+
+		tmpColStyle = tmpColStyle.trim();
+		if (tmpColStyle.split(' ').length > gridColStyle.split(' ').length)
+			gridColStyle = tmpColStyle;
 	}
+
+	gridColStyle = 'grid-template-columns: ' + gridColStyle + ';';
+	const calculatedGridRowColStyle = gridRowStyle + ' ' + gridColStyle;
+	table.style = calculatedGridRowColStyle;
 
 	for (let i = 0; i < (data.children || []).length; i++) {
 		const child = data.children[i];

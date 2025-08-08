@@ -2642,3 +2642,9 @@ kbd,
 	grid-template-columns: repeat(5, 1fr);
 	overflow: visible;
 }
+
+/* Writer - Character - Position */
+
+.jsdialog.ui-grid:has(#scalewidthsb-input) {
+	grid-template-rows: repeat(6, auto) !important;
+}
