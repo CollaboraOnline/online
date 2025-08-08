@@ -353,7 +353,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 }
 
 #NavigatorPanel .ui-treeview-entry.highlighted > *:not(.ui-treeview-expander-column) {
-	background-color: #FFEE80;
+	background-color: var(--color-treeview-highlight);
 }
 
 .ui-treeview-expandable.highlighted .ui-treeview-cell-text {
