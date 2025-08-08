@@ -352,8 +352,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-block-end: 8px;
 }
 
-#NavigatorPanel .ui-treeview-entry.highlighted {
-	background-color: orange;
+#NavigatorPanel .ui-treeview-entry.highlighted > *:not(.ui-treeview-expander-column) {
+	background-color: #FFEE80;
+}
+
+.ui-treeview-expandable.highlighted .ui-treeview-cell-text {
+	color: rgb(var(--doc-type)) !important;
 }
 
 #NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
