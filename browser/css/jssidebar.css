@@ -493,18 +493,26 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Navigation Tabs */
 #navigation-options {
 	display: flex;
-	padding: 0;
+	padding: 0 8px;
 }
 
 /* Tab Style */
 #navigation-options .tab {
-	flex: 1;
-	padding: 10px;
+	flex: 0 1 auto;
+	padding: 6px 8px;
+	margin-block-start: 14px;
 	cursor: pointer;
-	font-size: 0.875rem;
+	font-size: 0.83rem;
 	border-bottom: none;
 	color: var(--color-main-text);
 	transition: background-color 0.3s, border-color 0.3s;
+}
+#navigation-options .tab:after {
+	content: '';
+	display: block;
+	margin-top: 4px;
+	transition: border-color 0.3s;
+	border-bottom: 2px solid transparent;
 }
 
 /* Hover Effect */
@@ -515,7 +523,9 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Active/Selected Tab */
 #navigation-options .tab.selected {
 	color: rgba(var(--doc-type), 1);
-	border-bottom: 2px solid rgba(var(--doc-type), 1);
+}
+#navigation-options .tab.selected:after {
+	border-bottom-color: rgba(var(--doc-type), 1);
 }
 #navigation-sidebar {
 	width: 250px;
