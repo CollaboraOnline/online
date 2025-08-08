@@ -10,8 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Some app', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/slideshow.odp');
 		cy.cGet('.notebookbar #Slideshow-tab-label').click();
-		cy.cGet('.notebookbar #slide-presentation-button').click();
-		cy.cGet('#slide-presentation-entry-0').click();
+		cy.cGet('.notebookbar #slide-fullscreen-presentation-button').click();
 	});
 
 	it('Should see an empty slideshow', function () {
