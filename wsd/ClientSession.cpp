@@ -396,6 +396,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         [this, commandName=std::move(commandName),
                          docBroker](const std::shared_ptr<http::Session>& session)
                     {
+                        session->asyncShutdown();
                         const std::shared_ptr<const http::Response> httpResponse =
                             session->response();
                         if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
@@ -514,6 +515,7 @@ makeSignatureActionSession(std::shared_ptr<ClientSession> clientSession,
         [clientSession = std::move(clientSession),
          commandName = std::move(commandName)](const std::shared_ptr<http::Session>& session)
     {
+        session->asyncShutdown();
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
         resultArguments->set("commandName", commandName);
