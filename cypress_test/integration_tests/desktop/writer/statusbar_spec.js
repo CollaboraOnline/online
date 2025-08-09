@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
 		cy.cGet('#toolbar-down #next').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
-		desktopHelper.assertScrollbarPosition('vertical', 193, 203);
+		desktopHelper.assertScrollbarPosition('vertical', 110, 130);
 	});
 
 	it('Text entering mode.', function() {

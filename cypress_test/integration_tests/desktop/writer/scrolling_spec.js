@@ -17,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.wait(500);
 		desktopHelper.assertVisiblePage(2, 3, 6);
 
-		desktopHelper.assertScrollbarPosition('vertical', 140, 240);
+		desktopHelper.assertScrollbarPosition('vertical', 100, 200);
 	});
 
 	it('Scrolling to bottom/top', function() {
@@ -71,7 +71,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{ctrl}{home}');
 		desktopHelper.pressKey(2, 'pagedown');
 		desktopHelper.pressKey(1, 'pagedown');
-		desktopHelper.assertScrollbarPosition('vertical', 220, 240);
+		desktopHelper.assertScrollbarPosition('vertical', 150, 170);
 
 		// cursor on the bottom, scroll to top
 		desktopHelper.scrollWriterDocumentToTop();

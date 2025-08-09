@@ -45,7 +45,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 		desktopHelper.scrollViewDown();
 
-		desktopHelper.assertScrollbarPosition('vertical', 175, 205);
+		desktopHelper.assertScrollbarPosition('vertical', 170, 200);
 
 		cy.getFrameWindow().its('app').then((app) => {
 			expect(app.isFollowingOff()).to.be.true;
