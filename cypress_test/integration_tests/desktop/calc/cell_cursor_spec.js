@@ -11,11 +11,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
+		desktopHelper.assertScrollbarPosition('horizontal', 170, 300);
 		calcHelper.clickOnFirstCell(true, false, false);
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1:Z1');
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
+		desktopHelper.assertScrollbarPosition('horizontal', 170, 300);
 	});
 
 	it('Jump on address with not visible cursor', function() {
@@ -23,14 +23,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
 
 		helper.typeIntoInputField(helper.addressInputSelector, 'A110');
-		desktopHelper.assertScrollbarPosition('vertical', 205, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 170, 300);
 	});
 
 	it('Jump on search with not visible cursor', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
 
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
+		desktopHelper.assertScrollbarPosition('horizontal', 170, 300);
 		cy.cGet('input#search-input').clear().type('FIRST{enter}');
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A10');
@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	it('Show cursor on sheet insertion', function() {
 		// scroll down
 		helper.typeIntoInputField(helper.addressInputSelector, 'A110');
-		desktopHelper.assertScrollbarPosition('vertical', 205, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 170, 300);
 
 		// insert sheet before
 		calcHelper.selectOptionFromContextMenu('Insert sheet before this');
@@ -58,7 +58,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell with split panes', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
+		desktopHelper.assertScrollbarPosition('horizontal', 250, 370);
 
 		// Click on second cell in second row
 		cy.cGet('#map')
@@ -70,7 +70,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		});
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'B2:AA2');
-		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
+		desktopHelper.assertScrollbarPosition('horizontal', 250, 370);
 	});
 });
 

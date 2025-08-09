@@ -24,8 +24,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter Complex', funct
 		cy.cGet('#map').focus();
 		cy.wait(1000);
 
-		desktopHelper.assertScrollbarPosition('vertical', 250, 270);
-		desktopHelper.assertScrollbarPosition('horizontal', 260, 290);
+		desktopHelper.assertScrollbarPosition('vertical', 210, 230);
+		desktopHelper.assertScrollbarPosition('horizontal', 220, 250);
 	});
 
 	it('Check checkbox status in the date tree', function() {

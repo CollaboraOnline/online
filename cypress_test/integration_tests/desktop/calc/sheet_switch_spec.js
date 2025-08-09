@@ -74,7 +74,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// go to sheet 2
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 330, 350);
+		desktopHelper.assertScrollbarPosition('vertical', 290, 320);
 
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A2{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);

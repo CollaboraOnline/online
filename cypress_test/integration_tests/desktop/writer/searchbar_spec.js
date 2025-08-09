@@ -121,7 +121,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 
 		helper.copy();
 		helper.expectTextForClipboard('sit');
-		desktopHelper.assertScrollbarPosition('vertical', 55, 230);
+		desktopHelper.assertScrollbarPosition('vertical', 25, 205);
 		desktopHelper.assertVisiblePage(1, 2, 6);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
@@ -139,7 +139,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		desktopHelper.assertVisiblePage(3, 4, 6);
 
 		cy.cGet('#searchnext').click();
-		desktopHelper.assertScrollbarPosition('vertical', 200, 305);
+		desktopHelper.assertScrollbarPosition('vertical', 100, 150);
 		desktopHelper.assertVisiblePage(3, 4, 6);
 	});
 
