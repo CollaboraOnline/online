@@ -2903,7 +2903,7 @@ const result = [];
         const onOpenTag = _a.onOpenTag, onCloseTag = _a.onCloseTag, onText = _a.onText, onComment = _a.onComment, onDoctype = _a.onDoctype;
         const noCurrentTag = new CurrentTag();
         let charIdx = 0, state = 0 /* Data */, currentDataIdx = 0; // where the current data start index is
-        const len = html.length,
+        const len = html.length;
         let currentTag = noCurrentTag; // describes the current tag that is being read
         // For debugging: search for other "For debugging" lines
         // const table = new CliTable( {
