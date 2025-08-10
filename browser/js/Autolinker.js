@@ -22,7 +22,7 @@
      * @return {Object} The destination object (`dest`)
      */
     function defaults(dest, src) {
-        for (var prop in src) {
+        for (const prop in src) {
             if (src.hasOwnProperty(prop) && dest[prop] === undefined) {
                 dest[prop] = src[prop];
             }
@@ -40,7 +40,7 @@
      *   when truncated. Defaults to '...'
      */
     function ellipsis(str, truncateLen, ellipsisChars) {
-        var ellipsisLength;
+        let ellipsisLength;
         if (str.length > truncateLen) {
             if (ellipsisChars == null) {
                 ellipsisChars = '&hellip;';
@@ -65,7 +65,7 @@
             return arr.indexOf(element);
         }
         else {
-            for (var i = 0, len = arr.length; i < len; i++) {
+            for (let i = 0, len = arr.length; i < len; i++) {
                 if (arr[i] === element)
                     return i;
             }
@@ -87,7 +87,7 @@
      * @return {Array} The mutated input `arr`.
      */
     function remove(arr, fn) {
-        for (var i = arr.length - 1; i >= 0; i--) {
+        for (let i = arr.length - 1; i >= 0; i--) {
             if (fn(arr[i]) === true) {
                 arr.splice(i, 1);
             }
@@ -119,7 +119,8 @@
     function splitAndCapture(str, splitRegex) {
         if (!splitRegex.global)
             throw new Error("`splitRegex` must have the 'g' flag set");
-        var result = [], lastIdx = 0, match;
+const result = [];
+        let lastIdx = 0, match;
         while (match = splitRegex.exec(str)) {
             result.push(str.substring(lastIdx, match.index));
             result.push(match[0]); // push the splitting char(s)
@@ -149,7 +150,7 @@
      *
      * Example instantiation:
      *
-     *     var tag = new Autolinker.HtmlTag( {
+     *     let tag = new Autolinker.HtmlTag( {
      *         tagName : 'a',
      *         attrs   : { 'href': 'http://google.com', 'class': 'external-link' },
      *         innerHtml : 'Google'
@@ -165,7 +166,7 @@
      *
      * Using mutator methods (which may be used in combination with instantiation config properties):
      *
-     *     var tag = new Autolinker.HtmlTag();
+     *     let tag = new Autolinker.HtmlTag();
      *     tag.setTagName( 'a' );
      *     tag.setAttr( 'href', 'http://google.com' );
      *     tag.addClass( 'external-link' );
@@ -180,9 +181,9 @@
      *
      * ## Example use within a {@link Autolinker#replaceFn replaceFn}
      *
-     *     var html = Autolinker.link( "Test google.com", {
+     *     let html = Autolinker.link( "Test google.com", {
      *         replaceFn : function( match ) {
-     *             var tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance, configured with the Match's href and anchor text
+     *             let tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance, configured with the Match's href and anchor text
      *             tag.setAttr( 'rel', 'nofollow' );
      *
      *             return tag;
@@ -195,9 +196,9 @@
      *
      * ## Example use with a new tag for the replacement
      *
-     *     var html = Autolinker.link( "Test google.com", {
+     *     let html = Autolinker.link( "Test google.com", {
      *         replaceFn : function( match ) {
-     *             var tag = new Autolinker.HtmlTag( {
+     *             let tag = new Autolinker.HtmlTag( {
      *                 tagName : 'button',
      *                 attrs   : { 'title': 'Load URL: ' + match.getAnchorHref() },
      *                 innerHtml : 'Load URL: ' + match.getAnchorText()
@@ -210,7 +211,7 @@
      *     // generated html:
      *     //   Test <button title="Load URL: http://google.com">Load URL: google.com</button>
      */
-    var HtmlTag = /** @class */ (function () {
+    const  HtmlTag = /** @class */ (function () {
         /**
          * @method constructor
          * @param {Object} [cfg] The configuration properties for this class, in an Object (map)
@@ -276,7 +277,7 @@
          * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
          */
         HtmlTag.prototype.setAttr = function (attrName, attrValue) {
-            var tagAttrs = this.getAttrs();
+            const tagAttrs = this.getAttrs();
             tagAttrs[attrName] = attrValue;
             return this;
         };
@@ -323,7 +324,11 @@
          * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
          */
         HtmlTag.prototype.addClass = function (cssClass) {
-            var classAttr = this.getClass(), whitespaceRegex = this.whitespaceRegex, classes = (!classAttr) ? [] : classAttr.split(whitespaceRegex), newClasses = cssClass.split(whitespaceRegex), newClass;
+            const classAttr = this.getClass();
+            const whitespaceRegex = this.whitespaceRegex;
+            const classes = (!classAttr) ? [] : classAttr.split(whitespaceRegex);
+            const newClasses = cssClass.split(whitespaceRegex);
+            let newClass;
             while (newClass = newClasses.shift()) {
                 if (indexOf(classes, newClass) === -1) {
                     classes.push(newClass);
@@ -339,9 +344,13 @@
          * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
          */
         HtmlTag.prototype.removeClass = function (cssClass) {
-            var classAttr = this.getClass(), whitespaceRegex = this.whitespaceRegex, classes = (!classAttr) ? [] : classAttr.split(whitespaceRegex), removeClasses = cssClass.split(whitespaceRegex), removeClass;
+            const classAttr = this.getClass();
+            const whitespaceRegex = this.whitespaceRegex; 
+            const classes = (!classAttr) ? [] : classAttr.split(whitespaceRegex);
+            const removeClasses = cssClass.split(whitespaceRegex);
+             let removeClass;
             while (classes.length && (removeClass = removeClasses.shift())) {
-                var idx = indexOf(classes, removeClass);
+                const idx = indexOf(classes, removeClass);
                 if (idx !== -1) {
                     classes.splice(idx, 1);
                 }
@@ -408,7 +417,8 @@
          * @return {String}
          */
         HtmlTag.prototype.toAnchorString = function () {
-            var tagName = this.getTagName(), attrsStr = this.buildAttrsStr();
+            const tagName = this.getTagName();
+            const attrsStr = this.buildAttrsStr();
             attrsStr = (attrsStr) ? ' ' + attrsStr : ''; // prepend a space if there are actually attributes
             return ['<', tagName, attrsStr, '>', this.getInnerHtml(), '</', tagName, '>'].join("");
         };
@@ -422,8 +432,9 @@
         HtmlTag.prototype.buildAttrsStr = function () {
             if (!this.attrs)
                 return ""; // no `attrs` Object (map) has been set, return empty string
-            var attrs = this.getAttrs(), attrsArr = [];
-            for (var prop in attrs) {
+            const attrs = this.getAttrs()
+            const attrsArr = [];
+            for (const prop in attrs) {
                 if (attrs.hasOwnProperty(prop)) {
                     attrsArr.push(prop + '="' + attrs[prop] + '"');
                 }
@@ -446,8 +457,8 @@
      * @return {String} The truncated URL.
      */
     function truncateSmart(url, truncateLen, ellipsisChars) {
-        var ellipsisLengthBeforeParsing;
-        var ellipsisLength;
+        let ellipsisLengthBeforeParsing;
+        let ellipsisLength;
         if (ellipsisChars == null) {
             ellipsisChars = '&hellip;';
             ellipsisLength = 3;
@@ -457,10 +468,10 @@
             ellipsisLength = ellipsisChars.length;
             ellipsisLengthBeforeParsing = ellipsisChars.length;
         }
-        var parse_url = function (url) {
-            var urlObj = {};
-            var urlSub = url;
-            var match = urlSub.match(/^([a-z]+):\/\//i);
+        const parse_url = function (url) {
+            const urlObj = {};
+            let urlSub = url;
+            let match = urlSub.match(/^([a-z]+):\/\//i);
             if (match) {
                 urlObj.scheme = match[1];
                 urlSub = urlSub.substr(match[0].length);
@@ -487,8 +498,8 @@
             }
             return urlObj;
         };
-        var buildUrl = function (urlObj) {
-            var url = "";
+        const buildUrl = function (urlObj) {
+            let url = "";
             if (urlObj.scheme && urlObj.host) {
                 url += urlObj.scheme + "://";
             }
@@ -506,8 +517,11 @@
             }
             return url;
         };
-        var buildSegment = function (segment, remainingAvailableLength) {
-            var remainingAvailableLengthHalf = remainingAvailableLength / 2, startOffset = Math.ceil(remainingAvailableLengthHalf), endOffset = (-1) * Math.floor(remainingAvailableLengthHalf), end = "";
+        const buildSegment = function (segment, remainingAvailableLength) {
+            const remainingAvailableLengthHalf = remainingAvailableLength / 2;
+            const startOffset = Math.ceil(remainingAvailableLengthHalf);
+            const endOffset = (-1) * Math.floor(remainingAvailableLengthHalf);
+            let end = "";
             if (endOffset < 0) {
                 end = segment.substr(endOffset);
             }
@@ -516,11 +530,11 @@
         if (url.length <= truncateLen) {
             return url;
         }
-        var availableLength = truncateLen - ellipsisLength;
-        var urlObj = parse_url(url);
+        const availableLength = truncateLen - ellipsisLength;
+        const urlObj = parse_url(url);
         // Clean up the URL
         if (urlObj.query) {
-            var matchQuery = urlObj.query.match(/^(.*?)(?=(\?|\#))(.*?)$/i);
+            const matchQuery = urlObj.query.match(/^(.*?)(?=(\?|\#))(.*?)$/i);
             if (matchQuery) {
                 // Malformed URL; two or more "?". Removed any content behind the 2nd.
                 urlObj.query = urlObj.query.substr(0, matchQuery[1].length);
@@ -538,7 +552,7 @@
             return url;
         }
         // Process and build the URL
-        var str = "";
+        let str = "";
         if (urlObj.host) {
             str += urlObj.host;
         }
@@ -548,7 +562,7 @@
             }
             return buildSegment(str, availableLength).substr(0, availableLength + ellipsisLengthBeforeParsing);
         }
-        var pathAndQuery = "";
+        let pathAndQuery = "";
         if (urlObj.path) {
             pathAndQuery += "/" + urlObj.path;
         }
@@ -560,7 +574,7 @@
                 if ((str + pathAndQuery).length == truncateLen) {
                     return (str + pathAndQuery).substr(0, truncateLen);
                 }
-                var remainingAvailableLength = availableLength - str.length;
+                const remainingAvailableLength = availableLength - str.length;
                 return (str + buildSegment(pathAndQuery, remainingAvailableLength)).substr(0, availableLength + ellipsisLengthBeforeParsing);
             }
             else {
@@ -568,12 +582,12 @@
             }
         }
         if (urlObj.fragment) {
-            var fragment = "#" + urlObj.fragment;
+            const fragment = "#" + urlObj.fragment;
             if ((str + fragment).length >= availableLength) {
                 if ((str + fragment).length == truncateLen) {
                     return (str + fragment).substr(0, truncateLen);
                 }
-                var remainingAvailableLength2 = availableLength - str.length;
+                const remainingAvailableLength2 = availableLength - str.length;
                 return (str + buildSegment(fragment, remainingAvailableLength2)).substr(0, availableLength + ellipsisLengthBeforeParsing);
             }
             else {
@@ -581,7 +595,7 @@
             }
         }
         if (urlObj.scheme && urlObj.host) {
-            var scheme = urlObj.scheme + "://";
+            const scheme = urlObj.scheme + "://";
             if ((str + scheme).length < availableLength) {
                 return (scheme + str).substr(0, truncateLen);
             }
@@ -589,7 +603,7 @@
         if (str.length <= truncateLen) {
             return str;
         }
-        var end = "";
+        let end = "";
         if (availableLength > 0) {
             end = str.substr((-1) * Math.floor(availableLength / 2));
         }
@@ -611,8 +625,8 @@
         if (url.length <= truncateLen) {
             return url;
         }
-        var ellipsisLengthBeforeParsing;
-        var ellipsisLength;
+        let ellipsisLengthBeforeParsing;
+        let ellipsisLength;
         if (ellipsisChars == null) {
             ellipsisChars = '&hellip;';
             ellipsisLengthBeforeParsing = 8;
@@ -622,8 +636,8 @@
             ellipsisLengthBeforeParsing = ellipsisChars.length;
             ellipsisLength = ellipsisChars.length;
         }
-        var availableLength = truncateLen - ellipsisLength;
-        var end = "";
+        const availableLength = truncateLen - ellipsisLength;
+        let end = "";
         if (availableLength > 0) {
             end = url.substr((-1) * Math.floor(availableLength / 2));
         }
@@ -656,9 +670,9 @@
      * instances which may be modified before returning from the
      * {@link Autolinker#replaceFn replaceFn}. For example:
      *
-     *     var html = Autolinker.link( "Test google.com", {
+     *     let html = Autolinker.link( "Test google.com", {
      *         replaceFn : function( match ) {
-     *             var tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance
+     *             let tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance
      *             tag.setAttr( 'rel', 'nofollow' );
      *
      *             return tag;
@@ -668,7 +682,7 @@
      *     // generated html:
      *     //   Test <a href="http://google.com" target="_blank" rel="nofollow">google.com</a>
      */
-    var AnchorTagBuilder = /** @class */ (function () {
+   const AnchorTagBuilder = /** @class */ (function () {
         /**
          * @method constructor
          * @param {Object} [cfg] The configuration options for the AnchorTagBuilder instance, specified in an Object (map).
@@ -719,10 +733,10 @@
          * @return {Object} A key/value Object (map) of the anchor tag's attributes.
          */
         AnchorTagBuilder.prototype.createAttrs = function (match) {
-            var attrs = {
+           const attrs = {
                 'href': match.getAnchorHref() // we'll always have the `href` attribute
             };
-            var cssClass = this.createCssClass(match);
+           const cssClass = this.createCssClass(match);
             if (cssClass) {
                 attrs['class'] = cssClass;
             }
@@ -758,13 +772,14 @@
          *   an empty string.
          */
         AnchorTagBuilder.prototype.createCssClass = function (match) {
-            var className = this.className;
+           const className = this.className;
             if (!className) {
                 return "";
             }
             else {
-                var returnClasses = [className], cssClassSuffixes = match.getCssClassSuffixes();
-                for (var i = 0, len = cssClassSuffixes.length; i < len; i++) {
+               const returnClasses = [className];
+               const cssClassSuffixes = match.getCssClassSuffixes();
+                for (let i = 0, len = cssClassSuffixes.length; i < len; i++) {
                     returnClasses.push(className + '-' + cssClassSuffixes[i]);
                 }
                 return returnClasses.join(' ');
@@ -795,10 +810,11 @@
          * @return {String} The truncated anchor text.
          */
         AnchorTagBuilder.prototype.doTruncate = function (anchorText) {
-            var truncate = this.truncate;
+           const truncate = this.truncate;
             if (!truncate || !truncate.length)
                 return anchorText;
-            var truncateLength = truncate.length, truncateLocation = truncate.location;
+           const truncateLength = truncate.length;
+           const truncateLocation = truncate.location;
             if (truncateLocation === 'smart') {
                 return truncateSmart(anchorText, truncateLength);
             }
@@ -821,9 +837,9 @@
      *
      * For example:
      *
-     *     var input = "...";  // string with URLs, Email Addresses, and Mentions (Twitter, Instagram, Soundcloud)
+     *    let input = "...";  // string with URLs, Email Addresses, and Mentions (Twitter, Instagram, Soundcloud)
      *
-     *     var linkedText = Autolinker.link( input, {
+     *     let linkedText = Autolinker.link( input, {
      *         replaceFn : function( match ) {
      *             console.log( "href = ", match.getAnchorHref() );
      *             console.log( "text = ", match.getAnchorText() );
@@ -843,7 +859,7 @@
      *
      * See the {@link Autolinker} class for more details on using the {@link Autolinker#replaceFn replaceFn}.
      */
-    var Match = /** @class */ (function () {
+    const Match = /** @class */ (function () {
         /**
          * @member Autolinker.match.Match
          * @method constructor
@@ -939,7 +955,7 @@
          *
          * Example Usage:
          *
-         *     var tag = match.buildTag();
+         *     let tag = match.buildTag();
          *     tag.addClass( 'cordova-link' );
          *     tag.setAttr( 'target', '_system' );
          *
@@ -947,9 +963,9 @@
          *
          * Example Usage in {@link Autolinker#replaceFn}:
          *
-         *     var html = Autolinker.link( "Test google.com", {
+         *     let html = Autolinker.link( "Test google.com", {
          *         replaceFn : function( match ) {
-         *             var tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance
+         *             let tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance
          *             tag.setAttr( 'rel', 'nofollow' );
          *
          *             return tag;
@@ -981,10 +997,10 @@
     ***************************************************************************** */
     /* global Reflect, Promise */
 
-    var extendStatics = function(d, b) {
+    const extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (const p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
 
@@ -994,11 +1010,11 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    var __assign = function() {
+    const __assign = function() {
         __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
+            for (let s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+                for (const p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
             }
             return t;
         };
@@ -1013,7 +1029,7 @@
      *
      * See this class's superclass ({@link Autolinker.match.Match}) for more details.
      */
-    var EmailMatch = /** @class */ (function (_super) {
+    const EmailMatch = /** @class */ (function (_super) {
         __extends(EmailMatch, _super);
         /**
          * @method constructor
@@ -1021,7 +1037,7 @@
          *   instance, specified in an Object (map).
          */
         function EmailMatch(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {String} email (required)
              *
@@ -1077,7 +1093,7 @@
      * See this class's superclass ({@link Autolinker.match.Match}) for more
      * details.
      */
-    var HashtagMatch = /** @class */ (function (_super) {
+    const HashtagMatch = /** @class */ (function (_super) {
         __extends(HashtagMatch, _super);
         /**
          * @method constructor
@@ -1085,7 +1101,7 @@
          *   instance, specified in an Object (map).
          */
         function HashtagMatch(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {String} serviceName
              *
@@ -1135,7 +1151,8 @@
          * @return {String}
          */
         HashtagMatch.prototype.getAnchorHref = function () {
-            var serviceName = this.serviceName, hashtag = this.hashtag;
+            const serviceName = this.serviceName;
+            const  hashtag = this.hashtag;
             switch (serviceName) {
                 case 'twitter':
                     return 'https://twitter.com/hashtag/' + hashtag;
@@ -1166,7 +1183,7 @@
      *
      * See this class's superclass ({@link Autolinker.match.Match}) for more details.
      */
-    var MentionMatch = /** @class */ (function (_super) {
+    const  MentionMatch = /** @class */ (function (_super) {
         __extends(MentionMatch, _super);
         /**
          * @method constructor
@@ -1174,7 +1191,7 @@
          *   instance, specified in an Object (map).
          */
         function MentionMatch(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {String} serviceName
              *
@@ -1251,7 +1268,8 @@
          * @return {String[]}
          */
         MentionMatch.prototype.getCssClassSuffixes = function () {
-            var cssClassSuffixes = _super.prototype.getCssClassSuffixes.call(this), serviceName = this.getServiceName();
+            const cssClassSuffixes = _super.prototype.getCssClassSuffixes.call(this);
+            const serviceName = this.getServiceName();
             if (serviceName) {
                 cssClassSuffixes.push(serviceName);
             }
@@ -1270,7 +1288,7 @@
      * See this class's superclass ({@link Autolinker.match.Match}) for more
      * details.
      */
-    var PhoneMatch = /** @class */ (function (_super) {
+    const PhoneMatch = /** @class */ (function (_super) {
         __extends(PhoneMatch, _super);
         /**
          * @method constructor
@@ -1278,7 +1296,7 @@
          *   instance, specified in an Object (map).
          */
         function PhoneMatch(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @protected
              * @property {String} number (required)
@@ -1360,7 +1378,7 @@
      *
      * See this class's superclass ({@link Autolinker.match.Match}) for more details.
      */
-    var UrlMatch = /** @class */ (function (_super) {
+    const UrlMatch = /** @class */ (function (_super) {
         __extends(UrlMatch, _super);
         /**
          * @method constructor
@@ -1368,7 +1386,7 @@
          *   instance, specified in an Object (map).
          */
         function UrlMatch(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {String} url (required)
              *
@@ -1485,7 +1503,7 @@
          * @return {String}
          */
         UrlMatch.prototype.getUrl = function () {
-            var url = this.url;
+            const url = this.url;
             // if the url string doesn't begin with a protocol, assume 'http://'
             if (!this.protocolRelativeMatch && !this.protocolUrlMatch && !this.protocolPrepended) {
                 url = this.url = 'http://' + url;
@@ -1499,7 +1517,7 @@
          * @return {String}
          */
         UrlMatch.prototype.getAnchorHref = function () {
-            var url = this.getUrl();
+            const url = this.getUrl();
             return url.replace(/&amp;/g, '&'); // any &amp;'s in the URL should be converted back to '&' if they were displayed as &amp; in the source html
         };
         /**
@@ -1508,7 +1526,7 @@
          * @return {String}
          */
         UrlMatch.prototype.getAnchorText = function () {
-            var anchorText = this.getMatchedText();
+            const anchorText = this.getMatchedText();
             if (this.protocolRelativeMatch) {
                 // Strip off any protocol-relative '//' from the anchor text
                 anchorText = this.stripProtocolRelativePrefix(anchorText);
@@ -1591,7 +1609,7 @@
             // First, convert a few of the known % encodings to the corresponding
             // HTML entities that could accidentally be interpreted as special
             // HTML characters
-            var preProcessedEntityAnchorText = anchorText
+            const preProcessedEntityAnchorText = anchorText
                 .replace(/%22/gi, '&quot;') // " char
                 .replace(/%26/gi, '&amp;') // & char
                 .replace(/%27/gi, '&#39;') // ' char
@@ -1618,7 +1636,7 @@
      * Note that Matchers do not take HTML into account - they must be fed the text
      * nodes of any HTML string, which is handled by {@link Autolinker#parse}.
      */
-    var Matcher = /** @class */ (function () {
+    const Matcher = /** @class */ (function () {
         /**
          * @method constructor
          * @param {Object} cfg The configuration properties for the Matcher
@@ -1647,28 +1665,28 @@
     /**
      * Regular expression to match upper and lowercase ASCII letters
      */
-    var letterRe = /[A-Za-z]/;
+    const letterRe = /[A-Za-z]/;
     /**
      * Regular expression to match ASCII digits
      */
-    var digitRe = /[\d]/;
+    const digitRe = /[\d]/;
     /**
      * Regular expression to match everything *except* ASCII digits
      */
-    var nonDigitRe = /[\D]/;
+    const nonDigitRe = /[\D]/;
     /**
      * Regular expression to match whitespace
      */
-    var whitespaceRe = /\s/;
+    const whitespaceRe = /\s/;
     /**
      * Regular expression to match quote characters
      */
-    var quoteRe = /['"]/;
+    const quoteRe = /['"]/;
     /**
      * Regular expression to match the range of ASCII control characters (0-31), and
      * the backspace char (127)
      */
-    var controlCharsRe = /[\x00-\x1F\x7F]/;
+    const controlCharsRe = /[\x00-\x1F\x7F]/;
     /**
      * The string form of a regular expression that would match all of the
      * alphabetic ("letter") chars in the unicode character set when placed in a
@@ -1693,13 +1711,13 @@
      *   help others who are pulling in Autolinker into their own build and running
      *   UglifyJS themselves.
      */
-    var alphaCharsStr = /A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B4\u08B6-\u08BD\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FD5\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC/
+    const alphaCharsStr = /A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B4\u08B6-\u08BD\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FD5\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC/
         .source; // see note in above variable description
     /**
      * The string form of a regular expression that would match all emoji characters
      * Based on the emoji regex defined in this article: https://thekevinscott.com/emojis-in-javascript/
      */
-    var emojiStr = /\u2700-\u27bf\udde6-\uddff\ud800-\udbff\udc00-\udfff\ufe0e\ufe0f\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0\ud83c\udffb-\udfff\u200d\u3299\u3297\u303d\u3030\u24c2\ud83c\udd70-\udd71\udd7e-\udd7f\udd8e\udd91-\udd9a\udde6-\uddff\ude01-\ude02\ude1a\ude2f\ude32-\ude3a\ude50-\ude51\u203c\u2049\u25aa-\u25ab\u25b6\u25c0\u25fb-\u25fe\u00a9\u00ae\u2122\u2139\udc04\u2600-\u26FF\u2b05\u2b06\u2b07\u2b1b\u2b1c\u2b50\u2b55\u231a\u231b\u2328\u23cf\u23e9-\u23f3\u23f8-\u23fa\udccf\u2935\u2934\u2190-\u21ff/
+    const emojiStr = /\u2700-\u27bf\udde6-\uddff\ud800-\udbff\udc00-\udfff\ufe0e\ufe0f\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0\ud83c\udffb-\udfff\u200d\u3299\u3297\u303d\u3030\u24c2\ud83c\udd70-\udd71\udd7e-\udd7f\udd8e\udd91-\udd9a\udde6-\uddff\ude01-\ude02\ude1a\ude2f\ude32-\ude3a\ude50-\ude51\u203c\u2049\u25aa-\u25ab\u25b6\u25c0\u25fb-\u25fe\u00a9\u00ae\u2122\u2139\udc04\u2600-\u26FF\u2b05\u2b06\u2b07\u2b1b\u2b1c\u2b50\u2b55\u231a\u231b\u2328\u23cf\u23e9-\u23f3\u23f8-\u23fa\udccf\u2935\u2934\u2190-\u21ff/
         .source;
     /**
      * The string form of a regular expression that would match all of the
@@ -1724,7 +1742,7 @@
      *   help others who are pulling in Autolinker into their own build and running
      *   UglifyJS themselves.
      */
-    var marksStr = /\u0300-\u036F\u0483-\u0489\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED\u0711\u0730-\u074A\u07A6-\u07B0\u07EB-\u07F3\u0816-\u0819\u081B-\u0823\u0825-\u0827\u0829-\u082D\u0859-\u085B\u08D4-\u08E1\u08E3-\u0903\u093A-\u093C\u093E-\u094F\u0951-\u0957\u0962\u0963\u0981-\u0983\u09BC\u09BE-\u09C4\u09C7\u09C8\u09CB-\u09CD\u09D7\u09E2\u09E3\u0A01-\u0A03\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A70\u0A71\u0A75\u0A81-\u0A83\u0ABC\u0ABE-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AE2\u0AE3\u0B01-\u0B03\u0B3C\u0B3E-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B62\u0B63\u0B82\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD7\u0C00-\u0C03\u0C3E-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C62\u0C63\u0C81-\u0C83\u0CBC\u0CBE-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CE2\u0CE3\u0D01-\u0D03\u0D3E-\u0D44\u0D46-\u0D48\u0D4A-\u0D4D\u0D57\u0D62\u0D63\u0D82\u0D83\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DF2\u0DF3\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u0EB1\u0EB4-\u0EB9\u0EBB\u0EBC\u0EC8-\u0ECD\u0F18\u0F19\u0F35\u0F37\u0F39\u0F3E\u0F3F\u0F71-\u0F84\u0F86\u0F87\u0F8D-\u0F97\u0F99-\u0FBC\u0FC6\u102B-\u103E\u1056-\u1059\u105E-\u1060\u1062-\u1064\u1067-\u106D\u1071-\u1074\u1082-\u108D\u108F\u109A-\u109D\u135D-\u135F\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17B4-\u17D3\u17DD\u180B-\u180D\u1885\u1886\u18A9\u1920-\u192B\u1930-\u193B\u1A17-\u1A1B\u1A55-\u1A5E\u1A60-\u1A7C\u1A7F\u1AB0-\u1ABE\u1B00-\u1B04\u1B34-\u1B44\u1B6B-\u1B73\u1B80-\u1B82\u1BA1-\u1BAD\u1BE6-\u1BF3\u1C24-\u1C37\u1CD0-\u1CD2\u1CD4-\u1CE8\u1CED\u1CF2-\u1CF4\u1CF8\u1CF9\u1DC0-\u1DF5\u1DFB-\u1DFF\u20D0-\u20F0\u2CEF-\u2CF1\u2D7F\u2DE0-\u2DFF\u302A-\u302F\u3099\u309A\uA66F-\uA672\uA674-\uA67D\uA69E\uA69F\uA6F0\uA6F1\uA802\uA806\uA80B\uA823-\uA827\uA880\uA881\uA8B4-\uA8C5\uA8E0-\uA8F1\uA926-\uA92D\uA947-\uA953\uA980-\uA983\uA9B3-\uA9C0\uA9E5\uAA29-\uAA36\uAA43\uAA4C\uAA4D\uAA7B-\uAA7D\uAAB0\uAAB2-\uAAB4\uAAB7\uAAB8\uAABE\uAABF\uAAC1\uAAEB-\uAAEF\uAAF5\uAAF6\uABE3-\uABEA\uABEC\uABED\uFB1E\uFE00-\uFE0F\uFE20-\uFE2F/
+    const marksStr = /\u0300-\u036F\u0483-\u0489\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED\u0711\u0730-\u074A\u07A6-\u07B0\u07EB-\u07F3\u0816-\u0819\u081B-\u0823\u0825-\u0827\u0829-\u082D\u0859-\u085B\u08D4-\u08E1\u08E3-\u0903\u093A-\u093C\u093E-\u094F\u0951-\u0957\u0962\u0963\u0981-\u0983\u09BC\u09BE-\u09C4\u09C7\u09C8\u09CB-\u09CD\u09D7\u09E2\u09E3\u0A01-\u0A03\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A70\u0A71\u0A75\u0A81-\u0A83\u0ABC\u0ABE-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AE2\u0AE3\u0B01-\u0B03\u0B3C\u0B3E-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B62\u0B63\u0B82\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD7\u0C00-\u0C03\u0C3E-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C62\u0C63\u0C81-\u0C83\u0CBC\u0CBE-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CE2\u0CE3\u0D01-\u0D03\u0D3E-\u0D44\u0D46-\u0D48\u0D4A-\u0D4D\u0D57\u0D62\u0D63\u0D82\u0D83\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DF2\u0DF3\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u0EB1\u0EB4-\u0EB9\u0EBB\u0EBC\u0EC8-\u0ECD\u0F18\u0F19\u0F35\u0F37\u0F39\u0F3E\u0F3F\u0F71-\u0F84\u0F86\u0F87\u0F8D-\u0F97\u0F99-\u0FBC\u0FC6\u102B-\u103E\u1056-\u1059\u105E-\u1060\u1062-\u1064\u1067-\u106D\u1071-\u1074\u1082-\u108D\u108F\u109A-\u109D\u135D-\u135F\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17B4-\u17D3\u17DD\u180B-\u180D\u1885\u1886\u18A9\u1920-\u192B\u1930-\u193B\u1A17-\u1A1B\u1A55-\u1A5E\u1A60-\u1A7C\u1A7F\u1AB0-\u1ABE\u1B00-\u1B04\u1B34-\u1B44\u1B6B-\u1B73\u1B80-\u1B82\u1BA1-\u1BAD\u1BE6-\u1BF3\u1C24-\u1C37\u1CD0-\u1CD2\u1CD4-\u1CE8\u1CED\u1CF2-\u1CF4\u1CF8\u1CF9\u1DC0-\u1DF5\u1DFB-\u1DFF\u20D0-\u20F0\u2CEF-\u2CF1\u2D7F\u2DE0-\u2DFF\u302A-\u302F\u3099\u309A\uA66F-\uA672\uA674-\uA67D\uA69E\uA69F\uA6F0\uA6F1\uA802\uA806\uA80B\uA823-\uA827\uA880\uA881\uA8B4-\uA8C5\uA8E0-\uA8F1\uA926-\uA92D\uA947-\uA953\uA980-\uA983\uA9B3-\uA9C0\uA9E5\uAA29-\uAA36\uAA43\uAA4C\uAA4D\uAA7B-\uAA7D\uAAB0\uAAB2-\uAAB4\uAAB7\uAAB8\uAABE\uAABF\uAAC1\uAAEB-\uAAEF\uAAF5\uAAF6\uABE3-\uABEA\uABEC\uABED\uFB1E\uFE00-\uFE0F\uFE20-\uFE2F/
         .source; // see note in above variable description
     /**
      * The string form of a regular expression that would match all of the
@@ -1735,7 +1753,7 @@
      * These would be the characters matched by unicode regex engines `\p{L}\p{M}`
      * escapes and emoji characters.
      */
-    var alphaCharsAndMarksStr = alphaCharsStr + emojiStr + marksStr;
+    const alphaCharsAndMarksStr = alphaCharsStr + emojiStr + marksStr;
     /**
      * The string form of a regular expression that would match all of the
      * decimal number chars in the unicode character set when placed in a RegExp
@@ -1759,7 +1777,7 @@
      *   help others who are pulling in Autolinker into their own build and running
      *   UglifyJS themselves.
      */
-    var decimalNumbersStr = /0-9\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0BE6-\u0BEF\u0C66-\u0C6F\u0CE6-\u0CEF\u0D66-\u0D6F\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F29\u1040-\u1049\u1090-\u1099\u17E0-\u17E9\u1810-\u1819\u1946-\u194F\u19D0-\u19D9\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\uA620-\uA629\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19/
+    const decimalNumbersStr = /0-9\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0BE6-\u0BEF\u0C66-\u0C6F\u0CE6-\u0CEF\u0D66-\u0D6F\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F29\u1040-\u1049\u1090-\u1099\u17E0-\u17E9\u1810-\u1819\u1946-\u194F\u19D0-\u19D9\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\uA620-\uA629\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19/
         .source; // see note in above variable description
     /**
      * The string form of a regular expression that would match all of the
@@ -1769,7 +1787,7 @@
      * These would be the characters matched by unicode regex engines
      * `[\p{L}\p{Nd}]` escape ("all letters and decimal numbers")
      */
-    var alphaNumericCharsStr = alphaCharsAndMarksStr + decimalNumbersStr;
+   const alphaNumericCharsStr = alphaCharsAndMarksStr + decimalNumbersStr;
     /**
      * The string form of a regular expression that would match all of the
      * letters, combining marks, and decimal number chars in the unicode character
@@ -1779,30 +1797,30 @@
      * `[\p{L}\p{M}\p{Nd}]` escape ("all letters, combining marks, and decimal
      * numbers")
      */
-    var alphaNumericAndMarksCharsStr = alphaCharsAndMarksStr + decimalNumbersStr;
+    const alphaNumericAndMarksCharsStr = alphaCharsAndMarksStr + decimalNumbersStr;
     // Simplified IP regular expression
-    var ipStr = '(?:[' + decimalNumbersStr + ']{1,3}\\.){3}[' + decimalNumbersStr + ']{1,3}';
+    const ipStr = '(?:[' + decimalNumbersStr + ']{1,3}\\.){3}[' + decimalNumbersStr + ']{1,3}';
     // Protected domain label which do not allow "-" character on the beginning and the end of a single label
-    var domainLabelStr = '[' + alphaNumericAndMarksCharsStr + '](?:[' + alphaNumericAndMarksCharsStr + '\\-]{0,61}[' + alphaNumericAndMarksCharsStr + '])?';
-    var getDomainLabelStr = function (group) {
+    const domainLabelStr = '[' + alphaNumericAndMarksCharsStr + '](?:[' + alphaNumericAndMarksCharsStr + '\\-]{0,61}[' + alphaNumericAndMarksCharsStr + '])?';
+    const getDomainLabelStr = function (group) {
         return '(?=(' + domainLabelStr + '))\\' + group;
     };
     /**
      * A function to match domain names of a URL or email address.
      * Ex: 'google', 'yahoo', 'some-other-company', etc.
      */
-    var getDomainNameStr = function (group) {
+    const getDomainNameStr = function (group) {
         return '(?:' + getDomainLabelStr(group) + '(?:\\.' + getDomainLabelStr(group + 1) + '){0,126}|' + ipStr + ')';
     };
     /**
      * A regular expression that is simply the character class of the characters
      * that may be used in a domain name, minus the '-' or '.'
      */
-    var domainNameCharRegex = new RegExp("[" + alphaNumericAndMarksCharsStr + "]");
+    const domainNameCharRegex = new RegExp("[" + alphaNumericAndMarksCharsStr + "]");
 
     // NOTE: THIS IS A GENERATED FILE
     // To update with the latest TLD list, run `npm run update-tld-regex` or `yarn update-tld-regex` (depending on which you have installed)
-    var tldRegex = /(?:xn--vermgensberatung-pwb|xn--vermgensberater-ctb|xn--clchc0ea0b2g2a9gcd|xn--w4r85el8fhu5dnra|northwesternmutual|travelersinsurance|vermögensberatung|xn--3oq18vl8pn36a|xn--5su34j936bgsg|xn--bck1b9a5dre4c|xn--mgbai9azgqp6j|xn--mgberp4a5d4ar|xn--xkc2dl3a5ee0h|vermögensberater|xn--fzys8d69uvgm|xn--mgba7c0bbn0a|xn--xkc2al3hye2a|americanexpress|kerryproperties|sandvikcoromant|xn--i1b6b1a6a2e|xn--kcrx77d1x4a|xn--lgbbat1ad8j|xn--mgba3a4f16a|xn--mgbaakc7dvf|xn--mgbc0a9azcg|xn--nqv7fs00ema|afamilycompany|americanfamily|bananarepublic|cancerresearch|cookingchannel|kerrylogistics|weatherchannel|xn--54b7fta0cc|xn--6qq986b3xl|xn--80aqecdr1a|xn--b4w605ferd|xn--fiq228c5hs|xn--h2breg3eve|xn--jlq61u9w7b|xn--mgba3a3ejt|xn--mgbaam7a8h|xn--mgbayh7gpa|xn--mgbb9fbpob|xn--mgbbh1a71e|xn--mgbca7dzdo|xn--mgbi4ecexp|xn--mgbx4cd0ab|xn--rvc1e0am3e|international|lifeinsurance|spreadbetting|travelchannel|wolterskluwer|xn--eckvdtc9d|xn--fpcrj9c3d|xn--fzc2c9e2c|xn--h2brj9c8c|xn--tiq49xqyj|xn--yfro4i67o|xn--ygbi2ammx|construction|lplfinancial|scholarships|versicherung|xn--3e0b707e|xn--45br5cyl|xn--80adxhks|xn--80asehdb|xn--8y0a063a|xn--gckr3f0f|xn--mgb9awbf|xn--mgbab2bd|xn--mgbgu82a|xn--mgbpl2fh|xn--mgbt3dhd|xn--mk1bu44c|xn--ngbc5azd|xn--ngbe9e0a|xn--ogbpf8fl|xn--qcka1pmc|accountants|barclaycard|blackfriday|blockbuster|bridgestone|calvinklein|contractors|creditunion|engineering|enterprises|foodnetwork|investments|kerryhotels|lamborghini|motorcycles|olayangroup|photography|playstation|productions|progressive|redumbrella|rightathome|williamhill|xn--11b4c3d|xn--1ck2e1b|xn--1qqw23a|xn--2scrj9c|xn--3bst00m|xn--3ds443g|xn--3hcrj9c|xn--42c2d9a|xn--45brj9c|xn--55qw42g|xn--6frz82g|xn--80ao21a|xn--9krt00a|xn--cck2b3b|xn--czr694b|xn--d1acj3b|xn--efvy88h|xn--estv75g|xn--fct429k|xn--fjq720a|xn--flw351e|xn--g2xx48c|xn--gecrj9c|xn--gk3at1e|xn--h2brj9c|xn--hxt814e|xn--imr513n|xn--j6w193g|xn--jvr189m|xn--kprw13d|xn--kpry57d|xn--kpu716f|xn--mgbbh1a|xn--mgbtx2b|xn--mix891f|xn--nyqy26a|xn--otu796d|xn--pbt977c|xn--pgbs0dh|xn--q9jyb4c|xn--rhqv96g|xn--rovu88b|xn--s9brj9c|xn--ses554g|xn--t60b56a|xn--vuq861b|xn--w4rs40l|xn--xhq521b|xn--zfr164b|சிங்கப்பூர்|accountant|apartments|associates|basketball|bnpparibas|boehringer|capitalone|consulting|creditcard|cuisinella|eurovision|extraspace|foundation|healthcare|immobilien|industries|management|mitsubishi|nationwide|newholland|nextdirect|onyourside|properties|protection|prudential|realestate|republican|restaurant|schaeffler|swiftcover|tatamotors|technology|telefonica|university|vistaprint|vlaanderen|volkswagen|xn--30rr7y|xn--3pxu8k|xn--45q11c|xn--4gbrim|xn--55qx5d|xn--5tzm5g|xn--80aswg|xn--90a3ac|xn--9dbq2a|xn--9et52u|xn--c2br7g|xn--cg4bki|xn--czrs0t|xn--czru2d|xn--fiq64b|xn--fiqs8s|xn--fiqz9s|xn--io0a7i|xn--kput3i|xn--mxtq1m|xn--o3cw4h|xn--pssy2u|xn--unup4y|xn--wgbh1c|xn--wgbl6a|xn--y9a3aq|accenture|alfaromeo|allfinanz|amsterdam|analytics|aquarelle|barcelona|bloomberg|christmas|community|directory|education|equipment|fairwinds|financial|firestone|fresenius|frontdoor|fujixerox|furniture|goldpoint|hisamitsu|homedepot|homegoods|homesense|honeywell|institute|insurance|kuokgroup|ladbrokes|lancaster|landrover|lifestyle|marketing|marshalls|melbourne|microsoft|panasonic|passagens|pramerica|richardli|scjohnson|shangrila|solutions|statebank|statefarm|stockholm|travelers|vacations|xn--90ais|xn--c1avg|xn--d1alf|xn--e1a4c|xn--fhbei|xn--j1aef|xn--j1amh|xn--l1acc|xn--ngbrx|xn--nqv7f|xn--p1acf|xn--tckwe|xn--vhquv|yodobashi|abudhabi|airforce|allstate|attorney|barclays|barefoot|bargains|baseball|boutique|bradesco|broadway|brussels|budapest|builders|business|capetown|catering|catholic|chrysler|cipriani|cityeats|cleaning|clinique|clothing|commbank|computer|delivery|deloitte|democrat|diamonds|discount|discover|download|engineer|ericsson|esurance|etisalat|everbank|exchange|feedback|fidelity|firmdale|football|frontier|goodyear|grainger|graphics|guardian|hdfcbank|helsinki|holdings|hospital|infiniti|ipiranga|istanbul|jpmorgan|lighting|lundbeck|marriott|maserati|mckinsey|memorial|merckmsd|mortgage|movistar|observer|partners|pharmacy|pictures|plumbing|property|redstone|reliance|saarland|samsclub|security|services|shopping|showtime|softbank|software|stcgroup|supplies|symantec|training|uconnect|vanguard|ventures|verisign|woodside|xn--90ae|xn--node|xn--p1ai|xn--qxam|yokohama|السعودية|abogado|academy|agakhan|alibaba|android|athleta|auction|audible|auspost|avianca|banamex|bauhaus|bentley|bestbuy|booking|brother|bugatti|capital|caravan|careers|cartier|channel|charity|chintai|citadel|clubmed|college|cologne|comcast|company|compare|contact|cooking|corsica|country|coupons|courses|cricket|cruises|dentist|digital|domains|exposed|express|farmers|fashion|ferrari|ferrero|finance|fishing|fitness|flights|florist|flowers|forsale|frogans|fujitsu|gallery|genting|godaddy|grocery|guitars|hamburg|hangout|hitachi|holiday|hosting|hoteles|hotmail|hyundai|iselect|ismaili|jewelry|juniper|kitchen|komatsu|lacaixa|lancome|lanxess|lasalle|latrobe|leclerc|liaison|limited|lincoln|markets|metlife|monster|netbank|netflix|network|neustar|okinawa|oldnavy|organic|origins|philips|pioneer|politie|realtor|recipes|rentals|reviews|rexroth|samsung|sandvik|schmidt|schwarz|science|shiksha|shriram|singles|staples|starhub|storage|support|surgery|systems|temasek|theater|theatre|tickets|tiffany|toshiba|trading|walmart|wanggou|watches|weather|website|wedding|whoswho|windows|winners|xfinity|yamaxun|youtube|zuerich|католик|اتصالات|الجزائر|العليان|پاکستان|كاثوليك|موبايلي|இந்தியா|abarth|abbott|abbvie|active|africa|agency|airbus|airtel|alipay|alsace|alstom|anquan|aramco|author|bayern|beauty|berlin|bharti|blanco|bostik|boston|broker|camera|career|caseih|casino|center|chanel|chrome|church|circle|claims|clinic|coffee|comsec|condos|coupon|credit|cruise|dating|datsun|dealer|degree|dental|design|direct|doctor|dunlop|dupont|durban|emerck|energy|estate|events|expert|family|flickr|futbol|gallup|garden|george|giving|global|google|gratis|health|hermes|hiphop|hockey|hotels|hughes|imamat|insure|intuit|jaguar|joburg|juegos|kaufen|kinder|kindle|kosher|lancia|latino|lawyer|lefrak|living|locker|london|luxury|madrid|maison|makeup|market|mattel|mobile|mobily|monash|mormon|moscow|museum|mutual|nagoya|natura|nissan|nissay|norton|nowruz|office|olayan|online|oracle|orange|otsuka|pfizer|photos|physio|piaget|pictet|quebec|racing|realty|reisen|repair|report|review|rocher|rogers|ryukyu|safety|sakura|sanofi|school|schule|search|secure|select|shouji|soccer|social|stream|studio|supply|suzuki|swatch|sydney|taipei|taobao|target|tattoo|tennis|tienda|tjmaxx|tkmaxx|toyota|travel|unicom|viajes|viking|villas|virgin|vision|voting|voyage|vuelos|walter|warman|webcam|xihuan|yachts|yandex|zappos|москва|онлайн|ابوظبي|ارامكو|الاردن|المغرب|امارات|فلسطين|مليسيا|भारतम्|இலங்கை|ファッション|actor|adult|aetna|amfam|amica|apple|archi|audio|autos|azure|baidu|beats|bible|bingo|black|boats|bosch|build|canon|cards|chase|cheap|cisco|citic|click|cloud|coach|codes|crown|cymru|dabur|dance|deals|delta|dodge|drive|dubai|earth|edeka|email|epost|epson|faith|fedex|final|forex|forum|gallo|games|gifts|gives|glade|glass|globo|gmail|green|gripe|group|gucci|guide|homes|honda|horse|house|hyatt|ikano|intel|irish|iveco|jetzt|koeln|kyoto|lamer|lease|legal|lexus|lilly|linde|lipsy|lixil|loans|locus|lotte|lotto|lupin|macys|mango|media|miami|money|mopar|movie|nadex|nexus|nikon|ninja|nokia|nowtv|omega|osaka|paris|parts|party|phone|photo|pizza|place|poker|praxi|press|prime|promo|quest|radio|rehab|reise|ricoh|rocks|rodeo|rugby|salon|sener|seven|sharp|shell|shoes|skype|sling|smart|smile|solar|space|sport|stada|store|study|style|sucks|swiss|tatar|tires|tirol|tmall|today|tokyo|tools|toray|total|tours|trade|trust|tunes|tushu|ubank|vegas|video|vodka|volvo|wales|watch|weber|weibo|works|world|xerox|yahoo|zippo|ایران|بازار|بھارت|سودان|سورية|همراه|भारोत|संगठन|বাংলা|భారత్|ഭാരതം|嘉里大酒店|aarp|able|adac|aero|aigo|akdn|ally|amex|arab|army|arpa|arte|asda|asia|audi|auto|baby|band|bank|bbva|beer|best|bike|bing|blog|blue|bofa|bond|book|buzz|cafe|call|camp|care|cars|casa|case|cash|cbre|cern|chat|citi|city|club|cool|coop|cyou|data|date|dclk|deal|dell|desi|diet|dish|docs|doha|duck|duns|dvag|erni|fage|fail|fans|farm|fast|fiat|fido|film|fire|fish|flir|food|ford|free|fund|game|gbiz|gent|ggee|gift|gmbh|gold|golf|goog|guge|guru|hair|haus|hdfc|help|here|hgtv|host|hsbc|icbc|ieee|imdb|immo|info|itau|java|jeep|jobs|jprs|kddi|kiwi|kpmg|kred|land|lego|lgbt|lidl|life|like|limo|link|live|loan|loft|love|ltda|luxe|maif|meet|meme|menu|mini|mint|mobi|moda|moto|name|navy|news|next|nico|nike|ollo|open|page|pars|pccw|pics|ping|pink|play|plus|pohl|porn|post|prod|prof|qpon|raid|read|reit|rent|rest|rich|rmit|room|rsvp|ruhr|safe|sale|sarl|save|saxo|scor|scot|seat|seek|sexy|shaw|shia|shop|show|silk|sina|site|skin|sncf|sohu|song|sony|spot|star|surf|talk|taxi|team|tech|teva|tiaa|tips|town|toys|tube|vana|visa|viva|vivo|vote|voto|wang|weir|wien|wiki|wine|work|xbox|yoga|zara|zero|zone|дети|сайт|بارت|بيتك|ڀارت|تونس|شبكة|عراق|عمان|موقع|भारत|ভারত|ভাৰত|ਭਾਰਤ|ભારત|ଭାରତ|ಭಾರತ|ලංකා|グーグル|クラウド|ポイント|大众汽车|组织机构|電訊盈科|香格里拉|aaa|abb|abc|aco|ads|aeg|afl|aig|anz|aol|app|art|aws|axa|bar|bbc|bbt|bcg|bcn|bet|bid|bio|biz|bms|bmw|bnl|bom|boo|bot|box|buy|bzh|cab|cal|cam|car|cat|cba|cbn|cbs|ceb|ceo|cfa|cfd|com|crs|csc|dad|day|dds|dev|dhl|diy|dnp|dog|dot|dtv|dvr|eat|eco|edu|esq|eus|fan|fit|fly|foo|fox|frl|ftr|fun|fyi|gal|gap|gdn|gea|gle|gmo|gmx|goo|gop|got|gov|hbo|hiv|hkt|hot|how|ibm|ice|icu|ifm|inc|ing|ink|int|ist|itv|jcb|jcp|jio|jll|jmp|jnj|jot|joy|kfh|kia|kim|kpn|krd|lat|law|lds|llc|lol|lpl|ltd|man|map|mba|med|men|mil|mit|mlb|mls|mma|moe|moi|mom|mov|msd|mtn|mtr|nab|nba|nec|net|new|nfl|ngo|nhk|now|nra|nrw|ntt|nyc|obi|off|one|ong|onl|ooo|org|ott|ovh|pay|pet|phd|pid|pin|pnc|pro|pru|pub|pwc|qvc|red|ren|ril|rio|rip|run|rwe|sap|sas|sbi|sbs|sca|scb|ses|sew|sex|sfr|ski|sky|soy|srl|srt|stc|tab|tax|tci|tdk|tel|thd|tjx|top|trv|tui|tvs|ubs|uno|uol|ups|vet|vig|vin|vip|wed|win|wme|wow|wtc|wtf|xin|xxx|xyz|you|yun|zip|бел|ком|қаз|мкд|мон|орг|рус|срб|укр|հայ|קום|عرب|قطر|كوم|مصر|कॉम|नेट|คอม|ไทย|ストア|セール|みんな|中文网|天主教|我爱你|新加坡|淡马锡|诺基亚|飞利浦|ac|ad|ae|af|ag|ai|al|am|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cw|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|za|zm|zw|ελ|бг|ею|рф|გე|닷넷|닷컴|삼성|한국|コム|世界|中信|中国|中國|企业|佛山|信息|健康|八卦|公司|公益|台湾|台灣|商城|商店|商标|嘉里|在线|大拿|娱乐|家電|工行|广东|微博|慈善|手机|手表|招聘|政务|政府|新闻|时尚|書籍|机构|游戏|澳門|点看|珠宝|移动|网址|网店|网站|网络|联通|谷歌|购物|通販|集团|食品|餐厅|香港)/;
+    const tldRegex = /(?:xn--vermgensberatung-pwb|xn--vermgensberater-ctb|xn--clchc0ea0b2g2a9gcd|xn--w4r85el8fhu5dnra|northwesternmutual|travelersinsurance|vermögensberatung|xn--3oq18vl8pn36a|xn--5su34j936bgsg|xn--bck1b9a5dre4c|xn--mgbai9azgqp6j|xn--mgberp4a5d4ar|xn--xkc2dl3a5ee0h|vermögensberater|xn--fzys8d69uvgm|xn--mgba7c0bbn0a|xn--xkc2al3hye2a|americanexpress|kerryproperties|sandvikcoromant|xn--i1b6b1a6a2e|xn--kcrx77d1x4a|xn--lgbbat1ad8j|xn--mgba3a4f16a|xn--mgbaakc7dvf|xn--mgbc0a9azcg|xn--nqv7fs00ema|afamilycompany|americanfamily|bananarepublic|cancerresearch|cookingchannel|kerrylogistics|weatherchannel|xn--54b7fta0cc|xn--6qq986b3xl|xn--80aqecdr1a|xn--b4w605ferd|xn--fiq228c5hs|xn--h2breg3eve|xn--jlq61u9w7b|xn--mgba3a3ejt|xn--mgbaam7a8h|xn--mgbayh7gpa|xn--mgbb9fbpob|xn--mgbbh1a71e|xn--mgbca7dzdo|xn--mgbi4ecexp|xn--mgbx4cd0ab|xn--rvc1e0am3e|international|lifeinsurance|spreadbetting|travelchannel|wolterskluwer|xn--eckvdtc9d|xn--fpcrj9c3d|xn--fzc2c9e2c|xn--h2brj9c8c|xn--tiq49xqyj|xn--yfro4i67o|xn--ygbi2ammx|construction|lplfinancial|scholarships|versicherung|xn--3e0b707e|xn--45br5cyl|xn--80adxhks|xn--80asehdb|xn--8y0a063a|xn--gckr3f0f|xn--mgb9awbf|xn--mgbab2bd|xn--mgbgu82a|xn--mgbpl2fh|xn--mgbt3dhd|xn--mk1bu44c|xn--ngbc5azd|xn--ngbe9e0a|xn--ogbpf8fl|xn--qcka1pmc|accountants|barclaycard|blackfriday|blockbuster|bridgestone|calvinklein|contractors|creditunion|engineering|enterprises|foodnetwork|investments|kerryhotels|lamborghini|motorcycles|olayangroup|photography|playstation|productions|progressive|redumbrella|rightathome|williamhill|xn--11b4c3d|xn--1ck2e1b|xn--1qqw23a|xn--2scrj9c|xn--3bst00m|xn--3ds443g|xn--3hcrj9c|xn--42c2d9a|xn--45brj9c|xn--55qw42g|xn--6frz82g|xn--80ao21a|xn--9krt00a|xn--cck2b3b|xn--czr694b|xn--d1acj3b|xn--efvy88h|xn--estv75g|xn--fct429k|xn--fjq720a|xn--flw351e|xn--g2xx48c|xn--gecrj9c|xn--gk3at1e|xn--h2brj9c|xn--hxt814e|xn--imr513n|xn--j6w193g|xn--jvr189m|xn--kprw13d|xn--kpry57d|xn--kpu716f|xn--mgbbh1a|xn--mgbtx2b|xn--mix891f|xn--nyqy26a|xn--otu796d|xn--pbt977c|xn--pgbs0dh|xn--q9jyb4c|xn--rhqv96g|xn--rovu88b|xn--s9brj9c|xn--ses554g|xn--t60b56a|xn--vuq861b|xn--w4rs40l|xn--xhq521b|xn--zfr164b|சிங்கப்பூர்|accountant|apartments|associates|basketball|bnpparibas|boehringer|capitalone|consulting|creditcard|cuisinella|eurovision|extraspace|foundation|healthcare|immobilien|industries|management|mitsubishi|nationwide|newholland|nextdirect|onyourside|properties|protection|prudential|realestate|republican|restaurant|schaeffler|swiftcover|tatamotors|technology|telefonica|university|vistaprint|vlaanderen|volkswagen|xn--30rr7y|xn--3pxu8k|xn--45q11c|xn--4gbrim|xn--55qx5d|xn--5tzm5g|xn--80aswg|xn--90a3ac|xn--9dbq2a|xn--9et52u|xn--c2br7g|xn--cg4bki|xn--czrs0t|xn--czru2d|xn--fiq64b|xn--fiqs8s|xn--fiqz9s|xn--io0a7i|xn--kput3i|xn--mxtq1m|xn--o3cw4h|xn--pssy2u|xn--unup4y|xn--wgbh1c|xn--wgbl6a|xn--y9a3aq|accenture|alfaromeo|allfinanz|amsterdam|analytics|aquarelle|barcelona|bloomberg|christmas|community|directory|education|equipment|fairwinds|financial|firestone|fresenius|frontdoor|fujixerox|furniture|goldpoint|hisamitsu|homedepot|homegoods|homesense|honeywell|institute|insurance|kuokgroup|ladbrokes|lancaster|landrover|lifestyle|marketing|marshalls|melbourne|microsoft|panasonic|passagens|pramerica|richardli|scjohnson|shangrila|solutions|statebank|statefarm|stockholm|travelers|vacations|xn--90ais|xn--c1avg|xn--d1alf|xn--e1a4c|xn--fhbei|xn--j1aef|xn--j1amh|xn--l1acc|xn--ngbrx|xn--nqv7f|xn--p1acf|xn--tckwe|xn--vhquv|yodobashi|abudhabi|airforce|allstate|attorney|barclays|barefoot|bargains|baseball|boutique|bradesco|broadway|brussels|budapest|builders|business|capetown|catering|catholic|chrysler|cipriani|cityeats|cleaning|clinique|clothing|commbank|computer|delivery|deloitte|democrat|diamonds|discount|discover|download|engineer|ericsson|esurance|etisalat|everbank|exchange|feedback|fidelity|firmdale|football|frontier|goodyear|grainger|graphics|guardian|hdfcbank|helsinki|holdings|hospital|infiniti|ipiranga|istanbul|jpmorgan|lighting|lundbeck|marriott|maserati|mckinsey|memorial|merckmsd|mortgage|movistar|observer|partners|pharmacy|pictures|plumbing|property|redstone|reliance|saarland|samsclub|security|services|shopping|showtime|softbank|software|stcgroup|supplies|symantec|training|uconnect|vanguard|ventures|verisign|woodside|xn--90ae|xn--node|xn--p1ai|xn--qxam|yokohama|السعودية|abogado|academy|agakhan|alibaba|android|athleta|auction|audible|auspost|avianca|banamex|bauhaus|bentley|bestbuy|booking|brother|bugatti|capital|caravan|careers|cartier|channel|charity|chintai|citadel|clubmed|college|cologne|comcast|company|compare|contact|cooking|corsica|country|coupons|courses|cricket|cruises|dentist|digital|domains|exposed|express|farmers|fashion|ferrari|ferrero|finance|fishing|fitness|flights|florist|flowers|forsale|frogans|fujitsu|gallery|genting|godaddy|grocery|guitars|hamburg|hangout|hitachi|holiday|hosting|hoteles|hotmail|hyundai|iselect|ismaili|jewelry|juniper|kitchen|komatsu|lacaixa|lancome|lanxess|lasalle|latrobe|leclerc|liaison|limited|lincoln|markets|metlife|monster|netbank|netflix|network|neustar|okinawa|oldnavy|organic|origins|philips|pioneer|politie|realtor|recipes|rentals|reviews|rexroth|samsung|sandvik|schmidt|schwarz|science|shiksha|shriram|singles|staples|starhub|storage|support|surgery|systems|temasek|theater|theatre|tickets|tiffany|toshiba|trading|walmart|wanggou|watches|weather|website|wedding|whoswho|windows|winners|xfinity|yamaxun|youtube|zuerich|католик|اتصالات|الجزائر|العليان|پاکستان|كاثوليك|موبايلي|இந்தியா|abarth|abbott|abbvie|active|africa|agency|airbus|airtel|alipay|alsace|alstom|anquan|aramco|author|bayern|beauty|berlin|bharti|blanco|bostik|boston|broker|camera|career|caseih|casino|center|chanel|chrome|church|circle|claims|clinic|coffee|comsec|condos|coupon|credit|cruise|dating|datsun|dealer|degree|dental|design|direct|doctor|dunlop|dupont|durban|emerck|energy|estate|events|expert|family|flickr|futbol|gallup|garden|george|giving|global|google|gratis|health|hermes|hiphop|hockey|hotels|hughes|imamat|insure|intuit|jaguar|joburg|juegos|kaufen|kinder|kindle|kosher|lancia|latino|lawyer|lefrak|living|locker|london|luxury|madrid|maison|makeup|market|mattel|mobile|mobily|monash|mormon|moscow|museum|mutual|nagoya|natura|nissan|nissay|norton|nowruz|office|olayan|online|oracle|orange|otsuka|pfizer|photos|physio|piaget|pictet|quebec|racing|realty|reisen|repair|report|review|rocher|rogers|ryukyu|safety|sakura|sanofi|school|schule|search|secure|select|shouji|soccer|social|stream|studio|supply|suzuki|swatch|sydney|taipei|taobao|target|tattoo|tennis|tienda|tjmaxx|tkmaxx|toyota|travel|unicom|viajes|viking|villas|virgin|vision|voting|voyage|vuelos|walter|warman|webcam|xihuan|yachts|yandex|zappos|москва|онлайн|ابوظبي|ارامكو|الاردن|المغرب|امارات|فلسطين|مليسيا|भारतम्|இலங்கை|ファッション|actor|adult|aetna|amfam|amica|apple|archi|audio|autos|azure|baidu|beats|bible|bingo|black|boats|bosch|build|canon|cards|chase|cheap|cisco|citic|click|cloud|coach|codes|crown|cymru|dabur|dance|deals|delta|dodge|drive|dubai|earth|edeka|email|epost|epson|faith|fedex|final|forex|forum|gallo|games|gifts|gives|glade|glass|globo|gmail|green|gripe|group|gucci|guide|homes|honda|horse|house|hyatt|ikano|intel|irish|iveco|jetzt|koeln|kyoto|lamer|lease|legal|lexus|lilly|linde|lipsy|lixil|loans|locus|lotte|lotto|lupin|macys|mango|media|miami|money|mopar|movie|nadex|nexus|nikon|ninja|nokia|nowtv|omega|osaka|paris|parts|party|phone|photo|pizza|place|poker|praxi|press|prime|promo|quest|radio|rehab|reise|ricoh|rocks|rodeo|rugby|salon|sener|seven|sharp|shell|shoes|skype|sling|smart|smile|solar|space|sport|stada|store|study|style|sucks|swiss|tatar|tires|tirol|tmall|today|tokyo|tools|toray|total|tours|trade|trust|tunes|tushu|ubank|vegas|video|vodka|volvo|wales|watch|weber|weibo|works|world|xerox|yahoo|zippo|ایران|بازار|بھارت|سودان|سورية|همراه|भारोत|संगठन|বাংলা|భారత్|ഭാരതം|嘉里大酒店|aarp|able|adac|aero|aigo|akdn|ally|amex|arab|army|arpa|arte|asda|asia|audi|auto|baby|band|bank|bbva|beer|best|bike|bing|blog|blue|bofa|bond|book|buzz|cafe|call|camp|care|cars|casa|case|cash|cbre|cern|chat|citi|city|club|cool|coop|cyou|data|date|dclk|deal|dell|desi|diet|dish|docs|doha|duck|duns|dvag|erni|fage|fail|fans|farm|fast|fiat|fido|film|fire|fish|flir|food|ford|free|fund|game|gbiz|gent|ggee|gift|gmbh|gold|golf|goog|guge|guru|hair|haus|hdfc|help|here|hgtv|host|hsbc|icbc|ieee|imdb|immo|info|itau|java|jeep|jobs|jprs|kddi|kiwi|kpmg|kred|land|lego|lgbt|lidl|life|like|limo|link|live|loan|loft|love|ltda|luxe|maif|meet|meme|menu|mini|mint|mobi|moda|moto|name|navy|news|next|nico|nike|ollo|open|page|pars|pccw|pics|ping|pink|play|plus|pohl|porn|post|prod|prof|qpon|raid|read|reit|rent|rest|rich|rmit|room|rsvp|ruhr|safe|sale|sarl|save|saxo|scor|scot|seat|seek|sexy|shaw|shia|shop|show|silk|sina|site|skin|sncf|sohu|song|sony|spot|star|surf|talk|taxi|team|tech|teva|tiaa|tips|town|toys|tube|vana|visa|viva|vivo|vote|voto|wang|weir|wien|wiki|wine|work|xbox|yoga|zara|zero|zone|дети|сайт|بارت|بيتك|ڀارت|تونس|شبكة|عراق|عمان|موقع|भारत|ভারত|ভাৰত|ਭਾਰਤ|ભારત|ଭାରତ|ಭಾರತ|ලංකා|グーグル|クラウド|ポイント|大众汽车|组织机构|電訊盈科|香格里拉|aaa|abb|abc|aco|ads|aeg|afl|aig|anz|aol|app|art|aws|axa|bar|bbc|bbt|bcg|bcn|bet|bid|bio|biz|bms|bmw|bnl|bom|boo|bot|box|buy|bzh|cab|cal|cam|car|cat|cba|cbn|cbs|ceb|ceo|cfa|cfd|com|crs|csc|dad|day|dds|dev|dhl|diy|dnp|dog|dot|dtv|dvr|eat|eco|edu|esq|eus|fan|fit|fly|foo|fox|frl|ftr|fun|fyi|gal|gap|gdn|gea|gle|gmo|gmx|goo|gop|got|gov|hbo|hiv|hkt|hot|how|ibm|ice|icu|ifm|inc|ing|ink|int|ist|itv|jcb|jcp|jio|jll|jmp|jnj|jot|joy|kfh|kia|kim|kpn|krd|lat|law|lds|llc|lol|lpl|ltd|man|map|mba|med|men|mil|mit|mlb|mls|mma|moe|moi|mom|mov|msd|mtn|mtr|nab|nba|nec|net|new|nfl|ngo|nhk|now|nra|nrw|ntt|nyc|obi|off|one|ong|onl|ooo|org|ott|ovh|pay|pet|phd|pid|pin|pnc|pro|pru|pub|pwc|qvc|red|ren|ril|rio|rip|run|rwe|sap|sas|sbi|sbs|sca|scb|ses|sew|sex|sfr|ski|sky|soy|srl|srt|stc|tab|tax|tci|tdk|tel|thd|tjx|top|trv|tui|tvs|ubs|uno|uol|ups|vet|vig|vin|vip|wed|win|wme|wow|wtc|wtf|xin|xxx|xyz|you|yun|zip|бел|ком|қаз|мкд|мон|орг|рус|срб|укр|հայ|קום|عرب|قطر|كوم|مصر|कॉम|नेट|คอม|ไทย|ストア|セール|みんな|中文网|天主教|我爱你|新加坡|淡马锡|诺基亚|飞利浦|ac|ad|ae|af|ag|ai|al|am|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cw|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|za|zm|zw|ελ|бг|ею|рф|გე|닷넷|닷컴|삼성|한국|コム|世界|中信|中国|中國|企业|佛山|信息|健康|八卦|公司|公益|台湾|台灣|商城|商店|商标|嘉里|在线|大拿|娱乐|家電|工行|广东|微博|慈善|手机|手表|招聘|政务|政府|新闻|时尚|書籍|机构|游戏|澳門|点看|珠宝|移动|网址|网店|网站|网络|联通|谷歌|购物|通販|集团|食品|餐厅|香港)/;
 
     // For debugging: search for other "For debugging" lines
     // import CliTable from 'cli-table';
@@ -1811,8 +1829,8 @@
     // called multiple times, thus instantiating EmailMatcher and its RegExp
     // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
-    var localPartCharRegex = new RegExp("[" + alphaNumericAndMarksCharsStr + "!#$%&'*+/=?^_`{|}~-]");
-    var strictTldRegex = new RegExp("^" + tldRegex.source + "$");
+    const localPartCharRegex = new RegExp("[" + alphaNumericAndMarksCharsStr + "!#$%&'*+/=?^_`{|}~-]");
+    const strictTldRegex = new RegExp("^" + tldRegex.source + "$");
     /**
      * @class Autolinker.matcher.Email
      * @extends Autolinker.matcher.Matcher
@@ -1821,10 +1839,10 @@
      *
      * See this class's superclass ({@link Autolinker.matcher.Matcher}) for more details.
      */
-    var EmailMatcher = /** @class */ (function (_super) {
+    const EmailMatcher = /** @class */ (function (_super) {
         __extends(EmailMatcher, _super);
         function EmailMatcher() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
+            const _this = _super !== null && _super.apply(this, arguments) || this;
             /**
              * Valid characters that can be used in the "local" part of an email address,
              * i.e. the "name" part of "name@site.com"
@@ -1841,9 +1859,13 @@
          * @inheritdoc
          */
         EmailMatcher.prototype.parseMatches = function (text) {
-            var tagBuilder = this.tagBuilder, localPartCharRegex = this.localPartCharRegex, strictTldRegex = this.strictTldRegex, matches = [], len = text.length, noCurrentEmailMatch = new CurrentEmailMatch();
+            const tagBuilder = this.tagBuilder;
+            const localPartCharRegex = this.localPartCharRegex;
+            const strictTldRegex = this.strictTldRegex;
+            const matches = [], len = text.length;
+            const noCurrentEmailMatch = new CurrentEmailMatch();
             // for matching a 'mailto:' prefix
-            var mailtoTransitions = {
+            const mailtoTransitions = {
                 'm': 'a',
                 'a': 'i',
                 'i': 'l',
@@ -1851,13 +1873,15 @@
                 't': 'o',
                 'o': ':',
             };
-            var charIdx = 0, state = 0 /* NonEmailMatch */, currentEmailMatch = noCurrentEmailMatch;
+            let charIdx = 0;
+            let state = 0 /* NonEmailMatch */;
+             let currentEmailMatch = noCurrentEmailMatch;
             // For debugging: search for other "For debugging" lines
             // const table = new CliTable( {
             // 	head: [ 'charIdx', 'char', 'state', 'charIdx', 'currentEmailAddress.idx', 'hasDomainDot' ]
             // } );
             while (charIdx < len) {
-                var char = text.charAt(charIdx);
+                const char = text.charAt(charIdx);
                 // For debugging: search for other "For debugging" lines
                 // table.push(
                 // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ]
@@ -2050,7 +2074,7 @@
              */
             function captureMatchIfValidAndReset() {
                 if (currentEmailMatch.hasDomainDot) { // we need at least one dot in the domain to be considered a valid email address
-                    var matchedText = text.slice(currentEmailMatch.idx, charIdx);
+                    let matchedText = text.slice(currentEmailMatch.idx, charIdx);
                     // If we read a '.' or '-' char that ended the email address
                     // (valid domain name characters, but only valid email address
                     // characters if they are followed by something else), strip
@@ -2058,7 +2082,7 @@
                     if (/[-.]$/.test(matchedText)) {
                         matchedText = matchedText.slice(0, -1);
                     }
-                    var emailAddress = currentEmailMatch.hasMailtoPrefix
+                    const emailAddress = currentEmailMatch.hasMailtoPrefix
                         ? matchedText.slice('mailto:'.length)
                         : matchedText;
                     // if the email address has a valid TLD, add it to the list of matches
@@ -2078,16 +2102,16 @@
                  * @return {Boolean} - true is email have valid TLD, false otherwise
                  */
                 function doesEmailHaveValidTld(emailAddress) {
-                    var emailAddressTld = emailAddress.split('.').pop() || '';
-                    var emailAddressNormalized = emailAddressTld.toLowerCase();
-                    var isValidTld = strictTldRegex.test(emailAddressNormalized);
+                    const emailAddressTld = emailAddress.split('.').pop() || '';
+                    const emailAddressNormalized = emailAddressTld.toLowerCase();
+                    const isValidTld = strictTldRegex.test(emailAddressNormalized);
                     return isValidTld;
                 }
             }
         };
         return EmailMatcher;
     }(Matcher));
-    var CurrentEmailMatch = /** @class */ (function () {
+    const CurrentEmailMatch = /** @class */ (function () {
         function CurrentEmailMatch(cfg) {
             if (cfg === void 0) { cfg = {}; }
             this.idx = cfg.idx !== undefined ? cfg.idx : -1;
@@ -2111,7 +2135,7 @@
      * filter out any false positives that have been matched by the
      * {@link Autolinker.matcher.Url UrlMatcher}.
      */
-    var UrlMatchValidator = /** @class */ (function () {
+    const UrlMatchValidator = /** @class */ (function () {
         function UrlMatchValidator() {
         }
         /**
@@ -2150,13 +2174,13 @@
             }
             return true;
         };
-        UrlMatchValidator.isValidIpAddress = function (uriSchemeMatch) {
-            var newRegex = new RegExp(this.hasFullProtocolRegex.source + this.ipRegex.source);
-            var uriScheme = uriSchemeMatch.match(newRegex);
+         UrlMatchValidator.isValidIpAddress = function (uriSchemeMatch) {
+            const newRegex = new RegExp(this.hasFullProtocolRegex.source + this.ipRegex.source);
+            const uriScheme = uriSchemeMatch.match(newRegex);
             return uriScheme !== null;
         };
         UrlMatchValidator.containsMultipleDots = function (urlMatch) {
-            var stringBeforeSlash = urlMatch;
+            let stringBeforeSlash = urlMatch;
             if (this.hasFullProtocolRegex.test(urlMatch)) {
                 stringBeforeSlash = urlMatch.split('://')[1];
             }
@@ -2172,7 +2196,8 @@
          * @return {Boolean} `true` if the scheme is a valid one, `false` otherwise.
          */
         UrlMatchValidator.isValidUriScheme = function (uriSchemeMatch) {
-            var uriSchemeMatchArr = uriSchemeMatch.match(this.uriSchemeRegex), uriScheme = uriSchemeMatchArr && uriSchemeMatchArr[0].toLowerCase();
+            const uriSchemeMatchArr = uriSchemeMatch.match(this.uriSchemeRegex);
+            const uriScheme = uriSchemeMatchArr && uriSchemeMatchArr[0].toLowerCase();
             return (uriScheme !== 'javascript:' && uriScheme !== 'vbscript:');
         };
         /**
@@ -2264,8 +2289,8 @@
     // called multiple times, thus instantiating UrlMatcher and its RegExp
     // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
-    var matcherRegex = (function () {
-        var schemeRegex = /(?:[A-Za-z][-.+A-Za-z0-9]{0,63}:(?![A-Za-z][-.+A-Za-z0-9]{0,63}:\/\/)(?!\d+\/?)(?:\/\/)?)/, // match protocol, allow in format "http://" or "mailto:". However, do not match the first part of something like 'link:http://www.google.com' (i.e. don't match "link:"). Also, make sure we don't interpret 'google.com:8000' as if 'google.com' was a protocol here (i.e. ignore a trailing port number in this regex)
+    const  matcherRegex = (function () {
+        const  schemeRegex = /(?:[A-Za-z][-.+A-Za-z0-9]{0,63}:(?![A-Za-z][-.+A-Za-z0-9]{0,63}:\/\/)(?!\d+\/?)(?:\/\/)?)/, // match protocol, allow in format "http://" or "mailto:". However, do not match the first part of something like 'link:http://www.google.com' (i.e. don't match "link:"). Also, make sure we don't interpret 'google.com:8000' as if 'google.com' was a protocol here (i.e. ignore a trailing port number in this regex)
         wwwRegex = /(?:www\.)/, // starting with 'www.'
         // Allow optional path, query string, and hash anchor, not ending in the following characters: "?!:,.;"
         // http://blog.codinghorror.com/the-problem-with-urls/
@@ -2294,7 +2319,7 @@
             '(?:' + urlSuffixRegex.source + ')?' // match for path, query string, and/or hash anchor - optional
         ].join(""), 'gi');
     })();
-    var wordCharRegExp = new RegExp('[' + alphaNumericAndMarksCharsStr + ']');
+    const  wordCharRegExp = new RegExp('[' + alphaNumericAndMarksCharsStr + ']');
     /**
      * @class Autolinker.matcher.Url
      * @extends Autolinker.matcher.Matcher
@@ -2303,7 +2328,7 @@
      *
      * See this class's superclass ({@link Autolinker.matcher.Matcher}) for more details.
      */
-    var UrlMatcher = /** @class */ (function (_super) {
+    const UrlMatcher = /** @class */ (function (_super) {
         __extends(UrlMatcher, _super);
         /**
          * @method constructor
@@ -2311,7 +2336,7 @@
          *   specified in an Object (map).
          */
         function UrlMatcher(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {Object} stripPrefix (required)
              *
@@ -2386,11 +2411,23 @@
          * @inheritdoc
          */
         UrlMatcher.prototype.parseMatches = function (text) {
-            var matcherRegex = this.matcherRegex, stripPrefix = this.stripPrefix, stripTrailingSlash = this.stripTrailingSlash, decodePercentEncoding = this.decodePercentEncoding, tagBuilder = this.tagBuilder, matches = [], match;
-            var _loop_1 = function () {
-                var matchStr = match[0], schemeUrlMatch = match[1], wwwUrlMatch = match[4], wwwProtocolRelativeMatch = match[5],
+            const matcherRegex = this.matcherRegex;
+            const stripPrefix = this.stripPrefix;
+           const   stripTrailingSlash = this.stripTrailingSlash;
+            const   decodePercentEncoding = this.decodePercentEncoding;
+             const   tagBuilder = this.tagBuilder
+             const matches = [];
+            let  match;
+            const _loop_1 = function () {
+                let matchStr = match[0];
+                const schemeUrlMatch = match[1];
+                const wwwUrlMatch = match[4];
+                const wwwProtocolRelativeMatch = match[5];
                 //tldUrlMatch = match[ 8 ],  -- not needed at the moment
-                tldProtocolRelativeMatch = match[9], offset = match.index, protocolRelativeMatch = wwwProtocolRelativeMatch || tldProtocolRelativeMatch, prevChar = text.charAt(offset - 1);
+              const  tldProtocolRelativeMatch = match[9];
+              let offset = match.index;
+              const protocolRelativeMatch = wwwProtocolRelativeMatch || tldProtocolRelativeMatch;
+              const prevChar = text.charAt(offset - 1);
                 if (!UrlMatchValidator.isValid(matchStr, schemeUrlMatch)) {
                     return "continue";
                 }
@@ -2420,7 +2457,7 @@
                 }
                 else {
                     // Handle an invalid character after the TLD
-                    var pos = this_1.matchHasInvalidCharAfterTld(matchStr, schemeUrlMatch);
+                    const pos = this_1.matchHasInvalidCharAfterTld(matchStr, schemeUrlMatch);
                     if (pos > -1) {
                         matchStr = matchStr.substr(0, pos); // remove the trailing invalid chars
                     }
@@ -2430,17 +2467,17 @@
                 // (for example: `nowhitespacehttp://www.test.com`), we only want the match to start
                 // at the http:// part. We will check if the match contains a common scheme and then
                 // shift the match to start from there.
-                var foundCommonScheme = ['http://', 'https://'].find(function (commonScheme) { return !!schemeUrlMatch && schemeUrlMatch.indexOf(commonScheme) !== -1; });
+                const foundCommonScheme = ['http://', 'https://'].find(function (commonScheme) { return !!schemeUrlMatch && schemeUrlMatch.indexOf(commonScheme) !== -1; });
                 if (foundCommonScheme) {
                     // If we found an overmatched URL, we want to find the index
                     // of where the match should start and shift the match to
                     // start from the beginning of the common scheme
-                    var indexOfSchemeStart = matchStr.indexOf(foundCommonScheme);
+                    const indexOfSchemeStart = matchStr.indexOf(foundCommonScheme);
                     matchStr = matchStr.substr(indexOfSchemeStart);
                     schemeUrlMatch = schemeUrlMatch.substr(indexOfSchemeStart);
                     offset = offset + indexOfSchemeStart;
                 }
-                var urlMatchType = schemeUrlMatch ? 'scheme' : (wwwUrlMatch ? 'www' : 'tld'), protocolUrlMatch = !!schemeUrlMatch;
+                const urlMatchType = schemeUrlMatch ? 'scheme' : (wwwUrlMatch ? 'www' : 'tld'), protocolUrlMatch = !!schemeUrlMatch;
                 matches.push(new UrlMatch({
                     tagBuilder: tagBuilder,
                     matchedText: matchStr,
@@ -2454,7 +2491,7 @@
                     decodePercentEncoding: decodePercentEncoding,
                 }));
             };
-            var this_1 = this;
+            const this_1 = this;
             while ((match = matcherRegex.exec(text)) !== null) {
                 _loop_1();
             }
@@ -2487,8 +2524,8 @@
          *   square bracket at the end of the `matchStr`, `false` otherwise.
          */
         UrlMatcher.prototype.matchHasUnbalancedClosingParen = function (matchStr) {
-            var endChar = matchStr.charAt(matchStr.length - 1);
-            var startChar;
+            const endChar = matchStr.charAt(matchStr.length - 1);
+            let startChar;
             if (endChar === ')') {
                 startChar = '(';
             }
@@ -2504,9 +2541,9 @@
             // Find if there are the same number of open braces as close braces in
             // the URL string, minus the last character (which we have already
             // determined to be either ')', ']' or '}'
-            var numOpenBraces = 0;
-            for (var i = 0, len = matchStr.length - 1; i < len; i++) {
-                var char = matchStr.charAt(i);
+            let numOpenBraces = 0;
+            for (let i = 0, len = matchStr.length - 1; i < len; i++) {
+                const char = matchStr.charAt(i);
                 if (char === startChar) {
                     numOpenBraces++;
                 }
@@ -2543,13 +2580,13 @@
             if (!urlMatch) {
                 return -1;
             }
-            var offset = 0;
+            let offset = 0;
             if (schemeUrlMatch) {
                 offset = urlMatch.indexOf(':');
                 urlMatch = urlMatch.slice(offset);
             }
-            var re = new RegExp("^((.?\/\/)?[-." + alphaNumericAndMarksCharsStr + "]*[-" + alphaNumericAndMarksCharsStr + "]\\.[-" + alphaNumericAndMarksCharsStr + "]+)");
-            var res = re.exec(urlMatch);
+            const re = new RegExp("^((.?\/\/)?[-." + alphaNumericAndMarksCharsStr + "]*[-" + alphaNumericAndMarksCharsStr + "]\\.[-" + alphaNumericAndMarksCharsStr + "]+)");
+            const res = re.exec(urlMatch);
             if (res === null) {
                 return -1;
             }
@@ -2568,15 +2605,15 @@
     // called multiple times, thus instantiating HashtagMatcher and its RegExp
     // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
-    var matcherRegex$1 = new RegExp("#[_" + alphaNumericAndMarksCharsStr + "]{1,139}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 139 characters
-    var nonWordCharRegex = new RegExp('[^' + alphaNumericAndMarksCharsStr + ']');
+    const matcherRegex$1 = new RegExp("#[_" + alphaNumericAndMarksCharsStr + "]{1,139}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 139 characters
+    const nonWordCharRegex = new RegExp('[^' + alphaNumericAndMarksCharsStr + ']');
     /**
      * @class Autolinker.matcher.Hashtag
      * @extends Autolinker.matcher.Matcher
      *
      * Matcher to find HashtagMatch matches in an input string.
      */
-    var HashtagMatcher = /** @class */ (function (_super) {
+    const HashtagMatcher = /** @class */ (function (_super) {
         __extends(HashtagMatcher, _super);
         /**
          * @method constructor
@@ -2584,7 +2621,7 @@
          *   specified in an Object (map).
          */
         function HashtagMatcher(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {String} serviceName
              *
@@ -2618,14 +2655,19 @@
          * @inheritdoc
          */
         HashtagMatcher.prototype.parseMatches = function (text) {
-            var matcherRegex = this.matcherRegex, nonWordCharRegex = this.nonWordCharRegex, serviceName = this.serviceName, tagBuilder = this.tagBuilder, matches = [], match;
+            const matcherRegex = this.matcherRegex;
+            const nonWordCharRegex = this.nonWordCharRegex;
+            const serviceName = this.serviceName;
+            const tagBuilder = this.tagBuilder;
+            const matches = [];
+            let match;
             while ((match = matcherRegex.exec(text)) !== null) {
-                var offset = match.index, prevChar = text.charAt(offset - 1);
+                const  offset = match.index, prevChar = text.charAt(offset - 1);
                 // If we found the match at the beginning of the string, or we found the match
                 // and there is a whitespace char in front of it (meaning it is not a '#' char
                 // in the middle of a word), then it is a hashtag match.
                 if (offset === 0 || nonWordCharRegex.test(prevChar)) {
-                    var matchedText = match[0], hashtag = match[0].slice(1); // strip off the '#' character at the beginning
+                    const matchedText = match[0], hashtag = match[0].slice(1); // strip off the '#' character at the beginning
                     matches.push(new HashtagMatch({
                         tagBuilder: tagBuilder,
                         matchedText: matchedText,
@@ -2645,7 +2687,7 @@
     // called multiple times, thus instantiating PhoneMatcher and its RegExp
     // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
-    var phoneMatcherRegex = /(?:(?:(?:(\+)?\d{1,3}[-\040.]?)?\(?\d{3}\)?[-\040.]?\d{3}[-\040.]?\d{4})|(?:(\+)(?:9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)[-\040.]?(?:\d[-\040.]?){6,12}\d+))([,;]+[0-9]+#?)*/g;
+    const phoneMatcherRegex = /(?:(?:(?:(\+)?\d{1,3}[-\040.]?)?\(?\d{3}\)?[-\040.]?\d{3}[-\040.]?\d{4})|(?:(\+)(?:9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)[-\040.]?(?:\d[-\040.]?){6,12}\d+))([,;]+[0-9]+#?)*/g;
     /**
      * @class Autolinker.matcher.Phone
      * @extends Autolinker.matcher.Matcher
@@ -2655,10 +2697,10 @@
      * See this class's superclass ({@link Autolinker.matcher.Matcher}) for more
      * details.
      */
-    var PhoneMatcher = /** @class */ (function (_super) {
+    const PhoneMatcher = /** @class */ (function (_super) {
         __extends(PhoneMatcher, _super);
         function PhoneMatcher() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
+            const _this = _super !== null && _super.apply(this, arguments) || this;
             /**
              * The regular expression to match Phone numbers. Example matches:
              *
@@ -2684,10 +2726,13 @@
          * @inheritdoc
          */
         PhoneMatcher.prototype.parseMatches = function (text) {
-            var matcherRegex = this.matcherRegex, tagBuilder = this.tagBuilder, matches = [], match;
+            const matcherRegex = this.matcherRegex;
+            const tagBuilder = this.tagBuilder;
+            const matches = [];
+            let match;
             while ((match = matcherRegex.exec(text)) !== null) {
                 // Remove non-numeric values from phone number string
-                var matchedText = match[0], cleanNumber = matchedText.replace(/[^0-9,;#]/g, ''), // strip out non-digit characters exclude comma semicolon and #
+                const matchedText = match[0], cleanNumber = matchedText.replace(/[^0-9,;#]/g, ''), // strip out non-digit characters exclude comma semicolon and #
                 plusSign = !!(match[1] || match[2]), // match[ 1 ] or match[ 2 ] is the prefixed plus sign, if there is one
                 before = match.index == 0 ? '' : text.substr(match.index - 1, 1), after = text.substr(match.index + matchedText.length, 1), contextClear = !before.match(/\d/) && !after.match(/\d/);
                 if (this.testMatch(match[3]) && this.testMatch(matchedText) && contextClear) {
@@ -2713,17 +2758,17 @@
     // called multiple times, thus instantiating MentionMatcher and its RegExp
     // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
-    var twitterRegex = new RegExp("@[_" + alphaNumericAndMarksCharsStr + "]{1,50}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
-    var instagramRegex = new RegExp("@[_." + alphaNumericAndMarksCharsStr + "]{1,30}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 30 characters
-    var soundcloudRegex = new RegExp("@[-_." + alphaNumericAndMarksCharsStr + "]{1,50}(?![-_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
-    var nonWordCharRegex$1 = new RegExp('[^' + alphaNumericAndMarksCharsStr + ']');
+    const twitterRegex = new RegExp("@[_" + alphaNumericAndMarksCharsStr + "]{1,50}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
+    const instagramRegex = new RegExp("@[_." + alphaNumericAndMarksCharsStr + "]{1,30}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 30 characters
+    const soundcloudRegex = new RegExp("@[-_." + alphaNumericAndMarksCharsStr + "]{1,50}(?![-_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
+    const nonWordCharRegex$1 = new RegExp('[^' + alphaNumericAndMarksCharsStr + ']');
     /**
      * @class Autolinker.matcher.Mention
      * @extends Autolinker.matcher.Matcher
      *
      * Matcher to find/replace username matches in an input string.
      */
-    var MentionMatcher = /** @class */ (function (_super) {
+    const MentionMatcher = /** @class */ (function (_super) {
         __extends(MentionMatcher, _super);
         /**
          * @method constructor
@@ -2731,7 +2776,7 @@
          *   specified in an Object (map).
          */
         function MentionMatcher(cfg) {
-            var _this = _super.call(this, cfg) || this;
+            const _this = _super.call(this, cfg) || this;
             /**
              * @cfg {'twitter'/'instagram'/'soundcloud'} protected
              *
@@ -2770,17 +2815,22 @@
          * @inheritdoc
          */
         MentionMatcher.prototype.parseMatches = function (text) {
-            var serviceName = this.serviceName, matcherRegex = this.matcherRegexes[this.serviceName], nonWordCharRegex = this.nonWordCharRegex, tagBuilder = this.tagBuilder, matches = [], match;
+            const serviceName = this.serviceName;
+            const matcherRegex = this.matcherRegexes[this.serviceName];
+            const nonWordCharRegex = this.nonWordCharRegex;
+            const tagBuilder = this.tagBuilder;
+            const matches = [];
+            let match;
             if (!matcherRegex) {
                 return matches;
             }
             while ((match = matcherRegex.exec(text)) !== null) {
-                var offset = match.index, prevChar = text.charAt(offset - 1);
+                const offset = match.index, prevChar = text.charAt(offset - 1);
                 // If we found the match at the beginning of the string, or we found the match
                 // and there is a whitespace char in front of it (meaning it is not an email
                 // address), then it is a username match.
                 if (offset === 0 || nonWordCharRegex.test(prevChar)) {
-                    var matchedText = match[0].replace(/\.+$/g, ''), // strip off trailing .
+                    const matchedText = match[0].replace(/\.+$/g, ''), // strip off trailing .
                     mention = matchedText.slice(1); // strip off the '@' character at the beginning
                     matches.push(new MentionMatch({
                         tagBuilder: tagBuilder,
@@ -2850,16 +2900,17 @@
      *   argument, and offset (number) into the string as its second.
      */
     function parseHtml(html, _a) {
-        var onOpenTag = _a.onOpenTag, onCloseTag = _a.onCloseTag, onText = _a.onText, onComment = _a.onComment, onDoctype = _a.onDoctype;
-        var noCurrentTag = new CurrentTag();
-        var charIdx = 0, len = html.length, state = 0 /* Data */, currentDataIdx = 0, // where the current data start index is
-        currentTag = noCurrentTag; // describes the current tag that is being read
+        const onOpenTag = _a.onOpenTag, onCloseTag = _a.onCloseTag, onText = _a.onText, onComment = _a.onComment, onDoctype = _a.onDoctype;
+        const noCurrentTag = new CurrentTag();
+        let charIdx = 0, state = 0 /* Data */, currentDataIdx = 0; // where the current data start index is
+        const len = html.length,
+        let currentTag = noCurrentTag; // describes the current tag that is being read
         // For debugging: search for other "For debugging" lines
         // const table = new CliTable( {
         // 	head: [ 'charIdx', 'char', 'state', 'currentDataIdx', 'currentOpenTagIdx', 'tag.type' ]
         // } );
         while (charIdx < len) {
-            var char = html.charAt(charIdx);
+            const char = html.charAt(charIdx);
             // For debugging: search for other "For debugging" lines
             // ALSO: Temporarily remove the 'const' keyword on the State enum
             // table.push(
@@ -3333,7 +3384,7 @@
          * text node before it.
          */
         function emitTagAndPreviousTextNode() {
-            var textBeforeTag = html.slice(currentDataIdx, currentTag.idx);
+            const textBeforeTag = html.slice(currentDataIdx, currentTag.idx);
             if (textBeforeTag) {
                 // the html tag was the first element in the html string, or two
                 // tags next to each other, in which case we should not emit a text
@@ -3359,7 +3410,7 @@
             currentDataIdx = charIdx + 1;
         }
         function emitText() {
-            var text = html.slice(currentDataIdx, charIdx);
+            const text = html.slice(currentDataIdx, charIdx);
             onText(text, currentDataIdx);
             currentDataIdx = charIdx + 1;
         }
@@ -3368,7 +3419,7 @@
          * index, and converts it to lower case
          */
         function captureTagName() {
-            var startIdx = currentTag.idx + (currentTag.isClosing ? 2 : 1);
+            const startIdx = currentTag.idx + (currentTag.isClosing ? 2 : 1);
             return html.slice(startIdx, charIdx).toLowerCase();
         }
         /**
@@ -3380,7 +3431,7 @@
             charIdx--;
         }
     }
-    var CurrentTag = /** @class */ (function () {
+    const CurrentTag = /** @class */ (function () {
         function CurrentTag(cfg) {
             if (cfg === void 0) { cfg = {}; }
             this.idx = cfg.idx !== undefined ? cfg.idx : -1;
@@ -3405,12 +3456,12 @@
      *
      * For example:
      *
-     *     var autolinker = new Autolinker( {
+     *     let autolinker = new Autolinker( {
      *         newWindow : false,
      *         truncate  : 30
      *     } );
      *
-     *     var html = autolinker.link( "Joe went to www.yahoo.com" );
+     *     let html = autolinker.link( "Joe went to www.yahoo.com" );
      *     // produces: 'Joe went to <a href="http://www.yahoo.com">yahoo.com</a>'
      *
      *
@@ -3418,7 +3469,7 @@
      * options into a single call, which may be more convenient for one-off uses.
      * For example:
      *
-     *     var html = Autolinker.link( "Joe went to www.yahoo.com", {
+     *     let html = Autolinker.link( "Joe went to www.yahoo.com", {
      *         newWindow : false,
      *         truncate  : 30
      *     } );
@@ -3434,9 +3485,9 @@
      *
      * For example:
      *
-     *     var input = "...";  // string with URLs, Email Addresses, Phone #s, Hashtags, and Mentions (Twitter, Instagram, Soundcloud)
+     *     let input = "...";  // string with URLs, Email Addresses, Phone #s, Hashtags, and Mentions (Twitter, Instagram, Soundcloud)
      *
-     *     var linkedText = Autolinker.link( input, {
+     *     let linkedText = Autolinker.link( input, {
      *         replaceFn : function( match ) {
      *             console.log( "href = ", match.getAnchorHref() );
      *             console.log( "text = ", match.getAnchorText() );
@@ -3446,7 +3497,7 @@
      *                     console.log( "url: ", match.getUrl() );
      *
      *                     if( match.getUrl().indexOf( 'mysite.com' ) === -1 ) {
-     *                         var tag = match.buildTag();  // returns an `Autolinker.HtmlTag` instance, which provides mutator methods for easy changes
+     *                         let tag = match.buildTag();  // returns an `Autolinker.HtmlTag` instance, which provides mutator methods for easy changes
      *                         tag.setAttr( 'rel', 'nofollow' );
      *                         tag.addClass( 'external-link' );
      *
@@ -3457,7 +3508,7 @@
      *                     }
      *
      *                 case 'email' :
-     *                     var email = match.getEmail();
+     *                     let email = match.getEmail();
      *                     console.log( "email: ", email );
      *
      *                     if( email === "my@own.address" ) {
@@ -3467,19 +3518,19 @@
      *                     }
      *
      *                 case 'phone' :
-     *                     var phoneNumber = match.getPhoneNumber();
+     *                     let phoneNumber = match.getPhoneNumber();
      *                     console.log( phoneNumber );
      *
      *                     return '<a href="http://newplace.to.link.phone.numbers.to/">' + phoneNumber + '</a>';
      *
      *                 case 'hashtag' :
-     *                     var hashtag = match.getHashtag();
+     *                     let hashtag = match.getHashtag();
      *                     console.log( hashtag );
      *
      *                     return '<a href="http://newplace.to.link.hashtag.handles.to/">' + hashtag + '</a>';
      *
      *                 case 'mention' :
-     *                     var mention = match.getMention();
+     *                     let mention = match.getMention();
      *                     console.log( mention );
      *
      *                     return '<a href="http://newplace.to.link.mention.to/">' + mention + '</a>';
@@ -3498,7 +3549,7 @@
      * - An {@link Autolinker.HtmlTag} instance, which can be used to build/modify
      *   an HTML tag before writing out its HTML text.
      */
-    var Autolinker = /** @class */ (function () {
+    const Autolinker = /** @class */ (function () {
         /**
          * @method constructor
          * @param {Object} [cfg] The configuration options for the Autolinker instance,
@@ -3785,12 +3836,12 @@
             this.decodePercentEncoding = typeof cfg.decodePercentEncoding === 'boolean' ? cfg.decodePercentEncoding : this.decodePercentEncoding;
             this.sanitizeHtml = cfg.sanitizeHtml || false;
             // Validate the value of the `mention` cfg
-            var mention = this.mention;
+            const mention = this.mention;
             if (mention !== false && mention !== 'twitter' && mention !== 'instagram' && mention !== 'soundcloud') {
                 throw new Error("invalid `mention` cfg - see docs");
             }
             // Validate the value of the `hashtag` cfg
-            var hashtag = this.hashtag;
+            const hashtag = this.hashtag;
             if (hashtag !== false && hashtag !== 'twitter' && hashtag !== 'facebook' && hashtag !== 'instagram') {
                 throw new Error("invalid `hashtag` cfg - see docs");
             }
@@ -3809,7 +3860,7 @@
          *
          * Example:
          *
-         *     var linkedText = Autolinker.link( "Go to google.com", { newWindow: false } );
+         *     let linkedText = Autolinker.link( "Go to google.com", { newWindow: false } );
          *     // Produces: "Go to <a href="http://google.com">google.com</a>"
          *
          * @static
@@ -3822,7 +3873,7 @@
          * @return {String} The HTML text, with matches automatically linked.
          */
         Autolinker.link = function (textOrHtml, options) {
-            var autolinker = new Autolinker(options);
+            const autolinker = new Autolinker(options);
             return autolinker.link(textOrHtml);
         };
         /**
@@ -3837,7 +3888,7 @@
          *
          * Example:
          *
-         *     var matches = Autolinker.parse( "Hello google.com, I am asdf@asdf.com", {
+         *     let matches = Autolinker.parse( "Hello google.com, I am asdf@asdf.com", {
          *         urls: true,
          *         email: true
          *     } );
@@ -3859,7 +3910,7 @@
          *   given input `textOrHtml`.
          */
         Autolinker.parse = function (textOrHtml, options) {
-            var autolinker = new Autolinker(options);
+            const autolinker = new Autolinker(options);
             return autolinker.parse(textOrHtml);
         };
         /**
@@ -3942,12 +3993,12 @@
          *
          * Example usage:
          *
-         *     var autolinker = new Autolinker( {
+         *     let autolinker = new Autolinker( {
          *         urls: true,
          *         email: true
          *     } );
          *
-         *     var matches = autolinker.parse( "Hello google.com, I am asdf@asdf.com" );
+         *     let matches = autolinker.parse( "Hello google.com, I am asdf@asdf.com" );
          *
          *     console.log( matches.length );           // 2
          *     console.log( matches[ 0 ].getType() );   // 'url'
@@ -3962,9 +4013,10 @@
          *   given input `textOrHtml`.
          */
         Autolinker.prototype.parse = function (textOrHtml) {
-            var _this = this;
-            var skipTagNames = ['a', 'style', 'script'], skipTagsStackCount = 0, // used to only Autolink text outside of anchor/script/style tags. We don't want to autolink something that is already linked inside of an <a> tag, for instance
-            matches = [];
+            const _this = this;
+            const skipTagNames = ['a', 'style', 'script'];
+            let skipTagsStackCount = 0; // used to only Autolink text outside of anchor/script/style tags. We don't want to autolink something that is already linked inside of an \u003ca\u003e tag, for instance
+            const matches = [];
             // Find all matches within the `textOrHtml` (but not matches that are
             // already nested within <a>, <style> and <script> tags)
             parseHtml(textOrHtml, {
@@ -3981,13 +4033,13 @@
                         // include the trailing '&' in the URL. See issue #76
                         // TODO: Handle HTML entities separately in parseHtml() and
                         // don't emit them as "text" except for &amp; entities
-                        var htmlCharacterEntitiesRegex = /(&nbsp;|&#160;|&lt;|&#60;|&gt;|&#62;|&quot;|&#34;|&#39;)/gi;
-                        var textSplit = splitAndCapture(text, htmlCharacterEntitiesRegex);
-                        var currentOffset_1 = offset;
+                        const htmlCharacterEntitiesRegex = /(&nbsp;|&#160;|&lt;|&#60;|&gt;|&#62;|&quot;|&#34;|&#39;)/gi;
+                        const textSplit = splitAndCapture(text, htmlCharacterEntitiesRegex);
+                        let currentOffset_1 = offset;
                         textSplit.forEach(function (splitText, i) {
                             // even number matches are text, odd numbers are html entities
                             if (i % 2 === 0) {
-                                var textNodeMatches = _this.parseText(splitText, currentOffset_1);
+                                const textNodeMatches = _this.parseText(splitText, currentOffset_1);
                                 matches.push.apply(matches, textNodeMatches);
                             }
                             currentOffset_1 += splitText.length;
@@ -4027,12 +4079,12 @@
         Autolinker.prototype.compactMatches = function (matches) {
             // First, the matches need to be sorted in order of offset
             matches.sort(function (a, b) { return a.getOffset() - b.getOffset(); });
-            for (var i = 0; i < matches.length - 1; i++) {
-                var match = matches[i], offset = match.getOffset(), matchedTextLength = match.getMatchedText().length, endIdx = offset + matchedTextLength;
+            for (let i = 0; i < matches.length - 1; i++) {
+                const match = matches[i], offset = match.getOffset(), matchedTextLength = match.getMatchedText().length, endIdx = offset + matchedTextLength;
                 if (i + 1 < matches.length) {
                     // Remove subsequent matches that equal offset with current match
                     if (matches[i + 1].getOffset() === offset) {
-                        var removeIdx = matches[i + 1].getMatchedText().length > matchedTextLength ? i : i + 1;
+                        const removeIdx = matches[i + 1].getMatchedText().length > matchedTextLength ? i : i + 1;
                         matches.splice(removeIdx, 1);
                         continue;
                     }
@@ -4106,14 +4158,14 @@
         Autolinker.prototype.parseText = function (text, offset) {
             if (offset === void 0) { offset = 0; }
             offset = offset || 0;
-            var matchers = this.getMatchers(), matches = [];
-            for (var i = 0, numMatchers = matchers.length; i < numMatchers; i++) {
-                var textMatches = matchers[i].parseMatches(text);
+            const matchers = this.getMatchers(), matches = [];
+            for (let i = 0, numMatchers = matchers.length; i < numMatchers; i++) {
+                const textMatches = matchers[i].parseMatches(text);
                 // Correct the offset of each of the matches. They are originally
                 // the offset of the match within the provided text node, but we
                 // need to correct them to be relative to the original HTML input
                 // string (i.e. the one provided to #parse).
-                for (var j = 0, numTextMatches = textMatches.length; j < numTextMatches; j++) {
+                for (let j = 0, numTextMatches = textMatches.length; j < numTextMatches; j++) {
                     textMatches[j].setOffset(offset + textMatches[j].getOffset());
                 }
                 matches.push.apply(matches, textMatches);
@@ -4151,9 +4203,11 @@
                     .replace(/</g, '&lt;')
                     .replace(/>/g, '&gt;');
             }
-            var matches = this.parse(textOrHtml), newHtml = [], lastIndex = 0;
-            for (var i = 0, len = matches.length; i < len; i++) {
-                var match = matches[i];
+            const matches = this.parse(textOrHtml);
+            const newHtml = [];
+            let lastIndex = 0;
+            for (let i = 0, len = matches.length; i < len; i++) {
+                const match = matches[i];
                 newHtml.push(textOrHtml.substring(lastIndex, match.getOffset()));
                 newHtml.push(this.createMatchReturnVal(match));
                 lastIndex = match.getOffset() + match.getMatchedText().length;
@@ -4175,7 +4229,7 @@
          */
         Autolinker.prototype.createMatchReturnVal = function (match) {
             // Handle a custom `replaceFn` being provided
-            var replaceFnResult;
+            let replaceFnResult;
             if (this.replaceFn) {
                 replaceFnResult = this.replaceFn.call(this.context, match); // Autolinker instance is the context
             }
@@ -4190,7 +4244,7 @@
             }
             else { // replaceFnResult === true, or no/unknown return value from function
                 // Perform Autolinker's default anchor tag generation
-                var anchorTag = match.buildTag(); // returns an Autolinker.HtmlTag instance
+                const anchorTag = match.buildTag(); // returns an Autolinker.HtmlTag instance
                 return anchorTag.toAnchorString();
             }
         };
@@ -4203,8 +4257,8 @@
          */
         Autolinker.prototype.getMatchers = function () {
             if (!this.matchers) {
-                var tagBuilder = this.getTagBuilder();
-                var matchers = [
+                const tagBuilder = this.getTagBuilder();
+                const matchers = [
                     new HashtagMatcher({ tagBuilder: tagBuilder, serviceName: this.hashtag }),
                     new EmailMatcher({ tagBuilder: tagBuilder }),
                     new PhoneMatcher({ tagBuilder: tagBuilder }),
@@ -4225,7 +4279,7 @@
          * @return {Autolinker.AnchorTagBuilder}
          */
         Autolinker.prototype.getTagBuilder = function () {
-            var tagBuilder = this.tagBuilder;
+            let tagBuilder = this.tagBuilder;
             if (!tagBuilder) {
                 tagBuilder = this.tagBuilder = new AnchorTagBuilder({
                     newWindow: this.newWindow,
