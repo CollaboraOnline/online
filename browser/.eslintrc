@@ -19,6 +19,8 @@
     "no-unreachable": 1,
     "no-unused-vars": 1,
     "no-await-in-loop": 1,
+    "prefer-const": ["error", { "destructuring": "all" }],
+    "no-var": "error",
   },
   "globals": {
     "L": true,

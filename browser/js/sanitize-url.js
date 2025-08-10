@@ -1,9 +1,9 @@
-var invalidProtocolRegex = /^([^\w]*)(javascript|data|vbscript)/im;
-var htmlEntitiesRegex = /&#(\w+)(^\w|;)?/g;
-var htmlCtrlEntityRegex = /&(newline|tab);/gi;
-var ctrlCharactersRegex = /[\u0000-\u001F\u007F-\u009F\u2000-\u200D\uFEFF]/gim;
-var urlSchemeRegex = /^.+(:|&colon;)/gim;
-var relativeFirstCharacters = [".", "/"];
+const invalidProtocolRegex = /^([^\\w]*)(javascript|data|vbscript)/im;
+const htmlEntitiesRegex = /\u0026#(\\w+)(^\\w|;)?/g;
+const htmlCtrlEntityRegex = /\u0026(newline|tab);/gi;
+const ctrlCharactersRegex = /[\\u0000-\\u001F\\u007F-\\u009F\\u2000-\\u200D\\uFEFF]/gim;
+const urlSchemeRegex = /^.+(:|\u0026colon;)/gim;
+const relativeFirstCharacters = [".", "/"];
 function isRelativeUrlWithoutProtocol(url) {
     return relativeFirstCharacters.indexOf(url[0]) > -1;
 }
@@ -14,7 +14,7 @@ function decodeHtmlCharacters(str) {
     });
 }
 function sanitizeUrl(url) {
-    var sanitizedUrl = decodeHtmlCharacters(url || "")
+    const sanitizedUrl = decodeHtmlCharacters(url || "")
         .replace(htmlCtrlEntityRegex, "")
         .replace(ctrlCharactersRegex, "")
         .trim();
@@ -24,11 +24,11 @@ function sanitizeUrl(url) {
     if (isRelativeUrlWithoutProtocol(sanitizedUrl)) {
         return sanitizedUrl;
     }
-    var urlSchemeParseResults = sanitizedUrl.match(urlSchemeRegex);
+    const urlSchemeParseResults = sanitizedUrl.match(urlSchemeRegex);
     if (!urlSchemeParseResults) {
         return sanitizedUrl;
     }
-    var urlScheme = urlSchemeParseResults[0];
+    const urlScheme = urlSchemeParseResults[0];
     if (invalidProtocolRegex.test(urlScheme)) {
         return "about:blank";
     }
