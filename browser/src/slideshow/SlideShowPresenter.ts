@@ -153,6 +153,11 @@ class SlideShowPresenter {
 			this.handleSlideShowProgressBar,
 			this,
 		);
+		this._map.on(
+			'presentercanvasclick',
+			this._handlePresenterCanvasClick,
+			this,
+		);
 	}
 
 	removeHooks() {
@@ -170,6 +175,54 @@ class SlideShowPresenter {
 			'handleslideshowprogressbar',
 			this.handleSlideShowProgressBar,
 			this,
+		);
+		this._map.off(
+			'presentercanvasclick',
+			this._handlePresenterCanvasClick,
+			this,
+		);
+	}
+
+	private _handlePresenterCanvasClick(event: any) {
+		const navigator = this._slideShowNavigator;
+		if (!navigator) return;
+
+		const currentSlideIndex = navigator.currentSlideIndex;
+		if (currentSlideIndex === undefined) return;
+
+		const slideInfo =
+			this._metaPresentation.getSlideInfoByIndex(currentSlideIndex);
+		if (!slideInfo || !slideInfo.videos || slideInfo.videos.length === 0) {
+			return;
+		}
+
+		if (event.relativeX !== undefined && event.relativeY !== undefined) {
+			const x = event.relativeX * this._metaPresentation.slideWidth;
+			const y = event.relativeY * this._metaPresentation.slideHeight;
+
+			const clickedVideo = slideInfo.videos.find((videoInfo) =>
+				this.isPointInVideoArea(videoInfo, x, y),
+			);
+
+			if (clickedVideo) {
+				const videoRenderer = this.getVideoRenderer(
+					slideInfo.hash,
+					clickedVideo,
+				);
+				if (videoRenderer) {
+					videoRenderer.handleClick();
+					return;
+				}
+			}
+		}
+	}
+
+	private isPointInVideoArea(bounds: VideoInfo, x: number, y: number): boolean {
+		return (
+			x >= bounds.x &&
+			x <= bounds.x + bounds.width &&
+			y >= bounds.y &&
+			y <= bounds.y + bounds.height
 		);
 	}
 

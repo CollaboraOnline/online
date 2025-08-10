@@ -151,6 +151,10 @@ class PresenterConsole {
 		if (!currentPresentationCanvas) return;
 		this._computeCanvas(currentPresentationCanvas);
 
+		currentPresentationCanvas.addEventListener(
+			'click',
+			this._onPresenterCanvasClick.bind(this),
+		);
 		this._timer = this._proxyPresenter.setInterval(
 			L.bind(this._onTimer, this),
 			1000,
@@ -185,6 +189,19 @@ class PresenterConsole {
 				elem.append(img);
 			}
 		}
+	}
+
+	_onPresenterCanvasClick(event) {
+		const canvas = event.target;
+		const rect = canvas.getBoundingClientRect();
+		const relativeX = (event.clientX - rect.left) / canvas.clientWidth;
+		const relativeY = (event.clientY - rect.top) / canvas.clientHeight;
+
+		this._map.fire('presentercanvasclick', {
+			relativeX: relativeX,
+			relativeY: relativeY,
+			originalEvent: event,
+		});
 	}
 
 	_onImpressModeChanged(e) {
