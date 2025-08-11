@@ -1770,7 +1770,6 @@ class CanvasSectionContainer {
 					this.context.globalAlpha = 1;
 				}
 
-				this.sections[i].onUpdateDOM();
 				this.sections[i].onDraw(frameCount, elapsedTime);
 				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
 					var offset = this.sections[i].getLineOffset();
