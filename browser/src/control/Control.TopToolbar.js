@@ -112,12 +112,10 @@ class TopToolbar extends JSDialog.Toolbar {
 			}
 		];
 		var undoGroup = [
-			{type: 'separator', orientation: 'vertical', id: 'savebreak', mobile: false},
 			{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', mobile: false},
 			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false}
 		];
 		var fontGroup = [
-			{type: 'separator', orientation: 'vertical', id: 'redobreak', mobile: false, tablet: false,},
 			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), command: '.uno:FormatPaintbrush', mobile: false},
 			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false},
 			{type: 'toolitem',  id: 'resetimpress', class: 'unoResetAttributes', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false},
@@ -127,21 +125,18 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'listbox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false,}
 		];
 		var formatGroup = [
-			{type: 'separator', orientation: 'vertical', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false},
 			{type: 'toolitem',  id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold'},
 			{type: 'toolitem',  id: 'italic', text: _UNO('.uno:Italic'), command: '.uno:Italic'},
 			{type: 'toolitem',  id: 'underline', text: _UNO('.uno:Underline'), command: '.uno:Underline'},
 			{type: 'toolitem',  id: 'strikeout', text: _UNO('.uno:Strikeout'), command: '.uno:Strikeout'},
 		];
 		const fontColorGroup = [
-			{type: 'separator', orientation: 'vertical', id: 'breakformatting'},
 			{type: 'colorlistbox',  id: 'fontcolorwriter:ColorPickerMenu', command: '.uno:FontColor', text: _UNO('.uno:FontColor'), visible: false, lockUno: '.uno:FontColor'},
 			{type: 'colorlistbox',  id: 'fontcolor:ColorPickerMenu', command: '.uno:Color', text: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor'},
 			{type: 'colorlistbox',  id: 'backcolor:ColorPickerMenu', command: '.uno:CharBackColor', text: _UNO('.uno:CharBackColor', 'text'), visible: false, lockUno: '.uno:CharBackColor'},
 			{type: 'colorlistbox',  id: 'backgroundcolor:ColorPickerMenu', command: '.uno:BackgroundColor', text: _UNO('.uno:BackgroundColor'), visible: false, lockUno: '.uno:BackgroundColor'},
 		];
 		const indentGroup = [
-			{type: 'separator', orientation: 'vertical' , id: 'breakcolor', mobile:false},
 			{type: 'toolitem',  id: 'leftpara',  command: '.uno:LeftPara', text: _UNO('.uno:LeftPara', '', true), visible: false},
 			{type: 'toolitem',  id: 'centerpara',  command: '.uno:CenterPara', text: _UNO('.uno:CenterPara', '', true), visible: false},
 			{type: 'toolitem',  id: 'rightpara',  command: '.uno:RightPara', text: _UNO('.uno:RightPara', '', true), visible: false},
@@ -174,7 +169,6 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText'}
 		];
 		var otherGroup = [
-			{type: 'separator', orientation: 'vertical', id: 'breakspacing', visible: false},
 			{type: 'toolitem',  id: 'defaultnumbering', text: _UNO('.uno:DefaultNumbering', '', true), visible: false, command: '.uno:DefaultNumbering'},
 			{type: 'toolitem',  id: 'defaultbullet', text: _UNO('.uno:DefaultBullet', '', true), visible: false, command: '.uno:DefaultBullet'},
 			{type: 'separator', orientation: 'vertical', id: 'breakbullet', visible: false},
@@ -208,11 +202,17 @@ class TopToolbar extends JSDialog.Toolbar {
 		var items = [
 			{type: 'overflowmanager', id: 'overflow-manager-toptoolbar', children: [
 				{type: 'overflowgroup', id: 'save-toptoolbar', children: saveGroup},
+				{type: 'separator', orientation: 'vertical', id: 'savebreak', mobile: false},
 				{type: 'overflowgroup', id: 'undo-toptoolbar', children: undoGroup},
+				{type: 'separator', orientation: 'vertical', id: 'redobreak', mobile: false, tablet: false,},
 				{type: 'overflowgroup', id: 'font-toptoolbar', children: fontGroup},
+				{type: 'separator', orientation: 'vertical', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false},
 				{type: 'overflowgroup', id: 'format-toptoolbar', children: formatGroup},
+				{type: 'separator', orientation: 'vertical', id: 'breakformatting'},
 				{type: 'overflowgroup', id: 'fontcolor-toptoolbar', children: fontColorGroup},
+				{type: 'separator', orientation: 'vertical' , id: 'breakcolor', mobile:false},
 				{type: 'overflowgroup', id: 'indent-toptoolbar', children: indentGroup},
+				{type: 'separator', orientation: 'vertical', id: 'breakspacing', visible: false},
 				{type: 'overflowgroup', id: 'other-toptoolbar', children: otherGroup},
 			]},
 			{type: 'spacer', id: 'topspacer'},
