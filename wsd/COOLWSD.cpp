@@ -1050,6 +1050,17 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
     }
 
     LOG_DBG("getNewChild: Timed out while waiting for new child.");
+
+    if (!configId.empty())
+    {
+        auto it = SubForKitProcs.find(configId);
+        if (it != SubForKitProcs.end())
+        {
+            LOG_WRN("subForKit " << configId << " failed to respond, resetting it");
+            dropSubForKit(it);
+        }
+    }
+
     return nullptr;
 }
 
