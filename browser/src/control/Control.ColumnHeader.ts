@@ -276,21 +276,6 @@ export class ColumnHeader extends Header {
 
 	setOptimalWidthAuto(): void {
 		if (this._mouseOverEntry) {
-			const column = this._mouseOverEntry.index;
-			if (!this._hitResizeArea) {
-				const command = {
-					Column: {
-						type: 'long',
-						value: column
-					},
-					Modifier: {
-						type: 'unsigned short',
-						value: 0
-					}
-				};
-				this._map.sendUnoCommand('.uno:SelectColumn', command);
-			}
-
 			const extra = {
 				aExtraHeight: {
 					type: 'unsigned short',
