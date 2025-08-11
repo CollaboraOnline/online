@@ -41,16 +41,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#insertannotation').click({force: true});
-			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
-			cy.cGet('#annotation-save-new').click();
+			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
+			cy.cGet('#annotation-save-new').click({ force: true });
 			// Wait for animation
 			cy.wait(500);
 		}
 		enableRecord();
 
 		cy.cGet('#insertannotation').click({force: true});
-		cy.cGet('#annotation-modify-textarea-new').type('some text2');
-		cy.cGet('#annotation-save-new').click();
+		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
+		cy.cGet('#annotation-save-new').click({ force: true });
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -82,16 +82,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#insertannotation').click({force: true});
-			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
-			cy.cGet('#annotation-save-new').click();
+			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
+			cy.cGet('#annotation-save-new').click({ force: true });
 			// Wait for animation
 			cy.wait(500);
 		}
 		enableRecord();
 
 		cy.cGet('#insertannotation').click({force: true});
-		cy.cGet('#annotation-modify-textarea-new').type('some text2');
-		cy.cGet('#annotation-save-new').click();
+		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
+		cy.cGet('#annotation-save-new').click({ force: true });
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
