@@ -1686,17 +1686,18 @@ class CanvasSectionContainer {
 	}
 
 	public applyDrawingOrders () {
-		// According to drawing order. Section with the highest drawing order will be drawn on top (inside same zIndex).
-		for (var i: number = 0; i < this.sections.length - 1; i++) {
-			var zIndex = this.sections[i].zIndex;
-			for (var j: number = i + 1; j < this.sections.length && this.sections[j].zIndex === zIndex; j++) {
-				if (this.sections[i].drawingOrder > this.sections[j].drawingOrder) {
-					var temp = this.sections[j];
-					this.sections[j] = this.sections[i];
-					this.sections[i] = temp;
-				}
-			}
+		// According to zIndex, drawing order & processing order.
+		// Section with the highest drawing order will be drawn on top (inside same zIndex).
+		function compareSections(a: any, b: any) {
+			var zIndexDiff = a.zIndex - b.zIndex;
+			if (zIndexDiff != 0)
+				return zIndexDiff;
+			var drawingOrderDiff = a.drawingOrder - b.drawingOrder;
+			if (drawingOrderDiff != 0)
+				return drawingOrderDiff;
+			return a.processingOrder - b.processingOrder;
 		}
+		this.sections.sort(compareSections);
 	}
 
 	private drawSectionBorders () {
