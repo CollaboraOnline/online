@@ -263,21 +263,6 @@ export class RowHeader extends cool.Header {
 
 	setOptimalHeightAuto(): void {
 		if (this._mouseOverEntry) {
-			if (!this._hitResizeArea) {
-				const row = this._mouseOverEntry.index;
-				const command = {
-					Row: {
-						type: 'long',
-						value: row
-					},
-					Modifier: {
-						type: 'unsigned short',
-						value: 0
-					}
-				};
-				this._map.sendUnoCommand('.uno:SelectRow', command);
-			}
-
 			const extra = {
 				aExtraHeight: {
 					type: 'unsigned short',
