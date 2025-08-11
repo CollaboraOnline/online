@@ -304,10 +304,6 @@
 	background-color: var(--color-background-darker);
 }
 
-.notebookbar-scroll-wrapper {
-	height: 72px;
-}
-
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
 	width: 50%;
