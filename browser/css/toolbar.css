@@ -590,6 +590,7 @@ button.leaflet-control-search-next
 }
 #toolbar-up #fontsizecombobox .select2-container {
 	min-width: 55px !important;
+	margin: 0px 4px;
 }
 #fontsizecombobox-input-notebookbar,
 #fontsizecombobox-input-sidebar,
