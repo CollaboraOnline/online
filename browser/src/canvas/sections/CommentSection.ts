@@ -42,6 +42,11 @@ export enum CommentLayoutStatus {
 }
 
 export class Comment extends CanvasSectionObject {
+	// Cache the expensive to localize frequently created strings
+	static readonly editCommentLabel = _('Edit comment');
+	static readonly replyCommentLabel = _('Reply comment');
+	static readonly openMenuLabel = _('Open menu');
+
 	name: string = L.CSections.Comment.name;
 	processingOrder: number = L.CSections.Comment.processingOrder;
 	drawingOrder: number = L.CSections.Comment.drawingOrder;
@@ -229,14 +234,14 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeModifyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
 		this.sectionProperties.nodeModifyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeModifyText.setAttribute('role', 'textbox');
-		this.sectionProperties.nodeModifyText.setAttribute('aria-label', _('Edit comment'));
+		this.sectionProperties.nodeModifyText.setAttribute('aria-label', Comment.editCommentLabel);
 		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
 		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
 		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeReplyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
 		this.sectionProperties.nodeReplyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeReplyText.setAttribute('role', 'textbox');
-		this.sectionProperties.nodeReplyText.setAttribute('aria-label', _('Reply comment'));
+		this.sectionProperties.nodeReplyText.setAttribute('aria-label', Comment.replyCommentLabel);
 		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
 		this.createChildLinesNode();
 
@@ -314,9 +319,8 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.tabIndex = 0;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
 		this.sectionProperties.menu.onkeypress = this.menuOnKeyPress.bind(this);
-		var divMenuTooltipText = _('Open menu');
-		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
-		this.sectionProperties.menu.setAttribute('aria-label', divMenuTooltipText);
+		this.sectionProperties.menu.dataset.title = Comment.openMenuLabel;
+		this.sectionProperties.menu.setAttribute('aria-label', Comment.openMenuLabel);
 		this.sectionProperties.menu.annotation = this;
 	}
 
