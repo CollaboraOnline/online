@@ -79,7 +79,6 @@ class CanvasSectionObject {
 	onMultiTouchEnd(e: TouchEvent): void { return; }
 	onResize(): void { return; }
 	onDraw(frameCount?: number, elapsedTime?: number): void { return; }
-	onUpdateDOM(): void { return; } // Called before onDraw, to update the DOM if required.
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.
 	onAnimate(frameCount: number, elapsedTime: number): void { return; }
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
