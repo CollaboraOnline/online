@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 			cy.cGet('#insertannotation').click();
-			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
+			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
 			cy.cGet('#annotation-save-new').click({force: true});
 			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
@@ -52,7 +52,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#insertannotation').click();
-		cy.cGet('#annotation-modify-textarea-new').type('some text2');
+		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
 		cy.cGet('#annotation-save-new').click({force: true});
 		cy.cGet('.jsdialog-overlay').click();
 		cy.wait(500);
@@ -87,7 +87,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 			cy.cGet('#insertannotation').click();
-			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
+			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
 			cy.cGet('#annotation-save-new').click({force: true});
 			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
@@ -97,7 +97,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#insertannotation').click();
-		cy.cGet('#annotation-modify-textarea-new').type('some text2');
+		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
 		cy.cGet('#annotation-save-new').click({force: true});
 		cy.cGet('.jsdialog-overlay').click();
 		cy.wait(500);

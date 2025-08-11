@@ -79,6 +79,8 @@ export class CommentSection extends CanvasSectionObject {
 		showSelectedBigger: boolean;
 		commentsAreListed: boolean;
 		[key: string]: any;
+		canvasContainerTop: number; // The top pixel of the document container. Added to positions of comments.
+		canvasContainerLeft: number;
 	};
 	disableLayoutAnimation: boolean = false;
 	mobileCommentId: string = 'new-annotation-dialog';
@@ -1851,8 +1853,8 @@ export class CommentSection extends CanvasSectionObject {
 			height = subList[i].getCommentHeight(relayout);
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - (height * app.dpiScale);
 
-			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale)) + 'px';
-			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale)) + 'px';
+			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale) + this.sectionProperties.canvasContainerLeft) + 'px';
+			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
 
 			if (!subList[i].isEdit())
 				subList[i].show();
@@ -1904,12 +1906,12 @@ export class CommentSection extends CanvasSectionObject {
 								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
 
-				subList[i].sectionProperties.container.style.left = String(posX) + 'px';
-				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale)) + 'px';
+				subList[i].sectionProperties.container.style.left = String(posX + this.sectionProperties.canvasContainerLeft) + 'px';
+				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
 			}
 			else {
-				subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale)) + 'px';
-				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale)) + 'px';
+				subList[i].sectionProperties.container.style.left = String(this.sectionProperties.canvasContainerLeft + Math.round(actualPosition[0] / app.dpiScale)) + 'px';
+				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
 			}
 
 			lastY += (subList[i].getCommentHeight(relayout) * app.dpiScale);
@@ -2004,6 +2006,9 @@ export class CommentSection extends CanvasSectionObject {
 				this.orderCommentList();
 			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.
 		}
+
+		this.sectionProperties.canvasContainerLeft = document.getElementById('document-container').getBoundingClientRect().left;
+		this.sectionProperties.canvasContainerTop = document.getElementById('document-container').getBoundingClientRect().top;
 
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
