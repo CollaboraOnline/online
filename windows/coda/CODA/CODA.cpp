@@ -198,25 +198,14 @@ static void do_hullo_handling_things(WindowData& data)
         })
         .detach();
 
-    // First we simply send it the URL. This corresponds to the GET request with Upgrade to
-    // WebSocket.
-    LOG_TRC_NOFILE("Actually sending to Online:" << data.documentUri);
+    // First we must send the URL. This corresponds to the GET request with Upgrade to WebSocket.
+    // This *must* be the first message written to the "client" thread. We don't need to do this
+    // write in a separate thread, and we can't, because if we do that, we will occasionaly run into
+    // a bug when the "coolclient" message sent by the JS is received and gets forwarded to the
+    // "client" thread before we have written the URL to it.
 
-    // Must do this in a thread, too, so that we can return to the main loop
-    // Must duplicate fileURL as it exists only while this function is called from C#.
-    char* fileURLcopy = _strdup(data.documentUri.c_str());
-    std::thread(
-        [data, fileURLcopy]
-        {
-            struct pollfd pollfd;
-            pollfd.fd = data.fakeClientFd;
-            pollfd.events = POLLOUT;
-            fakeSocketPoll(&pollfd, 1, -1);
-            std::string message(fileURLcopy + (" " + std::to_string(data.appDocId)));
-            fakeSocketWrite(data.fakeClientFd, message.c_str(), message.size());
-            std::free(fileURLcopy);
-        })
-        .detach();
+    std::string message(data.documentUri + " " + std::to_string(data.appDocId));
+    fakeSocketWrite(data.fakeClientFd, message.c_str(), message.size());
 }
 
 static void do_bye_handling_things(const WindowData& data)
