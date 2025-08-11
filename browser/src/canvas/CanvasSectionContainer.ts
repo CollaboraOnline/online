@@ -1676,16 +1676,13 @@ class CanvasSectionContainer {
 
 	private orderSections () {
 		// According to zIndex & processing order.
-		for (var i: number = 0; i < this.sections.length - 1; i++) {
-			for (var j = i + 1; j < this.sections.length; j++) {
-				if (this.sections[i].zIndex > this.sections[j].zIndex
-					|| (this.sections[i].zIndex === this.sections[j].zIndex && this.sections[i].processingOrder > this.sections[j].processingOrder)) {
-					var temp = this.sections[i];
-					this.sections[i] = this.sections[j];
-					this.sections[j] = temp;
-				}
-			}
+		function compareSections(a: any, b: any) {
+			var zIndexDiff = a.zIndex - b.zIndex;
+			if (zIndexDiff != 0)
+				return zIndexDiff;
+			return a.processingOrder - b.processingOrder;
 		}
+		this.sections.sort(compareSections);
 	}
 
 	public applyDrawingOrders () {
