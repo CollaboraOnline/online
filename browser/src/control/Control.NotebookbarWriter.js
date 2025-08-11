@@ -2467,9 +2467,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Comments'),
 				'children' : [
 					{
-						'id': 'review-insert-annotation',
-						'type': 'bigtoolitem',
+						'id': 'review-insert-annotation:AnnotationMenu',
+						'type': 'menubutton',
 						'text': _UNO('.uno:InsertAnnotation'),
+						'applyCallback': () => { app.map.insertComment() },
 						'command': '.uno:InsertAnnotation',
 						'accessibility': { focusBack: false, combination: 'C', de: 'N' }
 					},
