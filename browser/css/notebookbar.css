@@ -1,4 +1,9 @@
 
+.notebookbar-scroll-wrapper {
+	height: 72px;
+	display: flex;
+}
+
 /* stretch the fields */
 .notebookbar.ui-listbox,
 .notebookbar.ui-combobox,
@@ -566,12 +571,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 #Transition-container.notebookbar {
 	width: 100%;
 	justify-items: stretch;
-	grid-template-columns: 1fr 0 auto 0 auto 30px;
 }
 
 #transitions_icons.ui-iconview.notebookbar {
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	flex-grow: 1;
 }
 
 /* Table Tab */
