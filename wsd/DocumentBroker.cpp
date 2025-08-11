@@ -4224,7 +4224,17 @@ void DocumentBroker::uploadPresetsToWopiHost()
         fileJailPath.append(fileName);
         std::filesystem::file_time_type currentTimestamp =
             std::filesystem::last_write_time(fileJailPath, ec);
-        if (ec || currentTimestamp <= _presetTimestamp[fileName])
+
+        auto it = _presetTimestamp.find(fileName);
+        bool skipUpload = false;
+        if (ec)
+            skipUpload = true;
+        else if (it != _presetTimestamp.end())
+            skipUpload = (currentTimestamp <= it->second);
+        else if (fileName != "standard.dic")
+            skipUpload = true;
+
+        if (skipUpload)
         {
             LOG_TRC("Skip uploading preset file [" << fileName << "] to wopiHost["
                                                    << uriObject.toString() << "], "
