@@ -1,4 +1,3 @@
-/* eslint-disable */
 
 /* Source:
 	https://github.com/que-etc/resize-observer-polyfill/blob/master/dist/ResizeObserver.js
@@ -18,7 +17,7 @@ if (typeof ResizeObserver === 'undefined') {
          * modules as they cover only a limited range of use cases.
          */
         /* eslint-disable require-jsdoc, valid-jsdoc */
-        var MapShim = (function () {
+        let MapShim = (function () {
             if (typeof Map !== 'undefined') {
                 return Map;
             }
@@ -30,7 +29,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {number}
              */
             function getIndex(arr, key) {
-                var result = -1;
+                let result = -1;
                 arr.some(function (entry, index) {
                     if (entry[0] === key) {
                         result = index;
@@ -59,8 +58,8 @@ if (typeof ResizeObserver === 'undefined') {
                  * @returns {*}
                  */
                 class_1.prototype.get = function (key) {
-                    var index = getIndex(this.__entries__, key);
-                    var entry = this.__entries__[index];
+                    let index = getIndex(this.__entries__, key);
+                    let entry = this.__entries__[index];
                     return entry && entry[1];
                 };
                 /**
@@ -69,7 +68,7 @@ if (typeof ResizeObserver === 'undefined') {
                  * @returns {void}
                  */
                 class_1.prototype.set = function (key, value) {
-                    var index = getIndex(this.__entries__, key);
+                    let index = getIndex(this.__entries__, key);
                     if (~index) {
                         this.__entries__[index][1] = value;
                     }
@@ -82,8 +81,8 @@ if (typeof ResizeObserver === 'undefined') {
                  * @returns {void}
                  */
                 class_1.prototype.delete = function (key) {
-                    var entries = this.__entries__;
-                    var index = getIndex(entries, key);
+                    let entries = this.__entries__;
+                    let index = getIndex(entries, key);
                     if (~index) {
                         entries.splice(index, 1);
                     }
@@ -108,8 +107,8 @@ if (typeof ResizeObserver === 'undefined') {
                  */
                 class_1.prototype.forEach = function (callback, ctx) {
                     if (ctx === void 0) { ctx = null; }
-                    for (var _i = 0, _a = this.__entries__; _i < _a.length; _i++) {
-                        var entry = _a[_i];
+                    for (let _i = 0, _a = this.__entries__; _i < _a.length; _i++) {
+                        let entry = _a[_i];
                         callback.call(ctx, entry[1], entry[0]);
                     }
                 };
@@ -120,10 +119,10 @@ if (typeof ResizeObserver === 'undefined') {
         /**
          * Detects whether window and document objects are available in current environment.
          */
-        var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
+        let isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
 
         // Returns global object of a current environment.
-        var global$1 = (function () {
+        let global$1 = (function () {
             if (typeof global !== 'undefined' && global.Math === Math) {
                 return global;
             }
@@ -133,7 +132,7 @@ if (typeof ResizeObserver === 'undefined') {
             if (typeof window !== 'undefined' && window.Math === Math) {
                 return window;
             }
-            // eslint-disable-next-line no-new-func
+             
             return Function('return this')();
         })();
 
@@ -143,7 +142,7 @@ if (typeof ResizeObserver === 'undefined') {
          *
          * @returns {number} Requests' identifier.
          */
-        var requestAnimationFrame$1 = (function () {
+        let requestAnimationFrame$1 = (function () {
             if (typeof requestAnimationFrame === 'function') {
                 // It's required to use a bounded function because IE sometimes throws
                 // an "Invalid calling object" error if rAF is invoked without the global
@@ -154,7 +153,7 @@ if (typeof ResizeObserver === 'undefined') {
         })();
 
         // Defines minimum timeout before adding a trailing call.
-        var trailingTimeout = 2;
+        let trailingTimeout = 2;
         /**
          * Creates a wrapper function which ensures that provided callback will be
          * invoked only once during the specified delay period.
@@ -164,7 +163,7 @@ if (typeof ResizeObserver === 'undefined') {
          * @returns {Function}
          */
         function throttle (callback, delay) {
-            var leadingCall = false, trailingCall = false, lastCallTime = 0;
+            let leadingCall = false, trailingCall = false, lastCallTime = 0;
             /**
              * Invokes the original callback function and schedules new invocation if
              * the "proxy" was called during current request.
@@ -196,7 +195,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {void}
              */
             function proxy() {
-                var timeStamp = Date.now();
+                let timeStamp = Date.now();
                 if (leadingCall) {
                     // Reject immediately following calls.
                     if (timeStamp - lastCallTime < trailingTimeout) {
@@ -219,16 +218,16 @@ if (typeof ResizeObserver === 'undefined') {
         }
 
         // Minimum delay before invoking the update of observers.
-        var REFRESH_DELAY = 20;
+        let REFRESH_DELAY = 20;
         // A list of substrings of CSS properties used to find transition events that
         // might affect dimensions of observed elements.
-        var transitionKeys = ['top', 'right', 'bottom', 'left', 'width', 'height', 'size', 'weight'];
+        let transitionKeys = ['top', 'right', 'bottom', 'left', 'width', 'height', 'size', 'weight'];
         // Check if MutationObserver is available.
-        var mutationObserverSupported = typeof MutationObserver !== 'undefined';
+        let mutationObserverSupported = typeof MutationObserver !== 'undefined';
         /**
          * Singleton controller class which handles updates of ResizeObserver instances.
          */
-        var ResizeObserverController = /** @class */ (function () {
+        let ResizeObserverController = /** @class */ (function () {
             /**
              * Creates a new instance of ResizeObserverController.
              *
@@ -284,8 +283,8 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {void}
              */
             ResizeObserverController.prototype.removeObserver = function (observer) {
-                var observers = this.observers_;
-                var index = observers.indexOf(observer);
+                let observers = this.observers_;
+                let index = observers.indexOf(observer);
                 // Remove observer if it's present in registry.
                 if (~index) {
                     observers.splice(index, 1);
@@ -302,7 +301,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {void}
              */
             ResizeObserverController.prototype.refresh = function () {
-                var changesDetected = this.updateObservers_();
+                let changesDetected = this.updateObservers_();
                 // Continue running updates if changes have been detected as there might
                 // be future ones caused by CSS transitions.
                 if (changesDetected) {
@@ -319,7 +318,7 @@ if (typeof ResizeObserver === 'undefined') {
              */
             ResizeObserverController.prototype.updateObservers_ = function () {
                 // Collect observers that have active observations.
-                var activeObservers = this.observers_.filter(function (observer) {
+                let activeObservers = this.observers_.filter(function (observer) {
                     return observer.gatherActive(), observer.hasActive();
                 });
                 // Deliver notifications in a separate cycle in order to avoid any
@@ -394,9 +393,9 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {void}
              */
             ResizeObserverController.prototype.onTransitionEnd_ = function (_a) {
-                var _b = _a.propertyName, propertyName = _b === void 0 ? '' : _b;
+                let _b = _a.propertyName, propertyName = _b === void 0 ? '' : _b;
                 // Detect whether transition may affect dimensions of an element.
-                var isReflowProperty = transitionKeys.some(function (key) {
+                let isReflowProperty = transitionKeys.some(function (key) {
                     return !!~propertyName.indexOf(key);
                 });
                 if (isReflowProperty) {
@@ -430,9 +429,9 @@ if (typeof ResizeObserver === 'undefined') {
          * @param {Object} props - Properties to be defined.
          * @returns {Object} Target object.
          */
-        var defineConfigurable = (function (target, props) {
-            for (var _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
-                var key = _a[_i];
+        let defineConfigurable = (function (target, props) {
+            for (let _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
+                let key = _a[_i];
                 Object.defineProperty(target, key, {
                     value: props[key],
                     enumerable: false,
@@ -449,18 +448,18 @@ if (typeof ResizeObserver === 'undefined') {
          * @param {Object} target
          * @returns {Object}
          */
-        var getWindowOf = (function (target) {
+        let getWindowOf = (function (target) {
             // Assume that the element is an instance of Node, which means that it
             // has the "ownerDocument" property from which we can retrieve a
             // corresponding global object.
-            var ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
+            let ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
             // Return the local global object if it's not possible extract one from
             // provided element.
             return ownerGlobal || global$1;
         });
 
         // Placeholder of an empty content rectangle.
-        var emptyRect = createRectInit(0, 0, 0, 0);
+        let emptyRect = createRectInit(0, 0, 0, 0);
         /**
          * Converts provided string to a number.
          *
@@ -478,12 +477,12 @@ if (typeof ResizeObserver === 'undefined') {
          * @returns {number}
          */
         function getBordersSize(styles) {
-            var positions = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
+            let positions = [];
+            for (let _i = 1; _i < arguments.length; _i++) {
                 positions[_i - 1] = arguments[_i];
             }
             return positions.reduce(function (size, position) {
-                var value = styles['border-' + position + '-width'];
+                let value = styles['border-' + position + '-width'];
                 return size + toFloat(value);
             }, 0);
         }
@@ -494,11 +493,11 @@ if (typeof ResizeObserver === 'undefined') {
          * @returns {Object} Paddings box.
          */
         function getPaddings(styles) {
-            var positions = ['top', 'right', 'bottom', 'left'];
-            var paddings = {};
-            for (var _i = 0, positions_1 = positions; _i < positions_1.length; _i++) {
-                var position = positions_1[_i];
-                var value = styles['padding-' + position];
+            let positions = ['top', 'right', 'bottom', 'left'];
+            let paddings = {};
+            for (let _i = 0, positions_1 = positions; _i < positions_1.length; _i++) {
+                let position = positions_1[_i];
+                let value = styles['padding-' + position];
                 paddings[position] = toFloat(value);
             }
             return paddings;
@@ -511,7 +510,7 @@ if (typeof ResizeObserver === 'undefined') {
          * @returns {DOMRectInit}
          */
         function getSVGContentRect(target) {
-            var bbox = target.getBBox();
+            let bbox = target.getBBox();
             return createRectInit(0, 0, bbox.width, bbox.height);
         }
         /**
@@ -523,7 +522,7 @@ if (typeof ResizeObserver === 'undefined') {
         function getHTMLElementContentRect(target) {
             // Client width & height properties can't be
             // used exclusively as they provide rounded values.
-            var clientWidth = target.clientWidth, clientHeight = target.clientHeight;
+            let clientWidth = target.clientWidth, clientHeight = target.clientHeight;
             // By this condition we can catch all non-replaced inline, hidden and
             // detached elements. Though elements with width & height properties less
             // than 0.5 will be discarded as well.
@@ -535,15 +534,15 @@ if (typeof ResizeObserver === 'undefined') {
             if (!clientWidth && !clientHeight) {
                 return emptyRect;
             }
-            var styles = getWindowOf(target).getComputedStyle(target);
-            var paddings = getPaddings(styles);
-            var horizPad = paddings.left + paddings.right;
-            var vertPad = paddings.top + paddings.bottom;
+            let styles = getWindowOf(target).getComputedStyle(target);
+            let paddings = getPaddings(styles);
+            let horizPad = paddings.left + paddings.right;
+            let vertPad = paddings.top + paddings.bottom;
             // Computed styles of width & height are being used because they are the
             // only dimensions available to JS that contain non-rounded values. It could
             // be possible to utilize the getBoundingClientRect if only it's data wasn't
             // affected by CSS transformations let alone paddings, borders and scroll bars.
-            var width = toFloat(styles.width), height = toFloat(styles.height);
+            let width = toFloat(styles.width), height = toFloat(styles.height);
             // Width & height include paddings and borders when the 'border-box' box
             // model is applied (except for IE).
             if (styles.boxSizing === 'border-box') {
@@ -569,8 +568,8 @@ if (typeof ResizeObserver === 'undefined') {
                 // include scroll bars size which can be removed at this step as scroll
                 // bars are the only difference between rounded dimensions + paddings
                 // and "client" properties, though that is not always true in Chrome.
-                var vertScrollbar = Math.round(width + horizPad) - clientWidth;
-                var horizScrollbar = Math.round(height + vertPad) - clientHeight;
+                let vertScrollbar = Math.round(width + horizPad) - clientWidth;
+                let horizScrollbar = Math.round(height + vertPad) - clientHeight;
                 // Chrome has a rather weird rounding of "client" properties.
                 // E.g. for an element with content width of 314.2px it sometimes gives
                 // the client width of 315px and for the width of 314.7px it may give
@@ -591,7 +590,7 @@ if (typeof ResizeObserver === 'undefined') {
          * @param {Element} target - Element to be checked.
          * @returns {boolean}
          */
-        var isSVGGraphicsElement = (function () {
+        let isSVGGraphicsElement = (function () {
             // Some browsers, namely IE and Edge, don't have the SVGGraphicsElement
             // interface.
             if (typeof SVGGraphicsElement !== 'undefined') {
@@ -599,7 +598,7 @@ if (typeof ResizeObserver === 'undefined') {
             }
             // If it's so, then check that element is at least an instance of the
             // SVGElement and that it has the "getBBox" method.
-            // eslint-disable-next-line no-extra-parens
+             
             return function (target) { return (target instanceof getWindowOf(target).SVGElement &&
                 typeof target.getBBox === 'function'); };
         })();
@@ -635,10 +634,10 @@ if (typeof ResizeObserver === 'undefined') {
          * @returns {DOMRectReadOnly}
          */
         function createReadOnlyRect(_a) {
-            var x = _a.x, y = _a.y, width = _a.width, height = _a.height;
+            let x = _a.x, y = _a.y, width = _a.width, height = _a.height;
             // If DOMRectReadOnly is available use it as a prototype for the rectangle.
-            var Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
-            var rect = Object.create(Constr.prototype);
+            let Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
+            let rect = Object.create(Constr.prototype);
             // Rectangle's properties are not writable and non-enumerable.
             defineConfigurable(rect, {
                 x: x, y: y, width: width, height: height,
@@ -667,7 +666,7 @@ if (typeof ResizeObserver === 'undefined') {
          * Class that is responsible for computations of the content rectangle of
          * provided DOM element and for keeping track of it's changes.
          */
-        var ResizeObservation = /** @class */ (function () {
+        let ResizeObservation = /** @class */ (function () {
             /**
              * Creates an instance of ResizeObservation.
              *
@@ -701,7 +700,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {boolean}
              */
             ResizeObservation.prototype.isActive = function () {
-                var rect = getContentRect(this.target);
+                let rect = getContentRect(this.target);
                 this.contentRect_ = rect;
                 return (rect.width !== this.broadcastWidth ||
                     rect.height !== this.broadcastHeight);
@@ -713,7 +712,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {DOMRectInit} Last observed content rectangle.
              */
             ResizeObservation.prototype.broadcastRect = function () {
-                var rect = this.contentRect_;
+                let rect = this.contentRect_;
                 this.broadcastWidth = rect.width;
                 this.broadcastHeight = rect.height;
                 return rect;
@@ -721,7 +720,7 @@ if (typeof ResizeObserver === 'undefined') {
             return ResizeObservation;
         }());
 
-        var ResizeObserverEntry = /** @class */ (function () {
+        let ResizeObserverEntry = /** @class */ (function () {
             /**
              * Creates an instance of ResizeObserverEntry.
              *
@@ -729,7 +728,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @param {DOMRectInit} rectInit - Data of the element's content rectangle.
              */
             function ResizeObserverEntry(target, rectInit) {
-                var contentRect = createReadOnlyRect(rectInit);
+                let contentRect = createReadOnlyRect(rectInit);
                 // According to the specification following properties are not writable
                 // and are also not enumerable in the native implementation.
                 //
@@ -741,7 +740,7 @@ if (typeof ResizeObserver === 'undefined') {
             return ResizeObserverEntry;
         }());
 
-        var ResizeObserverSPI = /** @class */ (function () {
+        let ResizeObserverSPI = /** @class */ (function () {
             /**
              * Creates a new instance of ResizeObserver.
              *
@@ -790,7 +789,7 @@ if (typeof ResizeObserver === 'undefined') {
                 if (!(target instanceof getWindowOf(target).Element)) {
                     throw new TypeError('parameter 1 is not of type "Element".');
                 }
-                var observations = this.observations_;
+                let observations = this.observations_;
                 // Do nothing if element is already being observed.
                 if (observations.has(target)) {
                     return;
@@ -817,7 +816,7 @@ if (typeof ResizeObserver === 'undefined') {
                 if (!(target instanceof getWindowOf(target).Element)) {
                     throw new TypeError('parameter 1 is not of type "Element".');
                 }
-                var observations = this.observations_;
+                let observations = this.observations_;
                 // Do nothing if element is not being observed.
                 if (!observations.has(target)) {
                     return;
@@ -844,7 +843,7 @@ if (typeof ResizeObserver === 'undefined') {
              * @returns {void}
              */
             ResizeObserverSPI.prototype.gatherActive = function () {
-                var _this = this;
+                let _this = this;
                 this.clearActive();
                 this.observations_.forEach(function (observation) {
                     if (observation.isActive()) {
@@ -863,9 +862,9 @@ if (typeof ResizeObserver === 'undefined') {
                 if (!this.hasActive()) {
                     return;
                 }
-                var ctx = this.callbackCtx_;
+                let ctx = this.callbackCtx_;
                 // Create ResizeObserverEntry instance for every active observation.
-                var entries = this.activeObservations_.map(function (observation) {
+                let entries = this.activeObservations_.map(function (observation) {
                     return new ResizeObserverEntry(observation.target, observation.broadcastRect());
                 });
                 this.callback_.call(ctx, entries, ctx);
@@ -893,12 +892,12 @@ if (typeof ResizeObserver === 'undefined') {
         // Registry of internal observers. If WeakMap is not available use current shim
         // for the Map collection as it has all required methods and because WeakMap
         // can't be fully polyfilled anyway.
-        var observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
+        let observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
         /**
          * ResizeObserver API. Encapsulates the ResizeObserver SPI implementation
          * exposing only those methods and properties that are defined in the spec.
          */
-        var ResizeObserver = /** @class */ (function () {
+        let ResizeObserver = /** @class */ (function () {
             /**
              * Creates a new instance of ResizeObserver.
              *
@@ -912,8 +911,8 @@ if (typeof ResizeObserver === 'undefined') {
                 if (!arguments.length) {
                     throw new TypeError('1 argument required, but only 0 present.');
                 }
-                var controller = ResizeObserverController.getInstance();
-                var observer = new ResizeObserverSPI(callback, controller, this);
+                let controller = ResizeObserverController.getInstance();
+                let observer = new ResizeObserverSPI(callback, controller, this);
                 observers.set(this, observer);
             }
             return ResizeObserver;
@@ -925,12 +924,12 @@ if (typeof ResizeObserver === 'undefined') {
             'disconnect'
         ].forEach(function (method) {
             ResizeObserver.prototype[method] = function () {
-                var _a;
+                let _a;
                 return (_a = observers.get(this))[method].apply(_a, arguments);
             };
         });
 
-        var index = (function () {
+        let index = (function () {
             // Export existing implementation if available.
             if (typeof global$1.ResizeObserver !== 'undefined') {
                 return global$1.ResizeObserver;
@@ -942,3 +941,4 @@ if (typeof ResizeObserver === 'undefined') {
 
     })));
 }
+

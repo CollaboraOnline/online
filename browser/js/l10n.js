@@ -14,30 +14,30 @@
 (function () {
 "use strict";
 
-var
-  undef_type = "undefined"
-, string_type = "string"
-, nav = {}
-, String_ctr = String
-, has_own_prop = Object.prototype.hasOwnProperty
-, load_queues = {}
-, localizations = {}
-, FALSE = !1
-, TRUE = !0
-, browserless = FALSE
-// the official format is application/vnd.oftn.l10n+json, though l10n.js will also
-// accept application/x-l10n+json and application/l10n+json
-, l10n_js_media_type = /^\s*application\/(?:vnd\.oftn\.|x-)?l10n\+json\s*(?:$|;)/i
-, XHR
+const undef_type = "undefined",
+      string_type = "string",
+      String_ctr = String,
+      has_own_prop = Object.prototype.hasOwnProperty,
+      load_queues = {},
+      localizations = {},
+      FALSE = !1,
+      TRUE = !0,
+      // the official format is application/vnd.oftn.l10n+json, though l10n.js will also
+      // accept application/x-l10n+json and application/l10n+json
+      l10n_js_media_type = /^\s*application\/(?:vnd\.oftn\.|x-)?l10n\+json\s*(?:$|;)/i;
+
+let nav = {},
+    browserless = FALSE,
+    XHR;
 
 // property minification aids
-, $locale = "locale"
-, $default_locale = "defaultLocale"
-, $to_locale_string = "toLocaleString"
-, $to_lowercase = "toLowerCase"
+const $locale = "locale",
+      $default_locale = "defaultLocale",
+      $to_locale_string = "toLocaleString",
+      $to_lowercase = "toLowerCase";
 
-, array_index_of = Array.prototype.indexOf || function (item) {
-	var
+const array_index_of = Array.prototype.indexOf || function (item) {
+	let
 	  len = this.length
 	, i   = 0
 	;
@@ -54,7 +54,7 @@ var
     if(browserless)
         return loadFromDisk(uri);
 
-	var req  = new XHR(),
+	let req  = new XHR(),
 		data = {};
 
 	try {
@@ -74,7 +74,7 @@ var
 		// warn about error without stopping execution
 		setTimeout(function () {
 			// Error messages are not localized as not to cause an infinite loop
-			var l10n_err = new Error("Unable to load localization data: " + uri);
+			const l10n_err = new Error("Unable to load localization data: " + uri);
 			l10n_err.name = "Localization Error";
 			throw l10n_err;
 		}, 0);
@@ -92,7 +92,7 @@ var
 			localizations = {};
 		} else {
 			// Extend current localizations instead of completely overwriting them
-			var locale, localization, message;
+			let locale, localization, message;
 			for (locale in data) {
 				if (has_own_prop.call(data, locale)) {
 					localization = data[locale];
@@ -134,12 +134,12 @@ var
 	return Function.prototype[$to_locale_string].apply(String_ctr, arguments);
 }
 , loadFromDisk = String_ctr[$to_locale_string] = function (uri) {
-        var fs = require('fs');
-        var read = fs.readFileSync(uri, 'utf8');
+        const fs = require('fs');
+        const read = fs.readFileSync(uri, 'utf8');
         return JSON.parse(read);
 }
 , process_load_queue = function (locale) {
-	var
+	let
 	  queue = load_queues[locale]
 	, i = 0
 	, len = queue.length
@@ -154,9 +154,11 @@ var
 
 	delete load_queues[locale];
 }
-, use_default
-, localize = String_ctr.prototype[$to_locale_string] = function () {
-	var
+
+let use_default;
+
+const localize = String_ctr.prototype[$to_locale_string] = function () {
+	let
 	  using_default = use_default
 	, current_locale = String_ctr[using_default ? $default_locale : $locale]
 	, parts = current_locale[$to_lowercase]().split("-")
@@ -201,7 +203,7 @@ catch(selfNotFoundException)
    }
    else
    {
-       var nodeError = "Problem setting nav in L10N. You are most likely running in a non-browser environment like Node." +
+       const nodeError = "Problem setting nav in L10N. You are most likely running in a non-browser environment like Node." +
         "If this is the case, you can resolve this error by setting global.nav to an object which contains a \"language\"  field. ";
        throw new Error(nodeError);
    }
@@ -209,7 +211,7 @@ catch(selfNotFoundException)
 }
 
 if (!browserless && typeof XMLHttpRequest === undef_type && typeof ActiveXObject !== undef_type) {
-	var AXO = ActiveXObject;
+	const AXO = ActiveXObject;
 
 	XHR = function () {
 		try {
@@ -235,7 +237,7 @@ if (!browserless && typeof XMLHttpRequest === undef_type && typeof ActiveXObject
             XHR = global.XMLHttpRequest;
         }
         else {
-           var nodeError = "Problem setting XHR in L10N. You are most likely running in a non-browser environment like Node." +
+           const nodeError = "Problem setting XHR in L10N. You are most likely running in a non-browser environment like Node." +
             "If this is the case, you can resolve this error by setting global.XMLHttpRequest to a function which produces XMLHttpRequests. " +
             "\nTip: if you are using node, you might want to use the XHR2 package (usage: global.XMLHttpRequest = require('xhr2')";
             throw new Error(nodeError);
@@ -249,14 +251,14 @@ String_ctr[$locale] = nav && (nav.language || nav.userLanguage) || "";
 document.documentElement.lang = window.langParam;
 
 if (!browserless || typeof document !== undef_type) {
-	var
+	let
 	  elts = document.getElementsByTagName("link")
 	, i = elts.length
 	, localization
 	;
 
 	while (i--) {
-		var
+		const
 		  elt = elts[i]
 		, rel = (elt.getAttribute("rel") || "")[$to_lowercase]().split(/\s+/)
 		;
@@ -281,10 +283,11 @@ else
         load(global.l10NLocalFilePath);
     }
     else {
-        var nodeError = "Problem loading localization file. You are most likely running in a non-browser environment like Node." +
+        const nodeError = "Problem loading localization file. You are most likely running in a non-browser environment like Node." +
             "If this is the case, you can resolve this error by setting global.l10NLocalFilePath to the path of your localization file. ";
         throw new Error(nodeError);
     }
 }
 
 }());
+

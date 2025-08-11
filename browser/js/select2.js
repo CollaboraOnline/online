@@ -35,7 +35,7 @@
   // This is needed so we can catch the AMD loader configuration and use it
   // The inner file should be wrapped (by `banner.start.js`) in a function that
   // returns the AMD loader references.
-  var S2 =(function () {
+  const S2 =(function () {
   // Restore the Select2 AMD loader so it can be used
   // Needed mostly in the language files, where the loader is not inserted
   if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) {
@@ -51,9 +51,9 @@ if (!S2) { S2 = {}; } else { require = S2; }
 //be followed.
 /*global setTimeout: false */
 
-var requirejs, require, define;
+let requirejs, require, define;
 (function (undef) {
-    var main, req, makeMap, handlers,
+    let main, req, makeMap, handlers,
         defined = {},
         waiting = {},
         config = {},
@@ -75,7 +75,7 @@ var requirejs, require, define;
      * @returns {String} normalized name
      */
     function normalize(name, baseName) {
-        var nameParts, nameSegment, mapValue, foundMap, lastIndex,
+        let nameParts, nameSegment, mapValue, foundMap, lastIndex,
             foundI, foundStarMap, starI, i, j, part, normalizedBaseParts,
             baseParts = baseName && baseName.split("/"),
             map = config.map,
@@ -189,7 +189,7 @@ var requirejs, require, define;
             //A version of a require function that passes a moduleName
             //value for items that may need to
             //look up paths relative to the moduleName
-            var args = aps.call(arguments, 0);
+            const args = aps.call(arguments, 0);
 
             //If first arg is not require('string'), and there is only
             //one arg, it is the array form without a callback. Insert
@@ -215,7 +215,7 @@ var requirejs, require, define;
 
     function callDep(name) {
         if (hasProp(waiting, name)) {
-            var args = waiting[name];
+            const args = waiting[name];
             delete waiting[name];
             defining[name] = true;
             main.apply(undef, args);
@@ -231,7 +231,7 @@ var requirejs, require, define;
     //with the plugin being undefined if the name
     //did not have a plugin prefix.
     function splitPrefix(name) {
-        var prefix,
+        let prefix,
             index = name ? name.indexOf('!') : -1;
         if (index > -1) {
             prefix = name.substring(0, index);
@@ -252,7 +252,7 @@ var requirejs, require, define;
      * too, as an optimization.
      */
     makeMap = function (name, relParts) {
-        var plugin,
+        let plugin,
             parts = splitPrefix(name),
             prefix = parts[0],
             relResourceName = relParts[1];
@@ -301,7 +301,7 @@ var requirejs, require, define;
             return makeRequire(name);
         },
         exports: function (name) {
-            var e = defined[name];
+            const e = defined[name];
             if (typeof e !== 'undefined') {
                 return e;
             } else {
@@ -319,7 +319,7 @@ var requirejs, require, define;
     };
 
     main = function (name, deps, callback, relName) {
-        var cjsModule, depName, ret, map, i, relParts,
+        let cjsModule, depName, ret, map, i, relParts,
             args = [],
             callbackType = typeof callback,
             usingExports;
@@ -485,7 +485,7 @@ S2.define("almond", function(){});
 
 /* global jQuery:false, $:false */
 S2.define('jquery',[],function () {
-  var _$ = jQuery || $;
+  const _$ = jQuery || $;
 
   if (_$ == null && console && console.error) {
     console.error(
@@ -501,16 +501,16 @@ S2.define('jquery',[],function () {
 S2.define('select2/utils',[
   'jquery'
 ], function ($) {
-  var Utils = {};
+  const Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
-    var __hasProp = {}.hasOwnProperty;
+    const __hasProp = {}.hasOwnProperty;
 
     function BaseConstructor () {
       this.constructor = ChildClass;
     }
 
-    for (var key in SuperClass) {
+    for (const key in SuperClass) {
       if (__hasProp.call(SuperClass, key)) {
         ChildClass[key] = SuperClass[key];
       }
@@ -524,12 +524,12 @@ S2.define('select2/utils',[
   };
 
   function getMethods (theClass) {
-    var proto = theClass.prototype;
+    const proto = theClass.prototype;
 
-    var methods = [];
+    const methods = [];
 
-    for (var methodName in proto) {
-      var m = proto[methodName];
+    for (const methodName in proto) {
+      const m = proto[methodName];
 
       if (typeof m !== 'function') {
         continue;
@@ -546,15 +546,15 @@ S2.define('select2/utils',[
   }
 
   Utils.Decorate = function (SuperClass, DecoratorClass) {
-    var decoratedMethods = getMethods(DecoratorClass);
-    var superMethods = getMethods(SuperClass);
+    const decoratedMethods = getMethods(DecoratorClass);
+    const superMethods = getMethods(SuperClass);
 
     function DecoratedClass () {
-      var unshift = Array.prototype.unshift;
+      const unshift = Array.prototype.unshift;
 
-      var argCount = DecoratorClass.prototype.constructor.length;
+      const argCount = DecoratorClass.prototype.constructor.length;
 
-      var calledConstructor = SuperClass.prototype.constructor;
+      let calledConstructor = SuperClass.prototype.constructor;
 
       if (argCount > 0) {
         unshift.call(arguments, SuperClass.prototype.constructor);
@@ -573,25 +573,25 @@ S2.define('select2/utils',[
 
     DecoratedClass.prototype = new ctr();
 
-    for (var m = 0; m < superMethods.length; m++) {
-      var superMethod = superMethods[m];
+    for (let m = 0; m < superMethods.length; m++) {
+      const superMethod = superMethods[m];
 
       DecoratedClass.prototype[superMethod] =
         SuperClass.prototype[superMethod];
     }
 
-    var calledMethod = function (methodName) {
+    const calledMethod = function (methodName) {
       // Stub out the original method if it's not decorating an actual method
-      var originalMethod = function () {};
+      let originalMethod = function () {};
 
       if (methodName in DecoratedClass.prototype) {
         originalMethod = DecoratedClass.prototype[methodName];
       }
 
-      var decoratedMethod = DecoratorClass.prototype[methodName];
+      const decoratedMethod = DecoratorClass.prototype[methodName];
 
       return function () {
-        var unshift = Array.prototype.unshift;
+        const unshift = Array.prototype.unshift;
 
         unshift.call(arguments, originalMethod);
 
@@ -599,8 +599,8 @@ S2.define('select2/utils',[
       };
     };
 
-    for (var d = 0; d < decoratedMethods.length; d++) {
-      var decoratedMethod = decoratedMethods[d];
+    for (let d = 0; d < decoratedMethods.length; d++) {
+      const decoratedMethod = decoratedMethods[d];
 
       DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
     }
@@ -608,7 +608,7 @@ S2.define('select2/utils',[
     return DecoratedClass;
   };
 
-  var Observable = function () {
+  const Observable = function () {
     this.listeners = {};
   };
 
@@ -623,8 +623,8 @@ S2.define('select2/utils',[
   };
 
   Observable.prototype.trigger = function (event) {
-    var slice = Array.prototype.slice;
-    var params = slice.call(arguments, 1);
+    const slice = Array.prototype.slice;
+    let params = slice.call(arguments, 1);
 
     this.listeners = this.listeners || {};
 
@@ -651,7 +651,7 @@ S2.define('select2/utils',[
   };
 
   Observable.prototype.invoke = function (listeners, params) {
-    for (var i = 0, len = listeners.length; i < len; i++) {
+    for (let i = 0, len = listeners.length; i < len; i++) {
       listeners[i].apply(this, params);
     }
   };
@@ -659,10 +659,10 @@ S2.define('select2/utils',[
   Utils.Observable = Observable;
 
   Utils.generateChars = function (length) {
-    var chars = '';
+    let chars = '';
 
-    for (var i = 0; i < length; i++) {
-      var randomChar = Math.floor(Math.random() * 36);
+    for (let i = 0; i < length; i++) {
+      const randomChar = Math.floor(Math.random() * 36);
       chars += randomChar.toString(36);
     }
 
@@ -676,17 +676,17 @@ S2.define('select2/utils',[
   };
 
   Utils._convertData = function (data) {
-    for (var originalKey in data) {
-      var keys = originalKey.split('-');
+    for (const originalKey in data) {
+      const keys = originalKey.split('-');
 
-      var dataLevel = data;
+      let dataLevel = data;
 
       if (keys.length === 1) {
         continue;
       }
 
-      for (var k = 0; k < keys.length; k++) {
-        var key = keys[k];
+      for (let k = 0; k < keys.length; k++) {
+        let key = keys[k];
 
         // Lowercase the first letter
         // By default, dash-separated becomes camelCase
@@ -716,9 +716,9 @@ S2.define('select2/utils',[
     // http://codereview.stackexchange.com/q/13338
     // and was designed to be used with the Sizzle selector engine.
 
-    var $el = $(el);
-    var overflowX = el.style.overflowX;
-    var overflowY = el.style.overflowY;
+    const $el = $(el);
+    const overflowX = el.style.overflowX;
+    const overflowY = el.style.overflowY;
 
     //Check both x and y declarations
     if (overflowX === overflowY &&
@@ -735,7 +735,7 @@ S2.define('select2/utils',[
   };
 
   Utils.escapeMarkup = function (markup) {
-    var replaceMap = {
+    const replaceMap = {
       '\\': '&#92;',
       '&': '&amp;',
       '<': '&lt;',
@@ -760,7 +760,7 @@ S2.define('select2/utils',[
     // jQuery 1.7.x does not support $.fn.append() with an array
     // Fall back to a jQuery object collection using $.fn.add()
     if ($.fn.jquery.substr(0, 3) === '1.7') {
-      var $jqNodes = $();
+      let $jqNodes = $();
 
       $.map($nodes, function (node) {
         $jqNodes = $jqNodes.add(node);
@@ -775,14 +775,14 @@ S2.define('select2/utils',[
   // Cache objects in Utils.__cache instead of $.data (see #4346)
   Utils.__cache = {};
 
-  var id = 0;
+  let id = 0;
   Utils.GetUniqueElementId = function (element) {
     // Get a unique element Id. If element has no id,
     // creates a new unique number, stores it in the id
     // attribute and returns the new id.
     // If an id already exists, it simply returns it.
 
-    var select2Id = element.getAttribute('data-select2-id');
+    let select2Id = element.getAttribute('data-select2-id');
     if (select2Id == null) {
       // If element has id, use it.
       if (element.id) {
@@ -799,7 +799,7 @@ S2.define('select2/utils',[
   Utils.StoreData = function (element, name, value) {
     // Stores an item in the cache for a specified element.
     // name is the cache key.
-    var id = Utils.GetUniqueElementId(element);
+    const id = Utils.GetUniqueElementId(element);
     if (!Utils.__cache[id]) {
       Utils.__cache[id] = {};
     }
@@ -812,7 +812,7 @@ S2.define('select2/utils',[
     // name is optional. If no name specified, return
     // all cache items for the specified element.
     // and for a specified element.
-    var id = Utils.GetUniqueElementId(element);
+    const id = Utils.GetUniqueElementId(element);
     if (name) {
       if (Utils.__cache[id]) {
         if (Utils.__cache[id][name] != null) {
@@ -828,7 +828,7 @@ S2.define('select2/utils',[
 
   Utils.RemoveData = function (element) {
     // Removes all cached items for a specified element.
-    var id = Utils.GetUniqueElementId(element);
+    const id = Utils.GetUniqueElementId(element);
     if (Utils.__cache[id] != null) {
       delete Utils.__cache[id];
     }
@@ -854,7 +854,7 @@ S2.define('select2/results',[
   Utils.Extend(Results, Utils.Observable);
 
   Results.prototype.render = function () {
-    var $results = $(
+    const $results = $(
       '<ul class="select2-results__options" role="listbox"></ul>'
     );
 
@@ -872,17 +872,17 @@ S2.define('select2/results',[
   };
 
   Results.prototype.displayMessage = function (params) {
-    var escapeMarkup = this.options.get('escapeMarkup');
+    const escapeMarkup = this.options.get('escapeMarkup');
 
     this.clear();
     this.hideLoading();
 
-    var $message = $(
+    const $message = $(
       '<li role="alert" aria-live="assertive"' +
       ' class="select2-results__option"></li>'
     );
 
-    var message = this.options.get('translations').get(params.message);
+    const message = this.options.get('translations').get(params.message);
 
     $message.append(
       escapeMarkup(
@@ -902,7 +902,7 @@ S2.define('select2/results',[
   Results.prototype.append = function (data) {
     this.hideLoading();
 
-    var $options = [];
+    const $options = [];
 
     if (data.results == null || data.results.length === 0) {
       if (this.$results.children().length === 0) {
@@ -916,10 +916,10 @@ S2.define('select2/results',[
 
     data.results = this.sort(data.results);
 
-    for (var d = 0; d < data.results.length; d++) {
-      var item = data.results[d];
+    for (let d = 0; d < data.results.length; d++) {
+      const item = data.results[d];
 
-      var $option = this.option(item);
+      const $option = this.option(item);
 
       $options.push($option);
     }
@@ -928,21 +928,21 @@ S2.define('select2/results',[
   };
 
   Results.prototype.position = function ($results, $dropdown) {
-    var $resultsContainer = $dropdown.find('.select2-results');
+    const $resultsContainer = $dropdown.find('.select2-results');
     $resultsContainer.append($results);
   };
 
   Results.prototype.sort = function (data) {
-    var sorter = this.options.get('sorter');
+    const sorter = this.options.get('sorter');
 
     return sorter(data);
   };
 
   Results.prototype.highlightFirstItem = function () {
-    var $options = this.$results
+    const $options = this.$results
       .find('.select2-results__option[aria-selected]');
 
-    var $selected = $options.filter('[aria-selected=true]');
+    const $selected = $options.filter('[aria-selected=true]');
 
     // Check if there are any selected options
     if ($selected.length > 0) {
@@ -958,23 +958,23 @@ S2.define('select2/results',[
   };
 
   Results.prototype.setClasses = function () {
-    var self = this;
+    const self = this;
 
     this.data.current(function (selected) {
-      var selectedIds = $.map(selected, function (s) {
+      const selectedIds = $.map(selected, function (s) {
         return s.id.toString();
       });
 
-      var $options = self.$results
+      const $options = self.$results
         .find('.select2-results__option[aria-selected]');
 
       $options.each(function () {
-        var $option = $(this);
+        const $option = $(this);
 
-        var item = Utils.GetData(this, 'data');
+        const item = Utils.GetData(this, 'data');
 
         // id needs to be converted to a string when comparing
-        var id = '' + item.id;
+        const id = '' + item.id;
 
         if ((item.element != null && item.element.selected) ||
             (item.element == null && $.inArray(id, selectedIds) > -1)) {
@@ -990,14 +990,14 @@ S2.define('select2/results',[
   Results.prototype.showLoading = function (params) {
     this.hideLoading();
 
-    var loadingMore = this.options.get('translations').get('searching');
+    const loadingMore = this.options.get('translations').get('searching');
 
-    var loading = {
+    const loading = {
       disabled: true,
       loading: true,
       text: loadingMore(params)
     };
-    var $loading = this.option(loading);
+    const $loading = this.option(loading);
     $loading.className += ' loading-results';
 
     this.$results.prepend($loading);
@@ -1008,15 +1008,15 @@ S2.define('select2/results',[
   };
 
   Results.prototype.option = function (data) {
-    var option = document.createElement('li');
+    const option = document.createElement('li');
     option.className = 'select2-results__option';
 
-    var attrs = {
+    const attrs = {
       'role': 'option',
       'aria-selected': 'false'
     };
 
-    var matches = window.Element.prototype.matches ||
+    const matches = window.Element.prototype.matches ||
       window.Element.prototype.msMatchesSelector ||
       window.Element.prototype.webkitMatchesSelector;
 
@@ -1044,32 +1044,32 @@ S2.define('select2/results',[
       delete attrs['aria-selected'];
     }
 
-    for (var attr in attrs) {
-      var val = attrs[attr];
+    for (const attr in attrs) {
+      const val = attrs[attr];
 
       option.setAttribute(attr, val);
     }
 
     if (data.children) {
-      var $option = $(option);
+      const $option = $(option);
 
-      var label = document.createElement('strong');
+      const label = document.createElement('strong');
       label.className = 'select2-results__group';
 
-      var $label = $(label);
+      const $label = $(label);
       this.template(data, label);
 
-      var $children = [];
+      const $children = [];
 
-      for (var c = 0; c < data.children.length; c++) {
-        var child = data.children[c];
+      for (let c = 0; c < data.children.length; c++) {
+        const child = data.children[c];
 
-        var $child = this.option(child);
+        const $child = this.option(child);
 
         $children.push($child);
       }
 
-      var $childrenContainer = $('<ul></ul>', {
+      const $childrenContainer = $('<ul></ul>', {
         'class': 'select2-results__options select2-results__options--nested'
       });
 
@@ -1087,9 +1087,9 @@ S2.define('select2/results',[
   };
 
   Results.prototype.bind = function (container, $container) {
-    var self = this;
+    const self = this;
 
-    var id = container.id + '-results';
+    const id = container.id + '-results';
 
     this.$results.attr('id', id);
 
@@ -1157,7 +1157,7 @@ S2.define('select2/results',[
     });
 
     container.on('results:toggle', function () {
-      var $highlighted = self.getHighlightedResults();
+      const $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
         return;
@@ -1167,13 +1167,13 @@ S2.define('select2/results',[
     });
 
     container.on('results:select', function () {
-      var $highlighted = self.getHighlightedResults();
+      const $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
         return;
       }
 
-      var data = Utils.GetData($highlighted[0], 'data');
+      const data = Utils.GetData($highlighted[0], 'data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
         self.trigger('close', {});
@@ -1185,11 +1185,11 @@ S2.define('select2/results',[
     });
 
     container.on('results:previous', function () {
-      var $highlighted = self.getHighlightedResults();
+      const $highlighted = self.getHighlightedResults();
 
-      var $options = self.$results.find('[aria-selected]');
+      const $options = self.$results.find('[aria-selected]');
 
-      var currentIndex = $options.index($highlighted);
+      const currentIndex = $options.index($highlighted);
 
       // If we are already at the top, don't move further
       // If no options, currentIndex will be -1
@@ -1197,20 +1197,20 @@ S2.define('select2/results',[
         return;
       }
 
-      var nextIndex = currentIndex - 1;
+      let nextIndex = currentIndex - 1;
 
       // If none are highlighted, highlight the first
       if ($highlighted.length === 0) {
         nextIndex = 0;
       }
 
-      var $next = $options.eq(nextIndex);
+      const $next = $options.eq(nextIndex);
 
       $next.trigger('mouseenter');
 
-      var currentOffset = self.$results.offset().top;
-      var nextTop = $next.offset().top;
-      var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
+      const currentOffset = self.$results.offset().top;
+      const nextTop = $next.offset().top;
+      const nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
 
       if (nextIndex === 0) {
         self.$results.scrollTop(0);
@@ -1220,27 +1220,27 @@ S2.define('select2/results',[
     });
 
     container.on('results:next', function () {
-      var $highlighted = self.getHighlightedResults();
+      const $highlighted = self.getHighlightedResults();
 
-      var $options = self.$results.find('[aria-selected]');
+      const $options = self.$results.find('[aria-selected]');
 
-      var currentIndex = $options.index($highlighted);
+      const currentIndex = $options.index($highlighted);
 
-      var nextIndex = currentIndex + 1;
+      const nextIndex = currentIndex + 1;
 
       // If we are at the last option, stay there
       if (nextIndex >= $options.length) {
         return;
       }
 
-      var $next = $options.eq(nextIndex);
+      const $next = $options.eq(nextIndex);
 
       $next.trigger('mouseenter');
 
-      var currentOffset = self.$results.offset().top +
+      const currentOffset = self.$results.offset().top +
         self.$results.outerHeight(false);
-      var nextBottom = $next.offset().top + $next.outerHeight(false);
-      var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
+      const nextBottom = $next.offset().top + $next.outerHeight(false);
+      const nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
 
       if (nextIndex === 0) {
         self.$results.scrollTop(0);
@@ -1259,12 +1259,12 @@ S2.define('select2/results',[
 
     if ($.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
-        var top = self.$results.scrollTop();
+        const top = self.$results.scrollTop();
 
-        var bottom = self.$results.get(0).scrollHeight - top + e.deltaY;
+        const bottom = self.$results.get(0).scrollHeight - top + e.deltaY;
 
-        var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
-        var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
+        const isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
+        const isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
 
         if (isAtTop) {
           self.$results.scrollTop(0);
@@ -1284,9 +1284,9 @@ S2.define('select2/results',[
 
     this.$results.on('mouseup', '.select2-results__option[aria-selected]',
       function (evt) {
-      var $this = $(this);
+      const $this = $(this);
 
-      var data = Utils.GetData(this, 'data');
+      const data = Utils.GetData(this, 'data');
 
       if ($this.attr('aria-selected') === 'true') {
         if (self.options.get('multiple')) {
@@ -1309,7 +1309,7 @@ S2.define('select2/results',[
 
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
       function (evt) {
-      var data = Utils.GetData(this, 'data');
+      const data = Utils.GetData(this, 'data');
 
       self.getHighlightedResults()
           .removeClass('select2-results__option--highlighted');
@@ -1322,7 +1322,7 @@ S2.define('select2/results',[
   };
 
   Results.prototype.getHighlightedResults = function () {
-    var $highlighted = this.$results
+    const $highlighted = this.$results
     .find('.select2-results__option--highlighted');
 
     return $highlighted;
@@ -1333,21 +1333,21 @@ S2.define('select2/results',[
   };
 
   Results.prototype.ensureHighlightVisible = function () {
-    var $highlighted = this.getHighlightedResults();
+    const $highlighted = this.getHighlightedResults();
 
     if ($highlighted.length === 0) {
       return;
     }
 
-    var $options = this.$results.find('[aria-selected]');
+    const $options = this.$results.find('[aria-selected]');
 
-    var currentIndex = $options.index($highlighted);
+    const currentIndex = $options.index($highlighted);
 
-    var currentOffset = this.$results.offset().top;
-    var nextTop = $highlighted.offset().top;
-    var nextOffset = this.$results.scrollTop() + (nextTop - currentOffset);
+    const currentOffset = this.$results.offset().top;
+    const nextTop = $highlighted.offset().top;
+    let nextOffset = this.$results.scrollTop() + (nextTop - currentOffset);
 
-    var offsetDelta = nextTop - currentOffset;
+    const offsetDelta = nextTop - currentOffset;
     nextOffset -= $highlighted.outerHeight(false) * 2;
 
     if (currentIndex <= 2) {
@@ -1358,10 +1358,10 @@ S2.define('select2/results',[
   };
 
   Results.prototype.template = function (result, container) {
-    var template = this.options.get('templateResult');
-    var escapeMarkup = this.options.get('escapeMarkup');
+    const template = this.options.get('templateResult');
+    const escapeMarkup = this.options.get('escapeMarkup');
 
-    var content = template(result, container);
+    const content = template(result, container);
 
     if (content == null) {
       container.style.display = 'none';
@@ -1378,7 +1378,7 @@ S2.define('select2/results',[
 S2.define('select2/keys',[
 
 ], function () {
-  var KEYS = {
+  const KEYS = {
     BACKSPACE: 8,
     TAB: 9,
     ENTER: 13,
@@ -1416,7 +1416,7 @@ S2.define('select2/selection/base',[
   Utils.Extend(BaseSelection, Utils.Observable);
 
   BaseSelection.prototype.render = function () {
-    var $selection = $(
+    const $selection = $(
       '<span class="select2-selection" role="combobox" ' +
       ' aria-haspopup="true" aria-expanded="false">' +
       '</span>'
@@ -1440,9 +1440,9 @@ S2.define('select2/selection/base',[
   };
 
   BaseSelection.prototype.bind = function (container, $container) {
-    var self = this;
+    const self = this;
 
-    var resultsId = container.id + '-results';
+    const resultsId = container.id + '-results';
 
     this.container = container;
 
@@ -1501,7 +1501,7 @@ S2.define('select2/selection/base',[
   };
 
   BaseSelection.prototype._handleBlur = function (evt) {
-    var self = this;
+    const self = this;
 
     // This needs to be delayed as the active element is the body when the tab
     // key is pressed, possibly along with others.
@@ -1521,18 +1521,18 @@ S2.define('select2/selection/base',[
   BaseSelection.prototype._attachCloseHandler = function (container) {
 
     $(document.body).on('mousedown.select2.' + container.id, function (e) {
-      var $target = $(e.target);
+      const $target = $(e.target);
 
-      var $select = $target.closest('.select2');
+      const $select = $target.closest('.select2');
 
-      var $all = $('.select2.select2-container--open');
+      const $all = $('.select2.select2-container--open');
 
       $all.each(function () {
         if (this == $select[0]) {
           return;
         }
 
-        var $element = Utils.GetData(this, 'element');
+        const $element = Utils.GetData(this, 'element');
 
         $element.select2('close');
       });
@@ -1544,7 +1544,7 @@ S2.define('select2/selection/base',[
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {
-    var $selectionContainer = $container.find('.selection');
+    const $selectionContainer = $container.find('.selection');
     $selectionContainer.append($selection);
   };
 
@@ -1593,7 +1593,7 @@ S2.define('select2/selection/single',[
   Utils.Extend(SingleSelection, BaseSelection);
 
   SingleSelection.prototype.render = function () {
-    var $selection = SingleSelection.__super__.render.call(this);
+    const $selection = SingleSelection.__super__.render.call(this);
 
     $selection.addClass('select2-selection--single');
 
@@ -1608,11 +1608,11 @@ S2.define('select2/selection/single',[
   };
 
   SingleSelection.prototype.bind = function (container, $container) {
-    var self = this;
+    const self = this;
 
     SingleSelection.__super__.bind.apply(this, arguments);
 
-    var id = container.id + '-container';
+    const id = container.id + '-container';
 
     this.$selection.find('.select2-selection__rendered')
       .attr('id', id)
@@ -1647,14 +1647,14 @@ S2.define('select2/selection/single',[
   };
 
   SingleSelection.prototype.clear = function () {
-    var $rendered = this.$selection.find('.select2-selection__rendered');
+    const $rendered = this.$selection.find('.select2-selection__rendered');
     $rendered.empty();
     $rendered.removeAttr('title'); // clear tooltip on empty
   };
 
   SingleSelection.prototype.display = function (data, container) {
-    var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
+    const template = this.options.get('templateSelection');
+    const escapeMarkup = this.options.get('escapeMarkup');
 
     return escapeMarkup(template(data, container));
   };
@@ -1669,14 +1669,14 @@ S2.define('select2/selection/single',[
       return;
     }
 
-    var selection = data[0];
+    const selection = data[0];
 
-    var $rendered = this.$selection.find('.select2-selection__rendered');
-    var formatted = this.display(selection, $rendered);
+    const $rendered = this.$selection.find('.select2-selection__rendered');
+    const formatted = this.display(selection, $rendered);
 
     $rendered.empty().append(formatted);
 
-    var title = selection.title || selection.text;
+    const title = selection.title || selection.text;
 
     if (title) {
       $rendered.attr('title', title);
@@ -1700,7 +1700,7 @@ S2.define('select2/selection/multiple',[
   Utils.Extend(MultipleSelection, BaseSelection);
 
   MultipleSelection.prototype.render = function () {
-    var $selection = MultipleSelection.__super__.render.call(this);
+    const $selection = MultipleSelection.__super__.render.call(this);
 
     $selection.addClass('select2-selection--multiple');
 
@@ -1712,7 +1712,7 @@ S2.define('select2/selection/multiple',[
   };
 
   MultipleSelection.prototype.bind = function (container, $container) {
-    var self = this;
+    const self = this;
 
     MultipleSelection.__super__.bind.apply(this, arguments);
 
@@ -1731,10 +1731,10 @@ S2.define('select2/selection/multiple',[
           return;
         }
 
-        var $remove = $(this);
-        var $selection = $remove.parent();
+        const $remove = $(this);
+        const $selection = $remove.parent();
 
-        var data = Utils.GetData($selection[0], 'data');
+        const data = Utils.GetData($selection[0], 'data');
 
         self.trigger('unselect', {
           originalEvent: evt,
@@ -1745,20 +1745,20 @@ S2.define('select2/selection/multiple',[
   };
 
   MultipleSelection.prototype.clear = function () {
-    var $rendered = this.$selection.find('.select2-selection__rendered');
+    const $rendered = this.$selection.find('.select2-selection__rendered');
     $rendered.empty();
     $rendered.removeAttr('title');
   };
 
   MultipleSelection.prototype.display = function (data, container) {
-    var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
+    const template = this.options.get('templateSelection');
+    const escapeMarkup = this.options.get('escapeMarkup');
 
     return escapeMarkup(template(data, container));
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
-    var $container = $(
+    const $container = $(
       '<li class="select2-selection__choice">' +
         '<span class="select2-selection__choice__remove" role="presentation">' +
           '&times;' +
@@ -1776,17 +1776,17 @@ S2.define('select2/selection/multiple',[
       return;
     }
 
-    var $selections = [];
+    const $selections = [];
 
-    for (var d = 0; d < data.length; d++) {
-      var selection = data[d];
+    for (let d = 0; d < data.length; d++) {
+      const selection = data[d];
 
-      var $selection = this.selectionContainer();
-      var formatted = this.display(selection, $selection);
+      const $selection = this.selectionContainer();
+      const formatted = this.display(selection, $selection);
 
       $selection.append(formatted);
 
-      var title = selection.title || selection.text;
+      const title = selection.title || selection.text;
 
       if (title) {
         $selection.attr('title', title);
@@ -1797,7 +1797,7 @@ S2.define('select2/selection/multiple',[
       $selections.push($selection);
     }
 
-    var $rendered = this.$selection.find('.select2-selection__rendered');
+    const $rendered = this.$selection.find('.select2-selection__rendered');
 
     Utils.appendMany($rendered, $selections);
   };
@@ -1826,7 +1826,7 @@ S2.define('select2/selection/placeholder',[
   };
 
   Placeholder.prototype.createPlaceholder = function (decorated, placeholder) {
-    var $placeholder = this.selectionContainer();
+    const $placeholder = this.selectionContainer();
 
     $placeholder.html(this.display(placeholder));
     $placeholder.addClass('select2-selection__placeholder')
@@ -1836,10 +1836,10 @@ S2.define('select2/selection/placeholder',[
   };
 
   Placeholder.prototype.update = function (decorated, data) {
-    var singlePlaceholder = (
+    const singlePlaceholder = (
       data.length == 1 && data[0].id != this.placeholder.id
     );
-    var multipleSelections = data.length > 1;
+    const multipleSelections = data.length > 1;
 
     if (multipleSelections || singlePlaceholder) {
       return decorated.call(this, data);
@@ -1847,7 +1847,7 @@ S2.define('select2/selection/placeholder',[
 
     this.clear();
 
-    var $placeholder = this.createPlaceholder(this.placeholder);
+    const $placeholder = this.createPlaceholder(this.placeholder);
 
     this.$selection.find('.select2-selection__rendered').append($placeholder);
   };
@@ -1863,7 +1863,7 @@ S2.define('select2/selection/allowClear',[
   function AllowClear () { }
 
   AllowClear.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
     decorated.call(this, container, $container);
 
@@ -1892,7 +1892,7 @@ S2.define('select2/selection/allowClear',[
       return;
     }
 
-    var $clear = this.$selection.find('.select2-selection__clear');
+    const $clear = this.$selection.find('.select2-selection__clear');
 
     // Ignore the event if nothing has been selected
     if ($clear.length === 0) {
@@ -1901,12 +1901,12 @@ S2.define('select2/selection/allowClear',[
 
     evt.stopPropagation();
 
-    var data = Utils.GetData($clear[0], 'data');
+    const data = Utils.GetData($clear[0], 'data');
 
-    var previousVal = this.$element.val();
+    const previousVal = this.$element.val();
     this.$element.val(this.placeholder.id);
 
-    var unselectData = {
+    let unselectData = {
       data: data
     };
     this.trigger('clear', unselectData);
@@ -1915,7 +1915,7 @@ S2.define('select2/selection/allowClear',[
       return;
     }
 
-    for (var d = 0; d < data.length; d++) {
+    for (let d = 0; d < data.length; d++) {
       unselectData = {
         data: data[d]
       };
@@ -1954,9 +1954,9 @@ S2.define('select2/selection/allowClear',[
       return;
     }
 
-    var removeAll = this.options.get('translations').get('removeAllItems');
+    const removeAll = this.options.get('translations').get('removeAllItems');
 
-    var $remove = $(
+    const $remove = $(
       '<span class="select2-selection__clear" title="' + removeAll() +'">' +
         '&times;' +
       '</span>'
@@ -1979,7 +1979,7 @@ S2.define('select2/selection/search',[
   }
 
   Search.prototype.render = function (decorated) {
-    var $search = $(
+    const $search = $(
       '<li class="select2-search select2-search--inline">' +
         '<input class="select2-search__field" type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
@@ -1990,7 +1990,7 @@ S2.define('select2/selection/search',[
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    var $rendered = decorated.call(this);
+    const $rendered = decorated.call(this);
 
     this._transferTabIndex();
 
@@ -1998,9 +1998,9 @@ S2.define('select2/selection/search',[
   };
 
   Search.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
-    var resultsId = container.id + '-results';
+    const resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
 
@@ -2053,14 +2053,14 @@ S2.define('select2/selection/search',[
 
       self._keyUpPrevented = evt.isDefaultPrevented();
 
-      var key = evt.which;
+      const key = evt.which;
 
       if (key === KEYS.BACKSPACE && self.$search.val() === '') {
-        var $previousChoice = self.$searchContainer
+        const $previousChoice = self.$searchContainer
           .prev('.select2-selection__choice');
 
         if ($previousChoice.length > 0) {
-          var item = Utils.GetData($previousChoice[0], 'data');
+          const item = Utils.GetData($previousChoice[0], 'data');
 
           self.searchRemoveChoice(item);
 
@@ -2080,8 +2080,8 @@ S2.define('select2/selection/search',[
     // slightly cleaner than doing a user agent check.
     // This property is not available in Edge, but Edge also doesn't have
     // this bug.
-    var msie = document.documentMode;
-    var disableInputEvents = msie && msie <= 11;
+    const msie = document.documentMode;
+    const disableInputEvents = msie && msie <= 11;
 
     // Workaround for browsers which do not support the `input` event
     // This will prevent double-triggering of events for browsers which support
@@ -2115,7 +2115,7 @@ S2.define('select2/selection/search',[
           return;
         }
 
-        var key = evt.which;
+        const key = evt.which;
 
         // We can freely ignore events from modifier keys
         if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
@@ -2149,7 +2149,7 @@ S2.define('select2/selection/search',[
   };
 
   Search.prototype.update = function (decorated, data) {
-    var searchHadFocus = this.$search[0] == document.activeElement;
+    const searchHadFocus = this.$search[0] == document.activeElement;
 
     this.$search.attr('placeholder', '');
 
@@ -2168,7 +2168,7 @@ S2.define('select2/selection/search',[
     this.resizeSearch();
 
     if (!this._keyUpPrevented) {
-      var input = this.$search.val();
+      const input = this.$search.val();
 
       this.trigger('query', {
         term: input
@@ -2190,12 +2190,12 @@ S2.define('select2/selection/search',[
   Search.prototype.resizeSearch = function () {
     this.$search.css('width', '25px');
 
-    var width = '';
+    let width = '';
 
     if (this.$search.attr('placeholder') !== '') {
       width = this.$selection.find('.select2-selection__rendered').width();
     } else {
-      var minimumWidth = this.$search.val().length + 1;
+      const minimumWidth = this.$search.val().length + 1;
 
       width = (minimumWidth * 0.75) + 'em';
     }
@@ -2212,8 +2212,8 @@ S2.define('select2/selection/eventRelay',[
   function EventRelay () { }
 
   EventRelay.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-    var relayEvents = [
+    const self = this;
+    const relayEvents = [
       'open', 'opening',
       'close', 'closing',
       'select', 'selecting',
@@ -2221,7 +2221,7 @@ S2.define('select2/selection/eventRelay',[
       'clear', 'clearing'
     ];
 
-    var preventableEvents = [
+    const preventableEvents = [
       'opening', 'closing', 'selecting', 'unselecting', 'clearing'
     ];
 
@@ -2237,7 +2237,7 @@ S2.define('select2/selection/eventRelay',[
       params = params || {};
 
       // Generate the jQuery event for the Select2 event
-      var evt = $.Event('select2:' + name, {
+      const evt = $.Event('select2:' + name, {
         params: params
       });
 
@@ -2281,7 +2281,7 @@ S2.define('select2/translation',[
 
   Translation.loadPath = function (path) {
     if (!(path in Translation._cache)) {
-      var translations = require(path);
+      const translations = require(path);
 
       Translation._cache[path] = translations;
     }
@@ -2295,7 +2295,7 @@ S2.define('select2/translation',[
 S2.define('select2/diacritics',[
 
 ], function () {
-  var diacritics = {
+  const diacritics = {
     '\u24B6': 'A',
     '\uFF21': 'A',
     '\u00C0': 'A',
@@ -3169,7 +3169,7 @@ S2.define('select2/data/base',[
   };
 
   BaseAdapter.prototype.generateResultId = function (container, data) {
-    var id = container.id + '-result-';
+    let id = container.id + '-result-';
 
     id += Utils.generateChars(4);
 
@@ -3199,13 +3199,13 @@ S2.define('select2/data/select',[
   Utils.Extend(SelectAdapter, BaseAdapter);
 
   SelectAdapter.prototype.current = function (callback) {
-    var data = [];
-    var self = this;
+    const data = [];
+    const self = this;
 
     this.$element.find(':selected').each(function () {
-      var $option = $(this);
+      const $option = $(this);
 
-      var option = self.item($option);
+      const option = self.item($option);
 
       data.push(option);
     });
@@ -3214,7 +3214,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.select = function (data) {
-    var self = this;
+    const self = this;
 
     data.selected = true;
 
@@ -3229,13 +3229,13 @@ S2.define('select2/data/select',[
 
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
-        var val = [];
+        const val = [];
 
         data = [data];
         data.push.apply(data, currentData);
 
-        for (var d = 0; d < data.length; d++) {
-          var id = data[d].id;
+        for (let d = 0; d < data.length; d++) {
+          const id = data[d].id;
 
           if ($.inArray(id, val) === -1) {
             val.push(id);
@@ -3246,7 +3246,7 @@ S2.define('select2/data/select',[
         self.$element.trigger('input').trigger('change');
       });
     } else {
-      var val = data.id;
+      const val = data.id;
 
       this.$element.val(val);
       this.$element.trigger('input').trigger('change');
@@ -3254,7 +3254,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.unselect = function (data) {
-    var self = this;
+    const self = this;
 
     if (!this.$element.prop('multiple')) {
       return;
@@ -3271,10 +3271,10 @@ S2.define('select2/data/select',[
     }
 
     this.current(function (currentData) {
-      var val = [];
+      const val = [];
 
-      for (var d = 0; d < currentData.length; d++) {
-        var id = currentData[d].id;
+      for (let d = 0; d < currentData.length; d++) {
+        const id = currentData[d].id;
 
         if (id !== data.id && $.inArray(id, val) === -1) {
           val.push(id);
@@ -3288,7 +3288,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.bind = function (container, $container) {
-    var self = this;
+    const self = this;
 
     this.container = container;
 
@@ -3310,21 +3310,21 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.query = function (params, callback) {
-    var data = [];
-    var self = this;
+    const data = [];
+    const self = this;
 
-    var $options = this.$element.children();
+    const $options = this.$element.children();
 
     $options.each(function () {
-      var $option = $(this);
+      const $option = $(this);
 
       if (!$option.is('option') && !$option.is('optgroup')) {
         return;
       }
 
-      var option = self.item($option);
+      const option = self.item($option);
 
-      var matches = self.matches(params, option);
+      const matches = self.matches(params, option);
 
       if (matches !== null) {
         data.push(matches);
@@ -3341,7 +3341,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.option = function (data) {
-    var option;
+    let option;
 
     if (data.children) {
       option = document.createElement('optgroup');
@@ -3372,9 +3372,9 @@ S2.define('select2/data/select',[
       option.title = data.title;
     }
 
-    var $option = $(option);
+    const $option = $(option);
 
-    var normalizedData = this._normalizeItem(data);
+    const normalizedData = this._normalizeItem(data);
     normalizedData.element = option;
 
     // Override the option's data with the combined data
@@ -3384,7 +3384,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.item = function ($option) {
-    var data = {};
+    let data = {};
 
     data = Utils.GetData($option[0], 'data');
 
@@ -3407,13 +3407,13 @@ S2.define('select2/data/select',[
         title: $option.prop('title')
       };
 
-      var $children = $option.children('option');
-      var children = [];
+      const $children = $option.children('option');
+      const children = [];
 
-      for (var c = 0; c < $children.length; c++) {
-        var $child = $($children[c]);
+      for (let c = 0; c < $children.length; c++) {
+        const $child = $($children[c]);
 
-        var child = this.item($child);
+        const child = this.item($child);
 
         children.push(child);
       }
@@ -3441,7 +3441,7 @@ S2.define('select2/data/select',[
       text: ''
     }, item);
 
-    var defaults = {
+    const defaults = {
       selected: false,
       disabled: false
     };
@@ -3462,7 +3462,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
-    var matcher = this.options.get('matcher');
+    const matcher = this.options.get('matcher');
 
     return matcher(params, data);
   };
@@ -3490,7 +3490,7 @@ S2.define('select2/data/array',[
   };
 
   ArrayAdapter.prototype.select = function (data) {
-    var $option = this.$element.find('option').filter(function (i, elm) {
+    let $option = this.$element.find('option').filter(function (i, elm) {
       return elm.value == data.id.toString();
     });
 
@@ -3504,14 +3504,14 @@ S2.define('select2/data/array',[
   };
 
   ArrayAdapter.prototype.convertToOptions = function (data) {
-    var self = this;
+    const self = this;
 
-    var $existing = this.$element.find('option');
-    var existingIds = $existing.map(function () {
+    const $existing = this.$element.find('option');
+    const existingIds = $existing.map(function () {
       return self.item($(this)).id;
     }).get();
 
-    var $options = [];
+    const $options = [];
 
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
@@ -3520,27 +3520,27 @@ S2.define('select2/data/array',[
       };
     }
 
-    for (var d = 0; d < data.length; d++) {
-      var item = this._normalizeItem(data[d]);
+    for (let d = 0; d < data.length; d++) {
+      const item = this._normalizeItem(data[d]);
 
       // Skip items which were pre-loaded, only merge the data
       if ($.inArray(item.id, existingIds) >= 0) {
-        var $existingOption = $existing.filter(onlyItem(item));
+        const $existingOption = $existing.filter(onlyItem(item));
 
-        var existingData = this.item($existingOption);
-        var newData = $.extend(true, {}, item, existingData);
+        const existingData = this.item($existingOption);
+        const newData = $.extend(true, {}, item, existingData);
 
-        var $newOption = this.option(newData);
+        const $newOption = this.option(newData);
 
         $existingOption.replaceWith($newOption);
 
         continue;
       }
 
-      var $option = this.option(item);
+      const $option = this.option(item);
 
       if (item.children) {
-        var $children = this.convertToOptions(item.children);
+        const $children = this.convertToOptions(item.children);
 
         Utils.appendMany($option, $children);
       }
@@ -3572,14 +3572,14 @@ S2.define('select2/data/ajax',[
   Utils.Extend(AjaxAdapter, ArrayAdapter);
 
   AjaxAdapter.prototype._applyDefaults = function (options) {
-    var defaults = {
+    const defaults = {
       data: function (params) {
         return $.extend({}, params, {
           q: params.term
         });
       },
       transport: function (params, success, failure) {
-        var $request = $.ajax(params);
+        const $request = $.ajax(params);
 
         $request.then(success);
         $request.fail(failure);
@@ -3596,8 +3596,8 @@ S2.define('select2/data/ajax',[
   };
 
   AjaxAdapter.prototype.query = function (params, callback) {
-    var matches = [];
-    var self = this;
+    const matches = [];
+    const self = this;
 
     if (this._request != null) {
       // JSONP requests cannot always be aborted
@@ -3608,7 +3608,7 @@ S2.define('select2/data/ajax',[
       this._request = null;
     }
 
-    var options = $.extend({
+    const options = $.extend({
       type: 'GET'
     }, this.ajaxOptions);
 
@@ -3622,7 +3622,7 @@ S2.define('select2/data/ajax',[
 
     function request () {
       var $request = options.transport(options, function (data) {
-        var results = self.processResults(data, params);
+        const results = self.processResults(data, params);
 
         if (self.options.get('debug') && window.console && console.error) {
           // Check to make sure that the response included a `results` key.
@@ -3669,15 +3669,15 @@ S2.define('select2/data/tags',[
   'jquery'
 ], function ($) {
   function Tags (decorated, $element, options) {
-    var tags = options.get('tags');
+    const tags = options.get('tags');
 
-    var createTag = options.get('createTag');
+    const createTag = options.get('createTag');
 
     if (createTag !== undefined) {
       this.createTag = createTag;
     }
 
-    var insertTag = options.get('insertTag');
+    const insertTag = options.get('insertTag');
 
     if (insertTag !== undefined) {
         this.insertTag = insertTag;
@@ -3686,11 +3686,11 @@ S2.define('select2/data/tags',[
     decorated.call(this, $element, options);
 
     if ($.isArray(tags)) {
-      for (var t = 0; t < tags.length; t++) {
-        var tag = tags[t];
-        var item = this._normalizeItem(tag);
+      for (let t = 0; t < tags.length; t++) {
+        const tag = tags[t];
+        const item = this._normalizeItem(tag);
 
-        var $option = this.option(item);
+        const $option = this.option(item);
 
         this.$element.append($option);
       }
@@ -3698,7 +3698,7 @@ S2.define('select2/data/tags',[
   }
 
   Tags.prototype.query = function (decorated, params, callback) {
-    var self = this;
+    const self = this;
 
     this._removeOldTags();
 
@@ -3708,22 +3708,22 @@ S2.define('select2/data/tags',[
     }
 
     function wrapper (obj, child) {
-      var data = obj.results;
+      const data = obj.results;
 
-      for (var i = 0; i < data.length; i++) {
-        var option = data[i];
+      for (let i = 0; i < data.length; i++) {
+        const option = data[i];
 
-        var checkChildren = (
+        const checkChildren = (
           option.children != null &&
           !wrapper({
             results: option.children
           }, true)
         );
 
-        var optionText = (option.text || '').toUpperCase();
-        var paramsTerm = (params.term || '').toUpperCase();
+        const optionText = (option.text || '').toUpperCase();
+        const paramsTerm = (params.term || '').toUpperCase();
 
-        var checkText = optionText === paramsTerm;
+        const checkText = optionText === paramsTerm;
 
         if (checkText || checkChildren) {
           if (child) {
@@ -3741,10 +3741,10 @@ S2.define('select2/data/tags',[
         return true;
       }
 
-      var tag = self.createTag(params);
+      const tag = self.createTag(params);
 
       if (tag != null) {
-        var $option = self.option(tag);
+        const $option = self.option(tag);
         $option.attr('data-select2-tag', true);
 
         self.addOptions([$option]);
@@ -3761,7 +3761,7 @@ S2.define('select2/data/tags',[
   };
 
   Tags.prototype.createTag = function (decorated, params) {
-    var term = $.trim(params.term);
+    const term = $.trim(params.term);
 
     if (term === '') {
       return null;
@@ -3778,7 +3778,7 @@ S2.define('select2/data/tags',[
   };
 
   Tags.prototype._removeOldTags = function (_) {
-    var $options = this.$element.find('option[data-select2-tag]');
+    const $options = this.$element.find('option[data-select2-tag]');
 
     $options.each(function () {
       if (this.selected) {
@@ -3796,7 +3796,7 @@ S2.define('select2/data/tokenizer',[
   'jquery'
 ], function ($) {
   function Tokenizer (decorated, $element, options) {
-    var tokenizer = options.get('tokenizer');
+    const tokenizer = options.get('tokenizer');
 
     if (tokenizer !== undefined) {
       this.tokenizer = tokenizer;
@@ -3813,21 +3813,21 @@ S2.define('select2/data/tokenizer',[
   };
 
   Tokenizer.prototype.query = function (decorated, params, callback) {
-    var self = this;
+    const self = this;
 
     function createAndSelect (data) {
       // Normalize the data object so we can use it for checks
-      var item = self._normalizeItem(data);
+      const item = self._normalizeItem(data);
 
       // Check if the data object already exists as a tag
       // Select it if it doesn't
-      var $existingOptions = self.$element.find('option').filter(function () {
+      const $existingOptions = self.$element.find('option').filter(function () {
         return $(this).val() === item.id;
       });
 
       // If an existing option wasn't found for it, create the option
       if (!$existingOptions.length) {
-        var $option = self.option(item);
+        const $option = self.option(item);
         $option.attr('data-select2-tag', true);
 
         self._removeOldTags();
@@ -3846,7 +3846,7 @@ S2.define('select2/data/tokenizer',[
 
     params.term = params.term || '';
 
-    var tokenData = this.tokenizer(params, this.options, createAndSelect);
+    const tokenData = this.tokenizer(params, this.options, createAndSelect);
 
     if (tokenData.term !== params.term) {
       // Replace the search term if we have the search box
@@ -3862,11 +3862,11 @@ S2.define('select2/data/tokenizer',[
   };
 
   Tokenizer.prototype.tokenizer = function (_, params, options, callback) {
-    var separators = options.get('tokenSeparators') || [];
-    var term = params.term;
-    var i = 0;
+    const separators = options.get('tokenSeparators') || [];
+    let term = params.term;
+    let i = 0;
 
-    var createTag = this.createTag || function (params) {
+    const createTag = this.createTag || function (params) {
       return {
         id: params.term,
         text: params.term
@@ -3874,7 +3874,7 @@ S2.define('select2/data/tokenizer',[
     };
 
     while (i < term.length) {
-      var termChar = term[i];
+      const termChar = term[i];
 
       if ($.inArray(termChar, separators) === -1) {
         i++;
@@ -3882,12 +3882,12 @@ S2.define('select2/data/tokenizer',[
         continue;
       }
 
-      var part = term.substr(0, i);
-      var partParams = $.extend({}, params, {
+      const part = term.substr(0, i);
+      const partParams = $.extend({}, params, {
         term: part
       });
 
-      var data = createTag(partParams);
+      const data = createTag(partParams);
 
       if (data == null) {
         i++;
@@ -3983,7 +3983,7 @@ S2.define('select2/data/maximumSelectionLength',[
 
   MaximumSelectionLength.prototype.bind =
     function (decorated, container, $container) {
-      var self = this;
+      const self = this;
 
       decorated.call(this, container, $container);
 
@@ -3994,7 +3994,7 @@ S2.define('select2/data/maximumSelectionLength',[
 
   MaximumSelectionLength.prototype.query =
     function (decorated, params, callback) {
-      var self = this;
+      const self = this;
 
       this._checkIfMaximumSelected(function () {
         decorated.call(self, params, callback);
@@ -4003,10 +4003,10 @@ S2.define('select2/data/maximumSelectionLength',[
 
   MaximumSelectionLength.prototype._checkIfMaximumSelected =
     function (_, successCallback) {
-      var self = this;
+      const self = this;
 
       this.current(function (currentData) {
-        var count = currentData != null ? currentData.length : 0;
+        const count = currentData != null ? currentData.length : 0;
         if (self.maximumSelectionLength > 0 &&
           count >= self.maximumSelectionLength) {
           self.trigger('results:message', {
@@ -4041,7 +4041,7 @@ S2.define('select2/dropdown',[
   Utils.Extend(Dropdown, Utils.Observable);
 
   Dropdown.prototype.render = function () {
-    var $dropdown = $(
+    const $dropdown = $(
       '<span class="select2-dropdown">' +
         '<span class="select2-results"></span>' +
       '</span>'
@@ -4077,9 +4077,9 @@ S2.define('select2/dropdown/search',[
   function Search () { }
 
   Search.prototype.render = function (decorated) {
-    var $rendered = decorated.call(this);
+    const $rendered = decorated.call(this);
 
-    var $search = $(
+    const $search = $(
       '<span class="select2-search select2-search--dropdown">' +
         '<input class="select2-search__field" type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
@@ -4096,9 +4096,9 @@ S2.define('select2/dropdown/search',[
   };
 
   Search.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
-    var resultsId = container.id + '-results';
+    const resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
 
@@ -4148,7 +4148,7 @@ S2.define('select2/dropdown/search',[
 
     container.on('results:all', function (params) {
       if (params.query.term == null || params.query.term === '') {
-        var showSearch = self.showSearch(params);
+        const showSearch = self.showSearch(params);
 
         if (showSearch) {
           self.$searchContainer.removeClass('select2-search--hide');
@@ -4169,7 +4169,7 @@ S2.define('select2/dropdown/search',[
 
   Search.prototype.handleSearch = function (evt) {
     if (!this._keyUpPrevented) {
-      var input = this.$search.val();
+      const input = this.$search.val();
 
       this.trigger('query', {
         term: input
@@ -4213,10 +4213,10 @@ S2.define('select2/dropdown/hidePlaceholder',[
   };
 
   HidePlaceholder.prototype.removePlaceholder = function (_, data) {
-    var modifiedData = data.slice(0);
+    const modifiedData = data.slice(0);
 
-    for (var d = data.length - 1; d >= 0; d--) {
-      var item = data[d];
+    for (let d = data.length - 1; d >= 0; d--) {
+      const item = data[d];
 
       if (this.placeholder.id === item.id) {
         modifiedData.splice(d, 1);
@@ -4254,7 +4254,7 @@ S2.define('select2/dropdown/infiniteScroll',[
   };
 
   InfiniteScroll.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
     decorated.call(this, container, $container);
 
@@ -4272,7 +4272,7 @@ S2.define('select2/dropdown/infiniteScroll',[
   };
 
   InfiniteScroll.prototype.loadMoreIfNeeded = function () {
-    var isLoadMoreVisible = $.contains(
+    const isLoadMoreVisible = $.contains(
       document.documentElement,
       this.$loadingMore[0]
     );
@@ -4281,9 +4281,9 @@ S2.define('select2/dropdown/infiniteScroll',[
       return;
     }
 
-    var currentOffset = this.$results.offset().top +
+    const currentOffset = this.$results.offset().top +
       this.$results.outerHeight(false);
-    var loadingMoreOffset = this.$loadingMore.offset().top +
+    const loadingMoreOffset = this.$loadingMore.offset().top +
       this.$loadingMore.outerHeight(false);
 
     if (currentOffset + 50 >= loadingMoreOffset) {
@@ -4294,7 +4294,7 @@ S2.define('select2/dropdown/infiniteScroll',[
   InfiniteScroll.prototype.loadMore = function () {
     this.loading = true;
 
-    var params = $.extend({}, {page: 1}, this.lastParams);
+    const params = $.extend({}, {page: 1}, this.lastParams);
 
     params.page++;
 
@@ -4306,13 +4306,13 @@ S2.define('select2/dropdown/infiniteScroll',[
   };
 
   InfiniteScroll.prototype.createLoadingMore = function () {
-    var $option = $(
+    const $option = $(
       '<li ' +
       'class="select2-results__option select2-results__option--load-more"' +
       'role="option" aria-disabled="true"></li>'
     );
 
-    var message = this.options.get('translations').get('loadingMore');
+    const message = this.options.get('translations').get('loadingMore');
 
     $option.html(message(this.lastParams));
 
@@ -4333,7 +4333,7 @@ S2.define('select2/dropdown/attachBody',[
   }
 
   AttachBody.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
     decorated.call(this, container, $container);
 
@@ -4377,9 +4377,9 @@ S2.define('select2/dropdown/attachBody',[
   };
 
   AttachBody.prototype.render = function (decorated) {
-    var $container = $('<span></span>');
+    const $container = $('<span></span>');
 
-    var $dropdown = decorated.call(this);
+    const $dropdown = decorated.call(this);
     $container.append($dropdown);
 
     this.$dropdownContainer = $container;
@@ -4399,7 +4399,7 @@ S2.define('select2/dropdown/attachBody',[
       return;
     }
 
-    var self = this;
+    const self = this;
 
     container.on('results:all', function () {
       self._positionDropdown();
@@ -4431,13 +4431,13 @@ S2.define('select2/dropdown/attachBody',[
 
   AttachBody.prototype._attachPositioningHandler =
       function (decorated, container) {
-    var self = this;
+    const self = this;
 
-    var scrollEvent = 'scroll.select2.' + container.id;
-    var resizeEvent = 'resize.select2.' + container.id;
-    var orientationEvent = 'orientationchange.select2.' + container.id;
+    const scrollEvent = 'scroll.select2.' + container.id;
+    const resizeEvent = 'resize.select2.' + container.id;
+    const orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
+    const $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
       Utils.StoreData(this, 'select2-scroll-position', {
         x: $(this).scrollLeft(),
@@ -4446,7 +4446,7 @@ S2.define('select2/dropdown/attachBody',[
     });
 
     $watchers.on(scrollEvent, function (ev) {
-      var position = Utils.GetData(this, 'select2-scroll-position');
+      const position = Utils.GetData(this, 'select2-scroll-position');
       $(this).scrollTop(position.y);
     });
 
@@ -4459,54 +4459,54 @@ S2.define('select2/dropdown/attachBody',[
 
   AttachBody.prototype._detachPositioningHandler =
       function (decorated, container) {
-    var scrollEvent = 'scroll.select2.' + container.id;
-    var resizeEvent = 'resize.select2.' + container.id;
-    var orientationEvent = 'orientationchange.select2.' + container.id;
+    const scrollEvent = 'scroll.select2.' + container.id;
+    const resizeEvent = 'resize.select2.' + container.id;
+    const orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
+    const $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
 
   AttachBody.prototype._positionDropdown = function () {
-    var $window = $(window);
+    const $window = $(window);
 
-    var isCurrentlyAbove = this.$dropdown.hasClass('select2-dropdown--above');
-    var isCurrentlyBelow = this.$dropdown.hasClass('select2-dropdown--below');
+    const isCurrentlyAbove = this.$dropdown.hasClass('select2-dropdown--above');
+    const isCurrentlyBelow = this.$dropdown.hasClass('select2-dropdown--below');
 
-    var newDirection = null;
+    let newDirection = null;
 
-    var offset = this.$container.offset();
+    const offset = this.$container.offset();
 
     offset.bottom = offset.top + this.$container.outerHeight(false);
 
-    var container = {
+    const container = {
       height: this.$container.outerHeight(false)
     };
 
     container.top = offset.top;
     container.bottom = offset.top + container.height;
 
-    var dropdown = {
+    const dropdown = {
       height: this.$dropdown.outerHeight(false)
     };
 
-    var viewport = {
+    const viewport = {
       top: $window.scrollTop(),
       bottom: $window.scrollTop() + $window.height()
     };
 
-    var enoughRoomAbove = viewport.top < (offset.top - dropdown.height);
-    var enoughRoomBelow = viewport.bottom > (offset.bottom + dropdown.height);
+    const enoughRoomAbove = viewport.top < (offset.top - dropdown.height);
+    const enoughRoomBelow = viewport.bottom > (offset.bottom + dropdown.height);
 
-    var css = {
+    const css = {
       left: offset.left,
       top: container.bottom
     };
 
     // Determine what the parent element is to use for calculating the offset
-    var $offsetParent = this.$dropdownParent;
+    let $offsetParent = this.$dropdownParent;
 
     // For statically positioned elements, we need to get the element
     // that is determining the offset
@@ -4514,7 +4514,7 @@ S2.define('select2/dropdown/attachBody',[
       $offsetParent = $offsetParent.offsetParent();
     }
 
-    var parentOffset = {
+    let parentOffset = {
       top: 0,
       left: 0
     };
@@ -4557,7 +4557,7 @@ S2.define('select2/dropdown/attachBody',[
   };
 
   AttachBody.prototype._resizeDropdown = function () {
-    var css = {
+    const css = {
       width: this.$container.outerWidth(false) + 'px'
     };
 
@@ -4584,10 +4584,10 @@ S2.define('select2/dropdown/minimumResultsForSearch',[
 
 ], function () {
   function countResults (data) {
-    var count = 0;
+    let count = 0;
 
-    for (var d = 0; d < data.length; d++) {
-      var item = data[d];
+    for (let d = 0; d < data.length; d++) {
+      const item = data[d];
 
       if (item.children) {
         count += countResults(item.children);
@@ -4626,7 +4626,7 @@ S2.define('select2/dropdown/selectOnClose',[
   function SelectOnClose () { }
 
   SelectOnClose.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
     decorated.call(this, container, $container);
 
@@ -4637,7 +4637,7 @@ S2.define('select2/dropdown/selectOnClose',[
 
   SelectOnClose.prototype._handleSelectOnClose = function (_, params) {
     if (params && params.originalSelect2Event != null) {
-      var event = params.originalSelect2Event;
+      const event = params.originalSelect2Event;
 
       // Don't select an item if the close event was triggered from a select or
       // unselect event
@@ -4646,14 +4646,14 @@ S2.define('select2/dropdown/selectOnClose',[
       }
     }
 
-    var $highlightedResults = this.getHighlightedResults();
+    const $highlightedResults = this.getHighlightedResults();
 
     // Only select highlighted results
     if ($highlightedResults.length < 1) {
       return;
     }
 
-    var data = Utils.GetData($highlightedResults[0], 'data');
+    const data = Utils.GetData($highlightedResults[0], 'data');
 
     // Don't re-select already selected resulte
     if (
@@ -4677,7 +4677,7 @@ S2.define('select2/dropdown/closeOnSelect',[
   function CloseOnSelect () { }
 
   CloseOnSelect.prototype.bind = function (decorated, container, $container) {
-    var self = this;
+    const self = this;
 
     decorated.call(this, container, $container);
 
@@ -4691,7 +4691,7 @@ S2.define('select2/dropdown/closeOnSelect',[
   };
 
   CloseOnSelect.prototype._selectTriggered = function (_, evt) {
-    var originalEvent = evt.originalEvent;
+    const originalEvent = evt.originalEvent;
 
     // Don't close if the control key is being held
     if (originalEvent && (originalEvent.ctrlKey || originalEvent.metaKey)) {
@@ -4714,9 +4714,9 @@ S2.define('select2/i18n/en',[],function () {
       return 'The results could not be loaded.';
     },
     inputTooLong: function (args) {
-      var overChars = args.input.length - args.maximum;
+      const overChars = args.input.length - args.maximum;
 
-      var message = 'Please delete ' + overChars + ' character';
+      let message = 'Please delete ' + overChars + ' character';
 
       if (overChars != 1) {
         message += 's';
@@ -4725,9 +4725,9 @@ S2.define('select2/i18n/en',[],function () {
       return message;
     },
     inputTooShort: function (args) {
-      var remainingChars = args.minimum - args.input.length;
+      const remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more characters';
+      const message = 'Please enter ' + remainingChars + ' or more characters';
 
       return message;
     },
@@ -4735,7 +4735,7 @@ S2.define('select2/i18n/en',[],function () {
       return 'Loading more results…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select ' + args.maximum + ' item';
+      let message = 'You can only select ' + args.maximum + ' item';
 
       if (args.maximum != 1) {
         message += 's';
@@ -4856,7 +4856,7 @@ S2.define('select2/defaults',[
       }
 
       if (options.query != null) {
-        var Query = require(options.amdBase + 'compat/query');
+        const Query = require(options.amdBase + 'compat/query');
 
         options.dataAdapter = Utils.Decorate(
           options.dataAdapter,
@@ -4865,7 +4865,7 @@ S2.define('select2/defaults',[
       }
 
       if (options.initSelection != null) {
-        var InitSelection = require(options.amdBase + 'compat/initSelection');
+        const InitSelection = require(options.amdBase + 'compat/initSelection');
 
         options.dataAdapter = Utils.Decorate(
           options.dataAdapter,
@@ -4903,7 +4903,7 @@ S2.define('select2/defaults',[
       if (options.multiple) {
         options.dropdownAdapter = Dropdown;
       } else {
-        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
+        const SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
 
         options.dropdownAdapter = SearchableDropdown;
       }
@@ -4927,7 +4927,7 @@ S2.define('select2/defaults',[
         options.dropdownCss != null ||
         options.adaptDropdownCssClass != null
       ) {
-        var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
+        const DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
 
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
@@ -4975,7 +4975,7 @@ S2.define('select2/defaults',[
         options.containerCss != null ||
         options.adaptContainerCssClass != null
       ) {
-        var ContainerCSS = require(options.amdBase + 'compat/containerCss');
+        const ContainerCSS = require(options.amdBase + 'compat/containerCss');
 
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
@@ -4996,10 +4996,10 @@ S2.define('select2/defaults',[
     // Always fall back to English since it will always be complete
     options.language.push('en');
 
-    var uniqueLanguages = [];
+    const uniqueLanguages = [];
 
-    for (var l = 0; l < options.language.length; l++) {
-      var language = options.language[l];
+    for (let l = 0; l < options.language.length; l++) {
+      const language = options.language[l];
 
       if (uniqueLanguages.indexOf(language) === -1) {
         uniqueLanguages.push(language);
@@ -5036,13 +5036,13 @@ S2.define('select2/defaults',[
       if (data.children && data.children.length > 0) {
         // Clone the data object if there are children
         // This is required as we modify the object to remove any non-matches
-        var match = $.extend(true, {}, data);
+        const match = $.extend(true, {}, data);
 
         // Check each child of the option
-        for (var c = data.children.length - 1; c >= 0; c--) {
-          var child = data.children[c];
+        for (let c = data.children.length - 1; c >= 0; c--) {
+          const child = data.children[c];
 
-          var matches = matcher(params, child);
+          const matches = matcher(params, child);
 
           // If there wasn't a match, remove the object in the array
           if (matches == null) {
@@ -5059,8 +5059,8 @@ S2.define('select2/defaults',[
         return matcher(params, match);
       }
 
-      var original = stripDiacritics(data.text).toUpperCase();
-      var term = stripDiacritics(params.term).toUpperCase();
+      const original = stripDiacritics(data.text).toUpperCase();
+      const term = stripDiacritics(params.term).toUpperCase();
 
       // Check if the text contains the term
       if (original.indexOf(term) > -1) {
@@ -5101,12 +5101,12 @@ S2.define('select2/defaults',[
   };
 
   Defaults.prototype.applyFromElement = function (options, $element) {
-    var optionLanguage = options.language;
-    var defaultLanguage = this.defaults.language;
-    var elementLanguage = $element.prop('lang');
-    var parentLanguage = $element.closest('[lang]').prop('lang');
+    const optionLanguage = options.language;
+    const defaultLanguage = this.defaults.language;
+    const elementLanguage = $element.prop('lang');
+    const parentLanguage = $element.closest('[lang]').prop('lang');
 
-    var languages = Array.prototype.concat.call(
+    const languages = Array.prototype.concat.call(
       this._resolveLanguage(elementLanguage),
       this._resolveLanguage(optionLanguage),
       this._resolveLanguage(defaultLanguage),
@@ -5131,7 +5131,7 @@ S2.define('select2/defaults',[
       return [language];
     }
 
-    var languages;
+    let languages;
 
     if (!$.isArray(language)) {
       languages = [language];
@@ -5139,15 +5139,15 @@ S2.define('select2/defaults',[
       languages = language;
     }
 
-    var resolvedLanguages = [];
+    const resolvedLanguages = [];
 
-    for (var l = 0; l < languages.length; l++) {
+    for (let l = 0; l < languages.length; l++) {
       resolvedLanguages.push(languages[l]);
 
       if (typeof languages[l] === 'string' && languages[l].indexOf('-') > 0) {
         // Extract the region information if it is included
-        var languageParts = languages[l].split('-');
-        var baseLanguage = languageParts[0];
+        const languageParts = languages[l].split('-');
+        const baseLanguage = languageParts[0];
 
         resolvedLanguages.push(baseLanguage);
       }
@@ -5157,12 +5157,12 @@ S2.define('select2/defaults',[
   };
 
   Defaults.prototype._processTranslations = function (languages, debug) {
-    var translations = new Translation();
+    const translations = new Translation();
 
-    for (var l = 0; l < languages.length; l++) {
-      var languageData = new Translation();
+    for (let l = 0; l < languages.length; l++) {
+      let languageData = new Translation();
 
-      var language = languages[l];
+      let language = languages[l];
 
       if (typeof language === 'string') {
         try {
@@ -5198,17 +5198,17 @@ S2.define('select2/defaults',[
   };
 
   Defaults.prototype.set = function (key, value) {
-    var camelKey = $.camelCase(key);
+    const camelKey = $.camelCase(key);
 
-    var data = {};
+    const data = {};
     data[camelKey] = value;
 
-    var convertedData = Utils._convertData(data);
+    const convertedData = Utils._convertData(data);
 
     $.extend(true, this.defaults, convertedData);
   };
 
-  var defaults = new Defaults();
+  const defaults = new Defaults();
 
   return defaults;
 });
@@ -5233,7 +5233,7 @@ S2.define('select2/options',[
     this.options = Defaults.apply(this.options);
 
     if ($element && $element.is('input')) {
-      var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+      const InputCompat = require(this.get('amdBase') + 'compat/inputData');
 
       this.options.dataAdapter = Utils.Decorate(
         this.options.dataAdapter,
@@ -5243,7 +5243,7 @@ S2.define('select2/options',[
   }
 
   Options.prototype.fromElement = function ($e) {
-    var excludedData = ['select2'];
+    const excludedData = ['select2'];
 
     if (this.options.multiple == null) {
       this.options.multiple = $e.prop('multiple');
@@ -5292,27 +5292,27 @@ S2.define('select2/options',[
       Utils.StoreData($e[0], 'ajax-Url', Utils.GetData($e[0], 'ajaxUrl'));
     }
 
-    var dataset = {};
+    let dataset = {};
 
     function upperCaseLetter(_, letter) {
       return letter.toUpperCase();
     }
 
     // Pre-load all of the attributes which are prefixed with `data-`
-    for (var attr = 0; attr < $e[0].attributes.length; attr++) {
-      var attributeName = $e[0].attributes[attr].name;
-      var prefix = 'data-';
+    for (let attr = 0; attr < $e[0].attributes.length; attr++) {
+      const attributeName = $e[0].attributes[attr].name;
+      const prefix = 'data-';
 
       if (attributeName.substr(0, prefix.length) == prefix) {
         // Get the contents of the attribute after `data-`
-        var dataName = attributeName.substring(prefix.length);
+        const dataName = attributeName.substring(prefix.length);
 
         // Get the data contents from the consistent source
         // This is more than likely the jQuery data helper
-        var dataValue = Utils.GetData($e[0], dataName);
+        const dataValue = Utils.GetData($e[0], dataName);
 
         // camelCase the attribute name to match the spec
-        var camelDataName = dataName.replace(/-([a-z])/g, upperCaseLetter);
+        const camelDataName = dataName.replace(/-([a-z])/g, upperCaseLetter);
 
         // Store the data attribute contents into the dataset since
         dataset[camelDataName] = dataValue;
@@ -5326,11 +5326,11 @@ S2.define('select2/options',[
     }
 
     // Prefer our internal data cache if it exists
-    var data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
+    let data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
 
     data = Utils._convertData(data);
 
-    for (var key in data) {
+    for (const key in data) {
       if ($.inArray(key, excludedData) > -1) {
         continue;
       }
@@ -5362,7 +5362,7 @@ S2.define('select2/core',[
   './utils',
   './keys'
 ], function ($, Options, Utils, KEYS) {
-  var Select2 = function ($element, options) {
+  const Select2 = function ($element, options) {
     if (Utils.GetData($element[0], 'select2') != null) {
       Utils.GetData($element[0], 'select2').destroy();
     }
@@ -5379,32 +5379,32 @@ S2.define('select2/core',[
 
     // Set up the tabindex
 
-    var tabindex = $element.attr('tabindex') || 0;
+    const tabindex = $element.attr('tabindex') || 0;
     Utils.StoreData($element[0], 'old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
 
     // Set up containers and adapters
 
-    var DataAdapter = this.options.get('dataAdapter');
+    const DataAdapter = this.options.get('dataAdapter');
     this.dataAdapter = new DataAdapter($element, this.options);
 
-    var $container = this.render();
+    const $container = this.render();
 
     this._placeContainer($container);
 
-    var SelectionAdapter = this.options.get('selectionAdapter');
+    const SelectionAdapter = this.options.get('selectionAdapter');
     this.selection = new SelectionAdapter($element, this.options);
     this.$selection = this.selection.render();
 
     this.selection.position(this.$selection, $container);
 
-    var DropdownAdapter = this.options.get('dropdownAdapter');
+    const DropdownAdapter = this.options.get('dropdownAdapter');
     this.dropdown = new DropdownAdapter($element, this.options);
     this.$dropdown = this.dropdown.render();
 
     this.dropdown.position(this.$dropdown, $container);
 
-    var ResultsAdapter = this.options.get('resultsAdapter');
+    const ResultsAdapter = this.options.get('resultsAdapter');
     this.results = new ResultsAdapter($element, this.options, this.dataAdapter);
     this.$results = this.results.render();
 
@@ -5412,7 +5412,7 @@ S2.define('select2/core',[
 
     // Bind events
 
-    var self = this;
+    const self = this;
 
     // Bind the container to all of the adapters
     this._bindAdapters();
@@ -5450,7 +5450,7 @@ S2.define('select2/core',[
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype._generateId = function ($element) {
-    var id = '';
+    let id = '';
 
     if ($element.attr('id') != null) {
       id = $element.attr('id');
@@ -5469,7 +5469,7 @@ S2.define('select2/core',[
   Select2.prototype._placeContainer = function ($container) {
     $container.insertAfter(this.$element);
 
-    var width = this._resolveWidth(this.$element, this.options.get('width'));
+    const width = this._resolveWidth(this.$element, this.options.get('width'));
 
     if (width != null) {
       $container.css('width', width);
@@ -5477,10 +5477,10 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._resolveWidth = function ($element, method) {
-    var WIDTH = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
+    const WIDTH = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
 
     if (method == 'resolve') {
-      var styleWidth = this._resolveWidth($element, 'style');
+      const styleWidth = this._resolveWidth($element, 'style');
 
       if (styleWidth != null) {
         return styleWidth;
@@ -5490,7 +5490,7 @@ S2.define('select2/core',[
     }
 
     if (method == 'element') {
-      var elementWidth = $element.outerWidth(false);
+      const elementWidth = $element.outerWidth(false);
 
       if (elementWidth <= 0) {
         return 'auto';
@@ -5500,17 +5500,17 @@ S2.define('select2/core',[
     }
 
     if (method == 'style') {
-      var style = $element.attr('style');
+      const style = $element.attr('style');
 
       if (typeof(style) !== 'string') {
         return null;
       }
 
-      var attrs = style.split(';');
+      const attrs = style.split(';');
 
-      for (var i = 0, l = attrs.length; i < l; i = i + 1) {
-        var attr = attrs[i].replace(/\s/g, '');
-        var matches = attr.match(WIDTH);
+      for (let i = 0, l = attrs.length; i < l; i = i + 1) {
+        const attr = attrs[i].replace(/\s/g, '');
+        const matches = attr.match(WIDTH);
 
         if (matches !== null && matches.length >= 1) {
           return matches[1];
@@ -5521,7 +5521,7 @@ S2.define('select2/core',[
     }
 
     if (method == 'computedstyle') {
-      var computedStyle = window.getComputedStyle($element[0]);
+      const computedStyle = window.getComputedStyle($element[0]);
 
       return computedStyle.width;
     }
@@ -5538,7 +5538,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._registerDomEvents = function () {
-    var self = this;
+    const self = this;
 
     this.$element.on('change.select2', function () {
       self.dataAdapter.current(function (data) {
@@ -5559,7 +5559,7 @@ S2.define('select2/core',[
       this.$element[0].attachEvent('onpropertychange', this._syncA);
     }
 
-    var observer = window.MutationObserver ||
+    const observer = window.MutationObserver ||
       window.WebKitMutationObserver ||
       window.MozMutationObserver
     ;
@@ -5594,7 +5594,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._registerDataEvents = function () {
-    var self = this;
+    const self = this;
 
     this.dataAdapter.on('*', function (name, params) {
       self.trigger(name, params);
@@ -5602,8 +5602,8 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._registerSelectionEvents = function () {
-    var self = this;
-    var nonRelayEvents = ['toggle', 'focus'];
+    const self = this;
+    const nonRelayEvents = ['toggle', 'focus'];
 
     this.selection.on('toggle', function () {
       self.toggleDropdown();
@@ -5623,7 +5623,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._registerDropdownEvents = function () {
-    var self = this;
+    const self = this;
 
     this.dropdown.on('*', function (name, params) {
       self.trigger(name, params);
@@ -5631,7 +5631,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._registerResultsEvents = function () {
-    var self = this;
+    const self = this;
 
     this.results.on('*', function (name, params) {
       self.trigger(name, params);
@@ -5639,7 +5639,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._registerEvents = function () {
-    var self = this;
+    const self = this;
 
     this.on('open', function () {
       self.$container.addClass('select2-container--open');
@@ -5684,7 +5684,7 @@ S2.define('select2/core',[
     });
 
     this.on('keypress', function (evt) {
-      var key = evt.which;
+      const key = evt.which;
 
       if (self.isOpen()) {
         if (key === KEYS.ESC || key === KEYS.TAB ||
@@ -5735,8 +5735,8 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._isChangeMutation = function (evt, mutations) {
-    var changed = false;
-    var self = this;
+    let changed = false;
+    const self = this;
 
     // Ignore any mutation events raised for elements that aren't options or
     // optgroups. This handles the case when the select element is destroyed
@@ -5753,8 +5753,8 @@ S2.define('select2/core',[
       // change affected the selections
       changed = true;
     } else if (mutations.addedNodes && mutations.addedNodes.length > 0) {
-      for (var n = 0; n < mutations.addedNodes.length; n++) {
-        var node = mutations.addedNodes[n];
+      for (let n = 0; n < mutations.addedNodes.length; n++) {
+        const node = mutations.addedNodes[n];
 
         if (node.selected) {
           changed = true;
@@ -5776,8 +5776,8 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._syncSubtree = function (evt, mutations) {
-    var changed = this._isChangeMutation(evt, mutations);
-    var self = this;
+    const changed = this._isChangeMutation(evt, mutations);
+    const self = this;
 
     // Only re-pull the data if we think there is a change
     if (changed) {
@@ -5794,8 +5794,8 @@ S2.define('select2/core',[
    * there are events that can be prevented.
    */
   Select2.prototype.trigger = function (name, args) {
-    var actualTrigger = Select2.__super__.trigger;
-    var preTriggerMap = {
+    const actualTrigger = Select2.__super__.trigger;
+    const preTriggerMap = {
       'open': 'opening',
       'close': 'closing',
       'select': 'selecting',
@@ -5808,8 +5808,8 @@ S2.define('select2/core',[
     }
 
     if (name in preTriggerMap) {
-      var preTriggerName = preTriggerMap[name];
-      var preTriggerArgs = {
+      const preTriggerName = preTriggerMap[name];
+      const preTriggerArgs = {
         prevented: false,
         name: name,
         args: args
@@ -5911,7 +5911,7 @@ S2.define('select2/core',[
       args = [true];
     }
 
-    var disabled = !args[0];
+    const disabled = !args[0];
 
     this.$element.prop('disabled', disabled);
   };
@@ -5925,7 +5925,7 @@ S2.define('select2/core',[
       );
     }
 
-    var data = [];
+    let data = [];
 
     this.dataAdapter.current(function (currentData) {
       data = currentData;
@@ -5946,7 +5946,7 @@ S2.define('select2/core',[
       return this.$element.val();
     }
 
-    var newVal = args[0];
+    let newVal = args[0];
 
     if ($.isArray(newVal)) {
       newVal = $.map(newVal, function (obj) {
@@ -6000,7 +6000,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype.render = function () {
-    var $container = $(
+    const $container = $(
       '<span class="select2 select2-container">' +
         '<span class="selection"></span>' +
         '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
@@ -6025,7 +6025,7 @@ S2.define('select2/compat/utils',[
   'jquery'
 ], function ($) {
   function syncCssClasses ($dest, $src, adapter) {
-    var classes, replacements = [], adapted;
+    let classes, replacements = [], adapted;
 
     classes = $.trim($dest.attr('class'));
 
@@ -6077,24 +6077,24 @@ S2.define('select2/compat/containerCss',[
   function ContainerCSS () { }
 
   ContainerCSS.prototype.render = function (decorated) {
-    var $container = decorated.call(this);
+    const $container = decorated.call(this);
 
-    var containerCssClass = this.options.get('containerCssClass') || '';
+    let containerCssClass = this.options.get('containerCssClass') || '';
 
     if ($.isFunction(containerCssClass)) {
       containerCssClass = containerCssClass(this.$element);
     }
 
-    var containerCssAdapter = this.options.get('adaptContainerCssClass');
+    let containerCssAdapter = this.options.get('adaptContainerCssClass');
     containerCssAdapter = containerCssAdapter || _containerAdapter;
 
     if (containerCssClass.indexOf(':all:') !== -1) {
       containerCssClass = containerCssClass.replace(':all:', '');
 
-      var _cssAdapter = containerCssAdapter;
+      const _cssAdapter = containerCssAdapter;
 
       containerCssAdapter = function (clazz) {
-        var adapted = _cssAdapter(clazz);
+        const adapted = _cssAdapter(clazz);
 
         if (adapted != null) {
           // Append the old one along with the adapted one
@@ -6105,7 +6105,7 @@ S2.define('select2/compat/containerCss',[
       };
     }
 
-    var containerCss = this.options.get('containerCss') || {};
+    let containerCss = this.options.get('containerCss') || {};
 
     if ($.isFunction(containerCss)) {
       containerCss = containerCss(this.$element);
@@ -6134,24 +6134,24 @@ S2.define('select2/compat/dropdownCss',[
   function DropdownCSS () { }
 
   DropdownCSS.prototype.render = function (decorated) {
-    var $dropdown = decorated.call(this);
+    const $dropdown = decorated.call(this);
 
-    var dropdownCssClass = this.options.get('dropdownCssClass') || '';
+    let dropdownCssClass = this.options.get('dropdownCssClass') || '';
 
     if ($.isFunction(dropdownCssClass)) {
       dropdownCssClass = dropdownCssClass(this.$element);
     }
 
-    var dropdownCssAdapter = this.options.get('adaptDropdownCssClass');
+    let dropdownCssAdapter = this.options.get('adaptDropdownCssClass');
     dropdownCssAdapter = dropdownCssAdapter || _dropdownAdapter;
 
     if (dropdownCssClass.indexOf(':all:') !== -1) {
       dropdownCssClass = dropdownCssClass.replace(':all:', '');
 
-      var _cssAdapter = dropdownCssAdapter;
+      const _cssAdapter = dropdownCssAdapter;
 
       dropdownCssAdapter = function (clazz) {
-        var adapted = _cssAdapter(clazz);
+        const adapted = _cssAdapter(clazz);
 
         if (adapted != null) {
           // Append the old one along with the adapted one
@@ -6162,7 +6162,7 @@ S2.define('select2/compat/dropdownCss',[
       };
     }
 
-    var dropdownCss = this.options.get('dropdownCss') || {};
+    let dropdownCss = this.options.get('dropdownCss') || {};
 
     if ($.isFunction(dropdownCss)) {
       dropdownCss = dropdownCss(this.$element);
@@ -6200,7 +6200,7 @@ S2.define('select2/compat/initSelection',[
   }
 
   InitSelection.prototype.current = function (decorated, callback) {
-    var self = this;
+    const self = this;
 
     if (this._isInitialized) {
       decorated.call(this, callback);
@@ -6245,7 +6245,7 @@ S2.define('select2/compat/inputData',[
 
   InputData.prototype.current = function (_, callback) {
     function getSelected (data, selectedIds) {
-      var selected = [];
+      const selected = [];
 
       if (data.selected || $.inArray(data.id, selectedIds) !== -1) {
         data.selected = true;
@@ -6261,10 +6261,10 @@ S2.define('select2/compat/inputData',[
       return selected;
     }
 
-    var selected = [];
+    const selected = [];
 
-    for (var d = 0; d < this._currentData.length; d++) {
-      var data = this._currentData[d];
+    for (let d = 0; d < this._currentData.length; d++) {
+      const data = this._currentData[d];
 
       selected.push.apply(
         selected,
@@ -6291,7 +6291,7 @@ S2.define('select2/compat/inputData',[
       this.$element.val(data.id);
       this.$element.trigger('input').trigger('change');
     } else {
-      var value = this.$element.val();
+      let value = this.$element.val();
       value += this._valueSeparator + data.id;
 
       this.$element.val(value);
@@ -6300,15 +6300,15 @@ S2.define('select2/compat/inputData',[
   };
 
   InputData.prototype.unselect = function (_, data) {
-    var self = this;
+    const self = this;
 
     data.selected = false;
 
     this.current(function (allData) {
-      var values = [];
+      const values = [];
 
-      for (var d = 0; d < allData.length; d++) {
-        var item = allData[d];
+      for (let d = 0; d < allData.length; d++) {
+        const item = allData[d];
 
         if (data.id == item.id) {
           continue;
@@ -6323,12 +6323,12 @@ S2.define('select2/compat/inputData',[
   };
 
   InputData.prototype.query = function (_, params, callback) {
-    var results = [];
+    const results = [];
 
-    for (var d = 0; d < this._currentData.length; d++) {
-      var data = this._currentData[d];
+    for (let d = 0; d < this._currentData.length; d++) {
+      const data = this._currentData[d];
 
-      var matches = this.matches(params, data);
+      const matches = this.matches(params, data);
 
       if (matches !== null) {
         results.push(matches);
@@ -6341,7 +6341,7 @@ S2.define('select2/compat/inputData',[
   };
 
   InputData.prototype.addOptions = function (_, $options) {
-    var options = $.map($options, function ($option) {
+    const options = $.map($options, function ($option) {
       return Utils.GetData($option[0], 'data');
     });
 
@@ -6356,19 +6356,19 @@ S2.define('select2/compat/matcher',[
 ], function ($) {
   function oldMatcher (matcher) {
     function wrappedMatcher (params, data) {
-      var match = $.extend(true, {}, data);
+      const match = $.extend(true, {}, data);
 
       if (params.term == null || $.trim(params.term) === '') {
         return match;
       }
 
       if (data.children) {
-        for (var c = data.children.length - 1; c >= 0; c--) {
-          var child = data.children[c];
+        for (let c = data.children.length - 1; c >= 0; c--) {
+          const child = data.children[c];
 
           // Check if the child object matches
           // The old matcher returned a boolean true or false
-          var doesMatch = matcher(params.term, child.text, child);
+          const doesMatch = matcher(params.term, child.text, child);
 
           // If the child didn't match, pop it off
           if (!doesMatch) {
@@ -6413,7 +6413,7 @@ S2.define('select2/compat/query',[
   Query.prototype.query = function (_, params, callback) {
     params.callback = callback;
 
-    var query = this.options.get('query');
+    const query = this.options.get('query');
 
     query.call(null, params);
   };
@@ -6430,7 +6430,7 @@ S2.define('select2/dropdown/attachContainer',[
 
   AttachContainer.prototype.position =
     function (decorated, $dropdown, $container) {
-    var $dropdownContainer = $container.find('.dropdown-wrapper');
+    const $dropdownContainer = $container.find('.dropdown-wrapper');
     $dropdownContainer.append($dropdown);
 
     $dropdown.addClass('select2-dropdown--below');
@@ -6448,7 +6448,7 @@ S2.define('select2/dropdown/stopPropagation',[
   StopPropagation.prototype.bind = function (decorated, container, $container) {
     decorated.call(this, container, $container);
 
-    var stoppedEvents = [
+    const stoppedEvents = [
     'blur',
     'change',
     'click',
@@ -6487,7 +6487,7 @@ S2.define('select2/selection/stopPropagation',[
   StopPropagation.prototype.bind = function (decorated, container, $container) {
     decorated.call(this, container, $container);
 
-    var stoppedEvents = [
+    const stoppedEvents = [
       'blur',
       'change',
       'click',
@@ -6539,14 +6539,14 @@ S2.define('select2/selection/stopPropagation',[
     }
 }(function ($) {
 
-    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+    let toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
         toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
                     ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
         slice  = Array.prototype.slice,
         nullLowestDeltaTimeout, lowestDelta;
 
     if ( $.event.fixHooks ) {
-        for ( var i = toFix.length; i; ) {
+        for ( let i = toFix.length; i; ) {
             $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
         }
     }
@@ -6556,7 +6556,7 @@ S2.define('select2/selection/stopPropagation',[
 
         setup: function() {
             if ( this.addEventListener ) {
-                for ( var i = toBind.length; i; ) {
+                for ( let i = toBind.length; i; ) {
                     this.addEventListener( toBind[--i], handler, false );
                 }
             } else {
@@ -6569,7 +6569,7 @@ S2.define('select2/selection/stopPropagation',[
 
         teardown: function() {
             if ( this.removeEventListener ) {
-                for ( var i = toBind.length; i; ) {
+                for ( let i = toBind.length; i; ) {
                     this.removeEventListener( toBind[--i], handler, false );
                 }
             } else {
@@ -6581,7 +6581,7 @@ S2.define('select2/selection/stopPropagation',[
         },
 
         getLineHeight: function(elem) {
-            var $elem = $(elem),
+            let $elem = $(elem),
                 $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
             if (!$parent.length) {
                 $parent = $('body');
@@ -6611,7 +6611,7 @@ S2.define('select2/selection/stopPropagation',[
 
 
     function handler(event) {
-        var orgEvent   = event || window.event,
+        let orgEvent   = event || window.event,
             args       = slice.call(arguments, 1),
             delta      = 0,
             deltaX     = 0,
@@ -6656,12 +6656,12 @@ S2.define('select2/selection/stopPropagation',[
         //   * deltaMode 1 is by lines
         //   * deltaMode 2 is by pages
         if ( orgEvent.deltaMode === 1 ) {
-            var lineHeight = $.data(this, 'mousewheel-line-height');
+            const lineHeight = $.data(this, 'mousewheel-line-height');
             delta  *= lineHeight;
             deltaY *= lineHeight;
             deltaX *= lineHeight;
         } else if ( orgEvent.deltaMode === 2 ) {
-            var pageHeight = $.data(this, 'mousewheel-page-height');
+            const pageHeight = $.data(this, 'mousewheel-page-height');
             delta  *= pageHeight;
             deltaY *= pageHeight;
             deltaX *= pageHeight;
@@ -6694,7 +6694,7 @@ S2.define('select2/selection/stopPropagation',[
 
         // Normalise offsetX and offsetY properties
         if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
-            var boundingRect = this.getBoundingClientRect();
+            const boundingRect = this.getBoundingClientRect();
             offsetX = event.clientX - boundingRect.left;
             offsetY = event.clientY - boundingRect.top;
         }
@@ -6750,25 +6750,25 @@ S2.define('jquery.select2',[
 ], function ($, _, Select2, Defaults, Utils) {
   if ($.fn.select2 == null) {
     // All methods that should return the element
-    var thisMethods = ['open', 'close', 'destroy'];
+    const thisMethods = ['open', 'close', 'destroy'];
 
     $.fn.select2 = function (options) {
       options = options || {};
 
       if (typeof options === 'object') {
         this.each(function () {
-          var instanceOptions = $.extend(true, {}, options);
+          const instanceOptions = $.extend(true, {}, options);
 
-          var instance = new Select2($(this), instanceOptions);
+          const instance = new Select2($(this), instanceOptions);
         });
 
         return this;
       } else if (typeof options === 'string') {
-        var ret;
-        var args = Array.prototype.slice.call(arguments, 1);
+        let ret;
+        const args = Array.prototype.slice.call(arguments, 1);
 
         this.each(function () {
-          var instance = Utils.GetData(this, 'select2');
+          const instance = Utils.GetData(this, 'select2');
 
           if (instance == null && window.console && console.error) {
             console.error(
@@ -6808,7 +6808,7 @@ S2.define('jquery.select2',[
 
   // Autoload the jQuery bindings
   // We know that all of the modules exist above this, so we're safe
-  var select2 = S2.require('jquery.select2');
+  const select2 = S2.require('jquery.select2');
 
   // Hold the AMD module references on the jQuery function that was just loaded
   // This allows Select2 to use the internal loader outside of this file, such

@@ -16,11 +16,11 @@ window.app = {
 // This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
-var Base64ToArrayBuffer = function(base64Str) {
-	var binStr = atob(base64Str);
-	var ab = new ArrayBuffer(binStr.length);
-	var bv = new Uint8Array(ab);
-	for (var i = 0, l = binStr.length; i < l; i++) {
+let Base64ToArrayBuffer = function(base64Str) {
+	const binStr = atob(base64Str);
+	const ab = new ArrayBuffer(binStr.length);
+	const bv = new Uint8Array(ab);
+	for (let i = 0, l = binStr.length; i < l; i++) {
 		bv[[i]] = binStr.charCodeAt(i);
 	}
 	return ab;
@@ -31,9 +31,9 @@ var Base64ToArrayBuffer = function(base64Str) {
 // This function may look unused, but it's needed in WASM and mobile to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
-var b64d = function(base64Str) {
-	var binStr = atob(base64Str);
-	var u8Array = Uint8Array.from(binStr, c => c.codePointAt(0));
+let b64d = function(base64Str) {
+	const binStr = atob(base64Str);
+	const u8Array = Uint8Array.from(binStr, c => c.codePointAt(0));
 	return new TextDecoder().decode(u8Array);
 }
 
@@ -42,45 +42,45 @@ class BrowserProperties {
 	static initiateBrowserProperties(global) {
 		global.L = {};
 
-		let ua = navigator.userAgent.toLowerCase();
-		let uv = navigator.vendor.toLowerCase();
-		let doc = document.documentElement;
+		const ua = navigator.userAgent.toLowerCase();
+		const uv = navigator.vendor.toLowerCase();
+		const doc = document.documentElement;
 
-		let ie = 'ActiveXObject' in global;
+		const ie = 'ActiveXObject' in global;
 
-		let cypressTest = ua.indexOf('cypress') !== -1;
+		const cypressTest = ua.indexOf('cypress') !== -1;
 
 		// Firefox has undefined navigator.clipboard.read and navigator.clipboard.write,
 		// unsecure contexts (such as http + non-localhost) has the entire navigator.clipboard
 		// undefined.
-		let clipboardApiAvailable = navigator.clipboard !== undefined && navigator.clipboard.write !== undefined && navigator.clipboard.read !== undefined;
+		const clipboardApiAvailable = navigator.clipboard !== undefined && navigator.clipboard.write !== undefined && navigator.clipboard.read !== undefined;
 
-		let webkit    = ua.indexOf('webkit') !== -1;
-		let chrome    = ua.indexOf('chrome') !== -1;
-		let gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style)) && !webkit && !global.opera && !ie;
-		let safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0);
+		const webkit    = ua.indexOf('webkit') !== -1;
+		const chrome    = ua.indexOf('chrome') !== -1;
+		const gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style)) && !webkit && !global.opera && !ie;
+		const safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0);
 
-		let win = navigator.platform.indexOf('Win') === 0;
+		const win = navigator.platform.indexOf('Win') === 0;
 
-		let mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1;
-		let msPointer = !global.PointerEvent && global.MSPointerEvent;
-		let pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer;
+		const mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1;
+		const msPointer = !global.PointerEvent && global.MSPointerEvent;
+		const pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer;
 
-		let webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix());
-		let gecko3d = 'MozPerspective' in doc.style;
+		const webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix());
+		const gecko3d = 'MozPerspective' in doc.style;
 
-		var mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
-		var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
+		const mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
+		const chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
 
-		var navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
+		const navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
 		(navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage);
 
 		function getFirefoxVersion() {
-			var version = '';
+			let version = '';
 
-			var userAgent = navigator.userAgent.toLowerCase();
+			const userAgent = navigator.userAgent.toLowerCase();
 			if (userAgent.indexOf('firefox') !== -1) {
-				var matches = userAgent.match(/firefox\/([0-9]+\.*[0-9]*)/);
+				const matches = userAgent.match(/firefox\/([0-9]+\.*[0-9]*)/);
 				if (matches) {
 					version = matches[1];
 				}
@@ -288,11 +288,11 @@ class InitializerBase {
 			document.getElementById('content-keeper').remove();
 		}, false);
 
-		let productName = document.getElementById("init-product-branding-name").value;
+		const productName = document.getElementById("init-product-branding-name").value;
 		if (typeof productName === 'string' && productName.length) {
 			window.brandProductName = productName;
 		}
-		let productURL = document.getElementById("init-product-branding-url").value;
+		const productURL = document.getElementById("init-product-branding-url").value;
 		if (typeof productURL === 'string' && productURL.length) {
 			window.brandProductURL = productURL;
 		}
@@ -418,7 +418,7 @@ class BrowserInitializer extends InitializerBase {
 			return;
 
 		try {
-			var msg = JSON.parse(e.data);
+			const msg = JSON.parse(e.data);
 		} catch (err) {
 			return;
 		}
@@ -559,24 +559,24 @@ function getInitializerClass() {
 	// enable later toggling
 	global.setLogging = function(doLogging)
 	{
-		var loggingMethods = ['error', 'warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd', 'group', 'groupEnd'];
+		const loggingMethods = ['error', 'warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd', 'group', 'groupEnd'];
 		if (!doLogging) {
-			var noop = function() {};
+			const noop = function() {};
 
-			for (var i = 0; i < loggingMethods.length; i++) {
+			for (let i = 0; i < loggingMethods.length; i++) {
 				global.app.console[loggingMethods[i]] = noop;
 			}
 		} else {
-			for (var i = 0; i < loggingMethods.length; i++) {
+			for (let i = 0; i < loggingMethods.length; i++) {
 				if (!Object.prototype.hasOwnProperty.call(global.console, loggingMethods[i])) {
 					continue;
 				}
 				(function(method) {
 					global.app.console[method] = function logWithCool() {
-						var args = Array.prototype.slice.call(arguments);
+						const args = Array.prototype.slice.call(arguments);
 						if (method === 'error') {
-							var log = 'jserror ';
-							for (var arg = 0; arg < arguments.length; arg++) {
+							let log = 'jserror ';
+							for (let arg = 0; arg < arguments.length; arg++) {
 								if (typeof arguments[arg] === 'string')
 									log += arguments[arg] + '\n';
 							}
@@ -589,7 +589,7 @@ function getInitializerClass() {
 			}
 
 			global.onerror = function (msg, src, row, col, err) {
-				var data = {
+				const data = {
 					userAgent: navigator.userAgent.toLowerCase(),
 					vendor: navigator.vendor.toLowerCase(),
 					message: msg,
@@ -597,8 +597,8 @@ function getInitializerClass() {
 					line: row,
 					column: col
 				};
-				var desc = err ? err.message || '(no message)': '(no err)', stack = err ? err.stack || '(no stack)': '(no err)';
-				var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
+				const desc = err ? err.message || '(no message)': '(no err)', stack = err ? err.stack || '(no stack)': '(no err)';
+				const log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
 				global.logServer(log);
 
 				if (L.Browser.cypressTest && window.parent !== window && err !== null) {
@@ -646,7 +646,7 @@ function getInitializerClass() {
 		_pendingSettingUpdate: undefined,
 		useBrowserSetting: false,
 		canPersist: (function() {
-			var str = 'localstorage_test';
+			const str = 'localstorage_test';
 			try {
 				global.localStorage.setItem(str, str);
 				global.localStorage.removeItem(str);
@@ -657,7 +657,7 @@ function getInitializerClass() {
 		})(),
 
 		_initializeBrowserSetting: function (msg) {
-			let settingJSON = JSON.parse(msg.substring('browsersetting:'.length + 1));;
+			const settingJSON = JSON.parse(msg.substring('browsersetting:'.length + 1));;
 
 			if (typeof settingJSON === 'undefined')
 				return;
@@ -859,7 +859,7 @@ function getInitializerClass() {
 	};
 
 	global.getAccessibilityState = function () {
-		var isCalcTest =
+		const isCalcTest =
 			global.docURL.includes('data/desktop/calc/') ||
 			global.docURL.includes('data/mobile/calc/') ||
 			global.docURL.includes('data/idle/calc/') ||
@@ -921,7 +921,7 @@ function getInitializerClass() {
 					&& global.L.Map
 					&& global.L.Map.THIS._docLayer.isCalc()
 					&& hint !== undefined) {
-				var command = {
+				const command = {
 					Enable: {
 						type: 'boolean',
 						value: hint
@@ -953,11 +953,11 @@ function getInitializerClass() {
 		/// A decorator factory, which takes a decorator and prevents it from creating new instances when wrapping the same function
 		/// This is particularly useful for functions that take events, say, as .on and .off won't work properly if you don't provide the same function instance
 		decorator: function(decorator, context) {
-			var decoratorId = global.memo._getId(decorator);
-			var contextId = global.memo._getId(context);
+			const decoratorId = global.memo._getId(decorator);
+			const contextId = global.memo._getId(context);
 
 			return function(f) {
-				var functionId = global.memo._getId(f);
+				const functionId = global.memo._getId(f);
 
 				if (global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId] === undefined) {
 					global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId] = decorator.apply(this, arguments);
@@ -976,8 +976,8 @@ function getInitializerClass() {
 		/// A decorator, which takes a function and binds it to an object
 		/// Similar to L.bind, but when given the same function and context we will return the previously bound function
 		bind: function(f, context) {
-			var functionId = global.memo._getId(f);
-			var contextId = global.memo._getId(context);
+			const functionId = global.memo._getId(f);
+			const contextId = global.memo._getId(context);
 			if (global.memo._bindMemo[functionId + ' ' + contextId] === undefined) {
 				global.memo._bindMemo[functionId + ' ' + contextId] = f.bind(context);
 			}
@@ -1140,7 +1140,7 @@ function getInitializerClass() {
 
 	global.proxySocketCounter = 0;
 	global.ProxySocket = function (uri) {
-		var that = this;
+		const that = this;
 		this.uri = uri;
 		this.binaryType = 'arraybuffer';
 		this.bufferedAmount = 0;
@@ -1176,15 +1176,15 @@ function getInitializerClass() {
 		};
 		this.parseIncomingArray = function(arr) {
 			//global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
-			for (var i = 0; i < arr.length; ++i)
+			for (let i = 0; i < arr.length; ++i)
 			{
-				var left = arr.length - i;
+				const left = arr.length - i;
 				if (left < 4)
 				{
 					//global.app.console.debug('no data left');
 					break;
 				}
-				var type = String.fromCharCode(arr[i+0]);
+				const type = String.fromCharCode(arr[i+0]);
 				if (type != 'T' && type != 'B')
 				{
 					global.app.console.debug('wrong data type: ' + type);
@@ -1199,12 +1199,12 @@ function getInitializerClass() {
 					break;
 				}
 				i += 2;
-				var numStr = '';
-				var start = i;
+				let numStr = '';
+				let start = i;
 				while (arr[i] != 10) // '\n'
 					i++;
 				numStr = this.decode(arr, start, i);
-				var serial = parseInt(numStr, 16);
+				const serial = parseInt(numStr, 16);
 
 				i++; // skip \n
 
@@ -1219,11 +1219,11 @@ function getInitializerClass() {
 				while (arr[i] != 10) // '\n'
 					i++;
 				numStr = this.decode(arr, start, i);
-				var size = parseInt(numStr, 16);
+				const size = parseInt(numStr, 16);
 
 				i++; // skip \n
 
-				var data;
+				let data;
 				if (type == 'T')
 					data = this.decode(arr, i, i + size);
 				else
@@ -1308,14 +1308,14 @@ function getInitializerClass() {
 
 			//global.app.console.debug('send msg - ' + that.msgInflight + ' on session ' +
 			//	      that.sessionId + '  queue: "' + that.sendQueue + '"');
-			var req = new XMLHttpRequest();
+			const req = new XMLHttpRequest();
 			const url = that.getEndPoint('write');
 			req.open('POST', url);
 			req.responseType = 'arraybuffer';
 			req.addEventListener('load', function() {
 				if (this.status == 200)
 				{
-					var data = new Uint8Array(this.response);
+					const data = new Uint8Array(this.response);
 					if (data.length)
 					{
 						// We have some data back from WSD.
@@ -1338,7 +1338,7 @@ function getInitializerClass() {
 				if (that.curPollMs < that.maxPollMs) // If we aren't throttled, see if we should.
 				{
 					// Has it been long enough since we got any data?
-					var timeSinceLastDataMs = (performance.now() - that.lastDataTimestamp) | 0;
+					const timeSinceLastDataMs = (performance.now() - that.lastDataTimestamp) | 0;
 					if (timeSinceLastDataMs >= that.minIdlePollsToThrottle * that.curPollMs)
 					{
 						// Throttle.
@@ -1369,9 +1369,9 @@ function getInitializerClass() {
 			// avoid attempting to re-connect too quickly
 			if (global.lastCreatedProxySocket)
 			{
-				var msSince = performance.now() - global.lastCreatedProxySocket;
+				const msSince = performance.now() - global.lastCreatedProxySocket;
 				if (msSince < 250) {
-					var delay = 250 - msSince;
+					const delay = 250 - msSince;
 					global.app.console.debug('Wait to re-try session creation for ' + delay + 'ms');
 					this.curPollMs = delay; // ms
 					this.delaySession = setTimeout(function() {
@@ -1383,7 +1383,7 @@ function getInitializerClass() {
 			}
 			global.lastCreatedProxySocket = performance.now();
 
-			var req = new XMLHttpRequest();
+			const req = new XMLHttpRequest();
 			const endPoint = that.getEndPoint('open');
 
 			req.open('POST', endPoint);
@@ -1412,7 +1412,7 @@ function getInitializerClass() {
 			this.openInflight++;
 		};
 		this.send = function(msg) {
-			var hadData = this.sendQueue.length > 0;
+			const hadData = this.sendQueue.length > 0;
 			this.sendQueue = this.sendQueue.concat(
 				'B0x' + this.outSerial.toString(16) + '\n' +
 				'0x' + (new TextEncoder().encode(msg)).length.toString(16) + '\n' + msg + '\n');
@@ -1435,7 +1435,7 @@ function getInitializerClass() {
 
 			if (!beacon)
 			{
-				var req = new XMLHttpRequest();
+				const req = new XMLHttpRequest();
 				req.open('POST', url);
 				req.send('');
 			}
@@ -1443,7 +1443,7 @@ function getInitializerClass() {
 				navigator.sendBeacon(url, '');
 		};
 		this.close = function() {
-			var oldState = this.readyState;
+			const oldState = this.readyState;
 			global.app.console.debug('proxy: close socket');
 			this.readyState = 3;
 			this.onclose();
@@ -1458,7 +1458,7 @@ function getInitializerClass() {
 			this.unloading = true;
 		};
 		this.getEndPoint = function(command) {
-			var base = this.uri;
+			const base = this.uri;
 			return base + '/' + this.sessionId + '/' + command + '/' + this.outSerial;
 		};
 		global.app.console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
@@ -1486,11 +1486,11 @@ function getInitializerClass() {
 	}
 
 	global.iterateCSSImages = function(visitor) {
-		var visitUrls = function(rules, visitor, base) {
+		const visitUrls = function(rules, visitor, base) {
 			if (!rules)
 				return;
 
-			for (var r = 0; r < rules.length; ++r) {
+			for (let r = 0; r < rules.length; ++r) {
 				// check subset of rules like @media or @import
 				if (rules[r] && rules[r].type != 1) {
 					visitUrls(rules[r].cssRules || rules[r].rules, visitor, base);
@@ -1498,7 +1498,7 @@ function getInitializerClass() {
 				}
 				if (!rules[r] || !rules[r].style)
 					continue;
-				var img = rules[r].style.backgroundImage;
+				const img = rules[r].style.backgroundImage;
 				if (img === '' || img === undefined)
 					continue;
 
@@ -1514,9 +1514,9 @@ function getInitializerClass() {
 				}
 			}
 		};
-		var sheets = document.styleSheets;
-		for (var i = 0; i < sheets.length; ++i) {
-			var relBases;
+		const sheets = document.styleSheets;
+		for (let i = 0; i < sheets.length; ++i) {
+			let relBases;
 			try {
 				relBases = sheets[i].href.split('/');
 			} catch (err) {
@@ -1524,9 +1524,9 @@ function getInitializerClass() {
 				continue;
 			}
 			relBases.pop(); // bin last - css name.
-			var base = 'url("' + relBases.join('/');
+			const base = 'url("' + relBases.join('/');
 
-			var rules;
+			let rules;
 			try {
 				rules = sheets[i].cssRules || sheets[i].rules;
 			} catch (err) {
@@ -1551,7 +1551,7 @@ function getInitializerClass() {
 
 	// indirect socket to wrap the asyncness around fetching the routetoken from indirection url endpoint
 	global.IndirectSocket = function(uri) {
-		var that = this;
+		const that = this;
 		this.uri = uri;
 		this.binaryType = '';
 		this.unloading = false;
@@ -1576,7 +1576,7 @@ function getInitializerClass() {
 		};
 
 		this.sendPostMsg = function(errorCode) {
-			var errorMsg;
+			let errorMsg;
 			if (errorCode === 0) {
 				errorMsg = _('Cluster is scaling, retrying...');
 			} else if (errorCode === 1) {
@@ -1584,7 +1584,7 @@ function getInitializerClass() {
 			} else {
 				errorMsg = _('Failed to get RouteToken from controller');
 			}
-			var msg = {
+			const msg = {
 				'MessageId': 'Action_Load_Resp',
 				'SendTime': Date.now(),
 				'Values': {
@@ -1597,15 +1597,15 @@ function getInitializerClass() {
 		};
 
 		this.sendRouteTokenRequest = function (requestUri) {
-			var http = new XMLHttpRequest();
+			const http = new XMLHttpRequest();
 			// let url = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
 			http.open('GET', requestUri, true);
 			http.responseType = 'json';
 			http.addEventListener('load', function () {
 				if (this.status === 200) {
-					var uriWithRouteToken = http.response.uri;
+					const uriWithRouteToken = http.response.uri;
 					global.expectedServerId = http.response.serverId;
-					var params = (new URL(uriWithRouteToken)).searchParams;
+					const params = (new URL(uriWithRouteToken)).searchParams;
 					global.routeToken = params.get('RouteToken');
 					global.app.console.log('updated routeToken: ' + global.routeToken);
 					that.innerSocket = new WebSocket(uriWithRouteToken);
@@ -1633,7 +1633,7 @@ function getInitializerClass() {
 					if (!(window.app && window.app.socket && window.app.socket._reconnecting)) {
 						that.sendPostMsg(http.response.errorCode);
 					}
-					var timeoutFn = function (requestUri) {
+					const timeoutFn = function (requestUri) {
 						console.warn('Requesting again for routeToken');
 						this.open('GET', requestUri, true);
 						this.send();
@@ -1649,7 +1649,7 @@ function getInitializerClass() {
 
 		let requestUri = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
 		if (global.geolocationSetup) {
-			let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			requestUri += "&TimeZone=" + timeZone;
 		}
 		this.sendRouteTokenRequest(requestUri);
@@ -1678,7 +1678,7 @@ function getInitializerClass() {
 			// We use another approach just for iOS for now.
 			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
 				// global.postMobileDebug('_(' + string + '): YES: ' + global.LOCALIZATIONS[string]);
-				var result = global.LOCALIZATIONS[string];
+				let result = global.LOCALIZATIONS[string];
 				if (global.LANG === 'de-CH') {
 					result = result.replace(/ß/g, 'ss');
 				}
@@ -1698,13 +1698,13 @@ function getInitializerClass() {
 
 	// Setup global.webserver: the host URL, with http(s):// protocol (used to fetch files).
 	if (global.webserver === undefined) {
-		var protocol = global.location.protocol === 'file:' ? 'https:' : global.location.protocol;
+		const protocol = global.location.protocol === 'file:' ? 'https:' : global.location.protocol;
 		global.webserver = global.host.replace(/^(ws|wss):/i, protocol);
 		global.webserver = global.webserver.replace(/\/*$/, ''); // Remove trailing slash.
 	}
 
-	var docParams, wopiParams;
-	var filePath = global.coolParams.get('file_path');
+	let docParams, wopiParams;
+	const filePath = global.coolParams.get('file_path');
 	global.wopiSrc = global.coolParams.get('WOPISrc');
 	if (global.wopiSrc != '') {
 		global.docURL = decodeURIComponent(global.wopiSrc);
@@ -1739,7 +1739,7 @@ function getInitializerClass() {
 	// The docUrlParams, suffix, and wopiSrc are optionally hexified.
 	global.routeToken = '';
 	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
-		var wopiSrc = '';
+		let wopiSrc = '';
 		if (global.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + encodeURIComponent(global.wopiSrc);
 			if (global.routeToken != '')
@@ -1753,7 +1753,7 @@ function getInitializerClass() {
 		}
 
 		suffix = suffix || '/ws';
-		var encodedDocUrl = encodeURIComponent(docUrlParams) + suffix + wopiSrc;
+		let encodedDocUrl = encodeURIComponent(docUrlParams) + suffix + wopiSrc;
 		if (global.hexifyUrl)
 			encodedDocUrl = global.hexEncode(encodedDocUrl);
 		return root + encodedDocUrl + '/ws';
@@ -1762,7 +1762,7 @@ function getInitializerClass() {
 	// Form a valid WS URL to the host with the given path and
 	// encode the document URL and params.
 	global.makeWsUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
-		var websocketURI = global.makeWsUrl(path);
+		const websocketURI = global.makeWsUrl(path);
 		return global.makeDocAndWopiSrcUrl(websocketURI, docUrlParams, suffix, wopiSrcParam);
 	};
 
@@ -1775,7 +1775,7 @@ function getInitializerClass() {
 	// Form a valid HTTP URL to the host with the given path and
 	// encode the document URL and params.
 	global.makeHttpUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
-		var httpURI = global.makeHttpUrl(path);
+		const httpURI = global.makeHttpUrl(path);
 		return global.makeDocAndWopiSrcUrl(httpURI, docUrlParams, suffix, wopiSrcParam);
 	};
 
@@ -1789,9 +1789,9 @@ function getInitializerClass() {
 
 	// Encode a string to hex.
 	global.hexEncode = function (string) {
-		var bytes = new TextEncoder().encode(string);
-		var hex = '0x';
-		for (var i = 0; i < bytes.length; ++i) {
+		const bytes = new TextEncoder().encode(string);
+		let hex = '0x';
+		for (let i = 0; i < bytes.length; ++i) {
 			hex += bytes[i].toString(16);
 		}
 		return hex;
@@ -1801,8 +1801,8 @@ function getInitializerClass() {
 	global.hexDecode = function (hex) {
 		if (hex.startsWith('0x'))
 			hex = hex.substr(2);
-		var bytes = new Uint8Array(hex.length / 2);
-		for (var i = 0; i < bytes.length; i++) {
+		const bytes = new Uint8Array(hex.length / 2);
+		for (let i = 0; i < bytes.length; i++) {
 			bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
 		}
 		return new TextDecoder().decode(bytes);
@@ -1813,8 +1813,8 @@ function getInitializerClass() {
 		global.TheFakeWebSocket = global.socket;
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
-		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.makeWsUrlWopiSrc('/cool/', global.docURL + docParamsPart);
+		const docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
+		const websocketURI = global.makeWsUrlWopiSrc('/cool/', global.docURL + docParamsPart);
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
@@ -1822,22 +1822,22 @@ function getInitializerClass() {
 		}
 	}
 
-	var isRandomUser = global.coolParams.get('randomUser');
+	const isRandomUser = global.coolParams.get('randomUser');
 	if (isRandomUser) {
 		// List of languages supported in core
-		var randomUserLangs = [
+		const randomUserLangs = [
 			'ar', 'bg', 'ca', 'cs', 'da', 'de', 'el', 'en-US',
 			'en-GB', 'eo', 'es', 'eu', 'fi', 'fr', 'gl', 'he',
 			'hr', 'hu', 'id', 'is', 'it', 'ja', 'ko', 'lo',
 			'nb', 'nl', 'oc', 'pl', 'pt', 'pt-BR', 'sq', 'ru',
 			'sk', 'sl', 'sv', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'];
-		var randomUserLang = randomUserLangs[Math.floor(Math.random() * randomUserLangs.length)];
+		const randomUserLang = randomUserLangs[Math.floor(Math.random() * randomUserLangs.length)];
 		window.app.console.log('Randomize Settings: Set language to: ',randomUserLang);
 		global.coolParams.set('lang', randomUserLang);
 		global.coolParams.set('debug',true);
 	}
 
-	var lang = global.coolParams.get('lang');
+	let lang = global.coolParams.get('lang');
 	if (lang) {
 		// Workaround for broken integrations vs. LOKit language fallback
 		if (lang === 'en-us')
@@ -1866,13 +1866,13 @@ function getInitializerClass() {
 			// Note there are two socket "onopen" handlers, this one and the other in browser/src/core/Socket.js.
 			// See the notes there for explanation.
 			if (global.socket.readyState === 1) {
-				var ProtocolVersionNumber = '0.1';
-				var timestamp = encodeURIComponent(global.coolParams.get('timestamp'));
-				var msg = 'load url=' + encodeURIComponent(global.docURL);
+				const ProtocolVersionNumber = '0.1';
+				const timestamp = encodeURIComponent(global.coolParams.get('timestamp'));
+				let msg = 'load url=' + encodeURIComponent(global.docURL);
 
-				var now0 = Date.now();
-				var now1 = performance.now();
-				var now2 = Date.now();
+				const now0 = Date.now();
+				const now1 = performance.now();
+				const now2 = Date.now();
 				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
 				msg += ' accessibilityState=' + global.getAccessibilityState();
@@ -1893,7 +1893,7 @@ function getInitializerClass() {
 				if (global.deviceFormFactor) {
 					msg += ' deviceFormFactor=' + global.deviceFormFactor;
 				}
-				var spellOnline = window.prefs.get('SpellOnline');
+				const spellOnline = window.prefs.get('SpellOnline');
 				if (spellOnline) {
 					msg += ' spellOnline=' + spellOnline;
 				}
@@ -1950,7 +1950,7 @@ function getInitializerClass() {
 	}
 
 	function handleViewportChange(event) {
-		var visualViewport = event.target;
+		const visualViewport = event.target;
 
 		window.scroll(0, 0);
 		document.body.style.height = visualViewport.height + 'px';
@@ -1961,3 +1961,4 @@ function getInitializerClass() {
 		window.visualViewport.addEventListener('resize', handleViewportChange);
 	}
 }(window));
+
