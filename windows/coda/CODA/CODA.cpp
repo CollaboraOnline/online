@@ -111,41 +111,6 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
                              : "window.TheFakeWebSocket.onmessage({'data': window.b64d('" };
     const std::string posttext{ "')});" };
 
-#if 0
-   if (!binaryMessage)
-   {
-       std::vector<char> sb(length*3 + 10);
-       int sbi = 0;
-
-       for (int i = 0; i < (length > 100 ? 100 : length); i++)
-       {
-           if (buffer[i] >= ' ' && buffer[i] < 127 && buffer[i] != '\\')
-           {
-               sb[sbi++] = buffer[i];
-           }
-           else if (buffer[i] == '\\')
-           {
-               sb[sbi++] = '\\';
-               sb[sbi++] = '\\';
-           }
-           else if (buffer[i] == '\n')
-           {
-
-               sb[sbi++] = '\\';
-               sb[sbi++] = 'n';
-           }
-           else
-           {
-               const char hex[] { "0123456789abcdef" };
-               sb[sbi++] = '\\';
-               sb[sbi++] = hex[buffer[i] >> 4];
-               sb[sbi++] = hex[buffer[i] & 0x0F];
-           }
-       }
-       sb[sbi++] = '\0';
-   }
-#endif
-
     DWORD base64len = length * 2 + 100;
     std::vector<char> base64(base64len);
     CryptBinaryToStringA((BYTE*)buffer, length, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF,
