@@ -117,7 +117,6 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
 		this.sectionProperties.showSelectedBigger = false;
 		this.sectionProperties.calcCurrentComment = null; // We don't automatically show a Calc comment when cursor is on its cell. But we remember it to show if user presses Alt+C keys.
-		this.sectionProperties.pendingUpdate = false;
 		this.sectionProperties.reLayout = true;
 
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
@@ -2068,21 +2067,21 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private update (reLayout: boolean = true): void {
-		this.sectionProperties.pendingUpdate = true;
 		this.sectionProperties.reLayout = reLayout;
-		this.containerObject.requestReDraw();
+		this.updateDOM();
 	}
 
-	public onUpdateDOM(): void {
-		if (!this.sectionProperties.pendingUpdate)
-			return
+	private updateDOM(): void {
+		if (!this.sectionProperties.firstImport) return;
 
-		if (this.sectionProperties.reLayout && app.map._docLayer._docType === 'text')
-			this.updateThreadInfoIndicator();
+		app.layoutingService.appendLayoutingTask(() => {
+			if (this.sectionProperties.reLayout && app.map._docLayer._docType === 'text')
+				this.updateThreadInfoIndicator();
 
-		this.layout(this.sectionProperties.reLayout);
-		this.sectionProperties.pendingUpdate = false;
-		this.sectionProperties.reLayout = true;
+			this.layout(this.sectionProperties.reLayout);
+		});
+
+		app.sectionContainer.requestReDraw();
 	}
 
 	private updateThreadInfoIndicator(): void {
@@ -2414,7 +2413,8 @@ export class CommentSection extends CanvasSectionObject {
 			this.showHideComments();
 
 		this.sectionProperties.reLayout = true;
-		this.onUpdateDOM();
+		this.sectionProperties.firstImport = true;
+		this.updateDOM();
 
 		CommentSection.importingComments = false;
 	}
