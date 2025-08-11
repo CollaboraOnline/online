@@ -181,7 +181,8 @@ static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
 static std::atomic<int> TotalOutstandingForks(0);
 std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
-std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitProcs;
+typedef std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitMap;
+SubForKitMap SubForKitProcs;
 std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex;
@@ -447,6 +448,23 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 #endif
 }
 
+namespace {
+
+SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
+{
+    // copy as it will be used after erase()
+    std::string configId = it->first;
+
+    LastSubForKitBrokerExitTimes.erase(configId);
+    OutstandingForks.erase(configId);
+    it = SubForKitProcs.erase(it);
+    UnitWSD::get().killSubForKit(configId);
+
+    return it;
+}
+
+}
+
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
 void cleanupDocBrokers()
@@ -521,10 +539,7 @@ void cleanupDocBrokers()
             else
             {
                 LOG_DBG("subforkit " << configId << " is unused, dropping it");
-                LastSubForKitBrokerExitTimes.erase(configId);
-                OutstandingForks.erase(configId);
-                it = SubForKitProcs.erase(it);
-                UnitWSD::get().killSubForKit(configId);
+                it = dropSubForKit(it);
             }
         }
 
