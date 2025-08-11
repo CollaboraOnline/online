@@ -55,8 +55,11 @@
 .sidebar.unotoolbutton.selected,
 .notebookbar.unotoolbutton.selected,
 .jsdialog.unotoolbutton.selected {
-	background-color: var(--color-background-dark);
+	background-color: rgba(var(--doc-type), 0.2);
 	border: 1px solid var(--color-border-dark);
+	border-color: rgb(var(--doc-type));
+	border-width: 1px;
+	border-style: solid;
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
 }
