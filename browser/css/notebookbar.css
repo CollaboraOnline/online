@@ -1,7 +1,9 @@
 
 .notebookbar-scroll-wrapper {
-	height: 72px;
+	height: 82px;
 	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
 }
 
 /* stretch the fields */
