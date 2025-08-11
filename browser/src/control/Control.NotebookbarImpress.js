@@ -932,14 +932,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'home-fontcombobox-break', orientation: 'vertical' },
 			{
-				'id': 'home-insert-annotation',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation'),
-				'command': '.uno:InsertAnnotation',
-				'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
-			},
-			{ type: 'separator', id: 'home-insertannotation-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
 				'id': 'home-paragraph',
 				'name':_('Paragraph'),
@@ -1124,14 +1116,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'home-fillcolormenu-break', orientation: 'vertical' },
 			{
-				'id': 'home-text',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Text'),
-				'command': '.uno:Text',
-				'accessibility': { focusBack: true, combination: 'TI', de: null }
-			},
-			{ type: 'separator', id: 'home-inserttext-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
 				'id': 'illustrations',
 				'name':_('Illustrations'),
@@ -1198,11 +1182,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'home-duplicate-slide',
+										'id': 'home-text',
 										'type': 'toolitem',
-										'text': _UNO('.uno:DuplicateSlide', 'presentation'),
-										'command': '.uno:DuplicatePage',
-										'accessibility': { focusBack: true, combination: 'DP', de: null }
+										'text': _UNO('.uno:Text'),
+										'command': '.uno:Text',
+										'accessibility': { focusBack: true, combination: 'TI', de: null }
 									},
 									{
 										'id': 'home-object-chart',
@@ -1219,15 +1203,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				]
 			},
 			{ type: 'separator', id: 'home-insertobjectchart-break', orientation: 'vertical' },
-			{
-				'id': 'home-presentation',
-				'class': 'unoPresentation',
-				'type': 'bigcustomtoolitem',
-				'text': _('Presentation'),
-				'command': 'presentation',
-				'accessibility': { focusBack: true, combination: 'PT', de: null }
-			},
-			{ type: 'separator', id: 'home-presentation-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'home-search',
