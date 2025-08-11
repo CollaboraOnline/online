@@ -307,13 +307,6 @@
 .notebookbar-scroll-wrapper {
 	height: 72px;
 }
-#toolbar-wrapper.hasnotebookbar .ui-scroll-left,
-#toolbar-wrapper.hasnotebookbar .ui-scroll-right {
-	/* .notebookbar-scroll-wrapper's height */
-	height: 72px;
-	/* #toolbar-wrapper:not(.mobile)'s top padding */
-	top: 3px;
-}
 
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {

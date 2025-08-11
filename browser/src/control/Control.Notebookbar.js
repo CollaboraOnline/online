@@ -16,7 +16,6 @@
 /* global $ _ _UNO JSDialog app */
 L.Control.Notebookbar = L.Control.extend({
 
-	_currentScrollPosition: 0,
 	_showNotebookbar: false,
 	_RTL: false,
 	_lastContext: null,
@@ -32,7 +31,6 @@ L.Control.Notebookbar = L.Control.extend({
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
 		this.additionalShortcutButtons = [];
-		this._currentScrollPosition = 0;
 		var docType = this._map.getDocType();
 
 		if (document.documentElement.dir === 'rtl')
@@ -247,7 +245,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (window.mode.isDesktop() || window.mode.isTablet())
 			this.createOptionsSection();
 
-		this.scrollToLastPositionIfNeeded();
+		JSDialog.RefreshScrollables();
 	},
 
 	setTabs: function(tabs) {
@@ -399,20 +397,6 @@ L.Control.Notebookbar = L.Control.extend({
 			return true;
 		}
 		return false;
-	},
-
-	setCurrentScrollPosition: function() {
-		this._currentScrollPosition = $(this.container).scrollLeft();
-	},
-
-	scrollToLastPositionIfNeeded: function() {
-		var rootContainer = $(this.container).children('div').get(0);
-
-		if (this._currentScrollPosition && $(rootContainer).outerWidth() > $(window).width()) {
-			$(this.container).animate({ scrollLeft: this._currentScrollPosition }, 0);
-		} else {
-			JSDialog.RefreshScrollables();
-		}
 	},
 
 	shouldIgnoreContextChange(contexts, appId) {
