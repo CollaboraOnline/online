@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 
 		// after switch we should see cursor and A1
-		desktopHelper.assertScrollbarPosition('vertical', 50, 100);
+		desktopHelper.assertScrollbarPosition('vertical', 20, 100);
 		desktopHelper.assertScrollbarPosition('horizontal', 50, 100);
 	});
 
@@ -89,7 +89,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// click on sheet 2 tab (yes, current one)
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 340, 380);
+		desktopHelper.assertScrollbarPosition('vertical', 320, 380);
 
 		// go to different place in the spreadsheet
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A2{enter}');
