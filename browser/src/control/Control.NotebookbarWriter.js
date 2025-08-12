@@ -1078,6 +1078,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'menubutton',
 						'text': _UNO('.uno:FormatBulletsMenu', 'text'),
 						'command': '.uno:FormatBulletsMenu',
+						'applyCallback':function () {
+							app.map.sendUnoCommand('.uno:DefaultNumbering') // this will make this as split button
+						},
 						'accessibility': { focusBack: false, combination: 'FB', de: null }
 					},
 					{
@@ -2540,6 +2543,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'id': 'review-track-changes:RecordTrackedChangesMenu',
 						'type': 'menubutton',
 						'text': _UNO('.uno:TrackChanges', 'text'),
+						'applyCallback':function () {
+							app.map.sendUnoCommand('.uno:TrackChangesInAllViews') // this will make this as split button
+						},
 						'command': '.uno:TrackChanges',
 						'accessibility': { focusBack: true, combination: 'TC', de: null }
 					},

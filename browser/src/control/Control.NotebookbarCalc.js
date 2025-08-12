@@ -267,6 +267,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'menubutton',
 				'text': _UNO('.uno:Print', 'spreadsheet'),
 				'command': '.uno:Print',
+				'applyCallback':function () {
+					app.map.print();
+				},
 				'accessibility': { focusBack: true,	combination: 'PT', de: null }
 			});
 		}
@@ -556,6 +559,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 									'noLabel': true,
 									'text': _UNO('.uno:SetBorderStyle'),
 									'command': '.uno:SetBorderStyle',
+									'applyCallback':function () {
+										app.map.sendUnoCommand(window.getBorderStyleUNOCommand(0, 0, 1, 0, 0, 0, 0)) // this will make this as split button
+									},
 									'accessibility': { focusBack: true,	combination: 'B', de: null }
 								},
 								{
