@@ -282,6 +282,9 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.wrapper.style.marginLeft = this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
 
+		if (document.documentElement.dir === 'rtl')
+			this.sectionProperties.wrapper.dir = 'rtl';
+
 		// We make comment directly visible when its transitioned to its determined position
 		if (cool.CommentSection.autoSavedComment)
 			this.sectionProperties.container.style.visibility = 'hidden';
