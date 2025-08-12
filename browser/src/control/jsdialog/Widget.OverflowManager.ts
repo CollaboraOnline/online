@@ -43,7 +43,7 @@ class OverflowManager {
 
 	hasOverflow(maxWidth: number): boolean {
 		const requiredWidth = this.parentContainer.scrollWidth;
-		console.debug(
+		app.console.debug(
 			'overflow manager: "' +
 				this.data.id +
 				'" max: ' +
@@ -92,6 +92,6 @@ JSDialog.OverflowManager = function (
 	// Just create manager which will attach itself to the container and resize event.
 	// Builder will process children as in regular container.
 	new OverflowManager(parentContainer, data);
-	console.debug('Create OverflowManager for: "' + data.id + '"');
+	app.console.debug('Create OverflowManager for: "' + data.id + '"');
 	return true;
 } as JSWidgetHandler;

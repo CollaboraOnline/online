@@ -61,14 +61,14 @@ function setupOverflowMenu(
 	};
 
 	(parentContainer as OverflowGroupContainer).foldGroup = () => {
-		console.debug('overflow manager: fold group: ' + id);
+		app.console.debug('overflow manager: fold group: ' + id);
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
 		overflowMenuButton.style.display = '';
 	};
 
 	(parentContainer as OverflowGroupContainer).unfoldGroup = () => {
-		console.debug('overflow manager: unfold group: ' + id);
+		app.console.debug('overflow manager: unfold group: ' + id);
 		groupLabel.style.display = '';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
@@ -171,7 +171,7 @@ JSDialog.OverflowGroup = function (
 
 	// content
 	if (data.children) builder.build(contentContainer, data.children, false);
-	else console.error('OverflowGroup: no content provided');
+	else app.console.error('OverflowGroup: no content provided');
 
 	// first toolitem in the group
 	const firstItem = findFirstToolitem(data.children);
