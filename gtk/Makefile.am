@@ -33,7 +33,8 @@ cmake_list= \
             ../common/Crypto-stub.cpp \
             ../common/FileUtil.cpp \
             ../common/FileUtil-unix.cpp \
-            ../common/Log.cpp \
+            ../common/Log-common.cpp \
+            ../common/Log-poco.cpp \
             ../common/TraceEvent.cpp \
             ../common/Protocol.cpp \
             ../common/RegexUtil.cpp \

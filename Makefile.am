@@ -147,7 +147,8 @@ AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 shared_sources = common/FileUtil.cpp \
                  common/FileUtil-unix.cpp \
                  common/JailUtil.cpp \
-                 common/Log.cpp \
+                 common/Log-common.cpp \
+                 common/Log-poco.cpp \
                  common/Protocol.cpp \
                  common/StringVector.cpp \
                  common/Session.cpp \
@@ -235,7 +236,8 @@ endif
 
 connect_SOURCES = tools/Connect.cpp \
                   common/DummyTraceEventEmitter.cpp \
-                  common/Log.cpp \
+                  common/Log-common.cpp \
+                  common/Log-poco.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
                   common/Util.cpp \
@@ -243,7 +245,8 @@ connect_SOURCES = tools/Connect.cpp \
                   $(util_platform_cpp) \
                   common/Util-unix.cpp
 
-lokitclient_SOURCES = common/Log.cpp \
+lokitclient_SOURCES = common/Log-common.cpp \
+                      common/Log-poco.cpp \
                       common/DummyTraceEventEmitter.cpp \
                       tools/KitClient.cpp \
                       common/Protocol.cpp \
@@ -338,7 +341,8 @@ endif # ENABLE_LIBFUZZER
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/DummyTraceEventEmitter.cpp \
-                   common/Log.cpp \
+                   common/Log-common.cpp \
+                   common/Log-poco.cpp \
                    common/StringVector.cpp \
                    common/Util.cpp \
                    common/Util-server.cpp \
@@ -352,7 +356,8 @@ coolmap_SOURCES = tools/map.cpp
 
 coolbench_SOURCES = tools/Benchmark.cpp \
                     common/DummyTraceEventEmitter.cpp \
-                    common/Log.cpp \
+                    common/Log-common.cpp \
+                    common/Log-poco.cpp \
                     common/StringVector.cpp \
                     common/Util.cpp \
                     common/Util-server.cpp \
@@ -376,7 +381,8 @@ coolconfig_SOURCES = tools/Config.cpp \
                     common/ConfigUtil.cpp \
                     common/Crypto.cpp \
                     common/DummyTraceEventEmitter.cpp \
-                    common/Log.cpp \
+                    common/Log-common.cpp \
+                    common/Log-poco.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
                     common/Util-unix.cpp \
