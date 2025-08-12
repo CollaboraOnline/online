@@ -129,18 +129,27 @@ class SlideRenderer2d extends SlideRenderer {
 	protected render() {
 		if (this.isDisposed()) return;
 
-		const gl = this._context.get2dGl();
-		gl.clearRect(0, 0, gl.canvas.width, gl.canvas.height);
+		const canvas2dCtx = this._context.get2dGl();
+		if (!canvas2dCtx) {
+			console.error('Canvas 2D context not available');
+			return;
+		}
+		canvas2dCtx.clearRect(
+			0,
+			0,
+			canvas2dCtx.canvas.width,
+			canvas2dCtx.canvas.height,
+		);
 
 		const slideImage = this.getAnimatedSlideImage();
 		app.map.fire('newslideshowframe', {
 			frame: slideImage,
 		});
 
-		gl.drawImage(slideImage, 0, 0);
+		canvas2dCtx.drawImage(slideImage, 0, 0);
 		slideImage.close();
 
-		gl.setTransform(1, 0, 0, 1, 0, 0);
+		canvas2dCtx.setTransform(1, 0, 0, 1, 0, 0);
 
 		if (this.isAnyLayerActive() || this.isAnyVideoPlaying) {
 			this._requestAnimationFrameId = requestAnimationFrame(
