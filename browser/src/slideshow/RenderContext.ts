@@ -30,8 +30,12 @@ abstract class RenderContext {
 		return this.gl as WebGL2RenderingContext;
 	}
 
-	public get2dGl(): CanvasRenderingContext2D {
-		return this.gl instanceof CanvasRenderingContext2D ? this.gl : null;
+	public get2dGl(): CanvasRenderingContext2D | null {
+		return this.gl &&
+			(this.gl instanceof CanvasRenderingContext2D ||
+				this.gl.constructor?.name === 'CanvasRenderingContext2D')
+			? (this.gl as CanvasRenderingContext2D)
+			: null;
 	}
 
 	public get2dOffscreen(): OffscreenCanvasRenderingContext2D {
