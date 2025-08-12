@@ -1997,8 +1997,9 @@ button.menubutton.sidebar > span {
 	left: var(--click-increment);
 }
 
-.notebookbar .ui-content.unobutton:hover,
-.jsdialog .ui-content.unobutton:hover {
+/* targetting buttons inside of split button */
+.notebookbar .splitbutton > .ui-content.unobutton:hover,
+.jsdialog .splitbutton > .ui-content.unobutton:hover {
 	background-color: var(--color-background-darker);
 }
 

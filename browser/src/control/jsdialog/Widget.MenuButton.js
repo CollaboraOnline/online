@@ -71,8 +71,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
+		var isSplitButton = data.applyCallback;
 
-		$(control.container).addClass('menubutton');
+		$(control.container).addClass('menubutton' + (isSplitButton ? ' splitbutton' : ''));
 
 		$(control.button).unbind('click');
 		$(control.label).unbind('click');
@@ -122,8 +123,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 				JSDialog.OpenDropdown(dropdownId, control.container, freshMenu, callback);
 			}
 		};
-
-		var isSplitButton = data.applyCallback;
 
 		// make it possible to setup separate callbacks for split button
 		if (isSplitButton) {
