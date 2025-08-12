@@ -1117,13 +1117,11 @@ menuDefinitions.set('LanguageMenu', [
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('InsertImageMenu', [
-	{ action: 'localgraphic', text: _('Insert Local Image') },
-	// remote entry added in Map.WOPI
+	// local and remote entries added in Map.WOPI
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('InsertMultimediaMenu', [
-	{ action: 'insertmultimedia', text: _('Insert Local Multimedia') },
-	// remote entry added in Map.WOPI
+	// local and remote entries added in Map.WOPI
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('CharSpacingMenu', [

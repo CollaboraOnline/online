@@ -169,6 +169,7 @@ interface ContainerWidgetJSON extends WidgetJSON {
 
 interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
 	name: string; // visible name of a group
+	icon?: string; // Optional icon name. Otherwise it will be guessed.
 }
 
 interface OverflowGroupContainer extends Element {

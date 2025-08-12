@@ -73,6 +73,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 		var isSplitButton = data.applyCallback;
 
+		if (menuEntries.length == 0) {
+			control.container.setAttribute('disabled', true);
+		}
+
 		$(control.container).addClass('menubutton' + (isSplitButton ? ' splitbutton' : ''));
 
 		$(control.button).unbind('click');

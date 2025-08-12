@@ -1403,7 +1403,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'children': [
 									{
 									'id': 'insert-insert-graphic:InsertImageMenu',
-									'type': 'toolitem',
+									'type': 'menubutton',
+									'noLabel': true,
 									'text': _UNO('.uno:InsertGraphic'),
 									'command': '.uno:InsertGraphic',
 									'accessibility': { focusBack: true, combination: 'IG', de: null }

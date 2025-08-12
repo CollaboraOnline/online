@@ -188,9 +188,9 @@ L.Map.WOPI = L.Handler.extend({
 		var menuEntriesImage = JSDialog.MenuDefinitions.get('InsertImageMenu');
 		var menuEntriesMultimedia = JSDialog.MenuDefinitions.get('InsertMultimediaMenu');
 
-		if (this.DisableInsertLocalImage) {
-			menuEntriesImage = [];
-			menuEntriesMultimedia = [];
+		if (!this.DisableInsertLocalImage) {
+			menuEntriesImage.push({ action: 'localgraphic', text: _('Insert Local Image') });
+			menuEntriesMultimedia.push({ action: 'insertmultimedia', text: _('Insert Local Multimedia') });
 		}
 
 		if (this.EnableInsertRemoteImage) {
