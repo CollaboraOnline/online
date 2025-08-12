@@ -95,9 +95,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 			desktopHelper.hideSidebar();
 		}
 
-		// TODO: skip sidebar detection on reload
-		// cy.cGet('#options-modify-page').click();
-
+		desktopHelper.closeNavigatorSidebar(); // we expand again on very narrow space so avoid it
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -159,6 +157,8 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 
 		helper.reloadDocument(newFilePath);
+		desktopHelper.closeNavigatorSidebar();
+		cy.cGet('#options-modify-page-button.selected').then(function(button) {button.click();});
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
