@@ -186,8 +186,10 @@ class NavigatorPanel extends SidebarBase {
 		if (this.navigationPanel) {
 			// Insert navigation container as the first child & navHeader as next-child of navigator-panel
 			this.navigationPanel.prepend(navContainer);
-			this.navigationPanel.prepend(navSearchWrapper);
-			this.createSearchBar(navSearchWrapper);
+			if (this.map.isText()) {
+				this.navigationPanel.prepend(navSearchWrapper);
+				this.createSearchBar(navSearchWrapper);
+			}
 			this.navigationPanel.prepend(navHeader);
 		}
 	}
