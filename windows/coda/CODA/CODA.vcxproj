@@ -162,7 +162,8 @@
     <ClCompile Include="..\..\..\common\Crypto-stub.cpp" />
     <ClCompile Include="..\..\..\common\FileUtil-windows.cpp" />
     <ClCompile Include="..\..\..\common\FileUtil.cpp" />
-    <ClCompile Include="..\..\..\common\Log.cpp" />
+    <ClCompile Include="..\..\..\common\Log-common.cpp" />
+    <ClCompile Include="..\..\..\common\Log-windows.cpp" />
     <ClCompile Include="..\..\..\common\MobileApp.cpp" />
     <ClCompile Include="..\..\..\common\Protocol.cpp" />
     <ClCompile Include="..\..\..\common\RegexUtil.cpp" />
