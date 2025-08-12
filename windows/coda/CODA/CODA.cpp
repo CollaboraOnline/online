@@ -149,7 +149,6 @@ static void do_hullo_handling_things(WindowData& data)
         [data]
         {
             Util::setThreadName("app2js " + std::to_string(data.appDocId));
-            LOG_ERR("Why does this not show up even as ERR?");
             while (true)
             {
                 struct pollfd pollfd[2];
