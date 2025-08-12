@@ -9,54 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/*
- * JSDialog.MultilineEdit - text field with multiple lines and scrollbar
- *
- * Example JSON:
- * {
- *     id: 'id',
- *     type: 'multilineedit',
- *     text: 'text content\nsecond line',
- *     html: '<a href="hyperlink">hyperlink</a>' // only if contenteditable is true
- *     cursor: true,
- *     contenteditable: false
- *     enabled: false
- * }
- *
- * 'cursor' specifies if user can type into the field or it is readonly
- * 'enabled' editable field can be temporarily disabled
- */
-
-/* global JSDialog */
-
-interface MultilineEditData {
-	id: string;
-	type: string;
-	text: string;
-	html?: string;
-	cursor?: boolean | string;
-	contenteditable?: boolean;
-	enabled?: boolean;
-	hidden?: boolean;
-}
-
-interface Builder {
-	options: {
-		cssClass: string;
-	};
-	callback: (
-		type: string,
-		action: string,
-		element: HTMLElement,
-		value: string,
-		builder: Builder,
-	) => void;
-	_cleanText: (text: string) => string;
-}
-
 function _sendSimpleSelection(
 	edit: HTMLTextAreaElement | HTMLDivElement,
-	builder: Builder,
+	builder: JSBuilder,
 ): void {
 	const startPos = (edit as HTMLTextAreaElement).selectionStart;
 	const endPos = (edit as HTMLTextAreaElement).selectionEnd;
@@ -68,9 +23,9 @@ function _sendSimpleSelection(
 function _multiLineEditControl(
 	parentContainer: HTMLElement,
 	data: MultilineEditData,
-	builder: Builder,
+	builder: JSBuilder,
 	callback?: (value: string) => void,
-): HTMLElement | false {
+): boolean {
 	let controlType: 'textarea' | 'div' | 'p' = 'textarea';
 	if (data.contenteditable) {
 		controlType = 'div';
@@ -142,8 +97,8 @@ function _multiLineEditControl(
 JSDialog.multilineEdit = function (
 	parentContainer: HTMLElement,
 	data: MultilineEditData,
-	builder: Builder,
-): HTMLElement | false {
+	builder: JSBuilder,
+): boolean {
 	const buildInnerData = _multiLineEditControl(parentContainer, data, builder);
 	return buildInnerData;
 };
