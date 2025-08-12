@@ -132,6 +132,7 @@ class SlideShowPresenter {
 	private _onImpressModeChanged: any = null;
 	private _startingPresentation: boolean = false;
 	private _hammer: HammerManager;
+	private _wasInDarkMode: boolean = false;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -409,6 +410,8 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
+		this.checkDarkMode(false);
+
 		console.debug('SlideShowPresenter.endPresentation');
 		if (this._pauseTimer) this._pauseTimer.stopTimer();
 
@@ -723,12 +726,29 @@ class SlideShowPresenter {
 		);
 	}
 
+	// We want to present the slides in default mode. So we check the state here and change when needed.
+	private checkDarkMode(starting: boolean) {
+		if (starting) {
+			const isDarkMode = window.prefs.getBoolean('darkTheme');
+			if (isDarkMode) {
+				this._wasInDarkMode = true;
+				app.map.uiManager.toggleDarkMode();
+			}
+		} else if (this._wasInDarkMode) {
+			app.map.uiManager.toggleDarkMode();
+			this._wasInDarkMode = false;
+		}
+	}
+
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
 		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
 			return;
+
+		this.checkDarkMode(true);
+
 		// disable slide sorter or it will receive key events
 		this._map._docLayer._preview.partsFocused = false;
 		this._startingPresentation = true;
@@ -741,6 +761,9 @@ class SlideShowPresenter {
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
 			return;
+
+		this.checkDarkMode(true);
+
 		// disable present in console onStartInWindow
 		this._enablePresenterConsole(true);
 		this._startingPresentation = true;
