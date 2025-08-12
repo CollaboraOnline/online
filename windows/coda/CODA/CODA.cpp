@@ -72,8 +72,6 @@ static const wchar_t windowClass[] = L"CODA";
 
 static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
 
-static bool beingDebugged;
-
 static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message);
 
 static int generate_new_app_doc_id()
@@ -150,7 +148,6 @@ static void do_hullo_handling_things(WindowData& data)
     std::thread(
         [data]
         {
-            Log::setThreadLocalLogLevel("trace");
             Util::setThreadName("app2js " + std::to_string(data.appDocId));
             LOG_ERR("Why does this not show up even as ERR?");
             while (true)
@@ -231,9 +228,7 @@ static void do_print(int appDocId)
             Util::string_to_wide_string(app_installation_path + "PrintPDFAndDelete.exe").c_str(),
             Util::string_to_wide_string("PrintPDFAndDelete " + tempFileUri).data(), NULL, NULL,
             TRUE, 0, NULL, NULL, &startupInfo, &processInformation))
-        if (beingDebugged)
-            OutputDebugString(
-                (L"CreateProcess failed: " + std::to_wstring(GetLastError())).c_str());
+        LOG_ERR("CreateProcess failed: " << GetLastError());
 }
 
 static void do_other_message_handling_things(const WindowData& data, const char* message)
@@ -554,8 +549,7 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             {
                 // FIXME: We probably should not just do a blunt TerminateProcess(). On the other
                 // hand, it works.
-                if (beingDebugged)
-                    OutputDebugString(L"DocumentData::count() is ZERO, bluntly exiting\n");
+                LOG_INF("DocumentData::count() is ZERO, bluntly exiting");
                 TerminateProcess(GetCurrentProcess(), 0);
             }
             break;
@@ -672,8 +666,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
 static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message)
 {
     std::wstring s(message.get());
-    if (beingDebugged)
-        OutputDebugString((s + L"\n").c_str());
+    LOG_TRC(Util::wide_string_to_string(s));
     if (s.starts_with(L"MSG "))
     {
         s = s.substr(4);
@@ -728,15 +721,12 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
-    beingDebugged = IsDebuggerPresent();
-
     appInstance = hInstance;
     appShowMode = showWindowMode;
 
-    Log::initialize("CODA", "trace");
+    // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
+    Log::initialize("CODA", COOLWSD_LOGLEVEL);
     Util::setThreadName("main");
-
-    LOG_TRC("This is TRC");
 
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
         std::abort();
@@ -767,9 +757,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
             // warnings, but let's try to do as they want.
             argv[0] = _strdup("mobile");
             argv[1] = nullptr;
-            Log::setThreadLocalLogLevel("trace");
             Util::setThreadName("app");
-            LOG_TRC("TRC from main");
             while (true)
             {
                 coolwsd = new COOLWSD();
