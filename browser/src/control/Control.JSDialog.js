@@ -121,7 +121,7 @@ L.Control.JSDialog = L.Control.extend({
 
 	closeDialog: function(id, sendCloseEvent) {
 		if (id === undefined || !this.dialogs[id]) {
-			console.warn('missing dialog data');
+			app.console.warn('missing dialog data');
 			return;
 		}
 
@@ -136,7 +136,7 @@ L.Control.JSDialog = L.Control.extend({
 	// we want to kill HTML popup when we receive feedback from the server
 	closePopover: function(id, sendCloseEvent) {
 		if (id === undefined || !this.dialogs[id]) {
-			console.warn('missing popover data');
+			app.console.warn('missing popover data');
 			return;
 		}
 
@@ -152,7 +152,7 @@ L.Control.JSDialog = L.Control.extend({
 			else if (builder)
 				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
 			else
-				console.warn('closePopover: no builder');
+				app.console.warn('closePopover: no builder');
 		}
 		else {
 			// Close handler for Dropdown which requires to setup aria properties
@@ -187,14 +187,14 @@ L.Control.JSDialog = L.Control.extend({
 				dialog.lastFocusedElement.focus();
 			}
 			catch (error) {
-				console.debug('Cannot focus last element in dialog with id: ' + id);
+				app.console.debug('Cannot focus last element in dialog with id: ' + id);
 				this.map.focus();
 			}
 		});
 	},
 
 	setTabs: function() {
-		console.error('setTabs: not implemented in dialogs.');
+		app.console.error('setTabs: not implemented in dialogs.');
 	},
 
 	selectedTab: function() {
@@ -469,7 +469,7 @@ L.Control.JSDialog = L.Control.extend({
 			firstFocusableElement.focus();
 		}
 		else if (instance.canHaveFocus !== false)
-			console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
+			app.console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
 
 		if (instance.isDropdown && instance.isSubmenu) {
 			instance.container.addEventListener('mouseleave', () => {
@@ -532,7 +532,7 @@ L.Control.JSDialog = L.Control.extend({
 					return;
 				}
 				else {
-					console.warn('other popup than autofilter in the document area');
+					app.console.warn('other popup than autofilter in the document area');
 				}
 			}
 
@@ -752,7 +752,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		// Check.
 		if (instance.popupParent === '_POPOVER_' && (instance.posx === undefined || instance.posy === undefined))
-			console.error('There is a POPOVER dialogue without position information.');
+			app.console.error('There is a POPOVER dialogue without position information.');
 
 		if (instance.action === 'fadeout')
 		{
@@ -869,8 +869,8 @@ L.Control.JSDialog = L.Control.extend({
 		app.layoutingService.appendLayoutingTask(() => {
 			var dialogInfo = dialogInfos[data.id];
 			if (!dialogInfo) {
-				console.debug('JSDialog: dialog info with id: "' + data.id + '" not found.');
-				if (dialog) console.debug('JSDialog: old data was: ' + JSON.stringify(dialog));
+				app.console.debug('JSDialog: dialog info with id: "' + data.id + '" not found.');
+				if (dialog) app.console.debug('JSDialog: old data was: ' + JSON.stringify(dialog));
 				return;
 			}
 			if (dialogInfo.isDocumentAreaPopup) {
