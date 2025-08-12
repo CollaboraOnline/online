@@ -90,9 +90,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
-		cy.cGet('#toolbar-up #overflow-button-indent-toptoolbar .arrowbackground').click();
 		cy.cGet('.ui-toolbar .unoWrapText').click();
-		cy.cGet('.jsdialog-overlay').click();
 
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
@@ -266,11 +264,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #overflow-button-indent-toptoolbar .arrowbackground').click();
 		// Set right alignment first
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
-		cy.cGet('.jsdialog-overlay').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'align', 'right');
@@ -278,10 +274,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Change alignment back
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('#toolbar-up #overflow-button-indent-toptoolbar .arrowbackground').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click();
-		cy.cGet('.jsdialog-overlay').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
