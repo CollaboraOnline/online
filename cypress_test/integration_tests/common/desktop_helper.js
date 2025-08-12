@@ -249,7 +249,7 @@ function insertVideo() {
 	selectZoomLevel('50', false);
 
 	cy.cGet('#Insert-tab-label').click();
-	cy.cGet('#Insert-container .insertmultimedia').click();
+	cy.cGet('#Insert-container .inline.insertmultimedia').click();
 
 	cy.cGet('#insertmultimedia[type=file]').attachFile(
 		'/desktop/impress/video_to_insert.mp4'
