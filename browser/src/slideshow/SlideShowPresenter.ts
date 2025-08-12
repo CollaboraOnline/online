@@ -555,7 +555,7 @@ class SlideShowPresenter {
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
 		const closeImg = L.DomUtil.create('img', 'left-img', container);
-		app.LOUtil.setImage(closeImg, 'closedoc.svg', this._map);
+		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
 		closeImg.addEventListener('click', this._onQuit);
 		closeImg.style.flex = '25%';
 		closeImg.style.paddingLeft = '5px';
@@ -563,22 +563,14 @@ class SlideShowPresenter {
 		closeImg.style.maxWidth = '100%';
 
 		const leftImg = L.DomUtil.create('img', 'left-img', container);
-		app.LOUtil.setImage(
-			leftImg,
-			'presenterscreen-ButtonSlidePreviousSelected.svg',
-			this._map,
-		);
+		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
 		leftImg.addEventListener('click', this._onPrevSlide);
 		leftImg.style.flex = '25%';
 		leftImg.style.paddingBottom = '5px';
 		leftImg.style.maxWidth = '100%';
 
 		const rightImg = L.DomUtil.create('img', 'right-img', container);
-		app.LOUtil.setImage(
-			rightImg,
-			'presenterscreen-ButtonEffectNextSelected.svg',
-			this._map,
-		);
+		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
 		rightImg.addEventListener('click', this._onNextSlide);
 		rightImg.style.flex = '25%';
 		rightImg.style.paddingBottom = '5px';
