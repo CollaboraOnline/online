@@ -26,7 +26,10 @@
     <ClCompile Include="..\..\..\common\FileUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\common\Log.cpp">
+    <ClCompile Include="..\..\..\common\Log-common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\Log-windows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\MobileApp.cpp">
