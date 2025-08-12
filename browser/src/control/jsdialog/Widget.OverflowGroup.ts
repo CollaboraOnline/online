@@ -17,6 +17,11 @@
 declare var JSDialog: any;
 
 function migrateItems(from: HTMLElement, to: HTMLElement) {
+	if (!from) {
+		app.console.debug('overflow manager: no source for migration');
+		return;
+	}
+
 	const items = from.querySelectorAll(':scope > *');
 
 	items.forEach((button: Element) => {
@@ -60,8 +65,12 @@ function setupOverflowMenu(
 		if (hideContent) migrateItems(overflowMenu, hiddenItems);
 	};
 
+	const dropdownId = 'overflow-button-' + id;
+
 	(parentContainer as OverflowGroupContainer).foldGroup = () => {
 		app.console.debug('overflow manager: fold group: ' + id);
+		JSDialog.CloseDropdown(dropdownId);
+
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
 		overflowMenuButton.style.display = '';
@@ -69,6 +78,8 @@ function setupOverflowMenu(
 
 	(parentContainer as OverflowGroupContainer).unfoldGroup = () => {
 		app.console.debug('overflow manager: unfold group: ' + id);
+		JSDialog.CloseDropdown(dropdownId);
+
 		groupLabel.style.display = '';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
@@ -81,7 +92,13 @@ function setupOverflowMenu(
 			// layouting task adds menu container to the DOM
 			app.layoutingService.appendLayoutingTask(() => {
 				app.layoutingService.appendLayoutingTask(() => {
-					const menu = JSDialog.GetDropdown('overflow-button-' + id);
+					const menu = JSDialog.GetDropdown(dropdownId);
+					if (!menu) {
+						app.console.error(
+							'overflow manager: menu missing: "' + dropdownId + '"',
+						);
+						return;
+					}
 					// move overflow to the NB structure to be targeted by onJSUpdate and onJSAction
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
@@ -95,7 +112,7 @@ function setupOverflowMenu(
 				});
 			});
 		} else {
-			const menu = JSDialog.GetDropdown('overflow-button-' + id);
+			const menu = JSDialog.GetDropdown(dropdownId);
 			migrateItems(menu, hiddenItems);
 		}
 	};
