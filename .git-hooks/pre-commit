@@ -133,8 +133,8 @@ sub check_prettier()
 {
     my $red = "\033[0;31m";
     my $reset = "\033[0m";
-    my $hasmake = system("which make > /dev/null") == 0;
-    my $hasgmake = system("which gmake > /dev/null") == 0;
+    my $hasmake = system("which make > /dev/null 2>&1") == 0;
+    my $hasgmake = system("which gmake > /dev/null 2>&1") == 0;
 
     my $make = $hasgmake? "gmake" : $hasmake? "make" : die  $red .
                 "\n===============================================\n" .
