@@ -909,6 +909,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				app.setCursorVisibility(false);
 				if (this._map._docLayer._cursorMarker)
 					this._map._docLayer._cursorMarker.remove();
+
+				var grid = document.querySelector('.leaflet-layer');
+				grid.classList.add('spreadsheet-cursor');
+				grid.style.cursor = '';
 			}
 		}
 		else if (e.commandName === '.uno:ToggleSheetGrid') {
