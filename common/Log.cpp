@@ -748,7 +748,7 @@ namespace Log
             return;
         }
 
-        if (Util::isFuzzing())
+        if constexpr (Util::isFuzzing())
         {
             // loggingleveloverride tries to increase log level, ignore.
             return;
@@ -826,7 +826,7 @@ namespace Log
     void setLogLevelByName(const std::string &channel,
                            const std::string &level)
     {
-        if (Util::isFuzzing())
+        if constexpr (Util::isFuzzing())
         {
             // update-log-levels tries to increase log level, ignore.
             return;

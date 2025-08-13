@@ -167,7 +167,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
     {
         Log::setLevel(tokens[1]);
     }
-    else if (!Util::isFuzzing())
+    else if constexpr (!Util::isFuzzing())
     {
         LOG_ERR("Bad or unknown token [" << tokens[0] << ']');
     }
