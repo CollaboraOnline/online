@@ -18,12 +18,10 @@ declare var JSDialog: any;
 class OverflowManager {
 	parentContainer: HTMLElement;
 	data: ContainerWidgetJSON;
-	overflowMenuDebounced: ReturnType<typeof setTimeout> | null;
 
 	constructor(parentContainer: Element, data: ContainerWidgetJSON) {
 		this.parentContainer = parentContainer as HTMLElement;
 		this.data = data;
-		this.overflowMenuDebounced = null;
 
 		window.addEventListener('resize', this.onResize.bind(this));
 	}
@@ -60,32 +58,27 @@ class OverflowManager {
 	}
 
 	onResize() {
-		this.overflowMenuDebounced && clearTimeout(this.overflowMenuDebounced);
-
 		if (!this.parentContainer) return;
 
-		const timeoutInterval = 25;
-		this.overflowMenuDebounced = setTimeout(() => {
-			app.layoutingService.appendLayoutingTask(() => {
-				const groups =
-					this.parentContainer.querySelectorAll('.ui-overflow-group');
+		app.layoutingService.appendLayoutingTask(() => {
+			const groups =
+				this.parentContainer.querySelectorAll('.ui-overflow-group');
 
-				// first show all the groups
-				groups.forEach((element: OverflowGroupContainer) => {
-					if (typeof element.unfoldGroup === 'function') element.unfoldGroup();
-				});
-
-				const maxWidth = this.calculateMaxWidth();
-
-				// then hide required
-				for (let i = groups.length - 1; i >= 0; i--) {
-					const element: OverflowGroupContainer = groups[i];
-					if (maxWidth !== 0 && this.hasOverflow(maxWidth)) {
-						if (typeof element.foldGroup === 'function') element.foldGroup();
-					}
-				}
+			// first show all the groups
+			groups.forEach((element: OverflowGroupContainer) => {
+				if (typeof element.unfoldGroup === 'function') element.unfoldGroup();
 			});
-		}, timeoutInterval);
+
+			const maxWidth = this.calculateMaxWidth();
+
+			// then hide required
+			for (let i = groups.length - 1; i >= 0; i--) {
+				const element: OverflowGroupContainer = groups[i];
+				if (maxWidth !== 0 && this.hasOverflow(maxWidth)) {
+					if (typeof element.foldGroup === 'function') element.foldGroup();
+				}
+			}
+		});
 	}
 }
 
