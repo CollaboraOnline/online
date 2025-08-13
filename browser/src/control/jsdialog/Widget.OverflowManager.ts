@@ -29,7 +29,11 @@ class OverflowManager {
 	}
 
 	calculateMaxWidth(): number {
-		const nextElement = this.parentContainer.nextSibling as HTMLElement;
+		let nextElement = this.parentContainer.nextSibling as HTMLElement;
+		// floating right element after spacer
+		if (nextElement && nextElement.classList.contains('ui-spacer'))
+			nextElement = nextElement.nextSibling as HTMLElement;
+
 		let nextElementPosition = nextElement ? nextElement.offsetLeft : 0;
 		if (nextElementPosition <= 0)
 			// is a last visible sibling
@@ -38,7 +42,8 @@ class OverflowManager {
 			nextElementPosition = window.innerWidth;
 
 		const startPosition = this.parentContainer.offsetLeft;
-		return nextElementPosition - startPosition;
+		const margin = 5;
+		return nextElementPosition - startPosition - margin;
 	}
 
 	hasOverflow(maxWidth: number): boolean {
@@ -59,6 +64,7 @@ class OverflowManager {
 
 		if (!this.parentContainer) return;
 
+		const timeoutInterval = 25;
 		this.overflowMenuDebounced = setTimeout(() => {
 			app.layoutingService.appendLayoutingTask(() => {
 				const groups =
@@ -79,7 +85,7 @@ class OverflowManager {
 					}
 				}
 			});
-		});
+		}, timeoutInterval);
 	}
 }
 
