@@ -545,11 +545,11 @@ class VirtualWordList {
 		this.itemHeight = 50;
 
 		this.container.style.overflowY = 'auto';
-		this.container.style.minHeight = '40vh';
 
 		this.contentWrapper = document.createElement('div');
 		this.contentWrapper.style.position = 'relative';
-		this.contentWrapper.style.height = `${this.words.length * this.itemHeight}px`;
+		this.visibleCount = 7;
+		this.contentWrapper.style.height = `${this.visibleCount * this.itemHeight}px`;
 		this.container.appendChild(this.contentWrapper);
 
 		this.viewport = document.createElement('div');
@@ -559,7 +559,6 @@ class VirtualWordList {
 		this.viewport.style.right = '0';
 		this.contentWrapper.appendChild(this.viewport);
 
-		this.visibleCount = 7;
 		this.pool = [];
 
 		for (let i = 0; i < this.visibleCount; i++) {
@@ -599,12 +598,11 @@ class VirtualWordList {
 		if (newWords) {
 			this.words = newWords;
 		}
-		this.contentWrapper.style.height = `${(this.words.length + 1) * this.itemHeight}px`;
 		this.onScroll();
 	}
 
 	public scrollToBottom(): void {
-		this.container.scrollTop = (this.words.length + 1) * this.itemHeight;
+		this.container.scrollTop = this.visibleCount * this.itemHeight;
 	}
 }
 
