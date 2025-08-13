@@ -7,6 +7,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/help_dialog.ods');
+		cy.viewport(1920,1080);
 	});
 
 	it('JSDialog popup dialog', function() {
