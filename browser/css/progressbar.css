@@ -67,3 +67,19 @@
 		transform: translateX(100%) scaleX(0.5);
 	}
 }
+
+/* slideshow nav btns  */
+.slideshow-nav-container img {
+	flex: 1 1 25%;
+	margin-inline-start: 5px;
+	max-width: 100%;
+	border-radius: 100%;
+	width: 48px;
+	height: 48px;
+}
+.slideshow-nav-container img:hover {
+	background-image: radial-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+}
+.skipTransition-true {
+	filter: brightness(0.5);
+}

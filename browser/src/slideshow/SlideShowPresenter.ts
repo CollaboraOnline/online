@@ -520,6 +520,7 @@ class SlideShowPresenter {
 		container.style.height = '50px';
 		container.style.zIndex = '1000000000000';
 		container.style.display = 'flex';
+		container.style.paddingLeft = '5px';
 	}
 
 	private _onPrevSlide = (e: Event) => {
@@ -557,40 +558,29 @@ class SlideShowPresenter {
 		const closeImg = L.DomUtil.create('img', 'left-img', container);
 		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
 		closeImg.addEventListener('click', this._onQuit);
-		closeImg.style.flex = '25%';
-		closeImg.style.paddingLeft = '5px';
-		closeImg.style.paddingBottom = '5px';
-		closeImg.style.maxWidth = '100%';
 
 		const leftImg = L.DomUtil.create('img', 'left-img', container);
 		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
 		leftImg.addEventListener('click', this._onPrevSlide);
-		leftImg.style.flex = '25%';
-		leftImg.style.paddingBottom = '5px';
-		leftImg.style.maxWidth = '100%';
 
 		const rightImg = L.DomUtil.create('img', 'right-img', container);
 		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
 		rightImg.addEventListener('click', this._onNextSlide);
-		rightImg.style.flex = '25%';
-		rightImg.style.paddingBottom = '5px';
-		rightImg.style.maxWidth = '100%';
 
 		const animationsImage = L.DomUtil.create(
 			'img',
-			'animations-img',
+			'animations-img skipTransition-false',
 			container,
 		);
-		app.LOUtil.setImage(animationsImage, 'lc_down.svg', this._map);
+		app.LOUtil.setImage(animationsImage, 'slideshow-transition.svg', this._map);
 		animationsImage.addEventListener(
 			'click',
 			function (this: SlideShowPresenter) {
 				this._navigateSkipTransition = !this._navigateSkipTransition;
+				animationsImage.className =
+					'animations-img skipTransition-' + this._navigateSkipTransition;
 			}.bind(this),
 		);
-		animationsImage.style.flex = '25%';
-		animationsImage.style.paddingBottom = '5px';
-		animationsImage.style.maxWidth = '100%';
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
