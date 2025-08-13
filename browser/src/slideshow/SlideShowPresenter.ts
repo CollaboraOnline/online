@@ -538,7 +538,7 @@ class SlideShowPresenter {
 		this._slideNavContainer.style.visibility = 'hidden';
 		this._slideNavContainer.style.opacity = '0';
 		this._slideNavContainer.style.transition =
-			'visibility 0s 1s, opacity 1s linear';
+			'visibility 0s 0.5s, opacity 0.5s ease-in-out';
 	}
 
 	_showSlideControls() {
