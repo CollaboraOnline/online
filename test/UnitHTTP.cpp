@@ -118,13 +118,18 @@ public:
 
     inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
     {
-        return
+        auto socket =
 #if ENABLE_SSL
             std::make_shared<Poco::Net::SecureStreamSocket>
 #else
             std::make_shared<Poco::Net::StreamSocket>
 #endif
             (Poco::Net::SocketAddress("127.0.0.1", ClientPortNumber));
+
+        constexpr long seconds = 30;
+        constexpr long microseconds = 0;
+        socket->setReceiveTimeout(Poco::Timespan(seconds, microseconds));
+        return socket;
     }
 
     void testChunks()
