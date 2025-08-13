@@ -39,6 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	it('Accept All', function () {
 		helper.typeIntoDocument('Hello World');
+		cy.wait(3000);
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 			cy.cGet('#insertannotation').click();
@@ -84,6 +85,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Reject All', function () {
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
+		cy.wait(3000);
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 			cy.cGet('#insertannotation').click();
