@@ -250,7 +250,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
 
-	it.skip('Insert hyperlink.', function() {
+	it('Insert hyperlink.', function() {
 		helper.setDummyClipboardForCopy();
 		helper.copy();
 		cy.wait(1000);
@@ -258,10 +258,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .hyperlinkdialog button').click();
-		cy.cGet('#hyperlink-link-box-input').should('exist');
-		cy.cGet('#hyperlink-text-box').type('link');
-		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
-		cy.cGet('#response-ok').click();
+		cy.cGet('#target-input').should('exist');
+		cy.cGet('#indication-input').type('link');
+		cy.cGet('#target-input').type('www.something.com');
+		cy.cGet('#ok').click();
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();

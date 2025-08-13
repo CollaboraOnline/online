@@ -97,12 +97,10 @@ class Dispatcher {
 		};
 		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
-			app.map.showHyperlinkDialog();
+			app.map.sendUnoCommand('.uno:HyperlinkDialog');
 		};
 		this.actionsMap['inserthyperlink'] = () => {
-			if (app.map.getDocType() == 'spreadsheet')
-				app.map.sendUnoCommand('.uno:HyperlinkDialog');
-			else app.map.showHyperlinkDialog();
+			app.map.sendUnoCommand('.uno:HyperlinkDialog');
 		};
 		this.actionsMap['rev-history'] = function () {
 			app.map.openRevisionHistory();

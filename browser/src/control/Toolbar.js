@@ -346,8 +346,7 @@ L.Map.include({
 
 	messageNeedsToBeRedirected: function(command) {
 		if (command === '.uno:EditHyperlink') {
-			var that = this;
-			setTimeout(function () { that.showHyperlinkDialog(); }, 500);
+			this.sendUnoCommand('.uno:HyperlinkDialog');
 			return true;
 		}
 		else {
@@ -796,90 +795,6 @@ L.Map.include({
 		return str;
 	},
 
-	_createAndRunHyperlinkDialog: function(defaultText, defaultLink) {
-		var map = this;
-		var id = 'hyperlink';
-		var title = _('Insert hyperlink');
-
-		let focusId = 'hyperlink-link-box-input';
-		if (defaultText === '') {
-			focusId = 'hyperlink-text-box';
-		}
-
-		var dialogId = 'modal-dialog-' + id;
-		var json = map.uiManager._modalDialogJSON(id, title, true, [
-			{
-				id: 'hyperlink-text-box-label',
-				type: 'fixedtext',
-				text: _('Text'),
-				labelFor: 'hyperlink-text-box'
-			},
-			{
-				id: 'hyperlink-text-box',
-				type: 'multilineedit',
-				text: defaultText,
-				labelledBy: 'hyperlink-text-box-label'
-			},
-			{
-				id: 'hyperlink-link-box-label',
-				type: 'fixedtext',
-				text: _('Link'),
-				labelFor: 'hyperlink-link-box'
-			},
-			{
-				id: 'hyperlink-link-box',
-				type: 'edit',
-				text: defaultLink,
-				labelledBy: 'hyperlink-link-box-label'
-			},
-			{
-				type: 'buttonbox',
-				enabled: true,
-				children: [
-					{
-						id: 'response-cancel',
-						type: 'pushbutton',
-						text: _('Cancel'),
-					},
-					{
-						id: 'response-ok',
-						type: 'pushbutton',
-						text: _('OK'),
-						'has_default': true,
-					}
-				],
-				vertical: false,
-				layoutstyle: 'end'
-			},
-		], focusId);
-
-		map.uiManager.showModal(json, [
-			{id: 'response-ok', func: function() {
-				var text = document.getElementById('hyperlink-text-box');
-				var link = document.getElementById('hyperlink-link-box-input');
-
-				if (link.value != '') {
-					if (!text.value || text.value === '')
-						text.value = link.value;
-
-					var command = {
-						'Hyperlink.Text': {
-							type: 'string',
-							value: text.value
-						},
-						'Hyperlink.URL': {
-							type: 'string',
-							value: map.makeURLFromStr(link.value)
-						}
-					};
-					map.sendUnoCommand('.uno:SetHyperlink', command, true);
-				}
-
-				map.uiManager.closeModal(dialogId);
-			}}
-		]);
-	},
-
 	getTextForLink: function() {
 		var map = this;
 		var text = '';
@@ -898,22 +813,6 @@ L.Map.include({
 			text = this.extractContent(this._docLayer._selectedTextContent);
 		}
 		return text;
-	},
-
-	showHyperlinkDialog: function() {
-		if (this.getDocType() === 'spreadsheet') {
-			// show native core dialog
-			// in case we try to edit email EditHyperlink doesn't work
-			this.sendUnoCommand('.uno:HyperlinkDialog');
-			return;
-		}
-
-		var text = this.getTextForLink();
-		var link = '';
-		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.link)
-			link = this.hyperlinkUnderCursor.link;
-
-		this._createAndRunHyperlinkDialog(text ? text.replace(/^[\n\r]+|[\n\r]+$/g, '') : '', link);
 	},
 
 	cancelSearch: function() {

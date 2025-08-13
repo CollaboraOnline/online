@@ -585,8 +585,7 @@ input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled
 	font-weight: normal;
 }
 
-input.ui-edit.mobile-wizard,
-#hyperlink-text-box.mobile-wizard {
+input.ui-edit.mobile-wizard {
 	background-color: var(--color-background-lighter);
 	color: var(--color-text-lighter);
 	border: 1px solid var(--color-border-dark);

@@ -734,7 +734,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._isCtrlKey(e) && !e.shiftKey && e.keyCode === this.keyCodes.K) {
-			this._map.showHyperlinkDialog();
+			this._map.sendUnoCommand('.uno:HyperlinkDialog');
 			e.preventDefault();
 			return true;
 		}
