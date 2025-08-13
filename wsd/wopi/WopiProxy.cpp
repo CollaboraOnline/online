@@ -347,7 +347,7 @@ void WopiProxy::transfer(const std::shared_ptr<TerminatingPoll>& poll, const std
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the GET request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, poll);
+    _httpSession->asyncRequest(httpRequest, poll, false);
 }
 #endif //!MOBILEAPP
 

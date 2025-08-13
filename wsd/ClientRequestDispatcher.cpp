@@ -1597,7 +1597,6 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
 
         const auto lastErrno = errno;
 
-        probeSession->asyncShutdown();
         const std::shared_ptr<http::Response> httpResponse = probeSession->response();
         const http::Response::State responseState = httpResponse->state();
         const http::StatusCode statusCode = httpResponse->statusCode();
@@ -1650,7 +1649,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     };
 
     httpProbeSession->setFinishedHandler(std::move(finishHandler));
-    httpProbeSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
+    httpProbeSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll(), true);
 
     return true;
 }

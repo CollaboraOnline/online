@@ -64,7 +64,7 @@ public:
                 exitTest(TestResult::Ok);
             });
 
-        httpSession->asyncRequest(_req, _poll);
+        httpSession->asyncRequest(_req, _poll, false);
 
         _poll->startThread();
     }
