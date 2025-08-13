@@ -357,6 +357,19 @@ class NavigatorPanel extends SidebarBase {
 					placeholder: _('Search...'),
 					text: '',
 				} as EditWidgetJSON,
+				{
+					id: '',
+					type: 'toolbox',
+					text: '',
+					children: [
+						{
+							id: 'navigator-search-button',
+							type: 'pushbutton',
+							text: '',
+							image: 'lc_recsearch.svg',
+						},
+					],
+				},
 			],
 		} as WidgetJSON;
 
@@ -370,9 +383,15 @@ class NavigatorPanel extends SidebarBase {
 		data: any,
 		builder: JSBuilder,
 	): void {
-		if (object.id === 'navigator-search') {
-			var searchTerm = data;
-			// For quickfind
+		let searchTerm = '';
+		// Update results tab
+		if (object.id === 'navigator-search-button') {
+			searchTerm = (
+				document.getElementById('navigator-search-input') as HTMLInputElement
+			).value;
+			super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
+		} else if (object.id === 'navigator-search') {
+			searchTerm = data;
 			super.callback(
 				objectType,
 				eventType,
@@ -380,15 +399,16 @@ class NavigatorPanel extends SidebarBase {
 				searchTerm,
 				builder,
 			);
-
-			// Unify search updates on activate event only (enter key pressed).
-			// Note that QuickFind needs changed and activated events to be sent to core to function properly.
-			if (eventType === 'activate') {
-				// For outline
-				var treeContainer = document.getElementById('contenttree') as any;
-				treeContainer.highlightEntries(searchTerm);
-				this.highlightTerm = searchTerm;
-			}
+		}
+		// Update outline highlighting
+		// Note: only update on 'activate' or button pressed events to be consistent with results tab
+		if (
+			(object.id == 'navigator-search' && eventType == 'activate') ||
+			object.id == 'navigator-search-button'
+		) {
+			var treeContainer = document.getElementById('contenttree') as any;
+			treeContainer.highlightEntries(searchTerm);
+			this.highlightTerm = searchTerm;
 			return;
 		}
 		super.callback(objectType, eventType, object, data, builder);
