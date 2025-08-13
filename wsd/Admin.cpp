@@ -451,7 +451,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
-    if (!Util::isFuzzing())
+    if constexpr (!Util::isFuzzing())
     {
         UnitWSD::get().onAdminQueryMessage(message);
     }

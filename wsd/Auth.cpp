@@ -135,7 +135,7 @@ bool JWTAuth::verify(const std::string& accessToken)
         if (encodedSig != tokens[2])
         {
             LOG_ERR("JWTAuth: verification failed; Expected: " << encodedSig << ", Received: " << tokens[2]);
-            if (!Util::isFuzzing())
+            if constexpr (!Util::isFuzzing())
             {
                 return false;
             }
@@ -162,7 +162,7 @@ bool JWTAuth::verify(const std::string& accessToken)
         if (curtime > decodedExptime)
         {
             LOG_INF("JWTAuth:verify: JWT expired; curtime:" << curtime << ", exp:" << decodedExptime);
-            if (!Util::isFuzzing())
+            if constexpr (!Util::isFuzzing())
             {
                 return false;
             }
