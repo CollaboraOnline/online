@@ -1534,7 +1534,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (data.image) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			image = L.DomUtil.create('img', '', pushbutton);
-			image.src = data.image;
+			builder._isStringLCIcon(data.image) ? app.LOUtil.setImage(image, data.image, builder.map) : image.src = data.image;
 		} else if (data.symbol) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			image = L.DomUtil.create('img', '', pushbutton);
@@ -2001,6 +2001,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_isStringCloseToURL : function(str) {
 		return str.indexOf('http') !== -1;
+	},
+
+	_isStringLCIcon: function (str) {
+		return str.indexOf('lc_') === 0;
 	},
 
 	_makeIdUnique: function(id) {
