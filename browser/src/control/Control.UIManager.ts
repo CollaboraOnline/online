@@ -706,7 +706,7 @@ class UIManager extends L.Control {
 			this.notebookbar.showTabs();
 			$('#map').addClass('notebookbar-opened');
 			this.insertCustomButtons();
-			this.map.sendInitUNOCommands();
+			this.map.sendInitNotebookbarCommands();
 			if (this.map.getDocType() === 'presentation')
 				this.map.fire('toggleslidehide');
 	}

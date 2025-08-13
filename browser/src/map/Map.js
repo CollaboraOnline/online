@@ -372,9 +372,14 @@ L.Map = L.Evented.extend({
 			this._clip.clearSelection();
 	},
 
+	sendInitNotebookbarCommands: function() {
+		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
+		this._docLayer._getToolbarCommandsValues();
+	},
+
 	sendInitUNOCommands: function() {
 		// TODO: remove duplicated init code
-		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
+		this.sendInitNotebookbarCommands();
 		if (this._docLayer._docType === 'spreadsheet') {
 			if (this._docLayer.options.sheetGeometryDataEnabled)
 				this._docLayer.requestSheetGeometryData();
@@ -384,7 +389,6 @@ L.Map = L.Evented.extend({
 		// For calc parsing this will need SheetGeometry, so send after
 		// requesting that
 		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
-		this._docLayer._getToolbarCommandsValues();
 	},
 
 	// public methods that modify map state
