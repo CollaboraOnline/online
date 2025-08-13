@@ -102,8 +102,16 @@ class Toolbar {
 		this.create();
 	}
 
+	isItemHidden(id: string): boolean {
+		const item = this.parentContainer.querySelector('[id="' + id + '"]');
+		if (!item) return true;
+		return item.classList.contains('hidden');
+	}
+
 	showItem(command: string, show: boolean) {
 		if (!command) return;
+
+		if (this.isItemHidden(command) === !show) return;
 
 		this.builder.executeAction(this.parentContainer, {
 			control_id: command,
@@ -111,11 +119,23 @@ class Toolbar {
 			action_type: show ? 'show' : 'hide',
 		});
 
-		JSDialog.RefreshScrollables();
+		app.layoutingService.appendLayoutingTask(() => {
+			JSDialog.RefreshScrollables();
+		});
+	}
+
+	isItemEnabled(id: string): boolean {
+		const item = this.parentContainer.querySelector('[id="' + id + '"]');
+		if (!item) return true;
+		return (
+			item.hasAttribute('disabled') && item.getAttribute('disabled') !== 'false'
+		);
 	}
 
 	enableItem(command: string, enable: boolean) {
 		if (!command) return;
+
+		if (this.isItemEnabled(command) === !enable) return;
 
 		this.builder.executeAction(this.parentContainer, {
 			control_id: command,
@@ -135,7 +155,9 @@ class Toolbar {
 	updateItem(data: ToolbarItem) {
 		this.builder.updateWidget(this.parentContainer, data);
 		this.updateVisibilityForToolbar('');
-		JSDialog.RefreshScrollables();
+		app.layoutingService.appendLayoutingTask(() => {
+			JSDialog.RefreshScrollables();
+		});
 	}
 
 	updateVisibilityForToolbar(context: string) {
