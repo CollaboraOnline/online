@@ -840,7 +840,7 @@ img.context-menu-icon {
 	outline-offset: -2px;
 }
 
-.jsdialog.ui-edit, #hyperlink-text-box:not(.mobile-wizard) {
+.jsdialog.ui-edit {
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 	line-height: 28px;

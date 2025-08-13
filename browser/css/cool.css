@@ -1076,14 +1076,6 @@ body {
 	border-radius: 50%;
 }
 
-#hyperlink-text-box:not(.mobile-wizard) {
-	width: 100% !important;
-	margin-bottom: 10px;
-	resize: none;
-	height: 32px;
-	box-sizing: border-box;
-}
-
 .functiontooltip {
 	white-space: nowrap;
 	max-width: fit-content !important;
@@ -1347,4 +1339,3 @@ body {
 	background-color: var(--color-insert-marker-background-dark) !important;
 	background: url('images/insert-plus-marker-hover.svg') no-repeat center center /20px;
 }
-

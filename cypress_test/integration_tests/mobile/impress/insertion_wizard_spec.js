@@ -109,18 +109,22 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 	});
 
 	it('Insert hyperlink.', function() {
+		helper.setDummyClipboardForCopy();
 		mobileHelper.openInsertionWizard();
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box-input').should('exist');
+		cy.cGet('#target-input').should('exist');
 		// Type text and link
-		cy.cGet('#hyperlink-text-box').type('some text');
-		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
+		cy.cGet('#indication-input').type('some text');
+		cy.cGet('#target-input').type('www.something.com');
 		// Insert
-		cy.cGet('#response-ok').click();
-		// TODO: we have some weird shape here instead of a text shape with the link
-		cy.cGet('#document-container svg g').should('exist');
+		cy.cGet('#ok').click();
+
+		impressHelper.selectTextOfShape();
+		helper.copy();
+		helper.expectTextForClipboard('some text');
+		cy.cGet('.hyperlink-pop-up-container a').should('have.text', 'http://www.something.com/');
 	});
 
 	it('Insert shape.', function() {
@@ -260,17 +264,17 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box-input').should('exist');
+		cy.cGet('#target-input').should('exist');
 		// Type text and link
-		cy.cGet('#hyperlink-text-box').type('some text');
-		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
+		cy.cGet('#indication-input').type('some text');
+		cy.cGet('#target-input').type('www.something.com');
 		// Insert
-		cy.cGet('#response-ok').click();
+		cy.cGet('#ok').click();
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
 		helper.expectTextForClipboard('some text');
-		cy.cGet('.hyperlink-pop-up-container a').should('have.text', 'http://www.something.com');
+		cy.cGet('.hyperlink-pop-up-container a').should('have.text', 'http://www.something.com/');
 	});
 
 	it('Insert date field (fixed) inside existing text shape.', function() {
