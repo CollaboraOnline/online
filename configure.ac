@@ -1527,6 +1527,17 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
                          [AC_MSG_RESULT([OK])],
                          [AC_MSG_ERROR([The POCO version is too old])])
 
+       AC_MSG_CHECKING([POCO bugs])
+       AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+       #include <Poco/Version.h>
+       #if POCO_VERSION >= 0x010D0000 && POCO_VERSION < 0x010D0100
+       #error known buggy poco 1.13.0
+       #endif
+       ])],
+                         [AC_MSG_RESULT([OK])],
+                         [AC_MSG_RESULT([buggy])
+                          poco_known_buggy="yes"])
+
        # Poco headers from distro packages may need -DPOCO_UNBUNDLED
        # (the actual problem was in 1.13 Poco/XML/ParserEngine.h)
        AC_CHECK_HEADERS([Poco/SAX/SAXParser.h])
@@ -2008,6 +2019,9 @@ if test -n "$with_lo_path"; then
 echo "    \$ make run # to start coolwsd
     \$ make sync-writer|calc|impress # to start browsersync with specified app
 "
+fi
+if test -n "$poco_known_buggy"; then
+    AC_MSG_WARN([Your version of POCO has known bugs: see dev-notes/dependency-issues.md])
 fi
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:
