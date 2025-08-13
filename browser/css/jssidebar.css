@@ -551,10 +551,21 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 /* search field box */
 #navigator-search {
-	padding: 16px 16px 0px;
+	padding: 8px 16px;
 }
 #navigator-search-input {
 	height: 24px;
+}
+/* search button */
+#navigator-search-button button.ui-pushbutton {
+	background: transparent;
+	border: none;
+	width: var(--btn-size);
+	height: var(--btn-size);
+	padding: var(--btn-padding);
+}
+#navigator-search-button button.ui-pushbutton:hover {
+	background-color: var(--color-background-darker) !important;
 }
 #quickfind-dock-wrapper #box > div:nth-child(1) {
 	justify-content: space-evenly;
