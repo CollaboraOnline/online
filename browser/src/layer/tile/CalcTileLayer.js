@@ -1027,30 +1027,27 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			});
 			for (var index in values.commentsPos) {
 				comment = values.commentsPos[index];
-				if (section)
-				{
-					var commentObject;
-					for (var i = 0; i < section.sectionProperties.commentList.length; i++) {
-						if (section.sectionProperties.commentList[i].sectionProperties.data.id === comment.id) {
-							commentObject = section.sectionProperties.commentList[i];
-							if (section.sectionProperties.commentList[i].sectionProperties.data.tab !== comment.tab) {
-								// tabs can be moved around and we need to update the tab because the id is still valid.
-								commentObject.sectionProperties.data.tab = comment.tab;
-							}
-							commentObject.valid = true;
-							break;
-						}
-					}
-					if (commentObject) {
-						// turn cell range string into Bounds
-						commentObject.sectionProperties.data.cellRange = this._parseCellRange(comment.cellRange);
 
+				var commentObject;
+				for (var i = 0; i < section.sectionProperties.commentList.length; i++) {
+					if (section.sectionProperties.commentList[i].sectionProperties.data.id === comment.id) {
+						commentObject = section.sectionProperties.commentList[i];
+						if (section.sectionProperties.commentList[i].sectionProperties.data.tab !== comment.tab) {
+							// tabs can be moved around and we need to update the tab because the id is still valid.
+							commentObject.sectionProperties.data.tab = comment.tab;
+						}
+						commentObject.valid = true;
+						break;
 					}
+				}
+				if (commentObject) {
+					// turn cell range string into Bounds
+					commentObject.sectionProperties.data.cellRange = this._parseCellRange(comment.cellRange);
+
 				}
 			}
 
-			if (section)
-				section.onCommentsDataUpdate();
+			section.onCommentsDataUpdate();
 
 		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
