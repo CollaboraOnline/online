@@ -133,7 +133,7 @@ const load = String_ctr[$to_locale_string] = function (data) {
 	return Function.prototype[$to_locale_string].apply(String_ctr, arguments);
 };
 
-const loadFromDisk = function (uri) {
+const loadFromDisk = String_ctr[$to_locale_string] = function (uri) {
         const fs = require('fs');
         const read = fs.readFileSync(uri, 'utf8');
         return JSON.parse(read);
@@ -199,7 +199,7 @@ catch(selfNotFoundException)
    }
    else
    {
-        const nodeError = "Problem setting nav in L10N. You are most likely running in a non-browser environment like Node." +
+        const nodeError = "Problem setting nav in L10N. You are most likely running in a non-browser environment like Node. " +
          "If this is the case, you can resolve this error by setting global.nav to an object which contains a \"language\"  field. ";
         throw new Error(nodeError);
    }
@@ -233,7 +233,7 @@ if (!browserless && typeof XMLHttpRequest === undef_type && typeof ActiveXObject
             XHR = global.XMLHttpRequest;
         }
         else {
-           const nodeError = "Problem setting XHR in L10N. You are most likely running in a non-browser environment like Node." +
+           const nodeError = "Problem setting XHR in L10N. You are most likely running in a non-browser environment like Node. " +
             "If this is the case, you can resolve this error by setting global.XMLHttpRequest to a function which produces XMLHttpRequests. " +
             "\nTip: if you are using node, you might want to use the XHR2 package (usage: global.XMLHttpRequest = require('xhr2')";
             throw new Error(nodeError);
@@ -275,7 +275,7 @@ else
         load(global.l10NLocalFilePath);
     }
     else {
-        const nodeError = "Problem loading localization file. You are most likely running in a non-browser environment like Node." +
+        const nodeError = "Problem loading localization file. You are most likely running in a non-browser environment like Node. " +
             "If this is the case, you can resolve this error by setting global.l10NLocalFilePath to the path of your localization file. ";
         throw new Error(nodeError);
     }
