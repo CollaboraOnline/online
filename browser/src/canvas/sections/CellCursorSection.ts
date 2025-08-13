@@ -23,6 +23,7 @@ class CellCursorSection extends CanvasSectionObject {
 		this.sectionProperties.viewId = viewId;
 		this.sectionProperties.weight = weight;
 		this.sectionProperties.color = color;
+		this.sectionProperties.mouseInside = true;
 	}
 
 	public getViewId(): number {
@@ -88,6 +89,7 @@ class CellCursorSection extends CanvasSectionObject {
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+		this.sectionProperties.mouseInside = true;
 		if (!app.file.textCursor.visible) return;
 		const grid: any = document.querySelector('.leaflet-layer');
 		grid.classList.remove('spreadsheet-cursor');
@@ -95,6 +97,7 @@ class CellCursorSection extends CanvasSectionObject {
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
+		this.sectionProperties.mouseInside = false;
 		const grid: any = document.querySelector('.leaflet-layer');
 		grid.classList.add('spreadsheet-cursor');
 		grid.style.cursor = '';
