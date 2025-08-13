@@ -408,6 +408,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: #666;
 }
 
+.ui-expander-label.jsdialog {
+	font-family: var(--jquery-ui-font);
+}
+
 .ui-expander-label::before,
 .ui-treeview-expandable.collapsed > div > .ui-treeview-expander::before,
 .ui-treeview div[aria-expanded='false'] > div > .ui-treeview-expander::before {
@@ -2566,12 +2570,12 @@ kbd,
 }
 
 #ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img,
-:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry img {  
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry img {
 	padding: 1px;
 }
 
 #ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected),
-:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry:is(:hover, .selected) {  
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry:is(:hover, .selected) {
 	outline: 2px solid var(--color-primary);
 	border: 1px solid transparent;
 	background-color: transparent;
@@ -2579,7 +2583,7 @@ kbd,
 }
 
 #ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span,
-:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry span {  
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry span {
 	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
 }
 
