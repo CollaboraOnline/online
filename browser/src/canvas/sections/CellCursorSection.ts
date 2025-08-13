@@ -37,7 +37,7 @@ class CellCursorSection extends CanvasSectionObject {
 	public static adjustSizePos(defaultSizePos: number[]): number[] {
 		const splitPos = app.map._docLayer._splitPanesContext ? app.map._docLayer._splitPanesContext.getSplitPos() : null;
 
-		if (!splitPos || (splitPos.x === 0 && splitPos.y === 0) || (app.activeDocument.activeView.viewedRectangle.pX1 === 0 && app.activeDocument.activeView.viewedRectangle.pY1 === 0)) return defaultSizePos;
+		if (!splitPos || (splitPos.x === 0 && splitPos.y === 0) || !app.activeDocument || (app.activeDocument.activeView.viewedRectangle.pX1 === 0 && app.activeDocument.activeView.viewedRectangle.pY1 === 0)) return defaultSizePos;
 
 		if (defaultSizePos[0] < splitPos.x && defaultSizePos[0] + defaultSizePos[2] > splitPos.x)
 			defaultSizePos[2] = Math.max(splitPos.x - defaultSizePos[0], defaultSizePos[2] - app.activeDocument.activeView.viewedRectangle.pX1);
