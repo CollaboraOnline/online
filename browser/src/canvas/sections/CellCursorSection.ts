@@ -103,4 +103,7 @@ class CellCursorSection extends CanvasSectionObject {
 		grid.style.cursor = '';
 	}
 
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+		this.sectionProperties.mouseInside = true;
+	}
 }

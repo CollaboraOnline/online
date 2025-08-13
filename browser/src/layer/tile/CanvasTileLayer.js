@@ -2597,7 +2597,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
 			this._cellAutoFillAreaPixels = app.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
-			this._cellCursorSection.sectionProperties.mouseInside = true;
 		}
 		else {
 			this._cellAutoFillAreaPixels = null;
