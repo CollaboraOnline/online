@@ -317,7 +317,7 @@ void HttpRequestTests::testSimpleGet()
         httpSession->setConnectFailHandler([testname](const std::shared_ptr<http::Session>&)
                                            { LOK_ASSERT_FAIL("Unexpected connection failure"); });
 
-        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread, false));
 
         // Use Poco to get the same URL in parallel.
         const auto pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + URL));
@@ -539,7 +539,7 @@ void HttpRequestTests::test500GetStatuses()
         httpSession->setConnectFailHandler([testname](const std::shared_ptr<http::Session>&)
                                            { LOK_ASSERT_FAIL("Unexpected connection failure"); });
 
-        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread, false));
 
         // Get via Poco in parallel.
         std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponse;
@@ -666,7 +666,7 @@ void HttpRequestTests::testSimplePost_External()
     httpSession->setConnectFailHandler([testname](const std::shared_ptr<http::Session>&)
                                        { LOK_ASSERT_FAIL("Unexpected connection failure"); });
 
-    LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+    LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread, false));
 
     cv.wait_for(lock, DefTimeoutSeconds, [&]() { return timedout == false; });
 
@@ -724,7 +724,7 @@ void HttpRequestTests::testInvalidPoll()
                                        { calledFailed = true; });
 
     std::weak_ptr<SocketPoll> poll;
-    LOK_ASSERT(httpSession->asyncRequest(httpRequest, poll) == false);
+    LOK_ASSERT(httpSession->asyncRequest(httpRequest, poll, false) == false);
 
     LOK_ASSERT(httpSession->response() == nullptr);
 
