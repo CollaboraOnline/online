@@ -1255,6 +1255,7 @@ private:
         , _handshakeSslVerifyFailure(0)
         , _timeout(getDefaultTimeout())
         , _connected(false)
+        , _asyncShutdownOnFinish(false)
         , _result(net::AsyncConnectResult::Ok)
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
@@ -1390,7 +1391,7 @@ public:
         LOG_TRC_S("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                    << req.getUrl());
 
-        newRequest(req);
+        newRequest(req, false);
 
         if (!saveToFilePath.empty())
             _response->saveBodyToFile(saveToFilePath);
@@ -1415,7 +1416,7 @@ public:
         LOG_TRC_S("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                   << req.getUrl());
 
-        newRequest(req);
+        newRequest(req, false);
         syncRequestImpl(poller);
         return _response;
     }
@@ -1449,11 +1450,13 @@ public:
 
     /// Start an asynchronous request on the given SocketPoll.
     /// Return true when it dispatches the socket to the SocketPoll.
+    /// Use asyncShutdownOnFinish of true to shutdown when finished (typical).
+    /// Use asyncShutdownOnFinish of false to leave socket open to reuse.
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
     /// Returns false when it fails to start the async request.
-    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll)
+    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll, bool asyncShutdownOnFinish)
     {
         std::shared_ptr<SocketPoll> socketPoll(poll.lock());
         if (!socketPoll)
@@ -1474,7 +1477,7 @@ public:
         LOG_TRC("New asyncRequest on [" << socketPoll->name() << "]: " << req.getVerb() << ' '
                                         << host() << ':' << port() << ' ' << req.getUrl());
 
-        newRequest(req);
+        newRequest(req, asyncShutdownOnFinish);
 
         if (!isConnected())
         {
@@ -1553,6 +1556,7 @@ public:
         os << indent << "http::Session: #" << _fd << " (" << (_socket.lock() ? "have" : "no")
            << " socket)";
         os << indent << "\tconnected: " << _connected;
+        os << indent << "\tasyncShutdownOnFinish: " << _asyncShutdownOnFinish;
         os << indent << "\ttimeout: " << _timeout;
         os << indent << "\thost: " << _host;
         os << indent << "\tport: " << _port;
@@ -1614,6 +1618,9 @@ private:
 
     void callOnFinished()
     {
+        if (_asyncShutdownOnFinish)
+            asyncShutdown();
+
         if (!_onFinished)
             return;
 
@@ -1637,7 +1644,7 @@ private:
     }
 
     /// Set up a new request and response.
-    void newRequest(const Request& req)
+    void newRequest(const Request& req, bool asyncShutdownOnFinish)
     {
         _startTime = std::chrono::steady_clock::now();
 
@@ -1671,6 +1678,8 @@ private:
         _response = std::make_shared<Response>(onFinished, _fd);
 
         _request = req;
+
+        _asyncShutdownOnFinish = asyncShutdownOnFinish;
 
         std::string host = _host;
 
@@ -1972,6 +1981,7 @@ private:
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
     bool _connected;
+    bool _asyncShutdownOnFinish;
     Request _request;
     net::AsyncConnectResult _result; // last connection tentative result
     FinishedCallback _onFinished;

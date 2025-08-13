@@ -42,8 +42,6 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         [selfWeak = weak_from_this(), this, startTime,
          uriAnonym = std::move(uriAnonym), redirectLimit](const std::shared_ptr<http::Session>& session)
     {
-        session->asyncShutdown();
-
         std::shared_ptr<CheckFileInfo> selfLifecycle = selfWeak.lock();
         if (!selfLifecycle)
             return;
@@ -172,7 +170,7 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
     _state = State::Active;
 
     // Run the CheckFileInfo request on the WebServer Poll.
-    return _httpSession->asyncRequest(httpRequest, _poll);
+    return _httpSession->asyncRequest(httpRequest, _poll, true);
 }
 
 void CheckFileInfo::checkFileInfoSync(int redirectionLimit)
