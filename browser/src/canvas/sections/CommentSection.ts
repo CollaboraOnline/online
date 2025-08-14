@@ -257,6 +257,9 @@ export class Comment extends CanvasSectionObject {
 			this.createMarkerSubSection();
 
 		this.doPendingInitializationInView();
+
+		if (!(<any>window).mode.isMobile())
+			document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
 	private createContainerAndWrapper (): void {
@@ -274,9 +277,6 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		this.sectionProperties.wrapper.style.marginLeft = this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
-
-		if (!(<any>window).mode.isMobile())
-			document.getElementById('document-container').appendChild(this.sectionProperties.container);
 
 		// We make comment directly visible when its transitioned to its determined position
 		if (cool.CommentSection.autoSavedComment)
