@@ -441,11 +441,13 @@ class SlideShowNavigator {
 	}
 
 	onKeyDown(aEvent: KeyboardEvent) {
-		aEvent.preventDefault();
-		aEvent.stopPropagation();
 		if (!this.isEnabled && aEvent.code !== 'Escape') return;
 		const handler = this.keyHandlerMap[aEvent.code];
-		if (handler) handler();
+		if (handler) {
+			aEvent.preventDefault();
+			aEvent.stopPropagation();
+			handler();
+		}
 	}
 
 	onSwipe(event: HammerInput) {
