@@ -59,7 +59,7 @@
 <item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/GrammarCheckerList"><prop oor:name="ro-RO" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.LanguageToolGrammarChecker</it></value></prop></item>
 
 <!-- Hide MediaPlaybackPanel on sidebar. It does not work in Online. Video playback controls are implemented by the browser.  -->
-<item oor:path="/org.openoffice.Office.UI.Sidebar/Content/PanelList/org.openoffice.Office.UI.Sidebar:Panel['MediaPlaybackPanel']"><prop oor:name="ContextList" oor:op="fuse"><value><it>any</it><it>default</it><it>hidden</it></value></prop></item>
+<item oor:path="/org.openoffice.Office.UI.Sidebar/Content/PanelList/org.openoffice.Office.UI.Sidebar:Panel['MediaPlaybackPanel']"><prop oor:name="ContextList" oor:op="fuse"><value><it>any, default, hidden</it></value></prop></item>
 
 <!-- CJK/CTL settings -->
 <item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="VerticalText" oor:op="fuse"><value>true</value></prop></item>
