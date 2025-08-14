@@ -27,7 +27,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-1').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -39,14 +39,14 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		// First add left border
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-1').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-left: 1px solid #000000');
 		// Then remove it
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-0').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
@@ -57,7 +57,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-2').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -68,7 +68,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-3').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
@@ -79,7 +79,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-4').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
@@ -90,7 +90,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-5').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
@@ -101,7 +101,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-6').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
@@ -112,7 +112,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-7').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		helper.copy();
 		calcHelper.selectEntireSheet();
@@ -124,7 +124,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.selectEntireSheet();
 		// Click on the one in notebookbar (not sidebar).
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-8').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
 
@@ -140,7 +140,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 	it('Apply horizontal inner borders and vertical outer borders', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.selectEntireSheet();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-9').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
 		//cy.cGet('#copy-paste-container table td')
@@ -158,7 +158,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 	it('Apply vertical inner borders and horizontal outer borders', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.selectEntireSheet();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-10').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
 		//cy.cGet('#copy-paste-container table td')
@@ -176,7 +176,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 	it('Apply all inner and outer borders', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.selectEntireSheet();
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.cGet('#home-set-border-style-entry-11').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
 		//cy.cGet('#copy-paste-container table td')
@@ -193,7 +193,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		// Apply left border first
-		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
 		cy.wait(500);
 		cy.cGet('#home-set-border-style-entry-1').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 
