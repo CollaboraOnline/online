@@ -526,9 +526,11 @@ class UIManager extends L.Control {
 			this._map.fire('commandstatechanged', {commandName : 'showannotations', state : initialCommentState});
 			this.map.mention = L.control.mention(this.map);
 
-			// setup quickfind panel
-			this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
-			this.map.addControl(this.map.quickFindPanel);
+			if (!window.mode.isMobile()) {
+				// setup quickfind panel
+				this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
+				this.map.addControl(this.map.quickFindPanel);
+			}
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
