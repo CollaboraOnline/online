@@ -782,14 +782,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'home-fontcombobox-break', orientation: 'vertical' },
 			{
-				'id': 'home-insert-annotation',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation'),
-				'command': '.uno:InsertAnnotation',
-				'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
-			},
-			{ type: 'separator', id: 'home-insertannotation-break', orientation: 'vertical' },
-			{
 				'type': 'overflowgroup',
 				'id': 'home-paragraph',
 				'name': 'Paragraph',
@@ -948,7 +940,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{ type: 'separator', id: 'home-stylesview-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'home-insert-element',
