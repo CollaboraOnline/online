@@ -25,7 +25,6 @@
 namespace cool {
 
 export class RowGroup extends GroupBase {
-	name: string = L.CSections.RowGroup.name;
 	anchor: any = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
 	expand: string[] = ['top', 'bottom']; // Expand vertically.
 	processingOrder: number = L.CSections.RowGroup.processingOrder;
@@ -36,7 +35,7 @@ export class RowGroup extends GroupBase {
 	_cornerHeaderHeight: number;
 	_splitPos: cool.Point;
 
-	constructor() { super(); }
+	constructor() { super(L.CSections.RowGroup.name); }
 
 	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.

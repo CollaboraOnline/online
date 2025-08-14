@@ -15,7 +15,7 @@ class CanvasSectionObject {
 	context: CanvasRenderingContext2D;
 	myTopLeft: Array<number> = [0, 0];
 	containerObject: CanvasSectionContainer = null;
-	name: string = null;
+	readonly name: string = null;
 	backgroundColor: string = null; // Default is null (container's background color will be used).
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null; // Default is null (no borders).
@@ -39,6 +39,10 @@ class CanvasSectionObject {
 	windowSection: boolean = false;
 	sectionProperties: any = {};
 	boundsList: Array<CanvasSectionObject> = []; // The sections those this section can propagate events to. Updated by container.
+
+	constructor(name: string) {
+		this.name= name;
+	}
 
 	onInitialize(): void { return; }
 	onCursorPositionChanged(newPosition: cool.SimpleRectangle): void { return; }

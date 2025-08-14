@@ -23,7 +23,6 @@
 */
 
 class FocusCellSection extends CanvasSectionObject {
-	name: string = L.CSections.FocusCell.name;
 	processingOrder: number = L.CSections.FocusCell.processingOrder;
 	drawingOrder: number = L.CSections.FocusCell.drawingOrder;
 	zIndex: number = L.CSections.FocusCell.zIndex;
@@ -32,7 +31,7 @@ class FocusCellSection extends CanvasSectionObject {
 	static instance: FocusCellSection = null;
 
 	constructor() {
-		super();
+		super(L.CSections.FocusCell.name);
 
 		this.sectionProperties.columnRectangle = null;
 		this.sectionProperties.rowRectangle = null;

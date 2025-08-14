@@ -22,7 +22,6 @@
 namespace cool {
 
 export class CornerGroup extends GroupBase {
-	name: string = L.CSections.CornerGroup.name;
 	anchor: string[] = ['top', 'left'];
 	processingOrder: number = L.CSections.CornerGroup.processingOrder;
 	drawingOrder: number = L.CSections.CornerGroup.drawingOrder;
@@ -31,7 +30,7 @@ export class CornerGroup extends GroupBase {
 
 	_map: any;
 
-	constructor() { super(); }
+	constructor() { super(L.CSections.CornerGroup.name); }
 
 	public onInitialize(): void {
 		this._map = L.Map.THIS;

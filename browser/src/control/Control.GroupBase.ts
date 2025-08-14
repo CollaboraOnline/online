@@ -46,7 +46,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 	_groups: Array<Array<GroupEntry>>;
 	isRemoved: boolean = false;
 
-	constructor () { super(); }
+	constructor (name: string) { super(name); }
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize(): void {

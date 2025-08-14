@@ -10,7 +10,6 @@
  */
 
 class SplitSection extends CanvasSectionObject {
-	name: string = L.CSections.Debug.Splits.name;
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
 	processingOrder: number = L.CSections.Debug.Splits.processingOrder;
@@ -22,7 +21,7 @@ class SplitSection extends CanvasSectionObject {
 	};
 
 	constructor() {
-		super();
+		super(L.CSections.Debug.Splits.name);
 	}
 
 	onDraw(): void {

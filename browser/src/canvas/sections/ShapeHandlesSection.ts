@@ -57,7 +57,6 @@ class HelperLineStyles {
 }
 
 class ShapeHandlesSection extends CanvasSectionObject {
-	name: string = "shapeHandlesSection";
 	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
@@ -65,7 +64,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	showSection: boolean = false;
 
 	constructor (info: any) {
-        super();
+        super("shapeHandlesSection");
 
 		this.sectionProperties.info = null;
 		this.sectionProperties.handles = [];

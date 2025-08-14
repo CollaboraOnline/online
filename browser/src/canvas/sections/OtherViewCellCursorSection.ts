@@ -24,12 +24,11 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     static sectionPointers: Array<OtherViewCellCursorSection> = [];
 
     constructor(viewId: number, rectangle: cool.SimpleRectangle, part: number) {
-        super();
+        super(OtherViewCellCursorSection.sectionNamePrefix + viewId);
 
         this.size = [rectangle.pWidth, rectangle.pHeight];
         this.position = [rectangle.pX1, rectangle.pY1];
         this.sectionProperties.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
-        this.name = OtherViewCellCursorSection.sectionNamePrefix + viewId;
 
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;

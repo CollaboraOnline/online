@@ -17,7 +17,6 @@
 namespace cool {
 
 export class ColumnHeader extends Header {
-	name: string = L.CSections.ColumnHeader.name;
 	anchor: Array<Array<string>> = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
 	position: number[] = [0, 0]; // This section's myTopLeft is placed according to corner header and column group sections.
 	size: number[] = [0, 19 * app.dpiScale]; // No initial width is necessary.
@@ -32,7 +31,7 @@ export class ColumnHeader extends Header {
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
-		super();
+		super(L.CSections.ColumnHeader.name);
 
 		if (cursor)
 			this.cursor = cursor;

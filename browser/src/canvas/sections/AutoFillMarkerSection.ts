@@ -16,7 +16,6 @@ declare var L: any;
 
 app.definitions.AutoFillMarkerSection =
 class AutoFillMarkerSection extends CanvasSectionObject {
-	name: string = L.CSections.AutoFillMarker.name;
 	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
 	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
 	zIndex: number = L.CSections.AutoFillMarker.zIndex;
@@ -28,7 +27,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	_showSection: boolean = true; // Store the internal show/hide section through forced readonly hides...
 
 	constructor () {
-		super();
+		super(L.CSections.AutoFillMarker.name);
 		this.documentObject = true;
 		this.map = L.Map.THIS;
 		this.sectionProperties.docLayer = this.map._docLayer;

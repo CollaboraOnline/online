@@ -94,7 +94,6 @@ class TransformationsList {
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
 class CanvasOverlay extends CanvasSectionObject {
-	name: string = L.CSections.Overlays.name;
 	processingOrder: number = L.CSections.Overlays.processingOrder;
 	drawingOrder: number = L.CSections.Overlays.drawingOrder;
 	zIndex: number = L.CSections.Overlays.zIndex;
@@ -109,7 +108,7 @@ class CanvasOverlay extends CanvasSectionObject {
 	private transformList: TransformationsList;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
-		super();
+		super(L.CSections.Overlays.name);
 		this.map = mapObject;
 		this.ctx = canvasContext;
 		this.tsManager = this.map.getTileSectionMgr();

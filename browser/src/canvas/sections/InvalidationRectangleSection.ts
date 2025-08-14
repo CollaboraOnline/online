@@ -13,8 +13,6 @@
 const sectionName = 'TileInvalidationRectangle';
 
 class InvalidationRectangleSection extends CanvasSectionObject {
-	name: string = sectionName;
-
 	/*
 		We don't want visibility issues.
 		Since there will be more than one rectangles in this section, position property (thus document section) is not useful anymore.
@@ -28,7 +26,7 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 	interactable: boolean = false;
 
 	constructor() {
-		super();
+		super(sectionName);
 		this.sectionProperties.rectangleList = [];
 	}
 

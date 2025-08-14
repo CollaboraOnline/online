@@ -59,7 +59,6 @@ declare var JSDialog: any;
 namespace cool {
 
 export class CommentSection extends CanvasSectionObject {
-	name: string = L.CSections.CommentList.name;
 	backgroundColor: string = app.sectionContainer.getClearColor();
 	expand: string[] = ['bottom'];
 	processingOrder: number = L.CSections.CommentList.processingOrder;
@@ -98,7 +97,7 @@ export class CommentSection extends CanvasSectionObject {
 	private annotationMaxSize: number;
 
 	constructor () {
-		super();
+		super(L.CSections.CommentList.name);
 
 		this.map = L.Map.THIS;
 		this.anchor = ['top', 'right'];
@@ -744,8 +743,8 @@ export class CommentSection extends CanvasSectionObject {
 					anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]],
 				};
 
-				var replyAnnotationSection = new cool.Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
-				replyAnnotationSection.name += '-reply';
+				const name = cool.Comment.makeName(replyAnnotation) + '-reply';
+				var replyAnnotationSection = new cool.Comment(name, replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
 
 				this.newAnnotationMobile(replyAnnotationSection, annotation.onReplyClick, /* isMod */ false);
 			}
@@ -1307,7 +1306,8 @@ export class CommentSection extends CanvasSectionObject {
 
 	public add (comment: any): cool.Comment {
 		if (!comment.sectionProperties) {
-			const temp = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+			const name = cool.Comment.makeName(comment);
+			const temp = new cool.Comment(name, comment, comment.id === 'new' ? {noMenu: true} : {}, this);
 			temp.sectionProperties.data = comment;
 			comment = temp;
 		}
@@ -2386,7 +2386,8 @@ export class CommentSection extends CanvasSectionObject {
 				if (comment.author in this.map._viewInfoByUserName) {
 					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
 				}
-				var commentSection = new cool.Comment(comment, {}, this);
+				const name = cool.Comment.makeName(comment);
+				var commentSection = new cool.Comment(name, comment, {}, this);
 				if (!this.containerObject.addSection(commentSection))
 					continue;
 				this.sectionProperties.commentList.push(commentSection);
@@ -2435,7 +2436,8 @@ export class CommentSection extends CanvasSectionObject {
 				if (changeComment.author in this.map._viewInfoByUserName) {
 					changeComment.avatar = this.map._viewInfoByUserName[changeComment.author].userextrainfo.avatar;
 				}
-				var commentSection = new cool.Comment(changeComment, {}, this);
+				const name = cool.Comment.makeName(changeComment);
+				var commentSection = new cool.Comment(name, changeComment, {}, this);
 				if (!this.containerObject.addSection(commentSection))
 					continue;
 				this.sectionProperties.commentList.push(commentSection);

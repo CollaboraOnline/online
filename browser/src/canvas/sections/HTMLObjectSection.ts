@@ -11,16 +11,14 @@
 */
 
 class HTMLObjectSection extends CanvasSectionObject {
-	name: string = "will-be-set-at-initialization"; // There may be multiple instances of this class.
 	processingOrder: number = L.CSections.HTMLObject.processingOrder;
 	drawingOrder: number = L.CSections.HTMLObject.drawingOrder;
 	zIndex: number = L.CSections.HTMLObject.zIndex;
 	documentObject: boolean = true;
 
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
-        super();
+        super(sectionName);
 
-		this.name = sectionName;
 		this.size = [objectWidth * app.dpiScale, objectHeight * app.dpiScale];
 		this.position = [documentPosition.pX, documentPosition.pY];
 		this.sectionProperties.objectWidth = objectWidth;

@@ -22,7 +22,6 @@
 namespace cool {
 
 export class CornerHeader extends CanvasSectionObject {
-	name: string = L.CSections.CornerHeader.name;
 	anchor: any = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
 	size: number[] = [48 * app.dpiScale, 19 * app.dpiScale]; // These values are static.
 	processingOrder: number = L.CSections.CornerHeader.processingOrder;
@@ -33,7 +32,7 @@ export class CornerHeader extends CanvasSectionObject {
 	_map: any;
 	_textColor: string;
 
-	constructor() { super(); }
+	constructor() { super(L.CSections.CornerHeader.name); }
 
 	onInitialize():void {
 		this._map = L.Map.THIS;
