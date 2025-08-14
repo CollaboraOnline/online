@@ -1268,6 +1268,10 @@ class UIManager extends L.Control {
 		this.map.fire('statusbarchanged');
 	}
 
+	showNavigator(): void {
+		app.socket.sendMessage('uno .uno:Navigator');
+	}
+
 	/**
 	 * Hides the status bar.
 	 * @param firstStart - Optional flag indicating if this is the initial call.
@@ -1298,7 +1302,13 @@ class UIManager extends L.Control {
 	 * Focuses the search functionality.
 	 */
 	focusSearch(): void {
-		this.showStatusBar();
+		if (this.map.isText() && !app.showNavigator) {
+			this.map.navigator.preFocusQuickFind();
+			this.showNavigator();
+		}
+		else {
+			this.showStatusBar();
+		}
 		this.map.fire('focussearch');
 	}
 
