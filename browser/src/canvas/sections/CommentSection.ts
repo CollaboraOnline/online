@@ -159,8 +159,14 @@ export class Comment extends CanvasSectionObject {
 		if (!this.pendingInit)
 			return;
 
-		if (!force && !this.convertRectanglesToViewCoordinates())
-			return;
+		if (!force) {
+			if (!this.convertRectanglesToViewCoordinates())
+				return;
+
+			// skip comments on other tabs than the current
+			if (app.map._docLayer._docType === 'spreadsheet' && parseInt(this.sectionProperties.data.tab) !== app.map._docLayer._selectedPart)
+				return;
+		}
 
 		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
