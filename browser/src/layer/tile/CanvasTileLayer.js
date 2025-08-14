@@ -1286,9 +1286,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (textMsg.startsWith('a11yfocuschanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
 				var listPrefixLength = obj.listPrefixLength !== undefined ? parseInt(obj.listPrefixLength) : 0;
-				this._map._textInput.onAccessibilityFocusChanged(
-					obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end),
-					listPrefixLength, parseInt(obj.force) > 0);
+				if (typeof this._map._textInput.onAccessibilityFocusChanged === 'function') {
+					this._map._textInput.onAccessibilityFocusChanged(
+						obj.content,
+						parseInt(obj.position),
+						parseInt(obj.start),
+						parseInt(obj.end),
+						listPrefixLength,
+						parseInt(obj.force) > 0);
+				}
 			}
 			else if (textMsg.startsWith('a11ycaretchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
