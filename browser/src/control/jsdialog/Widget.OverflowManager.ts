@@ -18,6 +18,7 @@ declare var JSDialog: any;
 class OverflowManager {
 	parentContainer: HTMLElement;
 	data: ContainerWidgetJSON;
+	lastMaxWidth: number = -1;
 
 	constructor(parentContainer: Element, data: ContainerWidgetJSON) {
 		this.parentContainer = parentContainer as HTMLElement;
@@ -27,6 +28,7 @@ class OverflowManager {
 	}
 
 	calculateMaxWidth(): number {
+		const margin = 5;
 		let nextElement = this.parentContainer.nextSibling as HTMLElement;
 		// floating right element after spacer
 		if (nextElement && nextElement.classList.contains('ui-spacer'))
@@ -35,12 +37,12 @@ class OverflowManager {
 		let nextElementPosition = nextElement ? nextElement.offsetLeft : 0;
 		if (nextElementPosition <= 0)
 			// is a last visible sibling
-			nextElementPosition = this.parentContainer.offsetWidth;
+			nextElementPosition = this.parentContainer.offsetWidth + margin + 1;
 		if (nextElementPosition > window.innerWidth)
 			nextElementPosition = window.innerWidth;
 
 		const startPosition = this.parentContainer.offsetLeft;
-		const margin = 5;
+
 		return nextElementPosition - startPosition - margin;
 	}
 
@@ -61,6 +63,10 @@ class OverflowManager {
 		if (!this.parentContainer) return;
 
 		app.layoutingService.appendLayoutingTask(() => {
+			if (this.lastMaxWidth === window.innerWidth) return;
+
+			this.lastMaxWidth = window.innerWidth;
+
 			const groups =
 				this.parentContainer.querySelectorAll('.ui-overflow-group');
 
@@ -74,7 +80,7 @@ class OverflowManager {
 			// then hide required
 			for (let i = groups.length - 1; i >= 0; i--) {
 				const element: OverflowGroupContainer = groups[i];
-				if (maxWidth !== 0 && this.hasOverflow(maxWidth)) {
+				if (maxWidth >= 0 && this.hasOverflow(maxWidth)) {
 					if (typeof element.foldGroup === 'function') element.foldGroup();
 				}
 			}

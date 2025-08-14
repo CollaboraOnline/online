@@ -66,23 +66,29 @@ function setupOverflowMenu(
 	};
 
 	const dropdownId = 'overflow-button-' + id;
+	let isCollapsed = false;
 
 	(parentContainer as OverflowGroupContainer).foldGroup = () => {
+		if (isCollapsed) return;
 		app.console.debug('overflow manager: fold group: ' + id);
 		JSDialog.CloseDropdown(dropdownId);
 
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
 		overflowMenuButton.style.display = '';
+		isCollapsed = true;
 	};
 
 	(parentContainer as OverflowGroupContainer).unfoldGroup = () => {
+		if (!isCollapsed) return;
+
 		app.console.debug('overflow manager: unfold group: ' + id);
 		JSDialog.CloseDropdown(dropdownId);
 
 		groupLabel.style.display = '';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
+		isCollapsed = false;
 	};
 
 	// fill the updated menu after it is open
