@@ -61,25 +61,7 @@
 #include "CommandControl.hpp"
 #endif
 
-#if !MOBILEAPP
-
-#if ENABLE_SSL
-#include <Poco/Net/SSLManager.h>
-#endif
-
-#include <cerrno>
-#include <stdexcept>
-#include <unordered_map>
-
-#include "Admin.hpp"
-#include "Auth.hpp"
-#include "CacheUtil.hpp"
-#include "FileServer.hpp"
-#include "UserMessages.hpp"
-#include <wsd/RemoteConfig.hpp>
-#include <wsd/SpecialBrokers.hpp>
-
-#endif // !MOBILEAPP
+#include <wsd/PlatformDesktop.hpp>
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Exception.h>
@@ -107,18 +89,10 @@
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 
-#if !MOBILEAPP
-#include <common/JailUtil.hpp>
-#include <common/Watchdog.hpp>
-#endif
-
 #include <common/Log.hpp>
 #include <MobileApp.hpp>
 #include <Protocol.hpp>
 #include <Session.hpp>
-#if ENABLE_SSL
-#  include <SslSocket.hpp>
-#endif
 #include <wsd/wopi/StorageConnectionManager.hpp>
 #include <wsd/TraceFile.hpp>
 #include <common/ConfigUtil.hpp>
@@ -131,25 +105,7 @@
 
 #include <ServerSocket.hpp>
 
-#if MOBILEAPP
-#include <Kit.hpp>
-#ifdef IOS
-#include "ios.h"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
-#elif defined(__ANDROID__)
-#include "androidapp.hpp"
-#elif WASMAPP
-#include "wasmapp.hpp"
-#endif
-#endif // MOBILEAPP
-
-#ifdef __linux__
-#if !MOBILEAPP
-#include <common/security.h>
-#include <sys/inotify.h>
-#endif
-#endif
+#include <wsd/PlatformMobile.hpp>
 
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::Option;
