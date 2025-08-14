@@ -1275,6 +1275,7 @@ body {
 }
 
 #hyperlink-pop-up-preview p {
+	color: var(--color-main-text);
 	text-overflow: ellipsis;
 	overflow: hidden;
 	font-size: 14px;
