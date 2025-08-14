@@ -23,6 +23,7 @@ class NavigatorPanel extends SidebarBase {
 	closeNavButton: HTMLElement;
 
 	highlightTerm: string;
+	focusQuickFind: boolean;
 
 	constructor(map: any) {
 		super(map, SidebarType.Navigator);
@@ -32,6 +33,7 @@ class NavigatorPanel extends SidebarBase {
 		super.onAdd(map);
 		this.map.on('navigator', this.onNavigator, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
+		this.map.on('focussearch', this.focusSearch, this);
 		this.navigationPanel = document.getElementById(`navigation-sidebar`);
 		this.floatingNavIcon = document.getElementById(`navigator-floating-icon`);
 		this.presentationControlsWrapper = this.navigationPanel.querySelector(
@@ -272,6 +274,11 @@ class NavigatorPanel extends SidebarBase {
 			} else {
 				this.switchNavigationTab('tab-navigator');
 			}
+			if (this.focusQuickFind) {
+				this.switchNavigationTab('tab-quick-find');
+				this.focusSearch();
+				this.focusQuickFind = false;
+			}
 		} else {
 			this.closeSidebar();
 		}
@@ -343,6 +350,18 @@ class NavigatorPanel extends SidebarBase {
 			this.navigationPanel.classList.remove('visible');
 			this.floatingNavIcon.classList.add('visible');
 			this.handleFloatingButtonVisibilityOnZoomChange(); // on close panel we should check if we can display nav icon or not based on zoom level
+		});
+	}
+
+	preFocusQuickFind() {
+		this.focusQuickFind = true;
+	}
+
+	focusSearch() {
+		app.layoutingService.appendLayoutingTask(() => {
+			(
+				document.getElementById('navigator-search-input') as HTMLInputElement
+			).focus();
 		});
 	}
 
