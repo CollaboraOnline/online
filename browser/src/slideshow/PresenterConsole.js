@@ -186,6 +186,7 @@ class PresenterConsole {
 				img.width = 100;
 				img.height = 100;
 				img._index = index;
+				img.tabIndex = 0;
 				elem.append(img);
 			}
 		}
@@ -482,6 +483,13 @@ class PresenterConsole {
 
 		this._slides.appendChild(elem);
 		this._slides.addEventListener('click', L.bind(this._onClickSlides, this));
+		this._slides.addEventListener(
+			'keydown',
+			function (event) {
+				if (event.code !== 'Enter') return;
+				this._onClickSlides(event);
+			}.bind(this),
+		);
 
 		elem = this._proxyPresenter.document.querySelector('#toolbar');
 		elem.style.display = 'flex';
@@ -587,6 +595,13 @@ class PresenterConsole {
 		this._onShowNotes();
 		// simulate resize to Firefox
 		this._onResize();
+
+		this._proxyPresenter.addEventListener('load', () => {
+			const pauseButton = this._proxyPresenter.document.querySelector('#pause');
+			if (pauseButton) {
+				pauseButton.focus();
+			}
+		});
 	}
 
 	// Show the tooltip
