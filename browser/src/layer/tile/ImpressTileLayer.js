@@ -120,7 +120,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		commentData.parthash = app.impress.partList[this._selectedPart].hash;
 
-		const comment = new cool.Comment(commentData, {}, app.sectionContainer.getSectionWithName(L.CSections.CommentList.name));
+		const name = cool.Comment.makeName(commentData);
+		const comment = new cool.Comment(name, commentData, {}, app.sectionContainer.getSectionWithName(L.CSections.CommentList.name));
 
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);

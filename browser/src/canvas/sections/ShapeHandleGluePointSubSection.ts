@@ -16,9 +16,8 @@ class ShapeHandleGluePointSubSection extends CanvasSectionObject {
     documentObject: boolean = true;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
-        super();
+        super(sectionName);
 
-        this.name = sectionName;
         this.size = size;
         this.position = [documentPosition.pX, documentPosition.pY];
 

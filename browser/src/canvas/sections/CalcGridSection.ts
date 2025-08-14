@@ -12,12 +12,11 @@
 
 class CalcGridSection extends CanvasSectionObject {
 	constructor () {
-        super();
+        super(L.CSections.CalcGrid.name);
 
         // Even if this one is drawn on top, won't be able to catch events.
         // Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
         this.interactable = false;
-        this.name = L.CSections.CalcGrid.name,
         this.anchor = ['top', 'left'];
         this.processingOrder = L.CSections.CalcGrid.processingOrder, // Size and position will be copied (boundSection), this value is not important.
         this.drawingOrder = L.CSections.CalcGrid.drawingOrder,

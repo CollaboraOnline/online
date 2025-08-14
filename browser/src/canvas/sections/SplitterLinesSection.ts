@@ -10,7 +10,6 @@
  */
 
 class SplitterLinesSection extends CanvasSectionObject {
-	name: string = L.CSections.Splitter.name;
 	interactable: boolean = false;
 	processingOrder: number = L.CSections.Splitter.processingOrder;
 	drawingOrder: number = L.CSections.Splitter.drawingOrder;
@@ -18,7 +17,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 	documentObject: boolean = true;
 
 	constructor() {
-		super();
+		super(L.CSections.Splitter.name);
 	}
 
 	onInitialize(): void {

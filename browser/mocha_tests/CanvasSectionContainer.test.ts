@@ -46,8 +46,7 @@ describe('Singleton section container', function() {
     const docLayer = {};
     const tsManager = {};
 
-    let onlySection = new CanvasSectionObject();
-    onlySection.name = 'OnlySection';
+    let onlySection = new CanvasSectionObject('OnlySection');
     onlySection.anchor = ['top', 'left'];
     onlySection.position = [originX, originY];
     onlySection.size = [1, 1];
@@ -86,8 +85,7 @@ describe('Horizontally packed two section container', function() {
     const docLayer = {};
     const tsManager = {};
 
-    let leftSection = new CanvasSectionObject();
-    leftSection.name = 'LeftSection';
+    let leftSection = new CanvasSectionObject('LeftSection');
     leftSection.anchor = ['top', 'left'];
     leftSection.position = [originX, originY];
     leftSection.size = [halfWidth, 1];
@@ -101,8 +99,7 @@ describe('Horizontally packed two section container', function() {
     };
     sectionContainer.addSection(leftSection);
 
-    let rightSection = new CanvasSectionObject();
-    rightSection.name = 'RightSection';
+    let rightSection = new CanvasSectionObject('RightSection');
     rightSection.anchor = ['top', ['LeftSection', 'right', 'left']] as (string[] | Array<Array<string>>);
     rightSection.position = [originX, originY];
     rightSection.size = [1, 1];
@@ -158,8 +155,7 @@ describe('Vertically packed two section container', function() {
     const docLayer = {};
     const tsManager = {};
 
-    let topSection = new CanvasSectionObject();
-    topSection.name = 'TopSection';
+    let topSection = new CanvasSectionObject('TopSection');
     topSection.anchor = ['top', 'left'];
     topSection.position = [originX, originY];
     topSection.size = [1, halfHeight];
@@ -173,8 +169,7 @@ describe('Vertically packed two section container', function() {
     };
     sectionContainer.addSection(topSection);
 
-    let bottomSection = new CanvasSectionObject();
-    bottomSection.name = 'BottomSection';
+    let bottomSection = new CanvasSectionObject('BottomSection');
     bottomSection.anchor = [['TopSection', 'bottom', 'top'], 'left'] as (string[] | Array<Array<string>>);
     bottomSection.position = [originX, originY];
     bottomSection.size = [1, 1];
@@ -231,8 +226,7 @@ describe('Horizontally packed two section container with -left layout', function
     const docLayer = {};
     const tsManager = {};
 
-    let rightSection = new CanvasSectionObject();
-    rightSection.name = 'RightSection';
+    let rightSection = new CanvasSectionObject('RightSection');
     rightSection.anchor = ['top', 'right'];
     rightSection.position = [originX, originY];
     rightSection.size = [halfWidth, 1];
@@ -246,8 +240,7 @@ describe('Horizontally packed two section container with -left layout', function
     };
     sectionContainer.addSection(rightSection);
 
-    let leftSection = new CanvasSectionObject();
-    leftSection.name = 'LeftSection';
+    let leftSection = new CanvasSectionObject('LeftSection');
     leftSection.anchor = ['top', ['RightSection', '-left', 'right']] as (string[] | Array<Array<string>>); // Attach LeftSection's right to left of RightSection.
     leftSection.position = [originX, originY];
     leftSection.size = [1, 1];

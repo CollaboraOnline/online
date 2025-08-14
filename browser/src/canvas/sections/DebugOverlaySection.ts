@@ -10,7 +10,6 @@
  */
 
 class DebugOverlaySection extends CanvasSectionObject {
-	name: string = L.CSections.Debug.DebugOverlay.name;
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
 	processingOrder: number = L.CSections.Debug.DebugOverlay.processingOrder;
@@ -21,7 +20,7 @@ class DebugOverlaySection extends CanvasSectionObject {
 	_debug: any;
 
 	constructor(debug: any) {
-		super();
+		super(L.CSections.Debug.DebugOverlay.name);
 		this._debug = debug;
 	}
 

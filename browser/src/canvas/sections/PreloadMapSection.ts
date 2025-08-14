@@ -10,7 +10,6 @@
  */
 
 class PreloadMapSection extends CanvasSectionObject {
-	name: string = L.CSections.Debug.PreloadMap.name;
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
 	processingOrder: number = L.CSections.Debug.PreloadMap.processingOrder;
@@ -19,7 +18,7 @@ class PreloadMapSection extends CanvasSectionObject {
 	boundToSection: string = 'tiles';
 
 	constructor() {
-		super();
+		super(L.CSections.Debug.PreloadMap.name);
 	}
 
 	onDraw(

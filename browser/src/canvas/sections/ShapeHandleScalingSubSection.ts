@@ -21,11 +21,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	documentObject: boolean = true;
 
 	constructor(parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any, cropModeEnabled: boolean) {
-		super();
+		super(sectionName);
 
 		this.size = size;
 		this.sectionProperties.position = documentPosition.clone();
-		this.name = sectionName;
 
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;

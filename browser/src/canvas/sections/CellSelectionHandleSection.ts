@@ -17,12 +17,10 @@ class CellSelectionHandle extends CanvasSectionObject {
 	documentObject: boolean = true;
 
 	constructor (name: string) {
-        super();
+        super(name);
 
 		this.sectionProperties.circleRadius = 10 * app.dpiScale;
 		this.size = [this.sectionProperties.circleRadius * 2, this.sectionProperties.circleRadius * 2];
-
-		this.name = name;
 	}
 
 	private onDragEnd(point: cool.SimplePoint) {

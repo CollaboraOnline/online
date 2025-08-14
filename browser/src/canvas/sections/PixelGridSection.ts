@@ -9,7 +9,6 @@
 */
 
 class PixelGridSection extends CanvasSectionObject {
-	name: string = L.CSections.Debug.TilePixelGrid.name;
     interactable: boolean = false;
     anchor: string[] = ['top', 'left'];
     processingOrder: number = L.CSections.Debug.TilePixelGrid.processingOrder;
@@ -17,7 +16,7 @@ class PixelGridSection extends CanvasSectionObject {
     zIndex: number = L.CSections.Debug.TilePixelGrid.zIndex;
     boundToSection: string = 'tiles';
 
-    constructor () { super(); }
+    constructor () { super(L.CSections.Debug.TilePixelGrid.name); }
 
     onDraw(frameCount?: number, elapsedTime?: number): void {
 		var offset = 8;

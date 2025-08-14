@@ -23,12 +23,11 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
     static sectionPointers: Array<OtherViewGraphicSelectionSection> = [];
 
     constructor(viewId: number, rectangle: cool.SimpleRectangle, part: number, mode: number) {
-        super();
+        super(OtherViewGraphicSelectionSection.sectionNamePrefix + viewId);
 
         this.size = [rectangle.pWidth, rectangle.pHeight];
         this.position = [rectangle.pX1, rectangle.pY1];
         this.sectionProperties.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
-        this.name = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
 
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;

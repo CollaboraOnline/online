@@ -28,7 +28,6 @@ export class ScrollSection extends CanvasSectionObject {
 	// The number of lines a scroll-wheel tick should travel
 	static readonly scrollWheelDelta: number = 20;
 
-	name: string = L.CSections.Scroll.name;
 	processingOrder: number = L.CSections.Scroll.processingOrder
 	drawingOrder: number = L.CSections.Scroll.drawingOrder;
 	zIndex: number = L.CSections.Scroll.zIndex;
@@ -42,7 +41,7 @@ export class ScrollSection extends CanvasSectionObject {
 	isRTL: () => boolean;
 
 	constructor (isRTL?: () => boolean) {
-		super();
+		super(L.CSections.Scroll.name);
 
 		this.map = L.Map.THIS;
 
