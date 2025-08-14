@@ -1306,7 +1306,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-overflow-group-label {
 	font-family: var(--jquery-ui-font);
-	font-size: var(--default-font-size);
+	font-size: var(--overflow-group-font-size);
 	color: var(--color-text-lighter);
 	flex-grow: 1;
 	text-align: center;
