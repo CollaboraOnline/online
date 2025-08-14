@@ -761,11 +761,13 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		else if (instance.action === 'close')
 		{
+			const dialogs = Object.keys(this.dialogs);
+			const hadOpenedDialog = dialogs.length > 0;
+
 			this.close(instance.id, false);
 
 			// Manage focus
-			var dialogs = Object.keys(this.dialogs);
-			if (dialogs.length) {
+			if (hadOpenedDialog && dialogs.length) {
 				var lastKey = dialogs[dialogs.length - 1];
 				const lastDialog = this.dialogs[lastKey];
 				const lastContainer = lastDialog.container;
@@ -776,7 +778,7 @@ L.Control.JSDialog = L.Control.extend({
 					else
 						lastContainer.focus();
 				}
-			} else {
+			} else if (hadOpenedDialog){
 				this.map.focus();
 			}
 		}
