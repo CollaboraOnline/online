@@ -27,7 +27,7 @@ class SecondJoinQuit : public WopiTestServer
 {
     STATE_ENUM(Phase, LoadUser1, WaitUser1Loaded, User1Loaded, LoadUser2, WaitUser2Loaded, User2Loaded, DropUser2, ModifyDoc, Done) _phase;
 
-    bool _earlyQuit;
+    const bool _earlyQuit;
 
     std::size_t _checkFileInfoCount;
     std::size_t _viewCount;
@@ -59,14 +59,19 @@ public:
                                       int& /*unitReturn*/) override
     {
         const std::string message(data, len);
+        TST_LOG("WS Message: [" << message << "] in phase: " << name(_phase));
 
         if (message.starts_with("viewinfo:"))
         {
             Poco::JSON::Parser parser0;
             Poco::JSON::Array::Ptr array = parser0.parse(message.substr(9)).extract<Poco::JSON::Array::Ptr>();
             _viewsActive = array->size();
-            if (_phase == Phase::Done && _viewsActive == 1)
-                passTest("View disconnection seen");
+            if (_phase == Phase::ModifyDoc && _viewsActive == 1)
+
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+                WSD_CMD("closedocument");
+            }
         }
 
         return false;
@@ -84,6 +89,14 @@ public:
 
         if (_viewCount == 2 && _phase == Phase::WaitUser2Loaded)
             TRANSITION_STATE(_phase, Phase::User2Loaded);
+    }
+
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        TST_LOG("Destroyed dockey [" << docKey << "], phase: " << name(_phase));
+        LOK_ASSERT_STATE(_phase, Phase::Done);
+
+        passTest("View disconnection seen");
     }
 
     void invokeWSDTest() override
@@ -144,8 +157,6 @@ public:
             }
             case Phase::ModifyDoc:
             {
-                TRANSITION_STATE(_phase, Phase::Done);
-
                 // Modify the document.
                 TST_LOG("Modifying");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "key type=input char=97 key=0");
