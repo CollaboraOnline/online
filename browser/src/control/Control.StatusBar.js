@@ -311,6 +311,7 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('permissionmode-container', true);
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
+				this.showItem('search', false);
 			}
 			break;
 
