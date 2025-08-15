@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
-"PO-Revision-Date: 2025-07-21 22:34+0000\n"
-"Last-Translator: kevin10-26 <kevin.bento@free.fr>\n"
+"PO-Revision-Date: 2025-08-06 17:01+0000\n"
+"Last-Translator: \"David D.\" <david.ducassou@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -469,9 +469,8 @@ msgid "Set default interface preferences."
 msgstr "Définir les préférences de l’interface par défaut."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:597
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Veuillez sélectionner un onglet pour voir les paramètres."
+msgstr "Sélectionnez un onglet pour les paramètres du navigateur."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:610
 #: admin/src/integrator/Xcu.ts:357
@@ -2373,11 +2372,11 @@ msgstr "Remplacer"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Margin"
-msgstr ""
+msgstr "Marge"
 
 #: src/control/Control.NotebookbarCalc.js:1006
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: src/control/Control.NotebookbarCalc.js:1064
 msgid "Row Height"
@@ -2434,11 +2433,11 @@ msgstr "Barre d'état"
 
 #: src/control/Control.NotebookbarCalc.js:1443
 msgid "Group"
-msgstr ""
+msgstr "Grouper"
 
 #: src/control/Control.NotebookbarCalc.js:1450
 msgid "Ungroup"
-msgstr ""
+msgstr "Dégrouper"
 
 #: src/control/Control.NotebookbarCalc.js:1579
 #: src/control/Control.NotebookbarDraw.js:1375
@@ -2485,7 +2484,7 @@ msgstr "Règle"
 
 #: src/control/Control.NotebookbarImpress.js:109
 msgid "Design"
-msgstr ""
+msgstr "Design"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
@@ -2530,7 +2529,7 @@ msgstr "Taille de la diapositive"
 
 #: src/control/Control.NotebookbarImpress.js:1657
 msgid "Background Image"
-msgstr ""
+msgstr "Image de fond"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3169,11 +3168,11 @@ msgstr "Normal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr ""
+msgstr "Large"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr ""
+msgstr "Étroit"
 
 #: src/control/jsdialog/Definitions.Menu.ts:130
 msgid "Min"
@@ -3185,11 +3184,11 @@ msgstr "Max"
 
 #: src/control/jsdialog/Definitions.Menu.ts:187
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Modifier unique Sparkline"
 
 #: src/control/jsdialog/Definitions.Menu.ts:198
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Supprimer une Sparkline"
 
 #: src/control/jsdialog/Definitions.Menu.ts:234
 msgid "Portrait"
@@ -3201,39 +3200,39 @@ msgstr "Paysage"
 
 #: src/control/jsdialog/Definitions.Menu.ts:248
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:253
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:258
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:263
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:268
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:278
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:283
 msgid "Letter"
-msgstr ""
+msgstr "Lettre"
 
 #: src/control/jsdialog/Definitions.Menu.ts:288
 msgid "Legal"
-msgstr ""
+msgstr "Légal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Long Bond"
@@ -3241,7 +3240,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloïde"
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "B6 (JIS)"
@@ -3269,27 +3268,27 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "DL Envelope"
-msgstr ""
+msgstr "Enveloppe DL"
 
 #: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "C6 Envelope"
-msgstr ""
+msgstr "Enveloppe C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "Enveloppe C6/5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:353
 msgid "C5 Envelope"
-msgstr ""
+msgstr "Enveloppe C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:358
 msgid "C4 Envelope"
-msgstr ""
+msgstr "Enveloppe C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:363
 msgid "#6¾ Envelope"
@@ -3301,23 +3300,23 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:373
 msgid "#9 Envelope"
-msgstr ""
+msgstr "Enveloppe #9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:378
 msgid "#10 Envelope"
-msgstr ""
+msgstr "Enveloppe #10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:383
 msgid "#11 Envelope"
-msgstr ""
+msgstr "Enveloppe #11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:388
 msgid "#12 Envelope"
-msgstr ""
+msgstr "Enveloppe #12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:393
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Carte postale japonaise"
 
 #: src/control/jsdialog/Definitions.Menu.ts:547
 msgid "Insert Local Image"
@@ -3433,15 +3432,15 @@ msgstr "Titre, Texte vertical, Clipart"
 
 #: src/control/jsdialog/Definitions.Menu.ts:895
 msgid "Grayscale"
-msgstr ""
+msgstr "Tons de gris"
 
 #: src/control/jsdialog/Definitions.Menu.ts:900
 msgid "Black/White"
-msgstr ""
+msgstr "Noir/Blanc"
 
 #: src/control/jsdialog/Definitions.Menu.ts:905
 msgid "Watermark"
-msgstr ""
+msgstr "Filigrane"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3466,23 +3465,23 @@ msgstr "Récent"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:82
 msgid "Top: {top}"
-msgstr ""
+msgstr "Haut : {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:87
 msgid "Left: {left}"
-msgstr ""
+msgstr "Gauche : {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Bas : {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Right: {right}"
-msgstr ""
+msgstr "Droite : {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Marges perso…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
