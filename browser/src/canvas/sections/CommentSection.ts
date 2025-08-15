@@ -240,7 +240,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
 		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeModifyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
-		this.createReplyHint();
+		this.createReplyHint(this.sectionProperties.nodeModify);
 		this.sectionProperties.nodeModifyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeModifyText.setAttribute('role', 'textbox');
 		this.sectionProperties.nodeModifyText.setAttribute('aria-label', Comment.editCommentLabel);
@@ -248,6 +248,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
 		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeReplyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
+		this.createReplyHint(this.sectionProperties.nodeReply);
 		this.sectionProperties.nodeReplyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeReplyText.setAttribute('role', 'textbox');
 		this.sectionProperties.nodeReplyText.setAttribute('aria-label', Comment.replyCommentLabel);
@@ -333,8 +334,8 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.annotation = this;
 	}
 
-	private createReplyHint (): void {
-		this.sectionProperties.replyHint = L.DomUtil.create('p', '', this.sectionProperties.nodeModify);
+	private createReplyHint (commentType: any): void {
+		this.sectionProperties.replyHint = L.DomUtil.create('p', '', commentType);
 		var small = document.createElement('small');
 		small.classList.add('cool-font');
 		small.innerText = _('Press Ctrl + Enter to post');
