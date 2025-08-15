@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
-"PO-Revision-Date: 2025-07-21 09:07+0000\n"
-"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
+"PO-Revision-Date: 2025-08-06 17:01+0000\n"
+"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -718,7 +718,7 @@ msgstr "Promoveer naar bovenste reactie"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Show on the side"
-msgstr "Toon aan de zijkant"
+msgstr "Aan de zijkant weergeven"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Open in full view"
@@ -1598,12 +1598,12 @@ msgstr "UI modus in-/uitschakelen"
 
 #: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:489
 msgid "Show Ruler"
-msgstr "Toon liniaal"
+msgstr "Liniaal weergeven"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:490
 #: src/control/Control.Menubar.ts:655 src/control/Control.Menubar.ts:795
 msgid "Show Status Bar"
-msgstr "Toon Statusbalk"
+msgstr "Statusbalk weergeven"
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:656 src/control/Control.Menubar.ts:796
@@ -2363,11 +2363,11 @@ msgstr "Vervangen"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Margin"
-msgstr ""
+msgstr "Marge"
 
 #: src/control/Control.NotebookbarCalc.js:1006
 msgid "Size"
-msgstr ""
+msgstr "Grootte"
 
 #: src/control/Control.NotebookbarCalc.js:1064
 msgid "Row Height"
@@ -2424,11 +2424,11 @@ msgstr "Statusbalk"
 
 #: src/control/Control.NotebookbarCalc.js:1443
 msgid "Group"
-msgstr ""
+msgstr "Groeperen"
 
 #: src/control/Control.NotebookbarCalc.js:1450
 msgid "Ungroup"
-msgstr ""
+msgstr "Groepering opheffen"
 
 #: src/control/Control.NotebookbarCalc.js:1579
 #: src/control/Control.NotebookbarDraw.js:1375
@@ -2475,7 +2475,7 @@ msgstr "Liniaal"
 
 #: src/control/Control.NotebookbarImpress.js:109
 msgid "Design"
-msgstr ""
+msgstr "Ontwerp"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
@@ -2496,7 +2496,7 @@ msgstr "Presenteer in venster"
 
 #: src/control/Control.NotebookbarImpress.js:604
 msgid "Show Grid"
-msgstr "Toon raster"
+msgstr "Raster weergeven"
 
 #: src/control/Control.NotebookbarImpress.js:611
 msgid "Snap to Grid"
@@ -2520,7 +2520,7 @@ msgstr "Diaformaat"
 
 #: src/control/Control.NotebookbarImpress.js:1657
 msgid "Background Image"
-msgstr ""
+msgstr "Achtergrondafbeelding"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3158,11 +3158,11 @@ msgstr "Normaal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr ""
+msgstr "Breed"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr ""
+msgstr "Smal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:130
 msgid "Min"
@@ -3174,11 +3174,11 @@ msgstr "Max"
 
 #: src/control/jsdialog/Definitions.Menu.ts:187
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Enkele vonklijn bewerken"
 
 #: src/control/jsdialog/Definitions.Menu.ts:198
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Enkele vonklijn verwijderen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:234
 msgid "Portrait"
@@ -3190,123 +3190,123 @@ msgstr "Liggend"
 
 #: src/control/jsdialog/Definitions.Menu.ts:248
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:253
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:258
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:263
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:268
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:278
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:283
 msgid "Letter"
-msgstr ""
+msgstr "Letter"
 
 #: src/control/jsdialog/Definitions.Menu.ts:288
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Long Bond"
-msgstr ""
+msgstr "Long Bond"
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:308
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:313
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:318
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "User"
-msgstr ""
+msgstr "Aangepast"
 
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "DL Envelope"
-msgstr ""
+msgstr "DL Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "C6 Envelope"
-msgstr ""
+msgstr "C6 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "C6/5 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:353
 msgid "C5 Envelope"
-msgstr ""
+msgstr "C5 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:358
 msgid "C4 Envelope"
-msgstr ""
+msgstr "C4 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:363
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "#6¾ Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:368
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:373
 msgid "#9 Envelope"
-msgstr ""
+msgstr "#9 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:378
 msgid "#10 Envelope"
-msgstr ""
+msgstr "#10 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:383
 msgid "#11 Envelope"
-msgstr ""
+msgstr "#11 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:388
 msgid "#12 Envelope"
-msgstr ""
+msgstr "#12 Envelop"
 
 #: src/control/jsdialog/Definitions.Menu.ts:393
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Japanse briefkaart"
 
 #: src/control/jsdialog/Definitions.Menu.ts:547
 msgid "Insert Local Image"
@@ -3422,15 +3422,15 @@ msgstr "Titel, verticale tekst, clipart"
 
 #: src/control/jsdialog/Definitions.Menu.ts:895
 msgid "Grayscale"
-msgstr ""
+msgstr "Grijswaarden"
 
 #: src/control/jsdialog/Definitions.Menu.ts:900
 msgid "Black/White"
-msgstr ""
+msgstr "Zwart/wit"
 
 #: src/control/jsdialog/Definitions.Menu.ts:905
 msgid "Watermark"
-msgstr ""
+msgstr "Watermerk"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3455,23 +3455,23 @@ msgstr "Recent"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:82
 msgid "Top: {top}"
-msgstr ""
+msgstr "Boven: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:87
 msgid "Left: {left}"
-msgstr ""
+msgstr "Links: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Onder: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Right: {right}"
-msgstr ""
+msgstr "Rechts: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Aangepaste marges…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
