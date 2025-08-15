@@ -929,6 +929,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		else if (e.commandName === 'AutoFilterInfo') {
 			app.calc.autoFilterCell = { 'row': e.state.row, 'column': e.state.column };
 		}
+		else if (e.commandName === 'PivotTableFilterInfo') {
+			app.calc.pivotTableFilterCell = { 'row': e.state.row, 'column': e.state.column };
+		}
 	},
 
 	_onSplitStateChanged: function (e, isSplitCol) {
