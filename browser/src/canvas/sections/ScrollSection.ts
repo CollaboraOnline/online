@@ -18,15 +18,16 @@ declare var L: any;
 namespace cool {
 
 export class ScrollSection extends CanvasSectionObject {
-	// Scrolling animation constants. Unlabelled units are fractions of the line
-	// height, so that they're somewhat DPI-independent.
-	static readonly scrollAnimationAcceleration: number = 0.2;
-	static readonly scrollAnimationMaxVelocity: number = 2.5;
-	static readonly scrollAnimationMaxDelta: number = 75;
-	static readonly scrollDirectTimeoutMs: number = 100;
+	// The fraction of the line-height per 16.6ms to accelerate
+	static readonly scrollAnimationAcceleration: number = 0.1;
 
-	// The number of lines a scroll-wheel tick should travel
-	static readonly scrollWheelDelta: number = 20;
+	// The number of lines a scroll-wheel tick should travel. Note that
+	// this is approximate, as it doesn't include deceleration once the target is reached.
+	static readonly scrollWheelDelta: number = 3;
+
+	// Any scroll events within this number of milliseconds after direct (e.g. touchpad)
+	// scrolling will be treated as direct scroll events.
+	static readonly scrollDirectTimeoutMs: number = 100;
 
 	processingOrder: number = L.CSections.Scroll.processingOrder
 	drawingOrder: number = L.CSections.Scroll.drawingOrder;
@@ -96,6 +97,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.scrollAnimationDelta = [0, 0];
 		this.sectionProperties.scrollAnimationAcc = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
+		this.sectionProperties.scrollAnimationDirection = [0, 0];
 		this.sectionProperties.scrollAnimationDisableTimeout = null;
 		this.sectionProperties.scrollWheelDelta = [0, 0];	// Used for non-animated scrolling
 
@@ -379,33 +381,34 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onAnimate(frameCount: number, elapsedTime: number): void {
+		const timeDelta = (elapsedTime - this.sectionProperties.lastElapsedTime) / (1000/60);
 		if (this.sectionProperties.animatingScroll) {
 			const lineHeight = this.containerObject.getScrollLineHeight();
 			// Smoothness will be affected by Firefox bug #1967935
-			const timeDelta = (elapsedTime - this.sectionProperties.lastElapsedTime) / (1000/60);
+			// Note that we should really use geometric series to calculate acceleration when frames
+			// are skipped, but given we expect consistent performance, this shouldn't make a
+			// noticeable difference and isn't worth the added complication.
 			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration * timeDelta * app.dpiScale;
-			const maxVelocity = lineHeight * ScrollSection.scrollAnimationMaxVelocity * timeDelta * app.dpiScale;
-			const maxDelta = lineHeight * ScrollSection.scrollAnimationMaxDelta * app.dpiScale;
 
 			// Calculate horizontal and vertical scroll deltas for this animation step
 			const deltas = [0, 0];
 			for (let i = 0; i < 2; ++i) {
+				const sign = this.sectionProperties.scrollAnimationDirection[i];
+
+				// Note for future implementers: if we wanted to accelerate the scroll distance over time,
+				// we ought to multiply the scrollAnimationDelta here by some factor that increases with
+				// elapsedTime.
 				this.sectionProperties.scrollAnimationAcc[i] += this.sectionProperties.scrollAnimationDelta[i];
 				this.sectionProperties.scrollAnimationDelta[i] = 0;
 
-				// Don't let the accumulated delta get too big, or the user will be able to
-				// accumulate a long scrolling animation and it'd feel weird.
-				const sign = this.sectionProperties.scrollAnimationAcc[i] > 0 ? 1 : -1;
-				if (Math.abs(this.sectionProperties.scrollAnimationAcc[i]) > maxDelta)
-					this.sectionProperties.scrollAnimationAcc[i] = sign * maxDelta;
-				this.sectionProperties.scrollAnimationVelocity[i] += accel * sign;
+				this.sectionProperties.scrollAnimationVelocity[i] += this.sectionProperties.scrollAnimationAcc[i] != 0 ? accel : -accel;
+				this.sectionProperties.scrollAnimationVelocity[i] = Math.max(0, this.sectionProperties.scrollAnimationVelocity[i]);
 
-				deltas[i] = Math.round(Math.min(Math.abs(this.sectionProperties.scrollAnimationVelocity[i]), maxVelocity) * sign);
-				if (Math.abs(deltas[i]) >= Math.abs(this.sectionProperties.scrollAnimationAcc[i])) {
-					deltas[i] = this.sectionProperties.scrollAnimationAcc[i];
+				deltas[i] = this.sectionProperties.scrollAnimationVelocity[i] * sign;
+
+				if (Math.abs(deltas[i]) >= Math.abs(this.sectionProperties.scrollAnimationAcc[i]))
 					this.sectionProperties.scrollAnimationAcc[i] = 0;
-					this.sectionProperties.scrollAnimationVelocity[i] = 0;
-				} else
+				else
 					this.sectionProperties.scrollAnimationAcc[i] -= deltas[i];
 			}
 
@@ -431,7 +434,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		const animatingScrollbar = elapsedTime && (elapsedTime < this.sectionProperties.fadeOutDuration);
 		const animatingScroll = this.sectionProperties.animatingScroll
-			&& this.sectionProperties.scrollAnimationAcc.reduce((a: number, x: number) => a + x, 0) !== 0;
+			&& (timeDelta <= 0 || this.sectionProperties.scrollAnimationVelocity.reduce((a: number, x: number) => a + x, 0) !== 0);
 		if (!animatingScrollbar && !animatingScroll) this.containerObject.stopAnimating();
 	}
 
@@ -439,6 +442,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.animatingScroll = false;
 		this.sectionProperties.scrollAnimationAcc = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
+		this.sectionProperties.scrollAnimationDirection = [0, 0];
 	}
 
 	private increaseScrollBarThickness () : void {
@@ -876,13 +880,14 @@ export class ScrollSection extends CanvasSectionObject {
 		for (let i = 0; i < 2; ++i) {
 			if (Math.abs(delta[i]) === 0) continue;
 
-			if ((delta[i] > 0) !== (this.sectionProperties.scrollAnimationAcc[i] > 0)) {
+			const sign = delta[i] > 0 ? 1 : -1;
+			if (sign !== this.sectionProperties.scrollAnimationDirection[i]) {
 				// Stop animation on scroll change direction
 				this.sectionProperties.scrollAnimationVelocity[i] = 0;
 				this.sectionProperties.scrollAnimationAcc[i] = 0;
+				this.sectionProperties.scrollAnimationDirection[i] = sign;
 			}
 
-			const sign = delta[i] > 0 ? 1 : -1;
 			this.sectionProperties.scrollAnimationDelta[i] =
 				lineHeight * ScrollSection.scrollWheelDelta * sign * app.dpiScale;
 		}
