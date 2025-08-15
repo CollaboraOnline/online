@@ -585,6 +585,14 @@ L.Control.JSDialog = L.Control.extend({
 				app.getScale()
 			);
 		}
+		else if (app.calc.pivotTableFilterCell) {
+			// This is a pivot table filter dialog. We have the row and column indexes. Get cell rectangle with this info.
+			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
+				app.calc.pivotTableFilterCell.column,
+				app.calc.pivotTableFilterCell.row,
+				app.getScale()
+			);
+		}
 		else {
 			// This is a Cell DropDown. We will use current cell's rectangle.
 			cellRectangle = app.calc.cellCursorRectangle;
@@ -596,6 +604,7 @@ L.Control.JSDialog = L.Control.extend({
 		cellRectangle.pY1 += documentAnchor[1] - documentTopLeft[1];
 
 		app.calc.autoFilterCell = null; // Set to null after using to ensure it doesn't confuse consequent calls.
+		app.calc.pivotTableFilterCell = null;
 
 		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
 		instance.posy = cellRectangle.cY2 + canvasEl.top;
