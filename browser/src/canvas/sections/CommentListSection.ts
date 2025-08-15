@@ -75,6 +75,7 @@ export class CommentSection extends CanvasSectionObject {
 		commentWidth: number;
 		collapsedMarginToTheEdge: number;
 		deflectionOfSelectedComment: number;
+		collapsedCommentWidth: number;
 		showSelectedBigger: boolean;
 		commentsAreListed: boolean;
 		[key: string]: any;
@@ -114,6 +115,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 		this.sectionProperties.commentWidth = 200 * 1.3; // CSS pixels.
+		this.sectionProperties.collapsedCommentWidth = 32 * 1.5; // CSS Pixels
 		this.sectionProperties.collapsedMarginToTheEdge = 120; // CSS pixels.
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
 		this.sectionProperties.showSelectedBigger = false;
@@ -288,8 +290,9 @@ export class CommentSection extends CanvasSectionObject {
 	public shouldCollapse (): boolean {
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
+		const availableSpace = this.calculateAvailableSpace();
 
-		return this.calculateAvailableSpace() < this.sectionProperties.commentWidth;
+		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
 	}
 
 	public hideAllComments (): void {
@@ -2022,6 +2025,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.canvasContainerLeft = document.getElementById('document-container').getBoundingClientRect().left;
 		this.sectionProperties.canvasContainerTop = document.getElementById('document-container').getBoundingClientRect().top;
 
+		const availableSpace = this.calculateAvailableSpace();
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
 			if (relayout)
@@ -2033,17 +2037,14 @@ export class CommentSection extends CanvasSectionObject {
 			var yOrigin = null;
 			var selectedIndex = null;
 			var x = isRTL ? 0 : topRight[0];
-			var availableSpace = this.calculateAvailableSpace();
 
-			if (availableSpace > this.sectionProperties.commentWidth) {
-				if (isRTL)
-					x = Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5) - this.containerObject.getDocumentAnchorSection().size[0];
-				else
-					x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5);
-			} else if (isRTL)
-				x = -this.containerObject.getDocumentAnchorSection().size[0];
-			else
-				x -= this.sectionProperties.collapsedMarginToTheEdge;
+			if (isRTL)
+				x = availableSpace - this.sectionProperties.commentWidth;
+			else {
+				x = app.activeDocument.fileSize.pX - app.activeDocument.activeView.viewedRectangle.cX1 - app.sectionContainer.getCanvasBoundingClientRect().x;
+				x += app.map.navigator ? app.map.navigator.navigationPanel.offsetWidth : 0;
+			}
+
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
@@ -2073,12 +2074,17 @@ export class CommentSection extends CanvasSectionObject {
 			this.resizeComments();
 
 		lastY += app.activeDocument.activeView.viewedRectangle.pY1;
+
+		let horizontalScroll = app.activeDocument.fileSize.x;
+		if (availableSpace < this.sectionProperties.commentWidth && !this.isCollapsed)
+			horizontalScroll = (app.activeDocument.fileSize.pX + this.sectionProperties.commentWidth) * app.pixelsToTwips;
+
 		if (lastY > app.activeDocument.fileSize.pY) {
-			app.activeDocument.activeView.viewSize = new cool.SimplePoint(app.activeDocument.activeView.viewSize.x, lastY * app.pixelsToTwips);
+			app.activeDocument.activeView.viewSize = new cool.SimplePoint(horizontalScroll, lastY * app.pixelsToTwips);
 			this.containerObject.requestReDraw();
 		}
 		else
-			app.activeDocument.activeView.viewSize = new cool.SimplePoint(app.activeDocument.activeView.viewSize.x, app.activeDocument.fileSize.y);
+			app.activeDocument.activeView.viewSize = new cool.SimplePoint(horizontalScroll, app.activeDocument.fileSize.y);
 
 		this.disableLayoutAnimation = false;
 	}
