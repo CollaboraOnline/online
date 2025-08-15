@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
 "PO-Revision-Date: 2025-07-30 23:14+0000\n"
-"Last-Translator: Максим Горпиніч <gorpinicmaksim5@gmail.com>\n"
+"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
 "Language: uk\n"
@@ -2347,7 +2347,7 @@ msgstr "Замінити"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Margin"
-msgstr "Маржа"
+msgstr "Поле"
 
 #: src/control/Control.NotebookbarCalc.js:1006
 msgid "Size"
@@ -2412,7 +2412,7 @@ msgstr "Група"
 
 #: src/control/Control.NotebookbarCalc.js:1450
 msgid "Ungroup"
-msgstr "Не група"
+msgstr "Розгрупувати"
 
 #: src/control/Control.NotebookbarCalc.js:1579
 #: src/control/Control.NotebookbarDraw.js:1375
@@ -3135,15 +3135,15 @@ msgstr "Нижнє поле"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 #: src/control/jsdialog/Definitions.Menu.ts:559
 msgid "Normal"
-msgstr "Звичайно"
+msgstr "Звичайне"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr "Широкий"
+msgstr "Широке"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr "Вузький"
+msgstr "Вузьке"
 
 #: src/control/jsdialog/Definitions.Menu.ts:130
 msgid "Min"
@@ -3203,7 +3203,7 @@ msgstr "Лист"
 
 #: src/control/jsdialog/Definitions.Menu.ts:288
 msgid "Legal"
-msgstr "Юридичні"
+msgstr "Правові"
 
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Long Bond"
@@ -3436,7 +3436,7 @@ msgstr "Недавні"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:82
 msgid "Top: {top}"
-msgstr "Верх: {top}"
+msgstr "Угорі: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:87
 msgid "Left: {left}"
@@ -3444,7 +3444,7 @@ msgstr "Ліворуч: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Bottom: {bottom}"
-msgstr "Вниз: {bottom}"
+msgstr "Внизу: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Right: {right}"
