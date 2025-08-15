@@ -68,6 +68,8 @@
 	--color-insert-marker-background-dark: #1c99e0;
 
 	--color-treeview-highlight: #FFEE80;
+	--color-treeview-highlight-text: #222;
+	--color-quickfind-border: #e1dfdd;
 }
 
 [data-bg-theme='light'] {
