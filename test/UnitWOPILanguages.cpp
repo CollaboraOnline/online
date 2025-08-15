@@ -186,26 +186,35 @@ public:
                     return false;
                 }
 
-                // Compare.
-                TST_LOG("Comparing: [" << _user1Time << "] with [" << _user2Time << ']');
-                if (_user1Time == _user2Time)
-                {
-                    failTest("Timestamps of first (default) and second users (Pacific/Auckland) "
-                             "shouldn't match");
-                }
-                else if (_user1Time.substr(2) == _user2Time.substr(2))
-                {
-                    failTest("The hours of first (default) and second users (Pacific/Auckland) "
-                             "shouldn't match");
-                }
-                else
-                {
-                    passTest("Timezones do not match as expected");
-                }
+                WSD_CMD("closedocument");
             }
         }
 
         return false;
+    }
+
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        TST_LOG("Destroyed dockey [" << docKey << "], phase: " << name(_phase));
+
+        // Compare.
+        TST_LOG("Comparing: [" << _user1Time << "] with [" << _user2Time << ']');
+        if (_user1Time == _user2Time)
+        {
+            failTest("Timestamps of first (default) and second users (Pacific/Auckland) "
+                     "shouldn't match");
+        }
+        else if (_user1Time.substr(2) == _user2Time.substr(2))
+        {
+            failTest("The hours of first (default) and second users (Pacific/Auckland) "
+                     "shouldn't match");
+        }
+        else
+        {
+            passTest("Timezones do not match as expected");
+        }
+
+        TRANSITION_STATE(_phase, Phase::Done);
     }
 
     void invokeWSDTest() override
