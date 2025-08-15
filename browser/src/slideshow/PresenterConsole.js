@@ -56,7 +56,7 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
 								  <div id="toolbar">
-									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}">
+									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}" aria-label="${this.labels.goBack}">
 										<img src="images/presenterscreen-ArrowBack.svg">
 									</button>
                                   </div>
@@ -65,10 +65,10 @@ class PresenterConsole {
 										<div id="timer-container">
 											<div id="timer"></div>
 											 <div id="timer-controls">
-												<button type="button" id="pause" data-cooltip="${this.labels.pause}">
+												<button type="button" id="pause" data-cooltip="${this.labels.pause}" aria-label="${this.labels.pause}">
 													<img src="images/presenterscreen-ButtonPauseTimerNormal.svg">
 												</button>
-												<button type="button" id="restart" data-cooltip="${this.labels.restart}">
+												<button type="button" id="restart" data-cooltip="${this.labels.restart}" aria-label="${this.labels.restart}">
 													<img src="images/presenterscreen-ButtonRestartTimerNormal.svg">
 												</button>
 											 </div>
@@ -78,19 +78,19 @@ class PresenterConsole {
                                             <canvas id="current-presentation"></canvas>
 											<div id="slideshow-control-container">
 											<div id="navigation-container">
-												<button type="button" id="prev" data-cooltip="${this.labels.previous}">
+												<button type="button" id="prev" data-cooltip="${this.labels.previous}" aria-label="${this.labels.previous}">
 													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
 												</button>
 												<div id="title-current">${this.labels.currentSlide}</div>
-												<button type="button" id="next" data-cooltip="${this.labels.next}">
+												<button type="button" id="next" data-cooltip="${this.labels.next}" aria-label="${this.labels.next}">
 													<img src="images/presenterscreen-ButtonEffectNextSelected.svg">
 												</button>
 											</div>
 											<div id="action-buttons-container">
-												<button type="button" id="notes" data-cooltip="${this.labels.notes}">
+												<button type="button" id="notes" data-cooltip="${this.labels.notes}" aria-label=${this.labels.notes}">
 													<img src="images/presenterscreen-ButtonNotesNormal.svg">
 												</button>
-												<button type="button" id="slides" data-cooltip="${this.labels.slides}">
+												<button type="button" id="slides" data-cooltip="${this.labels.slides}" aria-label="${this.labels.slides}">
 													<img src="images/presenterscreen-ButtonSlideSorterNormal.svg">
 												</button>
 											</div>
