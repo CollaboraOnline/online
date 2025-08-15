@@ -30,14 +30,35 @@ public:
     {
     }
 
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::LoadEncoded);
+
+        TRANSITION_STATE(_phase, Phase::CloseDoc);
+
+        WSD_CMD("closedocument");
+
+        return true;
+    }
+
+    /// Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        TST_LOG("Testing with dockey [" << docKey << "] closed.");
+        LOK_ASSERT_STATE(_phase, Phase::CloseDoc);
+
+        TRANSITION_STATE(_phase, Phase::Done);
+        exitTest(TestResult::Ok);
+    }
+
     void invokeWSDTest() override
     {
         switch (_phase)
         {
             case Phase::LoadEncoded:
             {
-                TRANSITION_STATE(_phase, Phase::CloseDoc);
-
                 initWebsocket("/wopi/files/3?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -45,15 +66,8 @@ public:
                 break;
             }
             case Phase::CloseDoc:
-            {
-                TRANSITION_STATE(_phase, Phase::Done);
-
-                WSD_CMD("closedocument");
-                break;
-            }
             case Phase::Done:
             {
-                exitTest(TestResult::Ok);
                 break;
             }
         }
