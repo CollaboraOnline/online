@@ -24,7 +24,7 @@
  * customEntryRenderer - specifies if entries have custom content which is rendered by the core
  */
 
-/* global JSDialog app $ */
+/* global JSDialog app _ $ */
 
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
@@ -202,6 +202,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	button.setAttribute('aria-haspopup', true);
 	button.setAttribute('aria-expanded', false);
 	button.setAttribute('aria-controls', dropDownId);
+	if (data.aria)
+		button.setAttribute('aria-label', _('Open ') + data.aria.label + _(' list'));
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
