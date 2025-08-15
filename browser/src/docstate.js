@@ -31,6 +31,7 @@ window.app = {
 		splitCoordinate: null, // SimplePoint.
 		partHashes: null, // hashes used to distinguish parts (we use sheet name)
 		autoFilterCell: null, // The cell of the current autofilter popup.
+		pivotTableFilterCell: null // The cell of the current pivot table filter popup.
 	},
 	impress: {
 		partList: null, // Info for parts.
