@@ -467,7 +467,6 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         _lockHttpSession.reset();
 
         assert(httpSession && "Expected a valid http::Session");
-        httpSession->asyncShutdown();
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -517,7 +516,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         AsyncLockUpdate::State::Running, LockUpdateResult(LockUpdateResult::Status::OK, lock)));
 
     // Make the request.
-    _lockHttpSession->asyncRequest(httpRequest, socketPoll);
+    _lockHttpSession->asyncRequest(httpRequest, socketPoll, true);
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -849,7 +848,6 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
             _uploadHttpSession.reset();
 
             assert(httpSession && "Expected a valid http::Session");
-            httpSession->asyncShutdown();
             const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
             _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -891,7 +889,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
             AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
 
         // Make the request.
-        _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
+        _uploadHttpSession->asyncRequest(httpRequest, socketPoll, true);
 
         return size;
     }
