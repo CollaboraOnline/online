@@ -589,24 +589,32 @@ class CanvasSectionContainer {
 	private redrawCallback(timestamp: number) {
 		this.drawRequest = null;
 
-		if (this.needsResize) {
-			this.needsResize = false;
-			this.canvas.width = this.width;
-			this.canvas.height = this.height;
+		const doRedraw = () => {
+			this.drawSections();
+			this.flushLayoutingTasks();
+			this.canvas.style.visibility = 'unset';
+		};
 
-			// CSS pixels can be fractional, but need to round to the same real pixels
-			var cssWidth: number = this.width / app.dpiScale; // NB. beware
-			var cssHeight: number = this.height / app.dpiScale;
-			this.canvas.style.width = cssWidth.toFixed(4) + 'px';
-			this.canvas.style.height = cssHeight.toFixed(4) + 'px';
-
-			// Avoid black default background.
-			this.clearCanvas();
+		if (!this.needsResize) {
+			doRedraw();
+			return;
 		}
 
-		this.drawSections();
-		this.flushLayoutingTasks();
-		this.canvas.style.visibility = 'unset';
+		this.needsResize = false;
+		this.canvas.width = this.width;
+		this.canvas.height = this.height;
+
+		// CSS pixels can be fractional, but need to round to the same real pixels
+		var cssWidth: number = this.width / app.dpiScale; // NB. beware
+		var cssHeight: number = this.height / app.dpiScale;
+		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
+		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
+
+		requestAnimationFrame(() => {
+			// Avoid black default background.
+			this.clearCanvas();
+			doRedraw();
+		});
 	}
 
 	public requestReDraw() {
