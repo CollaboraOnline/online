@@ -3,7 +3,7 @@
     <string name="temp_file_saving_disabled">Tämä tiedosto on vain luettavissa, tallennus on pois käytöstä.</string>
     <string name="failed_to_load_file">Ladattavan tiedoston valitseminen epäonnistui</string>
     <string name="storage_permission_required">Tallennusoikeudet vaaditaan</string>
-    <string name="file_chromeos_read_only">Tiedostoa ei voi tallentaa tänne. Se avataan vain luku -muodossa. Saat täydet luku- ja kirjoitusoikeudet siirtämällä tiedoston Play-tiedostoihin.</string>
+    <string name="file_chromeos_read_only">Tätä tiedostoa ei voida tallentaa tähän sijaintiin, se avataan vain luku -tilassa. Siirrä se kohtaan \"Toista tiedostot\" saadaksesi täydet luku-/kirjoitusoikeudet.</string>
     <string name="failed_to_insert_image">Kuvan lisääminen epäonnistui</string>
     <string name="cannot_open_file_chooser">Tiedostonvalitsinta ei voi avata</string>
     <string name="preparing_for_the_first_start_after_an_update">Valmistellaan ensimmäistä käynnistystä päivityksen jälkeen.</string>
@@ -18,7 +18,7 @@
     <string name="ask_for_convert_odf">Vahvista tiedostomuoto</string>
     <string name="convert_odf_message">Tässä asiakirjassa voi olla muotoiluja tai sisältöä, jota ei voida tallentaa nykyisessä tiedostomuodossa eli tekstitiedostona.</string>
     <string name="restarting">Käynnistetään uudelleen...</string>
-    <string name="view_only">Vain luku</string>
+    <string name="view_only">Vain katselu</string>
     <string name="edit_copy">Muokkaa kopiota</string>
     <string name="ask_for_copy">Tämä asiakirja on vain luku -muotoinen. Haluatko luoda siitä kopion muokattavaksi?</string>
     <string name="cant_open_the_document">Asiakirjaa ei voitu avata</string>

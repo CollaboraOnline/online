@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
-"PO-Revision-Date: 2025-07-01 10:01+0000\n"
+"PO-Revision-Date: 2025-08-02 16:02+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fi/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -23,13 +23,12 @@ msgstr "Collabora Office: LibreOffice, OpenOffice ynnä muuta"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
-#, fuzzy
 msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"LibreOffice-pohjainen editori Microsoft Office-, LibreOffice- ja OpenOffice-"
-"tiedostoille."
+"LibreOffice-pohjainen muokkain LibreOffice- ja OpenOffice- ja Microsoft "
+"Office -asiakirjoille."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:13-1
@@ -114,6 +113,10 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Collaboran insinöörit Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, Miklos "
+"Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia ja Skyler Grey ovat "
+"kehittäneet Android-tukea vuodesta 2012 lähtien Google Summer of Code -"
+"opiskelijoiden Andrzej Huntin, Iain Billetin ja Kaishu Sahun avustuksella."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
