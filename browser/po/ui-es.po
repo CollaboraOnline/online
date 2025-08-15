@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
-"PO-Revision-Date: 2025-07-25 00:19+0000\n"
+"PO-Revision-Date: 2025-08-11 14:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2357,11 +2357,11 @@ msgstr "Reemplazar"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Margin"
-msgstr ""
+msgstr "Margen"
 
 #: src/control/Control.NotebookbarCalc.js:1006
 msgid "Size"
-msgstr ""
+msgstr "Tamaño"
 
 #: src/control/Control.NotebookbarCalc.js:1064
 msgid "Row Height"
@@ -2418,11 +2418,11 @@ msgstr "Barra de estado"
 
 #: src/control/Control.NotebookbarCalc.js:1443
 msgid "Group"
-msgstr ""
+msgstr "Agrupar"
 
 #: src/control/Control.NotebookbarCalc.js:1450
 msgid "Ungroup"
-msgstr ""
+msgstr "Desagrupar"
 
 #: src/control/Control.NotebookbarCalc.js:1579
 #: src/control/Control.NotebookbarDraw.js:1375
@@ -2469,7 +2469,7 @@ msgstr "Regla"
 
 #: src/control/Control.NotebookbarImpress.js:109
 msgid "Design"
-msgstr ""
+msgstr "Diseño"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
@@ -2514,7 +2514,7 @@ msgstr "Tamaño de diapositiva"
 
 #: src/control/Control.NotebookbarImpress.js:1657
 msgid "Background Image"
-msgstr ""
+msgstr "Imagen de fondo"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -3183,35 +3183,35 @@ msgstr "Horizontal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:248
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:253
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:258
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:263
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:268
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:278
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:283
 msgid "Letter"
-msgstr ""
+msgstr "Carta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:288
 msgid "Legal"
@@ -3255,11 +3255,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "DL Envelope"
-msgstr ""
+msgstr "Sobre DL"
 
 #: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "C6 Envelope"
-msgstr ""
+msgstr "Sobre C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "C6/5 Envelope"
@@ -3267,11 +3267,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:353
 msgid "C5 Envelope"
-msgstr ""
+msgstr "Sobre C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:358
 msgid "C4 Envelope"
-msgstr ""
+msgstr "Sobre C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:363
 msgid "#6¾ Envelope"
@@ -3307,7 +3307,7 @@ msgstr "Insertar imagen local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:552
 msgid "Insert Local Multimedia"
-msgstr "Insertar multimedia de forma local"
+msgstr "Insertar multimedia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:557
 msgid "Very Tight"
@@ -3417,15 +3417,15 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:895
 msgid "Grayscale"
-msgstr ""
+msgstr "Escala de grises"
 
 #: src/control/jsdialog/Definitions.Menu.ts:900
 msgid "Black/White"
-msgstr ""
+msgstr "Blanco y negro"
 
 #: src/control/jsdialog/Definitions.Menu.ts:905
 msgid "Watermark"
-msgstr ""
+msgstr "Marca de agua"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3466,7 +3466,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Márgenes personalizados…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
