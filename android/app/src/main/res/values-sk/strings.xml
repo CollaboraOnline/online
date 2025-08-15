@@ -43,7 +43,7 @@
     <string name="pref_viewmode_summary">Zobraziť súbory v mriežke alebo v zozname.</string>
     <string name="pref_sort_summary">Zvoľte spôsob zoraďovania súborov: A-Z, podľa veľkosti alebo dátumu.</string>
     <string name="pref_show_hidden_files_summary">Povoliť zobrazenie skrytých súborov a priečinkov</string>
-    <string name="pref_show_hidden_files">Skryté súbory / priečinky</string>
+    <string name="pref_show_hidden_files">Skryté súbory/priečinky</string>
     <string name="pref_category_explorer">Nastavenia správcu súborov</string>
     <string name="grid_view">Mriežka</string>
     <string name="list_view">Zoznam</string>
@@ -95,10 +95,10 @@
     <string name="physical_storage_settings">Nastavenia fyzického úložiska</string>
     <string name="owncloud_settings">Nastavenia cloudového servera</string>
     <string name="storage_provider_settings">Nastavenia poskytovateľa úložiska</string>
-    <string name="otg_missing_error">Neplatný koreňový súbor. Skontrolujte OTG zariadenie a alebo nastavenia.</string>
+    <string name="otg_missing_error">Neplatný koreňový súbor. Skontrolujte OTG zariadenie alebo nastavenia.</string>
     <string name="ext_document_provider_error">Neplatný koreňový súbor. Skontrolujte nastavenie SD karty.</string>
     <string name="owncloud_unspecified_error">Nešpecifikovaná chyba pri pripájaní ku cloudovému serveru. Skontrolujte konfiguráciu alebo to skúste neskôr.</string>
-    <string name="owncloud_unauthorized">Nedá sa prihlásiť ku cloudovému servera. Skontrolujte konfiguráciu.</string>
+    <string name="owncloud_unauthorized">Nedá sa prihlásiť ku cloudovému serveru. Skontrolujte konfiguráciu.</string>
     <string name="remove_from_list">Odstrániť zo zoznamu</string>
     <string name="file_actions_icon_desc">Operácie so súbormi</string>
     <string name="pref_category_editor">Nastavenia editora</string>
