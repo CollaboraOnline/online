@@ -15,6 +15,18 @@ https://docs.cypress.io/guides/getting-started/installing-cypress.html#npm-insta
 For CI you might need to install some additional dependencies:
 https://docs.cypress.io/guides/guides/continuous-integration.html#Dependencies
 
+Note:
+If you have installed Chromium via snap (default on Ubuntu), you need to specify the full path
+to the binary:
+```
+CYPRESS_BROWSER="/snap/chromium/current/usr/lib/chromium-browser/chrome" make check
+```
+
+or add this to your `~/.bashrc` to make it persist:
+
+```
+export CYPRESS_BROWSER="/snap/chromium/current/usr/lib/chromium-browser/chrome"
+```
 
 Running tests
 -------------
