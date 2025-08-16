@@ -49,10 +49,10 @@ struct PerfMetricInfo
 
 // store buckets of latency
 struct Histogram {
-    const size_t incLowMs = 10;
-    const size_t maxLowMs = incLowMs * 10;
-    const size_t incHighMs = 100;
-    const size_t maxHighMs = incHighMs * 10;
+    static constexpr size_t incLowMs = 10;
+    static constexpr size_t maxLowMs = incLowMs * 10;
+    static constexpr size_t incHighMs = 100;
+    static constexpr size_t maxHighMs = incHighMs * 10;
     size_t _items;
     size_t _tooLong;
     std::vector<size_t> _buckets;
