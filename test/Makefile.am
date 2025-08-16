@@ -27,20 +27,26 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
-	unit-invalidation.la \
-	unit-httpws.la \
-	unit-perf.la \
 	unit-wopi-async-slow.la \
+	unit-wopi-fail-upload.la \
 	unit-wopi-lock.la \
 	unit-tiletest.la \
 	unit-wopi-documentconflict.la \
 	unit-wopi-stuck-save.la \
+	unit-perf.la \
 	unit-close.la \
+	unit-user-presets.la \
 	unit-wopi-watermark.la \
 	unit-crash.la \
-	unit-proxy.la \
+	unit-invalidation.la \
+	unit-httpws.la \
 	unit-synthetic-lok.la \
-	unit-wopi-fail-upload.la \
+	unit-any-input.la \
+	unit-convert.la \
+	unit-copy-paste.la \
+	unit-wopi-save-on-exit.la \
+	unit-uno-command.la \
+	unit-proxy.la \
 	unit-each-view.la \
 	unit-load.la \
 	unit-integration.la \
@@ -48,14 +54,11 @@ all_la_unit_tests = \
 	unit-multi-tenant.la \
 	unit-load-torture.la \
 	unit-save-torture.la \
-	unit-copy-paste.la \
 	unit-copy-paste-writer.la \
 	unit-wopi-fileurl.la \
-	unit-wopi-save-on-exit.la \
 	unit-wopi-languages.la \
 	unit-insert-delete.la \
 	unit-password-protected.la \
-	unit-uno-command.la \
 	unit-wopi-httpredirect.la \
 	unit-calc.la \
 	unit-http.la \
@@ -68,7 +71,6 @@ all_la_unit_tests = \
 	unit-wopi-crash-modified.la \
 	unit-oauth.la \
 	unit-wopi-versionrestore.la \
-	unit-convert.la \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
@@ -77,7 +79,6 @@ all_la_unit_tests = \
 	unit-render-search-result.la \
 	unit-tiff-load.la \
 	unit-save.la \
-	unit-any-input.la \
 	unit-wopi-saveas-with-encoded-file-name.la \
 	unit-storage.la \
 	unit-wopi-async-upload-modifyclose.la \
@@ -95,7 +96,6 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
-	unit-user-presets.la \
 	unit-base.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
