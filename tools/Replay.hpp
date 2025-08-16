@@ -39,9 +39,9 @@ struct PerfMetricInfo
     std::string _metric;
     size_t _data;
 
-    PerfMetricInfo(const std::string& phase, const std::string& metric, size_t data)
-        : _phase(phase)
-        , _metric(metric)
+    PerfMetricInfo(std::string phase, std::string metric, size_t data)
+        : _phase(std::move(phase))
+        , _metric(std::move(metric))
         , _data(data)
     {
     }
