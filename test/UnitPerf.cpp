@@ -74,7 +74,7 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
         poll->poll(TerminatingPoll::DefaultPollTimeoutMicroS);
     } while (poll->continuePolling() && poll->getSocketCount() > 0);
 
-    stats->dump();
+    TST_LOG("Stats: " << [&](std::ostream& os) { stats->dump(os); });
 }
 
 
