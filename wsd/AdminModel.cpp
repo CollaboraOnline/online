@@ -940,6 +940,7 @@ int filterNumberName(const struct dirent *dir)
     return !fnmatch("[0-9]*", dir->d_name, 0);
 }
 
+// coverity[ -taint_source : arg-1 ] 2024.6.1
 int AdminModel::getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids)
 {
     struct dirent **namelist = NULL;
