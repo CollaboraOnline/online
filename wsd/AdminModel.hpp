@@ -424,7 +424,7 @@ public:
     static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
     static int getAssignedKitPids(std::vector<int> *pids);
     static int getUnassignedKitPids(std::vector<int> *pids);
-    static int getKitPidsFromSystem(std::vector<int> *pids);
+    static void getKitPidsFromSystem(std::vector<int> *pids);
     bool isDocSaved(const std::string&);
     bool isDocReadOnly(const std::string&);
     void setMigratingInfo(const std::string& docKey, const std::string& routeToken, const std::string& serverId);
