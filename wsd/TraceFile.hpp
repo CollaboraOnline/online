@@ -355,11 +355,12 @@ private:
 
 /// Trace-file parser class.
 /// Reads records from a trace file.
-class TraceFileReader
+class TraceFileReader final
 {
 public:
-    TraceFileReader(const std::string& path)
-        : TraceFileReader(path, (path.size() > 2 && path.substr(path.size() - 2) == "gz"))
+    TraceFileReader(const std::string& path, float latencyFactor = 1)
+        : TraceFileReader(path, (path.size() > 2 && path.substr(path.size() - 2) == "gz"),
+                          latencyFactor)
     {
     }
 
@@ -408,15 +409,16 @@ public:
     }
 
 private:
-    TraceFileReader(const std::string& path, bool compressed) :
-        _stream(path, compressed ? std::ios::binary : std::ios::in),
-        _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
-        _epochStart(0),
-        _epochEnd(0),
-        _index(0),
-        _indexIn(-1),
-        _indexOut(-1),
-        _compressed(compressed)
+    TraceFileReader(const std::string& path, bool compressed, float latencyFactor)
+        : _stream(path, compressed ? std::ios::binary : std::ios::in)
+        , _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP)
+        , _epochStart(0)
+        , _epochEnd(0)
+        , _index(0)
+        , _indexIn(-1)
+        , _indexOut(-1)
+        , _latencyFactor(latencyFactor)
+        , _compressed(compressed)
     {
         readFile();
     }
@@ -444,7 +446,7 @@ private:
             }
 
             TraceFileRecord rec;
-            if (extractRecord(line, lastTime, rec))
+            if (extractRecord(line, lastTime, rec, _latencyFactor))
                 _records.push_back(std::move(rec));
             else
                 fprintf(stderr, "Invalid trace file record, expected 4 tokens. [%s]\n", line.c_str());
@@ -466,7 +468,8 @@ private:
         _epochEnd = _records[_records.size() - 1].getTimestampUs();
     }
 
-    static bool extractRecord(const std::string& s, unsigned &lastTime, TraceFileRecord& rec)
+    static bool extractRecord(const std::string& s, unsigned& lastTime, TraceFileRecord& rec,
+                              float latencyFactor)
     {
         if (s.length() < 1)
             return false;
@@ -475,8 +478,8 @@ private:
         rec.setDir(static_cast<TraceFileRecord::Direction>(delimiter));
 
         size_t pos = 1;
-        int record = 0;
-        for (; record < 4 && pos < s.length(); ++record)
+
+        for (int record = 0; record < 4 && pos < s.length(); ++record)
         {
             size_t next = s.find(delimiter, pos);
 
@@ -485,6 +488,7 @@ private:
                 case 0:
                     if (s[pos] == '+') { // incremental timestamps
                         unsigned time = std::atol(s.substr(pos, next - pos).c_str());
+                        time *= latencyFactor;
                         rec.setTimestampUs(lastTime + time);
                         lastTime += time;
                     }
@@ -533,6 +537,7 @@ private:
     unsigned _index;
     unsigned _indexIn;
     unsigned _indexOut;
+    float _latencyFactor;
     const bool _compressed;
 };
 
