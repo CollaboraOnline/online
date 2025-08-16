@@ -406,7 +406,7 @@ public:
 
         static std::atomic<int> number;
         _logPre = '[' + std::to_string(++number) + "] ";
-        std::cerr << "Attempt connect to " << uri << " for trace " << _trace << '\n';
+        LOG_TST("Attempt connect to " << uri << " for trace " << _trace);
         getNextRecord();
         _start = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
         _nextPing = _start + std::chrono::milliseconds(Util::rng::getNext() % 1000);
@@ -423,8 +423,8 @@ public:
     {
         if (_connecting)
         {
-            std::cerr << _logPre << "Waiting for outbound connection to " << _uri
-                      << " to complete for trace " << _trace << '\n';
+            LOG_TST(_logPre << "Waiting for outbound connection to " << _uri
+                            << " to complete for trace " << _trace);
             return POLLOUT;
         }
 
@@ -450,7 +450,7 @@ public:
             }
         }
 
-//        std::cerr << "next event in " << nextTime << " us\n";
+        //        LOG_TST( "next event in " << nextTime << " us");
         if (nextTime < timeoutMaxMicroS)
             timeoutMaxMicroS = nextTime;
 
@@ -479,15 +479,14 @@ public:
     void performWrites(std::size_t capacity) override
     {
         if (_connecting)
-            std::cerr << _logPre << "Outbound websocket - connected\n";
+            LOG_TST(_logPre << "Outbound websocket - connected");
         _connecting = false;
         return WebSocketHandler::performWrites(capacity);
     }
 
     void onDisconnect() override
     {
-        std::cerr << _logPre << "Websocket " << _uri <<
-            " dis-connected, re-trying in 20 seconds\n";
+        LOG_TST(_logPre << "Websocket " << _uri << " dis-connected, re-trying in 20 seconds");
         WebSocketHandler::onDisconnect();
     }
 
@@ -500,13 +499,13 @@ public:
         std::string msg = rewriteMessage(_next.getPayload());
         if (!msg.empty())
         {
-            std::cerr << _logPre << "Send: '" << msg << "'\n";
+            LOG_TST(_logPre << "Send: '" << msg << "'");
             sendMessage(msg);
         }
 
         if (!getNextRecord())
         {
-            std::cerr << _logPre << "Shutdown\n";
+            LOG_TST(_logPre << "Shutdown");
             shutdown();
         }
     }
@@ -532,7 +531,7 @@ public:
             out = "load url=" + _uri; // already encoded
             for (size_t i = 2; i < tokens.size(); ++i)
                 out += ' ' + tokens[i];
-            std::cerr << _logPre << "msg " << out << '\n';
+            LOG_TST(_logPre << "msg " << out);
         }
 
         size_t currentMemoryUsage = _stats->getMemoryUsage();
@@ -555,7 +554,7 @@ public:
 
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
         StringVector tokens = StringVector::tokenize(firstLine);
-        std::cerr << _logPre << "Got msg: " << firstLine << '\n';
+        LOG_TST(_logPre << "Got msg: " << firstLine);
 
         _stats->accumulateRecv(tokens[0], data.size());
 
@@ -569,27 +568,26 @@ public:
             TileDesc desc = TileDesc::parse(tokens);
 
             sendMessage("tileprocessed tile=" + desc.generateID());
-            std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << '\n';
+            LOG_TST(_logPre << "Sent tileprocessed tile= " + desc.generateID());
         }
         else if (tokens.equals(0, "error:"))
         {
             bool reconnect = false;
             if (firstLine == "error: cmd=load kind=docunloading")
             {
-                std::cerr << ": wait and try again later ...!\n";
+                LOG_TST(": wait and try again later ...!");
                 reconnect = true;
             }
             else if (firstLine == "error: cmd=storage kind=documentconflict")
             {
-                std::cerr << "Document conflict - need to resolve it first ...\n";
+                LOG_TST("Document conflict - need to resolve it first ...");
                 sendMessage("closedocument");
                 reconnect = true;
             }
             else
             {
-                std::cerr << _logPre << "Error while processing " << _uri
-                          << " and trace " << _trace << ":\n"
-                          << "'" << firstLine << "'\n";
+                LOG_TST(_logPre << "Error while processing " << _uri << " and trace " << _trace
+                                << ": [" << firstLine << ']');
             }
 
             if (reconnect)
