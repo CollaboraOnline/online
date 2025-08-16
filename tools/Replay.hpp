@@ -391,7 +391,8 @@ class StressSocketHandler : public WebSocketHandler
 public:
     StressSocketHandler(SocketPoll& poll, /* bad style */
                         const std::shared_ptr<Stats>& stats, const std::string& uri,
-                        const std::string& trace, const int delayMs = 0)
+                        const std::string& trace,
+                        const std::chrono::milliseconds delay = std::chrono::milliseconds::zero())
         : WebSocketHandler(true, true)
         , _poll(poll)
         , _reader(trace)
@@ -406,7 +407,7 @@ public:
         _logPre = '[' + std::to_string(++number) + "] ";
         LOG_TST("Attempt connect to " << uri << " for trace " << _trace);
         getNextRecord();
-        _start = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
+        _start = std::chrono::steady_clock::now() + delay;
         _nextPing = _start + std::chrono::milliseconds(Util::rng::getNext() % 1000);
         _lastTile = _start;
     }
@@ -591,8 +592,9 @@ public:
             if (reconnect)
             {
                 shutdown(true, "bye");
-                auto handler = std::make_shared<StressSocketHandler>(
-                    _poll, _stats, _uri, _trace, 1000 /* delay 1 second */);
+                auto handler =
+                    std::make_shared<StressSocketHandler>(_poll, _stats, _uri, _trace,
+                                                          /*delay=*/std::chrono::seconds(1));
                 _poll.insertNewWebSocketSync(Poco::URI(_uri), handler);
                 return;
             }
