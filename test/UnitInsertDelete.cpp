@@ -212,6 +212,9 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
         std::shared_ptr<http::WebSocketSession> wsSession = helpers::loadDocAndGetSession(
             socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
+        // Drain the 'textselection:' issued upon loading, which confuses the following SelectAll.
+        helpers::getResponseMessage(wsSession, "textselection:", testname);
+
         TST_LOG("deleteAll");
         helpers::deleteAll(wsSession, testname, std::chrono::seconds(3));
 

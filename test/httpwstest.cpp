@@ -190,6 +190,9 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
+        // Drain the 'textselection:' issued upon loading, which confuses the following SelectAll.
+        getResponseMessage(socket, "textselection:", testname);
+
         deleteAll(socket, testname);
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
 
