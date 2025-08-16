@@ -65,10 +65,9 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
     helpers::getDocumentPathAndURL(docName, filePath, dummy, "testPerf");
 
     const std::string tracePath = TDOC + traceStr;
-    StressSocketHandler::addPollFor(
-        *poll, helpers::getTestServerURI("ws"),
-        filePath, tracePath,
-        stats);
+    constexpr float latencyFactor = 0.1; // ~10x faster replay than recorded.
+    StressSocketHandler::addPollFor(*poll, helpers::getTestServerURI("ws"), filePath, tracePath,
+                                    stats, latencyFactor);
 
     do {
         poll->poll(TerminatingPoll::DefaultPollTimeoutMicroS);
