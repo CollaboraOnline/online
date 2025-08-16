@@ -991,12 +991,10 @@ int AdminModel::getUnassignedKitPids(std::vector<int> *pids)
     return getPidsFromProcName(std::regex("kit_spare_.*"), pids);
 }
 
-int AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
+void AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
 {
-    int count = getAssignedKitPids(pids);
-    count += getUnassignedKitPids(pids);
-
-    return count;
+    getAssignedKitPids(pids);
+    getUnassignedKitPids(pids);
 }
 
 class AggregateStats final
