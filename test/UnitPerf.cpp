@@ -90,7 +90,7 @@ UnitPerf::UnitPerf() : UnitWSD("UnitPerf")
 
 void UnitPerf::invokeWSDTest()
 {
-    std::cerr << "startup: " << _timer->elapsedTime().count() << "us\n";
+    TST_LOG("startup: " << _timer->elapsedTime().count() << "us\n");
     _timer->restart();
 
     testPerf("writer", "odt", "/../traces/perf-writer.txt");
@@ -103,7 +103,7 @@ void UnitPerf::invokeWSDTest()
 
     long cpuTime = _timer->elapsedTime().count();
 
-    std::cerr << "test: " << cpuTime << "us\n";
+    TST_LOG("test: " << cpuTime << "us\n");
 
     exitTest(TestResult::Ok);
 }
