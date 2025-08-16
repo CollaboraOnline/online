@@ -1173,7 +1173,7 @@ void CalcKitStats(KitProcStats& stats)
     std::vector<int> childProcs;
     stats.unassignedCount = AdminModel::getUnassignedKitPids(&childProcs);
     stats.assignedCount = AdminModel::getAssignedKitPids(&childProcs);
-    for (int& pid : childProcs)
+    for (int pid : childProcs)
     {
         stats.UpdateAggregateStats(pid);
     }
