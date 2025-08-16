@@ -943,6 +943,7 @@ int filterNumberName(const struct dirent *dir)
 int AdminModel::getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids)
 {
     struct dirent **namelist = NULL;
+    // coverity[tainted_data_argument : FALSE] - we trust the kernel-provided data
     int n = scandir("/proc", &namelist, filterNumberName, 0);
     int pidCount = 0;
 
