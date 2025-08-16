@@ -8,16 +8,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 #include <config.h>
+
+#include <common/Globals.hpp>
+#include <tools/Replay.hpp>
 
 #include <sysexits.h>
 
 #include <Poco/Util/Application.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
-
-#include "Globals.hpp"
-#include "Replay.hpp"
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
@@ -89,7 +90,7 @@ int Stress::main(const std::vector<std::string>& args)
     }
 #endif
 
-    std::string server = args[0];
+    const std::string& server = args[0];
 
     if (!strncmp(server.c_str(), "http", 4))
     {
@@ -107,7 +108,7 @@ int Stress::main(const std::vector<std::string>& args)
         poll->poll(TerminatingPoll::DefaultPollTimeoutMicroS);
     } while (poll->continuePolling() && poll->getSocketCount() > 0);
 
-    stats->dump();
+    stats->dump(std::cerr);
 
     return EX_OK;
 }

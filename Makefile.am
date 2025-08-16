@@ -30,7 +30,7 @@ bin_PROGRAMS = \
 	coolforkit-caps \
 	coolforkit-ns \
 	coolmount \
-        coolstress \
+	coolstress \
 	coolconvert coolconfig
 
 if ENABLE_LIBFUZZER

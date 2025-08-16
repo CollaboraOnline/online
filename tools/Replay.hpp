@@ -72,7 +72,7 @@ struct Histogram {
         _items++;
     }
 
-    void dump(const char *legend)
+    void dump(std::ostream& os, const char* legend)
     {
         size_t max = 0;
         ssize_t firstBucket = -1;
@@ -91,16 +91,16 @@ struct Histogram {
             if (_buckets[last] > 0)
                 break;
 
-        std::cout << legend << ' ' << _items << " items, max #: " << max
-                  << " too long: " << _tooLong << '\n';
+        os << legend << ' ' << _items << " items, max #: " << max << " too long: " << _tooLong
+           << '\n';
 
         const double chrsPerFreq = 60.0 / max;
         for (size_t i = firstBucket; i <= last; ++i)
         {
             int chrs = ::ceil(chrsPerFreq * _buckets[i]);
             int ms = i < 10 ? (incLowMs * (i+1)) : (maxLowMs + (i+1-10) * incHighMs);
-            std::cout << "< " << std::setw(4) << ms << " ms |" << std::string(chrs, '-') << "| "
-                      << _buckets[i] << '\n';
+            os << "< " << std::setw(4) << ms << " ms |" << std::string(chrs, '-') << "| "
+               << _buckets[i] << '\n';
         }
     }
 
@@ -223,7 +223,7 @@ struct Stats {
 
     void addConnection() { _connections++; }
 
-    void dumpMap(std::unordered_map<std::string, MessageStat> &map)
+    void dumpMap(std::ostream& os, std::unordered_map<std::string, MessageStat>& map)
     {
         // how much from each command ?
         std::vector<std::string> sortKeys;
@@ -236,41 +236,39 @@ struct Stats {
         std::sort(sortKeys.begin(), sortKeys.end(),
                   [&](const std::string &a, const std::string &b)
                       { return map[a].size > map[b].size; } );
-        std::cout << "size\tcount\tcommand\n";
+        os << "size\tcount\tcommand\n";
         for (const auto& it : sortKeys)
         {
-            std::cout << map[it].size << '\t' << map[it].count << '\t' << it << '\n';
+            os << map[it].size << '\t' << map[it].count << '\t' << it << '\n';
             if (map[it].size < (total / 100))
                 break;
         }
     }
 
-    void dump()
+    void dump(std::ostream& os)
     {
         const auto now = std::chrono::steady_clock::now();
         const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
 
-        std::cout << "Peak memory usage: " << _peakMemoryUsage << "kB";
-        std::cout << "Stress run took " << runMs << " ms\n";
-        std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
-        _pingLatency.dump("ping latency:");
-        _tileLatency.dump("tile latency:");
+        os << "Peak memory usage: " << _peakMemoryUsage << "kB\n";
+        os << "Stress run took " << runMs << " ms\n";
+        os << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0) / runMs) << '\n';
+        _pingLatency.dump(os, "ping latency:");
+        _tileLatency.dump(os, "tile latency:");
         size_t recvKbps = (_bytesRecvd * 1000) / (_connections * runMs * 1024);
         size_t sentKbps = (_bytesSent * 1000) / (_connections * runMs * 1024);
-        std::cout << "  we sent " << Util::getHumanizedBytes(_bytesSent) <<
-            " (" << sentKbps << " kB/s) " <<
-            " server sent " << Util::getHumanizedBytes(_bytesRecvd) <<
-            " (" << recvKbps << " kB/s) to " << _connections << " connections.\n";
+        os << "  we sent " << Util::getHumanizedBytes(_bytesSent) << " (" << sentKbps << " kB/s) "
+           << " server sent " << Util::getHumanizedBytes(_bytesRecvd) << " (" << recvKbps
+           << " kB/s) to " << _connections << " connections.\n";
 
+        endPhase(Log::Phase::Edit);
+        dumpPerfStatsToCSV(_perfStatsList);
 
-       endPhase(Log::Phase::Edit);
-       dumpPerfStatsToCSV(_perfStatsList);
+        os << "we sent:\n";
+        dumpMap(os, _sent);
 
-        std::cout << "we sent:\n";
-        dumpMap(_sent);
-
-        std::cout << "server sent us:\n";
-        dumpMap(_recvd);
+        os << "server sent us:\n";
+        dumpMap(os, _recvd);
     }
 
 
