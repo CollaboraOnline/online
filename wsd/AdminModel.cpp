@@ -943,6 +943,7 @@ int filterNumberName(const struct dirent *dir)
 int AdminModel::getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids)
 {
     struct dirent **namelist = NULL;
+    // coverity[tainted_data_argument : FALSE] - we trust the kernel-provided data
     int n = scandir("/proc", &namelist, filterNumberName, 0);
     int pidCount = 0;
 
@@ -991,12 +992,10 @@ int AdminModel::getUnassignedKitPids(std::vector<int> *pids)
     return getPidsFromProcName(std::regex("kit_spare_.*"), pids);
 }
 
-int AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
+void AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
 {
-    int count = getAssignedKitPids(pids);
-    count += getUnassignedKitPids(pids);
-
-    return count;
+    getAssignedKitPids(pids);
+    getUnassignedKitPids(pids);
 }
 
 class AggregateStats final
