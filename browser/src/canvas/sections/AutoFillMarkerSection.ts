@@ -127,8 +127,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 		if (!desktop) {
 			this.context.beginPath();
-			this.context.moveTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), -0.5);
-			this.context.lineTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), translation[1] - 0.5 - borderWidth);
+			this.context.moveTo(transformX(this.size[0] - 0.5), -0.5);
+			this.context.lineTo(transformX(this.size[0] - 0.5), translation[1] - 0.5 - borderWidth);
 			this.context.stroke();
 		}
 
