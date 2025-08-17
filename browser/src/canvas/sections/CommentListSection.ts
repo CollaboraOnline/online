@@ -2048,7 +2048,6 @@ export class CommentSection extends CanvasSectionObject {
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
 				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1];
 				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - app.activeDocument.activeView.viewedRectangle.pY1;
 				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
 				var resolved:string = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.resolved;
