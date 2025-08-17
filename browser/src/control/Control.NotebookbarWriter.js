@@ -1506,7 +1506,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'separator',
 				'visible': isODF ? 'true' : 'false',
 				'id': 'insert-fontgalleryfloater-break',
-				'orienatation': 'vertical'
+				'orientation': 'vertical'
 			},
 			{
 				'id': 'insert-FormattingMarkMenu:FormattingMarkMenu',
