@@ -106,7 +106,7 @@ class AddressInputField {
 	}
 
 	private onJSUpdate(e: any) {
-		const data = e?.data;
+		const data = e.data;
 		if (data.jsontype !== 'addressinputfield') return;
 
 		// we don't want to send change event on every keypress,
@@ -128,7 +128,7 @@ class AddressInputField {
 		const data = e.data;
 		if (data.jsontype !== 'addressinputfield') return;
 
-		const innerData = data?.data;
+		const innerData = data.data;
 		this.builder.executeAction(this.parentContainer, innerData);
 	}
 }
