@@ -2668,7 +2668,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'unselect':
-			if (typeof control.onSelect === 'function')
+			if (typeof control.onUnSelect === 'function')
 				control.onUnSelect(parseInt(data.position));
 			else
 				window.app.console.warn('widget "' + data.control_id + '" doesn\'t support "unselect" action');
