@@ -265,7 +265,7 @@ export class CommentSection extends CanvasSectionObject {
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
 				this.sectionProperties.commentList[i].setCollapsed();
-				$(this.sectionProperties.commentList[i].sectionProperties.container).addClass('collapsed-comment');
+			$(this.sectionProperties.commentList[i].sectionProperties.container).addClass('collapsed-comment');
 			if (this.sectionProperties.commentList[i].isRootComment())
 				this.collapseReplies(i, this.sectionProperties.commentList[i].sectionProperties.data.id);
 		}
