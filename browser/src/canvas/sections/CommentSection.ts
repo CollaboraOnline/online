@@ -1402,7 +1402,7 @@ export class Comment extends CanvasSectionObject {
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
 		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
-			if (app.map._docLayer._docType === 'presentataion' || app.map._docLayer._docType === 'drawing')
+			if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing')
 				app.map._docLayer._openCommentWizard(this);
 			this.onMouseEnter();
 			this.onClick(point, e);
