@@ -1676,7 +1676,7 @@ class CanvasSectionContainer {
 
 	private orderSections () {
 		// According to zIndex & processing order.
-		function compareSections(a: any, b: any) {
+		function compareSections(a: CanvasSectionObject, b: CanvasSectionObject) {
 			var zIndexDiff = a.zIndex - b.zIndex;
 			if (zIndexDiff != 0)
 				return zIndexDiff;
@@ -1688,7 +1688,7 @@ class CanvasSectionContainer {
 	public applyDrawingOrders () {
 		// According to zIndex, drawing order & processing order.
 		// Section with the highest drawing order will be drawn on top (inside same zIndex).
-		function compareSections(a: any, b: any) {
+		function compareSections(a: CanvasSectionObject, b: CanvasSectionObject) {
 			var zIndexDiff = a.zIndex - b.zIndex;
 			if (zIndexDiff != 0)
 				return zIndexDiff;
