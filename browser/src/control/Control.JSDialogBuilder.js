@@ -1153,7 +1153,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 					var firstFocusableElement = findFirstFocusableElement(currentElement);
 
-					firstFocusableElement.focus();
+					if (firstFocusableElement !== null) {
+						firstFocusableElement.focus();
+					}
 				};
 
 				// We are adding this to distinguish "enter" key from real click events.
