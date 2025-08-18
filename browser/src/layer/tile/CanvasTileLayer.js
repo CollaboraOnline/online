@@ -2263,7 +2263,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 		var rectArray = this._getTextSelectionRectangles(textMsg);
 
-		if (rectArray.length && !this._cellSelectionArea) {
+		if (rectArray.length) {
 			TextSelections.activate();
 
 			var rectangles = rectArray.map(function (rect) {
