@@ -11,22 +11,22 @@
 
 #pragma once
 
+#include <QWebEngineView>
 #include <QObject>
 #include <QVariant>
 #include <string>
 #include "Document.hpp"
-#include "WebView.hpp"
 
 // Qt ⇄ JavaScript bridge
 class Bridge : public QObject
 {
     Q_OBJECT
 
-    coda::DocumentData& _document;
-    WebView& _webView;
+    coda::DocumentData _document;
+    QWebEngineView* _webView;
 
 public:
-    explicit Bridge(QObject* parent, coda::DocumentData& document, WebView& webView)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, QWebEngineView* webView)
         : QObject(parent)
         , _document(document)
         , _webView(webView)
