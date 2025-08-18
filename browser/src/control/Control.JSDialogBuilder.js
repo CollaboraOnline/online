@@ -407,7 +407,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	listenNumericChanges: function (data, builder, controls, customCallback) {
-		controls.spinfield.addEventListener('change', function() {
+		controls.spinfield.addEventListener('input', function() {
 			if (!this.checkValidity())
 				return;
 
