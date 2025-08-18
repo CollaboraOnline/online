@@ -2661,3 +2661,14 @@ kbd,
 	justify-content: flex-end;
 }
 
+#BulletsAndNumberingDialog #pick_graphic_iconview.jsdialog.ui-iconview {
+	min-width: 650px;
+}
+
+#BulletsAndNumberingDialog #PickGraphicPage.jsdialog #pick_graphic_iconview.ui-iconview .ui-iconview-entry span {
+	font-size: 0; /* Hide placeholder text to prevent layout shifts in image page of bullets and numbering dialog due to lazy loading */
+}
+
+#BulletsAndNumberingDialog #NumberingPositionPage #previewwin.jsdialog img.jsdialog.ui-drawing-area {
+	width: 370px;
+}
