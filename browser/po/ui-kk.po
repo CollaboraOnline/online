@@ -861,7 +861,7 @@ msgstr ""
 "хабарласыңыз."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Бұлды қайталамаңыз"
 
 #: src/control/Control.AlertDialog.js:105

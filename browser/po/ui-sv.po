@@ -865,7 +865,7 @@ msgid ""
 msgstr "Vald extern datakälla är förbjuden. Kontakta systemadministratören."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Visa inte detta igen"
 
 #: src/control/Control.AlertDialog.js:105

@@ -865,7 +865,7 @@ msgstr ""
 "Vybrané externí zdroje dat jsou zakázané. Obraťte se na správce systému."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Nezobrazovat toto znovu"
 
 #: src/control/Control.AlertDialog.js:105

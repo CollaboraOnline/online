@@ -876,7 +876,7 @@ msgstr ""
 "administratorul de sistem."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Nu mai afișa asta"
 
 #: src/control/Control.AlertDialog.js:105

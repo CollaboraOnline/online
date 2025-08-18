@@ -856,7 +856,7 @@ msgid ""
 msgstr "所选的外部数据源被禁止。请联系系统管理员。"
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "不再显示"
 
 #: src/control/Control.AlertDialog.js:105

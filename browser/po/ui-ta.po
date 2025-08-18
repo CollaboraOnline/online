@@ -873,7 +873,7 @@ msgstr ""
 "நிர்வாகியை தொடர்பு கொள்ளவும்."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "இதை மீண்டும் காட்ட வேண்டாம்"
 
 #: src/control/Control.AlertDialog.js:105

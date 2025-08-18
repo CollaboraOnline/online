@@ -857,7 +857,7 @@ msgstr ""
 "بىلەن ئالاقىلىشىڭ."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "بۇنى قايتا كۆرسەتمەڭ"
 
 #: src/control/Control.AlertDialog.js:105

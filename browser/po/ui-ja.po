@@ -851,7 +851,7 @@ msgstr "外部データソースの選択は禁止されています。 "
 "システム管理者にお問い合わせください."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "今後表示しない"
 
 #: src/control/Control.AlertDialog.js:105

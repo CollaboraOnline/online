@@ -864,7 +864,7 @@ msgstr ""
 "διαχειριστή του συστήματος."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Να μην εμφανιστεί ξανά"
 
 #: src/control/Control.AlertDialog.js:105
