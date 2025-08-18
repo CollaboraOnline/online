@@ -43,7 +43,7 @@ function _createEntryImage(
 	}
 
 	if (entryData.tooltip) img.title = entryData.tooltip;
-	else img.title = entryData.text;
+	else if (entryData.text) img.title = entryData.text;
 }
 
 function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
