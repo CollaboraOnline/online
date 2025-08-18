@@ -1811,6 +1811,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'enabled': 'true',
 			},
 			{
+				'id': 'Layout-SizeMenu:MenuPageSizesWriter',
+				'type': 'menubutton',
+				'text': _('Size'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PS', de: null }
+			},
+			{
 				'id': 'layout-page-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageDialog'),
