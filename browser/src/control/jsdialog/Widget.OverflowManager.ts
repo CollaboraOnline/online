@@ -64,18 +64,46 @@ class OverflowManager {
 				const groups =
 					this.parentContainer.querySelectorAll('.ui-overflow-group');
 
-				// first show all the groups
-				groups.forEach((element: OverflowGroupContainer) => {
-					if (typeof element.unfoldGroup === 'function') element.unfoldGroup();
-				});
-
 				const maxWidth = this.calculateMaxWidth();
+				let available = maxWidth - this.parentContainer.scrollWidth;
 
-				// then hide required
-				for (let i = groups.length - 1; i >= 0; i--) {
-					const element: OverflowGroupContainer = groups[i];
-					if (maxWidth !== 0 && this.hasOverflow(maxWidth)) {
-						if (typeof element.foldGroup === 'function') element.foldGroup();
+				if (this.hasOverflow(maxWidth)) {
+					// Fold from last to first if currently unfolded
+					for (let i = groups.length - 1; i >= 0; i--) {
+						const element: OverflowGroupContainer = groups[i];
+						if (
+							typeof element.isCollapsed === 'function' &&
+							!element.isCollapsed()
+						) {
+							const size =
+								typeof element.getUnfoldedSize === 'function'
+									? element.getUnfoldedSize()
+									: 0;
+							if (typeof element.foldGroup === 'function') element.foldGroup();
+							available += size;
+							if (available >= 0) break;
+						}
+					}
+				} else {
+					// Unfold from first to last if currently folded and fits
+					for (let i = 0; i < groups.length; i++) {
+						const element: OverflowGroupContainer = groups[i];
+						if (
+							typeof element.isCollapsed === 'function' &&
+							element.isCollapsed()
+						) {
+							const size =
+								typeof element.getUnfoldedSize === 'function'
+									? element.getUnfoldedSize()
+									: 0;
+							if (size <= available) {
+								if (typeof element.unfoldGroup === 'function')
+									element.unfoldGroup();
+								available -= size;
+							} else {
+								break;
+							}
+						}
 					}
 				}
 			});

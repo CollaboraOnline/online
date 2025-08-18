@@ -60,21 +60,51 @@ function setupOverflowMenu(
 		if (hideContent) migrateItems(overflowMenu, hiddenItems);
 	};
 
+	// New state + size cache
+	let _isFolded = false;
+	let unfoldedSize: number | undefined;
+
 	(parentContainer as OverflowGroupContainer).foldGroup = () => {
+		if (_isFolded) return;
 		app.console.debug('overflow manager: fold group: ' + id);
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
 		overflowMenuButton.style.display = '';
+		_isFolded = true;
 	};
 
 	(parentContainer as OverflowGroupContainer).unfoldGroup = () => {
+		if (!_isFolded) return;
 		app.console.debug('overflow manager: unfold group: ' + id);
 		groupLabel.style.display = '';
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
+		_isFolded = false;
 	};
 
-	// fill the updated menu after it is open
+	(parentContainer as OverflowGroupContainer).isCollapsed = () => _isFolded;
+
+	(parentContainer as OverflowGroupContainer).getUnfoldedSize = () => {
+		if (unfoldedSize === undefined) {
+			const prevState = _isFolded;
+			if (_isFolded) {
+				// temporarily unfold to measure, without flicker
+				groupLabel.style.display = '';
+				overflowMenuButton.style.display = 'none';
+				overflowMenuHandler(false);
+			}
+			unfoldedSize = parentContainer.scrollWidth;
+			if (_isFolded !== prevState) {
+				// restore folded state
+				groupLabel.style.display = 'none';
+				overflowMenuButton.style.display = '';
+				overflowMenuHandler(true);
+				_isFolded = true;
+			}
+		}
+		return unfoldedSize;
+	};
+
 	(overflowMenuButton as any)._onDropDown = (opened: boolean) => {
 		if (opened) {
 			// we need to schedule it 2 times as the first one happens just before

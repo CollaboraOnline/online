@@ -175,6 +175,8 @@ interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
 interface OverflowGroupContainer extends Element {
 	foldGroup?: () => void;
 	unfoldGroup?: () => void;
+	isCollapsed?: () => boolean;
+	getUnfoldedSize?: () => number;
 }
 
 interface GridWidgetJSON extends ContainerWidgetJSON {
