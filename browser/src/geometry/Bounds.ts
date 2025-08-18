@@ -146,19 +146,13 @@ export class Bounds {
 	public contains(obj: Bounds | PointConvertable): boolean {
 		var min, max;
 
-		var bounds: Bounds;
-		var point: Point;
 		if (Array.isArray(obj) || obj instanceof L.Point || obj instanceof SimplePoint) {
-			point = toPoint(<PointConvertable>obj);
+			var point: Point = toPoint(<PointConvertable>obj);
+			min = max = point;
 		} else {
-			bounds = Bounds.toBounds(obj);
-		}
-
-		if (bounds) {
+			var bounds: Bounds = Bounds.toBounds(obj);
 			min = bounds.min;
 			max = bounds.max;
-		} else {
-			min = max = point;
 		}
 
 		return (min.x >= this.min.x) &&
