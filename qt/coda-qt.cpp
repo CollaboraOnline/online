@@ -25,6 +25,8 @@
 #include <QApplication>
 #include <QByteArray>
 #include <QClipboard>
+#include <QDir>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QMainWindow>
 #include <QMetaObject>
@@ -222,14 +224,15 @@ void Bridge::debug(const QString& msg) { LOG_TRC_NOFILE("From JS: debug: " << ms
 
 void Bridge::error(const QString& msg) { LOG_TRC_NOFILE("From JS: error: " << msg.toStdString()); }
 
-QVariant Bridge::cool(const QString& msg)
+QVariant Bridge::cool(const QString& messageStr)
 {
     constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
+    constexpr std::string_view DOWNLOADAS = "downloadas ";
 
-    const std::string utf8 = msg.toStdString();
-    LOG_TRC_NOFILE("From JS: cool: " << utf8);
+    const std::string message = messageStr.toStdString();
+    LOG_TRC_NOFILE("From JS: cool: " << message);
 
-    if (utf8 == "HULLO")
+    if (message == "HULLO")
     {
         // JS side fully initialised – open our fake WebSocket to COOLWSD
         assert(coolwsd_server_socket_fd != -1);
@@ -288,30 +291,104 @@ QVariant Bridge::cool(const QString& msg)
             })
             .detach();
     }
-    else if (utf8 == "BYE")
+    else if (message == "BYE")
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
     }
-    else if (utf8 == "CLIPBOARDWRITE")
+    else if (message == "CLIPBOARDWRITE")
     {
         getClipboard(_document._appDocId);
     }
-    else if (utf8 == "CLIPBOARDREAD")
+    else if (message == "CLIPBOARDREAD")
     {
         // WARN: this is only cargo-culted and not tested yet.
         setClipboard(_document._appDocId);
         return "(internal)";
     }
-    else if (utf8.starts_with(CLIPBOARDSET))
+    else if (message.starts_with(CLIPBOARDSET))
     {
-        std::string content = utf8.substr(CLIPBOARDSET.size());
+        std::string content = message.substr(CLIPBOARDSET.size());
         setClipboardFromContent(_document._appDocId, content);
+    }
+    else if (message == "PRINT")
+    {
+    }
+    else if (message.starts_with(DOWNLOADAS))
+    {
+        // Parse "format=" argument and handle "direct-" prefix
+        const std::string args = message.substr(DOWNLOADAS.size());
+
+        std::string format;
+        {
+            size_t start = 0;
+            while (start < args.size())
+            {
+                size_t end = args.find(' ', start);
+                if (end == std::string::npos) end = args.size();
+                const std::string_view tok(args.c_str() + start, end - start);
+                if (tok.rfind("format=", 0) == 0)
+                    format = std::string(tok.substr(strlen("format=")));
+                start = end + 1;
+            }
+        }
+        if (format.empty())
+        {
+            LOG_ERR("downloadas: no format= specified");
+            return {};
+        }
+        if (format.rfind("direct-", 0) == 0)
+            format.erase(0, strlen("direct-"));
+
+        // Build a suggested filename from the current document
+        const QUrl docUrl(QString::fromStdString(_document._fileURL));
+        const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
+        const QFileInfo docInfo(docPath);
+        const QString baseName = docInfo.completeBaseName().isEmpty()
+                                 ? QStringLiteral("document")
+                                 : docInfo.completeBaseName();
+        const QString suggestedName = baseName + "." + QString::fromStdString(format);
+
+        // Ask the user for the destination
+        const QString destPath = QFileDialog::getSaveFileName(
+            _webView,
+            QObject::tr("Export As"),
+            QDir::home().filePath(suggestedName),
+            QObject::tr("All Files (*)"));
+
+        if (destPath.isEmpty())
+            return {}; // user cancelled
+
+        // Export directly to the chosen path
+        lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
+        if (!loKitDoc)
+        {
+            LOG_ERR("downloadas: no loKitDocument");
+            return {};
+        }
+
+        const QUrl destUrl = QUrl::fromLocalFile(destPath);
+        const QByteArray urlUtf8 =
+                destUrl.toString(QUrl::FullyEncoded | QUrl::PreferLocalFile).toUtf8();
+        const QByteArray fmtUtf8 = QString::fromStdString(format).toUtf8();
+
+        loKitDoc->saveAs(urlUtf8.constData(), fmtUtf8.constData(), nullptr);
+
+        // Verify save
+        const QFileInfo outInfo(destPath);
+        if (!outInfo.exists() || outInfo.size() <= 0)
+        {
+            LOG_ERR("downloadas: failed to save to '" << destPath.toStdString() << "'");
+            return {};
+        }
+
+        LOG_INF("downloadas: exported to " << destPath.toStdString());
+        return {};
     }
     else
     {
         // Forward arbitrary payload from JS → Online
-        std::string copy = utf8; // make lifetime explicit
+        std::string copy = message; // make lifetime explicit
         std::thread(
             [this, copy]
             {
