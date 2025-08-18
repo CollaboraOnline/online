@@ -42,14 +42,29 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		if (!key || !options[key]) return;
 
 		const opt = options[key];
-		const cmd =
-			`.uno:CalcPageMargin` +
-			`?Page.LeftMargin:long=${inchesToHMM(opt.details.Left)}` +
-			`&Page.RightMargin=${inchesToHMM(opt.details.Right)}` +
-			`&Page.TopMargin:long=${inchesToHMM(opt.details.Top)}` +
-			`&Page.BottomMargin=${inchesToHMM(opt.details.Bottom)}`;
+		if (map.getDocType() === 'spreadsheet') {
+			const cmd =
+				`.uno:CalcPageMargin` +
+				`?Page.LeftMargin:long=${inchesToHMM(opt.details.Left)}` +
+				`&Page.RightMargin=${inchesToHMM(opt.details.Right)}` +
+				`&Page.TopMargin:long=${inchesToHMM(opt.details.Top)}` +
+				`&Page.BottomMargin=${inchesToHMM(opt.details.Bottom)}`;
 
-		map.sendUnoCommand(cmd);
+			map.sendUnoCommand(cmd);
+		} else if (map.getDocType() === 'text') {
+			const cmdLR =
+				`.uno:PageLRMargin` +
+				`?Page.Left:long=${inchesToHMM(opt.details.Left)}` +
+				`&Page.Right:long=${inchesToHMM(opt.details.Right)}`;
+
+			const cmdUL =
+				`.uno:PageULMargin` +
+				`?Page.Upper:long=${inchesToHMM(opt.details.Top)}` +
+				`&Page.Lower:long=${inchesToHMM(opt.details.Bottom)}`;
+
+			map.sendUnoCommand(cmdLR);
+			map.sendUnoCommand(cmdUL);
+		}
 		builder.callback('dialog', 'close', { id: data.id }, null);
 	};
 
