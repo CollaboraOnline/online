@@ -516,7 +516,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         AsyncLockUpdate::State::Running, LockUpdateResult(LockUpdateResult::Status::OK, lock)));
 
     // Make the request.
-    _lockHttpSession->asyncRequest(httpRequest, socketPoll, true);
+    _lockHttpSession->asyncRequest(httpRequest, socketPoll);
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -891,7 +891,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
             AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
 
         // Make the request.
-        _uploadHttpSession->asyncRequest(httpRequest, socketPoll, true);
+        _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
 
         return size;
     }
