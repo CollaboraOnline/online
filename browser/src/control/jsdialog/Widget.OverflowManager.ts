@@ -25,6 +25,7 @@ class OverflowManager {
 		this.data = data;
 
 		window.addEventListener('resize', this.onResize.bind(this));
+		app.map.on('refreshoverflows', this.onResize, this);
 	}
 
 	calculateMaxWidth(): number {
@@ -59,11 +60,11 @@ class OverflowManager {
 		return maxWidth < requiredWidth;
 	}
 
-	onResize() {
+	onResize(event: any) {
 		if (!this.parentContainer) return;
 
 		app.layoutingService.appendLayoutingTask(() => {
-			if (this.lastMaxWidth === window.innerWidth) return;
+			if (!event?.force && this.lastMaxWidth === window.innerWidth) return;
 
 			this.lastMaxWidth = window.innerWidth;
 
