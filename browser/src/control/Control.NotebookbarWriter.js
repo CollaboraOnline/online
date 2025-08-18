@@ -1437,7 +1437,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						],
 						'vertical': 'true'
 					},
-				] 
+				]
 			},
 			{ type: 'separator', id: 'header-footer-break', orientation: 'vertical' },
 			{
@@ -1804,6 +1804,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 	getLayoutTab: function() {
 		var content = [
+			{
+				'id': 'Layout-MarginMenu:MenuMargins',
+				'type': 'menubutton',
+				'text': _('Margin'),
+				'enabled': 'true',
+			},
 			{
 				'id': 'layout-page-dialog',
 				'type': 'bigtoolitem',
