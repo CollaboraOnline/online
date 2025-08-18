@@ -49,6 +49,15 @@ The brand package of CODE is not open source. To build an image without it:
 Check build.sh for more build options!
 
 
+Usage
+
+On using the pre-made or self-built Docker images, see Collabora Online SDK:
+
+- https://sdk.collaboraonline.com/docs/installation/Docker_image.html
+
+- https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html
+
+
 Runtime
 
 At runtime use the provided cool-seccomp-profile.json as seccomp profile (Ref: https://docs.docker.com/engine/security/seccomp/)
