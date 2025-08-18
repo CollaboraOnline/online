@@ -1649,7 +1649,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     };
 
     httpProbeSession->setFinishedHandler(std::move(finishHandler));
-    httpProbeSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll(), true);
+    httpProbeSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 
     return true;
 }

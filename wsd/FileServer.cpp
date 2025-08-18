@@ -2182,7 +2182,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     LOG_DBG("Fetching wopi setting config from WopiHost[" << uriAnonym << ']');
     auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
     httpSession->setFinishedHandler(std::move(finishedCallback));
-    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll(), true);
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& request,
@@ -2328,7 +2328,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
 
     LOG_DBG("Deleting presetfile with fileId[" << fileId << "] from WopiHost[" << uriAnonym << ']');
     httpSession->setFinishedHandler(std::move(finishedCallback));
-    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll(), true);
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
@@ -2414,7 +2414,7 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 
     LOG_DBG("Uploading presetfile[" << fileName << "] to wopiHost[" << uriAnonym << ']');
     httpSession->setFinishedHandler(std::move(finishedCallback));
-    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll(), true);
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& request,
