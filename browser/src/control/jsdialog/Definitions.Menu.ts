@@ -850,158 +850,68 @@ menuDefinitions.set('MenuOrientation', [
 	},
 ] as Array<MenuDefinition>);
 
-menuDefinitions.set('MenuPageSizes', [
-	{
-		id: 'A6',
-		text: _('A6'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_A6,
-	},
-	{
-		id: 'A5',
-		text: _('A5'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_A5,
-	},
-	{
-		id: 'A4',
-		text: _('A4'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_A4,
-	},
-	{
-		id: 'A3',
-		text: _('A3'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_A3,
-	},
-	{
-		id: 'B6ISO',
-		text: _('B6 (ISO)'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_B6_ISO,
-	},
-	{
-		id: 'B5ISO',
-		text: _('B5 (ISO)'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_B5_ISO,
-	},
-	{
-		id: 'B4ISO',
-		text: _('B4 (ISO)'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_B4_ISO,
-	},
-	{
-		id: 'Letter',
-		text: _('Letter'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_LETTER,
-	},
-	{
-		id: 'Legal',
-		text: _('Legal'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_LEGAL,
-	},
-	{
-		id: 'LongBond',
-		text: _('Long Bond'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_FANFOLD_LEGAL_DE,
-	},
-	{
-		id: 'Tabloid',
-		text: _('Tabloid'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_TABLOID,
-	},
-	{
-		id: 'B6JIS',
-		text: _('B6 (JIS)'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_B6_JIS,
-	},
-	{
-		id: 'B5JIS',
-		text: _('B5 (JIS)'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_B5_JIS,
-	},
-	{
-		id: 'B4JIS',
-		text: _('B4 (JIS)'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_B4_JIS,
-	},
-	{
-		id: '16Kai',
-		text: _('16 Kai'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_KAI16,
-	},
-	{
-		id: '32Kai',
-		text: _('32 Kai'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_KAI32,
-	},
-	{
-		id: 'Big32Kai',
-		text: _('Big 32 Kai'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_KAI32BIG,
-	},
-	{
-		id: 'User',
-		text: _('User'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_USER,
-	},
-	{
-		id: 'DLEnvelope',
-		text: _('DL Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_DL,
-	},
-	{
-		id: 'C6Envelope',
-		text: _('C6 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_C6,
-	},
-	{
-		id: 'C6_5Envelope',
-		text: _('C6/5 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_C65,
-	},
-	{
-		id: 'C5Envelope',
-		text: _('C5 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_C5,
-	},
-	{
-		id: 'C4Envelope',
-		text: _('C4 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_C4,
-	},
+const pageSizes = [
+	{ id: 'A6', text: _('A6'), paper: Paper.PAPER_A6 },
+	{ id: 'A5', text: _('A5'), paper: Paper.PAPER_A5 },
+	{ id: 'A4', text: _('A4'), paper: Paper.PAPER_A4 },
+	{ id: 'A3', text: _('A3'), paper: Paper.PAPER_A3 },
+	{ id: 'B6ISO', text: _('B6 (ISO)'), paper: Paper.PAPER_B6_ISO },
+	{ id: 'B5ISO', text: _('B5 (ISO)'), paper: Paper.PAPER_B5_ISO },
+	{ id: 'B4ISO', text: _('B4 (ISO)'), paper: Paper.PAPER_B4_ISO },
+	{ id: 'Letter', text: _('Letter'), paper: Paper.PAPER_LETTER },
+	{ id: 'Legal', text: _('Legal'), paper: Paper.PAPER_LEGAL },
+	{ id: 'LongBond', text: _('Long Bond'), paper: Paper.PAPER_FANFOLD_LEGAL_DE },
+	{ id: 'Tabloid', text: _('Tabloid'), paper: Paper.PAPER_TABLOID },
+	{ id: 'B6JIS', text: _('B6 (JIS)'), paper: Paper.PAPER_B6_JIS },
+	{ id: 'B5JIS', text: _('B5 (JIS)'), paper: Paper.PAPER_B5_JIS },
+	{ id: 'B4JIS', text: _('B4 (JIS)'), paper: Paper.PAPER_B4_JIS },
+	{ id: '16Kai', text: _('16 Kai'), paper: Paper.PAPER_KAI16 },
+	{ id: '32Kai', text: _('32 Kai'), paper: Paper.PAPER_KAI32 },
+	{ id: 'Big32Kai', text: _('Big 32 Kai'), paper: Paper.PAPER_KAI32BIG },
+	{ id: 'User', text: _('User'), paper: Paper.PAPER_USER },
+	{ id: 'DLEnvelope', text: _('DL Envelope'), paper: Paper.PAPER_ENV_DL },
+	{ id: 'C6Envelope', text: _('C6 Envelope'), paper: Paper.PAPER_ENV_C6 },
+	{ id: 'C6_5Envelope', text: _('C6/5 Envelope'), paper: Paper.PAPER_ENV_C65 },
+	{ id: 'C5Envelope', text: _('C5 Envelope'), paper: Paper.PAPER_ENV_C5 },
+	{ id: 'C4Envelope', text: _('C4 Envelope'), paper: Paper.PAPER_ENV_C4 },
 	{
 		id: 'No6_3_4Envelope',
 		text: _('#6¾ Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_PERSONAL,
+		paper: Paper.PAPER_ENV_PERSONAL,
 	},
 	{
 		id: 'No7_3_4MonarchEnvelope',
 		text: _('#7¾ (Monarch) Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_MONARCH,
+		paper: Paper.PAPER_ENV_MONARCH,
 	},
-	{
-		id: 'No9Envelope',
-		text: _('#9 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_9,
-	},
-	{
-		id: 'No10Envelope',
-		text: _('#10 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_10,
-	},
-	{
-		id: 'No11Envelope',
-		text: _('#11 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_11,
-	},
-	{
-		id: 'No12Envelope',
-		text: _('#12 Envelope'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_ENV_12,
-	},
+	{ id: 'No9Envelope', text: _('#9 Envelope'), paper: Paper.PAPER_ENV_9 },
+	{ id: 'No10Envelope', text: _('#10 Envelope'), paper: Paper.PAPER_ENV_10 },
+	{ id: 'No11Envelope', text: _('#11 Envelope'), paper: Paper.PAPER_ENV_11 },
+	{ id: 'No12Envelope', text: _('#12 Envelope'), paper: Paper.PAPER_ENV_12 },
 	{
 		id: 'JapanesePostcard',
 		text: _('Japanese Postcard'),
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + Paper.PAPER_POSTCARD_JP,
+		paper: Paper.PAPER_POSTCARD_JP,
 	},
-] as Array<MenuDefinition>);
+];
+
+menuDefinitions.set(
+	'MenuPageSizesCalc',
+	pageSizes.map((item) => ({
+		id: item.id,
+		text: item.text,
+		uno: '.uno:CalcPageSize?PaperFormat:long=' + item.paper,
+	})) as Array<MenuDefinition>,
+);
+
+menuDefinitions.set(
+	'MenuPageSizesWriter',
+	pageSizes.map((item) => ({
+		id: item.id,
+		text: item.text,
+		uno: '.uno:AttributePageSize?PaperFormat:short=' + item.paper,
+	})) as Array<MenuDefinition>,
+);
 
 menuDefinitions.set('Print', [
 	{ text: _('Active sheet'), action: 'print-active-sheet' },

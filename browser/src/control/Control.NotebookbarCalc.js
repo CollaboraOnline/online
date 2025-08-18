@@ -1065,7 +1065,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'enabled': 'true',
 					},
 					{
-						'id': 'Layout-SizeMenu:MenuPageSizes',
+						'id': 'Layout-SizeMenu:MenuPageSizesCalc',
 						'type': 'menubutton',
 						'text': _('Size'),
 						'enabled': 'true',
