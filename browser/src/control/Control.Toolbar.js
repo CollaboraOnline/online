@@ -1180,22 +1180,14 @@ function setupToolbar(e) {
 }
 
 global.setupToolbar = setupToolbar;
-global.insertTable = insertTable;
 global.getInsertTablePopupElements = getInsertTablePopupElements;
-global.sendInsertTableFunction = sendInsertTableFunction;
-global.highlightTableFunction = highlightTableFunction;
 global.getShapesPopupElements = getShapesPopupElements;
 global.getConnectorsPopupElements = getConnectorsPopupElements;
-global.onShapeClickFunction = onShapeClickFunction;
-global.onShapeKeyUpFunction = onShapeKeyUpFunction;
-global.onShapeKeyDownFunction = onShapeKeyDownFunction;
 global.createShapesPanel = createShapesPanel;
-global.onUpdatePermission = onUpdatePermission;
 global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
-global.getColorPickerElements = getColorPickerElements;
 global.onUpdateParts = onUpdateParts;
 global.getColorPickerData = getColorPickerData;
 }(window));
