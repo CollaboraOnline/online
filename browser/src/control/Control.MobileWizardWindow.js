@@ -590,7 +590,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				// since it does not hide it, instead it goes back in this case
 				this.backButton.removeClass('close-button');
 			}
-			if (this._isActive && currentPath.length) {
+			if (this._isActive && currentPath && currentPath.length) {
 				this._goToPath(currentPath);
 				this._scrollToPosition(lastScrollPosition);
 			}
