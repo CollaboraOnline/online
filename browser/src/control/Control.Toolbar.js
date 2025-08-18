@@ -696,12 +696,6 @@ function getConnectorsPopupElements(closeCallback) {
 	return wrapperContainer;
 }
 
-function getColorPickerElements(id) {
-	const div = document.createElement('div');
-	div.id = id + '-wrapper';
-	return div;
-}
-
 function getColorPickerData(type) {
 	var uno;
 	if (type === 'Font Color') {
