@@ -2302,31 +2302,39 @@ bool DocumentBroker::handleLockResult(ClientSession& session,
 
         case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
         {
-            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << _docKey
-                                 << "]. Invalid or expired access token. Notifying client and "
-                                    "invalidating the authorization token of session ["
-                                 << session.getId() << "]. This session will now be read-only");
+            std::string errMsg;
+            errMsg.append("Failed to ");
+            errMsg.append(StorageBase::name(requestedLock));
+            errMsg.append(" docKey [" + _docKey +
+                          "]. Invalid or expired access token. Notifying client and "
+                          "invalidating the authorization token of session [" +
+                          session.getId() + "]. ");
             session.invalidateAuthorizationToken();
             if (requestedLock == StorageBase::LockState::LOCK)
             {
                 // If we can't unlock, we don't want to set the document to read-only mode.
+                errMsg.append("This session will now be read-only");
                 session.setLockFailed(reason);
             }
+            LOG_ERR(errMsg);
         }
         break;
 
         case StorageBase::LockUpdateResult::Status::FAILED:
         {
-            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << _docKey
-                                 << "] with reason [" << reason
-                                 << "]. Notifying client and making session [" << session.getId()
-                                 << "] read-only");
+            std::string errMsg;
+            errMsg.append("Failed to ");
+            errMsg.append(StorageBase::nameShort(requestedLock));
+            errMsg.append(" docKey [" + _docKey + "] with reason [" + reason + "].");
 
             if (requestedLock == StorageBase::LockState::LOCK)
             {
                 // If we can't unlock, we don't want to set the document to read-only mode.
                 session.setLockFailed(reason);
+                errMsg.append(" Notifying client and making session [" + session.getId() +
+                              "] read-only");
             }
+            LOG_ERR(errMsg);
         }
         break;
     }
