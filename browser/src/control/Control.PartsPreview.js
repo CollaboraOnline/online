@@ -387,9 +387,6 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_scrollToPart: function() {
 		var partNo = this._map.getCurrentPartNumber();
-		// update the page back and forward buttons status
-		var pagerButtonsEvent = { selectedPart: partNo, parts: this._partsPreviewCont.children.length };
-		window.onUpdateParts(pagerButtonsEvent);
 		//var sliderSize, nodePos, nodeOffset, nodeMargin;
 		var node = this._partsPreviewCont.children[partNo];
 
