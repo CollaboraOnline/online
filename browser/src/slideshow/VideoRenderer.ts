@@ -192,6 +192,10 @@ class VideoRenderer2d extends VideoRenderer {
 	public render(): void {
 		if (this.isDisposed()) return;
 		const ctx = this._context.get2dGl();
+		if (!ctx) {
+			console.error('Canvas 2D context not available');
+			return;
+		}
 		const video = this.videoRenderInfo;
 
 		const width = ctx.canvas.width;
