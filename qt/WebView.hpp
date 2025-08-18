@@ -16,6 +16,7 @@
 #include <QWebEngineProfile>
 #include <QWebEngineView>
 #include "Document.hpp"
+#include <QMainWindow>
 
 class WebView
 {
@@ -26,6 +27,7 @@ public:
     void load(const std::string& fileURL);
 
 private:
+    QMainWindow* _mainWindow;
     QWebEngineView* _webView;
     coda::DocumentData _document;
 };

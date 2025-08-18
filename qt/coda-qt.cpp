@@ -170,8 +170,8 @@ void Bridge::evalJS(const std::string& script)
     // Ensure execution on GUI thread – queued if needed
     QMetaObject::invokeMethod(
         // TODO: fix needless `this` captures...
-        _webView.webEngineView(), [this, script]
-        { _webView.webEngineView()->page()->runJavaScript(QString::fromStdString(script)); },
+        _webView, [this, script]
+        { _webView->page()->runJavaScript(QString::fromStdString(script)); },
         Qt::QueuedConnection);
 }
 
@@ -335,9 +335,9 @@ void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 
 int main(int argc, char** argv)
 {
-    if (argc != 3)
+    if (argc < 2)
     {
-        fprintf(stderr, "Usage: %s /path/to/document /path/to/document2\n", argv[0]);
+        fprintf(stderr, "Usage: %s DOCUMENT [DOCUMENT...]\n", argv[0]);
         _exit(1);
     }
 
@@ -362,18 +362,13 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     QApplication::setApplicationName("CODA-Q");
 
-    // Resolve absolute file URL to pass into Online
-    std::string fileURL = "file://" + FileUtil::realpath(argv[1]);
-    WebView firstView(nullptr);
-    firstView.load(fileURL);
-
-    fileURL = "file://" + FileUtil::realpath(argv[2]);
-    WebView secondView(nullptr);
-
-    // there seems to be some race conditions going on -> need to debug. on top of that the second
-    // file only loads properly if the first document is interacted with..
-    // could it be some idle logic somewhere?
-    QTimer::singleShot(10000, [&]() { secondView.load(fileURL); });
+    for (int i = 1; i < argc; i++)
+    {
+        // Resolve absolute file URL to pass into Online
+        std::string fileURL = "file://" + FileUtil::realpath(argv[i]);
+        WebView* webViewInstance = new WebView(nullptr);
+        webViewInstance->load(fileURL);
+    }
 
     return app.exec();
 }

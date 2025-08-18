@@ -12,8 +12,15 @@
 #include "WebView.hpp"
 #include "bridge.hpp"
 #include <QWebChannel>
+#include <QMainWindow>
 #include "FakeSocket.hpp"
 #include "MobileApp.hpp"
+
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QFileDialog>
+#include <QKeySequence>
 
 namespace
 {
@@ -26,8 +33,36 @@ unsigned generateNewAppDocId()
 } // namespace
 
 WebView::WebView(QWidget* parent)
-    : _webView(new QWebEngineView(parent))
+        : _mainWindow(new QMainWindow(parent))
+        , _webView(new QWebEngineView(_mainWindow))
 {
+    _mainWindow->setCentralWidget(_webView);
+
+    // populate menu bar
+    QMenuBar* menuBar = _mainWindow->menuBar();
+    QMenu* fileMenu = menuBar->addMenu(QObject::tr("&File"));
+
+    QAction* openAct = fileMenu->addAction(QObject::tr("&Open..."));
+    openAct->setShortcut(QKeySequence::Open);
+    openAct->setStatusTip(QObject::tr("Open a file"));
+
+    QObject::connect(openAct, &QAction::triggered, _mainWindow,
+                     [this]()
+                     {
+                         const QString filePath = QFileDialog::getOpenFileName(
+                             _mainWindow, QObject::tr("Open File"), QString(),
+                             QObject::tr("All Files (*);;"
+                                         "Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;"
+                                         "Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;"
+                                         "Presentations (*.odp *.otp *.ppt *.pptx)"
+                                         )
+                         );
+                         if (!filePath.isEmpty())
+                         {
+                             WebView* webViewInstance = new WebView(nullptr);
+                             webViewInstance->load(filePath.toStdString());
+                         }
+                     });
 }
 
 void WebView::load(const std::string& fileURL)
@@ -40,8 +75,7 @@ void WebView::load(const std::string& fileURL)
 
     // setup js c++ communication
     QWebChannel* channel = new QWebChannel(_webView->page());
-    // TODO: pass webview as a ref instead.
-    auto bridge = new Bridge(channel, _document, *this);
+    auto bridge = new Bridge(channel, _document, _webView);
     channel->registerObject("bridge", bridge);
     _webView->page()->setWebChannel(channel);
 
@@ -59,8 +93,8 @@ void WebView::load(const std::string& fileURL)
     LOG_TRC("Open URL: " << urlAndQuery);
     _webView->load(QUrl(QString::fromStdString(urlAndQuery)));
 
-    _webView->resize(720, 1600);
-    _webView->show();
+    _mainWindow->resize(720, 1600);
+    _mainWindow->show();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
