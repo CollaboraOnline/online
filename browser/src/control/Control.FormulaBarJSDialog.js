@@ -343,8 +343,9 @@ class FormulaBar {
 			}
 
 			this.builder.executeAction(this.parentContainer, innerData);
-		} else
+		} else if (innerData) {
 			this.createFormulabar(innerData.text);
+		}
 	}
 }
 
