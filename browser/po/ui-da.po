@@ -866,7 +866,7 @@ msgstr ""
 "Den valgte eksterne datakilde er ikke tilladt. Kontakt systemadministratoren."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Vis ikke igen"
 
 #: src/control/Control.AlertDialog.js:105

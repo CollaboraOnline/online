@@ -873,7 +873,7 @@ msgstr ""
 "riarthóir an chórais."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Ná taispeáin é seo arís"
 
 #: src/control/Control.AlertDialog.js:105

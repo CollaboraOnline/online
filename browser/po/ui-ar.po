@@ -862,7 +862,7 @@ msgid ""
 msgstr "مصدر البيانات الخارجي المحدد محظور. الرجاء الاتصال بمشرف النظام عندك."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "لا تُظهِر هذا مُجدَّداً"
 
 #: src/control/Control.AlertDialog.js:105

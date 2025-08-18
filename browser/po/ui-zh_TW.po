@@ -850,7 +850,7 @@ msgid ""
 msgstr "被選擇的外部來源資料已被禁止。請聯絡系統管理員。"
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "不再顯示"
 
 #: src/control/Control.AlertDialog.js:105

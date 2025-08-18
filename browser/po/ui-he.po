@@ -858,7 +858,7 @@ msgid ""
 msgstr "מקור הנתונים החיצוניים הזה אסור. נא ליצור קשר עם הנהלת המערכת."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "לא להציג את זה שוב"
 
 #: src/control/Control.AlertDialog.js:105

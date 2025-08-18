@@ -862,8 +862,8 @@ msgstr ""
 "administrator."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
-msgstr "Don't show this again"
+msgid "Don’t show this again"
+msgstr "Don’t show this again"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."

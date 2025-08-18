@@ -851,7 +851,7 @@ msgid ""
 msgstr "선택한 외부 자료는 금지되어있습니다. 시스템 관리자에게 문의하세요."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "다시 보지 않기"
 
 #: src/control/Control.AlertDialog.js:105

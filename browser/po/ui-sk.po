@@ -860,7 +860,7 @@ msgid ""
 msgstr "Vybraný externý zdroj dát je zakázaný. Kontaktujte správcu systému."
 
 #: src/control/Control.AlertDialog.js:86
-msgid "Don't show this again"
+msgid "Don’t show this again"
 msgstr "Toto už znovu nezobrazovať"
 
 #: src/control/Control.AlertDialog.js:105
