@@ -1508,7 +1508,7 @@ public:
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
     /// Returns false when it fails to start the async request.
-    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll, bool asyncShutdownOnFinish)
+    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll, bool asyncShutdownOnFinish = true)
     {
         std::shared_ptr<SocketPoll> socketPoll(poll.lock());
         if (!socketPoll)

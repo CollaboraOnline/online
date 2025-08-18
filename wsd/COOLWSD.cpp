@@ -3532,7 +3532,7 @@ void COOLWSD::processFetchUpdate(const std::shared_ptr<SocketPoll>& poll)
                         << httpResponse->statusLine().reasonPhrase());
         });
 
-        FetchHttpSession->asyncRequest(request, poll, true);
+        FetchHttpSession->asyncRequest(request, poll);
     }
     catch(const Poco::Exception& exc)
     {
