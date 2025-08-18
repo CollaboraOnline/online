@@ -2686,3 +2686,8 @@ kbd,
 #BulletsAndNumberingDialog #NumberingPositionPage #previewwin.jsdialog img.jsdialog.ui-drawing-area {
 	width: 370px;
 }
+
+/* Format - Bullets and Numbering - Select image as bullet -> Go to Customize */
+#BulletsAndNumberingDialog #customize #bitmap-button.unobutton {
+	width: fit-content; /* makes button text visible*/
+}
