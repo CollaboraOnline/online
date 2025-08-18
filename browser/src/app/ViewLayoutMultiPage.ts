@@ -40,7 +40,6 @@ class MultiPageViewLayout extends ViewLayoutBase {
 			visibleArea.width +
 			' height=' +
 			visibleArea.height;
-		+' splitx=' + Math.round(0) + ' splity=' + Math.round(0);
 
 		app.socket.sendMessage(visibleAreaCommand);
 
