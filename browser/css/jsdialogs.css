@@ -2646,3 +2646,18 @@ kbd,
 	grid-template-columns: repeat(5, 1fr);
 	overflow: visible;
 }
+
+/* Format - Bullets and Numbering */
+
+#BulletsAndNumberingDialog
+:is(#pick_bullet_iconview,
+#pick_numbering_iconview,
+#pick_outline_iconview,
+#pick_graphic_iconview).jsdialog.ui-iconview {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+#BulletsAndNumberingDialog #PickBulletPage #changeBulletBtn.jsdialog.ui-grid-cell {
+	justify-content: flex-end;
+}
+
