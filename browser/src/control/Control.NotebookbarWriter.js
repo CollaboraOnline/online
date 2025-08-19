@@ -1818,6 +1818,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: true,	combination: 'PS', de: null }
 			},
 			{
+				'id': 'Layout-OrientationMenu:MenuOrientation',
+				'type': 'menubutton',
+				'text': _UNO('.uno:Orientation'),
+				'enabled': 'true',
+				'accessibility': { focusBack: true,	combination: 'PO', de: null }
+			},
+			{
 				'id': 'layout-page-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageDialog'),
