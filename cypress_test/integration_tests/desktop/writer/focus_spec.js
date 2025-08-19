@@ -15,64 +15,64 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		helper.assertFocus('className', 'clipboard');
 	});
 
-	it.skip('Search for non existing word.', function() {
+	it('Search for non existing word.', function() {
 		// Move focus to the search field
-		cy.cGet('#search-input').click();
+		helper.typeIntoDocument('{ctrl}f');
 
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
 		var text = 'qqqqq';
 		helper.typeText('body', text, 100);
 
 		// Search field still has the focus.
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
-		cy.cGet('#search-input').should('have.prop', 'value', text);
+		cy.cGet('#navigator-search-input').should('have.prop', 'value', text);
 	});
 
-	it.skip('Search for existing word (with bold font).', function() {
+	it('Search for existing word (with bold font).', function() {
 		// Move focus to the search field
-		cy.cGet('#search-input').click();
+		helper.typeIntoDocument('{ctrl}f');
 
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
 		var text = 'text';
 		helper.typeText('body', text, 100);
 
 		// Search field still has the focus.
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
-		cy.cGet('#search-input').should('have.prop', 'value', text);
+		cy.cGet('#navigator-search-input').should('have.prop', 'value', text);
 	});
 
-	it.skip('Search for existing word (in table).', function() {
+	it('Search for existing word (in table).', function() {
 		// Move focus to the search field
-		cy.cGet('#search-input').click();
+		helper.typeIntoDocument('{ctrl}f');
 
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
 		var text = 'word';
 		helper.typeText('body', text, 200);
 
 		// Search field still has the focus.
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
-		cy.cGet('#search-input').should('have.prop', 'value', text);
+		cy.cGet('#navigator-search-input').should('have.prop', 'value', text);
 	});
 
-	it.skip('Search with fast typing.', function() {
+	it('Search with fast typing.', function() {
 		// Move focus to the search field
-		cy.cGet('#search-input').click();
+		helper.typeIntoDocument('{ctrl}f');
 
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
 		var text = 'qqqqqqqqqqqqqqqqqqqq';
 		cy.cGet('body').type(text);
 
 		// Search field still has the focus.
-		helper.assertFocus('id','search-input');
+		helper.assertFocus('id', 'navigator-search-input');
 
-		cy.cGet('#search-input').should('have.prop', 'value', text);
+		cy.cGet('#navigator-search-input').should('have.prop', 'value', text);
 	});
 
 	it('Type in font change.', function () {
