@@ -25,7 +25,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 					var combination = language && rawList[i].accessibility[language] ? rawList[i].accessibility[language]: rawList[i].accessibility.combination;
 					var id = this.cleanMenuName(rawList[i].id);
 
-					// menu button
+					// menu button & overflow button
 					var arrow = document.querySelector('#' + id + ' .arrowbackground');
 					if (arrow) {
 						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
