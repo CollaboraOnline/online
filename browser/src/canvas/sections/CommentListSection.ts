@@ -1067,7 +1067,9 @@ export class CommentSection extends CanvasSectionObject {
 		};
 
 		var removedComment = this.getComment(id);
-		removedComment.sectionProperties.selfRemoved = true;
+		if (removedComment) {
+			removedComment.sectionProperties.selfRemoved = true;
+		}
 		if (app.file.fileBasedView) // We have to set the part from which the comment will be removed as selected part before the process.
 			this.map.setPart(app.map._docLayer._selectedPart, false);
 
