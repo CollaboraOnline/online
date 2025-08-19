@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 /* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
@@ -14,7 +13,7 @@ class LayoutPageRectangle extends cool.SimpleRectangle {
 	// X and Y coordinates of the rectangle in multi page view.
 	layoutX: number = 0;
 	layoutY: number = 0;
-	part: number;
+	part: number = 0;
 }
 
 class MultiPageViewLayout extends ViewLayoutBase {
