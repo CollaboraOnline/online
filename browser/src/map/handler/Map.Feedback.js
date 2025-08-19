@@ -101,9 +101,9 @@ L.Map.Feedback = L.Handler.extend({
 		if (this._iframeDialog && this._iframeDialog.hasLoaded())
 			this.removeIframe();
 
-		var lokitHash = document.querySelector('#lokit-version a') || {};
+		var lokitHash = document.querySelector('#lokit-version a');
 		lokitHash = lokitHash ? lokitHash.innerText : '';
-		var wopiHostId = document.querySelector('#wopi-host-id') || {};
+		var wopiHostId = document.querySelector('#wopi-host-id');
 		wopiHostId = wopiHostId ? wopiHostId.innerText : '';
 		var proxyPrefixEnabled = window.socketProxy ? "True" : "False";
 
