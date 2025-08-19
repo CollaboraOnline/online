@@ -26,6 +26,7 @@ interface Window {
 	wopiSettingBaseUrl?: string;
 	iframeType?: string;
 	cssVars?: string;
+	serviceRoot?: string;
 }
 
 interface ConfigItem {
@@ -137,14 +138,20 @@ class SettingIframe {
 		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
 	};
 
-	private API_ENDPOINTS = {
-		uploadSettings: window.enableDebug
-			? '/wopi/settings/upload'
-			: '/browser/dist/upload-settings',
-		fetchSharedConfig: '/browser/dist/fetch-settings-config',
-		deleteSharedConfig: '/browser/dist/delete-settings-config',
-		fetchSettingFile: '/browser/dist/fetch-settings-file',
-	};
+	private getAPIEndpoints() {
+		return {
+			uploadSettings: window.serviceRoot + '/browser/dist/upload-settings',
+
+			fetchSharedConfig:
+				window.serviceRoot + '/browser/dist/fetch-settings-config',
+
+			deleteSharedConfig:
+				window.serviceRoot + '/browser/dist/delete-settings-config',
+
+			fetchSettingFile:
+				window.serviceRoot + '/browser/dist/fetch-settings-file',
+		};
+	}
 
 	private PATH = {
 		autoTextUpload: () => this.settingConfigBasePath() + '/autotext/',
@@ -200,6 +207,7 @@ class SettingIframe {
 				(document as any).adoptedStyleSheets.push(sheet);
 			}
 		}
+		window.serviceRoot = element.dataset.serviceRoot;
 	}
 
 	private validateJsonFile(file: File): Promise<any> {
@@ -326,7 +334,7 @@ class SettingIframe {
 
 		try {
 			const response: Response = await fetch(
-				this.API_ENDPOINTS.fetchSharedConfig,
+				this.getAPIEndpoints().fetchSharedConfig,
 				{
 					method: 'POST',
 					headers: {
@@ -431,7 +439,7 @@ class SettingIframe {
 			formData.append('fileUrl', fileId);
 			formData.append('accessToken', window.accessToken ?? '');
 
-			const apiUrl = this.API_ENDPOINTS.fetchSettingFile;
+			const apiUrl = this.getAPIEndpoints().fetchSettingFile;
 
 			const response = await fetch(apiUrl, {
 				method: 'POST',
@@ -1019,7 +1027,7 @@ class SettingIframe {
 		}
 
 		try {
-			const apiUrl = this.API_ENDPOINTS.uploadSettings;
+			const apiUrl = this.getAPIEndpoints().uploadSettings;
 
 			const response = await fetch(apiUrl, {
 				method: 'POST',
@@ -1134,7 +1142,7 @@ class SettingIframe {
 						formData.append('accessToken', window.accessToken);
 
 						const response = await fetch(
-							this.API_ENDPOINTS.deleteSharedConfig,
+							this.getAPIEndpoints().deleteSharedConfig,
 							{
 								method: 'POST',
 								headers: {
