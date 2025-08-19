@@ -167,4 +167,4 @@ Now you can build the JavaScript bits:
 
 	(cd browser && make)
 
-And then finally, open the windows/coda/CODA/CODA.sln solution in Visual Studio and build it.
+And then finally, open the windows/coda/CODA.sln solution in Visual Studio and build it.
