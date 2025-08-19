@@ -227,18 +227,11 @@ class AboutDialog {
 			const newLogLevel = app.socket.threadLocalLoggingLevelToggle
 				? 'verbose'
 				: 'default';
-
 			app.socket.sendMessage('loggingleveloverride ' + newLogLevel);
 
-			let logLevelInformation;
-			if (newLogLevel === 'default')
-				logLevelInformation = 'default (from coolwsd.xml)';
-			else if (newLogLevel === 'verbose')
-				logLevelInformation = 'most verbose (from coolwsd.xml)';
-			else if (newLogLevel === 'terse')
-				logLevelInformation = 'least verbose (from coolwsd.xml)';
-			else logLevelInformation = newLogLevel;
-
+			const logLevelInformation = app.socket.threadLocalLoggingLevelToggle
+				? 'most verbose (from coolwsd.xml)'
+				: 'default (from coolwsd.xml)';
 			console.debug('Log level: ' + logLevelInformation);
 		}
 	}
