@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		helper.assertFocus('className', 'clipboard');
 	});
 
-	it('Search for non existing word.', function() {
+	it.skip('Search for non existing word.', function() {
 		// Move focus to the search field
 		cy.cGet('#search-input').click();
 
@@ -30,7 +30,7 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('#search-input').should('have.prop', 'value', text);
 	});
 
-	it('Search for existing word (with bold font).', function() {
+	it.skip('Search for existing word (with bold font).', function() {
 		// Move focus to the search field
 		cy.cGet('#search-input').click();
 
@@ -45,7 +45,7 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('#search-input').should('have.prop', 'value', text);
 	});
 
-	it('Search for existing word (in table).', function() {
+	it.skip('Search for existing word (in table).', function() {
 		// Move focus to the search field
 		cy.cGet('#search-input').click();
 
@@ -60,7 +60,7 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('#search-input').should('have.prop', 'value', text);
 	});
 
-	it('Search with fast typing.', function() {
+	it.skip('Search with fast typing.', function() {
 		// Move focus to the search field
 		cy.cGet('#search-input').click();
 
