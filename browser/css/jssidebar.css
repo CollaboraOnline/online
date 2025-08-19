@@ -573,6 +573,11 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: inherit;
 }
 
+#QuickFindPanel .ui-treeview-cell-text-content .highlighted {
+	background-color: var(--color-treeview-highlight);
+	color: var(--color-treeview-highlight-text);
+}
+
 /* search field box */
 #navigator-search {
 	padding: 8px 16px;
