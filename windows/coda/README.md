@@ -150,10 +150,11 @@ In an Ubuntu shell, run
 
 	./autogen.sh
 
-then run the configure script. Like this to use Debug build of zstd.
+then run the configure script. Like this to use release build of zstd
+and LibreOffice core.
 
-(You will automatically get the Debug libraries of Poco when building a
-Debug configuration of the CODALib project, and the Release libraries
+(You will automatically get the Debug libraries of Poco when building
+a Debug configuration of the CODA project, and the Release libraries
 in a Release configuration. There is some slightly questionable
 #pragmas in <Poco/Foundation.h> to take care of that.)
 
