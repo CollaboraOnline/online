@@ -686,9 +686,9 @@ function getFunctionsMenuArray(
 	funcs: Array<string>,
 	category: number,
 ): Array<MenuDefinition> {
-	var financialFunctionsMenu: Array<any> = [];
+	var functionsMenu: Array<any> = [];
 	for (var func of funcs) {
-		financialFunctionsMenu.push({
+		functionsMenu.push({
 			text: func,
 			uno:
 				'.uno:InsertFunction?FunctionName:string=' +
@@ -697,7 +697,7 @@ function getFunctionsMenuArray(
 				category,
 		});
 	}
-	return financialFunctionsMenu as Array<MenuDefinition>;
+	return functionsMenu as Array<MenuDefinition>;
 }
 
 menuDefinitions.set(
