@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
-var searchHelper = require('../../common/search_helper.js');
+var writerHelper = require('../../common/writer_helper.js');
 
 describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 
@@ -21,8 +21,8 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 
 		// first view goes somewhere down
 		cy.cSetActiveFrame('#iframe1');
-		searchHelper.typeIntoSearchField('P'); // avoid focus loss
-		searchHelper.typeIntoSearchField('Pellentesque porttitor');
+		writerHelper.openQuickFind();
+		writerHelper.searchInQuickFind('Pellentesque porttitor');
 		desktopHelper.assertScrollbarPosition('vertical', 380, 390);
 
 		// verify that second view is scrolled to the editor

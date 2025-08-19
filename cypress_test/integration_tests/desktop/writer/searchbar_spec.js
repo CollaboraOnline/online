@@ -5,7 +5,8 @@ var desktopHelper = require('../../common/desktop_helper');
 var searchHelper = require('../../common/search_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' ,function() {
+// TODO: no longer needed after we remove searchbar in favour of quickfind in https://github.com/CollaboraOnline/online/pull/12581
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' ,function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/search_bar.odt');
