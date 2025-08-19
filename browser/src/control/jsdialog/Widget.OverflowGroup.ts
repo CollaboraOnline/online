@@ -68,6 +68,10 @@ function setupOverflowMenu(
 	const dropdownId = 'overflow-button-' + id;
 	let isCollapsed = false;
 
+	(parentContainer as OverflowGroupContainer).isCollapsed = () => {
+		return isCollapsed;
+	};
+
 	(parentContainer as OverflowGroupContainer).foldGroup = () => {
 		if (isCollapsed) return;
 		app.console.debug('overflow manager: fold group: ' + id);
