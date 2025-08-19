@@ -52,8 +52,8 @@ Using an autogen.input like this is known to work:
 --disable-opencl
 --disable-pch
 --without-doxygen
---without-lxml
 --without-lang
+--without-lxml
 ```
 
 The --with-distro, --with-visual-studio, and --enable-headless options
@@ -70,6 +70,26 @@ suitable windowing system found, exiting".
 You can attempt to run "make check" but that will probably run into
 some false positives.
 
+The above is for a debug build, for a release build, a known to work autogen.input is:
+
+```
+--with-distro=CODAWindows
+--with-visual-studio=2022
+--enable-headless
+--enable-mergelibs
+--enable-symbols
+--disable-ccache
+--disable-opencl
+--disable-pch
+--without-doxygen
+--without-galleries
+--without-lang
+--without-lxml
+```
+
+(The use of --disable-gallaries in the latter is not essential, could
+be used in the debug one, too.)
+
 ### Buikding also LibreOffice using WSL
 
 Apparently it should be possible nowadays to build LibreOffice core
@@ -79,6 +99,10 @@ branch, not in the coda-25.04 branch (which is based on the co-25.04
 branch, which is based on master some year ago, as far as I know). But
 if you experiment with it and notice that it works, by all means edit
 this file.
+
+Especialy when/if somebody would want or need to work on CODA on ARM64
+Windows, it would be good to be able to manage without Cygwin, as
+Cygwin is available only for x64 Windows.
 
 ## Build direct dependencies of CODA-W
 
@@ -101,7 +125,7 @@ zstd-1.5.7/build/VS2010/bin/x64\_Release/libzstd\_static.lib .
 
 ## Poco
 
-Download and unpack the poco-poco-1.13.3-release.zip archive.
+Download and unpack the poco-poco-1.14.2-release.zip archive.
 
 Then build it. Only a subset of it is needed. In a Ubuntu shell
 window, run:
@@ -133,7 +157,7 @@ Debug configuration of the CODALib project, and the Release libraries
 in a Release configuration. There is some slightly questionable
 #pragmas in <Poco/Foundation.h> to take care of that.)
 
-	./configure --enable-windowsapp --enable-debug --with-app-name=CODA --with-lo-builddir=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug --with-lo-path=c:/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/instdir --with-poco-includes=/mnt/c/Users/tml/poco-poco-1.13.3-release/include --with-poco-libs=/mnt/c/Users/tml/poco-poco-1.13.3-release/lib64 --with-zstd-includes=/mnt/c/Users/tml/zstd-1.5.7/lib --with-zstd-libs=/mnt/c/Users/tml/zstd-1.5.7/build/VS2010/bin/x64\_Debug --with-libpng-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/workdir/UnpackedTarball/libpng --with-libpng-libs=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/workdir/LinkTarget/StaticLibrary --with-zlib-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-debug/workdir/UnpackedTarball/zlib
+	./configure --enable-windowsapp --with-app-name=CODA --with-lo-builddir=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release --with-lo-path='C:\cygwin64\home\tml\lo\core-gitlab-coda25-coda-release\instdir' --with-poco-includes=/mnt/c/Users/tml/poco-poco-1.14.2-release/include --with-poco-libs=/mnt/c/Users/tml/poco-poco-1.14.2-release/lib64 --with-zstd-includes=/mnt/c/Users/tml/zstd-1.5.7/lib --with-zstd-libs=/mnt/c/Users/tml/zstd-1.5.7/build/VS2010/bin/x64_Release --with-libpng-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/UnpackedTarball/libpng --with-libpng-libs=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/LinkTarget/StaticLibrary --with-zlib-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/UnpackedTarball/zlib
 
 Obviously, adapt as necessary to match your username and where you
 built LibreOffice, zstd, and Poco.
