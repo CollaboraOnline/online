@@ -176,6 +176,9 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	focusToLastElement: function(id) {
+		if (id === undefined)
+			return;
+
 		const dialog = this.dialogs[id];
 		app.layoutingService.appendLayoutingTask(() => {
 			if (!dialog.lastFocusedElement) {
@@ -766,10 +769,12 @@ L.Control.JSDialog = L.Control.extend({
 
 		if (instance.action === 'fadeout')
 		{
+			app.console.debug('JSDialog: fadeout "' + (instance ? instance.id : '-') + '"');
 			this.fadeOutDialog(instance);
 		}
 		else if (instance.action === 'close')
 		{
+			app.console.debug('JSDialog: close "' + (instance ? instance.id : '-') + '"');
 			const dialogs = Object.keys(this.dialogs);
 			const hadOpenedDialog = dialogs.length > 0;
 
@@ -792,6 +797,8 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		}
 		else {
+			app.console.debug('JSDialog: full dialog "' + (instance ? instance.id : '-') + '"');
+
 			// There is no action, so we create a new dialogue.
 			if (instance.isModalPopUp || instance.isDocumentAreaPopup)
 				this.getOrCreateOverlay(instance);
@@ -821,6 +828,8 @@ L.Control.JSDialog = L.Control.extend({
 			instance.updatePos = this.setPosition.bind(this, instance);
 
 			app.layoutingService.appendLayoutingTask(() => {
+				app.console.debug('JSDialog: put items inside container for "' + instance.id + '"');
+
 				// dialog built - add to DOM now
 				if (existingNode) {
 					existingNode.container.replaceWith(instance.container);
