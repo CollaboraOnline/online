@@ -168,3 +168,18 @@ Now you can build the JavaScript bits:
 	(cd browser && make)
 
 And then finally, open the windows/coda/CODA.sln solution in Visual Studio and build it.
+
+To build CODA-W from the command line, run this in "x64 native Tools
+Command Prompt" window. To do it from a script you probably want to
+check what the PATH in such a command prompt window is, and make sure
+to use the relevant PATH entries in a .cmd file.
+
+	msbuild /p:Configuration=Release windows\coda\CODA.sln
+
+To first clean the build, run:
+
+	msbuild /p:Configuration=Release /t:Clean windows\coda\CODA.sln
+
+You could also run that from a WSL shell, as long as you make sure
+PATH has what is needed, and you quote the msbuild command-line
+parameters as needed.
