@@ -305,7 +305,9 @@ class NavigatorPanel extends SidebarBase {
 			.forEach((t) => t.classList.remove('selected'));
 
 		// Add 'selected' class to the clicked tab
-		this.navigationPanel.querySelector('#' + tabId).classList.add('selected');
+		// In Calc we don't have tabs so far
+		const tab = this.navigationPanel.querySelector('#' + tabId);
+		tab?.classList.add('selected');
 
 		// Toggle visibility based on tabId
 		if (tabId === 'tab-slide-sorter') {
