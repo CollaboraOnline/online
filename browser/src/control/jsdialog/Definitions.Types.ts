@@ -163,6 +163,11 @@ type MenuDefinition = {
 	items?: Array<any>; // submenu
 };
 
+type FunctionNameAlias = {
+	en: string;
+	de?: string;
+};
+
 interface ContainerWidgetJSON extends WidgetJSON {
 	layoutstyle?: string | 'start' | 'end'; // describes alignment of the elements
 	vertical?: boolean; // is horizontal or vertical container
