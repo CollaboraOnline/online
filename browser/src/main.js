@@ -107,14 +107,6 @@ if (window.ThisIsTheEmscriptenApp) {
 		onRuntimeInitialized: function() {
 			map.loadDocument(global.socket);
 		},
-		print: function (text) {
-			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-			console.warn(text);
-		},
-		printErr: function (text) {
-			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-			console.error(text);
-		},
 		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 	};
 	createOnlineModule(globalThis.Module);
