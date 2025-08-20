@@ -641,7 +641,7 @@ const arrayFunctions: Array<string> = [
 	_('FREQUENCY'),
 	_('GROWTH'),
 	_('LINEST'),
-	_('LONGEST'),
+	_('LOGEST'),
 	_('MDETERM'),
 	_('MINVERSE'),
 	_('MMULT'),
