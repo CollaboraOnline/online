@@ -1409,6 +1409,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'overflowgroup',
 				'id': 'insert-illustrations',
 				'name':_('Illustrations'),
+				'icon': 'lc_insertgraphic.svg',
 				'accessibility': { focusBack: true, combination: 'IG', de: null },
 				'children' : [
 										{
@@ -1433,7 +1434,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								!window.ThisIsAMobileApp ?
 									{
 										'id': 'insert-insert-multimedia:InsertMultimediaMenu',
-										'type': 'toolitem',
+										'type': 'menubutton',
+										'noLabel': true,
 										'text': _UNO('.uno:InsertAVMedia'),
 										'command': 'insertmultimedia',
 										'accessibility': { focusBack: true, combination: 'MM', de: null }, // IM was already taken, so 'MM' for MultiMedia
