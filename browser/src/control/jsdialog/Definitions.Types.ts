@@ -176,8 +176,11 @@ interface ContainerWidgetJSON extends WidgetJSON {
 interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
 	name: string; // visible name of a group
 	icon?: string; // Optional icon name. Otherwise it will be guessed.
+	more?: MoreOptions;
 }
-
+interface MoreOptions {
+	command: string;
+}
 interface OverflowGroupContainer extends Element {
 	foldGroup?: () => void;
 	isCollapsed?: () => boolean;

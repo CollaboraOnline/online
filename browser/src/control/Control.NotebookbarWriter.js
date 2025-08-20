@@ -646,6 +646,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'overflowgroup',
 				'id': 'home-font',
 				'name': 'Font',
+				'more': {
+					'command':'.uno:FontDialog'
+				},
 				'accessibility': { focusBack: false,	combination: 'FF',	de: null },
 				'children': [
 			{
@@ -788,6 +791,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'home-paragraph',
 				'name': 'Paragraph',
 				'accessibility': { focusBack: false, 	combination: 'U',	de: 'AA' },
+				'more': {
+					'command':'.uno:ParagraphDialog'
+				},
 				'children': [
 					{
 						'type': 'container',
@@ -945,8 +951,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'overflowgroup',
-				'id': 'home-insert-element',
-				'name': _('Insert Control'),
+				'id': 'home-illustrations',
+				'name':_('Illustrations'),
 				'accessibility': { focusBack: false,	combination: 'IT',	de:	null },
 				'children': [
 					{
@@ -2018,6 +2024,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'layout-align',
 				'name':_('Align'),
 				'accessibility': { focusBack: false,	combination: 'OL', de: null },
+				'more': {
+					'command':'.uno:TransformDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',
@@ -2085,6 +2094,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'layout-arrange',
 				'name':_('Arrange'),
 				'accessibility': { focusBack: false,	combination: 'OF', de: null },
+				'more': {
+					'command':'.uno:TransformDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',
@@ -3222,6 +3234,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'shape-align',
 				'name':_('Align'),
 				'accessibility': { focusBack: false, combination: 'SA', de: null },
+				'more': {
+					'command':'.uno:TransformDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',
@@ -3277,6 +3292,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'shape-arrange',
 				'name':_('Arrange'),
 				'accessibility': { focusBack: false, combination: 'AR', de: null },
+				'more': {
+					'command':'.uno:TransformDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',
@@ -3368,6 +3386,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'picture-adjustments',
 				'name':_('Image Controls'),
 				'accessibility': { focusBack: false, combination: 'BN', de: null },
+				'more': {
+					'command':'.uno:GraphicDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',
@@ -3533,6 +3554,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'picture-align',
 				'name':_('Align'),
 				'accessibility': { focusBack: false, combination: 'BP', de: null },
+				'more': {
+					'command':'.uno:GraphicDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',
@@ -3588,6 +3612,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'picture-arrange',
 				'name':_('Arrange'),
 				'accessibility': { focusBack: false, combination: 'AB', de: null },
+				'more': {
+					'command':'.uno:GraphicDialog'
+				},
 				'children' : [
 					{
 						'type': 'container',

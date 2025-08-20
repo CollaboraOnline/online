@@ -30,10 +30,49 @@ function migrateItems(from: HTMLElement, to: HTMLElement) {
 	});
 }
 
+function createMoreButton(
+	id: string,
+	more: MoreOptions,
+	groupLabel: HTMLElement,
+): HTMLElement {
+	const moreOptionsButton = document.createElement('button');
+	moreOptionsButton.className = 'ui-content unobutton';
+	moreOptionsButton.id = `${id}-more-button`;
+	moreOptionsButton.setAttribute('aria-label', `More options for ${id}`);
+	moreOptionsButton.setAttribute('aria-pressed', 'false');
+
+	const img = document.createElement('img');
+	app.LOUtil.setImage(img, 'lc_morebutton.svg', app.map);
+	moreOptionsButton.appendChild(img);
+
+	const unoToolButtonDiv = document.createElement('div');
+	unoToolButtonDiv.className = 'unotoolbutton ui-overflow-group-more';
+	unoToolButtonDiv.tabIndex = -1;
+	unoToolButtonDiv.setAttribute('data-cooltip', `More options for ${id}`);
+	unoToolButtonDiv.appendChild(moreOptionsButton);
+
+	const expanderIconRightDiv = document.createElement('div');
+	expanderIconRightDiv.className = 'ui-expander-icon-right jsdialog sidebar';
+	expanderIconRightDiv.appendChild(unoToolButtonDiv);
+
+	if (groupLabel.parentElement) {
+		groupLabel.parentElement.appendChild(expanderIconRightDiv);
+	}
+
+	moreOptionsButton.addEventListener('click', (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+		app.map.sendUnoCommand(more.command);
+	});
+
+	return expanderIconRightDiv;
+}
+
 function setupOverflowMenu(
 	parentContainer: HTMLElement,
 	overflowMenu: HTMLElement,
 	id: string,
+	more: MoreOptions | undefined,
 ) {
 	const overflowMenuButton = parentContainer.querySelector(
 		'[id^="overflow-button"]',
@@ -43,6 +82,12 @@ function setupOverflowMenu(
 	const groupLabel = parentContainer.querySelector(
 		'.ui-overflow-group-label',
 	) as HTMLElement;
+
+	let expanderIconRightDiv: HTMLElement | undefined;
+
+	if (more) {
+		expanderIconRightDiv = createMoreButton(id, more, groupLabel);
+	}
 
 	// keeps hidden items
 	const hiddenItems = L.DomUtil.create(
@@ -79,6 +124,9 @@ function setupOverflowMenu(
 
 		overflowMenuHandler(true);
 		groupLabel.style.display = 'none';
+		if (expanderIconRightDiv) {
+			expanderIconRightDiv.style.display = 'none';
+		}
 		overflowMenuButton.style.display = '';
 		isCollapsed = true;
 	};
@@ -90,6 +138,9 @@ function setupOverflowMenu(
 		JSDialog.CloseDropdown(dropdownId);
 
 		groupLabel.style.display = '';
+		if (expanderIconRightDiv) {
+			expanderIconRightDiv.style.display = '';
+		}
 		overflowMenuButton.style.display = 'none';
 		overflowMenuHandler(false);
 		isCollapsed = false;
@@ -250,7 +301,7 @@ JSDialog.OverflowGroup = function (
 		false,
 	);
 
-	setupOverflowMenu(container, contentContainer, data.id);
+	setupOverflowMenu(container, contentContainer, data.id, data.more);
 
 	return false;
 } as JSWidgetHandler;
