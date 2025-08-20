@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
-"PO-Revision-Date: 2025-07-05 11:01+0000\n"
-"Last-Translator: Yurt Page <yurtpage@gmail.com>\n"
+"PO-Revision-Date: 2025-08-20 07:51+0000\n"
+"Last-Translator: procellarium <procellarium@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "help/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.13\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1694,6 +1694,11 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">The menu bar:</span> Главное меню размещено наверху и "
+"включает в себя множество опций, команд для печати, редактирования, "
+"просмотра и других передовых команд. Вы можете скрыть строку меню на значке "
+"<span class=\"w2ui-icon fold icon-size\"></span> справа. Нажмите на значок "
+"<span class=\"w2ui-icon unfold icon-size\"></span>, чтобы показать меню."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -2010,7 +2015,6 @@ msgstr ""
 "скопированы из того же документа, с которым вы работаете."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
@@ -2155,14 +2159,12 @@ msgid "comment"
 msgstr "комментарий"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Нажмите значок (<span class=\"cool-annotation-menu\" style=\"height:0."
-"6cm;width:0.6cm;\"></span>) в подменю, чтобы ответить, переместить или "
-"удалить комментарии."
+"Нажмите на иконку submenu (<span class=\"cool-annotation-menu icon-size\""
+"></span>), чтобы ответить, переместить и удалить комментарии."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -2427,6 +2429,9 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
+"При нажатии правой кнопки мыши доступны контекстные меню. Команды, доступные "
+"в контекстном меню, связаны - не в полном объеме - с выделенным объектом в "
+"документе."
 
 #: html/cool-help.html%2Bdiv.div.div.h3:565-5
 msgid "Formatting text"
