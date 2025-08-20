@@ -2708,7 +2708,9 @@ kbd,
 }
 
 /* Insert - Line - Sidebar - Line Style */
-#floating_line_style_iconview.ui-iconview.jsdialog {
+/* Insert - Line - Sidebar - Thickness */
+#floating_line_style_iconview.ui-iconview.jsdialog,
+#line_iconview.ui-iconview.jsdialog {
 	grid-template-columns: 1fr; /* we want line style in a single column */
 }
 
@@ -2724,7 +2726,7 @@ kbd,
 	font-size: 0; /* Hide placeholder text to prevent layout shifts due to lazy loading */
 }
 
-:is(#floating_line_style_iconview, #floating_line_end_iconview).ui-iconview .ui-iconview-entry {
+:is(#floating_line_style_iconview, #floating_line_end_iconview, #line_iconview).ui-iconview .ui-iconview-entry {
 	border: 1px solid transparent !important; /* Prevents layout shift by reserving space for the border on hover */
 }
 
