@@ -91,6 +91,21 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				json.gridKeyboardNavigation = true;
 			break;
 
+			// allows to put regular JSDialog JSON into popup
+			case 'json':
+				entry = entries[i].content;
+				json.gridKeyboardNavigation = true;
+			break;
+
+			// horizontal separator in menu
+			case 'separator':
+				entry = {
+					id: id + '-entry-' + i,
+					type: 'separator',
+					orientation: 'horizontal'
+				};
+			break;
+
 			// menu and submenu entry
 			case 'action':
 			case 'menu':
@@ -108,21 +123,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					checked: entries[i].checked || checkedValue,
 					selected: entries[i].selected,
 					hasSubMenu: !!entries[i].items
-				};
-			break;
-
-			// allows to put regular JSDialog JSON into popup
-			case 'json':
-				entry = entries[i].content;
-				json.gridKeyboardNavigation = true;
-			break;
-
-			// horizontal separator in menu
-			case 'separator':
-				entry = {
-					id: id + '-entry-' + i,
-					type: 'separator',
-					orientation: 'horizontal'
 				};
 			break;
 		}
