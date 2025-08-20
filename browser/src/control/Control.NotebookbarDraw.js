@@ -401,6 +401,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'view-zoom',
 				'name':_('Zoom'),
+				'accessibility': { focusBack: true, combination: 'FR', de: null },
 				'children' : [
 					(window.mode.isTablet()) ?
 						{
@@ -505,6 +506,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'view-grid',
 				'name':_('Grid'),
+				'accessibility': { focusBack: true, combination: 'GV', de: null },
 				'children' : [
 					{
 						'type': 'toolbox',
@@ -590,6 +592,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-clipboard',
 				'name':_('Clipboard'),
+				'accessibility': { focusBack: true, combination: 'V', de: null },
 				'children' : [					
 					{
 						'id': 'home-paste:PasteMenu',
@@ -649,6 +652,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-font',
 				'name':_('Font'),
+				'accessibility': { focusBack: true, combination: 'FN', de: null },
 				'children' : [					
 					{
 						'type': 'container',
@@ -785,6 +789,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-alignment',
 				'name':_('Alignment'),
+				'accessibility': { focusBack: true, combination: 'AT', de: null },
 				'children' : [					
 					{
 						'type': 'container',
@@ -871,6 +876,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-paragraph',
 				'name':_('Paragraph'),
+				'accessibility': { focusBack: true, combination: 'BD', de: null },
 				'children' : [
 					{
 						'type': 'container',
@@ -980,6 +986,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-illustrations',
 				'name':_('Illustrations'),
+				'accessibility': { focusBack: true, combination: 'IS', de: null },
 				'children' : [
 					{
 						'type': 'container',
@@ -1098,6 +1105,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-page-insert',
 				'name':_('Insert'),
+				'accessibility': { focusBack: true, combination: 'IP', de: null },
 				'children' : [
 					{
 						'type': 'container',
@@ -1136,6 +1144,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'home-search',
 				'name':_('Search'),
+				'accessibility': { focusBack: true, combination: 'SS', de: null },
 				'children' : [
 					{
 						'type': 'container',
@@ -1188,6 +1197,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'layout-page',
 				'name':_('Page'),
+				'accessibility': { focusBack: true, combination: 'IP', de: null },
 				'children' : [
 					{
 						'id': 'layout-insert-page',
@@ -1261,6 +1271,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'layout-align',
 				'name':_('Align'),
+				'accessibility': { focusBack: true, combination: 'AL', de: null },
 				'children' : [
 					{
 						'type': 'container',
@@ -1327,6 +1338,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'layout-arrange',
 				'name':_('Arrange'),
+				'accessibility': { focusBack: true, combination: 'FO', de: null },
 				'children' : [
 					{
 						'type': 'container',
@@ -1385,6 +1397,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'insert-page',
 				'name':_('Page'),
+				'accessibility': { focusBack: true, combination: 'IP', de: null },
 				'children' : [
 					{
 						'id': 'insert-insert-page',
@@ -1430,6 +1443,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'insert-illustrations',
 				'name':_('Illustrations'),
+				'accessibility': { focusBack: true, combination: 'IG', de: null },
 				'children' : [
 					{
 						'id': 'insert-insert-graphic:InsertImageMenu',
@@ -1535,6 +1549,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'insert-field',
 				'name':_('Field'),
+				'accessibility': { focusBack: true, combination: 'RL', de: null },
 				'children' : [
 					(this.map['wopi'].EnableRemoteLinkPicker) ? {
 						'id': 'insert-remote-link',
@@ -1624,6 +1639,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'insert-text',
 				'name':_('Text'),
+				'accessibility': { focusBack: true, combination: 'TI', de: null },
 				'children' : [
 					{
 						'id': 'insert-text',
@@ -1709,6 +1725,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'overflowgroup',
 				'id': 'format-style',
 				'name':_('Style'),
+				'accessibility': { focusBack: true, combination: 'FD', de: null },
 				'children' : [
 					{
 						'id': 'format-font-dialog',
