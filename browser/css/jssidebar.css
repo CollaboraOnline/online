@@ -65,7 +65,8 @@ img.sidebar.ui-image {
 	display: flex;
 }
 
-.ui-expander-icon-right .sidebar.unotoolbutton {
+.ui-expander-icon-right .sidebar.unotoolbutton,
+.ui-expander-icon-right .ui-overflow-group-more.unotoolbutton {
 	margin: 0px !important;
 }
 
@@ -74,7 +75,9 @@ img.sidebar.ui-image {
 }
 
 .ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button,
-.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button img {
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button,
+.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button img,
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button img {
 	width: 10px;
 	height: 10px;
 	padding: 0;
@@ -168,7 +171,8 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 .sidebar.ui-grid-cell .sidebar.ui-pushbutton {
 	margin: 0;
 }
-.sidebar.unotoolbutton {
+.sidebar.unotoolbutton,
+.ui-overflow-group-more.unotoolbutton {
 	margin-right: 3px;
 	padding: 0 !important;
 }

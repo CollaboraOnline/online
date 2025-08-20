@@ -26,6 +26,7 @@
 .hasnotebookbar .ui-content.unotoolbutton.inline,
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
 .sidebar.unotoolbutton,
+.ui-overflow-group-more.unotoolbutton,
 .jsdialog.unotoolbutton,
 .notebookbar.unotoolbutton,
 #closebutton {
@@ -75,6 +76,7 @@
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
 .sidebar.unotoolbutton.selected:hover,
+.ui-overflow-group-more.unotoolbutton:hover,
 .notebookbar.unotoolbutton.selected:hover,
 .jsdialog.unotoolbutton.selected:hover {
 	color: var(--color-text-darker);
