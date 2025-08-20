@@ -2707,6 +2707,20 @@ kbd,
 	width: fit-content; /* makes button text visible*/
 }
 
+/* Insert - Line - Sidebar - Line Style */
+
+#floating_line_style_iconview.ui-iconview.jsdialog {
+	grid-template-columns: 1fr; /* we want line style in a single column */
+}
+
+#floating_line_style_iconview.ui-iconview.jsdialog {
+	font-size: 0; /* Hide placeholder text to prevent layout shifts due to lazy loading */
+}
+
+#floating_line_style_iconview.ui-iconview .ui-iconview-entry {
+	border: 1px solid transparent !important;
+}
+
 /* Select Chart - Sidebar - Edit Object - Colors */
 :is(#colorful_palettes, #monochromatic_palettes) .ui-iconview-entry {
 	border: 1px solid transparent;
