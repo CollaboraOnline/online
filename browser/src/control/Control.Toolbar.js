@@ -1111,12 +1111,6 @@ $(document).ready(function() {
 function setupToolbar(e) {
 	map = e;
 
-	map.on('focussearch', function () {
-		var entry = L.DomUtil.get('search-input');
-		entry.focus();
-		entry.select();
-	});
-
 	map.on('search', function (e) {
 		var searchInput = L.DomUtil.get('search-input');
 		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;

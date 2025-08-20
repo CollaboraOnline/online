@@ -1310,7 +1310,7 @@ class UIManager extends L.Control {
 			this.showNavigator();
 		}
 		else {
-			this.showStatusBar();
+			app.socket.sendMessage('uno .uno:SearchDialog');
 		}
 		this.map.fire('focussearch');
 	}
