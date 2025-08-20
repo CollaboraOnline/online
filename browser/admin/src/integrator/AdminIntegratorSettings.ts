@@ -114,17 +114,17 @@ class SettingIframe {
 		accessibilityState: _('Accessibility'),
 	};
 	private readonly settingLabels: Record<string, string> = {
-		darkTheme: 'Dark mode',
-		compactMode: 'Compact layout',
-		ShowStatusbar: 'Show status bar',
-		ShowRuler: 'Show ruler',
-		A11yCheckDeck: 'Accessibility Checker',
-		NavigatorDeck: 'Navigator',
-		PropertyDeck: 'Show Sidebar',
-		SdCustomAnimationDeck: 'Custom Animation',
-		SdMasterPagesDeck: 'Master Pages',
-		SdSlideTransitionDeck: 'Slide Transition',
-		StyleListDeck: 'Style List',
+		darkTheme: _('Dark mode'),
+		compactMode: _('Compact layout'),
+		ShowStatusbar: _('Show status bar'),
+		ShowRuler: _('Show ruler'),
+		A11yCheckDeck: _('Accessibility Checker'),
+		NavigatorDeck: _('Navigator'),
+		PropertyDeck: _('Show Sidebar'),
+		SdCustomAnimationDeck: _('Custom Animation'),
+		SdMasterPagesDeck: _('Master Pages'),
+		SdSlideTransitionDeck: _('Slide Transition'),
+		StyleListDeck: _('Style List'),
 		// Add more as needed
 	};
 
