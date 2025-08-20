@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-29 23:05+0200\n"
-"PO-Revision-Date: 2025-08-15 11:02+0000\n"
+"PO-Revision-Date: 2025-08-20 07:51+0000\n"
 "Last-Translator: Pavol Hodas <teachquiz1@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "help/sk/>\n"
@@ -24,7 +24,7 @@ msgstr "Všeobecné klávesové skratky"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-38
 msgid "Undo"
-msgstr "Vrátiť"
+msgstr "Vrátiť späť"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
@@ -407,7 +407,8 @@ msgstr "Posuň kurzor so selekciou doľava"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:214-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:279-103
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Šípka Doľava</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-38
@@ -419,7 +420,8 @@ msgstr "Prejsť na začiatok slova"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:280-90
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Šípka Doľava</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-38
@@ -435,7 +437,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
+"\"kbd--plus\">+</span><kbd>Šípka Doľava</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-38
@@ -461,7 +463,7 @@ msgstr "Posuň kurzor so selekciou doprava"
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Šípka Doprava</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
@@ -473,7 +475,8 @@ msgstr "Presunúť kurzor na začiatok nasledujúceho slova"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:284-93
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Šípka Doprava</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
@@ -593,7 +596,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>šípka dole</kbd>"
+"\"kbd--plus\">+</span><kbd>Šípka Dole</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -612,14 +615,14 @@ msgstr "Domov"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-38
 msgid "Go and select to the beginning of a line"
-msgstr "Vybrať text po začiatok riadka"
+msgstr "Prejsť a označiť začiatok riadka"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-105
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Domov</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
@@ -633,11 +636,11 @@ msgstr "Prejsť na začiatok dokumentu"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-88
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Domov</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
-msgstr "Vybrať text od pôvodnej pozície po začiatok dokumentu"
+msgstr "Prejsť a označiť začiatok dokumentu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-103
@@ -647,7 +650,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Home</kbd>"
+"\"kbd--plus\">+</span><kbd>Domov</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -666,14 +669,14 @@ msgstr "Koniec"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-38
 msgid "Go and select to the end of a line"
-msgstr "Vybrať text po koniec riadka"
+msgstr "Prejsť a vybrať po koniec riadku"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:77-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Koniec</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -687,7 +690,7 @@ msgstr "Prejsť na koniec dokumentu"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-86
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Koniec</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
@@ -701,7 +704,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>End</kbd>"
+"\"kbd--plus\">+</span><kbd>Koniec</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -709,7 +712,7 @@ msgstr "Presunúť zobrazenie o stranu nahor"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-90
 msgid "PageUp"
-msgstr "PageUp"
+msgstr "Stránka nahor"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-38
 msgid "Switch cursor between text and header"
@@ -717,7 +720,8 @@ msgstr "Prepnúť kurzor medzi textom a hlavičkou"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka nahor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
@@ -725,7 +729,8 @@ msgstr "Rozšíriť výber o stranu nahor"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka nahor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -733,7 +738,7 @@ msgstr "Presunúť zobrazenie o stranu nadol"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-92
 msgid "PageDown"
-msgstr "PageDown"
+msgstr "Stránka nadol"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-38
 msgid "Switch cursor between text and footer"
@@ -741,7 +746,8 @@ msgstr "Prepnúť kurzor medzi textom a pätou"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka nadol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
@@ -749,7 +755,8 @@ msgstr "Rozšíriť zobrazenie o stranu nadol"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka nadol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
@@ -841,7 +848,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Šípky</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-133
 msgid ""
@@ -854,7 +861,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>šípka</kbd>"
+"\"kbd--plus\">+</span><kbd>Šípky</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -866,7 +873,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>šípka</kbd>"
+"\"kbd--plus\">+</span><kbd>Šípky</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-228
@@ -881,7 +888,7 @@ msgid ""
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-">+</span><kbd>šípka</kbd>"
+">+</span><kbd>Šípky</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
@@ -893,7 +900,7 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "3 sekundy v režime vkladania, šípka vloží riadok/stĺpec, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>šípka</kbd> vloží bunku"
+"kbd><span class=\"kbd--plus\">+</span><kbd>ˇŠípka</kbd> vloží bunku"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
@@ -989,7 +996,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
-msgstr "Vložiť značku miesta na zalomenie"
+msgstr "Vložiť voliteľné rozdelenie"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
@@ -1084,9 +1091,8 @@ msgid "Moves the cursor to the first cell of the current row."
 msgstr "Presunie kurzor na prvú bunku aktuálneho riadka."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
-#, fuzzy
 msgid "Moves the cursor to the last cell of the current row."
-msgstr "Presunie kurzor na prvú bunku aktuálneho riadka."
+msgstr "Presunie kurzor na poslednú bunku aktuálneho riadka."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-38
 msgid ""
@@ -1108,7 +1114,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka Nahor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
@@ -1120,7 +1127,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka Nadol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1190,7 +1198,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"\"kbd--plus\">+</span><kbd>Stránka Nadol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1202,7 +1210,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"\"kbd--plus\">+</span><kbd>Stránka Nahor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1221,25 +1229,25 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>šípka hore</kbd>"
+"\"kbd--plus\">+</span><kbd>Šípka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
 msgstr "Presunie sa o jeden hárok doľava."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka nahor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 msgid "Moves one screen page to the right."
 msgstr "Presunie sa o jednu obrazovkovú stranu doprava."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Stránka nadol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1252,13 +1260,12 @@ msgstr ""
 "Predchádzajúci hárok sa stane aktuálnym hárkom."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Stránka nahor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1271,13 +1278,12 @@ msgstr ""
 "Nasledujúci hárok sa stane aktuálnym hárkom."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Stránka nadol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1290,9 +1296,8 @@ msgstr ""
 "ohraničený prázdnymi riadkami a stĺpcami."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-38
 msgid ""
@@ -1303,27 +1308,26 @@ msgstr ""
 "vzorca, ktorý obsahuje kurzor."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "Vložiť bunky (ako v ponuke Vložiť – Bunky)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tlačidlo Plus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "Odstrániť bunky (ako v ponuke Upraviť – Odstrániť bunky)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tlačidlo Mínus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 msgid "Cell formatting"
@@ -1331,12 +1335,11 @@ msgstr "Formátovanie bunky"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:168-38
 msgid "Display comment"
-msgstr "Zobraziť poznámku"
+msgstr "Zobraziť komentár"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:168-80
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-38
 msgid "Fill Down"
@@ -1351,78 +1354,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "Dve desatinné miesta, oddeľovač tisícok"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
 msgstr "Štandardný exponenciálny formát"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
 msgstr "Štandardný formát dátumu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
 msgstr "Štandardný formát meny"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "Štandardný formát percent (dve desatinné miesta)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-112
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
 msgstr "Štandardný formát"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:205-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-38
@@ -1445,9 +1442,8 @@ msgstr "Zvýšiť úroveň položky (položka musí byť vybraná)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-127
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:210-9
 #: html/cool-help.html%2Bdiv.div.div.h2:275-9
@@ -1493,7 +1489,6 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "Vybrať objekty v opačnom poradí, ako boli vytvorené"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-38
-#, fuzzy
 msgid "Move to next text object on slide"
 msgstr "Prejsť na nasledujúci textový objekt snímky"
 
@@ -1502,23 +1497,20 @@ msgid "Select all in slide"
 msgstr "Označiť všetko na snímke"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:305-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Skratky pre snímky prezentácie"
+msgstr "Klávesové skratky pre stránku s kresbou"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Prejsť na nasledujúci textový objekt snímky"
+msgstr "Prejsť na ďalší textový objekt na stránke s kresbou"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-38
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Vybrať všetko na snímke"
+msgstr "Vybrať všetko na stránke s kresbou"
 
 #: html/cool-help.html%2Bdiv.h1:317-5
 msgid "<span class=\"productname\">{productname}</span> Help"
-msgstr "Pomocník <span class=\"productname\">{productname}</span>"
+msgstr "<span class=\"productname\">{productname}</span>Pomocník"
 
 #: html/cool-help.html%2Bdiv.p:318-5
 #: html/cool-help.html%2Bdiv.div.h3:354-5
@@ -1528,8 +1520,7 @@ msgstr "Spolupráca pri úpravách"
 #: html/cool-help.html%2Bdiv.p:319-5
 #: html/cool-help.html%2Bdiv.div.h3:365-5
 msgid "<span class=\"productname\">{productname}</span> user interface"
-msgstr ""
-"Používateľské rozhranie <span class=\"productname\">{productname}</span>"
+msgstr "<span class=\"productname\">{productname}</span>Používateľské rozhranie"
 
 #: html/cool-help.html%2Bdiv.p:320-5
 #: html/cool-help.html%2Bdiv.div.h3:403-5
@@ -1553,7 +1544,7 @@ msgstr "Pokročilé funkcie"
 #: html/cool-help.html%2Bdiv.div.p:324-9
 #: html/cool-help.html%2Bdiv.div.h2:483-5
 msgid "<span class=\"productname\">{productname}</span> spreadsheets"
-msgstr "Hárky <span class=\"productname\">{productname}</span>"
+msgstr "<span class=\"productname\">{productname}</span>Hárky"
 
 #: html/cool-help.html%2Bdiv.div.p:325-9
 #: html/cool-help.html%2Bdiv.div.div.h3:486-5
@@ -1579,7 +1570,7 @@ msgstr "Hárky"
 #: html/cool-help.html%2Bdiv.div.p:332-9
 #: html/cool-help.html%2Bdiv.div.h2:552-5
 msgid "<span class=\"productname\">{productname}</span> text documents"
-msgstr "Textové dokumenty <span class=\"productname\">{productname}</span>"
+msgstr "<span class=\"productname\">{productname}</span>Textové dokumenty"
 
 #: html/cool-help.html%2Bdiv.div.p:333-9
 #: html/cool-help.html%2Bdiv.div.div.h3:555-5
@@ -1604,12 +1595,12 @@ msgstr "Textové dokumenty"
 #: html/cool-help.html%2Bdiv.div.p:339-9
 #: html/cool-help.html%2Bdiv.div.h2:606-5
 msgid "<span class=\"productname\">{productname}</span> presentations"
-msgstr "Prezentácie <span class=\"productname\">{productname}</span>"
+msgstr "<span class=\"productname\">{productname}</span>Prezentácie"
 
 #: html/cool-help.html%2Bdiv.div.p:340-9
 #: html/cool-help.html%2Bdiv.div.div.h3:609-5
 msgid "Editing presentations"
-msgstr "Úprava prezentacií"
+msgstr "Úprava prezentácií"
 
 #: html/cool-help.html%2Bdiv.div.p:341-9
 #: html/cool-help.html%2Bdiv.div.div.h3:614-5
@@ -1666,8 +1657,8 @@ msgid ""
 "<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"Oznámením v päte <span class=\"productname\">{productname}</span> informuje, "
-"keď sa pripojí nový používateľ alebo existujúci používateľ dokument opustí."
+"<span class=\"productname\">{productname}</span> informuje, keď sa pripojí "
+"nový používateľ alebo existujúci používateľ dokument opustí."
 
 #: html/cool-help.html%2Bdiv.div.div.p:366-30
 msgid ""
@@ -1899,7 +1890,7 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
-"Ak chcete kopírovať väčšie časti obsahu do iných aplikácií na svojpom "
+"Ak chcete kopírovať väčšie časti obsahu do iných aplikácií na svojom "
 "zariadení, je nutné stlačiť tlačidlo <span class=\"ui\">Spustiť preberanie</"
 "span> a potom znovu skopírovať obsah do schránky tohto zariadenia, čím sa "
 "stane pre cieľovú aplikáciu dostupný. Tento export obsahu pre vloženie do "
@@ -1930,9 +1921,8 @@ msgstr ""
 "\"ui\">Prejsť na stav</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:424-29
-#, fuzzy
 msgid "document repair"
-msgstr "Oprava dokumentu"
+msgstr "oprava dokumentu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:425-5
 msgid ""
@@ -1962,9 +1952,8 @@ msgstr ""
 "Dokument je neaktívny – na pokračovanie v úpravách kliknite“."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:430-29
-#, fuzzy
 msgid "inactive document"
-msgstr "Neaktívny dokument"
+msgstr "neaktívny dokument"
 
 #: html/cool-help.html%2Bdiv.div.div.p:431-5
 msgid ""
@@ -2013,7 +2002,6 @@ msgstr ""
 "dokumentu, v ktorom pracujete."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
@@ -2095,7 +2083,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:462-5
 msgid "Handling images"
-msgstr "Práca s tabuľkami"
+msgstr "Práca s obrázkami"
 
 #: html/cool-help.html%2Bdiv.div.div.p:463-5
 msgid ""
@@ -2180,9 +2168,8 @@ msgstr ""
 "kontextové menu s návrhmi na opravu."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:477-29
-#, fuzzy
 msgid "spellchecking"
-msgstr "Kontrola pravopisu"
+msgstr "kontrola pravopisu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:478-5
 msgid ""
@@ -2203,11 +2190,11 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
-"Tabuľkový hárok uložený online upravujete rovnako ako hárok v desktopovej "
-"aplikácii. Rovnaké zostávajú operácie ako zadávanie dát či výber oblastí, "
-"stĺpcov, riadkov alebo listov. Príkazy v hárku spustíte pomocou klávesnice, "
-"menu alebo nástrojovej lišty. Podporované je tiež presúvanie obsahu buniek, "
-"ktoré vyplní do buniek dáta. Príkazy vystrihnúť, kopírovať a vložiť sú k "
+"Tabuľkový hárok upravujete rovnako ako hárok v desktopovej aplikácii. "
+"Rovnaké zostávajú operácie ako zadávanie dát či výber oblastí, stĺpcov, "
+"riadkov alebo listov. Príkazy v hárku spustíte pomocou klávesnice, menu "
+"alebo nástrojovej lišty. Podporované je tiež presúvanie obsahu buniek, ktoré "
+"vyplní do buniek dáta. Príkazy vystrihnúť, kopírovať a vložiť sú k "
 "dispozícii v kontextovom menu. Ak stlačíte po zadaní dát <kbd>Tab</kbd>, "
 "kurzor sa presunie do bunky nasledujúcej vpravo, po stlačení klávesu "
 "<kbd>Enter</kbd> sa presunie do bunky nižšie; tým ľahšie zadáte ďalší záznam."
@@ -2222,7 +2209,6 @@ msgid "All spreadsheets functions and mathematical rules applies."
 msgstr "K dispozícii sú všetky funkcie hárku a matematické pravidlá."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:496-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -2231,8 +2217,8 @@ msgid ""
 msgstr ""
 "Zápis vzorcov by mal byť zrejmý všetkým používateľom tabuľkových procesorov. "
 "Podrobnosti sú uvedené v <a href=\"https://www.oasis-open.org/committees/"
-"download.php/16826/openformula-spec-20060221.html\">špecifikácii OASIS "
-"OpenFormula</a>."
+"download.php/16826/openformula-spec-20060221.html\" target=\"_blank\" rel="
+"\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:503-5
 msgid ""
@@ -2469,7 +2455,7 @@ msgid ""
 msgstr ""
 "<span class=\"def\">Priame formátovanie:</span> Objekty textového dokumentu "
 "môžete formátovať priamo príkazmi z menu, nástrojovej lišty alebo "
-"kontextového menu. Priame formátovanie sa uplatňuje len na aktuálne vybratý "
+"kontextového menu. Priame formátovanie sa uplatňuje len na aktuálne zvolený "
 "objekt."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:572-5
@@ -2527,9 +2513,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:590-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:724-29
-#, fuzzy
 msgid "track changes"
-msgstr "Sledovanie zmien"
+msgstr "sledovanie zmien"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:591-5
 msgid ""
@@ -2825,7 +2810,6 @@ msgstr ""
 "vhodný návrh."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:682-5
-#, fuzzy
 msgid "Is there a thesaurus?"
 msgstr "Je k dispozícii slovník synoným?"
 
@@ -2940,7 +2924,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr "Prečo sa text preškrtává namiesto toho, aby sa zmazal?"
+msgstr "Prečo sa text preškrtáva namiesto toho, aby sa zmazal?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:716-5
 msgid ""
@@ -2952,7 +2936,7 @@ msgid ""
 msgstr ""
 "Máte v dokumente zapnuté sledovanie zmien. V dôsledku toho sa zaznamenávajú "
 "všetky zmeny textu a zobrazujú sa, aby si ich bolo možné neskôr prezrieť. "
-"Sledovanie zmien sa povoľuje voľbou <span class=\"ui\">Upraviť</span> → "
+"Sledovanie zmien sa povolilo voľbou <span class=\"ui\">Upraviť</span> → "
 "<span class=\"ui\">Sledovať zmeny</span> → <span class=\"ui\">Záznam</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:717-5
@@ -2985,17 +2969,16 @@ msgstr ""
 "Farby priradené k zmenám závisia na tom, ktorý používateľ dokument zmenil."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:726-5
-#, fuzzy
 msgid ""
 "To display or hide track changes choose <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. "
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
-"Ak chcete sledované zmeny zobraziť alebo skryť, vyberte <span class=\"ui\""
-">Upraviť</span> → <span class=\"ui\">Sledovať zmeny</span> → <span class=\"ui"
-"\">Zobraziť</span>. Majte na pamäti, že ak je sledovanie zmien povolené, ale "
-"zmeny sú skryté, zmeny sa stále zaznamenávajú. Tým môžete v dokumente "
+"Ak chcete zobraziť alebo skryť sledované zmeny, vyberte <span class=\"ui\""
+">Upraviť</span> → <span class=\"ui\">Sledovať zmeny</span> → <span class="
+"\"ui\">Zobraziť</span>. Majte na pamäti, že ak je sledovanie zmien povolené "
+"ale zmeny sú skryté, zmeny sa stále zaznamenávajú. Tým môžete v dokumente "
 "nechtiac zanechať nežiaduci text."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:727-5
@@ -3103,15 +3086,14 @@ msgid "Select the text with the existing format"
 msgstr "Vyberte text s existujúcim formátom"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Kliknite na ikonu štetca formátu <img style=\"height:0.6cm;width:0.6cm;\" "
-"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Kurzor myši sa zmení na "
-"vedierko s farbou."
+"Kliknite na ikonu štetca formátu <img class=\"icon-size\" alt=\"\" src=\""
+"images/lc_formatpaintbrush.svg\" />. Kurzor myši sa zmení na vedierko s "
+"farbou."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3192,9 +3174,9 @@ msgid ""
 "opens to let you describe the precise format of the CSV data."
 msgstr ""
 "Vložte dáta z ponuky prehliadača <span class=\"ui\">Upraviť</span> → <span "
-"class=\"ui\">Vložiť</span> alebo stlačte <kbd>Ctrl</kbd> <kbd>V</kbd>. V "
-"dialógovom okne <span class=\"ui\">Import textu</span> presne popíšte formát "
-"dát CSV."
+"class=\"ui\">Vložiť</span> alebo stlačte <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>. V dialógovom okne <span class=\"ui\""
+">Import textu</span> presne popíšte formát dát CSV."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:789-31
 msgid "import"
@@ -3226,14 +3208,13 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Nastavte pre zdrojové bunky písmo, farbu pozadia a ďalšie vlastnosti."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Kliknite na ikonu štetca formátu <img style=\"height:0.6cm;width:0.6cm;\" "
-"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Kurzor myši sa zmení na "
-"vedierko s farbou."
+"Kliknite na ikonu štetca formátu <img class=\"icon-size\" src="
+"\"images/lc_formatpaintbrush.svg\" />. Kurzor myši sa zmení na vedierko s "
+"farbou."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."

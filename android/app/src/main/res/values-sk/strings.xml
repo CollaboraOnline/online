@@ -54,7 +54,7 @@
     <string name="temp_file_saving_disabled">Súbor je len na čítanie, ukladanie je zakázané.</string>
     <string name="no_items">Žiadne položky</string>
     <string name="no_recent_items">Otvorte súbor kliknutím na ikonu priečinka na nástrojovej lište.</string>
-    <string name="app_vendor">Dodávateľom tohto produktu je $VENDOR.</string>
+    <string name="app_vendor">Toto vydanie bolo dodané od $VENDOR.</string>
     <string name="app_description">$APP_NAME je moderný a ľahko použiteľný kancelársky balík s otvoreným kódom na spracovanie textu, tabuliek, prezentácií a ďalších dokumentov.</string>
     <string name="app_version">Verzia: %1$s, ID zostavenia: %2$s</string>
     <string name="app_name_settings">Nastavenia</string>
@@ -64,7 +64,7 @@
     <string name="owncloud_wrong_connection">Nedá sa pripojiť ku cloudovému serveru. Skontrolujte konfiguráciu.</string>
     <string name="title_activity_show_html">O aplikácii</string>
     <string name="directory_not_saved">Priečinok nebol uložený.</string>
-    <string name="bmp_null">BMP je prázdne!</string>
+    <string name="bmp_null">Bmp je prázdne!</string>
     <string name="unable_to_go_further">Nemožno ísť ďalej.</string>
     <string name="share_document">Zdieľať dokument</string>
     <string name="loading">Načítanie...</string>
@@ -102,15 +102,13 @@
     <string name="remove_from_list">Odstrániť zo zoznamu</string>
     <string name="file_actions_icon_desc">Operácie so súbormi</string>
     <string name="pref_category_editor">Nastavenia editora</string>
-    <string name="app_version_and_hash">Verzia: %1$s
-\ngit-hash pre online: %2$s
-\ngit-hash pre core: %3$s</string>
+    <string name="app_version_and_hash">Verzia: %1$s\nonline git-hash: %2$s\ncore git-hash:%3$s</string>
     <string name="theme_light">Svetlá</string>
     <string name="theme_dark">Tmavá</string>
-    <string name="theme_system_default">Predvolená téma</string>
+    <string name="theme_system_default">Východzie pre systém</string>
     <string name="choose_theme">Vybrať tému vzhľadu</string>
     <string name="theme">Téma vzhľadu</string>
     <string name="pref_user_name">Meno používateľa</string>
-    <string name="pref_user_name_info">Používa sa pri pridávaní komentárov</string>
+    <string name="pref_user_name_info">Používa sa pri pridávaní komentáru</string>
     <string name="pref_user_name_guest">Používateľ typu Hosť</string>
 </resources>
