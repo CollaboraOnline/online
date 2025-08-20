@@ -172,7 +172,9 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					JSDialog.CloseDropdown(id);
 					return;
 				}
-			} else if (!lastSubMenuOpened && eventType === 'hidedropdown') {
+			} else if (eventType === 'hidedropdown') {
+				if (lastSubMenuOpened)
+					JSDialog.CloseDropdown(lastSubMenuOpened);
 				JSDialog.CloseDropdown(id);
 			}
 

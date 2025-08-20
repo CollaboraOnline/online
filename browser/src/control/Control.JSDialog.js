@@ -263,9 +263,12 @@ L.Control.JSDialog = L.Control.extend({
 			overlay = L.DomUtil.create('div', 'jsdialog-overlay ' + (instance.cancellable && !instance.hasOverlay ? 'cancellable' : ''), instance.containerParent);
 			overlay.id = instance.id + '-overlay';
 			if (instance.cancellable) {
-				// dropdowns are online-only components, don't exist in core
-				var hasToNotifyServer = !instance.isDropdown;
-				overlay.onclick = () => { this.close(instance.id, hasToNotifyServer); };
+				overlay.onclick = () => {
+					if (instance.isDropdown) {
+						instance.builder.callback('dropdown', 'hidedropdown', {id: instance.id}, null, instance.builder);
+						return;
+					}
+					this.close(instance.id, true); };
 			}
 		}
 		instance.overlay = overlay;
