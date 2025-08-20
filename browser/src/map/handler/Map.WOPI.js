@@ -185,13 +185,13 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
+		if (this.DisableInsertLocalImage) {
+			JSDialog.MenuDefinitions.set('InsertImageMenu', []);
+			JSDialog.MenuDefinitions.set('InsertMultimediaMenu', []);
+		}
+
 		var menuEntriesImage = JSDialog.MenuDefinitions.get('InsertImageMenu');
 		var menuEntriesMultimedia = JSDialog.MenuDefinitions.get('InsertMultimediaMenu');
-
-		if (!this.DisableInsertLocalImage) {
-			menuEntriesImage.push({ action: 'localgraphic', text: _('Insert Local Image') });
-			menuEntriesMultimedia.push({ action: 'insertmultimedia', text: _('Insert Local Multimedia') });
-		}
 
 		if (this.EnableInsertRemoteImage) {
 			menuEntriesImage.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
