@@ -225,11 +225,6 @@ class StatusBar extends JSDialog.Toolbar {
 
 	getToolItems() {
 		return [
-			{type: 'searchedit',  id: 'search', placeholder: _('Search'), text: ''},
-			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false, pressAndHold: true},
-			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false, pressAndHold: true},
-			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},
-			{type: 'separator', id: 'searchbreak', orientation: 'vertical'},
 			this._generateHtmlItem('statusdocpos'), 					// spreadsheet
 			this._generateHtmlItem('rowcolselcount', 1), 					// spreadsheet
 			this._generateHtmlItem('statepagenumber'), 					// text
@@ -311,7 +306,6 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('permissionmode-container', true);
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
-				this.showItem('search', false);
 			}
 			break;
 
