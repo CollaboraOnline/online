@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-20 10:16+0200\n"
-"PO-Revision-Date: 2025-07-26 07:06+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"POT-Creation-Date: 2025-08-20 09:56+0200\n"
+"PO-Revision-Date: 2025-08-20 07:51+0000\n"
+"Last-Translator: Pavol Hodas <teachquiz1@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sk/>\n"
-"Language: sk\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -141,10 +141,10 @@ msgid "Network Graph"
 msgstr "Graf siete"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:623
-#: admin/src/integrator/AdminIntegratorSettings.ts:1292
+#: admin/src/integrator/AdminIntegratorSettings.ts:631
+#: admin/src/integrator/AdminIntegratorSettings.ts:1300
 #: admin/src/integrator/WordBook.ts:394
-#: src/canvas/sections/CommentListSection.ts:512
+#: src/canvas/sections/CommentListSection.ts:513
 #: src/canvas/sections/CommentSection.ts:166
 #: src/control/Control.Notebookbar.js:291
 #: src/control/Control.NotebookbarDraw.js:29
@@ -216,7 +216,7 @@ msgstr "Obnoviť protokol"
 msgid "Channel Filter:"
 msgstr "Filter kanálu:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:490
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:493
 #: src/control/Control.StatusBar.js:219 src/control/Control.StatusBar.js:224
 msgid "None"
 msgstr "Žiadne"
@@ -227,20 +227,20 @@ msgstr "Nastaviť úroveň protokolu"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr "Úrovne protokolu"
+msgstr "Úrovne podrobností protokolu"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:165
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:166
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:436 src/core/Socket.js:1217 src/core/Socket.js:1222
+#: src/core/Socket.js:437 src/core/Socket.js:1218 src/core/Socket.js:1223
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Zatvoriť"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr "Aktualizovať úrovne protokolu"
+msgstr "Aktualizovať úrovne podrobností protokolu"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
@@ -286,13 +286,13 @@ msgstr "Túto reláciu nebolo možné autentifikovať pomocou protokolu {0}"
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr "Upozornenie"
+msgstr "Varovanie"
 
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1453 src/app/Debug.ts:1383
-#: src/canvas/sections/CommentListSection.ts:1458
+#: admin/src/integrator/AdminIntegratorSettings.ts:1461 src/app/Debug.ts:1383
+#: src/canvas/sections/CommentListSection.ts:1459
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -304,23 +304,23 @@ msgstr "Upozornenie"
 #: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:746 src/control/Toolbar.js:845
-#: src/core/Socket.js:721 src/core/Socket.js:1187 src/core/Socket.js:1257
-#: src/core/Socket.js:1429 src/core/Socket.js:1433 src/docdispatcher.ts:524
+#: src/core/Socket.js:722 src/core/Socket.js:1188 src/core/Socket.js:1258
+#: src/core/Socket.js:1430 src/core/Socket.js:1434 src/docdispatcher.ts:524
 #: src/main.js:86 src/main.js:89 src/main.js:142 src/map/Clipboard.js:1292
 #: src/map/handler/Map.Feedback.js:96 src/map/handler/Map.SlideShow.js:60
 #: src/map/handler/Map.SlideShow.js:169 src/map/handler/Map.SlideShow.js:297
 #: src/map/handler/Map.SlideShow.js:308 src/map/handler/Map.WOPI.js:691
-#: src/slideshow/SlideShowPresenter.ts:667
-#: src/slideshow/SlideShowPresenter.ts:682
-#: src/slideshow/SlideShowPresenter.ts:697
-#: src/slideshow/SlideShowPresenter.ts:720
+#: src/slideshow/SlideShowPresenter.ts:670
+#: src/slideshow/SlideShowPresenter.ts:685
+#: src/slideshow/SlideShowPresenter.ts:700
+#: src/slideshow/SlideShowPresenter.ts:723
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:507
+#: src/canvas/sections/CommentListSection.ts:508
 #: src/canvas/sections/CommentSection.ts:165
 #: src/canvas/sections/CommentSection.ts:168
 #: src/control/Control.DocumentRepair.js:71
@@ -330,7 +330,7 @@ msgstr "OK"
 #: src/control/Control.UIManager.ts:1705 src/control/Control.UIManager.ts:1786
 #: src/control/Control.UIManager.ts:1940 src/control/Control.UIManager.ts:2118
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:840
-#: src/core/Socket.js:1454
+#: src/core/Socket.js:1455
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -366,23 +366,23 @@ msgstr "Naozaj chcete túto reláciu ukončiť?"
 msgid "Are you sure you want to shut down the server?"
 msgstr "Naozaj chcete vypnúť tento server?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:113
+#: admin/src/integrator/AdminIntegratorSettings.ts:114
 msgid "Accessibility"
 msgstr "Prístupnosť"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:214
+#: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Invalid JSON file"
 msgstr "Neplatný súbor JSON"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:218
+#: admin/src/integrator/AdminIntegratorSettings.ts:226
 msgid "Error reading file"
 msgstr "Chyba čítania súboru"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:230
+#: admin/src/integrator/AdminIntegratorSettings.ts:238
 msgid "Autotext"
 msgstr "Automatický text"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:232
+#: admin/src/integrator/AdminIntegratorSettings.ts:240
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -390,15 +390,15 @@ msgstr ""
 "Nahrať opakovane použiteľné textové výstrižky (.bau). Ak chcete takýto "
 "výstrižok vložiť do dokumentu, zadajte jeho skratku a stlačte F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:238
+#: admin/src/integrator/AdminIntegratorSettings.ts:246
 msgid "Upload Autotext"
 msgstr "Nahrať Automatický text"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:242
+#: admin/src/integrator/AdminIntegratorSettings.ts:250
 msgid "Custom dictionaries"
 msgstr "Vlastné slovníky"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:244
+#: admin/src/integrator/AdminIntegratorSettings.ts:252
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -406,80 +406,80 @@ msgstr ""
 "Pridať alebo upraviť slová v slovníku pre kontrolu pravopisu. Slová vo vašom "
 "slovníku (.dic) budú k dispozícii pre kontrolu pravopisu."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:250
+#: admin/src/integrator/AdminIntegratorSettings.ts:258
 msgid "Upload Wordbook"
 msgstr "Nahrať Wordbook"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:254
+#: admin/src/integrator/AdminIntegratorSettings.ts:262
 msgid "Document settings"
 msgstr "Nastavenia dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:255
+#: admin/src/integrator/AdminIntegratorSettings.ts:263
 #: admin/src/integrator/Xcu.ts:297
 msgid "Adjust how office documents behave."
 msgstr "Upraviť, ako sa správajú kancelárske dokumenty."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:261
+#: admin/src/integrator/AdminIntegratorSettings.ts:269
 msgid "Upload Xcu"
 msgstr "Nahrať Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:312
+#: admin/src/integrator/AdminIntegratorSettings.ts:320
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL zdieľanej konfigurácie chýba v počiatočných premenných."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:318
+#: admin/src/integrator/AdminIntegratorSettings.ts:326
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Prístupový token chýba v počiatočných premenných."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:347
+#: admin/src/integrator/AdminIntegratorSettings.ts:355
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Niečo sa pokazilo. Skúste obnoviť stránku."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:445
+#: admin/src/integrator/AdminIntegratorSettings.ts:453
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Pri načítavaní súboru nastavení sa vyskytla chyba. Skúste obnoviť stránku."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:470
+#: admin/src/integrator/AdminIntegratorSettings.ts:478
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Pri načítavaní slovníka sa vyskytla chyba. Skúste obnoviť stránku."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:480
+#: admin/src/integrator/AdminIntegratorSettings.ts:488
 msgid "Interface Settings"
-msgstr ""
+msgstr "Nastavenia rozhrania"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:482
+#: admin/src/integrator/AdminIntegratorSettings.ts:490
 msgid "Set default interface preferences."
 msgstr "Nastaviť predvolené predvoľby rozhrania."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:590
+#: admin/src/integrator/AdminIntegratorSettings.ts:598
 msgid "Select a tab to browser settings."
-msgstr ""
+msgstr "Vyberte kartu na nastavenie prehliadača."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:603
+#: admin/src/integrator/AdminIntegratorSettings.ts:611
 #: admin/src/integrator/Xcu.ts:357
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Obnoviť predvolené nastavenia dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:607
+#: admin/src/integrator/AdminIntegratorSettings.ts:615
 #: admin/src/integrator/Xcu.ts:371
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Naozaj chcete obnoviť nastavenia dokumentu?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:624
+#: admin/src/integrator/AdminIntegratorSettings.ts:632
 #: admin/src/integrator/Xcu.ts:386
-#, fuzzy
 msgid "Save Document settings"
-msgstr "Nastavenia dokumentu"
+msgstr "Uložiť nastavenia dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:954
+#: admin/src/integrator/AdminIntegratorSettings.ts:962
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Zobrazenie lišty kariet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:961
+#: admin/src/integrator/AdminIntegratorSettings.ts:969
 #: src/control/Control.NotebookbarCalc.js:1344
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:528
@@ -487,106 +487,105 @@ msgstr ""
 msgid "Compact view"
 msgstr "Kompaktné zobrazenie"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1034
+#: admin/src/integrator/AdminIntegratorSettings.ts:1042
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Pri nahrávaní súboru sa vyskytla chyba. Skúste to znova."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1110
+#: admin/src/integrator/AdminIntegratorSettings.ts:1118
 #: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:521
 msgid "Delete"
 msgstr "Zmazať"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1148
+#: admin/src/integrator/AdminIntegratorSettings.ts:1156
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Pri odstraňovaní súboru sa vyskytla chyba. Skúste obnoviť stránku."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1163
+#: admin/src/integrator/AdminIntegratorSettings.ts:1171
 msgid "Edit"
 msgstr "Upraviť"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1189
+#: admin/src/integrator/AdminIntegratorSettings.ts:1197
 msgid "View Settings"
-msgstr ""
+msgstr "Zobraziť nastavenia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1190
+#: admin/src/integrator/AdminIntegratorSettings.ts:1198
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Upraviť nastavenia zobrazenia."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1200
+#: admin/src/integrator/AdminIntegratorSettings.ts:1208
 msgid "Option"
-msgstr ""
+msgstr "Možnosť"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1235
+#: admin/src/integrator/AdminIntegratorSettings.ts:1243
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Upozornenie: Na prepínanie musí byť povolená dostupnosť servera)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1269
+#: admin/src/integrator/AdminIntegratorSettings.ts:1277
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Obnoviť predvolené nastavenia zobrazenia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1273
+#: admin/src/integrator/AdminIntegratorSettings.ts:1281
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Naozaj chcete obnoviť nastavenia zobrazenia?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1293
+#: admin/src/integrator/AdminIntegratorSettings.ts:1301
 msgid "Save View Settings"
-msgstr ""
+msgstr "Uložiť nastavenia zobrazenia"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1441
+#: admin/src/integrator/AdminIntegratorSettings.ts:1449
 #: src/map/handler/Map.WOPI.js:691
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Štandardný slovník"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Kontrola pravopisu tieto slová ignoruje"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Slovník výnimiek"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Slová zo zoznamu výnimiek sú pri kontrole pravopisu podčiarknuté"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Načítava sa slovník..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Napíšte slovo, ktoré chcete pridať"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Pridať"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Neplatný formát slovníka. Skontrolujte súbor."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Pri nahrávaní súboru so slovníkom sa vyskytla chyba"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Pri načítavaní nastavení dokumentu sa vyskytla chyba."
 
 #: admin/src/integrator/Xcu.ts:293
-#, fuzzy
 msgid "Document Settings"
-msgstr "Nastavenia dokumentu"
+msgstr "Nastavenia Dokumentu"
 
 #: admin/src/integrator/Xcu.ts:344
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Vyberte kartu na zobrazenie nastavení."
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -622,7 +621,7 @@ msgstr "YB"
 
 #: admin/src/Util.js:26
 msgid "BB"
-msgstr "B"
+msgstr "BB"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
@@ -636,126 +635,128 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1583
-msgid "Cluster is scaling, retrying..."
-msgstr "Klaster je škálovaný, skúša sa znova..."
-
 #: js/global.js:1585
-msgid "Document is migrating to new server, retrying..."
-msgstr "Dokument je migrovaný na nový server, skúša sa znova..."
+msgid ""
+"The system is currently adjusting resources. Please wait a moment while we "
+"retry your request..."
+msgstr ""
 
 #: js/global.js:1587
+msgid "The document is being migrated to a new server. Retrying shortly..."
+msgstr ""
+
+#: js/global.js:1589
 msgid "Failed to get RouteToken from controller"
 msgstr "Z controllera sa nepodarilo získať RouteToken"
 
 #: src/app/Debug.ts:135
 msgid "Debug Tools"
-msgstr ""
+msgstr "Nástroje na ladenie"
 
 #: src/app/Debug.ts:137
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D na ukončenie"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Spracovanie udalosti bolo neočakávane dlho oneskorené: {0} ms"
 
-#: src/canvas/sections/CommentListSection.ts:164
+#: src/canvas/sections/CommentListSection.ts:165
 msgid "A comment is being edited"
 msgstr "Komentár je práve upravovaný"
 
-#: src/canvas/sections/CommentListSection.ts:165
+#: src/canvas/sections/CommentListSection.ts:166
 msgid "Please save or discard the comment currently being edited."
 msgstr "Uložte alebo zrušte aktuálne upravovaný komentár."
 
-#: src/canvas/sections/CommentListSection.ts:1166
+#: src/canvas/sections/CommentListSection.ts:1167
 msgid "Modify"
-msgstr "Upraviť"
+msgstr "Zmeniť"
 
-#: src/canvas/sections/CommentListSection.ts:1172
+#: src/canvas/sections/CommentListSection.ts:1173
 #: src/canvas/sections/CommentSection.ts:169
 msgid "Reply"
 msgstr "Odpovedať"
 
-#: src/canvas/sections/CommentListSection.ts:1178
+#: src/canvas/sections/CommentListSection.ts:1179
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: src/canvas/sections/CommentListSection.ts:1184
+#: src/canvas/sections/CommentListSection.ts:1185
 msgid "Remove Thread"
 msgstr "Odstrániť vlákno"
 
-#: src/canvas/sections/CommentListSection.ts:1190
+#: src/canvas/sections/CommentListSection.ts:1191
 msgid "Resolve"
 msgstr "Vyriešiť"
 
-#: src/canvas/sections/CommentListSection.ts:1190
+#: src/canvas/sections/CommentListSection.ts:1191
 msgid "Unresolve"
-msgstr "Nevyriešiť"
+msgstr "Zrušiť vyriešenie"
 
-#: src/canvas/sections/CommentListSection.ts:1196
+#: src/canvas/sections/CommentListSection.ts:1197
 msgid "Unresolve Thread"
-msgstr "Nevyriešiť vlákno"
+msgstr "Zrušiť vyriešenie vlákna"
 
-#: src/canvas/sections/CommentListSection.ts:1196
+#: src/canvas/sections/CommentListSection.ts:1197
 msgid "Resolve Thread"
 msgstr "Vyriešiť vlákno"
 
-#: src/canvas/sections/CommentListSection.ts:1202
+#: src/canvas/sections/CommentListSection.ts:1203
 msgid "Promote to top comment"
 msgstr "Komentár na základnú úroveň"
 
-#: src/canvas/sections/CommentListSection.ts:1208
+#: src/canvas/sections/CommentListSection.ts:1209
 msgid "Show on the side"
 msgstr "Zobraziť na strane"
 
-#: src/canvas/sections/CommentListSection.ts:1208
+#: src/canvas/sections/CommentListSection.ts:1209
 msgid "Open in full view"
-msgstr ""
+msgstr "Otvoriť v plnom zobrazení"
 
-#: src/canvas/sections/CommentListSection.ts:1236
-#: src/control/Control.JSDialogBuilder.js:1944
+#: src/canvas/sections/CommentListSection.ts:1237
+#: src/control/Control.JSDialogBuilder.js:1947
 #: src/layer/tile/CanvasTileLayer.js:3422
 #: src/layer/tile/CanvasTileLayer.js:3433
 msgid "Comment"
 msgstr "Poznámka"
 
-#: src/canvas/sections/CommentListSection.ts:1456
-#: src/canvas/sections/CommentListSection.ts:1469
+#: src/canvas/sections/CommentListSection.ts:1457
+#: src/canvas/sections/CommentListSection.ts:1470
 msgid "Comments Updated"
 msgstr "Komentáre aktualizované"
 
-#: src/canvas/sections/CommentListSection.ts:1457
+#: src/canvas/sections/CommentListSection.ts:1458
 msgid "Another user has removed this comment."
 msgstr "Tento komentár bol odstránený iným používateľom."
 
-#: src/canvas/sections/CommentListSection.ts:1470
+#: src/canvas/sections/CommentListSection.ts:1471
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 "Komentár bol aktualizovaný iným používateľom. Chcete prepísať jeho zmeny?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1458
+#: src/canvas/sections/CommentListSection.ts:1472 src/core/Socket.js:1459
 msgid "Overwrite"
 msgstr "Prepísať"
 
-#: src/canvas/sections/CommentListSection.ts:1472
+#: src/canvas/sections/CommentListSection.ts:1473
 msgid "Update"
 msgstr "Aktualizovať"
 
-#: src/canvas/sections/CommentListSection.ts:1573
-#: src/canvas/sections/CommentListSection.ts:1647
+#: src/canvas/sections/CommentListSection.ts:1574
+#: src/canvas/sections/CommentListSection.ts:1648
 msgid "Autosaved"
 msgstr "Automaticky uložené"
 
 #: src/canvas/sections/CommentSection.ts:232
 msgid "Edit comment"
-msgstr ""
+msgstr "Upraviť komentár"
 
 #: src/canvas/sections/CommentSection.ts:239
 msgid "Reply comment"
-msgstr ""
+msgstr "Odpovedať na komentár"
 
 #: src/canvas/sections/CommentSection.ts:317
 msgid "Open menu"
@@ -779,15 +780,15 @@ msgstr "Vyriešené"
 msgid "Document contains unsupported media"
 msgstr "Dokument obsahuje nepodporované médiá"
 
-#: src/canvas/sections/URLPopUpSection.ts:65
+#: src/canvas/sections/URLPopUpSection.ts:66
 msgid "Copy link location"
 msgstr "Skopírovať umiestnenie odkazu"
 
-#: src/canvas/sections/URLPopUpSection.ts:79
+#: src/canvas/sections/URLPopUpSection.ts:80
 msgid "Edit link"
 msgstr "Upraviť odkaz"
 
-#: src/canvas/sections/URLPopUpSection.ts:94
+#: src/canvas/sections/URLPopUpSection.ts:95
 msgid "Remove link"
 msgstr "Odstrániť odkaz"
 
@@ -801,7 +802,7 @@ msgstr "Automatická farba"
 
 #: src/control/Control.AboutDialog.ts:112
 msgid "This version of {productname} is powered by"
-msgstr "Táto verzia of {productname} bola vytvorená"
+msgstr "Táto verzia od {productname} využíva"
 
 #: src/control/Control.AboutDialog.ts:135
 msgid "\"Slow Proxy\""
@@ -809,7 +810,7 @@ msgstr "\"Pomalé proxy\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Časové pásmo:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -923,7 +924,7 @@ msgstr "Opakovať vrátené"
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
-msgstr "Vrátiť"
+msgstr "Vrátiť späť"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
@@ -975,7 +976,7 @@ msgstr "Preberanie zlyhalo"
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr "Andora"
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
@@ -1003,7 +1004,7 @@ msgstr "Austrália"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr "Ålandské ostrovy"
+msgstr "Ålandy"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
@@ -1051,7 +1052,7 @@ msgstr "Cyprus"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
-msgstr "Česko"
+msgstr "Česká republika"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Germany"
@@ -1159,11 +1160,11 @@ msgstr "Lotyšsko"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
-msgstr "Slovenčina"
+msgstr "Monako"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr "Moldavsko"
+msgstr "Moldavsko, Republika"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
@@ -1292,7 +1293,7 @@ msgstr "Vložiť elektronický podpis"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Rozbaliť panel vzorcov"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1300,13 +1301,13 @@ msgstr "Sprievodca funkciou"
 
 #: src/control/Control.FormulaBarJSDialog.js:73
 msgid "Select Function"
-msgstr ""
+msgstr "Označiť funkciu"
 
 #: src/control/Control.FormulaBarJSDialog.js:79
 #: src/control/Control.NotebookbarWriter.js:120
 #: src/control/Control.NotebookbarWriter.js:1488
 msgid "Formula"
-msgstr "Sledujete"
+msgstr "Vzorec"
 
 #: src/control/Control.FormulaBarJSDialog.js:85
 #: src/control/Control.MobileTopBar.ts:42
@@ -1315,7 +1316,7 @@ msgstr "Prijať"
 
 #: src/control/Control.FormulaBarJSDialog.js:169
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Zbaliť panel vzorcov"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1333,95 +1334,95 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Zavrieť dialógové okno"
 
-#: src/control/Control.JSDialogBuilder.js:493
+#: src/control/Control.JSDialogBuilder.js:496
 msgid "Solid"
 msgstr "Jednofarebná"
 
-#: src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Linear"
 msgstr "Lineárna"
 
-#: src/control/Control.JSDialogBuilder.js:499
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Axial"
 msgstr "Axiálna"
 
-#: src/control/Control.JSDialogBuilder.js:502
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Radial"
 msgstr "Radiálna"
 
-#: src/control/Control.JSDialogBuilder.js:505
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Ellipsoid"
 msgstr "Oválna"
 
-#: src/control/Control.JSDialogBuilder.js:509
+#: src/control/Control.JSDialogBuilder.js:512
 msgid "Quadratic"
 msgstr "Kvadratická"
 
-#: src/control/Control.JSDialogBuilder.js:512
+#: src/control/Control.JSDialogBuilder.js:515
 msgid "Square"
 msgstr "Štvorcová"
 
-#: src/control/Control.JSDialogBuilder.js:515
+#: src/control/Control.JSDialogBuilder.js:518
 msgid "Fixed size"
 msgstr "Nemenná veľkosť"
 
-#: src/control/Control.JSDialogBuilder.js:1472
+#: src/control/Control.JSDialogBuilder.js:1475
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1475
+#: src/control/Control.JSDialogBuilder.js:1478
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1478
+#: src/control/Control.JSDialogBuilder.js:1481
 msgid "Color"
 msgstr "Farba"
 
-#: src/control/Control.JSDialogBuilder.js:1554
+#: src/control/Control.JSDialogBuilder.js:1557
 msgid "Select range"
 msgstr "Zvoliť rozsah"
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1676
 #: src/control/Control.NotebookbarBuilder.js:153
 msgid "Font Name"
 msgstr "Názov písma"
 
-#: src/control/Control.JSDialogBuilder.js:1675 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1678 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Veľkosť písma"
 
-#: src/control/Control.JSDialogBuilder.js:1677
+#: src/control/Control.JSDialogBuilder.js:1680
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Štýl"
 
-#: src/control/Control.JSDialogBuilder.js:1930
+#: src/control/Control.JSDialogBuilder.js:1933
 msgid "reply"
 msgstr "odpovedať"
 
-#: src/control/Control.JSDialogBuilder.js:1933
+#: src/control/Control.JSDialogBuilder.js:1936
 msgid "replies"
-msgstr "odpovedí"
+msgstr "odpovedá"
 
-#: src/control/Control.JSDialogBuilder.js:2008
+#: src/control/Control.JSDialogBuilder.js:2011
 msgid "Insert Comment"
 msgstr "Vložiť komentár"
 
-#: src/control/Control.JSDialogBuilder.js:2304
+#: src/control/Control.JSDialogBuilder.js:2307
 msgid "Open {name}"
-msgstr ""
+msgstr "Otvoriť {name}"
 
-#: src/control/Control.JSDialogBuilder.js:2626
+#: src/control/Control.JSDialogBuilder.js:2629
 #: src/control/Control.Menubar.ts:921
 msgid "Rows"
 msgstr "Riadky"
 
-#: src/control/Control.JSDialogBuilder.js:2627
+#: src/control/Control.JSDialogBuilder.js:2630
 #: src/control/Control.Menubar.ts:924
 msgid "Columns"
 msgstr "Stĺpce"
 
-#: src/control/Control.JSDialogBuilder.js:2647
+#: src/control/Control.JSDialogBuilder.js:2650
 msgid "Insert Table"
 msgstr "Vložiť tabuľku"
 
@@ -1442,7 +1443,7 @@ msgstr "Jazyk"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Nenašli sa žiadne výsledky vyhľadávania!"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
 #: src/control/Control.Menubar.ts:1042
@@ -1470,7 +1471,7 @@ msgstr "Dokument Word (.docx)"
 #: src/control/Control.NotebookbarBuilder.js:340
 #: src/control/Control.NotebookbarBuilder.js:553
 msgid "Rich Text (.rtf)"
-msgstr "Rich Text (.rtf)"
+msgstr "Formátovaný text (.rtf)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
 #: src/control/Control.Menubar.ts:430 src/control/Control.Menubar.ts:436
@@ -1500,7 +1501,7 @@ msgstr "Exportovať ako"
 #: src/control/Control.NotebookbarBuilder.js:635
 #: src/control/Control.NotebookbarDraw.js:312
 msgid "PDF Document (.pdf)"
-msgstr "PDF dokument (.pdf)"
+msgstr "PDF Dokument (.pdf)"
 
 #: src/control/Control.Menubar.ts:104 src/control/Control.Menubar.ts:116
 #: src/control/Control.Menubar.ts:1032 src/control/Control.Menubar.ts:1046
@@ -1510,9 +1511,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:106 src/control/Control.UIManager.ts:317
-#, fuzzy
 msgid "Rename Document"
-msgstr "Opraviť dokument"
+msgstr "Premenovať dokument"
 
 #: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:434
 #: src/control/Control.Menubar.ts:606 src/control/Control.Menubar.ts:746
@@ -1542,9 +1542,8 @@ msgstr "Stiahnuť ako"
 #: src/control/Control.NotebookbarBuilder.js:367
 #: src/control/Control.NotebookbarBuilder.js:401
 #: src/control/Control.NotebookbarBuilder.js:443
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF dokument (.pdf)"
+msgstr "PDF Dokument (.pdf) ako..."
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:755
 msgid "HTML file (.html)"
@@ -1607,7 +1606,7 @@ msgstr "Skryť hlavné menu"
 #: src/control/Control.NotebookbarImpress.js:609
 #: src/control/Control.NotebookbarWriter.js:1668
 msgid "Dark Mode"
-msgstr "Tmavý mód"
+msgstr "Tmavý režim"
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:648 src/control/Control.Menubar.ts:793
@@ -1730,7 +1729,7 @@ msgstr "Vlastnosti"
 #: src/control/Control.Menubar.ts:397 src/control/Control.Menubar.ts:1077
 #: src/control/Control.NotebookbarWriter.js:466
 msgid "Screen Reading"
-msgstr "Čítanie obrazovky"
+msgstr "Hovorený komentár"
 
 #: src/control/Control.Menubar.ts:410
 #: src/control/Control.NotebookbarWriter.js:430
@@ -1807,7 +1806,7 @@ msgstr "Prezentácia PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.ts:433 src/control/Control.Menubar.ts:605
 msgid "Save Comments"
-msgstr "Uložiť poznámky"
+msgstr "Uložiť komentáre"
 
 #: src/control/Control.Menubar.ts:442
 #: src/control/Control.NotebookbarBuilder.js:425
@@ -1852,21 +1851,21 @@ msgstr "Celostránkové snímky"
 #: src/control/Control.Menubar.ts:455
 #: src/control/Control.NotebookbarBuilder.js:658
 msgid "Notes Pages"
-msgstr ""
+msgstr "Strany s poznámkami"
 
 #: src/control/Control.Menubar.ts:489
 #: src/control/Control.NotebookbarImpress.js:573
 msgid "Notes View"
-msgstr ""
+msgstr "Zobrazenie poznámok"
 
 #: src/control/Control.Menubar.ts:493
 #: src/control/Control.NotebookbarImpress.js:579
 msgid "Master View"
-msgstr ""
+msgstr "Zobrazenie predlohy"
 
 #: src/control/Control.Menubar.ts:505
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Lokálne multimédiá..."
 
 #: src/control/Control.Menubar.ts:572 src/control/Control.Menubar.ts:1150
 #: src/control/Control.PresentationBar.js:127
@@ -1879,13 +1878,13 @@ msgstr "Prezentovať aktuálnu snímku"
 
 #: src/control/Control.Menubar.ts:574
 msgid "Present in new window"
-msgstr ""
+msgstr "Prezentovať v novom okne"
 
 #: src/control/Control.Menubar.ts:575
 #: src/control/Control.NotebookbarImpress.js:468
 #: src/slideshow/PresenterConsole.js:230
 msgid "Presenter Console"
-msgstr ""
+msgstr "Konzola prezentujúceho"
 
 #: src/control/Control.Menubar.ts:612 src/control/Control.Menubar.ts:1110
 #: src/control/Control.Menubar.ts:1171
@@ -1922,93 +1921,93 @@ msgstr "Súbor CSV (.csv)"
 #: src/control/Control.Menubar.ts:760
 #: src/control/jsdialog/Definitions.Menu.ts:127
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktívny hárok"
 
 #: src/control/Control.Menubar.ts:761 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:128
 msgid "All Sheets"
-msgstr ""
+msgstr "Všetky hárky"
 
 #: src/control/Control.Menubar.ts:799
 #: src/control/Control.NotebookbarCalc.js:1283
 msgid "Focus Cell"
-msgstr ""
+msgstr "Aktívna bunka"
 
 #: src/control/Control.Menubar.ts:893
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Zvýrazniť bunky s…"
 
 #: src/control/Control.Menubar.ts:894
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Values greater than..."
-msgstr ""
+msgstr "Hodnoty väčšie ako…"
 
 #: src/control/Control.Menubar.ts:895
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Values less than..."
-msgstr ""
+msgstr "Hodnoty menšie ako…"
 
 #: src/control/Control.Menubar.ts:896
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Values equal to..."
-msgstr ""
+msgstr "Hodnoty rovné…"
 
 #: src/control/Control.Menubar.ts:897
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Values between..."
-msgstr ""
+msgstr "Hodnoty medzi…"
 
 #: src/control/Control.Menubar.ts:898
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Duplicitné hodnoty…"
 
 #: src/control/Control.Menubar.ts:899
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Containing text..."
-msgstr ""
+msgstr "Obsahujúci text…"
 
 #: src/control/Control.Menubar.ts:901 src/control/Control.Menubar.ts:911
 #: src/control/jsdialog/Definitions.Menu.ts:358
 #: src/control/jsdialog/Definitions.Menu.ts:389
 msgid "More highlights..."
-msgstr ""
+msgstr "Ďalšie zvýraznenia…"
 
 #: src/control/Control.Menubar.ts:903
 #: src/control/jsdialog/Definitions.Menu.ts:362
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Pravidlá pre horné/dolné hodnoty…"
 
 #: src/control/Control.Menubar.ts:904
 #: src/control/jsdialog/Definitions.Menu.ts:365
 msgid "Top N elements..."
-msgstr ""
+msgstr "Najvyšších N prvkov…"
 
 #: src/control/Control.Menubar.ts:905
 #: src/control/jsdialog/Definitions.Menu.ts:369
 msgid "Top N percent..."
-msgstr ""
+msgstr "Najvyšších N percent…"
 
 #: src/control/Control.Menubar.ts:906
 #: src/control/jsdialog/Definitions.Menu.ts:373
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Najnižších N prvkov…"
 
 #: src/control/Control.Menubar.ts:907
 #: src/control/jsdialog/Definitions.Menu.ts:377
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Najnižších N percent…"
 
 #: src/control/Control.Menubar.ts:908
 #: src/control/jsdialog/Definitions.Menu.ts:381
 msgid "Above Average..."
-msgstr ""
+msgstr "Nadpriemerné…"
 
 #: src/control/Control.Menubar.ts:909
 #: src/control/jsdialog/Definitions.Menu.ts:385
 msgid "Below Average..."
-msgstr ""
+msgstr "Podpriemerné..."
 
 #: src/control/Control.Menubar.ts:1026 src/control/Control.Menubar.ts:1092
 #: src/control/Control.Menubar.ts:1157 src/control/Control.Menubar.ts:1212
@@ -2031,9 +2030,8 @@ msgid "Define print area"
 msgstr "Definovať oblasť tlače"
 
 #: src/control/Control.Menubar.ts:1224
-#, fuzzy
 msgid "Remove print area"
-msgstr "Definovať oblasť tlače"
+msgstr "Odstrániť oblasť tlače"
 
 #: src/control/Control.Menubar.ts:1580 src/control/Control.StatusBar.js:547
 msgid "Reset to Default Language"
@@ -2060,10 +2058,12 @@ msgstr "Vložiť útvar"
 #: src/control/Control.Menubar.ts:2191
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Riadok na podpis je teraz možné podľa potreby presunúť alebo zmeniť jeho "
+"veľkosť."
 
 #: src/control/Control.Menubar.ts:2193
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Dokončiť elektronické podpisovanie"
 
 #: src/control/Control.Menubar.ts:2388
 msgid "file type icon"
@@ -2098,28 +2098,28 @@ msgstr "Začiatok prechodu"
 
 #: src/control/Control.MobileWizardBuilder.js:550
 msgid "Gradient End"
-msgstr "Koniec prechod"
+msgstr "Koniec prechodu"
 
 #: src/control/Control.NavigatorPanel.ts:96
 msgid "Navigation"
-msgstr ""
+msgstr "Navigácia"
 
 #: src/control/Control.NavigatorPanel.ts:111
 msgid "Close Navigation"
-msgstr ""
+msgstr "Zavrieť navigáciu"
 
 #: src/control/Control.NavigatorPanel.ts:135
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Snímky"
 
 #: src/control/Control.NavigatorPanel.ts:140
 msgid "Outline"
-msgstr ""
+msgstr "Osnova"
 
 #: src/control/Control.NavigatorPanel.ts:165
 msgid "Navigator"
-msgstr ""
+msgstr "Navigátor"
 
 #: src/control/Control.Notebookbar.js:683
 #: src/control/Control.NotebookbarCalc.js:179
@@ -2136,12 +2136,12 @@ msgstr "Zdieľať"
 
 #: src/control/Control.NotebookbarBuilder.js:223
 msgid "Tap to expand"
-msgstr ""
+msgstr "Ťuknutím rozbaliť"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 #: src/control/Control.NotebookbarBuilder.js:270
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Ťuknutím zbalíte"
 
 #: src/control/Control.NotebookbarBuilder.js:362
 #: src/control/Control.NotebookbarBuilder.js:391
@@ -2180,7 +2180,7 @@ msgstr "Vložiť"
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1154
 msgid "Page Layout"
-msgstr "Rozloženie strany"
+msgstr "Rozloženie Strany"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Data"
@@ -2258,7 +2258,7 @@ msgstr "Zobraziť históriu"
 #: src/control/Control.NotebookbarImpress.js:412
 #: src/control/Control.NotebookbarWriter.js:369
 msgid "Signature"
-msgstr ""
+msgstr "Podpis"
 
 #: src/control/Control.NotebookbarCalc.js:339
 #: src/control/Control.NotebookbarDraw.js:387
@@ -2266,7 +2266,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:385
 #: src/control/Control.UIManager.ts:317
 msgid "Rename"
-msgstr ""
+msgstr "Premenovať"
 
 #: src/control/Control.NotebookbarCalc.js:684
 msgid "General"
@@ -2385,7 +2385,7 @@ msgstr "Čítať viac"
 #: src/control/Control.NotebookbarImpress.js:565
 #: src/control/Control.NotebookbarWriter.js:1660
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Zbaliť karty"
 
 #: src/control/Control.NotebookbarCalc.js:1369
 #: src/control/Control.NotebookbarDraw.js:481
@@ -2415,8 +2415,8 @@ msgstr "Asistent"
 #: src/control/Control.NotebookbarImpress.js:2425
 #: src/control/Control.NotebookbarImpress.js:2740
 #: src/control/Control.NotebookbarWriter.js:1200
-#: src/control/Control.NotebookbarWriter.js:3129
-#: src/control/Control.NotebookbarWriter.js:3427
+#: src/control/Control.NotebookbarWriter.js:3136
+#: src/control/Control.NotebookbarWriter.js:3434
 msgid "Shapes"
 msgstr "Tvary"
 
@@ -2437,7 +2437,7 @@ msgstr "Tabuľka"
 
 #: src/control/Control.NotebookbarDraw.js:321
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF Dokument (.pdf) – Expert"
 
 #: src/control/Control.NotebookbarDraw.js:469
 #: src/control/Control.NotebookbarImpress.js:541
@@ -2447,7 +2447,7 @@ msgstr "Pravítko"
 
 #: src/control/Control.NotebookbarImpress.js:115
 msgid "Slide Show"
-msgstr ""
+msgstr "Prezentácia"
 
 #: src/control/Control.NotebookbarImpress.js:154
 msgid "Master"
@@ -2460,32 +2460,31 @@ msgstr "Prezentácia"
 
 #: src/control/Control.NotebookbarImpress.js:460
 msgid "Present in Window"
-msgstr ""
+msgstr "Prezentovať v okne"
 
 #: src/control/Control.NotebookbarImpress.js:590
 msgid "Show Grid"
-msgstr ""
+msgstr "Zobraziť mriežku"
 
 #: src/control/Control.NotebookbarImpress.js:597
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Zarovnať podľa mriežky"
 
 #: src/control/Control.NotebookbarImpress.js:712
 msgid "New"
-msgstr ""
+msgstr "Nový"
 
 #: src/control/Control.NotebookbarImpress.js:723
-#, fuzzy
 msgid "Change Layout"
-msgstr "Rozloženie strany"
+msgstr "Zmeniť Rozloženie"
 
 #: src/control/Control.NotebookbarImpress.js:731
 msgid "Reset Layout"
-msgstr ""
+msgstr "Obnoviť rozloženie"
 
 #: src/control/Control.NotebookbarImpress.js:1620
 msgid "Slide Size"
-msgstr ""
+msgstr "Veľkosť snímky"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2493,19 +2492,19 @@ msgstr "Formulár"
 
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Go Online"
-msgstr ""
+msgstr "Prejsť online"
 
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Go Offline"
-msgstr ""
+msgstr "Prejsť offline"
 
 #: src/control/Control.NotebookbarWriter.js:915
 msgid "Scroll up"
-msgstr ""
+msgstr "Posunúť nahor"
 
 #: src/control/Control.NotebookbarWriter.js:922
 msgid "Scroll down"
-msgstr ""
+msgstr "Posunúť nadol"
 
 #: src/control/Control.NotebookbarWriter.js:1507
 msgid "Rich Text"
@@ -2513,32 +2512,31 @@ msgstr "Formátovaný text"
 
 #: src/control/Control.NotebookbarWriter.js:1515
 msgid "Checkbox"
-msgstr "Začiarkavacie políčko"
+msgstr "Zaškrtávacie políčko"
 
 #: src/control/Control.NotebookbarWriter.js:1523
 msgid "Dropdown"
 msgstr "Rozbaľovací zoznam"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "náhľad stránky "
+msgstr "náhľad stránky %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Snímka %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
-msgstr ""
+msgstr "Prilepiť snímku"
 
 #: src/control/Control.PartsPreview.js:307
 msgid "Paste"
-msgstr ""
+msgstr "Prilepiť"
 
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
-msgstr ""
+msgstr "Ukladanie"
 
 #: src/control/Control.SaveState.ts:53
 msgid "Saved"
@@ -2554,43 +2552,47 @@ msgstr "Posunúť na komentár nadol"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Vlastnosť IsAdminUser nie je nastavená integráciou"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Použité zastarané pole is_admin, integrácia by mala namiesto toho používať "
+"vlastnosť IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Vlastnosť používateľa IsAdminUser je nastavená integráciou"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Váš WOPI server nie je bezpečný: Overenie SSL zlyhalo"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Neboli zistené žiadne problémy s overením SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API je inicializované"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrátor nie je pripravený na volania PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Váš server je nakonfigurovaný s nedostatočnými hardvérovými prostriedkami, "
+"čo môže viesť k slabému výkonu."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Hardvérové prostriedky sú dostatočné pre optimálny výkon"
 
 #: src/control/Control.ServerAuditDialog.ts:215
 msgid "Status"
@@ -2598,19 +2600,19 @@ msgstr "Stav"
 
 #: src/control/Control.ServerAuditDialog.ts:225
 msgid "No issues found"
-msgstr ""
+msgstr "Neboli nájdené žiadne problémy"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Upozornenia:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Skontrolujte bezpečnostné upozornenia vášho servera"
 
 #: src/control/Control.ServerAuditDialog.ts:277
 msgid "OPEN"
-msgstr ""
+msgstr "OTVORIŤ"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2634,7 +2636,7 @@ msgstr "Vložiť hárok"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Zapnúť"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:314
@@ -2681,6 +2683,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Aby sa zabránilo nechceným zmenám, autor nastavil tento súbor na otvorenie "
+"iba na čítanie"
 
 #: src/control/Control.StatusBar.js:469
 msgid "Select multiple cells"
@@ -2692,15 +2696,15 @@ msgstr "Režim výberu: neaktívny"
 
 #: src/control/Control.StatusBar.js:564
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Nastaviť jazyk pre všetok text"
 
 #: src/control/Control.StatusBar.js:567
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Nastaviť jazyk pre odsek"
 
 #: src/control/Control.StatusBar.js:568
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Nastaviť jazyk pre výber"
 
 #: src/control/Control.Tabs.js:52
 msgid "Insert sheet before this"
@@ -2744,7 +2748,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Aktívny hárok"
 
 #: src/control/Control.TopToolbar.js:121
 msgid "Default Style"
@@ -2764,15 +2768,15 @@ msgstr "Vložiť spojnice"
 
 #: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.ts:1071
 msgid "Hide Menu"
-msgstr ""
+msgstr "Skryť menu"
 
 #: src/control/Control.UIManager.ts:317
 msgid "Enter new name"
-msgstr ""
+msgstr "Zadajte nové meno"
 
 #: src/control/Control.UIManager.ts:1098
 msgid "Show Menu"
-msgstr ""
+msgstr "Zobraziť menu"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
@@ -2784,19 +2788,19 @@ msgstr "{user} sa odpojil"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
-msgstr ""
+msgstr "Sledujete {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Sledovanie editora"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr ""
+msgstr "Prestať sledovať"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "Avatar používateľa {user}"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
@@ -2812,7 +2816,7 @@ msgstr "Počet používateľov: 0"
 
 #: src/control/Control.UserList.ts:87
 msgid "User List Summary"
-msgstr ""
+msgstr "Súhrn zoznamu používateľov"
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
@@ -2824,36 +2828,37 @@ msgstr "Vždy sledovať tohto editora"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "API kľúč Zotero nie je nakonfigurovaný"
 
 #: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "API kľúč Zotero je nesprávny"
 
 #: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero Varovanie"
 
 #: src/control/Control.Zotero.js:192
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokument obsahuje niektoré citácie, ktoré nemusia byť dostupné cez webové "
+"API. Pri úprave citácií alebo bibliografie to môže spôsobovať problémy."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1378
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1379
 msgid "Loading..."
 msgstr "Načítava sa…"
 
 #: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Predchádzajúci"
 
 #: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
 #: src/slideshow/PresenterConsole.js:32
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr "Ďalej"
 
 #: src/control/Control.Zotero.js:294
 msgid "Language:"
@@ -2861,51 +2866,51 @@ msgstr "Jazyk:"
 
 #: src/control/Control.Zotero.js:309
 msgid "Store as:"
-msgstr ""
+msgstr "Uložiť ako:"
 
 #: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
-msgstr ""
+msgstr "Polia"
 
 #: src/control/Control.Zotero.js:316 src/control/Control.Zotero.js:438
 msgid "Bookmarks"
-msgstr ""
+msgstr "Záložky"
 
 #: src/control/Control.Zotero.js:436
 msgid "Footnotes"
-msgstr ""
+msgstr "Poznámky pod čiarou"
 
 #: src/control/Control.Zotero.js:436
 msgid "Endnotes"
-msgstr ""
+msgstr "Vysvetlivky"
 
 #: src/control/Control.Zotero.js:523
 msgid "My Publications"
-msgstr ""
+msgstr "Moje publikácie"
 
 #: src/control/Control.Zotero.js:529 src/control/Control.Zotero.js:748
 msgid "My Library"
-msgstr ""
+msgstr "Moja knižnica"
 
 #: src/control/Control.Zotero.js:530
 msgid "Group Libraries"
-msgstr ""
+msgstr "Skupinové knižnice"
 
 #: src/control/Control.Zotero.js:764
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Nepodarilo sa načítať skupiny"
 
 #: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Nepodarilo sa načítať kolekcie"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Načítavajú sa referencie"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
-msgstr ""
+msgstr "Štýl citovania"
 
 #: src/control/Control.Zotero.js:829
 msgid "Styles"
@@ -2913,11 +2918,11 @@ msgstr "Štýly"
 
 #: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Pri získavaní zoznamu štýlov došlo k chybe"
 
 #: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Nepodarilo sa načítať štýly"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
@@ -2925,59 +2930,62 @@ msgstr "Názov"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
-msgstr ""
+msgstr "Autor(i)"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
-msgstr ""
+msgstr "Vaša knižnica je prázdna"
 
 #: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
-msgstr ""
+msgstr "Nepodarilo sa načítať položky"
 
 #: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
-msgstr ""
+msgstr "Upozornenie na citáciu"
 
 #: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Po zadaní citácií už nie je možné zmeniť spôsob ich uloženia ani zobrazenia."
 
 #: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdiť"
 
 #: src/control/Control.Zotero.js:1339
 msgid "Add Note"
-msgstr ""
+msgstr "Pridať poznámku"
 
 #: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
-msgstr ""
+msgstr "Poznámky"
 
 #: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Pri získavaní poznámok došlo k chybe"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
-msgstr ""
+msgstr "Aktualizované citácie"
 
 #: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
-msgstr ""
+msgstr "Aktualizácia citácií zlyhala"
 
 #: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
-msgstr ""
+msgstr "Aktualizácia citácií"
 
 #: src/control/Control.Zotero.js:1534
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Odpojenie citácií zabráni Collabora Online v aktualizácii citácií a "
+"bibliografie v tomto dokumente."
 
 #: src/control/HRuler.ts:604
 msgid "Left Margin"
@@ -2993,15 +3001,15 @@ msgstr "Vložiť tabulátor"
 
 #: src/control/HRuler.ts:897
 msgid "Delete tabstop"
-msgstr "Odstraniť tabulátor"
+msgstr "Odstrániť tabulátor"
 
 #: src/control/Parts.js:483
 msgid "Show sheets"
-msgstr ""
+msgstr "Zobraziť hárky"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Upraviť dokument"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -3041,7 +3049,7 @@ msgstr ""
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokument nie je podpísaný."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -3053,7 +3061,7 @@ msgstr "Tento dokument má neplatný podpis."
 
 #: src/control/Signing.js:40
 msgid "The signature was valid, but the document has been modified."
-msgstr "Podpis je platný, ale dokument bol zmenený"
+msgstr "Podpis je platný, ale dokument bol zmenený."
 
 #: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
@@ -3061,7 +3069,7 @@ msgstr "Podpis je platný, nemožno však overiť certifikát."
 
 #: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "Podpis je platný, ale dokument je podpísaný len čiastočne"
+msgstr "Podpis je platný, ale dokument je podpísaný len čiastočne."
 
 #: src/control/Signing.js:52
 msgid ""
@@ -3097,11 +3105,11 @@ msgstr "Odkaz"
 
 #: src/control/VRuler.ts:359
 msgid "Top Margin"
-msgstr ""
+msgstr "Horný okraj"
 
 #: src/control/VRuler.ts:360
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Dolný okraj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:25
 msgid "Min"
@@ -3125,7 +3133,7 @@ msgstr "Vložiť lokálny obrázok"
 
 #: src/control/jsdialog/Definitions.Menu.ts:280
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Vložiť lokálne multimédiá"
 
 #: src/control/jsdialog/Definitions.Menu.ts:285
 msgid "Very Tight"
@@ -3155,85 +3163,85 @@ msgstr "Všetci používatelia"
 msgid "This user"
 msgstr "Tento užívateľ"
 
-#: src/control/jsdialog/Definitions.Menu.ts:457
+#: src/control/jsdialog/Definitions.Menu.ts:464
 msgid "From Beginning"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:461
-msgid "From Current Slide"
-msgstr ""
+msgstr "Od začiatku"
 
 #: src/control/jsdialog/Definitions.Menu.ts:468
+msgid "From Current Slide"
+msgstr "Od aktuálnej snímky"
+
+#: src/control/jsdialog/Definitions.Menu.ts:475
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Štandardný (4:3)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:473
+#: src/control/jsdialog/Definitions.Menu.ts:480
 msgid "Widescreen (16:9)"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:483
-msgid "Blank Slide"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:484
-msgid "Title Slide"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:485
-msgid "Title, Content"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:486
-msgid "Title and 2 Content"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:487
-msgid "Title Only"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:488
-msgid "Centered Text"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:489
-msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Širokouhlý (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:490
-msgid "Title, Content and 2 Content"
-msgstr ""
+msgid "Blank Slide"
+msgstr "Prázdna snímka"
 
 #: src/control/jsdialog/Definitions.Menu.ts:491
-msgid "Title, 2 Content over Content"
-msgstr ""
+msgid "Title Slide"
+msgstr "Titulná snímka"
 
 #: src/control/jsdialog/Definitions.Menu.ts:492
-msgid "Title, Content over Content"
-msgstr ""
+msgid "Title, Content"
+msgstr "Nadpis, obsah"
 
 #: src/control/jsdialog/Definitions.Menu.ts:493
-msgid "Title, 4 Content"
-msgstr ""
+msgid "Title and 2 Content"
+msgstr "Nadpis a 2 obsahy"
 
 #: src/control/jsdialog/Definitions.Menu.ts:494
-msgid "Title, 6 Content"
-msgstr ""
+msgid "Title Only"
+msgstr "Len nadpis"
 
 #: src/control/jsdialog/Definitions.Menu.ts:495
-msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgid "Centered Text"
+msgstr "Centrovaný text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:496
-msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgid "Title, 2 Content and Content"
+msgstr "Nadpis, 2 obsahy a obsah"
 
 #: src/control/jsdialog/Definitions.Menu.ts:497
-msgid "Title, Vertical Text"
-msgstr ""
+msgid "Title, Content and 2 Content"
+msgstr "Nadpis, obsah a 2 obsahy"
 
 #: src/control/jsdialog/Definitions.Menu.ts:498
+msgid "Title, 2 Content over Content"
+msgstr "Nadpis, 2 obsahy nad obsahom"
+
+#: src/control/jsdialog/Definitions.Menu.ts:499
+msgid "Title, Content over Content"
+msgstr "Nadpis, obsah nad obsahom"
+
+#: src/control/jsdialog/Definitions.Menu.ts:500
+msgid "Title, 4 Content"
+msgstr "Nadpis, 4 obsahy"
+
+#: src/control/jsdialog/Definitions.Menu.ts:501
+msgid "Title, 6 Content"
+msgstr "Nadpis, 6 obsahov"
+
+#: src/control/jsdialog/Definitions.Menu.ts:502
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikálny nadpis, text, graf"
+
+#: src/control/jsdialog/Definitions.Menu.ts:503
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertikálny nadpis, vertikálny text"
+
+#: src/control/jsdialog/Definitions.Menu.ts:504
+msgid "Title, Vertical Text"
+msgstr "Nadpis, vertikálny text"
+
+#: src/control/jsdialog/Definitions.Menu.ts:505
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Nadpis, vertikálny text, klipart"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3242,15 +3250,15 @@ msgstr "Odmietnuť"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:138
 msgid "Unknown color"
-msgstr ""
+msgstr "Neznáma farba"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "No fill"
-msgstr ""
+msgstr "Bez výplne"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:214
 msgid "Automatic"
-msgstr ""
+msgstr "Automatický"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:395
 msgid "Recent"
@@ -3267,7 +3275,7 @@ msgstr "Režim oprávnenia"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Edit mode"
-msgstr ""
+msgstr "Režim úprav"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 #: src/control/jsdialog/Widget.HTMLContent.ts:154
@@ -3305,7 +3313,7 @@ msgstr "Počet snímok"
 #: src/control/jsdialog/Widget.HTMLContent.ts:163
 #: src/control/jsdialog/Widget.HTMLContent.ts:175
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Vaše zmeny boli uložené"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:187
 msgid "Show Comments"
@@ -3317,74 +3325,74 @@ msgstr "Orámovanie buniek"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {1}"
-msgstr ""
+msgstr "Ďalšie možnosti pre {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1311
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Nadpisy a objekty, ktoré pridáte do dokumentu, sa zobrazia tu"
 
-#: src/core/Socket.js:68
+#: src/core/Socket.js:69
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Nastal problém pri spájaní sa s {productname}: "
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server je opäť dostupný. Stránku je nutné obnoviť."
 
-#: src/core/Socket.js:704
+#: src/core/Socket.js:705
 msgid "Server is now reachable..."
 msgstr "Server je opäť dostupný..."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "RELOAD"
 msgstr "Znovu načítať"
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:722
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Upozornenie na konfiguráciu klastru"
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:725
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Nesprávny server, pripájam sa znova..."
 
-#: src/core/Socket.js:733
+#: src/core/Socket.js:734
 msgid "COOLWSD version:"
 msgstr "Verzia COOLWSD:"
 
-#: src/core/Socket.js:758
+#: src/core/Socket.js:759
 msgid "Served by:"
 msgstr "Zo serveru:"
 
-#: src/core/Socket.js:764
+#: src/core/Socket.js:765
 msgid "Unsupported server version."
 msgstr "Nepodporovaná verzia servera."
 
-#: src/core/Socket.js:768
+#: src/core/Socket.js:769
 msgid "LOKit version:"
 msgstr "Verzia LOKit:"
 
-#: src/core/Socket.js:893
+#: src/core/Socket.js:894
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Dokument sa migruje"
 
-#: src/core/Socket.js:920
+#: src/core/Socket.js:921
 msgid "Session terminated by document owner"
 msgstr "Relácia ukončená vlastníkom dokumentu"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:932
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server sa vypína kvôli údržbe (zmeny budú automaticky uložené)"
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:938
 msgid "Oops, there is a problem connecting the document"
 msgstr "Nastal problém pri spájaní sa s dokumentom"
 
-#: src/core/Socket.js:941
+#: src/core/Socket.js:942
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Server je momentálne nedostupný, automaticky sa reštartuje. Počkajte prosím."
 
-#: src/core/Socket.js:968
+#: src/core/Socket.js:969
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -3392,105 +3400,107 @@ msgstr ""
 "Dokument v úložisku bol zmenený. Dokument sa načítava, vaša verzia bude "
 "uložená ako revízia."
 
-#: src/core/Socket.js:974
+#: src/core/Socket.js:975
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
-"Obnovuje se staršia revízia. Všetky neuložené zmeny budú dostupné v histórii "
+"Obnovuje sa staršia revízia. Všetky neuložené zmeny budú dostupné v histórii "
 "verzií"
 
-#: src/core/Socket.js:980
+#: src/core/Socket.js:981
 msgid "Reloading the document after rename"
 msgstr "Dokument sa po premenovaní znovu načíta"
 
-#: src/core/Socket.js:1139
+#: src/core/Socket.js:1140
 msgid "Document requires password to view."
 msgstr "Na zobrazenie dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:1142
+#: src/core/Socket.js:1143
 msgid "Document requires password to modify."
 msgstr "Na úpravu dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:1144
+#: src/core/Socket.js:1145
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stlačte Zrušiť aby otvoriť dokument v režime zobrazenia."
 
-#: src/core/Socket.js:1148
+#: src/core/Socket.js:1149
 msgid "Wrong password provided. Please try again."
-msgstr "Zadané nesprávne heslo, zopakujte."
+msgstr "Zadané nesprávne heslo. Prosím, skúste znova."
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1187
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Iba vlastník dokumentu môže zmeniť heslo."
 
-#: src/core/Socket.js:1217 src/core/Socket.js:1222
+#: src/core/Socket.js:1218 src/core/Socket.js:1223
 msgid "Missing Fonts"
 msgstr "Chýbajúce písma"
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1255
 msgid "Someone"
 msgstr "Niekto"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1256
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} uložil tento dokument ako {filename}. Chcete sa pripojiť?"
 
-#: src/core/Socket.js:1272
+#: src/core/Socket.js:1273
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument sa práve premenováva a čoskoro sa znovu načíta"
 
-#: src/core/Socket.js:1275
+#: src/core/Socket.js:1276
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Dokument sa prepína do režimu offline a čoskoro sa znova načíta"
 
-#: src/core/Socket.js:1378
+#: src/core/Socket.js:1379
 msgid "Connecting..."
 msgstr "Prebieha pripájanie…"
 
-#: src/core/Socket.js:1393
+#: src/core/Socket.js:1394
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Server sa vypína"
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1430
 msgid "Exported to storage"
 msgstr "Exportované do úložiska"
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1430
 msgid "Successfully exported: "
-msgstr "Úpešne exportované: "
+msgstr "Úspešne exportované: "
 
-#: src/core/Socket.js:1457
+#: src/core/Socket.js:1458
 msgid "Discard"
 msgstr "Zahodiť"
 
-#: src/core/Socket.js:1469
+#: src/core/Socket.js:1470
 msgid "Save to new file"
 msgstr "Uložiť do nového súboru"
 
-#: src/core/Socket.js:1479
+#: src/core/Socket.js:1480
 msgid "Document has been changed"
 msgstr "Dokument bol zmenený"
 
-#: src/core/Socket.js:1480
+#: src/core/Socket.js:1481
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
-"Dokument bol zmenený v úložisku. Čo chcete spraviť so svojimi neuloženými "
+"Dokument bol zmenený v úložisku. Čo si prajete urobiť so svojimi neuloženými "
 "zmenami?"
 
-#: src/core/Socket.js:1744
+#: src/core/Socket.js:1745
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr "Nepodarilo sa nadviazať spojenie s dokumentom. Prosím zopakujte."
+msgstr ""
+"Toto je nepríjemné, nepodarilo sa pripojiť k dokumentu. Skúste to znova, "
+"prosím."
 
-#: src/core/Socket.js:1761
+#: src/core/Socket.js:1762
 msgid "Reconnecting..."
 msgstr "Opätovné pripájanie..."
 
-#: src/core/Socket.js:1771
+#: src/core/Socket.js:1772
 msgid "The server has been disconnected."
 msgstr "Server bol odpojený."
 
@@ -3502,36 +3512,36 @@ msgstr "Naozaj chcete túto snímku odstrániť?"
 msgid "Are you sure you want to delete this page?"
 msgstr "Naozaj chcete túto stranu odstrániť?"
 
-#: src/docstate.js:101
+#: src/docstate.js:103
 msgid "Standard"
-msgstr ""
+msgstr "Štandard"
 
-#: src/docstate.js:114
+#: src/docstate.js:116
 msgid "Theme colors"
-msgstr ""
+msgstr "Farby motívu"
 
-#: src/docstate.js:115
+#: src/docstate.js:117
 msgid "Document colors"
-msgstr ""
+msgstr "Farby dokumentu"
 
 #: src/docstatefunctions.js:256
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", chyba konfigurácie klastru: nesúlad serverid"
 
 #: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
-msgstr ""
+msgstr "karta {0} je vybraná"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Na serveri nezostalo žiadne miesto na disku."
 
 #: src/errormessages.js:23
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"URL servera nie je špecifikovaný. Loowsd server je pravdepodobne zle "
+"URL servera nie je špecifikovaný. Coolwsd server je pravdepodobne zle "
 "nakonfigurovaný, kontaktujte prosím administrátora."
 
 #: src/errormessages.js:24
@@ -3575,30 +3585,30 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Chyba autorizácie: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "Chybný alebo chýbajúci parameter WOPISrc, kontaktujte podporu."
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Relácia sa ukončí o {time}. Pre pokračovanie uložte dokumenty a reláciu ("
-"alebo webovú stránku) obnovte."
+"Platnosť relácie vyprší o {time}. Prosím, uložte si svoju prácu a obnovte "
+"reláciu (alebo webovú stránku) ak chcete ďalej pokračovať. Môže sa stať, že "
+"sa budete musieť opätovne prihlásiť."
 
 #: src/errormessages.js:32
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"Vaša relácia exspirovala, ďalšie zmeny dokumentu nebolo možné uložiť. Pre "
-"pokračovanie reláciu (alebo webovú stránku) obnovte."
+"Platnosť vašej relácie vypršala. Ďalšie zmeny dokumentu sa nemusia uložiť. "
+"Prosím, obnovte reláciu (alebo webovú stránku) ak chcete ďalej pokračovať v "
+"práci. Môže sa stať, že sa budete musieť opätovne prihlásiť."
 
 #: src/errormessages.js:33
 msgid ""
@@ -3644,6 +3654,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
+"Zdá sa, že váš klaster {productname} je nesprávne nakonfigurovaný alebo sa "
+"rýchlo škáluje – kontaktujte prosím svojho systémového administrátora. "
+"Pokračovanie v úpravách môže viesť k tomu, že viacerí používatelia sa "
+"navzájom neuvidia, k problémom s ukladaním dokumentov a/alebo s kopírovaním/"
+"vkladaním. Očakávaný serverId: {0} pre routeToken: {1}, ale pripojený k "
+"serverId: {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -3652,12 +3668,19 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Nepodarilo sa nadviazať socketové spojenie alebo bolo socketové spojenie "
+"neočakávane ukončené. Reverzný proxy server môže byť nesprávne "
+"nakonfigurovaný, kontaktujte prosím administrátora. Viac informácií o "
+"konfigurácii proxy nájdete na https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html“"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Nepodarilo sa nadviazať socketové spojenie alebo bolo socketové spojenie "
+"neočakávane ukončené."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
@@ -3674,12 +3697,16 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokument je príliš veľký alebo na uložení nezostalo žiadne miesto na disku. "
+"Dokument bude teraz iba na čítanie."
 
 #: src/errormessages.js:47
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Dokument nie je možné uložiť, pretože relácia vypršala. Prosím, znovu "
+"otvorte dokument, aby ste mohli pokračovať."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -3693,12 +3720,16 @@ msgstr "Dokument nemožno premenovať."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Nepodarilo sa načítať dokument z úložiska, skúste dokument načítať znova."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Uloženie zlyhalo, pretože nie je dostupné žiadne úložné miesto. Dokument "
+"bude teraz iba na čítanie. Uistite sa, že je k dispozícii dostatok miesta na "
+"disku, a skúste dokument uložiť znova."
 
 #: src/errormessages.js:55
 msgid ""
@@ -3706,24 +3737,29 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Uloženie zlyhalo, pretože dokument je príliš veľký alebo presahuje "
+"zostávajúce úložné miesto. Dokument bude teraz iba na čítanie, ale môžete si "
+"ho stiahnuť a uchovať kópiu lokálne."
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Dokument nie je možné uložiť, pretože relácia vypršala. Prosím, obnovte "
+"stránku, aby ste mohli pokračovať."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Dokument nie je možné uložiť, skontrolujte prosím svoje oprávnenia."
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dokument nie je možné premenovať, skontrolujte prosím svoje oprávnenia."
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Dokument nie je možné exportovať. Skúste to znova."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
@@ -3735,71 +3771,73 @@ msgstr "Nahrávanie súboru na server zlyhalo, súbor je príliš veľký."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Mimo tabuľky"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabuľka s {0} riadkami a {1} stĺpcami"
 
 #: src/layer/marker/A11yTextInput.js:243
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Riadky {0} až {1}"
 
 #: src/layer/marker/A11yTextInput.js:246
 msgid "Row {0}"
-msgstr ""
+msgstr "Riadok {0}"
 
 #: src/layer/marker/A11yTextInput.js:254
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Stĺpce {0} až {1}"
 
 #: src/layer/marker/A11yTextInput.js:257
 msgid "Column {0}"
-msgstr ""
+msgstr "Stĺpec {0}"
 
 #: src/layer/marker/A11yTextInput.js:285
 msgid "Editing activated. "
-msgstr ""
+msgstr "Upravovanie aktivované. "
 
 #: src/layer/marker/A11yTextInput.js:304
 msgid "{0} selected"
-msgstr ""
+msgstr "Vybrané: {0}"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Obsahuje text: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} zrušené"
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} odstránené"
 
 #: src/layer/marker/TextInput.js:451
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Podpora čítačky obrazovky pre textový obsah je vypnutá. "
 
 #: src/layer/marker/TextInput.js:452
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "Je potrebné ho povoliť na úrovni servera aj v používateľskom rozhraní. "
 
 #: src/layer/marker/TextInput.js:453
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Pozrite sa na sekciu pre prístupnosť (accessibility) v súbore coolwsd.xml "
+"kvôli nastaveniu na úrovni servera. "
 
 #: src/layer/marker/TextInput.js:454
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Skontrolujte tiež prepínač hlasového výstupu pod {parentControl}."
 
 #: src/layer/marker/TextInput.js:456
 msgid "the Help tab"
-msgstr ""
+msgstr "záložka Pomocník"
 
 #: src/layer/marker/TextInput.js:456
 msgid "the View menu"
-msgstr ""
+msgstr "ponuka Zobraziť"
 
 #: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
@@ -3807,7 +3845,7 @@ msgstr "Funkcie"
 
 #: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
-msgstr ""
+msgstr "Pomenovaný rozsah"
 
 #: src/layer/tile/CanvasTileLayer.js:3450
 msgid "No Comments"
@@ -3829,7 +3867,7 @@ msgstr "Kopírovanie z dokumentu je zakázané"
 
 #: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "Upozornenie: požiadavka na kopírovanie/vloženie vypršala"
 
 #: src/map/Clipboard.js:329
 msgid "Failed to download clipboard, please re-copy"
@@ -3840,35 +3878,36 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Váš prehliadač má veľmi obmedzený prístup k schránke, preto používajte "
+"tlačidlá na vloženie na vašej obrazovkovej klávesnici."
 
 #: src/map/Clipboard.js:1366
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Sťahovanie za účelom rozsiahleho kopírovania / vkladania začalo. Počkajte "
-"na jeho dokončenie alebo ho pred začatím nového najprv zrušte.</p>"
+"Sťahovanie za účelom rozsiahleho kopírovania / vkladania už začalo. Prosím, "
+"počkajte na jeho dokončenie alebo ho pred začatím nového najprv zrušte"
 
 #: src/map/Clipboard.js:1388
 msgid "Paste from this document"
-msgstr ""
+msgstr "Prilepiť z tohto dokumentu"
 
 #: src/map/Clipboard.js:1388
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Zrušiť špeciálne prilepenie"
 
 #: src/map/Clipboard.js:1410
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Váš prehliadač má veľmi obmedzený prístup k schránke"
 
 #: src/map/Clipboard.js:1415
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Na zobrazenie ďalších možností použite nasledujúcu kombináciu:"
 
 #: src/map/Clipboard.js:1433
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Zatvorte vyskakovacie okno, ak chcete ignorovať špeciálne prilepenie"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -3880,11 +3919,11 @@ msgstr "Naposledy uložené:"
 
 #: src/map/Map.js:1483
 msgid "Please wait!"
-msgstr ""
+msgstr "Prosím, čakajte!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Prosím, pošlite nám svoju spätnú väzbu"
 
 #: src/map/handler/Map.FileInserter.js:174
 #, javascript-format
@@ -3909,72 +3948,75 @@ msgstr "Nahrávanie súboru na server zlyhalo so stavom: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Dialógové okno tlače"
 
-#: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:664
+#: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:667
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Prázdna prezentácia"
 
 #: src/map/handler/Map.SlideShow.js:167
-#: src/slideshow/SlideShowPresenter.ts:692
+#: src/slideshow/SlideShowPresenter.ts:695
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Prezentácia v okne bola zablokovaná"
 
 #: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:694
+#: src/slideshow/SlideShowPresenter.ts:697
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Prezentácia bola zablokovaná. Povoliť vyskakovacie okná vo vašom "
+"prehliadači. To umožní zobrazovanie prezentácií v samostatných oknách, čo "
+"uľahčí zdieľanie obrazovky."
 
 #: src/map/handler/Map.SlideShow.js:172
-#: src/slideshow/SlideShowPresenter.ts:491
+#: src/slideshow/SlideShowPresenter.ts:494
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Prezentácia v okne "
 
 #: src/map/handler/Map.SlideShow.js:202
-#: src/slideshow/SlideShowPresenter.ts:534
+#: src/slideshow/SlideShowPresenter.ts:537
 msgid "Presenting in window"
-msgstr ""
+msgstr "Prezentovanie v okne"
 
 #: src/map/handler/Map.SlideShow.js:203
-#: src/slideshow/SlideShowPresenter.ts:535
+#: src/slideshow/SlideShowPresenter.ts:538
 msgid "Close Presentation"
-msgstr ""
+msgstr "Zatvoriť prezentáciu"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Prezentovanie na celú obrazovku"
 
 #: src/map/handler/Map.SlideShow.js:231
-#, fuzzy
 msgid "End Presentation"
-msgstr "Prezentácia"
+msgstr "Ukončiť prezentáciu"
 
 #: src/map/handler/Map.SlideShow.js:295
-#: src/slideshow/SlideShowPresenter.ts:679
+#: src/slideshow/SlideShowPresenter.ts:682
 msgid "Already presenting"
-msgstr ""
+msgstr "Už prezentujete"
 
 #: src/map/handler/Map.SlideShow.js:296
-#: src/slideshow/SlideShowPresenter.ts:680
+#: src/slideshow/SlideShowPresenter.ts:683
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Tento dokument už prezentujete"
 
 #: src/map/handler/Map.SlideShow.js:306
-#: src/slideshow/SlideShowPresenter.ts:717
+#: src/slideshow/SlideShowPresenter.ts:720
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Prezentácia je zakázaná"
 
 #: src/map/handler/Map.SlideShow.js:307
-#: src/slideshow/SlideShowPresenter.ts:718
+#: src/slideshow/SlideShowPresenter.ts:721
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Prezentácia bola pre tento dokument zakázaná"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Váš server Collabora Online vyžaduje aktualizáciu. Je dostupná verzia {0}."
 
 #: src/map/handler/Map.WOPI.js:176
 msgid "Creating new file from template..."
@@ -3982,7 +4024,7 @@ msgstr "Vytvára sa nový súbor zo šablóny..."
 
 #: src/map/handler/Map.WOPI.js:691
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Názov súboru musí obsahovať príponu."
 
 #: src/map/handler/Map.WOPI.js:699
 msgid "Creating copy..."
@@ -3990,15 +4032,15 @@ msgstr "Vytváranie kópie..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Uvítací dialóg"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pozastavené... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Aktuálny snímok"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
@@ -4006,52 +4048,52 @@ msgstr "Nasledujúca snímka"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pozastaviť"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Reštartovať"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Pokračovať"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Späť"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Priblížiť"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Oddialiť"
 
 #: src/slideshow/PresenterConsole.js:173
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Ukážka snímku {1}"
 
 #: src/slideshow/PresenterConsole.js:1218
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Snímok {0} z {1}"
 
 #: src/slideshow/PresenterConsole.js:1242
 msgid "No Notes"
-msgstr ""
+msgstr "Bez poznámok"
 
 #: src/slideshow/PresenterConsole.js:1330
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Opakovať o {0} sekúnd"
 
 #: src/slideshow/PresenterConsole.js:1335
-#: src/slideshow/SlideShowPresenter.ts:389
+#: src/slideshow/SlideShowPresenter.ts:390
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Kliknite na ukončenie prezentácie…"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Vitajte v Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
@@ -4060,7 +4102,7 @@ msgstr "Zoznámte sa s novou verziou {coolversion}"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr "Collabora Online Development Edition"
+msgstr "Collabora Online, developerská edícia"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -4069,6 +4111,11 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Vychutnajte si najnovšie inovácie v online produktivite, ktoré môžete "
+"bezplatne používať, skúmať a zdieľať s ostatnými v prehliadači. Rôzne <a "
+"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
+"collabora-office-android-ios/\">aplikácie</a> sú dostupné aj pre mobilné "
+"zariadenia."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -4081,14 +4128,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Pozrite si <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
+"code-24-04-release-notes/\">poznámky k vydaniu</a> a zistite všetko o "
+"najnovšej verzii Collabora Online Development Edition, určenej pre domácich "
+"používateľov a malé tímy."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Zapojte sa"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -4101,6 +4152,12 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Máte záujem prispieť, ale neviete, kde začať? Pozrite si <a target=\"_blank\""
+" href=\"https://collaboraonline.github.io/post/build-code/\">podrobný návod</"
+"a> a zostavte CODE od začiatku. Pomôcť môžete aj s <a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/translate/\">prekladmi</a> alebo <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
+">hlásením chýb</a> spolu so všetkými dôležitými krokmi, ako ich reprodukovať."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -4109,6 +4166,160 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
+
+#~ msgid "Cluster is scaling, retrying..."
+#~ msgstr "Klaster je škálovaný, skúša sa znova..."
+
+#~ msgid "Document is migrating to new server, retrying..."
+#~ msgstr "Dokument je migrovaný na nový server, skúša sa znova..."
+
+#~ msgid "Margin"
+#~ msgstr "Okraj"
+
+#~ msgid "Size"
+#~ msgstr "Veľkosť"
+
+#~ msgid "Group"
+#~ msgstr "Zoskupiť"
+
+#~ msgid "Ungroup"
+#~ msgstr "Zrušiť zoskupenie"
+
+#~ msgid "Design"
+#~ msgstr "Dizajn"
+
+#~ msgid "Background Image"
+#~ msgstr "Obrázok na pozadí"
+
+#~ msgid "Wide"
+#~ msgstr "Široký"
+
+#~ msgid "Narrow"
+#~ msgstr "Úzky"
+
+#~ msgid "Edit Single Sparkline"
+#~ msgstr "Upraviť jednotlivý minigraf"
+
+#~ msgid "Delete Single Sparkline"
+#~ msgstr "Odstrániť jednotlivý minigraf"
+
+#~ msgid "A6"
+#~ msgstr "A6"
+
+#~ msgid "A5"
+#~ msgstr "A5"
+
+#~ msgid "A4"
+#~ msgstr "A4"
+
+#~ msgid "A3"
+#~ msgstr "A3"
+
+#~ msgid "B6 (ISO)"
+#~ msgstr "B6 (ISO)"
+
+#~ msgid "B5 (ISO)"
+#~ msgstr "B5 (ISO)"
+
+#~ msgid "B4 (ISO)"
+#~ msgstr "B4 (ISO)"
+
+#~ msgid "Letter"
+#~ msgstr "Letter"
+
+#~ msgid "Legal"
+#~ msgstr "Legal"
+
+#~ msgid "Long Bond"
+#~ msgstr "Long Bond"
+
+#~ msgid "Tabloid"
+#~ msgstr "Tabloid"
+
+#~ msgid "B6 (JIS)"
+#~ msgstr "B6 (JIS)"
+
+#~ msgid "B5 (JIS)"
+#~ msgstr "B5 (JIS)"
+
+#~ msgid "B4 (JIS)"
+#~ msgstr "B4 (JIS)"
+
+#~ msgid "16 Kai"
+#~ msgstr "16 Kai"
+
+#~ msgid "32 Kai"
+#~ msgstr "32 Kai"
+
+#~ msgid "Big 32 Kai"
+#~ msgstr "Big 32 Kai"
+
+#~ msgid "User"
+#~ msgstr "Používateľ"
+
+#~ msgid "DL Envelope"
+#~ msgstr "DL obálka"
+
+#~ msgid "C6 Envelope"
+#~ msgstr "C6 obálka"
+
+#~ msgid "C6/5 Envelope"
+#~ msgstr "C6/5 Obálka"
+
+#~ msgid "C5 Envelope"
+#~ msgstr "C5 Obálka"
+
+#~ msgid "C4 Envelope"
+#~ msgstr "C4 Obálka"
+
+#~ msgid "#6¾ Envelope"
+#~ msgstr "#6¾ Obálka"
+
+#~ msgid "#7¾ (Monarch) Envelope"
+#~ msgstr "#7¾ (Monarch) Obálka"
+
+#~ msgid "#9 Envelope"
+#~ msgstr "#9 Obálka"
+
+#~ msgid "#10 Envelope"
+#~ msgstr "#10 Obálka"
+
+#~ msgid "#11 Envelope"
+#~ msgstr "#11 Obálka"
+
+#~ msgid "#12 Envelope"
+#~ msgstr "#12 Obálka"
+
+#~ msgid "Japanese Postcard"
+#~ msgstr "Japonská pohľadnica"
+
+#~ msgid "Grayscale"
+#~ msgstr "Odtiene sivej"
+
+#~ msgid "Black/White"
+#~ msgstr "Čierna/biela"
+
+#~ msgid "Watermark"
+#~ msgstr "Vodoznak"
+
+#~ msgid "Top: {top}"
+#~ msgstr "Horné: {top}"
+
+#~ msgid "Left: {left}"
+#~ msgstr "Vľavo: {left}"
+
+#~ msgid "Bottom: {bottom}"
+#~ msgstr "Dolné: {bottom}"
+
+#~ msgid "Right: {right}"
+#~ msgstr "Vpravo: {right}"
+
+#~ msgid "Custom Margins…"
+#~ msgstr "Vlastné okraje…"
 
 #~ msgid "Interface"
 #~ msgstr "Používateľské rozhranie"
