@@ -73,8 +73,6 @@ L.Control.Notebookbar = L.Control.extend({
 			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
 		}
 
-		this.map.uiManager.initializeNotebookbarInCore();
-
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
 		this.floatingNavIcon = document.querySelector('.navigator-btn-wrapper');
@@ -109,23 +107,10 @@ L.Control.Notebookbar = L.Control.extend({
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
-
-		var that = this;
-		var retryNotebookbarInit = function() {
-			if (!that.isInitializedInCore()) {
-				// if notebookbar doesn't have any welded controls it can trigger false alarm here
-				window.app.console.warn('notebookbar might be not initialized, retrying');
-				that.map.uiManager.initializeNotebookbarInCore();
-				that.retry = setTimeout(retryNotebookbarInit, 3000);
-			}
-		};
-
-		this.retry = setTimeout(retryNotebookbarInit, 3000);
 	},
 
 	onRemove: function() {
 		clearTimeout(this.retry);
-		this.resetInCore();
 		this.map.off('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
@@ -138,15 +123,6 @@ L.Control.Notebookbar = L.Control.extend({
 			this.floatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
-	},
-
-	isInitializedInCore: function() {
-		return this._isNotebookbarLoadedOnCore;
-	},
-
-	resetInCore: function() {
-		this._isNotebookbarLoadedOnCore = false;
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
 	},
 
 	onJSUpdate: function (e) {

@@ -1626,11 +1626,9 @@ app.definitions.Socket = L.Class.extend({
 			this._map.uiManager.applyInvert();
 			this._map.uiManager.setCanvasColorAfterModeChange();
 
-			var uiMode = this._map.uiManager.getCurrentMode();
-			if (uiMode === 'notebookbar' && this._map.uiManager.notebookbar) {
-				this._map.uiManager.notebookbar.resetInCore();
+			if (!window.mode.isMobile())
 				this._map.uiManager.initializeNotebookbarInCore();
-			}
+
 			// close all the popups otherwise document textArea will not get focus
 			this._map.uiManager.closeAll();
 			this._map.setPermission(app.file.permission);
