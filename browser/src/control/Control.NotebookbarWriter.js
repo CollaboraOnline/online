@@ -417,143 +417,137 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasServerAudit = !!this.map.serverAuditDialog;
 
 		var content = [
-			{
-				'type': 'container',
-				'id': helpTabName + '-container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'forum',
-								'type': 'bigtoolitem',
-								'text': _('Forum'),
-								'command': '.uno:ForumHelp',
-								'accessibility': { focusBack: true, combination: 'C', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'online-help',
-								'type': 'bigtoolitem',
-								'text': _('Online Help'),
-								'command': '.uno:OnlineHelp',
-								'accessibility': { focusBack: false, combination: 'H', de: null }
-							}
-						]
-					},
-					{ type: 'separator', id: 'help-onlinehelp-break', orientation: 'vertical' },
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'keyboard-shortcuts',
-								'type': 'bigtoolitem',
-								'text': _('Keyboard shortcuts'),
-								'command': '.uno:KeyboardShortcuts',
-								'accessibility': { focusBack: false, combination: 'S', de: null }
-							}
-						]
-					},
-					{ type: 'separator', id: 'help-keyboardshortcuts-break', orientation: 'vertical' },
-					hasAccessibilitySupport ?
+				{
+					'type': 'toolbox',
+					'children': [
 						{
-							'id':'togglea11ystate',
-							'type': 'bigcustomtoolitem',
-							'text': _('Screen Reading'),
-							'accessibility': { focusBack: true,	combination: 'SR', de: null }
-						} : {},
-					hasAccessibilityCheck ?
-						{
-							'id': 'accessibility-check',
-							'class': 'unoAccessibilityCheck',
+							'id': 'forum',
 							'type': 'bigtoolitem',
-							'text': _UNO('.uno:AccessibilityCheck', 'text'),
-							'command': '.uno:SidebarDeck.A11yCheckDeck',
-							'accessibility': { focusBack: false, combination: 'A', de: null }
-						} : {},
-					hasAccessibilitySupport || hasAccessibilityCheck ?
+							'text': _('Forum'),
+							'command': '.uno:ForumHelp',
+							'accessibility': { focusBack: true, combination: 'C', de: null }
+						}
+					]
+				},
+				{
+					'type': 'toolbox',
+					'children': [
 						{
-							'id': 'help-accessibility-break',
+							'id': 'online-help',
+							'type': 'bigtoolitem',
+							'text': _('Online Help'),
+							'command': '.uno:OnlineHelp',
+							'accessibility': { focusBack: false, combination: 'H', de: null }
+						}
+					]
+				},
+				{ type: 'separator', id: 'help-onlinehelp-break', orientation: 'vertical' },
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'keyboard-shortcuts',
+							'type': 'bigtoolitem',
+							'text': _('Keyboard shortcuts'),
+							'command': '.uno:KeyboardShortcuts',
+							'accessibility': { focusBack: false, combination: 'S', de: null }
+						}
+					]
+				},
+				{ type: 'separator', id: 'help-keyboardshortcuts-break', orientation: 'vertical' },
+				hasAccessibilitySupport ?
+					{
+						'id':'togglea11ystate',
+						'type': 'bigcustomtoolitem',
+						'text': _('Screen Reading'),
+						'accessibility': { focusBack: true,	combination: 'SR', de: null }
+					} : {},
+				hasAccessibilityCheck ?
+					{
+						'id': 'accessibility-check',
+						'class': 'unoAccessibilityCheck',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:AccessibilityCheck', 'text'),
+						'command': '.uno:SidebarDeck.A11yCheckDeck',
+						'accessibility': { focusBack: false, combination: 'A', de: null }
+					} : {},
+				hasAccessibilitySupport || hasAccessibilityCheck ?
+					{
+						'id': 'help-accessibility-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					} : {},
+				hasServerAudit ?
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'server-audit',
+							'type': 'bigcustomtoolitem',
+							'text': _('Server audit'),
+							'command': 'serveraudit',
+							'accessibility': { focusBack: false, combination: 'SA', de: null }
+						},
+						{
+							'id': 'help-serveraudit-break',
 							'type': 'separator',
 							'orientation': 'vertical'
-						} : {},
-					hasServerAudit ?
+						}
+					]
+				} : {},
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'report-an-issue',
+							'type': 'bigtoolitem',
+							'text': _('Report an issue'),
+							'command': '.uno:ReportIssue',
+							'accessibility': { focusBack: true, combination: 'K', de: null }
+						},
+						{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
+					]
+				},
+				hasLatestUpdates ?
 					{
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'server-audit',
-								'type': 'bigcustomtoolitem',
-								'text': _('Server audit'),
-								'command': 'serveraudit',
-								'accessibility': { focusBack: false, combination: 'SA', de: null }
-							},
-							{
-								'id': 'help-serveraudit-break',
-								'type': 'separator',
-								'orientation': 'vertical'
+								'id': 'latestupdates',
+								'type': 'bigtoolitem',
+								'text': _('Latest Updates'),
+								'command': '.uno:LatestUpdates',
+								'accessibility': { focusBack: true,	combination: 'LU', de: null }
+
 							}
 						]
 					} : {},
+				hasFeedback ?
 					{
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'report-an-issue',
+								'id': 'feedback',
 								'type': 'bigtoolitem',
-								'text': _('Report an issue'),
-								'command': '.uno:ReportIssue',
-								'accessibility': { focusBack: true, combination: 'K', de: null }
-							},
-							{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
+								'text': _('Send Feedback'),
+								'command': '.uno:Feedback',
+								'accessibility': { focusBack: true,	combination: 'SF', de: null }
+							}
 						]
-					},
-					hasLatestUpdates ?
-						{
-							'type': 'toolbox',
-							'children': [
-								{
-									'id': 'latestupdates',
-									'type': 'bigtoolitem',
-									'text': _('Latest Updates'),
-									'command': '.uno:LatestUpdates',
-									'accessibility': { focusBack: true,	combination: 'LU', de: null }
-
-								}
-							]
-						} : {},
-					hasFeedback ?
-						{
-							'type': 'toolbox',
-							'children': [
-								{
-									'id': 'feedback',
-									'type': 'bigtoolitem',
-									'text': _('Send Feedback'),
-									'command': '.uno:Feedback',
-									'accessibility': { focusBack: true,	combination: 'SF', de: null }
-								}
-							]
-						} : {},
-					hasAbout ?
-						{
-							'type': 'toolbox',
-							'children': [
-								{
-									'id': 'about',
-									'type': 'bigtoolitem',
-									'text': _('About'),
-									'command': '.uno:About',
-									'accessibility': { focusBack: false, combination: 'W', de: null }
-								}
-							]
-						} : {}
-				]
-			}
+					} : {},
+				hasAbout ?
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'about',
+								'type': 'bigtoolitem',
+								'text': _('About'),
+								'command': '.uno:About',
+								'accessibility': { focusBack: false, combination: 'W', de: null }
+							}
+						]
+					} : {}
 		];
 
 		return this.getTabPage(helpTabName, content);
