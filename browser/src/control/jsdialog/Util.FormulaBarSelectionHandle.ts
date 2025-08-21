@@ -129,7 +129,7 @@ class FormulaBarSelectionHandle {
 		}
 
 		app.layoutingService.appendLayoutingTask(() => {
-			if (!this.visible) {
+			if (!this.visible || !window.touch.currentlyUsingTouchscreen()) {
 				this.element.style.visibility = 'hidden';
 				return;
 			}
