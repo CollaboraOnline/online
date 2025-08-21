@@ -26,6 +26,8 @@ interface WidgetJSON {
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
 	labelledBy?: string;
+	command?: string;
+	icon?: string;
 	allyRole?: string;
 }
 
@@ -302,12 +304,14 @@ interface IconViewEntry {
 	text: string; // label of an entry
 	tooltip: string; // tooltip of an entry
 	ondemand: boolean; // if true then we ignore image property and request it on demand (when shown)
+	externalUICmd: string;
 }
 
 interface IconViewJSON extends WidgetJSON {
 	entries: Array<IconViewEntry>;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
+	isExpandable: boolean;
 }
 
 interface EditWidgetJSON extends WidgetJSON {

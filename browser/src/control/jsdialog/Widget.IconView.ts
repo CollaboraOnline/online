@@ -174,12 +174,101 @@ JSDialog.iconView = function (
 	data: IconViewJSON,
 	builder: JSBuilder,
 ) {
+	const commonContainer = L.DomUtil.create(
+		'div',
+		builder.options.cssClass + ' ui-iconview-window',
+		parentContainer,
+	);
+	commonContainer.id = data.id;
+
 	const container = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview',
-		parentContainer,
+		commonContainer,
 	);
-	container.id = data.id;
+	container.id = data.id + '-iconview';
+
+	// but there's another problem. iconview is not just used by the notebookbar,
+	// but also by the sidebar, and the sidebar is now showing these buttons which is
+	// wierd. so maybe removing the scrools is not that bad of an idea and instead
+	// i should focus on making the stylesview expandable first.
+	//
+	// there would be some specification needed then, things like which iconview
+	// is expandable and which is not and when. and why the hell is this conditional
+	// not working. in the third call to this iconview constructor, there's
+	// no isExpandable property passed in, i wonder why.
+
+	if ((data as any).isExpandable === 'true') {
+		builder.build(
+			commonContainer,
+			[
+				{
+					id: data.id + '-btn',
+					type: 'container',
+					children: [
+						{
+							id: data.id + '-expand',
+							type: 'customtoolitem',
+							text: _('Expand'),
+							icon: 'lc_searchnext.svg',
+						},
+					],
+					vertical: 'true',
+				} as WidgetJSON,
+			],
+			false,
+		);
+	} else {
+		builder.build(
+			commonContainer,
+			[
+				{
+					id: data.id + '-btn',
+					type: 'container',
+					children: [
+						{
+							id: data.id + '-scroll-up',
+							type: 'customtoolitem',
+							text: _('Scroll up'),
+							icon: 'lc_searchprev.svg',
+						},
+						// these two will be handled internally, the third one
+						// would come from the iconview, it tells us what command
+						// to use for the externalInterface
+						{
+							id: data.id + '-scroll-down',
+							type: 'customtoolitem',
+							text: _('Scroll down'),
+							icon: 'lc_searchnext.svg',
+						},
+						{
+							id: data.id + '-external-ui-button',
+							type: 'customtoolitem',
+							text: _('Style list'),
+							command: (data as any).externalUICmd,
+							icon: 'lc_stylepreviewmore.svg',
+						},
+					],
+					vertical: 'true',
+				} as WidgetJSON,
+			],
+			false,
+		);
+
+		const scroll_up = document.getElementById(data.id + '-scroll-up');
+		if (scroll_up) {
+			scroll_up.onclick = function () {
+				app.dispatcher.dispatch('scrolliconviewup', container.id);
+			};
+		}
+
+		const scroll_down = document.getElementById(data.id + '-scroll-down');
+		if (scroll_down) {
+			scroll_down.onclick = function () {
+				app.dispatcher.dispatch('scrolliconviewdown', container.id);
+			};
+		}
+	}
 
 	const disabled = data.enabled === false;
 	if (disabled) L.DomUtil.addClass(container, 'disabled');
@@ -246,6 +335,10 @@ JSDialog.iconView = function (
 			);
 	};
 
+	// this is the function which adds rendered images to the iconview
+	// through the calls to _createEntryText. this should be linked with
+	// the new parent that we are creating. looking around the code and
+	// asking, wait... how does that happen helps
 	container.updateRenders = (pos: number) => {
 		const dropdown = container.querySelectorAll(
 			'.ui-iconview-entry, .ui-iconview-separator',
@@ -270,6 +363,8 @@ JSDialog.iconView = function (
 		}
 	};
 
+	// this is never called, but why?
+
 	JSDialog.KeyboardGridNavigation(container);
 	container.addEventListener('keydown', function (e: KeyboardEvent) {
 		if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
@@ -289,6 +384,9 @@ JSDialog.iconView = function (
 		else if (e.key === 'Enter')
 			builder.callback('iconview', 'activate', data, selectedIndex, builder);
 	});
+
+	commonContainer.updateRenders = container.updateRenders;
+	commonContainer.onSelect = container.onSelect;
 
 	return false;
 };
