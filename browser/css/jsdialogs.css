@@ -1301,7 +1301,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .notebookbar.ui-overflow-group-bottom {
 	display: flex;
 	padding: 0 5px;
-	margin-top: 4px;
 }
 
 .notebookbar .ui-overflow-group-inner {
