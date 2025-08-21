@@ -843,7 +843,7 @@ class SettingIframe {
 		checkboxWrapper.appendChild(checkboxContent);
 
 		const checkboxContentIcon = document.createElement('span');
-		checkboxContentIcon.className = `checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
+		checkboxContentIcon.className = `${isDisabled ? 'checkbox-content-icon-disabled' : 'checkbox-content-icon'} checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
 		checkboxContentIcon.ariaHidden = 'true';
 		checkboxContent.appendChild(checkboxContentIcon);
 

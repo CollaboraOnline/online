@@ -551,6 +551,12 @@ ul {
   color: var(--settings-btn-primary);
 }
 
+.checkbox-content-icon-disabled {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  color: #6B7280
+}
+
 .checkbox-content {
   cursor: pointer;
   flex-shrink: 0;
