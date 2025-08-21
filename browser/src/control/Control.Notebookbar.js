@@ -19,11 +19,13 @@ L.Control.Notebookbar = L.Control.extend({
 	_showNotebookbar: false,
 	_RTL: false,
 	_lastContext: null,
+	_lastSelectedTabName: null,
 
 	container: null,
 	builder: null,
 
 	HOME_TAB_ID: 'Home-tab-label',
+	FORMULAS_TAB_ID: 'Formula-tab-label',
 
 	additionalShortcutButtons: [],
 
@@ -263,8 +265,13 @@ L.Control.Notebookbar = L.Control.extend({
 		this.createShortcutsBar();
 	},
 
-	selectedTab: function() {
+	selectedTab: function(tabName) {
 		// implement in child classes
+		this._lastSelectedTabName = tabName;
+	},
+
+	isTabSelected: function(tabName) {
+		return this._lastSelectedTabName === tabName;
 	},
 
 	getTabs: function() {
@@ -517,11 +524,17 @@ L.Control.Notebookbar = L.Control.extend({
 			return;
 		}
 
+		const docType = this._map.getDocType();
+		
+		if (docType === 'spreadsheet' && this.isTabSelected('Formulas')) {
+			this.updateButtonVisibilityForContext(requestedContext, this.FORMULAS_TAB_ID);
+			return;
+		}
+
 		if (contextTab) {
 			// Switch to the tab of the context, unless we currently show the review tab
 			// for text documents, where jumping to the next change would possibly
 			// switch to the Home or Table tabs, which is not wanted.
-			var docType = this._map.getDocType();
 			if (docType !== 'text' || currentlySelectedTabName !== 'Review') {
 				contextTab.click();
 			}
