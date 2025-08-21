@@ -578,6 +578,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	color: var(--color-treeview-highlight-text);
 }
 
+#QuickFindPanel .ui-treeview-cell-text-content.page-divider {
+	/*TODO: style however we want*/
+	font-weight: bold;
+	font-size: large;
+}
+
 /* search field box */
 #navigator-search {
 	padding: 8px 16px;
