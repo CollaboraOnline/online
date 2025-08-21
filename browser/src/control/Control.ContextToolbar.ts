@@ -73,12 +73,6 @@ class ContextToolbar {
 
 			this.builder.build(this.container, contextToolbarItems, false);
 
-			if (
-				!this.builder.map.uiManager.notebookbar ||
-				!this.builder.map.uiManager.notebookbar.isInitializedInCore()
-			)
-				this.builder.map.uiManager.initializeNotebookbarInCore();
-
 			this.initialized = true;
 		}
 
