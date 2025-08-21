@@ -129,7 +129,7 @@ class FormulaBarSelectionHandle {
 		}
 
 		requestAnimationFrame(() => {
-			if (!this.visible) {
+			if (!this.visible || !window.touch.currentlyUsingTouchscreen()) {
 				this.element.style.visibility = 'hidden';
 				return;
 			}
