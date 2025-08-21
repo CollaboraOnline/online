@@ -2,9 +2,9 @@
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
-var searchHelper = require('../../common/search_helper');
+var findHelper = require('../../common/find_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/search_bar.ods');
@@ -14,25 +14,26 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 	it('Search existing word.', function() {
 		helper.setDummyClipboardForCopy();
-		searchHelper.typeIntoSearchField('a');
+		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 
-		searchHelper.searchNext();
+		findHelper.findNext();
 
 		// First cell should be selected
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
-		searchHelper.searchNext();
+		findHelper.findNext();
 		cy.cGet(helper.addressInputSelector).should('have.value', 'B1');
 
-		searchHelper.typeIntoSearchField('c');
-		searchHelper.searchNext();
+		findHelper.typeIntoSearchField('c');
+		findHelper.findNext();
 
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'c');
 
-		searchHelper.searchNext();
+		findHelper.findNext();
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A301');
 	});
 
@@ -52,24 +53,26 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		});
 
 		helper.setDummyClipboardForCopy();
-		searchHelper.typeIntoSearchField('a');
+		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 
-		searchHelper.searchNext();
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
 		desktopHelper.scrollViewDown();
 
-		searchHelper.typeIntoSearchField('c');
-		searchHelper.searchNext();
+		findHelper.typeIntoSearchField('c');
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'C1');
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 	});
 
 	it('Search not existing word.', function() {
-		searchHelper.typeIntoSearchField('q');
+		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('q');
 
 		// Should be no new selection
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
@@ -77,22 +80,23 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 	it('Search next / prev instance.', function() {
 		helper.setDummyClipboardForCopy();
-		searchHelper.typeIntoSearchField('d');
-		searchHelper.searchNext();
+		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('d');
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A472');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'd');
 
 		// Search next instance
-		searchHelper.searchNext();
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'D1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'd');
 
 		// Search prev instance
-		searchHelper.searchPrev();
+		findHelper.findPrev();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A472');
 		helper.copy();
@@ -101,43 +105,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 	it('Search wrap at document end', function() {
 		helper.setDummyClipboardForCopy();
-		searchHelper.typeIntoSearchField('a');
+		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 
-		searchHelper.searchNext();
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
-		searchHelper.searchNext();
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'B1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance, which is in the beginning of the document.
-		searchHelper.searchNext();
+		findHelper.findNext();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
-
-	it('Cancel search.', function() {
-		helper.setDummyClipboardForCopy();
-		searchHelper.typeIntoSearchField('a');
-
-		searchHelper.searchNext();
-
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
-		helper.copy();
-		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
-
-		// Cancel search -> selection removed
-		searchHelper.cancelSearch();
-
-		cy.cGet('input#search-input').should('be.visible');
-	});
-
 });
