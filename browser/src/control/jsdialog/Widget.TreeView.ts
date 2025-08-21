@@ -500,7 +500,15 @@ class TreeViewControl {
 			img.alt = text;
 		} else {
 			let cell;
-			if (treeViewData.highlightTerm !== undefined) {
+			if (this.isPageDivider(entry)) {
+				cell = L.DomUtil.create(
+					'span',
+					builder.options.cssClass +
+						` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index} page-divider`,
+					parent,
+				);
+				cell.innerText = entry.text.substring(4, entry.text.length - 4);
+			} else if (treeViewData.highlightTerm !== undefined) {
 				cell = this.createHighlightedCell(
 					parent,
 					entry,
@@ -584,6 +592,11 @@ class TreeViewControl {
 		}
 
 		return mainSpan;
+	}
+
+	isPageDivider(entry: TreeEntryJSON): boolean {
+		// Matches page divider prefix and suffix: -$#~ PAGE ~#$- as set in core: QuickFindPanel::FillSearchFindsList() (QuickFindPanel.cxx)
+		return entry.text.startsWith('-$#~') && entry.text.endsWith('~#$-');
 	}
 
 	caseInsensitiveSplit(text: string, delimeter: string) {
