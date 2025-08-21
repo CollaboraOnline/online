@@ -24,6 +24,10 @@
 #include <android/log.h>
 #endif
 
+#if defined __EMSCRIPTEN__
+#include <emscripten/console.h>
+#endif
+
 #include "Util.hpp"
 #include "StateEnum.hpp"
 
@@ -194,6 +198,16 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_LOG(LVL, STR) \
     ((void)__android_log_print(ANDROID_LOG_DEBUG, \
                                "coolwsd", "%s %s", #LVL, STR.c_str()))
+#elif defined __EMSCRIPTEN__
+
+// emscripten/console.h does not have emscripten_console_info (corresponding to JS console.info) nor
+// emsripten_console_debug (corresponding to JS console.debug), so use emscripten_console_log
+// (corresponding to JS console.log) instead:
+#define LOG_LOG(LVL, STR) ( \
+    Log::LVL <= Log::ERR ? emscripten_console_error((STR).c_str()) : \
+    Log::LVL <= Log::WRN ? emscripten_console_warn((STR).c_str()) : \
+                           emscripten_console_log((STR).c_str()))
+
 #else
 
 #define LOG_LOG(LVL, STR)  Log::log(Log::LVL, STR)
