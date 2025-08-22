@@ -1075,7 +1075,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'layout-page',
-				'name':_('Format'),
+				'name':_('Page Setup'),
 				'accessibility': { focusBack: true,	combination: 'PS', de: null },
 				'children' : [
 					{
