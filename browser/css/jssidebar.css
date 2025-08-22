@@ -75,13 +75,29 @@ img.sidebar.ui-image {
 }
 
 .ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button,
-.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button,
-.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button img,
-.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button img {
+.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button img {
 	width: 10px;
 	height: 10px;
 	padding: 0;
 	margin: 0;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton,
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button,
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button img {
+	width: 14px;
+	height: 14px;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button {
+	opacity: 0.75;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button:hover {
+	opacity: 1;
 }
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
