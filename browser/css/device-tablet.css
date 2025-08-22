@@ -43,7 +43,6 @@
 	align-items: center;
 }
 .hasnotebookbar {
-	overflow: auto hidden;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 }
