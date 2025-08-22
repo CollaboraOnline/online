@@ -92,7 +92,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	_onStatusMsg: function (textMsg) {
 		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
 
-		if (app.socket._reconnecting) {
+		if (app.socket.impl._reconnecting) {
 			// persist cursor position on reconnection
 			// In writer, core always sends the cursor coordinates
 			// of the first paragraph of the document so we want to ignore that

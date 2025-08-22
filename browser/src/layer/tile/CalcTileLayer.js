@@ -451,7 +451,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docType = statusJSON.type;
 			this._parts = statusJSON.partscount;
 
-			if (app.socket._reconnecting) {
+			if (app.socket.impl._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 				this._resetInternalState();
 				window.keyboard.hintOnscreenKeyboard(window.keyboard.guessOnscreenKeyboard());
