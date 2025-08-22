@@ -769,7 +769,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'name':_('Slide Layout'),
 				'accessibility': { focusBack: true, combination: 'CS', de: null },
 				'more': {
-					'command':'.uno:PageSetup'
+					'command':'.uno:PageSetup',
+					'accessibility': { focusBack: true, combination: 'ML', de: null }
 				},
 				'children' : [
 					{
@@ -812,7 +813,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'name':_('Character'),
 				'accessibility': { focusBack: true, combination: 'FN', de: null },
 				'more': {
-					'command':'.uno:FontDialog'
+					'command':'.uno:FontDialog',
+					'accessibility': { focusBack: true, combination: 'MC', de: null }
 				},
 				'children' : [
 					{
@@ -950,7 +952,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'overflowgroup',
 				'id': 'home-paragraph',
 				'more': {
-					'command':'.uno:ParagraphDialog'
+					'command':'.uno:ParagraphDialog',
+					'accessibility': { focusBack: true, combination: 'MP', de: null }
 				},
 				'name':_('Paragraph'),
 				'accessibility': { focusBack: true, combination: 'DB', de: null },

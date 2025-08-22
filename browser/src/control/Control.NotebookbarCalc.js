@@ -456,7 +456,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': _('Font'),
 				'accessibility': { focusBack: true,	combination: 'FF', de: null },
 				'more': {
-					'command':'.uno:CellTextDlg'
+					'command':'.uno:CellTextDlg',
+					'accessibility': { focusBack: true,	combination: 'MF', de: null },
 				},
 				'children': [
 				{
@@ -602,7 +603,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': _('Alignment'),
 				'accessibility': { focusBack: true,	combination: 'AT', de: null },
 				'more': {
-					'command':'.uno:Hyphenate'
+					'command':'.uno:Hyphenate',
+					'accessibility': { focusBack: true,	combination: 'MA', de: null },
 				},
 				'children' : [
 				{
@@ -727,7 +729,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'type': 'bigtoolitem',
 					'text': _('Merge & Center'),
 					'command': '.uno:ToggleMergeCells',
-					'accessibility': { focusBack: true, combination: 'M', de: null }
+					'accessibility': { focusBack: true, combination: 'MC', de: null }
 				}
 			]
 		},
@@ -738,7 +740,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': _('Number'),
 				'accessibility': { focusBack: true,	combination: 'N', de: null },
 				'more': {
-					'command':'.uno:FormatCellDialog'
+					'command':'.uno:FormatCellDialog',
+					'accessibility': { focusBack: true, combination: 'MN', de: null }
 				},
 				'children' : [
 				{
