@@ -418,9 +418,7 @@ L.Map.WOPI = L.Handler.extend({
 				switch (msg.Values.id) {
 				case 'Navigator':
 				case 'ModifyPage':
-				case 'SlideChangeWindow':
 				case 'CustomAnimation':
-				case 'MasterSlidesPanel':
 					this._map.sendUnoCommand(`.uno:${msg.Values.id}`);
 					return;
 				}

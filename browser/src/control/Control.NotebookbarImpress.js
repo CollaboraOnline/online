@@ -57,13 +57,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:CustomAnimation',
 				'accessibility': { focusBack: true, combination: 'ZA', de: null }
 			},
-			{
-				'id': 'options-master-slides-panel',
-				'type': 'toolitem',
-				'text': _UNO('.uno:MasterSlidesPanel', 'presentation', true),
-				'command': '.uno:MasterSlidesPanel',
-				'accessibility': { focusBack: true, combination: 'ZM', de: null }
-			}
 		];
 		if (this._map && this._map['wopi'].EnableShare) {
 			optionsToolItems.push({
@@ -1808,14 +1801,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SelectBackground',
 				'accessibility': { focusBack: true, combination: 'SB', de: null }
 			},
-			{ type: 'separator', id: 'design-backgroundimage-break', orientation: 'vertical' },
-			{
-				'id': 'design-master-slides-panel',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:MasterSlidesPanel', 'presentation'),
-				'command': '.uno:MasterSlidesPanel',
-				'accessibility': { focusBack: true, combination: 'MS', de: null }
-			}
 		];
 
 		return this.getTabPage('Design', content);

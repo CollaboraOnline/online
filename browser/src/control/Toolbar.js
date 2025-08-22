@@ -359,8 +359,7 @@ L.Map.include({
 			console.error('Trying to send uno command without prefix: "' + command + '"');
 
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
-			command.startsWith('.uno:SlideChangeWindow') || command.startsWith('.uno:CustomAnimation') ||
-			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:ModifyPage') ||
+			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:ModifyPage') ||
 			command.startsWith('.uno:SidebarDeck') || command.startsWith('.uno:EditStyle')) {
 
 			// sidebar control is present only in desktop/tablet case
