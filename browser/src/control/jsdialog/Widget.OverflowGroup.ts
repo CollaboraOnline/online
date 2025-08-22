@@ -46,6 +46,7 @@ function createMoreButton(
 	moreOptionsButton.appendChild(img);
 
 	const unoToolButtonDiv = document.createElement('div');
+	unoToolButtonDiv.id = `${id}-more`;
 	unoToolButtonDiv.className = 'unotoolbutton ui-overflow-group-more';
 	unoToolButtonDiv.tabIndex = -1;
 	unoToolButtonDiv.setAttribute('data-cooltip', `More options for ${id}`);
