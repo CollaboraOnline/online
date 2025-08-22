@@ -641,7 +641,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'home-font',
 				'name': _('Font'),
 				'more': {
-					'command':'.uno:FontDialog'
+					'command':'.uno:FontDialog',
+					'accessibility': { focusBack: true,	combination: 'MF', de: null },
 				},
 				'accessibility': { focusBack: false,	combination: 'FF',	de: null },
 				'children': [
@@ -786,7 +787,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name': _('Paragraph'),
 				'accessibility': { focusBack: false, 	combination: 'U',	de: 'AA' },
 				'more': {
-					'command':'.uno:ParagraphDialog'
+					'command':'.uno:ParagraphDialog',
+					'accessibility': { focusBack: true,	combination: 'MP', de: null },
 				},
 				'children': [
 					{
@@ -2039,7 +2041,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Align'),
 				'accessibility': { focusBack: false,	combination: 'OL', de: null },
 				'more': {
-					'command':'.uno:TransformDialog'
+					'command':'.uno:TransformDialog',
+					'accessibility': { focusBack: true,	combination: 'MA', de: null },
 				},
 				'children' : [
 					{
@@ -2109,7 +2112,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Arrange'),
 				'accessibility': { focusBack: false,	combination: 'OF', de: null },
 				'more': {
-					'command':'.uno:TransformDialog'
+					'command':'.uno:TransformDialog',
+					'accessibility': { focusBack: true,	combination: 'MR', de: null },
 				},
 				'children' : [
 					{
@@ -3249,7 +3253,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Align'),
 				'accessibility': { focusBack: false, combination: 'SA', de: null },
 				'more': {
-					'command':'.uno:TransformDialog'
+					'command':'.uno:TransformDialog',
+					'accessibility': { focusBack: true,	combination: 'MS', de: null },
 				},
 				'children' : [
 					{
@@ -3307,7 +3312,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Arrange'),
 				'accessibility': { focusBack: false, combination: 'AR', de: null },
 				'more': {
-					'command':'.uno:TransformDialog'
+					'command':'.uno:TransformDialog',
+					'accessibility': { focusBack: true,	combination: 'MR', de: null },
 				},
 				'children' : [
 					{
@@ -3401,7 +3407,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Image Controls'),
 				'accessibility': { focusBack: false, combination: 'BN', de: null },
 				'more': {
-					'command':'.uno:GraphicDialog'
+					'command':'.uno:GraphicDialog',
+					'accessibility': { focusBack: true,	combination: 'MG', de: null },
 				},
 				'children' : [
 					{
@@ -3569,7 +3576,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Align'),
 				'accessibility': { focusBack: false, combination: 'BP', de: null },
 				'more': {
-					'command':'.uno:GraphicDialog'
+					'command':'.uno:GraphicDialog',
+					'accessibility': { focusBack: true,	combination: 'MA', de: null },
 				},
 				'children' : [
 					{
@@ -3627,7 +3635,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name':_('Arrange'),
 				'accessibility': { focusBack: false, combination: 'AB', de: null },
 				'more': {
-					'command':'.uno:GraphicDialog'
+					'command':'.uno:GraphicDialog',
+					'accessibility': { focusBack: true,	combination: 'MR', de: null },
 				},
 				'children' : [
 					{
