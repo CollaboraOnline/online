@@ -498,9 +498,7 @@ class Menubar extends L.Control {
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
 				   {uno: '.uno:ModifyPage'},
-				   {uno: '.uno:SlideChangeWindow'},
 				   {uno: '.uno:CustomAnimation'},
-				   {uno: '.uno:MasterSlidesPanel'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},

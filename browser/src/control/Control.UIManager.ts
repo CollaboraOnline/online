@@ -578,10 +578,6 @@ class UIManager extends L.Control {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:CustomAnimation');
 					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
-				} else if (this.getBooleanDocTypePref('SdMasterPagesDeck', false)) {
-					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
-					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
 				}
 			} else if (this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
