@@ -1314,6 +1314,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-overflow-group-bottom {
 	text-align: center;
+	align-items: center;
 }
 
 .notebookbar.ui-overflow-group-bottom {
