@@ -1814,20 +1814,21 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'menubutton',
 						'text': _('Margin'),
 						'enabled': 'true',
+						'accessibility': { focusBack: true,	combination: 'M', de: '8' },
 					},
 					{
 						'id': 'Layout-SizeMenu:MenuPageSizesWriter',
 						'type': 'menubutton',
 						'text': _('Size'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true, combination: 'PS', de: null }
+						'accessibility': { focusBack: true, combination: 'SZ', de: 'R' }
 					},
 					{
 						'id': 'Layout-OrientationMenu:MenuOrientation',
 						'type': 'menubutton',
 						'text': _UNO('.uno:Orientation'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true, combination: 'PO', de: null }
+						'accessibility': { focusBack: true, combination: 'O', de: '4' }
 					}
 				]
 			},
@@ -1837,7 +1838,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FormatColumns', 'text'),
 				'command': '.uno:FormatColumns',
-				'accessibility': { focusBack: false, combination: 'J', de: 'R' }
+				'accessibility': { focusBack: false, combination: 'J', de: 'HS' }
 			},
 			{ type: 'separator', id: 'layout-formatcolumns-break', orientation: 'vertical' },
 			{
