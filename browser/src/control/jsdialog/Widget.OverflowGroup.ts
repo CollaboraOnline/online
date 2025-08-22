@@ -42,7 +42,7 @@ function createMoreButton(
 	moreOptionsButton.setAttribute('aria-pressed', 'false');
 
 	const img = document.createElement('img');
-	app.LOUtil.setImage(img, 'lc_morebutton.svg', app.map);
+	app.LOUtil.setImage(img, 'lc_overflow-morebutton.svg', app.map);
 	moreOptionsButton.appendChild(img);
 
 	const unoToolButtonDiv = document.createElement('div');
