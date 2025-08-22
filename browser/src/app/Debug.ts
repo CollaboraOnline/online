@@ -717,12 +717,7 @@ class DebugManager {
 	private _randomizeSidebar(): void {
 		let sidebars = ['none', '.uno:SidebarDeck.PropertyDeck', '.uno:Navigator'];
 		if (this._docLayer.isImpress()) {
-			sidebars = sidebars.concat([
-				'.uno:SlideChangeWindow',
-				'.uno:CustomAnimation',
-				'.uno:MasterSlidesPanel',
-				'.uno:ModifyPage',
-			]);
+			sidebars = sidebars.concat(['.uno:CustomAnimation', '.uno:ModifyPage']);
 		}
 		const sidebar = sidebars[Math.floor(Math.random() * sidebars.length)];
 		window.app.console.log('Randomize Settings: Target sidebar: ' + sidebar);

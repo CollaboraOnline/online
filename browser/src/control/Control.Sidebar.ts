@@ -40,11 +40,11 @@ class Sidebar extends SidebarBase {
 	updateSidebarPrefs(currentDeck: string) {
 		// No longer used:
 		// 'SdSlideTransitionDeck'
+		// 'SdMasterPagesDeck',
 
 		const decks = [
 			'PropertyDeck',
 			'SdCustomAnimationDeck',
-			'SdMasterPagesDeck',
 			'NavigatorDeck',
 			'StyleListDeck',
 			'A11yCheckDeck',
@@ -60,10 +60,10 @@ class Sidebar extends SidebarBase {
 	commandForDeck(deckId: string): string {
 		// No longer used:
 		// if (deckId === 'SdSlideTransitionDeck') return '.uno:SlideChangeWindow';
+		// else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
 
 		if (deckId === 'PropertyDeck') return '.uno:SidebarDeck.PropertyDeck';
 		else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
-		else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
 		else if (deckId === 'NavigatorDeck') return '.uno:Navigator';
 		else if (deckId === 'StyleListDeck')
 			return '.uno:SidebarDeck.StyleListDeck';
