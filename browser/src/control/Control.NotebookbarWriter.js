@@ -1801,31 +1801,35 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
-				'id': 'Layout-MarginMenu:MenuMargins',
-				'type': 'menubutton',
-				'text': _('Margin'),
-				'enabled': 'true',
-			},
-			{
-				'id': 'Layout-SizeMenu:MenuPageSizesWriter',
-				'type': 'menubutton',
-				'text': _('Size'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PS', de: null }
-			},
-			{
-				'id': 'Layout-OrientationMenu:MenuOrientation',
-				'type': 'menubutton',
-				'text': _UNO('.uno:Orientation'),
-				'enabled': 'true',
-				'accessibility': { focusBack: true,	combination: 'PO', de: null }
-			},
-			{
-				'id': 'layout-page-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageDialog'),
-				'command': '.uno:PageDialog',
-				'accessibility': { focusBack: false, combination: 'M', de: '8' }
+				'type': 'overflowgroup',
+				'id': 'layout-page',
+				'name': _('Page Setup'),
+				'accessibility': { focusBack: true, combination: 'PS', de: null },
+				'more': {
+					'command':'.uno:PageDialog'
+				},
+				'children' : [
+					{
+						'id': 'Layout-MarginMenu:MenuMargins',
+						'type': 'menubutton',
+						'text': _('Margin'),
+						'enabled': 'true',
+					},
+					{
+						'id': 'Layout-SizeMenu:MenuPageSizesWriter',
+						'type': 'menubutton',
+						'text': _('Size'),
+						'enabled': 'true',
+						'accessibility': { focusBack: true, combination: 'PS', de: null }
+					},
+					{
+						'id': 'Layout-OrientationMenu:MenuOrientation',
+						'type': 'menubutton',
+						'text': _UNO('.uno:Orientation'),
+						'enabled': 'true',
+						'accessibility': { focusBack: true, combination: 'PO', de: null }
+					}
+				]
 			},
 			{ type: 'separator', id: 'layout-pagedialog-break', orientation: 'vertical' },
 			{
