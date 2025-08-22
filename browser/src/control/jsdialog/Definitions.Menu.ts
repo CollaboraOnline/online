@@ -680,7 +680,8 @@ const spreadsheetFunctions: Array<FunctionNameAlias> = [
 ];
 
 function getLocalizedFuncName(funcNameList: FunctionNameAlias): string {
-	if (String.locale === 'de' && funcNameList.de) return funcNameList.de;
+	if (String.locale.toLowerCase().startsWith('de') && funcNameList.de)
+		return funcNameList.de;
 	else return funcNameList.en;
 }
 
