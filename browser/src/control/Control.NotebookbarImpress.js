@@ -1758,6 +1758,18 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getDesignTab: function() {
 		var content = [
 			{
+				'id': 'design-master-page-group',
+				'type': 'overflowgroup',
+				'name': _('Master Slide Templates'),
+				'children': [
+					{
+						'id': 'masterpageall_icons', // has to match core id
+						'type': 'iconview'
+					}
+				]
+			},
+			{ type: 'separator', id: 'design-masterslides-break', orientation: 'vertical' },
+			{
 				'id': 'design-theme-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ThemeDialog'),
