@@ -35,6 +35,11 @@ var NotebookbarAccessibilityDefinitions = function() {
 							list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
 						} else if (rawList[i].children) {
 							this.getContentListRecursive(rawList[i].children, list, language);
+							if(rawList[i].more && rawList[i].more.accessibility) {
+								const moreAccessibility = rawList[i].more.accessibility;
+								combination = language && moreAccessibility[language] ? moreAccessibility[language]: moreAccessibility.combination;
+								list.push({ id: id + '-more-button', focusBack: moreAccessibility.focusBack, combination: combination });
+							}
 						}
 					} else if (arrow) {
 						// menu button
