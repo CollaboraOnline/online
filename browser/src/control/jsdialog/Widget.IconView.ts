@@ -44,6 +44,7 @@ function _createEntryImage(
 
 	if (entryData.tooltip) img.title = entryData.tooltip;
 	else if (entryData.text) img.title = entryData.text;
+	else img.title = '';
 }
 
 function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
@@ -54,7 +55,7 @@ function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
 		'ui-iconview-entry-title',
 		parent,
 	);
-	placeholder.innerText = entryData.text;
+	placeholder.innerText = entryData.text ? entryData.text : '';
 }
 
 function _iconViewEntry(
@@ -98,9 +99,10 @@ function _iconViewEntry(
 			builder.options.cssClass,
 			entryContainer,
 		);
-		placeholder.innerText = entry.text;
+		placeholder.innerText = entry.text ? entry.text : '';
 		if (entry.tooltip) placeholder.title = entry.tooltip;
-		else placeholder.title = entry.text;
+		else if (entry.text) placeholder.title = entry.text;
+		else placeholder.title = '';
 
 		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
 		entryContainer.setAttribute('tabindex', '0');
