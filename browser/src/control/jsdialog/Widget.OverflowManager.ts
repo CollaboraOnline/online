@@ -65,8 +65,15 @@ class OverflowManager {
 
 		app.layoutingService.appendLayoutingTask(() => {
 			if (!event?.force && this.lastMaxWidth === window.innerWidth) return;
-
 			this.lastMaxWidth = window.innerWidth;
+
+			// check our visibility
+			let parentNode = this.parentContainer;
+			while (parentNode) {
+				if (parentNode?.classList?.contains('hidden')) return;
+
+				parentNode = parentNode.parentNode as HTMLElement;
+			}
 
 			const groups =
 				this.parentContainer.querySelectorAll('.ui-overflow-group');
