@@ -25,7 +25,7 @@ class OverflowManager {
 		this.data = data;
 
 		window.addEventListener('resize', this.onResize.bind(this));
-		app.map.on('refreshoverflows', this.onResize, this);
+		app.map.on('refreshoverflows', this.onRefresh, this);
 	}
 
 	calculateMaxWidth(): number {
@@ -60,39 +60,41 @@ class OverflowManager {
 		return maxWidth < requiredWidth;
 	}
 
-	onResize(event: any) {
+	onResize(event: Event) {
+		app.layoutingService.appendLayoutingTask(() => this.onRefresh(event));
+	}
+
+	// sometimes we want to call it synchronously as it is already in the task (tab switch)
+	onRefresh(event: Event & { force?: boolean }) {
 		if (!this.parentContainer) return;
+		if (this.lastMaxWidth === window.innerWidth) return;
 
-		app.layoutingService.appendLayoutingTask(() => {
-			if (!event?.force && this.lastMaxWidth === window.innerWidth) return;
-			this.lastMaxWidth = window.innerWidth;
+		// check our visibility
+		let parentNode = this.parentContainer;
+		while (parentNode) {
+			if (parentNode?.classList?.contains('hidden')) return;
 
-			// check our visibility
-			let parentNode = this.parentContainer;
-			while (parentNode) {
-				if (parentNode?.classList?.contains('hidden')) return;
+			parentNode = parentNode.parentNode as HTMLElement;
+		}
 
-				parentNode = parentNode.parentNode as HTMLElement;
-			}
+		this.lastMaxWidth = window.innerWidth;
 
-			const groups =
-				this.parentContainer.querySelectorAll('.ui-overflow-group');
+		const groups = this.parentContainer.querySelectorAll('.ui-overflow-group');
 
-			// first show all the groups
-			groups.forEach((element: OverflowGroupContainer) => {
-				if (typeof element.unfoldGroup === 'function') element.unfoldGroup();
-			});
-
-			const maxWidth = this.calculateMaxWidth();
-
-			// then hide required
-			for (let i = groups.length - 1; i >= 0; i--) {
-				const element: OverflowGroupContainer = groups[i];
-				if (maxWidth >= 0 && this.hasOverflow(maxWidth)) {
-					if (typeof element.foldGroup === 'function') element.foldGroup();
-				}
-			}
+		// first show all the groups
+		groups.forEach((element: OverflowGroupContainer) => {
+			if (typeof element.unfoldGroup === 'function') element.unfoldGroup();
 		});
+
+		const maxWidth = this.calculateMaxWidth();
+
+		// then hide required
+		for (let i = groups.length - 1; i >= 0; i--) {
+			const element: OverflowGroupContainer = groups[i];
+			if (maxWidth >= 0 && this.hasOverflow(maxWidth)) {
+				if (typeof element.foldGroup === 'function') element.foldGroup();
+			}
+		}
 	}
 }
 
