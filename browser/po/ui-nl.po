@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-22 11:07+0200\n"
-"PO-Revision-Date: 2025-08-06 17:01+0000\n"
+"PO-Revision-Date: 2025-08-23 15:02+0000\n"
 "Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -171,7 +171,7 @@ msgstr "Tijdsinterval van CPU-statistieken (in ms)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr "Beëindig sessie."
+msgstr "Sessie beëindigen."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -205,7 +205,7 @@ msgstr "Vernieuwen"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
-msgstr "Zet de server uit"
+msgstr "Server uitschakelen"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
@@ -226,11 +226,11 @@ msgstr "Geen"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr "Instellen nivo gebeurtenisoverzicht"
+msgstr "Logboekniveaus instellen"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr "Nivo gebeurtenisoverzicht"
+msgstr "Logboekniveaus"
 
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:165
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
@@ -243,7 +243,7 @@ msgstr "Sluiten"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr "Bijwerken gebeurtenisoverzicht nivo"
+msgstr "Logboekniveaus bijwerken"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
@@ -371,27 +371,24 @@ msgid "Accessibility"
 msgstr "Toegankelijkheid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
-#, fuzzy
 msgid "Dark mode"
 msgstr "Donkere modus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
 msgid "Compact layout"
-msgstr ""
+msgstr "Compacte lay-out"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
-#, fuzzy
 msgid "Show status bar"
 msgstr "Statusbalk weergeven"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show ruler"
 msgstr "Liniaal weergeven"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Toegankelijkheidscontrole"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -400,24 +397,23 @@ msgstr "Navigator"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Zijbalk weergeven"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Custom Animation"
-msgstr ""
+msgstr "Aangepaste animatie"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Master Pages"
-msgstr ""
+msgstr "Ontwerppagina's"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Slide Transition"
-msgstr ""
+msgstr "Diaovergang"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
-#, fuzzy
 msgid "Style List"
-msgstr "Opmaakprofielen"
+msgstr "Stijlenlijst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Invalid JSON file"
@@ -698,10 +694,14 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Het systeem past momenteel de middelen aan. Een ogenblik geld terwijl we het "
+"opnieuw proberen…"
 
 #: js/global.js:1583
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
+"Het document wordt gemigreerd naar een nieuwe server. Binnenkort opnieuw "
+"proberen…"
 
 #: js/global.js:1585
 msgid "Failed to get RouteToken from controller"
@@ -775,7 +775,7 @@ msgstr "Beeldvullend openen"
 
 #: src/canvas/sections/CommentListSection.ts:1219
 msgid "Show in navigator"
-msgstr ""
+msgstr "Weergeven in navigator"
 
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/control/Control.JSDialogBuilder.js:1911
@@ -828,7 +828,7 @@ msgstr "Menu openen"
 
 #: src/canvas/sections/CommentSection.ts:341
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Druk op Ctrl + Enter om te posten"
 
 #: src/canvas/sections/CommentSection.ts:405
 #: src/canvas/sections/CommentSection.ts:406
@@ -948,7 +948,7 @@ msgstr "Ontgrendelen"
 
 #: src/control/Control.ContextMenu.js:275
 msgid "Paste Special"
-msgstr "Plakken speciaal"
+msgstr "Speciaal plakken"
 
 #: src/control/Control.ContextMenu.js:282
 msgid "Copy Cells"
@@ -1468,7 +1468,7 @@ msgstr "Lettergrootte"
 #: src/control/Control.NotebookbarWriter.js:1045
 #: src/control/Control.TopToolbar.js:486
 msgid "Style"
-msgstr "Opmaakprofiel"
+msgstr "Stijl"
 
 #: src/control/Control.JSDialogBuilder.js:1897
 msgid "reply"
@@ -1655,7 +1655,7 @@ msgstr "Zoom herstellen"
 #: src/control/Control.Menubar.ts:166 src/control/Control.Menubar.ts:489
 #: src/control/Control.Menubar.ts:651 src/control/Control.Menubar.ts:795
 msgid "Toggle UI Mode"
-msgstr "UI modus in-/uitschakelen"
+msgstr "UI-modus in-/uitschakelen"
 
 #: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:490
 msgid "Show Ruler"
@@ -1698,7 +1698,7 @@ msgstr "Achtergrond omkeren"
 #: src/control/Control.NotebookbarWriter.js:938
 #: src/control/Control.NotebookbarWriter.js:1072
 msgid "Style list"
-msgstr "Opmaakprofielen"
+msgstr "Stijlenlijst"
 
 #: src/control/Control.Menubar.ts:181 src/control/Control.Menubar.ts:506
 #: src/control/Control.Menubar.ts:660 src/control/Control.Menubar.ts:813
@@ -1935,7 +1935,7 @@ msgstr "Notities Weergave"
 #: src/control/Control.Menubar.ts:496
 #: src/control/Control.NotebookbarImpress.js:618
 msgid "Master View"
-msgstr "Hoofdweergave"
+msgstr "Ontwerpweergave"
 
 #: src/control/Control.Menubar.ts:508
 msgid "Local Multimedia..."
@@ -2196,31 +2196,31 @@ msgstr "Schets"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Resultaten"
 
 #: src/control/Control.NavigatorPanel.ts:378
 msgid "Search..."
-msgstr ""
+msgstr "Zoeken…"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Overgang"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Variant"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Duur"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
-msgstr ""
+msgstr "Bij muisklik"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Na"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2288,9 +2288,8 @@ msgid "Page Layout"
 msgstr "Pagina-opmaak"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formule"
+msgstr "Formules"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2387,7 +2386,7 @@ msgstr "Hernoemen"
 
 #: src/control/Control.NotebookbarCalc.js:728
 msgid "Merge & Center"
-msgstr ""
+msgstr "Samenvoegen & centreren"
 
 #: src/control/Control.NotebookbarCalc.js:752
 msgid "General"
@@ -2482,7 +2481,7 @@ msgstr "Grootte"
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Raster"
 
 #: src/control/Control.NotebookbarCalc.js:1155
 msgid "Row Height"
@@ -2527,7 +2526,7 @@ msgstr "Kolommen verwijderen"
 #: src/control/Control.NotebookbarWriter.js:3249
 #: src/control/Control.NotebookbarWriter.js:3569
 msgid "Align"
-msgstr ""
+msgstr "Uitlijnen"
 
 #: src/control/Control.NotebookbarCalc.js:1316
 #: src/control/Control.NotebookbarCalc.js:2869
@@ -2540,18 +2539,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3307
 #: src/control/Control.NotebookbarWriter.js:3627
 msgid "Arrange"
-msgstr ""
+msgstr "Ordenen"
 
 #: src/control/Control.NotebookbarCalc.js:1378
 msgid "Freeze"
-msgstr ""
+msgstr "Bevriezen"
 
 #: src/control/Control.NotebookbarCalc.js:1432
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1670
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: src/control/Control.NotebookbarCalc.js:1439
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2591,7 +2590,7 @@ msgstr "Groepering opheffen"
 
 #: src/control/Control.NotebookbarCalc.js:1603
 msgid "Pivot Table"
-msgstr ""
+msgstr "Draaitabel"
 
 #: src/control/Control.NotebookbarCalc.js:1652
 #: src/control/Control.NotebookbarDraw.js:994
@@ -2601,7 +2600,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:949
 #: src/control/Control.NotebookbarWriter.js:1238
 msgid "Illustrations"
-msgstr ""
+msgstr "Illustraties"
 
 #: src/control/Control.NotebookbarCalc.js:1722
 #: src/control/Control.NotebookbarDraw.js:1008
@@ -2621,63 +2620,61 @@ msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1938
 msgid "Insert Function"
-msgstr ""
+msgstr "Functie invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:1946
-#, fuzzy
 msgid "Function Library"
-msgstr "Functie-assistent"
+msgstr "Functie-bibliotheek"
 
 #: src/control/Control.NotebookbarCalc.js:1960
 msgid "AutoSum"
-msgstr ""
+msgstr "AutoSom"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Financial"
-msgstr ""
+msgstr "Financieel"
 
 #: src/control/Control.NotebookbarCalc.js:1991
 msgid "Logical"
-msgstr ""
+msgstr "Logisch"
 
 #: src/control/Control.NotebookbarCalc.js:2021
 msgid "Date & Time"
-msgstr ""
+msgstr "Datum & tijd"
 
 #: src/control/Control.NotebookbarCalc.js:2033
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Opzoeken & verwijzen"
 
 #: src/control/Control.NotebookbarCalc.js:2051
 msgid "Math & Trig"
-msgstr ""
+msgstr "Wiskunde & gonio"
 
 #: src/control/Control.NotebookbarCalc.js:2063
 msgid "More Functions"
-msgstr ""
+msgstr "Meer functies"
 
 #: src/control/Control.NotebookbarCalc.js:2108
 msgid "Range"
-msgstr ""
+msgstr "Bereik"
 
 #: src/control/Control.NotebookbarCalc.js:2191
 msgid "Sort"
-msgstr ""
+msgstr "Sorteren"
 
 #: src/control/Control.NotebookbarCalc.js:2237
 msgid "Filter"
-msgstr ""
+msgstr "Filteren"
 
 #: src/control/Control.NotebookbarCalc.js:2484
 #: src/control/Control.NotebookbarImpress.js:1897
 #: src/control/Control.NotebookbarWriter.js:2515
-#, fuzzy
 msgid "Comments"
-msgstr "Opmerking"
+msgstr "Opmerkingen"
 
 #: src/control/Control.NotebookbarCalc.js:2589
 msgid "Format Cells"
-msgstr ""
+msgstr "Cellen opmaken"
 
 #: src/control/Control.NotebookbarCalc.js:2735
 #: src/control/Control.NotebookbarCalc.js:3092
@@ -2685,13 +2682,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3194
 #: src/control/Control.NotebookbarWriter.js:3514
 msgid "Wrap"
-msgstr ""
+msgstr "Tekstomloop"
 
 #: src/control/Control.NotebookbarCalc.js:2974
 #: src/control/Control.NotebookbarImpress.js:2616
 #: src/control/Control.NotebookbarWriter.js:3401
 msgid "Image Controls"
-msgstr ""
+msgstr "Afbeelding instellen"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2720,7 +2717,7 @@ msgstr "Liniaal"
 #: src/control/Control.NotebookbarDraw.js:594
 #: src/control/Control.NotebookbarImpress.js:708
 msgid "Clipboard"
-msgstr ""
+msgstr "Klembord"
 
 #: src/control/Control.NotebookbarDraw.js:654 src/control/Toolbar.js:56
 msgid "Font"
@@ -2728,27 +2725,26 @@ msgstr "Lettertype"
 
 #: src/control/Control.NotebookbarDraw.js:794
 msgid "Alignment"
-msgstr ""
+msgstr "Uitlijning"
 
 #: src/control/Control.NotebookbarDraw.js:881
 #: src/control/Control.NotebookbarImpress.js:955
 #: src/control/Control.NotebookbarImpress.js:2109
 #: src/control/Control.NotebookbarWriter.js:2960
 msgid "Paragraph"
-msgstr ""
+msgstr "Alinea"
 
 #: src/control/Control.NotebookbarDraw.js:1205
 #: src/control/Control.NotebookbarDraw.js:1405
 #: src/control/Control.NotebookbarWriter.js:1207
 msgid "Page"
-msgstr ""
+msgstr "Pagina"
 
 #: src/control/Control.NotebookbarDraw.js:1557
 #: src/control/Control.NotebookbarImpress.js:1600
 #: src/control/Control.NotebookbarWriter.js:2382
-#, fuzzy
 msgid "Field"
-msgstr "Velden"
+msgstr "Veld"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Design"
@@ -2760,7 +2756,7 @@ msgstr "Diavoorstelling"
 
 #: src/control/Control.NotebookbarImpress.js:149
 msgid "Master"
-msgstr "Hoofddocument"
+msgstr "Ontwerppagina"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "From Beginning"
@@ -2776,7 +2772,7 @@ msgstr "Presenteer in venster"
 
 #: src/control/Control.NotebookbarImpress.js:605
 msgid "Slide Views"
-msgstr ""
+msgstr "Diaweergaven"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Show Grid"
@@ -2788,7 +2784,7 @@ msgstr "Op raster plaatsen"
 
 #: src/control/Control.NotebookbarImpress.js:769
 msgid "Slide Layout"
-msgstr ""
+msgstr "Dia-opmaak"
 
 #: src/control/Control.NotebookbarImpress.js:779
 msgid "New"
@@ -2804,11 +2800,11 @@ msgstr "Opmaak herstellen"
 
 #: src/control/Control.NotebookbarImpress.js:812
 msgid "Character"
-msgstr ""
+msgstr "Teken"
 
 #: src/control/Control.NotebookbarImpress.js:1071
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Spatiëring & kleur"
 
 #: src/control/Control.NotebookbarImpress.js:1769
 msgid "Slide Size"
@@ -2820,16 +2816,16 @@ msgstr "Achtergrondafbeelding"
 
 #: src/control/Control.NotebookbarImpress.js:2001
 msgid "Merge & Split"
-msgstr ""
+msgstr "Samenvoegen & splitsen"
 
 #: src/control/Control.NotebookbarImpress.js:2040
 #: src/control/Control.NotebookbarWriter.js:2910
 msgid "Select"
-msgstr ""
+msgstr "Selecteren"
 
 #: src/control/Control.NotebookbarImpress.js:2649
 msgid "Effects"
-msgstr ""
+msgstr "Effecten"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2853,19 +2849,19 @@ msgstr "Omlaag scrollen"
 
 #: src/control/Control.NotebookbarWriter.js:1082
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Lijsten/opsommingstekens"
 
 #: src/control/Control.NotebookbarWriter.js:1371
 msgid "Header & Footer"
-msgstr ""
+msgstr "Kop- & voettekst"
 
 #: src/control/Control.NotebookbarWriter.js:1440
 msgid "Section"
-msgstr ""
+msgstr "Sectie"
 
 #: src/control/Control.NotebookbarWriter.js:1536
 msgid "Symbols"
-msgstr ""
+msgstr "Symbolen"
 
 #: src/control/Control.NotebookbarWriter.js:1600
 msgid "Rich Text"
@@ -2881,23 +2877,23 @@ msgstr "Vervolgkeuzemenu"
 
 #: src/control/Control.NotebookbarWriter.js:2171
 msgid "Table of content"
-msgstr ""
+msgstr "Inhoudsopgave"
 
 #: src/control/Control.NotebookbarWriter.js:2217
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Voetnoot/eindnoot"
 
 #: src/control/Control.NotebookbarWriter.js:2590
 msgid "Tracking"
-msgstr ""
+msgstr "Wijzigingen bijhouden"
 
 #: src/control/Control.NotebookbarWriter.js:2848
 msgid "Split"
-msgstr ""
+msgstr "Splitsen"
 
 #: src/control/Control.NotebookbarWriter.js:3032
 msgid "Number Format"
-msgstr ""
+msgstr "Getalopmaak"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
@@ -3069,7 +3065,7 @@ msgstr "Meerdere cellen selecteren"
 
 #: src/control/Control.StatusBar.js:456
 msgid "Selection mode: inactive"
-msgstr "Selectie modus: inactief"
+msgstr "Selectiemodus: inactief"
 
 #: src/control/Control.StatusBar.js:534
 msgid "Set Language for All text"
@@ -3129,7 +3125,7 @@ msgstr "Actieve Blad"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr "Standaard opmaakprofiel"
+msgstr "Standaardstijl"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
@@ -3297,11 +3293,11 @@ msgstr "Stijlen"
 
 #: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
-msgstr "Er is een fout opgetreden tijdens het ophalen van de stijllijst"
+msgstr "Er is een fout opgetreden tijdens het ophalen van de stijlenlijst"
 
 #: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
-msgstr "Laden van stijlen niet gelukt"
+msgstr "Laden van stijlen is mislukt"
 
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
@@ -3673,104 +3669,103 @@ msgstr "Deze gebruiker"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1235
 msgid "No Borders"
-msgstr ""
+msgstr "Geen randen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1241
 msgid "Left Border"
-msgstr ""
+msgstr "Rand links"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1247
 msgid "Right Border"
-msgstr ""
+msgstr "Rand rechts"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Randen links en rechts"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
-msgstr ""
+msgstr "Rand boven"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1265
 msgid "Bottom Border"
-msgstr ""
+msgstr "Rand onder"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1271
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Randen boven en onder"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1277
 msgid "Outer Border"
-msgstr ""
+msgstr "Randen buitenom"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1283
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Alle horizontale lijnen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1289
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Randen buitenom en horizontale lijnen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1295
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Randen buitenom en verticale lijnen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1301
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Randen buitenom en lijnen binnenin"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1306
 msgid "Line color"
-msgstr ""
+msgstr "Lijnkleur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
-#, fuzzy
 msgid "Line style"
-msgstr "Lijnstijl:"
+msgstr "Lijnstijl"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Haarlijn (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1329
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Zeer dun (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1338
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Dun (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1347
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Middel (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1356
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Dik (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1365
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Extra dik (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1374
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Dubbele haarlijn (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1383
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Dubbele haarlijn (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1392
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Dun/Middel (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1401
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Middel/Haarlijn (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1410
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Middel/Middel (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1470
 msgid "Standard (4:3)"
@@ -3912,7 +3907,7 @@ msgstr "Bewerkingsmodus"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Aantal Pagina's. Klik voor het dialoogvenster Ga naar pagina."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -3928,7 +3923,7 @@ msgstr "Tekstmodus activeren"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:122
 msgid "Selection Mode"
-msgstr "Selectie modus"
+msgstr "Selectiemodus"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:131
 msgid "Selected range of cells"
@@ -4057,7 +4052,7 @@ msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
 #: src/core/Socket.js:1145
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Klik Cancel om het in alleen-lezen modus te openen."
+msgstr "Klik Annuleren om het in alleen-lezen modus te openen."
 
 #: src/core/Socket.js:1149
 msgid "Wrong password provided. Please try again."
@@ -4540,7 +4535,7 @@ msgstr "Plakken uit dit document"
 
 #: src/map/Clipboard.js:1396
 msgid "Cancel paste special"
-msgstr "Annuleren plakken speciaal"
+msgstr "Speciaal plakken annuleren"
 
 #: src/map/Clipboard.js:1418
 msgid "Your browser has very limited access to the clipboard"
@@ -4552,7 +4547,7 @@ msgstr "Gebruik de volgende combinatie om meer opties te zien:"
 
 #: src/map/Clipboard.js:1441
 msgid "Close popup to ignore paste special"
-msgstr "Sluit popup om plakken speciaal te negeren"
+msgstr "Sluit popup om Speciaal plakken te negeren"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -4597,7 +4592,7 @@ msgstr "Het uploaden van het bestand naar de server is mislukt met status: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr "Dialoogvenster afdrukken"
+msgstr "Dialoogvenster Afdrukken"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:890
 msgid "Empty Slide Show"
@@ -4742,16 +4737,16 @@ msgstr "Klik om presentatie te verlaten..."
 
 #: src/slideshow/SlideShowPresenter.ts:560
 msgid "End Show"
-msgstr ""
+msgstr "Voorstelling beëindigen"
 
 #: src/slideshow/SlideShowPresenter.ts:588
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Disable Animations"
-msgstr ""
+msgstr "Animaties uitschakelen"
 
 #: src/slideshow/SlideShowPresenter.ts:598
 msgid "Enable Animations"
-msgstr ""
+msgstr "Animaties inschakelen"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
