@@ -597,7 +597,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* matched count on top */
-#quickfind-dock-wrapper #box .ui-text {
+#quickfind-dock-wrapper #QuickFindPanel .ui-text {
 	grid-row: 1;
 	height: min-content;
 	font-size: var(--default-font-size);

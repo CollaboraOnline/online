@@ -21,6 +21,7 @@ class NavigatorPanel extends SidebarBase {
 	navigatorDockWrapper: HTMLElement;
 	quickFindWrapper: HTMLElement;
 	closeNavButton: HTMLElement;
+	placeholderLabel: HTMLLabelElement;
 
 	highlightTerm: string;
 	focusQuickFind: boolean;
@@ -325,6 +326,9 @@ class NavigatorPanel extends SidebarBase {
 			this.presentationControlsWrapper.style.display = 'none';
 			this.navigatorDockWrapper.style.display = 'none';
 			this.quickFindWrapper.style.display = 'block';
+			if (!this.placeholderLabel) {
+				this.createPlaceholderLabel();
+			}
 		}
 	}
 
@@ -397,6 +401,30 @@ class NavigatorPanel extends SidebarBase {
 		this.builder.build(wrapper, [data], false);
 	}
 
+	createPlaceholderLabel() {
+		const quickFindPanel =
+			this.quickFindWrapper.querySelector('#QuickFindPanel');
+		this.placeholderLabel = L.DomUtil.create(
+			'label',
+			'jsdialog sidebar ui-text',
+			quickFindPanel,
+		);
+		this.placeholderLabel.id = 'quickfind-placeholder';
+		this.placeholderLabel.textContent = _(
+			'Type in the search box to find anything in your document',
+		);
+		this.placeholderLabel.setAttribute('aria-hidden', 'true');
+	}
+
+	placeholderLabelVisibility(searchTerm: string) {
+		if (!this.placeholderLabel) return;
+		if (searchTerm.trim() === '') {
+			this.placeholderLabel.classList.remove('hidden');
+		} else {
+			this.placeholderLabel.classList.add('hidden');
+		}
+	}
+
 	override callback(
 		objectType: string,
 		eventType: string,
@@ -420,6 +448,11 @@ class NavigatorPanel extends SidebarBase {
 				searchTerm,
 				builder,
 			);
+		}
+
+		const quickFindTab = this.navigationPanel.querySelector('#tab-quick-find');
+		if (quickFindTab.classList.contains('selected')) {
+			this.placeholderLabelVisibility(searchTerm);
 		}
 		// Update outline highlighting
 		// Note: only update on 'activate' or button pressed events to be consistent with results tab
