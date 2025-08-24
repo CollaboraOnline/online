@@ -580,7 +580,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'home-clipboard',
-				'name': 'Clipboard',
+				'name': _('Clipboard'),
 				'accessibility': { focusBack: false,	combination: 'V',	de: null },
 				'children' : [
 				{
@@ -639,7 +639,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'home-font',
-				'name': 'Font',
+				'name': _('Font'),
 				'more': {
 					'command':'.uno:FontDialog'
 				},
@@ -783,7 +783,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'home-paragraph',
-				'name': 'Paragraph',
+				'name': _('Paragraph'),
 				'accessibility': { focusBack: false, 	combination: 'U',	de: 'AA' },
 				'more': {
 					'command':'.uno:ParagraphDialog'
@@ -997,7 +997,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'home-search',
-				'name': 'Search',
+				'name': _('Search'),
 				'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' },
 				'children': [
 					{
