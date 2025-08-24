@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-22 11:07+0200\n"
 "PO-Revision-Date: 2025-08-23 15:02+0000\n"
-"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
+"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
 "Language: nl\n"
@@ -205,11 +205,11 @@ msgstr "Vernieuwen"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
-msgstr "Server uitschakelen"
+msgstr "Server afsluiten"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr "Server bedrijfstijd"
+msgstr "Serverbeschikbaarheid"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -4052,7 +4052,7 @@ msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
 #: src/core/Socket.js:1145
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Klik Annuleren om het in alleen-lezen modus te openen."
+msgstr "Klik Annuleren om in alleen-lezen modus te openen."
 
 #: src/core/Socket.js:1149
 msgid "Wrong password provided. Please try again."
@@ -4592,7 +4592,7 @@ msgstr "Het uploaden van het bestand naar de server is mislukt met status: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr "Dialoogvenster Afdrukken"
+msgstr "Afdrukdialoog"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:890
 msgid "Empty Slide Show"
