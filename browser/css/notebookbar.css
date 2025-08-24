@@ -248,6 +248,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	align-items: center;
 	justify-items: center;
 	width: max-content;
+	color: var(--color-main-text);
 }
 
 /* unobuttons */
