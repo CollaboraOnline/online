@@ -328,16 +328,16 @@ class Dispatcher {
 			app.map.uiManager.collapseNotebookbar();
 		};
 
-		this.actionsMap['scrollpreviewup'] = () => {
-			const stylePreview = document.getElementById('stylesview');
+		this.actionsMap['scrolliconviewup'] = (id: string) => {
+			const stylePreview = document.getElementById(id);
 			stylePreview.scrollBy({
 				top: -stylePreview.offsetHeight,
 				behavior: 'smooth',
 			}); // Scroll up based on stylepreview height
 		};
 
-		this.actionsMap['scrollpreviewdown'] = () => {
-			const stylePreview = document.getElementById('stylesview');
+		this.actionsMap['scrolliconviewdown'] = (id: string) => {
+			const stylePreview = document.getElementById(id);
 			stylePreview.scrollBy({
 				top: stylePreview.offsetHeight,
 				behavior: 'smooth',

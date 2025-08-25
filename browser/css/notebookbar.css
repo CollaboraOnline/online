@@ -431,7 +431,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Styles preview */
 
-#stylesview {
+#stylesview-iconview {
 	height: 64px;
 	width: 35vw;
 	overflow: auto;
@@ -464,6 +464,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 #stylesview-btn.vertical {
 	gap: 0;
+	margin-left: 1px;
 }
 
 #stylesview-btn div {
@@ -490,31 +491,36 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	height: 0;
 }
 
-#stylesview .ui-iconview-entry {
+#stylesview-iconview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
 	align-self: start;
 }
 
-#stylesview .icon-view-item-container {
+.ui-iconview-window {
+	display: flex;
+	flex-direction: row;
+}
+
+#stylesview-iconview .icon-view-item-container {
 	margin: unset;
 }
 
-#stylesview .ui-iconview-entry-title {
+#stylesview-iconview .ui-iconview-entry-title {
 	display: none;
 }
 
-#stylesview .ui-iconview-entry.selected {
+#stylesview-iconview .ui-iconview-entry.selected {
 	border: 1px solid var(--color-border-darker);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
 	background-color: transparent;
 }
 
-#stylesview .ui-iconview-entry:not(.selected) {
+#stylesview-iconview .ui-iconview-entry:not(.selected) {
 	border: 1px solid transparent;
 }
 
-#stylesview .ui-iconview-entry:not(.selected):hover {
+#stylesview-iconview .ui-iconview-entry:not(.selected):hover {
 	border: 1px solid var(--color-border-dark);
 	-webkit-box-shadow: 0 0 2px 0 var(--color-background-darker);
 	box-shadow: 0 0 2px 0 var(--color-background-darker);
