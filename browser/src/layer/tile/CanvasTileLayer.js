@@ -1456,8 +1456,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					+ ' ';
 			}
 			msg += 'x=0 y=0 ';
-			msg += 'width=' + app.activeDocument.fileSize.x + ' ';
-			msg += 'height=' + app.activeDocument.fileSize.y;
+			msg += 'width=' + Number.MAX_SAFE_INTEGER + ' ';
+			msg += 'height=' + Number.MAX_SAFE_INTEGER;
 			if (wireIdToken !== undefined)
 				msg += ' ' + wireIdToken;
 			this._onInvalidateTilesMsg(msg);
