@@ -282,6 +282,14 @@ interface TreeHeaderJSON {
 	sortable: boolean; // can be sorted by column
 }
 
+interface MultilineEditData extends WidgetJSON {
+	text: string;
+	html?: string;
+	cursor?: boolean | string;
+	contenteditable?: boolean;
+	hidden?: boolean;
+}
+
 interface TreeWidgetJSON extends WidgetJSON {
 	text: string;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
