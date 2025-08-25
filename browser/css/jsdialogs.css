@@ -1067,6 +1067,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 	box-sizing: border-box;
 	height: 24px;
+	min-width: 70px;
 }
 
 .ui-listbox-container {
