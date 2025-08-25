@@ -587,9 +587,41 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 /* Animation Tab */
+#Animation.notebookbar .ui-grid,
+#Animation.notebookbar #effect_list,
 #Animation.notebookbar #custom_animation_list {
-	min-height: initial;
-	height: 70px;
+	min-height: initial; /* ignore other rules */
+	height: 64px;
+	margin: 0px 5px;
+}
+
+#Animation.notebookbar #custom_animation_list {
+	display: block;      /* force to allow full scroll range */
+	min-width: 318px;    /* to avoid flicker and too much changes */
+	overflow-y: scroll;  /* to avoid flicker always show scroll */
+	width: max-content;  /* adjust to the generated size */
+}
+
+#Animation.notebookbar #custom_animation_list div {
+	padding: 0px;
+	margin: 0px;
+}
+
+#Animation.notebookbar #custom_animation_list .ui-treeview-cell-text-content {
+	display: grid;
+}
+
+#Animation.notebookbar .ui-grid {
+	justify-items: stretch;
+	align-content: center;
+}
+
+#Animation.notebookbar .ui-grid button {
+	width: 100%;
+}
+
+#Animation.notebookbar .ui-listbox-container {
+	min-width: 100px;
 }
 
 /* Table Tab */
