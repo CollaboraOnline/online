@@ -80,9 +80,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	beforeEach(function() {
 		newFilePath = helper.setupAndLoadDocument('writer/annotation.odt');
 		desktopHelper.switchUIToNotebookbar();
-
-		// TODO: skip sidebar detection on reload
-		// cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
 	it('Insert', function() {
