@@ -166,6 +166,8 @@ type MenuDefinition = {
 type FunctionNameAlias = {
 	en: string;
 	de?: string;
+	fr?: string;
+	es?: string;
 };
 
 interface ContainerWidgetJSON extends WidgetJSON {
