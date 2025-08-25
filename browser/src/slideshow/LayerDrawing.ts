@@ -15,6 +15,8 @@
  * LayerDrawing is handling the slideShow action
  */
 
+/* global app  _ $ SlideBitmapManager */
+
 declare var SlideShow: any;
 // These are defined in browser/js/global.js
 declare var ThisIsTheAndroidApp: any;
@@ -84,6 +86,8 @@ class LayerDrawing {
 	private helper: LayersCompositor;
 
 	private slideCache: SlideCache = new SlideCache();
+	private compressedSlideCache: Map<string, CompressedSlideLayer[]> = new Map();
+	private compressedPrefetchSlideHash: string = null;
 	private requestedSlideHash: string = null;
 	private prefetchedSlideHash: string = null;
 	private nextRequestedSlideHash: string = null;
@@ -114,11 +118,20 @@ class LayerDrawing {
 	addHooks() {
 		this.map.on('slidelayer', this.onSlideLayerMsg, this);
 		this.map.on('sliderenderingcomplete', this.onSlideRenderingComplete, this);
+		this.map.on('compressedslide', this.onCompressSlide, this);
 	}
 
 	removeHooks() {
 		this.map.off('slidelayer', this.onSlideLayerMsg, this);
 		this.map.off('sliderenderingcomplete', this.onSlideRenderingComplete, this);
+		this.map.off('compressedslide', this.onCompressSlide, this);
+	}
+
+	public onCompressSlide(e: any) {
+		console.log(
+			`CompressedCache: Storing compressed slide in LayerDrawing cache - slideHash: ${e.slideHash}, layers: ${e.layers.length}`,
+		);
+		this.compressedSlideCache.set(e.slideHash, e.layers);
 	}
 
 	public isDisposed() {
@@ -131,6 +144,7 @@ class LayerDrawing {
 		this.nextPrefetchedSlideHash = null;
 		this.deleteVideosResources();
 		this.layerRenderer.dispose();
+		this.compressedSlideCache.clear();
 	}
 
 	private getSlideInfo(slideHash: string): SlideInfo {
@@ -305,6 +319,7 @@ class LayerDrawing {
 		this.cachedMasterPages.clear();
 		this.cachedDrawPages.clear();
 		this.videoRenderers.clear();
+		this.compressedSlideCache.clear();
 	}
 
 	public getCanvasSize(): [number, number] {
@@ -342,7 +357,11 @@ class LayerDrawing {
 		}
 	}
 
-	private requestSlideImpl(slideHash: string, prefetch: boolean = false) {
+	private requestSlideImpl(
+		slideHash: string,
+		prefetch: boolean = false,
+		compressedLayers: boolean = false,
+	) {
 		if (this.isDisposed()) return;
 
 		console.debug(
@@ -411,6 +430,26 @@ class LayerDrawing {
 			return;
 		}
 
+		if (this.compressedSlideCache.has(slideHash)) {
+			console.log(
+				'CompressedCache: fetching slides from CompressedCache, SlideHash :',
+				slideHash,
+			);
+			SlideBitmapManager.renderCachedCompressSlide(
+				this.compressedSlideCache.get(slideHash),
+			);
+			return;
+		}
+
+		this.requestSlideFromServer(slideInfo, prefetch, compressedLayers);
+	}
+
+	private requestSlideFromServer(
+		slideInfo: SlideInfo,
+		prefetch: boolean = false,
+		compressedLayers: boolean = false,
+	) {
+		const slideHash = slideInfo.hash;
 		const backgroundRendered = this.drawBackground(slideHash);
 		const masterPageRendered = this.drawMasterPage(slideHash);
 		if (backgroundRendered && masterPageRendered) {
@@ -425,7 +464,7 @@ class LayerDrawing {
 
 		app.socket.sendMessage(
 			`getslide hash=${slideInfo.hash} part=${slideInfo.index} width=${this.canvasWidth} height=${this.canvasHeight} ` +
-				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio}`,
+				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio} compressedLayers=${compressedLayers ? 1 : 0}`,
 		);
 	}
 
@@ -728,13 +767,24 @@ class LayerDrawing {
 			return;
 		}
 
+		if (e.compressedLayers) {
+			this.prefetchNextCompressedSlide();
+			return;
+		}
+
 		if (this.prefetchedSlideHash) {
+			var currSlideHash = this.prefetchedSlideHash;
 			this.prefetchedSlideHash = null;
+			if (app.isExperimentalMode()) {
+				this.compressedPrefetchSlideHash = currSlideHash;
+				this.prefetchNextCompressedSlide();
+			}
 			return;
 		}
 		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash);
 
 		this.cacheAndNotify();
+
 		// fetch next slide and draw it on offscreen canvas
 		if (reqSlideInfo.next && !this.slideCache.has(reqSlideInfo.next)) {
 			this.requestSlideImpl(reqSlideInfo.next, true);
@@ -752,6 +802,7 @@ class LayerDrawing {
 			const renderedSlide = this.offscreenCanvas.transferToImageBitmap();
 			this.slideCache.set(this.requestedSlideHash, renderedSlide);
 		}
+		this.compressedSlideCache.delete(this.requestedSlideHash);
 		this.requestedSlideHash = null;
 
 		const oldCallback = this.onSlideRenderingCompleteCallback;
@@ -759,6 +810,45 @@ class LayerDrawing {
 		if (oldCallback)
 			// if we already closed presentation it is missing
 			oldCallback.call(this.helper);
+	}
+
+	private prefetchNextCompressedSlide(): void {
+		if (this.compressedPrefetchSlideHash) {
+			const slideInfo = this.getSlideInfo(this.compressedPrefetchSlideHash);
+			this.compressedPrefetchSlideHash = null;
+
+			if (slideInfo?.next) {
+				this.prefetchCompressedSlide(slideInfo.next);
+			}
+		}
+	}
+
+	private prefetchCompressedSlide(slideHash: string) {
+		const slideInfo = this.getSlideInfo(slideHash);
+		if (!slideInfo) {
+			console.warn(`SlideInfo not found for hash: ${slideHash}`);
+			return;
+		}
+
+		if (this.isSlideAlreadyCached(slideHash)) {
+			this.prefetchNextSlide(slideInfo);
+			return;
+		}
+		this.compressedPrefetchSlideHash = slideHash;
+		this.requestSlideFromServer(slideInfo, true, true);
+		return;
+	}
+
+	private isSlideAlreadyCached(slideHash: string): boolean {
+		return (
+			this.slideCache.has(slideHash) || this.compressedSlideCache.has(slideHash)
+		);
+	}
+
+	private prefetchNextSlide(slideInfo: SlideInfo): void {
+		if (slideInfo.next) {
+			this.prefetchCompressedSlide(slideInfo.next);
+		}
 	}
 
 	private checkAndAttachImageData(imageInfo: ImageInfo, img: any): boolean {
