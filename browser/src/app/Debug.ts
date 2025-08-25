@@ -83,6 +83,7 @@ class DebugManager {
 	private logIncomingMessages: boolean;
 	private logOutgoingMessages: boolean;
 	private logKeyboardEvents: boolean;
+	private logTrace: boolean;
 
 	private eventDelayWatchdog: boolean;
 	private _eventDelayTimeout: TimeoutHdl;
@@ -431,6 +432,18 @@ class DebugManager {
 			},
 			onRemove: function () {
 				self.logKeyboardEvents = false;
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Log Trace',
+			category: 'Logging',
+			startsOn: false,
+			onAdd: function () {
+				self.logTrace = true;
+			},
+			onRemove: function () {
+				self.logTrace = false;
 			},
 		});
 
