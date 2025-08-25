@@ -1076,9 +1076,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'overflowgroup',
 				'id': 'layout-page',
 				'name':_('Page Setup'),
-				'accessibility': { focusBack: true,	combination: 'PS', de: null },
+				'accessibility': { focusBack: true,	combination: 'PS', de: 'K' },
 				'more': {
-					'command':'.uno:PageFormatDialog'
+					'command':'.uno:PageFormatDialog',
+					'accessibility': { focusBack: true,	combination: 'PS', de: 'K' },
 				},
 				'children' : [
 					{
@@ -1086,27 +1087,28 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'menubutton',
 						'text': _('Margin'),
 						'enabled': 'true',
+						'accessibility': { focusBack: true,	combination: 'M', de: '8' }
 					},
 					{
 						'id': 'Layout-SizeMenu:MenuPageSizesCalc',
 						'type': 'menubutton',
 						'text': _('Size'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true,	combination: 'PS', de: null }
+						'accessibility': { focusBack: true,	combination: 'SZ', de: 'R' }
 					},
 					{
 						'id': 'Layout-OrientationMenu:MenuOrientation',
 						'type': 'menubutton',
 						'text': _UNO('.uno:Orientation'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true,	combination: 'PO', de: null }
+						'accessibility': { focusBack: true,	combination: 'O', de: '4' }
 					},
 					{
 						'id': 'Layout-PrintRangesMenu:MenuPrintRanges',
 						'type': 'menubutton',
 						'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
 						'enabled': 'true',
-						'accessibility': { focusBack: true,	combination: 'PR', de: null }
+						'accessibility': { focusBack: true,	combination: 'R', de: 'H' }
 					},
 				]
 			},
