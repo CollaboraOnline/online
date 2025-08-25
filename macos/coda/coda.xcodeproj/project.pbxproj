@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BE16C9F02CD51F58005E5960 /* hello.odt in Resources */ = {isa = PBXBuildFile; fileRef = BE16C9EF2CD51F58005E5960 /* hello.odt */; };
+		BE178EEA2E5C756000A1FCBF /* Log-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE178EE92E5C756000A1FCBF /* Log-common.cpp */; };
 		BE22492C2CC79AD700385A9C /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492B2CC79AD700385A9C /* cool.html */; };
 		BE2252292CC79BAE00385A9C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE22492E2CC79BAE00385A9C /* bundle.js */; };
 		BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492F2CC79BAE00385A9C /* cool-help.html */; };
@@ -40,7 +41,7 @@
 		BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636A2CBE38E20007435A /* Uri.cpp */; };
 		BEA2636E2CBE38E20007435A /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636C2CBE38E20007435A /* Util.cpp */; };
 		BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263682CBE38E20007435A /* Unit.cpp */; };
-		BEA263702CBE38E20007435A /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263582CBE38E20007435A /* Log.cpp */; };
+		BEA263702CBE38E20007435A /* Log-poco.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263582CBE38E20007435A /* Log-poco.cpp */; };
 		BEA263712CBE38E20007435A /* Simd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263612CBE38E20007435A /* Simd.cpp */; };
 		BEA263722CBE38E20007435A /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263562CBE38E20007435A /* FileUtil.cpp */; };
 		BEA263732CBE38E20007435A /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2635D2CBE38E20007435A /* Session.cpp */; };
@@ -87,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		BE16C9EF2CD51F58005E5960 /* hello.odt */ = {isa = PBXFileReference; lastKnownFileType = file; name = hello.odt; path = ../../../test/data/hello.odt; sourceTree = "<group>"; };
+		BE178EE92E5C756000A1FCBF /* Log-common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Log-common.cpp"; path = "../../../../common/Log-common.cpp"; sourceTree = "<group>"; };
 		BE22492B2CC79AD700385A9C /* cool.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
 		BE22492D2CC79BAE00385A9C /* bundle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
 		BE22492E2CC79BAE00385A9C /* bundle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 		BEA263552CBE38E20007435A /* ConfigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigUtil.cpp; path = ../../../../common/ConfigUtil.cpp; sourceTree = "<group>"; };
 		BEA263562CBE38E20007435A /* FileUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtil.cpp; path = ../../../../common/FileUtil.cpp; sourceTree = "<group>"; };
 		BEA263572CBE38E20007435A /* Log.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = ../../../../common/Log.hpp; sourceTree = "<group>"; };
-		BEA263582CBE38E20007435A /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = ../../../../common/Log.cpp; sourceTree = "<group>"; };
+		BEA263582CBE38E20007435A /* Log-poco.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Log-poco.cpp"; path = "../../../../common/Log-poco.cpp"; sourceTree = "<group>"; };
 		BEA263592CBE38E20007435A /* Png.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Png.hpp; path = ../../../../common/Png.hpp; sourceTree = "<group>"; };
 		BEA2635A2CBE38E20007435A /* Protocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Protocol.hpp; path = ../../../../common/Protocol.hpp; sourceTree = "<group>"; };
 		BEA2635B2CBE38E20007435A /* Protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Protocol.cpp; path = ../../../../common/Protocol.cpp; sourceTree = "<group>"; };
@@ -270,7 +272,8 @@
 				BE44ACC62D7F011F00BFA3B2 /* FileUtil-apple.mm */,
 				BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */,
 				BEA263572CBE38E20007435A /* Log.hpp */,
-				BEA263582CBE38E20007435A /* Log.cpp */,
+				BE178EE92E5C756000A1FCBF /* Log-common.cpp */,
+				BEA263582CBE38E20007435A /* Log-poco.cpp */,
 				BE4C62052D59E85500047DF2 /* MobileApp.hpp */,
 				BE4C62062D59E85500047DF2 /* MobileApp.cpp */,
 				BEA263592CBE38E20007435A /* Png.hpp */,
@@ -589,7 +592,7 @@
 				BEA2636E2CBE38E20007435A /* Util.cpp in Sources */,
 				BE44ACC22D7EFF1500BFA3B2 /* Util-mobile.cpp in Sources */,
 				BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */,
-				BEA263702CBE38E20007435A /* Log.cpp in Sources */,
+				BEA263702CBE38E20007435A /* Log-poco.cpp in Sources */,
 				BE44ACDA2D7F089200BFA3B2 /* RequestVettingStation.cpp in Sources */,
 				BEA263712CBE38E20007435A /* Simd.cpp in Sources */,
 				BEA263722CBE38E20007435A /* FileUtil.cpp in Sources */,
@@ -612,6 +615,7 @@
 				BEA264AF2CBE99340007435A /* COOLWSD.cpp in Sources */,
 				BEA264B02CBE99340007435A /* ClientSession.cpp in Sources */,
 				BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */,
+				BE178EEA2E5C756000A1FCBF /* Log-common.cpp in Sources */,
 				BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */,
 				BEA263772CBE38E20007435A /* ConfigUtil.cpp in Sources */,
 				BEA263782CBE38E20007435A /* StringVector.cpp in Sources */,
