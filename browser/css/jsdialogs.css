@@ -347,7 +347,11 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	box-sizing: border-box;
 	/* same height as .hasnotebookbar > #toolbar-row */
 	height: 82px;
+}
+.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
+	height: 49px !important;
+	margin-bottom: 14px;
 }
 
 .ui-overflow-manager > .notebookbar.ui-iconview {
@@ -358,6 +362,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 49px;
 	/* 14px extra margin for containers without label */
 	margin-bottom: 14px;
+}
+.ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
+	justify-content: end;
 }
 
 .ui-toggle button,
