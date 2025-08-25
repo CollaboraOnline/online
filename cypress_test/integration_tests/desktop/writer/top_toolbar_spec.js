@@ -250,15 +250,17 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
 
-	it('Insert hyperlink.', function() {
+	it('Insert text hyperlink.', function() {
 		helper.setDummyClipboardForCopy();
-		helper.copy();
-		cy.wait(1000);
-		helper.expectTextForClipboard('text text1');
 
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .hyperlinkdialog button').click();
-		cy.cGet('#target-input').should('exist');
+
+		// All 3 fields should be visible
+		cy.cGet('#target').should('exist').should('be.visible');
+		cy.cGet('#indication').should('exist').should('be.visible');
+		cy.cGet('#name').should('exist').should('be.visible');
+
 		cy.cGet('#indication-input').type('link');
 		cy.cGet('#target-input').type('www.something.com');
 		cy.cGet('#ok').click();
@@ -268,6 +270,51 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.wait(1000);
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
+	});
+
+	it('Insert mail hyperlink.', function() {
+		helper.setDummyClipboardForCopy();
+
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+		cy.cGet('#mail').click();
+
+		// Both mail fields should be visible
+		cy.cGet('#receiver').should('exist').should('be.visible');
+		cy.cGet('#subject').should('exist').should('be.visible');
+
+		cy.cGet('#receiver-input').type('john.doe@test.abc');
+		cy.cGet('#subject-input').type('planning-meeting');
+		cy.cGet('#ok').click();
+
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.wait(1000);
+		helper.expectTextForClipboard('text text1');
+		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'mailto:john.doe@test.abc?subject=planning-meeting');
+	});
+
+	it('Insert image hyperlink.', function () {
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert-container .unoBasicShapes button').click();
+		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
+		cy.cGet('#document-container svg g').should('exist');
+		cy.wait(1000);
+
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+
+		// Only URL field should be visible
+		cy.cGet('#target').should('exist').should('be.visible');
+		cy.cGet('#indication').should('exist').should('not.be.visible');
+		cy.cGet('#name').should('exist').should('not.be.visible');
+
+		cy.cGet('#target-input').type('www.something.com');
+		cy.cGet('#ok').click();
+
+		//Can't ctrl click shape, so re-enter dialog to check value persists
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+		cy.cGet('#target-input').should('have.value', 'http://www.something.com/');
 	});
 
 	it('Insert/delete shape.', function() {
