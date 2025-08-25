@@ -499,13 +499,32 @@ class TreeViewControl {
 			img.src = image;
 			img.alt = text;
 		} else {
-			const cell = L.DomUtil.create(
-				'span',
-				builder.options.cssClass +
-					` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
-				parent,
-			);
-			cell.innerText = text;
+			let cell;
+			if (this.isPageDivider(entry)) {
+				cell = L.DomUtil.create(
+					'span',
+					builder.options.cssClass +
+						` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index} page-divider`,
+					parent,
+				);
+				cell.innerText = entry.text.substring(4, entry.text.length - 4);
+			} else if (treeViewData.highlightTerm !== undefined) {
+				cell = this.createHighlightedCell(
+					parent,
+					entry,
+					index,
+					builder,
+					treeViewData.highlightTerm,
+				);
+			} else {
+				cell = L.DomUtil.create(
+					'span',
+					builder.options.cssClass +
+						` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
+					parent,
+				);
+				cell.innerText = text;
+			}
 
 			if (hasRenderer) {
 				JSDialog.OnDemandRenderer(
@@ -519,6 +538,74 @@ class TreeViewControl {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Creates a partially highlighted cell for the tree view.
+	 * Highlighted part of text corresponds to where core has marked a hit
+	 *
+	 * e.g. searching for 'line', core sends the following:
+	 * 		Collabora On[line],
+	 * 		https://www.collaboraon[line].com,
+	 * 		des graphiques spark[line],
+	 *      etc.
+	 */
+	createHighlightedCell(
+		parent: HTMLElement,
+		entry: TreeEntryJSON,
+		index: any,
+		builder: JSBuilder,
+		searchTerm: string,
+	) {
+		const sourceText = entry.text;
+
+		const searchPattern = `[${searchTerm}]`;
+		const mainSpan = L.DomUtil.create(
+			'span',
+			builder.options.cssClass +
+				` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
+			parent,
+		);
+
+		const fragments = this.caseInsensitiveSplit(sourceText, searchPattern);
+		if (fragments.length === 1) {
+			/// not found
+			mainSpan.appendChild(document.createTextNode(sourceText));
+		} else {
+			// found, can be many times
+			for (let i = 0; i < fragments.length - 1; i += 2) {
+				mainSpan.appendChild(document.createTextNode(fragments[i])); // pre
+				const highlightSpan = L.DomUtil.create(
+					'span',
+					builder.options.cssClass + ' ui-treeview-cell-text highlighted',
+					mainSpan,
+				);
+				highlightSpan.innerText = fragments[i + 1].substring(
+					1,
+					fragments[i + 1].length - 1,
+				);
+				mainSpan.appendChild(highlightSpan);
+			}
+			mainSpan.appendChild(
+				document.createTextNode(fragments[fragments.length - 1]),
+			); // post
+		}
+
+		return mainSpan;
+	}
+
+	isPageDivider(entry: TreeEntryJSON): boolean {
+		// Matches page divider prefix and suffix: -$#~ PAGE ~#$- as set in core: QuickFindPanel::FillSearchFindsList() (QuickFindPanel.cxx)
+		return entry.text.startsWith('-$#~') && entry.text.endsWith('~#$-');
+	}
+
+	caseInsensitiveSplit(text: string, delimeter: string) {
+		// escape regex special chars
+		const escapedPattern = delimeter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		// '()' indicate keeping the delimeter, g:global, i:insensitive
+		const regex = new RegExp(`(${escapedPattern})`, 'gi');
+
+		return text.split(regex);
 	}
 
 	createLinkCell(
