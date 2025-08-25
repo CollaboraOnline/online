@@ -2640,7 +2640,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		// If cache is max size, drop the last element
-		if (this._pngCache.length == app.socket.TunnelledDialogImageCacheSize) {
+		if (this._pngCache.length == app.socket.impl.TunnelledDialogImageCacheSize) {
 			// app.socket.sendMessage('DEBUG - Dropping last cache element');
 			this._pngCache.pop();
 		}

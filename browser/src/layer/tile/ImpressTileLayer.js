@@ -250,7 +250,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 			this._viewId = statusJSON.viewid;
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
-			if (app.socket._reconnecting) {
+			if (app.socket.impl._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			} else {
 				this._selectedPart = statusJSON.selectedpart;

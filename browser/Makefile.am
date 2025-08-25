@@ -275,6 +275,7 @@ COOL_JS_LST =\
 	src/app/iface/Control.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
+	src/app/SocketImpl.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -1028,6 +1029,7 @@ pot:
 		admin/src/Util.js \
 		js/global.js \
 		src/app/Debug.ts \
+		src/app/SocketImpl.ts \
 		src/app/IconUtil.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \

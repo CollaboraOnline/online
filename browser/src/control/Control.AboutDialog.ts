@@ -221,10 +221,10 @@ class AboutDialog {
 			// so there is nothing more verbose. But presumably it is different
 			// in production setups.
 
-			app.socket.threadLocalLoggingLevelToggle =
-				!app.socket.threadLocalLoggingLevelToggle;
+			app.socket.impl.threadLocalLoggingLevelToggle =
+				!app.socket.impl.threadLocalLoggingLevelToggle;
 
-			const newLogLevel = app.socket.threadLocalLoggingLevelToggle
+			const newLogLevel = app.socket.impl.threadLocalLoggingLevelToggle
 				? 'verbose'
 				: 'default';
 

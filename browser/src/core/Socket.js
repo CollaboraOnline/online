@@ -12,21 +12,9 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager SlideBitmapManager*/
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager SlideBitmapManager SocketImpl */
 
 app.definitions.Socket = L.Class.extend({
-	ProtocolVersionNumber: '0.1',
-	ReconnectCount: 0,
-	WasShownLimitDialog: false,
-	WSDServer: {},
-	IndirectSocketReconnectCount: 0,
-
-	/// Whether Trace Event recording is enabled or not. ("Enabled" here means whether it can be
-	/// turned on (and off again), not whether it is on.)
-	enableTraceEventLogging: false,
-
-	// Will be set from lokitversion message
-	TunnelledDialogImageCacheSize: 0,
 
 	getParameterValue: function (s) {
 		var i = s.indexOf('=');
@@ -36,13 +24,16 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	initialize: function (map) {
-		window.app.console.debug('socket.initialize:');
+		// Move all state to SocketImpl instance.
+		this.impl = new SocketImpl(map, this);
+
+		// for convenience (to avoid too many this.impl.* here)
+		// these are just references (not copies).
 		this._map = map;
-		this._msgQueue = [];
-		this._delayedMessages = [];
-		this._handlingDelayedMessages = false;
-		this._inLayerTransaction = false;
-		this._slurpDuringTransaction = false;
+		this._msgQueue = this.impl._msgQueue;
+		this._delayedMessages = this.impl._delayedMessages;
+		this._slurpQueue = this.impl._slurpQueue;
+		this.WSDServer = this.impl.WSDServer;
 	},
 
 	getWebSocketBaseURI: function(map) {
@@ -78,8 +69,8 @@ app.definitions.Socket = L.Class.extend({
 		this.socket.binaryType = 'arraybuffer';
 		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
 			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
-			clearTimeout(this._accessTokenExpireTimeout);
-			this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
+			clearTimeout(this.impl._accessTokenExpireTimeout);
+			this.impl._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
 			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
 		}
 
@@ -97,7 +88,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_sessionExpiredWarning: function() {
-		clearTimeout(this._accessTokenExpireTimeout);
+		clearTimeout(this.impl._accessTokenExpireTimeout);
 		var expirymsg = errorMessages.sessionexpiry;
 		if (parseInt(this._map.options.docParams.access_token_ttl) - Date.now() <= 0) {
 			expirymsg = errorMessages.sessionexpired;
@@ -108,7 +99,7 @@ app.definitions.Socket = L.Class.extend({
 		this._map.fire('warn', {msg: expirymsg.replace('{time}', timerepr)});
 
 		// If user still doesn't refresh the session, warn again periodically
-		this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
+		this.impl._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
 		                                            120 * 1000);
 	},
 
@@ -127,7 +118,7 @@ app.definitions.Socket = L.Class.extend({
 		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization
 		this._map['wopi'].resetAppLoaded();
 		this._map.fire('docloaded', {status: false});
-		clearTimeout(this._accessTokenExpireTimeout);
+		clearTimeout(this.impl._accessTokenExpireTimeout);
 	},
 
 	connected: function() {
@@ -219,11 +210,11 @@ app.definitions.Socket = L.Class.extend({
 		var now0 = Date.now();
 		var now1 = performance.now();
 		var now2 = Date.now();
-		this._doSend('coolclient ' + this.ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
+		this._doSend('coolclient ' + this.impl.ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
 		var msg = 'load url=' + encodeURIComponent(this._map.options.doc);
 		if (this._map._docLayer) {
-			this._reconnecting = true;
+			this.impl._reconnecting = true;
 			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
 		}
@@ -337,36 +328,36 @@ app.definitions.Socket = L.Class.extend({
 
 	_queueSlurpEventEmission: function(delayMS) {
 
-		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
+		if (this.impl._slurpTimer && this.impl._slurpTimerDelay != delayMS) {
 			// The timer already exists, but now want to change timeout _slurpTimerDelay to delayMS.
 			// Cancel it and reschedule by replacement with another timer using the desired delayMS
 			// adjusted as if used at the original launch time.
-			clearTimeout(this._slurpTimer);
-			this._slurpTimer = null;
-			this._slurpTimerDelay = delayMS;
+			clearTimeout(this.impl._slurpTimer);
+			this.impl._slurpTimer = null;
+			this.impl._slurpTimerDelay = delayMS;
 
 			var now = Date.now();
-			var sinceLaunchMS = now - this._slurpTimerLaunchTime;
+			var sinceLaunchMS = now - this.impl._slurpTimerLaunchTime;
 			delayMS -= sinceLaunchMS;
 			if (delayMS <= 0)
 				delayMS = 1;
 		}
 
-		if (!this._slurpTimer)
+		if (!this.impl._slurpTimer)
 		{
 			var that = this;
-			if (!that._slurpTimerLaunchTime) {
+			if (!that.impl._slurpTimerLaunchTime) {
 				// The initial launch of the timer, rescheduling replacements retain
 				// the launch time
-				that._slurpTimerLaunchTime = now;
-				that._slurpTimerDelay = delayMS;
+				that.impl._slurpTimerLaunchTime = now;
+				that.impl._slurpTimerDelay = delayMS;
 			}
-			that._slurpTimer = setTimeout(function () {
-				that._slurpTimer = undefined;
-				that._slurpTimerLaunchTime = undefined;
-				that._slurpTimerDelay = undefined;
-				if (that._inLayerTransaction) {
-					that._slurpDuringTransaction = true;
+			that.impl._slurpTimer = setTimeout(function () {
+				that.impl._slurpTimer = undefined;
+				that.impl._slurpTimerLaunchTime = undefined;
+				that.impl._slurpTimerDelay = undefined;
+				if (that.impl._inLayerTransaction) {
+					that.impl._slurpDuringTransaction = true;
 					return;
 				}
 				that._emitSlurpedEvents();
@@ -383,24 +374,24 @@ app.definitions.Socket = L.Class.extend({
 									       {'_slurpQueue.length' : String(queueLength)});
 		if (this._map && this._map._docLayer) {
 			TileManager.beginTransaction();
-			this._inLayerTransaction = true;
+			this.impl._inLayerTransaction = true;
 
 			// Queue an instant timeout early to try to measure the
 			// re-rendering delay before we get back to the main-loop.
-			if (this.traceEventRecordingToggle)
+			if (this.impl.traceEventRecordingToggle)
 			{
 				var that = this;
-				if (!that._renderEventTimer)
-					that._renderEventTimer = setTimeout(function() {
+				if (!that.impl._renderEventTimer)
+					that.impl._renderEventTimer = setTimeout(function() {
 						var now = performance.now();
-						var delta = now - that._renderEventTimerStart;
+						var delta = now - that.impl._renderEventTimerStart;
 						if (delta >= 2 /* ms */) // significant
 						{
-							that.sendTraceEvent(name, 'X', 'ts=' + Math.round(that._renderEventTimerStart * 1000) +
-									    ' dur=' + Math.round((now - that._renderEventTimerStart) * 1000));
-							that._renderEventTimerStart = undefined;
+							that.sendTraceEvent(name, 'X', 'ts=' + Math.round(that.impl._renderEventTimerStart * 1000) +
+									    ' dur=' + Math.round((now - that.impl._renderEventTimerStart) * 1000));
+							that.impl._renderEventTimerStart = undefined;
 						}
-						that._renderEventTimer = undefined;
+						that.impl._renderEventTimer = undefined;
 					}, 0);
 			}
 		}
@@ -469,16 +460,16 @@ app.definitions.Socket = L.Class.extend({
 				// Let other layers / overlays catch up.
 				this._map.fire('messagesdone');
 
-				this._renderEventTimerStart = performance.now();
+				this.impl._renderEventTimerStart = performance.now();
 
-				this._inLayerTransaction = false;
-				if (this._slurpDuringTransaction) {
-					this._slurpDuringTransaction = false;
+				this.impl._inLayerTransaction = false;
+				if (this.impl._slurpDuringTransaction) {
+					this.impl._slurpDuringTransaction = false;
 					this._queueSlurpEventEmission(1);
 				}
 			};
 
-			if (this._inLayerTransaction && this._map._docLayer) {
+			if (this.impl._inLayerTransaction && this._map._docLayer) {
 				// Resume with redraw if dirty due to previous _onMessage() calls.
 				TileManager.endTransaction(completeCallback);
 			} else {
@@ -714,13 +705,13 @@ app.definitions.Socket = L.Class.extend({
 			}
 			if (window.indirectSocket) {
 				if (window.expectedServerId && window.expectedServerId != this.WSDServer.Id) {
-					if (this.IndirectSocketReconnectCount++ >= 3) {
+					if (this.impl.IndirectSocketReconnectCount++ >= 3) {
 						var msg = errorMessages.clusterconfiguration.replace('{productname}', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)'));
 						msg = msg.replace('{0}', window.expectedServerId);
 						msg = msg.replace('{1}', window.routeToken);
 						msg = msg.replace('{2}', this.WSDServer.Id);
 						this._map.uiManager.showInfoModal('wrong-server-modal', _('Cluster configuration warning'), msg, '', _('OK'), null, false);
-						this.IndirectSocketReconnectCount = 0;
+						this.impl.IndirectSocketReconnectCount = 0;
 					} else {
 						this._map.showBusy(_('Wrong server, reconnecting...'), false);
 						this.manualReconnect(3000);
@@ -761,7 +752,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			// TODO: For now we expect perfect match in protocol versions
-			if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
+			if (this.WSDServer.Protocol !== this.impl.ProtocolVersionNumber) {
 				this._map.fire('error', {msg: _('Unsupported server version.')});
 			}
 		}
@@ -791,10 +782,10 @@ app.definitions.Socket = L.Class.extend({
 				versionContainer.appendChild(span);
 			}
 
-			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
+			this.impl.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
 		}
 		else if (textMsg.startsWith('enabletraceeventlogging ')) {
-			this.enableTraceEventLogging = true;
+			this.impl.enableTraceEventLogging = true;
 		}
 		else if (textMsg.startsWith('osinfo ')) {
 			var osInfo = textMsg.replace('osinfo ', '');
@@ -950,11 +941,11 @@ app.definitions.Socket = L.Class.extend({
 
 				var socket = this;
 				var map = this._map;
-				clearTimeout(this.timer);
-				this.timer = setInterval(function() {
+				clearTimeout(this.impl.timer);
+				this.impl.timer = setInterval(function() {
 					if (socket.connected()) {
 						// We're connected: cancel timer and dialog.
-						clearTimeout(this.timer);
+						clearTimeout(this.impl.timer);
 						return;
 					}
 
@@ -994,8 +985,8 @@ app.definitions.Socket = L.Class.extend({
 				app.idleHandler._active = false;
 				map = this._map;
 				var that = this;
-				clearTimeout(this.timer);
-				this.timer = setInterval(function() {
+				clearTimeout(this.impl.timer);
+				this.impl.timer = setInterval(function() {
 					try {
 						// Activate and cancel timer and dialogs.
 						app.idleHandler._activate();
@@ -1157,13 +1148,13 @@ app.definitions.Socket = L.Class.extend({
 				// The document is unloading. Have to wait a bit.
 				app.idleHandler._active = false;
 
-				clearTimeout(this.timer);
-				if (this.ReconnectCount++ >= 10) {
+				clearTimeout(this.impl.timer);
+				if (this.impl.ReconnectCount++ >= 10) {
 					this._map.fire('error', {msg: errorMessages.docunloadinggiveup});
 					return; // Give up.
 				}
 
-				this.timer = setInterval(function() {
+				this.impl.timer = setInterval(function() {
 					try {
 						// Activate and cancel timer and dialogs.
 						app.idleHandler._activate();
@@ -1171,9 +1162,9 @@ app.definitions.Socket = L.Class.extend({
 						window.app.console.warn('Cannot activate map');
 					}
 				// .5, 2, 4.5, 8, 12.5, 18, 24.5, 32, 40.5 seconds
-				}, 500 * this.ReconnectCount * this.ReconnectCount); // Quadratic back-off.
+				}, 500 * this.impl.ReconnectCount * this.impl.ReconnectCount); // Quadratic back-off.
 
-				if (this.ReconnectCount > 1) {
+				if (this.impl.ReconnectCount > 1) {
 					this._map.showBusy(errorMessages.docunloadingretry, false);
 				}
 			}
@@ -1224,8 +1215,8 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('info:') && command.errorCmd === 'socket') {
-			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
-				this.WasShownLimitDialog = true;
+			if (command.errorKind === 'limitreached' && !this.impl.WasShownLimitDialog) {
+				this.impl.WasShownLimitDialog = true;
 				textMsg = errorMessages.limitreached;
 				textMsg = textMsg.replace('{docs}', command.params[0]);
 				textMsg = textMsg.replace('{connections}', command.params[1]);
@@ -1379,8 +1370,8 @@ app.definitions.Socket = L.Class.extend({
 				this._map.showBusy(window.ThisIsAMobileApp? _('Loading...'): _('Connecting...'), true);
 				if (info.id == "ready") {
 					// We're connected: cancel timer and dialog.
-					this.ReconnectCount = 0;
-					clearTimeout(this.timer);
+					this.impl.ReconnectCount = 0;
+					clearTimeout(this.impl.timer);
 				}
 			} else if (info.id == 'start' || info.id == 'setvalue')
 				this._map.fire('statusindicator', info);
@@ -1418,7 +1409,7 @@ app.definitions.Socket = L.Class.extend({
 			// intentional falltrough
 		}
 
-		if (!this._map._docLayer || this._handlingDelayedMessages) {
+		if (!this._map._docLayer || this.impl._handlingDelayedMessages) {
 			this._delayMessage(textMsg);
 		} else {
 			this._map._docLayer._onMessage(textMsg, e.image);
@@ -1546,7 +1537,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_handleDelayedMessages: function(docLayer) {
-		this._handlingDelayedMessages = true;
+		this.impl._handlingDelayedMessages = true;
 
 		while (this._delayedMessages.length) {
 			var message = this._delayedMessages.shift();
@@ -1559,7 +1550,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}
 
-		this._handlingDelayedMessages = false;
+		this.impl._handlingDelayedMessages = false;
 	},
 
 	_onStatusMsg: function(textMsg, command) {
@@ -1615,7 +1606,7 @@ app.definitions.Socket = L.Class.extend({
 			this._map.addLayer(docLayer);
 			this._map.fire('doclayerinit');
 		}
-		else if (this._reconnecting) {
+		else if (this.impl._reconnecting) {
 			// we are reconnecting ...
 			this._map._docLayer._resetClientVisArea();
 			TileManager.refreshTilesInBackground();
@@ -1645,7 +1636,7 @@ app.definitions.Socket = L.Class.extend({
 			if (!this._map._docLayer._getViewId())
 				this._map.fire('updateviewslist');
 
-			this._reconnecting = false;
+			this.impl._reconnecting = false;
 
 			// Applying delayed messages
 			// note: delayed messages cannot be done before:
@@ -1691,7 +1682,7 @@ app.definitions.Socket = L.Class.extend({
 
 	_onSocketClose: function (event) {
 		window.app.console.debug('_onSocketClose:');
-		if (!this._map._docLoadedOnce && this.ReconnectCount === 0) {
+		if (!this._map._docLoadedOnce && this.impl.ReconnectCount === 0) {
 			var errorMsg, errorType = '';
 			var reason = event.reason;
 			if (reason && reason.startsWith('error:')) {
@@ -1720,7 +1711,7 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('postMessage', { msgId: 'Action_Load_Resp', args: postMessageObj });
 			return;
 		}
-		if (this.ReconnectCount > 0)
+		if (this.impl.ReconnectCount > 0)
 			return;
 
 		var isActive = app.idleHandler._active;
@@ -1741,7 +1732,7 @@ app.definitions.Socket = L.Class.extend({
 			this._map._docLayer._resetDocumentInfo();
 		}
 
-		if (isActive && this._reconnecting) {
+		if (isActive && this.impl._reconnecting) {
 			// Don't show this before first transparently trying to reconnect.
 			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
@@ -1757,8 +1748,8 @@ app.definitions.Socket = L.Class.extend({
 		// "close: idle" was not processed yet).
 		var that = this;
 		setTimeout(function () {
-			if (!that._reconnecting) {
-				that._reconnecting = true;
+			if (!that.impl._reconnecting) {
+				that.impl._reconnecting = true;
 				if (!app.idleHandler._documentIdle)
 					that._map.showBusy(_('Reconnecting...'), false);
 				app.idleHandler._activate();
@@ -1942,8 +1933,8 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	setTraceEventLogging: function (enabled) {
-		this.traceEventRecordingToggle = enabled;
-		this.sendMessage('traceeventrecording ' + (this.traceEventRecordingToggle ? 'start' : 'stop'));
+		this.impl.traceEventRecordingToggle = enabled;
+		this.sendMessage('traceeventrecording ' + (this.impl.traceEventRecordingToggle ? 'start' : 'stop'));
 
 		// Just as a test, uncomment this to toggle SAL_WARN and
 		// SAL_INFO selection between two states: 1) the default
@@ -1954,7 +1945,7 @@ app.definitions.Socket = L.Class.extend({
 		// to "-WARN-INFO", i.e. the default is that nothing is
 		// logged from core.)
 
-		// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
+		// app.socket.sendMessage('sallogoverride ' + (app.socket.impl.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
 	},
 
 	traceEventRecordingToggle: false,
@@ -1969,12 +1960,12 @@ app.definitions.Socket = L.Class.extend({
 	asyncTracePseudoThread: 1,
 
 	createAsyncTraceEvent: function (name, args) {
-		if (!this.traceEventRecordingToggle)
+		if (!this.impl.traceEventRecordingToggle)
 			return null;
 
 		var result = {};
-		result.id = this.asyncTraceEventCounter++;
-		result.tid = this.asyncTracePseudoThread++;
+		result.id = this.impl.asyncTraceEventCounter++;
+		result.tid = this.impl.asyncTracePseudoThread++;
 		result.active = true;
 		result.args = args;
 
@@ -1982,21 +1973,21 @@ app.definitions.Socket = L.Class.extend({
 
 		var that = this;
 		result.finish = function () {
-			that.asyncTracePseudoThread--;
+			that.impl.asyncTracePseudoThread--;
 			if (this.active) {
 				that.sendTraceEvent(name, 'F', undefined, this.args, this.id, this.tid);
 				this.active = false;
 			}
 		};
 		result.abort = function () {
-			that.asyncTracePseudoThread--;
+			that.impl.asyncTracePseudoThread--;
 			this.active = false;
 		};
 		return result;
 	},
 
 	createCompleteTraceEvent: function (name, args) {
-		if (!this.traceEventRecordingToggle)
+		if (!this.impl.traceEventRecordingToggle)
 			return null;
 
 		var result = {};
@@ -2021,7 +2012,7 @@ app.definitions.Socket = L.Class.extend({
 
 	// something we can grok quickly in the trace viewer
 	createCompleteTraceEventFromEvent: function(textMsg) {
-		if (!this.traceEventRecordingToggle)
+		if (!this.impl.traceEventRecordingToggle)
 			return null;
 
 		var pretty;
@@ -2045,7 +2036,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 		app.idleHandler._active = false;
 		this.close();
-		clearTimeout(this.timer);
+		clearTimeout(this.impl.timer);
 		setTimeout(function () {
 			try {
 				app.idleHandler._activate();
