@@ -907,35 +907,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'false'
 			},
 			{
-				'id': 'stylesview-btn',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'scroll-up',
-						'type': 'customtoolitem',
-						'text': _('Scroll up'),
-						'command': 'scrollpreviewup',
-						'icon': 'lc_searchprev.svg',
-					},
-					{
-						'id': 'scroll-down',
-						'type': 'customtoolitem',
-						'text': _('Scroll down'),
-						'command': 'scrollpreviewdown',
-						'icon': 'lc_searchnext.svg',
-					},
-					{
-						'id': 'format-style-list-dialog',
-						'type': 'toolitem',
-						'text': _('Style list'),
-						'command': '.uno:SidebarDeck.StyleListDeck',
-						'icon': 'lc_stylepreviewmore.svg',
-						'accessibility': { focusBack: true, combination: 'SD', de: null }
-					},
-				],
-				'vertical': 'true'
-			},
-			{
 				'type': 'overflowgroup',
 				'id': 'home-illustrations',
 				'name':_('Illustrations'),
