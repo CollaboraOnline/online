@@ -376,13 +376,15 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	shouldIgnoreContextChange(contexts, appId) {
 		// New -> old context name pairs.
-		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
+		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage'],
+			['Graphic', 'DrawPage', 'Animation'], ['DrawPage', 'Graphic', 'Animation']];
 		if (appId === 'com.sun.star.text.TextDocument') {
 			ignored.push(['Text', '']);
 		}
 
 		for (let i = 0; i < ignored.length; i++) {
-			if (contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
+			if ((ignored[i].length < 3 || this._lastSelectedTabName === ignored[i][2])
+				&& contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
 				return true;
 		}
 
