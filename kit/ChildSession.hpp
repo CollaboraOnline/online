@@ -198,7 +198,7 @@ private:
     bool selectGraphic(const StringVector& tokens);
     bool renderNextSlideLayer(SlideCompressor &scomp,
                               unsigned width, unsigned height,
-                              double dDevicePixelRatio, bool& done);
+                              double dDevicePixelRatio, bool& done, bool isCompressed);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);
