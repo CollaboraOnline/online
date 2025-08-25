@@ -583,6 +583,14 @@ function getInitializerClass() {
 							global.logServer(log);
 						}
 
+						// Can use optional chaining if we increase the ecma version
+						if (global.L && global.L.Map && global.L.Map.THIS &&
+								global.L.Map.THIS._debug && global.L.Map.THIS._debug.logTrace === true) {
+							console.groupCollapsed("Trace");
+							console.trace();
+							console.groupEnd();
+						}
+
 						return global.console[method].apply(console, args);
 					};
 				}(loggingMethods[i]));
