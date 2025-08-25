@@ -111,7 +111,7 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
     };
     sessionProxy->setConnectFailHandler(std::move(connectFailCallback));
 
-    sessionProxy->asyncRequest(requestProxy, COOLWSD::getWebServerPoll());
+    sessionProxy->asyncRequest(requestProxy, COOLWSD::getWebServerPoll(), false);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

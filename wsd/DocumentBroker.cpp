@@ -1894,8 +1894,6 @@ DocumentBroker::asyncInstallPresets(const std::shared_ptr<SocketPoll>& poll, con
         [uriAnonym = std::move(uriAnonym), presetsPath, presetTasks,
          session](const std::shared_ptr<http::Session>& configSession)
     {
-        configSession->asyncShutdown();
-
         if (SigUtil::getShutdownRequestFlag())
         {
             LOG_DBG("Shutdown flagged, giving up on in-flight requests");
@@ -1956,8 +1954,6 @@ void DocumentBroker::asyncInstallPreset(
         [configId, presetUri, presetStamp, uriAnonym=std::move(uriAnonym),
          presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
     {
-        presetSession->asyncShutdown();
-
         if (SigUtil::getShutdownRequestFlag())
         {
             LOG_DBG("Shutdown flagged, giving up on in-flight requests");

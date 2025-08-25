@@ -396,7 +396,6 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         [this, commandName=std::move(commandName),
                          docBroker](const std::shared_ptr<http::Session>& session)
                     {
-                        session->asyncShutdown();
                         const std::shared_ptr<const http::Response> httpResponse =
                             session->response();
                         if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
@@ -515,7 +514,6 @@ makeSignatureActionSession(std::shared_ptr<ClientSession> clientSession,
         [clientSession = std::move(clientSession),
          commandName = std::move(commandName)](const std::shared_ptr<http::Session>& session)
     {
-        session->asyncShutdown();
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
         resultArguments->set("commandName", commandName);
@@ -1480,8 +1478,6 @@ void ClientSession::uploadBrowserSettingsToWopiHost()
     http::Session::FinishedCallback finishedCallback =
         [this, uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
     {
-        wopiSession->asyncShutdown();
-
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
         if (statusLine.statusCode() != http::StatusCode::OK)

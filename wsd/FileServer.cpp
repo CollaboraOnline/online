@@ -2118,8 +2118,6 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
         [uriAnonym, socketWeak, requestPath = getRequestPath(request),
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
-        wopiSession->asyncShutdown();
-
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
@@ -2255,8 +2253,6 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
         [uriAnonym, socketWeak, requestPath = getRequestPath(request), fileId,
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
-        wopiSession->asyncShutdown();
-
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
@@ -2349,8 +2345,6 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
         [fileName, uriAnonym, socketWeak, requestPath = getRequestPath(request),
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
-        wopiSession->asyncShutdown();
-
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
