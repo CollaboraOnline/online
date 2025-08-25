@@ -1523,6 +1523,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var wrapper = L.DomUtil.create('div', wrapperClass + ' ui-pushbutton-wrapper ' + builder.options.cssClass, parentContainer); // need for locking overlay
 		wrapper.id = data.id;
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
+		pushbutton.setAttribute('tabindex', '0');
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
 		var image;
