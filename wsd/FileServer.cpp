@@ -1748,8 +1748,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 
         std::string brandProductURL = ConfigUtil::getConfigValue<std::string>(config, "user_interface.brandProductURL", "");
         std::string brandProductName = ConfigUtil::getConfigValue<std::string>(config, "user_interface.brandProductName", "");
+        std::string logoUrl = ConfigUtil::getConfigValue<std::string>(config, "user_interface.logoURL", "");
         Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_NAME%"), brandProductName);
         Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_URL%"), brandProductURL);
+        Poco::replaceInPlace(preprocess, std::string("%LOGO_URL%"), logoUrl);
     #endif
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);

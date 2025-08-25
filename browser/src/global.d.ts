@@ -173,6 +173,7 @@ interface Window {
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
 	zoteroEnabled: boolean;
+	logoURL?: string;
 
 	createShapesPanel(shapeType: string): HTMLDivElement;
 	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
