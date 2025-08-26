@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-22 14:02+0000\n"
+"PO-Revision-Date: 2025-08-25 11:46+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2450,7 +2450,7 @@ msgstr "Szöveg"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Cellák"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:1620
@@ -2479,7 +2479,7 @@ msgstr "Rossz"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Szerkesztés"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
