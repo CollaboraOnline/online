@@ -8,7 +8,7 @@ var AdminClusterOverviewAbout = AdminSocketBase.extend({
     },
 
     onSocketMessage: function(e) {
-        var textMsg;
+        let textMsg;
         if (typeof e.data === 'string') {
             textMsg = e.data;
         }
@@ -16,8 +16,13 @@ var AdminClusterOverviewAbout = AdminSocketBase.extend({
             textMsg = '';
         }
         if (textMsg.startsWith('license')) {
-            $('#license-content').html(textMsg.substring('license: '.length));
-        }
+            const licenseContentEl = document.getElementById('license-content');
+            if (licenseContentEl) {
+                licenseContentEl.innerHTML = textMsg.substring('license: '.length);
+            } else {
+                console.warn('Element #license-content not found');
+            }
+         }
     },
 
     onSocketOpen: function() {
