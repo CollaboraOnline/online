@@ -359,6 +359,14 @@ private:
     void abortConversion(const std::shared_ptr<DocumentBroker>& docBroker,
                          const std::shared_ptr<StreamSocket>& saveAsSocket, std::string errorKind);
 
+#if !MOBILEAPP
+
+    /// Handles saveas: and exportas: in handleKitToClientMessage.
+    bool handleSaveAs(const std::shared_ptr<Message>& payload,
+                      const std::shared_ptr<DocumentBroker>& docBroker,
+                      const std::shared_ptr<StreamSocket>& saveAsSocket);
+#endif // !MOBILEAPP
+
 private:
     /// URI with which client made request to us
     const Poco::URI _uriPublic;

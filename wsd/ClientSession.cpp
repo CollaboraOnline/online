@@ -2282,14 +2282,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         std::string errorCommand;
         std::string errorKind;
         if (getTokenString(tokens[1], "cmd", errorCommand) &&
-            getTokenString(tokens[2], "kind", errorKind) )
+            getTokenString(tokens[2], "kind", errorKind))
         {
             if (errorCommand == "load")
             {
                 LOG_ERR("Document load failed: " << errorKind);
                 if (errorKind == "passwordrequired:to-view" ||
-                    errorKind == "passwordrequired:to-modify" ||
-                    errorKind == "wrongpassword")
+                    errorKind == "passwordrequired:to-modify" || errorKind == "wrongpassword")
                 {
                     if (_isConvertTo)
                     {
@@ -2322,10 +2321,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
     }
     else if (tokens.equals(0, "setpart:") && tokens.size() == 2)
     {
-        if(!_isTextDocument)
+        if (!_isTextDocument)
         {
             int setPart;
-            if(getTokenInteger(tokens[1], "part", setPart))
+            if (getTokenInteger(tokens[1], "part", setPart))
             {
                 _clientSelectedPart = setPart;
             }
@@ -2335,127 +2334,14 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             }
             else
                 return false;
-         }
+        }
     }
 #if !MOBILEAPP
     else if (tokens.size() == 3 && (tokens.equals(0, "saveas:") || tokens.equals(0, "exportas:")))
     {
-        bool isExportAs = tokens.equals(0, "exportas:");
-
-        std::string encodedURL;
-        if (!getTokenString(tokens[1], "url", encodedURL))
-        {
-            LOG_ERR("Bad syntax for: " << firstLine);
-            // we must not return early with convert-to so that we clean up
-            // the session
-            if (!_isConvertTo)
-            {
-                sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
-                return false;
-            }
-        }
-
-        std::string encodedWopiFilename;
-        if (!_isConvertTo && !getTokenString(tokens[2], "filename", encodedWopiFilename))
-        {
-            LOG_ERR("Bad syntax for: " << firstLine);
-            sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
-            return false;
-        }
-
-        // Save-as completed, inform the ClientSession.
-        const std::string wopiFilename = Uri::decode(encodedWopiFilename);
-
-        // URI constructor implicitly decodes when it gets std::string as param
-        Poco::URI resultURL(encodedURL);
-
-        // Prepend the jail path in the normal (non-nocaps) case
-        if (resultURL.getScheme() == "file" && !COOLWSD::NoCapsForKit)
-        {
-            std::string relative;
-            if (_isConvertTo || isExportAs)
-                relative = Uri::decode(resultURL.getPath());
-            else
-                relative = resultURL.getPath();
-
-            if (relative.size() > 0 && relative[0] == '/')
-                relative = relative.substr(1);
-
-            // Rewrite file:// URLs to be visible to the outside world.
-            const Path path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
-                                                           docBroker->getJailRoot(),
-                                                           std::move(relative)));
-            if (Poco::File(path).exists())
-            {
-                if (!_isConvertTo)
-                {
-                    // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
-                    std::string encodedPath;
-                    Poco::URI::encode(path.toString(), "", encodedPath);
-
-                    resultURL.setPath(encodedPath);
-                }
-                else
-                {
-                    resultURL.setPath(path.toString());
-                }
-            }
-            else
-            {
-                // Blank for failure.
-                LOG_DBG("SaveAs produced no output in '" << path.toString() << "', producing blank url.");
-                resultURL.clear();
-            }
-        }
-
-        LOG_TRC("Save-as URL: " << resultURL.toString());
-
-        if (!_isConvertTo)
-        {
-            // Normal SaveAs - save to Storage and log result.
-            if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())
-            {
-                // this also sends the saveas: result
-                LOG_TRC("Save-as path: " << resultURL.getPath());
-                docBroker->uploadAsToStorage(client_from_this(), resultURL.getPath(), wopiFilename,
-                                             false, isExportAs);
-            }
-            else
-                sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
-        }
-        else
-        {
-            // using the convert-to REST API
-            // TODO: Send back error when there is no output.
-            if (!resultURL.getPath().empty())
-            {
-                LOG_TRC("Sending file: " << resultURL.getPath());
-
-                const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
-                http::Response response(http::StatusCode::OK);
-                FileServerRequestHandler::hstsHeaders(response);
-                if (!fileName.empty())
-                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
-                response.setContentType("application/octet-stream");
-
-                if (!saveAsSocket)
-                    LOG_ERR("Error saveas socket missing in isConvertTo mode");
-                else
-                    HttpHelper::sendFileAndShutdown(saveAsSocket, resultURL.getPath(), response);
-            }
-
-            // Conversion is done, cleanup this fake session.
-            LOG_TRC("Removing save-as ClientSession after conversion.");
-
-            // Remove us.
-            docBroker->removeSession(client_from_this());
-
-            // Now terminate.
-            docBroker->stop("Finished saveas handler.");
-        }
-
-        return true;
+        return handleSaveAs(payload, docBroker, saveAsSocket);
     }
+
 #endif
     else if (tokens.size() == 2 && tokens.equals(0, "statechanged:"))
     {
@@ -3059,6 +2945,132 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
     // Now terminate.
     docBroker->stop("Aborting saveas handler.");
 }
+
+#if !MOBILEAPP
+bool ClientSession::handleSaveAs(const std::shared_ptr<Message>& payload,
+                                 const std::shared_ptr<DocumentBroker>& docBroker,
+                                 const std::shared_ptr<StreamSocket>& saveAsSocket)
+{
+    const auto& tokens = payload->tokens();
+    const std::string& firstLine = payload->firstLine();
+
+    bool isExportAs = tokens.equals(0, "exportas:");
+
+    std::string encodedURL;
+    if (!getTokenString(tokens[1], "url", encodedURL))
+    {
+        LOG_ERR("Bad syntax for: " << firstLine);
+        // we must not return early with convert-to so that we clean up
+        // the session
+        if (!_isConvertTo)
+        {
+            sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
+            return false;
+        }
+    }
+
+    std::string encodedWopiFilename;
+    if (!_isConvertTo && !getTokenString(tokens[2], "filename", encodedWopiFilename))
+    {
+        LOG_ERR("Bad syntax for: " << firstLine);
+        sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
+        return false;
+    }
+
+    // Save-as completed, inform the ClientSession.
+    const std::string wopiFilename = Uri::decode(encodedWopiFilename);
+
+    // URI constructor implicitly decodes when it gets std::string as param
+    Poco::URI resultURL(encodedURL);
+
+    // Prepend the jail path in the normal (non-nocaps) case
+    if (resultURL.getScheme() == "file" && !COOLWSD::NoCapsForKit)
+    {
+        std::string relative;
+        if (_isConvertTo || isExportAs)
+            relative = Uri::decode(resultURL.getPath());
+        else
+            relative = resultURL.getPath();
+
+        if (relative.size() > 0 && relative[0] == '/')
+            relative = relative.substr(1);
+
+        // Rewrite file:// URLs to be visible to the outside world.
+        const Path path(FileUtil::buildLocalPathToJail(
+            COOLWSD::EnableMountNamespaces, docBroker->getJailRoot(), std::move(relative)));
+        if (Poco::File(path).exists())
+        {
+            if (!_isConvertTo)
+            {
+                // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
+                std::string encodedPath;
+                Poco::URI::encode(path.toString(), "", encodedPath);
+
+                resultURL.setPath(encodedPath);
+            }
+            else
+            {
+                resultURL.setPath(path.toString());
+            }
+        }
+        else
+        {
+            // Blank for failure.
+            LOG_DBG("SaveAs produced no output in '" << path.toString()
+                                                     << "', producing blank url.");
+            resultURL.clear();
+        }
+    }
+
+    LOG_TRC("Save-as URL: " << resultURL.toString());
+
+    if (!_isConvertTo)
+    {
+        // Normal SaveAs - save to Storage and log result.
+        if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())
+        {
+            // this also sends the saveas: result
+            LOG_TRC("Save-as path: " << resultURL.getPath());
+            docBroker->uploadAsToStorage(client_from_this(), resultURL.getPath(), wopiFilename,
+                                         false, isExportAs);
+        }
+        else
+            sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+    }
+    else
+    {
+        // using the convert-to REST API
+        // TODO: Send back error when there is no output.
+        if (!resultURL.getPath().empty())
+        {
+            LOG_TRC("Sending file: " << resultURL.getPath());
+
+            const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
+            http::Response response(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(response);
+            if (!fileName.empty())
+                response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
+            response.setContentType("application/octet-stream");
+
+            if (!saveAsSocket)
+                LOG_ERR("Error saveas socket missing in isConvertTo mode");
+            else
+                HttpHelper::sendFileAndShutdown(saveAsSocket, resultURL.getPath(), response);
+        }
+
+        // Conversion is done, cleanup this fake session.
+        LOG_TRC("Removing save-as ClientSession after conversion.");
+
+        // Remove us.
+        docBroker->removeSession(client_from_this());
+
+        // Now terminate.
+        docBroker->stop("Finished saveas handler.");
+    }
+
+    return true;
+}
+#endif // !MOBILEAPP
 
 bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 {
