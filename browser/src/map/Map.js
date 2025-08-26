@@ -304,8 +304,9 @@ L.Map = L.Evented.extend({
 
 			// Show sidebar.
 			if (this._docLayer && !this._docLoadedOnce) {
-				// Let the first page finish loading then load the sidebar.
+				// Let the first page finish loading then load the sidebar and notebookbar
 				setTimeout(this.uiManager.initializeSidebar.bind(this.uiManager), 200);
+				setTimeout(this.uiManager.initializeNotebookbarInCore.bind(this.uiManager), 200);
 			}
 
 			// We have loaded.
