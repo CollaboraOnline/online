@@ -1184,6 +1184,15 @@ class UIManager extends L.Control {
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 	}
 
+	// QuickFindPanel
+
+	initializeQuickFindInCore(): void {
+		if (!this.map.quickFindPanel) return;
+
+		// Initialize QuickFindPanel in core
+		app.socket.sendMessage('uno .uno:QuickFind');
+	}
+
 	/**
 	 * Returns whether the notebookbar is currently shown.
 	 */
