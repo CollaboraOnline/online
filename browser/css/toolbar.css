@@ -116,11 +116,15 @@
 	margin: 0px;
 }
 
+.ui-overflow-group-popup > .top-row-overflow-group {
+	display: flex;
+}
 /* overflow menu */
 .ui-overflow-group-popup {
+	display: flex;
+	flex-direction: column;
 	position: absolute;
 	z-index: 12;
-	display: flex;
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-toolbar-border);
 	align-items: center;
