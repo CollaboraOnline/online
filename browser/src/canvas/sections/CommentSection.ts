@@ -193,14 +193,6 @@ export class Comment extends CanvasSectionObject {
 		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
 		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
 
-		this.sectionProperties.container.onwheel = function(e: WheelEvent) {
-			// Don't scroll the document if mouse is over comment content. Scrolling the comment content is priority.
-			if (!this.sectionProperties.contentNode.matches(':hover')) {
-				e.preventDefault();
-				app.sectionContainer.onMouseWheel(e);
-			}
-		}.bind(this);
-
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
 		}
