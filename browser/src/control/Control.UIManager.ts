@@ -565,11 +565,12 @@ class UIManager extends L.Control {
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 			var showSidebar = this.getBooleanDocTypePref('ShowSidebar', true);
 
-			if (this.getBooleanDocTypePref('PropertyDeck', true)) {
+			if (showSidebar && this.getBooleanDocTypePref('PropertyDeck', true)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
+				this.map.sidebar.setAsInitialized();
 			}
 
-			if (this.map.getDocType() === 'presentation') {
+			if (showSidebar && this.map.getDocType() === 'presentation') {
 				if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:SlideChangeWindow');
@@ -579,7 +580,7 @@ class UIManager extends L.Control {
 					app.socket.sendMessage('uno .uno:CustomAnimation');
 					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
 				}
-			} else if (this.getBooleanDocTypePref('StyleListDeck', false)) {
+			} else if (showSidebar && this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:SidebarDeck.StyleListDeck');
 				this.map.sidebar.setupTargetDeck('.uno:SidebarDeck.StyleListDeck');
