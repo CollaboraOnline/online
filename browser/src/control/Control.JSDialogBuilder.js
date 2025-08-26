@@ -260,6 +260,28 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		}
 	},
 
+	_defaultCallbackHandlerSendMessage: function(objectType, eventType, object, data, builder) {
+		switch (typeof data) {
+		case 'string':
+			// escape backspaces, quotes, newlines, and so on; remove added quotes
+			data = JSON.stringify(data).slice(1, -1);
+			break;
+		case 'object':
+			data = encodeURIComponent(JSON.stringify(data));
+			break;
+		}
+		var windowId = builder && builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
+			(window.mobileDialogId !== undefined ? window.mobileDialogId :
+				(window.sidebarId !== undefined ? window.sidebarId : -1));
+		var message = 'dialogevent ' + windowId
+				+ ' {\"id\":\"' + object.id
+			+ '\", \"cmd\": \"' + eventType
+			+ '\", \"data\": \"' + data
+			+ '\", \"type\": \"' + objectType + '\"}';
+		app.socket.sendMessage(message);
+		window._firstDialogHandled = true;
+	},
+
 	// by default send new state to the core
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
 		if (builder.map.uiManager.isUIBlocked())
@@ -302,25 +324,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				dispatcher.dispatch('closeapp');
 			}
-			switch (typeof data) {
-			case 'string':
-				// escape backspaces, quotes, newlines, and so on; remove added quotes
-				data = JSON.stringify(data).slice(1, -1);
-				break;
-			case 'object':
-				data = encodeURIComponent(JSON.stringify(data));
-				break;
-			}
-			var windowId = builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
-				(window.mobileDialogId !== undefined ? window.mobileDialogId :
-					(window.sidebarId !== undefined ? window.sidebarId : -1));
-			var message = 'dialogevent ' + windowId
-					+ ' {\"id\":\"' + object.id
-				+ '\", \"cmd\": \"' + eventType
-				+ '\", \"data\": \"' + data
-				+ '\", \"type\": \"' + objectType + '\"}';
-			app.socket.sendMessage(message);
-			window._firstDialogHandled = true;
+			this._defaultCallbackHandlerSendMessage(objectType, eventType, object, data, builder);
 		}
 	},
 
