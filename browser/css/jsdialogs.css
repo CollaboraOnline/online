@@ -1640,6 +1640,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: 7px;
 	outline: 1px solid var(--color-background-lighter);
 }
+#context-toolbar .unotoolbutton .selected-color {
+	outline: 1px solid var(--color-border-dark-63);
+}
 
 /* dropdown arrow */
 .unoarrow, .menubutton .arrow {
