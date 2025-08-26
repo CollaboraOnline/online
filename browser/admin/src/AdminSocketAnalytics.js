@@ -13,7 +13,7 @@
  * containing various graphs to show to the user on specified interval
  */
 
-/* global _ d3 Util AdminSocketBase $ Admin */
+/* global _ d3 Util AdminSocketBase Admin */
 var AdminSocketAnalytics = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -530,8 +530,13 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		else if (textMsg.startsWith('sent_activity')) {
 			var data = Util.consumeDataText(textMsg, this._sentStatsData);
 			if (data === undefined) {
-				if ($('#NetVisualisation').html() === '')
-					this._createGraph('net');
+				const netVisEl = document.getElementById('NetVisualisation');
+				if (netVisEl) {
+					if (netVisEl.innerHTML === '')
+						this._createGraph('net');
+				} else {
+					console.warn('Element #NetVisualisation not found');
+				}
 			} else {
 				this._addNewData(this._sentStatsData, parseInt(data), 'sent');
 				this._updateNetGraph();
@@ -540,8 +545,13 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		else if (textMsg.startsWith('recv_activity')) {
 			var data = Util.consumeDataText(textMsg, this._recvStatsData);
 			if (data === undefined) {
-				if ($('#NetVisualisation').html() === '')
-					this._createGraph('net');
+				const netVisEl = document.getElementById('NetVisualisation');
+				if (netVisEl) {
+					if (netVisEl.innerHTML === '')
+						this._createGraph('net');
+				} else {
+					console.warn('Element #NetVisualisation not found');
+				}
 			} else {
 				this._addNewData(this._recvStatsData, parseInt(data), 'recv');
 				this._updateNetGraph();
@@ -550,8 +560,13 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		else if (textMsg.startsWith('connection_activity')) {
 			var data = Util.consumeDataText(textMsg, this._connStatsData);
 			if (data === undefined) {
-				if ($('#NetVisualisation').html() === '')
-					this._createGraph('net');
+				const netVisEl = document.getElementById('NetVisualisation');
+				if (netVisEl) {
+					if (netVisEl.innerHTML === '')
+						this._createGraph('net');
+				} else {
+					console.warn('Element #NetVisualisation not found');
+				}
 			} else {
 				this._addNewData(this._connStatsData, parseInt(data), 'connect');
 				this._updateNetGraph();

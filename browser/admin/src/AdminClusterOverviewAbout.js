@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global AdminSocketBase Admin $ */
+/* global AdminSocketBase Admin */
 
 var AdminClusterOverviewAbout = AdminSocketBase.extend({
     constructor: function(host, routeToken) {
