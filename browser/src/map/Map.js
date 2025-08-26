@@ -307,6 +307,7 @@ L.Map = L.Evented.extend({
 				// Let the first page finish loading then load the sidebar and notebookbar
 				setTimeout(this.uiManager.initializeSidebar.bind(this.uiManager), 200);
 				setTimeout(this.uiManager.initializeNotebookbarInCore.bind(this.uiManager), 200);
+				setTimeout(this.uiManager.initializeQuickFindInCore.bind(this.uiManager), 400);
 			}
 
 			// We have loaded.
