@@ -126,7 +126,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
 		return function(objectType, eventType, object, data) {
-			var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
+			if (typeof data == 'number') var pos = data;
+			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
 			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
