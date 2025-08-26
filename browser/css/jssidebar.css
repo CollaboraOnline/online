@@ -597,7 +597,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* matched count on top */
-#quickfind-dock-wrapper #box .ui-text {
+#quickfind-dock-wrapper #box .ui-text,
+#quickfind-dock-wrapper #quickfind-placeholder.ui-text {
 	grid-row: 1;
 	height: min-content;
 	font-size: var(--default-font-size);
@@ -639,6 +640,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #quickfind-dock-wrapper .ui-treeview.empty {
 	border: none;
+}
+
+#quickfind-dock-wrapper #quickfind-container > [id='0'] {
+	display: grid !important;
+	grid-auto-flow: row !important;
+	grid-template-columns: 1fr;
 }
 
 #navigation-sidebar.visible {
