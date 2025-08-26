@@ -139,4 +139,31 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',8750);
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '655px');
 	});
+
+	it('Click shape hyperlink.', function() {
+		// Insert shape
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		cy.cGet('.ui-toolbar #insertshapes').click();
+		cy.cGet('.col.w2ui-icon.basicshapes_round-quadrat').click();
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+		// Select shape at center of document
+		impressHelper.clickCenterOfSlide( { } );
+
+		helper.typeIntoDocument('{ctrl}k');
+		cy.cGet('#target').should('exist').should('be.visible');
+		cy.cGet('#indication').should('exist').should('not.be.visible');
+		cy.cGet('#name').should('exist').should('not.be.visible');
+
+		cy.cGet('#target-input').type('www.something.com');
+		cy.cGet('#ok').click();
+
+		impressHelper.removeShapeSelection();
+
+		// Ctrl-click to open hyperlink pop-up
+		impressHelper.clickCenterOfSlide( {ctrlKey: true} );
+
+		cy.cGet('#info-modal-label2').should('have.text', 'http://www.something.com/');
+		cy.cGet('#openlink-response').should('exist');
+	});
 });
