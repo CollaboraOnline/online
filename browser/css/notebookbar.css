@@ -58,6 +58,10 @@ label.notebookbar,
 	height: 100%;
 }
 
+.notebookbar#NotebookBar {
+	height: 82px;
+}
+
 button.ui-tab.notebookbar {
 	box-sizing: border-box;
 	height: 24px;
