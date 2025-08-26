@@ -552,9 +552,6 @@ class UIManager extends L.Control {
 			}
 		});
 		this.map.contextToolbar = L.control.ContextToolbar(this.map);
-
-		// do it always as we need it for contextual toolbar
-		if (!window.mode.isMobile()) this.initializeNotebookbarInCore();
 	}
 
 	/**
@@ -1181,6 +1178,9 @@ class UIManager extends L.Control {
 	// Notebookbar helpers
 
 	initializeNotebookbarInCore(): void {
+		// do it always apart of mobile as we need it for contextual toolbar
+		if (window.mode.isMobile()) return;
+
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 	}
 
