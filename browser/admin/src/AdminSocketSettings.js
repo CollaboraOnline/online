@@ -23,22 +23,31 @@ var AdminSocketSettings = AdminSocketBase.extend({
 	_init: function() {
 		var socketSettings = this.socket;
 		$(document).ready(function() {
-			$('#admin_settings').on('submit', function(e) {
-				e.preventDefault();
-				var memStatsSize = $('#mem_stats_size').val();
-				var memStatsInterval = $('#mem_stats_interval').val();
-				var cpuStatsSize = $('#cpu_stats_size').val();
-				var cpuStatsInterval = $('#cpu_stats_interval').val();
-				var command = 'set';
-				command += ' mem_stats_size=' + memStatsSize;
-				command += ' mem_stats_interval=' + memStatsInterval;
-				command += ' cpu_stats_size=' + cpuStatsSize;
-				command += ' cpu_stats_interval=' + cpuStatsInterval;
-				command += ' limit_virt_mem_mb=' + $('#limit_virt_mem_mb').val();
-				command += ' limit_stack_mem_kb=' + $('#limit_stack_mem_kb').val();
-				command += ' limit_file_size_mb=' + $('#limit_file_size_mb').val();
-				socketSettings.send(command);
-			});
+			const adminForm = document.getElementById('admin_settings');
+			if (adminForm) {
+				adminForm.addEventListener('submit', function(e) {
+					e.preventDefault();
+					const memStatsSizeEl = document.getElementById('mem_stats_size');
+					const memStatsIntervalEl = document.getElementById('mem_stats_interval');
+					const cpuStatsSizeEl = document.getElementById('cpu_stats_size');
+					const cpuStatsIntervalEl = document.getElementById('cpu_stats_interval');
+					var memStatsSize = memStatsSizeEl ? memStatsSizeEl.value : '';
+					var memStatsInterval = memStatsIntervalEl ? memStatsIntervalEl.value : '';
+					var cpuStatsSize = cpuStatsSizeEl ? cpuStatsSizeEl.value : '';
+					var cpuStatsInterval = cpuStatsIntervalEl ? cpuStatsIntervalEl.value : '';
+					var command = 'set';
+					command += ' mem_stats_size=' + memStatsSize;
+					command += ' mem_stats_interval=' + memStatsInterval;
+					command += ' cpu_stats_size=' + cpuStatsSize;
+					command += ' cpu_stats_interval=' + cpuStatsInterval;
+					command += ' limit_virt_mem_mb=' + (document.getElementById('limit_virt_mem_mb') ? document.getElementById('limit_virt_mem_mb').value : '');
+					command += ' limit_stack_mem_kb=' + (document.getElementById('limit_stack_mem_kb') ? document.getElementById('limit_stack_mem_kb').value : '');
+					command += ' limit_file_size_mb=' + (document.getElementById('limit_file_size_mb') ? document.getElementById('limit_file_size_mb').value : '');
+					socketSettings.send(command);
+				});
+			} else {
+				console.warn('Element #admin_settings not found');
+			}
 
 			document.getElementById('btnShutdown').onclick = function() {
 				var dialog = (new DlgYesNo())
@@ -50,8 +59,8 @@ var AdminSocketSettings = AdminSocketBase.extend({
 					.yesFunction(function() {
 						socketSettings.send('shutdown maintenance');
 					});
-				dialog.open();
-			};
+					dialog.open();
+				};
 		});
 	},
 
@@ -91,16 +100,28 @@ var AdminSocketSettings = AdminSocketBase.extend({
 			var h = coolwsdVersionObj.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://github.com/CollaboraOnline/online/commits/' + h + '">' + h + '</a>';
-				$('#coolwsd-version').html(coolwsdVersionObj.Version + ' (git hash: ' + h + ')');
+					{
+						const el = document.getElementById('coolwsd-version');
+						if (el) el.innerHTML = coolwsdVersionObj.Version + ' (git hash: ' + h + ')';
+						else console.warn('Element #coolwsd-version not found');
+					}
 			}
 			else {
-				$('#coolwsd-version').text(coolwsdVersionObj.Version);
+					{
+						const el = document.getElementById('coolwsd-version');
+						if (el) el.textContent = coolwsdVersionObj.Version;
+						else console.warn('Element #coolwsd-version not found');
+					}
 			}
 			let buildConfig = coolwsdVersionObj.BuildConfig;
 			if (coolwsdVersionObj.PocoVersion !== undefined) {
 				buildConfig += ' (poco version: ' + coolwsdVersionObj.PocoVersion + ')';
 			}
-			$('#coolwsd-buildconfig').html(buildConfig);
+				{
+					const el = document.getElementById('coolwsd-buildconfig');
+					if (el) el.innerHTML = buildConfig;
+					else console.warn('Element #coolwsd-buildconfig not found');
+				}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
@@ -108,10 +129,18 @@ var AdminSocketSettings = AdminSocketBase.extend({
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://git.libreoffice.org/core/+log/' + lokitVersionObj.BuildId + '/">' + h + '</a>';
 			}
-			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
-			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
-			                         ' (git hash: ' + h + ')');
-			$('#lokit-buildconfig').html(lokitVersionObj.BuildConfig);
+			{
+				const el = document.getElementById('lokit-version');
+				if (el) el.innerHTML = lokitVersionObj.ProductName + ' ' +
+				                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
+				                         ' (git hash: ' + h + ')';
+				else console.warn('Element #lokit-version not found');
+			}
+			{
+				const el2 = document.getElementById('lokit-buildconfig');
+				if (el2) el2.innerHTML = lokitVersionObj.BuildConfig;
+				else console.warn('Element #lokit-buildconfig not found');
+			}
 		}
 	},
 
