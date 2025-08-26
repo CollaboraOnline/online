@@ -3203,7 +3203,14 @@ int pollCallback(void* data, int timeoutUs)
 // Do we have any pending input events from coolwsd ?
 bool anyInputCallback(void* data, int mostUrgentPriority)
 {
-    auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
+    if (!data)
+        return false;
+
+    return reinterpret_cast<KitSocketPoll*>(data)->kitHasAnyInput(mostUrgentPriority);
+}
+
+bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
+#if !MOBILEAPP
     const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
 
     if (document)
@@ -3239,16 +3246,24 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
     }
 
     return false;
+#else
+    // FIXME - should return true only if there is any input in any of the Kits
+    return true;
+#endif
 }
 
 /// Called by LOK main-loop
 void wakeCallback(void* data)
 {
-#if !MOBILEAPP
     if (!data)
         return;
-    else
-        return reinterpret_cast<KitSocketPoll*>(data)->wakeup();
+
+    return reinterpret_cast<KitSocketPoll*>(data)->kitWakeup();
+}
+
+void KitSocketPoll::kitWakeup() {
+#if !MOBILEAPP
+    wakeup();
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     if (KitSocketPoll::KSPolls.empty())
@@ -3265,6 +3280,28 @@ void wakeCallback(void* data)
     for (const auto &p : v)
         p->wakeup();
 #endif
+}
+
+/**
+ * Register the "any input", "poll" and "wake up" callbacks in LibreOfficeKit and start the LOKit's main loop.
+ *
+ * The LOKit main loop will use/call these callbacks inside VCL's Yield(), see SvpSalInstance::ImplYield().
+ */
+void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>& loKit) {
+    if (!LIBREOFFICEKIT_HAS(kit, runLoop))
+    {
+        LOG_FTL("Kit is missing Unipoll API");
+        std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
+        Util::forcedExit(EX_SOFTWARE);
+    }
+
+    loKit->registerAnyInputCallback(anyInputCallback, loKit.get());
+
+    LOG_INF("Kit unipoll loop run");
+
+    loKit->runLoop(pollCallback, wakeCallback, loKit.get());
+
+    LOG_INF("Kit unipoll loop run terminated.");
 }
 
 #ifndef BUILDING_TESTS
@@ -3953,6 +3990,9 @@ void lokit_main(
         setupKitEnvironment(userInterface);
 #endif
 
+        auto mainKit = KitSocketPoll::create();
+        mainKit->runOnClientThread(); // We will do the polling on this thread.
+
 #if (defined(__linux__) && !defined(__ANDROID__) && !defined(QTAPP)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
@@ -3977,9 +4017,6 @@ void lokit_main(
         const std::string jailId = "jailid";
 
 #endif // MOBILEAPP
-
-        auto mainKit = KitSocketPoll::create();
-        mainKit->runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<KitWebSocketHandler> websocketHandler =
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit, numericIdentifier);
@@ -4032,20 +4069,7 @@ void lokit_main(
 #endif
 
 #if !MOBILEAPP
-        if (!LIBREOFFICEKIT_HAS(kit, runLoop))
-        {
-            LOG_FTL("Kit is missing Unipoll API");
-            std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
-            Util::forcedExit(EX_SOFTWARE);
-        }
-
-        loKit->registerAnyInputCallback(anyInputCallback, mainKit.get());
-
-        LOG_INF("Kit unipoll loop run");
-
-        loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
-
-        LOG_INF("Kit unipoll loop run terminated.");
+        startMainLoop(kit, mainKit.get());
 
         // Trap the signal handler, if invoked,
         // to prevent exiting.
@@ -4080,16 +4104,6 @@ void lokit_main(
 
 #if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
 
-/**
- * Callback that tells LO's Yield if it should go ahead and handle the LOKit's poll.
- * FIXME: This is a temporary implementation that always assumes there are events; we should do better.
- */
-bool alwaysHasEventsCallback(void* data, int mostUrgentPriority)
-{
-    // FIXME - return true only if there is any input in any of the Kits
-    return true;
-}
-
 // with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
 // lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
 // and runLoop in the same thread.
@@ -4119,11 +4133,7 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
 
                 std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
 
-                loKit->registerAnyInputCallback(alwaysHasEventsCallback, nullptr);
-                LOG_INF("Kit unipoll loop run");
-
-                int dummy;
-                loKit->runLoop(pollCallback, wakeCallback, &dummy);
+                startMainLoop(kit, loKit);
 
                 // Should never return
                 std::abort();

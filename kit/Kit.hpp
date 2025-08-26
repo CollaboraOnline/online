@@ -171,7 +171,16 @@ public:
         ~ReEntrancyGuard() { _count--; }
     };
 #endif
+
+    /// Handle the poll from the unipoll callback.
     int kitPoll(int timeoutMicroS);
+
+    /// Handle the wake up from the unipoll callback.
+    void kitWakeup();
+
+    /// Handle the 'has any input?' unipoll callback.
+    bool kitHasAnyInput(int mostUrgentPriority);
+
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
     const std::shared_ptr<Document>& getDocument() const { return _document; }
 
