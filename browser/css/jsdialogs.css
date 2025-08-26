@@ -348,6 +348,15 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	/* same height as .hasnotebookbar > #toolbar-row */
 	height: 82px;
 }
+
+/* ATTENTION the following declaration is targetting containers and childreen
+ that have .horizontal.notebookbar. Ideally we would instead use:
+.ui-overflow-manager > .horizontal.notebookbar so,
+ buttons inside of grid are still center aligned but the sub container would be
+algned to the bottom */
+.ui-overflow-manager .horizontal.notebookbar {
+	align-items: end;
+}
 .ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
 	height: 49px !important;
