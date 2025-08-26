@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-07-23 00:05+0000\n"
+"PO-Revision-Date: 2025-08-25 11:46+0000\n"
 "Last-Translator: Ion Silvestru <ion.silvestru@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ro/>\n"
-"Language: \n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -372,27 +372,24 @@ msgid "Accessibility"
 msgstr "Accesibilitate"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
-#, fuzzy
 msgid "Dark mode"
-msgstr "Mod închis"
+msgstr "Mod întunecat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
 msgid "Compact layout"
-msgstr ""
+msgstr "Aspect compact"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
-#, fuzzy
 msgid "Show status bar"
 msgstr "Bara de stare"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show ruler"
 msgstr "Rigla"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Verificator de accesibilitate"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -401,22 +398,21 @@ msgstr "Navigator"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Bara laterală"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Custom Animation"
-msgstr ""
+msgstr "Animație personalizată"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Master Pages"
-msgstr ""
+msgstr "Pagini principale"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Slide Transition"
-msgstr ""
+msgstr "Tranziție diapozitive"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
-#, fuzzy
 msgid "Style List"
 msgstr "Lista de stiluri"
 
@@ -699,10 +695,12 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Sistemul ajustează în prezent resursele. Vă rugăm să așteptați un moment în "
+"timp ce reîncercăm solicitarea dvs...."
 
 #: js/global.js:1583
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "Documentul este migrat pe un server nou. Se va reîncerca în curând..."
 
 #: js/global.js:1585
 msgid "Failed to get RouteToken from controller"
@@ -777,7 +775,7 @@ msgstr "Deschide la vedere completă"
 
 #: src/canvas/sections/CommentListSection.ts:1219
 msgid "Show in navigator"
-msgstr ""
+msgstr "Afișare în navigator"
 
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/control/Control.JSDialogBuilder.js:1911
@@ -830,7 +828,7 @@ msgstr "Deschide meniul"
 
 #: src/canvas/sections/CommentSection.ts:341
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Apăsați Ctrl + Enter pentru a posta"
 
 #: src/canvas/sections/CommentSection.ts:405
 #: src/canvas/sections/CommentSection.ts:406
@@ -2198,31 +2196,31 @@ msgstr "Contur"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Rezultate"
 
 #: src/control/Control.NavigatorPanel.ts:378
 msgid "Search..."
-msgstr ""
+msgstr "Căutare..."
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Tranziţie"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Variantă"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Durată"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
-msgstr ""
+msgstr "La clic de mouse"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "După"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2290,9 +2288,8 @@ msgid "Page Layout"
 msgstr "Aspect pagină"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formulă"
+msgstr "Formule"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2391,7 +2388,7 @@ msgstr "Redenumire"
 #: src/control/Control.NotebookbarImpress.js:708
 #: src/control/Control.NotebookbarWriter.js:583
 msgid "Clipboard"
-msgstr ""
+msgstr "Clipboard"
 
 #: src/control/Control.NotebookbarCalc.js:456
 #: src/control/Control.NotebookbarDraw.js:654
@@ -2402,11 +2399,11 @@ msgstr "Font"
 #: src/control/Control.NotebookbarCalc.js:603
 #: src/control/Control.NotebookbarDraw.js:795
 msgid "Alignment"
-msgstr ""
+msgstr "Aliniere"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
-msgstr ""
+msgstr "Îmbinare și centrare"
 
 #: src/control/Control.NotebookbarCalc.js:740
 #: src/control/Control.NotebookbarCalc.js:756
@@ -2458,7 +2455,7 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Celule"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:1620
@@ -2487,7 +2484,7 @@ msgstr "Rău"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Editare"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -2499,18 +2496,18 @@ msgstr "Înlocuire"
 #: src/control/Control.NotebookbarCalc.js:1087
 #: src/control/Control.NotebookbarWriter.js:1815
 msgid "Margin"
-msgstr ""
+msgstr "Margine"
 
 #: src/control/Control.NotebookbarCalc.js:1093
 #: src/control/Control.NotebookbarWriter.js:1822
 msgid "Size"
-msgstr ""
+msgstr "Dimensiune"
 
 #: src/control/Control.NotebookbarCalc.js:1125
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Grilă"
 
 #: src/control/Control.NotebookbarCalc.js:1154
 msgid "Row Height"
@@ -2555,7 +2552,7 @@ msgstr "Eliminare coloane"
 #: src/control/Control.NotebookbarWriter.js:3258
 #: src/control/Control.NotebookbarWriter.js:3581
 msgid "Align"
-msgstr ""
+msgstr "Aliniere"
 
 #: src/control/Control.NotebookbarCalc.js:1315
 #: src/control/Control.NotebookbarCalc.js:2868
@@ -2568,18 +2565,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3317
 #: src/control/Control.NotebookbarWriter.js:3640
 msgid "Arrange"
-msgstr ""
+msgstr "Aranjare"
 
 #: src/control/Control.NotebookbarCalc.js:1377
 msgid "Freeze"
-msgstr ""
+msgstr "Îngheţare"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Scalare"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2611,15 +2608,15 @@ msgstr "Bara de stare"
 #: src/control/Control.NotebookbarWriter.js:3366
 #: src/control/Control.NotebookbarWriter.js:3689
 msgid "Group"
-msgstr ""
+msgstr "Grupare"
 
 #: src/control/Control.NotebookbarCalc.js:1580
 msgid "Ungroup"
-msgstr ""
+msgstr "Degrupare"
 
 #: src/control/Control.NotebookbarCalc.js:1602
 msgid "Pivot Table"
-msgstr ""
+msgstr "Tabel Pivot"
 
 #: src/control/Control.NotebookbarCalc.js:1651
 #: src/control/Control.NotebookbarDraw.js:996
@@ -2629,7 +2626,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:951
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Ilustrații"
 
 #: src/control/Control.NotebookbarCalc.js:1721
 #: src/control/Control.NotebookbarDraw.js:1010
@@ -2649,63 +2646,61 @@ msgstr "Asistent"
 
 #: src/control/Control.NotebookbarCalc.js:1937
 msgid "Insert Function"
-msgstr ""
+msgstr "Funcție de inserare"
 
 #: src/control/Control.NotebookbarCalc.js:1945
-#, fuzzy
 msgid "Function Library"
-msgstr "Expertul de funcții"
+msgstr "Biblioteca de funcții"
 
 #: src/control/Control.NotebookbarCalc.js:1959
 msgid "AutoSum"
-msgstr ""
+msgstr "AutoSum"
 
 #: src/control/Control.NotebookbarCalc.js:1972
 msgid "Financial"
-msgstr ""
+msgstr "Financiar"
 
 #: src/control/Control.NotebookbarCalc.js:1990
 msgid "Logical"
-msgstr ""
+msgstr "Logică"
 
 #: src/control/Control.NotebookbarCalc.js:2020
 msgid "Date & Time"
-msgstr ""
+msgstr "Dată și oră"
 
 #: src/control/Control.NotebookbarCalc.js:2032
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Căutare și referință"
 
 #: src/control/Control.NotebookbarCalc.js:2050
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matematică și trigonometrie"
 
 #: src/control/Control.NotebookbarCalc.js:2062
 msgid "More Functions"
-msgstr ""
+msgstr "Mai multe funcții"
 
 #: src/control/Control.NotebookbarCalc.js:2107
 msgid "Range"
-msgstr ""
+msgstr "Diapazon"
 
 #: src/control/Control.NotebookbarCalc.js:2190
 msgid "Sort"
-msgstr ""
+msgstr "Sortare"
 
 #: src/control/Control.NotebookbarCalc.js:2236
 msgid "Filter"
-msgstr ""
+msgstr "Filtrare"
 
 #: src/control/Control.NotebookbarCalc.js:2483
 #: src/control/Control.NotebookbarImpress.js:1900
 #: src/control/Control.NotebookbarWriter.js:2524
-#, fuzzy
 msgid "Comments"
-msgstr "Comentariu"
+msgstr "Comentarii"
 
 #: src/control/Control.NotebookbarCalc.js:2588
 msgid "Format Cells"
-msgstr ""
+msgstr "Formatare celule"
 
 #: src/control/Control.NotebookbarCalc.js:2734
 #: src/control/Control.NotebookbarCalc.js:3091
@@ -2713,13 +2708,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3203
 #: src/control/Control.NotebookbarWriter.js:3526
 msgid "Wrap"
-msgstr ""
+msgstr "Scindare"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarImpress.js:2619
 #: src/control/Control.NotebookbarWriter.js:3412
 msgid "Image Controls"
-msgstr ""
+msgstr "Controale imagine"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2751,24 +2746,23 @@ msgstr "Riglă"
 #: src/control/Control.NotebookbarWriter.js:787
 #: src/control/Control.NotebookbarWriter.js:2969
 msgid "Paragraph"
-msgstr ""
+msgstr "Paragraf"
 
 #: src/control/Control.NotebookbarDraw.js:1207
 #: src/control/Control.NotebookbarDraw.js:1407
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Pagină"
 
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1603
 #: src/control/Control.NotebookbarWriter.js:2391
-#, fuzzy
 msgid "Field"
-msgstr "Câmpuri"
+msgstr "Câmp"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Design"
-msgstr ""
+msgstr "Schiță"
 
 #: src/control/Control.NotebookbarImpress.js:110
 msgid "Slide Show"
@@ -2792,7 +2786,7 @@ msgstr "Presentare în fereastră"
 
 #: src/control/Control.NotebookbarImpress.js:605
 msgid "Slide Views"
-msgstr ""
+msgstr "Vizualizare diapozitive"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Show Grid"
@@ -2804,7 +2798,7 @@ msgstr "Aliniere la grilă"
 
 #: src/control/Control.NotebookbarImpress.js:769
 msgid "Slide Layout"
-msgstr ""
+msgstr "Aspect diapozitive"
 
 #: src/control/Control.NotebookbarImpress.js:780
 msgid "New"
@@ -2820,11 +2814,11 @@ msgstr "Resetare aspect"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "Character"
-msgstr ""
+msgstr "Caracter"
 
 #: src/control/Control.NotebookbarImpress.js:1074
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Spațiu și culoare"
 
 #: src/control/Control.NotebookbarImpress.js:1772
 msgid "Slide Size"
@@ -2832,20 +2826,20 @@ msgstr "Dimensiune diapozitiv"
 
 #: src/control/Control.NotebookbarImpress.js:1795
 msgid "Background Image"
-msgstr ""
+msgstr "Imagine fundal"
 
 #: src/control/Control.NotebookbarImpress.js:2004
 msgid "Merge & Split"
-msgstr ""
+msgstr "Îmbinare și divizare"
 
 #: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:2919
 msgid "Select"
-msgstr ""
+msgstr "Selectare"
 
 #: src/control/Control.NotebookbarImpress.js:2652
 msgid "Effects"
-msgstr ""
+msgstr "Efecte"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2869,19 +2863,19 @@ msgstr "Derulare în jos"
 
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Liste/Marcatori"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
-msgstr ""
+msgstr "Antet și subsol"
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Secțiune"
 
 #: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
-msgstr ""
+msgstr "Simboluri"
 
 #: src/control/Control.NotebookbarWriter.js:1602
 msgid "Rich Text"
@@ -2897,23 +2891,23 @@ msgstr "Dropdown"
 
 #: src/control/Control.NotebookbarWriter.js:2180
 msgid "Table of content"
-msgstr ""
+msgstr "Cuprins"
 
 #: src/control/Control.NotebookbarWriter.js:2226
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Notă de subsol/Notă de sfârșit"
 
 #: src/control/Control.NotebookbarWriter.js:2599
 msgid "Tracking"
-msgstr ""
+msgstr "Urmărire"
 
 #: src/control/Control.NotebookbarWriter.js:2857
 msgid "Split"
-msgstr ""
+msgstr "Divizare"
 
 #: src/control/Control.NotebookbarWriter.js:3041
 msgid "Number Format"
-msgstr ""
+msgstr "Format număr"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
@@ -3502,11 +3496,11 @@ msgstr "Normal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr ""
+msgstr "Lat"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr ""
+msgstr "Îngust"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Min"
@@ -3518,11 +3512,11 @@ msgstr "Max"
 
 #: src/control/jsdialog/Definitions.Menu.ts:816
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Editare sparkline"
 
 #: src/control/jsdialog/Definitions.Menu.ts:827
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Elimnare sparkline"
 
 #: src/control/jsdialog/Definitions.Menu.ts:863
 msgid "Portrait"
@@ -3534,123 +3528,123 @@ msgstr "Peisaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:875
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:876
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:877
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:878
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:879
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:880
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:881
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:882
 msgid "Letter"
-msgstr ""
+msgstr "Scrisoare"
 
 #: src/control/jsdialog/Definitions.Menu.ts:883
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:884
 msgid "Long Bond"
-msgstr ""
+msgstr "Long Bond"
 
 #: src/control/jsdialog/Definitions.Menu.ts:885
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:886
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:887
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:888
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:889
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:890
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:891
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:892
 msgid "User"
-msgstr ""
+msgstr "Utilizator"
 
 #: src/control/jsdialog/Definitions.Menu.ts:893
 msgid "DL Envelope"
-msgstr ""
+msgstr "Plic DL"
 
 #: src/control/jsdialog/Definitions.Menu.ts:894
 msgid "C6 Envelope"
-msgstr ""
+msgstr "Plic C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:895
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "Plic C6/5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:896
 msgid "C5 Envelope"
-msgstr ""
+msgstr "Plic C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:897
 msgid "C4 Envelope"
-msgstr ""
+msgstr "Plic C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:900
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "Plic #6¾"
 
 #: src/control/jsdialog/Definitions.Menu.ts:905
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "Plic #7¾ (Monarch)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:908
 msgid "#9 Envelope"
-msgstr ""
+msgstr "Plic #9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:909
 msgid "#10 Envelope"
-msgstr ""
+msgstr "Plic #10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:910
 msgid "#11 Envelope"
-msgstr ""
+msgstr "Plic #11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:911
 msgid "#12 Envelope"
-msgstr ""
+msgstr "Plic #12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:914
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Carte poștală japoneză"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1086
 msgid "Insert Local Image"
@@ -3686,103 +3680,103 @@ msgstr "Acest utilizator"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1235
 msgid "No Borders"
-msgstr ""
+msgstr "Fără chenar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1241
 msgid "Left Border"
-msgstr ""
+msgstr "Chenar stânga"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1247
 msgid "Right Border"
-msgstr ""
+msgstr "Chenar dreapta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Chenare stânga și dreapta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
-msgstr ""
+msgstr "Chenar de sus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1265
 msgid "Bottom Border"
-msgstr ""
+msgstr "Chenar de jos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1271
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Chenar de sus și de jos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1277
 msgid "Outer Border"
-msgstr ""
+msgstr "Chenar exterior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1283
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Toate liniile orizontale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1289
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Bordură exterioară și linii orizontale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1295
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Bordură exterioară și linii verticale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1301
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Borduri exterioare și toate liniile interioare"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1306
 msgid "Line color"
-msgstr ""
+msgstr "Culoare linie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
 msgid "Line style"
-msgstr ""
+msgstr "Stil linie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Fir de păr (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1329
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Foarte subțire (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1338
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Subțire (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1347
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Mediu (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1356
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Gros (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1365
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Foarte gros (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1374
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Fir de păr dublu (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1383
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Fir de păr dublu (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1392
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Subțire/Mediu (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1401
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Mediu/Fir de păr (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1410
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Mediu/Mediu (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1470
 msgid "Standard (4:3)"
@@ -3858,15 +3852,15 @@ msgstr "Titlu, Text vertical, Clipart"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1625
 msgid "Grayscale"
-msgstr ""
+msgstr "Tonuri de gri"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1630
 msgid "Black/White"
-msgstr ""
+msgstr "Negru/Alb"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1635
 msgid "Watermark"
-msgstr ""
+msgstr "Filigran"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3891,23 +3885,23 @@ msgstr "Recent"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Top: {top}"
-msgstr ""
+msgstr "Sus: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Left: {left}"
-msgstr ""
+msgstr "Stânga: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:112
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Jos: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:117
 msgid "Right: {right}"
-msgstr ""
+msgstr "Dreapta: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Margini personalizate…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
@@ -3925,6 +3919,8 @@ msgstr "Mod editare"
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
 msgstr ""
+"Număr de pagini. Faceți clic pentru a deschide caseta de dialog Salt la "
+"pagină."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -4750,16 +4746,16 @@ msgstr "Faceți clic pentru a ieși din prezentare..."
 
 #: src/slideshow/SlideShowPresenter.ts:560
 msgid "End Show"
-msgstr ""
+msgstr "Încheiere prezentare"
 
 #: src/slideshow/SlideShowPresenter.ts:588
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Disable Animations"
-msgstr ""
+msgstr "Dezactivare animații"
 
 #: src/slideshow/SlideShowPresenter.ts:598
 msgid "Enable Animations"
-msgstr ""
+msgstr "Activare animații"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
