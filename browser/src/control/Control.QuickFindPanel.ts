@@ -33,13 +33,68 @@ class QuickFindPanel extends SidebarBase {
 		this.map.off('quickfind', this.onQuickFind, this);
 	}
 
+	onJSUpdate(e: FireEvent): void {
+		var data = e.data;
+
+		if (data.jsontype !== this.type) return;
+		if (!this.container) return;
+		if (!this.builder) return;
+
+		if (data.control.id === 'addonimage') {
+			window.app.console.log('Ignored update for control: ' + data.control.id);
+			return;
+		}
+
+		const placeholder = document.getElementById('quickfind-placeholder');
+
+		if (data.control.id === 'numberofsearchfinds') {
+			const resultsText = data.control.text.trim().length > 0;
+			if (placeholder) placeholder.classList.toggle('hidden', resultsText);
+		} else if (
+			data.control.id === 'searchfinds' &&
+			data.control.type === 'treelistbox'
+		) {
+			const isEmpty = data.control.entries.length === 0;
+			if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
+		}
+
+		this.builder.updateWidget(this.container, data.control);
+	}
+
+	addPlaceholderIfEmpty(quickFindData: any): any {
+		const hasEntries =
+			quickFindData.children &&
+			quickFindData.children.some(
+				(child: any) =>
+					child.type === 'treelistbox' &&
+					child.entries &&
+					child.entries.length > 0,
+			);
+
+		if (!hasEntries) {
+			const modifiedData = JSON.parse(JSON.stringify(quickFindData));
+
+			modifiedData.children.unshift({
+				id: 'quickfind-placeholder',
+				type: 'fixedtext',
+				text: _('Type in the search box to find anything in your document'),
+				visible: true,
+			});
+
+			return modifiedData;
+		}
+
+		return quickFindData;
+	}
+
 	onQuickFind(data: any) {
 		const quickFindData = data.data;
 
 		if (this.container) this.container.innerHTML = '';
 		else console.error('QuickFind: no container');
 
-		this.builder.build(this.container, [quickFindData], false);
+		const modifiedData = this.addPlaceholderIfEmpty(quickFindData);
+		this.builder.build(this.container, [modifiedData], false);
 
 		app.showQuickFind = true;
 		// this will update the indentation marks for elements like ruler
