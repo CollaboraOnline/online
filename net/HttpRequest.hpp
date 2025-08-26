@@ -809,6 +809,54 @@ private:
     IoReadFunc _bodyReaderCb;
 };
 
+class MultipartDataParser final
+{
+    STATE_ENUM(State, FirstPart, NextPart, LastPart);
+
+    static constexpr std::size_t MaxLineLength = 512;
+
+public:
+    MultipartDataParser(const std::string& boundary)
+        : _delimiter("\r\n--" + boundary)
+        , _dashBoundary(&_delimiter[2], _delimiter.size() - 2) // Skip CRLF
+        , _boundary(&_delimiter[4], _delimiter.size() - 4) // Skip CRLF--
+        , _state(State::FirstPart)
+    {
+    }
+
+    /// Returns the boundary used for this multipart-data.
+    std::string_view boundary() const { return _boundary; }
+
+    /// True after calling readPart iff we read the last part.
+    /// Calling readPart when this is true is undefined.
+    bool isLast() const { return _state == State::LastPart; }
+
+    /// Read the current part and return the payload and header.
+    /// Returns an empty string if there is not enough data, or we're at the last part.
+    int64_t readPart(std::string_view data, Header& header, std::string_view& body);
+
+private:
+    /// Finds the given delimiter (which can be _dashBoundary or _delimiter).
+    /// Returns a triad with the following values: {the offset to the start of the marker,
+    /// the offset to the end of the marker, true if last boundary}.
+    /// The first value is -1 when there is not enough data.
+    /// The second value is 0, if no end is found, -1 for invalid data.
+    std::tuple<int64_t, int64_t, bool> findBoundary(const std::string_view data,
+                                                    const std::string_view delimiter, int64_t off);
+
+    /// Finds and parses the next part.
+    int64_t parsePart(std::string_view data, Header& header, std::string_view& body);
+
+    /// The delimiter is CRLF--boundary.
+    const std::string _delimiter;
+    /// The dash-boundary is --boundary.
+    const std::string_view _dashBoundary;
+    /// The boundary name as provided by the 'Content-Type:' header.
+    const std::string_view _boundary;
+    /// The state of the parser.
+    State _state;
+};
+
 /// A server-side HTTP Request parser for incoming request.
 class RequestParser final : public RequestCommon
 {

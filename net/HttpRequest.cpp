@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "HttpRequest.hpp"
 
@@ -25,6 +25,7 @@
 #include <netdb.h>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <sys/types.h>
 #include <utility>
 
@@ -74,6 +75,11 @@ static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
     }
 
     return len;
+}
+
+static inline int64_t findLineBreak(const std::string_view data, int64_t off)
+{
+    return findLineBreak(data.data(), off, data.size());
 }
 
 /// Finds the double CRLF that signifies the end
@@ -382,6 +388,108 @@ bool Request::writeData(Buffer& out, std::size_t capacity)
 #endif //DEBUG_HTTP
 
     return true;
+}
+
+std::tuple<int64_t, int64_t, bool>
+MultipartDataParser::findBoundary(const std::string_view data, const std::string_view delimiter,
+                                  int64_t off)
+{
+    // Per RFC 2046, 5.1.1.  Common Syntax, we can have a preamble
+    // between the header and the first boundary marker. So we
+    // can and should skip anything until we hit a boundary.
+
+    //  multipart-body := [preamble CRLF]
+    //                    dash-boundary transport-padding CRLF
+    //                    body-part *encapsulation
+    //                    close-delimiter transport-padding
+    //                    [CRLF epilogue]
+
+    // Find the delimiter.
+    const std::size_t pos = data.find(delimiter, off);
+    if (pos == std::string::npos)
+    {
+        return { -1, -1, false }; // Not enough data.
+    }
+
+    // Expect at least 2 bytes after the delimiter, either CRLF
+    // or '--' to signal last part.
+    if (data.size() < pos + delimiter.size() + 2)
+    {
+        return { pos, 0, false }; // Incomplete.
+    }
+
+    //  close-delimiter := delimiter "--"
+    const bool last =
+        data[pos + delimiter.size()] == '-' && data[pos + delimiter.size() + 1] == '-';
+
+    // Find the CRLF ending the boundary.
+    off = findLineBreak(data, pos + delimiter.size());
+    if (static_cast<std::size_t>(off) == data.size())
+    {
+        // If it's too long, fail with -1. Otherwise, 0 for incomplete.
+        off = data.size() - pos - delimiter.size() > MaxLineLength ? -1 : 0;
+    }
+
+    return { pos, off, last };
+}
+
+int64_t MultipartDataParser::parsePart(std::string_view data, Header& header,
+                                       std::string_view& body)
+{
+    if (isLast())
+    {
+        return data.size(); // Consume everything, since it's epilogue.
+    }
+
+    // The very first boundary could be at the very start of the body.
+    // In that case, there will not be CRLF, because there is no preamble.
+    // However, if that's not the case, there must be CRLF, so we search for that.
+    const std::string_view delimiter =
+        (_state == State::FirstPart && data.starts_with(_dashBoundary)) ? _dashBoundary
+                                                                        : _delimiter;
+    auto [start, end, last] = findBoundary(data, delimiter, 0);
+    if (start < 0 || (!last && end == 0))
+    {
+        return 0; // Incomplete.
+    }
+
+    if (end < 0)
+    {
+        return -1; // Invalid.
+    }
+
+    ++end; // Skip the last char ('\n').
+
+    // Find the *next* boundary, or closing one.
+    auto [nextStart, nextEnd, nextLast] = findBoundary(data, _delimiter, end);
+    if (nextStart < 0 || (!last && nextEnd == 0))
+    {
+        return 0; // Incomplete.
+    }
+
+    if (nextEnd < 0)
+    {
+        return -1; // Invalid.
+    }
+
+    _state = nextLast ? State::LastPart : State::NextPart;
+    data = data.substr(end); // Skip the boundary.
+
+    int64_t off = header.parse(data.data(), data.size());
+    if (off <= 0)
+    {
+        return off; // Not enough or invalid data.
+    }
+
+    // The body is everything from the end of the header to
+    // the beginning of the next boundary.
+    body = std::string_view(data.data() + off, nextStart - end - off);
+    return nextStart;
+}
+
+int64_t MultipartDataParser::readPart(std::string_view data, Header& header, std::string_view& body)
+{
+    return parsePart(data, header, body);
 }
 
 int64_t RequestParser::readData(const char* p, const int64_t len)
