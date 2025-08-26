@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-20 07:51+0000\n"
+"PO-Revision-Date: 2025-08-26 00:40+0000\n"
 "Last-Translator: Pavol Hodas <teachquiz1@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sk/>\n"
-"Language: \n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -369,27 +369,24 @@ msgid "Accessibility"
 msgstr "Prístupnosť"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
-#, fuzzy
 msgid "Dark mode"
 msgstr "Tmavý režim"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
 msgid "Compact layout"
-msgstr ""
+msgstr "Kompaktné rozloženie"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
-#, fuzzy
 msgid "Show status bar"
 msgstr "Zobrazovať stavový riadok"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show ruler"
 msgstr "Zobraziť pravítko"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Kontrola prístupnosti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -398,22 +395,21 @@ msgstr "Navigátor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Zobraziť postrannú lištu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Custom Animation"
-msgstr ""
+msgstr "Vlastná animácia"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Master Pages"
-msgstr ""
+msgstr "Predlohy strán"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Slide Transition"
-msgstr ""
+msgstr "Prechody medzi snímkami"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
-#, fuzzy
 msgid "Style List"
 msgstr "Zoznam štýlov"
 
@@ -687,10 +683,12 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Systém momentálne upravuje zdroje. Počkajte prosím chvíľu, kým sa pokus "
+"zopakuje…"
 
 #: js/global.js:1583
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "Dokument sa presúva na nový server. O chvíľu sa vykoná opakovaný pokus…"
 
 #: js/global.js:1585
 msgid "Failed to get RouteToken from controller"
@@ -763,7 +761,7 @@ msgstr "Otvoriť v plnom zobrazení"
 
 #: src/canvas/sections/CommentListSection.ts:1219
 msgid "Show in navigator"
-msgstr ""
+msgstr "Zobraziť v navigátore"
 
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/control/Control.JSDialogBuilder.js:1911
@@ -815,7 +813,7 @@ msgstr "Otvoriť menu"
 
 #: src/canvas/sections/CommentSection.ts:341
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Stlačte Ctrl + Enter na odoslanie"
 
 #: src/canvas/sections/CommentSection.ts:405
 #: src/canvas/sections/CommentSection.ts:406
@@ -2184,31 +2182,31 @@ msgstr "Osnova"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Výsledky"
 
 #: src/control/Control.NavigatorPanel.ts:378
 msgid "Search..."
-msgstr ""
+msgstr "Vyhľadať..."
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Prechod"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Variant"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Doba trvania"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
-msgstr ""
+msgstr "Pri kliknutí myšou"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Po"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2276,9 +2274,8 @@ msgid "Page Layout"
 msgstr "Rozloženie Strany"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Vzorec"
+msgstr "Vzorce"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2377,7 +2374,7 @@ msgstr "Premenovať"
 #: src/control/Control.NotebookbarImpress.js:708
 #: src/control/Control.NotebookbarWriter.js:583
 msgid "Clipboard"
-msgstr ""
+msgstr "Schránka"
 
 #: src/control/Control.NotebookbarCalc.js:456
 #: src/control/Control.NotebookbarDraw.js:654
@@ -2388,11 +2385,11 @@ msgstr "Písmo"
 #: src/control/Control.NotebookbarCalc.js:603
 #: src/control/Control.NotebookbarDraw.js:795
 msgid "Alignment"
-msgstr ""
+msgstr "Zarovnanie"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
-msgstr ""
+msgstr "Zlúčiť a zarovnať na stred"
 
 #: src/control/Control.NotebookbarCalc.js:740
 #: src/control/Control.NotebookbarCalc.js:756
@@ -2444,7 +2441,7 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Bunky"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:1620
@@ -2473,7 +2470,7 @@ msgstr "Zlé"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Úprava"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -2496,7 +2493,7 @@ msgstr "Veľkosť"
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Mriežka"
 
 #: src/control/Control.NotebookbarCalc.js:1154
 msgid "Row Height"
@@ -2541,7 +2538,7 @@ msgstr "Odstrániť stĺpce"
 #: src/control/Control.NotebookbarWriter.js:3258
 #: src/control/Control.NotebookbarWriter.js:3581
 msgid "Align"
-msgstr ""
+msgstr "Zarovnať"
 
 #: src/control/Control.NotebookbarCalc.js:1315
 #: src/control/Control.NotebookbarCalc.js:2868
@@ -2554,18 +2551,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3317
 #: src/control/Control.NotebookbarWriter.js:3640
 msgid "Arrange"
-msgstr ""
+msgstr "Usporiadať"
 
 #: src/control/Control.NotebookbarCalc.js:1377
 msgid "Freeze"
-msgstr ""
+msgstr "Ukotviť"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Priblížiť"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2605,7 +2602,7 @@ msgstr "Zrušiť zoskupenie"
 
 #: src/control/Control.NotebookbarCalc.js:1602
 msgid "Pivot Table"
-msgstr ""
+msgstr "Kontingenčná tabuľka"
 
 #: src/control/Control.NotebookbarCalc.js:1651
 #: src/control/Control.NotebookbarDraw.js:996
@@ -2615,7 +2612,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:951
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Ilustrácie"
 
 #: src/control/Control.NotebookbarCalc.js:1721
 #: src/control/Control.NotebookbarDraw.js:1010
@@ -2635,63 +2632,61 @@ msgstr "Asistent"
 
 #: src/control/Control.NotebookbarCalc.js:1937
 msgid "Insert Function"
-msgstr ""
+msgstr "Vložiť funkciu"
 
 #: src/control/Control.NotebookbarCalc.js:1945
-#, fuzzy
 msgid "Function Library"
-msgstr "Sprievodca funkciou"
+msgstr "Sprievodca funkciami"
 
 #: src/control/Control.NotebookbarCalc.js:1959
 msgid "AutoSum"
-msgstr ""
+msgstr "Automatický súčet"
 
 #: src/control/Control.NotebookbarCalc.js:1972
 msgid "Financial"
-msgstr ""
+msgstr "Finančné"
 
 #: src/control/Control.NotebookbarCalc.js:1990
 msgid "Logical"
-msgstr ""
+msgstr "Logické"
 
 #: src/control/Control.NotebookbarCalc.js:2020
 msgid "Date & Time"
-msgstr ""
+msgstr "Dátum a čas"
 
 #: src/control/Control.NotebookbarCalc.js:2032
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Vyhľadávanie a odkazy"
 
 #: src/control/Control.NotebookbarCalc.js:2050
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matematické a goniometrické"
 
 #: src/control/Control.NotebookbarCalc.js:2062
 msgid "More Functions"
-msgstr ""
+msgstr "Ďalšie funkcie"
 
 #: src/control/Control.NotebookbarCalc.js:2107
 msgid "Range"
-msgstr ""
+msgstr "Oblasť"
 
 #: src/control/Control.NotebookbarCalc.js:2190
 msgid "Sort"
-msgstr ""
+msgstr "Zoradiť"
 
 #: src/control/Control.NotebookbarCalc.js:2236
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: src/control/Control.NotebookbarCalc.js:2483
 #: src/control/Control.NotebookbarImpress.js:1900
 #: src/control/Control.NotebookbarWriter.js:2524
-#, fuzzy
 msgid "Comments"
-msgstr "Poznámka"
+msgstr "Komentáre"
 
 #: src/control/Control.NotebookbarCalc.js:2588
 msgid "Format Cells"
-msgstr ""
+msgstr "Formátovať bunky"
 
 #: src/control/Control.NotebookbarCalc.js:2734
 #: src/control/Control.NotebookbarCalc.js:3091
@@ -2699,13 +2694,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3203
 #: src/control/Control.NotebookbarWriter.js:3526
 msgid "Wrap"
-msgstr ""
+msgstr "Obtekanie textu"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarImpress.js:2619
 #: src/control/Control.NotebookbarWriter.js:3412
 msgid "Image Controls"
-msgstr ""
+msgstr "Ovládacie pole obrázkov"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2737,20 +2732,19 @@ msgstr "Pravítko"
 #: src/control/Control.NotebookbarWriter.js:787
 #: src/control/Control.NotebookbarWriter.js:2969
 msgid "Paragraph"
-msgstr ""
+msgstr "Odstavec"
 
 #: src/control/Control.NotebookbarDraw.js:1207
 #: src/control/Control.NotebookbarDraw.js:1407
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Strana"
 
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1603
 #: src/control/Control.NotebookbarWriter.js:2391
-#, fuzzy
 msgid "Field"
-msgstr "Polia"
+msgstr "Pole"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Design"
@@ -2778,7 +2772,7 @@ msgstr "Prezentovať v okne"
 
 #: src/control/Control.NotebookbarImpress.js:605
 msgid "Slide Views"
-msgstr ""
+msgstr "Pohľad na snímku"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Show Grid"
@@ -2790,7 +2784,7 @@ msgstr "Zarovnať podľa mriežky"
 
 #: src/control/Control.NotebookbarImpress.js:769
 msgid "Slide Layout"
-msgstr ""
+msgstr "Rozloženie snímky"
 
 #: src/control/Control.NotebookbarImpress.js:780
 msgid "New"
@@ -2806,11 +2800,11 @@ msgstr "Obnoviť rozloženie"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "Character"
-msgstr ""
+msgstr "Znak"
 
 #: src/control/Control.NotebookbarImpress.js:1074
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Rozostupy a farba"
 
 #: src/control/Control.NotebookbarImpress.js:1772
 msgid "Slide Size"
@@ -2822,16 +2816,16 @@ msgstr "Obrázok na pozadí"
 
 #: src/control/Control.NotebookbarImpress.js:2004
 msgid "Merge & Split"
-msgstr ""
+msgstr "Zlúčiť a rozdeliť"
 
 #: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:2919
 msgid "Select"
-msgstr ""
+msgstr "Vybrať"
 
 #: src/control/Control.NotebookbarImpress.js:2652
 msgid "Effects"
-msgstr ""
+msgstr "Efekty"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2855,19 +2849,19 @@ msgstr "Posunúť nadol"
 
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Zoznamy/Odrážky"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
-msgstr ""
+msgstr "Hlavička & Päta"
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Sekcia"
 
 #: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
-msgstr ""
+msgstr "Symboly"
 
 #: src/control/Control.NotebookbarWriter.js:1602
 msgid "Rich Text"
@@ -2883,23 +2877,23 @@ msgstr "Rozbaľovací zoznam"
 
 #: src/control/Control.NotebookbarWriter.js:2180
 msgid "Table of content"
-msgstr ""
+msgstr "Obsah"
 
 #: src/control/Control.NotebookbarWriter.js:2226
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Poznámka pod čiarou/Vysvetlivka"
 
 #: src/control/Control.NotebookbarWriter.js:2599
 msgid "Tracking"
-msgstr ""
+msgstr "Sledovanie"
 
 #: src/control/Control.NotebookbarWriter.js:2857
 msgid "Split"
-msgstr ""
+msgstr "Rozdeliť"
 
 #: src/control/Control.NotebookbarWriter.js:3041
 msgid "Number Format"
-msgstr ""
+msgstr "Číselný formát"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
@@ -3671,104 +3665,103 @@ msgstr "Tento užívateľ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1235
 msgid "No Borders"
-msgstr ""
+msgstr "Bez orámovania"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1241
 msgid "Left Border"
-msgstr ""
+msgstr "Ľavé orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1247
 msgid "Right Border"
-msgstr ""
+msgstr "Pravé orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Ľavé a pravé orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
-msgstr ""
+msgstr "Horné orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1265
 msgid "Bottom Border"
-msgstr ""
+msgstr "Dolné orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1271
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Horné a dolné orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1277
 msgid "Outer Border"
-msgstr ""
+msgstr "Vonkajšie orámovanie"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1283
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Všetky vodorovné čiary"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1289
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Vonkajšie orámovanie a vodorovné čiary"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1295
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Vonkajšie orámovanie a zvislé čiary"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1301
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Vonkajšie orámovanie a všetky vnútorné čiary"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1306
 msgid "Line color"
-msgstr ""
+msgstr "Farba čiary"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
-#, fuzzy
 msgid "Line style"
-msgstr "Štýl čiary:"
+msgstr "Štýl čiary"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Vlasová (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1329
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Veľmi tenká (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1338
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Tenká (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1347
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Stredná (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1356
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Tučná (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1365
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Veľmi tučná (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1374
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Dvojitá vlasová (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1383
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Dvojitá vlasová (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1392
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Tenká/stredná (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1401
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Stredná/vlasová (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1410
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Stredná/stredná (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1470
 msgid "Standard (4:3)"
@@ -3910,7 +3903,7 @@ msgstr "Režim úprav"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Počet strán. Kliknutím otvoríte dialógové okno Prejsť na stranu."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -4727,16 +4720,16 @@ msgstr "Kliknite na ukončenie prezentácie…"
 
 #: src/slideshow/SlideShowPresenter.ts:560
 msgid "End Show"
-msgstr ""
+msgstr "Ukončiť prezentáciu"
 
 #: src/slideshow/SlideShowPresenter.ts:588
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Disable Animations"
-msgstr ""
+msgstr "Zakázať animácie"
 
 #: src/slideshow/SlideShowPresenter.ts:598
 msgid "Enable Animations"
-msgstr ""
+msgstr "Povoliť animácie"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
