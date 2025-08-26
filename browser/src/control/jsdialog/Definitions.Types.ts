@@ -60,6 +60,7 @@ interface JSBuilder {
 	updateWidget: (parentContainer: Element, updateJSON: any) => void;
 	executeAction: (parentContainer: Element, actionJSON: any) => void;
 	callback: JSDialogCallback;
+	_defaultCallbackHandlerSendMessage: JSDialogCallback;
 	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
 	setWindowId: (id: WindowId | number) => void;
