@@ -84,10 +84,8 @@ function setupOverflowMenu(
 		'.ui-overflow-group-label',
 	) as HTMLElement;
 
-	let expanderIconRightDiv: HTMLElement | undefined;
-
 	if (more) {
-		expanderIconRightDiv = createMoreButton(id, more, groupLabel);
+		createMoreButton(id, more, groupLabel);
 	}
 
 	// keeps hidden items
@@ -101,14 +99,31 @@ function setupOverflowMenu(
 
 	// keeps original content
 	const originalTopbar = overflowMenu.querySelectorAll(':scope > *');
-
+	const bottomGroup = parentContainer.querySelector(
+		'.ui-overflow-group-bottom',
+	) as HTMLElement;
 	// hide/show content on resize
 	const overflowMenuHandler = (hideContent: boolean) => {
 		overflowMenu.replaceChildren();
+		hiddenItems.replaceChildren();
+
+		// Create a new container for the top row
+		const topRow = document.createElement('div');
+		topRow.classList.add('top-row-overflow-group');
+
 		originalTopbar.forEach((element: Element) => {
-			overflowMenu.append(element);
+			topRow.append(element);
 		});
 
+		overflowMenu.append(topRow);
+
+		if (bottomGroup && hideContent) {
+			overflowMenu.append(bottomGroup);
+		} else {
+			const parent = overflowMenu.parentNode as HTMLElement;
+			const grandParent = parent?.parentNode as HTMLElement;
+			grandParent?.insertBefore(bottomGroup, parent.nextSibling);
+		}
 		if (hideContent) migrateItems(overflowMenu, hiddenItems);
 	};
 
@@ -125,10 +140,6 @@ function setupOverflowMenu(
 		JSDialog.CloseDropdown(dropdownId);
 
 		overflowMenuHandler(true);
-		groupLabel.style.display = 'none';
-		if (expanderIconRightDiv) {
-			expanderIconRightDiv.style.display = 'none';
-		}
 		parentContainer.classList.remove('ui-overflow-group-container-with-label');
 		overflowMenuButton.style.display = '';
 		isCollapsed = true;
@@ -140,10 +151,6 @@ function setupOverflowMenu(
 		app.console.debug('overflow manager: unfold group: ' + id);
 		JSDialog.CloseDropdown(dropdownId);
 
-		groupLabel.style.display = '';
-		if (expanderIconRightDiv) {
-			expanderIconRightDiv.style.display = '';
-		}
 		overflowMenuButton.style.display = 'none';
 		parentContainer.classList.add('ui-overflow-group-container-with-label');
 		overflowMenuHandler(false);
