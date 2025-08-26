@@ -26,6 +26,8 @@
 #include <utility>
 #include "Util.hpp"
 
+#include <optional>
+
 class DocumentBroker;
 
 /// Represents a session to a COOL client, in the WSD process.
@@ -69,6 +71,11 @@ public:
 
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const std::shared_ptr<Message>& payload);
+
+    std::optional<bool>
+    handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& payload,
+                                    const std::shared_ptr<DocumentBroker>& docBroker,
+                                    const std::shared_ptr<StreamSocket>& saveAsSocket);
 
     /// Integer id of the view in the kit process, or -1 if unknown
     int getKitViewId() const { return _kitViewId; }
