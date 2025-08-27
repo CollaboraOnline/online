@@ -715,6 +715,12 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
         }
+    } else if (s.starts_with(L"ERR "))
+    {
+        LOG_ERR("From JS: " + Util::wide_string_to_string(s));
+    } else if (s.starts_with(L"DBG "))
+    {
+        LOG_DBG("From JS: " + Util::wide_string_to_string(s));
     }
 }
 
