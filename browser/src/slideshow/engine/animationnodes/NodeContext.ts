@@ -12,7 +12,7 @@
  */
 
 class NodeContext {
-	public aContext: SlideShowContext = null;
+	public m_aContext: SlideShowContext = null;
 	public aAnimationNodeMap: AnimationNodeMap = null;
 	public aAnimatedElementMap: Map<string, AnimatedElement> = null;
 	public aSourceEventElementMap: Map<string, SourceEventElement> = null;
@@ -22,11 +22,11 @@ class NodeContext {
 	public bIsInvalid = false;
 
 	constructor(aSlideShowContext: any) {
-		this.aContext = aSlideShowContext;
+		this.m_aContext = aSlideShowContext;
 	}
 
 	public makeSourceEventElement(sId: string, aSlideShow: SlideShowHandler) {
-		if (!this.aContext.aEventMultiplexer) {
+		if (!this.m_aContext.aEventMultiplexer) {
 			window.app.console.log(
 				'NodeContext.makeSourceEventElement: event multiplexer not initialized',
 			);
@@ -47,11 +47,11 @@ class NodeContext {
 				sId,
 				new SourceEventElement(
 					sId,
-					this.aContext.m_aCanvas,
+					this.m_aContext.m_aCanvas,
 					triggerInfo.bounds,
 					triggerInfo.index,
 					aSlideShow,
-					this.aContext.aEventMultiplexer,
+					this.m_aContext.aEventMultiplexer,
 				),
 			);
 		}

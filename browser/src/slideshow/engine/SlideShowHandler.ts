@@ -65,7 +65,7 @@ class SlideShowHandler {
 	private aNextEffectEventArray: NextEffectEventArray;
 	private aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap;
 	private aEventMultiplexer: EventMultiplexer;
-	private aContext: SlideShowContext;
+	private m_aContext: SlideShowContext;
 	private bIsIdle: boolean;
 	private bIsEnabled: boolean;
 	private bNoSlideTransition: boolean;
@@ -111,7 +111,7 @@ class SlideShowHandler {
 		this.aInteractiveAnimationSequenceMap = null;
 		this.aEventMultiplexer = null;
 
-		this.aContext = new SlideShowContext(
+		this.m_aContext = new SlideShowContext(
 			this,
 			this.aTimerEventQueue,
 			this.aEventMultiplexer,
@@ -176,12 +176,12 @@ class SlideShowHandler {
 				'SlideShow.setSlideEvents: aEventMultiplexer is not valid',
 			);
 
-		this.aContext.aNextEffectEventArray = aNextEffectEventArray;
+		this.m_aContext.aNextEffectEventArray = aNextEffectEventArray;
 		this.aNextEffectEventArray = aNextEffectEventArray;
-		this.aContext.aInteractiveAnimationSequenceMap =
+		this.m_aContext.aInteractiveAnimationSequenceMap =
 			aInteractiveAnimationSequenceMap;
 		this.aInteractiveAnimationSequenceMap = aInteractiveAnimationSequenceMap;
-		this.aContext.aEventMultiplexer = aEventMultiplexer;
+		this.m_aContext.aEventMultiplexer = aEventMultiplexer;
 		this.aEventMultiplexer = aEventMultiplexer;
 		this.nCurrentEffect = 0;
 	}
@@ -356,7 +356,7 @@ class SlideShowHandler {
 				metaNewSlide.animationsHandler.getAnimatedElementMap();
 
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
-				aAnimatedElement.notifySlideStart(this.aContext);
+				aAnimatedElement.notifySlideStart(this.m_aContext);
 			});
 		}
 		this.slideCompositor.notifyTransitionStart();
@@ -902,7 +902,7 @@ class SlideShowHandler {
 	}
 
 	getContext() {
-		return this.aContext;
+		return this.m_aContext;
 	}
 
 	private get slideRenderer(): SlideRenderer {

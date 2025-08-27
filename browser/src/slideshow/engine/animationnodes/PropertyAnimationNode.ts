@@ -27,8 +27,8 @@ class PropertyAnimationNode extends AnimationBaseNode3 {
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
-			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight,
+			this.aNodeContext.m_aContext.nSlideWidth,
+			this.aNodeContext.m_aContext.nSlideHeight,
 		);
 
 		if (!aAnimation) {
