@@ -1153,9 +1153,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 					var firstFocusableElement = findFirstFocusableElement(currentElement);
 
-					if (firstFocusableElement !== null) {
-						firstFocusableElement.focus();
-					}
+					firstFocusableElement.focus();
 				};
 
 				// We are adding this to distinguish "enter" key from real click events.
@@ -2554,8 +2552,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(menuEntry).click(() => {
 				if (window.insertionMobileWizard)
 					app.dispatcher.dispatch('insertion_mobile_wizard');
-				else if (window.mobileMenuWizard)
-					$('#main-menu-state').click();
+				else if (window.mobileMenuWizard) {
+					const mainMenuState = document.getElementById('main-menu-state');
+					if (!mainMenuState)
+						console.warn('Element #main-menu-state not found');
+					else
+						mainMenuState.click();
+				}
 				else if (window.contextMenuWizard) {
 					window.contextMenuWizard = false;
 					builder.map.fire('closemobilewizard');
@@ -2614,8 +2617,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var buttonData = { text: _('Insert Table') };
 		builder._pushbuttonControl(content, buttonData, builder, function() {
-			var rowsCount = parseInt($('#rows > input.spinfield').get(0).value);
-			var colsCount = parseInt($('#cols > input.spinfield').get(0).value);
+			const rowsContainer = document.getElementById('rows');
+			const colsContainer = document.getElementById('cols');
+			const rowsInput = rowsContainer ? rowsContainer.querySelector('input.spinfield') : null;
+			const colsInput = colsContainer ? colsContainer.querySelector('input.spinfield') : null;
+			if (!rowsInput) console.warn('Element #rows > input.spinfield not found');
+			if (!colsInput) console.warn('Element #cols > input.spinfield not found');
+			const rowsCount = parseInt(rowsInput ? rowsInput.value : '0');
+			const colsCount = parseInt(colsInput ? colsInput.value : '0');
 			builder.map.sendUnoCommand('.uno:InsertTable?Columns=' + colsCount + '&Rows=' + rowsCount);
 			builder.map.fire('closemobilewizard');
 		});
@@ -2882,7 +2891,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			&& data.type !== 'spacer'
 			&& data.type !== 'edit'
 			&& data.type !== 'deck'
-			&& data.type !== 'pushbutton'
 			)
 			control.setAttribute('tabIndex', '0');
 	},
@@ -2996,7 +3004,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (processChildren && childData.children != undefined)
 				this.build(childObject, childData.children, isVertical);
 			else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
-				$('#' + childData.id).addClass('hidden-from-event');
+				const targetEl = document.getElementById(childData.id);
+				if (!targetEl)
+					console.warn('Element #' + childData.id + ' not found');
+				else
+					targetEl.classList.add('hidden-from-event');
 			}
 		}
 	}
