@@ -1288,7 +1288,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			else if (textMsg.startsWith('a11ycaretchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
-				this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
+				if (typeof this._map._textInput.onAccessibilityCaretChanged === 'function')
+					this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
 			}
 			else if (textMsg.startsWith('a11ytextselectionchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
