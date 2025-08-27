@@ -66,6 +66,35 @@ const initTranslationStr = () => {
 		document.documentElement.getAttribute('lang') || String.defaultLocale;
 };
 
+const onLoaded = () => {
+	window.addEventListener('message', onMessage, false);
+	window.parent.postMessage('{"MessageId":"settings-ready"}', '*');
+};
+
+const onMessage = (e) => {
+	try {
+		const data = JSON.parse(e.data);
+		if (e.origin === window.origin && window.parent !== window.self) {
+			if (data.MessageId === 'settings-ready')
+				window.parent.postMessage('{"MessageId":"settings-show"}', '*');
+			else if (data.MessageId === 'settings-save-all') {
+				const saveButtons = [
+					'xcu-save-button',
+					'browser-settings-save-button',
+					'document-settings-save-button',
+				];
+				for (const i in saveButtons) {
+					const button = document.getElementById(saveButtons[i]);
+					button?.click();
+				}
+			}
+		}
+	} catch (err) {
+		console.error('Could not process postmessage:', err);
+		return;
+	}
+};
+
 const defaultBrowserSetting: Record<string, any> = {
 	compactMode: {
 		value: false,
@@ -347,7 +376,7 @@ class SettingIframe {
 
 			if (!response.ok) {
 				console.error(
-					'something wend wrong shared config response',
+					'something went wrong shared config response',
 					response.text(),
 				);
 				throw new Error(
@@ -1584,3 +1613,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 (window as any)._ = _;
+(window as any).onload = onLoaded;

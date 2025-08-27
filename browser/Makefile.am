@@ -192,7 +192,8 @@ COOL_CSS_LST =\
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
 	$(srcdir)/css/tooltip.css \
-	$(srcdir)/css/progressbar.css
+	$(srcdir)/css/progressbar.css \
+	$(srcdir)/css/settings.css
 
 COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
@@ -389,6 +390,7 @@ COOL_JS_LST =\
 	src/map/handler/Map.KeyboardShortcuts.ts \
 	src/map/handler/Map.Welcome.js \
 	src/map/handler/Map.Feedback.js \
+	src/map/handler/Map.Settings.ts \
 	src/map/handler/Map.VersionBar.js \
 	src/dom/DomEvent.MultiClick.js \
 	src/map/handler/Map.Mouse.js \
@@ -1119,6 +1121,7 @@ pot:
 		src/map/handler/Map.VersionBar.js \
 		src/map/handler/Map.WOPI.js \
 		src/map/handler/Map.Welcome.js \
+		src/map/handler/Map.Settings.ts \
 		src/slideshow/PauseTimer.ts \
 		src/slideshow/PresenterConsole.js \
 		src/slideshow/SlideShowPresenter.ts
