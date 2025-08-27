@@ -47,7 +47,7 @@ class NodeContext {
 				sId,
 				new SourceEventElement(
 					sId,
-					this.aContext.aCanvas,
+					this.aContext.m_aCanvas,
 					triggerInfo.bounds,
 					triggerInfo.index,
 					aSlideShow,
