@@ -469,7 +469,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		let focusWidget, firstFocusableElement ;
 
-		if (tabControlWidget) {
+		if (tabControlWidget && !instance.init_focus_id) {
 			// get DOM element of tabControl from current instance
 			focusWidget = instance.content.querySelector('[id="' + tabControlWidget.id + '"]');
 			firstFocusableElement = JSDialog.GetFocusableElements(focusWidget);
@@ -478,6 +478,9 @@ L.Control.JSDialog = L.Control.extend({
 			// will directly set element of focusable element based on init focus id
 			// If init_id is not defined, select the first focusable element from the container
 			firstFocusableElement = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : JSDialog.GetFocusableElements(instance.container);
+			if (!JSDialog.IsFocusable(firstFocusableElement)){
+				firstFocusableElement = JSDialog.FindFocusableWithin(firstFocusableElement, 'next');
+			}
 		}
 
 		if (firstFocusableElement && document.activeElement !== firstFocusableElement && instance.canHaveFocus) {
