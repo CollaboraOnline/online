@@ -1561,6 +1561,34 @@ window.L.TextInput = window.L.Layer.extend({
 		msg += '    is collapsed: ' + selection.isCollapsed + '\n';
 
 		window.app.console.log(msg);
+	},
+
+	onAccessibilityCaretChange: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilityTextSelectionChanged: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilityFocusedCellChanged: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilityEditingInSelectionState: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilitySelectionChanged: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	setA11yFocusedParagraph: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	setA11yCaretPosition: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
 	}
 });
 
