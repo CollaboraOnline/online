@@ -302,12 +302,10 @@ L.Map = L.Evented.extend({
 			if (!window.mode.isMobile())
 				this.initializeModificationIndicator();
 
-			// Show sidebar.
 			if (this._docLayer && !this._docLoadedOnce) {
-				// Let the first page finish loading then load the sidebar and notebookbar
-				setTimeout(this.uiManager.initializeSidebar.bind(this.uiManager), 200);
-				setTimeout(this.uiManager.initializeNotebookbarInCore.bind(this.uiManager), 200);
-				setTimeout(this.uiManager.initializeQuickFindInCore.bind(this.uiManager), 400);
+				// Let the first page finish loading then request core ui components
+				// TODO: make it deterministic by using the signal for first tiles received
+				setTimeout(this.uiManager.initializeLateComponents.bind(this.uiManager), 200);
 			}
 
 			// We have loaded.
