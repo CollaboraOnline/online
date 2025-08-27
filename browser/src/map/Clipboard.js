@@ -1159,13 +1159,13 @@ window.L.Clipboard = window.L.Class.extend({
 			// Here, too, just let native code handle it
 			if (cmd === '.uno:Cut') {
 				window.postMobileMessage('CUT');
-				return;
+				return true;
 			} else if (cmd === '.uno:Copy') {
 				window.postMobileMessage('COPY');
-				return;
+				return true;
 			} else if (cmd === '.uno:Paste') {
 				window.postMobileMessage('PASTE');
-				return;
+				return true;
 			}
 		}
 
