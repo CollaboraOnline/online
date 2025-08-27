@@ -36,29 +36,23 @@ class QuickFindPanel extends SidebarBase {
 	onJSUpdate(e: FireEvent): void {
 		var data = e.data;
 
-		if (data.jsontype !== this.type) return;
-		if (!this.container) return;
-		if (!this.builder) return;
+		super.onJSUpdate(e);
 
-		if (data.control.id === 'addonimage') {
-			window.app.console.log('Ignored update for control: ' + data.control.id);
-			return;
-		}
+		// handle placeholder text visibility
+		app.layoutingService.appendLayoutingTask(() => {
+			const placeholder = document.getElementById('quickfind-placeholder');
 
-		const placeholder = document.getElementById('quickfind-placeholder');
-
-		if (data.control.id === 'numberofsearchfinds') {
-			const resultsText = data.control.text.trim().length > 0;
-			if (placeholder) placeholder.classList.toggle('hidden', resultsText);
-		} else if (
-			data.control.id === 'searchfinds' &&
-			data.control.type === 'treelistbox'
-		) {
-			const isEmpty = data.control.entries.length === 0;
-			if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
-		}
-
-		this.builder.updateWidget(this.container, data.control);
+			if (data.control.id === 'numberofsearchfinds') {
+				const resultsText = data.control.text.trim().length > 0;
+				if (placeholder) placeholder.classList.toggle('hidden', resultsText);
+			} else if (
+				data.control.id === 'searchfinds' &&
+				data.control.type === 'treelistbox'
+			) {
+				const isEmpty = data.control.entries.length === 0;
+				if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
+			}
+		});
 	}
 
 	addPlaceholderIfEmpty(quickFindData: any): any {
