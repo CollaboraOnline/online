@@ -25,8 +25,8 @@ class AnimationSetNode extends AnimationBaseNode2 {
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
-			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight,
+			this.aNodeContext._context.nSlideWidth,
+			this.aNodeContext._context.nSlideHeight,
 		);
 
 		const aActivityParamSet = this.fillActivityParams();

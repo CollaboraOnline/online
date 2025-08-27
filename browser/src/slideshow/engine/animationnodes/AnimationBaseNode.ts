@@ -71,8 +71,8 @@ abstract class AnimationBaseNode extends BaseNode {
 		if (this.aTargetHash) {
 			if (!this.aNodeContext.aAnimatedElementMap.has(this.aTargetHash)) {
 				const slideHash = this.aNodeContext.metaSlide.info.hash;
-				const slideWidth = this.aNodeContext.aContext.nSlideWidth;
-				const slideHeight = this.aNodeContext.aContext.nSlideHeight;
+				const slideWidth = this.aNodeContext._context.nSlideWidth;
+				const slideHeight = this.aNodeContext._context.nSlideHeight;
 
 				const aAnimatedElement = this.bIsTargetTextElement
 					? new AnimatedTextElement(
@@ -155,16 +155,16 @@ abstract class AnimationBaseNode extends BaseNode {
 		const aActivityParamSet = new ActivityParamSet();
 
 		aActivityParamSet.aEndEvent = makeEvent(this.deactivate.bind(this));
-		aActivityParamSet.aTimerEventQueue = this.aContext.aTimerEventQueue;
-		aActivityParamSet.aActivityQueue = this.aContext.aActivityQueue;
+		aActivityParamSet.aTimerEventQueue = this._context.aTimerEventQueue;
+		aActivityParamSet.aActivityQueue = this._context.aActivityQueue;
 		aActivityParamSet.nMinDuration = nDuration;
 		aActivityParamSet.nMinNumberOfFrames = this.getMinFrameCount();
 		aActivityParamSet.bAutoReverse = this.isAutoReverseEnabled();
 		aActivityParamSet.nRepeatCount = this.getRepeatCount();
 		aActivityParamSet.nAccelerationFraction = this.getAccelerateValue();
 		aActivityParamSet.nDecelerationFraction = this.getDecelerateValue();
-		aActivityParamSet.nSlideWidth = this.aNodeContext.aContext.nSlideWidth;
-		aActivityParamSet.nSlideHeight = this.aNodeContext.aContext.nSlideHeight;
+		aActivityParamSet.nSlideWidth = this.aNodeContext._context.nSlideWidth;
+		aActivityParamSet.nSlideHeight = this.aNodeContext._context.nSlideHeight;
 
 		return aActivityParamSet;
 	}
