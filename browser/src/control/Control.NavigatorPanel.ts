@@ -360,10 +360,13 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	focusSearch() {
+		const searchInput = document.getElementById(
+			'navigator-search-input',
+		) as HTMLInputElement;
+		if (!searchInput) return;
+
 		app.layoutingService.appendLayoutingTask(() => {
-			(
-				document.getElementById('navigator-search-input') as HTMLInputElement
-			).focus();
+			searchInput.focus();
 		});
 	}
 
