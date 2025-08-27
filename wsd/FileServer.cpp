@@ -1690,6 +1690,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, POSTMESSAGE_ORIGIN, urv[POSTMESSAGE_ORIGIN]);
     Poco::replaceInPlace(preprocess, CHECK_FILE_INFO_OVERRIDE,
                          checkFileInfoToJSON(urv[CHECK_FILE_INFO_OVERRIDE]));
+    Poco::replaceInPlace(preprocess, WOPI_SETTING_BASE_URL, urv[WOPI_SETTING_BASE_URL]);
     Poco::replaceInPlace(preprocess, std::string("%WOPI_HOST_ID%"), form.get("host_session_id", ""));
 
     const auto& config = Application::instance().config();
