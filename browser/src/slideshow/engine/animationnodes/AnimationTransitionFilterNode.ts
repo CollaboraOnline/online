@@ -132,13 +132,13 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 		const aActivityParamSet = this.fillActivityParams();
 
 		// in the 2d context case map any transition to cross-fade
-		if (!this.aNodeContext.aContext.aSlideShowHandler.isGlSupported()) {
+		if (!this.aNodeContext._context.aSlideShowHandler.isGlSupported()) {
 			const bModeIn = this.getTransitionMode() == TransitionMode.in;
 			return createCrossFadeTransition(
 				aActivityParamSet,
 				this.getAnimatedElement(),
-				this.aNodeContext.aContext.nSlideWidth,
-				this.aNodeContext.aContext.nSlideHeight,
+				this.aNodeContext._context.nSlideWidth,
+				this.aNodeContext._context.nSlideHeight,
 				bModeIn,
 			);
 		}
@@ -146,8 +146,8 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 		return createShapeTransition(
 			aActivityParamSet,
 			this.getAnimatedElement(),
-			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight,
+			this.aNodeContext._context.nSlideWidth,
+			this.aNodeContext._context.nSlideHeight,
 			this,
 		);
 	}

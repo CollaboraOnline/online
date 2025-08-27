@@ -145,7 +145,7 @@ function registerEvent(
 	aEvent: EventBase,
 	aNodeContext: NodeContext,
 ) {
-	const aSlideShowContext = aNodeContext.aContext;
+	const aSlideShowContext = aNodeContext._context;
 	const eTimingType = aTiming.getType();
 
 	aRegisterEventDebugPrinter.print(
