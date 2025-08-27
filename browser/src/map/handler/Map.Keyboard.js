@@ -802,7 +802,11 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return false;
 		}
 		/* Without specifying the key type, the messages are sent twice (both keydown/up) */
-		if (e.type === 'keydown' && window.ThisIsAMobileApp) {
+
+		// Don't do this in CODA-W, there it is the sending of
+		// the PASTE message in document,onpaste() in
+		// Clipboard.js that does the paste.
+		if (e.type === 'keydown' && window.ThisIsAMobileApp && !window.ThisIsTheWindowsApp) {
 			if (this.keyCodes.C.includes(e.keyCode)) {
 				app.socket.sendMessage('uno .uno:Copy');
 				return true;
