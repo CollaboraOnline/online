@@ -20,6 +20,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		// Add some main body text of X
 		ceHelper.type('X');
@@ -47,6 +49,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		helper.setupAndLoadDocument('writer/invalidations_headers.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
@@ -89,6 +93,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
