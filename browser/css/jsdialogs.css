@@ -1,4 +1,13 @@
 /* Overlay for popups and dropdowns allowing to handle click outside */
+
+fieldset {
+	margin-inline: 0;
+	border-width: 0;
+	border-style: none;
+	padding-block: 0;
+	padding-inline: 0;
+}
+
 .jsdialog-overlay {
 	position: absolute;
 	background: transparent;
@@ -11,6 +20,11 @@
 	z-index: 2000;
 	display: flex;
 	overflow: hidden;
+}
+
+legend {
+	display: inline;
+	padding-inline: 0;
 }
 
 .jsdialog-overlay.cancellable {
@@ -133,7 +147,9 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	overflow: hidden;
 }
 
-.jsdialog.vertical label, .ui-frame-label {
+.jsdialog.vertical label,
+.jsdialog.vertical legend,
+ui-frame-label {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
