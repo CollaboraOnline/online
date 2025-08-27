@@ -1128,6 +1128,14 @@ export class Comment extends CanvasSectionObject {
 			brElements[brElements.length-1].remove();
 	}
 
+	private isNodeEmpty(): boolean {
+		this.removeLastBRTag(this.sectionProperties.nodeModifyText);
+		if (this.sectionProperties.nodeModifyText.innerText == "" &&
+			this.sectionProperties.nodeModifyText.innerHTML == "")
+			return true;
+		return false;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
 
@@ -1164,6 +1172,8 @@ export class Comment extends CanvasSectionObject {
 					}
 				}
 			}
+			else if (app.map._docLayer._docType === 'text' && this.isNodeEmpty())
+				this.onCancelClick(e);
 		}
 	}
 
