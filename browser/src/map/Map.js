@@ -304,8 +304,8 @@ L.Map = L.Evented.extend({
 
 			if (this._docLayer && !this._docLoadedOnce) {
 				// Let the first page finish loading then request core ui components
-				// TODO: make it deterministic by using the signal for first tiles received
-				setTimeout(this.uiManager.initializeLateComponents.bind(this.uiManager), 200);
+				TileManager.appendAfterFirstTileTask(
+					this.uiManager.initializeLateComponents.bind(this.uiManager));
 			}
 
 			// We have loaded.
