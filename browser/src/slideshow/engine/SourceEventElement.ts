@@ -13,7 +13,7 @@
 
 class SourceEventElement implements MouseClickHandler {
 	private sId: string;
-	private aCanvas: HTMLCanvasElement;
+	private _canvas: HTMLCanvasElement;
 	private bounds: DOMRect;
 	private aSlideShow: SlideShowHandler = null;
 	private aEventMultiplexer: EventMultiplexer;
@@ -29,7 +29,7 @@ class SourceEventElement implements MouseClickHandler {
 		aEventMultiplexer: EventMultiplexer,
 	) {
 		this.sId = sId;
-		this.aCanvas = aCanvas;
+		this._canvas = aCanvas;
 		this.bounds = bounds;
 		this.aSlideShow = aSlideShow;
 
@@ -91,10 +91,10 @@ class SourceEventElement implements MouseClickHandler {
 
 	setPointerCursor() {
 		if (this.bClickHandled) return;
-		this.aCanvas.style.cursor = 'pointer';
+		this._canvas.style.cursor = 'pointer';
 	}
 
 	setDefaultCursor() {
-		this.aCanvas.style.cursor = 'default';
+		this._canvas.style.cursor = 'default';
 	}
 }
