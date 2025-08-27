@@ -25,7 +25,7 @@ class SlideShowContext {
 	public bIsSkipping: boolean;
 	public nSlideWidth: number;
 	public nSlideHeight: number;
-	public aCanvas: HTMLCanvasElement;
+	public _canvas: HTMLCanvasElement;
 
 	constructor(
 		aSlideShowHandler: SlideShowHandler,
