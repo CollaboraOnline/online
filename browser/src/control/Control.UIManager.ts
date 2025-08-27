@@ -555,6 +555,17 @@ class UIManager extends L.Control {
 	}
 
 	/**
+	 * Initializes the heavy components which require core side to work.
+	 * Scheduled to be executed after we do first tiles requests to not
+	 * block the document content rendering on a load.
+	 */
+	initializeLateComponents(): void {
+		this.initializeNotebookbarInCore();
+		this.initializeSidebar();
+		this.initializeQuickFindInCore();
+	}
+
+	/**
 	 * Initializes the sidebar based on saved state and preferences.
 	 */
 	initializeSidebar(): void {
