@@ -579,9 +579,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 #QuickFindPanel .ui-treeview-cell-text-content.page-divider {
-	/*TODO: style however we want*/
-	font-weight: bold;
-	font-size: large;
+	/* TODO The treeview entry should have disabled listenners for these items */
+	color: var(--color-text-lighter);
 }
 
 /* search field box */
