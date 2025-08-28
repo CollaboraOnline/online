@@ -28,6 +28,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
+		this._controlHandlers['iconview'] = this._overriddenIconViewHandler;
 
 		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
 		this._toolitemHandlers['.uno:FontColor'] = JSDialog.colorPickerButton;
@@ -273,6 +274,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		JSDialog.MakeFocusCycle(tabPage);
 
 		return result;
+	},
+
+	_overriddenIconViewHandler: function(parentContainer, data, builder) {
+		data.isExpandable = true;
+		return JSDialog.iconView(parentContainer, data, builder);
 	},
 
 	_exportMenuButton: function(parentContainer, data, builder) {
