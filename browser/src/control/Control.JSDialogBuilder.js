@@ -1775,6 +1775,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 
 		app.layoutingService.appendLayoutingTask(function () {
+			if(!data.labelFor)
+				return;
+
 			var labelledControl = document.getElementById(data.labelFor);
 			if (labelledControl) {
 				var target = labelledControl;
