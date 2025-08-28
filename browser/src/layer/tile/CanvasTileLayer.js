@@ -1288,11 +1288,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			else if (textMsg.startsWith('a11ycaretchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
-				this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
+				if (typeof this._map._textInput.onAccessibilityCaretChanged === 'function') {
+					this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
+				}
 			}
 			else if (textMsg.startsWith('a11ytextselectionchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
-				this._map._textInput.onAccessibilityTextSelectionChanged(parseInt(obj.start), parseInt(obj.end));
+				if (typeof this._map._textInput.onAccessibilityTextSelectionChanged === 'function') {
+					this._map._textInput.onAccessibilityTextSelectionChanged(parseInt(obj.start), parseInt(obj.end));
+				}
 			}
 			else if (textMsg.startsWith('a11yfocusedcellchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocusedcellchanged:'.length + 1));
@@ -1302,27 +1306,37 @@ L.CanvasTileLayer = L.Layer.extend({
 				var col = parseInt(obj.col);
 				var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
 				var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
-				this._map._textInput.onAccessibilityFocusedCellChanged(
-					outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+				if (typeof this._map._textInput.onAccessibilityFocusedCellChanged === 'function') {
+					this._map._textInput.onAccessibilityFocusedCellChanged(
+						outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+				}
 			}
-			else if (textMsg.startsWith('a11yeditinginselectionstate:')) {
+			else if (textMsg.startsWith('a11yeditingix1nselectionstate:')) {
 				obj = JSON.parse(textMsg.substring('a11yeditinginselectionstate:'.length + 1));
-				this._map._textInput.onAccessibilityEditingInSelectionState(
-					parseInt(obj.cell) > 0, parseInt(obj.enabled) > 0, obj.selection, obj.paragraph);
+				if (typeof this._map._textInput.onAccessibilityEditingInSelectionState === 'function') {
+					this._map._textInput.onAccessibilityEditingInSelectionState(
+						parseInt(obj.cell) > 0, parseInt(obj.enabled) > 0, obj.selection, obj.paragraph);
+				}
 			}
 			else if (textMsg.startsWith('a11yselectionchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yselectionchanged:'.length + 1));
-				this._map._textInput.onAccessibilitySelectionChanged(
-					parseInt(obj.cell) > 0, obj.action, obj.name, obj.text);
+				if (typeof this._map._textInput.onAccessibilitySelectionChanged === 'function') {
+					this._map._textInput.onAccessibilitySelectionChanged(
+						parseInt(obj.cell) > 0, obj.action, obj.name, obj.text);
+				}
 			}
 			else if (textMsg.startsWith('a11yfocusedparagraph:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocusedparagraph:'.length + 1));
-				this._map._textInput.setA11yFocusedParagraph(
-					obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
+				if (typeof this._map._textInput.setA11yFocusedParagraph === 'function') {
+					this._map._textInput.setA11yFocusedParagraph(
+						obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
+				}
 			}
 			else if (textMsg.startsWith('a11ycaretposition:')) {
 				var pos = textMsg.substring('a11ycaretposition:'.length + 1);
-				this._map._textInput.setA11yCaretPosition(parseInt(pos));
+				if (typeof this._map._textInput.setA11yCaretPosition === 'function') {
+					this._map._textInput.setA11yCaretPosition(parseInt(pos));
+				}
 			}
 		}
 		else if (textMsg.startsWith('colorpalettes:')) {
