@@ -163,7 +163,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		if (hasSave) {
 			content.push({
-				'type': 'toolbox',
+				'type': 'container',
 				'children': [
 					{
 						'id': 'file-save',
