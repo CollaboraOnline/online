@@ -458,16 +458,45 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	row-gap: 0;
 }
 
+#transitions_icons-iconview {
+	height: 64px;
+	width: 35vw;
+	overflow: auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
+	padding: 0px;
+	border: 1px solid var(--color-stylesview-border);
+	border-radius: var(--border-radius);
+	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	scrollbar-width: none;
+	background-color: var(--color-stylesview-background);
+	filter: brightness(var(--brightness-stylesview));
+	box-sizing: border-box;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	row-gap: 0;
+}
+
+#transitions_icons {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+
 .one-child-popup .ui-iconview {
 	height: 400px !important;
-	width: 36.7vw !important;
+	width: 36.8vw !important;
 }
 
-#stylesview-dropdown {
+#stylesview-dropdown,
+#transitions_icons-dropdown {
 	margin-top: 46px !important;
+	min-width: 36.8vw !important;
 }
 
-#stylesview-button {
+#stylesview-button,
+#transitions_icons-button {
 	border: 1px solid var(--color-stylesview-border);
 	border-top-right-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
