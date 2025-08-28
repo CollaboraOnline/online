@@ -68,6 +68,8 @@ class QuickFindPanel extends SidebarBase {
 		if (!hasEntries) {
 			const modifiedData = JSON.parse(JSON.stringify(quickFindData));
 
+			if (!modifiedData.children) modifiedData.children = [];
+
 			modifiedData.children.unshift({
 				id: 'quickfind-placeholder',
 				type: 'fixedtext',
