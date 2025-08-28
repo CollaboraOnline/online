@@ -115,10 +115,10 @@ class SettingIframe {
 		zoteroAPIKey: _('Zotero'),
 	};
 	private readonly settingLabels: Record<string, string> = {
-		darkTheme: _('Dark mode'),
+		darkTheme: _('Dark Mode'),
 		compactMode: _('Compact layout'),
 		ShowStatusbar: _('Show status bar'),
-		ShowRuler: _('Show ruler'),
+		ShowRuler: _('Show Ruler'),
 		A11yCheckDeck: _('Accessibility Checker'),
 		NavigatorDeck: _('Navigator'),
 		PropertyDeck: _('Show Sidebar'),
@@ -877,7 +877,7 @@ class SettingIframe {
 		const textElement = document.createElement('span');
 		textElement.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = labelText;
+		textElement.textContent = _(labelText);
 		checkboxContent.appendChild(textElement);
 
 		if (warningText) {
