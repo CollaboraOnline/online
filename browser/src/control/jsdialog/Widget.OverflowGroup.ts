@@ -119,6 +119,7 @@ function setupOverflowMenu(
 		} else {
 			// show normally
 			originalTopbar.forEach((el) => overflowGroupContentContainer.append(el));
+			hiddenItems.replaceChildren(); // do not allow to duplicate buttons
 			if (bottomBar) {
 				// make sure bottom bar gets it's original position after unfold
 				overflowGroupContainer?.append(bottomBar);
