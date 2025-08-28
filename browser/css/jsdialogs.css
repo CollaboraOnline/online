@@ -2389,16 +2389,6 @@ kbd,
 	min-height: 300px;
 }
 
-/* Insert hyperlink dialog */
-
-#HyperlinkInternetPage #grid2,
-#HyperlinkInternetPage #label2,
-#HyperlinkInternetPage #lbProtocol,
-#HyperlinkInternetPage #linktyp_ftp,
-#HyperlinkInternetPage #linktyp_internet {
-	display: none;
-}
-
 /* Third column has nothing to display */
 #HyperlinkMailPage #grid1 {
 	grid-template-columns: repeat(2, auto) 0px !important;
