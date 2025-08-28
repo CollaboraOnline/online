@@ -604,6 +604,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #quickfind-dock-wrapper .ui-treeview-entry {
 	text-wrap: balance;
+	word-break: break-word;
 	border-bottom: 1px solid var(--color-quickfind-border);
 }
 #quickfind-dock-wrapper .ui-treeview-entry.selected {
