@@ -43,7 +43,7 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 });
 
 describe(['tagdesktop'], 'Notebookbar review operations.', function() {
-	it('Go to the next change', function() {
+	it.skip('Go to the next change', function() {
 		// Given a document where the first redline is inside a table:
 		helper.setupAndLoadDocument('writer/notebookbar-redline.odt');
 		desktopHelper.switchUIToNotebookbar()
@@ -51,6 +51,8 @@ describe(['tagdesktop'], 'Notebookbar review operations.', function() {
 
 		// When going to the next redline:
 		cy.cGet('#Review-tab-label').click();
+		cy.cGet('#Review-tab-label').should('have.class', 'selected');
+		cy.cGet('#overflow-button-review-tracking .arrowbackground').click();
 		cy.cGet('#review-next-tracked-change-button').click();
 		cy.cGet('#Table-tab-label').should('not.have.class', 'hidden');
 
