@@ -8,7 +8,6 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	function expandSecion(name) {
 		cy.cGet('#contenttree')
 			.contains('.jsdialog.sidebar.ui-treeview-cell-text', name)
-			.parent() // .ui-treeview-cell-text
 			.parent() // .ui-treeview-cell
 			.parent() // div - column
 			.parent() // .ui-treeview-entry
