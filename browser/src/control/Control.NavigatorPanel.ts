@@ -431,7 +431,7 @@ class NavigatorPanel extends SidebarBase {
 			object.id == 'navigator-search-button'
 		) {
 			var treeContainer = document.getElementById('contenttree') as any;
-			treeContainer.highlightEntries(searchTerm);
+			if (treeContainer) treeContainer.highlightEntries(searchTerm);
 			this.highlightTerm = searchTerm;
 			return;
 		}
