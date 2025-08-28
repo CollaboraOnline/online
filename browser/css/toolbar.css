@@ -116,7 +116,7 @@
 	margin: 0px;
 }
 
-.ui-overflow-group-popup > .top-row-overflow-group {
+.top-row-overflow-group {
 	display: flex;
 }
 /* overflow menu */
