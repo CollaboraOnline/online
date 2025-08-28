@@ -325,7 +325,7 @@ body {
 	height: 100%;
 }
 
-#sidebar-dock-wrapper, #navigator-dock-wrapper {
+#sidebar-dock-wrapper, #navigator-dock-wrapper, #quickfind-dock-wrapper {
 	display: none;
 	background: var(--color-background-lighter);
 	position: relative;
