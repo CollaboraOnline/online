@@ -107,24 +107,21 @@ function setupOverflowMenu(
 		overflowMenu.replaceChildren();
 		hiddenItems.replaceChildren();
 
-		// Create a new container for the top row
-		const topRow = document.createElement('div');
-		topRow.classList.add('top-row-overflow-group');
-
-		originalTopbar.forEach((element: Element) => {
-			topRow.append(element);
-		});
-
-		overflowMenu.append(topRow);
-
-		if (bottomGroup && hideContent) {
-			overflowMenu.append(bottomGroup);
+		if (hideContent) {
+			// top row container
+			const topRow = document.createElement('div');
+			topRow.classList.add('top-row-overflow-group');
+			originalTopbar.forEach((el) => topRow.append(el));
+			overflowMenu.append(topRow, bottomGroup ?? null);
+			migrateItems(overflowMenu, hiddenItems);
 		} else {
-			const parent = overflowMenu.parentNode as HTMLElement;
-			const grandParent = parent?.parentNode as HTMLElement;
-			grandParent?.insertBefore(bottomGroup, parent.nextSibling);
+			// show normally
+			originalTopbar.forEach((el) => overflowMenu.append(el));
+			if (bottomGroup) {
+				// make sure bottom bar gets it's original position after unfold
+				parentContainer?.append(bottomGroup);
+			}
 		}
-		if (hideContent) migrateItems(overflowMenu, hiddenItems);
 	};
 
 	const dropdownId = 'overflow-button-' + id;
