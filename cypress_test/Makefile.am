@@ -753,9 +753,7 @@ define run_test_parallel
 		--spec $(3) \
 		--type $(4) \
 		--log-file $(5) \
-		--config-file $(CYPRESS_CONFIG) \
-		|| (echo ==dump coolwsd console output== && cat $(COOLWSD_OUTPUT) &&\
-		    false)
+		--config-file $(CYPRESS_CONFIG)
 endef
 
 # Run one test \ tests in headless mode.
@@ -773,8 +771,7 @@ define run_test_headless
 		--config $(1) \
 		--env $(2) \
 		$(if $(3),--spec=$(3)) \
-		|| (echo ==dump coolwsd console output== && cat $(COOLWSD_OUTPUT) && \
-		    $(KILL_COMMAND) && false)
+		|| ($(KILL_COMMAND) && false)
 endef
 
 # Checks whether the given spec file exists.
