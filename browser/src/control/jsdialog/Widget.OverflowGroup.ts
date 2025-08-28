@@ -69,17 +69,18 @@ function createMoreButton(
 }
 
 function setupOverflowMenu(
-	parentContainer: HTMLElement,
-	overflowMenu: HTMLElement,
+	overflowGroupContainer: HTMLElement,
+	overflowGroupContentContainer: HTMLElement,
+	bottomBar: HTMLElement,
 	id: string,
 	more: MoreOptions | undefined,
 ) {
-	const overflowMenuButton = parentContainer.querySelector(
+	const overflowMenuButton = overflowGroupContainer.querySelector(
 		'[id^="overflow-button"]',
 	) as HTMLElement;
 	overflowMenuButton.style.display = 'none';
 
-	const groupLabel = parentContainer.querySelector(
+	const groupLabel = overflowGroupContainer.querySelector(
 		'.ui-overflow-group-label',
 	) as HTMLElement;
 
@@ -91,19 +92,20 @@ function setupOverflowMenu(
 	const hiddenItems = L.DomUtil.create(
 		'div',
 		'hidden-overflow-container',
-		parentContainer,
+		overflowGroupContainer,
 	);
 	hiddenItems.style.display = 'none';
-	parentContainer.classList.add('ui-overflow-group-container-with-label');
+	overflowGroupContainer.classList.add(
+		'ui-overflow-group-container-with-label',
+	);
 
 	// keeps original content
-	const originalTopbar = overflowMenu.querySelectorAll(':scope > *');
-	const bottomGroup = parentContainer.querySelector(
-		'.ui-overflow-group-bottom',
-	) as HTMLElement;
+	const originalTopbar =
+		overflowGroupContentContainer.querySelectorAll(':scope > *');
+
 	// hide/show content on resize
 	const overflowMenuHandler = (hideContent: boolean) => {
-		overflowMenu.replaceChildren();
+		overflowGroupContentContainer.replaceChildren();
 		hiddenItems.replaceChildren();
 
 		if (hideContent) {
@@ -111,14 +113,14 @@ function setupOverflowMenu(
 			const topRow = document.createElement('div');
 			topRow.classList.add('top-row-overflow-group');
 			originalTopbar.forEach((el) => topRow.append(el));
-			overflowMenu.append(topRow, bottomGroup ?? null);
-			migrateItems(overflowMenu, hiddenItems);
+			overflowGroupContentContainer.append(topRow, bottomBar ?? null);
+			migrateItems(overflowGroupContentContainer, hiddenItems);
 		} else {
 			// show normally
-			originalTopbar.forEach((el) => overflowMenu.append(el));
-			if (bottomGroup) {
+			originalTopbar.forEach((el) => overflowGroupContentContainer.append(el));
+			if (bottomBar) {
 				// make sure bottom bar gets it's original position after unfold
-				parentContainer?.append(bottomGroup);
+				overflowGroupContainer?.append(bottomBar);
 			}
 		}
 	};
@@ -126,29 +128,33 @@ function setupOverflowMenu(
 	const dropdownId = 'overflow-button-' + id;
 	let isCollapsed = false;
 
-	(parentContainer as OverflowGroupContainer).isCollapsed = () => {
+	(overflowGroupContainer as OverflowGroupContainer).isCollapsed = () => {
 		return isCollapsed;
 	};
 
-	(parentContainer as OverflowGroupContainer).foldGroup = () => {
+	(overflowGroupContainer as OverflowGroupContainer).foldGroup = () => {
 		if (isCollapsed) return;
 		app.console.debug('overflow manager: fold group: ' + id);
 		JSDialog.CloseDropdown(dropdownId);
 
 		overflowMenuHandler(true);
-		parentContainer.classList.remove('ui-overflow-group-container-with-label');
+		overflowGroupContainer.classList.remove(
+			'ui-overflow-group-container-with-label',
+		);
 		overflowMenuButton.style.display = '';
 		isCollapsed = true;
 	};
 
-	(parentContainer as OverflowGroupContainer).unfoldGroup = () => {
+	(overflowGroupContainer as OverflowGroupContainer).unfoldGroup = () => {
 		if (!isCollapsed) return;
 
 		app.console.debug('overflow manager: unfold group: ' + id);
 		JSDialog.CloseDropdown(dropdownId);
 
 		overflowMenuButton.style.display = 'none';
-		parentContainer.classList.add('ui-overflow-group-container-with-label');
+		overflowGroupContainer.classList.add(
+			'ui-overflow-group-container-with-label',
+		);
 		overflowMenuHandler(false);
 		isCollapsed = false;
 	};
@@ -171,7 +177,7 @@ function setupOverflowMenu(
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
-					parentContainer.appendChild(menu.parentNode);
+					overflowGroupContainer.appendChild(menu.parentNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
 					menu?.classList.add('ui-overflow-group-popup');
@@ -218,32 +224,32 @@ JSDialog.OverflowGroup = function (
 	data: OverflowGroupWidgetJSON,
 	builder: JSBuilder,
 ) {
-	const container = L.DomUtil.create(
+	const overflowGroupContainer = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group',
 		parentContainer,
 	);
-	container.id = data.id;
+	overflowGroupContainer.id = data.id;
 
-	const innerContainer = L.DomUtil.create(
+	const overflowGroupInnerContainer = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group-inner',
-		container,
+		overflowGroupContainer,
 	);
-	innerContainer.id = data.id + '-inner';
+	overflowGroupInnerContainer.id = data.id + '-inner';
 
 	const contentContainer = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group-content',
-		innerContainer,
+		overflowGroupInnerContainer,
 	);
 	contentContainer.classList.add(data.vertical ? 'vertical' : 'horizontal');
-	innerContainer.id = data.id + '-content';
+	overflowGroupInnerContainer.id = data.id + '-content';
 
 	const bottomBar = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group-bottom',
-		container,
+		overflowGroupContainer,
 	);
 	bottomBar.id = data.id + '-bottom';
 
@@ -285,7 +291,7 @@ JSDialog.OverflowGroup = function (
 	// button
 	const id = 'overflow-button-' + data.id;
 	builder.build(
-		innerContainer,
+		overflowGroupInnerContainer,
 		[
 			{
 				type: 'menubutton',
@@ -308,7 +314,13 @@ JSDialog.OverflowGroup = function (
 		false,
 	);
 
-	setupOverflowMenu(container, contentContainer, data.id, data.more);
+	setupOverflowMenu(
+		overflowGroupContainer,
+		contentContainer,
+		bottomBar,
+		data.id,
+		data.more,
+	);
 
 	return false;
 } as JSWidgetHandler;
