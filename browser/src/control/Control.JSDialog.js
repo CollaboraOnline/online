@@ -314,9 +314,23 @@ L.Control.JSDialog = L.Control.extend({
 		defaultButton.style.display = 'none';
 		defaultButton.onclick = function() {
 			if (instance.defaultButtonId) {
-				var button = instance.form.querySelector('#' + instance.defaultButtonId);
-				if (button)
-					button.click();
+				var buttonContainer = instance.form.querySelector('#' + instance.defaultButtonId);
+				if(!buttonContainer) return;
+
+				// Check if the buttonContainer is a button
+				if (buttonContainer.tagName.toLowerCase() === 'button') {
+					buttonContainer.click();
+					return;
+				}
+
+				const button = buttonContainer.querySelector('button:not([disabled]):not(.hidden)');
+				if (button) {
+					if (button.onclick) {
+						button.onclick();
+					} else {
+						button.click();
+					}
+				}
 			}
 		};
 
