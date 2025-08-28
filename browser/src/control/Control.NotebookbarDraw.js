@@ -155,7 +155,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		if (hasSave) {
 			content.push(
 				{
-					'type': 'toolbox',
+					'type': 'container',
 					'children': [
 						{
 							'id': 'file-save',
