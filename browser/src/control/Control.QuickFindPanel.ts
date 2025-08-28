@@ -36,21 +36,36 @@ class QuickFindPanel extends SidebarBase {
 
 		super.onJSUpdate(e);
 
-		// handle placeholder text visibility
+		// handle placeholder text and quickfind controls visibility
 		app.layoutingService.appendLayoutingTask(() => {
-			const placeholder = document.getElementById('quickfind-placeholder');
-
 			if (data.control.id === 'numberofsearchfinds') {
-				const resultsText = data.control.text.trim().length > 0;
-				if (placeholder) placeholder.classList.toggle('hidden', resultsText);
+				this.handleNumberOfSearchFinds(data.control);
 			} else if (
 				data.control.id === 'searchfinds' &&
 				data.control.type === 'treelistbox'
 			) {
-				const isEmpty = data.control.entries.length === 0;
-				if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
+				this.handleSearchFindsTreelistbox(data.control);
 			}
 		});
+	}
+
+	handleNumberOfSearchFinds(control: any): void {
+		const placeholder = document.getElementById('quickfind-placeholder');
+
+		const hasText = (control.text ?? '').trim().length > 0;
+		if (placeholder) placeholder.classList.toggle('hidden', hasText);
+	}
+
+	handleSearchFindsTreelistbox(control: any): void {
+		const placeholder = document.getElementById('quickfind-placeholder');
+		const quickFindControls = document.getElementById('quickfind-controls');
+
+		const isEmpty =
+			!Array.isArray(control.entries) || control.entries.length === 0;
+
+		if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
+		if (quickFindControls)
+			quickFindControls.classList.toggle('hidden', isEmpty);
 	}
 
 	addPlaceholderIfEmpty(quickFindData: any): any {
@@ -88,6 +103,7 @@ class QuickFindPanel extends SidebarBase {
 		else console.error('QuickFind: no container');
 
 		const modifiedData = this.addPlaceholderIfEmpty(quickFindData);
+
 		this.builder.build(this.container, [modifiedData], false);
 
 		app.showQuickFind = true;
