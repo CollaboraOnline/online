@@ -27,8 +27,8 @@
 /* global JSDialog $ */
 
 function _extractLabelText(data) {
-	if (data.type === 'fixedtext') {
-		return data.visible != false ? data.text : ''; // visible can be undefined too, in that case it means its visible
+	if (data.type === 'fixedtext' && data.text !== undefined) {
+		return data.text;
 	}
 
 	for (var i = 0; i < data.children.length; i++) {
