@@ -5,7 +5,7 @@ var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
-	function expandSecion(name) {
+	function expandSection(name) {
 		cy.cGet('#contenttree')
 			.contains('.jsdialog.sidebar.ui-treeview-cell-text', name)
 			.parent() // .ui-treeview-cell
@@ -30,9 +30,9 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	it('Jump to element. Navigator -> Document', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
-		expandSecion('Tables');
-		expandSecion('Frames');
-		expandSecion('Images');
+		expandSection('Tables');
+		expandSection('Frames');
+		expandSection('Images');
 
 		cy.wait(500);
 
@@ -69,9 +69,9 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	it('Jump to element even when cursor not visible', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
-		expandSecion('Tables');
-		expandSecion('Frames');
-		expandSecion('Images');
+		expandSection('Tables');
+		expandSection('Frames');
+		expandSection('Images');
 
 		//Scroll back to Top
 		cy.cGet('#navigator-dock-wrapper').scrollTo(0,0, { ensureScrollable: false });
