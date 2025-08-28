@@ -218,7 +218,6 @@ int main(int argc, char* argv_main[])
     char *argv[2];
     argv[0] = strdup("wasm");
     argv[1] = nullptr;
-    Util::setThreadName("app");
 
     fakeClientFd = fakeSocketSocket();
 
