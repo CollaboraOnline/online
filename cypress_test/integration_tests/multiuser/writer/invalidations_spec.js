@@ -20,6 +20,9 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
 
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+
 		ceHelper.type('X');
 
 		cy.cSetActiveFrame('#iframe2');
@@ -53,6 +56,9 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join after document save and modify', function() {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
+
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
 
 		ceHelper.type('X');
 
