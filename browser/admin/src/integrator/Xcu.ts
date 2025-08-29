@@ -164,6 +164,18 @@ class Xcu {
 	}
 
 	private parse(content: string): XcuObject {
+		function format(propName: string): string {
+			let result = propName[0];
+			for (let i = 1; i < propName.length; i++) {
+				const char = propName[i];
+				if (char >= 'A' && char <= 'Z') {
+					result += ' ' + char.toLowerCase();
+				} else {
+					result += char;
+				}
+			}
+			return result;
+		}
 		const parser = new DOMParser();
 		const xmlDoc = parser.parseFromString(content, 'application/xml');
 
@@ -200,10 +212,11 @@ class Xcu {
 
 			const props = item.getElementsByTagName('prop');
 			Array.from(props).forEach((prop) => {
-				const propName = prop.getAttribute('oor:name');
+				let propName = prop.getAttribute('oor:name');
 				if (!propName) {
 					return;
 				}
+				propName = format(propName);
 
 				const valueElement = prop.getElementsByTagName('value')[0];
 				let value: string | boolean = valueElement
