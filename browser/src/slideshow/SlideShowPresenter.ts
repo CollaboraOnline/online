@@ -604,6 +604,14 @@ class SlideShowPresenter {
 					'animations-img skipTransition-' + this._navigateSkipTransition;
 			}.bind(this),
 		);
+
+		// Make sure slide controls don't disappear when mouse is over them
+		container.addEventListener(
+			'mouseenter',
+			function (this: SlideShowPresenter) {
+				clearTimeout(this._slideControlsTimer);
+			}.bind(this),
+		);
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
