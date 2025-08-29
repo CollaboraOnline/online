@@ -1617,6 +1617,21 @@ class UIManager extends L.Control {
 		};
 
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+
+		this.observeInputSelection();
+	}
+
+	observeInputSelection(): void {
+		const observer = new MutationObserver((_, obs) => {
+			const input = document.getElementById('input-modal-input') as HTMLInputElement | null;
+			if (input) {
+				input.focus();
+				input.select();
+				obs.disconnect();
+			}
+		});
+
+		observer.observe(document.body, { childList: true, subtree: true });
 	}
 
 	/**
