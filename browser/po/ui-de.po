@@ -12,20 +12,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-07-21 22:34+0000\n"
-"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
+"PO-Revision-Date: 2025-08-29 12:16+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
-msgstr "Admin-Konsole"
+msgstr "Administratorenkonsole"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
@@ -376,27 +376,24 @@ msgid "Accessibility"
 msgstr "Barrierefreiheit"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
-#, fuzzy
 msgid "Dark mode"
 msgstr "Dunkler Modus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
 msgid "Compact layout"
-msgstr ""
+msgstr "Kompaktes Layout"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
-#, fuzzy
 msgid "Show status bar"
 msgstr "Statusleiste anzeigen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show ruler"
 msgstr "Lineal anzeigen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Barrierefreiheitsprüfung"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -405,24 +402,23 @@ msgstr "Navigator"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Seitenleiste anzeigen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Custom Animation"
-msgstr ""
+msgstr "Benutzerdefinierte Animation"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Master Pages"
-msgstr ""
+msgstr "Masterseiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Slide Transition"
-msgstr ""
+msgstr "Folienübergang"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
-#, fuzzy
 msgid "Style List"
-msgstr "Stil-Liste"
+msgstr "Liste mit Formatvorlagen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:222
 msgid "Invalid JSON file"
@@ -480,7 +476,6 @@ msgid "Upload Xcu"
 msgstr "Xcu hochladen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:320
-#, fuzzy
 msgid "Shared Config URL is missing in initial variables."
 msgstr "Die gemeinsame Konfigurations-URL fehlt in den Anfangsvariablen."
 
@@ -519,9 +514,8 @@ msgid "Set default interface preferences."
 msgstr "Standardeinstellungen für die Schnittstelle festlegen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:605
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Wählen Sie einen Tab zum Anzeigen der Einstellungen aus."
+msgstr "Wählen Sie eine Registerkarte zu Browsereinstellungen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:618
 #: admin/src/integrator/Xcu.ts:357
@@ -709,10 +703,14 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Das System passt derzeit die Ressourcen an. Bitte warten Sie einen Moment, "
+"während wir Ihre Anfrage erneut versuchen..."
 
 #: js/global.js:1583
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
+"Das Dokument wird auf einen neuen Server migriert. Ein erneuter Versuch "
+"erfolgt in Kürze..."
 
 #: js/global.js:1585
 msgid "Failed to get RouteToken from controller"
@@ -787,7 +785,7 @@ msgstr "In Vollansicht öffnen"
 
 #: src/canvas/sections/CommentListSection.ts:1219
 msgid "Show in navigator"
-msgstr ""
+msgstr "Vorstellung in Navigator"
 
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/control/Control.JSDialogBuilder.js:1911
@@ -840,7 +838,7 @@ msgstr "Menü öffnen"
 
 #: src/canvas/sections/CommentSection.ts:341
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Drücken Sie Strg + Eingabetaste zu einwerfen"
 
 #: src/canvas/sections/CommentSection.ts:405
 #: src/canvas/sections/CommentSection.ts:406
@@ -2215,31 +2213,31 @@ msgstr "Gliederung"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Ergebnisse"
 
 #: src/control/Control.NavigatorPanel.ts:378
 msgid "Search..."
-msgstr ""
+msgstr "Suchen..."
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Übergang"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Dauer"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
-msgstr ""
+msgstr "Bei Mausklick"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Danach"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2307,9 +2305,8 @@ msgid "Page Layout"
 msgstr "Seitenlayout"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formel"
+msgstr "Formeln"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2332,9 +2329,8 @@ msgstr "Format"
 #: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Formen"
+msgstr "Form"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2409,7 +2405,7 @@ msgstr "Umbenennen"
 #: src/control/Control.NotebookbarImpress.js:708
 #: src/control/Control.NotebookbarWriter.js:583
 msgid "Clipboard"
-msgstr ""
+msgstr "Zwischenablage"
 
 #: src/control/Control.NotebookbarCalc.js:456
 #: src/control/Control.NotebookbarDraw.js:654
@@ -2420,11 +2416,11 @@ msgstr "Schriftart"
 #: src/control/Control.NotebookbarCalc.js:603
 #: src/control/Control.NotebookbarDraw.js:795
 msgid "Alignment"
-msgstr ""
+msgstr "Ausrichtung"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
-msgstr ""
+msgstr "Verbinden und Zentrieren"
 
 #: src/control/Control.NotebookbarCalc.js:740
 #: src/control/Control.NotebookbarCalc.js:756
@@ -2476,7 +2472,7 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Zellen"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:1620
@@ -2505,7 +2501,7 @@ msgstr "Schlecht"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -2517,18 +2513,18 @@ msgstr "Ersetzen"
 #: src/control/Control.NotebookbarCalc.js:1087
 #: src/control/Control.NotebookbarWriter.js:1815
 msgid "Margin"
-msgstr ""
+msgstr "Rand"
 
 #: src/control/Control.NotebookbarCalc.js:1093
 #: src/control/Control.NotebookbarWriter.js:1822
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 #: src/control/Control.NotebookbarCalc.js:1125
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Gitter"
 
 #: src/control/Control.NotebookbarCalc.js:1154
 msgid "Row Height"
@@ -2573,7 +2569,7 @@ msgstr "Spalten löschen"
 #: src/control/Control.NotebookbarWriter.js:3258
 #: src/control/Control.NotebookbarWriter.js:3581
 msgid "Align"
-msgstr ""
+msgstr "Ausrichtung"
 
 #: src/control/Control.NotebookbarCalc.js:1315
 #: src/control/Control.NotebookbarCalc.js:2868
@@ -2586,18 +2582,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3317
 #: src/control/Control.NotebookbarWriter.js:3640
 msgid "Arrange"
-msgstr ""
+msgstr "Anordnung"
 
 #: src/control/Control.NotebookbarCalc.js:1377
 msgid "Freeze"
-msgstr ""
+msgstr "Fixieren"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Maßstab"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2629,15 +2625,15 @@ msgstr "Statusleiste"
 #: src/control/Control.NotebookbarWriter.js:3366
 #: src/control/Control.NotebookbarWriter.js:3689
 msgid "Group"
-msgstr ""
+msgstr "Gruppen"
 
 #: src/control/Control.NotebookbarCalc.js:1580
 msgid "Ungroup"
-msgstr ""
+msgstr "Aufheben"
 
 #: src/control/Control.NotebookbarCalc.js:1602
 msgid "Pivot Table"
-msgstr ""
+msgstr "Pivot-Tabelle"
 
 #: src/control/Control.NotebookbarCalc.js:1651
 #: src/control/Control.NotebookbarDraw.js:996
@@ -2647,7 +2643,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:951
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Abbildungen"
 
 #: src/control/Control.NotebookbarCalc.js:1721
 #: src/control/Control.NotebookbarDraw.js:1010
@@ -2667,63 +2663,61 @@ msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1937
 msgid "Insert Function"
-msgstr ""
+msgstr "Funktion einfügen"
 
 #: src/control/Control.NotebookbarCalc.js:1945
-#, fuzzy
 msgid "Function Library"
-msgstr "Funktions-Assistent"
+msgstr "Funktions-Bibliothek"
 
 #: src/control/Control.NotebookbarCalc.js:1959
 msgid "AutoSum"
-msgstr ""
+msgstr "AutoSum"
 
 #: src/control/Control.NotebookbarCalc.js:1972
 msgid "Financial"
-msgstr ""
+msgstr "Finanz"
 
 #: src/control/Control.NotebookbarCalc.js:1990
 msgid "Logical"
-msgstr ""
+msgstr "Logisch"
 
 #: src/control/Control.NotebookbarCalc.js:2020
 msgid "Date & Time"
-msgstr ""
+msgstr "Datum und Zeit"
 
 #: src/control/Control.NotebookbarCalc.js:2032
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Suchen und Referenz"
 
 #: src/control/Control.NotebookbarCalc.js:2050
 msgid "Math & Trig"
-msgstr ""
+msgstr "Mathematik"
 
 #: src/control/Control.NotebookbarCalc.js:2062
 msgid "More Functions"
-msgstr ""
+msgstr "Mehr Funktionen"
 
 #: src/control/Control.NotebookbarCalc.js:2107
 msgid "Range"
-msgstr ""
+msgstr "Bereich"
 
 #: src/control/Control.NotebookbarCalc.js:2190
 msgid "Sort"
-msgstr ""
+msgstr "Sortierung"
 
 #: src/control/Control.NotebookbarCalc.js:2236
 msgid "Filter"
-msgstr ""
+msgstr "Filtern"
 
 #: src/control/Control.NotebookbarCalc.js:2483
 #: src/control/Control.NotebookbarImpress.js:1900
 #: src/control/Control.NotebookbarWriter.js:2524
-#, fuzzy
 msgid "Comments"
-msgstr "Kommentar"
+msgstr "Kommentare"
 
 #: src/control/Control.NotebookbarCalc.js:2588
 msgid "Format Cells"
-msgstr ""
+msgstr "Zellen formatieren"
 
 #: src/control/Control.NotebookbarCalc.js:2734
 #: src/control/Control.NotebookbarCalc.js:3091
@@ -2731,13 +2725,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3203
 #: src/control/Control.NotebookbarWriter.js:3526
 msgid "Wrap"
-msgstr ""
+msgstr "Umlauf"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarImpress.js:2619
 #: src/control/Control.NotebookbarWriter.js:3412
 msgid "Image Controls"
-msgstr ""
+msgstr "Bildsteuerung"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2769,24 +2763,23 @@ msgstr "Lineal"
 #: src/control/Control.NotebookbarWriter.js:787
 #: src/control/Control.NotebookbarWriter.js:2969
 msgid "Paragraph"
-msgstr ""
+msgstr "Absatz"
 
 #: src/control/Control.NotebookbarDraw.js:1207
 #: src/control/Control.NotebookbarDraw.js:1407
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Seite"
 
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1603
 #: src/control/Control.NotebookbarWriter.js:2391
-#, fuzzy
 msgid "Field"
-msgstr "Felder"
+msgstr "Feld"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Design"
-msgstr ""
+msgstr "Vorlage"
 
 #: src/control/Control.NotebookbarImpress.js:110
 msgid "Slide Show"
@@ -2810,7 +2803,7 @@ msgstr "Im Fenster anzeigen"
 
 #: src/control/Control.NotebookbarImpress.js:605
 msgid "Slide Views"
-msgstr ""
+msgstr "Folienansicht"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Show Grid"
@@ -2822,16 +2815,15 @@ msgstr "Am Raster einrasten"
 
 #: src/control/Control.NotebookbarImpress.js:769
 msgid "Slide Layout"
-msgstr ""
+msgstr "Folienlayout"
 
 #: src/control/Control.NotebookbarImpress.js:780
 msgid "New"
 msgstr "Neu"
 
 #: src/control/Control.NotebookbarImpress.js:791
-#, fuzzy
 msgid "Change Layout"
-msgstr "Seitenlayout"
+msgstr "Layout ändern"
 
 #: src/control/Control.NotebookbarImpress.js:799
 msgid "Reset Layout"
@@ -2839,11 +2831,11 @@ msgstr "Reset layout"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "Character"
-msgstr ""
+msgstr "Zeichen"
 
 #: src/control/Control.NotebookbarImpress.js:1074
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Abstand und Farbe"
 
 #: src/control/Control.NotebookbarImpress.js:1772
 msgid "Slide Size"
@@ -2851,20 +2843,20 @@ msgstr "Größe der Folie"
 
 #: src/control/Control.NotebookbarImpress.js:1795
 msgid "Background Image"
-msgstr ""
+msgstr "Hintergrundbild"
 
 #: src/control/Control.NotebookbarImpress.js:2004
 msgid "Merge & Split"
-msgstr ""
+msgstr "Verbinden und Teilen"
 
 #: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:2919
 msgid "Select"
-msgstr ""
+msgstr "Auswahl"
 
 #: src/control/Control.NotebookbarImpress.js:2652
 msgid "Effects"
-msgstr ""
+msgstr "Effekte"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2888,19 +2880,19 @@ msgstr "Nach unten blättern"
 
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Listen/Aufzählungszeichen"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
-msgstr ""
+msgstr "Kopf-/Fußzeilen"
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Bereich"
 
 #: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
-msgstr ""
+msgstr "Symbole"
 
 #: src/control/Control.NotebookbarWriter.js:1602
 msgid "Rich Text"
@@ -2916,23 +2908,23 @@ msgstr "Aufklappmenü"
 
 #: src/control/Control.NotebookbarWriter.js:2180
 msgid "Table of content"
-msgstr ""
+msgstr "Inhaltsverzeichnis"
 
 #: src/control/Control.NotebookbarWriter.js:2226
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Fußnote/Endnote"
 
 #: src/control/Control.NotebookbarWriter.js:2599
 msgid "Tracking"
-msgstr ""
+msgstr "Verfolgen"
 
 #: src/control/Control.NotebookbarWriter.js:2857
 msgid "Split"
-msgstr ""
+msgstr "Teilen"
 
 #: src/control/Control.NotebookbarWriter.js:3041
 msgid "Number Format"
-msgstr ""
+msgstr "Zahlenformat"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
@@ -3524,11 +3516,11 @@ msgstr "normal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr ""
+msgstr "Breit"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr ""
+msgstr "Schmal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Min"
@@ -3540,11 +3532,11 @@ msgstr "Max"
 
 #: src/control/jsdialog/Definitions.Menu.ts:816
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Einzelne Sparkline bearbeiten"
 
 #: src/control/jsdialog/Definitions.Menu.ts:827
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Einzelne Sparkline löschen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:863
 msgid "Portrait"
@@ -3556,123 +3548,123 @@ msgstr "Querformat"
 
 #: src/control/jsdialog/Definitions.Menu.ts:875
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:876
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:877
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:878
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:879
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:880
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:881
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:882
 msgid "Letter"
-msgstr ""
+msgstr "Letter"
 
 #: src/control/jsdialog/Definitions.Menu.ts:883
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:884
 msgid "Long Bond"
-msgstr ""
+msgstr "Long Bond"
 
 #: src/control/jsdialog/Definitions.Menu.ts:885
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:886
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:887
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:888
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:889
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:890
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:891
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:892
 msgid "User"
-msgstr ""
+msgstr "Selbstdefiniert"
 
 #: src/control/jsdialog/Definitions.Menu.ts:893
 msgid "DL Envelope"
-msgstr ""
+msgstr "DL Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:894
 msgid "C6 Envelope"
-msgstr ""
+msgstr "C6 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:895
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "C6/5 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:896
 msgid "C5 Envelope"
-msgstr ""
+msgstr "C5 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:897
 msgid "C4 Envelope"
-msgstr ""
+msgstr "C4 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:900
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "#6¾ Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:905
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:908
 msgid "#9 Envelope"
-msgstr ""
+msgstr "#9 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:909
 msgid "#10 Envelope"
-msgstr ""
+msgstr "#10 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:910
 msgid "#11 Envelope"
-msgstr ""
+msgstr "#11 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:911
 msgid "#12 Envelope"
-msgstr ""
+msgstr "#12 Briefumschlag"
 
 #: src/control/jsdialog/Definitions.Menu.ts:914
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Japanische Postkarte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1086
 msgid "Insert Local Image"
@@ -3708,104 +3700,103 @@ msgstr "Dieser Benutzer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1235
 msgid "No Borders"
-msgstr ""
+msgstr "Keine Ränder"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1241
 msgid "Left Border"
-msgstr ""
+msgstr "Linker Rand"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1247
 msgid "Right Border"
-msgstr ""
+msgstr "Rechter Rand"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Linker und rechter Rand"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
-msgstr ""
+msgstr "Oberer Rand"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1265
 msgid "Bottom Border"
-msgstr ""
+msgstr "Unterer Rand"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1271
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Oberer und unterer Rand"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1277
 msgid "Outer Border"
-msgstr ""
+msgstr "Äußere Ränder"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1283
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Alle horizontalen Linien"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1289
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Äußere Ränder und horizontale Linien"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1295
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Äußere Ränder und vertikale Linien"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1301
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Außenränder und alle inneren Linien"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1306
 msgid "Line color"
-msgstr ""
+msgstr "Linienfarbe"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
-#, fuzzy
 msgid "Line style"
-msgstr "Linienstil:"
+msgstr "Linienstil"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Haarfein (0,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1329
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Sehr schmal (0,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1338
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Schmal (0,75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1347
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Mittel (1,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1356
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Breit (2,25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1365
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Sehr breit (4,5 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1374
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Haarfein doppelt (1,10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1383
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Haarfein doppelt (2,35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1392
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Schmal/Mittel (3,00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1401
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Mittel/Haarfein (3,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1410
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Mittel/Mittel (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1470
 msgid "Standard (4:3)"
@@ -3877,19 +3868,19 @@ msgstr "Titel, Vertikaler Text"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1500
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Titel, vertikaler Text, Clipart"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1625
 msgid "Grayscale"
-msgstr ""
+msgstr "Graustufen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1630
 msgid "Black/White"
-msgstr ""
+msgstr "Schwarz/Weiß"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1635
 msgid "Watermark"
-msgstr ""
+msgstr "Wasserzeichen"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3914,23 +3905,23 @@ msgstr "Aktuell"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Top: {top}"
-msgstr ""
+msgstr "Oben: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Left: {left}"
-msgstr ""
+msgstr "Links: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:112
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Unter: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:117
 msgid "Right: {right}"
-msgstr ""
+msgstr "Recht: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Benutzerdefiniert Ränder…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
@@ -3948,6 +3939,8 @@ msgstr "Bearbeitungsmodus"
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
 msgstr ""
+"Anzahl der Seiten. Klicken Sie auf, um das Dialogfeld „Wechseln zu Seite“ zu "
+"öffnen."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -4807,16 +4800,16 @@ msgstr "Klicken Sie hier, um die Präsentation zu beenden..."
 
 #: src/slideshow/SlideShowPresenter.ts:560
 msgid "End Show"
-msgstr ""
+msgstr "Ende"
 
 #: src/slideshow/SlideShowPresenter.ts:588
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Disable Animations"
-msgstr ""
+msgstr "Animationen deaktivieren"
 
 #: src/slideshow/SlideShowPresenter.ts:598
 msgid "Enable Animations"
-msgstr ""
+msgstr "Animationen aktivieren"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
