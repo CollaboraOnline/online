@@ -264,11 +264,13 @@ L.Control.JSDialog = L.Control.extend({
 			overlay.id = instance.id + '-overlay';
 			if (instance.cancellable) {
 				overlay.onclick = () => {
+					// dropdowns are online-only components, don't exist in core
+					var hasToNotifyServer = !instance.isDropdown;
 					if (instance.isDropdown) {
+						// multi-level leftovers
 						instance.builder.callback('dropdown', 'hidedropdown', {id: instance.id}, null, instance.builder);
-						return;
 					}
-					this.close(instance.id, true); };
+					this.close(instance.id, hasToNotifyServer); };
 			}
 		}
 		instance.overlay = overlay;
