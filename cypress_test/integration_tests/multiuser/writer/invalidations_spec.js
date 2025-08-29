@@ -12,7 +12,9 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		// when available, currently adds an extra empty update when
 		// grammar checking kicks in at server-side idle after a change.
 		localStorage.setItem('SpellOnline', false);
-		helper.setupAndLoadDocument('writer/invalidations.odt',true);
+		helper.setupAndLoadDocument('writer/invalidations.odt',
+																/* skipDocumentCheck */ true,
+																/* isMulti */ true);
 		desktopHelper.switchUIToNotebookbar();
 	});
 
@@ -20,12 +22,13 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
 
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		ceHelper.type('X');
 
 		cy.cSetActiveFrame('#iframe2');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cSetActiveFrame('#iframe1');
@@ -57,12 +60,13 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
 
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		ceHelper.type('X');
 
 		cy.cSetActiveFrame('#iframe2');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cSetActiveFrame('#iframe1');
