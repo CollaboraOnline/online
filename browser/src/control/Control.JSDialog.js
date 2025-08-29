@@ -477,8 +477,14 @@ L.Control.JSDialog = L.Control.extend({
 		} else {
 			// will directly set element of focusable element based on init focus id
 			// If init_id is not defined, select the first focusable element from the container
-			firstFocusableElement = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : JSDialog.GetFocusableElements(instance.container);
-			if (!JSDialog.IsFocusable(firstFocusableElement)){
+			firstFocusableElement = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
+
+			if (!firstFocusableElement) {
+				const focusables = JSDialog.GetFocusableElements(instance.container);
+				if (focusables && focusables.length) firstFocusableElement = focusables[0];
+			}
+
+			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)){
 				firstFocusableElement = JSDialog.FindFocusableWithin(firstFocusableElement, 'next');
 			}
 		}
@@ -488,8 +494,8 @@ L.Control.JSDialog = L.Control.extend({
 			firstFocusableElement = firstFocusableElement.length > 0 ? firstFocusableElement[0] : firstFocusableElement;
 			firstFocusableElement.focus();
 		}
-		else if (instance.canHaveFocus !== false)
-			app.console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
+		else if (instance.canHaveFocus !== false && instance.init_focus_id)
+			app.console.error('JSDialog: Cannot get focus for dialog: "' + instance.id + '" with initial id: "' + instance.init_focus_id + '"');
 	},
 
 	 findTabControl: function(obj) {
