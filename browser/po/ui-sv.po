@@ -4764,12 +4764,12 @@ msgstr "Upptäck alla förändringar"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-24-04-release-notes/\">release notes</a> and learn all about: The "
+"code-25-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "Kolla <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-24-04-release-notes/\">släppanteckningarna</a> och ta del av senaste "
+"code-25-04-release-notes/\">släppanteckningarna</a> och ta del av senaste "
 "Collabora Online Development Edition, för hemanvändare och små arbetsgrupper."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7

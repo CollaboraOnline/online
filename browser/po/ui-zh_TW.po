@@ -4685,12 +4685,12 @@ msgstr "發現所有更新"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-24-04-release-notes/\">release notes</a> and learn all about: The "
+"code-25-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "檢查<a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-24-04-release-notes/\">發佈說明</a>並了解關於: 最新的 Collabora "
+"code-25-04-release-notes/\">發佈說明</a>並了解關於: 最新的 Collabora "
 "線上開發版，針對家庭用戶和小型團隊。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7

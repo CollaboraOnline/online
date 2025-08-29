@@ -4658,7 +4658,7 @@ msgstr ""
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-24-04-release-notes/\">release notes</a> and learn all about: The "
+"code-25-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
