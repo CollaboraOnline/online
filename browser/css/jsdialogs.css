@@ -2846,6 +2846,16 @@ kbd,
 	align-items: center;
 }
 
+/* Calc - Insert - Chart - Chart Wizard */
+#subtype_iconview.jsdialog.ui-iconview {
+	grid-template-columns: repeat(4, 1fr);
+	overflow: visible;
+}
+
+#CHART2_HID_SCH_WIZARD_ROADMAP.vertical.jsdialog label {
+	width: max-content;
+}
+
 /* Listbox UI grid */
 .jsdialog.ui-grid[role='listbox'] {
 	max-height: 470px;
