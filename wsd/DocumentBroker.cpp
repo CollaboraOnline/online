@@ -214,7 +214,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _stop(false)
     , _documentChangedInStorage(false)
     , _isViewFileExtension(false)
-    , _isViewSettingsAccessibilityEnabled(false)
+    , _isViewSettingsEnabled(false)
     , _alwaysSaveOnExit(ConfigUtil::getConfigValue<bool>("per_document.always_save_on_exit", false))
     , _backgroundAutoSave(
           ConfigUtil::getConfigValue<bool>("per_document.background_autosave", true))
@@ -1678,9 +1678,10 @@ void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
     }
 }
 
-static bool extractAccessibilityState(const std::string& viewSettings, const std::string& sessionId)
+static std::string extractViewSettings(const std::string& viewSettings,
+                                       const std::shared_ptr<ClientSession>& session)
 {
-    bool isViewSettingsAccessibilityEnabled = false;
+    std::string viewSettingsString;
     std::ifstream ifs(viewSettings);
     try
     {
@@ -1690,18 +1691,26 @@ static bool extractAccessibilityState(const std::string& viewSettings, const std
 
         const Poco::JSON::Object::Ptr& viewsetting = result.extract<Poco::JSON::Object::Ptr>();
 
-        std::string accessibilityState;
+        std::string accessibilityState, zoteroAPIKey;
         JsonUtil::findJSONValue(viewsetting, "accessibilityState", accessibilityState);
 
-        isViewSettingsAccessibilityEnabled = accessibilityState == "true";
+        JsonUtil::findJSONValue(viewsetting, "zoteroAPIKey", zoteroAPIKey);
+
+        session->setZoteroAPIKey(zoteroAPIKey);
+        session->setAccessibilityState(accessibilityState == "true");
+        std::ostringstream jsonStream;
+        viewsetting->stringify(jsonStream);
+        const std::string& jsonStr = jsonStream.str();
+        viewSettingsString = jsonStr;
     }
     catch (const std::exception& exc)
     {
         LOG_ERR("Failed to parse viewsetting json with[" << ifs.rdbuf() << "] error[" << exc.what()
-                                                         << "], for session[" << sessionId << ']');
-        return false;
+                                                         << "], for session[" << session->getId()
+                                                         << ']');
+        return viewSettingsString;
     }
-    return isViewSettingsAccessibilityEnabled;
+    return viewSettingsString;
 }
 
 void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
@@ -1737,10 +1746,13 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             }
 
             std::string viewSettings = presetsPath + "viewsetting/viewsetting.json";
+            std::string settings;
             if (FileUtil::Stat(viewSettings).exists())
-                _isViewSettingsAccessibilityEnabled =
-                    extractAccessibilityState(viewSettings, session->getId());
-
+            {
+                settings = extractViewSettings(viewSettings, session);
+                _isViewSettingsEnabled = !settings.empty();
+                session->sendTextFrame("viewsetting: " + settings);
+            }
             forwardToChild(session, "addconfig");
         }
         else
@@ -4926,32 +4938,30 @@ bool DocumentBroker::forwardUrpToChild(const std::string& message)
     return _childProcess && _childProcess->sendUrpMessage(message);
 }
 
-std::string DocumentBroker::applyViewAccessibility(const std::string& message,
-                                                   const std::string& viewId)
+std::string DocumentBroker::applyViewSettings(const std::string& message, const std::string& viewId)
 {
-    if (!_isViewSettingsAccessibilityEnabled)
+    if (!_isViewSettingsEnabled)
         return message;
 
     const auto it = _sessions.find(viewId);
-    if (it != _sessions.end())
-        it->second->sendTextFrame("lockaccessibilityon");
-    else
-        LOG_WRN("Cannot lock accessibility on for ClientSession [" << viewId << ']');
 
     // Ensure accessibilityState=true is enabled. Overwrite accessibilityState=
     // if it exists, append otherwise.
     bool accessibilityOverridden = false;
     std::string result;
     result.reserve(message.size());
+    std::cout << std::endl << std::endl << std::endl << message << std::endl << std::endl << std::endl;
     const StringVector tokens = StringVector::tokenize(message);
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         if (i)
             result.push_back(' ');
-        if (tokens[i].starts_with("accessibilityState"))
+        // accessibilityState may have updated the while the message is being processed so rely on latest state
+        if (tokens[i].starts_with("accessibilityState") && it->second->getAccessibilityState())
         {
             result.append("accessibilityState=true");
             accessibilityOverridden = true;
+            it->second->sendTextFrame("lockaccessibilityon");
         }
         else
             result.append(tokens[i]);
@@ -5028,13 +5038,13 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
                     std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
                     if (!selfLifecycle)
                         return;
-                    _childProcess->sendFrame(applyViewAccessibility(msg, viewId), binary);
+                    _childProcess->sendFrame(applyViewSettings(msg, viewId), binary);
                 };
                 _asyncInstallTask->appendCallback(sendLoad);
                 return true;
             }
 #endif
-            return _childProcess->sendFrame(applyViewAccessibility(msg, viewId), binary);
+            return _childProcess->sendFrame(applyViewSettings(msg, viewId), binary);
         }
     }
 

@@ -317,6 +317,23 @@ ul {
   background-color: var(--settings-background);
 }
 
+#zoterocontainer {
+  margin: 16px;
+}
+
+input#zotero {
+  width: 300px;
+  flex: none;
+  padding: 8px;
+  font-size: 15px;
+  border: 1px solid var(--settings-text-maxcontrast);
+  border-radius: 4px;
+  color: var(--settings-text);
+  background-color: var(--settings-background);
+  align-items: center;
+  margin-bottom: 16px;
+}
+
 .wordbook-add-button {
   padding: 8px;
   margin: 0px 5px;
@@ -461,7 +478,7 @@ ul {
   min-height: 40px;
 }
 
-.xcu-editor-tab::after, 
+.xcu-editor-tab::after,
 .browser-setting-tab::after {
   content: '';
   position: absolute;
@@ -473,7 +490,7 @@ ul {
   transition: background-color 0.2s ease;
 }
 
-.xcu-editor-tab.active, 
+.xcu-editor-tab.active,
 .browser-setting-tab.active {
   color: var(--settings-btn-primary);
 }

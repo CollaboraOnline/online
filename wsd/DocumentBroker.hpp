@@ -1685,8 +1685,7 @@ private:
     /// if _isViewSettingsAccessibilityEnabled is set then set
     /// accessibilityState=true in @message and force-enable
     /// accessibility on for viewId
-    std::string applyViewAccessibility(const std::string& message,
-                                       const std::string& viewId);
+    std::string applyViewSettings(const std::string& message, const std::string& viewId);
 
     /// What type are we: affects priority.
     const Poco::URI _uriPublic;
@@ -1819,7 +1818,7 @@ private:
     /// These files, such as PDF, don't have a reliable ModifiedStatus.
     bool _isViewFileExtension;
 
-    bool _isViewSettingsAccessibilityEnabled;
+    bool _isViewSettingsEnabled;
 
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit : 1;
