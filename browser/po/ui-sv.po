@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-07-30 23:14+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2025-08-28 20:07+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -369,27 +369,24 @@ msgid "Accessibility"
 msgstr "Tillgänglighet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:117
-#, fuzzy
 msgid "Dark mode"
 msgstr "Mörkt läge"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
 msgid "Compact layout"
-msgstr ""
+msgstr "Kompakt layout"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
-#, fuzzy
 msgid "Show status bar"
-msgstr "Visa statusfältet"
+msgstr "Visa statusfält"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show ruler"
 msgstr "Visa linjal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Tillgänglighetsgranskare"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -398,22 +395,21 @@ msgstr "Navigatör"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Visa sidofält"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Custom Animation"
-msgstr ""
+msgstr "Anpassad animering"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Master Pages"
-msgstr ""
+msgstr "Huvudsidor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Slide Transition"
-msgstr ""
+msgstr "Bildövergång"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
-#, fuzzy
 msgid "Style List"
 msgstr "Stillista"
 
@@ -691,10 +687,12 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Systemet justerar för närvarande resurser. Vänta ett ögonblick medan vi "
+"försöker göra om din begäran..."
 
 #: js/global.js:1583
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "Dokumentet migreras till en ny server. Försöker snart igen..."
 
 #: js/global.js:1585
 msgid "Failed to get RouteToken from controller"
@@ -767,7 +765,7 @@ msgstr "Öppna i helskärm"
 
 #: src/canvas/sections/CommentListSection.ts:1219
 msgid "Show in navigator"
-msgstr ""
+msgstr "Visa i navigatör"
 
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/control/Control.JSDialogBuilder.js:1911
@@ -820,7 +818,7 @@ msgstr "Öppna meny"
 
 #: src/canvas/sections/CommentSection.ts:341
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Tryck på Ctrl + Enter för att posta"
 
 #: src/canvas/sections/CommentSection.ts:405
 #: src/canvas/sections/CommentSection.ts:406
@@ -2185,31 +2183,31 @@ msgstr "Översikt"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Resultat"
 
 #: src/control/Control.NavigatorPanel.ts:378
 msgid "Search..."
-msgstr ""
+msgstr "Sök..."
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Övergång"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Variant"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Varaktighet"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
-msgstr ""
+msgstr "Vid musklick"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Efter"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2277,9 +2275,8 @@ msgid "Page Layout"
 msgstr "Sidlayout"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formel"
+msgstr "Formler"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2378,7 +2375,7 @@ msgstr "Byt namn"
 #: src/control/Control.NotebookbarImpress.js:708
 #: src/control/Control.NotebookbarWriter.js:583
 msgid "Clipboard"
-msgstr ""
+msgstr "Urklipp"
 
 #: src/control/Control.NotebookbarCalc.js:456
 #: src/control/Control.NotebookbarDraw.js:654
@@ -2389,11 +2386,11 @@ msgstr "Teckensnitt"
 #: src/control/Control.NotebookbarCalc.js:603
 #: src/control/Control.NotebookbarDraw.js:795
 msgid "Alignment"
-msgstr ""
+msgstr "Justering"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
-msgstr ""
+msgstr "Sammanfoga och centrera"
 
 #: src/control/Control.NotebookbarCalc.js:740
 #: src/control/Control.NotebookbarCalc.js:756
@@ -2445,7 +2442,7 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Celler"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:1620
@@ -2474,7 +2471,7 @@ msgstr "Dålig"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Redigering"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -2497,7 +2494,7 @@ msgstr "Storlek"
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Rutnät"
 
 #: src/control/Control.NotebookbarCalc.js:1154
 msgid "Row Height"
@@ -2542,7 +2539,7 @@ msgstr "Ta bort kolumner"
 #: src/control/Control.NotebookbarWriter.js:3258
 #: src/control/Control.NotebookbarWriter.js:3581
 msgid "Align"
-msgstr ""
+msgstr "Justera"
 
 #: src/control/Control.NotebookbarCalc.js:1315
 #: src/control/Control.NotebookbarCalc.js:2868
@@ -2555,18 +2552,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3317
 #: src/control/Control.NotebookbarWriter.js:3640
 msgid "Arrange"
-msgstr ""
+msgstr "Arrangera"
 
 #: src/control/Control.NotebookbarCalc.js:1377
 msgid "Freeze"
-msgstr ""
+msgstr "Frys"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2606,7 +2603,7 @@ msgstr "Avgruppera"
 
 #: src/control/Control.NotebookbarCalc.js:1602
 msgid "Pivot Table"
-msgstr ""
+msgstr "Pivottabell"
 
 #: src/control/Control.NotebookbarCalc.js:1651
 #: src/control/Control.NotebookbarDraw.js:996
@@ -2616,7 +2613,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:951
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Illustrationer"
 
 #: src/control/Control.NotebookbarCalc.js:1721
 #: src/control/Control.NotebookbarDraw.js:1010
@@ -2636,63 +2633,61 @@ msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1937
 msgid "Insert Function"
-msgstr ""
+msgstr "Infoga funktion"
 
 #: src/control/Control.NotebookbarCalc.js:1945
-#, fuzzy
 msgid "Function Library"
-msgstr "Funktionsguide"
+msgstr "Funktionsbibliotek"
 
 #: src/control/Control.NotebookbarCalc.js:1959
 msgid "AutoSum"
-msgstr ""
+msgstr "Autosumma"
 
 #: src/control/Control.NotebookbarCalc.js:1972
 msgid "Financial"
-msgstr ""
+msgstr "Finansiell"
 
 #: src/control/Control.NotebookbarCalc.js:1990
 msgid "Logical"
-msgstr ""
+msgstr "Logisk"
 
 #: src/control/Control.NotebookbarCalc.js:2020
 msgid "Date & Time"
-msgstr ""
+msgstr "Datum & tid"
 
 #: src/control/Control.NotebookbarCalc.js:2032
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Uppslag & referens"
 
 #: src/control/Control.NotebookbarCalc.js:2050
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matematik & trigonometri"
 
 #: src/control/Control.NotebookbarCalc.js:2062
 msgid "More Functions"
-msgstr ""
+msgstr "Mer funktioner"
 
 #: src/control/Control.NotebookbarCalc.js:2107
 msgid "Range"
-msgstr ""
+msgstr "Omfång"
 
 #: src/control/Control.NotebookbarCalc.js:2190
 msgid "Sort"
-msgstr ""
+msgstr "Sortera"
 
 #: src/control/Control.NotebookbarCalc.js:2236
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: src/control/Control.NotebookbarCalc.js:2483
 #: src/control/Control.NotebookbarImpress.js:1900
 #: src/control/Control.NotebookbarWriter.js:2524
-#, fuzzy
 msgid "Comments"
-msgstr "Kommentar"
+msgstr "Kommentarer"
 
 #: src/control/Control.NotebookbarCalc.js:2588
 msgid "Format Cells"
-msgstr ""
+msgstr "Formatera celler"
 
 #: src/control/Control.NotebookbarCalc.js:2734
 #: src/control/Control.NotebookbarCalc.js:3091
@@ -2700,13 +2695,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3203
 #: src/control/Control.NotebookbarWriter.js:3526
 msgid "Wrap"
-msgstr ""
+msgstr "Flödas"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarImpress.js:2619
 #: src/control/Control.NotebookbarWriter.js:3412
 msgid "Image Controls"
-msgstr ""
+msgstr "Bildkontroller"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2738,18 +2733,17 @@ msgstr "Linjal"
 #: src/control/Control.NotebookbarWriter.js:787
 #: src/control/Control.NotebookbarWriter.js:2969
 msgid "Paragraph"
-msgstr ""
+msgstr "Paragraf"
 
 #: src/control/Control.NotebookbarDraw.js:1207
 #: src/control/Control.NotebookbarDraw.js:1407
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Sida"
 
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1603
 #: src/control/Control.NotebookbarWriter.js:2391
-#, fuzzy
 msgid "Field"
 msgstr "Fält"
 
@@ -2779,7 +2773,7 @@ msgstr "Presentera i fönster"
 
 #: src/control/Control.NotebookbarImpress.js:605
 msgid "Slide Views"
-msgstr ""
+msgstr "Bildvyer"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Show Grid"
@@ -2791,7 +2785,7 @@ msgstr "Fäst till rutnät"
 
 #: src/control/Control.NotebookbarImpress.js:769
 msgid "Slide Layout"
-msgstr ""
+msgstr "Bildlayout"
 
 #: src/control/Control.NotebookbarImpress.js:780
 msgid "New"
@@ -2807,11 +2801,11 @@ msgstr "Återställ layout"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "Character"
-msgstr ""
+msgstr "Tecken"
 
 #: src/control/Control.NotebookbarImpress.js:1074
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Mellanrum & färg"
 
 #: src/control/Control.NotebookbarImpress.js:1772
 msgid "Slide Size"
@@ -2823,16 +2817,16 @@ msgstr "Bakgrundsbild"
 
 #: src/control/Control.NotebookbarImpress.js:2004
 msgid "Merge & Split"
-msgstr ""
+msgstr "Sammanfoga & dela"
 
 #: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:2919
 msgid "Select"
-msgstr ""
+msgstr "Välj"
 
 #: src/control/Control.NotebookbarImpress.js:2652
 msgid "Effects"
-msgstr ""
+msgstr "Effekter"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2856,19 +2850,19 @@ msgstr "Scrolla nedåt"
 
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Listor/Punkter"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
-msgstr ""
+msgstr "Sidhuvud & sidfot"
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Sektion"
 
 #: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
-msgstr ""
+msgstr "Symboler"
 
 #: src/control/Control.NotebookbarWriter.js:1602
 msgid "Rich Text"
@@ -2884,23 +2878,23 @@ msgstr "Rullgardinsmeny"
 
 #: src/control/Control.NotebookbarWriter.js:2180
 msgid "Table of content"
-msgstr ""
+msgstr "Innehållsförteckning"
 
 #: src/control/Control.NotebookbarWriter.js:2226
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Fotnot/Slutnot"
 
 #: src/control/Control.NotebookbarWriter.js:2599
 msgid "Tracking"
-msgstr ""
+msgstr "Spårning"
 
 #: src/control/Control.NotebookbarWriter.js:2857
 msgid "Split"
-msgstr ""
+msgstr "Dela upp"
 
 #: src/control/Control.NotebookbarWriter.js:3041
 msgid "Number Format"
-msgstr ""
+msgstr "Nummerformat"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
@@ -3673,104 +3667,103 @@ msgstr "Denna användaren"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1235
 msgid "No Borders"
-msgstr ""
+msgstr "Ingen gräns"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1241
 msgid "Left Border"
-msgstr ""
+msgstr "Vänster kantlinje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1247
 msgid "Right Border"
-msgstr ""
+msgstr "Höger kantlinje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Vänster och höger kantlinjer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
-msgstr ""
+msgstr "Övre kantlinje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1265
 msgid "Bottom Border"
-msgstr ""
+msgstr "Nedre kantlinje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1271
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Övre och nedre kantlinjer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1277
 msgid "Outer Border"
-msgstr ""
+msgstr "Yttre gräns"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1283
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Alla horisontella linjer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1289
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Yttergräns och horisontella linjer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1295
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Yttre gräns och vertikala linjer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1301
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Yttre gränser och alla inre linjer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1306
 msgid "Line color"
-msgstr ""
+msgstr "Linjens färg"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
-#, fuzzy
 msgid "Line style"
-msgstr "Stil för linje"
+msgstr "Linje stil"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Hårfäste (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1329
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Väldigt tunn (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1338
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Tunn (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1347
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Medium (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1356
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Tjock (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1365
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Extra tjock (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1374
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Dubbelt hårfäste (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1383
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Dubbelt hårfäste (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1392
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Tunn/Medium (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1401
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Medium/Hårfäste (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1410
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Medium/Medium (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1470
 msgid "Standard (4:3)"
@@ -3912,7 +3905,7 @@ msgstr "Redigeringsläge"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Antal sidor. Klicka för att öppna dialogrutan Gå till sida."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -4728,16 +4721,16 @@ msgstr "Klicka för att avsluta presentationen ..."
 
 #: src/slideshow/SlideShowPresenter.ts:560
 msgid "End Show"
-msgstr ""
+msgstr "Avsluta showen"
 
 #: src/slideshow/SlideShowPresenter.ts:588
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Disable Animations"
-msgstr ""
+msgstr "Inaktivera animationer"
 
 #: src/slideshow/SlideShowPresenter.ts:598
 msgid "Enable Animations"
-msgstr ""
+msgstr "Aktivera animationer"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
