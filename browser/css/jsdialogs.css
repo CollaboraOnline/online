@@ -2349,16 +2349,6 @@ kbd,
 	min-height: 300px;
 }
 
-/* Insert hyperlink dialog */
-
-#HyperlinkInternetPage #grid2,
-#HyperlinkInternetPage #label2,
-#HyperlinkInternetPage #lbProtocol,
-#HyperlinkInternetPage #linktyp_ftp,
-#HyperlinkInternetPage #linktyp_internet {
-	display: none;
-}
-
 /* feature_lock */
 #modal-dialog-unlock-features-popup {
 	width: 652px;
