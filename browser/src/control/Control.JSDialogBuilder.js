@@ -267,7 +267,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType === 'responsebutton' && data === 1 && !builder.reportValidity())
 			return;
 
-		console.assert(object.id, 'Trying to send command without valid id');
+		console.assert(
+			typeof object.id === 'number' || (typeof object.id === 'string' && object.id.length > 0),
+			'Trying to send command without valid id');
 
 		window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
