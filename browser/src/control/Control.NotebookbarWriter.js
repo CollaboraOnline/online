@@ -1803,7 +1803,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'overflowgroup',
 				'id': 'layout-page',
-				'name': 'Page Setup',
+				'name': _('Page Setup'),
 				'accessibility': { focusBack: true,	combination: 'SP', de: 'T' },
 				'more': {
 					'command':'.uno:PageDialog',
