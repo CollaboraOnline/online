@@ -479,21 +479,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					} : {},
 				hasServerAudit ?
 				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'server-audit',
-							'type': 'bigcustomtoolitem',
-							'text': _('Server audit'),
-							'command': 'serveraudit',
-							'accessibility': { focusBack: false, combination: 'SA', de: null }
-						},
-						{
-							'id': 'help-serveraudit-break',
-							'type': 'separator',
-							'orientation': 'vertical'
-						}
-					]
+					'id': 'server-audit',
+					'type': 'bigcustomtoolitem',
+					'text': _('Server audit'),
+					'command': 'serveraudit',
+					'accessibility': { focusBack: false, combination: 'SA', de: null }
+				} : {},
+				hasServerAudit ?
+				{
+				'id': 'help-serveraudit-break',
+				'type': 'separator',
+				'orientation': 'vertical'
 				} : {},
 				{
 					'type': 'toolbox',
