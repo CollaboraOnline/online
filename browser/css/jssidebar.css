@@ -618,6 +618,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	padding-inline-start: 0;
 }
 
+#quickfind-dock-wrapper #searchfinds {
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) transparent;
+}
+
 /* results */
 #quickfind-dock-wrapper .ui-treeview {
 	grid-row: 2;
