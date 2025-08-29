@@ -1755,6 +1755,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('label', builder.options.cssClass, parentContainer);
 
+		// Default case: assume target has `-input` suffix
 		if (data.labelFor)
 			fixedtext.htmlFor = data.labelFor + '-input';
 
@@ -1765,6 +1766,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
+
+		const updateLabelForAttribute = function(label, labelledControl) {
+			if(labelledControl.hasAttribute('aria-labelledby'))
+				label.removeAttribute('for');
+			else
+				label.htmlFor = labelledControl.id;
+		};
 
 		app.layoutingService.appendLayoutingTask(function () {
 			var labelledControl = document.getElementById(data.labelFor);
@@ -1779,6 +1787,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				builder._setAccessKey(target, accKey);
 			}
+
+			var targetElement = document.getElementById(data.labelFor + '-input');
+			// Label is already pointing to correct element (default case)
+			if(targetElement)
+				return;
+
+			// Retry scheduling if element not found.
+			// i.e. For pop-ups: Double click on Chart->Sidebar->Colors
+			app.layoutingService.appendLayoutingTask(function () {
+				targetElement = document.getElementById(data.labelFor + '-input');
+				// Label is already pointing to correct element (default case)
+				if (targetElement)
+					return;
+
+				targetElement = document.getElementById(data.labelFor);
+				// Reference label to target element correctly
+				if(targetElement)
+					updateLabelForAttribute(fixedtext, targetElement);
+			});
 		});
 
 		fixedtext.id = data.id;
