@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-06 17:01+0000\n"
-"Last-Translator: \"David D.\" <david.ducassou@free.fr>\n"
+"PO-Revision-Date: 2025-08-28 09:37+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -389,7 +389,6 @@ msgid "Show status bar"
 msgstr "Afficher la barre d'état"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show ruler"
 msgstr "Afficher la règle"
 
