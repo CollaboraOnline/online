@@ -25,6 +25,7 @@ class QuickFindPanel extends SidebarBase {
 
 		this.map = map;
 		this.map.on('quickfind', this.onQuickFind, this);
+		app.events.on('resize', this.onResize.bind(this));
 	}
 
 	onRemove() {
@@ -49,6 +50,16 @@ class QuickFindPanel extends SidebarBase {
 			) {
 				const isEmpty = data.control.entries.length === 0;
 				if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
+			}
+			this.onResize();
+		});
+	}
+
+	onResize(): void {
+		app.layoutingService.appendLayoutingTask(() => {
+			const searchFinds = document.getElementById('searchfinds');
+			if (searchFinds) {
+				searchFinds.style.maxHeight = `${this.documentContainer.getBoundingClientRect().height - 200}px`;
 			}
 		});
 	}
@@ -89,6 +100,7 @@ class QuickFindPanel extends SidebarBase {
 
 		const modifiedData = this.addPlaceholderIfEmpty(quickFindData);
 		this.builder.build(this.container, [modifiedData], false);
+		// this.onResize();
 
 		app.showQuickFind = true;
 		// this will update the indentation marks for elements like ruler
