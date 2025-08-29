@@ -230,7 +230,7 @@
     </ssl>
 
     <security desc="Altering these defaults potentially opens you to significant risk">
-      <seccomp desc="Should we use the seccomp system call filtering." type="bool" default="true">true</seccomp>
+      <seccomp desc="Should failure to enable seccomp system call filtering be a fatal error." type="bool" default="true">true</seccomp>
 
       <!-- deprecated: If capabilities is 'false', coolwsd will assume mount_namespaces of 'true' to achieve
            this goal, only avoiding chroot for process isolation if linux namespaces are unavailable -->
