@@ -82,7 +82,7 @@ static int fakeSocketLogLevel = -1;
 
 static void fakeSocketDumpStateImpl();
 
-static std::vector<FakeSocketPair*> fds;
+static std::vector<std::unique_ptr<FakeSocketPair>> fds;
 
 static std::string flush()
 {
@@ -129,7 +129,7 @@ static FakeSocketPair& fakeSocketAllocate()
     const int i = fds.size();
     fds.resize(i + 1);
 
-    fds[i] = new FakeSocketPair();
+    fds[i] = std::make_unique<FakeSocketPair>();
     fds[i]->fd[0] = i*2;
 
     return *(fds[i]);
