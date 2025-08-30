@@ -409,9 +409,21 @@ void resetTerminationFlags()
         if (info)
         {
             signalLog(" code: ");
-            signalLogNumber(info->si_code);
-            signalLog(" for address: 0x");
-            signalLogNumber((size_t)info->si_addr, 16);
+            signalLogNumber(static_cast<std::size_t>(info->si_code), 16);
+            // Also print in decimal.
+            if (info->si_code < 0)
+            {
+                signalLog("(-");
+                signalLogNumber(static_cast<std::size_t>(-info->si_code), 10);
+            }
+            else
+            {
+                signalLog("(");
+                signalLogNumber(static_cast<std::size_t>(info->si_code), 10);
+            }
+
+            signalLog(") for address: 0x");
+            signalLogNumber(reinterpret_cast<std::size_t>(info->si_addr), 16);
         }
         signalLog("\n");
 
@@ -452,7 +464,7 @@ void resetTerminationFlags()
     {
 #if !defined(__ANDROID__)
         signalLog("\nBacktrace ");
-        signalLogNumber(getpid());
+        signalLogNumber(static_cast<std::size_t>(getpid()));
         if (VersionInfo)
         {
             signalLog(" - ");

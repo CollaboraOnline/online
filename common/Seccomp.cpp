@@ -76,9 +76,9 @@ static void handleSysSignal(int /* signal */,
     SigUtil::signalLogOpen();
     SigUtil::signalLogPrefix();
     SigUtil::signalLog("SIGSYS trapped with code: ");
-    SigUtil::signalLogNumber(info->si_code);
+    SigUtil::signalLogNumber(static_cast<std::size_t>(info->si_code));
     SigUtil::signalLog(" and context ");
-    SigUtil::signalLogNumber(reinterpret_cast<size_t>(context));
+    SigUtil::signalLogNumber(reinterpret_cast<std::size_t>(context));
     SigUtil::signalLog("\n");
 
     if (info->si_code != SYS_SECCOMP || !uctx)
@@ -88,7 +88,7 @@ static void handleSysSignal(int /* signal */,
 
     SigUtil::signalLogPrefix();
     SigUtil::signalLog(" seccomp trapped signal, un-authorized sys-call: ");
-    SigUtil::signalLogNumber(syscall);
+    SigUtil::signalLogNumber(static_cast<std::size_t>(syscall));
     SigUtil::signalLog("\n");
 
     SigUtil::dumpBacktrace();
