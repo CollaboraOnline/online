@@ -64,6 +64,18 @@ function assertNumberOfSlidePreviews(slides) {
 	cy.log('<< assertNumberOfSlidePreviews - end');
 }
 
+// Trigger mouse click on center of the screen
+// Does no checking as to what is or isn't found there
+function clickCenterOfSlide(modifiers) {
+	cy.cGet('#document-container')
+		.then(function(items) {
+			expect(items).to.have.length(1);
+			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+			cy.cGet('body').click(XPos, YPos, modifiers);
+		});
+}
+
 // Select a text shape at the center of the slide / view.
 // This method triggers mouse click in the center to achive
 // a shape selection. It fails, if there is no shape there.
@@ -71,13 +83,7 @@ function selectTextShapeInTheCenter() {
 	cy.log('>> selectTextShapeInTheCenter - start');
 
 	// Click on the center of the slide to select the text shape there
-	cy.cGet('#document-container')
-		.then(function(items) {
-			expect(items).to.have.length(1);
-			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-			cy.cGet('body').click(XPos, YPos);
-		});
+	clickCenterOfSlide( { } );
 
 	cy.cGet('#test-div-shape-handle-rotation').should('exist');
 	cy.cGet('#document-container svg g.Page g').should('exist');
@@ -237,6 +243,7 @@ module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
 module.exports.assertNumberOfSlidePreviews = assertNumberOfSlidePreviews;
+module.exports.clickCenterOfSlide = clickCenterOfSlide;
 module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;
 module.exports.removeShapeSelection = removeShapeSelection;
