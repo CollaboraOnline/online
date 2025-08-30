@@ -12,9 +12,9 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager SlideBitmapManager*/
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager SlideBitmapManager SocketBase */
 
-app.definitions.Socket = class Socket {
+app.definitions.Socket = class Socket extends SocketBase {
 
 	getParameterValue(s) {
 		var i = s.indexOf('=');
@@ -24,49 +24,7 @@ app.definitions.Socket = class Socket {
 	}
 
 	constructor(map) {
-		window.app.console.debug('socket.constructor:');
-		this.ProtocolVersionNumber = '0.1';
-		this.ReconnectCount = 0;
-		this.WasShownLimitDialog = false;
-		this.WSDServer = {
-			Id: '',
-			Version: '',
-			Hash: '',
-			Protocol: '',
-			Options: '',
-			Timezone: '',
-		};
-		this.IndirectSocketReconnectCount = 0;
-
-		/// Whether Trace Event recording is enabled or not. ("Enabled" here means whether it can be
-		/// turned on (and off again), not whether it is on.)
-		this.enableTraceEventLogging = false;
-
-		// Will be set from lokitversion message
-		this.TunnelledDialogImageCacheSize = 0;
-
-		this._map = map;
-		this._slurpQueue = [];
-		this._msgQueue = [];
-		this._delayedMessages = [];
-		this._handlingDelayedMessages = false;
-		this._inLayerTransaction = false;
-		this._slurpDuringTransaction = false;
-		this.traceEventRecordingToggle = false;
-		this.asyncTraceEventCounter = 0;
-		// simulate a threads per live async event to help the chrome
-		// renderer.
-		this.asyncTracePseudoThread = 1;
-		this.threadLocalLoggingLevelToggle = false;
-		this._accessTokenExpireTimeout = undefined;
-		this._reconnecting = false;
-		this._slurpTimer = undefined;
-		this._renderEventTimer = undefined;
-		this._renderEventTimerStart = undefined;
-		this._slurpTimerDelay = undefined;
-		this._slurpTimerLaunchTime = undefined;
-		this.timer = undefined;
-		this.socket = undefined;
+		super(map);
 	}
 
 	getWebSocketBaseURI(map) {
