@@ -65,13 +65,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 		var entry;
 
-		if (entries[i].type === 'json') {
-			// replace old grid with new widget
-			json.children[0] = entries[i].content;
-			if (json.children[0].type === 'grid') json.gridKeyboardNavigation = true;
-			break;
-		}
-
 		switch (entries[i].type) {
 			// DEPRECACTED: legacy plain HTML adapter
 			case 'html':
@@ -94,7 +87,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			// allows to put regular JSDialog JSON into popup
 			case 'json':
 				entry = entries[i].content;
-				json.gridKeyboardNavigation = true;
+				if (entry.type === 'grid') json.gridKeyboardNavigation = true;
 			break;
 
 			// horizontal separator in menu
@@ -133,7 +126,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
 		return function(objectType, eventType, object, data) {
-			var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
+			if (typeof data == 'number') var pos = data;
+			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
 			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
