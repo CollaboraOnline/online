@@ -1166,7 +1166,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     }
     catch (const Poco::FileNotFoundException& exc)
     {
-        LOG_ERR("FileServerRequestHandler: " << exc.displayText());
+        LOG_WRN("FileServerRequestHandler: " << exc.displayText());
         sendError(http::StatusCode::NotFound, getRequestPath(request), socket, "404 - file not found!",
                   "There seems to be a problem locating");
     }
