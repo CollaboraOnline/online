@@ -556,6 +556,20 @@ function getInitializerClass() {
 		}
 	};
 
+	global.addEventListener('resize', function() {
+		if (global.mode.isDesktop() && typeof global.devicePixelRatio === 'number') {
+			var root = document.querySelector(':root');
+			if (global.devicePixelRatio >= 1.5) {
+				global.document.body.style.overflow = 'auto';
+				root.style.setProperty('--page-scale', window.devicePixelRatio);
+
+			} else {
+				global.document.body.style.overflow = '';
+				root.style.setProperty('--page-scale', '');
+			}
+		}
+	});
+
 	// enable later toggling
 	global.setLogging = function(doLogging)
 	{
@@ -1961,7 +1975,8 @@ function getInitializerClass() {
 		var visualViewport = event.target;
 
 		window.scroll(0, 0);
-		document.body.style.height = visualViewport.height + 'px';
+		if (!global.mode.isDesktop())
+			document.body.style.height = visualViewport.height + 'px';
 	}
 
 	if (window.visualViewport !== undefined) {
