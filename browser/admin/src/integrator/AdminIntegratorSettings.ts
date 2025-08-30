@@ -857,7 +857,7 @@ class SettingIframe {
 		const textElement = document.createElement('span');
 		textElement.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = labelText;
+		textElement.textContent = _(labelText);
 		checkboxContent.appendChild(textElement);
 
 		if (warningText) {
