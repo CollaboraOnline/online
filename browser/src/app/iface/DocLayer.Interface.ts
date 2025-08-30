@@ -20,7 +20,9 @@ interface PainterInterface {
 }
 
 interface DocLayerInterface {
+	_getViewId(): string;
 	_painter: PainterInterface;
+	_docType: string;
 
 	isCalc(): boolean;
 	isWriter(): boolean;
@@ -39,4 +41,19 @@ interface DocLayerInterface {
 		modifier: number,
 	): void;
 	postKeyboardEvent(typ: string, charCode: number, unoKeyCode: number): void;
+
+	filterSlurpedMessage(e: SlurpMessageEvent): boolean;
+	_documentInfo?: string;
+
+	removeAllViews(): void;
+	_resetClientVisArea(): void;
+
+	_onMessage(textMsg: string, img?: CoolHTMLImageElement): void;
+	_resetCanonicalIdStatus(): void;
+	_resetViewId(): void;
+	_resetDocumentInfo(): void;
+
+	options: {
+		tileWidthTwips: number;
+	};
 }
