@@ -493,7 +493,7 @@ export class Header extends CanvasSectionObject {
 				// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
 				const borderResizeHandle = 3;
 				let resizeAreaStart = isRTL ? Math.min(start + borderResizeHandle * app.dpiScale, end) : Math.max(start, end - borderResizeHandle * app.dpiScale);
-				if (entry.isCurrent || (window as any).mode.isMobile()) {
+				if (this._isColumn && (entry.isCurrent || (window as any).mode.isMobile())) {
 					resizeAreaStart = isRTL ? start + this.resizeHandleSize : end - this.resizeHandleSize;
 				}
 				const isMouseOverResizeArea = isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
