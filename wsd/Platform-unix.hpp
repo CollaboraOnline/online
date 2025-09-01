@@ -5,6 +5,6 @@
 #if !MOBILEAPP
 #include <common/security.h>
 #include <sys/inotify.h>
-#endif
+#endif // !MOBILEAPP
 
-#endif
+#endif // __linux__
