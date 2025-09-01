@@ -1355,7 +1355,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
 			} : {},
 			(this.map['wopi'].EnableRemoteAIContent) ? {
-				'type': 'bigcustomtoolitem',
+				'type': 'separator',
 				'id': 'insert-remoteaicontent-break',
 				'orientation': 'vertical'
 			} : {},
