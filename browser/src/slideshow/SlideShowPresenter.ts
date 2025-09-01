@@ -525,11 +525,12 @@ class SlideShowPresenter {
 	}
 
 	private _onPrevSlide = (e: Event) => {
-		this._slideShowNavigator.switchSlide(-1, this._navigateSkipTransition);
+		this._slideShowNavigator.rewindEffect();
 	};
 
 	private _onNextSlide = (e: Event) => {
-		this._slideShowNavigator.switchSlide(1, this._navigateSkipTransition);
+		if (this._navigateSkipTransition) this._slideShowNavigator.skipEffect();
+		else this._slideShowNavigator.dispatchEffect();
 	};
 
 	private _onQuit = (e: Event) => {
