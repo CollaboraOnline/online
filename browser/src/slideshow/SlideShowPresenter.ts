@@ -122,6 +122,7 @@ class SlideShowPresenter {
 	_canvasLoader: CanvasLoader | null = null;
 	_progressBarContainer: HTMLDivElement | null = null;
 	_slideNavContainer: HTMLDivElement | null = null;
+	_enableAlly: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
@@ -139,10 +140,11 @@ class SlideShowPresenter {
 	private _wasInDarkMode: boolean = false;
 	private _isLeader: boolean = false;
 
-	constructor(map: any) {
+	constructor(map: any, enableAlly: boolean) {
 		this._cypressSVGPresentationTest =
 			L.Browser.cypressTest || 'Cypress' in window;
 		this._map = map;
+		this._enableAlly = enableAlly;
 		this._init();
 		this.addHooks();
 	}
@@ -450,7 +452,9 @@ class SlideShowPresenter {
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
 
-		canvas.setAttribute('aria-live', 'assertive');
+		if (this._enableAlly) {
+			canvas.setAttribute('aria-live', 'assertive');
+		}
 
 		this._progressBarContainer = this._createProgressBar(parent);
 		this._slideNavContainer = this._createSlideNav(parent);
