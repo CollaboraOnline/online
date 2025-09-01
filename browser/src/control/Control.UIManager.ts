@@ -1394,15 +1394,6 @@ class UIManager extends L.Control {
 		}
 
 		var userPrivateInfo = myViewData.userprivateinfo;
-		if (userPrivateInfo && window.zoteroEnabled) {
-			var apiKey = userPrivateInfo.ZoteroAPIKey;
-			if (apiKey !== undefined && !this.map.zotero) {
-				this.map.zotero = L.control.zotero(this.map);
-				this.map.zotero.apiKey = apiKey;
-				this.map.addControl(this.map.zotero);
-				this.map.zotero.updateUserID();
-			}
-		}
 		if (window.documentSigningEnabled) {
 			if (userPrivateInfo && this.notebookbar) {
 				const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
