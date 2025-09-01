@@ -9,7 +9,11 @@
  */
 #pragma once
 
-#if ENABLE_SSL
-#include <Poco/Net/SSLManager.h>
-#include <SslSocket.hpp>
-#endif
+#ifdef __linux__
+
+#if !MOBILEAPP
+#include <common/security.h>
+#include <sys/inotify.h>
+#endif // !MOBILEAPP
+
+#endif // __linux__

@@ -27,9 +27,13 @@
 
 #include <common/JailUtil.hpp>
 #include <common/Watchdog.hpp>
-#include <wsd/PlatformUnix.hpp>
-#include <wsd/SslConfig.hpp>
+#include <wsd/Platform-unix.hpp>
 #include <wsd/RemoteConfig.hpp>
 #include <wsd/SpecialBrokers.hpp>
 
-#endif
+#if ENABLE_SSL
+#include <Poco/Net/SSLManager.h>
+#include <SslSocket.hpp>
+#endif // ENABLE_SSL
+
+#endif // !MOBILEAPP

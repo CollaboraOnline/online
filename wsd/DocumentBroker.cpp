@@ -36,7 +36,7 @@
 #include <wsd/ClientSession.hpp>
 #include <wsd/Exceptions.hpp>
 #include <wsd/FileServer.hpp>
-#include <wsd/PlatformDesktop.hpp>
+#include <wsd/Platform-server.hpp>
 #include <wsd/PresetsInstall.hpp>
 #include <wsd/Process.hpp>
 #include <wsd/ProxyProtocol.hpp>
