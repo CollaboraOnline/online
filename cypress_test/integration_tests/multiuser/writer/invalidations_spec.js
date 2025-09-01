@@ -5,6 +5,17 @@ var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 var writerHelper = require('../../common/writer_helper');
 
+function waitForInit(hasClass) {
+	// TODO: skipDocumentCheck=FALSE in beforeEach, let's do it here once for now
+	//       somehow it doesnt work for second iframe
+	if (hasClass) {
+		cy.cGet('#map', { timeout: 60 })
+			.should('have.class', 'initialized');
+	}
+
+	cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+}
+
 describe(['tagmultiuser'], 'Joining a document should not trigger an invalidation', function() {
 
 	beforeEach(function() {
@@ -21,14 +32,13 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
-
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(true);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		ceHelper.type('X');
 
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(false);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cSetActiveFrame('#iframe1');
@@ -59,14 +69,13 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join after document save and modify', function() {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
-
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(true);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		ceHelper.type('X');
 
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(false);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cSetActiveFrame('#iframe1');
