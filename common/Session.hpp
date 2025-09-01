@@ -313,6 +313,10 @@ public:
 
     const std::string& getInFilterOption() const { return _inFilterOptions; }
 
+    std::string getZoteroAPIKey() const { return _zoteroAPIKey; }
+
+    void setZoteroAPIKey(std::string val) { _zoteroAPIKey = val; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -466,6 +470,8 @@ private:
     /// Used in convert-to apis to specify loading options
     std::string _inFilterOptions;
 
+    /// Zotero API Key
+    std::string _zoteroAPIKey;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

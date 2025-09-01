@@ -112,6 +112,7 @@ class SettingIframe {
 	private _viewSetting;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
+		zoteroAPIKey: _('Zotero'),
 	};
 	private readonly settingLabels: Record<string, string> = {
 		darkTheme: _('Dark mode'),
@@ -406,6 +407,25 @@ class SettingIframe {
 		inputEl.classList.add('hidden');
 		inputEl.id = id;
 		inputEl.accept = accept;
+		return inputEl;
+	}
+
+	private createTextInput(
+		id: string,
+		placeholder: string = '',
+		text: string = '',
+		onChangeHandler = (input) => {},
+	) {
+		const inputEl = document.createElement('input');
+		inputEl.type = 'text';
+		inputEl.id = id;
+		inputEl.value = text;
+		inputEl.placeholder = placeholder;
+		inputEl.classList.add('dic-input-container');
+
+		inputEl.addEventListener('change', () => {
+			onChangeHandler(inputEl);
+		});
 		return inputEl;
 	}
 
@@ -1215,12 +1235,14 @@ class SettingIframe {
 		fieldset.appendChild(this.createLegend(_('Option')));
 
 		for (const key in data) {
+			const label = this._viewSettingLabels[key];
+			if (!label) {
+				continue;
+			}
 			if (typeof data[key] === 'boolean') {
-				const label = this._viewSettingLabels[key];
-				if (!label) {
-					continue;
-				}
 				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
+			} else if (typeof data[key] === 'string') {
+				fieldset.appendChild(this.createViewSettingsTextBox(key, data));
 			}
 		}
 
@@ -1232,6 +1254,15 @@ class SettingIframe {
 		const legend = document.createElement('legend');
 		legend.textContent = text;
 		return legend;
+	}
+
+	private createViewSettingsTextBox(key: string, data: any): HTMLDivElement {
+		const text = data[key];
+		let result: HTMLDivElement = document.createElement('div');
+		if (key === 'zoteroAPIKey') {
+			result = this.createZoteroConfig(text, data);
+		}
+		return result;
 	}
 
 	private createViewSettingCheckbox(
@@ -1291,7 +1322,10 @@ class SettingIframe {
 					return;
 				}
 				button.disabled = true;
-				const defaultViewSetting = { accessibilityState: false };
+				const defaultViewSetting = {
+					accessibilityState: false,
+					zoteroAPIKey: '',
+				};
 				await this.uploadViewSettingFile(
 					'viewsetting.json',
 					JSON.stringify(defaultViewSetting),
@@ -1352,7 +1386,10 @@ class SettingIframe {
 				const fetchContent = await this.fetchSettingFile(fileId);
 				if (fetchContent) this.generateViewSettingUI(JSON.parse(fetchContent));
 			} else {
-				const defaultViewSetting = { accessibilityState: false };
+				const defaultViewSetting = {
+					accessibilityState: false,
+					zoteroAPIKey: '',
+				};
 				this.generateViewSettingUI(defaultViewSetting);
 			}
 
@@ -1435,6 +1472,26 @@ class SettingIframe {
 		}
 
 		return result;
+	}
+
+	private createZoteroConfig(APIKey: string = '', data) {
+		const zoteroContainer = document.createElement('div');
+
+		zoteroContainer.id = 'zoterocontainer';
+		zoteroContainer.classList.add('section');
+		zoteroContainer.appendChild(this.createHeading(_('Zotero')));
+
+		const zotero = this.createTextInput(
+			'zotero',
+			_('Enter Zotero API Key'),
+			APIKey,
+			(input) => {
+				data['zoteroAPIKey'] = input.value;
+			},
+		);
+		zoteroContainer.appendChild(zotero);
+
+		return zoteroContainer;
 	}
 
 	private getConfigType(): string {
