@@ -133,7 +133,7 @@ query($owner: String!, $repo: String!)
 
     # Create local branch if needed.
     BRANCH_CREATED=
-    if git rev-parse --quiet --verify master2 >/dev/null; then
+    if git rev-parse --quiet --verify $BACKPORT_BRANCH >/dev/null; then
         git checkout $BACKPORT_BRANCH
     else
         git checkout --track $REMOTE/$BACKPORT_BRANCH
