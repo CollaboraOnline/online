@@ -223,6 +223,13 @@ class SlideShowHandler {
 		);
 	}
 
+	addAllyString(allyString: string) {
+		if (this.presenter._enableAlly) {
+			const canvas = this.getContext()._canvas;
+			canvas.innerHTML = app.LOUtil.sanitize(allyString);
+		}
+	}
+
 	isEnabled() {
 		return this.bIsEnabled;
 	}
@@ -806,6 +813,9 @@ class SlideShowHandler {
 		if (nOldSlide !== undefined) {
 			this.cleanLeavingSlideStatus(nOldSlide, bSkipSlideTransition);
 		}
+
+		const slideinfo = this.getSlideInfo(nNewSlide);
+		this.addAllyString(slideinfo.name);
 
 		this.notifySlideStart(nNewSlide, nOldSlide);
 
