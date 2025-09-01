@@ -1687,10 +1687,12 @@ void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
     }
 }
 
-static bool extractAccessibilityState(const std::string& viewSettings, const std::string& sessionId)
+static std::string extractViewSettings(const std::string& viewSettingsPath,
+                                       const std::shared_ptr<ClientSession>& session,
+                                       bool& _isViewSettingsAccessibilityEnabled)
 {
-    bool isViewSettingsAccessibilityEnabled = false;
-    std::ifstream ifs(viewSettings);
+    std::string viewSettingsString;
+    std::ifstream ifs(viewSettingsPath);
     try
     {
         LOG_TRC("Parsing viewsetting json");
@@ -1699,18 +1701,27 @@ static bool extractAccessibilityState(const std::string& viewSettings, const std
 
         const Poco::JSON::Object::Ptr& viewsetting = result.extract<Poco::JSON::Object::Ptr>();
 
-        std::string accessibilityState;
+        std::string accessibilityState, zoteroAPIKey;
         JsonUtil::findJSONValue(viewsetting, "accessibilityState", accessibilityState);
 
-        isViewSettingsAccessibilityEnabled = accessibilityState == "true";
+        JsonUtil::findJSONValue(viewsetting, "zoteroAPIKey", zoteroAPIKey);
+
+        session->setZoteroAPIKey(zoteroAPIKey);
+        _isViewSettingsAccessibilityEnabled = accessibilityState == "true";
+        session->setAccessibilityState(accessibilityState == "true");
+        std::ostringstream jsonStream;
+        viewsetting->stringify(jsonStream);
+        const std::string& jsonStr = jsonStream.str();
+        viewSettingsString = jsonStr;
     }
     catch (const std::exception& exc)
     {
         LOG_ERR("Failed to parse viewsetting json with[" << ifs.rdbuf() << "] error[" << exc.what()
-                                                         << "], for session[" << sessionId << ']');
-        return false;
+                                                         << "], for session[" << session->getId()
+                                                         << ']');
+        return viewSettingsString;
     }
-    return isViewSettingsAccessibilityEnabled;
+    return viewSettingsString;
 }
 
 void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
@@ -1746,10 +1757,13 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             }
 
             std::string viewSettings = presetsPath + "viewsetting/viewsetting.json";
+            std::string settings;
             if (FileUtil::Stat(viewSettings).exists())
-                _isViewSettingsAccessibilityEnabled =
-                    extractAccessibilityState(viewSettings, session->getId());
-
+            {
+                settings =
+                    extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled);
+                session->sendTextFrame("viewsetting: " + settings);
+            }
             forwardToChild(session, "addconfig");
         }
         else
