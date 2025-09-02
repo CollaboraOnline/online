@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-25 11:46+0000\n"
+"PO-Revision-Date: 2025-09-02 11:34+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1384,7 +1384,7 @@ msgstr "Idle document - please tap to reload and resume editing"
 
 #: src/control/Control.JSDialog.js:329
 msgid "Close dialog"
-msgstr "Close dialog"
+msgstr "Close dialogue"
 
 #: src/control/Control.JSDialogBuilder.js:501
 msgid "Solid"
@@ -3898,9 +3898,8 @@ msgid "Edit mode"
 msgstr "Edit mode"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
-#, fuzzy
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr "Number of Pages. Click to open the Go to Page dialog box."
+msgstr "Number of Pages. Click to open the Go to Page dialogue box."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -4569,7 +4568,7 @@ msgstr "Uploading file to server failed with status: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr "Print dialog"
+msgstr "Print dialogue"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:890
 msgid "Empty Slide Show"
@@ -4652,7 +4651,7 @@ msgstr "Creating copy..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr "Welcome Dialog"
+msgstr "Welcome Dialogue"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
