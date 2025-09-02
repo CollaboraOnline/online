@@ -13,6 +13,7 @@
 /// <reference path="../src/core/geometry.ts" />
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
+/// <reference path="../src/layer/tile/CanvasTileUtils.ts" />
 /// <reference path="../src/app/TilesMiddleware.ts" />
 /// <reference path="../src/app/Rectangle.ts" />
 /// <reference path="../src/app/LOUtil.ts" />
