@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-24 21:02+0000\n"
+"PO-Revision-Date: 2025-09-02 11:34+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
-"Language: \n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1384,7 +1384,7 @@ msgstr "Idle document - please tap to reload and resume editing"
 
 #: src/control/Control.JSDialog.js:329
 msgid "Close dialog"
-msgstr "Close dialog"
+msgstr "Close dialogue"
 
 #: src/control/Control.JSDialogBuilder.js:501
 msgid "Solid"
@@ -2438,7 +2438,7 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Cells"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:1620
@@ -2467,7 +2467,7 @@ msgstr "Bad"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Editing"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -4568,7 +4568,7 @@ msgstr "Uploading file to server failed with status: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr "Print dialog"
+msgstr "Print dialogue"
 
 #: src/map/handler/Map.SlideShow.js:59 src/slideshow/SlideShowPresenter.ts:890
 msgid "Empty Slide Show"
@@ -4651,7 +4651,7 @@ msgstr "Creating copy..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr "Welcome Dialog"
+msgstr "Welcome Dialogue"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
