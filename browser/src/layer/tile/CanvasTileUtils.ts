@@ -95,7 +95,7 @@ namespace cool {
 		}
 
 		public static updateImageFromDeltas(
-			image: ImageData,
+			imageData: Uint8Array,
 			deltas: Uint8Array,
 			keyframeDeltaSize: number,
 			tileSize: number,
@@ -124,7 +124,7 @@ namespace cool {
 				}
 
 				// copy old data to work from:
-				const oldData = new Uint8ClampedArray(image.data);
+				const oldData = new Uint8Array(imageData);
 
 				if (debug)
 					console.debug(
@@ -138,7 +138,7 @@ namespace cool {
 				// + ' hex: ' + hex2string(delta, delta.length));
 
 				const len = this.applyDeltaChunk(
-					image,
+					imageData,
 					delta,
 					oldData,
 					tileSize,
@@ -153,9 +153,9 @@ namespace cool {
 		}
 
 		private static applyDeltaChunk(
-			imgData: ImageData,
+			imgData: Uint8Array,
 			delta: Uint8Array,
-			oldData: Uint8ClampedArray,
+			oldData: Uint8Array,
 			width: number,
 			height: number,
 			debug: boolean = false,
@@ -170,7 +170,7 @@ namespace cool {
 
 			// wipe to grey.
 			if (0) {
-				for (let i = 0; i < pixSize * 4; ++i) imgData.data[i] = 128;
+				for (let i = 0; i < pixSize * 4; ++i) imgData[i] = 128;
 			}
 
 			// Apply delta.
@@ -198,7 +198,7 @@ namespace cool {
 							const src = (srcRow + cnt) * width * 4;
 							const dest = (destRow + cnt) * width * 4;
 							for (let j = 0; j < width * 4; ++j) {
-								imgData.data[dest + j] = oldData[src + j];
+								imgData[dest + j] = oldData[src + j];
 							}
 						}
 						break;
@@ -224,8 +224,7 @@ namespace cool {
 							);
 						i += 4;
 						span *= 4;
-						for (let j = 0; j < span; ++j)
-							imgData.data[offset++] = delta[i + j];
+						for (let j = 0; j < span; ++j) imgData[offset++] = delta[i + j];
 						i += span;
 						// imgData.data[offset - 2] = 256; // debug - blue terminator
 						break;

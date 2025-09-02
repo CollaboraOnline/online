@@ -23,38 +23,25 @@ if ('undefined' === typeof window) {
 
 	function onMessage(e) {
 		switch (e.data.message) {
-			case 'endTransaction':
-				var tileByteSize = e.data.tileSize * e.data.tileSize * 4;
-				var decompressed = [];
-				var buffers = [];
-				for (var tile of e.data.deltas) {
-					var deltas = self.fzstd.decompress(tile.rawDelta);
+			case 'endTransaction': {
+				const tileByteSize = e.data.tileSize * e.data.tileSize * 4;
+				const decompressed = [];
+				const buffers = [];
+				for (const tile of e.data.deltas) {
+					tile.deltas = self.fzstd.decompress(tile.rawDelta);
 					tile.keyframeDeltaSize = 0;
 
 					// Decompress the keyframe buffer
 					if (tile.isKeyframe) {
-						var keyframeBuffer = new Uint8Array(tileByteSize);
+						tile.keyframeBuffer = new Uint8Array(tileByteSize);
 						tile.keyframeDeltaSize = L.CanvasTileUtils.unrle(
-							deltas,
+							tile.deltas,
 							e.data.tileSize,
 							e.data.tileSize,
-							keyframeBuffer,
-						);
-						tile.keyframeBuffer = new Uint8ClampedArray(
-							keyframeBuffer.buffer,
-							keyframeBuffer.byteOffset,
-							keyframeBuffer.byteLength,
+							tile.keyframeBuffer,
 						);
 						buffers.push(tile.keyframeBuffer.buffer);
 					}
-
-					// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
-					// it earlier to avoid unnecessarily incurring bounds-checking penalties.
-					tile.deltas = new Uint8ClampedArray(
-						deltas.buffer,
-						deltas.byteOffset,
-						deltas.length,
-					);
 
 					// The main thread has no use for the concatenated rawDelta, delete it here
 					// instead of passing it back.
@@ -73,6 +60,7 @@ if ('undefined' === typeof window) {
 					buffers,
 				);
 				break;
+			}
 
 			default:
 				console.error('Unrecognised worker message');

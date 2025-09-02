@@ -139,7 +139,7 @@ class Tile {
 	coords: TileCoordData;
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	image: ImageBitmap | null = null; // ImageBitmap ready to render
-	imgDataCache: any = null; // flat byte array of image data
+	imgDataCache: Uint8Array | null = null; // flat byte array of image data
 	rawDeltas: cool.RawDelta[] = []; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
@@ -161,7 +161,7 @@ class Tile {
 	}
 
 	hasContent(): boolean {
-		return this.imgDataCache || this.hasKeyframe();
+		return !!this.imgDataCache || this.hasKeyframe();
 	}
 
 	needsFetch() {
@@ -501,8 +501,14 @@ class TileManager {
 		bitmaps: Promise<ImageBitmap>[],
 	) {
 		if (tile.imgDataCache) {
+			const clampedData = new Uint8ClampedArray(
+				tile.imgDataCache.buffer,
+				tile.imgDataCache.byteOffset,
+				tile.imgDataCache.byteLength,
+			);
+			const image = new ImageData(clampedData, this.tileSize, this.tileSize);
 			bitmaps.push(
-				createImageBitmap(tile.imgDataCache, {
+				createImageBitmap(image, {
 					premultiplyAlpha: 'none',
 				}),
 			);
@@ -932,7 +938,7 @@ class TileManager {
 		rawDeltas: any[],
 		deltas: any,
 		keyframeDeltaSize: any,
-		keyframeImage: any,
+		keyframeImage: Uint8Array,
 		wireMessage: any,
 	) {
 		const rawDeltaSize = rawDeltas.reduce((a, c) => a + c.length, 0);
@@ -987,7 +993,9 @@ class TileManager {
 
 		const imgData = keyframeImage ? keyframeImage : tile.imgDataCache;
 		if (!imgData) {
-			window.app.console.error('Trying to apply delta with no ImageData cache');
+			window.app.console.error(
+				'Trying to apply delta with no image data cache',
+			);
 			return;
 		}
 
@@ -1994,7 +2002,7 @@ class TileManager {
 						// hasn't decompressed the raw delta)
 						x.deltas = (window as any).fzstd.decompress(x.rawDelta);
 						if (x.isKeyframe) {
-							x.keyframeBuffer = new Uint8ClampedArray(
+							x.keyframeBuffer = new Uint8Array(
 								e.data.tileSize * e.data.tileSize * 4,
 							);
 							x.keyframeDeltaSize = L.CanvasTileUtils.unrle(
@@ -2016,25 +2024,20 @@ class TileManager {
 							'Unusual: Received unknown decompressed keyframe delta(s)',
 						);
 
-					let keyframeImage = null;
-					if (x.isKeyframe) {
-						keyframeImage = new ImageData(
-							x.keyframeBuffer,
-							e.data.tileSize,
-							e.data.tileSize,
-						);
-					} else if (tile.decompressedId !== 0) {
-						if (x.ids[0] !== tile.decompressedId + 1) {
-							window.app.console.warn(
-								'Unusual: Received discontiguous decompressed delta',
-							);
+					if (!x.isKeyframe) {
+						if (tile.decompressedId !== 0) {
+							if (x.ids[0] !== tile.decompressedId + 1) {
+								window.app.console.warn(
+									'Unusual: Received discontiguous decompressed delta',
+								);
+							}
+						} else {
+							if (this.debugDeltas)
+								window.app.console.warn(
+									"Decompressed delta received on GC'd tile",
+								);
+							continue;
 						}
-					} else {
-						if (this.debugDeltas)
-							window.app.console.warn(
-								"Decompressed delta received on GC'd tile",
-							);
-						continue;
 					}
 
 					this.applyDelta(
@@ -2042,7 +2045,7 @@ class TileManager {
 						rawDeltas,
 						x.deltas,
 						x.keyframeDeltaSize,
-						keyframeImage,
+						x.keyframeBuffer,
 						x.wireMessage,
 					);
 
