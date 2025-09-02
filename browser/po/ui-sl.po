@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-29 12:16+0000\n"
+"PO-Revision-Date: 2025-09-02 11:34+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
@@ -687,10 +687,14 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Sistem trenutno prilagaja vire. Počakajte trenutek, da bo vaš zahtevek znova "
+"obdelan ..."
 
 #: js/global.js:1583
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
+"Dokument je v postopku migracije na nov strežnik. Ponovni poskus sledi v "
+"kratkem ..."
 
 #: js/global.js:1585
 msgid "Failed to get RouteToken from controller"
@@ -815,7 +819,7 @@ msgstr "Odpri meni"
 
 #: src/canvas/sections/CommentSection.ts:341
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Pritisnite kombinacijo tipk krmilka + vnašalka za objavo"
 
 #: src/canvas/sections/CommentSection.ts:405
 #: src/canvas/sections/CommentSection.ts:406
@@ -2194,7 +2198,7 @@ msgstr "Prehod"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Različica"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
@@ -2389,7 +2393,7 @@ msgstr "Poravnava"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
-msgstr ""
+msgstr "Spoji in sredini"
 
 #: src/control/Control.NotebookbarCalc.js:740
 #: src/control/Control.NotebookbarCalc.js:756
@@ -2470,7 +2474,7 @@ msgstr "Slabo"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Urejanje"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -2562,7 +2566,7 @@ msgstr "Zamrzni"
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Povečava"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2640,7 +2644,7 @@ msgstr "Knjižnica funkcij"
 
 #: src/control/Control.NotebookbarCalc.js:1959
 msgid "AutoSum"
-msgstr ""
+msgstr "Samodejna vsota"
 
 #: src/control/Control.NotebookbarCalc.js:1972
 msgid "Financial"
@@ -2656,7 +2660,7 @@ msgstr "Datum in čas"
 
 #: src/control/Control.NotebookbarCalc.js:2032
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Iskanje in sklici"
 
 #: src/control/Control.NotebookbarCalc.js:2050
 msgid "Math & Trig"
@@ -2664,7 +2668,7 @@ msgstr "Matematika in trigonometrija"
 
 #: src/control/Control.NotebookbarCalc.js:2062
 msgid "More Functions"
-msgstr ""
+msgstr "Dodatne funkcije"
 
 #: src/control/Control.NotebookbarCalc.js:2107
 msgid "Range"
@@ -2676,7 +2680,7 @@ msgstr "Razvrsti"
 
 #: src/control/Control.NotebookbarCalc.js:2236
 msgid "Filter"
-msgstr ""
+msgstr "Filtriraj"
 
 #: src/control/Control.NotebookbarCalc.js:2483
 #: src/control/Control.NotebookbarImpress.js:1900
@@ -2804,7 +2808,7 @@ msgstr "Znak"
 
 #: src/control/Control.NotebookbarImpress.js:1074
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Razmik in barva"
 
 #: src/control/Control.NotebookbarImpress.js:1772
 msgid "Slide Size"
@@ -2816,12 +2820,12 @@ msgstr "Slika ozadja"
 
 #: src/control/Control.NotebookbarImpress.js:2004
 msgid "Merge & Split"
-msgstr ""
+msgstr "Spoji in razdeli"
 
 #: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:2919
 msgid "Select"
-msgstr ""
+msgstr "Izberi"
 
 #: src/control/Control.NotebookbarImpress.js:2652
 msgid "Effects"
@@ -2885,7 +2889,7 @@ msgstr "Sprotna/končna opomba"
 
 #: src/control/Control.NotebookbarWriter.js:2599
 msgid "Tracking"
-msgstr ""
+msgstr "Sledenje"
 
 #: src/control/Control.NotebookbarWriter.js:2857
 msgid "Split"
@@ -2893,7 +2897,7 @@ msgstr "Razdeli"
 
 #: src/control/Control.NotebookbarWriter.js:3041
 msgid "Number Format"
-msgstr ""
+msgstr "Oblika števil"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page %1"
@@ -3679,7 +3683,7 @@ msgstr "Desna obroba"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Leva in desna obroba"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
@@ -3718,9 +3722,8 @@ msgid "Line color"
 msgstr "Barva črte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
-#, fuzzy
 msgid "Line style"
-msgstr "Slog črte:"
+msgstr "Slog črte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
 msgid "Hairline (0.05 pt)"
@@ -3756,15 +3759,15 @@ msgstr "Dvojna tanka kot las (2,35 tč)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1392
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Tanka/srednja (3 tč)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1401
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Srednja/tanka kot las (3,05 tč)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1410
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Srednja/srednja (4,5 tč)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1470
 msgid "Standard (4:3)"
@@ -3906,7 +3909,7 @@ msgstr "Urejevalni način"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Število strani. Kliknite, da odprete pogovorno okno Pojdi na stran."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
