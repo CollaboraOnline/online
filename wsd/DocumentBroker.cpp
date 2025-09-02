@@ -371,12 +371,14 @@ void DocumentBroker::pollThread()
         ConfigUtil::getConfigValue<std::chrono::seconds>(
             "indirection_endpoint.migration_timeout_secs", 180);
 
+    const auto defaultPollTimeout = std::min<std::chrono::microseconds>(
+        _lockCtx->refreshPeriod(), SocketPoll::DefaultPollTimeoutMicroS);
+
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
     {
         // Poll more frequently while unloading to cleanup sooner.
-        _poll->poll(isUnloading() ? SocketPoll::DefaultPollTimeoutMicroS / 16
-                                  : SocketPoll::DefaultPollTimeoutMicroS);
+        _poll->poll(isUnloading() ? SocketPoll::DefaultPollTimeoutMicroS / 16 : defaultPollTimeout);
 
         // Consolidate updates across multiple processed events.
         processBatchUpdates();
