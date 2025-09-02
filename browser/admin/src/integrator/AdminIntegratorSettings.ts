@@ -112,7 +112,7 @@ class SettingIframe {
 	private _viewSetting;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
-		zoteroAPIKey: _('Zotero'),
+		zoteroAPIKey: 'Zotero',
 	};
 	private readonly settingLabels: Record<string, string> = {
 		darkTheme: _('Dark mode'),
@@ -1479,7 +1479,7 @@ class SettingIframe {
 
 		zoteroContainer.id = 'zoterocontainer';
 		zoteroContainer.classList.add('section');
-		zoteroContainer.appendChild(this.createHeading(_('Zotero')));
+		zoteroContainer.appendChild(this.createHeading('Zotero'));
 
 		const zotero = this.createTextInput(
 			'zotero',
