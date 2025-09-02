@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-08-26 00:40+0000\n"
+"PO-Revision-Date: 2025-09-02 20:03+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
 "n>6 && n<11) ? 3 : 4;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -587,7 +587,7 @@ msgstr "Sábháil Socruithe Amhairc"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr ""
+msgstr "Cuir isteach Eochair API Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -2209,7 +2209,7 @@ msgstr "Cuardaigh..."
 
 #: src/control/Control.QuickFindPanel.ts:74
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Clóscríobh sa bhosca cuardaigh chun aon rud i do dhoiciméad a aimsiú"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2831,7 +2831,7 @@ msgstr "Spásáil & Dath"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Teimpléid Sleamhnán Máistir"
 
 #: src/control/Control.NotebookbarImpress.js:1777
 msgid "Slide Size"
@@ -3883,13 +3883,12 @@ msgid "Watermark"
 msgstr "Uiscemharc"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
-#, fuzzy
 msgid "Insert comment"
-msgstr "Ionsáigh Nóta"
+msgstr "Cuir trácht isteach"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr ""
+msgstr "Liosta tuairimí"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
