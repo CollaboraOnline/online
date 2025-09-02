@@ -643,7 +643,11 @@ public:
         , _supportsLocks(false)
         , _lockState(StorageBase::LockState::UNLOCK)
     {
+        LOG_DBG("Lock will refresh every " << _refreshSeconds);
     }
+
+    /// Returns the refresh period.
+    std::chrono::seconds refreshPeriod() const { return _refreshSeconds; }
 
     /// one-time setup for supporting locks & create token
     void initSupportsLocks();
