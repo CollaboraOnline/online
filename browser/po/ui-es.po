@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
 "PO-Revision-Date: 2025-09-02 11:34+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -388,7 +388,7 @@ msgstr "Mostrar regla"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Comprobador de accesibilidad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -2503,7 +2503,7 @@ msgstr "Tamaño"
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Red"
 
 #: src/control/Control.NotebookbarCalc.js:1154
 msgid "Row Height"
@@ -2650,7 +2650,7 @@ msgstr "Biblioteca de funciones"
 
 #: src/control/Control.NotebookbarCalc.js:1959
 msgid "AutoSum"
-msgstr ""
+msgstr "AutoSuma"
 
 #: src/control/Control.NotebookbarCalc.js:1972
 msgid "Financial"
@@ -2666,11 +2666,11 @@ msgstr "Fecha y hora"
 
 #: src/control/Control.NotebookbarCalc.js:2032
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Búsqueda & Referencia"
 
 #: src/control/Control.NotebookbarCalc.js:2050
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matemáticas y Trigonometría"
 
 #: src/control/Control.NotebookbarCalc.js:2062
 msgid "More Functions"
@@ -3558,11 +3558,11 @@ msgstr "Carta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:883
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:884
 msgid "Long Bond"
-msgstr ""
+msgstr "Bono Largo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:885
 msgid "Tabloid"
