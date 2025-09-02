@@ -135,40 +135,12 @@ class PaneBorder {
 	}
 }
 
-class RawDelta {
-	private _delta: Uint8Array;
-	private _id: number;
-	private _isKeyframe: boolean;
-
-	constructor(delta: Uint8Array, id: number, isKeyframe: boolean) {
-		this._delta = delta;
-		this._id = id;
-		this._isKeyframe = isKeyframe;
-	}
-
-	public get length() {
-		return this.delta.length;
-	}
-
-	public get delta() {
-		return this._delta;
-	}
-
-	public get id() {
-		return this._id;
-	}
-
-	public get isKeyframe() {
-		return this._isKeyframe;
-	}
-}
-
 class Tile {
 	coords: TileCoordData;
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	image: ImageBitmap | null = null; // ImageBitmap ready to render
 	imgDataCache: any = null; // flat byte array of image data
-	rawDeltas: RawDelta[] = []; // deltas ready to decompress
+	rawDeltas: cool.RawDelta[] = []; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
 	loadCount: number = 0; // how many times did we get a new keyframe
@@ -567,7 +539,7 @@ class TileManager {
 
 	private static applyCompressedDelta(
 		tile: Tile,
-		rawDeltas: RawDelta[],
+		rawDeltas: cool.RawDelta[],
 		isKeyframe: any,
 		wireMessage: any,
 		ids: number[],
@@ -597,101 +569,6 @@ class TileManager {
 		tile.lastPendingId = ids[1];
 
 		this.pendingDeltas.push(e);
-	}
-
-	private static applyDeltaChunk(
-		imgData: any,
-		delta: any,
-		oldData: any,
-		width: any,
-		height: any,
-	) {
-		var pixSize = width * height * 4;
-		if (this.debugDeltas)
-			window.app.console.log(
-				'Applying a delta of length ' +
-					delta.length +
-					' image size: ' +
-					pixSize,
-			);
-		// + ' hex: ' + hex2string(delta, delta.length));
-
-		var offset = 0;
-
-		// Green-tinge the old-Data ...
-		if (0) {
-			for (var i = 0; i < pixSize; ++i) oldData[i * 4 + 1] = 128;
-		}
-
-		// wipe to grey.
-		if (0) {
-			for (var i = 0; i < pixSize * 4; ++i) imgData.data[i] = 128;
-		}
-
-		// Apply delta.
-		var stop = false;
-		for (var i = 0; i < delta.length && !stop; ) {
-			switch (delta[i]) {
-				case 99: // 'c': // copy row
-					var count = delta[i + 1];
-					var srcRow = delta[i + 2];
-					var destRow = delta[i + 3];
-					if (this.debugDeltasDetail)
-						window.app.console.log(
-							'[' +
-								i +
-								']: copy ' +
-								count +
-								' row(s) ' +
-								srcRow +
-								' to ' +
-								destRow,
-						);
-					i += 4;
-					for (var cnt = 0; cnt < count; ++cnt) {
-						var src = (srcRow + cnt) * width * 4;
-						var dest = (destRow + cnt) * width * 4;
-						for (var j = 0; j < width * 4; ++j) {
-							imgData.data[dest + j] = oldData[src + j];
-						}
-					}
-					break;
-				case 100: // 'd': // new run
-					destRow = delta[i + 1];
-					var destCol = delta[i + 2];
-					var span = delta[i + 3];
-					offset = destRow * width * 4 + destCol * 4;
-					if (this.debugDeltasDetail)
-						window.app.console.log(
-							'[' +
-								i +
-								']: apply new span of size ' +
-								span +
-								' at pos ' +
-								destCol +
-								', ' +
-								destRow +
-								' into delta at byte: ' +
-								offset,
-						);
-					i += 4;
-					span *= 4;
-					for (var j = 0; j < span; ++j) imgData.data[offset++] = delta[i + j];
-					i += span;
-					// imgData.data[offset - 2] = 256; // debug - blue terminator
-					break;
-				case 116: // 't': // terminate delta new one next
-					stop = true;
-					i++;
-					break;
-				default:
-					console.log('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
-					i = delta.length;
-					break;
-			}
-		}
-
-		return i;
 	}
 
 	private static checkTileMsgObject(msgObj: any) {
@@ -1058,7 +935,7 @@ class TileManager {
 		keyframeImage: any,
 		wireMessage: any,
 	) {
-		const rawDeltaSize = tile.rawDeltas.reduce((a, c) => a + c.length, 0);
+		const rawDeltaSize = rawDeltas.reduce((a, c) => a + c.length, 0);
 
 		if (this.debugDeltas) {
 			const hexStrings = [];
@@ -1108,65 +985,19 @@ class TileManager {
 			{ keyFrame: !!keyframeDeltaSize, length: rawDeltaSize },
 		);
 
-		// apply potentially several deltas in turn.
-		var i = 0;
-
-		// If it's a new keyframe, use the given image and offset
-		var imgData = keyframeImage;
-		var offset = keyframeDeltaSize;
-
-		while (offset < deltas.length) {
-			if (this.debugDeltas)
-				window.app.console.log(
-					'Next delta at ' + offset + ' length ' + (deltas.length - offset),
-				);
-
-			var delta = !offset ? deltas : deltas.subarray(offset);
-
-			// Debugging paranoia: if we get this wrong bad things happen.
-			if (delta.length >= this.tileSize * this.tileSize * 4) {
-				window.app.console.warn(
-					'Unusual delta possibly mis-tagged, suspicious size vs. type ' +
-						delta.length +
-						' vs. ' +
-						this.tileSize * this.tileSize * 4,
-				);
-			}
-
-			if (!imgData)
-				// no keyframe
-				imgData = tile.imgDataCache;
-			if (!imgData) {
-				window.app.console.error(
-					'Trying to apply delta with no ImageData cache',
-				);
-				return;
-			}
-
-			// copy old data to work from:
-			var oldData = new Uint8ClampedArray(imgData.data);
-
-			var len = this.applyDeltaChunk(
-				imgData,
-				delta,
-				oldData,
-				this.tileSize,
-				this.tileSize,
-			);
-			if (this.debugDeltas)
-				window.app.console.log(
-					'Applied chunk ' +
-						i++ +
-						' of total size ' +
-						delta.length +
-						' at stream offset ' +
-						offset +
-						' size ' +
-						len,
-				);
-
-			offset += len;
+		const imgData = keyframeImage ? keyframeImage : tile.imgDataCache;
+		if (!imgData) {
+			window.app.console.error('Trying to apply delta with no ImageData cache');
+			return;
 		}
+
+		L.CanvasTileUtils.updateImageFromDeltas(
+			imgData,
+			deltas,
+			keyframeDeltaSize,
+			this.tileSize,
+			this.debugDeltas,
+		);
 
 		// hold onto the original imgData for reuse in the no keyframe case
 		tile.imgDataCache = imgData;
@@ -2002,7 +1833,7 @@ class TileManager {
 			// Store the compressed tile data for later decompression and
 			// display. This lets us store many more tiles than if we were
 			// to only store the decompressed tile data.
-			const rawDelta = new RawDelta(
+			const rawDelta = new cool.RawDelta(
 				img.rawData,
 				++tile.deltaId,
 				img.isKeyframe,
