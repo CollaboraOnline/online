@@ -225,6 +225,8 @@ int main(int argc, char* argv_main[])
     std::thread(
         [&]
         {
+            Util::setThreadName("COOLWSD::run");
+
             if ((false)) { //TODO: clarify which configuration wants to use this
                 const std::string docURL = std::string(argv_main[1]);
                 const std::string encodedWOPI = std::string(argv_main[2]);
