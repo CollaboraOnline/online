@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-08-25 11:46+0000\n"
+"PO-Revision-Date: 2025-09-02 20:03+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 5.13\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -587,7 +587,7 @@ msgstr "Zapisz ustawienia widoku"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr ""
+msgstr "Wpisz klucz API Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -2198,7 +2198,7 @@ msgstr "Szukaj..."
 
 #: src/control/Control.QuickFindPanel.ts:74
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Wpisz w polu wyszukiwania, aby znaleźć cokolwiek w dokumencie"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2820,7 +2820,7 @@ msgstr "Odstępy i kolor"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Szablony slajdów wzorcowych"
 
 #: src/control/Control.NotebookbarImpress.js:1777
 msgid "Slide Size"
@@ -3868,13 +3868,12 @@ msgid "Watermark"
 msgstr "Znak wodny"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
-#, fuzzy
 msgid "Insert comment"
 msgstr "Wstaw komentarz"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr ""
+msgstr "Lista komentarzy"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
