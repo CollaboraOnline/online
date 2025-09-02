@@ -373,9 +373,15 @@ L.Control.JSDialog = L.Control.extend({
 		if (!instance.canHaveFocus)
 			return;
 
+		const elementToFocus = document.getElementById(instance.init_focus_id);
+
+		if (instance.init_focus_id === 'input-modal-input' && elementToFocus) {
+			elementToFocus.select();
+		}
+		
 		const failedToFindFocus = () => {
-			if (document.getElementById(instance.init_focus_id))
-				document.getElementById(instance.init_focus_id).focus();
+			if (elementToFocus)
+				elementToFocus.focus();
 			else {
 				app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
 				instance.that.close(instance.id, true);
