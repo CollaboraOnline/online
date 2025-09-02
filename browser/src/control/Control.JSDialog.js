@@ -671,12 +671,20 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		else {
 			// This is a Cell DropDown. We will use current cell's rectangle.
-			cellRectangle = app.calc.cellCursorRectangle;
+			cellRectangle = app.calc.cellCursorRectangle.clone();
 		}
 
 		const documentAnchor = app.sectionContainer.getDocumentAnchor();
-		cellRectangle.pX1 += documentAnchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
-		cellRectangle.pY1 += documentAnchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;
+
+		if (!app.isXOrdinateInFrozenPane(cellRectangle.pX1))
+			cellRectangle.pX1 += documentAnchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
+		else
+			cellRectangle.pX1 += documentAnchor[0];
+
+		if (!app.isYOrdinateInFrozenPane(cellRectangle.pY1))
+			cellRectangle.pY1 += documentAnchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;
+		else
+			cellRectangle.pY1 += documentAnchor[1];
 
 		app.calc.autoFilterCell = null; // Set to null after using to ensure it doesn't confuse consequent calls.
 		app.calc.pivotTableFilterCell = null;
