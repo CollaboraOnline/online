@@ -18,6 +18,9 @@ class GraphicSelection {
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
 	public static handlesSection: ShapeHandlesSection = null;
+	public static chartContextToolbarSelectStyle: ChartContextButtonSection =
+		null;
+	public static chartContextToolbarSaveStyle: ChartContextButtonSection = null;
 
 	public static hasActiveSelection() {
 		return this.rectangle !== null;
@@ -240,6 +243,45 @@ class GraphicSelection {
 		else if (this.handlesSection) this.handlesSection.setSVG(textMsg);
 	}
 
+	private static checkChartData() {
+		if (
+			GraphicSelection.extraInfo &&
+			GraphicSelection.extraInfo.isChartPage &&
+			GraphicSelection.extraInfo.isChartPage === true
+		) {
+			if (!GraphicSelection.chartContextToolbarSelectStyle) {
+				GraphicSelection.chartContextToolbarSelectStyle =
+					new ChartContextButtonSection(0);
+				GraphicSelection.chartContextToolbarSaveStyle =
+					new ChartContextButtonSection(1);
+				GraphicSelection.chartContextToolbarSelectStyle.forceNextReposition();
+				GraphicSelection.chartContextToolbarSaveStyle.forceNextReposition();
+				app.sectionContainer.addSection(
+					GraphicSelection.chartContextToolbarSelectStyle,
+				);
+				app.sectionContainer.addSection(
+					GraphicSelection.chartContextToolbarSaveStyle,
+				);
+			}
+			GraphicSelection.chartContextToolbarSelectStyle.updatePosition();
+			GraphicSelection.chartContextToolbarSaveStyle.updatePosition();
+
+			if (GraphicSelection.chartContextToolbarSelectStyle) {
+				GraphicSelection.chartContextToolbarSelectStyle.showChartContextToolbar();
+				GraphicSelection.chartContextToolbarSaveStyle.showChartContextToolbar();
+			}
+		} else if (GraphicSelection.chartContextToolbarSelectStyle) {
+			app.sectionContainer.removeSection(
+				GraphicSelection.chartContextToolbarSelectStyle.name,
+			);
+			app.sectionContainer.removeSection(
+				GraphicSelection.chartContextToolbarSaveStyle.name,
+			);
+			GraphicSelection.chartContextToolbarSelectStyle = null;
+			GraphicSelection.chartContextToolbarSaveStyle = null;
+		}
+	}
+
 	public static onMessage(textMsg: string) {
 		URLPopUpSection.closeURLPopUp();
 
@@ -357,6 +399,8 @@ class GraphicSelection {
 				this.onEmbeddedVideoContent(JSON.stringify(extraInfo));
 			}
 		}
+
+		GraphicSelection.checkChartData();
 	}
 }
 

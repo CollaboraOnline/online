@@ -1373,3 +1373,29 @@ body {
 	background-color: var(--color-insert-marker-background-dark) !important;
 	background: url('images/insert-plus-marker-hover.svg') no-repeat center center /20px;
 }
+
+.chart-select-theme {
+	border-radius: 4px;
+	background-color: var(--color-insert-marker-background) !important;
+	box-shadow: 1px var(--color-box-shadow);
+	background: url('images/lc_selecttheme.svg') no-repeat center center /20px;
+}
+
+.chart-select-theme.hovered {
+	cursor: pointer;
+	background-color: var(--color-insert-marker-background-dark) !important;
+	background: url('images/lc_selecttheme.svg') no-repeat center center /20px;
+}
+
+.chart-save-to-new-theme {
+	border-radius: 4px;
+	background-color: var(--color-insert-marker-background) !important;
+	box-shadow: 1px var(--color-box-shadow);
+	background: url('images/lc_chartsavetonewtheme.svg') no-repeat center center /20px;
+}
+
+.chart-save-to-new-theme.hovered {
+	cursor: pointer;
+	background-color: var(--color-insert-marker-background-dark) !important;
+	background: url('images/lc_chartsavetonewtheme.svg') no-repeat center center /20px;
+}
