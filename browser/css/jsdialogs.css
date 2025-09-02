@@ -2862,3 +2862,17 @@ div [id^='TemplateDialog'] #tabcontrol #Area.jsdialog,
 #PageTemplateDialog #tabcontrol #Background.jsdialog {
 	align-self: start;
 }
+
+div [id^='themeview'] {
+	grid-template-columns: 1fr 1fr;
+	width: 420px;
+}
+div [id^='themeview1col'] {
+	grid-template-columns: 1fr;
+	width: 220px;
+}
+
+div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-entry {
+	width: 200px;
+	height: 146px
+}
