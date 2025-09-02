@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-09-02 11:34+0000\n"
+"PO-Revision-Date: 2025-09-02 11:37+0000\n"
 "Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
@@ -3585,15 +3585,16 @@ msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:889
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:890
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:891
+#, fuzzy
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:892
 msgid "User"
@@ -3608,9 +3609,8 @@ msgid "C6 Envelope"
 msgstr "Sobre C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:895
-#, fuzzy
 msgid "C6/5 Envelope"
-msgstr "Sobre C6"
+msgstr "Sobre C6/5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:896
 msgid "C5 Envelope"
@@ -3621,37 +3621,32 @@ msgid "C4 Envelope"
 msgstr "Sobre C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:900
-#, fuzzy
 msgid "#6¾ Envelope"
-msgstr "Sobre C6"
+msgstr "Sobre #6¾"
 
 #: src/control/jsdialog/Definitions.Menu.ts:905
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "Sobre #7¾ (Monarch)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:908
-#, fuzzy
 msgid "#9 Envelope"
-msgstr "Sobre DL"
+msgstr "Sobre #9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:909
-#, fuzzy
 msgid "#10 Envelope"
-msgstr "Sobre DL"
+msgstr "Sobre #10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:910
-#, fuzzy
 msgid "#11 Envelope"
-msgstr "Sobre DL"
+msgstr "Sobre #11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:911
-#, fuzzy
 msgid "#12 Envelope"
-msgstr "Sobre DL"
+msgstr "Sobre #12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:914
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Postal japonesa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1086
 msgid "Insert Local Image"
@@ -3738,17 +3733,17 @@ msgid "Line color"
 msgstr "Color de línea"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1317
-#, fuzzy
 msgid "Line style"
-msgstr "Estilo de línea:"
+msgstr "Estilo de línea"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1320
+#, fuzzy
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Hairline (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1329
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "My fino (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1338
 msgid "Thin (0.75 pt)"
