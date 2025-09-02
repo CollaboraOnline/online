@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-24 23:06+0200\n"
-"PO-Revision-Date: 2025-08-01 10:02+0000\n"
+"PO-Revision-Date: 2025-09-02 11:34+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -378,7 +378,7 @@ msgstr "Mode nocturn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
 msgid "Compact layout"
-msgstr ""
+msgstr "Disposició compacta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
 #, fuzzy
@@ -392,7 +392,7 @@ msgstr "Mostra el regle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Comprovació d'accessibilitat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 #: src/control/Control.NavigatorPanel.ts:204
@@ -401,11 +401,11 @@ msgstr "Navegador"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Mostra la barra lateral"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Custom Animation"
-msgstr ""
+msgstr "Animació personalitzada"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Master Pages"
@@ -413,7 +413,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Slide Transition"
-msgstr ""
+msgstr "Transició entre diapositives"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 #, fuzzy
@@ -508,7 +508,7 @@ msgstr "Paràmetres de la interfície"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:497
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Definiu les preferències de la interfície per defecte."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:605
 #, fuzzy
@@ -2197,15 +2197,15 @@ msgstr "Esquema"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Resultats"
 
 #: src/control/Control.NavigatorPanel.ts:378
 msgid "Search..."
-msgstr ""
+msgstr "Cerca…"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Transició"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
@@ -2213,7 +2213,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Durada"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
@@ -2221,7 +2221,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Després"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2390,7 +2390,7 @@ msgstr "Canvia el nom"
 #: src/control/Control.NotebookbarImpress.js:708
 #: src/control/Control.NotebookbarWriter.js:583
 msgid "Clipboard"
-msgstr ""
+msgstr "Porta-retalls"
 
 #: src/control/Control.NotebookbarCalc.js:456
 #: src/control/Control.NotebookbarDraw.js:654
@@ -2401,7 +2401,7 @@ msgstr "Lletra tipogràfica"
 #: src/control/Control.NotebookbarCalc.js:603
 #: src/control/Control.NotebookbarDraw.js:795
 msgid "Alignment"
-msgstr ""
+msgstr "Alineació"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
@@ -2498,18 +2498,18 @@ msgstr "Reemplaça"
 #: src/control/Control.NotebookbarCalc.js:1087
 #: src/control/Control.NotebookbarWriter.js:1815
 msgid "Margin"
-msgstr ""
+msgstr "Marge"
 
 #: src/control/Control.NotebookbarCalc.js:1093
 #: src/control/Control.NotebookbarWriter.js:1822
 msgid "Size"
-msgstr ""
+msgstr "Mida"
 
 #: src/control/Control.NotebookbarCalc.js:1125
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:628
 msgid "Grid"
-msgstr ""
+msgstr "Graella"
 
 #: src/control/Control.NotebookbarCalc.js:1154
 msgid "Row Height"
@@ -2578,7 +2578,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Escala"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2610,11 +2610,11 @@ msgstr "Barra d'estat"
 #: src/control/Control.NotebookbarWriter.js:3366
 #: src/control/Control.NotebookbarWriter.js:3689
 msgid "Group"
-msgstr ""
+msgstr "Agrupa"
 
 #: src/control/Control.NotebookbarCalc.js:1580
 msgid "Ungroup"
-msgstr ""
+msgstr "Desagrupa"
 
 #: src/control/Control.NotebookbarCalc.js:1602
 msgid "Pivot Table"
@@ -2628,7 +2628,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:951
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Il·lustracions"
 
 #: src/control/Control.NotebookbarCalc.js:1721
 #: src/control/Control.NotebookbarDraw.js:1010
@@ -2685,15 +2685,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2107
 msgid "Range"
-msgstr ""
+msgstr "Interval"
 
 #: src/control/Control.NotebookbarCalc.js:2190
 msgid "Sort"
-msgstr ""
+msgstr "Ordena"
 
 #: src/control/Control.NotebookbarCalc.js:2236
 msgid "Filter"
-msgstr ""
+msgstr "Filtra"
 
 #: src/control/Control.NotebookbarCalc.js:2483
 #: src/control/Control.NotebookbarImpress.js:1900
@@ -2712,7 +2712,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3203
 #: src/control/Control.NotebookbarWriter.js:3526
 msgid "Wrap"
-msgstr ""
+msgstr "Ajusta"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarImpress.js:2619
@@ -2750,13 +2750,13 @@ msgstr "Regle"
 #: src/control/Control.NotebookbarWriter.js:787
 #: src/control/Control.NotebookbarWriter.js:2969
 msgid "Paragraph"
-msgstr ""
+msgstr "Paràgraf"
 
 #: src/control/Control.NotebookbarDraw.js:1207
 #: src/control/Control.NotebookbarDraw.js:1407
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Pàgina"
 
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1603
@@ -2767,7 +2767,7 @@ msgstr "Camps"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Design"
-msgstr ""
+msgstr "Disseny"
 
 #: src/control/Control.NotebookbarImpress.js:110
 msgid "Slide Show"
@@ -2819,7 +2819,7 @@ msgstr "Reinicialitza la disposició"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "Character"
-msgstr ""
+msgstr "Caràcter"
 
 #: src/control/Control.NotebookbarImpress.js:1074
 msgid "Spacing & Color"
@@ -2840,11 +2840,11 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:2043
 #: src/control/Control.NotebookbarWriter.js:2919
 msgid "Select"
-msgstr ""
+msgstr "Selecciona"
 
 #: src/control/Control.NotebookbarImpress.js:2652
 msgid "Effects"
-msgstr ""
+msgstr "Efectes"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2868,7 +2868,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Llistes/pics"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
@@ -2876,11 +2876,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Secció"
 
 #: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
-msgstr ""
+msgstr "Símbols"
 
 #: src/control/Control.NotebookbarWriter.js:1602
 msgid "Rich Text"
@@ -3501,11 +3501,11 @@ msgstr "Normal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr ""
+msgstr "Ample"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr ""
+msgstr "Estret"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Min"
@@ -3533,19 +3533,19 @@ msgstr "Horitzontal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:875
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:876
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:877
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:878
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:879
 msgid "B6 (ISO)"
@@ -3601,7 +3601,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:892
 msgid "User"
-msgstr ""
+msgstr "Usuari"
 
 #: src/control/jsdialog/Definitions.Menu.ts:893
 msgid "DL Envelope"
@@ -3657,7 +3657,7 @@ msgstr "Insereix una imatge local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1092
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Insereix multimèdia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1098
 msgid "Very Tight"
@@ -3685,31 +3685,31 @@ msgstr "Aquest usuari"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1235
 msgid "No Borders"
-msgstr ""
+msgstr "Cap vora"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1241
 msgid "Left Border"
-msgstr ""
+msgstr "Vora esquerra"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1247
 msgid "Right Border"
-msgstr ""
+msgstr "Vora dreta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1253
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Vores esquerra i dreta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1259
 msgid "Top Border"
-msgstr ""
+msgstr "Vora superior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1265
 msgid "Bottom Border"
-msgstr ""
+msgstr "Vora inferior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1271
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Vores superior i inferior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1277
 msgid "Outer Border"
@@ -3858,15 +3858,15 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1625
 msgid "Grayscale"
-msgstr ""
+msgstr "Escala de grisos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1630
 msgid "Black/White"
-msgstr ""
+msgstr "Blanc i negre"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1635
 msgid "Watermark"
-msgstr ""
+msgstr "Marca d'aigua"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4732,11 +4732,11 @@ msgstr ""
 #: src/slideshow/SlideShowPresenter.ts:588
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Disable Animations"
-msgstr ""
+msgstr "Desactiva les animacions"
 
 #: src/slideshow/SlideShowPresenter.ts:598
 msgid "Enable Animations"
-msgstr ""
+msgstr "Activa les animacions"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
