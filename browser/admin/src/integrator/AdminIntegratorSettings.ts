@@ -813,6 +813,9 @@ class SettingIframe {
 	): HTMLFieldSetElement {
 		const fieldset = document.createElement('fieldset');
 		fieldset.classList.add('xcu-settings-fieldset');
+		if (uniqueId.startsWith('Grid-')) {
+			fieldset.classList.add('grid-options-fieldset');
+		}
 		const legend = document.createElement('legend');
 		legend.textContent = _(this.settingLabels[key] || key);
 		fieldset.appendChild(legend);
@@ -850,6 +853,7 @@ class SettingIframe {
 	): HTMLSpanElement {
 		const checkboxWrapper = document.createElement('span');
 		checkboxWrapper.className = `checkbox-radio-switch checkbox-radio-switch-checkbox ${isChecked ? '' : 'checkbox-radio-switch--checked'} checkbox-wrapper`;
+		id = id.replace(/\s/g, '');
 		checkboxWrapper.id = id + '-container';
 
 		// Use the new helper here
@@ -890,7 +894,14 @@ class SettingIframe {
 		if (!isDisabled) {
 			checkboxWrapper.addEventListener('click', () => {
 				onClickHandler(inputCheckbox, checkboxWrapper, materialIconContainer);
+				if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
+					this.toggleGridOptionsVisibility(checkboxWrapper);
+				}
 			});
+			if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
+				// Set the initial state of Grid fieldsets' visibility
+				setTimeout(() => this.toggleGridOptionsVisibility(checkboxWrapper), 0);
+			}
 		} else {
 			checkboxWrapper.classList.add('checkbox-radio-switch--disabled');
 		}
@@ -1545,6 +1556,20 @@ class SettingIframe {
 			filename = filename.replace(/\.[^.]+$/, '');
 		}
 		return filename;
+	}
+
+	private toggleGridOptionsVisibility(checkbox: HTMLElement): void {
+		const gridFieldset = checkbox.closest('.xcu-settings-fieldset');
+		const childFieldsets = gridFieldset?.querySelectorAll(
+			'.grid-options-fieldset',
+		) as NodeListOf<HTMLElement>;
+		childFieldsets?.forEach((fieldset) => {
+			if (checkbox.classList.contains('checkbox-radio-switch--checked')) {
+				fieldset.style.display = 'none';
+			} else {
+				fieldset.style.display = 'block';
+			}
+		});
 	}
 }
 
