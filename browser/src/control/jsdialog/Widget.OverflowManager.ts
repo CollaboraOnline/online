@@ -25,7 +25,8 @@ class OverflowManager {
 		this.data = data;
 
 		window.addEventListener('resize', this.onResize.bind(this));
-		app.map.on('refreshoverflows', this.onRefresh, this);
+		if (app.map) app.map.on('refreshoverflows', this.onRefresh, this);
+		else app.console.error('OverflowManager: no app.map available');
 	}
 
 	calculateMaxWidth(): number {
