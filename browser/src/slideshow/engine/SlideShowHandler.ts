@@ -25,7 +25,7 @@ class SlideShowContext {
 	public bIsSkipping: boolean;
 	public nSlideWidth: number;
 	public nSlideHeight: number;
-	public aCanvas: HTMLCanvasElement;
+	public m_aCanvas: HTMLCanvasElement;
 
 	constructor(
 		aSlideShowHandler: SlideShowHandler,
@@ -65,7 +65,7 @@ class SlideShowHandler {
 	private aNextEffectEventArray: NextEffectEventArray;
 	private aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap;
 	private aEventMultiplexer: EventMultiplexer;
-	private aContext: SlideShowContext;
+	private m_aContext: SlideShowContext;
 	private bIsIdle: boolean;
 	private bIsEnabled: boolean;
 	private bNoSlideTransition: boolean;
@@ -111,7 +111,7 @@ class SlideShowHandler {
 		this.aInteractiveAnimationSequenceMap = null;
 		this.aEventMultiplexer = null;
 
-		this.aContext = new SlideShowContext(
+		this.m_aContext = new SlideShowContext(
 			this,
 			this.aTimerEventQueue,
 			this.aEventMultiplexer,
@@ -176,12 +176,12 @@ class SlideShowHandler {
 				'SlideShow.setSlideEvents: aEventMultiplexer is not valid',
 			);
 
-		this.aContext.aNextEffectEventArray = aNextEffectEventArray;
+		this.m_aContext.aNextEffectEventArray = aNextEffectEventArray;
 		this.aNextEffectEventArray = aNextEffectEventArray;
-		this.aContext.aInteractiveAnimationSequenceMap =
+		this.m_aContext.aInteractiveAnimationSequenceMap =
 			aInteractiveAnimationSequenceMap;
 		this.aInteractiveAnimationSequenceMap = aInteractiveAnimationSequenceMap;
-		this.aContext.aEventMultiplexer = aEventMultiplexer;
+		this.m_aContext.aEventMultiplexer = aEventMultiplexer;
 		this.aEventMultiplexer = aEventMultiplexer;
 		this.nCurrentEffect = 0;
 	}
@@ -221,6 +221,13 @@ class SlideShowHandler {
 			aSlideTransition,
 			DirectionType.Forward,
 		);
+	}
+
+	addAllyString(allyString: string) {
+		if (this.presenter._enableAlly) {
+			const canvas = this.getContext().m_aCanvas;
+			canvas.innerHTML = allyString;
+		}
 	}
 
 	isEnabled() {
@@ -356,7 +363,7 @@ class SlideShowHandler {
 				metaNewSlide.animationsHandler.getAnimatedElementMap();
 
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
-				aAnimatedElement.notifySlideStart(this.aContext);
+				aAnimatedElement.notifySlideStart(this.m_aContext);
 			});
 		}
 		this.slideCompositor.notifyTransitionStart();
@@ -807,6 +814,9 @@ class SlideShowHandler {
 			this.cleanLeavingSlideStatus(nOldSlide, bSkipSlideTransition);
 		}
 
+		const slideinfo = this.getSlideInfo(nNewSlide);
+		this.addAllyString(slideinfo.name);
+
 		this.notifySlideStart(nNewSlide, nOldSlide);
 
 		if (this.isEnabled() && this.isGlSupported() && !bSkipSlideTransition) {
@@ -902,7 +912,7 @@ class SlideShowHandler {
 	}
 
 	getContext() {
-		return this.aContext;
+		return this.m_aContext;
 	}
 
 	private get slideRenderer(): SlideRenderer {

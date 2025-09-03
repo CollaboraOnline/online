@@ -176,7 +176,7 @@ abstract class BaseContainerNode extends BaseNode {
 			if (this.nLeftIterations >= 1.0) {
 				bFinished = false;
 				const aRepetitionEvent = makeDelay(this.repeat.bind(this), 0.0);
-				this.aContext.aTimerEventQueue.addEvent(aRepetitionEvent);
+				this.m_aContext.aTimerEventQueue.addEvent(aRepetitionEvent);
 			} else {
 				this.deactivate();
 			}
@@ -540,25 +540,25 @@ class SequentialTimeContainer extends BaseContainerNode {
 			);
 
 			if (this.isMainSequenceRootNode()) {
-				this.aContext.aEventMultiplexer.registerSkipEffectEvent(
+				this.m_aContext.aEventMultiplexer.registerSkipEffectEvent(
 					this.aCurrentSkipEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindCurrentEffectEvent(
+				this.m_aContext.aEventMultiplexer.registerRewindCurrentEffectEvent(
 					this.aRewindCurrentEffectEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindLastEffectEvent(
+				this.m_aContext.aEventMultiplexer.registerRewindLastEffectEvent(
 					this.aRewindLastEffectEvent,
 				);
 			} else if (this.isInteractiveSequenceRootNode()) {
-				this.aContext.aEventMultiplexer.registerSkipInteractiveEffectEvent(
+				this.m_aContext.aEventMultiplexer.registerSkipInteractiveEffectEvent(
 					aChildNode.getId(),
 					this.aCurrentSkipEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindRunningInteractiveEffectEvent(
+				this.m_aContext.aEventMultiplexer.registerRewindRunningInteractiveEffectEvent(
 					aChildNode.getId(),
 					this.aRewindCurrentEffectEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindEndedInteractiveEffectEvent(
+				this.m_aContext.aEventMultiplexer.registerRewindEndedInteractiveEffectEvent(
 					aChildNode.getId(),
 					this.aRewindLastEffectEvent,
 				);
@@ -569,13 +569,13 @@ class SequentialTimeContainer extends BaseContainerNode {
 
 	public notifyRewindedEvent(aChildNode: BaseNode) {
 		if (this.isInteractiveSequenceRootNode()) {
-			this.aContext.aEventMultiplexer.notifyRewindedEffectEvent(
+			this.m_aContext.aEventMultiplexer.notifyRewindedEffectEvent(
 				aChildNode.getId(),
 			);
 
 			const sId = aChildNode.getBegin().getEventBaseElementId();
 			if (sId) {
-				this.aContext.aEventMultiplexer.notifyRewindedEffectEvent(sId);
+				this.m_aContext.aEventMultiplexer.notifyRewindedEffectEvent(sId);
 			}
 		}
 	}

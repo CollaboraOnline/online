@@ -59,15 +59,15 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 			aAnimation = createPairPropertyAnimation(
 				this.getAttributeName(),
 				this.getAnimatedElement(),
-				this.aNodeContext.aContext.nSlideWidth,
-				this.aNodeContext.aContext.nSlideHeight,
+				this.aNodeContext.m_aContext.nSlideWidth,
+				this.aNodeContext.m_aContext.nSlideHeight,
 			);
 		} else {
 			aAnimation = createPropertyAnimation(
 				this.getAttributeName(),
 				this.getAnimatedElement(),
-				this.aNodeContext.aContext.nSlideWidth,
-				this.aNodeContext.aContext.nSlideHeight,
+				this.aNodeContext.m_aContext.nSlideWidth,
+				this.aNodeContext.m_aContext.nSlideHeight,
 			);
 		}
 

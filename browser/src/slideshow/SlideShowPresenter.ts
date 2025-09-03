@@ -122,6 +122,7 @@ class SlideShowPresenter {
 	_canvasLoader: CanvasLoader | null = null;
 	_progressBarContainer: HTMLDivElement | null = null;
 	_slideNavContainer: HTMLDivElement | null = null;
+	_enableAlly: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
@@ -138,10 +139,11 @@ class SlideShowPresenter {
 	private _hammer: HammerManager;
 	private _wasInDarkMode: boolean = false;
 
-	constructor(map: any) {
+	constructor(map: any, enableAlly: boolean) {
 		this._cypressSVGPresentationTest =
 			L.Browser.cypressTest || 'Cypress' in window;
 		this._map = map;
+		this._enableAlly = enableAlly;
 		this._init();
 		this.addHooks();
 	}
@@ -416,6 +418,10 @@ class SlideShowPresenter {
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
 
+		if (this._enableAlly) {
+			canvas.setAttribute('aria-live', 'assertive');
+		}
+
 		this._progressBarContainer = this._createProgressBar(parent);
 		this._slideNavContainer = this._createSlideNav(parent);
 
@@ -443,7 +449,7 @@ class SlideShowPresenter {
 				.bind(this._slideShowNavigator),
 		);
 
-		this._slideShowHandler.getContext().aCanvas = canvas;
+		this._slideShowHandler.getContext().m_aCanvas = canvas;
 
 		try {
 			this._slideRenderer = new SlideRendererGl(canvas);
@@ -756,7 +762,6 @@ class SlideShowPresenter {
 			window.screen.width,
 			window.screen.height,
 		);
-		this._slideShowCanvas.focus();
 
 		window.addEventListener('resize', this.onSlideWindowResize);
 		this._getProxyDocumentNode().addEventListener(
@@ -788,6 +793,7 @@ class SlideShowPresenter {
 			'beforeunload',
 			this.slideshowWindowCleanUp.bind(this),
 		);
+		this._slideShowCanvas.focus();
 	}
 
 	slideshowWindowCleanUp = () => {
