@@ -1586,7 +1586,7 @@ export class CommentSection extends CanvasSectionObject {
 							app.definitions.CommentSection.needFocus = annotation;
 						}
 						annotation.sectionProperties.container.style.visibility = 'visible';
-						annotation.sectionProperties.autoSave.innerText = _('Autosaved');
+						annotation.focusLost();
 						if (app.map._docLayer._docType === 'spreadsheet')
 							annotation.show();
 						if (autoSavedComment.sectionProperties.data.id === 'new')
@@ -1660,7 +1660,7 @@ export class CommentSection extends CanvasSectionObject {
 				this.update();
 
 				if (CommentSection.autoSavedComment) {
-					CommentSection.autoSavedComment.sectionProperties.autoSave.innerText = _('Autosaved');
+					modified.focusLost();
 					if (app.map._docLayer._docType === 'spreadsheet')
 						modified.show();
 					modified.edit();
