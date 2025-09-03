@@ -2360,8 +2360,16 @@ kbd,
 }
 
 /* Third column has nothing to display */
-#HyperlinkMailPage #grid1 {
-	grid-template-columns: repeat(2, auto) 0px !important;
+#HyperlinkInternetPage #HyperlinkMailPage #grid1 {
+	grid-template-columns: 1fr 3fr 0px !important;
+	column-gap: 0px !important;
+}
+
+#HyperlinkInternetPage #HyperlinkInternetPage #grid1,
+#HyperlinkInternetPage #HyperlinkInternetPage #grid3,
+#HyperlinkInternetPage #HyperlinkMailPage #grid3 {
+	grid-template-columns: 1fr 3fr !important;
+	column-gap: 0px !important;
 }
 
 /* feature_lock */
