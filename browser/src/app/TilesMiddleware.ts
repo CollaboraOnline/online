@@ -139,7 +139,6 @@ class Tile {
 	coords: TileCoordData;
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	image: ImageBitmap | null = null; // ImageBitmap ready to render
-	imgDataCache: Uint8Array | null = null; // flat byte array of image data
 	rawDeltas: cool.RawDelta[] = []; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
@@ -161,7 +160,7 @@ class Tile {
 	}
 
 	hasContent(): boolean {
-		return !!this.imgDataCache || this.hasKeyframe();
+		return !!this.image || this.hasKeyframe();
 	}
 
 	needsFetch() {
@@ -239,6 +238,7 @@ class TileManager {
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: Map<string, Tile> = new Map(); // stores all tiles, keyed by coordinates, and cached, compressed deltas
 	private static tileBitmapList: Tile[] = []; // stores all tiles with bitmaps, sorted by distance from view(s)
+	private static tileImageCache: Map<string, Uint8Array> = new Map();
 	public static tileSize: number = 256;
 
 	// The tile distance around the visible tile area that will be requested when updating
@@ -500,11 +500,12 @@ class TileManager {
 		deltas: any[],
 		bitmaps: Promise<ImageBitmap>[],
 	) {
-		if (tile.imgDataCache) {
+		const imageData = this.tileImageCache.get(tile.coords.toString());
+		if (imageData) {
 			const clampedData = new Uint8ClampedArray(
-				tile.imgDataCache.buffer,
-				tile.imgDataCache.byteOffset,
-				tile.imgDataCache.byteLength,
+				imageData.buffer,
+				imageData.byteOffset,
+				imageData.byteLength,
 			);
 			const image = new ImageData(clampedData, this.tileSize, this.tileSize);
 			bitmaps.push(
@@ -991,7 +992,10 @@ class TileManager {
 			{ keyFrame: !!keyframeDeltaSize, length: rawDeltaSize },
 		);
 
-		const imgData = keyframeImage ? keyframeImage : tile.imgDataCache;
+		const key = tile.coords.toString();
+		const imgData = keyframeImage
+			? keyframeImage
+			: this.tileImageCache.get(key);
 		if (!imgData) {
 			window.app.console.error(
 				'Trying to apply delta with no image data cache',
@@ -1008,7 +1012,7 @@ class TileManager {
 		);
 
 		// hold onto the original imgData for reuse in the no keyframe case
-		tile.imgDataCache = imgData;
+		this.tileImageCache.set(key, imgData);
 
 		if (traceEvent) traceEvent.finish();
 	}
@@ -1063,7 +1067,7 @@ class TileManager {
 		if (tile.image) {
 			tile.image.close();
 			tile.image = null;
-			tile.imgDataCache = null;
+			this.tileImageCache.delete(tile.coords.toString());
 
 			tile.decompressedId = 0;
 			tile.lastPendingId = 0;
