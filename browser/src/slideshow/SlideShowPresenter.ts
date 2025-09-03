@@ -450,6 +450,8 @@ class SlideShowPresenter {
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
 
+		canvas.setAttribute('aria-live', 'assertive');
+
 		this._progressBarContainer = this._createProgressBar(parent);
 		this._slideNavContainer = this._createSlideNav(parent);
 
