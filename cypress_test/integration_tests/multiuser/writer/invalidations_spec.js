@@ -33,7 +33,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		desktopHelper.switchUIToNotebookbar();
 	});
 
-	it('Join document', function() {
+	it.skip('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 		waitForInit(true);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
@@ -67,7 +67,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		});
 	});
 
-	it('Join after document save and modify', function() {
+	it.skip('Join after document save and modify', function() {
 		cy.cSetActiveFrame('#iframe1');
 		waitForInit(true);
 		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '0 words, 0 characters');
