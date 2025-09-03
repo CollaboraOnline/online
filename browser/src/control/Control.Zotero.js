@@ -144,10 +144,13 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	refreshUI: function () {
+		app.console.debug('Zotero: refreshUI');
 		this.map.uiManager.refreshUI();
 	},
 
 	updateUserID: function () {
+		app.console.debug('Zotero: updateUserID');
+
 		if (this.apiKey === '') {
 			this.refreshUI();
 			return;
@@ -157,6 +160,7 @@ L.Control.Zotero = L.Control.extend({
 		fetch('https://api.zotero.org/keys/' + this.apiKey)
 			.then(function (response) { return response.json(); })
 			.then(function (data) {
+				app.console.debug('Zotero: got user data');
 				that.userID = data.userID;
 				that.enable = !!that.userID;
 				that.refreshUI();
