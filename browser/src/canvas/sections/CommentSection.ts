@@ -125,6 +125,10 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentNode = null;
 		this.sectionProperties.nodeModify = null;
 		this.sectionProperties.nodeModifyText = null;
+		this.sectionProperties.saveButton = null;
+		this.sectionProperties.cancelButton = null;
+		this.sectionProperties.replyButton = null;
+		this.sectionProperties.cancelReplyButton = null;
 		this.sectionProperties.contentText = null;
 		this.sectionProperties.nodeReply = null;
 		this.sectionProperties.nodeReplyText = null;
@@ -170,15 +174,17 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		var button = window.L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
+		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'focus', this.onFocus, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'focus', this.onFocusReply, this);
 		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
 		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
 		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
 		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
-		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
-		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
+		this.sectionProperties.cancelButton = this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
+		this.sectionProperties.saveButton = this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
 		button = window.L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
-		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
-		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.handleReplyCommentButton);
+		this.sectionProperties.cancelReplyButton = this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
+		this.sectionProperties.replyButton = this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.handleReplyCommentButton);
 		window.L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		// Since this is a late called function, if the width is enough, we shouldn't collapse the comments.
@@ -313,7 +319,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.authorAvatartdImg = tdImg;
 		this.sectionProperties.contentAuthor = window.L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
 		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
-		this.sectionProperties.autoSave = window.L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
 	}
 
 	private createMenu (): void {
@@ -412,13 +417,14 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private createButton (container: any, id: any, cssClass: string, value: any, handler: any): void {
+	private createButton (container: any, id: any, cssClass: string, value: any, handler: any): HTMLButtonElement {
 		var button = window.L.DomUtil.create('input', cssClass, container);
 		button.id = id;
 		button.type = 'button';
 		button.value = value;
 		window.L.DomEvent.on(button, 'mousedown', window.L.DomEvent.preventDefault);
 		window.L.DomEvent.on(button, 'click', handler, this);
+		return button;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -443,8 +449,6 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private textAreaInput(ev: any): void {
-		this.sectionProperties.autoSave.innerText = '';
-
 		if (ev && app.map._docLayer._docType === 'text') {
 			// special handling for mentions
 			this.map?.mention.handleMentionInput(ev, this.isNewPara());
@@ -477,6 +481,14 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		this.handleKeyDownForPopup(ev, 'mentionPopup');
+	}
+
+	private onFocus() {
+		this.resetControl(this.sectionProperties.saveButton, _('Save'), 'annotation-button-autosaved');
+	}
+
+	private onFocusReply() {
+		this.resetControl(this.sectionProperties.replyButton, _('Reply'), 'annotation-button-autosaved');
 	}
 
 	private updateContent (): void {
@@ -1131,6 +1143,27 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
+	private updateControl(
+		button: HTMLButtonElement | null,
+		label: string,
+		className: string
+	): void {
+		if (button) {
+			button.value = label;
+			button.classList.add(className);
+		}
+	}
+
+	private updateSaveControls() {
+		this.updateControl(this.sectionProperties.saveButton, _('Saved'), 'annotation-button-autosaved');
+		this.updateControl(this.sectionProperties.cancelButton, _('Delete'), 'annotation-button-delete');
+	}
+
+	private updateReplyControls() {
+		this.updateControl(this.sectionProperties.replyButton, _('Saved'), 'annotation-button-autosaved');
+		this.updateControl(this.sectionProperties.cancelReplyButton, _('Delete'), 'annotation-button-delete');
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
 
@@ -1145,7 +1178,6 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 		if (!this.sectionProperties.commentContainerRemoved) {
-			this.cachedIsEdit = false;
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
 			this.removeLastBRTag(this.sectionProperties.nodeModifyText);
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.innerText ||
@@ -1194,6 +1226,27 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	private resetControl(
+		button: HTMLButtonElement | null,
+		label: string,
+		className: string
+	): void {
+		if (button) {
+			button.value = label;
+			button.classList.remove(className);
+		}
+	}
+
+	private resetSaveControls(): void {
+		this.resetControl(this.sectionProperties.saveButton, _('Save'), 'annotation-button-autosaved');
+		this.resetControl(this.sectionProperties.cancelButton, _('Cancel'), 'annotation-button-delete');
+	}
+
+	private resetReplyControls(): void {
+		this.resetControl(this.sectionProperties.replyButton, _('Reply'), 'annotation-button-autosaved');
+		this.resetControl(this.sectionProperties.cancelReplyButton, _('Cancel'), 'annotation-button-delete');
+	}
+
 	public focus (): void {
 		this.sectionProperties.container.classList.add('annotation-active');
 		this.sectionProperties.nodeModifyText.focus({ focusVisible: true });
@@ -1209,6 +1262,13 @@ export class Comment extends CanvasSectionObject {
 			sel.addRange(range)
 		}
 
+		this.resetSaveControls();
+		this.resetReplyControls();
+	}
+
+	public focusLost (): void {
+		this.updateSaveControls();
+		this.updateReplyControls();
 	}
 
 	public reply (): Comment {
