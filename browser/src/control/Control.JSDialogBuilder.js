@@ -1753,10 +1753,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('label', builder.options.cssClass, parentContainer);
+		var hasLabelFor = JSDialog.findID(data.children, data.labelFor);
+		var fixedtext = L.DomUtil.create((hasLabelFor ? 'label' : 'legend'), builder.options.cssClass, parentContainer);
 
-		if (data.labelFor)
+		if (data.labelFor && hasLabelFor) {
 			fixedtext.htmlFor = data.labelFor + '-input';
+		}
 
 		if (data.text)
 			fixedtext.textContent = builder._cleanText(data.text);
