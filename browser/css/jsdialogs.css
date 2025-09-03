@@ -2333,6 +2333,10 @@ button.menubutton.sidebar > span {
 	margin-top: 0px;
 }
 
+#FormulaDialog #box3 :is(#grid2, #grid3) {
+	align-items: center;
+}
+
 #FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
 #FormulaDialog #ALTBOX #funcdesc {
 	margin: auto 0px;
