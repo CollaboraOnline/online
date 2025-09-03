@@ -178,6 +178,9 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	setInitialized: function(initialized) {
+		if (this._isNotebookbarLoadedOnCore === initialized)
+			return;
+
 		this._isNotebookbarLoadedOnCore = initialized;
 		app.console.debug('Notebookbar: set initialized: ' + initialized);
 
@@ -224,6 +227,8 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	loadTab: function(tabJSON) {
+		app.console.debug('Notebookbar: loadTab');
+
 		this.clearNotebookbar();
 
 		this.container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
