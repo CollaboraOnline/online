@@ -108,6 +108,7 @@
 #include <ServerSocket.hpp>
 
 #include <wsd/PlatformMobile.hpp>
+#include <wsd/PlatformUnix.hpp>
 
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::Option;
