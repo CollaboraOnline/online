@@ -1544,14 +1544,21 @@ const pageSizes = [
 	},
 ];
 
-menuDefinitions.set(
-	'MenuPageSizesCalc',
-	pageSizes.map((item) => ({
-		id: item.id,
-		text: item.text,
-		uno: '.uno:CalcPageSize?PaperFormat:long=' + item.paper,
-	})) as Array<MenuDefinition>,
-);
+menuDefinitions.set('MenuPageSizesCalc', [
+	{
+		type: 'json',
+		content: {
+			id: 'Layout-PageSizeMenu',
+			type: 'pagesizeentry',
+			options: pageSizes.map((item) => ({
+				id: item.id,
+				text: item.text,
+				uno: '.uno:CalcPageSize?PaperFormat:long=' + item.paper,
+			})),
+		},
+	},
+	{ type: 'separator' },
+] as Array<MenuDefinition>);
 
 menuDefinitions.set(
 	'MenuPageSizesWriter',

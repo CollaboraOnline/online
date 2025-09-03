@@ -79,6 +79,12 @@
 	font-size: var(--default-font-size);
 }
 
+.pagesize-list {
+	max-height: clamp(12rem, 45vh, 24rem);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 @keyframes moveIndicator {
 	from { left: -25%; }
 	to { left: 100%; }
