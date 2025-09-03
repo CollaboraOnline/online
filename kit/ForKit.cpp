@@ -355,8 +355,12 @@ static void cleanupChildren(const std::string& childRoot)
                 }
                 else
                 {
-                    LOG_ERR("Child " << exitedChildPid << " has exited, with status " << status);
+                    LOG_ERR("Child " << exitedChildPid << " has terminated, with signal " << status);
                 }
+            }
+            else if (info.si_code == CLD_EXITED && status != 0)
+            {
+                LOG_ERR("Child " << exitedChildPid << " has exited, with status " << status);
             }
 
             LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");
