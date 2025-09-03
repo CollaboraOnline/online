@@ -2400,9 +2400,24 @@ kbd,
 }
 
 /* Third column has nothing to display */
-#HyperlinkMailPage #grid1 {
-	grid-template-columns: repeat(2, auto) 0px !important;
+#\~Mail #grid1 {
+	grid-template-columns: 1fr 3fr 0px !important;
+	column-gap: 0px !important;
 }
+
+#\~Internet #grid1, #\~Internet #grid3, #\~Mail #grid3 {
+	grid-template-columns: 1fr 3fr !important;
+	column-gap: 0px !important;
+}
+
+/* Unlike frame1, and both frames on the mail page, this only has one element,
+   and is therefore a div not a fieldset. Fieldsets have 2px margin on both sides,
+   so add it here to to align elements. */
+#\~Internet #frame2 {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
 
 /* feature_lock */
 #modal-dialog-unlock-features-popup {
