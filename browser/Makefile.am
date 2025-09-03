@@ -486,6 +486,7 @@ COOL_JS_LST =\
 	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
 	src/control/Notebookbar.ImpressTransitionTab.ts \
+	src/control/Notebookbar.WriterReferencesTab.ts \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
 	src/control/Control.NotebookbarCalc.js \
