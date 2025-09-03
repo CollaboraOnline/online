@@ -61,6 +61,11 @@ extern "C"
 #define THREAD_UNSAFE_DUMP_END
 #endif
 
+#ifdef __linux__
+#define THREADCOUNTER_USABLE 1
+#define FDCOUNTER_USABLE 1
+#endif
+
 /// Format minutes with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::minutes& s)
 {
