@@ -1682,6 +1682,7 @@ fi
 AC_SUBST(APP_BRANDING_DIR)
 AC_SUBST(APP_IC_LAUNCHER)
 AC_SUBST(APP_HAS_BRANDING)
+AM_CONDITIONAL([APP_HAS_BRANDING], [test "$APP_HAS_BRANDING" = "true"])
 
 APP_GOOGLE_PLAY="false"
 if test "$enable_android_google_play" = "yes"; then
