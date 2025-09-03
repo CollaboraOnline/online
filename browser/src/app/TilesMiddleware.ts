@@ -238,7 +238,7 @@ class TileManager {
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: Map<string, Tile> = new Map(); // stores all tiles, keyed by coordinates, and cached, compressed deltas
 	private static tileBitmapList: Tile[] = []; // stores all tiles with bitmaps, sorted by distance from view(s)
-	private static tileImageCache: Map<string, Uint8Array> = new Map();
+	private static tileImageCache: Map<string, Uint8Array | null> = new Map();
 	public static tileSize: number = 256;
 
 	// The tile distance around the visible tile area that will be requested when updating
@@ -527,6 +527,7 @@ class TileManager {
 				{
 					message: message,
 					deltas: this.pendingDeltas,
+					cachedTiles: this.tileImageCache,
 					tileSize: this.tileSize,
 				},
 				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
@@ -940,7 +941,6 @@ class TileManager {
 		deltas: any,
 		keyframeDeltaSize: any,
 		keyframeImage: Uint8Array,
-		wireMessage: any,
 	) {
 		const rawDeltaSize = rawDeltas.reduce((a, c) => a + c.length, 0);
 
@@ -958,34 +958,6 @@ class TileManager {
 					(this.debugDeltasDetail ? ' hex: ' + hexString : ''),
 			);
 		}
-
-		// if re-creating ImageData from rawDeltas, don't update counts
-		if (wireMessage) {
-			if (keyframeDeltaSize) {
-				tile.loadCount++;
-				tile.deltaCount = 0;
-				tile.updateCount = 0;
-				if (app.map._debug.tileDataOn) {
-					app.map._debug.tileDataAddLoad();
-				}
-			} else if (rawDeltas.length === 0) {
-				tile.updateCount++;
-				this.nullDeltaUpdate++;
-				if (app.map._docLayer._emptyDeltaDiv) {
-					app.map._docLayer._emptyDeltaDiv.innerText = this.nullDeltaUpdate;
-				}
-				if (app.map._debug.tileDataOn) {
-					app.map._debug.tileDataAddUpdate();
-				}
-				return; // that was easy
-			} else {
-				tile.deltaCount++;
-				if (app.map._debug.tileDataOn) {
-					app.map._debug.tileDataAddDelta();
-				}
-			}
-		}
-		// else - re-constituting from tile.rawData
 
 		var traceEvent = app.socket.createCompleteTraceEvent(
 			'L.CanvasTileLayer.applyDelta',
@@ -2001,23 +1973,6 @@ class TileManager {
 						continue;
 					}
 
-					if (!x.deltas) {
-						// This path is taken when this is called on the DOM thread (i.e. the worker
-						// hasn't decompressed the raw delta)
-						x.deltas = (window as any).fzstd.decompress(x.rawDelta);
-						if (x.isKeyframe) {
-							x.keyframeBuffer = new Uint8Array(
-								e.data.tileSize * e.data.tileSize * 4,
-							);
-							x.keyframeDeltaSize = L.CanvasTileUtils.unrle(
-								x.deltas,
-								e.data.tileSize,
-								e.data.tileSize,
-								x.keyframeBuffer,
-							);
-						} else x.keyframeDeltaSize = 0;
-					}
-
 					let rawDeltas: any[] = [];
 					const firstDelta = tile.rawDeltas.findIndex((d) => d.id === x.ids[0]);
 					const lastDelta = tile.rawDeltas.findIndex((d) => d.id === x.ids[1]);
@@ -2027,6 +1982,34 @@ class TileManager {
 						window.app.console.warn(
 							'Unusual: Received unknown decompressed keyframe delta(s)',
 						);
+
+					// if rehydrating from rawDeltas, don't update counts
+					if (x.wireMessage) {
+						if (x.isKeyframe) {
+							tile.loadCount++;
+							tile.deltaCount = 0;
+							tile.updateCount = 0;
+							if (app.map._debug.tileDataOn) {
+								app.map._debug.tileDataAddLoad();
+							}
+						} else if (rawDeltas.length === 0) {
+							tile.updateCount++;
+							this.nullDeltaUpdate++;
+							if (app.map._docLayer._emptyDeltaDiv) {
+								app.map._docLayer._emptyDeltaDiv.innerText =
+									this.nullDeltaUpdate;
+							}
+							if (app.map._debug.tileDataOn) {
+								app.map._debug.tileDataAddUpdate();
+							}
+							continue; // that was easy
+						} else {
+							tile.deltaCount++;
+							if (app.map._debug.tileDataOn) {
+								app.map._debug.tileDataAddDelta();
+							}
+						}
+					}
 
 					if (!x.isKeyframe) {
 						if (tile.decompressedId !== 0) {
@@ -2044,16 +2027,41 @@ class TileManager {
 						}
 					}
 
-					this.applyDelta(
-						tile,
-						rawDeltas,
-						x.deltas,
-						x.keyframeDeltaSize,
-						x.keyframeBuffer,
-						x.wireMessage,
-					);
+					if (!x.bitmap) {
+						// This path is taken when this is called on the DOM thread (i.e. the worker
+						// hasn't decompressed the raw delta)
+						x.deltas = (window as any).fzstd.decompress(x.rawDelta);
+						if (x.isKeyframe) {
+							x.keyframeBuffer = new Uint8Array(
+								e.data.tileSize * e.data.tileSize * 4,
+							);
+							x.keyframeDeltaSize = L.CanvasTileUtils.unrle(
+								x.deltas,
+								e.data.tileSize,
+								e.data.tileSize,
+								x.keyframeBuffer,
+							);
+						} else x.keyframeDeltaSize = 0;
 
-					this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
+						this.applyDelta(
+							tile,
+							rawDeltas,
+							x.deltas,
+							x.keyframeDeltaSize,
+							x.keyframeBuffer,
+						);
+
+						this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
+					} else {
+						this.tileImageCache.set(x.key, null);
+						bitmaps.push(
+							new Promise((resolve, _reject) => {
+								resolve(x.bitmap);
+							}),
+						);
+						pendingDeltas.push(x);
+					}
+
 					tile.decompressedId = x.ids[1];
 				}
 
