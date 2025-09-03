@@ -821,9 +821,13 @@ body {
 	font-size: var(--default-font-size);
 }
 
-.cool-annotation-autosavelabel {
-	font-size: var(--default-font-size);
-	opacity: 75%;
+.annotation-button-autosaved {
+	color: var(--color-primary-dark) !important;
+	background-color: #e1e8f9 !important;
+}
+
+.annotation-button-delete {
+	color: var(--color-error) !important;
 }
 
 .cool-annotation-menubar {
