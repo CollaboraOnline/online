@@ -15,8 +15,10 @@
 
 if ('undefined' === typeof window) {
 	self.L = {};
-
 	importScripts('CanvasTileUtils.js');
+
+	let tileImageCache = new Map(); // Map<string, Uint8Array>
+
 	addEventListener('message', onMessage);
 
 	console.info('CanvasTileWorker initialised');
@@ -24,41 +26,80 @@ if ('undefined' === typeof window) {
 	function onMessage(e) {
 		switch (e.data.message) {
 			case 'endTransaction': {
+				// Update tile image cache
+				for (const key of Array.from(tileImageCache.keys())) {
+					if (!e.data.cachedTiles.has(key)) tileImageCache.delete(key);
+				}
+
+				const bitmaps = []; // Promise<ImageBitmap>[]
+				const tilesWithBitmaps = [];
+
 				const tileByteSize = e.data.tileSize * e.data.tileSize * 4;
-				const decompressed = [];
-				const buffers = [];
 				for (const tile of e.data.deltas) {
-					tile.deltas = self.fzstd.decompress(tile.rawDelta);
-					tile.keyframeDeltaSize = 0;
+					const deltas = self.fzstd.decompress(tile.rawDelta);
 
 					// Decompress the keyframe buffer
+					let keyframeDeltaSize = 0;
+					let imageData = null;
 					if (tile.isKeyframe) {
-						tile.keyframeBuffer = new Uint8Array(tileByteSize);
-						tile.keyframeDeltaSize = L.CanvasTileUtils.unrle(
-							tile.deltas,
+						imageData = new Uint8Array(tileByteSize);
+						keyframeDeltaSize = L.CanvasTileUtils.unrle(
+							deltas,
 							e.data.tileSize,
 							e.data.tileSize,
-							tile.keyframeBuffer,
+							imageData,
 						);
-						buffers.push(tile.keyframeBuffer.buffer);
-					}
+					} else imageData = tileImageCache.get(tile.key);
 
 					// The main thread has no use for the concatenated rawDelta, delete it here
 					// instead of passing it back.
 					delete tile.rawDelta;
 
-					decompressed.push(tile);
-					buffers.push(tile.deltas.buffer);
+					if (imageData === null) {
+						console.warn('Delta update received on tile with no cached image');
+						continue;
+					}
+
+					L.CanvasTileUtils.updateImageFromDeltas(
+						imageData,
+						deltas,
+						keyframeDeltaSize,
+						e.data.tileSize,
+					);
+					tileImageCache.set(tile.key, imageData);
+
+					const clampedData = new Uint8ClampedArray(
+						imageData.buffer,
+						imageData.byteOffset,
+						imageData.byteLength,
+					);
+					const image = new ImageData(
+						clampedData,
+						e.data.tileSize,
+						e.data.tileSize,
+					);
+					bitmaps.push(
+						createImageBitmap(image, {
+							premultiplyAlpha: 'none',
+						}),
+					);
+					tilesWithBitmaps.push(tile);
 				}
 
-				postMessage(
-					{
-						message: e.data.message,
-						deltas: decompressed,
-						tileSize: e.data.tileSize,
-					},
-					buffers,
-				);
+				Promise.all(bitmaps).then((bitmaps) => {
+					for (const bitmap of bitmaps) {
+						const tile = tilesWithBitmaps.shift();
+						tile.bitmap = bitmap;
+					}
+					postMessage(
+						{
+							message: e.data.message,
+							deltas: e.data.deltas,
+							tileSize: e.data.tileSize,
+						},
+						bitmaps,
+					);
+				});
 				break;
 			}
 
