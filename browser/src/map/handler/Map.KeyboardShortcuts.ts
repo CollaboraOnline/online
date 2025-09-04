@@ -54,7 +54,7 @@ class ShortcutDescriptor {
     docType: string; // if undefined then all apps match
     eventType: string | readonly string[];
     modifier: Mod;
-    keyCode: number | readonly number[] | null;
+    code: string | null;
     key: string | null;
     unoAction: string;
     dispatchAction: string;
@@ -66,7 +66,7 @@ class ShortcutDescriptor {
         docType = null,
         eventType,
         modifier = Mod.NONE,
-        keyCode = null,
+        code = null,
         key = null,
         unoAction = null,
         dispatchAction = null,
@@ -86,17 +86,10 @@ class ShortcutDescriptor {
 
         @default Mod.NONE */
         modifier?: Mod,
-        /** The keyCode of the shortcut trigger key, as seen in the table on https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
 
-        It is rare but possible for this to provide different results in different browsers. For example, Safari sometimes returns keyCode 0 (unknown) on some event types when the bind would trigger certain system shortcuts. You should test any shortcuts you make with 'keyCode' on different browsers and systems to make sure they all work as intended.
+        code?: string,
 
-        You must provide at least one of 'key' or 'keyCode'. If you provide both, either a matching key or a matching keyCode will trigger the binding.
-
-        @deprecated Unless you know you need this, you should probably use 'key' instead, as this relies on a deprecated web API. It will not be removed as dead keys cannot be properly handled in the key API */
-        keyCode?: number | readonly number[],
-        /** The key of the shortcut trigger key, as seen on https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
-
-        You must provide at least one of 'key' or 'keyCode'. If you provide both, either a matching key or a matching keyCode will trigger the binding.
+        /** You must provide at least one of 'key' or 'code'. If you provide both, either a matching key or a matching code will trigger the binding.
 
         When adding shortcuts using 'key' you should always test in multiple browsers and systems or ask for review from someone who can. Sometimes, particularly on keybinds that trigger "dead keys" (accents for letters), there are inconsistencies in different browsers. It's also possible for multiple different key combinations to trigger the same typed glyph - leading to this munging different keybinds together */
         key?: string,
@@ -137,12 +130,12 @@ class ShortcutDescriptor {
         */
         platform?: Platform,
     }) {
-        app.console.assert(keyCode !== null || key !== null, 'registering a keyboard shortcut without specifying either a key or a keyCode - this will result in an untriggerable shortcut');
+        app.console.assert(code !== null || key !== null, 'registering a keyboard shortcut without specifying either a key or a code - this will result in an untriggerable shortcut');
 
         this.docType = docType;
         this.eventType = eventType;
         this.modifier = modifier;
-        this.keyCode = keyCode;
+        this.code = code;
         this.key = key;
         this.unoAction = unoAction;
         this.dispatchAction = dispatchAction;
@@ -160,7 +153,7 @@ class KeyboardShortcuts {
         this.definitions = new Map<string, Array<ShortcutDescriptor>>();
     }
 
-    private findShortcut(language: string, eventType: string, modifier: Mod, keyCode: number | undefined, key: string | undefined, platform: Platform)
+    private findShortcut(language: string, eventType: string, modifier: Mod, code: string | undefined, key: string | undefined, platform: Platform)
         : ShortcutDescriptor | undefined {
         const descriptors = this.definitions.get(language);
         if (!descriptors) {
@@ -172,14 +165,14 @@ class KeyboardShortcuts {
 
         const shortcuts = descriptors.filter((descriptor: ShortcutDescriptor) => {
             const keyMatches = descriptor.key === key;
-            const keyCodeMatches = Array.isArray(descriptor.keyCode) ? descriptor.keyCode.includes(keyCode) : descriptor.keyCode === keyCode;
+            const codeMatches = descriptor.code === code;
 
             return (!descriptor.docType || descriptor.docType === docType) &&
                 (Array.isArray(descriptor.eventType) ? descriptor.eventType.includes(eventType) : descriptor.eventType === eventType) &&
                 descriptor.modifier === modifier &&
                 (descriptor.viewType === null || descriptor.viewType === viewType) &&
                 (!descriptor.platform || (descriptor.platform & platform)) &&
-                (keyMatches || keyCodeMatches);
+                (keyMatches || codeMatches);
         });
 
         if (shortcuts.length > 1) {
@@ -199,7 +192,7 @@ class KeyboardShortcuts {
         const ctrl = isCtrlKey(event);
         const shift = event.shiftKey;
         const alt = event.altKey;
-        const keyCode = event.which;
+        const code = event.code;
         const key = event.key;
         const macctrl = isMacCtrlKey(event);
         const modifier = (ctrl ? Mod.CTRL : Mod.NONE) |
@@ -213,7 +206,7 @@ class KeyboardShortcuts {
                          L.Browser.win ? Platform.WINDOWS :
                          Platform.LINUX;
 
-        const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
+        const shortcut = this.findShortcut(language, eventType, modifier, code, key, platform);
 
         if (shortcut) {
             let action = 'disabled';
@@ -260,31 +253,33 @@ class KeyboardShortcuts {
 
     public verifyShortcuts() : void {
         console.debug('KeyboardShortcuts.verifyShortcuts start');
+
         this.definitions.forEach((shortcuts, language) => {
-            shortcuts.forEach((shortcut) => {
-                // throws an exception if finds duplicated
-                const shortcutEventTypes = Array.isArray(shortcut.eventType) ? shortcut.eventType : [shortcut.eventType];
-                const shortcutKeyCodes = Array.isArray(shortcut.keyCode) ? shortcut.keyCode : [shortcut.keyCode];
+            for (let i = 0; i < shortcuts.length - 1; i++) {
 
-                for (const eventType of shortcutEventTypes) {
-                    for (const keyCode of shortcutKeyCodes) {
-                        if (keyCode === null) {
-                            continue;
-                        }
+                for (let j = i + 1; j < shortcuts.length; j++) {
+                    let eventTypeCheck = false;
+                    if (!Array.isArray(shortcuts[j].eventType) && !Array.isArray(shortcuts[i].eventType))
+                        eventTypeCheck = shortcuts[i].eventType === shortcuts[j].eventType;
+                    else if (Array.isArray(shortcuts[j].eventType) && Array.isArray(shortcuts[i].eventType))
+                        eventTypeCheck = (shortcuts[i].eventType as Array<string>).some(item => (shortcuts[j].eventType as Array<string>).includes(item));
+                    else if (Array.isArray(shortcuts[j].eventType))
+                        eventTypeCheck = (shortcuts[j].eventType as Array<string>).includes(shortcuts[i].eventType as string);
+                    else (Array.isArray(shortcuts[i].eventType))
+                        eventTypeCheck = (shortcuts[i].eventType as Array<string>).includes(shortcuts[j].eventType as string);
 
-                        this.findShortcut(language,
-                            eventType, shortcut.modifier, keyCode, undefined, shortcut.platform);
-                    }
-
-                    if (shortcut.key === null) {
-                        continue;
-                    }
-
-                    this.findShortcut(language,
-                        eventType, shortcut.modifier, undefined, shortcut.key, shortcut.platform);
+                    if (
+                        eventTypeCheck &&
+                        (shortcuts[i].key === shortcuts[j].key || shortcuts[i].code === shortcuts[j].code) &&
+                        shortcuts[i].modifier === shortcuts[j].modifier &&
+                        shortcuts[i].docType === shortcuts[j].docType &&
+                        shortcuts[i].platform === shortcuts[j].platform
+                    )
+                        console.warn('2 shortcuts with the same properties.');
                 }
-            });
+            }
         });
+
         console.debug('KeyboardShortcuts.verifyShortcuts finished');
     }
 }
@@ -331,7 +326,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
 
     // Passthrough some system shortcuts
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'I', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Open browser developer tools on Non-MacOS - shift means the I here is capital
-    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.ALT, keyCode: 73 /* keyCode('I') === 73 */, preventDefault: false, platform: Platform.MAC }), // Open browser developer tools on MacOS - registered with keyCode as alt+i triggers a dead key on MacOS
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.ALT, code: 'keyI', preventDefault: false, platform: Platform.MAC }), // Open browser developer tools on MacOS - registered with keyCode as alt+i triggers a dead key on MacOS
     new ShortcutDescriptor({ eventType: ['keydown', 'keypress'], modifier: Mod.CTRL | Mod.MACCTRL, key: ' ', preventDefault: false, platform: Platform.MAC | Platform.IOSAPP }), // On MacOS, open system emoji picker - bound to keypress as well as keydown since as that is needed on webkit browsers (such as Safari or Orion)
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'r', preventDefault: false, platform: Platform.MAC }), // Refresh browser tab
 	new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'R', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Refresh browser tab & clear cache
