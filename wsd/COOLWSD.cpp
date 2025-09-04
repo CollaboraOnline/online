@@ -1927,9 +1927,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         HardwareResourceWarning = "lowresources";
     }
 
-#elif defined(__EMSCRIPTEN__)
-    // disable threaded image scaling for wasm for now
-    setenv("VCL_NO_THREAD_SCALE", "1", 1);
 #endif
 
     const auto redlining =
