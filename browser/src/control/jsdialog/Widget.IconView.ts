@@ -210,7 +210,7 @@ JSDialog.iconView = function (
 				[{ type: 'json', content: data }],
 				builder._defaultCallbackHandlerSendMessage,
 			);
-
+			bIsExpanded = true;
 			data.isExpandable = isExpandable;
 		};
 
@@ -261,9 +261,16 @@ JSDialog.iconView = function (
 		}
 	};
 
+	// close dropdown when the window is resized. this
+	// is to prevent dropdown from hanging in the corner
+	// when the overflowgroups collapse displacing the
+	// underlying iconview.
+	let bIsExpanded = false;
+
 	// update indexes on resize
 	const resizeObserver = new ResizeObserver(() => {
 		updateAllIndexes();
+		if (bIsExpanded) JSDialog.CloseDropdown(data.id);
 	});
 	resizeObserver.observe(container);
 
