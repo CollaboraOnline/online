@@ -757,47 +757,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'home-slidefunctions-break', orientation: 'vertical' },
 			{
-				'type': 'overflowgroup',
-				'id': 'home-slide-layout',
-				'name':_('Slide Layout'),
-				'accessibility': { focusBack: true, combination: 'CS', de: null },
-				'more': {
-					'command':'.uno:PageSetup',
-					'accessibility': { focusBack: true, combination: 'ML', de: null }
-				},
-				'children' : [
-					{
-						'id': 'home-create-slide:NewSlideLayoutMenu',
-						'type': 'menubutton',
-						'applyCallback': () => { app.map.sendUnoCommand('.uno:InsertPage') },
-						'text': _('New'),
-						'command': '.uno:InsertPage',
-						'accessibility': { focusBack: true, combination: 'CS', de: null }
-					},
-					{
-						'type': 'container',
-						'children': [
-							{
-								'id': 'home-change-layout:ChangeSlideLayoutMenu',
-								'type': 'menubutton',
-								'noLabel': true,
-								'text': _('Change Layout'),
-								'icon': 'lc_changelayout.svg',
-								'command': '.uno:AssignLayout',
-								'accessibility': { focusBack: true, combination: 'CL', de: null }
-							},
-							{
-								'id': 'home-assign-layout',
-								'noLabel': true,
-								'text': _('Reset Layout'),
-								'type': 'toolitem',
-								'command': '.uno:AssignLayout',
-								'accessibility': { focusBack: true, combination: 'RS', de: null }
-							}
-						],
-						'vertical': 'true'
-					},
-				]
+				'id': 'home-create-slide:NewSlideLayoutMenu',
+				'type': 'menubutton',
+				'applyCallback': () => { app.map.sendUnoCommand('.uno:InsertPage') },
+				'text': _('New'),
+				'command': '.uno:InsertPage',
+				'accessibility': { focusBack: true, combination: 'CS', de: null }
 			},
 			{ type: 'separator', id: 'home-resertattributes-break', orientation: 'vertical' },
 			{
@@ -1770,6 +1735,34 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: false, combination: 'J', de: null }
 			},
 			{ type: 'separator', id: 'design-themedialog-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'design-slide-layout',
+				'name':_('Slide Layout'),
+				'accessibility': { focusBack: true, combination: 'CS', de: null },
+				'more': {
+					'command':'.uno:PageSetup',
+					'accessibility': { focusBack: true, combination: 'ML', de: null }
+				},
+				'children': [
+					{
+						'id': 'home-change-layout:ChangeSlideLayoutMenu',
+						'type': 'menubutton',
+						'text': _('Change Layout'),
+						'icon': 'lc_changelayout.svg',
+						'command': '.uno:AssignLayout',
+						'accessibility': { focusBack: true, combination: 'CL', de: null }
+					},
+					{
+						'id': 'home-assign-layout',
+						'text': _('Reset Layout'),
+						'type': 'bigtoolitem',
+						'command': '.uno:AssignLayout',
+						'accessibility': { focusBack: true, combination: 'RS', de: null }
+					}
+				]
+			},
+			{ type: 'separator', id: 'design-slidelayout-break', orientation: 'vertical' },
 			{
 				'id': 'design-slide-size:SlideSizeMenu',
 				'class': 'unoSlideSize',
