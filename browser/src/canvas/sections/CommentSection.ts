@@ -1612,6 +1612,52 @@ export class Comment extends CanvasSectionObject {
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
 
+	public selectText(startParagraph: number, startIndex: number, endParagraph: number, endIndex: number): void {
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+
+		const paragraphElements = Array.from(this.sectionProperties.contentText.firstChild.children);
+		if (paragraphElements.length === 0) {
+			return;
+		}
+		if (startParagraph > paragraphElements.length - 1 || endParagraph > paragraphElements.length - 1) {
+			return;
+		}
+
+		// Find start position
+		const startElement = paragraphElements[startParagraph] as HTMLElement;
+		const startWalker = document.createTreeWalker(
+			startElement,
+			NodeFilter.SHOW_TEXT,
+			null
+		);
+		const startTextNode = startWalker.nextNode();
+		if (!startTextNode) {
+			return;
+		}
+
+		// Find end position
+		const endElement = paragraphElements[endParagraph] as HTMLElement;
+		const endWalker = document.createTreeWalker(
+			endElement,
+			NodeFilter.SHOW_TEXT,
+			null
+		);
+		const endTextNode = endWalker.nextNode();
+		if (!endTextNode)
+			return;
+
+		// Create and apply the selection range
+		const range = document.createRange();
+		range.setStart(startTextNode, startIndex);
+		range.setEnd(endTextNode, endIndex);
+
+		selection.addRange(range);
+
+		// Ensure the selection is visible
+		this.sectionProperties.contentText.focus();
+	}
+
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
 		const selection = window.getSelection();
 		if (!selection.rangeCount) return;
