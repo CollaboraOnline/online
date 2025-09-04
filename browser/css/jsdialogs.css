@@ -2698,3 +2698,8 @@ kbd,
 #BulletsAndNumberingDialog #customize #bitmap-button.unobutton {
 	width: fit-content; /* makes button text visible*/
 }
+
+/* Select Chart - Sidebar - Edit Object - Colors */
+:is(#colorful_palettes, #monochromatic_palettes) .ui-iconview-entry {
+	border: 1px solid transparent;
+}
