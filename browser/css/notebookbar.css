@@ -489,10 +489,21 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	width: 36.8vw !important;
 }
 
-#stylesview-dropdown,
+.jsdialog .one-child-popup .ui-iconview {
+	border: none !important;
+}
+
+#stylesview {
+	min-width: 36.8vw !important;
+	justify-content: center;
+}
+
+#stylesview-dropdown {
+	margin-top: 37px !important;
+}
+
 #transitions_icons-dropdown {
 	margin-top: 46px !important;
-	min-width: 36.8vw !important;
 }
 
 #stylesview-button,
