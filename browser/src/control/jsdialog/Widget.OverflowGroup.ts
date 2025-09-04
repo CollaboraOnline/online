@@ -290,39 +290,41 @@ JSDialog.OverflowGroup = function (
 	] as Array<MenuDefinition>;
 	builder._menus.set(data.id, builtMenu);
 
-	// button
-	const id = 'overflow-button-' + data.id;
-	builder.build(
-		overflowGroupInnerContainer,
-		[
-			{
-				type: 'menubutton',
-				id: id,
-				text: data.name ? data.name : firstItem ? (firstItem as any).text : '',
-				icon: data.icon ? data.icon : getToolitemIcon(firstItem),
-				command: firstItem ? (firstItem as any).command : '',
-				noLabel: !data.name,
-				menu: builtMenu,
-				applyCallback:
-					firstItem && firstItem.type === 'toolitem'
-						? () => {
-								firstItem.type.includes('custom')
-									? app.dispatcher.dispatch((firstItem as any).command)
-									: app.map.sendUnoCommand((firstItem as any).command);
-							}
-						: undefined,
-			} as any as WidgetJSON,
-		],
-		false,
-	);
+	if (data.nofold !== true) {
+		// button
+		const id = 'overflow-button-' + data.id;
+		builder.build(
+			overflowGroupInnerContainer,
+			[
+				{
+					type: 'menubutton',
+					id: id,
+					text: data.name ? data.name : firstItem ? (firstItem as any).text : '',
+					icon: data.icon ? data.icon : getToolitemIcon(firstItem),
+					command: firstItem ? (firstItem as any).command : '',
+					noLabel: !data.name,
+					menu: builtMenu,
+					applyCallback:
+						firstItem && firstItem.type === 'toolitem'
+							? () => {
+									firstItem.type.includes('custom')
+										? app.dispatcher.dispatch((firstItem as any).command)
+										: app.map.sendUnoCommand((firstItem as any).command);
+								}
+							: undefined,
+				} as any as WidgetJSON,
+			],
+			false,
+		);
 
-	setupOverflowMenu(
-		overflowGroupContainer,
-		contentContainer,
-		bottomBar,
-		data.id,
-		data.more,
-	);
+		setupOverflowMenu(
+			overflowGroupContainer,
+			contentContainer,
+			bottomBar,
+			data.id,
+			data.more,
+		);
+	}
 
 	return false;
 } as JSWidgetHandler;
