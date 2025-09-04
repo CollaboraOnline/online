@@ -152,6 +152,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/Auth.cpp \
                   wsd/CacheUtil.cpp \
                   wsd/COOLWSD.cpp \
+                  wsd/dumpWsdState.cpp \
                   wsd/ClientRequestDispatcher.cpp \
                   wsd/ClientSession.cpp \
                   wsd/DocumentBroker.cpp \
