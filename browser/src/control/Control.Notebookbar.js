@@ -82,30 +82,41 @@ L.Control.Notebookbar = L.Control.extend({
 			this.floatingNavIcon.classList.add('hasnotebookbar');
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
-		var docLogoHeader = L.DomUtil.create('div', '');
-		docLogoHeader.id = 'document-header';
+		if (!window.logoURL || window.logoURL != "none") {
+			var docLogoHeader = L.DomUtil.create('div', '');
+			docLogoHeader.id = 'document-header';
 
-		var iconClass = 'document-logo';
-		var iconTooltip;
-		if (docType === 'text') {
-			iconClass += ' writer-icon-img';
-			iconTooltip = 'Writer';
-		} else if (docType === 'spreadsheet') {
-			iconClass += ' calc-icon-img';
-			iconTooltip = 'Calc';
-		} else if (docType === 'presentation') {
-			iconClass += ' impress-icon-img';
-			iconTooltip = 'Impress';
-		} else if (docType === 'drawing') {
-			iconClass += ' draw-icon-img';
-			iconTooltip = 'Draw';
+			var iconClass = 'document-logo';
+			var iconTooltip;
+			if (!window.logoURL) {
+				if (docType === 'text') {
+					iconClass += ' writer-icon-img';
+					iconTooltip = 'Writer';
+				} else if (docType === 'spreadsheet') {
+					iconClass += ' calc-icon-img';
+					iconTooltip = 'Calc';
+				} else if (docType === 'presentation') {
+					iconClass += ' impress-icon-img';
+					iconTooltip = 'Impress';
+				} else if (docType === 'drawing') {
+					iconClass += ' draw-icon-img';
+					iconTooltip = 'Draw';
+				}
+			}
+			var docLogo = L.DomUtil.create('div', iconClass, docLogoHeader);
+			$(docLogo).data('id', 'document-logo');
+			$(docLogo).data('type', 'action');
+			if (iconTooltip) {
+				docLogo.setAttribute('data-cooltip', iconTooltip);
+			}
+			L.control.attachTooltipEventListener(docLogo, this.map);
+			$('.main-nav').prepend(docLogoHeader);
+
+			if (window.logoURL) {
+				docLogo.style.backgroundImage = "url(" + window.logoURL + ")";
+			}
 		}
-		var docLogo = L.DomUtil.create('div', iconClass, docLogoHeader);
-		$(docLogo).data('id', 'document-logo');
-		$(docLogo).data('type', 'action');
-		docLogo.setAttribute('data-cooltip', iconTooltip);
-		L.control.attachTooltipEventListener(docLogo, this.map);
-		$('.main-nav').prepend(docLogoHeader);
+
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
