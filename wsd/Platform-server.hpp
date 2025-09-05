@@ -18,8 +18,8 @@
 
 #include <common/JailUtil.hpp>
 #include <common/Watchdog.hpp>
-#include <wsd/PlatformUnix.hpp>
-#include <wsd/SslConfig.hpp>
+#include <wsd/Platform-unix.hpp>
+#include <wsd/Ssl-config.hpp>
 #include <wsd/RemoteConfig.hpp>
 #include <wsd/SpecialBrokers.hpp>
 
