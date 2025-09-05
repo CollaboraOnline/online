@@ -365,6 +365,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.builder.build(instance.content, [instance]);
 		instance.builder.setContainer(instance.content);
 		var primaryBtn = instance.content.querySelector('#' + instance.defaultButtonId + ' button');
+		instance.primaryButton = primaryBtn;
 		if (primaryBtn)
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
@@ -1028,6 +1029,21 @@ L.Control.JSDialog = L.Control.extend({
 		var keyCode = event.keyCode;
 
 		switch (keyCode) {
+		case 13:
+			// ENTER
+			var dialogKeys = Object.keys(this.dialogs);
+			if (dialogKeys.length) {
+				const lastKey = dialogKeys[dialogKeys.length - 1];
+				const dialogInfo = this.dialogs[lastKey];
+				if (dialogInfo && dialogInfo.dialogid === "FindReplaceDialog") {
+					const primaryButton = dialogInfo.primaryButton;
+					if (primaryButton) {
+						primaryButton.click();
+						return true;
+					}
+				}
+			}
+			break;
 		case 27:
 			// ESC
 			var dialogKeys = Object.keys(this.dialogs);
