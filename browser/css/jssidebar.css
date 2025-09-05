@@ -499,6 +499,15 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	border-radius: var(--border-radius);
 }
 
+/* Navigation Search Wrapper */
+.navigation-search-wrapper {
+	padding: 8px 8px 8px 16px;
+}
+
+.navigation-search-wrapper > .sidebar.ui-grid-cell {
+	align-items: center;
+}
+
 /* Close Button Styling */
 .close-navigation-button {
 	width: var(--btn-img-size);
@@ -584,9 +593,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* search field box */
-#navigator-search {
-	padding: 8px 16px;
-}
 #navigator-search-input {
 	height: 24px;
 }
