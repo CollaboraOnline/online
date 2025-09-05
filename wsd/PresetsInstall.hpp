@@ -12,8 +12,10 @@
 #pragma once
 
 #include <net/Socket.hpp>
+
 #include <functional>
 #include <memory>
+#include <set>
 #include <string>
 
 struct CacheQuery;

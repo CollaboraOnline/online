@@ -4359,7 +4359,7 @@ void dump_state()
 void lslr_childroot()
 {
     std::cout << "lslr: " << COOLWSD::ChildRoot << "\n";
-    FileUtil::lslr(COOLWSD::ChildRoot.c_str());
+    FileUtil::lslr(COOLWSD::ChildRoot);
     std::cout << std::flush;
 }
 

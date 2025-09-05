@@ -2033,7 +2033,7 @@ bool DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& 
         LOG_TRC("Parsing browsersetting json from repsonseBody[" << responseBody << ']');
         Poco::JSON::Parser parser;
         auto result = parser.parse(responseBody);
-        auto browsersetting = result.extract<Poco::JSON::Object::Ptr>();
+        const auto& browsersetting = result.extract<Poco::JSON::Object::Ptr>();
         if (browsersetting.isNull())
         {
             LOG_INF("browsersetting.json is empty");
