@@ -15,64 +15,93 @@
 
 if ('undefined' === typeof window) {
 	self.L = {};
-
 	importScripts('CanvasTileUtils.js');
+
+	let tileImageCache = new Map(); // Map<string, Uint8Array>
+
 	addEventListener('message', onMessage);
 
 	console.info('CanvasTileWorker initialised');
 
 	function onMessage(e) {
 		switch (e.data.message) {
-			case 'endTransaction':
-				var tileByteSize = e.data.tileSize * e.data.tileSize * 4;
-				var decompressed = [];
-				var buffers = [];
-				for (var tile of e.data.deltas) {
-					var deltas = self.fzstd.decompress(tile.rawDelta);
-					tile.keyframeDeltaSize = 0;
+			case 'endTransaction': {
+				// Update tile image cache
+				for (const key of Array.from(tileImageCache.keys())) {
+					if (!e.data.cachedTiles.has(key)) tileImageCache.delete(key);
+				}
+
+				const bitmaps = []; // Promise<ImageBitmap>[]
+				const tilesWithBitmaps = [];
+
+				const tileByteSize = e.data.tileSize * e.data.tileSize * 4;
+				for (const tile of e.data.deltas) {
+					const deltas = self.fzstd.decompress(tile.rawDelta);
 
 					// Decompress the keyframe buffer
+					let keyframeDeltaSize = 0;
+					let imageData = null;
 					if (tile.isKeyframe) {
-						var keyframeBuffer = new Uint8Array(tileByteSize);
-						tile.keyframeDeltaSize = L.CanvasTileUtils.unrle(
+						imageData = new Uint8Array(tileByteSize);
+						keyframeDeltaSize = L.CanvasTileUtils.unrle(
 							deltas,
 							e.data.tileSize,
 							e.data.tileSize,
-							keyframeBuffer,
+							imageData,
 						);
-						tile.keyframeBuffer = new Uint8ClampedArray(
-							keyframeBuffer.buffer,
-							keyframeBuffer.byteOffset,
-							keyframeBuffer.byteLength,
-						);
-						buffers.push(tile.keyframeBuffer.buffer);
-					}
-
-					// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
-					// it earlier to avoid unnecessarily incurring bounds-checking penalties.
-					tile.deltas = new Uint8ClampedArray(
-						deltas.buffer,
-						deltas.byteOffset,
-						deltas.length,
-					);
+					} else imageData = tileImageCache.get(tile.key);
 
 					// The main thread has no use for the concatenated rawDelta, delete it here
 					// instead of passing it back.
 					delete tile.rawDelta;
 
-					decompressed.push(tile);
-					buffers.push(tile.deltas.buffer);
+					if (imageData === null) {
+						console.warn('Delta update received on tile with no cached image');
+						continue;
+					}
+
+					L.CanvasTileUtils.updateImageFromDeltas(
+						imageData,
+						deltas,
+						keyframeDeltaSize,
+						e.data.tileSize,
+					);
+					tileImageCache.set(tile.key, imageData);
+
+					const clampedData = new Uint8ClampedArray(
+						imageData.buffer,
+						imageData.byteOffset,
+						imageData.byteLength,
+					);
+					const image = new ImageData(
+						clampedData,
+						e.data.tileSize,
+						e.data.tileSize,
+					);
+					bitmaps.push(
+						createImageBitmap(image, {
+							premultiplyAlpha: 'none',
+						}),
+					);
+					tilesWithBitmaps.push(tile);
 				}
 
-				postMessage(
-					{
-						message: e.data.message,
-						deltas: decompressed,
-						tileSize: e.data.tileSize,
-					},
-					buffers,
-				);
+				Promise.all(bitmaps).then((bitmaps) => {
+					for (const bitmap of bitmaps) {
+						const tile = tilesWithBitmaps.shift();
+						tile.bitmap = bitmap;
+					}
+					postMessage(
+						{
+							message: e.data.message,
+							deltas: e.data.deltas,
+							tileSize: e.data.tileSize,
+						},
+						bitmaps,
+					);
+				});
 				break;
+			}
 
 			default:
 				console.error('Unrecognised worker message');
