@@ -139,7 +139,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!this.builder)
 			return;
 
-		this._isNotebookbarLoadedOnCore = true;
+		this.setInitialized(true);
 
 		this.builder.updateWidget(this.container, data.control);
 	},
@@ -156,7 +156,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!this.container)
 			return;
 
-		this._isNotebookbarLoadedOnCore = true;
+		this.setInitialized(true);
 
 		this.builder.executeAction(this.container, data.data);
 	},
@@ -172,9 +172,24 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onNotebookbar: function(data) {
-		this._isNotebookbarLoadedOnCore = true;
+		this.setInitialized(true);
 		// setup id for events
 		this.builder.setWindowId(data.id);
+	},
+
+	setInitialized: function(initialized) {
+		if (this._isNotebookbarLoadedOnCore === initialized)
+			return;
+
+		this._isNotebookbarLoadedOnCore = initialized;
+		app.console.debug('Notebookbar: set initialized: ' + initialized);
+
+		if (this.container) {
+			if (initialized)
+				this.container.classList.add('initialized');
+			else
+				this.container.classList.remove('initialized');
+		}
 	},
 
 	showTabs: function() {
@@ -208,9 +223,12 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-shortcuts-bar').remove();
 		$(this.container).remove();
+		this.setInitialized(false);
 	},
 
 	loadTab: function(tabJSON) {
+		app.console.debug('Notebookbar: loadTab');
+
 		this.clearNotebookbar();
 
 		this.container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);

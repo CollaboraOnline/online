@@ -552,9 +552,17 @@ class UIManager extends L.Control {
 			}
 		});
 		this.map.contextToolbar = L.control.ContextToolbar(this.map);
+	}
 
-		// do it always as we need it for contextual toolbar
-		if (!window.mode.isMobile()) this.initializeNotebookbarInCore();
+	/**
+	 * Initializes the heavy components which require core side to work.
+	 * Scheduled to be executed after we do first tiles requests to not
+	 * block the document content rendering on a load.
+	 */
+	initializeLateComponents(): void {
+		this.initializeNotebookbarInCore();
+		this.initializeSidebar();
+		this.initializeQuickFindInCore();
 	}
 
 	/**
@@ -565,11 +573,12 @@ class UIManager extends L.Control {
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 			var showSidebar = this.getBooleanDocTypePref('ShowSidebar', true);
 
-			if (this.getBooleanDocTypePref('PropertyDeck', true)) {
+			if (showSidebar && this.getBooleanDocTypePref('PropertyDeck', true)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
+				this.map.sidebar.setAsInitialized();
 			}
 
-			if (this.map.getDocType() === 'presentation') {
+			if (showSidebar && this.map.getDocType() === 'presentation') {
 				if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:SlideChangeWindow');
@@ -579,7 +588,7 @@ class UIManager extends L.Control {
 					app.socket.sendMessage('uno .uno:CustomAnimation');
 					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
 				}
-			} else if (this.getBooleanDocTypePref('StyleListDeck', false)) {
+			} else if (showSidebar && this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:SidebarDeck.StyleListDeck');
 				this.map.sidebar.setupTargetDeck('.uno:SidebarDeck.StyleListDeck');
@@ -1180,7 +1189,19 @@ class UIManager extends L.Control {
 	// Notebookbar helpers
 
 	initializeNotebookbarInCore(): void {
+		// do it always apart of mobile as we need it for contextual toolbar
+		if (window.mode.isMobile()) return;
+
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+	}
+
+	// QuickFindPanel
+
+	initializeQuickFindInCore(): void {
+		if (!this.map.quickFindPanel) return;
+
+		// Initialize QuickFindPanel in core
+		app.socket.sendMessage('uno .uno:QuickFind');
 	}
 
 	/**

@@ -371,6 +371,13 @@ function documentChecks(skipInitializedCheck = false) {
 		cy.wait(10000);
 	}
 
+	if (!skipInitializedCheck /* TODO: if notebookbar mode */) {
+		doIfOnDesktop(() => {
+			cy.cGet('.notebookbar-scroll-wrapper', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
+				.should('have.class', 'initialized');
+		});
+	}
+
 	// Wait for the sidebar to open.
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {

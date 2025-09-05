@@ -5,6 +5,21 @@ var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 var writerHelper = require('../../common/writer_helper');
 
+function waitForInit(hasClass) {
+	// TODO: skipDocumentCheck=FALSE in beforeEach, let's do it here once for now
+	//       somehow it doesnt work for second iframe
+	if (hasClass) {
+		cy.cGet('#map', { timeout: 60 })
+			.should('have.class', 'initialized');
+	}
+
+	cy.cGet('.notebookbar-scroll-wrapper', { timeout: 20 })
+			.should('have.class', 'initialized');
+	cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+
+	cy.cGet('div.clipboard').as('clipboard');
+}
+
 describe(['tagmultiuser'], 'Joining a document should not trigger an invalidation', function() {
 
 	beforeEach(function() {
@@ -20,15 +35,14 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 
 	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('div.clipboard').as('clipboard');
-
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(true);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		ceHelper.type('X');
+		cy.wait(1000);
 
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(false);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cSetActiveFrame('#iframe1');
@@ -43,6 +57,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			// joining triggered a theme related invalidation
 			cy.cSetActiveFrame('#iframe2');
 			cy.get('#form2').submit();
+			cy.wait(1000);
 
 			cy.cSetActiveFrame('#iframe1');
 			writerHelper.selectAllTextOfDoc();
@@ -58,15 +73,14 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 
 	it('Join after document save and modify', function() {
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('div.clipboard').as('clipboard');
-
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(true);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		ceHelper.type('X');
+		cy.wait(1000);
 
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#stylesview .ui-iconview-entry img').should('be.visible');
+		waitForInit(false);
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cSetActiveFrame('#iframe1');
@@ -95,7 +109,10 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 			cy.cGet('.leaflet-layer').click({force:true});
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
+
 			ceHelper.type('X');
+			cy.wait(1000);
+
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 2 characters');
 
 			cy.cGet('.empty-deltas').should(($after) => {

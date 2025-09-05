@@ -302,10 +302,10 @@ L.Map = L.Evented.extend({
 			if (!window.mode.isMobile())
 				this.initializeModificationIndicator();
 
-			// Show sidebar.
 			if (this._docLayer && !this._docLoadedOnce) {
-				// Let the first page finish loading then load the sidebar.
-				setTimeout(this.uiManager.initializeSidebar.bind(this.uiManager), 200);
+				// Let the first page finish loading then request core ui components
+				TileManager.appendAfterFirstTileTask(
+					this.uiManager.initializeLateComponents.bind(this.uiManager));
 			}
 
 			// We have loaded.
