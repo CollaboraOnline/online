@@ -671,6 +671,27 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	grid-template-columns: 1fr;
 }
 
+#quickfind-container #quickfind-controls {
+	position: absolute;
+	top: 0;
+	right: 0;		
+}
+
+#quickfind-container #quickfind-controls button img {
+	width: var(--btn-img-size-m);
+	height: var(--btn-img-size-m);
+}
+
+#quickfind-container #quickfind-controls button {
+	width: var(--btn-size-m);
+	height: var(--btn-size-m);
+	background-color: var(--color-background-lighter) !important;
+}
+
+#quickfind-container #quickfind-controls button:hover {
+	background-color: var(--color-background-dark) !important;
+}
+
 #navigation-sidebar.visible {
 	display: flex;
 	flex-direction: column;
