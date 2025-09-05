@@ -60,6 +60,7 @@ interface JSBuilder {
 	updateWidget: (parentContainer: Element, updateJSON: any) => void;
 	executeAction: (parentContainer: Element, actionJSON: any) => void;
 	callback: JSDialogCallback;
+	_defaultCallbackHandlerSendMessage: JSDialogCallback;
 	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
 	setWindowId: (id: number) => void;
@@ -179,6 +180,7 @@ interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
 	name: string; // visible name of a group
 	icon?: string; // Optional icon name. Otherwise it will be guessed.
 	more?: MoreOptions;
+	nofold?: boolean; // for widgets which use overflowgroup just for the label
 }
 interface MoreOptions {
 	command: string;
@@ -310,6 +312,7 @@ interface IconViewJSON extends WidgetJSON {
 	entries: Array<IconViewEntry>;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
+	isExpandable?: boolean;
 }
 
 interface EditWidgetJSON extends WidgetJSON {
