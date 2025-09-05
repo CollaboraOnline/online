@@ -1650,33 +1650,41 @@ PresetsInstallTask::PresetsInstallTask(const std::shared_ptr<SocketPoll>& poll,
 void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
              const std::shared_ptr<ClientSession>& session)
 {
-    std::vector<CacheQuery> presets;
-    if (!settings)
-        _overallSuccess = false;
-    else
+    try
     {
-        addGroup(settings, "browsersetting", presets);
-        addGroup(settings, "autotext", presets);
-        addGroup(settings, "wordbook", presets);
-        addGroup(settings, "viewsetting", presets);
-        addGroup(settings, "xcu", presets);
-        addGroup(settings, "template", presets);
-    }
+        std::vector<CacheQuery> presets;
+        if (!settings)
+            _overallSuccess = false;
+        else
+        {
+            addGroup(settings, "browsersetting", presets);
+            addGroup(settings, "autotext", presets);
+            addGroup(settings, "wordbook", presets);
+            addGroup(settings, "viewsetting", presets);
+            addGroup(settings, "xcu", presets);
+            addGroup(settings, "template", presets);
+        }
 
-    Cache::supplyConfigFiles(_configId, presets);
+        Cache::supplyConfigFiles(_configId, presets);
 
-    // If there are no presets to fetch then we can respond now, otherwise
-    // that happens when the last preset is installed.
-    if (!presets.empty())
-    {
-        LOG_INF("Async fetch of presets for " << _configId << " launched");
-        for (const auto& preset : presets)
-            asyncInstall(preset._uri, preset._stamp, preset._dest, session);
+        // If there are no presets to fetch then we can respond now, otherwise
+        // that happens when the last preset is installed.
+        if (!presets.empty())
+        {
+            LOG_INF("Async fetch of presets for " << _configId << " launched");
+            for (const auto& preset : presets)
+                asyncInstall(preset._uri, preset._stamp, preset._dest, session);
+        }
+        else
+        {
+            LOG_INF("Fetch of presets for "
+                    << _configId << " completed immediately. Success: " << _overallSuccess);
+            completed();
+        }
     }
-    else
+    catch (const std::exception& exc)
     {
-        LOG_INF("Fetch of presets for " << _configId << " completed immediately. Success: " << _overallSuccess);
-        completed();
+        LOG_WRN("Failed to install presets with exception: " << exc.what());
     }
 }
 
