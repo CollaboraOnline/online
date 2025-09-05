@@ -1986,7 +1986,8 @@ class TileManager {
 	}
 
 	public static onWorkerMessage(e: any) {
-		const bitmaps: Promise<ImageBitmap>[] = [];
+		const bitmaps: ImageBitmap[] = [];
+		const bitmapPromises: Promise<ImageBitmap>[] = [];
 		const pendingDeltas: any[] = [];
 		switch (e.data.message) {
 			case 'endTransaction':
@@ -2082,23 +2083,26 @@ class TileManager {
 							x.keyframeBuffer,
 						);
 
-						this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
+						this.createTileBitmap(tile, x, pendingDeltas, bitmapPromises);
 					} else {
 						this.tileImageCache.set(x.key, null);
-						bitmaps.push(
-							new Promise((resolve, _reject) => {
-								resolve(x.bitmap);
-							}),
-						);
+						bitmaps.push(x.bitmap);
 						pendingDeltas.push(x);
 					}
 
 					tile.decompressedId = x.ids[1];
 				}
 
-				Promise.all(bitmaps).then((bitmaps) => {
+				if (bitmapPromises.length && bitmaps.length)
+					window.app.console.warn(
+						'Unusual: Sync and async tile decompression happening simultaneously',
+					);
+				if (bitmaps.length)
 					this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
-				});
+				if (bitmapPromises.length)
+					Promise.all(bitmapPromises).then((bitmaps) => {
+						this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
+					});
 				break;
 
 			default:
