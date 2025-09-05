@@ -307,6 +307,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageDown' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F5' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL, key: ',', unoAction: '.uno:InsertCurrentDate' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL, key: ';', unoAction: '.uno:InsertCurrentDate' }),
 
     // Writer.
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F2' }),
