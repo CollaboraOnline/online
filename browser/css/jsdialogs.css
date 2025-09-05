@@ -2722,3 +2722,13 @@ kbd,
 :is(#colorful_palettes, #monochromatic_palettes) .ui-iconview-entry {
 	border: 1px solid transparent;
 }
+
+/* Calc - Insert - Chart - Chart Wizard(Data series) */
+
+#CHART2_HID_SCH_WIZARD_ROADMAP #tp_DataSource #box1.jsdialog.ui-grid-cell {
+	align-items: start;
+}
+
+#CHART2_HID_SCH_WIZARD_ROADMAP #tp_DataSource #grid2 :is(#box5, #box6) {
+	align-items: center;
+}
