@@ -1028,6 +1028,21 @@ L.Control.JSDialog = L.Control.extend({
 		var keyCode = event.keyCode;
 
 		switch (keyCode) {
+		case 13:
+			// ENTER
+			var dialogKeys = Object.keys(this.dialogs);
+			if (dialogKeys.length) {
+				var lastKey = dialogKeys[dialogKeys.length - 1];
+				var dialogInfo = this.dialogs[lastKey];
+				if (dialogInfo && dialogInfo.text === 'Find and Replace') {
+					var defaultButton = dialogInfo.container.querySelector('#' + dialogInfo.defaultButtonId + ' button');
+					if (defaultButton) {
+						defaultButton.click();
+						return true;
+					}
+				}
+			}
+			break;
 		case 27:
 			// ESC
 			var dialogKeys = Object.keys(this.dialogs);
