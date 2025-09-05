@@ -2735,3 +2735,10 @@ kbd,
 #CHART2_HID_SCH_WIZARD_ROADMAP #tp_DataSource #grid2 :is(#box5, #box6) {
 	align-items: center;
 }
+
+/* Listbox UI grid */
+.jsdialog.ui-grid[role='listbox'] {
+	max-height: 470px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
