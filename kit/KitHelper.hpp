@@ -122,6 +122,13 @@ namespace LOKitHelper
             bool readOnly = (isReadOnly.find("true") != std::string::npos);
             resultInfo["readonly"] = readOnly ? "true": "false";
         }
+
+        value = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea");
+        if (value)
+        {
+            resultInfo["printranges"] = std::string(value);
+            std::free(value);
+        }
     }
 
     inline std::string getDocumentTypeAsString(LibreOfficeKitDocument *loKitDocument)

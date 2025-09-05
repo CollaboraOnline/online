@@ -510,6 +510,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			TileManager.resetPreFetching(true);
 
+			/*
+				Side note: There is a getPrintRanges function on the core side that sends the JSON inside a printranges object.
+				When we get the printranges object, we put it into another printranges object on the server side. So we have a longer path here.
+			*/
+			if (statusJSON.printranges && statusJSON.printranges.printranges) {
+				this._printRanges = [];
+				const info = statusJSON.printranges.printranges;
+				for (let i = 0; i < info.length; i++)
+					this._printRanges[info[i]['sheet']] = info[i]['ranges'];
+			}
+
 			if (firstSelectedPart) this._switchSplitPanesContext();
 		} else {
 			this._adjustCanvasSectionsForLayoutChange();
