@@ -2739,3 +2739,8 @@ kbd,
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+
+/* Writer - Form - Properties(Dropdown) */
+#ContentControlDialog #tabindexlabel {
+	width: max-content;
+}
