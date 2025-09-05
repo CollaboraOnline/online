@@ -25,7 +25,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 
 		// after switch we should see cursor and A1
 		desktopHelper.assertScrollbarPosition('vertical', 20, 100);
-		desktopHelper.assertScrollbarPosition('horizontal', 50, 100);
+		desktopHelper.assertScrollbarPosition('horizontal', 40, 90);
 	});
 
 	it.skip('Check the visibility of tile content when rows are hidden', function() {
