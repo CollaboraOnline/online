@@ -594,8 +594,9 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
     {
         http::Header multipartHeader;
         std::string_view multipartBody;
+        std::string fragment = data.substr(0, i);
         LOK_ASSERT_EQUAL(firstPartOffset,
-                         multipart.readPart(data.substr(0, i), multipartHeader, multipartBody));
+                         multipart.readPart(fragment, multipartHeader, multipartBody));
         LOK_ASSERT_EQUAL(2UL, multipartHeader.size());
         LOK_ASSERT_EQUAL_STR(firstContentDisposition, multipartHeader.get("Content-Disposition"));
         LOK_ASSERT_EQUAL_STR(firstContentType, multipartHeader.getContentType());
@@ -617,9 +618,9 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
     {
         http::Header multipartHeader;
         std::string_view multipartBody;
-        LOK_ASSERT_EQUAL_MESSAGE(
-            "At " << 236, secondPartOffset,
-            multipart.readPart(data.substr(firstPartOffset, 236), multipartHeader, multipartBody));
+        std::string fragment = data.substr(firstPartOffset, 236);
+        LOK_ASSERT_EQUAL_MESSAGE("At " << 236, secondPartOffset,
+                                 multipart.readPart(fragment, multipartHeader, multipartBody));
         LOK_ASSERT_EQUAL(2UL, multipartHeader.size());
         LOK_ASSERT_EQUAL_STR(secondContentDisposition, multipartHeader.get("Content-Disposition"));
         LOK_ASSERT_EQUAL_STR(secondContentType, multipartHeader.getContentType());
