@@ -1063,6 +1063,7 @@ pot:
 		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.QuickFindPanel.ts \
 		src/control/Notebookbar.ImpressTransitionTab.ts \
+		src/control/Notebookbar.WriterReferencesTab.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
