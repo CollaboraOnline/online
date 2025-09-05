@@ -164,6 +164,18 @@ class Xcu {
 	}
 
 	private parse(content: string): XcuObject {
+		function format(propName: string): string {
+			let result = propName[0];
+			for (let i = 1; i < propName.length; i++) {
+				const char = propName[i];
+				if (char >= 'A' && char <= 'Z') {
+					result += ' ' + char.toLowerCase();
+				} else {
+					result += char;
+				}
+			}
+			return result;
+		}
 		const parser = new DOMParser();
 		const xmlDoc = parser.parseFromString(content, 'application/xml');
 
@@ -191,19 +203,26 @@ class Xcu {
 			const keys = path.split('/').filter((key) => key.trim() !== '');
 
 			let currentLevel = result;
+			let gridLevel;
 			keys.forEach((key) => {
 				if (!(key in currentLevel)) {
 					currentLevel[key] = {};
 				}
 				currentLevel = currentLevel[key];
+
+				if (key === 'Grid') {
+					gridLevel = currentLevel;
+					gridLevel['Show Grid'] = false;
+				}
 			});
 
 			const props = item.getElementsByTagName('prop');
 			Array.from(props).forEach((prop) => {
-				const propName = prop.getAttribute('oor:name');
+				let propName = prop.getAttribute('oor:name');
 				if (!propName) {
 					return;
 				}
+				propName = format(propName);
 
 				const valueElement = prop.getElementsByTagName('value')[0];
 				let value: string | boolean = valueElement
@@ -218,7 +237,11 @@ class Xcu {
 				}
 
 				if (typeof value === 'boolean') {
-					currentLevel[propName] = value;
+					if (propName === 'Visible grid') {
+						gridLevel['Show Grid'] = value;
+					} else {
+						currentLevel[propName] = value;
+					}
 				}
 			});
 		});
@@ -227,12 +250,24 @@ class Xcu {
 	}
 
 	private generate(xcu: XcuObject): string {
+		function format(key: string): string {
+			let result = key[0];
+			for (let i = 1; i < key.length; i++) {
+				if (key[i] === ' ' && i < key.length - 1) {
+					result += key[i + 1].toUpperCase();
+					i++;
+				} else {
+					result += key[i];
+				}
+			}
+			return result;
+		}
 		function generateItemNodes(node: any, path: string[]): string[] {
 			const items: string[] = [];
 			const leafProps: { [key: string]: string | boolean } = {};
 			const nestedKeys: string[] = [];
 
-			for (const key in node) {
+			for (let key in node) {
 				if (Object.prototype.hasOwnProperty.call(node, key)) {
 					const value = node[key];
 					if (
@@ -242,16 +277,23 @@ class Xcu {
 					) {
 						nestedKeys.push(key);
 					} else {
+						key = format(key);
 						leafProps[key] = value;
 					}
 				}
 			}
+
+			let visibleGrid;
 
 			if (Object.keys(leafProps).length > 0) {
 				const oorPath = '/org.openoffice.Office.' + path.join('/');
 				let propsXml = '';
 				for (const propName in leafProps) {
 					if (Object.prototype.hasOwnProperty.call(leafProps, propName)) {
+						if (propName === 'ShowGrid') {
+							visibleGrid = leafProps[propName];
+							continue;
+						}
 						const value = leafProps[propName];
 						let valueStr = '';
 						if (typeof value === 'boolean') {
@@ -269,6 +311,9 @@ class Xcu {
 
 			for (const key of nestedKeys) {
 				const child = node[key];
+				if (typeof visibleGrid === 'boolean') {
+					child['VisibleGrid'] = visibleGrid;
+				}
 				const newPath = path.concat(key);
 				items.push(...generateItemNodes(child, newPath));
 			}
