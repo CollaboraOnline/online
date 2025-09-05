@@ -261,7 +261,7 @@ class TileManager {
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
 			window.app.console.info('Creating CanvasTileWorkers');
-			for (let i = 0; i < 1; ++i) {
+			for (let i = 0; i < 4; ++i) {
 				this.workers.push(
 					new Worker(app.LOUtil.getURL('/src/layer/tile/TileWorker.js')),
 				);
@@ -525,19 +525,51 @@ class TileManager {
 
 	private static decompressPendingDeltas(message: string) {
 		if (this.workers.length) {
-			++this.nPendingWorkerTasks;
-			this.workers[0].postMessage(
-				{
-					message: message,
-					deltas: this.pendingDeltas,
-					cachedTiles: this.tileImageCache,
-					tileSize: this.tileSize,
-				},
-				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
-			);
+			// The same tiles need to go to the same workers each time so that the image cache
+			// is valid. Split work up based on the tile coords.
+			const deltaBuckets = [];
+			for (let i = 0; i < this.workers.length; ++i) {
+				deltaBuckets.push([]);
+			}
+			while (this.pendingDeltas.length) {
+				const delta = this.pendingDeltas.shift();
+				const bucket =
+					Math.round(
+						delta.key.x / this.tileSize + delta.key.y / this.tileSize,
+					) % this.workers.length;
+
+				// Replace TileCoordData with string representation
+				delta.key = delta.key.key();
+
+				deltaBuckets[bucket].push(delta);
+			}
+			for (let i = 0; i < this.workers.length; ++i) {
+				const deltas: any[] = deltaBuckets[i];
+				const worker = this.workers[i];
+				if (this.debugDeltas)
+					window.app.console.debug(
+						'XXX delta bucket (' + i + ') length: ' + deltas.length,
+					);
+				if (deltas.length) {
+					++this.nPendingWorkerTasks;
+					worker.postMessage(
+						{
+							message: message,
+							deltas: deltas,
+							cachedTiles: this.tileImageCache,
+							tileSize: this.tileSize,
+						},
+						deltas.map((x: any) => x.rawDelta.buffer),
+					);
+				}
+			}
 		} else {
 			// Synchronous path
 			++this.nPendingWorkerTasks;
+
+			// Replace TileCoords with string representation
+			for (const delta of this.pendingDeltas) delta.key = delta.key.key();
+
 			this.onWorkerMessage({
 				data: {
 					message: 'endTransaction',
@@ -572,7 +604,7 @@ class TileManager {
 		}, 0);
 
 		var e = {
-			key: tile.coords.key(),
+			key: tile.coords,
 			rawDelta: rawDelta,
 			isKeyframe: isKeyframe,
 			wireMessage: wireMessage,
