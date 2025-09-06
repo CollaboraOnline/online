@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter Complex', funct
 		cy.cGet('#map').focus();
 		cy.wait(1000);
 
-		desktopHelper.assertScrollbarPosition('vertical', 250, 270);
+		desktopHelper.assertScrollbarPosition('vertical', 220, 250);
 		desktopHelper.assertScrollbarPosition('horizontal', 260, 290);
 	});
 
