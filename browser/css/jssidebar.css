@@ -798,3 +798,13 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #TemplatePanel #highlightstyles input {
 	margin-left: 0px;
 }
+
+/* Sidebar - Style List */
+#StyleListDeck #left .sidebar.unotoolbutton {
+	margin: 0 5px;
+}
+
+/* Writer - Table - Sort */
+#SortDialog #box2 :is(#grid7, #grid5) {
+	align-items: center;
+}
