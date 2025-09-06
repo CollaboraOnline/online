@@ -2326,10 +2326,24 @@ button.menubutton.sidebar > span {
 	display: grid;
 	min-width: 400px;
 }
+
 #FormulaDialog .ui-tabs-content.jsdialog {
 	grid-auto-columns: 250px;
 	margin-right: 0.2em;
 	margin-top: 0px;
+}
+
+#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
+#FormulaDialog #ALTBOX #funcdesc {
+	margin: auto 0px;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
+	padding-left: inherit;
+}
+
+#FormulaDialog #ALTBOX #headline {
+	font-weight: bold;
 }
 
 div [id^='TemplateDialog'] {
