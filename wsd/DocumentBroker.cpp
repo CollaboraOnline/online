@@ -1370,6 +1370,9 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     if (!COOLWSD::getHardwareResourceWarning().empty())
         _serverAudit.set("hardwarewarning", COOLWSD::getHardwareResourceWarning());
 
+    if (_childProcess)
+        _serverAudit.mergeSettings(_childProcess);
+
     // Explicitly set the write-permission to match the UserCanWrite flag.
     // Technically, we only need to disable it when UserCanWrite=false,
     // but this is more readily comprehensible and easier to reason about.

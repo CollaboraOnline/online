@@ -3101,6 +3101,8 @@ private:
             const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
             LOG_TRC("New child spawned after " << durationMs << " of requesting");
 
+            std::map<std::string, std::string> admsProps;
+
             // New Child is spawned.
             const Poco::URI::QueryParameters params = requestURI.getQueryParameters();
             const int pid = socket->getPid();
@@ -3112,6 +3114,9 @@ private:
                     configId = param.second;
                 else if (param.first == "version")
                     COOLWSD::LOKitVersion = param.second;
+                else if (param.first.size() > 6 &&
+                         param.first.compare(0, 5, "adms_") == 0)
+                    admsProps[param.first.substr(5)] = param.second;
             }
 
             if (pid <= 0)
@@ -3139,7 +3144,7 @@ private:
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
-            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request, admsProps);
 
             if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);

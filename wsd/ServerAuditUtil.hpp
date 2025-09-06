@@ -13,7 +13,10 @@
 
 #include <string>
 #include <map>
+#include <memory>
 #include <mutex>
+
+class ChildProcess;
 
 /** This class helps to build list of security warnings for a server instance
  */
@@ -32,6 +35,7 @@ public:
     std::string getResultsJSON() const;
 
     void set(std::string code, std::string status);
+    void mergeSettings(const std::shared_ptr<ChildProcess> &proc);
 
     void disable() { _disabled = true; }
     bool isDisabled() const { return _disabled; }
