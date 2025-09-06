@@ -352,7 +352,7 @@ class Xcu {
 
 		const resetButton = document.createElement('button');
 		resetButton.type = 'button';
-		resetButton.id = 'xcu-reset-button';
+		resetButton.id = 'document-settings-reset-button';
 		resetButton.classList.add('button', 'button--vue-secondary');
 		resetButton.title = _('Reset to default Document settings');
 		resetButton.innerHTML = `
@@ -381,7 +381,7 @@ class Xcu {
 
 		const saveButton = document.createElement('button');
 		saveButton.type = 'button';
-		saveButton.id = 'xcu-save-button';
+		saveButton.id = 'document-settings-save-button';
 		saveButton.classList.add('button', 'button-primary');
 		saveButton.title = _('Save Document settings');
 		saveButton.innerHTML = `
