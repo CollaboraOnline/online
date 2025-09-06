@@ -60,6 +60,7 @@ public:
 #if !MOBILEAPP
     static bool NoCapsForKit;
     static bool NoSeccomp;
+    static bool SecCompFailed;
     static bool AdminEnabled;
     static bool UnattendedRun; ///< True when run from an unattended test, not interactive.
     static bool SignalParent;

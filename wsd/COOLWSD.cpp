@@ -90,6 +90,7 @@
 #include <common/FileUtil.hpp>
 
 #include <common/Log.hpp>
+#include <common/Seccomp.hpp>
 #include <MobileApp.hpp>
 #include <Protocol.hpp>
 #include <Session.hpp>
@@ -750,6 +751,7 @@ std::atomic<int> COOLWSD::ForKitProcId(-1);
 std::shared_ptr<ForKitProcess> COOLWSD::ForKitProc;
 bool COOLWSD::NoCapsForKit = false;
 bool COOLWSD::NoSeccomp = false;
+bool COOLWSD::SecCompFailed = false;
 bool COOLWSD::AdminEnabled = true;
 bool COOLWSD::UnattendedRun = false;
 bool COOLWSD::SignalParent = false;
@@ -3700,6 +3702,17 @@ int COOLWSD::innerMain()
 #endif
 
     ClientRequestDispatcher::InitStaticFileContentCache();
+
+    // Before opening sockets - lock down syscalls
+    if (!Seccomp::lockdown(Seccomp::Type::WSD))
+    {
+        if (!NoSeccomp)
+        {
+            LOG_FTL("coolwsd seccomp security lockdown failed. Exiting.");
+            Util::forcedExit(EX_SOFTWARE);
+        }
+        SecCompFailed = true;
+    }
 
     // Allocate our port - passed to prisoners.
     assert(Server && "The COOLWSDServer instance does not exist.");

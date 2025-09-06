@@ -120,7 +120,7 @@ bool lockdown([[maybe_unused]] Type type)
     #define KILL_SYSCALL(name) \
         KILL_SYSCALL_FULL(__NR_##name)
 
-    struct sock_filter filterCode[] = {
+    struct sock_filter filterPreamble[] = {
         // Check our architecture is correct.
         BPF_STMT(BPF_LD+BPF_W+BPF_ABS,  offsetof(struct seccomp_data, arch)),
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_NR, 1, 0),
@@ -147,8 +147,10 @@ bool lockdown([[maybe_unused]] Type type)
         ACCEPT_SYSCALL(epoll_create),
 #endif
         ACCEPT_SYSCALL(close),
-        ACCEPT_SYSCALL(nanosleep),
+        ACCEPT_SYSCALL(nanosleep)
+    };
 
+    struct sock_filter filterKitBits[] = {
         // Now block everything that we don't like the look of.
 
         // FIXME: should we bother blocking calls that have early
@@ -166,15 +168,21 @@ bool lockdown([[maybe_unused]] Type type)
 #ifdef __NR_execveat
         REJECT_SYSCALL(execveat, EPERM),
 #endif
+        KILL_SYSCALL(kill),   // !
+        KILL_SYSCALL(listen),  // server sockets
+        KILL_SYSCALL(accept),  // server sockets
+        KILL_SYSCALL(mount),
+        KILL_SYSCALL(umount2),
+        KILL_SYSCALL(unshare),
+    };
+
+    struct sock_filter filterDodgy[] = {
         KILL_SYSCALL(getitimer),
         KILL_SYSCALL(setitimer),
         KILL_SYSCALL(sendfile),
-        KILL_SYSCALL(listen),  // server sockets
-        KILL_SYSCALL(accept),  // server sockets
 #if 0
         KILL_SYSCALL(wait4),
 #endif
-        KILL_SYSCALL(kill),   // !
         KILL_SYSCALL(shmctl),
         KILL_SYSCALL(ptrace), // tracing
         KILL_SYSCALL(capset),
@@ -193,8 +201,6 @@ bool lockdown([[maybe_unused]] Type type)
         KILL_SYSCALL(chroot),
         KILL_SYSCALL(acct),   // !
         KILL_SYSCALL(sync),   // I/O perf.
-        KILL_SYSCALL(mount),
-        KILL_SYSCALL(umount2),
         KILL_SYSCALL(setns),
         KILL_SYSCALL(swapon),
         KILL_SYSCALL(swapoff),
@@ -214,7 +220,6 @@ bool lockdown([[maybe_unused]] Type type)
 #endif
         KILL_SYSCALL(inotify_add_watch),
         KILL_SYSCALL(inotify_rm_watch),
-        KILL_SYSCALL(unshare),
         KILL_SYSCALL(splice),
         KILL_SYSCALL(tee),
         KILL_SYSCALL(vmsplice), // vm bits
@@ -235,10 +240,18 @@ bool lockdown([[maybe_unused]] Type type)
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
     };
 
-    struct sock_fprog filter = {
-        N_ELEMENTS(filterCode), // length
-        filterCode
-    };
+    std::vector<struct sock_filter> filters;
+    filters.insert(filters.end(), filterPreamble,
+                   filterPreamble + N_ELEMENTS(filterPreamble));
+    if (type == Seccomp::Type::KIT)
+        filters.insert(filters.end(), filterKitBits,
+                       filterKitBits + N_ELEMENTS(filterKitBits));
+    filters.insert(filters.end(), filterDodgy,
+                   filterDodgy + N_ELEMENTS(filterDodgy));
+
+    struct sock_fprog filter;
+    filter.len = filters.size();
+    filter.filter = filters.data();
 
     if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0))
     {
