@@ -510,6 +510,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			TileManager.resetPreFetching(true);
 
+			// There are 2 printranges objects here because the same function on the core side is used as also callback.
+			if (statusJSON.printranges && statusJSON.printranges.printranges) {
+				this._printRanges = [];
+				const info = statusJSON.printranges.printranges;
+				for (let i = 0; i < info.length; i++)
+					this._printRanges[info[i]['sheet']] = info[i]['ranges'];
+			}
+
 			if (firstSelectedPart) this._switchSplitPanesContext();
 		} else {
 			this._adjustCanvasSectionsForLayoutChange();
