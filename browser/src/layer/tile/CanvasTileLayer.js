@@ -1861,6 +1861,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 
+		if (obj.controlEvent === true)
+			this._formID = obj.windowId;
+		else
+			this._formID = null;
+
 		// Remember the last position of the caret (in core pixels).
 		this._cursorPreviousPositionCorePixels = app.file.textCursor.rectangle.clone();
 
@@ -3753,6 +3758,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	onAdd: function (map) {
 		this._initContainer();
+
+		/*
+			Because of special handling of delete and backspace chars, we need to know which Writer form is focused.
+			When sending removeTextContext event to core side, we send the formID instead of the map id.
+		*/
+		this._formID = null;
 
 		// Initiate selection handles.
 		TextSelections.initiate();
