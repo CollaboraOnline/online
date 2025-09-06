@@ -3048,6 +3048,7 @@ private:
         {
             std::string jailId;
             std::string configId;
+            std::map<std::string, std::string> admsProps;
 #if !MOBILEAPP
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
@@ -3112,6 +3113,9 @@ private:
                     configId = param.second;
                 else if (param.first == "version")
                     COOLWSD::LOKitVersion = param.second;
+                else if (param.first.size() > 6 &&
+                         param.first.compare(0, 5, "adms_") == 0)
+                    admsProps[param.first.substr(5)] = param.second;
             }
 
             if (pid <= 0)
@@ -3139,7 +3143,7 @@ private:
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
-            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request, admsProps);
 
             if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);

@@ -10,6 +10,7 @@
  */
 
 #include "ServerAuditUtil.hpp"
+#include "Process.hpp"
 
 ServerAuditUtil::ServerAuditUtil()
     : _disabled(false)
@@ -44,6 +45,12 @@ void ServerAuditUtil::set(std::string code, std::string status)
     std::lock_guard<std::mutex> lock(_mutex);
 
     _entries[code] = std::move(status);
+}
+
+void ServerAuditUtil::mergeSettings(const std::shared_ptr<ChildProcess> &proc)
+{
+    auto props = proc->getJailProps();
+    _entries.insert(props.begin(), props.end());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
