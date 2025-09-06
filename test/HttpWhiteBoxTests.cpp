@@ -49,6 +49,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testClipboardIsOwnFormat);
     CPPUNIT_TEST(testMultiPartDataParser);
     CPPUNIT_TEST(testInsertFile);
+    CPPUNIT_TEST(testGetFavicon);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -66,6 +67,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testClipboardIsOwnFormat();
     void testMultiPartDataParser();
     void testInsertFile();
+    void testGetFavicon();
 };
 
 void HttpWhiteBoxTests::testStatusLineParserValidComplete()
@@ -756,6 +758,25 @@ void HttpWhiteBoxTests::testInsertFile()
     LOK_ASSERT_EQUAL(body.size(), req.getBody().size());
 
     comparePostContent(testname, data);
+}
+
+void HttpWhiteBoxTests::testGetFavicon()
+{
+    constexpr std::string_view testname = __func__;
+
+    const std::string data = "GET /favicon.ico HTTP/1.1\r\n"
+                             "Host: 127.0.0.1:9984\r\n"
+                             "Date: Sat, 06 Sep 2025 12:37:58\r\n"
+                             "User-Agent: COOLWSD HTTP Agent 25.04.5.1\r\n"
+                             "\r\n";
+
+    http::RequestParser req;
+    LOK_ASSERT(req.readData(data.data(), data.size()) > 0);
+    LOK_ASSERT_EQUAL_STR(std::string(), req.getBody());
+    LOK_ASSERT_EQUAL_STR("127.0.0.1:9984", req.getHost());
+    LOK_ASSERT_EQUAL_STR("Sat, 06 Sep 2025 12:37:58", req.get("Date"));
+    LOK_ASSERT_EQUAL_STR("COOLWSD HTTP Agent 25.04.5.1", req.get("User-Agent"));
+    LOK_ASSERT_EQUAL_STR("/favicon.ico", req.getUrl());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpWhiteBoxTests);
