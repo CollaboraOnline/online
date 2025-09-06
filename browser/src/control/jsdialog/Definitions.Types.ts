@@ -219,7 +219,11 @@ type ExpanderWidgetJSON = any;
 // type: 'fixedtext'
 interface TextWidget extends WidgetJSON {
 	text: string;
+	html?: string;
 	labelFor?: string;
+	style?: string;
+	hidden?: boolean;
+	renderAsStatic?: boolean;
 }
 
 // type: 'pushbutton'

@@ -1755,6 +1755,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
+		// Check if this label should render as static content(i.e. span) instead of interactive label
+		// This property is set by LibreOffice Kit when accessible-role="static" is detected
+		if(data.renderAsStatic)
+			return JSDialog.StaticText(parentContainer, data, builder);
+
 		var fixedtext = L.DomUtil.create('label', builder.options.cssClass, parentContainer);
 
 		if (data.labelFor)

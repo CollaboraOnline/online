@@ -465,6 +465,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.ScrolledWindow.js \
 	src/control/jsdialog/Widget.SearchEdit.ts \
 	src/control/jsdialog/Widget.SidebarContainers.ts \
+	src/control/jsdialog/Widget.Text.ts \
 	src/control/jsdialog/Widget.Timefield.js \
 	src/control/jsdialog/Widget.TreeView.ts \
 	src/control/Control.JSDialog.js \
