@@ -198,11 +198,12 @@ public:
     template <typename T>
     ChildProcess(const pid_t pid, const std::string& jailId,
                  const std::string& configId,
-                 const std::shared_ptr<StreamSocket>& socket, const T& request)
+                 const std::shared_ptr<StreamSocket>& socket, const T& request, std::map<std::string, std::string> &jailProps)
         : WSProcess("ChildProcess", pid, socket,
                     std::make_shared<WebSocketHandler>(socket, request, true))
         , _jailId(jailId)
         , _configId(configId)
+        , _jailProps(jailProps)
         , _urpFromKitFD(socket->getIncomingFD(SharedFDType::URPFromKit))
         , _urpToKitFD(socket->getIncomingFD(SharedFDType::URPToKit))
     {
@@ -263,6 +264,11 @@ public:
     std::weak_ptr<FILE> getSMapsFp() const { return _smapsFp; }
 #endif
 
+    std::map<std::string, std::string> getJailProps() const
+    {
+        return _jailProps;
+    }
+
     void moveSocketFromTo(const std::shared_ptr<SocketPoll>& from,
                           const std::shared_ptr<SocketPoll>& to)
     {
@@ -276,6 +282,7 @@ private:
     std::weak_ptr<StreamSocket> _urpFromKit;
     std::weak_ptr<StreamSocket> _urpToKit;
     std::shared_ptr<FILE> _smapsFp;
+    std::map<std::string, std::string> _jailProps;
     int _urpFromKitFD;
     int _urpToKitFD;
 };
