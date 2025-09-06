@@ -216,12 +216,23 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		return [handle.id, handle.x, handle.y];
 	}
 
+	private doWeKeepRatio(e: MouseEvent) {
+		let keep = e.ctrlKey && e.shiftKey;
+
+		// For images, the keepRatio shortcut works the opposite way.
+		if (app.map.context.context === 'Graphic')
+			keep = !keep;
+
+		return keep;
+	}
+
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
 
-			const keepRatio = e.ctrlKey && e.shiftKey;
+			const keepRatio = this.doWeKeepRatio(e);
+
 			let handleId = this.sectionProperties.ownInfo.id;
 			const parentHandlerSection = this.sectionProperties.parentHandlerSection;
 
@@ -290,7 +301,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 
 	calculateNewShapeRectangleProperties(point: number[], e: MouseEvent) {
 		const shapeRecProps: any = JSON.parse(JSON.stringify(this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties));
-		const keepRatio = e.ctrlKey && e.shiftKey;
+		const keepRatio = this.doWeKeepRatio(e);
 
 		if (keepRatio) {
 			point = this.calculateRatioPoint(point, shapeRecProps);

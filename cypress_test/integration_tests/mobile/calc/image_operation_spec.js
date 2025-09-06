@@ -57,6 +57,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 		});
 
 		cy.wait(1000);
-		helper.assertImageSize(494, 130);
+		helper.assertImageSize(494, 115);
 	});
 });

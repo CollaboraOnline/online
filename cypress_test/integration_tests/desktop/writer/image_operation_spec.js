@@ -45,7 +45,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		});
 
 		cy.wait(1000);
-		helper.assertImageSize(43, 63);
+		helper.assertImageSize(232, 51);
 	});
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
