@@ -2707,6 +2707,29 @@ kbd,
 	width: fit-content; /* makes button text visible*/
 }
 
+/* Insert - Line - Sidebar - Line Style */
+/* Insert - Line - Sidebar - Thickness */
+#floating_line_style_iconview.ui-iconview.jsdialog,
+#line_iconview.ui-iconview.jsdialog {
+	grid-template-columns: 1fr; /* we want line style in a single column */
+}
+
+/* Insert - Line - Sidebar - Arrow Styles */
+#floating_line_end_iconview.ui-iconview.jsdialog {
+	grid-template-columns: 1fr 1fr;
+}
+
+/* Insert - Line - Sidebar - Line Style */
+/* Insert - Line - Sidebar - Arrow Styles */
+#floating_line_style_iconview.ui-iconview.jsdialog,
+#floating_line_end_iconview.ui-iconview.jsdialog {
+	font-size: 0; /* Hide placeholder text to prevent layout shifts due to lazy loading */
+}
+
+:is(#floating_line_style_iconview, #floating_line_end_iconview, #line_iconview).ui-iconview .ui-iconview-entry {
+	border: 1px solid transparent !important; /* Prevents layout shift by reserving space for the border on hover */
+}
+
 /* Select Chart - Sidebar - Edit Object - Colors */
 :is(#colorful_palettes, #monochromatic_palettes) .ui-iconview-entry {
 	border: 1px solid transparent;
