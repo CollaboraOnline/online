@@ -258,17 +258,53 @@ class Dispatcher {
 			app.map.cancelSearch();
 		};
 		this.actionsMap['showsearchbar'] = () => {
-			$('#toolbar-down').hide();
-			$('#showsearchbar').removeClass('over');
-			$('#toolbar-search').show();
+			const toolbarDown = document.getElementById('toolbar-down');
+			if (toolbarDown) {
+				toolbarDown.style.display = 'none';
+			} else {
+				console.warn('Element #toolbar-down not found');
+			}
+
+			const showSearchBarBtn = document.getElementById('showsearchbar');
+			if (showSearchBarBtn) {
+				showSearchBarBtn.classList.remove('over');
+			} else {
+				console.warn('Element #showsearchbar not found');
+			}
+
+			const toolbarSearch = document.getElementById('toolbar-search');
+			if (toolbarSearch) {
+				// jQuery show() would restore display; empty string lets CSS decide.
+				(toolbarSearch as HTMLElement).style.display = '';
+			} else {
+				console.warn('Element #toolbar-search not found');
+			}
 			L.DomUtil.get('search-input').focus();
 		};
 		this.actionsMap['hidesearchbar'] = () => {
-			$('#toolbar-search').hide();
-			if (app.map.isEditMode()) $('#toolbar-down').show();
+			const toolbarSearch = document.getElementById('toolbar-search');
+			if (toolbarSearch) {
+				(toolbarSearch as HTMLElement).style.display = 'none';
+			} else {
+				console.warn('Element #toolbar-search not found');
+			}
+			if (app.map.isEditMode()) {
+				const toolbarDown = document.getElementById('toolbar-down');
+				if (toolbarDown) {
+					(toolbarDown as HTMLElement).style.display = '';
+				} else {
+					console.warn('Element #toolbar-down not found');
+				}
+			}
 			/** show edit button if only we are able to edit but in readonly mode */
-			if (!app.isReadOnly() && app.map.isReadOnlyMode())
-				$('#mobile-edit-button').css('display', 'flex');
+			if (!app.isReadOnly() && app.map.isReadOnlyMode()) {
+				const mobileEditButton = document.getElementById('mobile-edit-button');
+				if (mobileEditButton) {
+					(mobileEditButton as HTMLElement).style.display = 'flex';
+				} else {
+					console.warn('Element #mobile-edit-button not found');
+				}
+			}
 		};
 
 		this.actionsMap['prev'] = () => {
@@ -448,23 +484,42 @@ class Dispatcher {
 
 		// sheets toolbar
 		this.actionsMap['insertsheet'] = function () {
-			var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
+			let nPos = 0;
+			const spreadsheetTabScroll = document.getElementById(
+				'spreadsheet-tab-scroll',
+			);
+			if (spreadsheetTabScroll) {
+				nPos = spreadsheetTabScroll.childElementCount;
+			} else {
+				console.warn('Element #spreadsheet-tab-scroll not found');
+			}
 			app.map.insertPage(nPos);
 			app.map.insertPage.scrollToEnd = true;
 		};
 		this.actionsMap['firstrecord'] = function () {
-			$('#spreadsheet-tab-scroll').scrollLeft(0);
+			const el = document.getElementById('spreadsheet-tab-scroll');
+			if (el) {
+				el.scrollLeft = 0;
+			} else {
+				console.warn('Element #spreadsheet-tab-scroll not found');
+			}
 		};
 		this.actionsMap['nextrecord'] = function () {
 			// TODO: We should get visible tab's width instead of 60px
-			$('#spreadsheet-tab-scroll').scrollLeft(
-				$('#spreadsheet-tab-scroll').scrollLeft() + 60,
-			);
+			const el = document.getElementById('spreadsheet-tab-scroll');
+			if (el) {
+				el.scrollLeft = el.scrollLeft + 60;
+			} else {
+				console.warn('Element #spreadsheet-tab-scroll not found');
+			}
 		};
 		this.actionsMap['prevrecord'] = function () {
-			$('#spreadsheet-tab-scroll').scrollLeft(
-				$('#spreadsheet-tab-scroll').scrollLeft() - 30,
-			);
+			const el = document.getElementById('spreadsheet-tab-scroll');
+			if (el) {
+				el.scrollLeft = el.scrollLeft - 30;
+			} else {
+				console.warn('Element #spreadsheet-tab-scroll not found');
+			}
 		};
 		this.actionsMap['lastrecord'] = function () {
 			// Set a very high value, so that scroll is set to the maximum possible value internally.

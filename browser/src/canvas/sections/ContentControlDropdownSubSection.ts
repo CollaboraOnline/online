@@ -57,15 +57,22 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 	}
 
 	private showDatePicker(): void {
-		if ($('#datepicker').is(':visible')) {
-			$('#datepicker').hide();
-		} else {
-			var datePicker = document.getElementById('datepicker');
-			datePicker.style.left = String(this.myTopLeft[0] / app.dpiScale) + 'px';
-			datePicker.style.top =
-				String((this.myTopLeft[1] + this.size[1]) / app.dpiScale) + 'px';
-			$('#datepicker').show();
+		const datePicker = document.getElementById('datepicker');
+		if (!datePicker) {
+			console.warn('Element #datepicker not found');
+			return;
 		}
+		const isVisible =
+			datePicker.style.display !== 'none' && datePicker.offsetParent !== null;
+		if (isVisible) {
+			datePicker.style.display = 'none';
+			return;
+		}
+		datePicker.style.left = String(this.myTopLeft[0] / app.dpiScale) + 'px';
+		datePicker.style.top =
+			String((this.myTopLeft[1] + this.size[1]) / app.dpiScale) + 'px';
+		// Restore display; empty string lets stylesheet decide
+		datePicker.style.display = '';
 	}
 
 	private getDropdownJson(): any {
