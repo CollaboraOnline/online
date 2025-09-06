@@ -2036,7 +2036,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		let div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		controls['container'] = div;
-		div.tabIndex = -1;
+		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
+
+		if(data.index)
+			div.setAttribute('index', data.index);
+    
 		if (data.class)
 			div.classList.add(data.class);
 
