@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-09-02 20:03+0000\n"
+"PO-Revision-Date: 2025-09-04 15:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13.1-dev\n"
+"X-Generator: Weblate 5.13.1-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -587,7 +587,7 @@ msgstr "Guardar configuración de vista"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr ""
+msgstr "Introduzca la clave de API de Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -2206,6 +2206,8 @@ msgstr "Buscar…"
 #: src/control/Control.QuickFindPanel.ts:74
 msgid "Type in the search box to find anything in your document"
 msgstr ""
+"Escriba en el cuadro de búsqueda para encontrar cualquier cosa en el "
+"documento"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2481,7 +2483,7 @@ msgstr "Bueno"
 
 #: src/control/Control.NotebookbarCalc.js:978
 msgid "Neutral"
-msgstr "Neutro"
+msgstr "Neutral"
 
 #: src/control/Control.NotebookbarCalc.js:985
 msgid "Bad"
@@ -2512,7 +2514,7 @@ msgstr "Tamaño"
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:621
 msgid "Grid"
-msgstr "Red"
+msgstr "Cuadrícula"
 
 #: src/control/Control.NotebookbarCalc.js:1156
 msgid "Row Height"
@@ -2574,7 +2576,7 @@ msgstr "Organizar"
 
 #: src/control/Control.NotebookbarCalc.js:1379
 msgid "Freeze"
-msgstr "Congelar"
+msgstr "Inmovilizar"
 
 #: src/control/Control.NotebookbarCalc.js:1433
 #: src/control/Control.NotebookbarDraw.js:403
@@ -2659,7 +2661,7 @@ msgstr "Biblioteca de funciones"
 
 #: src/control/Control.NotebookbarCalc.js:1961
 msgid "AutoSum"
-msgstr "AutoSuma"
+msgstr "Suma automática"
 
 #: src/control/Control.NotebookbarCalc.js:1974
 msgid "Financial"
@@ -2675,7 +2677,7 @@ msgstr "Fecha y hora"
 
 #: src/control/Control.NotebookbarCalc.js:2034
 msgid "Lookup & Reference"
-msgstr "Búsqueda & Referencia"
+msgstr "Búsqueda y referencia"
 
 #: src/control/Control.NotebookbarCalc.js:2052
 msgid "Math & Trig"
@@ -2827,7 +2829,7 @@ msgstr "Espaciado y color"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Plantillas de patrón de diapositiva"
 
 #: src/control/Control.NotebookbarImpress.js:1777
 msgid "Slide Size"
@@ -3575,39 +3577,35 @@ msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Long Bond"
-msgstr "Bono Largo"
+msgstr "Folio"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
 msgstr "Tabloide"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
-#, fuzzy
 msgid "B6 (JIS)"
-msgstr "B6 (ISO)"
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
-#, fuzzy
 msgid "B5 (JIS)"
-msgstr "B5 (ISO)"
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
-#, fuzzy
 msgid "B4 (JIS)"
-msgstr "B4 (ISO)"
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "16 Kai"
-msgstr "16 Kai"
+msgstr "Kai 16"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "32 Kai"
-msgstr "32 Kai"
+msgstr "Kai 32"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
-#, fuzzy
 msgid "Big 32 Kai"
-msgstr "Big 32 Kai"
+msgstr "Kai 32 grande"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "User"
@@ -3623,7 +3621,7 @@ msgstr "Sobre C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C6/5 Envelope"
-msgstr "Sobre C6/5"
+msgstr "Sobre C 6⁄5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C5 Envelope"
@@ -3635,27 +3633,27 @@ msgstr "Sobre C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1528
 msgid "#6¾ Envelope"
-msgstr "Sobre #6¾"
+msgstr "Sobre del n.º 6 ¾"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1533
 msgid "#7¾ (Monarch) Envelope"
-msgstr "Sobre #7¾ (Monarch)"
+msgstr "Sobre del n.º 7 ¾ (monarca)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#9 Envelope"
-msgstr "Sobre #9"
+msgstr "Sobre del n.º 9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#10 Envelope"
-msgstr "Sobre #10"
+msgstr "Sobre del n.º 10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#11 Envelope"
-msgstr "Sobre #11"
+msgstr "Sobre del n.º 11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1539
 msgid "#12 Envelope"
-msgstr "Sobre #12"
+msgstr "Sobre del n.º 12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1542
 msgid "Japanese Postcard"
@@ -3750,49 +3748,48 @@ msgid "Line style"
 msgstr "Estilo de línea"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1948
-#, fuzzy
 msgid "Hairline (0.05 pt)"
-msgstr "Hairline (0.05 pt)"
+msgstr "Finísimo (0,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1957
 msgid "Very thin (0.50 pt)"
-msgstr "My fino (0.50 pt)"
+msgstr "Muy fino (0,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1966
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Fino (0,75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1975
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Mediano (1,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1984
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Grueso (2,25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Muy grueso (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2002
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Finísimo doble (1,10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2011
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Finísimo doble (2,35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2020
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Fino/mediano (3,00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2029
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Mediano/finísimo (3,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2038
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Mediano/mediano (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2098
 msgid "Standard (4:3)"
@@ -3881,13 +3878,12 @@ msgid "Watermark"
 msgstr "Marca de agua"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
-#, fuzzy
 msgid "Insert comment"
 msgstr "Insertar comentario"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr ""
+msgstr "Lista de comentarios"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3912,19 +3908,19 @@ msgstr "Recientes"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Top: {top}"
-msgstr ""
+msgstr "Superior: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Left: {left}"
-msgstr ""
+msgstr "Izquierdo: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:112
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Inferior: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:117
 msgid "Right: {right}"
-msgstr ""
+msgstr "Derecho: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Custom Margins…"
@@ -3945,7 +3941,7 @@ msgstr "Modo edición"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Número de páginas. Pulse para abrir el cuadro de diálogo Ir a página."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
