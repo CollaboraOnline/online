@@ -203,6 +203,15 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	grid-gap: 4px;
 }
 
+.jsdialog.ui-grid {
+	align-items: center;
+}
+
+#grid2-cell-0-2 {
+	grid-column: 3;
+	grid-row: 1 / span 2;
+}
+
 /* Special Characters dialog */
 #SpecialCharactersDialog #viewgrid,
 #SpecialCharactersDialog #favgrid {
