@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
 "PO-Revision-Date: 2025-09-04 15:01+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -506,7 +506,6 @@ msgid "Set default interface preferences."
 msgstr "Defina las preferencias predeterminadas de la interfaz."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:625
-#, fuzzy
 msgid "Select a tab to browser settings."
 msgstr "Seleccione una pestaña para ver configuraciones."
 
@@ -3825,45 +3824,43 @@ msgstr "Texto centrado"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2119
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Título, 2 Contenido y Contenido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2120
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Título, Contenido y 2 Contenido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2121
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Título, 2 Contenido sobre Contenido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2122
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Título, Contenido sobre Contenido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2123
-#, fuzzy
 msgid "Title, 4 Content"
-msgstr "Título, contenido"
+msgstr "Título, 4 Contenido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2124
-#, fuzzy
 msgid "Title, 6 Content"
-msgstr "Título, contenido"
+msgstr "Título, 6 Contenido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2125
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Título Vertical, Texto, Gráfico"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2126
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Título Vertical, Texto Vertical"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2127
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Título, Texto Vertical"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2128
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Título, Texto Vertical, Imágenes Prediseñadas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2253
 msgid "Grayscale"
