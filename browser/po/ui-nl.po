@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
 "PO-Revision-Date: 2025-09-06 05:02+0000\n"
-"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
+"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
 "Language: nl\n"
@@ -767,7 +767,7 @@ msgstr "Draadje oplossen"
 
 #: src/canvas/sections/CommentListSection.ts:1210
 msgid "Promote to top comment"
-msgstr "Promoveer naar topopmerking"
+msgstr "Promoveren tot belangrijkste opmerking"
 
 #: src/canvas/sections/CommentListSection.ts:1216
 msgid "Show on the side"
@@ -2834,7 +2834,7 @@ msgstr "Spatiëring & kleur"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
-msgstr "Dia-ontwerpsjablonen"
+msgstr "Sjablonen voor dia-ontwerpen"
 
 #: src/control/Control.NotebookbarImpress.js:1777
 msgid "Slide Size"
@@ -3883,11 +3883,11 @@ msgstr "Watermerk"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
 msgid "Insert comment"
-msgstr "Notitie invoegen"
+msgstr "Opmerking invoegen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr "Notitie overzicht"
+msgstr "Lijst met opmetingen"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
