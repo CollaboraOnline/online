@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-09-02 11:34+0000\n"
+"PO-Revision-Date: 2025-09-04 15:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13.1-dev\n"
+"X-Generator: Weblate 5.13.1-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -416,7 +416,6 @@ msgid "Slide Transition"
 msgstr "Transició entre diapositives"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:128
-#, fuzzy
 msgid "Style List"
 msgstr "Llista d'estils"
 
@@ -460,9 +459,8 @@ msgid "Upload Wordbook"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:263
-#, fuzzy
 msgid "Document settings"
-msgstr "Paràmetres dels documents"
+msgstr "Paràmetres del document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:264
 #: admin/src/integrator/Xcu.ts:297
@@ -595,7 +593,7 @@ msgstr "Desa els paràmetres de la visualització"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr ""
+msgstr "Introduïu la clau de l'API del Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -1300,7 +1298,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Aràbia Saudita"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Sweden"
@@ -2298,9 +2296,8 @@ msgid "Page Layout"
 msgstr "Compaginació"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Fórmula"
+msgstr "Fórmules"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2466,7 +2463,7 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Cel·les"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:2248
@@ -2580,7 +2577,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1379
 msgid "Freeze"
-msgstr ""
+msgstr "Congela"
 
 #: src/control/Control.NotebookbarCalc.js:1433
 #: src/control/Control.NotebookbarDraw.js:403
@@ -2627,7 +2624,7 @@ msgstr "Desagrupa"
 
 #: src/control/Control.NotebookbarCalc.js:1604
 msgid "Pivot Table"
-msgstr ""
+msgstr "Taula dinàmica"
 
 #: src/control/Control.NotebookbarCalc.js:1653
 #: src/control/Control.NotebookbarDraw.js:996
@@ -2657,16 +2654,15 @@ msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1939
 msgid "Insert Function"
-msgstr ""
+msgstr "Insereix una funció"
 
 #: src/control/Control.NotebookbarCalc.js:1947
-#, fuzzy
 msgid "Function Library"
-msgstr "Auxiliar de funcions"
+msgstr "Biblioteca de funcions"
 
 #: src/control/Control.NotebookbarCalc.js:1961
 msgid "AutoSum"
-msgstr ""
+msgstr "Suma automàtica"
 
 #: src/control/Control.NotebookbarCalc.js:1974
 msgid "Financial"
@@ -2678,19 +2674,19 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2022
 msgid "Date & Time"
-msgstr ""
+msgstr "Data i hora"
 
 #: src/control/Control.NotebookbarCalc.js:2034
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Cerca i referència"
 
 #: src/control/Control.NotebookbarCalc.js:2052
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matemàtica i trigonometria"
 
 #: src/control/Control.NotebookbarCalc.js:2064
 msgid "More Functions"
-msgstr ""
+msgstr "Més funcions"
 
 #: src/control/Control.NotebookbarCalc.js:2109
 msgid "Range"
@@ -2707,13 +2703,12 @@ msgstr "Filtra"
 #: src/control/Control.NotebookbarCalc.js:2485
 #: src/control/Control.NotebookbarImpress.js:1897
 #: src/control/Control.NotebookbarWriter.js:2525
-#, fuzzy
 msgid "Comments"
-msgstr "Comentari"
+msgstr "Comentaris"
 
 #: src/control/Control.NotebookbarCalc.js:2590
 msgid "Format Cells"
-msgstr ""
+msgstr "Format de cel·les"
 
 #: src/control/Control.NotebookbarCalc.js:2736
 #: src/control/Control.NotebookbarCalc.js:3093
@@ -2727,7 +2722,7 @@ msgstr "Ajusta"
 #: src/control/Control.NotebookbarImpress.js:2616
 #: src/control/Control.NotebookbarWriter.js:3413
 msgid "Image Controls"
-msgstr ""
+msgstr "Controls de la imatge"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2770,9 +2765,8 @@ msgstr "Pàgina"
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1596
 #: src/control/Control.NotebookbarWriter.js:2392
-#, fuzzy
 msgid "Field"
-msgstr "Camps"
+msgstr "Camp"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
@@ -2780,7 +2774,7 @@ msgstr "Disseny"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Slide Show"
-msgstr ""
+msgstr "Presentació de diapositives"
 
 #: src/control/Control.NotebookbarImpress.js:142
 msgid "Master"
@@ -2832,7 +2826,7 @@ msgstr "Caràcter"
 
 #: src/control/Control.NotebookbarImpress.js:1067
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Espaiat i color"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
@@ -2844,7 +2838,7 @@ msgstr "Mida de diapositiva"
 
 #: src/control/Control.NotebookbarImpress.js:1800
 msgid "Background Image"
-msgstr ""
+msgstr "Imatge de fons"
 
 #: src/control/Control.NotebookbarImpress.js:2001
 msgid "Merge & Split"
@@ -2913,7 +2907,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:2227
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Nota al peu/final"
 
 #: src/control/Control.NotebookbarWriter.js:2600
 msgid "Tracking"
@@ -2925,12 +2919,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:3042
 msgid "Number Format"
-msgstr ""
+msgstr "Format numèric"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "previsualització de la pàgina "
+msgstr "previsualització de la pàgina %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
@@ -3501,11 +3494,11 @@ msgstr "S'està canviant el nom..."
 
 #: src/control/VRuler.ts:359
 msgid "Top Margin"
-msgstr ""
+msgstr "Marge superior"
 
 #: src/control/VRuler.ts:360
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Marge inferior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:112
 #: src/control/jsdialog/Definitions.Menu.ts:1728
@@ -3562,15 +3555,15 @@ msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1507
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1508
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Letter"
@@ -3582,7 +3575,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Long Bond"
-msgstr ""
+msgstr "Foli"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
@@ -3590,15 +3583,15 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "16 Kai"
@@ -3755,47 +3748,47 @@ msgstr "Estil de línia:"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1948
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Finíssim (0,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1957
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Molt fi (0,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1966
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Fi (0,75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1975
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Mitjà (1,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1984
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Gruixut (2,25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Molt gruixut (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2002
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Finíssim doble (1,10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2011
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Finíssim doble (2,35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2020
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Fi/mitjà (3,00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2029
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Mitjà/finíssim (3,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2038
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Mitjà/mitjà (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2098
 msgid "Standard (4:3)"
@@ -3807,11 +3800,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:2113
 msgid "Blank Slide"
-msgstr ""
+msgstr "Diapositiva buida"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2114
 msgid "Title Slide"
-msgstr ""
+msgstr "Diapositiva de títol"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2115
 msgid "Title, Content"
@@ -3823,7 +3816,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:2117
 msgid "Title Only"
-msgstr ""
+msgstr "Només el títol"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2118
 msgid "Centered Text"
@@ -3882,13 +3875,12 @@ msgid "Watermark"
 msgstr "Marca d'aigua"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
-#, fuzzy
 msgid "Insert comment"
 msgstr "Insereix un comentari"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr ""
+msgstr "Llista de comentaris"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4749,7 +4741,7 @@ msgstr "Feu clic per a sortir de la presentació..."
 
 #: src/slideshow/SlideShowPresenter.ts:561
 msgid "End Show"
-msgstr ""
+msgstr "Finalitza la presentació"
 
 #: src/slideshow/SlideShowPresenter.ts:589
 #: src/slideshow/SlideShowPresenter.ts:600
