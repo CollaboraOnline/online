@@ -50,6 +50,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testMultiPartDataParser);
     CPPUNIT_TEST(testInsertFile);
     CPPUNIT_TEST(testGetFavicon);
+    CPPUNIT_TEST(testPostWopi);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -68,6 +69,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testMultiPartDataParser();
     void testInsertFile();
     void testGetFavicon();
+    void testPostWopi();
 };
 
 void HttpWhiteBoxTests::testStatusLineParserValidComplete()
@@ -467,6 +469,7 @@ static inline void comparePostContent(const std::string_view testname, const std
     LOK_ASSERT_EQUAL_STR(request.getURI(), req.getUrl());
     LOK_ASSERT_EQUAL_STR(request.getVersion(), req.getVersion());
     LOK_ASSERT_EQUAL_STR(request.getHost(), req.get("Host"));
+    LOK_ASSERT_EQUAL(request.getKeepAlive(), req.isKeepAlive());
 
     std::size_t headerCount = 0;
     for (const auto& header : request)
@@ -492,7 +495,8 @@ static inline void comparePostContent(const std::string_view testname, const std
         // LOK_ASSERT_EQUAL_STR(field.second, req.get(field.first));
     }
 
-    LOK_ASSERT(fieldCount > 0);
+    if (!form.empty())
+        LOK_ASSERT(fieldCount > 0);
     // LOK_ASSERT_EQUAL(fieldCount, req.header().size());
 
     // LOK_ASSERT_EQUAL_STR(form.(), req.boundary());
@@ -777,6 +781,61 @@ void HttpWhiteBoxTests::testGetFavicon()
     LOK_ASSERT_EQUAL_STR("Sat, 06 Sep 2025 12:37:58", req.get("Date"));
     LOK_ASSERT_EQUAL_STR("COOLWSD HTTP Agent 25.04.5.1", req.get("User-Agent"));
     LOK_ASSERT_EQUAL_STR("/favicon.ico", req.getUrl());
+    LOK_ASSERT_EQUAL(http::RequestParser::Stage::Finished, req.stage());
+    LOK_ASSERT_EQUAL(true, req.isKeepAlive()); // Because HTTP/1.1 is keep-alive by default.
+
+    comparePostContent(testname, data);
+}
+
+void HttpWhiteBoxTests::testPostWopi()
+{
+    constexpr std::string_view testname = __func__;
+
+    const std::string header = "POST "
+                               "/wopi/files/UnitWOPIExpiredToken/"
+                               "contents?access_token=anything&testname=UnitWOPIExpiredToken "
+                               "HTTP/1.1\r\n"
+                               "User-Agent: COOLWSD HTTP Agent 25.04.5.1\r\n"
+                               "Authorization: Bearer anything\r\n"
+                               "X-COOL-WOPI-ServerId: c5f25dc8\r\n"
+                               "X-WOPI-Override: PUT\r\n"
+                               "X-COOL-WOPI-IsModifiedByUser: true\r\n"
+                               "X-COOL-WOPI-IsAutosave: false\r\n"
+                               "X-COOL-WOPI-IsExitSave: true\r\n"
+                               "Connection: close\r\n"
+                               "X-COOL-WOPI-Timestamp: 2025-09-06T22:17:49.868004Z\r\n"
+                               "Content-Type: application/octet-stream\r\n"
+                               "Content-Length: 17\r\n"
+                               "Host: 127.0.0.1:9981\r\n"
+                               "Date: Sat, 06 Sep 2025 22:19:03\r\n"
+                               "\r\n";
+    const std::string body = "\357\273\277aHello, world\n";
+
+    const std::string data = header + body;
+
+    http::RequestParser req;
+    LOK_ASSERT(req.readData(header.data(), header.size()) > 0);
+    LOK_ASSERT_EQUAL_STR(std::string(), req.getBody());
+    LOK_ASSERT_EQUAL_STR(http::RequestParser::name(http::RequestParser::Stage::Body),
+                         http::RequestParser::name(req.stage()));
+    LOK_ASSERT_EQUAL_STR("127.0.0.1:9981", req.getHost());
+    LOK_ASSERT_EQUAL_STR("Sat, 06 Sep 2025 22:19:03", req.get("Date"));
+    LOK_ASSERT_EQUAL_STR("COOLWSD HTTP Agent 25.04.5.1", req.get("User-Agent"));
+    LOK_ASSERT_EQUAL_STR("/wopi/files/UnitWOPIExpiredToken/"
+                         "contents?access_token=anything&testname=UnitWOPIExpiredToken",
+                         req.getUrl());
+
+    LOK_ASSERT_EQUAL_STR("Bearer anything", req.get("Authorization"));
+    LOK_ASSERT_EQUAL_STR("c5f25dc8", req.get("X-COOL-WOPI-ServerId"));
+    LOK_ASSERT_EQUAL_STR("PUT", req.get("X-WOPI-Override"));
+    LOK_ASSERT_EQUAL_STR("true", req.get("X-COOL-WOPI-IsModifiedByUser"));
+    LOK_ASSERT_EQUAL_STR("false", req.get("X-COOL-WOPI-IsAutosave"));
+    LOK_ASSERT_EQUAL_STR("true", req.get("X-COOL-WOPI-IsExitSave"));
+    LOK_ASSERT_EQUAL_STR("close", req.get("Connection"));
+    LOK_ASSERT_EQUAL_STR("2025-09-06T22:17:49.868004Z", req.get("X-COOL-WOPI-Timestamp"));
+    LOK_ASSERT_EQUAL_STR("application/octet-stream", req.get("Content-Type"));
+    LOK_ASSERT_EQUAL_STR("17", req.get("Content-Length"));
+    LOK_ASSERT_EQUAL(false, req.isKeepAlive());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpWhiteBoxTests);
