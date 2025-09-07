@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
 "PO-Revision-Date: 2025-09-06 05:02+0000\n"
-"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
+"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
 "Language: nl\n"
@@ -588,7 +588,7 @@ msgstr "Weergave-instellingen opslaan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr "Zotero API-sleutel invoeren"
+msgstr "Voer de Zotero API-sleutel in"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -2212,7 +2212,7 @@ msgstr "Zoeken…"
 
 #: src/control/Control.QuickFindPanel.ts:74
 msgid "Type in the search box to find anything in your document"
-msgstr "Typ in het zoekveld om iets in het document te vinden"
+msgstr "Typ in het zoekvak om iets in uw document te vinden"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -3883,11 +3883,11 @@ msgstr "Watermerk"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
 msgid "Insert comment"
-msgstr "Opmerking invoegen"
+msgstr "Notitie invoegen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr "Lijst met opmerkingen"
+msgstr "Notitie overzicht"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
