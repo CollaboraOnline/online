@@ -17,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('#fillattr3').should('be.visible');
 		cy.cGet('#fillattr2').click();
 		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
-		cy.cGet('#colorwindow_iv_colors.ui-iconview').should('be.visible');
+		cy.cGet('#colorwindow_iv_colors .ui-iconview').should('be.visible');
 	});
 
 	it.skip('Set underline using popup', function() {
