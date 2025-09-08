@@ -764,3 +764,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	width: var(--btn-img-size);
 	height: var(--btn-img-size);
 }
+
+#masterpageall_icons .notebookbar.ui-iconview-entry {
+	height: 2.75rem;
+}
+
+#masterpageall_icons .notebookbar.ui-iconview-entry img {
+	height: 100%;
+	width: 100%;
+}
