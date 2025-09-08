@@ -485,7 +485,9 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 
 .one-child-popup .ui-iconview {
-	height: 400px !important;
+	height: auto !important;
+	max-height: 400px !important;
+	min-height: 64px !important;
 	width: 36.8vw !important;
 }
 
@@ -496,6 +498,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 #stylesview {
 	min-width: 36.8vw !important;
 	justify-content: center;
+}
+
+.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
+	margin-bottom: 24px;
 }
 
 #stylesview-dropdown {
@@ -513,7 +519,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	border-bottom-right-radius: var(--border-radius);
 	height: 64px;
 	margin-inline-start: -5px;
-	box-sizing: border-box;
+	padding-right: 2px;
 }
 
 #stylesview-button.vertical {
