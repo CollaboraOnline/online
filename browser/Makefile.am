@@ -250,6 +250,7 @@ COOL_JS_LST =\
 	src/app/DocUtil.ts \
 	src/app/LocaleService.ts \
 	src/app/LayoutingService.ts \
+	src/app/ServerConnectionService.ts \
 	src/docstate.js \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \

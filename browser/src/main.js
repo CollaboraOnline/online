@@ -13,7 +13,7 @@
 /* global globalThis */
 /* global errorMessages accessToken accessTokenTTL noAuthHeader accessHeader createOnlineModule */
 /* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
-/* global createEmscriptenModule */
+/* global ServerConnectionService createEmscriptenModule */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function (global) {
@@ -40,6 +40,7 @@ else
 
 app.localeService = new LocaleService();
 app.setPermission(global.coolParams.get('permission') || 'edit');
+app.serverConnectionService = new ServerConnectionService();
 app.layoutingService = new LayoutingService();
 
 var timestamp = global.coolParams.get('timestamp');
