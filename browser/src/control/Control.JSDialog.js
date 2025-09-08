@@ -1027,7 +1027,20 @@ L.Control.JSDialog = L.Control.extend({
 		this.setNewPosition(target, newX, newY);
 	},
 
-	setNewPosition(target, newX, newY) {
+	setNewPosition(target, newX, newY, reset = false) {
+		if (target.id.endsWith('-dropdown') && !reset) {
+			// Reset the width after popup items are created.
+			app.layoutingService.appendLayoutingTask(() => {
+				const clientRectangle = target.getBoundingClientRect();
+				const containerClientRectangle = document.getElementById('toolbar-wrapper').getBoundingClientRect();
+
+				if (clientRectangle.width + newX > containerClientRectangle.right)
+					newX = containerClientRectangle.right - clientRectangle.width;
+
+				this.setNewPosition(target, newX, newY, true);
+			});
+		}
+
 		target.style.marginInlineStart = newX + 'px';
 		target.style.marginTop = newY + 'px';
 	},
