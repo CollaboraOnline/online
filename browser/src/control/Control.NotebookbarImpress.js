@@ -473,6 +473,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'command': 'presenterconsole',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				}: {},
+			!window.ThisIsAMobileApp ?
+				{
+					'id': 'slide-presentation-follow-me',
+					'type': 'bigcustomtoolitem',
+					'text': _('Follow me Presentation'),
+					'command': 'followmepresentation',
+					'accessibility': { focusBack: true, combination: 'PW', de: null }
+				} : {},
 			{ type: 'separator', id: 'slide-zoomin-break', orientation: 'vertical' },
 			{
 				'id': 'showslide',

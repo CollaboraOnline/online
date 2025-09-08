@@ -79,6 +79,8 @@ class SlideShowNavigator {
 	}
 
 	dispatchEffect() {
+		if (this.presenter.isLeader())
+			app.socket.sendMessage('slideshowfollow dispatcheffect');
 		const currentTime = Date.now();
 		const timeDiff = currentTime - this.lastClickTime;
 		NAVDBG.print(
@@ -125,6 +127,8 @@ class SlideShowNavigator {
 	}
 
 	rewindEffect() {
+		if (this.presenter.isLeader())
+			app.socket.sendMessage('slideshowfollow rewindeffect');
 		NAVDBG.print(
 			'SlideShowNavigator.rewindEffect: current index: ' + this.currentSlide,
 		);
