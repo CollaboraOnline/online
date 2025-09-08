@@ -190,6 +190,10 @@ L.Control.Notebookbar = L.Control.extend({
 			else
 				this.container.classList.remove('initialized');
 		}
+
+		if (initialized) {
+			app.serverConnectionService.onNotebookbarInCoreInit();
+		}
 	},
 
 	showTabs: function() {
