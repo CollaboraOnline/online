@@ -13,7 +13,7 @@
  * L.Control.Zotero - bibliography dialogs implementation
  */
 
-/* global _ Promise app Set */
+/* global _ Promise app Set TileManager */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
 	citations: {},
@@ -144,8 +144,13 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	refreshUI: function () {
-		app.console.debug('Zotero: refreshUI');
-		this.map.uiManager.refreshUI();
+		app.console.debug('Zotero: refreshUI request');
+		TileManager.appendAfterFirstTileTask(() => {
+			app.console.debug('Zotero: refreshUI now');
+			// this reloads the notebookbar and because of that has to be done before
+			// notebookbar core initialization to receive all initial updates
+			this.map.uiManager.refreshUI();
+		});
 	},
 
 	updateUserID: function () {
