@@ -2314,8 +2314,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'id': 'review-track-changes:RecordTrackedChangesMenu',
 						'type': 'menubutton',
 						'text': _UNO('.uno:TrackChanges', 'text'),
-						'applyCallback':function () {
-							app.map.sendUnoCommand('.uno:TrackChangesInAllViews') // this will make this as split button
+						'applyCallback':function () { // this will make this as split button
+							const TrackChangesCurrentState = app.map['stateChangeHandler'].getItemValue('.uno:TrackChanges');
+							if (TrackChangesCurrentState  === 'true' || TrackChangesCurrentState === true)
+								app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false')
+							else
+								app.map.sendUnoCommand('.uno:TrackChangesInAllViews')
 						},
 						'command': '.uno:TrackChanges',
 						'accessibility': { focusBack: true, combination: 'TC', de: null }
