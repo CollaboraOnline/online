@@ -6,6 +6,8 @@
 
 #include <config.h>
 
+#define ONE_PROCESS_PER_DOCUMENT
+
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -62,6 +64,7 @@ static int appShowMode;
 
 const char* user_name = nullptr;
 int coolwsd_server_socket_fd = -1;
+static std::string app_exe_path;
 std::string app_installation_path;
 std::string app_installation_uri;
 
@@ -707,9 +710,20 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s == L"uno .uno:Open")
         {
+#ifdef ONE_PROCESS_PER_DOCUMENT
+            STARTUPINFOW startupInfo{ sizeof(STARTUPINFOW) };
+            PROCESS_INFORMATION processInformation;
+
+            if (!CreateProcessW(
+                                Util::string_to_wide_string(app_exe_path).c_str(),
+                                Util::string_to_wide_string("CODA").data(), NULL, NULL,
+                                TRUE, 0, NULL, NULL, &startupInfo, &processInformation))
+                LOG_ERR("CreateProcess failed: " << GetLastError());
+#else
             auto filenameAndUri = fileOpenDialog();
             if (filenameAndUri.filename != "")
                 openCOOLWindow(filenameAndUri);
+#endif
         }
         else
         {
@@ -775,7 +789,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     wchar_t fileName[1000];
     GetModuleFileNameW(NULL, fileName, sizeof(fileName) / sizeof(fileName[0]));
-    app_installation_path = Util::wide_string_to_string(std::wstring(fileName));
+    app_installation_path = app_exe_path = Util::wide_string_to_string(std::wstring(fileName));
     app_installation_path.resize(app_installation_path.find_last_of(L'\\') + 1);
     app_installation_uri = Poco::URI(Poco::Path(app_installation_path)).toString();
 
