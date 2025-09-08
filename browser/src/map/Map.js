@@ -303,6 +303,7 @@ L.Map = L.Evented.extend({
 				this.initializeModificationIndicator();
 
 			if (this._docLayer && !this._docLoadedOnce) {
+				app.console.debug('UIManager: late components init request');
 				// Let the first page finish loading then request core ui components
 				TileManager.appendAfterFirstTileTask(
 					this.uiManager.initializeLateComponents.bind(this.uiManager));
