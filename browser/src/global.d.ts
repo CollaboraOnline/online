@@ -157,6 +157,7 @@ interface Window {
 		get(key: string, defaultValue?: any): any;
 		set(key: string, value: any): void;
 		setMultiple(prefs: Record<string, string>): void;
+		sendPendingBrowserSettingsUpdate(): void;
 	};
 
 	allowUpdateNotification: boolean;
