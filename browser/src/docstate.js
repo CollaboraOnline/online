@@ -47,7 +47,8 @@ window.app = {
 	Log: null, // Attach Logger instance.
 	DebugManager: null, // Attach DebugManager class.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
-	layoutingService: null, // instance of a service processing squashed DOM updates
+	layoutingService: null, // Instance of a service processing squashed DOM updates.
+	serverConnectionService: null, // Service which coordinates operations on the integration events.
 	twipsToPixels: 0, // Twips to pixels multiplier, according to the current zoom level.
 	pixelsToTwips: 0, // Pixels to twips multiplier, according to the current zoom level.
 	accessibilityState: false, // If accessibility was enabled by user
