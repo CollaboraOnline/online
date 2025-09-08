@@ -389,8 +389,10 @@ class UIManager extends window.L.Control {
 
 		window.setupToolbar(this.map);
 
-		this.documentNameInput = window.L.control.documentNameInput();
-		this.map.addControl(this.documentNameInput);
+		if (!((window as any).ThisIsTheWindowsApp)) {
+			this.documentNameInput = window.L.control.documentNameInput();
+			this.map.addControl(this.documentNameInput);
+		}
 		this.map.addControl(window.L.control.alertDialog());
 		if (window.mode.isMobile()) {
 			this.mobileWizard = window.L.control.mobileWizard();
