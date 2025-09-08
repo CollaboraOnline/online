@@ -532,6 +532,11 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             };
             break;
 
+        case WM_SETFOCUS:
+            if (windowData.count(hWnd) && windowData[hWnd].webViewController)
+                windowData[hWnd].webViewController->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
+            break;
+
         case WM_CLOSE:
             // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
             do_bye_handling_things(windowData[hWnd]);
@@ -656,6 +661,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
                                                                     "&dir=ltr");
 
                             webView->Navigate(Util::string_to_wide_string(coolURL).c_str());
+                            controller->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
 
                             return S_OK;
                         })
