@@ -714,10 +714,9 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             STARTUPINFOW startupInfo{ sizeof(STARTUPINFOW) };
             PROCESS_INFORMATION processInformation;
 
-            if (!CreateProcessW(
-                                Util::string_to_wide_string(app_exe_path).c_str(),
-                                Util::string_to_wide_string("CODA").data(), NULL, NULL,
-                                TRUE, 0, NULL, NULL, &startupInfo, &processInformation))
+            if (!CreateProcessW(Util::string_to_wide_string(app_exe_path).c_str(),
+                                Util::string_to_wide_string("CODA").data(), NULL, NULL, TRUE, 0,
+                                NULL, NULL, &startupInfo, &processInformation))
                 LOG_ERR("CreateProcess failed: " << GetLastError());
 #else
             auto filenameAndUri = fileOpenDialog();
@@ -729,10 +728,12 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
         }
-    } else if (s.starts_with(L"ERR "))
+    }
+    else if (s.starts_with(L"ERR "))
     {
         LOG_ERR("From JS: " + Util::wide_string_to_string(s));
-    } else if (s.starts_with(L"DBG "))
+    }
+    else if (s.starts_with(L"DBG "))
     {
         LOG_DBG("From JS: " + Util::wide_string_to_string(s));
     }
