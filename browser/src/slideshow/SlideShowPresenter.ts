@@ -137,6 +137,7 @@ class SlideShowPresenter {
 	private _startingPresentation: boolean = false;
 	private _hammer: HammerManager;
 	private _wasInDarkMode: boolean = false;
+	private _isLeader: boolean = false;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -162,6 +163,20 @@ class SlideShowPresenter {
 			this._handlePresenterCanvasClick,
 			this,
 		);
+
+		// Follow me slide hooks
+		this._map.on('newfollowmepresentation', this._onStartInWindow, this);
+		this._map.on(
+			'dispatcheffect',
+			this._slideShowNavigator.dispatchEffect,
+			this._slideShowNavigator,
+		);
+		this._map.on(
+			'rewindeffect',
+			this._slideShowNavigator.rewindEffect,
+			this._slideShowNavigator,
+		);
+		this._map.on('endpresentation', this.endPresentation, this);
 	}
 
 	removeHooks() {
@@ -185,6 +200,20 @@ class SlideShowPresenter {
 			this._handlePresenterCanvasClick,
 			this,
 		);
+
+		// Follow me slide hooks
+		this._map.off('newfollowmepresentation', this._onStartInWindow, this);
+		this._map.off(
+			'dispatcheffect',
+			this._slideShowNavigator.dispatchEffect,
+			this._slideShowNavigator,
+		);
+		this._map.off(
+			'rewindeffect',
+			this._slideShowNavigator.rewindEffect,
+			this._slideShowNavigator,
+		);
+		this._map.off('endpresentation', this.endPresentation, this);
 	}
 
 	private _handlePresenterCanvasClick(event: any) {
@@ -633,6 +662,9 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
+		if (this.isLeader())
+			app.socket.sendMessage('slideshowfollow endpresentation');
+		this.setLeader(false);
 		this.checkDarkMode(false);
 
 		console.debug('SlideShowPresenter.endPresentation');
@@ -989,6 +1021,8 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
+		if (this._isLeader)
+			app.socket.sendMessage('slideshowfollow newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
@@ -1095,6 +1129,14 @@ class SlideShowPresenter {
 
 		this._presentationInfoChanged = true;
 		app.socket.sendMessage('getpresentationinfo');
+	}
+
+	isLeader(): boolean {
+		return this._isLeader;
+	}
+
+	setLeader(leader: boolean): void {
+		this._isLeader = leader;
 	}
 }
 
