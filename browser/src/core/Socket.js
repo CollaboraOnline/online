@@ -1407,7 +1407,8 @@ app.definitions.Socket = L.Class.extend({
 			window.prefs._initializeBrowserSetting(textMsg);
 		}
 		else if (textMsg.startsWith('viewsetting:')) {
-			this.handleViewSetting(textMsg);
+			const settingJSON = JSON.parse(textMsg.substring('viewsetting:'.length + 1));
+			app.serverConnectionService.onViewSetting(settingJSON);
 		}
 
 		if (textMsg.startsWith('downloadas:')) {
@@ -2056,21 +2057,6 @@ app.definitions.Socket = L.Class.extend({
 				window.app.console.warn('Cannot activate map');
 			}
 		}, timeout);
-	},
-
-	handleViewSetting: function(textMsg) {
-		let settingJSON = JSON.parse(textMsg.substring('viewsetting:'.length + 1));
-
-		if(window.zoteroEnabled && settingJSON.zoteroAPIKey && !this._map.zotero) {
-			this._map.zotero = L.control.zotero(this._map);
-			this._map.zotero.apiKey = settingJSON.zoteroAPIKey;
-			this._map.addControl(this._map.zotero);
-			this._map.zotero.updateUserID();
-		}
-
-		if (settingJSON.accessibilityState)
-			this._map.lockAccessibilityOn();
-
 	},
 
 	threadLocalLoggingLevelToggle: false
