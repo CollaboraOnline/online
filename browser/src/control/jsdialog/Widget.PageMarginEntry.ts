@@ -34,6 +34,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	const options: PageMarginOptions = data.options;
 	const container = document.createElement('div');
 	const map = builder.map;
+	const isCalc = map._docLayer.isCalc();
 	container.className = 'margins-popup-container';
 
 	const onMarginClick = (evt: MouseEvent) => {
@@ -140,7 +141,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	custom.id = 'customMarginsLink';
 	custom.textContent = _('Custom Margins…');
 	custom.addEventListener('click', (evt: MouseEvent) => {
-		map.sendUnoCommand('.uno:PageFormatDialog');
+		map.sendUnoCommand(isCalc ? '.uno:PageFormatDialog' : '.uno:PageDialog');
 		builder.callback('dialog', 'close', { id: data.id }, null);
 	});
 	container.appendChild(custom);
