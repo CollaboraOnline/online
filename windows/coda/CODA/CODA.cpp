@@ -537,6 +537,15 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 windowData[hWnd].webViewController->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
             break;
 
+        case WM_DPICHANGED:
+        {
+            const RECT* newRect = (RECT*)lParam;
+            SetWindowPos(hWnd, NULL, newRect->left, newRect->top,
+                         newRect->right - newRect->left, newRect->bottom - newRect->top,
+                         SWP_NOZORDER | SWP_NOACTIVATE);
+        }
+        break;
+
         case WM_CLOSE:
             // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
             do_bye_handling_things(windowData[hWnd]);
@@ -749,6 +758,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
     appInstance = hInstance;
     appShowMode = showWindowMode;
+
+    SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
     Log::initialize("CODA", COOLWSD_LOGLEVEL);
