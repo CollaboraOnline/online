@@ -78,6 +78,7 @@ interface SlideInfo {
 	index: number;
 	name: string;
 	notes: string;
+	ally?: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
