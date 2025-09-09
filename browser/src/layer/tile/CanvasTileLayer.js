@@ -1371,7 +1371,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			var content = JSON.parse(textMsg.substring('presentationinfo:'.length + 1));
 			this._map.fire('presentationinfo', content);
 		} else if (textMsg.startsWith('slideshowfollow')) {
-			this._map.fire(textMsg.substr('slideshowfollow '.length));
+			const eventInfo = textMsg.substr('slideshowfollow '.length);
+			const parameterStartIndex = eventInfo.indexOf('{');
+			if (parameterStartIndex === -1) {
+				this._map.fire(eventInfo);
+			} else {
+				const event = eventInfo.substring(0, parameterStartIndex).trim();
+				const parameter = JSON.parse(eventInfo.substring(parameterStartIndex));
+				this._map.fire(event, parameter);
+			}
 		}
 	},
 

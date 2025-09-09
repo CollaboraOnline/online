@@ -376,6 +376,15 @@ class SlideShowNavigator {
 			if (shape) {
 				this._onExecuteInteraction(shape.clickAction);
 			} else if (videoInfo) {
+				if (this.presenter.isLeader()) {
+					const parameters = {
+						currentSlide: this.currentSlide,
+						videoInfoId: videoInfo.id,
+					};
+					app.socket.sendMessage(
+						'slideshowfollow followvideo ' + JSON.stringify(parameters),
+					);
+				}
 				const video = this.presenter.getVideoRenderer(
 					slideInfo.hash,
 					videoInfo,
@@ -387,6 +396,15 @@ class SlideShowNavigator {
 		} else if (aEvent.button === 2) {
 			this.switchSlide(-1, false);
 		}
+	}
+
+	followVideo(info: any) {
+		const slideInfo = this.theMetaPres.getSlideInfoByIndex(info.currentSlide);
+		const videoInfo = slideInfo.videos.find(
+			(videoInfo) => info.videoInfoId === videoInfo.id,
+		);
+		const video = this.presenter.getVideoRenderer(slideInfo.hash, videoInfo);
+		video.handleClick();
 	}
 
 	onMouseMove(aEvent: MouseEvent) {
