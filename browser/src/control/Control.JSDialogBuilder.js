@@ -1762,6 +1762,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var fixedtext = window.L.DomUtil.create('label', builder.options.cssClass, parentContainer);
 
+		// Default case: assume target has `-input` suffix
 		if (data.labelFor)
 			fixedtext.htmlFor = data.labelFor + '-input';
 
@@ -1772,6 +1773,22 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
+
+		const updateLabelForAttribute = function(label, labelledControl) {
+			if (labelledControl.hasAttribute('aria-labelledby'))
+				label.removeAttribute('for');
+			else
+				label.htmlFor = labelledControl.id;
+		};
+
+		const findAndCleanInputTarget = function() {
+			var targetElement = document.querySelector(`[id="${data.parent.id}"] [id="${data.labelFor}-input"]`);
+			// If target element has aria-labelledby, remove it to avoid conflict with label htmlFor
+			if (targetElement && targetElement.hasAttribute('aria-labelledby'))
+				targetElement.removeAttribute('aria-labelledby');
+
+			return targetElement;
+		};
 
 		app.layoutingService.appendLayoutingTask(function () {
 			var labelledControl = document.getElementById(data.labelFor);
@@ -1786,6 +1803,25 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				builder._setAccessKey(target, accKey);
 			}
+
+			var targetElement = findAndCleanInputTarget();
+			// Label is already pointing to correct element (default case)
+			if (targetElement)
+				return;
+
+			// Retry scheduling if element not found.
+			// i.e. For pop-ups: Double click on Chart->Sidebar->Colors
+			app.layoutingService.appendLayoutingTask(function () {
+				targetElement = findAndCleanInputTarget();
+				// Label is already pointing to correct element (default case)
+				if (targetElement)
+					return;
+
+				targetElement = document.querySelector(`[id="${data.parent.id}"] [id="${data.labelFor}"]`)
+				// Reference label to target element correctly
+				if (targetElement)
+					updateLabelForAttribute(fixedtext, targetElement);
+			});
 		});
 
 		fixedtext.id = data.id;
