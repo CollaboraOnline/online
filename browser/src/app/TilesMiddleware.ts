@@ -478,7 +478,11 @@ class TileManager {
 			// Check if all current tiles are accounted for and resume drawing if so.
 			let shouldUnpause = true;
 			for (const tile of this.tiles.values()) {
-				if (tile.distanceFromView === 0 && !tile.isReady()) {
+				if (
+					tile.distanceFromView === 0 &&
+					tile.lastPendingId &&
+					!tile.isReady()
+				) {
 					shouldUnpause = false;
 					break;
 				}
@@ -2015,6 +2019,9 @@ class TileManager {
 							'Unusual: Received unknown decompressed keyframe delta(s)',
 						);
 
+					const lastDecompressedId = tile.decompressedId;
+					tile.decompressedId = x.ids[1];
+
 					// if rehydrating from rawDeltas, don't update counts
 					if (x.wireMessage) {
 						if (x.isKeyframe) {
@@ -2044,8 +2051,8 @@ class TileManager {
 					}
 
 					if (!x.isKeyframe) {
-						if (tile.decompressedId !== 0) {
-							if (x.ids[0] !== tile.decompressedId + 1) {
+						if (lastDecompressedId !== 0) {
+							if (x.ids[0] !== lastDecompressedId + 1) {
 								window.app.console.warn(
 									'Unusual: Received discontiguous decompressed delta',
 								);
@@ -2089,8 +2096,6 @@ class TileManager {
 						bitmaps.push(x.bitmap);
 						pendingDeltas.push(x);
 					}
-
-					tile.decompressedId = x.ids[1];
 				}
 
 				if (bitmapPromises.length && bitmaps.length)
