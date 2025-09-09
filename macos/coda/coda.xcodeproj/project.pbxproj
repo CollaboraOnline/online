@@ -717,9 +717,13 @@
 					"$(SRCROOT)/../../kit",
 					"$(SRCROOT)/../../net",
 					"$(SRCROOT)/../../wsd",
+					"$(POCO_INCLUDES)",
 					"$(HOMEBREW_PATH)/include",
 				);
-				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
+				LIBRARY_SEARCH_PATHS = (
+					"$(POCO_LIBS)",
+					"$(HOMEBREW_PATH)/lib"
+				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -797,9 +801,13 @@
 					"$(SRCROOT)/../../kit",
 					"$(SRCROOT)/../../net",
 					"$(SRCROOT)/../../wsd",
+					"$(POCO_INCLUDES)",
 					"$(HOMEBREW_PATH)/include",
 				);
-				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
+				LIBRARY_SEARCH_PATHS = (
+					"$(POCO_LIBS)",
+					"$(HOMEBREW_PATH)/lib"
+				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
