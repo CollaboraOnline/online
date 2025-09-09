@@ -610,10 +610,17 @@ dnl check for a file at a path with an env-var with a given suffix
 AC_DEFUN([CHK_FILE_VAR], dnl $1:env-var, $2:filename-to-match, $3:cleartext-name, $4:suffix
 [
    if test -n "$[$1][$4]" -o "z[$4]" = "z"; then
-       if test -f "$[$1][$4]/[$2]"; then
-           AC_MSG_RESULT([$[$1]])
+       found_file=""
+       for f in $2; do
+           if test -f "$[$1][$4]/$f"; then
+               found_file="$f"
+               break
+           fi
+       done
+       if test -n "$found_file"; then
+           AC_MSG_RESULT([$found_file])
        else
-           AC_MSG_ERROR([This is not a [$3] [$4] directory no: $[$1][$4]/[$2]])
+           AC_MSG_ERROR([This is not a [$3] [$4] directory, none of ($2) found in $[$1][$4]])
        fi
    fi
 ]) dnl CHK_FILE_VAR
@@ -745,7 +752,9 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
    if test "$enable_windowsapp" = "yes" ; then
       LOBUILDDIR_WINDOWS=`cd "$LOBUILDDIR" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
    fi
+fi
 
+if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_macosapp" = "yes" \) -o \( "$enable_windowsapp" = "yes" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
    AC_MSG_CHECKING([for Poco include directory to build against])
    if test -z "$with_poco_includes"; then
       AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile or Windows app build tree.])
@@ -811,7 +820,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
       CHK_FILE_VAR(POCOLIB,PocoFoundationmd.lib,Poco lib)
       CHK_FILE_VAR(POCOLIB,PocoFoundationmdd.lib,Poco lib)
    else
-      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a libPocoFoundation.so libPocoFoundation.dylib,Poco lib)
       CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
       CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X64)
       CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_X64)
