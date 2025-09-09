@@ -59,7 +59,8 @@ class ServerConnectionService {
 		app.console.debug('ServerConnectionService: onFirstTileReceived');
 
 		// first reload notebookbar with zotero if needed
-		if (window.zoteroEnabled) {
+		const isWriter = app.map?._docLayer?.isWriter();
+		if (isWriter && window.zoteroEnabled) {
 			app.console.debug('ServerConnectionService: reload UI for zotero');
 			app.map.uiManager.refreshUI();
 		}
