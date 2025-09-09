@@ -1996,12 +1996,15 @@ button.menubutton.sidebar > span {
 	grid-template-columns: repeat(2, auto);
 }
 
+#mobile-wizard.popup.snackbar [id$='button'] {
+	padding: 8px;
+}
+
 #mobile-wizard.popup.snackbar [id$='button'],
 .snackbar.jsdialog-container [id$='button'] {
 	color: #469cff !important;
 	font-weight: 600;
 	font-size: var(--header-font-size) !important;
-	padding: 8px;
 	display: flex;
 	align-items: center;
 }
