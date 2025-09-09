@@ -87,6 +87,11 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	max-height: calc(100% - 30px);
 }
 
+.notebookbar .jsdialog-window.modalpopup:not(.snackbar),
+.hyperlink-pop-up-container {
+	max-width: 100%;
+}
+
 /* Overwrite .jsdialog-window.modalpopup width */
 #modal-dialog-about-dialog-box {
 	max-width: 94%;
