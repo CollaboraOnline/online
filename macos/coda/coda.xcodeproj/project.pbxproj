@@ -735,7 +735,7 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"-lzstd",
+					"$(HOMEBREW_PATH)/lib/libzstd.a",
 					"-lpng",
 				);
 				SDKROOT = macosx;
@@ -818,7 +818,7 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"-lzstd",
+					"$(HOMEBREW_PATH)/lib/libzstd.a",
 					"-lpng",
 				);
 				SDKROOT = macosx;
@@ -862,7 +862,7 @@
 					"-lPocoNet",
 					"-lPocoNetSSL",
 					"-lPocoCrypto",
-					"-lzstd",
+					"$(HOMEBREW_PATH)/lib/libzstd.a",
 					"-lpng",
 					"-lz",
 					"-lssl",
@@ -914,7 +914,7 @@
 					"-lPocoNet",
 					"-lPocoNetSSL",
 					"-lPocoCrypto",
-					"-lzstd",
+					"$(HOMEBREW_PATH)/lib/libzstd.a",
 					"-lpng",
 					"-lz",
 					"-lssl",
