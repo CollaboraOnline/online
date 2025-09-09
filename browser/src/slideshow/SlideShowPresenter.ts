@@ -176,6 +176,11 @@ class SlideShowPresenter {
 			this._slideShowNavigator.rewindEffect,
 			this._slideShowNavigator,
 		);
+		this._map.on(
+			'followvideo',
+			this._slideShowNavigator.followVideo,
+			this._slideShowNavigator,
+		);
 		this._map.on('endpresentation', this.endPresentation, this);
 	}
 
