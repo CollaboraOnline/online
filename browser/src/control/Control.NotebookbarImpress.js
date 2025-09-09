@@ -1771,6 +1771,34 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'design-themedialog-break', orientation: 'vertical' },
 			{
+				'type': 'overflowgroup',
+				'id': 'design-slide-layout',
+				'name':_('Slide Layout'),
+				'accessibility': { focusBack: true, combination: 'CS', de: null },
+				'more': {
+					'command':'.uno:PageSetup',
+					'accessibility': { focusBack: true, combination: 'ML', de: null }
+				},
+				'children': [
+					{
+						'id': 'home-change-layout:ChangeSlideLayoutMenu',
+						'type': 'menubutton',
+						'text': _('Change Layout'),
+						'icon': 'lc_changelayout.svg',
+						'command': '.uno:AssignLayout',
+						'accessibility': { focusBack: true, combination: 'CL', de: null }
+					},
+					{
+						'id': 'home-assign-layout',
+						'text': _('Reset Layout'),
+						'type': 'bigtoolitem',
+						'command': '.uno:AssignLayout',
+						'accessibility': { focusBack: true, combination: 'RS', de: null }
+					}
+				]
+			},
+			{ type: 'separator', id: 'design-slidelayout-break', orientation: 'vertical' },
+			{
 				'id': 'design-slide-size:SlideSizeMenu',
 				'class': 'unoSlideSize',
 				'type': 'menubutton',
