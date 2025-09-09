@@ -143,18 +143,12 @@ L.Control.Zotero = L.Control.extend({
 			this.map.uiManager.showSnackbar(_('Zotero API key is not configured'));
 	},
 
-	refreshUI: function () {
-		app.console.debug('Zotero: refreshUI');
-		this.map.uiManager.refreshUI();
-	},
-
+	// executed in ServerConnectionService
 	updateUserID: function () {
 		app.console.debug('Zotero: updateUserID');
 
-		if (this.apiKey === '') {
-			this.refreshUI();
+		if (this.apiKey === '')
 			return;
-		}
 
 		var that = this;
 		fetch('https://api.zotero.org/keys/' + this.apiKey)
@@ -163,8 +157,8 @@ L.Control.Zotero = L.Control.extend({
 				app.console.debug('Zotero: got user data');
 				that.userID = data.userID;
 				that.enable = !!that.userID;
-				that.refreshUI();
 				that.updateGroupIdList();
+				// we need to reload the UI now
 			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key is incorrect')); });
 	},
 

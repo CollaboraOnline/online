@@ -302,12 +302,6 @@ L.Map = L.Evented.extend({
 			if (!window.mode.isMobile())
 				this.initializeModificationIndicator();
 
-			if (this._docLayer && !this._docLoadedOnce) {
-				// Let the first page finish loading then request core ui components
-				TileManager.appendAfterFirstTileTask(
-					this.uiManager.initializeLateComponents.bind(this.uiManager));
-			}
-
 			// We have loaded.
 			if (!this._docLoadedOnce) {
 				this._docLoadedOnce = this._docLoaded;

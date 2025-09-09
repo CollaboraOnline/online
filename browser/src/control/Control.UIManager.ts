@@ -560,6 +560,7 @@ class UIManager extends L.Control {
 	 * block the document content rendering on a load.
 	 */
 	initializeLateComponents(): void {
+		app.console.debug('UIManager: late components init');
 		this.initializeNotebookbarInCore();
 		this.initializeSidebar();
 		this.initializeQuickFindInCore();

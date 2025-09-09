@@ -21,6 +21,12 @@ interface ViewSetting {
 }
 
 class ServerConnectionService {
+	public constructor() {
+		TileManager.appendAfterFirstTileTask(this.onFirstTileReceived.bind(this));
+	}
+
+	// below methods should be sorted in expected order of execution to help understand the init
+
 	public onViewSetting(viewSetting: ViewSetting) {
 		app.console.debug('ServerConnectionService: onViewSetting');
 
@@ -47,5 +53,23 @@ class ServerConnectionService {
 			app.console.debug('ServerConnectionService: initialize accessibility');
 			app.map.lockAccessibilityOn();
 		}
+	}
+
+	public onFirstTileReceived() {
+		app.console.debug('ServerConnectionService: onFirstTileReceived');
+
+		// first reload notebookbar with zotero if needed
+		const isWriter = app.map?._docLayer?.isWriter();
+		if (isWriter && window.zoteroEnabled) {
+			app.console.debug('ServerConnectionService: reload UI for zotero');
+			app.map.uiManager.refreshUI();
+		}
+
+		// initialize notebookbar in core
+		app.map.uiManager.initializeLateComponents();
+	}
+
+	public onNotebookbarInCoreInit() {
+		app.console.debug('ServerConnectionService: onNotebookbarInCoreInit');
 	}
 }
