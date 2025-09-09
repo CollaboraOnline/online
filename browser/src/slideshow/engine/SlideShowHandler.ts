@@ -815,7 +815,9 @@ class SlideShowHandler {
 		}
 
 		const slideinfo = this.getSlideInfo(nNewSlide);
-		this.addAllyString(slideinfo.name);
+		if (slideinfo.ally) {
+			this.addAllyString(slideinfo.ally);
+		}
 
 		this.notifySlideStart(nNewSlide, nOldSlide);
 
