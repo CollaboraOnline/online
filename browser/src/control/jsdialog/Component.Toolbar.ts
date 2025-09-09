@@ -103,7 +103,7 @@ class Toolbar {
 	}
 
 	isItemHidden(id: string): boolean {
-		const item = this.parentContainer.querySelector('[id="' + id + '"]');
+		const item = this.parentContainer?.querySelector('[id="' + id + '"]');
 		if (!item) return true;
 		return item.classList.contains('hidden');
 	}
