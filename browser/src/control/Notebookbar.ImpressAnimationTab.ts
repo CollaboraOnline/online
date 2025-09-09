@@ -49,9 +49,10 @@ class ImpressAnimationTab implements NotebookbarTab {
 						id: 'move_up',
 						type: 'pushbutton',
 						text: _('Move Up'),
+						image: 'images/lc_moveup.svg',
 						top: '0',
 						left: '0',
-					} as TextWidget,
+					},
 					{
 						id: 'add_effect',
 						type: 'pushbutton',
@@ -63,9 +64,10 @@ class ImpressAnimationTab implements NotebookbarTab {
 						id: 'move_down',
 						type: 'pushbutton',
 						text: _('Move Down'),
+						image: 'images/lc_movedown.svg',
 						top: '1',
 						left: '0',
-					} as TextWidget,
+					},
 					{
 						id: 'remove_effect',
 						type: 'pushbutton',

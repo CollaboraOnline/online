@@ -401,6 +401,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin: auto !important;
 	display: block;
 }
+
+.ui-pushbutton.notebookbar img {
+	height: 24px;
+}
+
 .has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
