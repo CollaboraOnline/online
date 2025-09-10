@@ -721,7 +721,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s.starts_with(L"downloadas "))
         {
-            fprintf(stderr, "Not yet implemented: Save As");
+            LOG_ERR("Not yet implemented: Save As");
         }
         else if (s == L"uno .uno:Open")
         {
