@@ -24,6 +24,13 @@ interface ToolbarButton {
 	text?: string; // Optional because it's added later
 }
 
+type UIMode = 'classic' | 'notebookbar';
+
+interface UIModeCommand {
+	force?: boolean;
+	mode: UIMode;
+}
+
 /**
  * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
  */
@@ -110,7 +117,7 @@ class UIManager extends L.Control {
 	/**
 	 * Returns the current UI mode ("notebookbar" or "classic").
 	 */
-	getCurrentMode(): string {
+	getCurrentMode(): UIMode {
 		// no notebookbar on mobile
 		if (window.mode.isMobile())
 			return 'classic';
@@ -776,7 +783,7 @@ class UIManager extends L.Control {
 	 * Handles UI mode changes.
 	 * @param uiMode - Object containing the new UI mode and additional flags.
 	 */
-	onChangeUIMode(uiMode: any): void {
+	onChangeUIMode(uiMode: UIModeCommand): void {
 		if (window.mode.isMobile())
 			return;
 
