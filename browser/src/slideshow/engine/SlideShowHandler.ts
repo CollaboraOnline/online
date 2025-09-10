@@ -814,11 +814,6 @@ class SlideShowHandler {
 			this.cleanLeavingSlideStatus(nOldSlide, bSkipSlideTransition);
 		}
 
-		const slideinfo = this.getSlideInfo(nNewSlide);
-		if (slideinfo.ally) {
-			this.addAllyString(slideinfo.ally);
-		}
-
 		this.notifySlideStart(nNewSlide, nOldSlide);
 
 		if (this.isEnabled() && this.isGlSupported() && !bSkipSlideTransition) {
@@ -859,6 +854,11 @@ class SlideShowHandler {
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
+
+		const slideinfo = this.getSlideInfo(nNewSlide);
+		if (slideinfo.ally) {
+			this.addAllyString(slideinfo.ally);
+		}
 	}
 
 	exitSlideShow() {
