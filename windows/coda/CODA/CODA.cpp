@@ -24,8 +24,10 @@
 #include <Poco/MemoryStream.h>
 
 #include <common/Clipboard.hpp>
+#include <common/Protocol.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
+#include <common/StringVector.hpp>
 #include <net/FakeSocket.hpp>
 #include <wsd/COOLWSD.hpp>
 
@@ -51,7 +53,7 @@ struct WindowData
     HWND hWnd;
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
-    std::string documentUri;
+    FilenameAndUri filenameAndUri;
     int appDocId;
     wil::com_ptr<ICoreWebView2Controller> webViewController;
     wil::com_ptr<ICoreWebView2> webView;
@@ -203,7 +205,7 @@ static void do_hullo_handling_things(WindowData& data)
     // a bug when the "coolclient" message sent by the JS is received and gets forwarded to the
     // "client" thread before we have written the URL to it.
 
-    std::string message(data.documentUri + " " + std::to_string(data.appDocId));
+    std::string message(data.filenameAndUri.uri + " " + std::to_string(data.appDocId));
     fakeSocketWrite(data.fakeClientFd, message.c_str(), message.size());
 }
 
@@ -519,6 +521,36 @@ static FilenameAndUri fileOpenDialog()
     return { path.getFileName(), Poco::URI(path).toString() };
 }
 
+static FilenameAndUri fileSaveDialog(const std::string& name)
+{
+    IFileSaveDialog* dialog;
+
+    if (!SUCCEEDED(CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_ALL, IID_IFileSaveDialog,
+                                    reinterpret_cast<void**>(&dialog))))
+        std::abort();
+
+    if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
+        std::abort();
+
+    if (!SUCCEEDED(dialog->Show(NULL)))
+        return {};
+
+    IShellItem* item;
+    if (!SUCCEEDED(dialog->GetResult(&item)))
+        std::abort();
+
+    PWSTR fileSysPath;
+    if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
+        std::abort();
+
+    auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
+    CoTaskMemFree(fileSysPath);
+    item->Release();
+    dialog->Release();
+
+    return { path.getFileName(), Poco::URI(path).toString() };
+}
+
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -602,7 +634,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
     data.hWnd = hWnd;
     data.fakeClientFd = fakeSocketSocket();
     data.appDocId = generate_new_app_doc_id();
-    data.documentUri = filenameAndUri.uri;
+    data.filenameAndUri = filenameAndUri;
 
     ShowWindow(hWnd, appShowMode);
     UpdateWindow(hWnd);
@@ -661,7 +693,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
 
                             const std::string coolURL = app_installation_uri +
                                                         std::string("cool/cool.html?file_path=") +
-                                                        data.documentUri +
+                                                        data.filenameAndUri.uri +
                                                         std::string("&permission=edit"
                                                                     "&lang=en-US"
                                                                     "&appdocid=") +
@@ -721,6 +753,24 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s.starts_with(L"downloadas "))
         {
+            // "downloadas name=document.rtf id=export format=rtf options="
+            auto const ns = Util::wide_string_to_string(s);
+            auto const tokens = StringVector::tokenize(ns);
+            std::string name;
+            if (!COOLProtocol::getTokenString(tokens, "name", name))
+            {
+                LOG_ERR("No name parameter in message '" << ns << "'" );
+                return;
+            }
+            auto dot = name.find_last_of('.');
+            if (dot == std::string::npos || dot == name.length() - 1)
+            {
+                LOG_ERR("No file name extension in '" << ns << "'");
+                return;
+            }
+            auto const extension = name.substr(dot + 1);
+            auto const basename = data.filenameAndUri.filename.substr(0, data.filenameAndUri.filename.find_last_of('.'));
+            auto filenameAndUri = fileSaveDialog(basename + "." + extension);
             LOG_ERR("Not yet implemented: Save As");
         }
         else if (s == L"uno .uno:Open")
@@ -762,7 +812,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
-    Log::initialize("CODA", COOLWSD_LOGLEVEL);
+    Log::initialize("CODA", "trace");
     Util::setThreadName("main");
 
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
