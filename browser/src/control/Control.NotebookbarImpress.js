@@ -373,7 +373,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': _('Download'),
+				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
 				'accessibility': { focusBack: true, combination: 'DA', de: null }
 			});
 		}
