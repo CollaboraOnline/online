@@ -54,6 +54,7 @@ online_SOURCES = \
 	../wsd/ClientSession.cpp \
 	../wsd/DocumentBroker.cpp \
 	../wsd/COOLWSD.cpp \
+	../wsd/dumpWsdState.cpp \
 	../wsd/ClientRequestDispatcher.cpp \
 	../wsd/RequestDetails.cpp \
 	../wsd/RequestVettingStation.cpp \
