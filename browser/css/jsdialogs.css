@@ -357,7 +357,7 @@ algned to the bottom */
 .ui-overflow-manager .horizontal.notebookbar {
 	align-items: end;
 }
-.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
+.notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
 	height: 49px !important;
 	margin-bottom: 14px;
