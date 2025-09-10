@@ -226,7 +226,12 @@ class SlideShowHandler {
 	addAllyString(allyString: string) {
 		if (this.presenter._enableAlly) {
 			const canvas = this.getContext()._canvas;
-			canvas.innerHTML = app.LOUtil.sanitize(allyString);
+			if (canvas) {
+				const allyContainer = L.DomUtil.create('div', '');
+				canvas.innerHTML = '';
+				allyContainer.innerHTML = app.LOUtil.sanitize(allyString);
+				canvas.appendChild(allyContainer);
+			}
 		}
 	}
 
