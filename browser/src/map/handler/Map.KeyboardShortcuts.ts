@@ -341,6 +341,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', preventDefault: false }), // Close current tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'n', preventDefault: false }), // Open new browser window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 't', preventDefault: false }), // Open new browser tab
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
 ));
 
 // German shortcuts.
@@ -363,7 +364,10 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F4', dispatchAction: 'togglerelative' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F9', unoAction: '.uno:Calculate' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F5', dispatchAction: 'focusonaddressinput' }),
-    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.ALT, key: '0', unoAction: '.uno:FormatCellDialog' })
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.ALT, key: '0', unoAction: '.uno:FormatCellDialog' }),
+
+    // Passthrough some system shortcuts
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
 ));
 
 (window as any).KeyboardShortcuts = keyboardShortcuts;
