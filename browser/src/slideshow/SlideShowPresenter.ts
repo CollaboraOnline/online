@@ -168,23 +168,11 @@ class SlideShowPresenter {
 		);
 
 		// Follow me slide hooks
-		this._map.on('newfollowmepresentation', this._onStartInWindow, this);
 		this._map.on(
-			'dispatcheffect',
-			this._slideShowNavigator.dispatchEffect,
-			this._slideShowNavigator,
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation',
+			this.handleFollowMeEvents,
+			this,
 		);
-		this._map.on(
-			'rewindeffect',
-			this._slideShowNavigator.rewindEffect,
-			this._slideShowNavigator,
-		);
-		this._map.on(
-			'followvideo',
-			this._slideShowNavigator.followVideo,
-			this._slideShowNavigator,
-		);
-		this._map.on('endpresentation', this.endPresentation, this);
 	}
 
 	removeHooks() {
@@ -210,18 +198,31 @@ class SlideShowPresenter {
 		);
 
 		// Follow me slide hooks
-		this._map.off('newfollowmepresentation', this._onStartInWindow, this);
 		this._map.off(
-			'dispatcheffect',
-			this._slideShowNavigator.dispatchEffect,
-			this._slideShowNavigator,
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation',
+			this.handleFollowMeEvents,
+			this,
 		);
-		this._map.off(
-			'rewindeffect',
-			this._slideShowNavigator.rewindEffect,
-			this._slideShowNavigator,
-		);
-		this._map.off('endpresentation', this.endPresentation, this);
+	}
+
+	handleFollowMeEvents(info: any) {
+		switch (info.type) {
+			case 'newfollowmepresentation':
+				this._onStartInWindow(0);
+				break;
+			case 'dispatcheffect':
+				this._slideShowNavigator.dispatchEffect();
+				break;
+			case 'rewindeffect':
+				this._slideShowNavigator.rewindEffect();
+				break;
+			case 'followvideo':
+				this._slideShowNavigator.followVideo(info);
+				break;
+			case 'endpresentation':
+				this.endPresentation(true);
+				break;
+		}
 	}
 
 	private _handlePresenterCanvasClick(event: any) {
