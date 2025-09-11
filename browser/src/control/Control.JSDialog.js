@@ -624,6 +624,9 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	calculateSubmenuAutoFilterPosition: function(instance, parentAutofilter) {
+		if (!parentAutofilter)
+			return;
+
 		var parentAutofilter = parentAutofilter.getBoundingClientRect();
 		instance.posx = parentAutofilter.right;
 		instance.posy = parentAutofilter.top;
