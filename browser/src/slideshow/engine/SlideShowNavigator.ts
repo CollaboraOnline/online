@@ -24,6 +24,7 @@ class SlideShowNavigator {
 	private isRewindingToPrevSlide: boolean;
 	private lastClickTime: number = 0;
 	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
+	private currentLeaderSlide: number = -1;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -218,7 +219,22 @@ class SlideShowNavigator {
 		this.isRewindingToPrevSlide = false;
 	}
 
+	setLeaderSlide(info: any) {
+		this.currentLeaderSlide = info.currentSlide;
+	}
+
+	followLeaderSlide() {
+		this.presenter.setFollowing(true);
+		this.displaySlide(this.currentLeaderSlide, true);
+	}
+
 	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
+		if (this.presenter.isLeader()) {
+			app.socket.sendMessage(
+				'slideshowfollow displayslide ' +
+					JSON.stringify({ currentSlide: nNewSlide }),
+			);
+		}
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -346,6 +362,7 @@ class SlideShowNavigator {
 	}
 
 	private clickHandler(aEvent: MouseEvent) {
+		if (this.presenter.isFollower()) this.presenter.setFollowing(false);
 		if (aEvent.button === 0) {
 			const slideInfo = this.theMetaPres.getSlideInfoByIndex(this.currentSlide);
 			const slideHasInteractions =
