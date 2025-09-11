@@ -741,7 +741,7 @@ static FilenameAndUri fileOpenDialog()
     return { path.getFileName(), Poco::URI(path).toString() };
 }
 
-static FilenameAndUri fileSaveDialog(const std::string& name)
+static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& extension)
 {
     IFileSaveDialog* dialog;
 
@@ -749,11 +749,35 @@ static FilenameAndUri fileSaveDialog(const std::string& name)
                                     IID_IFileSaveDialog, reinterpret_cast<void**>(&dialog))))
         std::abort();
 
+    FILEOPENDIALOGOPTIONS options;
+
+    if (!SUCCEEDED(dialog->GetOptions(&options)))
+        std::abort();
+
+    options |= FOS_STRICTFILETYPES;
+
+    if (!SUCCEEDED(dialog->SetOptions(options)))
+        std::abort();
+
+    if (!SUCCEEDED(dialog->SetDefaultExtension(Util::string_to_wide_string(extension).c_str())))
+        std::abort();
+
+    wchar_t* extensionCopy = _wcsdup(Util::string_to_wide_string("*." + extension).c_str());
+
+    COMDLG_FILTERSPEC filter[] = {
+        { L"Only allowed", extensionCopy }
+    };
+
+    if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
+        std::abort();
+
     if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
         std::abort();
 
     if (!SUCCEEDED(dialog->Show(NULL)))
         return {};
+
+    std::free(extensionCopy);
 
     IShellItem* item;
     if (!SUCCEEDED(dialog->GetResult(&item)))
@@ -991,8 +1015,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             auto const extension = name.substr(dot + 1);
             auto const basename = data.filenameAndUri.filename.substr(
                 0, data.filenameAndUri.filename.find_last_of('.'));
-            auto filenameAndUri = fileSaveDialog(basename + "." + extension);
-            LOG_ERR("Not yet implemented: Save As");
+            auto filenameAndUri = fileSaveDialog(basename + "." + extension, extension);
+
+            if (filenameAndUri.filename != "")
+                DocumentData::get(data.appDocId).loKitDocument->saveAs(filenameAndUri.uri.c_str(), extension.c_str(), nullptr);
         }
         else if (s == L"uno .uno:Open")
         {
