@@ -11,11 +11,15 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <filesystem>
 #include <thread>
 
 #include <Windows.h>
+#include <shlobj.h>
+#include <shlwapi.h>
 #include <shobjidl.h>
 #include <wincrypt.h>
+
 #include "WebView2.h"
 
 #include <wrl.h>
@@ -34,6 +38,11 @@
 #include "Resource.h"
 #include "windows.hpp"
 
+// Note that all pathnames in this code that are plain narrow strings (std::string) are in UTF-8 and
+// can thus *not* be used for actual file system operations. They must always be converted to UTF-16
+// first with Util::string_to_wide_string(). URIs one the other hand are valid as such as narrow
+// strings.
+
 enum class ClipboardOp
 {
     CUT,
@@ -44,10 +53,14 @@ enum class ClipboardOp
 
 struct FilenameAndUri
 {
+    // Just the basename (and extension), without folder
     std::string filename;
+
+    // Complete file: URI
     std::string uri;
 };
 
+// Various document window speficic data
 struct WindowData
 {
     HWND hWnd;
@@ -66,8 +79,10 @@ static int appShowMode;
 
 const char* user_name = nullptr;
 int coolwsd_server_socket_fd = -1;
+
 static std::string app_exe_path;
 std::string app_installation_path;
+
 std::string app_installation_uri;
 
 static COOLWSD* coolwsd = nullptr;
@@ -76,6 +91,157 @@ static COOLWSD* coolwsd = nullptr;
 static const wchar_t windowClass[] = L"CODA";
 
 static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
+
+constexpr int CODA_GROUP_OPEN = 1000;
+
+// Use enum class to automatically get non-overlapping values. On the other hand, then we need to
+// cast the values to the underlying type when using them.
+enum class CODA_OPEN_CONTROL : DWORD
+{
+    SEP1,
+    NEW_TEXT,
+    NEW_SPREADSHEET,
+    NEW_PRESENTATION,
+    SEP2
+};
+
+constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
+
+// Ugly to use a global like this
+static std::wstring new_document_created;
+
+// Map from IFileDialogCustomize pointer to the corresponding IFileDialog, so that we can close it prematurely
+static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
+
+// ================ Sample code (MIT licensed). With app-specific modifications in the dialog event handler.
+// https://github.com/microsoft/Windows-classic-samples/blob/2b94df5730177ec27e726b60017c01c97ef1a8fb/Samples/Win7Samples/winui/shell/appplatform/commonfiledialog/CommonFileDialogApp.cpp
+
+/* File Dialog Event Handler *****************************************************************************************************/
+
+class CDialogEventHandler : public IFileDialogEvents, public IFileDialogControlEvents
+{
+public:
+    // IUnknown methods
+    IFACEMETHODIMP QueryInterface(REFIID riid, void** ppv)
+    {
+        static const QITAB qit[] = {
+            QITABENT(CDialogEventHandler, IFileDialogEvents),
+            QITABENT(CDialogEventHandler, IFileDialogControlEvents),
+            { 0 },
+        };
+        return QISearch(this, qit, riid, ppv);
+    }
+
+    IFACEMETHODIMP_(ULONG) AddRef() { return InterlockedIncrement(&_cRef); }
+
+    IFACEMETHODIMP_(ULONG) Release()
+    {
+        long cRef = InterlockedDecrement(&_cRef);
+        if (!cRef)
+            delete this;
+        return cRef;
+    }
+
+    // IFileDialogEvents methods
+    // All are dummies
+    IFACEMETHODIMP OnFileOk(IFileDialog*) { return S_OK; };
+    IFACEMETHODIMP OnFolderChange(IFileDialog*) { return S_OK; };
+    IFACEMETHODIMP OnFolderChanging(IFileDialog*, IShellItem*) { return S_OK; };
+    IFACEMETHODIMP OnHelp(IFileDialog*) { return S_OK; };
+    IFACEMETHODIMP OnSelectionChange(IFileDialog*) { return S_OK; };
+    IFACEMETHODIMP OnShareViolation(IFileDialog*, IShellItem*, FDE_SHAREVIOLATION_RESPONSE*)
+    {
+        return S_OK;
+    };
+    IFACEMETHODIMP OnTypeChange(IFileDialog* pfd) { return S_OK; };
+    IFACEMETHODIMP OnOverwrite(IFileDialog*, IShellItem*, FDE_OVERWRITE_RESPONSE*) { return S_OK; };
+
+    // IFileDialogControlEvents methods
+    IFACEMETHODIMP OnButtonClicked(IFileDialogCustomize* dialogCustomisation, DWORD id)
+    {
+        customisationToDialog[dialogCustomisation]->Close(CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD);
+
+        // Copy a template to the user's document folder. Where else? Should we let the user decide
+        // where it goes?
+
+        std::wstring templateBasename, templateExtension;
+        switch ((CODA_OPEN_CONTROL)id)
+        {
+            case CODA_OPEN_CONTROL::NEW_TEXT:
+                templateBasename = L"Text Document";
+                templateExtension = L"odt";
+                break;
+            case CODA_OPEN_CONTROL::NEW_SPREADSHEET:
+                templateBasename = L"Spreadsheet";
+                templateExtension = L"ods";
+                break;
+            case CODA_OPEN_CONTROL::NEW_PRESENTATION:
+                templateBasename = L"Presentation";
+                templateExtension = L"odp";
+                break;
+            default:
+                std::abort();
+        }
+
+        const auto templateSourcePath = Util::string_to_wide_string(app_installation_path) +
+                                        L"templates\\" + templateBasename + L"." +
+                                        templateExtension;
+
+        PWSTR documents;
+        SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &documents);
+
+        int counter = 0;
+        std::wstring templateCopyPath;
+
+        do
+        {
+            std::wstring number = L"";
+            if (counter > 0)
+                number = L" (" + std::to_wstring(counter) + L")";
+
+            templateCopyPath = std::wstring(documents) + L"\\" + templateBasename + number + L"." +
+                               templateExtension;
+            counter++;
+        } while (std::filesystem::exists(std::filesystem::path(templateCopyPath)));
+
+        std::filesystem::copy_file(templateSourcePath, templateCopyPath);
+
+        CoTaskMemFree(documents);
+
+        new_document_created = templateCopyPath;
+
+        return S_OK;
+    };
+
+    // Rest are dummies
+    IFACEMETHODIMP OnItemSelected(IFileDialogCustomize*, DWORD, DWORD) { return S_OK; };
+    IFACEMETHODIMP OnCheckButtonToggled(IFileDialogCustomize*, DWORD, BOOL) { return S_OK; };
+    IFACEMETHODIMP OnControlActivating(IFileDialogCustomize*, DWORD) { return S_OK; };
+
+    CDialogEventHandler()
+        : _cRef(1){};
+
+private:
+    virtual ~CDialogEventHandler(){};
+
+    long _cRef;
+};
+
+// Instance creation helper
+static HRESULT CDialogEventHandler_CreateInstance(REFIID riid, void** ppv)
+{
+    *ppv = NULL;
+    CDialogEventHandler* pDialogEventHandler = new (std::nothrow) CDialogEventHandler();
+    HRESULT hr = pDialogEventHandler ? S_OK : E_OUTOFMEMORY;
+    if (SUCCEEDED(hr))
+    {
+        hr = pDialogEventHandler->QueryInterface(riid, ppv);
+        pDialogEventHandler->Release();
+    }
+    return hr;
+}
+
+// ================ End of sample code
 
 static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message);
 
@@ -486,8 +652,8 @@ static FilenameAndUri fileOpenDialog()
 {
     IFileOpenDialog* dialog;
 
-    if (!SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog,
-                                    reinterpret_cast<void**>(&dialog))))
+    if (!SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER,
+                                    IID_IFileOpenDialog, reinterpret_cast<void**>(&dialog))))
         std::abort();
 
     COMDLG_FILTERSPEC filter[] = {
@@ -502,21 +668,75 @@ static FilenameAndUri fileOpenDialog()
     if (!SUCCEEDED(dialog->SetTitle(L"Select document to edit")))
         std::abort();
 
-    if (!SUCCEEDED(dialog->Show(NULL)))
+    IFileDialogEvents* dialogEvents = NULL;
+    if (!SUCCEEDED(CDialogEventHandler_CreateInstance(IID_PPV_ARGS(&dialogEvents))))
+        std::abort();
+
+    DWORD cookie = 0;
+    if (!SUCCEEDED(dialog->Advise(dialogEvents, &cookie)))
+        std::abort();
+
+    IFileDialogCustomize* dialogCustomisation = NULL;
+    if (!SUCCEEDED(dialog->QueryInterface(IID_PPV_ARGS(&dialogCustomisation))))
+        std::abort();
+
+    customisationToDialog[dialogCustomisation] = dialog;
+
+    if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP1)))
+        std::abort();
+
+    if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, L"Create new")))
+        std::abort();
+
+    if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_TEXT,
+                                                      L"Text document")))
+        std::abort();
+
+    if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_SPREADSHEET,
+                                                      L"Spreadsheet")))
+        std::abort();
+
+    if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_PRESENTATION,
+                                                      L"Presentation")))
+        std::abort();
+
+    dialogCustomisation->EndVisualGroup();
+
+    if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP2)))
+        std::abort();
+
+    dialogCustomisation->Release();
+
+    HRESULT dialogResult = dialog->Show(NULL);
+
+    if (!SUCCEEDED(dialogResult))
         return {};
 
-    IShellItem* item;
-    if (!SUCCEEDED(dialog->GetResult(&item)))
-        std::abort();
+    Poco::Path path;
+    if (dialogResult == CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD)
+    {
+        path = Poco::Path(Util::wide_string_to_string(new_document_created));
+    }
+    else
+    {
+        IShellItem* item;
+        if (!SUCCEEDED(dialog->GetResult(&item)))
+            std::abort();
 
-    PWSTR fileSysPath;
-    if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
-        std::abort();
+        PWSTR fileSysPath;
+        if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
+            std::abort();
 
-    auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
-    CoTaskMemFree(fileSysPath);
-    item->Release();
+        path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
+
+        CoTaskMemFree(fileSysPath);
+
+        item->Release();
+    }
+    dialog->Unadvise(cookie);
     dialog->Release();
+
+    customisationToDialog.erase(dialogCustomisation);
 
     return { path.getFileName(), Poco::URI(path).toString() };
 }
@@ -525,8 +745,8 @@ static FilenameAndUri fileSaveDialog(const std::string& name)
 {
     IFileSaveDialog* dialog;
 
-    if (!SUCCEEDED(CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_ALL, IID_IFileSaveDialog,
-                                    reinterpret_cast<void**>(&dialog))))
+    if (!SUCCEEDED(CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER,
+                                    IID_IFileSaveDialog, reinterpret_cast<void**>(&dialog))))
         std::abort();
 
     if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
@@ -566,15 +786,15 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
         case WM_SETFOCUS:
             if (windowData.count(hWnd) && windowData[hWnd].webViewController)
-                windowData[hWnd].webViewController->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
+                windowData[hWnd].webViewController->MoveFocus(
+                    COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
             break;
 
         case WM_DPICHANGED:
         {
             const RECT* newRect = (RECT*)lParam;
-            SetWindowPos(hWnd, NULL, newRect->left, newRect->top,
-                         newRect->right - newRect->left, newRect->bottom - newRect->top,
-                         SWP_NOZORDER | SWP_NOACTIVATE);
+            SetWindowPos(hWnd, NULL, newRect->left, newRect->top, newRect->right - newRect->left,
+                         newRect->bottom - newRect->top, SWP_NOZORDER | SWP_NOACTIVATE);
         }
         break;
 
@@ -759,7 +979,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             std::string name;
             if (!COOLProtocol::getTokenString(tokens, "name", name))
             {
-                LOG_ERR("No name parameter in message '" << ns << "'" );
+                LOG_ERR("No name parameter in message '" << ns << "'");
                 return;
             }
             auto dot = name.find_last_of('.');
@@ -769,7 +989,8 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
                 return;
             }
             auto const extension = name.substr(dot + 1);
-            auto const basename = data.filenameAndUri.filename.substr(0, data.filenameAndUri.filename.find_last_of('.'));
+            auto const basename = data.filenameAndUri.filename.substr(
+                0, data.filenameAndUri.filename.find_last_of('.'));
             auto filenameAndUri = fileSaveDialog(basename + "." + extension);
             LOG_ERR("Not yet implemented: Save As");
         }
@@ -808,6 +1029,12 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
     appInstance = hInstance;
     appShowMode = showWindowMode;
+
+    wchar_t fileName[1000];
+    GetModuleFileNameW(NULL, fileName, sizeof(fileName) / sizeof(fileName[0]));
+    app_installation_path = app_exe_path = Util::wide_string_to_string(std::wstring(fileName));
+    app_installation_path.resize(app_installation_path.find_last_of(L'\\') + 1);
+    app_installation_uri = Poco::URI(Poco::Path(app_installation_path)).toString();
 
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
@@ -854,12 +1081,6 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
             }
         })
         .detach();
-
-    wchar_t fileName[1000];
-    GetModuleFileNameW(NULL, fileName, sizeof(fileName) / sizeof(fileName[0]));
-    app_installation_path = app_exe_path = Util::wide_string_to_string(std::wstring(fileName));
-    app_installation_path.resize(app_installation_path.find_last_of(L'\\') + 1);
-    app_installation_uri = Poco::URI(Poco::Path(app_installation_path)).toString();
 
     WNDCLASSEXW wcex;
 
