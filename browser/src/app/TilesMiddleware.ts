@@ -548,6 +548,15 @@ class TileManager {
 
 				deltaBuckets[bucket].push(delta);
 			}
+
+			// FIXME: grim hack - should hav ebeen done earlier -
+			// but missing isCurrent parameter to getMissingTiles?
+			if (!this.pausedForDehydration && this.viewHasDehydratedTiles())
+			{
+				app.sectionContainer.pauseDrawing();
+				this.pausedForDehydration = true;
+			}
+
 			for (let i = 0; i < this.workers.length; ++i) {
 				const deltas: any[] = deltaBuckets[i];
 				const worker = this.workers[i];
