@@ -457,6 +457,17 @@ class TileManager {
 		);
 	}
 
+	// Do we have visible tiles which need de-hydrating ?
+	private static viewHasDehydratedTiles() : boolean {
+		for (const tile of this.tiles.values()) {
+			if ( tile.distanceFromView === 0 &&
+			     tile.lastPendingId &&
+			     !tile.isReady() )
+				return true;
+		}
+		return false;
+	}
+
 	private static endTransactionHandleBitmaps(
 		deltas: any[],
 		bitmaps: ImageBitmap[],
@@ -476,17 +487,7 @@ class TileManager {
 
 		if (this.pausedForDehydration) {
 			// Check if all current tiles are accounted for and resume drawing if so.
-			let shouldUnpause = true;
-			for (const tile of this.tiles.values()) {
-				if (
-					tile.distanceFromView === 0 &&
-					tile.lastPendingId &&
-					!tile.isReady()
-				) {
-					shouldUnpause = false;
-					break;
-				}
-			}
+			const shouldUnpause = !this.viewHasDehydratedTiles();
 			if (shouldUnpause) {
 				app.sectionContainer.resumeDrawing();
 				this.pausedForDehydration = false;
