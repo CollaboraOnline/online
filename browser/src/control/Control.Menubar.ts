@@ -2282,9 +2282,9 @@ class Menubar extends L.Control {
 		} else if (id === 'feedback' && this._map.feedback) {
 			this._map.feedback.showFeedbackDialog();
 		} else if (id === 'report-an-issue') {
-			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
+			window.open('https://github.com/CollaboraOnline/online/issues', '_blank', 'noopener');
 		} else if (id === 'forum') {
-			window.open('https://forum.collaboraonline.com', '_blank');
+			window.open('https://forum.collaboraonline.com', '_blank', 'noopener');
 		} else if (id === 'inserthyperlink') {
 			app.dispatcher.dispatch('hyperlinkdialog');
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {

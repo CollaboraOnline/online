@@ -696,12 +696,6 @@ function getConnectorsPopupElements(closeCallback) {
 	return wrapperContainer;
 }
 
-function getColorPickerElements(id) {
-	const div = document.createElement('div');
-	div.id = id + '-wrapper';
-	return div;
-}
-
 function getColorPickerData(type) {
 	var uno;
 	if (type === 'Font Color') {
@@ -942,59 +936,6 @@ function onCommandStateChanged(e) {
 	processStateChangedCommand(e.commandName, e.state);
 }
 
-function onUpdateParts(e) {
-	if (e.docType === 'text') {
-		var current = e.currentPage;
-		var count = e.pages;
-	}
-	else {
-		current = e.selectedPart;
-		count = e.parts;
-	}
-
-	// TODO
-	var toolbar = null;
-	if (!toolbar) {
-		return;
-	}
-
-	if (!window.mode.isMobile()) {
-		if (e.docType === 'presentation') {
-			// TODO
-			//toolbar.set('prev', {hint: _('Previous slide')});
-			//toolbar.set('next', {hint: _('Next slide')});
-		}
-		else {
-			toolbar.showItem('presentation', false);
-			toolbar.showItem('insertpage', false);
-			toolbar.showItem('duplicatepage', false);
-			toolbar.showItem('deletepage', false);
-		}
-	}
-
-	if (app.file.fileBasedView) {
-		toolbar.enableItem('prev', true);
-		toolbar.enableItem('next', true);
-		return;
-	}
-
-	if (e.docType !== 'spreadsheet') {
-		if (current === 0) {
-			toolbar.enableItem('prev', false);
-		}
-		else {
-			toolbar.enableItem('prev', true);
-		}
-
-		if (current === count - 1) {
-			toolbar.enableItem('next', false);
-		}
-		else {
-			toolbar.enableItem('next', true);
-		}
-	}
-}
-
 function onCommandResult(e) {
 	var commandName = e.commandName;
 
@@ -1152,7 +1093,6 @@ function setupToolbar(e) {
 	app.events.on('updatepermission', onUpdatePermission);
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
-	map.on('updateparts pagenumberchanged', onUpdateParts);
 
 	if (map.options.wopi && L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').css('display', 'flex');
@@ -1180,22 +1120,13 @@ function setupToolbar(e) {
 }
 
 global.setupToolbar = setupToolbar;
-global.insertTable = insertTable;
 global.getInsertTablePopupElements = getInsertTablePopupElements;
-global.sendInsertTableFunction = sendInsertTableFunction;
-global.highlightTableFunction = highlightTableFunction;
 global.getShapesPopupElements = getShapesPopupElements;
 global.getConnectorsPopupElements = getConnectorsPopupElements;
-global.onShapeClickFunction = onShapeClickFunction;
-global.onShapeKeyUpFunction = onShapeKeyUpFunction;
-global.onShapeKeyDownFunction = onShapeKeyDownFunction;
 global.createShapesPanel = createShapesPanel;
-global.onUpdatePermission = onUpdatePermission;
 global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
-global.getColorPickerElements = getColorPickerElements;
-global.onUpdateParts = onUpdateParts;
 global.getColorPickerData = getColorPickerData;
 }(window));
