@@ -5120,6 +5120,10 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
 #if !MOBILEAPP
 void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session, int redirectLimit)
 {
+    assert(_docState.activity() == DocumentState::Activity::SyncFileTimestamp &&
+           "Unexpected activity for CheckFileInfo");
+    assert(_storage && "Unexpected to not have Storage instance duing SyncFileTimestamp");
+
     if (!session)
     {
         assert(session && "Expected a valid session to CheckFileInfo");
@@ -5140,6 +5144,9 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
         assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
         assert(checkFileInfo.completed() &&
                "Expected CheckFileInfo to be completed when calling the continuation");
+
+        // End the SyncFileTimestamp activity, but don't reset _checkFileInfo yet (it's our caller).
+        endActivity();
 
         if (checkFileInfo.state() == CheckFileInfo::State::Pass && checkFileInfo.wopiInfo())
         {
@@ -5175,33 +5182,37 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
 
                 handleDocumentConflict();
             }
-
-            // End the SyncFileTimestamp activity, but don't reset _checkFileInfo yet.
-            endActivity();
-            return;
-        }
-
-        // Failed, but don't end the SyncFileTimestamp activity yet.
-        std::shared_ptr<ClientSession> failedSession = weakSession.lock();
-        if (failedSession)
-        {
-            if (checkFileInfo.state() == CheckFileInfo::State::Timedout)
-            {
-                // Timeout means we don't know whether the session is valid or not. Leave it alone.
-                LOG_INF("CheckFileInfo on [" << _docKey << "] for session #"
-                                             << failedSession->getId() << " timed-out");
-            }
-            else
-            {
-                // Got some response, but not positive. This is an expired session.
-                LOG_WRN("Session [" << failedSession->getId() << "] has invalid access_token for ["
-                                    << _docKey << "], resetting the authorization token");
-                failedSession->invalidateAuthorizationToken();
-            }
         }
         else
         {
-            LOG_WRN("CheckFileInfo failed and its session is expired");
+            // We failed to get CheckFileInfo.
+            _storage->setLastModifiedTimeUnSafe(); // We can't trust the LastModifiedTime.
+
+            std::shared_ptr<ClientSession> failedSession = weakSession.lock();
+            if (checkFileInfo.state() == CheckFileInfo::State::Unauthorized)
+            {
+                if (failedSession)
+                {
+                    // Got some response, but not positive. This is an expired session.
+                    LOG_WRN("CheckFileInfo on ["
+                            << failedSession->getId()
+                            << "] failed because it has invalid access_token for [" << _docKey
+                            << "], resetting the authorization token");
+                    failedSession->invalidateAuthorizationToken();
+                }
+                else
+                {
+                    LOG_WRN("CheckFileInfo failed and its session is expired");
+                }
+            }
+            else
+            {
+                assert(checkFileInfo.state() == CheckFileInfo::State::Timedout ||
+                       checkFileInfo.state() == CheckFileInfo::State::Fail);
+                LOG_INF("CheckFileInfo on ["
+                        << _docKey << "] for session #"
+                        << (failedSession ? failedSession->getId() : "<expired>") << " timed-out");
+            }
         }
     };
 
