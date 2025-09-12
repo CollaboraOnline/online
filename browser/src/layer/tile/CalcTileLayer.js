@@ -921,7 +921,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				if (this._map._docLayer._cursorMarker)
 					this._map._docLayer._cursorMarker.remove();
 
-				var grid = document.querySelector('.leaflet-layer');
+				var grid = document.querySelector('.leaflet-map-pane');
 				grid.classList.add('spreadsheet-cursor');
 				grid.style.cursor = '';
 			}

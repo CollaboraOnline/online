@@ -230,13 +230,13 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	}
 
 	public onMouseEnter () {
-		const grid: any = document.querySelector('.leaflet-layer');
+		const grid: any = document.querySelector('.leaflet-map-pane');
 		grid.classList.remove('spreadsheet-cursor');
 		grid.style.cursor = 'crosshair';
 	}
 
 	public onMouseLeave () {
-		const grid: any = document.querySelector('.leaflet-layer');
+		const grid: any = document.querySelector('.leaflet-map-pane');
 		grid.classList.add('spreadsheet-cursor');
 	}
 
