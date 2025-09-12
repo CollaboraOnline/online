@@ -628,6 +628,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	overflow-y: auto;
 	scrollbar-width: thin;
 	scrollbar-color: var(--color-border) transparent;
+	max-height: calc(100vh - 350px);
 }
 
 /* results */
