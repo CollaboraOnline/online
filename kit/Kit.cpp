@@ -3374,6 +3374,8 @@ void lokit_main(
         // initialize while we have access to /proc/self/fd
         fdCounter.reset(new Util::FDCounter());
 
+        std::chrono::milliseconds jailSetupTime(0);
+
         if (!ChildSession::NoCapsForKit)
         {
             std::chrono::time_point<std::chrono::steady_clock> jailSetupStartTime
@@ -3631,9 +3633,9 @@ void lokit_main(
             Poco::File(Poco::Path(jailPath, HomePathInJail)).createDirectories();
             ::setenv("HOME", HomePathInJail, 1);
 
-            const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+            jailSetupTime = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - jailSetupStartTime);
-            LOG_DBG("Initialized jail files in " << ms);
+            LOG_DBG("Initialized jail files in " << jailSetupTime);
 
             // The bug is that rewinding and rereading /proc/self/smaps_rollup doubles the previous
             // values, so it only affects the case where we reuse the fd from opening smaps_rollup
@@ -3738,6 +3740,7 @@ void lokit_main(
             }
         }
 
+        bool hasSeccomp = false;
         // Lock down the syscalls that can be used
         if (!Seccomp::lockdown(Seccomp::Type::KIT))
         {
@@ -3750,6 +3753,8 @@ void lokit_main(
             LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
                     "You are running in a significantly less secure mode.");
         }
+        else
+            hasSeccomp = true;
 
         rlimit rlim = { 0, 0 };
         if (getrlimit(RLIMIT_AS, &rlim) == 0)
@@ -3824,6 +3829,23 @@ void lokit_main(
             pathAndQuery.append(encodedVersion);
             free(versionInfo);
         }
+
+        // Admin settings bits:
+        // Are we using seccomp ?
+        pathAndQuery.append(std::string("&adms_seccomp=") +
+                            (hasSeccomp ? "ok" : "none"));
+        // Are we bind mounting ?
+        pathAndQuery.append(std::string("&adms_bindmounted=") +
+                            (JailUtil::isBindMountingEnabled() ? "ok" : "slow"));
+        // How slow was the jail setup ?
+        pathAndQuery.append(std::string("&adms_info_setup_ms=") +
+                            std::to_string(jailSetupTime.count()));
+        // Are we using a container ?
+        pathAndQuery.append(std::string("&adms_contained=") +
+                            (ChildSession::NoCapsForKit ? "nocaps" : "ok"));
+        // Are we using namespaces (or CAP_SYS_CHROOT etc.)
+        pathAndQuery.append(std::string("&adms_info_namespaces=") +
+                            (useMountNamespaces ? "true" : "false"));
 
 #else // MOBILEAPP
 
