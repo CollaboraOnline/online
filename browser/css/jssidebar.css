@@ -21,6 +21,10 @@ img.sidebar.ui-image {
 	width: 300px;
 }
 
+#layoutpanel_icons-iconview {
+	width: 100%;
+}
+
 .sidebar.ui-grid {
 	row-gap: 8px;
 }
