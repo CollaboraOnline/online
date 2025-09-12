@@ -1059,7 +1059,8 @@ else
       <enable type=\"bool\" desc=\"Controls whether the welcome screen should be shown to the users on new install and updates. When enabled, your custom welcome screen must be created at /usr/share/coolwsd/browser/dist/welcome/welcome.html.\" default=\"false\">false</enable>
     </welcome>"
     CONFIG_INTERFACE_FRAGMENT="<brandProductName desc=\"Change the displayed name the application will have for the user.\" type=\"string\"></brandProductName>
-    <brandProductURL desc=\"Change the product URL, empty makes disable the link\" type=\"string\">https://www.collaboraonline.com</brandProductURL>"
+    <brandProductURL desc=\"Change the product URL, empty makes disable the link\" type=\"string\">https://www.collaboraonline.com</brandProductURL>
+    <logoURL desc=\"Change the URL of the logo used by Collabora Online, use none to hide it.\" type=\"string\"></logoURL>"
 fi
 
 AC_SUBST([WELCOME_CONFIG_FRAGMENT])

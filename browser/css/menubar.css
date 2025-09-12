@@ -34,6 +34,9 @@
 	position: relative;
 	width: 30px;
 	height: 30px;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .document-title {
@@ -365,23 +368,14 @@ nav.hasnotebookbar #save.saved::after {
 
 .writer-icon-img {
 	background-image: url('images/x-office-document.svg');
-	background-size: 16px 16px;
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 .calc-icon-img {
 	background-image: url('images/x-office-spreadsheet.svg');
-	background-size: 16px 16px;
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 .impress-icon-img {
 	background-image: url('images/x-office-presentation.svg');
-	background-size: 16px 16px;
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 .draw-icon-img {

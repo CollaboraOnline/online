@@ -291,6 +291,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "user_interface.use_integration_theme", "true" },
     { "user_interface.brandProductName", "" },
     { "user_interface.brandProductURL", "" },
+    { "user_interface.logoURL", "" },
     { "wasm.enable", "false" },
     { "wasm.force", "false" },
     { "watermark.opacity", "0.2" },
