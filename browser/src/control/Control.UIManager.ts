@@ -1710,8 +1710,8 @@ class UIManager extends L.Control {
 		message1: string,
 		message2: string,
 		buttonText: string,
-		callback: any,
-		withCancel: boolean,
+		callback?: any,
+		withCancel?: boolean,
 		focusId?: string,
 	): void {
 		var dialogId = this.generateModalId(id);
