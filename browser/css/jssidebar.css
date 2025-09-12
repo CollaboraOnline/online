@@ -628,6 +628,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	overflow-y: auto;
 	scrollbar-width: thin;
 	scrollbar-color: var(--color-border) transparent;
+	max-height: calc(100vh - 350px);
 }
 
 /* results */
@@ -669,6 +670,27 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	display: grid !important;
 	grid-auto-flow: row !important;
 	grid-template-columns: 1fr;
+}
+
+#quickfind-container #quickfindcontrols {
+	position: absolute;
+	top: 0;
+	right: 0;		
+}
+
+#quickfind-container #quickfindcontrols button img {
+	width: var(--btn-img-size-m);
+	height: var(--btn-img-size-m);
+}
+
+#quickfind-container #quickfindcontrols button {
+	width: var(--btn-size-m);
+	height: var(--btn-size-m);
+	background-color: var(--color-background-lighter) !important;
+}
+
+#quickfind-container #quickfindcontrols button:hover {
+	background-color: var(--color-background-dark) !important;
 }
 
 #navigation-sidebar.visible {
