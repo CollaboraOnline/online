@@ -4980,18 +4980,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson leantainn air an deasachadh"
 
-#~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-#~ msgstr ""
-#~ "Tha uiread a cheanglaichean aig IE11 ’s a tha ceadaichte. Faic an "
-#~ "sgrìobhainn seo ma tha thu airson a’ chrìoch seo a chur an àirde: "
-#~ "https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
-#~ "ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
-#~ "connections"
-
 #, fuzzy
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "

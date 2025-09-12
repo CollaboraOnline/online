@@ -61,7 +61,7 @@ L.Map.include({
 			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
 
 			var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-			// Old browsers like IE11 et al don't like Object.keys with
+			// Old browsers don't like Object.keys with
 			// empty arguments
 			if (typeof commandValues === 'object') {
 				data = data.concat(Object.keys(commandValues));
