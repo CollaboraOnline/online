@@ -707,8 +707,7 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
-		if (this.isLeader())
-			app.socket.sendMessage('slideshowfollow endpresentation');
+		this.sendSlideShowFollowMessage('endpresentation');
 		this.checkDarkMode(false);
 
 		console.debug('SlideShowPresenter.endPresentation');
@@ -1065,8 +1064,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
-		if (this._isLeader)
-			app.socket.sendMessage('slideshowfollow newfollowmepresentation');
+		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
@@ -1197,6 +1195,10 @@ class SlideShowPresenter {
 
 	isFollowing(): boolean {
 		return this._isFollowing;
+	}
+
+	sendSlideShowFollowMessage(msg: string): void {
+		if (this.isLeader()) app.socket.sendMessage('slideshowfollow ' + msg);
 	}
 }
 
