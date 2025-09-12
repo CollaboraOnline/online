@@ -110,11 +110,11 @@ class ViewLayoutBase {
 	}
 
 	public set viewedRectangle(rectangle: cool.SimpleRectangle) {
-		this._viewedRectangle = rectangle;
-
 		// maintain a view of where we're panning to.
-		if (!this._viewedRectangle.equals(this.lastViewedRectangle.toArray()))
+		if (!this._viewedRectangle.equals(rectangle.toArray()))
 			this.lastViewedRectangle = this._viewedRectangle.clone();
+
+		this._viewedRectangle = rectangle;
 
 		app.sectionContainer.onNewDocumentTopLeft();
 		app.sectionContainer.requestReDraw();
