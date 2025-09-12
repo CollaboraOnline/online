@@ -5115,17 +5115,6 @@ msgstr ""
 #~ msgid "%d minutes ago"
 #~ msgstr "%d minutter siden"
 
-#~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-#~ msgstr ""
-#~ "IE11 har nået sit maksimale antal forbindelser. Om nødvendigt se venligst "
-#~ "dette dokument om at øge denne grænse: https://docs.microsoft.com/en-us/"
-#~ "previous-versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-
 #~ msgid "Start upload"
 #~ msgstr "Begynd upload"
 
