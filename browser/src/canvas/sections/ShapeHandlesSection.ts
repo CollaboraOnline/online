@@ -1096,6 +1096,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	public onDraw() {
+		this.context.beginPath();
+		this.context.strokeStyle = 'grey';
+		this.context.strokeRect(0, 0, this.size[0], this.size[1]);
+		this.context.closePath();
+
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
 		else if (this.anythingToDraw()) {
