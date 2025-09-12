@@ -325,7 +325,16 @@ body {
 	height: 100%;
 }
 
-#sidebar-dock-wrapper, #navigator-dock-wrapper, #quickfind-dock-wrapper {
+#quickfind-dock-wrapper {
+	display: none;
+	background: var(--color-background-lighter);
+	position: relative;
+	z-index: 990;
+	max-width: 350px;
+	height: 100%;
+}
+
+#sidebar-dock-wrapper, #navigator-dock-wrapper {
 	display: none;
 	background: var(--color-background-lighter);
 	position: relative;
