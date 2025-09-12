@@ -1225,6 +1225,30 @@ class TreeViewControl {
 		});
 	}
 
+	setupFocusOutHandler() {
+		this._container.addEventListener('focusout', (event) => {
+			requestAnimationFrame(() => {
+				const activeElement = document.activeElement as HTMLElement;
+				const isFocusInTreeView =
+					activeElement && this._container.contains(activeElement);
+
+				if (!isFocusInTreeView) {
+					const listElements =
+						this._container.querySelectorAll('.ui-treeview-entry');
+					this.restoreInitialTabIndexes(
+						Array.from(listElements) as Array<HTMLElement>,
+					);
+				}
+			});
+		});
+	}
+
+	restoreInitialTabIndexes(listElements: Array<HTMLElement>) {
+		listElements.forEach((entry: HTMLElement) => {
+			entry.tabIndex = 0;
+		});
+	}
+
 	changeFocusedRow(
 		listElements: Array<HTMLElement>,
 		fromIndex: number,
@@ -1632,6 +1656,7 @@ class TreeViewControl {
 
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);
+		this.setupFocusOutHandler();
 
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
