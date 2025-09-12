@@ -477,6 +477,10 @@ class SlideShowHandler {
 
 		if (this.nCurrentEffect >= this.aNextEffectEventArray.size()) return false;
 
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
+		);
+
 		this.notifyNextEffectStart();
 
 		this.aNextEffectEventArray.at(this.nCurrentEffect).fire();
@@ -725,6 +729,9 @@ class SlideShowHandler {
 		}
 
 		this.bIsRewinding = false;
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect - 1 }),
+		);
 	}
 
 	/** rewindToPreviousSlide

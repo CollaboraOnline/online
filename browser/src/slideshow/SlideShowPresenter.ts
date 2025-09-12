@@ -140,6 +140,10 @@ class SlideShowPresenter {
 	private _hammer: HammerManager;
 	private _wasInDarkMode: boolean = false;
 	private _isLeader: boolean = false;
+	// sometimes user may start presentation by themselves
+	// which means they are not leader but they are not follower either
+	private _isFollower: boolean = false;
+	private _isFollowing: boolean = false;
 
 	constructor(map: any, enableAlly: boolean) {
 		this._cypressSVGPresentationTest =
@@ -168,23 +172,11 @@ class SlideShowPresenter {
 		);
 
 		// Follow me slide hooks
-		this._map.on('newfollowmepresentation', this._onStartInWindow, this);
 		this._map.on(
-			'dispatcheffect',
-			this._slideShowNavigator.dispatchEffect,
-			this._slideShowNavigator,
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect',
+			this.handleFollowMeEvents,
+			this,
 		);
-		this._map.on(
-			'rewindeffect',
-			this._slideShowNavigator.rewindEffect,
-			this._slideShowNavigator,
-		);
-		this._map.on(
-			'followvideo',
-			this._slideShowNavigator.followVideo,
-			this._slideShowNavigator,
-		);
-		this._map.on('endpresentation', this.endPresentation, this);
 	}
 
 	removeHooks() {
@@ -210,18 +202,43 @@ class SlideShowPresenter {
 		);
 
 		// Follow me slide hooks
-		this._map.off('newfollowmepresentation', this._onStartInWindow, this);
 		this._map.off(
-			'dispatcheffect',
-			this._slideShowNavigator.dispatchEffect,
-			this._slideShowNavigator,
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect',
+			this.handleFollowMeEvents,
+			this,
 		);
-		this._map.off(
-			'rewindeffect',
-			this._slideShowNavigator.rewindEffect,
-			this._slideShowNavigator,
-		);
-		this._map.off('endpresentation', this.endPresentation, this);
+	}
+
+	handleFollowMeEvents(info: any) {
+		this.setFollower(true);
+		switch (info.type) {
+			case 'newfollowmepresentation':
+				this.setFollowing(true);
+				this._onStartInWindow(0);
+				break;
+			case 'dispatcheffect':
+				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
+				break;
+			case 'rewindeffect':
+				if (this.isFollowing()) this._slideShowNavigator.rewindEffect();
+				break;
+			case 'followvideo':
+				if (this.isFollowing()) this._slideShowNavigator.followVideo(info);
+				break;
+			case 'displayslide':
+				this._slideShowNavigator.setLeaderSlide(info);
+				break;
+			case 'effect':
+				this._slideShowNavigator.setLeaderEffect(info);
+				break;
+			case 'endpresentation':
+				if (!this.isFollowing()) return;
+				this.setLeader(false);
+				this.setFollowing(false);
+				this.setFollower(false);
+				this.endPresentation(true);
+				break;
+		}
 	}
 
 	private _handlePresenterCanvasClick(event: any) {
@@ -647,6 +664,19 @@ class SlideShowPresenter {
 			}.bind(this),
 		);
 
+		if (this.isFollower()) {
+			const FollowImg = L.DomUtil.create('img', 'right-img', container);
+			const followText = _('Follow Presentation');
+			L.control.attachTooltipEventListener(FollowImg, this._map);
+			FollowImg.setAttribute('aria-label', followText);
+			FollowImg.setAttribute('data-cooltip', followText);
+			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
+			FollowImg.addEventListener('click', (e: Event) => {
+				e.stopPropagation();
+				this._slideShowNavigator.followLeaderSlide();
+			});
+		}
+
 		// Make sure slide controls don't disappear when mouse is over them
 		container.addEventListener(
 			'mouseenter',
@@ -654,6 +684,9 @@ class SlideShowPresenter {
 				clearTimeout(this._slideControlsTimer);
 			}.bind(this),
 		);
+		container.addEventListener('click', () => {
+			this.setFollowing(false);
+		});
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
@@ -674,9 +707,7 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
-		if (this.isLeader())
-			app.socket.sendMessage('slideshowfollow endpresentation');
-		this.setLeader(false);
+		this.sendSlideShowFollowMessage('endpresentation');
 		this.checkDarkMode(false);
 
 		console.debug('SlideShowPresenter.endPresentation');
@@ -1033,8 +1064,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
-		if (this._isLeader)
-			app.socket.sendMessage('slideshowfollow newfollowmepresentation');
+		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
@@ -1149,6 +1179,26 @@ class SlideShowPresenter {
 
 	setLeader(leader: boolean): void {
 		this._isLeader = leader;
+	}
+
+	setFollower(follower: boolean): void {
+		this._isFollower = follower;
+	}
+
+	isFollower(): boolean {
+		return this._isFollower;
+	}
+
+	setFollowing(follow: boolean): void {
+		this._isFollowing = follow;
+	}
+
+	isFollowing(): boolean {
+		return this._isFollowing;
+	}
+
+	sendSlideShowFollowMessage(msg: string): void {
+		if (this.isLeader()) app.socket.sendMessage('slideshowfollow ' + msg);
 	}
 }
 
