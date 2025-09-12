@@ -178,8 +178,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_isOpen: function(id) {
-		return (id in this._dialogs) && this._dialogs[id] &&
-			$('#' + this._toStrId(id)).length > 0;
+		const el = document.getElementById(this._toStrId(id));
+		return (id in this._dialogs) && this._dialogs[id] && !!el;
 	},
 
 	isCursorVisible: function(id) {
@@ -392,7 +392,12 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'size_changed') {
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
-			$('#' + strId).remove();
+			const dlgEl = document.getElementById(strId);
+			if (dlgEl && dlgEl.parentNode) {
+				dlgEl.parentNode.removeChild(dlgEl);
+			} else if (!dlgEl) {
+				console.warn('Element #' + strId + ' not found');
+			}
 			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title, null, e.unique_id);
 			if (this._map._docLayer && this._map._docLayer._docType === 'spreadsheet') {
 				if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
@@ -446,11 +451,13 @@ L.Control.LokDialog = L.Control.extend({
 			var visible = (e.visible === 'true');
 			this._dialogs[e.id].cursorVisible = visible;
 			if (visible) {
-				$('#' + strId + '-cursor').css({display: 'block'});
+				const cursorEl = document.getElementById(strId + '-cursor');
+				if (cursorEl) cursorEl.style.display = 'block'; else console.warn('Element #' + strId + '-cursor not found');
 				this._map.fire('changefocuswidget', {winId: e.id, dialog: this, acceptInput: true}); // Us.
 			}
 			else {
-				$('#' + strId + '-cursor').css({display: 'none'});
+				const cursorEl = document.getElementById(strId + '-cursor');
+				if (cursorEl) cursorEl.style.display = 'none';
 			}
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
@@ -459,9 +466,11 @@ L.Control.LokDialog = L.Control.extend({
 			else
 				this._onDialogClose(e.id, false);
 		} else if (e.action === 'hide') {
-			$('#' + strId).parent().css({display: 'none'});
+			const dlg = document.getElementById(strId);
+			if (dlg && dlg.parentElement) dlg.parentElement.style.display = 'none';
 		} else if (e.action === 'show') {
-			$('#' + strId).parent().css({display: 'block'});
+			const dlg = document.getElementById(strId);
+			if (dlg && dlg.parentElement) dlg.parentElement.style.display = 'block';
 		}
 	},
 
@@ -875,7 +884,8 @@ L.Control.LokDialog = L.Control.extend({
 
 		if (notifyBackend)
 			this._sendCloseWindow(dialogId);
-		$('#' + this._toStrId(dialogId)).remove();
+		const dlg = document.getElementById(this._toStrId(dialogId));
+		if (dlg && dlg.parentNode) dlg.parentNode.removeChild(dlg); else if (!dlg) console.warn('Element #' + this._toStrId(dialogId) + ' not found');
 
 		// focus the main document
 		this._map.fire('editorgotfocus');
@@ -906,7 +916,8 @@ L.Control.LokDialog = L.Control.extend({
 	_onEditorGotFocus: function() {
 		// We need to lose focus on any dialogs currently with focus.
 		for (var winId in this._dialogs) {
-			$('#' + this._dialogs[winId].strId + '-cursor').css({display: 'none'});
+			const cursorEl = document.getElementById(this._dialogs[winId].strId + '-cursor');
+			if (cursorEl) cursorEl.style.display = 'none';
 		}
 	},
 
@@ -1004,7 +1015,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogChildClose: function(dialogId) {
-		$('#' + this._toStrId(dialogId) + '-floating').remove();
+		const floatEl = document.getElementById(this._toStrId(dialogId) + '-floating');
+		if (floatEl && floatEl.parentNode) floatEl.parentNode.removeChild(floatEl);
 
 		// Remove any extra height allocated for the parent container (only for floating dialogs).
 		var canvas = document.getElementById(dialogId + '-canvas');
@@ -1014,7 +1026,8 @@ L.Control.LokDialog = L.Control.extend({
 				return;
 		}
 		var canvasHeight = canvas.height;
-		$('#' + dialogId).height(canvasHeight + 'px');
+		const dlg = document.getElementById(dialogId);
+		if (dlg) dlg.style.height = canvasHeight + 'px';
 
 		this._dialogs[dialogId].childid = undefined;
 		this._dialogs[dialogId].childx = undefined;
@@ -1022,7 +1035,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_removeDialogChild: function(id) {
-		$('#' + this._toStrId(id) + '-floating').remove();
+		const floatEl = document.getElementById(this._toStrId(id) + '-floating');
+		if (floatEl && floatEl.parentNode) floatEl.parentNode.removeChild(floatEl);
 		this._dialogs[id].childid = undefined;
 		this._dialogs[id].childx = undefined;
 		this._dialogs[id].childy = undefined;
