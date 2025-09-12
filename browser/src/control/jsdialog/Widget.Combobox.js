@@ -27,6 +27,9 @@
 /* global JSDialog app _ $ */
 
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
+	if (data.visible === false) {
+		return;
+	}
 	var entry = L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
 
@@ -222,7 +225,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		entries.push({
 			text: data.entries[i].toString(),
 			selected: parseInt(i) === selectedEntryPos,
-			customRenderer: data.customEntryRenderer
+			customRenderer: data.customEntryRenderer,
+			visible: true
 		});
 	}
 
@@ -250,7 +254,6 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 				builder.map.focus();
 			}
 		}
-
 		resetSelection();
 		for (var i in entries) {
 			if (entries[i] == this.value || entries[i].text == this.value) {
@@ -258,6 +261,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 				break;
 			}
 		}
+
 		// check for drop down is in open state or not.
 		// If open then we should make focus in entries field for Arrow key navigation
 		if (event.key === 'ArrowDown' && builder.map.jsdialog.hasDropdownOpened()) {
@@ -268,6 +272,32 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 				return;
 			}
 		}
+	});
+
+	content.addEventListener('keydown', function (event) {
+		//  only run the keydown logic once after 1000ms of inactivity
+		if (content.timeout) {
+			clearTimeout(content.timeout);
+		}
+		content.timeout = setTimeout(() => {
+			resetSelection();
+
+			// Filter entries based on input text
+			JSDialog.CloseDropdown(data.id);
+			entries = [];
+			const filterText = content.value.toLowerCase();
+			for (var i in data.entries) {
+				const entry = data.entries[i];
+				entries.push({
+					text: entry,
+					selected: false,
+					visible: entry.toLowerCase().includes(filterText),
+					customRenderer: data.customEntryRenderer
+				});
+			}
+			clickFunction();
+			content.focus();
+		}, 1000);
 	});
 
 	var comboboxId = data.id;
