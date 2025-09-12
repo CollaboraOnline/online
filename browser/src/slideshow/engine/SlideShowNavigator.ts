@@ -25,6 +25,7 @@ class SlideShowNavigator {
 	private lastClickTime: number = 0;
 	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
 	private currentLeaderSlide: number = -1;
+	private currentLeaderEffect: number = -1;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -223,9 +224,18 @@ class SlideShowNavigator {
 		this.currentLeaderSlide = info.currentSlide;
 	}
 
+	setLeaderEffect(info: any) {
+		this.currentLeaderEffect = info.currentEffect;
+	}
+
 	followLeaderSlide() {
 		this.presenter.setFollowing(true);
-		this.displaySlide(this.currentLeaderSlide, true);
+		// const currentEffect = this.currentLeaderEffect;
+		if (this.currentLeaderSlide === this.currentSlide)
+			this.slideShowHandler.rewindAllEffects();
+		else this.displaySlide(this.currentLeaderSlide, true);
+		for (let i = 0; i <= this.currentLeaderEffect; i++)
+			this.slideShowHandler.skipNextEffect();
 	}
 
 	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
