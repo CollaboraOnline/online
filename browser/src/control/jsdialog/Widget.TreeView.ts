@@ -922,6 +922,25 @@ class TreeViewControl {
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 
+	selectEntryByRow(row: number) {
+		const rowElement = this._rows.get(String(row));
+		if (!rowElement) {
+			console.warn('TreeView onSelect: row "' + row + '" not found');
+			return;
+		}
+
+		// Clear existing selections
+		this._container
+			.querySelectorAll('.ui-treeview-entry.selected')
+			.forEach((item: HTMLElement) => {
+				this.unselectEntry(item);
+			});
+
+		// Select the target row
+		const checkbox = rowElement.querySelector('input') as HTMLInputElement;
+		this.selectEntry(rowElement, checkbox);
+	}
+
 	unselectEntry(item: HTMLElement) {
 		L.DomUtil.removeClass(item, 'selected');
 		item.removeAttribute('aria-selected');
@@ -1626,6 +1645,9 @@ class TreeViewControl {
 		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
 
 		this._tbody = this._container;
+		(this._container as any).onSelect = (position: number) => {
+			this.selectEntryByRow(position);
+		};
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 		(this._container as any).highlightEntries =
 			this.highlightEntries.bind(this);
