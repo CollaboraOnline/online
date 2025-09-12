@@ -557,7 +557,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	align-self: start;
 }
 
-.ui-iconview-window {
+.notebookbar .ui-iconview-window {
 	display: flex;
 	flex-direction: row;
 }
