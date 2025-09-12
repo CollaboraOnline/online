@@ -5323,17 +5323,6 @@ msgstr ""
 #~ msgid "%d minutes ago"
 #~ msgstr "před %d minutami"
 
-#~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-#~ msgstr ""
-#~ "Prohlížeč IE11 dosáhl maximálního počtu připojení. V případě potřeby můžete "
-#~ "tento limit navýšit podle následujícího dokumentu: https://docs.microsoft."
-#~ "com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
-#~ "general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-
 #~ msgid "Start upload"
 #~ msgstr "Zahájit nahrávání"
 

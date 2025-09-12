@@ -5374,17 +5374,6 @@ msgstr ""
 #~ msgid "%d minutes ago"
 #~ msgstr "%d perce"
 
-#~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this "
-#~ "document to increase this limit if needed: https://docs.microsoft.com/en-"
-#~ "us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-#~ msgstr ""
-#~ "Az IE11 elérte a lehetséges kapcsolatok maximális számát. Ha szükséges a "
-#~ "limit felemelése, olvassa el ezt a dokumentumot: https://docs.microsoft."
-#~ "com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
-#~ "general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-
 #~ msgid "Start upload"
 #~ msgstr "Feltöltés indítása"
 
