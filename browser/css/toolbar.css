@@ -124,7 +124,7 @@
 
 .top-row-overflow-group {
 	display: flex;
-	max-width: 498px;
+	max-width: 100%;
 }
 /* overflow menu */
 .ui-overflow-group-popup {
