@@ -471,7 +471,169 @@ class HRuler extends Ruler {
 		}
 	}
 
+	_updateBreakPointsImpress() {
+		if (this.options.margin1 == null || this.options.margin2 == null) return;
+
+		const leftPageMargin = this.options.leftOffset;
+		const rightPageMargin =
+			this.options.pageWidth - (this.options.leftOffset + this.options.margin2);
+		const scale = app.map.getZoomScale(this._map.getZoom(), 10);
+		const rulerWidth =
+			app.activeDocument.fileSize.cX - this.options.tileMargin * 2 * scale;
+		const rulerWidthCM = Math.floor(
+			rulerWidth * 0.026458 /* width of 1 CSS px in cm*/,
+		);
+		const pageWidthCM = this.options.pageWidth / 1000;
+		const numbersPerCM = pageWidthCM / rulerWidthCM;
+		const increaseBy = Math.round(numbersPerCM + 0.5);
+		const markerWidthPx = (increaseBy / numbersPerCM) * (1 / 0.026458);
+
+		this._fixOffset();
+
+		this.options.DraggableConvertRatio = rulerWidth / this.options.pageWidth;
+		this._rFace.style.width = rulerWidth + 'px';
+
+		this._rBPContainer.style.marginLeft =
+			-1 *
+				(this.options.DraggableConvertRatio * (500 - (leftPageMargin % 1000))) +
+			1 +
+			'px';
+
+		this._rBPContainer.replaceChildren();
+		var numCounter = -1 * Math.floor(leftPageMargin / 1000);
+
+		// this.options.pageWidth is in mm100, so the code here makes one ruler division per centimetre.
+		for (var num = 0; num <= this.options.pageWidth / 1000 + 1; num++) {
+			var marker = L.DomUtil.create(
+				'div',
+				'cool-ruler-maj',
+				this._rBPContainer,
+			);
+
+			// The - 1 is to compensate for the left and right .5px borders of cool-ruler-maj in leaflet.css.
+			marker.style.width =
+				(numCounter !== 0 ? markerWidthPx : markerWidthPx * 0.5) - 1 + 'px';
+			if (this.options.displayNumber) {
+				if (numCounter !== 0) marker.innerText = numCounter;
+			}
+			numCounter += increaseBy;
+		}
+
+		// The tabstops. Only draw user-created ones, with style RULER_TAB_LEFT,
+		// RULER_TAB_RIGHT, RULER_TAB_CENTER, and RULER_TAB_DECIMAL. See <svtools/ruler.hxx>.
+		this._rTSContainer.replaceChildren();
+
+		var pxPerMm100 =
+			this._map._docLayer._docPixelSize.x /
+			((app.activeDocument.fileSize.x * 2540) / 1440);
+		this._rTSContainer.tabStops = [];
+		for (
+			var tabstopIndex = 0;
+			tabstopIndex < this.options.tabs.length;
+			tabstopIndex++
+		) {
+			var markerClass = null;
+			var currentTabstop: any = this.options.tabs[tabstopIndex];
+			switch (currentTabstop.style) {
+				case 0:
+					markerClass = 'cool-ruler-tabstop-left';
+					break;
+				case 1:
+					markerClass = 'cool-ruler-tabstop-right';
+					break;
+				case 2:
+					markerClass = 'cool-ruler-tabstop-center';
+					break;
+				case 3:
+					markerClass = 'cool-ruler-tabstop-decimal';
+					break;
+			}
+			if (markerClass != null) {
+				marker = L.DomUtil.create('div', markerClass, this._rTSContainer);
+				var positionPixel = currentTabstop.position * pxPerMm100;
+				var markerWidth = marker.offsetWidth;
+				var markerHalfWidth = markerWidth / 2.0;
+				marker.tabStopLocation = {
+					left: positionPixel - markerHalfWidth,
+					center: positionPixel,
+					right: positionPixel + markerHalfWidth,
+				};
+				marker.style.left = marker.tabStopLocation.left + 'px';
+				marker.tabStopNumber = tabstopIndex;
+				this._rTSContainer.tabStops[tabstopIndex] = marker;
+				marker.style.cursor = 'move';
+			}
+		}
+
+		if (!this.options.marginSet) {
+			this.options.marginSet = true;
+			this._lMarginMarker = L.DomUtil.create(
+				'div',
+				'cool-ruler-margin cool-ruler-left',
+				this._rFace,
+			);
+			this._rMarginMarker = L.DomUtil.create(
+				'div',
+				'cool-ruler-margin cool-ruler-right',
+				this._rFace,
+			);
+			this._lMarginDrag = L.DomUtil.create(
+				'div',
+				'cool-ruler-drag cool-ruler-left',
+				this._rMarginWrapper,
+			);
+			this._lToolTip = L.DomUtil.create(
+				'div',
+				'cool-ruler-ltooltip',
+				this._lMarginDrag,
+			);
+			this._rMarginDrag = L.DomUtil.create(
+				'div',
+				'cool-ruler-drag cool-ruler-right',
+				this._rMarginWrapper,
+			);
+			this._rToolTip = L.DomUtil.create(
+				'div',
+				'cool-ruler-rtooltip',
+				this._rMarginDrag,
+			);
+			var lMarginTooltipText = _('Left Margin');
+			var rMarginTooltipText = _('Right Margin');
+
+			this._lMarginDrag.dataset.title = lMarginTooltipText;
+			this._rMarginDrag.dataset.title = rMarginTooltipText;
+		}
+
+		this._lMarginMarker.style.width =
+			this.options.DraggableConvertRatio * leftPageMargin + 'px';
+		this._rMarginMarker.style.width =
+			this.options.DraggableConvertRatio * rightPageMargin + 'px';
+		this._lMarginDrag.style.width =
+			this.options.DraggableConvertRatio * leftPageMargin + 'px';
+		this._rMarginDrag.style.width =
+			this.options.DraggableConvertRatio * rightPageMargin + 'px';
+
+		// Put the _rTSContainer in the right place
+		this._rTSContainer.style.left =
+			this.options.DraggableConvertRatio * leftPageMargin + 'px';
+		this._rTSContainer.style.right =
+			this.options.DraggableConvertRatio * rightPageMargin + 'px';
+
+		this._updateParagraphIndentations();
+
+		if (this.options.interactive) {
+			this._changeInteractions({ perm: 'edit' });
+		} else {
+			this._changeInteractions({ perm: 'readonly' });
+		}
+	}
+
 	_updateBreakPoints() {
+		if (app.map._docLayer._docType === 'presentation') {
+			this._updateBreakPointsImpress();
+			return;
+		}
+
 		if (this.options.margin1 == null || this.options.margin2 == null) return;
 
 		var lMargin, rMargin, wPixel, scale;
