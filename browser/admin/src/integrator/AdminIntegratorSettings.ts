@@ -93,9 +93,9 @@ const defaultBrowserSetting: Record<string, any> = {
 		A11yCheckDeck: false,
 		NavigatorDeck: false,
 		PropertyDeck: true,
-		SdCustomAnimationDeck: false,
-		SdMasterPagesDeck: false,
-		SdSlideTransitionDeck: false,
+		// SdCustomAnimationDeck: false,
+		// SdMasterPagesDeck: false,
+		// SdSlideTransitionDeck: false,
 	},
 	drawing: {
 		ShowRuler: false,
@@ -122,9 +122,9 @@ class SettingIframe {
 		A11yCheckDeck: _('Accessibility Checker'),
 		NavigatorDeck: _('Navigator'),
 		PropertyDeck: _('Show Sidebar'),
-		SdCustomAnimationDeck: _('Custom Animation'),
-		SdMasterPagesDeck: _('Master Pages'),
-		SdSlideTransitionDeck: _('Slide Transition'),
+		// SdCustomAnimationDeck: _('Custom Animation'),
+		// SdMasterPagesDeck: _('Master Pages'),
+		// SdSlideTransitionDeck: _('Slide Transition'),
 		StyleListDeck: _('Style List'),
 		// Add more as needed
 	};

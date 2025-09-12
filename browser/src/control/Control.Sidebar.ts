@@ -41,10 +41,10 @@ class Sidebar extends SidebarBase {
 		// No longer used:
 		// 'SdSlideTransitionDeck'
 		// 'SdMasterPagesDeck',
+		// 'SdCustomAnimationDeck',
 
 		const decks = [
 			'PropertyDeck',
-			'SdCustomAnimationDeck',
 			'NavigatorDeck',
 			'StyleListDeck',
 			'A11yCheckDeck',
@@ -61,9 +61,9 @@ class Sidebar extends SidebarBase {
 		// No longer used:
 		// if (deckId === 'SdSlideTransitionDeck') return '.uno:SlideChangeWindow';
 		// else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
+		// else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
 
 		if (deckId === 'PropertyDeck') return '.uno:SidebarDeck.PropertyDeck';
-		else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
 		else if (deckId === 'NavigatorDeck') return '.uno:Navigator';
 		else if (deckId === 'StyleListDeck')
 			return '.uno:SidebarDeck.StyleListDeck';
