@@ -81,8 +81,7 @@ class SlideShowNavigator {
 	}
 
 	dispatchEffect() {
-		if (this.presenter.isLeader())
-			app.socket.sendMessage('slideshowfollow dispatcheffect');
+		this.presenter.sendSlideShowFollowMessage('dispatcheffect');
 		const currentTime = Date.now();
 		const timeDiff = currentTime - this.lastClickTime;
 		NAVDBG.print(
@@ -129,8 +128,7 @@ class SlideShowNavigator {
 	}
 
 	rewindEffect() {
-		if (this.presenter.isLeader())
-			app.socket.sendMessage('slideshowfollow rewindeffect');
+		this.presenter.sendSlideShowFollowMessage('rewindeffect');
 		NAVDBG.print(
 			'SlideShowNavigator.rewindEffect: current index: ' + this.currentSlide,
 		);
@@ -239,12 +237,10 @@ class SlideShowNavigator {
 	}
 
 	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
-		if (this.presenter.isLeader()) {
-			app.socket.sendMessage(
-				'slideshowfollow displayslide ' +
-					JSON.stringify({ currentSlide: nNewSlide }),
-			);
-		}
+		this.presenter.sendSlideShowFollowMessage(
+			'displayslide ' + JSON.stringify({ currentSlide: nNewSlide }),
+		);
+
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -403,15 +399,14 @@ class SlideShowNavigator {
 			if (shape) {
 				this._onExecuteInteraction(shape.clickAction);
 			} else if (videoInfo) {
-				if (this.presenter.isLeader()) {
-					const parameters = {
-						currentSlide: this.currentSlide,
-						videoInfoId: videoInfo.id,
-					};
-					app.socket.sendMessage(
-						'slideshowfollow followvideo ' + JSON.stringify(parameters),
-					);
-				}
+				this.presenter.sendSlideShowFollowMessage(
+					'followvideo ' +
+						JSON.stringify({
+							currentSlide: this.currentSlide,
+							videoInfoId: videoInfo.id,
+						}),
+				);
+
 				const video = this.presenter.getVideoRenderer(
 					slideInfo.hash,
 					videoInfo,
