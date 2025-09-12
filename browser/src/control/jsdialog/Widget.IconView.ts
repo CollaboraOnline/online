@@ -182,6 +182,8 @@ JSDialog.iconView = function (
 		parentContainer,
 	);
 	container.id = data.id;
+	if (data.labelledBy)
+		container.setAttribute('aria-labelledby', data.labelledBy);
 
 	const disabled = data.enabled === false;
 	if (disabled) L.DomUtil.addClass(container, 'disabled');
