@@ -1688,6 +1688,13 @@ export class CommentSection extends CanvasSectionObject {
 				this.update();
 			}
 		}
+		else if (action === 'SearchHighlight') {
+			id = obj[dataroot].id;
+			const selection = obj[dataroot].searchSelection.split(",");
+			const comment = this.getComment(id);
+			comment.selectText(parseInt(selection[0]), parseInt(selection[1]), parseInt(selection[2]), parseInt(selection[3]));
+			this.showHideComment(comment);
+		}
 		if ((<any>window).mode.isMobile()) {
 			var shouldOpenWizard = false;
 			var wePerformedAction = obj.comment.author === this.map.getViewName(app.map._docLayer._viewId);
