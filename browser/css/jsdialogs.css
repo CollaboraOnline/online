@@ -265,12 +265,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 .jsdialog.ui-separator.vertical {
 	margin: 5px 0px;
-	padding-right: 1px;
 	background-color: var(--color-background-darker);
 }
 
 .ui-toolbar .ui-separator.vertical {
 	height: 14px;
+	width: 1px;
+	padding: 0px; /* Set padding to 0px, as the padding in `browser/css/toolbar.css` overrides it for the separator. */
 	align-self: center;
 	margin: 0 3px;
 }
