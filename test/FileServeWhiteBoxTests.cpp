@@ -42,7 +42,11 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     void testPreProcessedFileSubstitution();
 
     void preProcessedFileSubstitution(const std::string_view testname,
-                                      std::unordered_map<std::string, std::string> variables);
+                                      const std::unordered_map<std::string, std::string> variables);
+    // Helper replace each occurence of from in str to variables[to_key] except if to_key is not in variables
+    std::string& replaceIfExist(std::string& str, const std::string& from,
+                                const std::string& to_key,
+                                const std::unordered_map<std::string, std::string> variables);
 };
 
 void FileServeTests::testUIDefaults()
@@ -371,7 +375,7 @@ void FileServeTests::testPreProcessedFileRoundtrip()
 }
 
 void FileServeTests::preProcessedFileSubstitution(
-    const std::string_view testname, std::unordered_map<std::string, std::string> variables)
+    const std::string_view testname, const std::unordered_map<std::string, std::string> variables)
 {
     const Poco::Path path(TDIST);
 
@@ -391,28 +395,36 @@ void FileServeTests::preProcessedFileSubstitution(
 
             const std::string recon = ppf.substitute(variables);
 
-            Poco::replaceInPlace(orig, std::string("%ACCESS_TOKEN%"), variables["ACCESS_TOKEN"]);
-            Poco::replaceInPlace(orig, std::string("%ACCESS_TOKEN_TTL%"),
-                                 variables["ACCESS_TOKEN_TTL"]);
-            Poco::replaceInPlace(orig, std::string("%ACCESS_HEADER%"), variables["ACCESS_HEADER"]);
-            Poco::replaceInPlace(orig, std::string("%UI_DEFAULTS%"), variables["UI_DEFAULTS"]);
-            Poco::replaceInPlace(orig, std::string("<!--%CSS_VARIABLES%-->"),
-                                 variables["CSS_VARIABLES"]);
-            Poco::replaceInPlace(orig, std::string("%POSTMESSAGE_ORIGIN%"),
-                                 variables["POSTMESSAGE_ORIGIN"]);
-            Poco::replaceInPlace(orig, std::string("%BRANDING_THEME%"),
-                                 variables["BRANDING_THEME"]);
-            Poco::replaceInPlace(orig, std::string("<!--%BRANDING_JS%-->"),
-                                 variables["BRANDING_JS"]);
-            Poco::replaceInPlace(orig, std::string("%FOOTER%"), variables["FOOTER"]);
-            Poco::replaceInPlace(orig, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
-                                 variables["CHECK_FILE_INFO_OVERRIDE"]);
-            Poco::replaceInPlace(orig, std::string("%BUYPRODUCT_URL%"),
-                                 variables["BUYPRODUCT_URL"]);
+            replaceIfExist(orig, std::string("%ACCESS_TOKEN%"), "ACCESS_TOKEN", variables);
+            replaceIfExist(orig, std::string("%ACCESS_TOKEN_TTL%"), "ACCESS_TOKEN_TTL", variables);
+            replaceIfExist(orig, std::string("%ACCESS_HEADER%"), "ACCESS_HEADER", variables);
+            replaceIfExist(orig, std::string("%UI_DEFAULTS%"), "UI_DEFAULTS", variables);
+            replaceIfExist(orig, std::string("<!--%CSS_VARIABLES%-->"), "CSS_VARIABLES", variables);
+            replaceIfExist(orig, std::string("%POSTMESSAGE_ORIGIN%"), "POSTMESSAGE_ORIGIN",
+                           variables);
+            replaceIfExist(orig, std::string("%BRANDING_THEME%"), "BRANDING_THEME", variables);
+            replaceIfExist(orig, std::string("<!--%BRANDING_JS%-->"), "BRANDING_JS", variables);
+            replaceIfExist(orig, std::string("%FOOTER%"), "FOOTER", variables);
+            replaceIfExist(orig, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
+                           "CHECK_FILE_INFO_OVERRIDE", variables);
+            replaceIfExist(orig, std::string("%BUYPRODUCT_URL%"), "BUYPRODUCT_URL", variables);
 
             LOK_ASSERT_EQUAL(orig, recon);
         }
     }
+}
+
+std::string&
+FileServeTests::replaceIfExist(std::string& str, const std::string& from, const std::string& to_key,
+                               const std::unordered_map<std::string, std::string> variables)
+{
+    auto search = variables.find(to_key);
+    if (search == variables.end())
+    {
+        // key not found, do nothing
+        return str;
+    }
+    return Poco::replaceInPlace(str, from, search->second);
 }
 
 void FileServeTests::testPreProcessedFileSubstitution()
