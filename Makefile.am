@@ -373,7 +373,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/HostUtil.hpp \
               wsd/Platform-mobile.hpp \
               wsd/Platform-server.hpp \
-              wsd/Platform-unix.hpp \
               wsd/PresetsInstall.hpp \
               wsd/Process.hpp \
               wsd/ProofKey.hpp \
