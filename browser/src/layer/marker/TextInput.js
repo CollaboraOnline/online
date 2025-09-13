@@ -1176,11 +1176,12 @@ L.TextInput = L.Layer.extend({
 
 		this._followMyCursor();
 
+		const windowId = app.map._docLayer._formID !== null ? app.map._docLayer._formID : this._map.getWinId();
+
 		/// TODO: rename the event to 'removetextcontent' as soon as coolwsd supports it
 		/// TODO: Ask Marco about it
 		app.socket.sendMessage(
-			'removetextcontext id=' +
-			this._map.getWinId() +
+			'removetextcontext id=' + windowId +
 			' before=' + before +
 			' after=' + after
 		);
