@@ -267,6 +267,7 @@ class InitializerBase {
 		window.indirectionUrl = "";
 		window.geolocationSetup = false;
 		window.canvasSlideshowEnabled = false;
+		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 
 		window.tileSize = 256;
 
@@ -411,6 +412,7 @@ class BrowserInitializer extends InitializerBase {
 		window.indirectionUrl = element.dataset.indirectionUrl;
 		window.geolocationSetup = element.dataset.geolocationSetup.toLowerCase().trim() === "true";
 		window.canvasSlideshowEnabled = element.dataset.canvasSlideshowEnabled.toLowerCase().trim() === "true";
+		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 	}
 
 	postMessageHandler(e) {

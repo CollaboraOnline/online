@@ -12,6 +12,8 @@
  * L.IFrameDialog
  */
 
+/* global _ */
+
 L.IFrameDialog = L.Class.extend({
 
 	options: {
@@ -25,7 +27,16 @@ L.IFrameDialog = L.Class.extend({
 		this._loading = false;
 		L.setOptions(this, options);
 
-		this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
+		const containerCss = this.options.dialogCssClass;
+		this._container = L.DomUtil.create('div', this.options.prefix + '-wrap ' + containerCss);
+		if (this.options.titlebar) {
+			const titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', this._container);
+			const title = L.DomUtil.create('h2', 'ui-dialog-title', titlebar);
+			title.innerText = _('Options');
+			const closeButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
+			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', closeButton);
+			L.DomEvent.on(closeButton, 'click', () => this.remove(this._container));
+		}
 		content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 
 		this._container.style.display = 'none';
@@ -41,6 +52,32 @@ L.IFrameDialog = L.Class.extend({
 
 		if (this.options.id) {
 			this._iframe.id = this.options.id;
+		}
+
+		const modalButtons = this.options.modalButtons;
+		if (modalButtons) {
+			const buttonBox = L.DomUtil.create(
+				'div',
+				'jsdialog ui-button-box end',
+				content
+			);
+			const buttonBoxLeft = L.DomUtil.create(
+				'div',
+				'jsdialog ui-button-box-left',
+				buttonBox
+			);
+			const buttonBoxRight = L.DomUtil.create(
+				'div',
+				'jsdialog ui-button-box-right',
+				buttonBox
+			);
+
+			for (const i in modalButtons) {
+				const wrapper = L.DomUtil.create('div','ui-pushbutton-wrapper', modalButtons[i].align === 'left' ? buttonBoxLeft : buttonBoxRight);
+				const button = L.DomUtil.create('button', 'ui-pushbutton', wrapper);
+				button.id = modalButtons[i].id;
+				button.innerText = modalButtons[i].text;
+			}
 		}
 
 		if (element) {
@@ -79,6 +116,32 @@ L.IFrameDialog = L.Class.extend({
 				window.postMessage('{"MessageId":"' + msg + '"}');
 			}
 		}, 1000);
+
+		if (this.options.stylesheets) {
+			this.addStyleSheets(this.options.stylesheets);
+		}
+	},
+
+	addStyleSheet: function (href) {
+		if (!this._iframe || !this._iframe.contentDocument) {
+			console.error('Cannot access iframe element');
+			return false;
+		}
+
+		const head = this._iframe.contentDocument.head;
+		const link = this._iframe.contentDocument.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = href;
+		head.appendChild(link);
+
+		return true;
+	},
+
+	addStyleSheets: function (stylesheets) {
+		for (const i in stylesheets) {
+			this.addStyleSheet(stylesheets[i]);
+		}
 	},
 
 	clearTimeout: function ()
@@ -125,6 +188,7 @@ L.IFrameDialog = L.Class.extend({
 window.addEventListener('keyup', function iframeKeyupListener (e) {
 	if (e.keyCode === 27 || e.key === 'Escape') {
 		window.postMessage('{"MessageId":"welcome-close"}', '*');
+		window.postMessage('{"MessageId":"settings-cancel"}', '*');
 	}
 });
 

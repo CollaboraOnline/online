@@ -392,6 +392,23 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 
 		}
+
+		if (window.wopiSettingBaseUrl) {
+			content.push({
+				'type': 'separator',
+				'id': 'file-properties-break',
+				'orientation': 'vertical'
+			});
+
+			content.push({
+				'id': 'settings-dialog',
+				'type': 'bigtoolitem',
+				'text': _('Options'),
+				'command': '.uno:Settings',
+				'accessibility': { focusBack: false, combination: 'T', de: null }
+			});
+		}
+
 		return this.getTabPage('File', content);
 	},
 
