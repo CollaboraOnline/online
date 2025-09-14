@@ -1331,11 +1331,12 @@ class UIManager extends L.Control {
 	 * Focuses the search functionality.
 	 */
 	focusSearch(): void {
-		if (this.map.isText() && !app.showNavigator) {
+		const isTextDoc = this.map.isText();
+		if (isTextDoc && !app.showNavigator) {
 			this.map.navigator.preFocusQuickFind();
 			this.showNavigator();
 		}
-		else {
+		else if(!isTextDoc){
 			app.socket.sendMessage('uno .uno:SearchDialog');
 		}
 		this.map.fire('focussearch');
