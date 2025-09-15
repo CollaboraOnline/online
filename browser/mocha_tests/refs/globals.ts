@@ -10,12 +10,16 @@
  */
 
 var L: any = {
-    CSections: { Scroll: { name : 'scroll' } },
     LOUtil: {},
 };
 
 var app: any = {
+    CSections: { Scroll: { name : 'scroll' } },
     roundedDpiScale : 1,
     canvasSize: null,
-    definitions: {}
+    definitions: {},
+    dpiScale: 1,
+    twipsToPixels: 15,
+    pixelsToTwips: 1 / 15,
+    sectionContainer: {}
 };

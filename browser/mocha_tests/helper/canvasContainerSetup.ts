@@ -12,6 +12,7 @@
 /// <reference path="../../src/canvas/CanvasSectionContainer.ts" />
 /// <reference path="../../src/canvas/CanvasSectionObject.ts" />
 /// <reference path="../../src/canvas/sections/TilesSection.ts" />
+/// <reference path="../../src/app/LayoutingService.ts" />
 
 function canvasDomString() {
     return `
@@ -26,13 +27,16 @@ function canvasDomString() {
     </html>`;
 }
 
-function setupCanvasContainer(width: number, height: number): CanvasSectionContainer {
+function setupCanvasContainer(width: number, height: number) {
   const canvas = <HTMLCanvasElement>document.getElementById('document-canvas');
 
-  const sectionContainer = new CanvasSectionContainer(canvas, true /* disableDrawing? */);
-  sectionContainer.onResize(width, height); // Set canvas size.
+  app.sectionContainer = new CanvasSectionContainer(canvas, true /* disableDrawing? */);
+  app.sectionContainer.enableDrawing();
 
-  return sectionContainer;
+  app.sectionContainer.onResize(width, height); // Set canvas size.
+
+  app.layoutingService = new LayoutingService();
+
 }
 
 // The necessary canvas API functions are mocked here as we don't use canvas node module.
