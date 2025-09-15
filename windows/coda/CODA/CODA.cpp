@@ -1065,7 +1065,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
-    Log::initialize("CODA", "trace");
+    Log::initialize("CODA", COOLWSD_LOGLEVEL);
     Util::setThreadName("main");
 
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
