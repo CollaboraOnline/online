@@ -164,7 +164,7 @@ std::size_t getTotalSystemMemoryKb()
     return totalMemKb;
 }
 
-std::size_t getFromCGroup(const std::string& group, const std::string& key)
+static std::size_t getFromCGroup(const std::string& group, const std::string& key)
 {
     std::size_t num = 0;
 
@@ -203,10 +203,64 @@ std::size_t getFromCGroup(const std::string& group, const std::string& key)
     return num;
 }
 
+static std::string getCurrentCGroupPath()
+{
+    std::ifstream file("/proc/self/cgroup");
+    if (file.is_open())
+    {
+        std::string line;
+        while (std::getline(file, line))
+        {
+            // cgroup v2 format: 0::/path/to/cgroup
+            if (line.substr(0, 3) == "0::")
+            {
+                return line.substr(3);
+            }
+        }
+    }
+    return "/";
+}
+
+static bool isCGroupV2() { return std::ifstream("/sys/fs/cgroup/cgroup.controllers").good(); }
+
+static std::size_t getFromCGroupV2(const std::string& key)
+{
+    std::string cgroupPath = getCurrentCGroupPath();
+    std::string fullPath = "/sys/fs/cgroup" + cgroupPath + "/" + key;
+    std::size_t num = 0;
+
+    LOG_TRC("Reading from: " << fullPath);
+
+    std::ifstream file(fullPath);
+    if (file.is_open())
+    {
+        std::string line;
+        if (std::getline(file, line))
+        {
+            if (line == "max")
+            {
+                return 0; // Unlimited
+            }
+            else
+            {
+                num = std::stoull(line);
+            }
+        }
+    }
+    return num;
+}
+
 std::size_t getCGroupMemLimit()
 {
 #ifdef __linux__
-    return getFromCGroup("memory", "memory.limit_in_bytes");
+    if (isCGroupV2())
+    {
+        return getFromCGroupV2("memory.max");
+    }
+    else
+    {
+        return getFromCGroup("memory", "memory.limit_in_bytes");
+    }
 #else
     return 0;
 #endif
@@ -215,7 +269,14 @@ std::size_t getCGroupMemLimit()
 std::size_t getCGroupMemSoftLimit()
 {
 #ifdef __linux__
-    return getFromCGroup("memory", "memory.soft_limit_in_bytes");
+    if (isCGroupV2())
+    {
+        return getFromCGroupV2("memory.high");
+    }
+    else
+    {
+        return getFromCGroup("memory", "memory.soft_limit_in_bytes");
+    }
 #else
     return 0;
 #endif
