@@ -3114,25 +3114,36 @@ int pollCallback(void* data, int timeoutUs)
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     std::vector<std::shared_ptr<KitSocketPoll>> v;
+    v.reserve(KitSocketPoll::KSPolls.size());
     for (const auto &i : KitSocketPoll::KSPolls)
     {
-        auto p = i.lock();
-        if (p)
-            v.push_back(p);
+        if (auto p = i.lock())
+            v.push_back(std::move(p));
     }
+
     if (v.empty())
     {
         // Remove any stale elements from KitSocketPoll::KSPolls and
         // block until an element is added to KitSocketPoll::KSPolls
         KitSocketPoll::KSPolls.clear();
         KitSocketPoll::KSPollsCV.wait(lock, []{ return KitSocketPoll::KSPolls.size(); });
+        return 0;
     }
-    else
-    {
-        lock.unlock();
-        for (const auto &p : v)
-            p->kitPoll(timeoutUs);
+
+    lock.unlock();
+
+    // Non-blocking poll on all kits
+    bool anyPollHadEvents = false;
+    for (const auto &p : v) {
+        // deliberately kitPoll(0) - returns right away
+        if (p->kitPoll(0) > 0)
+            anyPollHadEvents = true;
     }
+
+    // If no poll had events, block until any fake-socket activity,
+    // or until the global condition variable (theCV) timeout expires
+    if (!anyPollHadEvents)
+        fakeSocketWaitAny(timeoutUs);
 
     // We never want to exit the main loop
     return 0;
