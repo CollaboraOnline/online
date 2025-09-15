@@ -257,6 +257,24 @@ static bool checkForPoll(struct pollfd *pollfds, int nfds)
     return retval;
 }
 
+/**
+ * Wait for any event on any of the fake sockets (theCV is notified on write/close/connect/etc.)
+ */
+void fakeSocketWaitAny(int timeoutUs)
+{
+    std::unique_lock<std::mutex> lock(theMutex);
+    if (timeoutUs < 0)
+    {
+        theCV.wait(lock);
+        return;
+    }
+    if (timeoutUs == 0)
+        return;
+
+    auto const deadline = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutUs);
+    theCV.wait_until(lock, deadline);
+}
+
 int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
 {
     FAKESOCKET_LOG("FakeSocket Poll ");
