@@ -1762,6 +1762,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'id': 'design-master-page-group',
 				'type': 'overflowgroup',
 				'name': _('Master Slide Templates'),
+				'icon': 'lc_masterslide.svg',
 				'children': [
 					{
 						'id': 'masterpageall_icons', // has to match core id
