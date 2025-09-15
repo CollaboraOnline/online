@@ -27,7 +27,6 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include "Authorization.hpp"
 #include "ClientSession.hpp"
 #include "Common.hpp"
 #include "COOLWSD.hpp"
