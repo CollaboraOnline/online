@@ -64,6 +64,7 @@ function createMoreButton(
 	moreOptionsButton.setAttribute('aria-pressed', 'false');
 
 	const img = document.createElement('img');
+	img.alt = '';
 	app.LOUtil.setImage(img, 'lc_overflow-morebutton.svg', app.map);
 	moreOptionsButton.appendChild(img);
 
