@@ -151,7 +151,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     public static addOrUpdateOtherViewCellCursor(viewId: number, username: string, rectangleData: Array<string>, part: number) {
         let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
         if (rectangleData)
-            rectangle = new app.definitions.simpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
+            rectangle = new cool.SimpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
 
         const sectionName = OtherViewCellCursorSection.sectionNamePrefix + viewId;
         let section: OtherViewCellCursorSection;

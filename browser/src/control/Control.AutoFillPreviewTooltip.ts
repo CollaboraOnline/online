@@ -58,7 +58,7 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 			._cellRangeToTwipRect(cellRange)
 			.toRectangle();
 
-		ev.data.celladdress = new app.definitions.simplePoint(
+		ev.data.celladdress = new cool.SimplePoint(
 			parseInt(ev.data.celladdress[0]),
 			parseInt(ev.data.celladdress[1]),
 		);

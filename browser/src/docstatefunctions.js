@@ -15,24 +15,14 @@
  * This file is meant to be used for setting and getting the document states.
  */
 
-/* global app _ */
+/* global app _ cool */
 
 window.addEventListener('load', function () {
-	app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(
-		0,
-		0,
-		0,
-		0,
-	);
-	app.calc.cellAddress = new app.definitions.simplePoint(0, 0);
-	app.calc.splitCoordinate = new app.definitions.simplePoint(0, 0);
-	app.file.textCursor.rectangle = new app.definitions.simpleRectangle(
-		0,
-		0,
-		0,
-		0,
-	);
-	app.tile.size = new app.definitions.simplePoint(0, 0);
+	app.calc.cellCursorRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+	app.calc.cellAddress = new cool.SimplePoint(0, 0);
+	app.calc.splitCoordinate = new cool.SimplePoint(0, 0);
+	app.file.textCursor.rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+	app.tile.size = new cool.SimplePoint(0, 0);
 	app.pixelsToTwips = 15;
 	app.twipsToPixels = 1 / app.pixelsToTwips;
 	app.tile.size.pX = app.tile.size.pY = 256;

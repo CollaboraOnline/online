@@ -120,7 +120,7 @@ L.CanvasTileLayer.include({
 		x -= Math.round(anchorSize[0] * app.pixelsToTwips);
 		y -= Math.round(anchorSize[1] * app.pixelsToTwips);
 
-		this._tableAnchorSection = new app.definitions.shapeHandleAnchorSubSection(null, 'table-anchor', anchorSize, new app.definitions.simplePoint(x, y), null);
+		this._tableAnchorSection = new app.definitions.shapeHandleAnchorSubSection(null, 'table-anchor', anchorSize, new cool.SimplePoint(x, y), null);
 		app.sectionContainer.addSection(this._tableAnchorSection);
 	},
 	_removeMoveMarker() {
@@ -336,11 +336,11 @@ L.CanvasTileLayer.include({
 	_addInsertMarkers: function(type, start) {
 		const markersDistanceFromTable = 10;
 		const delta1 = this._convertPixelToTwips(markersDistanceFromTable);
-		
+
 		let documentPosition;
 		let markerWidth;
 		let markerHeight;
-		
+
 		if (type === 'column') {
 			const tableRightEdge = parseInt(this._currentTableData.columns.right);
 			const columnPosition = this._tablePositionColumnOffset + tableRightEdge + delta1;
@@ -369,10 +369,10 @@ L.CanvasTileLayer.include({
 		const markerSection = new TableInsertMarkerSection(type, documentPosition);
 		markerSection.setMarkerSize(markerWidth, markerHeight);
 		app.sectionContainer.addSection(markerSection);
-		
-		this._tableAddMarkers.push({ 
+
+		this._tableAddMarkers.push({
 			type: type,
-			section: markerSection 
+			section: markerSection
 		});
 	},
 

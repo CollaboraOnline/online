@@ -14,7 +14,7 @@
  * Collabora Online toolbar
  */
 
-/* global app $ _ _UNO JSDialog URLPopUpSection */
+/* global app $ _ _UNO JSDialog URLPopUpSection cool */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function(global) {
@@ -982,7 +982,7 @@ function onCommandResult(e) {
 	} else if (commandName === '.uno:OpenHyperlink') {
 		// allow to process other incoming messages first
 		setTimeout(function () {
-			map._docLayer.scrollToPos(new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
+			map._docLayer.scrollToPos(new cool.SimplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 		}, 0);
 	}
 }
@@ -1081,9 +1081,9 @@ function setupToolbar(e) {
 				var strTwips = e.coordinates.match(/\d+/g);
 				var linkPosition;
 				if (strTwips.length > 7) {
-					linkPosition = new app.definitions.simplePoint(parseInt(strTwips[6]), parseInt(strTwips[7]));
+					linkPosition = new cool.SimplePoint(parseInt(strTwips[6]), parseInt(strTwips[7]));
 				}
-				URLPopUpSection.showURLPopUP(e.url, new app.definitions.simplePoint(parseInt(strTwips[6]), parseInt(strTwips[1])), linkPosition);
+				URLPopUpSection.showURLPopUP(e.url, new cool.SimplePoint(parseInt(strTwips[6]), parseInt(strTwips[1])), linkPosition);
 			} else {
 				map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 			}

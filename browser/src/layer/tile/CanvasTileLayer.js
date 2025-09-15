@@ -595,7 +595,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		app.calc.cellCursorVisible = false;
 		this._prevCellCursorAddress = null;
-		this._shapeGridOffset = new app.definitions.simplePoint(0, 0);
+		this._shapeGridOffset = new cool.SimplePoint(0, 0);
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
@@ -1397,7 +1397,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (isNaN(command.mode))
 			command.mode = this._selectedMode;
 
-		const invalidArea = new app.definitions.simpleRectangle(command.x, command.y, command.width, command.height);
+		const invalidArea = new cool.SimpleRectangle(command.x, command.y, command.width, command.height);
 		TileManager.overlapInvalidatedRectangleWithView(command.part, command.mode, command.wireId, invalidArea, textMsg);
 
 		if (this._docType === 'presentation' || this._docType === 'drawing') {
@@ -1783,9 +1783,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			var bottomRightTwips = topLeftTwips.add(offset);
 			let _cellCursorTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
-			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
+			app.calc.cellAddress = new cool.SimplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
 			let tempRectangle = _cellCursorTwips.toRectangle();
-			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
+			app.calc.cellCursorRectangle = new cool.SimpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
 			this._cellCursorSection.size[0] = app.calc.cellCursorRectangle.pWidth;
 			this._cellCursorSection.size[1] = app.calc.cellCursorRectangle.pHeight;
 			this._cellCursorSection.setPosition(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1);
@@ -1879,7 +1879,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Remember the last position of the caret (in core pixels).
 		this._cursorPreviousPositionCorePixels = app.file.textCursor.rectangle.clone();
 
-		app.file.textCursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
+		app.file.textCursor.rectangle = new cool.SimpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
 
 		if (this._docType === 'text') {
 			app.sectionContainer.onCursorPositionChanged();
@@ -1888,7 +1888,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
 		URLPopUpSection.closeURLPopUp();
 		if (obj.hyperlink && obj.hyperlink.link)
-			URLPopUpSection.showURLPopUP(obj.hyperlink.link, new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
+			URLPopUpSection.showURLPopUP(obj.hyperlink.link, new cool.SimplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 
 		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
@@ -1948,7 +1948,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		let rectangle;
 		if (obj.refpoint) {
 			let refPoint = obj.refpoint.split(',');
-			refPoint = new app.definitions.simplePoint(parseInt(refPoint[0]), parseInt(refPoint[1]));
+			refPoint = new cool.SimplePoint(parseInt(refPoint[0]), parseInt(refPoint[1]));
 
 			if (this.sheetGeometry) {
 				this.sheetGeometry.convertToTileTwips(refPoint);
@@ -2024,7 +2024,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!viewCursorSection.isVisible) {
 				const scrollX = viewCursorSection.position[0];
 				const scrollY = viewCursorSection.position[1];
-				this.scrollToPos(new app.definitions.simplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
+				this.scrollToPos(new cool.SimplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
 			}
 
 			OtherViewCellCursorSection.showPopUpForView(viewId);
@@ -2517,7 +2517,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.querySelector('#addressInput input').value;
 						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
-							let scroll = new app.definitions.simplePoint(0,0);
+							let scroll = new cool.SimplePoint(0,0);
 							scroll.pX = scrollX;
 							scroll.pY = scrollY;
 							this.scrollByPoint(scroll);
@@ -2535,7 +2535,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = TextSelections.getEndRectangle();
-			TextSelections.setEndRectangle(new app.definitions.simpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
+			TextSelections.setEndRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
 			this._updateScrollOnCellSelection(oldSelection, TextSelections.getEndRectangle());
 		}
 		else
@@ -2549,7 +2549,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
 			let oldSelection = TextSelections.getStartRectangle();
-			TextSelections.setStartRectangle(new app.definitions.simpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
+			TextSelections.setStartRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
 			this._updateScrollOnCellSelection(oldSelection, TextSelections.getStartRectangle());
 		}
 		else
@@ -2575,7 +2575,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var oldSelection = this._cellSelectionArea ? this._cellSelectionArea.clone(): null;
 			const adjustedTwipsWidth = boundsTwips.max.x - boundsTwips.min.x;
 			const adjustedTwipsHeight = boundsTwips.max.y - boundsTwips.min.y;
-			this._cellSelectionArea = new app.definitions.simpleRectangle(boundsTwips.min.x, boundsTwips.min.y, adjustedTwipsWidth, adjustedTwipsHeight);
+			this._cellSelectionArea = new cool.SimpleRectangle(boundsTwips.min.x, boundsTwips.min.y, adjustedTwipsWidth, adjustedTwipsHeight);
 
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection([this._cellSelectionArea.pX2, this._cellSelectionArea.pY2]);
@@ -2761,7 +2761,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			URLPopUpSection.closeURLPopUp();
 			for (const link of this._map['stateChangeHandler'].getItemValue('PageLinks')) {
 				if (link.rectangle.containsPoint([x, y])) {
-					URLPopUpSection.showURLPopUP(link.uri, new app.definitions.simplePoint(x, y + this.getFiledBasedViewVerticalOffset()), undefined, /*linkIsClientSide:*/true);
+					URLPopUpSection.showURLPopUP(link.uri, new cool.SimplePoint(x, y + this.getFiledBasedViewVerticalOffset()), undefined, /*linkIsClientSide:*/true);
 				}
 			}
 		}
@@ -2932,7 +2932,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Scrolls the view to selected position
 	scrollToPos: function(pos) {
-		if (pos instanceof app.definitions.simplePoint) // Turn into lat/lng if required (pos may also be a simplePoint.).
+		if (pos instanceof cool.SimplePoint) // Turn into lat/lng if required (pos may also be a simplePoint.).
 			pos = this._twipsToLatLng({ x: pos.x, y: pos.y });
 
 		var center = this._map.project(pos);
@@ -3011,10 +3011,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.activeDocument.activeView.viewSize.x);
 			}
 
-			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
-				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
+			if (!app.isPointVisibleInTheDisplayedArea(new cool.SimplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
+				!app.isPointVisibleInTheDisplayedArea(new cool.SimplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
 				if (app.isFollowingUser() && app.getFollowedViewId() === this._viewId && !this._map.calcInputBarHasFocus()) {
-					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
+					this.scrollToPos(new cool.SimplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
 			}
 		}
@@ -3112,7 +3112,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		const section = app.definitions.otherViewCursorSection.getViewCursorSection(viewId);
 
 		if (section && section.showSection) {
-			const point = new app.definitions.simplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
+			const point = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
 			var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
 			if (!isNewCursorVisible)
 				this.scrollToPos(point);
@@ -3191,7 +3191,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onValidityListButtonMsg: function(textMsg) {
 		var strXY = textMsg.match(/\d+/g);
-		var validatedCellAddress = new app.definitions.simplePoint(parseInt(strXY[0]), parseInt(strXY[1])); // Cell address of the validity list.
+		var validatedCellAddress = new cool.SimplePoint(parseInt(strXY[0]), parseInt(strXY[1])); // Cell address of the validity list.
 		var show = parseInt(strXY[2]) === 1;
 		if (show) {
 			if (this._validatedCellAddress && !validatedCellAddress.equals(this._validatedCellAddress.toArray())) {
@@ -3209,7 +3209,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onValidityInputHelpMsg: function(textMsg) {
 		app.definitions.validityInputHelpSection.removeValidityInputHelp();
-		app.definitions.validityInputHelpSection.showValidityInputHelp(textMsg, new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1));
+		app.definitions.validityInputHelpSection.showValidityInputHelp(textMsg, new cool.SimplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1));
 	},
 
 	_addCellDropDownArrow: function () {
@@ -3217,10 +3217,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			let position;
 			if (this.sheetGeometry) {
 				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y);
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, (position.max.y - CalcValidityDropDown.dropDownArrowSize * app.dpiScale) * app.pixelsToTwips);
+				position = new cool.SimplePoint(app.calc.cellCursorRectangle.x2, (position.max.y - CalcValidityDropDown.dropDownArrowSize * app.dpiScale) * app.pixelsToTwips);
 			}
 			else
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - CalcValidityDropDown.dropDownArrowSize * app.dpiScale * app.pixelsToTwips);
+				position = new cool.SimplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - CalcValidityDropDown.dropDownArrowSize * app.dpiScale * app.pixelsToTwips);
 
 			if (!app.sectionContainer.getSectionWithName(L.CSections.CalcValidityDropDown.name)) {
 				let dropDownSection = new CalcValidityDropDown(position);

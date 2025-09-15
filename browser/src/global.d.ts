@@ -130,6 +130,47 @@ interface StringConstructor {
 interface Window {
 	// app defined in: js/bundle.js
 	app: {
+		activeDocument: null | DocumentBase;
+		definitions: any;
+		dpiScale: number;
+		canvasSize: null | cool.SimplePoint;
+		viewId: null | number;
+		isAdminUser: null | boolean;
+		calc: {
+			cellAddress: null | cool.SimplePoint;
+			cellCursorVisible: boolean;
+			cellCursorRectangle: null | cool.SimpleRectangle;
+			decimalSeparator: null | string; // Current cell's decimal separator.
+			otherCellCursors: any;
+			splitCoordinate: null | cool.SimplePoint;
+			partHashes: null | Array<any>; // hashes used to distinguish parts (we use sheet name)
+			autoFilterCell: any; // The cell of the current autofilter popup.
+			pivotTableFilterCell: any; // The cell of the current pivot table filter popup.
+		};
+		impress: {
+			partList: any; // Info for parts.
+			notesMode: boolean;
+			twipsCorrection: number;
+		};
+		util: any;
+		LOUtil: any;
+		IconUtil: any;
+		Evented: any;
+		Log: any;
+		DebugManager: any;
+		dispatcher: any;
+		layoutingService: any;
+		serverConnectionService: any;
+		twipsToPixels: number;
+		pixelsToTwips: number;
+		accessibilityState: boolean;
+		UI: {
+			language: {
+				fromURL: string;
+				fromBrowser: string;
+				notebookbarAccessibility: any;
+			};
+		};
 		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 		colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 		console: Console;
@@ -143,7 +184,7 @@ interface Window {
 			disableSidebar: boolean;
 			textCursor: {
 				visible: boolean;
-				rectangle: Object;
+				rectangle: null | cool.SimpleRectangle;
 			};
 			fileBasedView: boolean;
 			writer: {
@@ -153,6 +194,20 @@ interface Window {
 			exportFormats: Array<any>;
 		};
 		roundedDpiScale: number;
+		following: {
+			mode: string;
+			viewId: number;
+		};
+		tile: {
+			size: null | cool.SimplePoint;
+		};
+		socket: any;
+		languages: Array<string>;
+		favouriteLanguages: Array<string>;
+		colorLastSelection: any;
+		serverAudit: any;
+		events: any;
+		showNavigator: boolean;
 	};
 	// coolParams defined in: js/global.js
 	coolParams: {
