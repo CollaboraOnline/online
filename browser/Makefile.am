@@ -252,7 +252,7 @@ COOL_JS_LST =\
 	src/app/LocaleService.ts \
 	src/app/LayoutingService.ts \
 	src/app/ServerConnectionService.ts \
-	src/docstate.js \
+	src/docstate.ts \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
 	src/app/DocEvents.ts \
@@ -1105,7 +1105,7 @@ pot:
 		src/control/jsdialog/Widget.TreeView.ts \
 		src/core/Socket.js \
 		src/docdispatcher.ts \
-		src/docstate.js \
+		src/docstate.ts \
 		src/docstatefunctions.js \
 		src/dom/NotebookbarAccessibility.js \
 		src/errormessages.js \
