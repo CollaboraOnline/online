@@ -25,6 +25,8 @@ int fakeSocketSocket();
 
 int fakeSocketPipe2(int pipefd[2]);
 
+void fakeSocketWaitAny(int timeoutUs);
+
 int fakeSocketPoll(struct pollfd *fds, int nfds, int timeout);
 
 int fakeSocketListen(int fd);
