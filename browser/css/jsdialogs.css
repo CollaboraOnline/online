@@ -1354,6 +1354,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	text-align: center;
 }
 
+#design-master-page-group-content.ui-overflow-group-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 /* Icon View */
 
 .ui-iconview {
@@ -1364,6 +1370,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 40vh;
 	gap: 2px;
 	padding: 2px;
+}
+
+#masterpageall_icons.ui-iconview {
+	display: flex;
 }
 
 .ui-iconview.mobile-wizard {
