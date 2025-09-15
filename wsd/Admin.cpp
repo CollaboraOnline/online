@@ -592,7 +592,7 @@ Admin::Admin()
         << (_totalAvailMemKb ? (totalUsedMemKb * 100. / _totalAvailMemKb) : 100) << "% of limit)");
 
     if (_totalAvailMemKb < 1000 * 1024)
-        LOG_WRN("Low memory condition detected: only " << _totalAvailMemKb / 1024
+        LOG_ERR("Low memory condition detected: only " << _totalAvailMemKb / 1024
                                                        << " MB of RAM available");
 
     LOG_INF("Hardware threads: " << std::thread::hardware_concurrency());
