@@ -385,6 +385,3 @@ export function rectanglesToPolygon(rectangles: Array<number[]>, converterConsta
 }
 
 }
-
-app.definitions.simpleRectangle = cool.SimpleRectangle;
-app.definitions.simplePoint = cool.SimplePoint;

@@ -121,7 +121,7 @@ class GraphicSelection {
 		if (hasExtraInfo) {
 			extraInfo = messageJSON[5];
 			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
-				app.map._docLayer._shapeGridOffset = new app.definitions.simplePoint(
+				app.map._docLayer._shapeGridOffset = new cool.SimplePoint(
 					signX * extraInfo.gridOffsetX,
 					extraInfo.gridOffsetY,
 				);
@@ -131,7 +131,7 @@ class GraphicSelection {
 
 		// Calc RTL: Negate positive X coordinates from core if grid offset is available.
 		signX = hasGridOffset && app.map._docLayer.isCalcRTL() ? -1 : 1;
-		this.rectangle = new app.definitions.simpleRectangle(
+		this.rectangle = new cool.SimpleRectangle(
 			signX * messageJSON[0],
 			messageJSON[1],
 			signX * messageJSON[2],
@@ -332,10 +332,7 @@ class GraphicSelection {
 					!app.map.calcInputBarHasFocus()
 				) {
 					app.map._docLayer.scrollToPos(
-						new app.definitions.simplePoint(
-							this.rectangle.x1,
-							this.rectangle.y1,
-						),
+						new cool.SimplePoint(this.rectangle.x1, this.rectangle.y1),
 					);
 				}
 			}
