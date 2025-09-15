@@ -1528,7 +1528,11 @@ public:
                 len = readData(buf.data(), available);
                 assert(len == available);
                 notifyBytesRcvd(len);
-                assert(_inBuffer.empty());
+                // It might happen that several messages need to be buffered if they arrive quicker
+                // than we can handle them. In the non-MOBILEAPP case they are WebSocket messages so
+                // they already contain a header indicating their length. Not so in the MOBILEAPP
+                // case, so prefix them with a length header.
+                _inBuffer.append((const char*)&len, sizeof(ssize_t));
                 _inBuffer.append(buf.data(), len);
             }
         }
