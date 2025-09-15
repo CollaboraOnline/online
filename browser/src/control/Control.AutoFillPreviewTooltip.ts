@@ -15,12 +15,16 @@
 
 /* global app */
 
-class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
+class AutoFillPreviewTooltip extends AutoCompletePopup {
 	usageText: string;
 	newPopupData: PopupData;
 
-	constructor(map: ReturnType<typeof L.map>) {
+	constructor(map: any) {
 		super('autoFillPreviewTooltip', map);
+	}
+
+	getPopupEntries(ev: FireEvent): Array<TreeEntryJSON> {
+		return [];
 	}
 
 	onAdd() {
@@ -99,6 +103,3 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 		super.closePopup();
 	}
 }
-L.control.autofillpreviewtooltip = function (map: any) {
-	return new AutoFillPreviewTooltip(map);
-};

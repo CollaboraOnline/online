@@ -354,7 +354,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				}
 			}
 			if (window.commentWizard === true) {
-				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
+				app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).removeHighlighters();
 			}
 		}
 	},

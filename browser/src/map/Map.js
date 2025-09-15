@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor JSDialog TileManager */
+/* global app _ Cursor JSDialog TileManager cool */
 
 L.Map = L.Evented.extend({
 
@@ -141,7 +141,7 @@ L.Map = L.Evented.extend({
 		this._addLayers(this.options.layers);
 		app.socket = new app.definitions.Socket(this);
 
-		this._progressBar = L.progressOverlay(new L.point(150, 25));
+		this._progressBar = L.progressOverlay(new cool.Point.toPoint(150, 25));
 
 		this._debug = new app.DebugManager(this);
 		this.on('docloaded', function() {
@@ -194,7 +194,7 @@ L.Map = L.Evented.extend({
 			if (window.mode.isMobile())
 			{
 				document.getElementById('document-container').classList.add('mobile');
-				this._size = new L.Point(0,0);
+				this._size = new cool.Point(0,0);
 				this.showCalcInputBar();
 			}
 		});
@@ -294,7 +294,7 @@ L.Map = L.Evented.extend({
 				}
 			} else if (this._docLayer && app.sectionContainer) {
 				// remove the comments and changes
-				var commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+				var commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
 				if (commentSection)
 					commentSection.clearList();
 			}
@@ -420,7 +420,7 @@ L.Map = L.Evented.extend({
 	},
 
 	panBy: function (offset) {
-		offset = L.point(offset).round();
+		offset = cool.Point.toPoint(offset).round();
 
 		if (!offset.x && !offset.y)
 			return this;
@@ -559,7 +559,7 @@ L.Map = L.Evented.extend({
 			const cursorInBounds = app.activeDocument.activeView.viewedRectangle.containsPoint(twipsTopLeft);
 
 			if (cursorInBounds) {
-				return new L.Point(...twipsTopLeft);
+				return new cool.Point(...twipsTopLeft);
 			}
 		}
 
@@ -568,7 +568,7 @@ L.Map = L.Evented.extend({
 			const selectionInBounds = app.activeDocument.activeView.viewedRectangle.containsPoint(twipsCenter);
 
 			if (selectionInBounds) {
-				return new L.Point(...twipsCenter);
+				return new cool.Point(...twipsCenter);
 			}
 		}
 
@@ -594,11 +594,11 @@ L.Map = L.Evented.extend({
 		const ctx = tsManager._paintContext();
 		const splitPos = ctx.splitPos;
 		const viewBounds = ctx.viewBounds;
-		const freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
+		const freePaneBounds = new cool.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
 		const zoomCenter = docLayer._twipsToCorePixels(this.getDesktopCalcZoomCenter());
 
-		tsManager._offset = new L.Point(0, 0);
+		tsManager._offset = new cool.Point(0, 0);
 		const docPos = docLayer._painter._getZoomDocPos(
 			zoomCenter,
 			zoomCenter,
@@ -767,7 +767,7 @@ L.Map = L.Evented.extend({
 	setZoomAround: function (latlng, zoom) {
 		var scale = this.getZoomScale(zoom),
 		    viewHalf = this.getSize().divideBy(2),
-		    containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPointIgnoreSplits(latlng),
+		    containerPoint = latlng instanceof cool.Point ? latlng : this.latLngToContainerPointIgnoreSplits(latlng),
 
 		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
 		    newCenter = this.containerPointToLatLngIgnoreSplits(viewHalf.add(centerOffset));
@@ -800,11 +800,11 @@ L.Map = L.Evented.extend({
 
 	getCorePxDocBounds: function () {
 		if (!this.options.docBounds)
-			return new L.Bounds(0, 0);
+			return new cool.Bounds(0, 0);
 
 		var topleft = this.project(this.options.docBounds.getNorthWest());
 		var bottomRight = this.project(this.options.docBounds.getSouthEast());
-		return new L.Bounds(this._docLayer._cssPixelsToCore(topleft),
+		return new cool.Bounds(this._docLayer._cssPixelsToCore(topleft),
 			this._docLayer._cssPixelsToCore(bottomRight));
 	},
 
@@ -999,18 +999,18 @@ L.Map = L.Evented.extend({
 	},
 
 	getLayerMaxBounds: function () {
-		return L.bounds(this.latLngToLayerPoint(this.options.maxBounds.getNorthWest()),
+		return cool.Bounds.toBounds(this.latLngToLayerPoint(this.options.maxBounds.getNorthWest()),
 			this.latLngToLayerPoint(this.options.maxBounds.getSouthEast()));
 	},
 
 	getLayerDocBounds: function () {
-		return L.bounds(this.latLngToLayerPoint(this.options.docBounds.getNorthWest()),
+		return cool.Bounds.toBounds(this.latLngToLayerPoint(this.options.docBounds.getNorthWest()),
 			this.latLngToLayerPoint(this.options.docBounds.getSouthEast()));
 	},
 
 	getSize: function () {
 		if (!this._size || this._sizeChanged) {
-			this._size = new L.Point(
+			this._size = new cool.Point(
 				this._container.clientWidth,
 				this._container.clientHeight);
 
@@ -1022,7 +1022,7 @@ L.Map = L.Evented.extend({
 
 	getPixelBounds: function (center, zoom) {
 		var topLeftPoint = this._getTopLeftPoint(center, zoom);
-		return new L.Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
+		return new cool.Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
 	},
 
 	getPixelBoundsCore: function (center, zoom) {
@@ -1091,12 +1091,12 @@ L.Map = L.Evented.extend({
 	project: function (latlng, zoom) { // (LatLng[, Number]) -> Point
 		zoom = zoom === undefined ? this.getZoom() : zoom;
 		var projectedPoint = this.options.crs.latLngToPoint(L.latLng(latlng), zoom);
-		return new L.Point(app.util.round(projectedPoint.x, 1e-6), app.util.round(projectedPoint.y, 1e-6));
+		return new cool.Point(app.util.round(projectedPoint.x, 1e-6), app.util.round(projectedPoint.y, 1e-6));
 	},
 
 	unproject: function (point, zoom) { // (Point[, Number]) -> LatLng
 		zoom = zoom === undefined ? this.getZoom() : zoom;
-		return this.options.crs.pointToLatLng(L.point(point), zoom);
+		return this.options.crs.pointToLatLng(new cool.Point(point.x, point.y), zoom);
 	},
 
 	// rescaling
@@ -1109,7 +1109,7 @@ L.Map = L.Evented.extend({
 	},
 
 	layerPointToLatLng: function (point) { // (Point)
-		var projectedPoint = L.point(point).add(this.getPixelOrigin());
+		var projectedPoint = cool.Point.toPoint(point).add(this.getPixelOrigin());
 		return this.unproject(projectedPoint);
 	},
 
@@ -1130,7 +1130,7 @@ L.Map = L.Evented.extend({
 		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
-		var result = L.point(point).clone();
+		var result = cool.Point.toPoint(point).clone();
 		var pointX = point.x;
 		if (this._docLayer.isCalcRTL()) {
 			pointX = this._container.clientWidth - pointX;
@@ -1155,7 +1155,7 @@ L.Map = L.Evented.extend({
 	},
 
 	containerPointToLayerPointIgnoreSplits: function (point) { // (Point)
-		return L.point(point).subtract(this._getMapPanePos());
+		return cool.Point.toPoint(point).subtract(this._getMapPanePos());
 	},
 
 	layerPointToContainerPoint: function (point) { // (Point)
@@ -1167,7 +1167,7 @@ L.Map = L.Evented.extend({
 		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
-		var result = L.point(point).add(pixelOrigin);
+		var result = cool.Point.toPoint(point).add(pixelOrigin);
 
 		if (result.x > splitPos.x) {
 			result.x -= (pixelOrigin.x - mapPanePos.x);
@@ -1181,11 +1181,11 @@ L.Map = L.Evented.extend({
 	},
 
 	layerPointToContainerPointIgnoreSplits: function (point) { // (Point)
-		return L.point(point).add(this._getMapPanePos());
+		return cool.Point.toPoint(point).add(this._getMapPanePos());
 	},
 
 	containerPointToLatLngIgnoreSplits: function (point) {
-		var layerPoint = this.containerPointToLayerPointIgnoreSplits(L.point(point));
+		var layerPoint = this.containerPointToLayerPointIgnoreSplits(cool.Point.toPoint(point));
 		return this.layerPointToLatLng(layerPoint);
 	},
 
@@ -1343,7 +1343,7 @@ L.Map = L.Evented.extend({
 		this._zoom = zoom;
 
 		if (!preserveMapOffset) {
-			L.DomUtil.setPosition(this._mapPane, new L.Point(0, 0));
+			L.DomUtil.setPosition(this._mapPane, new cool.Point(0, 0));
 		}
 
 		this._pixelOrigin = this._getNewPixelOrigin(center);
@@ -1462,7 +1462,7 @@ L.Map = L.Evented.extend({
 		if (app.definitions.CommentSection.needFocus)
 		{
 			app.definitions.CommentSection.needFocus.focus();
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).select(app.needFocus)
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).select(app.needFocus)
 			app.definitions.CommentSection.needFocus = null;
 		}
 	},
@@ -1560,8 +1560,8 @@ L.Map = L.Evented.extend({
 			}
 
 			// unselect if anything is selected already
-			if (app.sectionContainer.doesSectionExist(L.CSections.CommentList.name)) {
-				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).unselect();
+			if (app.sectionContainer.doesSectionExist(app.CSections.CommentList.name)) {
+				app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).unselect();
 			}
 		}
 
@@ -1651,7 +1651,7 @@ L.Map = L.Evented.extend({
 	// private methods for getting map state
 
 	_getMapPanePos: function () {
-		return L.DomUtil.getPosition(this._mapPane) || new L.Point(0, 0);
+		return L.DomUtil.getPosition(this._mapPane) || new cool.Point(0, 0);
 	},
 
 	_getTopLeftPoint: function (center, zoom) {
@@ -1684,7 +1684,7 @@ L.Map = L.Evented.extend({
 
 		var centerPoint = this.project(center, zoom),
 		    viewHalf = this.getSize().divideBy(2),
-		    viewBounds = new L.Bounds(centerPoint.subtract(viewHalf), centerPoint.add(viewHalf)),
+		    viewBounds = new cool.Bounds(centerPoint.subtract(viewHalf), centerPoint.add(viewHalf)),
 		    offset = this._getBoundsOffset(viewBounds, bounds, zoom);
 
 		return this.unproject(centerPoint.add(offset), zoom);
@@ -1698,7 +1698,7 @@ L.Map = L.Evented.extend({
 		    dx = this._rebound(nwOffset.x, -seOffset.x),
 		    dy = this._rebound(nwOffset.y, -seOffset.y);
 
-		return new L.Point(dx, dy);
+		return new cool.Point(dx, dy);
 	},
 
 	_rebound: function (left, right) {

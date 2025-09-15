@@ -17,13 +17,13 @@
 namespace cool {
 
 export class ColumnHeader extends Header {
-	anchor: Array<Array<string>> = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
+	anchor: Array<Array<string>> = [[app.CSections.ColumnGroup.name, 'bottom', 'top'], [app.CSections.CornerHeader.name, 'right', 'left']];
 	position: number[] = [0, 0]; // This section's myTopLeft is placed according to corner header and column group sections.
 	size: number[] = [0, 19 * app.dpiScale]; // No initial width is necessary.
 	expand: Array<string> = ['right']; // Expand horizontally.
-	processingOrder: number = L.CSections.ColumnHeader.processingOrder;
-	drawingOrder: number = L.CSections.ColumnHeader.drawingOrder;
-	zIndex: number = L.CSections.ColumnHeader.zIndex;
+	processingOrder: number = app.CSections.ColumnHeader.processingOrder;
+	drawingOrder: number = app.CSections.ColumnHeader.drawingOrder;
+	zIndex: number = app.CSections.ColumnHeader.zIndex;
 	cursor: string = 'col-resize';
 
 	_current: number;
@@ -31,14 +31,14 @@ export class ColumnHeader extends Header {
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
-		super(L.CSections.ColumnHeader.name);
+		super(app.CSections.ColumnHeader.name);
 
 		if (cursor)
 			this.cursor = cursor;
 	}
 
 	onInitialize(): void {
-		this._map = L.Map.THIS;
+		this._map = window.L.Map.THIS;
 		this._isColumn = true;
 		this._current = -1;
 		this._resizeHandleSize = 15 * app.dpiScale;
@@ -101,7 +101,7 @@ export class ColumnHeader extends Header {
 			}
 		};
 
-		this._menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
+		this._menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 		this._headerInfo = new cool.HeaderInfo(this._map, true /* isCol */);
 	}
 

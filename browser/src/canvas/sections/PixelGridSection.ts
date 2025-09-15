@@ -11,12 +11,12 @@
 class PixelGridSection extends CanvasSectionObject {
     interactable: boolean = false;
     anchor: string[] = ['top', 'left'];
-    processingOrder: number = L.CSections.Debug.TilePixelGrid.processingOrder;
-    drawingOrder: number = L.CSections.Debug.TilePixelGrid.drawingOrder;
-    zIndex: number = L.CSections.Debug.TilePixelGrid.zIndex;
+    processingOrder: number = app.CSections.Debug.TilePixelGrid.processingOrder;
+    drawingOrder: number = app.CSections.Debug.TilePixelGrid.drawingOrder;
+    zIndex: number = app.CSections.Debug.TilePixelGrid.zIndex;
     boundToSection: string = 'tiles';
 
-    constructor () { super(L.CSections.Debug.TilePixelGrid.name); }
+    constructor () { super(app.CSections.Debug.TilePixelGrid.name); }
 
     onDraw(frameCount?: number, elapsedTime?: number): void {
 		var offset = 8;

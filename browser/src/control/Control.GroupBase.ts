@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.GroupBase
- */
 
 namespace cool {
 
@@ -50,7 +47,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize(): void {
-		this._map = L.Map.THIS;
+		this._map = window.L.Map.THIS;
 		this.sectionProperties.docLayer = this._map._docLayer;
 		this._groups = null;
 
@@ -393,10 +390,8 @@ export abstract class GroupBase extends CanvasSectionObject {
 
 	onRemove(): void {
 		this.isRemoved = true;
-		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.RowHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).position[0] = 0;
 	}
 }
 }
-
-L.Control.GroupBase = cool.GroupBase;

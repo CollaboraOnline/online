@@ -10,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.ColorPicker is used for building a native HTML color picker
+ * ColorPicker is used for building a native HTML color picker
  * panel to be used by the properties mobile wizard.
  */
 
@@ -193,7 +193,7 @@ class ColorPicker {
 		if (this.options.noColorControl && this.options.autoColorControl) {
 			this.options.autoColorControl = false;
 			window.app.console.warn(
-				'L.ColorPicker: requested both no color and auto color control',
+				'ColorPicker: requested both no color and auto color control',
 			);
 		}
 
@@ -648,5 +648,3 @@ class ColorPicker {
 		}
 	}
 }
-
-L.ColorPicker = ColorPicker;

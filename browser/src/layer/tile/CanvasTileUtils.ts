@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-declare var L: any;
+/* global L */
 
 namespace cool {
 	export class RawDelta {
@@ -247,6 +247,3 @@ namespace cool {
 		}
 	}
 } // namespace cool
-
-L.CanvasTileUtils = cool.CanvasTileUtils;
-L.RawDelta = cool.RawDelta;

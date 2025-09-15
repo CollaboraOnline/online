@@ -12,7 +12,6 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
-declare var L: any;
 declare var Autolinker: any;
 declare var DOMPurify : any;
 
@@ -47,9 +46,9 @@ export class Comment extends CanvasSectionObject {
 	static readonly replyCommentLabel = _('Reply comment');
 	static readonly openMenuLabel = _('Open menu');
 
-	processingOrder: number = L.CSections.Comment.processingOrder;
-	drawingOrder: number = L.CSections.Comment.drawingOrder;
-	zIndex: number = L.CSections.Comment.zIndex;
+	processingOrder: number = app.CSections.Comment.processingOrder;
+	drawingOrder: number = app.CSections.Comment.drawingOrder;
+	zIndex: number = app.CSections.Comment.zIndex;
 
 	valid: boolean = true;
 	map: any;
@@ -70,7 +69,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.myTopLeft = [0, 0];
 		this.documentObject = true;
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 
 		if (!options)
 			options = {};
@@ -589,7 +588,7 @@ export class Comment extends CanvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(app.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
@@ -597,12 +596,12 @@ export class Comment extends CanvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(app.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(app.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 
 		this.containerObject.requestReDraw();
@@ -1039,7 +1038,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public handleCancelCommentButton (e: any): void {
 		if (cool.CommentSection.commentWasAutoAdded) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).remove(this.sectionProperties.data.id);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).remove(this.sectionProperties.data.id);
 		}
 
 		if (cool.CommentSection.autoSavedComment) {
@@ -1113,7 +1112,7 @@ export class Comment extends CanvasSectionObject {
 	// for some reason firefox adds <br> at of the end of text in contenteditable div
 	// there have been similar reports: https://bugzilla.mozilla.org/show_bug.cgi?id=1615852
 	private removeLastBRTag(element: HTMLElement) {
-		if (!L.Browser.gecko)
+		if (!window.L.Browser.gecko)
 			return;
 		const brElements = element.querySelectorAll('br');
 		if (brElements.length > 0)
@@ -1239,7 +1238,7 @@ export class Comment extends CanvasSectionObject {
 
 	public static isAnyEdit (): Comment {
 		var section = app.sectionContainer && app.sectionContainer instanceof CanvasSectionContainer ?
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name) : null;
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name) : null;
 		if (!section) {
 			return null;
 		}

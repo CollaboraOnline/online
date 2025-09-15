@@ -85,8 +85,8 @@ class GraphicSelection {
 	}
 
 	static renderDarkOverlay() {
-		var topLeft = new L.Point(this.rectangle.pX1, this.rectangle.pY1);
-		var bottomRight = new L.Point(this.rectangle.pX2, this.rectangle.pY2);
+		var topLeft = new cool.Point(this.rectangle.pX1, this.rectangle.pY1);
+		var bottomRight = new cool.Point(this.rectangle.pX2, this.rectangle.pY2);
 
 		if (app.map._docLayer.isCalcRTL()) {
 			// Dark overlays (like any other overlay) need regular document coordinates.
@@ -96,7 +96,7 @@ class GraphicSelection {
 			bottomRight.x = Math.abs(bottomRight.x);
 		}
 
-		var bounds = new L.Bounds(topLeft, bottomRight);
+		var bounds = new cool.Bounds(topLeft, bottomRight);
 
 		app.map._docLayer._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
 	}
@@ -280,7 +280,7 @@ class GraphicSelection {
 					dragInfo.initialOffset /= 100.0;
 					var dragDir = dragInfo.dragDirection;
 					dragInfo.dragDirection = app.map._docLayer._twipsToPixels(
-						new L.Point(dragDir[0], dragDir[1]),
+						new cool.Point(dragDir[0], dragDir[1]),
 					);
 					dragDir = dragInfo.dragDirection;
 					dragInfo.range2 = dragDir.x * dragDir.x + dragDir.y * dragDir.y;

@@ -14,7 +14,6 @@
  * Definitions.Menu - JSON description of menus for JSDialog
  */
 
-declare var L: any;
 declare var JSDialog: any;
 
 const menuDefinitions = new Map<string, Array<MenuDefinition>>();

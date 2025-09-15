@@ -432,7 +432,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (fromBottom)
 			scrollTop += partHeightPixels - viewHeight;
 		scrollTop = Math.round(scrollTop / app.dpiScale);
-		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: currentScrollX, y: scrollTop});
+		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollTo({x: currentScrollX, y: scrollTop});
 	},
 
 	_scrollViewByDirection: function(buttonType) {
@@ -464,7 +464,7 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			}
 		}
-		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
+		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
 	},
 
 	_setPart: function (e) {

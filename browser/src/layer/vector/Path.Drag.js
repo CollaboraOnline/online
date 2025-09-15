@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app */
+/* global app cool */
 
 var END = {
 	mousedown:     'mouseup',
@@ -49,12 +49,12 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._matrix = null;
 
 		/**
-		* @type {L.Point}
+		* @type {cool.Point}
 		*/
 		this._startPoint = null;
 
 		/**
-		* @type {L.Point}
+		* @type {cool.Point}
 		*/
 		this._dragStartPoint = null;
 
@@ -291,7 +291,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		var path = this._path;
 		var i, len, latlng;
 
-		var px = L.point(matrix[4], matrix[5]);
+		var px = cool.Point.toPoint(matrix[4], matrix[5]);
 
 		var crs = path._map.options.crs;
 		var transformation = crs.transformation;
@@ -299,7 +299,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		var projection = crs.projection;
 
 		var diff = transformation.untransform(px, scale)
-			.subtract(transformation.untransform(L.point(0, 0), scale));
+			.subtract(transformation.untransform(cool.Point.toPoint(0, 0), scale));
 		var applyTransform = !dest;
 
 		path._bounds = new L.LatLngBounds();

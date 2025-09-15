@@ -130,6 +130,7 @@ interface StringConstructor {
 interface Window {
 	// app defined in: js/bundle.js
 	app: {
+		CSections: any;
 		activeDocument: null | DocumentBase;
 		definitions: any;
 		dpiScale: number;
@@ -254,6 +255,7 @@ interface Window {
 	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
 	setupToolbar(map: any): void; // TODO should be L.Map
 	makeWsUrl: (url: string) => string;
+	L: any;
 }
 
 // For localization

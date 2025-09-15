@@ -9,7 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-declare var L: any;
 
 namespace cool {
 
@@ -71,7 +70,7 @@ export class SplitPanesContext {
 		var ychanged = this.setVertSplitPos(splitY, forceUpdate, true /* noFire */);
 		if (xchanged || ychanged) {
 			this._map.fire('splitposchanged');
-			const section = app.sectionContainer.getSectionWithName(L.CSections.Splitter.name);
+			const section = app.sectionContainer.getSectionWithName(app.CSections.Splitter.name);
 			if (section) {
 				section.setPosition(0, 0); // To refresh myTopLeft property.
 			}
@@ -315,5 +314,3 @@ export class SplitPanesContext {
 }
 
 }
-
-L.SplitPanesContext = cool.SplitPanesContext;

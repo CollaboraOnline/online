@@ -13,7 +13,7 @@
  * Control.Mention
  */
 
-/* global app */
+/* global app cool */
 
 interface MentionUserData {
 	username: string;
@@ -21,8 +21,8 @@ interface MentionUserData {
 	label?: string;
 }
 
-class Mention extends L.Control.AutoCompletePopup {
-	map: ReturnType<typeof L.map>;
+class Mention extends AutoCompletePopup {
+	map: any;
 	newPopupData: PopupData;
 	users: Array<MentionUserData>;
 	filteredUsers: Array<MentionUserData>;
@@ -33,7 +33,7 @@ class Mention extends L.Control.AutoCompletePopup {
 	lastTypedChar: string;
 	cursorPosAtStart: Point;
 
-	constructor(map: ReturnType<typeof L.map>) {
+	constructor(map: any) {
 		super('mentionPopup', map);
 	}
 
@@ -63,6 +63,7 @@ class Mention extends L.Control.AutoCompletePopup {
 		}, 300);
 	}
 
+	/* @ts-expect-error: Implementation is done before types are defined. Now there is a conflicting implementation. I need to keep it as is since this commit implies no functional changes. */
 	getPopupEntries(users: Array<MentionUserData>): any[] {
 		const entries: Array<TreeEntryJSON> = [];
 		if (users === null) return entries;
@@ -104,7 +105,7 @@ class Mention extends L.Control.AutoCompletePopup {
 
 		const entries = this.getPopupEntries(users);
 		const commentSection = app.sectionContainer.getSectionWithName(
-			L.CSections.CommentList.name,
+			app.CSections.CommentList.name,
 		);
 
 		const isMobileCommentActive = commentSection?.isMobileCommentActive();
@@ -140,12 +141,12 @@ class Mention extends L.Control.AutoCompletePopup {
 				return;
 			}
 			const control = this.getSimpleTextJSON();
-			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
+			if (window.L.DomUtil.get(this.popupId + 'fixedtext')) {
 				const data = this.getPopupJSON(control, cursorPos);
 				this.sendUpdate(data);
 				return;
 			}
-			if (L.DomUtil.get(this.popupId)) this.closeMentionPopup(true);
+			if (window.L.DomUtil.get(this.popupId)) this.closeMentionPopup(true);
 			const data = this.newPopupData;
 			data.children[0].children[0] = control;
 			data.posx = cursorPos.x;
@@ -156,7 +157,7 @@ class Mention extends L.Control.AutoCompletePopup {
 
 		const control = this.getTreeJSON();
 		if (isMobileCommentActive) control.hideIfEmpty = true;
-		if (L.DomUtil.get(this.popupId + 'List')) {
+		if (window.L.DomUtil.get(this.popupId + 'List')) {
 			const data = this.getPopupJSON(control, cursorPos);
 			if (isMobileCommentActive) data.id = mobileCommentModalId;
 			(data.control as TreeWidgetJSON).entries = entries;
@@ -164,7 +165,7 @@ class Mention extends L.Control.AutoCompletePopup {
 			return;
 		}
 
-		if (L.DomUtil.get(this.popupId)) this.closeMentionPopup(true);
+		if (window.L.DomUtil.get(this.popupId)) this.closeMentionPopup(true);
 		const data = this.newPopupData;
 		data.children[0].children[0] = control;
 		(data.children[0].children[0] as TreeWidgetJSON).entries = entries;
@@ -187,15 +188,15 @@ class Mention extends L.Control.AutoCompletePopup {
 		if (!typingMention) this.partialMention = [];
 
 		const mentionPopup =
-			L.DomUtil.get(this.popupId) ||
-			L.DomUtil.get(this.popupId + 'List') ||
-			L.DomUtil.get(this.popupId + 'fixedtext');
+			window.L.DomUtil.get(this.popupId) ||
+			window.L.DomUtil.get(this.popupId + 'List') ||
+			window.L.DomUtil.get(this.popupId + 'fixedtext');
 		if (!mentionPopup) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
 		if (this.isMobile) {
 			const commentSection = app.sectionContainer.getSectionWithName(
-				L.CSections.CommentList.name,
+				app.CSections.CommentList.name,
 			);
 			const isMobileCommentActive = commentSection?.isMobileCommentActive();
 			const mobileCommentModalId = commentSection?.getMobileCommentModalId();
@@ -290,7 +291,7 @@ class Mention extends L.Control.AutoCompletePopup {
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		const commentSection = app.sectionContainer.getSectionWithName(
-			L.CSections.CommentList.name,
+			app.CSections.CommentList.name,
 		);
 		const comment = commentSection?.getActiveEdit();
 		if (eventType === 'close') {
@@ -330,6 +331,3 @@ class Mention extends L.Control.AutoCompletePopup {
 		return false;
 	}
 }
-L.control.mention = function (map: any) {
-	return new Mention(map);
-};

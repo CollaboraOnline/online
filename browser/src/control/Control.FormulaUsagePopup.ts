@@ -15,11 +15,11 @@
 
 /* global app */
 
-class FormulaUsagePopup extends L.Control.AutoCompletePopup {
+class FormulaUsagePopup extends AutoCompletePopup {
 	usageText: string;
 	newPopupData: PopupData;
 
-	constructor(map: ReturnType<typeof L.map>) {
+	constructor(map: any) {
 		super('formulausagePopup', map);
 		this.newPopupData = {
 			children: [
@@ -82,7 +82,3 @@ class FormulaUsagePopup extends L.Control.AutoCompletePopup {
 		return false;
 	}
 }
-
-L.control.formulausage = function (map: any) {
-	return new FormulaUsagePopup(map);
-};

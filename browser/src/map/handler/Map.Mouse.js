@@ -40,7 +40,7 @@ L.Map.Mouse = L.Handler.extend({
 
 	_isMouseOnValidityDropdown: function() {
 		if (app.sectionContainer) {
-			const section = app.sectionContainer.getSectionWithName(L.CSections.CalcValidityDropDown.name);
+			const section = app.sectionContainer.getSectionWithName(app.CSections.CalcValidityDropDown.name);
 			if (section)
 				return section.sectionProperties.mouseEntered;
 		}
@@ -110,7 +110,7 @@ L.Map.Mouse = L.Handler.extend({
 				}
 			}
 
-			var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			var scrollSection = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (scrollSection.sectionProperties.mouseIsOnVerticalScrollBar || scrollSection.sectionProperties.mouseIsOnHorizontalScrollBar)
 				return;
 
@@ -236,7 +236,7 @@ L.Map.Mouse = L.Handler.extend({
 			const mousePos = this._map._docLayer._latLngToTwips(this._map.mouseEventToLatLng(e));
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 
-			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			const section = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (section) section.onScrollVelocity({ vx: 0, vy: 0 });
 		}
 	})

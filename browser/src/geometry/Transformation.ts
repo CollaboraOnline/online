@@ -1,6 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
 
-declare var L: any;
 
 namespace cool {
 
@@ -42,5 +41,3 @@ export class Transformation {
 }
 
 }
-
-L.Transformation = cool.Transformation;

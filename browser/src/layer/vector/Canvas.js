@@ -1,5 +1,7 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app */
+
+/* global app cool */
+
 /*
  * L.Canvas handles Canvas vector layers rendering and mouse events handling. All Canvas-specific code goes here.
  */
@@ -74,7 +76,7 @@ L.Canvas = L.Renderer.extend({
 	_requestRedraw: function (layer) {
 		if (!this._map) { return; }
 
-		this._redrawBounds = this._redrawBounds || new L.Bounds();
+		this._redrawBounds = this._redrawBounds || new cool.Bounds();
 		this._redrawBounds.extend(layer._pxBounds.min).extend(layer._pxBounds.max);
 
 		this._redrawRequest = this._redrawRequest || app.util.requestAnimFrame(this._redraw, this);

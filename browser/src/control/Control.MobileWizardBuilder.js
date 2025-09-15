@@ -14,7 +14,7 @@
  * variants for mobile/touch devices from the JSON description provided by the server.
  */
 
-/* global $ _UNO _ JSDialog app */
+/* global $ _UNO _ JSDialog app ColorPicker */
 
 L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_customizeOptions: function() {
@@ -562,7 +562,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			JSDialog.sendColorCommand(builder, data, color);
 		};
 
-		var colorPickerControl = new L.ColorPicker(
+		var colorPickerControl = new ColorPicker(
 			valueNode,
 			{
 				selectedColor: selectedColor,

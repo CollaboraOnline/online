@@ -237,7 +237,7 @@ class Util {
 	}
 
 	public static replaceCtrlAltInMac(msg: string): string {
-		if (L.Browser.mac) {
+		if (window.L.Browser.mac) {
 			var ctrl = /Ctrl/g;
 			var alt = /Alt/g;
 			const CustomString = String as any;

@@ -59,10 +59,10 @@ class ViewLayoutBase {
 
 		var splitPos = app.map._docLayer._splitPanesContext
 			? app.map._docLayer._splitPanesContext.getSplitPos()
-			: new L.Point(0, 0);
+			: new cool.Point(0, 0);
 
 		var visibleArea = app.map.getPixelBounds();
-		visibleArea = new L.Bounds(
+		visibleArea = new cool.Bounds(
 			app.map._docLayer._pixelsToTwips(visibleArea.min),
 			app.map._docLayer._pixelsToTwips(visibleArea.max),
 		);

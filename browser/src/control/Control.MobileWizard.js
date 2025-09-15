@@ -78,7 +78,7 @@ L.Control.MobileWizard = L.Control.extend({
 		}
 
 		if (window.commentWizard === true && app.sectionContainer) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).removeHighlighters();
 		}
 
 		if (!this.contents.length)

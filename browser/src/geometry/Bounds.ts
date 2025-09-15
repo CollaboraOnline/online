@@ -1,16 +1,16 @@
 // @ts-strict-ignore
 /* -*- js-indent-level: 8 -*- */
 
-declare var L: any;
+/* global L */
 
 namespace cool {
 
 function PointConstruct(x: number, y: number, round?: boolean): Point {
-	return new L.Point(x, y, round);
+	return new cool.Point(x, y, round);
 }
 
 function toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point {
-	return L.point(x, y, round);
+	return cool.Point.toPoint(x, y, round);
 }
 
 /// Bounds represents a rectangular area on the screen.
@@ -146,7 +146,7 @@ export class Bounds {
 	public contains(obj: Bounds | PointConvertable): boolean {
 		var min, max;
 
-		if (Array.isArray(obj) || obj instanceof L.Point || obj instanceof SimplePoint) {
+		if (Array.isArray(obj) || obj instanceof cool.Point || obj instanceof SimplePoint) {
 			var point: Point = toPoint(<PointConvertable>obj);
 			min = max = point;
 		} else {
@@ -181,7 +181,7 @@ export class Bounds {
 		var max2 = bounds.max;
 		var xIntersects = (max2.x >= min.x) && (min2.x <= max.x);
 		var yIntersects = (max2.y >= min.y) && (min2.y <= max.y);
-		
+
 		if (xIntersects) {
 			if (yIntersects) return 0;
 			if (max2.y < min.y) return min.y - max2.y;
@@ -247,7 +247,7 @@ export class Bounds {
 	}
 
 	public clamp(obj: Point | Bounds): Point | Bounds {
-		if (obj instanceof L.Point) {
+		if (obj instanceof cool.Point) {
 			return PointConstruct(
 				this.clampX((obj as Point).x),
 				this.clampY((obj as Point).y)
@@ -297,6 +297,3 @@ export class Bounds {
 }
 
 }
-
-L.Bounds = cool.Bounds;
-L.bounds = cool.Bounds.toBounds;

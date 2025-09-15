@@ -42,9 +42,9 @@ class MultiPageViewLayout extends ViewLayoutBase {
 
 		app.socket.sendMessage(visibleAreaCommand);
 
-		return new L.Bounds(
-			new L.Point(visibleArea.pX1, visibleArea.pY1),
-			new L.Point(visibleArea.pX2, visibleArea.pY2),
+		return new cool.Bounds(
+			new cool.Point(visibleArea.pX1, visibleArea.pY1),
+			new cool.Point(visibleArea.pX2, visibleArea.pY2),
 		);
 	}
 

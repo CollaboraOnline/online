@@ -14,7 +14,7 @@
 
 /* See CanvasSectionContainer.ts for explanations. */
 
-L.Map.include({
+window.L.Map.include({
 	insertComment: function() {
 		if (this.stateChangeHandler.getItemValue('InsertAnnotation') === 'disabled')
 			return;
@@ -40,12 +40,12 @@ L.Map.include({
 	showResolvedComments: function(on: any) {
 		var unoCommand = '.uno:ShowResolvedAnnotations';
 		this.sendUnoCommand(unoCommand);
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setViewResolved(on);
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).setViewResolved(on);
 		this.uiManager.setDocTypePref('ShowResolved', on ? true : false);
 	},
 
 	showComments: function(on: any) {
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setView(on);
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).setView(on);
 		this.uiManager.setDocTypePref('showannotations', on ? true : false);
 		this.fire('commandstatechanged', {commandName : 'showannotations', state : on ? 'true': 'false'});
 		this.fire('showannotationschanged', {state: on ? 'true': 'false'});
@@ -53,7 +53,6 @@ L.Map.include({
 });
 
 
-declare var L: any;
 declare var JSDialog: any;
 
 namespace cool {
@@ -61,9 +60,9 @@ namespace cool {
 export class CommentSection extends CanvasSectionObject {
 	backgroundColor: string = app.sectionContainer.getClearColor();
 	expand: string[] = ['bottom'];
-	processingOrder: number = L.CSections.CommentList.processingOrder;
-	drawingOrder: number = L.CSections.CommentList.drawingOrder;
-	zIndex: number = L.CSections.CommentList.zIndex;
+	processingOrder: number = app.CSections.CommentList.processingOrder;
+	drawingOrder: number = app.CSections.CommentList.drawingOrder;
+	zIndex: number = app.CSections.CommentList.zIndex;
 	interactable: boolean = false;
 	sectionProperties: {
 		commentList: Array<Comment>;
@@ -100,9 +99,9 @@ export class CommentSection extends CanvasSectionObject {
 	private annotationMaxSize: number;
 
 	constructor () {
-		super(L.CSections.CommentList.name);
+		super(app.CSections.CommentList.name);
 
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 		this.anchor = ['top', 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.commentList = new Array(0);
@@ -163,7 +162,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public static showCommentEditingWarning (): void {
-		L.Map.THIS.uiManager.showInfoModal('annotation-editing', _('A comment is being edited'),
+		window.L.Map.THIS.uiManager.showInfoModal('annotation-editing', _('A comment is being edited'),
 		_('Please save or discard the comment currently being edited.'), null, _('Close'));
 	}
 
@@ -897,7 +896,7 @@ export class CommentSection extends CanvasSectionObject {
 			const annotationBottom = annotationTop + this.cssToCorePixels(comment.getCommentHeight());
 
 			if (!this.isInViewPort([annotationTop, annotationBottom])) {
-				const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+				const scrollSection = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 				const screenTopBottom = this.getScreenTopBottom();
 
 				if (annotationTop < screenTopBottom[0]) {

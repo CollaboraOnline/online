@@ -570,7 +570,7 @@ export class Header extends CanvasSectionObject {
 			isMouseOverResizeArea = result.hit;
 
 			// cypress mobile emulation sometimes triggers resizing unintentionally.
-			if (L.Browser.cypressTest)
+			if (window.L.Browser.cypressTest)
 				return;
 
 			if (isMouseOverResizeArea !== this._hitResizeArea) { // Do we need to change cursor (to resize or pointer).
@@ -613,8 +613,8 @@ export class Header extends CanvasSectionObject {
 		this.onMouseMove(point);
 
 		if (this._hitResizeArea) {
-			L.DomUtil.disableImageDrag();
-			L.DomUtil.disableTextSelection();
+			window.L.DomUtil.disableImageDrag();
+			window.L.DomUtil.disableTextSelection();
 
 			// When code is here, this._mouseOverEntry should never be null.
 
@@ -634,8 +634,8 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onMouseUp(): void {
-		L.DomUtil.enableImageDrag();
-		L.DomUtil.enableTextSelection();
+		window.L.DomUtil.enableImageDrag();
+		window.L.DomUtil.enableTextSelection();
 
 		this._map.fire('closepopups'); // close all popups if a row/column header is selected
 
@@ -735,7 +735,7 @@ export class HeaderInfo {
 		let scale: number;
 		if (tsManager._inZoomAnim) {
 			const viewBounds = ctx.viewBounds;
-			const freePaneBounds = new L.Bounds(viewBounds.min.add(ctx.splitPos), viewBounds.max);
+			const freePaneBounds = new cool.Bounds(viewBounds.min.add(ctx.splitPos), viewBounds.max);
 
 			scale = tsManager._zoomFrameScale;
 
@@ -933,6 +933,3 @@ export class HeaderInfo {
 }
 
 }
-
-L.Control.Header = cool.Header;
-L.Control.Header.HeaderInfo = cool.HeaderInfo;

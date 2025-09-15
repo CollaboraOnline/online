@@ -11,7 +11,7 @@
 
 /* eslint-disable no-inner-declarations */
 /* eslint no-unused-vars: ["warn", { "argsIgnorePattern": "^_" }] */
-/* global importScripts Uint8Array */
+/* global importScripts Uint8Array cool */
 
 if ('undefined' === typeof window) {
 	self.L = {};
@@ -43,7 +43,7 @@ if ('undefined' === typeof window) {
 					let imageData = null;
 					if (tile.isKeyframe) {
 						imageData = new Uint8Array(tileByteSize);
-						keyframeDeltaSize = L.CanvasTileUtils.unrle(
+						keyframeDeltaSize = cool.CanvasTileUtils.unrle(
 							deltas,
 							e.data.tileSize,
 							e.data.tileSize,
@@ -60,7 +60,7 @@ if ('undefined' === typeof window) {
 						continue;
 					}
 
-					L.CanvasTileUtils.updateImageFromDeltas(
+					cool.CanvasTileUtils.updateImageFromDeltas(
 						imageData,
 						deltas,
 						keyframeDeltaSize,

@@ -125,7 +125,7 @@ class IdleHandler {
 
 		this._inactivityTimer = setTimeout(() => {
 			this._dimIfInactive();
-		}, (L.Browser.cypressTest ? 1000 : 1 * 60 * 1000)); // Check once a minute
+		}, (window.L.Browser.cypressTest ? 1000 : 1 * 60 * 1000)); // Check once a minute
 	}
 
 	_startOutOfFocusTimer() {

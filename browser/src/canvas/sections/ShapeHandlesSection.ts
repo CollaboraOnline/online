@@ -57,9 +57,9 @@ class HelperLineStyles {
 }
 
 class ShapeHandlesSection extends CanvasSectionObject {
-	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
 	documentObject: boolean = true;
 	showSection: boolean = false;
 
@@ -456,7 +456,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	showUnsupportedMediaWarning() {
 		var videoWarning = _('Document contains unsupported media');
-		L.Map.THIS.uiManager.showSnackbar(videoWarning);
+		window.L.Map.THIS.uiManager.showSnackbar(videoWarning);
 	}
 
 	addEmbeddedVideo(svgString: any) {

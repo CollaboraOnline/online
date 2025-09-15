@@ -13,7 +13,6 @@
 /* See CanvasSectionContainer.ts for explanations. */
 
 // We will keep below definitions until we use tsconfig.json.
-declare var L: any;
 
 namespace cool {
 
@@ -29,9 +28,9 @@ export class ScrollSection extends CanvasSectionObject {
 	// scrolling will be treated as direct scroll events.
 	static readonly scrollDirectTimeoutMs: number = 100;
 
-	processingOrder: number = L.CSections.Scroll.processingOrder
-	drawingOrder: number = L.CSections.Scroll.drawingOrder;
-	zIndex: number = L.CSections.Scroll.zIndex;
+	processingOrder: number = app.CSections.Scroll.processingOrder
+	drawingOrder: number = app.CSections.Scroll.drawingOrder;
+	zIndex: number = app.CSections.Scroll.zIndex;
 	windowSection: boolean = true; // This section covers the entire canvas.
 
 	map: any;
@@ -42,9 +41,9 @@ export class ScrollSection extends CanvasSectionObject {
 	isRTL: () => boolean;
 
 	constructor (isRTL?: () => boolean) {
-		super(L.CSections.Scroll.name);
+		super(app.CSections.Scroll.name);
 
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 
 		this.isRTL = isRTL ?? (() => false);
 
@@ -153,17 +152,17 @@ export class ScrollSection extends CanvasSectionObject {
 				this.onScrollBy({x: e.vx, y: e.vy});
 				// Unfortunately, dragging outside the map doesn't work for the map element.
 				// We will keep this until we remove leaflet.
-				if (L.Map.THIS.mouse
-				&& L.Map.THIS.mouse._mouseDown
-				&& this.containerObject.targetBoundSectionListContains(L.CSections.Tiles.name)
+				if (window.L.Map.THIS.mouse
+				&& window.L.Map.THIS.mouse._mouseDown
+				&& this.containerObject.targetBoundSectionListContains(app.CSections.Tiles.name)
 				&& (<any>window).mode.isDesktop()
 				&& this.containerObject.isDraggingSomething()
-				&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
+				&& window.L.Map.THIS._docLayer._docType === 'spreadsheet') {
 					var temp = [e.pos.x, e.pos.y];
 					var tempPos = [(this.isRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
 					tempPos = [tempPos[0] + app.activeDocument.activeView.viewedRectangle.pX1, tempPos[1] + app.activeDocument.activeView.viewedRectangle.pY1];
 					tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
-					L.Map.THIS._docLayer._postMouseEvent('move', tempPos[0], tempPos[1], 1, 1, 0);
+					window.L.Map.THIS._docLayer._postMouseEvent('move', tempPos[0], tempPos[1], 1, 1, 0);
 				}
 			}, this), 100);
 		}
@@ -348,7 +347,7 @@ export class ScrollSection extends CanvasSectionObject {
 		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
 
 		app.layoutingService.appendLayoutingTask(() => {
-			this.map.panBy(new L.Point(scrollProps.moveBy[0] / app.dpiScale, scrollProps.moveBy[1] / app.dpiScale));
+			this.map.panBy(new cool.Point(scrollProps.moveBy[0] / app.dpiScale, scrollProps.moveBy[1] / app.dpiScale));
 			scrollProps.moveBy = null;
 			this.onUpdateScrollOffset();
 
@@ -517,7 +516,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 	private isMouseOnScrollBar (point: cool.SimplePoint): void {
 		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
-		const documentAnchor: CanvasSectionObject = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
+		const documentAnchor: CanvasSectionObject = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
 
 		const mirrorX = this.isRTL();
 
@@ -559,7 +558,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public scrollVerticalWithOffset (offset: number): boolean {
-		if (!app.activeDocument.activeView.canScrollVertical(app.sectionContainer.getSectionWithName(L.CSections.Tiles.name)))
+		if (!app.activeDocument.activeView.canScrollVertical(app.sectionContainer.getSectionWithName(app.CSections.Tiles.name)))
 			return;
 
 		app.activeDocument.activeView.scroll(0, offset);
@@ -570,7 +569,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public scrollHorizontalWithOffset (offset: number): boolean {
-		if (!app.activeDocument.activeView.canScrollHorizontal(app.sectionContainer.getSectionWithName(L.CSections.Tiles.name)))
+		if (!app.activeDocument.activeView.canScrollHorizontal(app.sectionContainer.getSectionWithName(app.CSections.Tiles.name)))
 			return;
 
 		app.activeDocument.activeView.scroll(offset,0 );
@@ -850,19 +849,19 @@ export class ScrollSection extends CanvasSectionObject {
 
 		// Unfortunately, dragging outside the map doesn't work for the map element.
 		// We will keep this until we remove leaflet.
-		else if (L.Map.THIS.mouse && L.Map.THIS.mouse._mouseDown
-			&& this.containerObject.targetBoundSectionListContains(L.CSections.Tiles.name)
+		else if (window.L.Map.THIS.mouse && window.L.Map.THIS.mouse._mouseDown
+			&& this.containerObject.targetBoundSectionListContains(app.CSections.Tiles.name)
 			&& (<any>window).mode.isDesktop()
 			&& this.containerObject.isDraggingSomething()
-			&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
+			&& window.L.Map.THIS._docLayer._docType === 'spreadsheet') {
 
 			var temp = this.containerObject.getPositionOnMouseUp();
 			var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
 			tempPos = [tempPos[0] + app.activeDocument.activeView.viewedRectangle.pX1, tempPos[1] + app.activeDocument.activeView.viewedRectangle.pY1];
 			tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
 			this.onScrollVelocity({ vx: 0, vy: 0 }); // Cancel auto scrolling.
-			L.Map.THIS.mouse._mouseDown = false;
-			L.Map.THIS._docLayer._postMouseEvent('buttonup', tempPos[0], tempPos[1], 1, 1, 0);
+			window.L.Map.THIS.mouse._mouseDown = false;
+			window.L.Map.THIS._docLayer._postMouseEvent('buttonup', tempPos[0], tempPos[1], 1, 1, 0);
 		}
 
 		this.sectionProperties.previousDragDistance = null;
@@ -987,7 +986,3 @@ export class ScrollSection extends CanvasSectionObject {
 }
 
 }
-
-L.getNewScrollSection = function (isRTL?: () => boolean) {
-	return new cool.ScrollSection(isRTL);
-};

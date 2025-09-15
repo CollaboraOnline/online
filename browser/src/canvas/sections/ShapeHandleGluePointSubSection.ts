@@ -10,9 +10,9 @@
 */
 
 class ShapeHandleGluePointSubSection extends CanvasSectionObject {
-    processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+    processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
     documentObject: boolean = true;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {

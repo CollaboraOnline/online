@@ -23,15 +23,15 @@
 */
 
 class FocusCellSection extends CanvasSectionObject {
-	processingOrder: number = L.CSections.FocusCell.processingOrder;
-	drawingOrder: number = L.CSections.FocusCell.drawingOrder;
-	zIndex: number = L.CSections.FocusCell.zIndex;
+	processingOrder: number = app.CSections.FocusCell.processingOrder;
+	drawingOrder: number = app.CSections.FocusCell.drawingOrder;
+	zIndex: number = app.CSections.FocusCell.zIndex;
 	documentObject: boolean = true;
 	interactable: boolean = false;
 	static instance: FocusCellSection = null;
 
 	constructor() {
-		super(L.CSections.FocusCell.name);
+		super(app.CSections.FocusCell.name);
 
 		this.sectionProperties.columnRectangle = null;
 		this.sectionProperties.rowRectangle = null;

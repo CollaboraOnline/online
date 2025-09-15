@@ -23,7 +23,7 @@ class SheetsBar {
 	onAdd(map) {
 		this.map = map;
 		this.parentContainer = L.DomUtil.get('spreadsheet-toolbar');
-		this.builder = new L.control.jsDialogBuilder(
+		this.builder = new window.L.control.jsDialogBuilder(
 			{
 				mobileWizard: this,
 				map: this.map,

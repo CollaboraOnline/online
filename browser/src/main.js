@@ -10,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/* global globalThis */
+/* global globalThis UIManager */
 /* global errorMessages accessToken accessTokenTTL noAuthHeader accessHeader createOnlineModule */
 /* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
 /* global ServerConnectionService createEmscriptenModule */
@@ -81,7 +81,7 @@ var map = L.map('map', {
 
 ////// Controls /////
 
-map.uiManager = L.control.uiManager();
+map.uiManager = new UIManager();
 map.addControl(map.uiManager);
 if (!L.Browser.cypressTest)
 	map.tooltip = L.control.tooltip();

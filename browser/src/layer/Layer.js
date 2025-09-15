@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app */
+/* global app cool */
 
 L.Layer = L.Evented.extend({
 
@@ -196,9 +196,9 @@ L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect, map, 
 		layerSplitPos.y += 1;
 	}
 
-	var layerPos = new L.Point(0, 0);
-	var layerPosWithOffset = new L.Point(0, 0);
-	var eps = new L.Point(boundingClientRect.width, boundingClientRect.height);
+	var layerPos = new cool.Point(0, 0);
+	var layerPosWithOffset = new cool.Point(0, 0);
+	var eps = new cool.Point(boundingClientRect.width, boundingClientRect.height);
 
 	if (docPosWithOffset.x <= splitPos.x) {
 		// fixed region.
