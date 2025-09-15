@@ -6,7 +6,7 @@
 
 #include <config.h>
 
-#define ONE_PROCESS_PER_DOCUMENT
+// #define ONE_PROCESS_PER_DOCUMENT
 
 #include <cstdint>
 #include <cstdlib>
