@@ -35,7 +35,7 @@ interface UserEvent {
 	readonly: boolean;
 }
 
-class UserList extends L.Control {
+class UserList extends window.L.Control {
 	options: {
 		userLimitHeader: number;
 		userLimitHeaderWhenFollowing: number;
@@ -66,7 +66,7 @@ class UserList extends L.Control {
 
 	users: Map<number, User> = new Map();
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: any) {
 		this.map = map;
 
 		map.on('addview', this.onAddView, this);
@@ -594,13 +594,13 @@ class UserList extends L.Control {
 	}
 }
 
-L.control.userList = function () {
+window.L.control.userList = function () {
 	return new UserList();
 };
 
-L.control.createUserListWidget = function () {
+window.L.control.createUserListWidget = function () {
 	// TODO: this is not interactive
-	const userlistElement = L.DomUtil.create('div');
+	const userlistElement = window.L.DomUtil.create('div');
 	app.map.userList.renderHeaderAvatarPopover(userlistElement);
 	return userlistElement;
 };

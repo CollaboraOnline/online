@@ -9,6 +9,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * AutoCompletePopup - base class for mention, formula auto complete, auto fill popup and auto fill preview popup
  */
@@ -32,13 +33,13 @@ interface MentionEvent extends FireEvent {
 }
 
 abstract class AutoCompletePopup {
-	protected map: ReturnType<typeof L.map>;
+	protected map: any;
 	protected newPopupData: PopupData;
 	protected data: MessageEvent<any>;
 	protected popupId: string;
 	protected isMobile: boolean;
 
-	constructor(popupId: string, map: ReturnType<typeof L.map>) {
+	constructor(popupId: string, map: any) {
 		this.map = map;
 		this.popupId = popupId;
 		this.newPopupData = {
@@ -68,14 +69,14 @@ abstract class AutoCompletePopup {
 	abstract onAdd(): void;
 
 	closePopup(): void {
-		var popupExists = L.DomUtil.get(this.popupId);
+		var popupExists = window.L.DomUtil.get(this.popupId);
 		if (!popupExists) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
 		this.map.jsdialog.clearDialog(this.popupId);
 	}
 
-	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
+	abstract getPopupEntries(ev: FireEvent): any[];
 
 	getPopupJSON(control: any, framePos: any): PopupData {
 		return {
@@ -118,7 +119,7 @@ abstract class AutoCompletePopup {
 
 	getCursorPosition(): Point {
 		const commentSection = app.sectionContainer.getSectionWithName(
-			L.CSections.CommentList.name,
+			app.CSections.CommentList.name,
 		);
 		if (commentSection?.getActiveEdit()) {
 			const caretRect = window
@@ -126,7 +127,7 @@ abstract class AutoCompletePopup {
 				.getRangeAt(0)
 				.getBoundingClientRect();
 			const mapRect = this.map._container.getBoundingClientRect();
-			return new L.Point(
+			return new cool.Point(
 				caretRect.left - mapRect.left,
 				caretRect.bottom - mapRect.top,
 			);
@@ -138,7 +139,7 @@ abstract class AutoCompletePopup {
 		};
 		const origin = this.map.getPixelOrigin();
 		const panePos = this.map._getMapPanePos();
-		return new L.Point(
+		return new cool.Point(
 			Math.round(currPos.x + panePos.x - origin.x),
 			Math.round(currPos.y + panePos.y - origin.y),
 		);
@@ -167,10 +168,10 @@ abstract class AutoCompletePopup {
 		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
 		const offsetX = isSpreadsheetRTL
 			? 0
-			: app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)
+			: app.sectionContainer.getSectionWithName(app.CSections.RowHeader.name)
 					.size[0];
 		const offsetY = app.sectionContainer.getSectionWithName(
-			L.CSections.ColumnHeader.name,
+			app.CSections.ColumnHeader.name,
 		).size[1];
 
 		if (isSpreadsheetRTL) cursorPos.x = this.map._size.x - cursorPos.x;
@@ -195,5 +196,3 @@ abstract class AutoCompletePopup {
 		return false;
 	}
 }
-
-L.Control.AutoCompletePopup = AutoCompletePopup;

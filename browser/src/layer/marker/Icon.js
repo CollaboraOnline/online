@@ -1,7 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /*
  * L.Icon is an image-based icon class that you can use with L.Marker for custom markers.
- */
+*/
+
+/* global cool */
 
 L.Icon = L.Class.extend({
 	/*
@@ -49,8 +51,8 @@ L.Icon = L.Class.extend({
 
 	_setIconStyles: function (img, name) {
 		var options = this.options;
-		var size = L.point(options[name + 'Size']);
-		var anchor = L.point(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
+		var size = cool.Point.toPoint(options[name + 'Size']);
+		var anchor = cool.Point.toPoint(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
 		            size && size.x !== undefined && size.y !== undefined && size.divideBy(2, true));
 
 		img.className = 'leaflet-marker-' + name + ' ' + (options.className || '');

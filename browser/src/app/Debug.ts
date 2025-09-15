@@ -1277,11 +1277,11 @@ class DebugManager {
 
 		const signX = this._docLayer.isCalcRTL() ? -1 : 1;
 
-		const absTopLeftTwips = L.point(
+		const absTopLeftTwips = cool.Point.toPoint(
 			rectangleArray[0] * signX,
 			rectangleArray[1],
 		);
-		const absBottomRightTwips = L.point(
+		const absBottomRightTwips = cool.Point.toPoint(
 			(rectangleArray[0] + rectangleArray[2]) * signX,
 			rectangleArray[1] + rectangleArray[3],
 		);

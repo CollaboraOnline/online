@@ -50,7 +50,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	}
 
 	var isChecked = function (unoCommand) {
-		var items = L.Map.THIS['stateChangeHandler'];
+		var items = window.L.Map.THIS['stateChangeHandler'];
 		var val = items.getItemValue(unoCommand);
 
 		if (val && (val === true || val === 'true'))
@@ -168,7 +168,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					});
 				} else if (eventType === 'selected' && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
-					L.Map.THIS.sendUnoCommand(uno);
+					window.L.Map.THIS.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(id);
 					return;
 				}
@@ -188,12 +188,12 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				console.debug('Dropdown: unhandled action: "' + eventType + '"');
 		};
 	};
-	L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
-	L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
+	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	window.L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
 };
 
 JSDialog.CloseDropdown = function (id) {
-	L.Map.THIS.fire('jsdialog', {data: {
+	window.L.Map.THIS.fire('jsdialog', {data: {
 		id: _createDropdownId(id),
 		jsontype: 'dialog',
 		action: 'close'
@@ -201,7 +201,7 @@ JSDialog.CloseDropdown = function (id) {
 };
 
 JSDialog.CloseAllDropdowns = function () {
-	L.Map.THIS.jsdialog.closeAllDropdowns();
+	window.L.Map.THIS.jsdialog.closeAllDropdowns();
 };
 
 JSDialog.GetDropdown = function (id) {

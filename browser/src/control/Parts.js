@@ -302,7 +302,7 @@ L.Map.include({
 		if (!this.isEditMode() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
 			const posY = Math.round(app.file.writer.pageRectangleList[docLayer._currentPage][1] / app.dpiScale);
 
-			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			const section = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (section)
 				section.onScrollTo({x: 0, y: posY});
 

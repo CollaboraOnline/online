@@ -14,7 +14,6 @@
  */
 
 declare var JSDialog: any;
-declare var L: any;
 
 class AddressInputField {
 	map: any;
@@ -23,14 +22,14 @@ class AddressInputField {
 
 	public constructor(map: any) {
 		this.map = map;
-		this.parentContainer = L.DomUtil.get('addressInput');
+		this.parentContainer = window.L.DomUtil.get('addressInput');
 
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
 		this.map.on('celladdress', this.onCellAddress, this);
 
-		this.builder = new L.control.jsDialogBuilder({
+		this.builder = new window.L.control.jsDialogBuilder({
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'addressInput jsdialog',

@@ -12,16 +12,16 @@
 class SplitSection extends CanvasSectionObject {
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
-	processingOrder: number = L.CSections.Debug.Splits.processingOrder;
-	drawingOrder: number = L.CSections.Debug.Splits.drawingOrder;
-	zIndex: number = L.CSections.Debug.Splits.zIndex;
+	processingOrder: number = app.CSections.Debug.Splits.processingOrder;
+	drawingOrder: number = app.CSections.Debug.Splits.drawingOrder;
+	zIndex: number = app.CSections.Debug.Splits.zIndex;
 	boundToSection: string = 'tiles';
 	sectionProperties: any = {
 		docLayer: app.map._docLayer,
 	};
 
 	constructor() {
-		super(L.CSections.Debug.Splits.name);
+		super(app.CSections.Debug.Splits.name);
 	}
 
 	onDraw(): void {

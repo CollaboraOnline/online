@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 /* eslint-disable */
 
-declare var L: any;
 
 /*
  * Cursor implements a blinking cursor.
@@ -296,7 +295,7 @@ class Cursor {
 
 		if (Cursor.isCustomCursor(cursorName)) {
 			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
-			customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
+			customCursor = window.L.Browser.ie ? // IE10 does not like item with left/top position in the url list
 				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 		}

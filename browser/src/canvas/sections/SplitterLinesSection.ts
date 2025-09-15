@@ -11,13 +11,13 @@
 
 class SplitterLinesSection extends CanvasSectionObject {
 	interactable: boolean = false;
-	processingOrder: number = L.CSections.Splitter.processingOrder;
-	drawingOrder: number = L.CSections.Splitter.drawingOrder;
-	zIndex: number = L.CSections.Splitter.zIndex;
+	processingOrder: number = app.CSections.Splitter.processingOrder;
+	drawingOrder: number = app.CSections.Splitter.drawingOrder;
+	zIndex: number = app.CSections.Splitter.zIndex;
 	documentObject: boolean = true;
 
 	constructor() {
-		super(L.CSections.Splitter.name);
+		super(app.CSections.Splitter.name);
 	}
 
 	onInitialize(): void {
@@ -132,18 +132,19 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 	private GetColumnHeaderHeight(): number {
 		if (
-			this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name)
+			this.containerObject.getSectionWithName(app.CSections.ColumnHeader.name)
 		) {
 			return this.containerObject.getSectionWithName(
-				L.CSections.ColumnHeader.name,
+				app.CSections.ColumnHeader.name,
 			).size[1];
 		} else return 0;
 	}
 
 	private GetRowHeaderWidth(): number {
-		if (this.containerObject.getSectionWithName(L.CSections.RowHeader.name)) {
-			return this.containerObject.getSectionWithName(L.CSections.RowHeader.name)
-				.size[0];
+		if (this.containerObject.getSectionWithName(app.CSections.RowHeader.name)) {
+			return this.containerObject.getSectionWithName(
+				app.CSections.RowHeader.name,
+			).size[0];
 		} else return 0;
 	}
 

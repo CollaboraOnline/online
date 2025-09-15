@@ -8,9 +8,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.CornerGroup
- */
 
 /*
 	This file is Calc only. This adds a header section for grouped columns and rows in Calc.
@@ -23,17 +20,17 @@ namespace cool {
 
 export class CornerGroup extends GroupBase {
 	anchor: string[] = ['top', 'left'];
-	processingOrder: number = L.CSections.CornerGroup.processingOrder;
-	drawingOrder: number = L.CSections.CornerGroup.drawingOrder;
-	zIndex: number = L.CSections.CornerGroup.zIndex;
+	processingOrder: number = app.CSections.CornerGroup.processingOrder;
+	drawingOrder: number = app.CSections.CornerGroup.drawingOrder;
+	zIndex: number = app.CSections.CornerGroup.zIndex;
 	sectionProperties: any = { cursor: 'pointer' };
 
 	_map: any;
 
-	constructor() { super(L.CSections.CornerGroup.name); }
+	constructor() { super(app.CSections.CornerGroup.name); }
 
 	public onInitialize(): void {
-		this._map = L.Map.THIS;
+		this._map = window.L.Map.THIS;
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
 		this._map.on('darkmodechanged', this._cornerGroupColors, this);
@@ -50,13 +47,13 @@ export class CornerGroup extends GroupBase {
 	update(): void {
 		// Below 2 sections exist (since this section is added), unless they are being removed.
 
-		const rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name) as RowGroup;
+		const rowGroupSection = this.containerObject.getSectionWithName(app.CSections.RowGroup.name) as RowGroup;
 		if (rowGroupSection) {
 			rowGroupSection.update(); // This will update its size.
 			this.size[0] = rowGroupSection.size[0];
 		}
 
-		const columnGroupSection = this.containerObject.getSectionWithName(L.CSections.ColumnGroup.name) as ColumnGroup;
+		const columnGroupSection = this.containerObject.getSectionWithName(app.CSections.ColumnGroup.name) as ColumnGroup;
 		if (columnGroupSection) {
 			columnGroupSection.update(); // This will update its size.
 			this.size[1] = columnGroupSection.size[1];
@@ -92,9 +89,3 @@ export class CornerGroup extends GroupBase {
 	/* Only background and border drawings are needed for this section. And they are handled by CanvasSectionContainer. */
 }
 }
-
-L.Control.CornerGroup = cool.CornerGroup;
-
-L.control.cornerGroup = function () {
-	return new L.Control.CornerGroup();
-};

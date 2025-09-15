@@ -12,6 +12,7 @@
 /**
  * Type for the toolbar button configuration.
  */
+
 interface ToolbarButton {
 	type: string;
 	uno: string;
@@ -34,7 +35,7 @@ interface UIModeCommand {
 /**
  * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
  */
-class UIManager extends L.Control {
+class UIManager extends window.L.Control {
 	mobileWizard: any = null;
 	documentNameInput: any = null;
 	blockedUI: any = false;
@@ -51,7 +52,7 @@ class UIManager extends L.Control {
 	 * @param map - The Leaflet map instance.
 	 * @returns A dummy container HTMLElement.
 	 */
-	onAdd(map: ReturnType<typeof L.Map>) {
+	onAdd(map: any) {
 		this.map = map;
 		this.notebookbar = null;
 		// Every time the UI mode changes from 'classic' to 'notebookbar'
@@ -282,7 +283,7 @@ class UIManager extends L.Control {
 			this.refreshAfterThemeChange();
 
 		if (app.map._docLayer._docType === 'spreadsheet') {
-			const calcGridSection = app.sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
+			const calcGridSection = app.sectionContainer.getSectionWithName(app.CSections.CalcGrid.name);
 			if (calcGridSection)
 				calcGridSection.resetStrokeStyle();
 		}
@@ -348,7 +349,7 @@ class UIManager extends L.Control {
 		const enableNotebookbar = this.shouldUseNotebookbarMode();
 		const isMobile = window.mode.isMobile();
 		if (isMobile || !enableNotebookbar) {
-			var menubar = L.control.menubar();
+			var menubar = new Menubar();
 			this.map.menubar = menubar;
 			this.map.addControl(menubar);
 		}
@@ -376,33 +377,33 @@ class UIManager extends L.Control {
 
 			this.map.navigator = JSDialog.NavigatorPanel(this.map);
 
-			this.map.formulaautocomplete = L.control.formulaautocomplete(this.map);
-			this.map.formulausage = L.control.formulausage(this.map);
-			this.map.autofillpreviewtooltip = L.control.autofillpreviewtooltip(this.map);
+			this.map.formulaautocomplete = new FormulaAutoCompletePopup(this.map);
+			this.map.formulausage = new FormulaUsagePopup(this.map);
+			this.map.autofillpreviewtooltip = new AutoFillPreviewTooltip(this.map);
 		}
 
-		this.map.jsdialog = L.control.jsDialog();
+		this.map.jsdialog = window.L.control.jsDialog();
 		this.map.addControl(this.map.jsdialog);
 
 		window.setupToolbar(this.map);
 
-		this.documentNameInput = L.control.documentNameInput();
+		this.documentNameInput = window.L.control.documentNameInput();
 		this.map.addControl(this.documentNameInput);
-		this.map.addControl(L.control.alertDialog());
+		this.map.addControl(window.L.control.alertDialog());
 		if (window.mode.isMobile()) {
-			this.mobileWizard = L.control.mobileWizard();
+			this.mobileWizard = window.L.control.mobileWizard();
 			this.map.addControl(this.mobileWizard);
 		}
-		this.map.addControl(L.control.languageDialog());
-		this.map.dialog = L.control.lokDialog();
+		this.map.addControl(window.L.control.languageDialog());
+		this.map.dialog = window.L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
-		this.map.addControl(L.control.contextMenu());
-		this.map.userList = L.control.userList();
+		this.map.addControl(window.L.control.contextMenu());
+		this.map.userList = window.L.control.userList();
 		this.map.addControl(this.map.userList);
 		this.map.aboutDialog = JSDialog.aboutDialog(this.map);
 
-		if (L.Map.versionBar && window.allowUpdateNotification)
-			this.map.addControl(L.Map.versionBar);
+		if (window.L.Map.versionBar && window.allowUpdateNotification)
+			this.map.addControl(window.L.Map.versionBar);
 
 		var openBusyPopup = (label: string) => {
 			this.busyPopupTimer = window.setTimeout(() => {
@@ -531,7 +532,7 @@ class UIManager extends L.Control {
 			// Notify the initial status of comments
 			var initialCommentState = this.map['stateChangeHandler'].getItemValue('showannotations');
 			this._map.fire('commandstatechanged', {commandName : 'showannotations', state : initialCommentState});
-			this.map.mention = L.control.mention(this.map);
+			this.map.mention = new Mention(this.map);
 
 			if (!window.mode.isMobile()) {
 				// setup quickfind panel
@@ -558,7 +559,7 @@ class UIManager extends L.Control {
 				app.dispatcher.dispatch('presentation');
 			}
 		});
-		this.map.contextToolbar = L.control.ContextToolbar(this.map);
+		this.map.contextToolbar = new ContextToolbar(this.map);
 	}
 
 	/**
@@ -655,7 +656,7 @@ class UIManager extends L.Control {
 	 * Adds classic UI components.
 	 */
 	addClassicUI(): void {
-		this.map.menubar = L.control.menubar();
+		this.map.menubar = new Menubar();
 		this.map.addControl(this.map.menubar);
 		this.map.topToolbar = JSDialog.TopToolbar(this.map);
 
@@ -1087,7 +1088,7 @@ class UIManager extends L.Control {
 		if (!this.isMenubarHidden())
 			return;
 		$('.main-nav').show();
-		if (L.Params.closeButtonEnabled && !window.mode.isTablet()) {
+		if (window.L.Params.closeButtonEnabled && !window.mode.isTablet()) {
 			$('#closebuttonwrapper').show();
 			$('#closebuttonwrapperseparator').show();
 		}
@@ -1114,7 +1115,7 @@ class UIManager extends L.Control {
 		this._notebookbarShouldBeCollapsed = notebookbarWasCollapsed;
 
 		$('.main-nav').hide();
-		if (L.Params.closeButtonEnabled) {
+		if (window.L.Params.closeButtonEnabled) {
 			$('#closebuttonwrapper').hide();
 			$('#closebuttonwrapperseparator').hide();
 		}
@@ -1377,7 +1378,7 @@ class UIManager extends L.Control {
 				this.makeSpaceForNotebookbar();
 			} else if (e.detail.perm === 'readonly') {
 				if (!this.map.menubar) {
-					var menubar = L.control.menubar();
+					var menubar = new Menubar();
 					this.map.menubar = menubar;
 					this.map.addControl(menubar);
 				}
@@ -1437,7 +1438,7 @@ class UIManager extends L.Control {
 				const baseUrl = serverPrivateInfo.ESignatureBaseUrl;
 				const clientId = serverPrivateInfo.ESignatureClientId;
 				if (baseUrl !== undefined && !this.map.eSignature) {
-					this.map.eSignature = L.control.eSignature(baseUrl, clientId);
+					this.map.eSignature = new cool.ESignature(baseUrl, clientId);
 				}
 			}
 		}
@@ -1524,7 +1525,7 @@ class UIManager extends L.Control {
 	 */
 	showDocumentTooltip(tooltipInfo: any): void {
 		var split = tooltipInfo.rectangle.split(',');
-		var latlng = this.map._docLayer._twipsToLatLng(new L.Point(+split[0], +split[1]));
+		var latlng = this.map._docLayer._twipsToLatLng(new cool.Point(+split[0], +split[1]));
 		var pt = this.map.latLngToContainerPoint(latlng);
 		var elem = $('.leaflet-layer');
 
@@ -2238,8 +2239,3 @@ class UIManager extends L.Control {
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
 	}
 }
-
-// Export a factory function for the UIManager control.
-L.control.uiManager = function (): UIManager {
-	return new UIManager();
-};

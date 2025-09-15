@@ -19,10 +19,10 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 	*/
 	windowSection: boolean = true;
 	showSection: boolean = true;
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
 	processingOrder: number =
-		L.CSections.DefaultForDocumentObjects.processingOrder;
+		app.CSections.DefaultForDocumentObjects.processingOrder;
 	interactable: boolean = false;
 
 	constructor() {

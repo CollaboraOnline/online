@@ -36,12 +36,12 @@ abstract class SidebarBase {
 		this.onAdd(map);
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: any) {
 		this.map = map;
 
 		app.events.on('resize', this.onResize.bind(this));
 
-		this.builder = new L.control.jsDialogBuilder({
+		this.builder = new window.L.control.jsDialogBuilder({
 			mobileWizard: this,
 			map: map,
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later

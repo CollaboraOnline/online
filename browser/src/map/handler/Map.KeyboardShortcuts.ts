@@ -10,17 +10,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var L: any;
 
 function isCtrlKey (e: KeyboardEvent) {
-    if ((window as any).ThisIsTheiOSApp || L.Browser.mac)
+    if ((window as any).ThisIsTheiOSApp || window.L.Browser.mac)
         return e.metaKey;
     else
         return e.ctrlKey;
 }
 
 function isMacCtrlKey (e: KeyboardEvent) {
-    if ((window as any).ThisIsTheiOSApp || L.Browser.mac)
+    if ((window as any).ThisIsTheiOSApp || window.L.Browser.mac)
         return e.ctrlKey;
     else
         return false;
@@ -209,8 +208,8 @@ class KeyboardShortcuts {
         const platform = window.mode.isChromebook() ? Platform.CHROMEOSAPP :
                          window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : // Cannot come before window.mode.isChromebook() as all Chromebook app users are necessarily also Android app users
                          window.ThisIsTheiOSApp ? Platform.IOSAPP :
-                         L.Browser.mac ? Platform.MAC :
-                         L.Browser.win ? Platform.WINDOWS :
+                         window.L.Browser.mac ? Platform.MAC :
+                         window.L.Browser.win ? Platform.WINDOWS :
                          Platform.LINUX;
 
         const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
@@ -241,7 +240,7 @@ class KeyboardShortcuts {
         this.map = map;
 
         // in cypress it can fail on load to not allow for duplicated shortcuts
-        if (L.Browser.cypressTest) {
+        if (window.L.Browser.cypressTest) {
             this.map.on('docloaded', () => { keyboardShortcuts.verifyShortcuts(); });
         }
     }

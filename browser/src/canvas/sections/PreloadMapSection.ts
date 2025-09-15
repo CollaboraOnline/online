@@ -12,13 +12,13 @@
 class PreloadMapSection extends CanvasSectionObject {
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
-	processingOrder: number = L.CSections.Debug.PreloadMap.processingOrder;
-	drawingOrder: number = L.CSections.Debug.PreloadMap.drawingOrder;
-	zIndex: number = L.CSections.Debug.PreloadMap.zIndex;
+	processingOrder: number = app.CSections.Debug.PreloadMap.processingOrder;
+	drawingOrder: number = app.CSections.Debug.PreloadMap.drawingOrder;
+	zIndex: number = app.CSections.Debug.PreloadMap.zIndex;
 	boundToSection: string = 'tiles';
 
 	constructor() {
-		super(L.CSections.Debug.PreloadMap.name);
+		super(app.CSections.Debug.PreloadMap.name);
 	}
 
 	onDraw(
@@ -41,7 +41,7 @@ class PreloadMapSection extends CanvasSectionObject {
 
 		var canvas = this.context;
 
-		var tileRange = new L.Bounds(viewRange.min, viewRange.max);
+		var tileRange = new cool.Bounds(viewRange.min, viewRange.max);
 
 		// stop annoying jitter as the view fits different numbers of tiles.
 		var viewWidth = Math.floor(
@@ -82,7 +82,7 @@ class PreloadMapSection extends CanvasSectionObject {
 		var preParts = (numParts - 1) / 2;
 		var partBounds = new Array(numParts);
 		for (var i = 0; i < partBounds.length; ++i) {
-			partBounds[i] = new L.Bounds(tileRange.min, tileRange.max);
+			partBounds[i] = new cool.Bounds(tileRange.min, tileRange.max);
 			partBounds[i].part = part + i - preParts;
 		}
 

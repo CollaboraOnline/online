@@ -457,9 +457,3 @@ namespace cool {
 		}
 	}
 }
-
-L.Control.ESignature = cool.ESignature;
-
-L.control.eSignature = function (url: string, clientId: string) {
-	return new L.Control.ESignature(url, clientId);
-};

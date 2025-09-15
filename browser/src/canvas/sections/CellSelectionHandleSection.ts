@@ -11,9 +11,9 @@
 
 class CellSelectionHandle extends CanvasSectionObject {
 	showSection: boolean = false;
-	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
 	documentObject: boolean = true;
 
 	constructor (name: string) {

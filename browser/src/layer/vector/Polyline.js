@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app */
+/* global app cool */
 /*
  * L.Polyline implements polyline vector layer (a set of points connected with lines)
  */
@@ -95,10 +95,10 @@ L.Polyline = L.Path.extend({
 
 		// project bounds as well to use later for Canvas hit detection/etc.
 		var w = this._clickTolerance(),
-		    p = new L.Point(w, -w);
+		    p = new cool.Point(w, -w);
 
 		if (this._latlngs.length) {
-			this._pxBounds = new L.Bounds(
+			this._pxBounds = new cool.Bounds(
 				this._latLngToPoint(this._bounds.getSouthWest())._subtract(p),
 				this._latLngToPoint(this._bounds.getNorthEast())._add(p));
 		}

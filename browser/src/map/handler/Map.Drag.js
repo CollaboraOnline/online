@@ -3,6 +3,8 @@
  * L.Handler.MapDrag is used to make the map draggable (with panning inertia), enabled by default.
  */
 
+/* global cool */
+
 L.Map.mergeOptions({
 	dragging: true
 });
@@ -39,7 +41,7 @@ L.Map.Drag = L.Handler.extend({
 	},
 
 	_onDragStart: function () {
-		this._dragEdgeOffset = new L.Point(0, 0);
+		this._dragEdgeOffset = new cool.Point(0, 0);
 
 		var map = this._map;
 

@@ -10,23 +10,22 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-declare var L: any;
 
 namespace cool {
 
 export class ContentControlSection extends CanvasSectionObject {
-	processingOrder: number = L.CSections.ContentControl.processingOrder;
-	drawingOrder: number = L.CSections.ContentControl.drawingOrder;
-	zIndex: number = L.CSections.ContentControl.zIndex;
+	processingOrder: number = app.CSections.ContentControl.processingOrder;
+	drawingOrder: number = app.CSections.ContentControl.drawingOrder;
+	zIndex: number = app.CSections.ContentControl.zIndex;
 	interactable: boolean = false;
 	documentObject: boolean = true;
 
 	map: any;
 
 	constructor() {
-		super(L.CSections.ContentControl.name);
+		super(app.CSections.ContentControl.name);
 
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 		this.sectionProperties.json = null;
 		this.sectionProperties.datePicker = false;
 		this.sectionProperties.picturePicker = null;

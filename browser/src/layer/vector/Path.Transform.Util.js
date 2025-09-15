@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app */
+/* global app cool */
 
 /**
  * @namespace
@@ -10,14 +10,14 @@ L.PathTransform = {};
 /**
  * Point on the line segment or its extension
  *
- * @param  {L.Point} start
- * @param  {L.Point} final
+ * @param  {cool.Point} start
+ * @param  {cool.Point} final
  * @param  {Number}  distPx
- * @return {L.Point}
+ * @return {cool.Point}
  */
 L.PathTransform.pointOnLine = function(start, final, distPx) {
 	var ratio = 1 + distPx / start.distanceTo(final);
-	return new L.Point(
+	return new cool.Point(
 		start.x + (final.x - start.x) * ratio,
 		start.y + (final.y - start.y) * ratio
 	);

@@ -16,6 +16,7 @@
 		* var autoFillSection = new app.definitions.AutoFillMarkerSection();
 */
 window.app = {
+	CSections: {},
 	activeDocument: null, // Active document manager.
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
@@ -55,7 +56,7 @@ window.app = {
 	UI: {
 		language: {
 			fromURL: (window as any).langParam, // This is set in global.js.
-			fromBrowser: L.Browser.lang, // Again in global.js.
+			fromBrowser: window.L.Browser.lang, // Again in global.js.
 			notebookbarAccessibility: null,
 		},
 	},

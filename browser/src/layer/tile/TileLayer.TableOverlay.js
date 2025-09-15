@@ -30,7 +30,7 @@ L.CanvasTileLayer.include({
 		this._map.on('zoomend', this._onZoomForTableMarkers, this);
 	},
 	_convertPixelToTwips: function(pixel) {
-		var point = this._latLngToTwips(this._map.unproject(new L.Point(pixel, 0)));
+		var point = this._latLngToTwips(this._map.unproject(new cool.Point(pixel, 0)));
 		return point.x;
 	},
 	_convertTwipsToPixels: function(twips) {
@@ -53,12 +53,12 @@ L.CanvasTileLayer.include({
 		aboveSelectionHeaders = this._convertPixelToTwips(aboveSelectionHeaders);
 
 		if (marker._type.startsWith('column')) {
-			point = point.subtract(new L.Point(markerRect.width / 2, markerRect.height));
-			raiseDelta = new L.Point(0, aboveSelectionHeaders);
+			point = point.subtract(new cool.Point(markerRect.width / 2, markerRect.height));
+			raiseDelta = new cool.Point(0, aboveSelectionHeaders);
 		}
 		else {
-			point = point.subtract(new L.Point(markerRect.width, markerRect.height / 2));
-			raiseDelta = new L.Point(aboveSelectionHeaders, 0);
+			point = point.subtract(new cool.Point(markerRect.width, markerRect.height / 2));
+			raiseDelta = new cool.Point(aboveSelectionHeaders, 0);
 		}
 
 		raiseDelta = this._map.project(this._twipsToLatLng(raiseDelta, this._map.getZoom()));
@@ -94,17 +94,17 @@ L.CanvasTileLayer.include({
 		marker._max = parseInt(entry.max);
 		marker._index = parseInt(entry.index);
 		if (markerType === 'column') {
-			marker._positionTwips = new L.Point(this._tablePositionColumnOffset + marker._position, left);
-			marker._topBorderPoint = new L.Point(this._tablePositionColumnOffset + marker._position, left);
+			marker._positionTwips = new cool.Point(this._tablePositionColumnOffset + marker._position, left);
+			marker._topBorderPoint = new cool.Point(this._tablePositionColumnOffset + marker._position, left);
 			marker._topBorderPoint = this._twipsToLatLng(marker._topBorderPoint, this._map.getZoom());
-			marker._bottomBorderPoint = new L.Point(this._tablePositionColumnOffset + marker._position, right);
+			marker._bottomBorderPoint = new cool.Point(this._tablePositionColumnOffset + marker._position, right);
 			marker._bottomBorderPoint = this._twipsToLatLng(marker._bottomBorderPoint, this._map.getZoom());
 		}
 		else {
-			marker._positionTwips = new L.Point(left, this._tablePositionRowOffset + marker._position);
-			marker._topBorderPoint = new L.Point(left, this._tablePositionRowOffset + marker._position);
+			marker._positionTwips = new cool.Point(left, this._tablePositionRowOffset + marker._position);
+			marker._topBorderPoint = new cool.Point(left, this._tablePositionRowOffset + marker._position);
 			marker._topBorderPoint = this._twipsToLatLng(marker._topBorderPoint, this._map.getZoom());
-			marker._bottomBorderPoint = new L.Point(right, this._tablePositionRowOffset + marker._position);
+			marker._bottomBorderPoint = new cool.Point(right, this._tablePositionRowOffset + marker._position);
 			marker._bottomBorderPoint = this._twipsToLatLng(marker._bottomBorderPoint, this._map.getZoom());
 		}
 		this._setMarkerPosition(marker);
@@ -283,9 +283,9 @@ L.CanvasTileLayer.include({
 				endX = this._tablePositionColumnOffset + positions[i + 1];
 				startY = start;
 				endY = end;
-				point1 = this._twipsToLatLng(new L.Point(startX, startY - delta1 - selectionMarkerNominalSize),
+				point1 = this._twipsToLatLng(new cool.Point(startX, startY - delta1 - selectionMarkerNominalSize),
 							     this._map.getZoom());
-				width = this._convertTwipsToPixels(new L.Point(endX - startX, 0)).x - 2;
+				width = this._convertTwipsToPixels(new cool.Point(endX - startX, 0)).x - 2;
 			}
 			else {
 				classNameMarker += ' table-select-marker--row';
@@ -293,9 +293,9 @@ L.CanvasTileLayer.include({
 				endX = end;
 				startY = this._tablePositionRowOffset + positions[i];
 				endY = this._tablePositionRowOffset + positions[i + 1];
-				point1 = this._twipsToLatLng(new L.Point(startX - delta1 - selectionMarkerNominalSize, startY),
+				point1 = this._twipsToLatLng(new cool.Point(startX - delta1 - selectionMarkerNominalSize, startY),
 							     this._map.getZoom());
-				height = this._convertTwipsToPixels(new L.Point(0, endY - startY)).y - 2;
+				height = this._convertTwipsToPixels(new cool.Point(0, endY - startY)).y - 2;
 			}
 
 			var selectionRectangle = L.marker(point1,
@@ -350,7 +350,7 @@ L.CanvasTileLayer.include({
 			const rowStart = this._tablePositionRowOffset + parseInt(this._currentTableData.rows.left);
 			const rowEnd = this._tablePositionRowOffset + parseInt(this._currentTableData.rows.right);
 			const totalHeightTwips = rowEnd - rowStart;
-			markerHeight = this._convertTwipsToPixels(new L.Point(0, totalHeightTwips)).y;
+			markerHeight = this._convertTwipsToPixels(new cool.Point(0, totalHeightTwips)).y;
 			markerWidth = 16;
 
 		} else {
@@ -362,7 +362,7 @@ L.CanvasTileLayer.include({
 			const colStart = this._tablePositionColumnOffset + parseInt(this._currentTableData.columns.left);
 			const colEnd = this._tablePositionColumnOffset + parseInt(this._currentTableData.columns.right);
 			const totalWidthTwips = colEnd - colStart;
-			markerWidth = this._convertTwipsToPixels(new L.Point(totalWidthTwips, 0)).x;
+			markerWidth = this._convertTwipsToPixels(new cool.Point(totalWidthTwips, 0)).x;
 			markerHeight = 16;
 		}
 
@@ -391,7 +391,7 @@ L.CanvasTileLayer.include({
 		var aMousePosition = e.target.getLatLng();
 		aMousePosition = this._map.project(aMousePosition);
 		var size = e.target._icon.getBoundingClientRect();
-		aMousePosition = aMousePosition.add(new L.Point(size.width / 2, size.height / 2));
+		aMousePosition = aMousePosition.add(new cool.Point(size.width / 2, size.height / 2));
 		aMousePosition = this._map.unproject(aMousePosition);
 		var aLatLonPosition = aMousePosition;
 		aMousePosition = this._latLngToTwips(aMousePosition);

@@ -10,7 +10,7 @@
  */
 
 /*
- * L.control.ContextToolbar - definition of context toolbar
+ * ContextToolbar - definition of context toolbar
  * This toolbar should appear over selection when related selection is done using mouse
  */
 
@@ -27,7 +27,7 @@ class ContextToolbar {
 
 	constructor(map: any) {
 		this.map = map;
-		this.builder = new L.control.notebookbarBuilder({
+		this.builder = new window.L.control.notebookbarBuilder({
 			windowId: -2,
 			mobileWizard: this,
 			map: this.map,
@@ -436,7 +436,3 @@ class ContextToolbar {
 		}
 	}
 }
-
-L.control.ContextToolbar = function (map: any) {
-	return new ContextToolbar(map);
-};

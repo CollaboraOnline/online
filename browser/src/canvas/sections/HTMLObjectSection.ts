@@ -11,9 +11,9 @@
 */
 
 class HTMLObjectSection extends CanvasSectionObject {
-	processingOrder: number = L.CSections.HTMLObject.processingOrder;
-	drawingOrder: number = L.CSections.HTMLObject.drawingOrder;
-	zIndex: number = L.CSections.HTMLObject.zIndex;
+	processingOrder: number = app.CSections.HTMLObject.processingOrder;
+	drawingOrder: number = app.CSections.HTMLObject.drawingOrder;
+	zIndex: number = app.CSections.HTMLObject.zIndex;
 	documentObject: boolean = true;
 
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {

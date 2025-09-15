@@ -15,7 +15,6 @@
  */
 
 declare var JSDialog: any;
-declare var L: any;
 
 interface HtmlContentJson {
 	id: string;
@@ -225,7 +224,8 @@ var getElementsFromId = function (
 		return (window as any).getShapesPopupElements(closeCallback);
 	else if (id === 'insertconnectorspopup')
 		return (window as any).getConnectorsPopupElements(closeCallback);
-	else if (id === 'userslistpopup') return L.control.createUserListWidget();
+	else if (id === 'userslistpopup')
+		return window.L.control.createUserListWidget();
 	else if (id === 'permissionmode')
 		return getPermissionModeElements(
 			data.isReadOnlyMode,

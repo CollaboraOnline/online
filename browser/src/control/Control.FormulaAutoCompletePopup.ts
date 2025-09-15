@@ -9,16 +9,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
- * Control.FormulaAutoCompletePopup
+ * FormulaAutoCompletePopup
  */
 
 /* global app */
 
-class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
+class FormulaAutoCompletePopup extends AutoCompletePopup {
 	functionList: Array<any>;
 
-	constructor(map: ReturnType<typeof L.map>) {
+	constructor(map: any) {
 		super('formulaautocompletePopup', map);
 	}
 
@@ -157,7 +158,3 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 		return false;
 	}
 }
-
-L.control.formulaautocomplete = function (map: any) {
-	return new FormulaAutoCompletePopup(map);
-};

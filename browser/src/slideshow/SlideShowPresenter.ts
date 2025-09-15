@@ -147,7 +147,7 @@ class SlideShowPresenter {
 
 	constructor(map: any, enableA11y: boolean) {
 		this._cypressSVGPresentationTest =
-			L.Browser.cypressTest || 'Cypress' in window;
+			window.L.Browser.cypressTest || 'Cypress' in window;
 		this._map = map;
 		this._enableA11y = enableA11y;
 		this._init();

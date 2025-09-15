@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.ColumnGroup
- */
 
 /* global app */
 
@@ -26,17 +23,17 @@
 namespace cool {
 
 export class ColumnGroup extends GroupBase {
-	anchor: any = ['top', [L.CSections.CornerGroup.name, 'right', 'left']];
+	anchor: any = ['top', [app.CSections.CornerGroup.name, 'right', 'left']];
 	expand: string[] = ['left', 'right']; // Expand horizontally.
-	processingOrder: number = L.CSections.ColumnGroup.processingOrder;
-	drawingOrder: number = L.CSections.ColumnGroup.drawingOrder;
-	zIndex: number = L.CSections.ColumnGroup.zIndex;
+	processingOrder: number = app.CSections.ColumnGroup.processingOrder;
+	drawingOrder: number = app.CSections.ColumnGroup.drawingOrder;
+	zIndex: number = app.CSections.ColumnGroup.zIndex;
 
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderWidth: number;
 	_splitPos: cool.Point;
 
-	constructor() { super(L.CSections.ColumnGroup.name); }
+	constructor() { super(app.CSections.ColumnGroup.name); }
 
 	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
@@ -48,7 +45,7 @@ export class ColumnGroup extends GroupBase {
 		// Calculate width on the fly.
 		this.size[1] = this._computeSectionHeight();
 
-		this._cornerHeaderWidth = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[0];
+		this._cornerHeaderWidth = this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).size[0];
 
 		this._splitPos = (this._map._docLayer._splitPanesContext as cool.SplitPanesContext).getSplitPos();
 
@@ -211,15 +208,9 @@ export class ColumnGroup extends GroupBase {
 
 	onRemove(): void {
 		this.isRemoved = true;
-		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = 0;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = 0;
+		this.containerObject.getSectionWithName(app.CSections.ColumnHeader.name).position[1] = 0;
+		this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).position[1] = 0;
 	}
 }
 
 }
-
-L.Control.ColumnGroup = cool.ColumnGroup;
-
-L.control.columnGroup = function () {
-	return new L.Control.ColumnGroup();
-};

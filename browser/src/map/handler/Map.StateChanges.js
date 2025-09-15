@@ -52,7 +52,7 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		this._items[commandName] = state;
 		if (e.commandName === '.uno:CurrentTrackedChangeId') {
 			var redlineId = 'change-' + state;
-			const annotations = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			const annotations = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
 			if (annotations) annotations.selectById(redlineId);
 			else console.error('_onStateChanged: section "CommentList" missing');
 		}

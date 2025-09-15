@@ -12,7 +12,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global app $ L Hammer brandProductName UNOModifier */
+/* global app $ L Hammer brandProductName UNOModifier cool */
 
 L.WinUtil = {
 
@@ -395,9 +395,9 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + strId).remove();
 			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title, null, e.unique_id);
 			if (this._map._docLayer && this._map._docLayer._docType === 'spreadsheet') {
-				if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
-					app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-					app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+				if (app.sectionContainer.doesSectionExist(app.CSections.RowHeader.name)) {
+					app.sectionContainer.getSectionWithName(app.CSections.RowHeader.name)._updateCanvas();
+					app.sectionContainer.getSectionWithName(app.CSections.ColumnHeader.name)._updateCanvas();
 				}
 			}
 		} else if (e.action === 'cursor_invalidate') {
@@ -532,8 +532,8 @@ L.Control.LokDialog = L.Control.extend({
 			if (startRect.width < 1)
 				return;
 			startRect = {x: startRect.x, y: startRect.y, width: 1, height: startRect.height};
-			startPos = L.point(startRect.x, startRect.y + startRect.height);
-			startPos = startPos.subtract(L.point(0, 2));
+			startPos = cool.Point.toPoint(startRect.x, startRect.y + startRect.height);
+			startPos = startPos.subtract(cool.Point.toPoint(0, 2));
 			startHandle.lastPos = startPos;
 			startHandle.rowHeight = startRect.height;
 		}
@@ -544,8 +544,8 @@ L.Control.LokDialog = L.Control.extend({
 			if (endRect.width < 1)
 				return;
 			endRect = {x: endRect.x + endRect.width - 1, y: endRect.y, width: 1, height: endRect.height};
-			endPos = L.point(endRect.x, endRect.y + endRect.height);
-			endPos = endPos.subtract(L.point(0, 2));
+			endPos = cool.Point.toPoint(endRect.x, endRect.y + endRect.height);
+			endPos = endPos.subtract(cool.Point.toPoint(0, 2));
 			endHandle.lastPos = endPos;
 			endHandle.rowHeight = endRect.height;
 		}
@@ -637,7 +637,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (leftTwips != null && topTwips != null) {
 			// magic to re-calculate the position in twips to absolute pixel
 			// position inside the #document-container
-			var pixels = this._map._docLayer._twipsToPixels(new L.Point(leftTwips, topTwips));
+			var pixels = this._map._docLayer._twipsToPixels(new cool.Point(leftTwips, topTwips));
 			var origin = this._map.getPixelOrigin();
 			var panePos = this._map._getMapPanePos();
 

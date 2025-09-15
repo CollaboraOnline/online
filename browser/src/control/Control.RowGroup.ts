@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.RowGroup
- */
 
 /* global app */
 
@@ -25,17 +22,17 @@
 namespace cool {
 
 export class RowGroup extends GroupBase {
-	anchor: any = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
+	anchor: any = [[app.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
 	expand: string[] = ['top', 'bottom']; // Expand vertically.
-	processingOrder: number = L.CSections.RowGroup.processingOrder;
-	drawingOrder: number = L.CSections.RowGroup.drawingOrder;
-	zIndex: number = L.CSections.RowGroup.zIndex;
+	processingOrder: number = app.CSections.RowGroup.processingOrder;
+	drawingOrder: number = app.CSections.RowGroup.drawingOrder;
+	zIndex: number = app.CSections.RowGroup.zIndex;
 
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderHeight: number;
 	_splitPos: cool.Point;
 
-	constructor() { super(L.CSections.RowGroup.name); }
+	constructor() { super(app.CSections.RowGroup.name); }
 
 	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
@@ -47,7 +44,7 @@ export class RowGroup extends GroupBase {
 		// Calculate width on the fly.
 		this.size[0] = this._computeSectionWidth();
 
-		this._cornerHeaderHeight = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[1];
+		this._cornerHeaderHeight = this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).size[1];
 
 		this._splitPos = (this._map._docLayer._splitPanesContext as cool.SplitPanesContext).getSplitPos();
 
@@ -210,15 +207,9 @@ export class RowGroup extends GroupBase {
 
 	onRemove(): void {
 		this.isRemoved = true;
-		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.RowHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).position[0] = 0;
 	}
 }
 
 }
-
-L.Control.RowGroup = cool.RowGroup;
-
-L.control.rowGroup = function () {
-	return new L.Control.RowGroup();
-};
