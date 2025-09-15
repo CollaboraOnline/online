@@ -589,14 +589,14 @@ class SlideShowPresenter {
 	}
 
 	private _configureSlideNavStyles(container: HTMLDivElement): void {
+		container.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
 		container.style.position = 'absolute';
-		container.style.bottom = '0';
-		container.style.left = '0';
-		container.style.width = '200px';
-		container.style.height = '50px';
+		container.style.bottom = '8px';
+		container.style.left = '8px';
 		container.style.zIndex = '1000000000000';
 		container.style.display = 'flex';
-		container.style.paddingLeft = '5px';
+		container.style.padding = '2px';
+		container.style.borderRadius = '25px';
 	}
 
 	private _onA11yString(target: any) {

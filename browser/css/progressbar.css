@@ -77,6 +77,9 @@
 	width: 48px;
 	height: 48px;
 }
+.slideshow-nav-container img:first-child {
+	margin-inline-start: 0;
+}
 .slideshow-nav-container img:hover {
 	cursor: pointer;
 	background-image: radial-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.1));
