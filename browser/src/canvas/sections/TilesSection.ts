@@ -925,7 +925,3 @@ export class TilesSection extends CanvasSectionObject {
 }
 
 }
-
-L.getNewTilesSection = function () {
-	return new cool.TilesSection();
-};
