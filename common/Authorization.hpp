@@ -43,15 +43,15 @@ private:
     Type _type;
     bool _noHeader;
 
-public:
     Authorization()
         : _type(Type::None)
         , _noHeader(false)
     {
     }
 
-    Authorization(Type type, const std::string& data, bool noHeader)
-        : _data(data)
+public:
+    Authorization(Type type, std::string data, bool noHeader)
+        : _data(std::move(data))
         , _type(type)
         , _noHeader(noHeader)
     {
