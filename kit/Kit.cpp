@@ -3562,7 +3562,7 @@ void lokit_main(
 #ifndef __FreeBSD__
             if (usingMountNamespace)
             {
-                // create another namespace, map back to original uid/gid after chroot
+                // create another namespace, map back to original uid/gid after mount
                 LOG_DBG("Move into user namespace as uid " << origuid);
                 if (!JailUtil::enterUserNS(origuid, origgid))
                     LOG_ERR("Linux user namespace for kit failed: " << strerror(errno));
