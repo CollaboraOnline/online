@@ -136,7 +136,21 @@ interface Window {
 		map: any; // TODO should be L.Map
 		// file defined in: src/docstate.ts
 		file: {
+			editComment: boolean;
+			allowManageRedlines: boolean;
+			readOnly: boolean;
+			permission: string;
 			disableSidebar: boolean;
+			textCursor: {
+				visible: boolean;
+				rectangle: Object;
+			};
+			fileBasedView: boolean;
+			writer: {
+				pageRectangleList: Array<any>;
+				multiPageView: boolean;
+			};
+			exportFormats: Array<any>;
 		};
 		roundedDpiScale: number;
 	};
