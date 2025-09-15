@@ -95,7 +95,7 @@
 /src/core/Rectangle.ts
 /src/core/Socket.js
 /src/core/Util.js
-/src/docstate.js
+/src/docstate.ts
 /src/app/DocEvents.ts
 /src/dom/DomEvent.js
 /src/dom/DomEvent.MultiClick.js

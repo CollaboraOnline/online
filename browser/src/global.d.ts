@@ -134,7 +134,7 @@ interface Window {
 		colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 		console: Console;
 		map: any; // TODO should be L.Map
-		// file defined in: src/docstate.js
+		// file defined in: src/docstate.ts
 		file: {
 			disableSidebar: boolean;
 		};

@@ -3,7 +3,7 @@
 /* global Module ArrayBuffer Uint8Array _ */
 
 /*
-	For extending window.app object, please see "docstate.js" file.
+	For extending window.app object, please see "docstate.ts" file.
 	Below definition is only for the properties that this (global.js) file needs at initialization.
 */
 window.app = {
