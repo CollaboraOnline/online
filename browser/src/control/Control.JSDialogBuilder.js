@@ -1905,7 +1905,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		controls['container'] = div;
-		div.tabIndex = -1;
+		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
+
+		if(data.index)
+			div.setAttribute('index', data.index);
+
 		if (data.class)
 			div.classList.add(data.class);
 
@@ -1956,6 +1960,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			var buttonId = id + '-button';
 
 			button = window.L.DomUtil.create('button', 'ui-content unobutton', div);
+			if(div.tabIndex == 0)
+				button.tabIndex = -1; // prevent button from taking focus since container div itself is focusable element
 			button.id = buttonId;
 
 			itemsToSyncWithContainer.push(button);
