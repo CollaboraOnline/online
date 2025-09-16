@@ -315,7 +315,7 @@ public:
 
     std::string getZoteroAPIKey() const { return _zoteroAPIKey; }
 
-    void setZoteroAPIKey(std::string val) { _zoteroAPIKey = val; }
+    void setZoteroAPIKey(const std::string& val) { _zoteroAPIKey = val; }
 
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
