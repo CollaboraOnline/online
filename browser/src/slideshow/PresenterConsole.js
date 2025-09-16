@@ -215,7 +215,7 @@ class PresenterConsole {
 
 	_onPresentInConsole() {
 		if (app.impress.notesMode) {
-			console.debug(
+			app.console.debug(
 				'PresenterConsole._onPresentInConsole: notes mode is enabled, exiting',
 			);
 			// exit notes view mode and wait for status update notification

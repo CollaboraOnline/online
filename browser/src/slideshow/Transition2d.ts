@@ -45,7 +45,7 @@ abstract class TransitionBase extends SlideChangeGl {
 
 	public endTransition(): void {
 		this.releaseResources();
-		console.debug('Transition completed');
+		app.console.debug('Transition completed');
 	}
 
 	private releaseResources(): void {
@@ -157,7 +157,7 @@ class Transition2d extends TransitionBase {
 
 		const isSlideTransition: boolean = !!this.leavingSlide;
 
-		console.debug(`Transition2d.render: nT: ${nT}`);
+		app.console.debug(`Transition2d.render: nT: ${nT}`);
 
 		const gl = this.gl;
 		if (isSlideTransition) {
@@ -167,7 +167,7 @@ class Transition2d extends TransitionBase {
 		}
 
 		if (!this.program) {
-			console.error('Transition2d.render: this.program is missing');
+			app.console.error('Transition2d.render: this.program is missing');
 			return;
 		}
 
@@ -192,7 +192,7 @@ class Transition2d extends TransitionBase {
 				toLineColor,
 			} = LayerRendererGl.computeColor(properties);
 
-			console.debug(`Transition2d.render: alpha: ${alpha}`);
+			app.console.debug(`Transition2d.render: alpha: ${alpha}`);
 
 			this.setPositionBuffer(bounds);
 			this.gl.uniform1f(this.getUniformLocation('alpha'), alpha);
