@@ -73,7 +73,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	entry.addEventListener('click', clickFunction);
 	entry.addEventListener('keypress', function (event) {
-		if (event.key === 'Enter') {
+        if (event.key === 'Enter' || event.key === ' ') {
 			clickFunction();
 			event.preventDefault();
 		}
