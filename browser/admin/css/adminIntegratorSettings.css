@@ -317,22 +317,35 @@ ul {
   background-color: var(--settings-background);
 }
 
-#zoterocontainer {
-  margin: 16px;
+.view-input-container {
+  margin: 16px 0;
 }
 
-input#zotero {
-  width: 300px;
-  flex: none;
-  padding: 8px;
+.view-input-container h3 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--settings-text);
+}
+
+.view-input-container input[type='text'] {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 12px;
   font-size: 15px;
-  border: 1px solid var(--settings-text-maxcontrast);
+  border: 1px solid var(--settings-border);
   border-radius: 4px;
   color: var(--settings-text);
   background-color: var(--settings-background);
-  align-items: center;
-  margin-bottom: 16px;
+  transition: border-color 0.2s ease;
 }
+
+.view-input-container input[type='text']:focus {
+  outline: none;
+  border-color: var(--settings-btn-primary);
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.1);
+}
+
 
 .wordbook-add-button {
   padding: 8px;
@@ -629,4 +642,27 @@ input#zotero {
 	margin-top: 1rem;
 	font-size: var(--default-font-size);
 	color: var(--settings-text);
+}
+
+.signature-textarea {
+	width: 100%;
+	max-width: 80vw;
+	min-height: calc(var(--default-grid-baseline) * 30); 
+	resize: vertical;
+	font-family: monospace;
+	font-size: calc(var(--default-font-size) * 0.8);
+	line-height: 1.4;
+	border: 1px solid var(--settings-border);
+	padding: calc(var(--default-grid-baseline) * 2) calc(var(--default-grid-baseline) * 3);
+	border-radius: var(--border-radius-element);
+	background-color: var(--settings-background);
+	color: var(--settings-text);
+	transition: border-color calc(var(--animation-quick) * 2) ease;
+	box-sizing: border-box;
+}
+
+.signature-textarea:focus {
+	outline: none;
+	border-color: var(--settings-btn-primary);
+	box-shadow: 0 0 0 calc(var(--default-grid-baseline) / 2) rgba(0, 120, 212, 0.1);
 }

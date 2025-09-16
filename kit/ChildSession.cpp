@@ -2291,9 +2291,12 @@ bool ChildSession::unoSignatureCommand(const std::string_view commandName)
 
     std::string signatureCert;
     JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
+    LOG_INF("VIVEK: unoSignatureCommand getUserPrivateInfo() = " << userPrivateInfo);
+
     Object::Ptr argumentsObj = new Object();
     if (signatureCert.empty())
     {
+        LOG_INF("VIVEK: userPrivateInfo is empty in unoSignatureCommand");
         return false;
     }
 
