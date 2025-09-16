@@ -68,6 +68,8 @@ struct WindowData
     int closeNotificationPipeForForwardingThread[2];
     FilenameAndUri filenameAndUri;
     int appDocId;
+    DWORD lastOwnClipboardModification;
+    DWORD lastAnyonesClipboardModification;
     wil::com_ptr<ICoreWebView2Controller> webViewController;
     wil::com_ptr<ICoreWebView2> webView;
 };
@@ -420,10 +422,10 @@ static void do_other_message_handling_things(const WindowData& data, const char*
         .detach();
 }
 
-static void do_cut_or_copy(ClipboardOp op, int appDocId)
+static void do_cut_or_copy(ClipboardOp op, WindowData& data)
 {
-    // Tell core to copy the selexction into its internal clipboard
-    DocumentData::get(appDocId).loKitDocument->postUnoCommand(".uno:Copy");
+    // Tell core to copy the selection into its internal clipboard
+    DocumentData::get(data.appDocId).loKitDocument->postUnoCommand(".uno:Copy");
 
     size_t count = 0;
     char** mimeTypes = nullptr;
@@ -431,7 +433,7 @@ static void do_cut_or_copy(ClipboardOp op, int appDocId)
     char** streams = nullptr;
 
     // Get core's internal clipboard
-    DocumentData::get(appDocId).loKitDocument->getClipboard(nullptr, &count, &mimeTypes, &sizes,
+    DocumentData::get(data.appDocId).loKitDocument->getClipboard(nullptr, &count, &mimeTypes, &sizes,
                                                             &streams);
     if (!OpenClipboard(NULL))
         return;
@@ -445,7 +447,7 @@ static void do_cut_or_copy(ClipboardOp op, int appDocId)
     for (int i = 0; i < count; i++)
     {
         // We check whether there is a corresponding standard or well-known Windows clipboard
-        // format. It is either one using plain "narrow" chars or wide chars.
+        // format.
         int format = 0;
         int format2 = 0;
         int wformat = 0;
@@ -498,8 +500,10 @@ static void do_cut_or_copy(ClipboardOp op, int appDocId)
     }
     CloseClipboard();
 
+    data.lastOwnClipboardModification = GetClipboardSequenceNumber();
+
     if (op == ClipboardOp::CUT)
-        DocumentData::get(appDocId).loKitDocument->postUnoCommand(".uno:Cut");
+        DocumentData::get(data.appDocId).loKitDocument->postUnoCommand(".uno:Cut");
 }
 
 static std::wstring get_clipboard_format_name(UINT format)
@@ -515,105 +519,108 @@ static std::wstring get_clipboard_format_name(UINT format)
     return L"";
 }
 
-static void do_paste_or_read(ClipboardOp op, int appDocId)
+static void do_paste_or_read(ClipboardOp op, WindowData& data)
 {
-    if (!OpenClipboard(NULL))
-        return;
-
-    std::vector<const char*> mimeTypes;
-    std::vector<size_t> sizes;
-    std::vector<const char*> streams;
-
-    UINT format = 0;
-
-    std::set<std::string> doneMimeTypes;
-
-    while ((format = EnumClipboardFormats(format)) != 0)
+    if (data.lastAnyonesClipboardModification > data.lastOwnClipboardModification)
     {
-        if (format == CF_UNICODETEXT)
+        if (!OpenClipboard(NULL))
+            return;
+
+        std::vector<const char*> mimeTypes;
+        std::vector<size_t> sizes;
+        std::vector<const char*> streams;
+
+        UINT format = 0;
+
+        std::set<std::string> doneMimeTypes;
+
+        while ((format = EnumClipboardFormats(format)) != 0)
         {
-            HANDLE data = GetClipboardData(format);
-            if (!data)
-                continue;
-            wchar_t* wtext = (wchar_t*)GlobalLock(data);
-            if (!wtext)
-            {
-                GlobalUnlock(data);
-                continue;
-            }
-            std::string text = Util::wide_string_to_string(std::wstring(wtext));
-            GlobalUnlock(data);
-
-            mimeTypes.push_back(_strdup("text/plain;charset=utf-8"));
-            doneMimeTypes.insert("text/plain;charset=utf-8");
-            sizes.push_back(text.size());
-            streams.push_back(_strdup(text.c_str()));
-        }
-        else
-        {
-            auto name = get_clipboard_format_name(format);
-
-            std::string mimeType;
-
-            if (name == L"Star Embed Source (XML)")
-                mimeType = "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"";
-            else if (name == L"Star Object Descriptor (XML)")
-                mimeType = "application/x-openoffice-objectdescriptor-xml;windows_formatname=\"Star Object Descriptor (XML)\"";
-            else if (name == L"PNG")
-                mimeType = "image/png";
-            else if (name == L"Rich Text Format")
-                mimeType = "text/rtf";
-            else if (name == L"text/rtf" || name == L"image/png" ||
-                     // Not handled yet if ever by the rest of the code here and in core, I think,
-                     // but why not be future-safe.
-                     name == L"image/svg+xml")
-                mimeType = Util::wide_string_to_string(name);
-            else if (name == L"HTML (HyperText Markup Language)")
-                mimeType = "text/html";
-
-            if (mimeType != "" && doneMimeTypes.count(mimeType) == 0)
+            if (format == CF_UNICODETEXT)
             {
                 HANDLE data = GetClipboardData(format);
                 if (!data)
                     continue;
-                size_t size = GlobalSize(data);
-                const char* source = (const char*)GlobalLock(data);
-                if (!source)
+                wchar_t* wtext = (wchar_t*)GlobalLock(data);
+                if (!wtext)
                 {
                     GlobalUnlock(data);
                     continue;
                 }
-
-                doneMimeTypes.insert(mimeType);
-
-                char* copy = (char*)std::malloc(size);
-                std::memcpy(copy, source, size);
-
+                std::string text = Util::wide_string_to_string(std::wstring(wtext));
                 GlobalUnlock(data);
 
-                mimeTypes.push_back(_strdup(mimeType.c_str()));
-                sizes.push_back(size);
-                streams.push_back(copy);
+                mimeTypes.push_back(_strdup("text/plain;charset=utf-8"));
+                doneMimeTypes.insert("text/plain;charset=utf-8");
+                sizes.push_back(text.size());
+                streams.push_back(_strdup(text.c_str()));
+            }
+            else
+            {
+                auto name = get_clipboard_format_name(format);
+
+                std::string mimeType;
+
+                if (name == L"Star Embed Source (XML)")
+                    mimeType = "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"";
+                else if (name == L"Star Object Descriptor (XML)")
+                    mimeType = "application/x-openoffice-objectdescriptor-xml;windows_formatname=\"Star Object Descriptor (XML)\"";
+                else if (name == L"PNG")
+                    mimeType = "image/png";
+                else if (name == L"Rich Text Format")
+                    mimeType = "text/rtf";
+                else if (name == L"text/rtf" || name == L"image/png" ||
+                         // Not handled yet if ever by the rest of the code here and in core, I think,
+                         // but why not be future-safe.
+                         name == L"image/svg+xml")
+                    mimeType = Util::wide_string_to_string(name);
+                else if (name == L"HTML (HyperText Markup Language)")
+                    mimeType = "text/html";
+
+                if (mimeType != "" && doneMimeTypes.count(mimeType) == 0)
+                {
+                    HANDLE data = GetClipboardData(format);
+                    if (!data)
+                        continue;
+                    size_t size = GlobalSize(data);
+                    const char* source = (const char*)GlobalLock(data);
+                    if (!source)
+                    {
+                        GlobalUnlock(data);
+                        continue;
+                    }
+
+                    doneMimeTypes.insert(mimeType);
+
+                    char* copy = (char*)std::malloc(size);
+                    std::memcpy(copy, source, size);
+
+                    GlobalUnlock(data);
+
+                    mimeTypes.push_back(_strdup(mimeType.c_str()));
+                    sizes.push_back(size);
+                    streams.push_back(copy);
+                }
             }
         }
+
+        // Populate core's internal clipboard
+        DocumentData::get(data.appDocId).loKitDocument->setClipboard(mimeTypes.size(), mimeTypes.data(),
+                                                                     sizes.data(), streams.data());
+
+        for (int i = 0; i < mimeTypes.size(); i++)
+        {
+            std::free((void*)mimeTypes[i]);
+            std::free((void*)streams[i]);
+        }
+
+        CloseClipboard();
     }
-
-    // Populate core's internal clipboard
-    DocumentData::get(appDocId).loKitDocument->setClipboard(mimeTypes.size(), mimeTypes.data(),
-                                                            sizes.data(), streams.data());
-
-    for (int i = 0; i < mimeTypes.size(); i++)
-    {
-        std::free((void*)mimeTypes[i]);
-        std::free((void*)streams[i]);
-    }
-
-    CloseClipboard();
 
     if (op == ClipboardOp::PASTE)
     {
         // Tell core to paste from its internal clipboard into the document
-        DocumentData::get(appDocId).loKitDocument->postUnoCommand(".uno:Paste");
+        DocumentData::get(data.appDocId).loKitDocument->postUnoCommand(".uno:Paste");
     }
 }
 
@@ -855,6 +862,10 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             }
             break;
 
+        case WM_CLIPBOARDUPDATE:
+            windowData[hWnd].lastAnyonesClipboardModification = GetClipboardSequenceNumber();
+            break;
+
         case CODA_WM_EXECUTESCRIPT:
             windowData[hWnd].webView->ExecuteScript(
                 Util::string_to_wide_string(std::string((char*)wParam)).c_str(),
@@ -887,10 +898,14 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
     data.hWnd = hWnd;
     data.fakeClientFd = fakeSocketSocket();
     data.appDocId = generate_new_app_doc_id();
+    data.lastOwnClipboardModification = 0;
+    data.lastAnyonesClipboardModification = 1;
     data.filenameAndUri = filenameAndUri;
 
     ShowWindow(hWnd, appShowMode);
     UpdateWindow(hWnd);
+
+    AddClipboardFormatListener(hWnd);
 
     CreateCoreWebView2EnvironmentWithOptions(
         nullptr, nullptr, nullptr,
@@ -986,19 +1001,19 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s == L"CUT")
         {
-            do_cut_or_copy(ClipboardOp::CUT, data.appDocId);
+            do_cut_or_copy(ClipboardOp::CUT, data);
         }
         else if (s == L"COPY")
         {
-            do_cut_or_copy(ClipboardOp::COPY, data.appDocId);
+            do_cut_or_copy(ClipboardOp::COPY, data);
         }
         else if (s == L"PASTE")
         {
-            do_paste_or_read(ClipboardOp::PASTE, data.appDocId);
+            do_paste_or_read(ClipboardOp::PASTE, data);
         }
         else if (s == L"CLIPBOARDREAD")
         {
-            do_paste_or_read(ClipboardOp::READ, data.appDocId);
+            do_paste_or_read(ClipboardOp::READ, data);
         }
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
