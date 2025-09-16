@@ -9,15 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Map.SlideShow is handling the slideShow action
+ * window.L.Map.SlideShow is handling the slideShow action
  */
 
 /* global _ sanitizeUrl app */
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	slideShow: true
 });
 
-L.Map.SlideShow = L.Handler.extend({
+window.L.Map.SlideShow = window.L.Handler.extend({
 
 	_slideURL: '', // store the URL for svg
 	_presentInWindow: false,
@@ -26,9 +26,9 @@ L.Map.SlideShow = L.Handler.extend({
 
 	initialize: function (map) {
 		this._map = map;
-		window.app.console.log('L.Map.SlideShow: Cypress in window: ' + ('Cypress' in window));
+		window.app.console.log('window.L.Map.SlideShow: Cypress in window: ' + ('Cypress' in window));
 		this._cypressSVGPresentationTest =
-			L.Browser.cypressTest && 'Cypress' in window
+			window.L.Browser.cypressTest && 'Cypress' in window
 			&& window.Cypress.spec.name === 'impress/fullscreen_presentation_spec.js';
 	},
 
@@ -71,13 +71,13 @@ L.Map.SlideShow = L.Handler.extend({
 			that.fullscreen = !that._cypressSVGPresentationTest;
 			that._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 
-			L.DomEvent.on(document, 'fullscreenchange', that._onFullScreenChange, that);
+			window.L.DomEvent.on(document, 'fullscreenchange', that._onFullScreenChange, that);
 		};
 
 		let fallback = function(that, e) {
 			// fallback to "open in new tab"
 			if (that._slideShow) {
-				L.DomUtil.remove(that._slideShow);
+				window.L.DomUtil.remove(that._slideShow);
 				that._slideShow = null;
 			}
 
@@ -85,7 +85,7 @@ L.Map.SlideShow = L.Handler.extend({
 		};
 
 		if (!(this._cypressSVGPresentationTest || this._map['wopi'].DownloadAsPostMessage)) {
-			this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
+			this._slideShow = window.L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
 			if (this._slideShow.requestFullscreen) {
 
 				let that = this;
@@ -134,7 +134,7 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_stopFullScreen: function () {
-		L.DomUtil.remove(this._slideShow);
+		window.L.DomUtil.remove(this._slideShow);
 		this._slideShow = null;
 		// #7102 on exit from fullscreen we don't get a 'focus' event
 		// in Chrome so a later second attempt at launching a presentation
@@ -320,7 +320,7 @@ L.Map.SlideShow = L.Handler.extend({
 		// There is an issue where Safari without LBSE renders the video in the wrong place, so we
 		// must move it back into frame
 		// GH#7399 fixed the same issue, but not in presentation mode
-		if (!L.Browser.safari) {
+		if (!window.L.Browser.safari) {
 			return;
 		}
 
@@ -384,4 +384,4 @@ L.Map.SlideShow = L.Handler.extend({
 	}
 });
 
-L.Map.addInitHook('addHandler', 'slideShow', L.Map.SlideShow);
+window.L.Map.addInitHook('addHandler', 'slideShow', window.L.Map.SlideShow);

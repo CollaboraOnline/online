@@ -14,15 +14,6 @@
  * Contrast with TextSelectionHandle section
  */
 
-namespace L {
-	export type Draggable = any;
-	export type Point = {
-		x: number;
-		y: number;
-		[key: string]: any;
-	};
-}
-
 interface DraggableDragEvent {
 	originalEvent: MouseEvent | TouchEvent;
 }
@@ -36,10 +27,10 @@ class FormulaBarSelectionHandle {
 	private element: HTMLDivElement;
 	private wrapper: HTMLDivElement;
 
-	private draggable: L.Draggable;
+	private draggable: any;
 
-	onDrag?: (point: L.Point) => void;
-	onDragEnd?: (event: L.Point) => void;
+	onDrag?: (point: cool.Point) => void;
+	onDragEnd?: (event: cool.Point) => void;
 
 	/**
 	 * @param selectionLayer The layer that the formulabar's custom selections are placed in - we'll display relative to this element
@@ -51,7 +42,7 @@ class FormulaBarSelectionHandle {
 		side: FormulaBarSelectionHandleSide,
 	) {
 		this.side = side;
-		this.element = L.DomUtil.create(
+		this.element = window.L.DomUtil.create(
 			'div',
 			`formulabar-selection-handle-${side}`,
 			handleLayer,
@@ -59,7 +50,7 @@ class FormulaBarSelectionHandle {
 		this.wrapper = wrapper;
 		this.wrapper.addEventListener('scroll', () => this.requestVisible());
 
-		this.draggable = new L.Draggable(
+		this.draggable = new window.L.Draggable(
 			this.element,
 			this.element,
 			true,
@@ -83,9 +74,9 @@ class FormulaBarSelectionHandle {
 			offsetX = -this.width;
 		}
 
-		const lPoint = new L.Point(point.x + offsetX, point.y); // "what you're doing is gross and horrible Skyler and I hate it", "yeah well, Draggable doesn't work with SimplePoints so ig we both have to deal..."
+		const lPoint = new cool.Point(point.x + offsetX, point.y); // "what you're doing is gross and horrible Skyler and I hate it", "yeah well, Draggable doesn't work with SimplePoints so ig we both have to deal..."
 		// also for some reason the twips value is correct here? I'm not going to fix what ain't...
-		L.DomUtil.setPosition(this.element, lPoint, true);
+		window.L.DomUtil.setPosition(this.element, lPoint, true);
 		// Not using 3d transforms since as we're doing weird relative position hacks to get here :)
 		// Using DomUtil as we need to in order to be draggable later
 	}
@@ -97,7 +88,7 @@ class FormulaBarSelectionHandle {
 	_onDrag(event: DraggableDragEvent) {
 		// update selection position, set in Widget.FormulabarEdit.js so it can be repeatedly overidden...
 		if (this.onDrag) {
-			const point = L.DomUtil.getPosition(this.element);
+			const point = window.L.DomUtil.getPosition(this.element);
 			this.onDrag(point);
 		}
 	}
@@ -106,7 +97,7 @@ class FormulaBarSelectionHandle {
 		// update selection position, set in Widget.FormulabarEdit.js so it can be repeatedly overidden...
 		(<any>window).IgnorePanning = undefined;
 		if (this.onDragEnd) {
-			const point = L.DomUtil.getPosition(this.element);
+			const point = window.L.DomUtil.getPosition(this.element);
 			this.onDragEnd(point);
 		}
 	}

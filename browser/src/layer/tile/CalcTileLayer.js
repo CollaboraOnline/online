@@ -15,7 +15,7 @@
 
 /* global app TileManager cool FocusCellSection SplitterLinesSection */
 
-L.CalcTileLayer = L.CanvasTileLayer.extend({
+window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 	options: {
 		// TODO: sync these automatically from SAL_LOK_OPTIONS
 		sheetGeometryDataEnabled: true,
@@ -76,8 +76,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		map.addControl(L.control.tabs());
-		L.CanvasTileLayer.prototype.onAdd.call(this, map);
+		map.addControl(window.L.control.tabs());
+		window.L.CanvasTileLayer.prototype.onAdd.call(this, map);
 
 		map.on('resize', function () {
 			if (app.file.textCursor.visible) {
@@ -134,7 +134,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		} else if (textMsg.startsWith('printranges:')) {
 			this._onPrintRangesMsg(textMsg);
 		} else {
-			L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
+			window.L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},
 
@@ -251,7 +251,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		app.activeDocument.fileSize = new cool.SimplePoint(newDocWidth, newDocHeight);
 		app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
-		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+		this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, bottomRight));
 
 		this._map.fire('scrolllimits', newSizePx.clone());
 
@@ -482,7 +482,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				height = Math.max(height, mapSize.y);
 				var topLeft = this._map.unproject(new cool.Point(0, 0));
 				var bottomRight = this._map.unproject(new cool.Point(width, height));
-				this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+				this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, bottomRight));
 				this._docPixelSize = {x: width, y: height};
 				this._map.fire('scrolllimits', {x: width, y: height});
 			}
@@ -1058,12 +1058,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			section.onCommentsDataUpdate();
 
 		} else {
-			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			window.L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
-		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
+		window.L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
 		if ((this.insertMode === false || app.file.textCursor.visible === false) && app.calc.cellCursorVisible) {
 			// When insertMode is false, this is a cell selection message.
@@ -1095,7 +1095,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onCellCursorMsg: function (textMsg) {
-		L.CanvasTileLayer.prototype._onCellCursorMsg.call(this, textMsg);
+		window.L.CanvasTileLayer.prototype._onCellCursorMsg.call(this, textMsg);
 		this._refreshRowColumnHeaders();
 		if (!this._gotFirstCellCursor) {
 			this.allowDrawing();
@@ -1110,7 +1110,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			!Object.prototype.hasOwnProperty.call(msgObj, 'relrect') || !Object.prototype.hasOwnProperty.call(msgObj, 'refpoint')) {
 			// 1) non-print-twips messaging mode OR
 			// 2) the edit-cursor belongs to draw/chart objects.
-			return L.CanvasTileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
+			return window.L.CanvasTileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
 		}
 
 		if (typeof msgObj !== 'object') {
@@ -1127,7 +1127,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_getTextSelectionRectangles: function (textMsg) {
 
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
-			return L.CanvasTileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
+			return window.L.CanvasTileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
 		}
 
 		if (typeof textMsg !== 'string') {

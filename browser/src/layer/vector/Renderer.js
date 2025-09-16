@@ -3,11 +3,11 @@
 /* global app cool */
 
 /*
- * L.Renderer is a base class for renderer implementations (SVG, Canvas);
+ * window.L.Renderer is a base class for renderer implementations (SVG, Canvas);
  * handles renderer container, bounds and zoom animation.
  */
 
-L.Renderer = L.Layer.extend({
+window.L.Renderer = window.L.Layer.extend({
 
 	options: {
 		// how much to extend the clip area around the map view (relative to its size)
@@ -17,9 +17,9 @@ L.Renderer = L.Layer.extend({
 
 	initialize: function (options) {
 
-		L.Layer.prototype.initialize.call(this);
+		window.L.Layer.prototype.initialize.call(this);
 
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 		app.util.stamp(this);
 	},
 
@@ -41,13 +41,13 @@ L.Renderer = L.Layer.extend({
 		}
 
 		if (this.rendererId)
-			L.DomUtil.addClass(this._container, this.rendererId + '-svg-pane');
+			window.L.DomUtil.addClass(this._container, this.rendererId + '-svg-pane');
 
 		this._update();
 	},
 
 	onRemove: function () {
-		L.DomUtil.remove(this._container);
+		window.L.DomUtil.remove(this._container);
 	},
 
 	getEvents: function () {
@@ -87,28 +87,28 @@ L.Renderer = L.Layer.extend({
 	},
 
 	addContainerClass: function (className) {
-		L.DomUtil.addClass(this._container, className);
+		window.L.DomUtil.addClass(this._container, className);
 	},
 
 	removeContainerClass: function (className) {
-		L.DomUtil.removeClass(this._container, className);
+		window.L.DomUtil.removeClass(this._container, className);
 	},
 
 });
 
 
-L.Map.include({
+window.L.Map.include({
 	// used by each vector layer to decide which renderer to use
 	getRenderer: function (layer) {
 		var renderer = layer.options.renderer || this._getPaneRenderer(layer.options.pane) || this.options.renderer || this._renderer;
 
 		if (!renderer) {
 			if (this.getSplitPanesContext()) {
-				renderer = this._renderer = (L.SVG && L.SplitPanesSVG && L.splitPanesSVG()) ||
-					(L.Canvas && L.SplitPanesCanvas && L.splitPanesCanvas());
+				renderer = this._renderer = (L.SVG && window.L.SplitPanesSVG && window.L.splitPanesSVG()) ||
+					(window.L.Canvas && window.L.SplitPanesCanvas && window.L.splitPanesCanvas());
 			}
 			else {
-				renderer = this._renderer = (L.SVG && L.svg()) || (L.Canvas && L.canvas());
+				renderer = this._renderer = (L.SVG && window.L.svg()) || (window.L.Canvas && window.L.canvas());
 			}
 		}
 
@@ -128,11 +128,11 @@ L.Map.include({
 		var renderer = this._paneRenderers[name];
 		if (renderer === undefined) {
 			if (this.getSplitPanesContext()) {
-				renderer = (L.SVG && L.SplitPanesSVG && L.splitPanesSVG({pane: name})) ||
-					(L.Canvas && L.SplitPanesCanvas && L.splitPanesCanvas({pane: name}));
+				renderer = (L.SVG && window.L.SplitPanesSVG && window.L.splitPanesSVG({pane: name})) ||
+					(window.L.Canvas && window.L.SplitPanesCanvas && window.L.splitPanesCanvas({pane: name}));
 			}
 			else {
-				renderer = (L.SVG && L.svg({pane: name})) || (L.Canvas && L.canvas({pane: name}));
+				renderer = (L.SVG && window.L.svg({pane: name})) || (window.L.Canvas && window.L.canvas({pane: name}));
 			}
 
 			window.app.console.assert(renderer, 'Could create a renderer!');

@@ -27,19 +27,19 @@
 /* global JSDialog app _ $ */
 
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
-	var entry = L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
+	var entry = window.L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
 
 	if (data.hasSubMenu)
-		L.DomUtil.addClass(entry, 'ui-has-menu');
+		window.L.DomUtil.addClass(entry, 'ui-has-menu');
 
 	if (data.w2icon) {
 		// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-		L.DomUtil.create('div', 'w2ui-icon ui-combobox-icon ' + data.w2icon, entry);
+		window.L.DomUtil.create('div', 'w2ui-icon ui-combobox-icon ' + data.w2icon, entry);
 	}
 
 	if (data.icon) {
-		var icon = L.DomUtil.create('img', 'ui-combobox-icon', entry);
+		var icon = window.L.DomUtil.create('img', 'ui-combobox-icon', entry);
 		builder._isStringCloseToURL(data.icon) ? icon.src = data.icon : app.LOUtil.setImage(icon,  app.LOUtil.getIconNameOfCommand(data.icon), builder.map);
 	}
 
@@ -47,16 +47,16 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 		entry.title = data.hint;
 	}
 
-	var content = L.DomUtil.create('span', '', entry);
+	var content = window.L.DomUtil.create('span', '', entry);
 	content.innerText = data.text;
 
 	if (data.selected)
-		L.DomUtil.addClass(entry, 'selected');
+		window.L.DomUtil.addClass(entry, 'selected');
 
 	if (data.checked)
-		L.DomUtil.addClass(entry, 'checked');
+		window.L.DomUtil.addClass(entry, 'checked');
 	else if (data.checked !== undefined)
-		L.DomUtil.addClass(entry, 'notchecked');
+		window.L.DomUtil.addClass(entry, 'notchecked');
 
 	if (data.customRenderer)
 		JSDialog.OnDemandRenderer(builder, data.comboboxId, 'combobox', data.pos, content, entry, data.text);
@@ -85,13 +85,13 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 };
 
 JSDialog.mobileComboboxEntry = function(parentContainer, data, builder) {
-	var comboboxEntry = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
+	var comboboxEntry = window.L.DomUtil.create('p', builder.options.cssClass, parentContainer);
 	comboboxEntry.textContent = builder._cleanText(data.text);
 
 	comboboxEntry.parent = data.parent;
 
 	if (data.style && data.style.length)
-		L.DomUtil.addClass(comboboxEntry, data.style);
+		window.L.DomUtil.addClass(comboboxEntry, data.style);
 
 	comboboxEntry.addEventListener('click', function () {
 		builder.refreshSidebar = true;
@@ -104,26 +104,26 @@ JSDialog.mobileComboboxEntry = function(parentContainer, data, builder) {
 };
 
 JSDialog.mobileCombobox = function (parentContainer, data, builder) {
-	var container = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+	var container = window.L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 	if (data && data.id)
 		container.id = data.id;
 
-	var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', container);
+	var sectionTitle = window.L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', container);
 	$(sectionTitle).css('justify-content', 'space-between');
 
-	var leftDiv = L.DomUtil.create('div', 'ui-header-left combobox', sectionTitle);
+	var leftDiv = window.L.DomUtil.create('div', 'ui-header-left combobox', sectionTitle);
 
 	var editCallback = function(value) {
 		builder.callback('combobox', 'change', data, value, builder);
 	};
 	builder._controlHandlers['edit'](leftDiv, data, builder, editCallback);
 
-	var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
+	var rightDiv = window.L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 
-	var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
+	var arrowSpan = window.L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 	arrowSpan.textContent = '>';
 
-	var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, container);
+	var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, container);
 	contentDiv.title = data.text;
 
 	var entries = [];
@@ -180,10 +180,10 @@ function _extractText(selectCommandData) {
 }
 
 JSDialog.combobox = function (parentContainer, data, builder) {
-	var container = L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
+	var container = window.L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
 
-	var content = L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
+	var content = window.L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
 	content.id = data.id + '-input-' + builder.options.suffix;
 	content.value = data.text;
 	content.role = 'combobox';
@@ -198,14 +198,14 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.setAttribute('aria-expanded', false);
 	content.setAttribute('aria-controls', dropDownId);
 
-	var button = L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
+	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.setAttribute('aria-haspopup', true);
 	button.setAttribute('aria-expanded', false);
 	button.setAttribute('aria-controls', dropDownId);
 	if (data.aria)
 		button.setAttribute('aria-label', _('Open ') + data.aria.label + _(' list'));
 
-	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
+	var arrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
 
 	container._onDropDown = function(open) {
@@ -309,7 +309,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		var dropdown = dropdownRoot.querySelectorAll('.ui-combobox-entry');
 		if (dropdown[pos]) {
 			dropdown[pos].replaceChildren();
-			var img = L.DomUtil.create('img', '', dropdown[pos]);
+			var img = window.L.DomUtil.create('img', '', dropdown[pos]);
 			img.src = builder.rendersCache[data.id].images[pos];
 			img.alt = entries[pos].text;
 			img.title = entries[pos].text;

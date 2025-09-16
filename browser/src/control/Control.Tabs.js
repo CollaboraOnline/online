@@ -9,11 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.Tabs is used to switch sheets in Calc
+ * window.L.Control.Tabs is used to switch sheets in Calc
  */
 
 /* global $ _ _UNO Hammer cool app */
-L.Control.Tabs = L.Control.extend({
+window.L.Control.Tabs = window.L.Control.extend({
 	onAdd: function() {
 		app.events.on('updatepermission', this._onUpdatePermission.bind(this));
 		this._initialized = false;
@@ -38,7 +38,7 @@ L.Control.Tabs = L.Control.extend({
 		this._tabForContextMenu = 0;
 		var map = this._map;
 		var tableCell = document.getElementById('spreadsheet-toolbar');
-		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', tableCell);
+		this._tabsCont = window.L.DomUtil.create('div', 'spreadsheet-tabs-container', tableCell);
 
 		function areTabsMultiple() {
 			var numItems = $('.spreadsheet-tab').length;
@@ -121,7 +121,7 @@ L.Control.Tabs = L.Control.extend({
 		};
 
 		if ((!window.mode.isMobile() && !this._map.isReadOnlyMode()) || window.mode.isTablet()) {
-			L.installContextMenu({
+			window.L.installContextMenu({
 				selector: '.spreadsheet-tab',
 				className: 'cool-font',
 				items: this._menuItem,
@@ -144,7 +144,7 @@ L.Control.Tabs = L.Control.extend({
 
 			// Save scroll position
 			var horizScrollPos = 0;
-			var scrollDiv = L.DomUtil.get('spreadsheet-tab-scroll');
+			var scrollDiv = window.L.DomUtil.get('spreadsheet-tab-scroll');
 			if (scrollDiv) {
 				horizScrollPos = scrollDiv.scrollLeft;
 			}
@@ -153,7 +153,7 @@ L.Control.Tabs = L.Control.extend({
 				while (this._tabsCont.firstChild) {
 					this._tabsCont.removeChild(this._tabsCont.firstChild);
 				}
-				var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
+				var ssTabScroll = window.L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
 				if (!window.mode.isMobile())
 					ssTabScroll.style.overflowX = 'scroll';
@@ -192,7 +192,7 @@ L.Control.Tabs = L.Control.extend({
 				}
 
 				if (window.mode.isMobile()) {
-					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
+					var menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
 				}
 
 				for (var i = 0; i < parts; i++) {
@@ -201,12 +201,12 @@ L.Control.Tabs = L.Control.extend({
 
 					// create a drop zone indicator for the sheet tab
 					// put the indicator on the left of the tab
-					var dropZoneIndicator = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
+					var dropZoneIndicator = window.L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
 					dropZoneIndicator.id = 'drop-zone-' + i;
 					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
-					L.DomUtil.create('div', 'lock', tab);
-					var label = L.DomUtil.create('div', '', tab);
+					var tab = window.L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
+					window.L.DomUtil.create('div', 'lock', tab);
+					var label = window.L.DomUtil.create('div', '', tab);
 					if (window.mode.isMobile() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
@@ -229,14 +229,14 @@ L.Control.Tabs = L.Control.extend({
 					}
 
 					if (!window.mode.isMobile()) {
-						L.DomEvent.on(tab, 'dblclick', function(j) {
+						window.L.DomEvent.on(tab, 'dblclick', function(j) {
 							return function() {
 								// window.app.console.err('Double clicked ' + j);
 								this._tabForContextMenu = j;
 								this._renameSheet();
 							};
 						}(i).bind(this));
-						L.DomEvent.on(tab, 'contextmenu', function(j) {
+						window.L.DomEvent.on(tab, 'contextmenu', function(j) {
 							return function() {
 								this._tabForContextMenu = j;
 							};
@@ -244,17 +244,17 @@ L.Control.Tabs = L.Control.extend({
 					}
 
 					if (app.calc.isPartProtected(i)) {
-						L.DomUtil.addClass(tab, 'spreadsheet-tab-protected');
+						window.L.DomUtil.addClass(tab, 'spreadsheet-tab-protected');
 					}
 					else {
-						L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
+						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
 					}
 					label.textContent = e.partNames[i];
 					tab.id = id;
 
-					L.DomEvent
-						.on(tab, 'click', L.DomEvent.stopPropagation)
-						.on(tab, 'click', L.DomEvent.stop)
+					window.L.DomEvent
+						.on(tab, 'click', window.L.DomEvent.stopPropagation)
+						.on(tab, 'click', window.L.DomEvent.stop)
 						.on(tab, 'click', this._setPart, this)
 						.on(tab, 'click', this._map.focus, this._map);
 					this._addDnDHandlers(tab);
@@ -263,29 +263,29 @@ L.Control.Tabs = L.Control.extend({
 
 				// add an additional dropZoneIndicator for the last sheet tab
 				// put the indicator on the right of the last tab
-				var dropZoneIndicatorForTheLastTab = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
+				var dropZoneIndicatorForTheLastTab = window.L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
 				dropZoneIndicatorForTheLastTab.id = 'drop-zone-end';
 
 				// create drop zone container for the last drop zone indicator
 				// when a tab is over this container, dropZoneIndicatorForTheLastTab will be shown
-				var dropZoneEndContainer = L.DomUtil.create('div', '', ssTabScroll);
+				var dropZoneEndContainer = window.L.DomUtil.create('div', '', ssTabScroll);
 				dropZoneEndContainer.id = 'drop-zone-end-container';
 				this._addDnDHandlers(dropZoneEndContainer);
 				dropZoneEndContainer.setAttribute('draggable', false);
 			}
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
-				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
+				window.L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				if (part === selectedPart) {
 					// close auto filter popups on sheet tab selected
 					this._map.fire('closeAutoFilterDialog');
 					this._map.fire('closepopups');
-					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
+					window.L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				}
 			}
 
 			// Restore horizontal scroll position
-			scrollDiv = L.DomUtil.get('spreadsheet-tab-scroll');
+			scrollDiv = window.L.DomUtil.get('spreadsheet-tab-scroll');
 			if (scrollDiv) {
 				if (this._map.insertPage && this._map.insertPage.scrollToEnd) {
 					this._map.insertPage.scrollToEnd = false;
@@ -418,8 +418,8 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_isProtectedSheet: function(idx) {
-		var tab = L.DomUtil.get('spreadsheet-tab' + idx);
-		return tab && L.DomUtil.hasClass(tab, 'spreadsheet-tab-protected');
+		var tab = window.L.DomUtil.get('spreadsheet-tab' + idx);
+		return tab && window.L.DomUtil.hasClass(tab, 'spreadsheet-tab-protected');
 	},
 
 	_showSheet: function() {
@@ -473,6 +473,6 @@ L.Control.Tabs = L.Control.extend({
 	}
 });
 
-L.control.tabs = function (options) {
-	return new L.Control.Tabs(options);
+window.L.control.tabs = function (options) {
+	return new window.L.Control.Tabs(options);
 };

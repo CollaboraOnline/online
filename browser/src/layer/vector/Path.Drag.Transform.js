@@ -10,7 +10,7 @@
  * Matrix transform path for SVG/VML
  * Renderer-independent
  */
-L.Path.include({
+window.L.Path.include({
 
 	/**
 	 * Applies matrix transformation to SVG

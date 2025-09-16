@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Icon.Default is the blue marker icon used by default in Leaflet.
+ * window.L.Icon.Default is the blue marker icon used by default in Leaflet.
  */
 
-L.Icon.Default = L.Icon.extend({
+window.L.Icon.Default = window.L.Icon.extend({
 
 	options: {
 		iconSize:    [25, 41],
@@ -19,17 +19,17 @@ L.Icon.Default = L.Icon.extend({
 			return this.options[key];
 		}
 
-		var path = L.Icon.Default.imagePath;
+		var path = window.L.Icon.Default.imagePath;
 
 		if (!path) {
-			throw new Error('Couldn\'t autodetect L.Icon.Default.imagePath, set it manually.');
+			throw new Error('Couldn\'t autodetect window.L.Icon.Default.imagePath, set it manually.');
 		}
 
-		return path + '/marker-' + name + (L.Browser.retina && name === 'icon' ? '-2x' : '') + '.png';
+		return path + '/marker-' + name + (window.L.Browser.retina && name === 'icon' ? '-2x' : '') + '.png';
 	}
 });
 
-L.Icon.Default.imagePath = (function () {
+window.L.Icon.Default.imagePath = (function () {
 	var scripts = document.getElementsByTagName('script'),
 	    leafletRe = /[\/^]cool/;
 

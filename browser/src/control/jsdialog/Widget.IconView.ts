@@ -31,7 +31,7 @@ function _createEntryImage(
 	entryData: IconViewEntry,
 	image: string,
 ) {
-	const img = L.DomUtil.create('img', builder.options.cssClass, parent);
+	const img = window.L.DomUtil.create('img', builder.options.cssClass, parent);
 	if (image) img.src = image;
 
 	if (entryData.text) {
@@ -49,8 +49,8 @@ function _createEntryImage(
 
 function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
 	// Add text below Icon
-	L.DomUtil.addClass(parent, 'icon-view-item-container');
-	const placeholder = L.DomUtil.create(
+	window.L.DomUtil.addClass(parent, 'icon-view-item-container');
+	const placeholder = window.L.DomUtil.create(
 		'span',
 		'ui-iconview-entry-title',
 		parent,
@@ -68,7 +68,7 @@ function _iconViewEntry(
 	const hasText = entry.text && parentData.textWithIconEnabled;
 
 	if (entry.separator && entry.separator === true) {
-		L.DomUtil.create(
+		window.L.DomUtil.create(
 			'hr',
 			builder.options.cssClass + ' ui-iconview-separator',
 			parentContainer,
@@ -76,7 +76,7 @@ function _iconViewEntry(
 		return;
 	}
 
-	const entryContainer = L.DomUtil.create(
+	const entryContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-entry',
 		parentContainer,
@@ -94,7 +94,7 @@ function _iconViewEntry(
 	}
 
 	if (entry.ondemand) {
-		const placeholder = L.DomUtil.create(
+		const placeholder = window.L.DomUtil.create(
 			'span',
 			builder.options.cssClass,
 			entryContainer,
@@ -176,7 +176,7 @@ JSDialog.iconView = function (
 	data: IconViewJSON,
 	builder: JSBuilder,
 ) {
-	const container = L.DomUtil.create(
+	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview',
 		parentContainer,
@@ -184,7 +184,7 @@ JSDialog.iconView = function (
 	container.id = data.id;
 
 	const disabled = data.enabled === false;
-	if (disabled) L.DomUtil.addClass(container, 'disabled');
+	if (disabled) window.L.DomUtil.addClass(container, 'disabled');
 
 	for (const i in data.entries) {
 		_iconViewEntry(container, data, data.entries[i], builder);
@@ -230,7 +230,7 @@ JSDialog.iconView = function (
 				: null;
 
 		if (entry) {
-			L.DomUtil.addClass(entry, 'selected');
+			window.L.DomUtil.addClass(entry, 'selected');
 			if (builder.options.useScrollAnimation !== false) {
 				const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
 				entry.scrollIntoView({
@@ -260,7 +260,7 @@ JSDialog.iconView = function (
 
 			container.replaceChildren();
 			if (hasText) {
-				container = L.DomUtil.create(
+				container = window.L.DomUtil.create(
 					'div',
 					builder.options.cssClass,
 					dropdown[pos],

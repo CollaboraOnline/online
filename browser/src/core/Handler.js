@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /*
-	L.Handler is a base class for handler classes that are used internally to inject
+	window.L.Handler is a base class for handler classes that are used internally to inject
 	interaction features like dragging to classes like Map and Marker.
 */
 
-L.Handler = L.Class.extend({
+window.L.Handler = window.L.Class.extend({
 	initialize: function (map) {
 		this._map = map;
 	},

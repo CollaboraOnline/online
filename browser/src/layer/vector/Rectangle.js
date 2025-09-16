@@ -1,11 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Rectangle extends Polygon and creates a rectangle when passed a LatLngBounds object.
+ * window.L.Rectangle extends Polygon and creates a rectangle when passed a LatLngBounds object.
  */
 
-L.Rectangle = L.Polygon.extend({
+window.L.Rectangle = window.L.Polygon.extend({
 	initialize: function (latLngBounds, options) {
-		L.Polygon.prototype.initialize.call(this, this._boundsToLatLngs(latLngBounds), options);
+		window.L.Polygon.prototype.initialize.call(this, this._boundsToLatLngs(latLngBounds), options);
 	},
 
 	setBounds: function (latLngBounds) {
@@ -13,7 +13,7 @@ L.Rectangle = L.Polygon.extend({
 	},
 
 	_boundsToLatLngs: function (latLngBounds) {
-		latLngBounds = L.latLngBounds(latLngBounds);
+		latLngBounds = window.L.latLngBounds(latLngBounds);
 		return [
 			latLngBounds.getSouthWest(),
 			latLngBounds.getNorthWest(),
@@ -23,6 +23,6 @@ L.Rectangle = L.Polygon.extend({
 	}
 });
 
-L.rectangle = function (latLngBounds, options) {
-	return new L.Rectangle(latLngBounds, options);
+window.L.rectangle = function (latLngBounds, options) {
+	return new window.L.Rectangle(latLngBounds, options);
 };

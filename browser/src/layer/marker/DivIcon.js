@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.DivIcon is a lightweight HTML-based icon class (as opposed to the image-based L.Icon)
- * to use with L.Marker.
+ * window.L.DivIcon is a lightweight HTML-based icon class (as opposed to the image-based window.L.Icon)
+ * to use with window.L.Marker.
  */
 
-L.DivIcon = L.Icon.extend({
+window.L.DivIcon = window.L.Icon.extend({
 	options: {
 		iconSize: [12, 12], // also can be set through CSS
 		/*
@@ -36,6 +36,6 @@ L.DivIcon = L.Icon.extend({
 	}
 });
 
-L.divIcon = function (options) {
-	return new L.DivIcon(options);
+window.L.divIcon = function (options) {
+	return new window.L.DivIcon(options);
 };

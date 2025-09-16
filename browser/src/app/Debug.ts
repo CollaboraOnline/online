@@ -129,7 +129,7 @@ class DebugManager {
 
 		this._controls = {};
 		// Add header
-		this._controls['header'] = L.control
+		this._controls['header'] = window.L.control
 			.layers({}, {}, { collapsed: false })
 			.addTo(this._map);
 		const b = document.createElement('b');
@@ -179,7 +179,7 @@ class DebugManager {
 	private _addDebugTool(tool: DebugTool) {
 		// Create control if it doesn't exist
 		if (!(tool.category in this._controls)) {
-			this._controls[tool.category] = L.control
+			this._controls[tool.category] = window.L.control
 				.layers({}, {}, { collapsed: false })
 				.addTo(this._map);
 			// Add a title
@@ -189,7 +189,7 @@ class DebugManager {
 		}
 
 		// Create layer
-		const layer = new L.LayerGroup();
+		const layer = new window.L.LayerGroup();
 		this._toolLayers.push(layer);
 		this._controls[tool.category]._addLayer(layer, tool.name, true);
 		this._controls[tool.category]._update();
@@ -1103,7 +1103,7 @@ class DebugManager {
 		for (let i = 0; i < text.length; i++) {
 			if (delayMs) {
 				setTimeout(
-					L.bind(this._typeChar, this, text.charCodeAt(i)),
+					window.L.bind(this._typeChar, this, text.charCodeAt(i)),
 					i * delayMs,
 				);
 			} else {
@@ -1233,7 +1233,7 @@ class DebugManager {
 			}
 		}
 		this._tileInvalidationTimeoutId = setTimeout(
-			L.bind(this._tileInvalidationTimeout, this),
+			window.L.bind(this._tileInvalidationTimeout, this),
 			50,
 		);
 	}

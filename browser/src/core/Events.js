@@ -1,13 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app */
 /*
- * L.Evented is a base class that Leaflet classes inherit from to handle custom events.
+ * window.L.Evented is a base class that Leaflet classes inherit from to handle custom events.
  */
 
-L.Evented = L.Class.extend({
+window.L.Evented = window.L.Class.extend({
 
 	initialize: function () {
-		// pass in the L.Evented instance as the 'outerObject'.
+		// pass in the window.L.Evented instance as the 'outerObject'.
 		this._evented = new app.Evented(this);
 	},
 
@@ -54,7 +54,7 @@ L.Evented = L.Class.extend({
 
 });
 
-var proto = L.Evented.prototype;
+var proto = window.L.Evented.prototype;
 
 // aliases; we should ditch those eventually
 proto.addEventListener = proto.on;
@@ -63,4 +63,4 @@ proto.addOneTimeEventListener = proto.once;
 proto.fireEvent = proto.fire;
 proto.hasEventListeners = proto.listens;
 
-L.Mixin = {Events: proto};
+window.L.Mixin = {Events: proto};

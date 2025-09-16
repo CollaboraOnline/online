@@ -90,7 +90,7 @@ function setupOverflowMenu(
 	}
 
 	// keeps hidden items
-	const hiddenItems = L.DomUtil.create(
+	const hiddenItems = window.L.DomUtil.create(
 		'div',
 		'hidden-overflow-container',
 		overflowGroupContainer,
@@ -226,21 +226,21 @@ JSDialog.OverflowGroup = function (
 	data: OverflowGroupWidgetJSON,
 	builder: JSBuilder,
 ) {
-	const overflowGroupContainer = L.DomUtil.create(
+	const overflowGroupContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group',
 		parentContainer,
 	);
 	overflowGroupContainer.id = data.id;
 
-	const overflowGroupInnerContainer = L.DomUtil.create(
+	const overflowGroupInnerContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group-inner',
 		overflowGroupContainer,
 	);
 	overflowGroupInnerContainer.id = data.id + '-inner';
 
-	const contentContainer = L.DomUtil.create(
+	const contentContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group-content',
 		overflowGroupInnerContainer,
@@ -248,14 +248,14 @@ JSDialog.OverflowGroup = function (
 	contentContainer.classList.add(data.vertical ? 'vertical' : 'horizontal');
 	overflowGroupInnerContainer.id = data.id + '-content';
 
-	const bottomBar = L.DomUtil.create(
+	const bottomBar = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-overflow-group-bottom',
 		overflowGroupContainer,
 	);
 	bottomBar.id = data.id + '-bottom';
 
-	const label = L.DomUtil.create(
+	const label = window.L.DomUtil.create(
 		'span',
 		builder.options.cssClass + ' ui-overflow-group-label',
 		bottomBar,

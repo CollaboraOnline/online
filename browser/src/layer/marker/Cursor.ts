@@ -109,9 +109,9 @@ class Cursor {
 
 	addCursorClass(visible: boolean) {
 		if (visible)
-			L.DomUtil.removeClass(this.cursor, 'blinking-cursor-hidden');
+			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor-hidden');
 		else
-			L.DomUtil.addClass(this.cursor, 'blinking-cursor-hidden');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor-hidden');
 	}
 
 	isVisible(): boolean {
@@ -197,9 +197,9 @@ class Cursor {
 
 	setOpacity(opacity: number) {
 		if (this.container)
-			L.DomUtil.setOpacity(this.cursor, opacity);
+			window.L.DomUtil.setOpacity(this.cursor, opacity);
 		if (this.cursorHeader)
-			L.DomUtil.setOpacity(this.cursorHeader, opacity);
+			window.L.DomUtil.setOpacity(this.cursorHeader, opacity);
 	}
 
 	// Shows cursor header if cursor is in visible area.
@@ -210,10 +210,10 @@ class Cursor {
 				return;
 			}
 
-			L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'visible');
+			window.L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'visible');
 
 			clearTimeout(this.blinkTimeout);
-			this.blinkTimeout = setTimeout(L.bind(function () {
+			this.blinkTimeout = setTimeout(window.L.bind(function () {
 				this.hideCursorHeader();
 			}, this), this.headerTimeout);
 		}
@@ -221,32 +221,32 @@ class Cursor {
 
 	hideCursorHeader() {
 		if (this.cursorHeader)
-			L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
+			window.L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
 	}
 
 	private initLayout() {
-		this.container = L.DomUtil.create('div', 'leaflet-cursor-container');
+		this.container = window.L.DomUtil.create('div', 'leaflet-cursor-container');
 		if (this.header) {
-			this.cursorHeader = L.DomUtil.create('div', 'leaflet-cursor-header', this.container);
+			this.cursorHeader = window.L.DomUtil.create('div', 'leaflet-cursor-header', this.container);
 
 			this.cursorHeader.textContent = this.headerName;
 
 			clearTimeout(this.blinkTimeout);
-			this.blinkTimeout = setTimeout(L.bind(function () {
-				L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
+			this.blinkTimeout = setTimeout(window.L.bind(function () {
+				window.L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
 			}, this), this.headerTimeout);
 		}
-		this.cursor = L.DomUtil.create('div', 'leaflet-cursor', this.container);
+		this.cursor = window.L.DomUtil.create('div', 'leaflet-cursor', this.container);
 		if (this.blink) {
-			L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
 		}
 
 		if (this.color) {
-			L.DomUtil.setStyle(this.cursorHeader, 'background', this.color);
-			L.DomUtil.setStyle(this.cursor, 'background', this.color);
+			window.L.DomUtil.setStyle(this.cursorHeader, 'background', this.color);
+			window.L.DomUtil.setStyle(this.cursor, 'background', this.color);
 		}
 
-		L.DomEvent
+		window.L.DomEvent
 			.disableClickPropagation(this.cursor)
 			.disableScrollPropagation(this.container);
 
@@ -268,8 +268,8 @@ class Cursor {
 		this.container.style.zIndex = this.zIndex + '';
 		// Restart blinking animation
 		if (this.blink) {
-			L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
-			L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
 		}
 	}
 

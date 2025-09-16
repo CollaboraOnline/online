@@ -1,15 +1,15 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.Mouse is handling mouse interaction with the document
+ * window.L.Map.Mouse is handling mouse interaction with the document
  */
 
 /* global UNOModifier app TileManager */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	mouse: true
 });
 
-L.Map.Mouse = L.Handler.extend({
+window.L.Map.Mouse = window.L.Handler.extend({
 
 	initialize: function (map) {
 		this._map = map;
@@ -75,7 +75,7 @@ L.Map.Mouse = L.Handler.extend({
 		buttons |= e.originalEvent.button === this.JSButtons.right ? this.LOButtons.right : 0;
 
 		// Turn ctrl-left-click into right-click for browsers on macOS
-		if (L.Browser.mac) {
+		if (window.L.Browser.mac) {
 			if (modifier == UNOModifier.CTRL && buttons == this.LOButtons.left) {
 				modifier = 0;
 				buttons = this.LOButtons.right;
@@ -85,8 +85,8 @@ L.Map.Mouse = L.Handler.extend({
 		var mouseEnteringLeavingMap = this._map._mouseEnteringLeaving;
 
 		if (mouseEnteringLeavingMap && e.type === 'mouseover' && this._mouseDown) {
-			L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
-			L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
+			window.L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
+			window.L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
 		}
 		else if (e.type === 'mousedown') {
 			TileManager.resetPreFetching();
@@ -96,10 +96,10 @@ L.Map.Mouse = L.Handler.extend({
 				clearTimeout(this._holdMouseEvent);
 			}
 			var mousePos = docLayer._latLngToTwips(e.latlng);
-			this._mouseEventsQueue.push(L.bind(function () {
+			this._mouseEventsQueue.push(window.L.bind(function () {
 				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, buttons, modifier);
 			}, docLayer));
-			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
+			this._holdMouseEvent = setTimeout(window.L.bind(this._executeMouseEvents, this), 500);
 		}
 		else if (e.type === 'mouseup') {
 			this._mouseDown = false;
@@ -144,13 +144,13 @@ L.Map.Mouse = L.Handler.extend({
 				this._clickCount = 1;
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				var timeOut = 0;
-				this._mouseEventsQueue.push(L.bind(function () {
+				this._mouseEventsQueue.push(window.L.bind(function () {
 					var docLayer = this._map._docLayer;
 					this._mouseEventsQueue = [];
 					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, buttons, modifier);
 					this._map.focus();
 				}, this));
-				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
+				this._holdMouseEvent = setTimeout(window.L.bind(this._executeMouseEvents, this), timeOut);
 			}
 
 			this._map.fire('scrollvelocity', { vx: 0, vy: 0 });
@@ -184,7 +184,7 @@ L.Map.Mouse = L.Handler.extend({
 		else if (e.type === 'mousemove' && !this._mouseDown) {
 			clearTimeout(this._mouseOverTimeout);
 			mousePos = docLayer._latLngToTwips(e.latlng);
-			this._mouseOverTimeout = setTimeout(L.bind(function () {
+			this._mouseOverTimeout = setTimeout(window.L.bind(function () {
 				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 0, modifier);
 			}, this),
 				100);
@@ -202,8 +202,8 @@ L.Map.Mouse = L.Handler.extend({
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, count, buttons, modifier);
 		}
 		else if (mouseEnteringLeavingMap && e.type === 'mouseout' && this._mouseDown) {
-			L.DomEvent.on(document, 'mousemove', this._onMouseMoveOutside, this);
-			L.DomEvent.on(document, 'mouseup', this._onMouseUpOutside, this);
+			window.L.DomEvent.on(document, 'mousemove', this._onMouseMoveOutside, this);
+			window.L.DomEvent.on(document, 'mouseup', this._onMouseUpOutside, this);
 		}
 	}),
 
@@ -224,8 +224,8 @@ L.Map.Mouse = L.Handler.extend({
 
 	_onMouseUpOutside: window.touch.mouseOnly(function (e) {
 		this._mouseDown = false;
-		L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
-		L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
+		window.L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
+		window.L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
 
 		this._map._handleDOMEvent(e);
 		if (this._map.dragging.enabled()) {

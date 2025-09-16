@@ -19,11 +19,11 @@ interface IFrameDialog {
 	show(): void;
 }
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	settings: true,
 });
 
-L.Map.Settings = L.Handler.extend({
+window.L.Map.Settings = window.L.Handler.extend({
 	_iframeDialog: null as IFrameDialog | null,
 	_url: '',
 
@@ -36,17 +36,17 @@ L.Map.Settings = L.Handler.extend({
 	},
 
 	initialize: function (map: any): void {
-		L.Handler.prototype.initialize.call(this, map);
+		window.L.Handler.prototype.initialize.call(this, map);
 
 		this._url = this._getLocalSettingsUrl();
 	},
 
 	addHooks: function (): void {
-		L.DomEvent.on(window, 'message', this.onMessage, this);
+		window.L.DomEvent.on(window, 'message', this.onMessage, this);
 	},
 
 	removeHooks: function (): void {
-		L.DomEvent.off(window, 'message', this.onMessage, this);
+		window.L.DomEvent.off(window, 'message', this.onMessage, this);
 	},
 
 	removeIframe: function (): void {
@@ -88,12 +88,17 @@ L.Map.Settings = L.Handler.extend({
 				'jsdialog-container ui-dialog lokdialog_container ui-widget-content',
 		};
 
-		this._iframeDialog = L.iframeDialog(this._url, params, null, options);
+		this._iframeDialog = window.L.iframeDialog(
+			this._url,
+			params,
+			null,
+			options,
+		);
 
 		const cancelButton = document.getElementById('iframe-settings-cancel');
 		const saveButton = document.getElementById('iframe-settings-save');
 
-		L.DomEvent.on(
+		window.L.DomEvent.on(
 			cancelButton,
 			'click',
 			() => {
@@ -102,7 +107,7 @@ L.Map.Settings = L.Handler.extend({
 			this,
 		);
 
-		L.DomEvent.on(
+		window.L.DomEvent.on(
 			saveButton,
 			'click',
 			() => {
@@ -132,5 +137,5 @@ L.Map.Settings = L.Handler.extend({
 });
 
 if (window.prefs.canPersist) {
-	L.Map.addInitHook('addHandler', 'settings', L.Map.Settings);
+	window.L.Map.addInitHook('addHandler', 'settings', window.L.Map.Settings);
 }

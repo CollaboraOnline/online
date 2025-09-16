@@ -24,7 +24,7 @@ function isAnyInputFocused() {
 
 	var hasTunneledDialogOpened = app.map.dialog ? app.map.dialog.hasOpenedDialog() : false;
 	var hasJSDialogOpened = app.map.jsdialog ? app.map.jsdialog.hasDialogOpened() : false;
-	var hasJSDialogFocused = L.DomUtil.hasClass(document.activeElement, 'jsdialog');
+	var hasJSDialogFocused = window.L.DomUtil.hasClass(document.activeElement, 'jsdialog');
 	var commentHasFocus = cool.Comment.isAnyFocus();
 	var inputHasFocus = $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
 
@@ -71,8 +71,8 @@ function isFocusable(element) {
 
 /// close tab focus switching in cycle inside container
 function makeFocusCycle(container, failedToFindFocusFunc) {
-	var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
-	var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
+	var beginMarker = window.L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
+	var endMarker = window.L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
 
 	beginMarker.tabIndex = 0;
 	endMarker.tabIndex = 0;

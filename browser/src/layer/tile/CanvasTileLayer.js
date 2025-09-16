@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
- * L.CanvasTileLayer is a layer with canvas based rendering.
+ * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection */
+/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection */
 
 function clamp(num, min, max)
 {
@@ -12,7 +12,7 @@ function clamp(num, min, max)
 
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
-var CStyleData = L.Class.extend({
+var CStyleData = window.L.Class.extend({
 
 	initialize: function (styleDataDiv) {
 		this._div = styleDataDiv;
@@ -40,7 +40,7 @@ var CStyleData = L.Class.extend({
 
 // CSelections is used to add/modify/clear selections (text/cell-area(s)/ole)
 // on canvas using polygons (CPolygon).
-var CSelections = L.Class.extend({
+var CSelections = window.L.Class.extend({
 	initialize: function (pointSet, canvasOverlay, selectionsDataDiv, map, isView, viewId, selectionType) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
@@ -153,7 +153,7 @@ var CSelections = L.Class.extend({
 
 // CReferences is used to store and manage the CPath's of all
 // references in the current sheet.
-var CReferences = L.Class.extend({
+var CReferences = window.L.Class.extend({
 
 	initialize: function (canvasOverlay) {
 
@@ -185,7 +185,7 @@ var CReferences = L.Class.extend({
 
 });
 
-L.TileSectionManager = L.Class.extend({
+window.L.TileSectionManager = window.L.Class.extend({
 
 	initialize: function (layer) {
 		this._layer = layer;
@@ -194,7 +194,7 @@ L.TileSectionManager = L.Class.extend({
 		var mapSize = this._map.getPixelBoundsCore().getSize();
 		this._tilesSection = null; // Shortcut.
 
-		if (L.Browser.cypressTest) // If cypress is active, create test divs.
+		if (window.L.Browser.cypressTest) // If cypress is active, create test divs.
 			app.sectionContainer.testing = true;
 
 		app.sectionContainer.onResize(mapSize.x, mapSize.y);
@@ -559,7 +559,7 @@ L.TileSectionManager = L.Class.extend({
 	}
 });
 
-L.CanvasTileLayer = L.Layer.extend({
+window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	options: {
 		tileSize: window.tileSize,
@@ -579,9 +579,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	initialize: function (options) {
 
-		L.Layer.prototype.initialize.call(this);
+		window.L.Layer.prototype.initialize.call(this);
 
-		options = L.setOptions(this, options);
+		options = window.L.setOptions(this, options);
 
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
@@ -633,14 +633,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this._container) { return; }
 
-		this._container = L.DomUtil.create('div', 'leaflet-layer');
+		this._container = window.L.DomUtil.create('div', 'leaflet-layer');
 		this._updateZIndex();
 
 		this.getPane().appendChild(this._container);
 
 		var mapContainer = document.getElementById('document-container');
 		var canvasContainerClass = 'leaflet-canvas-container';
-		this._canvasContainer = L.DomUtil.create('div', canvasContainerClass, mapContainer);
+		this._canvasContainer = window.L.DomUtil.create('div', canvasContainerClass, mapContainer);
 		this._canvasContainer.id = 'canvas-container';
 		this._setup();
 	},
@@ -651,24 +651,24 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.error('canvas container not found. _initContainer failed ?');
 		}
 
-		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
+		this._canvas = window.L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
 		this._canvas.style.visibility = 'hidden';
 
 		app.sectionContainer = new CanvasSectionContainer(this._canvas, this.isCalc() /* disableDrawing? */);
 		app.activeDocument = new DocumentBase();
 
 		this._container.style.position = 'absolute';
-		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
-		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
-		this._splittersDataDiv = L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
-		this._cursorOverlayDiv = L.DomUtil.create('div', 'cursor-overlay', this._canvasContainer);
-		if (L.Browser.cypressTest) {
-			this._emptyDeltaDiv = L.DomUtil.create('div', 'empty-deltas', this._canvasContainer);
+		this._cursorDataDiv = window.L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
+		this._selectionsDataDiv = window.L.DomUtil.create('div', 'selections-data', this._canvasContainer);
+		this._splittersDataDiv = window.L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
+		this._cursorOverlayDiv = window.L.DomUtil.create('div', 'cursor-overlay', this._canvasContainer);
+		if (window.L.Browser.cypressTest) {
+			this._emptyDeltaDiv = window.L.DomUtil.create('div', 'empty-deltas', this._canvasContainer);
 			this._emptyDeltaDiv.innerText = 0;
 		}
 		this._splittersStyleData = new CStyleData(this._splittersDataDiv);
 
-		this._painter = new L.TileSectionManager(this);
+		this._painter = new window.L.TileSectionManager(this);
 
 		app.sectionContainer.addSection(new cool.TilesSection());
 		this._painter._tilesSection = app.sectionContainer.getSectionWithName('tiles');
@@ -682,7 +682,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		app.sectionContainer.addSection(new cool.ScrollSection(() => this.isCalcRTL()));
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
-		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
+		// Using window.L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this._map.on('move', this._painter.update, this._painter);
 			this._map.on('moveend', function () {
@@ -758,7 +758,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				app.tile.size.pX = app.tile.size.pY = TileManager.tileSize;
 			}
 
-			if (!L.Browser.mobileWebkit)
+			if (!window.L.Browser.mobileWebkit)
 				TileManager.update(this._map.getCenter(), tileZoom);
 
 			if (tileZoomChanged)
@@ -824,7 +824,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.options._origMaxBounds = this._map.options.maxBounds;
 			}
 			scale = this._map.options.crs.scale(1);
-			this._map.setMaxBounds(new L.LatLngBounds(
+			this._map.setMaxBounds(new window.L.LatLngBounds(
 				this._map.unproject(new cool.Point(0, 0)),
 				this._map.unproject(new cool.Point(width * scale, height * scale))));
 		}
@@ -1093,7 +1093,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map._clip.setTextSelectionHTML(jMessage.content);
 
 				// If _navigatorClipboardWrite is available, use it.
-				if (L.Browser.clipboardApiAvailable || window.ThisIsTheiOSApp)
+				if (window.L.Browser.clipboardApiAvailable || window.ThisIsTheiOSApp)
 					this._map.fire('clipboardchanged', { commandName: '.uno:CopyHyperlinkLocation' });
 				else // Or use previous method.
 					this._map._clip._execCopyCutPaste('copy');
@@ -1418,7 +1418,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._previewInvalidations.push(new cool.Bounds(topLeftTwips, bottomRightTwips));
 			// 1s after the last invalidation, update the preview
 			clearTimeout(this._previewInvalidator);
-			this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
+			this._previewInvalidator = setTimeout(window.L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
 		}
 	},
 
@@ -1677,7 +1677,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url}});
 		}
 		else if (command.id === 'print') {
-			if (this._map.options.print === false || L.Browser.cypressTest) {
+			if (this._map.options.print === false || window.L.Browser.cypressTest) {
 				// open the pdf in a new tab, it can be printed directly in the browser's pdf viewer
 				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
 					this._map.options.doc, '/download/' + command.downloadid,
@@ -1706,7 +1706,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			// Don't do a real download during testing
-			if (!L.Browser.cypressTest)
+			if (!window.L.Browser.cypressTest)
 				this._map._fileDownloader.src = url;
 			else
 				this._map._fileDownloader.setAttribute('data-src', url);
@@ -1810,7 +1810,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onDocumentRepair: function (textMsg) {
 		if (!this._docRepair) {
-			this._docRepair = L.control.documentRepair();
+			this._docRepair = window.L.control.documentRepair();
 		}
 
 		if (!this._docRepair.isVisible()) {
@@ -2309,7 +2309,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._textCSelections.setPointSet(pointSet);
 
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
-			if (L.Browser.clipboardApiAvailable) {
+			if (window.L.Browser.clipboardApiAvailable) {
 				// Just set the selection type, no fetch of the content.
 				this._map._clip.setTextSelectionType('text');
 			} else {
@@ -2318,7 +2318,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._selectionContentRequest) {
 					clearTimeout(this._selectionContentRequest);
 				}
-				this._selectionContentRequest = setTimeout(L.bind(function () {
+				this._selectionContentRequest = setTimeout(window.L.bind(function () {
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');}, this), 100);
 			}
 
@@ -2634,7 +2634,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!found) {
 				var message = 'windowpaint: message assumed PNG for hash ' + command.hash
 				    + ' is cached here in the client but not found';
-				if (L.Browser.cypressTest)
+				if (window.L.Browser.cypressTest)
 					throw new Error(message);
 				app.socket.sendMessage('ERROR ' + message);
 				// Not sure what to do. Ask the server to re-send the windowpaint: message but this time including the PNG?
@@ -2645,7 +2645,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._pngCache[i].hash == command.hash) {
 					message = 'windowpaint: message included PNG for hash ' + command.hash
 					    + ' even if it was already cached here in the client';
-					if (L.Browser.cypressTest)
+					if (window.L.Browser.cypressTest)
 						throw new Error(message);
 					app.socket.sendMessage('ERROR ' + message);
 					// Remove the extra copy, code below will add it at the start of the array
@@ -2810,7 +2810,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
-		if (L.Browser.mac) {
+		if (window.L.Browser.mac) {
 			// Map Mac standard shortcuts to the LO shortcuts for the corresponding
 			// functions when possible. Note that the Cmd modifier comes here as CTRL.
 
@@ -2884,7 +2884,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!bounds) {
 			return true;
 		}
-		return bounds.getSouthWest().equals(new L.LatLng(0, 0)) && bounds.getNorthEast().equals(new L.LatLng(0, 0));
+		return bounds.getSouthWest().equals(new window.L.LatLng(0, 0)) && bounds.getNorthEast().equals(new window.L.LatLng(0, 0));
 	},
 
 	_onZoomStart: function () {
@@ -3394,7 +3394,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		textMsg = textMsg.substring('formfieldbutton:'.length + 1);
 		var json = JSON.parse(textMsg);
 		if (json.action === 'show') {
-			this._formFieldButton = new L.FormFieldButton(json);
+			this._formFieldButton = new window.L.FormFieldButton(json);
 			this._map.addLayer(this._formFieldButton);
 		} else if (this._formFieldButton) {
 			this._map.removeLayer(this._formFieldButton);
@@ -3447,12 +3447,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	/// onlyThread - takes annotation indicating which thread will be generated
 	getCommentWizardStructure: function(menuStructure, onlyThread) {
-		var customTitleBar = L.DomUtil.create('div');
-		L.DomUtil.addClass(customTitleBar, 'mobile-wizard-titlebar-btn-container');
-		var title = L.DomUtil.create('span', '', customTitleBar);
+		var customTitleBar = window.L.DomUtil.create('div');
+		window.L.DomUtil.addClass(customTitleBar, 'mobile-wizard-titlebar-btn-container');
+		var title = window.L.DomUtil.create('span', '', customTitleBar);
 		title.innerText = _('Comment');
-		var button = L.DomUtil.createWithId('button', 'insert_comment', customTitleBar);
-		L.DomUtil.addClass(button, 'mobile-wizard-titlebar-btn');
+		var button = window.L.DomUtil.createWithId('button', 'insert_comment', customTitleBar);
+		window.L.DomUtil.addClass(button, 'mobile-wizard-titlebar-btn');
 		button.innerText = '+';
 		button.onclick = this._map.insertComment.bind(this._map);
 
@@ -3533,7 +3533,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				'invalidateviewcursor'
 			];
 
-			this._printTwipsMessagesForReplay = new L.MessageStore(ownViewTypes, otherViewTypes);
+			this._printTwipsMessagesForReplay = new window.L.MessageStore(ownViewTypes, otherViewTypes);
 		}
 
 		var colonIndex = textMsg.indexOf(':');
@@ -3582,7 +3582,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_syncTilePanePos: function () {
 		if (this._container) {
 			var mapPanePos = this._map._getMapPanePos();
-			L.DomUtil.setPosition(this._container, new cool.Point(-mapPanePos.x , -mapPanePos.y));
+			window.L.DomUtil.setPosition(this._container, new cool.Point(-mapPanePos.x , -mapPanePos.y));
 		}
 		var documentBounds = this._map.getPixelBoundsCore();
 		var documentPos = documentBounds.min;
@@ -3803,14 +3803,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._referencesAll = [];
 
 		// This layergroup contains all the layers corresponding to other's view
-		this._viewLayerGroup = new L.LayerGroup();
+		this._viewLayerGroup = new window.L.LayerGroup();
 		if (!app.isReadOnly()) {
 			map.addLayer(this._viewLayerGroup);
 		}
 
 		this._debug = map._debug;
 
-		this._searchResultsLayer = new L.LayerGroup();
+		this._searchResultsLayer = new window.L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
 
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
@@ -3871,7 +3871,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	onRemove: function (map) {
-		L.DomUtil.remove(this._container);
+		window.L.DomUtil.remove(this._container);
 		map._removeZoomLimit(this);
 		this._container = null;
 		this._tileZoom = null;
@@ -3897,7 +3897,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		TextSelections.dispose();
 
 		this._removeSplitters();
-		L.DomUtil.remove(this._canvasContainer);
+		window.L.DomUtil.remove(this._canvasContainer);
 	},
 
 	getEvents: function () {
@@ -4066,8 +4066,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setDocBounds(new L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
-			this._map.setMaxBounds(new L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
+			this._map.setDocBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
+			this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
@@ -4117,10 +4117,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var i = 0; i < previews.length; i++) {
 			const img = previews[i].querySelector('img');
 			if (parseInt(previews[i].id.replace('preview-frame-part-', '')) === part) {
-				L.DomUtil.addClass(img, 'preview-img-currentpart');
+				window.L.DomUtil.addClass(img, 'preview-img-currentpart');
 			}
 			else {
-				L.DomUtil.removeClass(img, 'preview-img-currentpart');
+				window.L.DomUtil.removeClass(img, 'preview-img-currentpart');
 			}
 		}
 	},
@@ -4177,7 +4177,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 });
 
-L.MessageStore = L.Class.extend({
+window.L.MessageStore = window.L.Class.extend({
 
 	// ownViewTypes : The types of messages related to own view.
 	// otherViewTypes: The types of messages related to other views.

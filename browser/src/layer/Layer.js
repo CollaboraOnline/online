@@ -1,14 +1,14 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app cool */
 
-L.Layer = L.Evented.extend({
+window.L.Layer = window.L.Evented.extend({
 
 	options: {
 		pane: 'overlayPane'
 	},
 
 	initialize: function () {
-		L.Evented.prototype.initialize.call(this);
+		window.L.Evented.prototype.initialize.call(this);
 	},
 
 	addTo: function (map) {
@@ -62,7 +62,7 @@ L.Layer = L.Evented.extend({
 });
 
 
-L.Map.include({
+window.L.Map.include({
 	addLayer: function (layer) {
 		var id = app.util.stamp(layer);
 		if (this._layers[id]) { return layer; }
@@ -160,10 +160,10 @@ L.Map.include({
 	}
 });
 
-// Used in L.Marker and L.Popup for computing layer position from latlng optionally with offsets
+// Used in window.L.Marker and L.Popup for computing layer position from latlng optionally with offsets
 // with or without freeze-panes. This also indicates in the returned object
 // whether the object should be visible or not when freeze panes are active.
-L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect, map, offset) {
+window.L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect, map, offset) {
 	var splitPanesContext = map.getSplitPanesContext();
 
 	if (!splitPanesContext) {

@@ -156,7 +156,7 @@ class PresenterConsole {
 			this._onPresenterCanvasClick.bind(this),
 		);
 		this._timer = this._proxyPresenter.setInterval(
-			L.bind(this._onTimer, this),
+			window.L.bind(this._onTimer, this),
 			1000,
 		);
 		this._ticks = 0;
@@ -268,7 +268,7 @@ class PresenterConsole {
 		}
 		this._proxyPresenter.addEventListener(
 			'unload',
-			L.bind(this._onConsoleClose, this),
+			window.L.bind(this._onConsoleClose, this),
 		);
 		this._boundOnKeyDown = this._onKeyDown.bind(this);
 		this._proxyPresenter.addEventListener('keydown', this._boundOnKeyDown);
@@ -404,7 +404,10 @@ class PresenterConsole {
 		actionBtnContainer.style.display = 'flex';
 		actionBtnContainer.style.gap = '1vw';
 
-		this._first.addEventListener('click', L.bind(this._onToolbarClick, this));
+		this._first.addEventListener(
+			'click',
+			window.L.bind(this._onToolbarClick, this),
+		);
 
 		let notesSeparator =
 			this._proxyPresenter.document.querySelector('#notes-separator');
@@ -443,7 +446,7 @@ class PresenterConsole {
 		nextSlideContainer.style.gap = '2vw';
 
 		elem = this._proxyPresenter.document.querySelector('#next-presentation');
-		elem.addEventListener('click', L.bind(this._onClickPreview, this));
+		elem.addEventListener('click', window.L.bind(this._onClickPreview, this));
 
 		this._notes = this._proxyPresenter.document.createElement('div');
 		this._notes.style.height = '45vh';
@@ -482,7 +485,10 @@ class PresenterConsole {
 		elem.style.columnGap = '5vw';
 
 		this._slides.appendChild(elem);
-		this._slides.addEventListener('click', L.bind(this._onClickSlides, this));
+		this._slides.addEventListener(
+			'click',
+			window.L.bind(this._onClickSlides, this),
+		);
 		this._slides.addEventListener(
 			'keydown',
 			function (event) {
@@ -500,7 +506,7 @@ class PresenterConsole {
 		elem.style.gap = '1vw';
 		elem.style.margin = '1vh 0vw';
 		elem.style.height = '6vh';
-		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
+		elem.addEventListener('click', window.L.bind(this._onToolbarClick, this));
 
 		let list =
 			this._proxyPresenter.document.querySelectorAll('#toolbar button');
@@ -540,7 +546,7 @@ class PresenterConsole {
 
 		timeControlElem.addEventListener(
 			'click',
-			L.bind(this._onToolbarClick, this),
+			window.L.bind(this._onToolbarClick, this),
 		);
 
 		// Style buttons in slideshow control container
@@ -582,7 +588,7 @@ class PresenterConsole {
 
 		mainContentContainer.append(this.tooltip);
 
-		this._tooltip = L.control.tooltip({
+		this._tooltip = window.L.control.tooltip({
 			window: this._proxyPresenter,
 			container: this.tooltip,
 		});
@@ -760,7 +766,7 @@ class PresenterConsole {
 		// font change button action listener
 		fontChangeContainer.addEventListener(
 			'click',
-			L.bind(this._onToolbarClick, this),
+			window.L.bind(this._onToolbarClick, this),
 		);
 
 		return fontChangeContainer;
@@ -835,7 +841,7 @@ class PresenterConsole {
 				this._pauseButton();
 				this._proxyPresenter.clearInterval(this._timer);
 				this._timer = this._proxyPresenter.setInterval(
-					L.bind(this._onTimer, this),
+					window.L.bind(this._onTimer, this),
 					1000,
 				);
 				break;
@@ -916,7 +922,7 @@ class PresenterConsole {
 		}
 
 		this._proxyPresenter.setTimeout(
-			L.bind(this._resizePreviews, this, rect.width, rect.height),
+			window.L.bind(this._resizePreviews, this, rect.width, rect.height),
 			0,
 		);
 	}
@@ -1096,7 +1102,7 @@ class PresenterConsole {
 		) {
 			const nextIndex = this._getNextVisibleSlide(this._lastIndex);
 			this._proxyPresenter.setTimeout(
-				L.bind(this._fetchPreview, this, nextIndex, next),
+				window.L.bind(this._fetchPreview, this, nextIndex, next),
 				0,
 			);
 		}

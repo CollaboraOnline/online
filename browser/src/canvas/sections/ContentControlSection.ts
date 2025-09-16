@@ -38,7 +38,7 @@ export class ContentControlSection extends CanvasSectionObject {
 	public onInitialize(): void {
 		this.map.on('darkmodechanged', this.changeBorderStyle, this);
 
-		var container = L.DomUtil.createWithId('div', 'datepicker');
+		var container = window.L.DomUtil.createWithId('div', 'datepicker');
 		container.style.zIndex = '12';
 		container.style.position = 'absolute';
 		document.getElementById('document-container').appendChild(container);
@@ -80,7 +80,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		else if (json.action === 'change-picture') {
 			this.sectionProperties.picturePicker = true;
 			if (!this.map.wopi.EnableInsertRemoteImage)
-				L.DomUtil.get('insertgraphic').click();
+				window.L.DomUtil.get('insertgraphic').click();
 			else
 				this.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		}

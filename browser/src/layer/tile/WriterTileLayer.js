@@ -13,7 +13,7 @@
  */
 
 /* global app GraphicSelection cool TileManager */
-L.WriterTileLayer = L.CanvasTileLayer.extend({
+window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 	newAnnotation: function (commentData) {
 		const name = cool.Comment.makeName(commentData);
@@ -73,7 +73,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		} else if (this._map.zotero && values.sections) {
 			this._map.zotero.onFieldValue(values.sections);
 		} else {
-			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			window.L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 

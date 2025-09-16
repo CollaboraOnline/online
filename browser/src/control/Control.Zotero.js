@@ -10,11 +10,11 @@
  */
 
 /*
- * L.Control.Zotero - bibliography dialogs implementation
+ * window.L.Control.Zotero - bibliography dialogs implementation
  */
 
 /* global _ Promise app Set */
-L.Control.Zotero = L.Control.extend({
+window.L.Control.Zotero = window.L.Control.extend({
 	_cachedURL: [],
 	citations: {},
 	itemsPerPage: 15,
@@ -716,7 +716,7 @@ L.Control.Zotero = L.Control.extend({
 			if (items[iterator].data.itemType !== 'note')
 				continue;
 
-			var dummyNode = L.DomUtil.create('div');
+			var dummyNode = window.L.DomUtil.create('div');
 			dummyNode.innerHTML = items[iterator].data.note;
 			var note = dummyNode.innerText.replaceAll('\n', ' ');
 
@@ -2202,6 +2202,6 @@ L.Control.Zotero = L.Control.extend({
 	}
 });
 
-L.control.zotero = function (map) {
-	return new L.Control.Zotero(map);
+window.L.control.zotero = function (map) {
+	return new window.L.Control.Zotero(map);
 };

@@ -150,18 +150,18 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		return control;
 	} else if (data.text !== undefined || data.image) {
-		var button = L.DomUtil.create('button', 'menubutton ' + builder.options.cssClass, parentContainer);
+		var button = window.L.DomUtil.create('button', 'menubutton ' + builder.options.cssClass, parentContainer);
 		button.id = data.id;
 		button.title = data.text;
 		button.setAttribute('aria-haspopup', true);
 		if (data.image) {
-			var image = L.DomUtil.create('img', '', button);
+			var image = window.L.DomUtil.create('img', '', button);
 			image.src = data.image;
 			image.setAttribute('alt', '');
 		}
-		var label = L.DomUtil.create('span', '', button);
+		var label = window.L.DomUtil.create('span', '', button);
 		label.innerText = data.text ? data.text : '';
-		L.DomUtil.create('i', 'arrow', button);
+		window.L.DomUtil.create('i', 'arrow', button);
 
 		$(button).click(function () {
 			if (!button.hasAttribute('disabled')) {

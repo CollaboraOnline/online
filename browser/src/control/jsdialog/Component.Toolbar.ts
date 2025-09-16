@@ -52,12 +52,12 @@ class Toolbar {
 	}
 
 	reset() {
-		this.parentContainer = L.DomUtil.get(this.toolbarElementId);
+		this.parentContainer = window.L.DomUtil.get(this.toolbarElementId);
 
 		// In case it contains garbage
 		if (this.parentContainer) this.parentContainer.replaceChildren();
 
-		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
+		window.L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
 	}
 
 	create() {

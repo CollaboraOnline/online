@@ -227,7 +227,7 @@ class SlideShowHandler {
 		if (this.presenter._enableA11y) {
 			const canvas = this.getContext()._canvas;
 			if (canvas) {
-				const a11yContainer = L.DomUtil.create('div', '');
+				const a11yContainer = window.L.DomUtil.create('div', '');
 				canvas.innerHTML = '';
 				a11yContainer.innerHTML = app.LOUtil.sanitize(a11yString);
 				canvas.appendChild(a11yContainer);

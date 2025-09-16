@@ -1,13 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app */
 /*
- * L.PosAnimation is used by Leaflet internally for pan animations.
+ * window.L.PosAnimation is used by Leaflet internally for pan animations.
  */
 
 /* global cool */
 
-L.PosAnimation = L.Class.extend({
-	includes: L.Mixin.Events,
+window.L.PosAnimation = window.L.Class.extend({
+	includes: window.L.Mixin.Events,
 
 	run: function (el, newPos, duration, easeLinearity) { // (HTMLElement, Point[, Number, Number])
 		this.stop();
@@ -21,8 +21,8 @@ L.PosAnimation = L.Class.extend({
 
 		// Skip some work if the duration is zero
 		if (duration <= 0) {
-			el.style[L.DomUtil.TRANSITION] = '';
-			L.DomUtil.setPosition(el, newPos);
+			el.style[window.L.DomUtil.TRANSITION] = '';
+			window.L.DomUtil.setPosition(el, newPos);
 			this._el._leaflet_pos = newPos;
 			this._inProgress = false;
 			this.fire('step').fire('end');
@@ -30,17 +30,17 @@ L.PosAnimation = L.Class.extend({
 			return;
 		}
 
-		el.style[L.DomUtil.TRANSITION] = 'all ' + (isNaN(duration) ? 0.25 : 0) +
+		el.style[window.L.DomUtil.TRANSITION] = 'all ' + (isNaN(duration) ? 0.25 : 0) +
 		        's cubic-bezier(0,0,' + (easeLinearity || 0.5) + ',1)';
 
-		L.DomEvent.on(el, L.DomUtil.TRANSITION_END, this._onTransitionEnd, this);
-		L.DomUtil.setPosition(el, newPos);
+		window.L.DomEvent.on(el, window.L.DomUtil.TRANSITION_END, this._onTransitionEnd, this);
+		window.L.DomUtil.setPosition(el, newPos);
 
 		// toggle reflow, Chrome flickers for some reason if you don't do this
 		app.util.falseFn(el.offsetWidth);
 
 		// there's no native way to track value updates of transitioned properties, so we imitate this
-		this._stepTimer = setInterval(L.bind(this._onStep, this), 50);
+		this._stepTimer = setInterval(window.L.bind(this._onStep, this), 50);
 	},
 
 	stop: function () {
@@ -49,7 +49,7 @@ L.PosAnimation = L.Class.extend({
 		// if we just removed the transition property, the element would jump to its final position,
 		// so we need to make it stay at the current position
 
-		L.DomUtil.setPosition(this._el, this._getPos());
+		window.L.DomUtil.setPosition(this._el, this._getPos());
 		this._onTransitionEnd();
 		app.util.falseFn(this._el.offsetWidth); // force reflow in case we are about to start a new animation
 	},
@@ -61,7 +61,7 @@ L.PosAnimation = L.Class.extend({
 			return;
 		}
 		/*eslint-disable camelcase*/
-		// make L.DomUtil.getPosition return intermediate position value during animation
+		// make window.L.DomUtil.getPosition return intermediate position value during animation
 		this._el._leaflet_pos = stepPos;
 		/*eslint-enable camelcase*/
 
@@ -78,8 +78,8 @@ L.PosAnimation = L.Class.extend({
 		    el = this._el,
 		    style = window.getComputedStyle(el);
 
-		if (L.Browser.any3d) {
-			matches = style[L.DomUtil.TRANSFORM].match(this._transformRe);
+		if (window.L.Browser.any3d) {
+			matches = style[window.L.DomUtil.TRANSFORM].match(this._transformRe);
 			if (!matches) { return; }
 			left = parseFloat(matches[1]);
 			top  = parseFloat(matches[2]);
@@ -92,15 +92,15 @@ L.PosAnimation = L.Class.extend({
 	},
 
 	_onTransitionEnd: function () {
-		L.DomEvent.off(this._el, L.DomUtil.TRANSITION_END, this._onTransitionEnd, this);
+		window.L.DomEvent.off(this._el, window.L.DomUtil.TRANSITION_END, this._onTransitionEnd, this);
 
 		if (!this._inProgress) { return; }
 		this._inProgress = false;
 
-		this._el.style[L.DomUtil.TRANSITION] = '';
+		this._el.style[window.L.DomUtil.TRANSITION] = '';
 
 		/*eslint-disable camelcase*/
-		// make sure L.DomUtil.getPosition returns the final position value after animation
+		// make sure window.L.DomUtil.getPosition returns the final position value after animation
 		this._el._leaflet_pos = this._newPos;
 		/*eslint-enable camelcase*/
 

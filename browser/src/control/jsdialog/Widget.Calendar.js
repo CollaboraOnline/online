@@ -25,7 +25,7 @@
 /* global JSDialog $ */
 
 function _calendarControl(parentContainer, data, builder) {
-	const container = L.DomUtil.create('div', 'ui-calendar ' + builder.options.cssClass, parentContainer);
+	const container = window.L.DomUtil.create('div', 'ui-calendar ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
 
 	$.datepicker.setDefaults($.datepicker.regional[window.langParamLocale.language]);

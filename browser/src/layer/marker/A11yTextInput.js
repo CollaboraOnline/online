@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.A11yTextInput is the hidden textarea, which handles text input events
+ * window.L.A11yTextInput is the hidden textarea, which handles text input events
  *
  * This is made significantly more difficult than expected by such a
  * mess of browser, and mobile IME quirks that it is not possible to
@@ -19,9 +19,9 @@
 
 /* global app _ */
 
-L.A11yTextInput = L.TextInput.extend({
+window.L.A11yTextInput = window.L.TextInput.extend({
 	initialize: function() {
-		L.TextInput.prototype.initialize.call(this);
+		window.L.TextInput.prototype.initialize.call(this);
 
 		this._className = 'A11yTextInput';
 
@@ -119,7 +119,7 @@ L.A11yTextInput = L.TextInput.extend({
 
 	_setSelectionFlag: function(flag) {
 		this._hasSelection = flag;
-		if (L.Browser.cypressTest)
+		if (window.L.Browser.cypressTest)
 			this._textArea.isSelectionNull = !flag;
 	},
 
@@ -353,7 +353,7 @@ L.A11yTextInput = L.TextInput.extend({
 
 		// Firefox is not able to delete the <img> post space. Since no 'input' event is generated,
 		// we need to handle a <delete> at the end of the paragraph, here.
-		if (L.Browser.gecko && (!this._hasSelection || this._isLastSelectionEmpty()) &&
+		if (window.L.Browser.gecko && (!this._hasSelection || this._isLastSelectionEmpty()) &&
 			this._getLastCursorPosition() === this.getPlainTextContent().length &&
 			this._deleteHint === 'delete') {
 			if (this._map._debug.logKeyboardEvents) {
@@ -625,5 +625,5 @@ L.A11yTextInput = L.TextInput.extend({
 });
 
 L.a11yTextInput = function() {
-	return new L.A11yTextInput();
+	return new window.L.A11yTextInput();
 };

@@ -15,7 +15,7 @@
 
 /* global app $ window brandProductName DocUtil GraphicSelection _ */
 
-L.Map.include({
+window.L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
 	unoToolbarCommands: [
@@ -746,7 +746,7 @@ L.Map.include({
 		map.uiManager.showYesNoButton(id + '-box', productName, '', _('OK'), null, null, null, true);
 		app.layoutingService.appendLayoutingTask(() => {
 			const box = document.getElementById(id + '-box');
-			const innerDiv = L.DomUtil.create('div', '', null);
+			const innerDiv = window.L.DomUtil.create('div', '', null);
 			box.insertBefore(innerDiv, box.firstChild);
 			innerDiv.innerHTML = data;
 
@@ -801,7 +801,7 @@ L.Map.include({
 			text = this.hyperlinkUnderCursor.text;
 		} else if (this._clip && this._clip._selectionType == 'text') {
 			if (map['stateChangeHandler'].getItemValue('.uno:Copy') === 'enabled') {
-				if (L.Browser.clipboardApiAvailable) {
+				if (window.L.Browser.clipboardApiAvailable) {
 					// Async copy, trigger fetching the text selection.
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 				} else {
@@ -816,7 +816,7 @@ L.Map.include({
 
 	cancelSearch: function() {
 		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
-		var searchInput = L.DomUtil.get('search-input');
+		var searchInput = window.L.DomUtil.get('search-input');
 		app.searchService.resetSelection();
 		if (toolbar) {
 			toolbar.showItem('cancelsearch', false);

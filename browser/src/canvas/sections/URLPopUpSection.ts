@@ -59,18 +59,18 @@ class URLPopUpSection extends HTMLObjectSection {
 
 	createUIElements(url: string) {
 		const parent = this.getHTMLObject();
-		L.DomUtil.createWithId('div', this.containerId, parent);
+		window.L.DomUtil.createWithId('div', this.containerId, parent);
 
-        const link = L.DomUtil.createWithId('a', this.linkId, parent);
+        const link = window.L.DomUtil.createWithId('a', this.linkId, parent);
 		link.innerText = url;
 		const copyLinkText = _('Copy link location');
-		const copyBtn = L.DomUtil.createWithId('div', this.copyButtonId, parent);
-		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
+		const copyBtn = window.L.DomUtil.createWithId('div', this.copyButtonId, parent);
+		window.L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 		copyBtn.setAttribute('title', copyLinkText);
 		copyBtn.setAttribute('role', 'button');
 		copyBtn.setAttribute('aria-label', copyLinkText);
 
-        const imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
+        const imgCopyBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
 		app.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
@@ -78,14 +78,14 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgCopyBtn.style.padding = '4px';
 
 		const editLinkText = _('Edit link');
-		const editBtn = L.DomUtil.createWithId('div', this.editButtonId, parent);
-		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
+		const editBtn = window.L.DomUtil.createWithId('div', this.editButtonId, parent);
+		window.L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 		editBtn.setAttribute('title', editLinkText);
 		editBtn.setAttribute('role', 'button');
 		editBtn.setAttribute('aria-label', copyLinkText);
 
 
-		const imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
+		const imgEditBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
 		app.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
@@ -93,13 +93,13 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgEditBtn.style.padding = '4px';
 
 		const removeLinkText = _('Remove link');
-		const removeBtn = L.DomUtil.createWithId('div', this.removeButtonId, parent);
-		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
+		const removeBtn = window.L.DomUtil.createWithId('div', this.removeButtonId, parent);
+		window.L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 		removeBtn.setAttribute('title', removeLinkText);
 		removeBtn.setAttribute('role', 'button');
 		removeBtn.setAttribute('aria-label', removeLinkText);
 
-		const imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
+		const imgRemoveBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
 		app.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);

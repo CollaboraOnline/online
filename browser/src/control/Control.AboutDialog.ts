@@ -173,7 +173,7 @@ class AboutDialog {
 			return;
 		}
 
-		var innerDiv = L.DomUtil.create('div', '', null);
+		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 		innerDiv.appendChild(content);
 
@@ -183,7 +183,7 @@ class AboutDialog {
 		form.addEventListener('keyup', this.aboutDialogKeyHandler.bind(this));
 		form.querySelector('#coolwsd-version').querySelector('a').focus();
 		const copyVersionText = _('Copy all version information in English');
-		var copyVersion = L.DomUtil.create(
+		var copyVersion = window.L.DomUtil.create(
 			'button',
 			'ui-pushbutton jsdialog',
 			null,
@@ -191,7 +191,7 @@ class AboutDialog {
 		copyVersion.setAttribute('id', 'modal-dialog-about-dialog-box-copybutton');
 		copyVersion.setAttribute('aria-label', copyVersionText);
 		copyVersion.setAttribute('data-cooltip', copyVersionText);
-		var img = L.DomUtil.create('img', null, null);
+		var img = window.L.DomUtil.create('img', null, null);
 		app.LOUtil.setImage(img, 'lc_copy.svg', this.map);
 		copyVersion.innerHTML =
 			'<img src="' + sanitizeUrl(img.src) + '" width="18px" height="18px">';
@@ -199,7 +199,7 @@ class AboutDialog {
 			'click',
 			this.copyVersionInfoToClipboard.bind(this),
 		);
-		L.control.attachTooltipEventListener(copyVersion, this.map);
+		window.L.control.attachTooltipEventListener(copyVersion, this.map);
 		var aboutOk = document.getElementById(
 			'modal-dialog-about-dialog-box-yesbutton',
 		);

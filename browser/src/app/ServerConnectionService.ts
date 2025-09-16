@@ -40,7 +40,7 @@ class ServerConnectionService {
 		if (window.zoteroEnabled && zoteroAPIKey && !zoteroPlugin) {
 			app.console.debug('ServerConnectionService: initialize Zotero plugin');
 
-			zoteroPlugin = L.control.zotero(app.map);
+			zoteroPlugin = window.L.control.zotero(app.map);
 			zoteroPlugin.apiKey = zoteroAPIKey;
 
 			app.map.zotero = zoteroPlugin;

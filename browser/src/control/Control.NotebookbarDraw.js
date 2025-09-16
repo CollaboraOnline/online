@@ -10,11 +10,11 @@
  */
 
 /*
- * L.Control.NotebookbarDraw - definition of notebookbar content in Draw
+ * window.L.Control.NotebookbarDraw - definition of notebookbar content in Draw
  */
 
 /* global _ _UNO app */
-L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
+window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 
 	getShortcutsBarData: function() {
 		return [
@@ -150,7 +150,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		var hasSave = !this.map['wopi'].HideSaveOption;
 		var hasSaveAs = !this.map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this.map['wopi'].EnableShare;
-		var hasRevisionHistory = L.Params.revHistoryEnabled;
+		var hasRevisionHistory = window.L.Params.revHistoryEnabled;
 
 		if (hasSave) {
 			content.push(
@@ -610,7 +610,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'id': 'home-clipboard',
 				'name':_('Clipboard'),
 				'accessibility': { focusBack: true, combination: 'V', de: null },
-				'children' : [					
+				'children' : [
 					{
 						'id': 'home-paste:PasteMenu',
 						'type': 'menubutton',
@@ -674,7 +674,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					'command':'.uno:FontDialog',
 					'accessibility': { focusBack: true, combination: 'MF', de: null }
 				},
-				'children' : [					
+				'children' : [
 					{
 						'type': 'container',
 						'children': [
@@ -811,7 +811,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'id': 'home-alignment',
 				'name':_('Alignment'),
 				'accessibility': { focusBack: true, combination: 'AT', de: null },
-				'children' : [					
+				'children' : [
 					{
 						'type': 'container',
 						'children': [
@@ -1854,6 +1854,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 });
 
-L.control.notebookbarDraw = function (options) {
-	return new L.Control.NotebookbarDraw(options);
+window.L.control.notebookbarDraw = function (options) {
+	return new window.L.Control.NotebookbarDraw(options);
 };

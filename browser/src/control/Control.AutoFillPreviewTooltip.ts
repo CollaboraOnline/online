@@ -79,7 +79,7 @@ class AutoFillPreviewTooltip extends AutoCompletePopup {
 		if (entry.length > 0) {
 			this.closeAutoFillPreviewPopup();
 			const control = this.getSimpleTextJSON(entry);
-			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
+			if (window.L.DomUtil.get(this.popupId + 'fixedtext')) {
 				data = this.getPopupJSON(control, {
 					x: ev.data.celladdress.cX,
 					y: ev.data.celladdress.cY,
@@ -88,7 +88,7 @@ class AutoFillPreviewTooltip extends AutoCompletePopup {
 				return;
 			}
 
-			if (L.DomUtil.get(this.popupId)) this.closeAutoFillPreviewPopup();
+			if (window.L.DomUtil.get(this.popupId)) this.closeAutoFillPreviewPopup();
 			data = Object.assign({}, this.newPopupData);
 			data.children[0].children[0] = control;
 

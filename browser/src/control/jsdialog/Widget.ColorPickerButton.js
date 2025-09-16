@@ -13,7 +13,7 @@
  * JSDialog.ColorPickerButton - split button with last color preview which opens color picker
  */
 
-/* global L app JSDialog */
+/* global app JSDialog */
 
 function parseHexColor(color) {
 	if (color === 'transparent') return -1;
@@ -180,12 +180,12 @@ JSDialog.colorPickerButton = function (parentContainer, data, builder) {
 		);
 
 		if (typeof menubutton === 'object') {
-			L.DomUtil.addClass(
+			window.L.DomUtil.addClass(
 				menubutton.container,
 				data.class ? data.class + ' has-colorpicker' : 'has-colorpicker',
 			);
 
-			var valueNode = L.DomUtil.create(
+			var valueNode = window.L.DomUtil.create(
 				'span',
 				'selected-color',
 				menubutton.button,

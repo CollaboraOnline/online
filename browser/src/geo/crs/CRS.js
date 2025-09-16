@@ -1,12 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.CRS is the base object for all defined CRS (Coordinate Reference Systems) in Leaflet.
+ * window.L.CRS is the base object for all defined CRS (Coordinate Reference Systems) in Leaflet.
  */
 
 /* global cool */
 
-L.CRS = {
-	projection: L.Projection.LonLat,
+window.L.CRS = {
+	projection: window.L.Projection.LonLat,
 	transformation: new cool.Transformation(1, 0, -1, 0),
 
 	// converts geo coords to pixel ones

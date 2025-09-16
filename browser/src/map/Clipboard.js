@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Clipboard is used to abstract our storage and management of
+ * window.L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
 
@@ -19,7 +19,7 @@
 // download logic in one place ...
 // We keep track of the current selection content if it is simple
 // So we can do synchronous copy/paste in the callback if possible.
-L.Clipboard = L.Class.extend({
+window.L.Clipboard = window.L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this._selectionContent = '';
@@ -63,7 +63,7 @@ L.Clipboard = L.Class.extend({
 		var parent = document.getElementById('map');
 		parent.appendChild(div);
 
-		if (L.Browser.cypressTest) {
+		if (window.L.Browser.cypressTest) {
 			this._dummyPlainDiv = document.createElement('div');
 			this._dummyPlainDiv.id = 'copy-plain-container';
 			this._dummyPlainDiv.style = 'position: fixed; left: 0px; top: -400px; width: 15000px; height: 200px; ' +
@@ -858,7 +858,7 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function(params) {
-		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
 			return false;
 		}
 
@@ -909,7 +909,7 @@ L.Clipboard = L.Class.extend({
 			// We define the text promise outside to allow us to reuse the fetch rather than fetching twice (as in Ic23f7f817cc855ff08f25a2afefcd73d6fc3472b)
 
 			let clipboard = navigator.clipboard;
-			if (L.Browser.cypressTest) {
+			if (window.L.Browser.cypressTest) {
 				clipboard = this._dummyClipboard;
 			}
 
@@ -967,7 +967,7 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
 			return false;
 		}
 
@@ -1007,7 +1007,7 @@ L.Clipboard = L.Class.extend({
 
 	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
 		var clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
+		if (window.L.Browser.cypressTest) {
 			clipboard = this._dummyClipboard;
 		}
 		let clipboardContents;
@@ -1210,7 +1210,7 @@ L.Clipboard = L.Class.extend({
 		this._selectionType = 'text';
 		this._selectionContent = html;
 		this._selectionPlainTextContent = plainText;
-		if (L.Browser.cypressTest) {
+		if (window.L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
 			this._dummyPlainDiv.innerText = plainText;
 		}
@@ -1247,7 +1247,7 @@ L.Clipboard = L.Class.extend({
 
 	_startProgress: function(isLargeCopy) {
 		if (!this._downloadProgress) {
-			this._downloadProgress = L.control.downloadProgress();
+			this._downloadProgress = window.L.control.downloadProgress();
 			this._map.addControl(this._downloadProgress);
 		}
 		this._downloadProgress.show(isLargeCopy);
@@ -1310,7 +1310,7 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		var innerDiv = L.DomUtil.create('div', '', null);
+		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
 		if (window.mode.isMobile() || window.mode.isTablet()) {
@@ -1409,7 +1409,7 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		var innerDiv = L.DomUtil.create('div', '', null);
+		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
 		const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
@@ -1462,8 +1462,8 @@ L.Clipboard = L.Class.extend({
 	},
 });
 
-L.clipboard = function(map) {
+window.L.clipboard = function(map) {
 	if (window.ThisIsTheAndroidApp)
-		window.app.console.log('======> Assertion failed!? No L.Clipboard object should be needed in the Android app');
-	return new L.Clipboard(map);
+		window.app.console.log('======> Assertion failed!? No window.L.Clipboard object should be needed in the Android app');
+	return new window.L.Clipboard(map);
 };

@@ -12,7 +12,7 @@
  * Document permission handler
  */
 /* global app $ _ */
-L.Map.include({
+window.L.Map.include({
 	readonlyStartingFormats: {
 		'txt': { canEdit: true, odfFormat: 'odt' },
 		'csv': { canEdit: true, odfFormat: 'ods' },

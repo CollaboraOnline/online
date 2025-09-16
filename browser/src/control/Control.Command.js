@@ -14,7 +14,7 @@
 
 /* global $ _ app */
 
-L.Map.include({
+window.L.Map.include({
 
 	Locking: {
 		isLockedUser: false,
@@ -54,8 +54,8 @@ L.Map.include({
 			var that = this;
 
 			if (window.mode.isMobile()) {
-				var overlay = L.DomUtil.create('div', 'locking-overlay', DOMParentElement);
-				var lock = L.DomUtil.create('img', 'locking-overlay-lock', overlay);
+				var overlay = window.L.DomUtil.create('div', 'locking-overlay', DOMParentElement);
+				var lock = window.L.DomUtil.create('img', 'locking-overlay-lock', overlay);
 				app.LOUtil.setImage(lock, 'lc_lock.svg', this);
 			}
 

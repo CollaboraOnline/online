@@ -10,11 +10,11 @@
  */
 
 /*
- * L.Control.MobileWizardWindow - contains one unique window instance inside mobile-wizard
+ * window.L.Control.MobileWizardWindow - contains one unique window instance inside mobile-wizard
  */
 
 /* global app $ */
-L.Control.MobileWizardWindow = L.Control.extend({
+window.L.Control.MobileWizardWindow = window.L.Control.extend({
 	options: {
 		maxHeight: '45vh',
 		snackbarTimeout: 6000
@@ -33,7 +33,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	_currentScrollPosition: 0,
 
 	initialize: function (mobileWizard, id) {
-		L.setOptions(this, this.options);
+		window.L.setOptions(this, this.options);
 		this.id = id; // unique id of this window "mobile-wizard-content-N"
 		this.parent = mobileWizard; // reference to the parent mobile-wizard
 		this.tabs = null; // tabs we can later restore if dialog was hidden
@@ -53,7 +53,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.titleNode = $('#mobile-wizard-title'); // title content
 		this.tabsContainer = $('#mobile-wizard-tabs'); // can be shown instead of titlebar
 		var parentNode = document.getElementById('mobile-wizard-content');
-		this.content = L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parentNode);
+		this.content = window.L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parentNode);
 		this.content.id = this.id;
 
 		this.scrollPositions = [];
@@ -71,7 +71,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	},
 
 	onRemove: function() {
-		L.DomUtil.remove(this.content);
+		window.L.DomUtil.remove(this.content);
 		this.content = undefined;
 	},
 
@@ -491,7 +491,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 						this.backButton.hide();
 						popupContainer.empty();
 						if (!this._builder) {
-							this._builder = L.control.mobileWizardBuilder(
+							this._builder = window.L.control.mobileWizardBuilder(
 								{
 									windowId: data.id,
 									mobileWizard: this,
@@ -510,7 +510,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 					return;
 				} else {
 					// normal popup - continue to open mobile wizard
-					var overlay = L.DomUtil.create('div', 'mobile-wizard jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
+					var overlay = window.L.DomUtil.create('div', 'mobile-wizard jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
 					var that = this;
 					if (data.cancellable) {
 						overlay.onclick = function () {
@@ -546,7 +546,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			}
 
 			if (!this._builder) {
-				this._builder = L.control.mobileWizardBuilder(
+				this._builder = window.L.control.mobileWizardBuilder(
 					{
 						windowId: data.id,
 						mobileWizard: this,
@@ -733,11 +733,11 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this._builder._currentDepth = currentLevel;
 		}
 
-		var temporaryParent = L.DomUtil.create('div');
+		var temporaryParent = window.L.DomUtil.create('div');
 		this._builder.build(temporaryParent, [data.control], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		var backupGridSpan = control.style.gridColumn;
-		L.DomUtil.remove(control);
+		window.L.DomUtil.remove(control);
 
 		// reset _builder._currentDepth
 		this._builder._currentDepth = 0;
@@ -795,6 +795,6 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	},
 });
 
-L.control.mobileWizardWindow = function (mobileWizard, id) {
-	return new L.Control.MobileWizardWindow(mobileWizard, id);
+window.L.control.mobileWizardWindow = function (mobileWizard, id) {
+	return new window.L.Control.MobileWizardWindow(mobileWizard, id);
 };

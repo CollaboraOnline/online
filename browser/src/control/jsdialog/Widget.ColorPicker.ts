@@ -125,7 +125,7 @@ function createColor(
 	isCurrent: boolean,
 	themeColors: ThemeColor[],
 ): Element {
-	const color = L.DomUtil.create(
+	const color = window.L.DomUtil.create(
 		'input',
 		builder.options.cssClass + ' ui-color-picker-entry',
 		parentContainer,
@@ -170,7 +170,7 @@ function createColor(
 			);
 		}
 	});
-	L.control.attachTooltipEventListener(color, builder.map);
+	window.L.control.attachTooltipEventListener(color, builder.map);
 
 	return color;
 }
@@ -217,7 +217,7 @@ function createAutoColorButton(
 	builder: JSBuilder,
 ) {
 	// Create a div container for the button
-	const buttonContainer = L.DomUtil.create(
+	const buttonContainer = window.L.DomUtil.create(
 		'div',
 		'auto-color-button-container',
 		parentContainer,
@@ -226,7 +226,7 @@ function createAutoColorButton(
 	const hasTransparent =
 		data.command !== '.uno:FontColor' && data.command !== '.uno:Color';
 	const buttonText = hasTransparent ? _('No fill') : _('Automatic');
-	const autoButton = L.DomUtil.create(
+	const autoButton = window.L.DomUtil.create(
 		'button',
 		builder.options.cssClass + ' ui-pushbutton auto-color-button',
 		buttonContainer, // Append button to the newly created div
@@ -246,12 +246,12 @@ function createPaletteSwitch(
 	parentContainer: HTMLElement,
 	builder: JSBuilder,
 ): HTMLSelectElement {
-	const paletteListbox = L.DomUtil.create(
+	const paletteListbox = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-listbox-container color-palette-selector',
 		parentContainer,
 	);
-	const listbox = L.DomUtil.create(
+	const listbox = window.L.DomUtil.create(
 		'select',
 		builder.options.cssClass + ' ui-listbox',
 		paletteListbox,
@@ -261,14 +261,14 @@ function createPaletteSwitch(
 	listbox.setAttribute('tabindex', '0');
 
 	for (const i in window.app.colorPalettes) {
-		const paletteOption = L.DomUtil.create('option', '', listbox);
+		const paletteOption = window.L.DomUtil.create('option', '', listbox);
 		if (i === getCurrentPaletteName())
 			paletteOption.setAttribute('selected', 'selected');
 		paletteOption.value = i;
 		paletteOption.innerText = window.app.colorPalettes[i].name;
 	}
 
-	L.DomUtil.create(
+	window.L.DomUtil.create(
 		'span',
 		builder.options.cssClass + ' ui-listbox-arrow',
 		paletteListbox,
@@ -320,7 +320,7 @@ function updatePalette(
 
 	customContainer.replaceChildren();
 
-	const customInput = L.DomUtil.create('input', '', customContainer);
+	const customInput = window.L.DomUtil.create('input', '', customContainer);
 	customInput.placeholder = '#FFF000';
 	customInput.maxlength = 7;
 	customInput.type = 'text';
@@ -385,7 +385,11 @@ JSDialog.colorPicker = function (
 	data: ColorPaletteWidgetData,
 	builder: JSBuilder,
 ) {
-	const container = L.DomUtil.create('div', 'ui-color-picker', parentContainer);
+	const container = window.L.DomUtil.create(
+		'div',
+		'ui-color-picker',
+		parentContainer,
+	);
 	container.id = data.id;
 	container.tabIndex = '-1'; // focus should be on first element in grid for color picker
 
@@ -393,23 +397,23 @@ JSDialog.colorPicker = function (
 
 	const listbox = createPaletteSwitch(container, builder);
 
-	const paletteContainer = L.DomUtil.create(
+	const paletteContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-color-picker-palette',
 		container,
 	);
 
-	const customContainer = L.DomUtil.createWithId(
+	const customContainer = window.L.DomUtil.createWithId(
 		'div',
 		'ui-color-picker-custom',
 		container,
 	);
 
-	const recentLabel = L.DomUtil.create('label', '', container);
+	const recentLabel = window.L.DomUtil.create('label', '', container);
 	recentLabel.innerText = _('Recent');
 	recentLabel.htmlFor = 'ui-color-picker-recent';
 
-	const recentContainer = L.DomUtil.createWithId(
+	const recentContainer = window.L.DomUtil.createWithId(
 		'div',
 		'ui-color-picker-recent',
 		container,
