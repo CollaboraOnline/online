@@ -57,19 +57,19 @@ export class Header extends CanvasSectionObject {
 
 	_initHeaderEntryStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', className, baseElem);
-		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
-		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
+		const elem = window.L.DomUtil.create('div', className, baseElem);
+		this._textColor = window.L.DomUtil.getStyle(elem, 'color');
+		this._backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color');
+		const fontFamily = window.L.DomUtil.getStyle(elem, 'font-family');
 		this.getFont = function() {
 			const selectedSize = this._getFontSize();
 			return selectedSize + 'px ' + fontFamily;
 		}.bind(this);
-		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
-		const borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
+		this._borderColor = window.L.DomUtil.getStyle(elem, 'border-top-color');
+		const borderWidth = window.L.DomUtil.getStyle(elem, 'border-top-width');
 		this._borderWidth = Math.round(parseFloat(borderWidth));
-		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
-		L.DomUtil.remove(elem);
+		this._cursor = window.L.DomUtil.getStyle(elem, 'cursor');
+		window.L.DomUtil.remove(elem);
 	}
 
 	_getFontSize(): number {
@@ -85,18 +85,18 @@ export class Header extends CanvasSectionObject {
 
 	_initHeaderEntryHoverStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', className, baseElem);
-		this._hoverColor = L.DomUtil.getStyle(elem, 'background-color');
-		L.DomUtil.remove(elem);
+		const elem = window.L.DomUtil.create('div', className, baseElem);
+		this._hoverColor = window.L.DomUtil.getStyle(elem, 'background-color');
+		window.L.DomUtil.remove(elem);
 	}
 
 	_initHeaderEntrySelectedStyles(className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', className, baseElem);
-		this._selectionTextColor = L.DomUtil.getStyle(elem, 'color');
+		const elem = window.L.DomUtil.create('div', className, baseElem);
+		this._selectionTextColor = window.L.DomUtil.getStyle(elem, 'color');
 
 		const selectionBackgroundGradient: string[] = [];
-		let gradientColors: string = L.DomUtil.getStyle(elem, 'background-image');
+		let gradientColors: string = window.L.DomUtil.getStyle(elem, 'background-image');
 		gradientColors = gradientColors.slice('linear-gradient('.length, -1);
 		while (gradientColors) {
 			const color = gradientColors.split(',', 3);
@@ -109,7 +109,7 @@ export class Header extends CanvasSectionObject {
 		if (selectionBackgroundGradient.length) {
 			this._selectionBackgroundGradient = selectionBackgroundGradient;
 		}
-		L.DomUtil.remove(elem);
+		window.L.DomUtil.remove(elem);
 	}
 
 	_initHeaderEntryResizeStyles (className: string): void {
@@ -118,9 +118,9 @@ export class Header extends CanvasSectionObject {
 		}
 		else {
 			const baseElem = document.getElementsByTagName('body')[0];
-			const elem = L.DomUtil.create('div', className, baseElem);
-			this._resizeCursor = L.DomUtil.getStyle(elem, 'cursor');
-			L.DomUtil.remove(elem);
+			const elem = window.L.DomUtil.create('div', className, baseElem);
+			this._resizeCursor = window.L.DomUtil.getStyle(elem, 'cursor');
+			window.L.DomUtil.remove(elem);
 		}
 	}
 

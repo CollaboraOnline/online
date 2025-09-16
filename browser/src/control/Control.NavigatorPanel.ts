@@ -29,7 +29,7 @@ class NavigatorPanel extends SidebarBase {
 		super(map, SidebarType.Navigator);
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: ReturnType<typeof window.L.map>) {
 		super.onAdd(map);
 		this.map.on('navigator', this.onNavigator, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
@@ -79,7 +79,7 @@ class NavigatorPanel extends SidebarBase {
 
 	initializeImpl(docType: string) {
 		// Create navigation container
-		const navContainer = L.DomUtil.create(
+		const navContainer = window.L.DomUtil.create(
 			'div',
 			'navigation-options-container',
 		);
@@ -98,26 +98,34 @@ class NavigatorPanel extends SidebarBase {
 		}
 
 		// Create header section
-		var navHeader = L.DomUtil.create('div', 'navigation-header', navContainer);
+		var navHeader = window.L.DomUtil.create(
+			'div',
+			'navigation-header',
+			navContainer,
+		);
 
-		var navTitle = L.DomUtil.create('span', 'navigation-title', navHeader);
+		var navTitle = window.L.DomUtil.create(
+			'span',
+			'navigation-title',
+			navHeader,
+		);
 		navTitle.textContent = _('Navigation');
 
 		// Create wrapper for search
-		const navSearchWrapper = L.DomUtil.create(
+		const navSearchWrapper = window.L.DomUtil.create(
 			'div',
 			'navigation-search-wrapper',
 		);
 
 		// Create a wrapper div
-		const closeNavWrapper = L.DomUtil.create(
+		const closeNavWrapper = window.L.DomUtil.create(
 			'div',
 			'close-navigation-wrapper',
 			navHeader,
 		);
 
 		// Create the close button inside the div
-		this.closeNavButton = L.DomUtil.create(
+		this.closeNavButton = window.L.DomUtil.create(
 			'span',
 			'close-navigation-button',
 			closeNavWrapper,
@@ -125,7 +133,7 @@ class NavigatorPanel extends SidebarBase {
 		const closeNavigationText = _('Close Navigation');
 		this.closeNavButton.setAttribute('aria-label', closeNavigationText);
 		this.closeNavButton.setAttribute('data-cooltip', closeNavigationText);
-		L.control.attachTooltipEventListener(this.closeNavButton, this.map);
+		window.L.control.attachTooltipEventListener(this.closeNavButton, this.map);
 		this.closeNavButton.setAttribute('tabindex', '0');
 
 		this.closeNavButton.addEventListener(
@@ -145,12 +153,16 @@ class NavigatorPanel extends SidebarBase {
 		if (this.map.isPresentationOrDrawing() || this.map.isText()) {
 			var navigationTabs = [];
 
-			var navOptions = L.DomUtil.create('div', 'navigation-tabs', navContainer);
+			var navOptions = window.L.DomUtil.create(
+				'div',
+				'navigation-tabs',
+				navContainer,
+			);
 			navOptions.id = 'navigation-options';
 
 			if (this.map.isPresentationOrDrawing()) {
 				// Create Slide Sorter tab
-				var slideSorterTab = L.DomUtil.create(
+				var slideSorterTab = window.L.DomUtil.create(
 					'div',
 					'tab selected',
 					navOptions,
@@ -161,14 +173,14 @@ class NavigatorPanel extends SidebarBase {
 			}
 
 			// Create Navigator tab
-			var navigatorTab = L.DomUtil.create('div', 'tab', navOptions);
+			var navigatorTab = window.L.DomUtil.create('div', 'tab', navOptions);
 			navigatorTab.id = 'tab-navigator';
 			navigatorTab.textContent = _('Outline');
 			navigationTabs.push(navigatorTab);
 
 			if (this.map.isText()) {
 				// Create Quick Find tab
-				var quickFindTab = L.DomUtil.create('div', 'tab', navOptions);
+				var quickFindTab = window.L.DomUtil.create('div', 'tab', navOptions);
 				quickFindTab.id = 'tab-quick-find';
 				quickFindTab.textContent = _('Results');
 				navigationTabs.push(quickFindTab);
@@ -203,7 +215,7 @@ class NavigatorPanel extends SidebarBase {
 		this.floatingNavIcon.setAttribute('tabindex', '-1');
 		const navigatorText = _('Navigator');
 		this.floatingNavIcon.setAttribute('data-cooltip', navigatorText);
-		L.control.attachTooltipEventListener(this.floatingNavIcon, this.map);
+		window.L.control.attachTooltipEventListener(this.floatingNavIcon, this.map);
 
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');

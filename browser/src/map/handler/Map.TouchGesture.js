@@ -1,15 +1,15 @@
 /* -*- js-indent-level: 8; fill-column: 100 -*- */
 /* global app */
 /*
- * L.Map.CalcTap is used to enable mobile taps.
+ * window.L.Map.CalcTap is used to enable mobile taps.
  */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	touchGesture: true,
 });
 
 /* global Hammer app $ GraphicSelection TileManager TextSelections cool */
-L.Map.TouchGesture = L.Handler.extend({
+window.L.Map.TouchGesture = window.L.Handler.extend({
 	statics: {
 		MAP: 1,
 		CURSOR: 2,
@@ -19,8 +19,8 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	initialize: function (map) {
-		L.Handler.prototype.initialize.call(this, map);
-		this._state = L.Map.TouchGesture.MAP;
+		window.L.Handler.prototype.initialize.call(this, map);
+		this._state = window.L.Map.TouchGesture.MAP;
 
 		if (!this._hammer) {
 			this._hammer = new Hammer(this._map._mapPane);
@@ -55,8 +55,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._hammer.add(tripleTap);
 			tripleTap.recognizeWith([doubleTap, singleTap]);
 			var hammer = this._hammer;
-			L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchcancel', window.touch.touchOnly(L.DomEvent.preventDefault));
-			L.DomEvent.on(this._map._mapPane, 'touchend', window.touch.touchOnly(function(e) {
+			window.L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchcancel', window.touch.touchOnly(window.L.DomEvent.preventDefault));
+			window.L.DomEvent.on(this._map._mapPane, 'touchend', window.touch.touchOnly(function(e) {
 				// sometimes inputs get stuck in hammer and further events get mixed with the old ones
 				// this causes to a failure to use all the gestures properly.
 				// This is a workaround until it is fixed by hammer.js
@@ -65,24 +65,24 @@ L.Map.TouchGesture = L.Handler.extend({
 						hammer.input.store = [];
 					}
 				}
-				L.DomEvent.preventDefault(e);
+				window.L.DomEvent.preventDefault(e);
 			}));
 
 			if (Hammer.prefixed(window, 'PointerEvent') !== undefined) {
-				L.DomEvent.on(this._map._mapPane, 'pointerdown pointermove pointerup pointercancel', window.touch.touchOnly(L.DomEvent.preventDefault));
+				window.L.DomEvent.on(this._map._mapPane, 'pointerdown pointermove pointerup pointercancel', window.touch.touchOnly(window.L.DomEvent.preventDefault));
 			}
 
 			// IE10 has prefixed support, and case-sensitive
 			if (window.MSPointerEvent && !window.PointerEvent) {
-				L.DomEvent.on(this._map._mapPane, 'MSPointerDown MSPointerMove MSPointerUp MSPointerCancel', window.touch.touchOnly(L.DomEvent.preventDefault));
+				window.L.DomEvent.on(this._map._mapPane, 'MSPointerDown MSPointerMove MSPointerUp MSPointerCancel', window.touch.touchOnly(window.L.DomEvent.preventDefault));
 			}
 
-			L.DomEvent.on(this._map._mapPane, 'mousedown mousemove mouseup', L.DomEvent.preventDefault);
-			L.DomEvent.on(document, 'touchmove', L.DomEvent.preventDefault);
+			window.L.DomEvent.on(this._map._mapPane, 'mousedown mousemove mouseup', window.L.DomEvent.preventDefault);
+			window.L.DomEvent.on(document, 'touchmove', window.L.DomEvent.preventDefault);
 		}
 
-		for (var events in L.Draggable.MOVE) {
-			L.DomEvent.on(document, L.Draggable.END[events], this._onDocUp, this);
+		for (var events in window.L.Draggable.MOVE) {
+			window.L.DomEvent.on(document, window.L.Draggable.END[events], this._onDocUp, this);
 		}
 
 		/// $.contextMenu does not support touch events so,
@@ -173,23 +173,23 @@ L.Map.TouchGesture = L.Handler.extend({
 			twipsPoint = new cool.SimplePoint(twipsPoint.x, twipsPoint.y);
 
 			if (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(twipsPoint.toArray())) {
-				this._state = L.Map.TouchGesture.CURSOR;
+				this._state = window.L.Map.TouchGesture.CURSOR;
 			} else if (app.calc.cellCursorVisible && funcWizardRangeBounds && funcWizardRangeBounds.contains(latlng)) {
-				this._state = L.Map.TouchGesture.CURSOR;
+				this._state = window.L.Map.TouchGesture.CURSOR;
 			} else {
-				this._state = L.Map.TouchGesture.MAP;
+				this._state = window.L.Map.TouchGesture.MAP;
 			}
 			this._moving = false;
 		}
 
-		if (e.isLast && this._state !== L.Map.TouchGesture.MAP) {
-			this._state = L.Map.TouchGesture.hitTest.MAP;
+		if (e.isLast && this._state !== window.L.Map.TouchGesture.MAP) {
+			this._state = window.L.Map.TouchGesture.hitTest.MAP;
 			this._moving = false;
 		}
 
 		if ($(e.srcEvent.target).has(this._map._mapPane)) {
-			L.DomEvent.preventDefault(e.srcEvent);
-			L.DomEvent.stopPropagation(e.srcEvent);
+			window.L.DomEvent.preventDefault(e.srcEvent);
+			window.L.DomEvent.stopPropagation(e.srcEvent);
 		}
 	},
 
@@ -475,7 +475,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			}
 		}
 
-		if (this._state === L.Map.TouchGesture.CURSOR) {
+		if (this._state === window.L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onDown(this._constructFakeEvent(point, 'mousedown'));
@@ -502,7 +502,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 			latlng = this._map.layerPointToLatLng(layerPoint),
 			mousePos = this._map._docLayer._latLngToTwips(latlng);
-		if (this._state === L.Map.TouchGesture.CURSOR) {
+		if (this._state === window.L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
 		} else if (this._map.scrollingIsHandled === false) {
 			this._map.dragging._draggable._onMove(this._constructFakeEvent(point, 'mousemove'));
@@ -524,7 +524,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._state === L.Map.TouchGesture.CURSOR) {
+		if (this._state === window.L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onUp(this._constructFakeEvent(point, 'mouseup'));
@@ -639,7 +639,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._velocity = pointVelocity;
 		}
 		this._amplitude = this._velocity.multiplyBy(32);
-		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
+		this._newPos = window.L.DomUtil.getPosition(this._map._mapPane);
 		var evt = this._constructFakeEvent({
 			clientX: e.center.x,
 			clientY: e.center.y,

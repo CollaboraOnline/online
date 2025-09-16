@@ -148,7 +148,7 @@ export class ScrollSection extends CanvasSectionObject {
 		} else {
 			clearInterval(this.autoScrollTimer);
 			this.map.isAutoScrolling = true;
-			this.autoScrollTimer = setInterval(L.bind(function() {
+			this.autoScrollTimer = setInterval(window.L.bind(function() {
 				this.onScrollBy({x: e.vx, y: e.vy});
 				// Unfortunately, dragging outside the map doesn't work for the map element.
 				// We will keep this until we remove leaflet.
@@ -702,7 +702,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop())
 			return;
 
-		L.DomUtil.addClass(document.documentElement, 'prevent-select');
+		window.L.DomUtil.addClass(document.documentElement, 'prevent-select');
 		const scrollProps: ScrollProperties = app.activeDocument.activeView.scrollProperties;
 
 		if (this.stepByStepScrolling) {
@@ -734,7 +734,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop())
 			return;
 
-		L.DomUtil.addClass(document.documentElement, 'prevent-select');
+		window.L.DomUtil.addClass(document.documentElement, 'prevent-select');
 		const scrollProps: ScrollProperties = app.activeDocument.activeView.scrollProperties;
 		const sizeX = scrollProps.horizontalScrollSize - this.sectionProperties.scrollBarThickness;
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
@@ -830,7 +830,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseUp (point: cool.SimplePoint, e: MouseEvent): void {
-		L.DomUtil.removeClass(document.documentElement, 'prevent-select');
+		window.L.DomUtil.removeClass(document.documentElement, 'prevent-select');
 		this.map.scrollingIsHandled = false;
 		this.clearQuickScrollTimeout();
 

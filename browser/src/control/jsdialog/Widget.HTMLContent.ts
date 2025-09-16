@@ -45,7 +45,7 @@ function getPermissionModeElements(
 		permissionModeDiv.classList.add('status-readonly-mode');
 		permissionModeDiv.textContent = _('Read-only');
 		permissionModeDiv.setAttribute('data-cooltip', _('Permission Mode'));
-		L.control.attachTooltipEventListener(permissionModeDiv, map);
+		window.L.control.attachTooltipEventListener(permissionModeDiv, map);
 	} else if (isReadOnlyMode && canUserWrite) {
 		permissionModeDiv.classList.add('status-readonly-transient-mode');
 		permissionModeDiv.style.display = 'none';
@@ -53,7 +53,7 @@ function getPermissionModeElements(
 		permissionModeDiv.classList.add('status-edit-mode');
 		permissionModeDiv.textContent = _('Edit mode');
 		permissionModeDiv.setAttribute('data-cooltip', _('Permission Mode'));
-		L.control.attachTooltipEventListener(permissionModeDiv, map);
+		window.L.control.attachTooltipEventListener(permissionModeDiv, map);
 	}
 
 	return permissionModeDiv;
@@ -70,7 +70,7 @@ function getStatusbarItemElements(
 	div.className = 'jsdialog ui-badge';
 	div.textContent = text;
 	div.setAttribute('data-cooltip', title);
-	L.control.attachTooltipEventListener(div, builder.map);
+	window.L.control.attachTooltipEventListener(div, builder.map);
 
 	return div;
 }
@@ -181,7 +181,7 @@ function getDocumentStatusElements(text: string, builder: any) {
 			'data-cooltip',
 			_('Your changes have been saved') + '.',
 		);
-		L.control.attachTooltipEventListener(lastSaved, builder.map);
+		window.L.control.attachTooltipEventListener(lastSaved, builder.map);
 		docstat.appendChild(lastSaved);
 	}
 

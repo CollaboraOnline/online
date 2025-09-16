@@ -158,7 +158,12 @@ class SlideShowPresenter {
 		this._map.on('presentationinfo', this.onSlideShowInfo, this);
 		this._map.on('newfullscreen', this._onStart, this);
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
-		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
+		window.L.DomEvent.on(
+			document,
+			'fullscreenchange',
+			this._onFullScreenChange,
+			this,
+		);
 		this._map.on('updateparts', this.onUpdateParts, this);
 		this._map.on(
 			'handleslideshowprogressbar',
@@ -183,7 +188,7 @@ class SlideShowPresenter {
 		this._map.off('presentationinfo', this.onSlideShowInfo, this);
 		this._map.off('newfullscreen', this._onStart, this);
 		this._map.off('newpresentinwindow', this._onStartInWindow, this);
-		L.DomEvent.off(
+		window.L.DomEvent.off(
 			document,
 			'fullscreenchange',
 			this._onFullScreenChange,
@@ -394,10 +399,10 @@ class SlideShowPresenter {
 
 		window.removeEventListener('keydown', this._onKeyDownHandler);
 
-		L.DomUtil.remove(this._slideShowCanvas);
+		window.L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
 		if (this._presenterContainer) {
-			L.DomUtil.remove(this._presenterContainer);
+			window.L.DomUtil.remove(this._presenterContainer);
 			this._presenterContainer = null;
 		}
 		// #7102 on exit from fullscreen we don't get a 'focus' event
@@ -442,13 +447,13 @@ class SlideShowPresenter {
 	}
 
 	private _createPresenterHTML(parent: Element, width: number, height: number) {
-		const presenterContainer = L.DomUtil.create(
+		const presenterContainer = window.L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
 			parent,
 		);
 		presenterContainer.id = 'presenter-container';
-		const slideshowContainer = L.DomUtil.create(
+		const slideshowContainer = window.L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
 			presenterContainer,
@@ -463,7 +468,11 @@ class SlideShowPresenter {
 	}
 
 	_createCanvas(parent: Element, width: number, height: number) {
-		const canvas = L.DomUtil.create('canvas', 'leaflet-slideshow2', parent);
+		const canvas = window.L.DomUtil.create(
+			'canvas',
+			'leaflet-slideshow2',
+			parent,
+		);
 
 		canvas.id = 'slideshow-canvas';
 		// set canvas styles
@@ -521,7 +530,7 @@ class SlideShowPresenter {
 		return true;
 	}
 	private _createProgressBar(parent: Element): HTMLDivElement {
-		const progressContainer = L.DomUtil.create(
+		const progressContainer = window.L.DomUtil.create(
 			'div',
 			'slideshow-progress-container',
 			parent,
@@ -561,7 +570,7 @@ class SlideShowPresenter {
 	}
 
 	private _createSlideNav(parent: Element): HTMLDivElement {
-		const slideNavContainer = L.DomUtil.create(
+		const slideNavContainer = window.L.DomUtil.create(
 			'div',
 			'slideshow-nav-container',
 			parent,
@@ -615,31 +624,31 @@ class SlideShowPresenter {
 	}
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
-		const closeImg = L.DomUtil.create('img', 'left-img', container);
+		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		const slideshowCloseText = _('End Show');
 		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
 		closeImg.setAttribute('aria-label', slideshowCloseText);
 		closeImg.setAttribute('data-cooltip', slideshowCloseText);
-		L.control.attachTooltipEventListener(closeImg, this._map);
+		window.L.control.attachTooltipEventListener(closeImg, this._map);
 		closeImg.addEventListener('click', this._onQuit);
 
-		const leftImg = L.DomUtil.create('img', 'left-img', container);
+		const leftImg = window.L.DomUtil.create('img', 'left-img', container);
 		const slideshowPrevText = _('Previous');
 		leftImg.setAttribute('aria-label', slideshowPrevText);
 		leftImg.setAttribute('data-cooltip', slideshowPrevText);
-		L.control.attachTooltipEventListener(leftImg, this._map);
+		window.L.control.attachTooltipEventListener(leftImg, this._map);
 		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
 		leftImg.addEventListener('click', this._onPrevSlide);
 
-		const rightImg = L.DomUtil.create('img', 'right-img', container);
+		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
 		const slideshowNextText = _('Next');
-		L.control.attachTooltipEventListener(rightImg, this._map);
+		window.L.control.attachTooltipEventListener(rightImg, this._map);
 		rightImg.setAttribute('aria-label', slideshowNextText);
 		rightImg.setAttribute('data-cooltip', slideshowNextText);
 		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
 		rightImg.addEventListener('click', this._onNextSlide);
 
-		const animationsImage = L.DomUtil.create(
+		const animationsImage = window.L.DomUtil.create(
 			'img',
 			'animations-img skipTransition-false',
 			container,
@@ -647,7 +656,7 @@ class SlideShowPresenter {
 		const slideshowAnimIniText = _('Disable Animations');
 		animationsImage.setAttribute('aria-label', slideshowAnimIniText);
 		animationsImage.setAttribute('data-cooltip', slideshowAnimIniText);
-		L.control.attachTooltipEventListener(animationsImage, this._map);
+		window.L.control.attachTooltipEventListener(animationsImage, this._map);
 		app.LOUtil.setImage(animationsImage, 'slideshow-transition.svg', this._map);
 		animationsImage.addEventListener(
 			'click',
@@ -665,9 +674,9 @@ class SlideShowPresenter {
 		);
 
 		if (this.isFollower()) {
-			const FollowImg = L.DomUtil.create('img', 'right-img', container);
+			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
 			const followText = _('Follow Presentation');
-			L.control.attachTooltipEventListener(FollowImg, this._map);
+			window.L.control.attachTooltipEventListener(FollowImg, this._map);
 			FollowImg.setAttribute('aria-label', followText);
 			FollowImg.setAttribute('data-cooltip', followText);
 			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
@@ -804,7 +813,7 @@ class SlideShowPresenter {
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
 
-		this._slideShowWindowProxy = L.DomUtil.createWithId(
+		this._slideShowWindowProxy = window.L.DomUtil.createWithId(
 			'iframe',
 			'slideshow-cypress-iframe',
 			document.body,
@@ -839,13 +848,13 @@ class SlideShowPresenter {
 		);
 		this._slideShowWindowProxy.addEventListener(
 			'unload',
-			L.bind(this._closeSlideShowWindow, this),
+			window.L.bind(this._closeSlideShowWindow, this),
 		);
 		const slideShowWindow = this._slideShowWindowProxy;
 		this._map.uiManager.showSnackbar(
 			_('Presenting in window'),
 			_('Close Presentation'),
-			L.bind(this._closeSlideShowWindow, this),
+			window.L.bind(this._closeSlideShowWindow, this),
 			-1,
 			false,
 			true,

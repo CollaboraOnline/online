@@ -1,15 +1,15 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.StateChanges stores the state changes commands coming from core
+ * window.L.Map.StateChanges stores the state changes commands coming from core
  * LOK_CALLBACK_STATE_CHANGED callback
  */
 /* global $ app cool */
 /*eslint no-extend-native:0*/
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	stateChangeHandler: true
 });
 
-L.Map.StateChangeHandler = L.Handler.extend({
+window.L.Map.StateChangeHandler = window.L.Handler.extend({
 
 	initialize: function (map) {
 		this._map = map;
@@ -131,4 +131,4 @@ L.Map.StateChangeHandler = L.Handler.extend({
 	}
 });
 
-L.Map.addInitHook('addHandler', 'stateChangeHandler', L.Map.StateChangeHandler);
+window.L.Map.addInitHook('addHandler', 'stateChangeHandler', window.L.Map.StateChangeHandler);

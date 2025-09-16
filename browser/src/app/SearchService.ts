@@ -11,14 +11,14 @@
  */
 
 class SearchService {
-	// TODO: avoid L.DomUtil.get(...)
+	// TODO: avoid window.L.DomUtil.get(...)
 
 	public searchNext() {
-		this.search(L.DomUtil.get('search-input').value, false);
+		this.search(window.L.DomUtil.get('search-input').value, false);
 	}
 
 	public searchPrevious() {
-		this.search(L.DomUtil.get('search-input').value, true);
+		this.search(window.L.DomUtil.get('search-input').value, true);
 	}
 
 	public search(

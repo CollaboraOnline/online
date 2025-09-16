@@ -107,7 +107,7 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 	let container, frame, label;
 
 	if (isFormControlGroup) {
-		container = L.DomUtil.create(
+		container = window.L.DomUtil.create(
 			'fieldset',
 			'ui-frame-container ui-fieldset ' + builder.options.cssClass,
 			parentContainer,
@@ -116,27 +116,27 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 
 		frame = container; // No inner frame for form control group
 
-		label = L.DomUtil.create(
+		label = window.L.DomUtil.create(
 			'legend',
 			'ui-frame-label ui-legend ' + builder.options.cssClass,
 			frame,
 		);
 	} else {
-		container = L.DomUtil.create(
+		container = window.L.DomUtil.create(
 			'div',
 			'ui-frame-container ' + builder.options.cssClass,
 			parentContainer,
 		);
 		container.id = data.id;
 
-		frame = L.DomUtil.create(
+		frame = window.L.DomUtil.create(
 			'div',
 			'ui-frame ' + builder.options.cssClass,
 			container,
 		);
 		frame.id = data.id + '-frame';
 
-		label = L.DomUtil.create(
+		label = window.L.DomUtil.create(
 			'label',
 			'ui-frame-label ' + builder.options.cssClass,
 			frame,
@@ -145,10 +145,11 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 	}
 	label.innerText = builder._cleanText(_extractLabelText(data.children[0]));
 	label.id = data.children[0].id;
-	if (data.children[0].visible === false) L.DomUtil.addClass(label, 'hidden');
+	if (data.children[0].visible === false)
+		window.L.DomUtil.addClass(label, 'hidden');
 	builder.postProcess(frame, data.children[0]);
 
-	const frameChildren = L.DomUtil.create(
+	const frameChildren = window.L.DomUtil.create(
 		'div',
 		'ui-expander-content ' + builder.options.cssClass,
 		container,

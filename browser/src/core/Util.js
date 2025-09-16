@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Util contains various utility functions used throughout Leaflet code.
+ * window.L.Util contains various utility functions used throughout Leaflet code.
  */
 
-L.Util = {
+window.L.Util = {
 	// extend an object with properties of one or more other objects
 	extend: function (dest) {
 		var i, j, len, src;
@@ -44,7 +44,7 @@ L.Util = {
 	// set options to an object, inheriting parent's options as well
 	setOptions: function (obj, options) {
 		if (!Object.prototype.hasOwnProperty.call(obj, 'options')) {
-			obj.options = obj.options ? L.Util.create(obj.options) : {};
+			obj.options = obj.options ? window.L.Util.create(obj.options) : {};
 		}
 		for (var i in options) {
 			obj.options[i] = options[i];
@@ -85,6 +85,6 @@ if (!Number.MAX_SAFE_INTEGER) {
 }
 
 // shortcuts for most used utility functions
-L.extend = L.Util.extend;
-L.bind = L.Util.bind;
-L.setOptions = L.Util.setOptions;
+window.L.extend = window.L.Util.extend;
+window.L.bind = window.L.Util.bind;
+window.L.setOptions = window.L.Util.setOptions;

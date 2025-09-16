@@ -109,17 +109,17 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	onSearch(e) {
-		var searchInput = L.DomUtil.get('search-input');
+		var searchInput = window.L.DomUtil.get('search-input');
 		if (e.count === 0) {
 			this.enableItem('searchprev', false);
 			this.enableItem('searchnext', false);
 			this.showItem('cancelsearch', false);
-			L.DomUtil.addClass(searchInput, 'search-not-found');
+			window.L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
 			app.searchService.resetSelection();
 			setTimeout(function () {
 				$('#findthis').removeClass('search-not-found');
-				L.DomUtil.removeClass(searchInput, 'search-not-found');
+				window.L.DomUtil.removeClass(searchInput, 'search-not-found');
 			}, 800);
 		}
 	}
@@ -439,7 +439,7 @@ class StatusBar extends JSDialog.Toolbar {
 			this.updateHtmlItem('RowColSelCount', state ? state : _('Select multiple cells'), !state);
 		}
 		else if (commandName === '.uno:InsertMode') {
-			this.updateHtmlItem('InsertMode', state ? L.Styles.insertMode[state].toLocaleString() : ' ', !state);
+			this.updateHtmlItem('InsertMode', state ? window.L.Styles.insertMode[state].toLocaleString() : ' ', !state);
 
 			$('#InsertMode').removeClass();
 			$('#InsertMode').addClass('jsdialog ui-badge insert-mode-' + state);
@@ -453,7 +453,7 @@ class StatusBar extends JSDialog.Toolbar {
 		}
 		else if (commandName === '.uno:StatusSelectionMode' || commandName === '.uno:SelectionMode') {
 			$('#statusselectionmode-container').attr('default-state', state === '0' || null);
-			this.updateHtmlItem('StatusSelectionMode', state ? L.Styles.selectionMode[state].toLocaleString() : _('Selection mode: inactive'), !state);
+			this.updateHtmlItem('StatusSelectionMode', state ? window.L.Styles.selectionMode[state].toLocaleString() : _('Selection mode: inactive'), !state);
 		}
 		else if (commandName == '.uno:StateTableCell') {
 			this.updateHtmlItem('StateTableCell', state ? this.localizeStateTableCell(state) : ' ');

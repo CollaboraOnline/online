@@ -1,13 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Handler.DoubleClickZoom is used to handle double-click zoom on the map, enabled by default.
+ * window.L.Handler.DoubleClickZoom is used to handle double-click zoom on the map, enabled by default.
  */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	doubleClickZoom: false
 });
 
-L.Map.DoubleClickZoom = L.Handler.extend({
+window.L.Map.DoubleClickZoom = window.L.Handler.extend({
 	addHooks: function () {
 		this._map.on('dblclick', this._onDoubleClick, this);
 	},

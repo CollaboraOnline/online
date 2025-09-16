@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app */
 /*
- * L.LatLng represents a geographical point with latitude and longitude coordinates.
+ * window.L.LatLng represents a geographical point with latitude and longitude coordinates.
  */
 
-L.LatLng = function (lat, lng, alt) {
+window.L.LatLng = function (lat, lng, alt) {
 	if (isNaN(lat) || isNaN(lng)) {
 		throw new Error('Invalid LatLng object: (' + lat + ', ' + lng + ')');
 	}
@@ -17,11 +17,11 @@ L.LatLng = function (lat, lng, alt) {
 	}
 };
 
-L.LatLng.prototype = {
+window.L.LatLng.prototype = {
 	equals: function (obj, maxMargin) {
 		if (!obj) { return false; }
 
-		obj = L.latLng(obj);
+		obj = window.L.latLng(obj);
 
 		var margin = Math.max(
 		        Math.abs(this.lat - obj.lat),
@@ -49,16 +49,16 @@ L.LatLng.prototype = {
 // constructs LatLng with different signatures
 // (LatLng) or ([Number, Number]) or (Number, Number) or (Object)
 
-L.latLng = function (a, b, c) {
-	if (a instanceof L.LatLng) {
+window.L.latLng = function (a, b, c) {
+	if (a instanceof window.L.LatLng) {
 		return a;
 	}
 	if (app.util.isArray(a) && typeof a[0] !== 'object') {
 		if (a.length === 3) {
-			return new L.LatLng(a[0], a[1], a[2]);
+			return new window.L.LatLng(a[0], a[1], a[2]);
 		}
 		if (a.length === 2) {
-			return new L.LatLng(a[0], a[1]);
+			return new window.L.LatLng(a[0], a[1]);
 		}
 		return null;
 	}
@@ -66,10 +66,10 @@ L.latLng = function (a, b, c) {
 		return a;
 	}
 	if (typeof a === 'object' && 'lat' in a) {
-		return new L.LatLng(a.lat, 'lng' in a ? a.lng : a.lon, a.alt);
+		return new window.L.LatLng(a.lat, 'lng' in a ? a.lng : a.lon, a.alt);
 	}
 	if (b === undefined) {
 		return null;
 	}
-	return new L.LatLng(a, b, c);
+	return new window.L.LatLng(a, b, c);
 };

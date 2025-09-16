@@ -1,11 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Icon is an image-based icon class that you can use with L.Marker for custom markers.
+ * window.L.Icon is an image-based icon class that you can use with window.L.Marker for custom markers.
 */
 
 /* global cool */
 
-L.Icon = L.Class.extend({
+window.L.Icon = window.L.Class.extend({
 	/*
 	options: {
 		iconUrl: (String) (required)
@@ -22,7 +22,7 @@ L.Icon = L.Class.extend({
 	*/
 
 	initialize: function (options) {
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 	},
 
 	createIcon: function (oldIcon) {
@@ -78,10 +78,10 @@ L.Icon = L.Class.extend({
 	},
 
 	_getIconUrl: function (name) {
-		return L.Browser.retina && this.options[name + 'RetinaUrl'] || this.options[name + 'Url'];
+		return window.L.Browser.retina && this.options[name + 'RetinaUrl'] || this.options[name + 'Url'];
 	}
 });
 
-L.icon = function (options) {
-	return new L.Icon(options);
+window.L.icon = function (options) {
+	return new window.L.Icon(options);
 };

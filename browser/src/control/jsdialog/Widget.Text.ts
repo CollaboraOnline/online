@@ -20,7 +20,7 @@ function staticTextControl(
 	data: TextWidget,
 	builder: JSBuilder,
 ) {
-	var statictext = L.DomUtil.create(
+	var statictext = window.L.DomUtil.create(
 		'span',
 		builder.options.cssClass,
 		parentContainer,
@@ -31,9 +31,9 @@ function staticTextControl(
 
 	statictext.id = data.id;
 	if (data.style && data.style.length) {
-		L.DomUtil.addClass(statictext, data.style);
+		window.L.DomUtil.addClass(statictext, data.style);
 	} else {
-		L.DomUtil.addClass(statictext, 'ui-text');
+		window.L.DomUtil.addClass(statictext, 'ui-text');
 	}
 
 	if (data.hidden) $(statictext).hide();

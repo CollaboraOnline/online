@@ -20,24 +20,28 @@ function radiobuttonControl(
 	data: RadioButtonWidget,
 	builder: JSBuilder,
 ) {
-	const container = L.DomUtil.createWithId('div', data.id, parentContainer);
-	L.DomUtil.addClass(container, 'radiobutton ui-radiobutton');
-	L.DomUtil.addClass(container, builder.options.cssClass);
+	const container = window.L.DomUtil.createWithId(
+		'div',
+		data.id,
+		parentContainer,
+	);
+	window.L.DomUtil.addClass(container, 'radiobutton ui-radiobutton');
+	window.L.DomUtil.addClass(container, builder.options.cssClass);
 
-	const radiobutton = L.DomUtil.create('input', '', container);
+	const radiobutton = window.L.DomUtil.create('input', '', container);
 	radiobutton.type = 'radio';
 	radiobutton.id = data.id + '-input';
 	radiobutton.tabIndex = '0';
 
 	if (data.image) {
-		const image = L.DomUtil.create('img', '', radiobutton);
+		const image = window.L.DomUtil.create('img', '', radiobutton);
 		image.src = data.image;
-		L.DomUtil.addClass(container, 'has-image');
+		window.L.DomUtil.addClass(container, 'has-image');
 	}
 
 	if (data.group) radiobutton.name = data.group;
 
-	const radiobuttonLabel = L.DomUtil.createWithId(
+	const radiobuttonLabel = window.L.DomUtil.createWithId(
 		'label',
 		data.id + '-label',
 		container,

@@ -20,7 +20,7 @@ const FUNCTION_WIZARD_TEXT = _('Function Wizard');
 class FormulaBar {
 	constructor(map) {
 		this.map = map;
-		this.parentContainer = L.DomUtil.get('formulabar');
+		this.parentContainer = window.L.DomUtil.get('formulabar');
 
 		this.map.on('formulabar', this.onFormulaBar, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
@@ -140,9 +140,9 @@ class FormulaBar {
 	}
 
 	toggleMultiLine(input) {
-		if (L.DomUtil.hasClass(input, 'expanded')) {
-			L.DomUtil.removeClass(input, 'expanded');
-			L.DomUtil.removeClass(this.parentContainer, 'expanded');
+		if (window.L.DomUtil.hasClass(input, 'expanded')) {
+			window.L.DomUtil.removeClass(input, 'expanded');
+			window.L.DomUtil.removeClass(this.parentContainer, 'expanded');
 			this.onJSUpdate({
 				data: {
 					jsontype: 'formulabar',
@@ -157,8 +157,8 @@ class FormulaBar {
 				}
 			});
 		} else {
-			L.DomUtil.addClass(input, 'expanded');
-			L.DomUtil.addClass(this.parentContainer, 'expanded');
+			window.L.DomUtil.addClass(input, 'expanded');
+			window.L.DomUtil.addClass(this.parentContainer, 'expanded');
 			this.onJSUpdate({
 				data: {
 					jsontype: 'formulabar',
@@ -202,11 +202,11 @@ class FormulaBar {
 	}
 
 	focusField() {
-		L.DomUtil.addClass(this.getInputField(), 'focused');
+		window.L.DomUtil.addClass(this.getInputField(), 'focused');
 	}
 
 	blurField() {
-		L.DomUtil.removeClass(this.getInputField(), 'focused');
+		window.L.DomUtil.removeClass(this.getInputField(), 'focused');
 	}
 
 	enable() {
@@ -229,7 +229,7 @@ class FormulaBar {
 		var input = this.getInputField();
 		if (!input)
 			return false;
-		return L.DomUtil.hasClass(input, 'focused');
+		return window.L.DomUtil.hasClass(input, 'focused');
 	}
 
 	isInEditMode() {
@@ -304,10 +304,10 @@ class FormulaBar {
 			return;
 
 		control.style.visibility = 'hidden';
-		var temporaryParent = L.DomUtil.create('div');
+		var temporaryParent = window.L.DomUtil.create('div');
 		this.builder.build(temporaryParent, [data.control], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
-		L.DomUtil.remove(control);
+		window.L.DomUtil.remove(control);
 	}
 
 	onJSAction (e) {

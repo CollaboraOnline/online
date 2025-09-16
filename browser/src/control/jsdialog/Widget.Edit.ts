@@ -58,7 +58,7 @@ class EditWidget {
 	): EditWidgetControl {
 		const result: EditWidgetControl = { container: null, input: null };
 
-		var container = L.DomUtil.create(
+		var container = window.L.DomUtil.create(
 			'div',
 			'ui-edit-container ' + builder.options.cssClass,
 			parentContainer,
@@ -66,7 +66,7 @@ class EditWidget {
 		container.id = data.id;
 		result.container = container;
 
-		var edit = L.DomUtil.create(
+		var edit = window.L.DomUtil.create(
 			'input',
 			'ui-edit ' + builder.options.cssClass,
 			container,

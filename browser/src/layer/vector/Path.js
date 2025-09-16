@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app */
 /*
- * L.Path is the base class for all Leaflet vector layers like polygons and circles.
+ * window.L.Path is the base class for all Leaflet vector layers like polygons and circles.
  */
 
-L.Path = L.Layer.extend({
+window.L.Path = window.L.Layer.extend({
 
 	options: {
 		stroke: true,
@@ -27,11 +27,11 @@ L.Path = L.Layer.extend({
 	},
 
 	initialize: function () {
-		L.Layer.prototype.initialize.call(this);
+		window.L.Layer.prototype.initialize.call(this);
 	},
 
 	onAdd: function () {
-		this._pathNodeCollection = new L.Path.PathNodeCollection();
+		this._pathNodeCollection = new window.L.Path.PathNodeCollection();
 		this._renderer = this._map.getRenderer(this);
 		this._renderer._initPath(this);
 		this._reset();
@@ -60,7 +60,7 @@ L.Path = L.Layer.extend({
 	},
 
 	setStyle: function (style) {
-		L.setOptions(this, style);
+		window.L.setOptions(this, style);
 		if (this._renderer) {
 			this._renderer._updateStyle(this);
 		}
@@ -100,10 +100,10 @@ L.Path = L.Layer.extend({
 		this._path = undefined;
 
 		if (!this._pathNodeCollection) {
-			this._pathNodeCollection = new L.Path.PathNodeCollection();
+			this._pathNodeCollection = new window.L.Path.PathNodeCollection();
 		}
 
-		this._pathNodeCollection.add(new L.Path.PathNodeData(pathNode, actualRenderer));
+		this._pathNodeCollection.add(new window.L.Path.PathNodeData(pathNode, actualRenderer));
 	},
 
 	getPathNode: function (actualRenderer) {
@@ -124,7 +124,7 @@ L.Path = L.Layer.extend({
 
 });
 
-L.Path.PathNodeData = L.Class.extend({
+window.L.Path.PathNodeData = window.L.Class.extend({
 
 	initialize: function (pathNode, actualRenderer) {
 
@@ -141,7 +141,7 @@ L.Path.PathNodeData = L.Class.extend({
 	},
 
 	key: function () {
-		return L.Path.PathNodeData.key(this._actualRenderer);
+		return window.L.Path.PathNodeData.key(this._actualRenderer);
 	},
 
 	getNode: function () {
@@ -172,10 +172,10 @@ L.Path.PathNodeData = L.Class.extend({
 
 	addOrRemoveClass: function (className, add) {
 		if (add) {
-			L.DomUtil.addClass(this._pathNode, className);
+			window.L.DomUtil.addClass(this._pathNode, className);
 		}
 		else {
-			L.DomUtil.removeClass(this._pathNode, className);
+			window.L.DomUtil.removeClass(this._pathNode, className);
 		}
 	},
 
@@ -185,11 +185,11 @@ L.Path.PathNodeData = L.Class.extend({
 
 });
 
-L.Path.PathNodeData.key = function (layer) {
+window.L.Path.PathNodeData.key = function (layer) {
 	return app.util.stamp(layer);
 };
 
-L.Path.PathNodeCollection = L.Class.extend({
+window.L.Path.PathNodeCollection = window.L.Class.extend({
 
 	initialize: function () {
 		this.clear();
@@ -197,7 +197,7 @@ L.Path.PathNodeCollection = L.Class.extend({
 
 	add: function (pathNodeData) {
 
-		window.app.console.assert(pathNodeData instanceof L.Path.PathNodeData,
+		window.app.console.assert(pathNodeData instanceof window.L.Path.PathNodeData,
 			'invalid pathNodeData argument!');
 
 		this._collection[pathNodeData.key()] = pathNodeData;
@@ -210,7 +210,7 @@ L.Path.PathNodeCollection = L.Class.extend({
 	getPathNode: function (actualRenderer) {
 
 		window.app.console.assert(actualRenderer, 'invalid actualRenderer argument!');
-		var key = L.Path.PathNodeData.key(actualRenderer);
+		var key = window.L.Path.PathNodeData.key(actualRenderer);
 		var nodeData = this._collection[key];
 
 		window.app.console.assert(nodeData, 'cannot find path node!');

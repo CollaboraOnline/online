@@ -225,7 +225,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		else if (app.map._docLayer._docType === 'presentation') { // If there are comments but none of them are on the selected part.
 			if (!this.sectionProperties.scrollAnnotation) {
-				this.sectionProperties.scrollAnnotation = L.control.scrollannotation();
+				this.sectionProperties.scrollAnnotation = window.L.control.scrollannotation();
 				this.sectionProperties.scrollAnnotation.addTo(this.map);
 			}
 		}
@@ -565,19 +565,19 @@ export class CommentSection extends CanvasSectionObject {
 			const tagTd = 'td',
 			empty = '',
 			tagDiv = 'div';
-			const author = L.DomUtil.create('table', 'cool-annotation-table');
-			const tbody = L.DomUtil.create('tbody', empty, author);
-			const tr = L.DomUtil.create('tr', empty, tbody);
-			const tdImg = L.DomUtil.create(tagTd, 'cool-annotation-img', tr);
-			const tdAuthor = L.DomUtil.create(tagTd, 'cool-annotation-author', tr);
-			const imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+			const author = window.L.DomUtil.create('table', 'cool-annotation-table');
+			const tbody = window.L.DomUtil.create('tbody', empty, author);
+			const tr = window.L.DomUtil.create('tr', empty, tbody);
+			const tdImg = window.L.DomUtil.create(tagTd, 'cool-annotation-img', tr);
+			const tdAuthor = window.L.DomUtil.create(tagTd, 'cool-annotation-author', tr);
+			const imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 			const user = this.map.getViewId(commentData.author);
 			app.LOUtil.setUserImage(imgAuthor, this.map, user);
 			imgAuthor.setAttribute('width', 32);
 			imgAuthor.setAttribute('height', 32);
 			const authorAvatarImg = imgAuthor;
-			const contentAuthor = L.DomUtil.create(tagDiv, 'cool-annotation-content-author', tdAuthor);
-			const contentDate = L.DomUtil.create(tagDiv, 'cool-annotation-date', tdAuthor);
+			const contentAuthor = window.L.DomUtil.create(tagDiv, 'cool-annotation-content-author', tdAuthor);
+			const contentDate = window.L.DomUtil.create(tagDiv, 'cool-annotation-date', tdAuthor);
 
 			$(contentAuthor).text(commentData.author);
 			$(authorAvatarImg).attr('src', commentData.avatar);
@@ -1160,7 +1160,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	private initializeContextMenus (): void {
 		var docLayer = app.map._docLayer;
-		L.installContextMenu({
+		window.L.installContextMenu({
 			selector: '.cool-annotation-menu',
 			trigger: 'none',
 			zIndex: 1500,
@@ -1241,7 +1241,7 @@ export class CommentSection extends CanvasSectionObject {
 				}
 			}
 		});
-		L.installContextMenu({
+		window.L.installContextMenu({
 			selector: '.cool-annotation-menu-redline',
 			trigger: 'none',
 			zIndex: 1500,
@@ -1378,9 +1378,9 @@ export class CommentSection extends CanvasSectionObject {
 		redline.anchorPix = this.numberArrayToCorePixFromTwips(redline.anchorPos, 0, 2);
 		redline.trackchange = true;
 		redline.text = redline.comment;
-		var rectangles = L.PolyUtil.rectanglesToPolygons(app.LOUtil.stringToRectangles(redline.textRange), app.map._docLayer);
+		var rectangles = window.L.PolyUtil.rectanglesToPolygons(app.LOUtil.stringToRectangles(redline.textRange), app.map._docLayer);
 		if (rectangles.length > 0) {
-			redline.textSelected = L.polygon(rectangles, {
+			redline.textSelected = window.L.polygon(rectangles, {
 				pointerEvents: 'all',
 				interactive: false,
 				fillOpacity: 0,

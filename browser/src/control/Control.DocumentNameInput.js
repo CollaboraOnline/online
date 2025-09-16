@@ -9,11 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.DocumentNameInput
+ * window.L.Control.DocumentNameInput
  */
 
 /* global $ _ */
-L.Control.DocumentNameInput = L.Control.extend({
+window.L.Control.DocumentNameInput = window.L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
@@ -147,9 +147,9 @@ L.Control.DocumentNameInput = L.Control.extend({
 		if (e.BaseFileName !== null) {
 			// set the document name into the name field
 			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
-			var input = L.DomUtil.get('document-name-input');
+			var input = window.L.DomUtil.get('document-name-input');
 			input.setAttribute('data-cooltip', input.value);
-			L.control.attachTooltipEventListener(input, this.map);
+			window.L.control.attachTooltipEventListener(input, this.map);
 		}
 		if (!e.UserCanNotWriteRelative && !this.map.isReadOnlyMode()) {
 			// Save As allowed
@@ -193,6 +193,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 });
 
-L.control.documentNameInput = function () {
-	return new L.Control.DocumentNameInput();
+window.L.control.documentNameInput = function () {
+	return new window.L.Control.DocumentNameInput();
 };

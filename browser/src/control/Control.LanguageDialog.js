@@ -10,11 +10,11 @@
  */
 
 /*
- * L.Control.LanguageDialog used for spellchecking language
+ * window.L.Control.LanguageDialog used for spellchecking language
  */
 
 /* global _ app */
-L.Control.LanguageDialog = L.Control.extend({
+window.L.Control.LanguageDialog = window.L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
@@ -154,6 +154,6 @@ L.Control.LanguageDialog = L.Control.extend({
 	}
 });
 
-L.control.languageDialog = function (options) {
-	return new L.Control.LanguageDialog(options);
+window.L.control.languageDialog = function (options) {
+	return new window.L.Control.LanguageDialog(options);
 };

@@ -30,8 +30,8 @@ function onDemandRenderer(
 		let requestRender = true;
 
 		if (cachedComboboxEntries && cachedComboboxEntries.images[entryId]) {
-			L.DomUtil.remove(placeholder);
-			placeholder = L.DomUtil.create('img', '', parentContainer);
+			window.L.DomUtil.remove(placeholder);
+			placeholder = window.L.DomUtil.create('img', '', parentContainer);
 			const placeholderImg = placeholder as HTMLImageElement;
 			placeholderImg.src = cachedComboboxEntries.images[entryId];
 			placeholderImg.alt = entryText;

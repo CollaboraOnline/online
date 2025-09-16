@@ -10,14 +10,14 @@
  */
 
 /*
- * L.Control.MobileWizard - main container can contain few MobileWizardWindows
+ * window.L.Control.MobileWizard - main container can contain few MobileWizardWindows
  */
 
 /* global app $ */
-L.Control.MobileWizard = L.Control.extend({
+window.L.Control.MobileWizard = window.L.Control.extend({
 
 	initialize: function (options) {
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 	},
 
 	onAdd: function (map) {
@@ -156,7 +156,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_onResize: function() {
-		L.DomUtil.updateElementsOrientation(['mobile-wizard', 'mobile-wizard-content']);
+		window.L.DomUtil.updateElementsOrientation(['mobile-wizard', 'mobile-wizard-content']);
 	},
 
 	selectedTab: function(tabText) {
@@ -192,7 +192,7 @@ L.Control.MobileWizard = L.Control.extend({
 			if (existingWindow) {
 				existingWindow._onMobileWizard(data, callback);
 			} else {
-				var newWindow = L.control.mobileWizardWindow(this, 'mobile-wizard-content-' + data.id);
+				var newWindow = window.L.control.mobileWizardWindow(this, 'mobile-wizard-content-' + data.id);
 				for (var i in this.contents)
 					this.contents[i].hideWindow();
 				this.contents.push(newWindow);
@@ -248,6 +248,6 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 });
 
-L.control.mobileWizard = function (options) {
-	return new L.Control.MobileWizard(options);
+window.L.control.mobileWizard = function (options) {
+	return new window.L.Control.MobileWizard(options);
 };

@@ -62,11 +62,11 @@ export class CornerHeader extends CanvasSectionObject {
 
 	_initCornerHeaderStyle(): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
-		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
-		this.borderColor = L.DomUtil.getStyle(elem, 'border-top-color'); // This is a section property.
-		L.DomUtil.remove(elem);
+		const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+		this._textColor = window.L.DomUtil.getStyle(elem, 'color');
+		this.backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
+		this.borderColor = window.L.DomUtil.getStyle(elem, 'border-top-color'); // This is a section property.
+		window.L.DomUtil.remove(elem);
 	}
 }
 

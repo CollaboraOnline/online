@@ -169,17 +169,17 @@ export class Comment extends CanvasSectionObject {
 				return;
 		}
 
-		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
+		var button = window.L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
+		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
 		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
-		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
+		button = window.L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
 		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.handleReplyCommentButton);
-		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
+		window.L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		// Since this is a late called function, if the width is enough, we shouldn't collapse the comments.
 		if (app.map._docLayer._docType !== 'text' || this.sectionProperties.commentListSection.isCollapsed === true)
@@ -189,17 +189,17 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
-		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
-		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
+		window.L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
+		window.L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
 
 		for (var it = 0; it < events.length; it++) {
-			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
+			window.L.DomEvent.on(this.sectionProperties.container, events[it], window.L.DomEvent.stopPropagation, this);
 		}
 
-		L.DomEvent.on(this.sectionProperties.container, 'touchstart',
+		window.L.DomEvent.on(this.sectionProperties.container, 'touchstart',
 			function (e: TouchEvent) {
 				if (e && e.touches.length > 1) {
-					L.DomEvent.preventDefault(e);
+					window.L.DomEvent.preventDefault(e);
 				}
 			},
 			this);
@@ -223,22 +223,22 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionNode = L.DomUtil.create('div', 'cool-annotation-caption', this.sectionProperties.wrapper);
-			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
+			this.sectionProperties.captionNode = window.L.DomUtil.create('div', 'cool-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionText = window.L.DomUtil.create('div', '', this.sectionProperties.captionNode);
 		}
 
-		this.sectionProperties.contentNode = L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.contentNode = window.L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
-		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
 		this.createReplyHint(this.sectionProperties.nodeModify);
 		this.sectionProperties.nodeModifyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeModifyText.setAttribute('role', 'textbox');
 		this.sectionProperties.nodeModifyText.setAttribute('aria-label', Comment.editCommentLabel);
 		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
-		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
-		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.contentText = window.L.DomUtil.create('div', '', this.sectionProperties.contentNode);
+		this.sectionProperties.nodeReply = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
 		this.createReplyHint(this.sectionProperties.nodeReply);
 		this.sectionProperties.nodeReplyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeReplyText.setAttribute('role', 'textbox');
@@ -259,16 +259,16 @@ export class Comment extends CanvasSectionObject {
 
 	private createContainerAndWrapper (): void {
 		var isRTL = document.documentElement.dir === 'rtl';
-		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
+		this.sectionProperties.container = window.L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
-		L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
+		window.L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
+			this.sectionProperties.wrapper = window.L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
 		} else {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
+			this.sectionProperties.wrapper = window.L.DomUtil.create('div', 'cool-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
 		this.sectionProperties.wrapper.style.marginLeft = this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
@@ -282,22 +282,22 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private createAuthorTable (): void {
-		this.sectionProperties.author = L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
+		this.sectionProperties.author = window.L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
 
-		var tbody = L.DomUtil.create('tbody', '', this.sectionProperties.author);
-		var rowResolved = L.DomUtil.create('tr', '', tbody);
-		var tdResolved = L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
-		var pResolved = L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
+		var tbody = window.L.DomUtil.create('tbody', '', this.sectionProperties.author);
+		var rowResolved = window.L.DomUtil.create('tr', '', tbody);
+		var tdResolved = window.L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
+		var pResolved = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
 		this.sectionProperties.resolvedTextElement = pResolved;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
 
-		var tr = L.DomUtil.create('tr', '', tbody);
+		var tr = window.L.DomUtil.create('tr', '', tbody);
 		this.sectionProperties.authorRow = tr;
 		tr.id = 'author table row ' + this.sectionProperties.data.id;
-		var tdImg = L.DomUtil.create('td', 'cool-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create('td', 'cool-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+		var tdImg = window.L.DomUtil.create('td', 'cool-annotation-img', tr);
+		var tdAuthor = window.L.DomUtil.create('td', 'cool-annotation-author', tr);
+		var imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 		imgAuthor.setAttribute('alt', this.sectionProperties.data.author);
 		var viewId = this.map.getViewId(this.sectionProperties.data.author);
 		app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
@@ -305,20 +305,20 @@ export class Comment extends CanvasSectionObject {
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
 		if (app.map._docLayer._docType !== 'spreadsheet') {
-			this.sectionProperties.collapsedInfoNode = L.DomUtil.create('div', 'cool-annotation-info-collapsed', tdImg);
+			this.sectionProperties.collapsedInfoNode = window.L.DomUtil.create('div', 'cool-annotation-info-collapsed', tdImg);
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		}
 
 		this.sectionProperties.authorAvatarImg = imgAuthor;
 		this.sectionProperties.authorAvatartdImg = tdImg;
-		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
-		this.sectionProperties.contentDate = L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
-		this.sectionProperties.autoSave = L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
+		this.sectionProperties.contentAuthor = window.L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
+		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
+		this.sectionProperties.autoSave = window.L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
 	}
 
 	private createMenu (): void {
-		var tdMenu = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
-		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
+		var tdMenu = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		this.sectionProperties.menu = window.L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.tabIndex = 0;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
@@ -329,7 +329,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private createReplyHint (commentType: HTMLElement): void {
-		this.sectionProperties.replyHint = L.DomUtil.create('p', '', commentType);
+		this.sectionProperties.replyHint = window.L.DomUtil.create('p', '', commentType);
 		var small = document.createElement('small');
 		small.classList.add('cool-font');
 		small.innerText = _('Press Ctrl + Enter to post');
@@ -337,7 +337,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private createChildLinesNode (): void {
-		this.sectionProperties.childLinesNode = L.DomUtil.create('div', '', this.sectionProperties.container);
+		this.sectionProperties.childLinesNode = window.L.DomUtil.create('div', '', this.sectionProperties.container);
 		this.sectionProperties.childLinesNode.id = 'annotation-child-lines-' + this.sectionProperties.data.id;
 		this.sectionProperties.childLinesNode.style.width = this.sectionProperties.childCommentOffset*(this.getChildLevel() + 1) + 'px';
 	}
@@ -367,7 +367,7 @@ export class Comment extends CanvasSectionObject {
 		let i = 0;
 		for (; i < childPositions.length; i++) {
 			if (this.sectionProperties.childLines[i] === undefined) {
-				this.sectionProperties.childLines[i] = L.DomUtil.create('div', 'cool-annotation-child-line', this.sectionProperties.childLinesNode);
+				this.sectionProperties.childLines[i] = window.L.DomUtil.create('div', 'cool-annotation-child-line', this.sectionProperties.childLinesNode);
 				this.sectionProperties.childLines[i].id = 'annotation-child-line-' + this.sectionProperties.data.id + '-' + i;
 				this.sectionProperties.childLines[i].style.width = this.sectionProperties.childCommentOffset/2 + 'px';
 			}
@@ -390,35 +390,35 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private createTrackChangeButtons (): void {
-		var tdAccept = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
-		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'cool-redline-accept-button', tdAccept);
+		var tdAccept = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		var acceptButton = this.sectionProperties.acceptButton = window.L.DomUtil.create('button', 'cool-redline-accept-button', tdAccept);
 
-		var tdReject = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
-		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'cool-redline-reject-button', tdReject);
+		var tdReject = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		var rejectButton = this.sectionProperties.rejectButton = window.L.DomUtil.create('button', 'cool-redline-reject-button', tdReject);
 
 		acceptButton.dataset.title = _('Accept change');
 		acceptButton.setAttribute('aria-label', _('Accept change'));
 
-		L.DomEvent.on(acceptButton, 'click', function() {
+		window.L.DomEvent.on(acceptButton, 'click', function() {
 			this.map.fire('RedlineAccept', {id: this.sectionProperties.data.id});
 		}, this);
 
 		rejectButton.dataset.title = _('Reject change');
 		rejectButton.setAttribute('aria-label', _('Reject change'));
 
-		L.DomEvent.on(rejectButton, 'click', function() {
+		window.L.DomEvent.on(rejectButton, 'click', function() {
 			this.map.fire('RedlineReject', {id: this.sectionProperties.data.id});
 		}, this);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private createButton (container: any, id: any, cssClass: string, value: any, handler: any): void {
-		var button = L.DomUtil.create('input', cssClass, container);
+		var button = window.L.DomUtil.create('input', cssClass, container);
 		button.id = id;
 		button.type = 'button';
 		button.value = value;
-		L.DomEvent.on(button, 'mousedown', L.DomEvent.preventDefault);
-		L.DomEvent.on(button, 'click', handler, this);
+		window.L.DomEvent.on(button, 'mousedown', window.L.DomEvent.preventDefault);
+		window.L.DomEvent.on(button, 'click', handler, this);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -794,7 +794,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.container.style.display = '';
 		}
 		if (this.sectionProperties.data.resolved !== 'true' || this.sectionProperties.commentListSection.sectionProperties.showResolved) {
-			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			window.L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 			this.sectionProperties.showSelectedCoordinate = true;
 		}
 		this.sectionProperties.contentNode.style.display = '';
@@ -848,7 +848,7 @@ export class Comment extends CanvasSectionObject {
 			else {
 				this.sectionProperties.container.style.visibility = 'hidden';
 			}
-			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			window.L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		}
 	}
 
@@ -896,7 +896,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.showSelectedCoordinate = false;
-		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.cachedIsEdit = false;
 		this.hidden = true;
 	}
@@ -925,7 +925,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeReply.style.display = 'none';
 			this.cachedIsEdit = false;
 		}
-		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.hidden = true;
 	}
 
@@ -966,14 +966,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnMouseClick (e: any): void {
 		$(this.sectionProperties.menu).contextMenu();
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
 		if (e.code === 'Space' || e.code === 'Enter')
 			$(this.sectionProperties.menu).contextMenu();
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -983,7 +983,7 @@ export class Comment extends CanvasSectionObject {
 			&& !this.map.uiManager.mobileWizard.isOpen()) {
 			this.hide();
 		}
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 		this.sectionProperties.commentListSection.click(this);
 	}
 
@@ -994,7 +994,7 @@ export class Comment extends CanvasSectionObject {
 				this.onCancelClick(e);
 			} else if (e.keyCode === 33 /*PageUp*/ || e.keyCode === 34 /*PageDown*/) {
 				// work around for a chrome issue https://issues.chromium.org/issues/41417806
-				L.DomEvent.preventDefault(e);
+				window.L.DomEvent.preventDefault(e);
 				var pos = e.keyCode === 33 ? 0 : e.target.textLength;
 				var currentPos = e.target.selectionStart;
 				if (e.shiftKey) {
@@ -1018,7 +1018,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onReplyClick (e: any): void {
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 		if ((<any>window).mode.isMobile()) {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
@@ -1073,7 +1073,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCancelClick (e: any): void {
 		if (e)
-			L.DomEvent.stopPropagation(e);
+			window.L.DomEvent.stopPropagation(e);
 		if (this.sectionProperties.contentText.origHTML) {
 			this.sectionProperties.nodeModifyText.innerHTML = app.LOUtil.sanitize(this.sectionProperties.contentText.origHTML);
 		}
@@ -1099,7 +1099,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
 		this.sectionProperties.commentContainerRemoved = true;
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 		this.removeLastBRTag(this.sectionProperties.nodeModifyText);
 		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.innerText;
 		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
@@ -1574,7 +1574,7 @@ export class Comment extends CanvasSectionObject {
 		|| this.sectionProperties.commentListSection.sectionProperties.showResolved
 		|| app.map._docLayer._docType === 'presentation'
 		|| app.map._docLayer._docType === 'drawing')
-			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			window.L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
 
 	public updateThreadInfoIndicator(replycount:number | string = -1): void {
@@ -1610,7 +1610,7 @@ export class Comment extends CanvasSectionObject {
 		}
 		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
-		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
 
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {

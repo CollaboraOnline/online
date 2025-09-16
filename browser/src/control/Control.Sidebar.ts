@@ -23,7 +23,7 @@ class Sidebar extends SidebarBase {
 		this.isUserRequest = true;
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: ReturnType<typeof window.L.map>) {
 		super.onAdd(map);
 		this.map.on('sidebar', this.onSidebar, this);
 	}

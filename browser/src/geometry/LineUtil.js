@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.LineUtil contains different utility functions for line segments
+ * window.L.LineUtil contains different utility functions for line segments
  * and polylines (clipping, simplification, distances, etc.)
  */
 /* global Uint8Array cool */
-L.LineUtil = {
+window.L.LineUtil = {
 
 	// Simplify polyline with vertex reduction and Douglas-Peucker simplification.
 	// Improves rendering performance dramatically by lessening the number of points to draw.

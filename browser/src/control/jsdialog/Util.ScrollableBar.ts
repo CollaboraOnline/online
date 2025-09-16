@@ -19,10 +19,10 @@
 declare var JSDialog: any;
 
 function createScrollButtons(parent: Element, scrollable: Element) {
-	L.DomUtil.addClass(scrollable, 'ui-scroll-wrapper');
+	window.L.DomUtil.addClass(scrollable, 'ui-scroll-wrapper');
 
-	const left = L.DomUtil.create('div', 'ui-scroll-left', parent);
-	const right = L.DomUtil.create('div', 'ui-scroll-right', parent);
+	const left = window.L.DomUtil.create('div', 'ui-scroll-left', parent);
+	const right = window.L.DomUtil.create('div', 'ui-scroll-right', parent);
 
 	JSDialog.AddOnClick(left, () => {
 		const scroll = $(scrollable).scrollLeft() - 300;
@@ -179,13 +179,13 @@ function setupPriorityStatusHandler(scrollable: Element, toolItems: any[]) {
 }
 
 JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
-	L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
+	window.L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
 	createScrollButtons(parent, scrollable);
 	setupResizeHandler(parent, scrollable);
 };
 
 JSDialog.MakeStatusPriority = function (scrollable: Element, toolItems: any[]) {
-	L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
+	window.L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
 	setupPriorityStatusHandler(scrollable, toolItems);
 };
 

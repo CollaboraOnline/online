@@ -9,12 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.LokDialog used for displaying LOK dialogs
+ * window.L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global app $ L Hammer brandProductName UNOModifier cool */
+/* global app $ Hammer brandProductName UNOModifier cool */
 
-L.WinUtil = {
+window.L.WinUtil = {
 
 };
 
@@ -35,7 +35,7 @@ function updateTransformation(target) {
 		target.value.style.transform = value;
 
 		if (target.transformation.origin) {
-			target.value.style[L.DomUtil.TRANSFORM_ORIGIN] = target.transformation.origin;
+			target.value.style[window.L.DomUtil.TRANSFORM_ORIGIN] = target.transformation.origin;
 		}
 	}
 }
@@ -65,7 +65,7 @@ function toZoomTargetId(id) {
 	return id.replace('-canvas', '');
 }
 
-L.Control.LokDialog = L.Control.extend({
+window.L.Control.LokDialog = window.L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
 
@@ -136,7 +136,7 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('editorgotfocus', this._onEditorGotFocus, this);
 		// Fired to signal that the input focus is being changed.
 		map.on('changefocuswidget', this._changeFocusWidget, this);
-		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
+		window.L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
 	},
 
 	_dialogs: {},
@@ -187,8 +187,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_isSelectionHandle: function(el) {
-		return L.DomUtil.hasClass(el, 'text-selection-handle-start')	||
-			L.DomUtil.hasClass(el, 'text-selection-handle-end');
+		return window.L.DomUtil.hasClass(el, 'text-selection-handle-start')	||
+			window.L.DomUtil.hasClass(el, 'text-selection-handle-end');
 	},
 
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
@@ -467,13 +467,13 @@ L.Control.LokDialog = L.Control.extend({
 
 	_updateDialogCursor: function(dlgId, x, y, height) {
 		var strId = this._toStrId(dlgId);
-		var dialogCursor = L.DomUtil.get(strId + '-cursor');
+		var dialogCursor = window.L.DomUtil.get(strId + '-cursor');
 		var cursorVisible = this.isCursorVisible(dlgId);
-		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
-		L.DomUtil.setStyle(dialogCursor, 'display', cursorVisible ? 'block' : 'none');
+		window.L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
+		window.L.DomUtil.setStyle(dialogCursor, 'display', cursorVisible ? 'block' : 'none');
 		// set the position of the cursor container element
-		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
-		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
+		window.L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
+		window.L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
 
 		// Make sure the keyboard is visible if there is a cursor.
 		// But don't hide the keyboard otherwise.
@@ -484,28 +484,28 @@ L.Control.LokDialog = L.Control.extend({
 
 	_createDialogCursor: function(dialogId) {
 		var id = this._toIntId(dialogId);
-		this._dialogs[id].cursor = L.DomUtil.create('div', 'leaflet-cursor-container', L.DomUtil.get(dialogId));
-		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[id].cursor);
+		this._dialogs[id].cursor = window.L.DomUtil.create('div', 'leaflet-cursor-container', window.L.DomUtil.get(dialogId));
+		var cursor = window.L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[id].cursor);
 		cursor.id = dialogId + '-cursor';
-		L.DomUtil.addClass(cursor, 'blinking-cursor');
+		window.L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
 	_updateTextSelection: function(dlgId, rectangles, startHandleVisible, endHandleVisible) {
 		var strId = this._toIntId(dlgId);
 		var selections = this._dialogs[strId].textSelection.rectangles;
-		L.DomUtil.empty(selections);
+		window.L.DomUtil.empty(selections);
 		var handles = this._dialogs[strId].textSelection.handles;
 		var startHandle, endHandle;
 		if (startHandleVisible) {
 			startHandle = this._dialogs[strId].textSelection.startHandle;
 		} else if (handles.start) {
-			L.DomUtil.remove(handles.start);
+			window.L.DomUtil.remove(handles.start);
 			handles.start = null;
 		}
 		if (endHandleVisible) {
 			endHandle = this._dialogs[strId].textSelection.endHandle;
 		}  else if (handles.end) {
-			L.DomUtil.remove(handles.end);
+			window.L.DomUtil.remove(handles.end);
 			handles.end = null;
 		}
 
@@ -517,13 +517,13 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		for (var i = 0; i < rectangles.length; ++i) {
-			var container = L.DomUtil.create('div', 'leaflet-text-selection-container', selections);
-			var selection = L.DomUtil.create('div', 'leaflet-text-selection', container);
+			var container = window.L.DomUtil.create('div', 'leaflet-text-selection-container', selections);
+			var selection = window.L.DomUtil.create('div', 'leaflet-text-selection', container);
 			var rect = rectangles[i];
-			L.DomUtil.setStyle(selection, 'width', rect.width + 'px');
-			L.DomUtil.setStyle(selection, 'height', rect.height + 'px');
-			L.DomUtil.setStyle(container, 'left',  rect.x + 'px');
-			L.DomUtil.setStyle(container, 'top', rect.y + 'px');
+			window.L.DomUtil.setStyle(selection, 'width', rect.width + 'px');
+			window.L.DomUtil.setStyle(selection, 'height', rect.height + 'px');
+			window.L.DomUtil.setStyle(container, 'left',  rect.x + 'px');
+			window.L.DomUtil.setStyle(container, 'top', rect.y + 'px');
 		}
 
 		var startPos;
@@ -555,8 +555,8 @@ L.Control.LokDialog = L.Control.extend({
 				handles.start = handles.appendChild(startHandle);
 			// window.app.console.log('lokdialog: _updateTextSelection: startPos: x: ' + startPos.x + ', y: ' + startPos.y);
 			startHandle.pos = startPos;
-			L.DomUtil.setStyle(startHandle, 'left',  startPos.x + 'px');
-			L.DomUtil.setStyle(startHandle, 'top', startPos.y + 'px');
+			window.L.DomUtil.setStyle(startHandle, 'left',  startPos.x + 'px');
+			window.L.DomUtil.setStyle(startHandle, 'top', startPos.y + 'px');
 		}
 
 		if (endHandle && handles.draggingStopped) {
@@ -564,8 +564,8 @@ L.Control.LokDialog = L.Control.extend({
 				handles.end = handles.appendChild(endHandle);
 			// window.app.console.log('lokdialog: _updateTextSelection: endPos: x: ' + endPos.x + ', y: ' + endPos.y);
 			endHandle.pos = endPos;
-			L.DomUtil.setStyle(endHandle, 'left',  endPos.x + 'px');
-			L.DomUtil.setStyle(endHandle, 'top', endPos.y + 'px');
+			window.L.DomUtil.setStyle(endHandle, 'left',  endPos.x + 'px');
+			window.L.DomUtil.setStyle(endHandle, 'top', endPos.y + 'px');
 		}
 	},
 
@@ -580,14 +580,14 @@ L.Control.LokDialog = L.Control.extend({
 		var newWidth = width * app.roundedDpiScale;
 		var changed = false;
 		if (canvas.width != newWidth) {
-			L.DomUtil.setStyle(canvas, 'width', width + 'px');
+			window.L.DomUtil.setStyle(canvas, 'width', width + 'px');
 			canvas.width = newWidth;
 			changed = true;
 		}
 
 		var newHeight = height * app.roundedDpiScale;
 		if (canvas.height != newHeight) {
-			L.DomUtil.setStyle(canvas, 'height', height + 'px');
+			window.L.DomUtil.setStyle(canvas, 'height', height + 'px');
 			canvas.height = newHeight;
 			changed = true;
 		}
@@ -598,17 +598,17 @@ L.Control.LokDialog = L.Control.extend({
 		if (window.ThisIsTheiOSApp && app.map.mobileTopBar)
 				app.map.mobileTopBar.enableItem('closemobile', false);
 		this.onCloseCurrentPopUp();
-		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
-		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
-		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
-		L.DomUtil.setStyle(dialogContainer, 'touch-action', 'manipulate');
+		var dialogContainer = window.L.DomUtil.create('div', 'lokdialog', document.body);
+		window.L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
+		window.L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
+		window.L.DomUtil.setStyle(dialogContainer, 'touch-action', 'manipulate');
 
 		var strId = this._toStrId(id);
 		dialogContainer.id = strId;
 		if (uniqueId)
 			dialogContainer.dataset.uniqueId = uniqueId;
 
-		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
+		var dialogCanvas = window.L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
 		this._setCanvasWidthHeight(dialogCanvas, width, height);
 		dialogCanvas.id = strId + '-canvas';
 
@@ -657,13 +657,13 @@ L.Control.LokDialog = L.Control.extend({
 		$(dialogContainer).parent().hide();
 
 		// Override default minHeight, which can be too large for thin dialogs.
-		L.DomUtil.setStyle(dialogContainer, 'minHeight', height + 'px');
+		window.L.DomUtil.setStyle(dialogContainer, 'minHeight', height + 'px');
 
 		// Title bar may overflow due to range name. So we should have max width
 		var titleBar = dialogContainer.previousSibling;
 		var leftPadding = window.getComputedStyle(titleBar).getPropertyValue('padding-left').slice(0, -2);
 		var rightPadding = window.getComputedStyle(titleBar).getPropertyValue('padding-right').slice(0, -2);
-		L.DomUtil.setStyle(titleBar, 'maxWidth', width - (+leftPadding + +rightPadding) + 'px');
+		window.L.DomUtil.setStyle(titleBar, 'maxWidth', width - (+leftPadding + +rightPadding) + 'px');
 
 		this._dialogs[id] = {
 			id: id,
@@ -695,14 +695,14 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_setupWindowEvents: function(id, canvas/*, dlgInput*/) {
-		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
-		L.DomEvent.on(canvas, 'mousemove', function(e) {
-			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
+		window.L.DomEvent.on(canvas, 'contextmenu', window.L.DomEvent.preventDefault);
+		window.L.DomEvent.on(canvas, 'mousemove', function(e) {
+			var pos = this._isSelectionHandle(e.target) ? window.L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
 			this._postWindowMouseEvent('move', id, pos.x, pos.y, 1, 0, 0);
 		}, this);
 
-		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
-			L.DomEvent.preventDefault(e);
+		window.L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
+			window.L.DomEvent.preventDefault(e);
 
 			if (this._map.uiManager.isUIBlocked())
 				return;
@@ -728,16 +728,16 @@ L.Control.LokDialog = L.Control.extend({
 
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
-			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
+			var pos = this._isSelectionHandle(e.target) ? window.L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
 			this._postWindowMouseEvent(lokEventType, id, pos.x, pos.y, 1, buttons, modifier);
 			this._map.setWinId(id);
 			//dlgInput.focus();
 		}, this);
 
-		L.DomEvent.on(canvas, 'click', function(ev) {
+		window.L.DomEvent.on(canvas, 'click', function(ev) {
 			// Clicking on the dialog's canvas shall not trigger any
 			// focus change - therefore the event is stopped and preventDefault()ed.
-			L.DomEvent.stop(ev);
+			window.L.DomEvent.stop(ev);
 		});
 	},
 
@@ -940,7 +940,7 @@ L.Control.LokDialog = L.Control.extend({
 			y = parseInt(rectangle[1]);
 		}
 
-		var container = L.DomUtil.get(strId);
+		var container = window.L.DomUtil.get(strId);
 
 		ctx.drawImage(img, x, y);
 
@@ -970,7 +970,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_paintDialogChild: function(parentId, img) {
 		var strId = this._toStrId(parentId);
-		var canvas = L.DomUtil.get(strId + '-floating');
+		var canvas = window.L.DomUtil.get(strId + '-floating');
 		if (!canvas)
 			return; // no floating window to paint to
 
@@ -980,7 +980,7 @@ L.Control.LokDialog = L.Control.extend({
 		var leftPos = left + width;
 		if (leftPos > window.innerWidth) {
 			var newLeft = window.innerWidth - width - 20;
-			L.DomUtil.setStyle(canvas, 'left', newLeft + 'px');
+			window.L.DomUtil.setStyle(canvas, 'left', newLeft + 'px');
 		}
 		// Also, make sure child is not trimmed on bottom.
 		var top = parseInt(canvas.style.top);
@@ -988,7 +988,7 @@ L.Control.LokDialog = L.Control.extend({
 		var bottomPos = top + height;
 		if (bottomPos > window.innerHeight) {
 			var newTop = top - height - 20;
-			L.DomUtil.setStyle(canvas, 'top', newTop + 'px');
+			window.L.DomUtil.setStyle(canvas, 'top', newTop + 'px');
 		}
 
 		// The image is rendered per the HiDPI scale we used
@@ -1030,15 +1030,15 @@ L.Control.LokDialog = L.Control.extend({
 
 	_createDialogChild: function(childId, parentId, top, left) {
 		var strId = this._toStrId(parentId);
-		var dialogContainer = L.DomUtil.get(strId);
-		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
+		var dialogContainer = window.L.DomUtil.get(strId);
+		var floatingCanvas = window.L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
 		$(floatingCanvas).hide(); // Hide to avoid flickering while we set the dimensions.
 
 		floatingCanvas.id = strId + '-floating';
-		L.DomUtil.setStyle(floatingCanvas, 'position', 'fixed');
-		L.DomUtil.setStyle(floatingCanvas, 'z-index', '11');
-		L.DomUtil.setStyle(floatingCanvas, 'width', '0px');
-		L.DomUtil.setStyle(floatingCanvas, 'height', '0px');
+		window.L.DomUtil.setStyle(floatingCanvas, 'position', 'fixed');
+		window.L.DomUtil.setStyle(floatingCanvas, 'z-index', '11');
+		window.L.DomUtil.setStyle(floatingCanvas, 'width', '0px');
+		window.L.DomUtil.setStyle(floatingCanvas, 'height', '0px');
 
 		/*
 			Some notes:
@@ -1048,18 +1048,18 @@ L.Control.LokDialog = L.Control.extend({
 
 		// Add header height..
 		var addition = 40;
-		L.DomUtil.setStyle(floatingCanvas, 'margin-inline-start', left + 'px');
-		L.DomUtil.setStyle(floatingCanvas, 'top', (top + addition) + 'px');
+		window.L.DomUtil.setStyle(floatingCanvas, 'margin-inline-start', left + 'px');
+		window.L.DomUtil.setStyle(floatingCanvas, 'top', (top + addition) + 'px');
 
 		// attach events
 		this._setupChildEvents(childId, floatingCanvas);
 	},
 
 	_setupChildEvents: function(childId, canvas) {
-		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
+		window.L.DomEvent.on(canvas, 'contextmenu', window.L.DomEvent.preventDefault);
 
-		L.DomEvent.on(canvas, 'touchstart touchmove touchend', function(e) {
-			L.DomEvent.preventDefault(e);
+		window.L.DomEvent.on(canvas, 'touchstart touchmove touchend', function(e) {
+			window.L.DomEvent.preventDefault(e);
 			var rect = canvas.getBoundingClientRect();
 			var touchX = (e.type === 'touchend') ? e.changedTouches[0].clientX : e.targetTouches[0].clientX;
 			var touchY = (e.type === 'touchend') ? e.changedTouches[0].clientY : e.targetTouches[0].clientY;
@@ -1094,7 +1094,7 @@ L.Control.LokDialog = L.Control.extend({
 			previousTouchType = e.type;
 		}, this);
 
-		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
+		window.L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
 			if (this._map['mouse']) {
 				buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
@@ -1106,16 +1106,16 @@ L.Control.LokDialog = L.Control.extend({
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, childId, e.offsetX, e.offsetY, 1, buttons, 0);
 		}, this);
-		L.DomEvent.on(canvas, 'mousemove', function(e) {
+		window.L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._postWindowMouseEvent('move', childId, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
-		L.DomEvent.on(canvas, 'contextmenu', function() {
+		window.L.DomEvent.on(canvas, 'contextmenu', function() {
 			return false;
 		});
 	}
 
 });
 
-L.control.lokDialog = function (options) {
-	return new L.Control.LokDialog(options);
+window.L.control.lokDialog = function (options) {
+	return new window.L.Control.LokDialog(options);
 };

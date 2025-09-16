@@ -1,20 +1,20 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Handler.MapDrag is used to make the map draggable (with panning inertia), enabled by default.
+ * window.L.Handler.MapDrag is used to make the map draggable (with panning inertia), enabled by default.
  */
 
 /* global cool */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	dragging: true
 });
 
-L.Map.Drag = L.Handler.extend({
+window.L.Map.Drag = window.L.Handler.extend({
 	addHooks: function () {
 		if (!this._draggable) {
 			var map = this._map;
 
-			this._draggable = new L.Draggable(map._mapPane, map._container);
+			this._draggable = new window.L.Draggable(map._mapPane, map._container);
 			this._draggable._map = map;
 
 			this._draggable.on({

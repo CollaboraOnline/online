@@ -11,11 +11,11 @@
  */
 
 /*
- * L.Control.JSDialog - class which creates and updates dialogs, popups, snackbar
+ * window.L.Control.JSDialog - class which creates and updates dialogs, popups, snackbar
  */
 
 /* global JSDialog Hammer app _ cool */
-L.Control.JSDialog = L.Control.extend({
+window.L.Control.JSDialog = window.L.Control.extend({
 	options: {},
 	dialogs: {},
 	draggingObject: null,
@@ -29,7 +29,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.on('zoomend', this.onZoomEnd, this);
 		this.map.on('closealldialogs', this.onCloseAll, this);
 		this.map.on('closeAutoFilterDialog', this.closePopupsOnTabChange, this);
-		L.DomEvent.on(window.document, 'keyup', this.onKeyUp, this);
+		window.L.DomEvent.on(window.document, 'keyup', this.onKeyUp, this);
 
 	},
 
@@ -40,7 +40,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('zoomend', this.onZoomEnd, this);
 		this.map.off('closealldialogs', this.onCloseAll, this);
 		this.map.off('closeAutoFilterDialog', this.closePopupsOnTabChange, this);
-		L.DomEvent.off(window.document, 'keyup', this.onKeyUp, this);
+		window.L.DomEvent.off(window.document, 'keyup', this.onKeyUp, this);
 
 	},
 
@@ -70,10 +70,10 @@ L.Control.JSDialog = L.Control.extend({
 		const builder = dialogInfo.builder;
 
 		app.layoutingService.appendLayoutingTask(() => {
-			L.DomUtil.remove(dialogInfo.container);
+			window.L.DomUtil.remove(dialogInfo.container);
 
 			if (dialogInfo.overlay && !dialogInfo.isSubmenu)
-				L.DomUtil.remove(dialogInfo.overlay);
+				window.L.DomUtil.remove(dialogInfo.overlay);
 
 			delete this.dialogs[id];
 		});
@@ -86,7 +86,7 @@ L.Control.JSDialog = L.Control.extend({
 			const dialog = this.dialogs[id];
 			if (!sendCloseEvent && dialog.overlay && !dialog.isSubmenu) {
 				app.layoutingService.appendLayoutingTask(
-					() => { L.DomUtil.remove(dialog.overlay); });
+					() => { window.L.DomUtil.remove(dialog.overlay); });
 			}
 
 			if (dialog.timeoutId)
@@ -147,7 +147,7 @@ L.Control.JSDialog = L.Control.extend({
 			// first try to close the dropdown if exists
 			if (clickToClose && typeof clickToClose.closeDropdown === 'function')
 				clickToClose.closeDropdown();
-			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'menubutton'))
+			if (clickToClose && window.L.DomUtil.hasClass(clickToClose, 'menubutton'))
 				clickToClose.click();
 			else if (builder)
 				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
@@ -232,7 +232,7 @@ L.Control.JSDialog = L.Control.extend({
 		const container = dialogInfo.container;
 
 		app.layoutingService.appendLayoutingTask(() => {
-			L.DomUtil.addClass(container, 'fadeout');
+			window.L.DomUtil.addClass(container, 'fadeout');
 
 			let timeoutId = null;
 			const finallyClose = () => {
@@ -254,13 +254,13 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		// Dialogue overlay which will allow automatic positioning and cancellation of the dialogue if cancellable.
-		var overlay = L.DomUtil.get(instance.id + '-overlay');
+		var overlay = window.L.DomUtil.get(instance.id + '-overlay');
 		if (!overlay) {
 
 			if (instance.noOverlay)
 				return;
 
-			overlay = L.DomUtil.create('div', 'jsdialog-overlay ' + (instance.cancellable && !instance.hasOverlay ? 'cancellable' : ''), instance.containerParent);
+			overlay = window.L.DomUtil.create('div', 'jsdialog-overlay ' + (instance.cancellable && !instance.hasOverlay ? 'cancellable' : ''), instance.containerParent);
 			overlay.id = instance.id + '-overlay';
 			if (instance.cancellable) {
 				overlay.onclick = () => {
@@ -286,10 +286,10 @@ L.Control.JSDialog = L.Control.extend({
 
 	createContainer: function(instance, documentFragment) {
 		// it has to be form to handle default button
-		instance.container = L.DomUtil.create('div', 'jsdialog-window', documentFragment);
+		instance.container = window.L.DomUtil.create('div', 'jsdialog-window', documentFragment);
 		instance.container.id = instance.id;
 
-		instance.form = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
+		instance.form = window.L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
 		instance.form.setAttribute('role', 'dialog');
 		instance.form.setAttribute('aria-labelledby', instance.title);
 		instance.form.setAttribute('autocomplete', 'off');
@@ -301,7 +301,7 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		if (instance.collapsed && (instance.collapsed === 'true' || instance.collapsed === true))
-			L.DomUtil.addClass(instance.container, 'collapsed');
+			window.L.DomUtil.addClass(instance.container, 'collapsed');
 
 		// prevent from reloading
 		instance.form.addEventListener('submit', (event) => { event.preventDefault(); });
@@ -312,7 +312,7 @@ L.Control.JSDialog = L.Control.extend({
 			instance.isOnlyChild = true;
 
 		// it has to be first button in the form
-		var defaultButton = L.DomUtil.createWithId('button', 'default-button', instance.form);
+		var defaultButton = window.L.DomUtil.createWithId('button', 'default-button', instance.form);
 		defaultButton.style.display = 'none';
 		defaultButton.onclick = function() {
 			if (instance.defaultButtonId) {
@@ -323,30 +323,30 @@ L.Control.JSDialog = L.Control.extend({
 		};
 
 		if (instance.haveTitlebar) {
-			instance.titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', instance.form);
-			let title = L.DomUtil.create('h2', 'ui-dialog-title', instance.titlebar);
+			instance.titlebar = window.L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', instance.form);
+			let title = window.L.DomUtil.create('h2', 'ui-dialog-title', instance.titlebar);
 			title.setAttribute('id', instance.title);
 			title.innerText = instance.title;
-			instance.titleCloseButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
+			instance.titleCloseButton = window.L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
 			const titleCloseButtonText = _('Close dialog');
 			instance.titleCloseButton.setAttribute('aria-label', titleCloseButtonText);
 			instance.titleCloseButton.setAttribute('title', titleCloseButtonText);
 			instance.titleCloseButton.tabIndex = '0';
-			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
+			window.L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
 		}
 
 		if (instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar)
-			L.DomUtil.addClass(instance.container, 'modalpopup');
+			window.L.DomUtil.addClass(instance.container, 'modalpopup');
 
 		if (instance.isModalPopUp && !instance.popupParent) // Special case for menu popups (they are also modal dialogues).
 			instance.overlay.classList.add('dimmed');
 
 		if (instance.isSnackbar) {
-			L.DomUtil.addClass(instance.container, 'snackbar');
-			L.DomUtil.addClass(instance.form, 'snackbar');
+			window.L.DomUtil.addClass(instance.container, 'snackbar');
+			window.L.DomUtil.addClass(instance.form, 'snackbar');
 		}
 
-		instance.content = L.DomUtil.create('div', 'jsdialog lokdialog ui-dialog-content ui-widget-content' + (instance.isOnlyChild ? ' one-child-popup' : ''), instance.form);
+		instance.content = window.L.DomUtil.create('div', 'jsdialog lokdialog ui-dialog-content ui-widget-content' + (instance.isOnlyChild ? ' one-child-popup' : ''), instance.form);
 
 		this.dialogs[instance.id] = {};
 	},
@@ -367,7 +367,7 @@ L.Control.JSDialog = L.Control.extend({
 		var primaryBtn = instance.content.querySelector('#' + instance.defaultButtonId + ' button');
 		instance.primaryButton = primaryBtn;
 		if (primaryBtn)
-			L.DomUtil.addClass(primaryBtn, 'button-primary');
+			window.L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
 
 	addFocusHandler: function(instance) {
@@ -433,11 +433,11 @@ L.Control.JSDialog = L.Control.extend({
 			hammerTitlebar.on('hammer.input', onInput);
 		}
 
-		var popupParent = instance.popupParent ? L.DomUtil.get(instance.popupParent) : null;
+		var popupParent = instance.popupParent ? window.L.DomUtil.get(instance.popupParent) : null;
 
 		this.addFocusHandler(instance); // Loop focus for all dialogues.
 
-		var clickToCloseId = instance.clickToClose ? L.Util.sanitizeElementId(instance.clickToClose) : null;
+		var clickToCloseId = instance.clickToClose ? window.L.Util.sanitizeElementId(instance.clickToClose) : null;
 		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
 			clickToCloseId = clickToCloseId.substr('.uno:'.length);
 
@@ -452,7 +452,7 @@ L.Control.JSDialog = L.Control.extend({
 				instance.clickToCloseText = instance.clickToClose;
 		} else if (clickToCloseId) {
 			// fallback
-			clickToCloseElement = L.DomUtil.get(clickToCloseId);
+			clickToCloseElement = window.L.DomUtil.get(clickToCloseId);
 		}
 		instance.clickToClose = clickToCloseElement;
 
@@ -537,7 +537,7 @@ L.Control.JSDialog = L.Control.extend({
 				instance.posx = updatedPos.x;
 				instance.posy = updatedPos.y;
 			}
-			var parent = L.DomUtil.get(instance.popupParent);
+			var parent = window.L.DomUtil.get(instance.popupParent);
 
 			if (instance.clickToCloseId && parent) {
 				var childButton = parent.querySelector('[id=\'' + instance.clickToCloseId + '\']');
@@ -1090,6 +1090,6 @@ L.Control.JSDialog = L.Control.extend({
 	}
 });
 
-L.control.jsDialog = function (options) {
-	return new L.Control.JSDialog(options);
+window.L.control.jsDialog = function (options) {
+	return new window.L.Control.JSDialog(options);
 };

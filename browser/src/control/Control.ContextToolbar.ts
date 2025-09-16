@@ -38,12 +38,12 @@ class ContextToolbar {
 	}
 
 	createContextToolbarElement(): void {
-		this.container = L.DomUtil.createWithId(
+		this.container = window.L.DomUtil.createWithId(
 			'div',
 			'context-toolbar',
 			document.body,
 		);
-		L.DomUtil.addClass(this.container, 'notebookbar horizontal');
+		window.L.DomUtil.addClass(this.container, 'notebookbar horizontal');
 	}
 
 	showContextToolbar(): void {
@@ -103,7 +103,7 @@ class ContextToolbar {
 	private showHideToolbar(show: boolean): void {
 		app.layoutingService.appendLayoutingTask(() => {
 			if (!show) {
-				L.DomUtil.addClass(this.container, 'hidden');
+				window.L.DomUtil.addClass(this.container, 'hidden');
 				return;
 			}
 
@@ -123,7 +123,7 @@ class ContextToolbar {
 				app.sectionContainer.getCanvasBoundingClientRect().y;
 			this.container.style.left = pos.x + 'px';
 			this.container.style.top = pos.y + 'px';
-			L.DomUtil.removeClass(this.container, 'hidden');
+			window.L.DomUtil.removeClass(this.container, 'hidden');
 		});
 	}
 

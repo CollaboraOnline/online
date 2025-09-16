@@ -120,7 +120,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['insertmultimedia'] = function () {
-			L.DomUtil.get('insertmultimedia').click();
+			window.L.DomUtil.get('insertmultimedia').click();
 		};
 		this.actionsMap['remotemultimedia'] = function () {
 			app.map.fire('postMessage', {
@@ -184,7 +184,7 @@ class Dispatcher {
 			app.map.fire('morelanguages', { applyto: 'all' });
 		};
 		this.actionsMap['localgraphic'] = function () {
-			L.DomUtil.get('insertgraphic').click();
+			window.L.DomUtil.get('insertgraphic').click();
 		};
 		this.actionsMap['remotegraphic'] = this.actionsMap['insertremotegraphic'] =
 			function () {
@@ -262,7 +262,7 @@ class Dispatcher {
 			$('#toolbar-down').hide();
 			$('#showsearchbar').removeClass('over');
 			$('#toolbar-search').show();
-			L.DomUtil.get('search-input').focus();
+			window.L.DomUtil.get('search-input').focus();
 		};
 		this.actionsMap['hidesearchbar'] = () => {
 			$('#toolbar-search').hide();
@@ -470,7 +470,7 @@ class Dispatcher {
 		this.actionsMap['lastrecord'] = function () {
 			// Set a very high value, so that scroll is set to the maximum possible value internally.
 			// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
-			L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
+			window.L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
 		};
 		this.actionsMap['columnrowhighlight'] = function () {
 			var newState = !app.map.uiManager.getHighlightMode();
@@ -613,7 +613,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['selectbackground'] = function () {
-			L.DomUtil.get('selectbackground').click();
+			window.L.DomUtil.get('selectbackground').click();
 		};
 
 		this.actionsMap['notesmode'] = function () {

@@ -1,13 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app cool */
 /*
- * L.DomEvent contains functions for working with DOM events.
+ * window.L.DomEvent contains functions for working with DOM events.
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
  */
 
 var eventsKey = '_leaflet_events';
 
-L.DomEvent = {
+window.L.DomEvent = {
 
 	on: function (obj, types, fn, context) {
 
@@ -54,7 +54,7 @@ L.DomEvent = {
 
 		var originalHandler = handler;
 
-		if (L.Browser.pointer && type.indexOf('touch') === 0) {
+		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
 			this.addPointerListener(obj, type, handler, id);
 
 		} else if ((type === 'dblclick') && this.addDoubleTapListener) {
@@ -72,16 +72,16 @@ L.DomEvent = {
 			} else if ((type === 'mouseenter') || (type === 'mouseleave')) {
 				handler = function (e) {
 					e = e || window.event;
-					if (L.DomEvent._checkMouse(obj, e)) {
+					if (window.L.DomEvent._checkMouse(obj, e)) {
 						originalHandler(e);
 					}
 				};
 				obj.addEventListener(type === 'mouseenter' ? 'mouseover' : 'mouseout', handler, false);
 
 			} else {
-				if (type === 'click' && L.Browser.android) {
+				if (type === 'click' && window.L.Browser.android) {
 					handler = function (e) {
-						return L.DomEvent._filterClick(e, originalHandler);
+						return window.L.DomEvent._filterClick(e, originalHandler);
 					};
 				}
 				obj.addEventListener(type, handler, false);
@@ -104,7 +104,7 @@ L.DomEvent = {
 
 		if (!handler) { return this; }
 
-		if (L.Browser.pointer && type.indexOf('touch') === 0) {
+		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
 			this.removePointerListener(obj, type, id);
 
 		} else if ((type === 'dblclick') && this.removeDoubleTapListener) {
@@ -141,33 +141,33 @@ L.DomEvent = {
 		} else {
 			e.cancelBubble = true;
 		}
-		L.DomEvent._skipped(e);
+		window.L.DomEvent._skipped(e);
 
 		return this;
 	},
 
 	disableMouseClickPropagation: function (el) {
-		var stop = window.touch.mouseOnly(L.DomEvent.stopPropagation);
+		var stop = window.touch.mouseOnly(window.L.DomEvent.stopPropagation);
 
-		L.DomEvent.on(el, L.Draggable.START.join(' '), stop);
+		window.L.DomEvent.on(el, window.L.Draggable.START.join(' '), stop);
 
-		return L.DomEvent.on(el, {
-			click: window.touch.mouseOnly(L.DomEvent._fakeStop),
+		return window.L.DomEvent.on(el, {
+			click: window.touch.mouseOnly(window.L.DomEvent._fakeStop),
 			dblclick: stop
 		});
 	},
 
 	disableScrollPropagation: function (el) {
-		return L.DomEvent.on(el, 'mousewheel MozMousePixelScroll', L.DomEvent.stopPropagation);
+		return window.L.DomEvent.on(el, 'mousewheel MozMousePixelScroll', window.L.DomEvent.stopPropagation);
 	},
 
 	disableClickPropagation: function (el) {
-		var stop = L.DomEvent.stopPropagation;
+		var stop = window.L.DomEvent.stopPropagation;
 
-		L.DomEvent.on(el, L.Draggable.START.join(' '), stop);
+		window.L.DomEvent.on(el, window.L.Draggable.START.join(' '), stop);
 
-		return L.DomEvent.on(el, {
-			click: L.DomEvent._fakeStop,
+		return window.L.DomEvent.on(el, {
+			click: window.L.DomEvent._fakeStop,
 			dblclick: stop
 		});
 	},
@@ -183,7 +183,7 @@ L.DomEvent = {
 	},
 
 	stop: function (e) {
-		return L.DomEvent
+		return window.L.DomEvent
 			.preventDefault(e)
 			.stopPropagation(e);
 	},
@@ -203,7 +203,7 @@ L.DomEvent = {
 		// iframe mouse coordinates are relative to the frame area
 		// `target`: body element of the iframe; `currentTarget`: content window of the iframe
 		if (e.currentTarget && e.currentTarget.frameElement
-			&& L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
+			&& window.L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
 			left = top = 0;
 		}
 
@@ -242,8 +242,8 @@ L.DomEvent = {
 	_skipEvents: {},
 
 	_fakeStop: function (e) {
-		// fakes stopPropagation by setting a special event flag, checked/reset with L.DomEvent._skipped(e)
-		L.DomEvent._skipEvents[e.type] = true;
+		// fakes stopPropagation by setting a special event flag, checked/reset with window.L.DomEvent._skipped(e)
+		window.L.DomEvent._skipEvents[e.type] = true;
 	},
 
 	_skipped: function (e) {
@@ -273,7 +273,7 @@ L.DomEvent = {
 	// this is a horrible workaround for a bug in Android where a single touch triggers two click events
 	_filterClick: function (e, handler) {
 		var timeStamp = (e.timeStamp || e.originalEvent.timeStamp),
-		    elapsed = L.DomEvent._lastClick && (timeStamp - L.DomEvent._lastClick);
+		    elapsed = window.L.DomEvent._lastClick && (timeStamp - window.L.DomEvent._lastClick);
 
 		// are they closer together than 500ms yet more than 100ms?
 		// Android typically triggers them ~300ms apart while multiple listeners
@@ -281,14 +281,14 @@ L.DomEvent = {
 		// or check if click is simulated on the element, and if it is, reject any non-simulated events
 
 		if ((elapsed && elapsed > 100 && elapsed < 500) || (e.target._simulatedClick && !e._simulated)) {
-			L.DomEvent.stop(e);
+			window.L.DomEvent.stop(e);
 			return;
 		}
-		L.DomEvent._lastClick = timeStamp;
+		window.L.DomEvent._lastClick = timeStamp;
 
 		handler(e);
 	}
 };
 
-L.DomEvent.addListener = L.DomEvent.on;
-L.DomEvent.removeListener = L.DomEvent.off;
+window.L.DomEvent.addListener = window.L.DomEvent.on;
+window.L.DomEvent.removeListener = window.L.DomEvent.off;

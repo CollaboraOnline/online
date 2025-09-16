@@ -1,15 +1,15 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app */
 /*
- * L.LayerGroup is a class to combine several layers into one so that
+ * window.L.LayerGroup is a class to combine several layers into one so that
  * you can manipulate the group (e.g. add/remove it) as one layer.
  */
 
-L.LayerGroup = L.Layer.extend({
+window.L.LayerGroup = window.L.Layer.extend({
 
 	initialize: function (layers) {
 
-		L.Layer.prototype.initialize.call(this);
+		window.L.Layer.prototype.initialize.call(this);
 
 		this._layers = {};
 
@@ -109,6 +109,6 @@ L.LayerGroup = L.Layer.extend({
 	}
 });
 
-L.layerGroup = function (layers) {
-	return new L.LayerGroup(layers);
+window.L.layerGroup = function (layers) {
+	return new window.L.LayerGroup(layers);
 };

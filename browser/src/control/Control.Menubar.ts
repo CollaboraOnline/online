@@ -1464,10 +1464,10 @@ class Menubar extends window.L.Control {
 	 * @param map - The Leaflet map instance.
 	 * @returns The menubar container HTMLElement.
 	 */
-	onAdd(map: ReturnType<typeof L.Map>) {
+	onAdd(map: ReturnType<typeof window.L.Map>) {
 		this._initialized = false;
 		this._hiddenItems = [];
-		this._menubarCont = L.DomUtil.get('main-menu');
+		this._menubarCont = window.L.DomUtil.get('main-menu');
 		this._isFileODF = true;
 		this._map = map;
 		// In case it contains garbage
@@ -1516,17 +1516,17 @@ class Menubar extends window.L.Control {
 	 * @param e - Event data containing the new menu item details.
 	 */
 	private _addMenu(e: any): void {
-		var alreadyExists = L.DomUtil.get('menu-' + e.id);
+		var alreadyExists = window.L.DomUtil.get('menu-' + e.id);
 		if (alreadyExists)
 			return;
 
-		var liItem = L.DomUtil.create('li', '');
+		var liItem = window.L.DomUtil.create('li', '');
 		liItem.setAttribute('role', 'menuitem');
 		liItem.id = 'menu-' + e.id;
 		if (this._map.isReadOnlyMode()) {
-			L.DomUtil.addClass(liItem, 'readonly');
+			window.L.DomUtil.addClass(liItem, 'readonly');
 		}
-		var aItem = L.DomUtil.create('a', '', liItem);
+		var aItem = window.L.DomUtil.create('a', '', liItem);
 		$(aItem).text(e.label);
 		$(aItem).data('id', e.id);
 		$(aItem).data('type', 'action');
@@ -1544,9 +1544,9 @@ class Menubar extends window.L.Control {
        */
 	private _createUnoMenuItem(caption: string, command: string, tag?: string): HTMLElement {
 		var liItem, aItem;
-		liItem = L.DomUtil.create('li', '');
+		liItem = window.L.DomUtil.create('li', '');
 		liItem.setAttribute('role', 'menuitem');
-		aItem = L.DomUtil.create('a', '', liItem);
+		aItem = window.L.DomUtil.create('a', '', liItem);
 		$(aItem).text(caption);
 		$(aItem).data('type', 'unocommand');
 		$(aItem).data('uno', command);
@@ -1564,9 +1564,9 @@ class Menubar extends window.L.Control {
 	 */
 	private _createActionMenuItem(caption: string, id: string): HTMLElement {
 		var liItem, aItem;
-		liItem = L.DomUtil.create('li', '');
+		liItem = window.L.DomUtil.create('li', '');
 		liItem.setAttribute('role', 'menuitem');
-		aItem = L.DomUtil.create('a', '', liItem);
+		aItem = window.L.DomUtil.create('a', '', liItem);
 		$(aItem).text(caption);
 		$(aItem).data('type', 'action');
 		$(aItem).data('id', id);
@@ -1659,7 +1659,7 @@ class Menubar extends window.L.Control {
 
 		// clear initial menu
 		if (this._menubarCont)
-			L.DomUtil.removeChildNodes(this._menubarCont);
+			window.L.DomUtil.removeChildNodes(this._menubarCont);
 
 		// Add document specific menu
 		var docType = this._map.getDocType();
@@ -2208,11 +2208,11 @@ class Menubar extends window.L.Control {
 			// request new tiles for now.
 			app.map._docLayer.requestNewFiledBasedViewTiles();
 		} else if (id === 'insertgraphic') {
-			L.DomUtil.get('insertgraphic').click();
+			window.L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'insertgraphicremote') {
 			this._map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		} else if (id === 'insertmultimedia') {
-			L.DomUtil.get('insertmultimedia').click();
+			window.L.DomUtil.get('insertmultimedia').click();
 		} else if (id === 'remotemultimedia') {
 			this._map.fire('postMessage', {
 				msgId: 'UI_InsertFile', args: {
@@ -2302,7 +2302,7 @@ class Menubar extends window.L.Control {
 				$('#toolbar-down').hide();
 				$('#toolbar-search').show();
 				$('#mobile-edit-button').hide();
-				L.DomUtil.get('search-input').focus();
+				window.L.DomUtil.get('search-input').focus();
 			} else {
 				this._map.sendUnoCommand('.uno:SearchDialog');
 			}
@@ -2386,10 +2386,10 @@ class Menubar extends window.L.Control {
 	 * Creates the file icon in the menubar header.
 	 */
 	private _createFileIcon(): void {
-		var liItem = L.DomUtil.create('li', '');
+		var liItem = window.L.DomUtil.create('li', '');
 		liItem.id = 'document-header';
 		liItem.setAttribute('role', 'menuitem');
-		var aItem = L.DomUtil.create('div', 'document-logo', liItem);
+		var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
 		$(aItem).data('id', 'document-logo');
 		$(aItem).data('type', 'action');
 		aItem.setAttribute('role', 'img');
@@ -2415,7 +2415,7 @@ class Menubar extends window.L.Control {
 		if (window.ThisIsTheiOSApp && menuItem.iosapp === false) {
 			return false;
 		}
-		if (menuItem.id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
+		if (menuItem.id === 'about' && (window.L.DomUtil.get('about-dialog') === null)) {
 			return false;
 		}
 		if (menuItem.id === 'fontworkgalleryfloater' && !this._isFileODF) {
@@ -2574,16 +2574,16 @@ class Menubar extends window.L.Control {
 			if (this._checkItemVisibility(menu[i]) === false)
 				continue;
 
-			var liItem = L.DomUtil.create('li', '');
+			var liItem = window.L.DomUtil.create('li', '');
 			liItem.setAttribute('role', 'menuitem');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
 				if (menu[i].id === 'closedocument' && this._map.isReadOnlyMode()) {
 					// see corresponding css rule for readonly class usage
-					L.DomUtil.addClass(liItem, 'readonly');
+					window.L.DomUtil.addClass(liItem, 'readonly');
 				}
 			}
-			var aItem = L.DomUtil.create('a', menu[i].disabled ? 'disabled' : '', liItem);
+			var aItem = window.L.DomUtil.create('a', menu[i].disabled ? 'disabled' : '', liItem);
 			if (menu[i].name !== undefined) {
 				aItem.innerHTML = menu[i].name;
 			} else if (menu[i].uno !== undefined) {
@@ -2596,7 +2596,7 @@ class Menubar extends window.L.Control {
 			}
 
 			if (menu[i].type === 'menu') {
-				var ulItem = L.DomUtil.create('ul', '', liItem);
+				var ulItem = window.L.DomUtil.create('ul', '', liItem);
 				var subitemList = this._createMenu(menu[i].menu);
 				if (!subitemList.length) {
 					continue;
@@ -2939,14 +2939,14 @@ class Menubar extends window.L.Control {
 	 * @param lastmodtime - The last modification time.
 	 */
 	private _onInitModificationIndicator(lastmodtime: any): void {
-		var lastModButton = L.DomUtil.get('menu-last-mod');
+		var lastModButton = window.L.DomUtil.get('menu-last-mod');
 		if (lastModButton !== null && lastModButton !== undefined
 			&& lastModButton.firstChild
 			&& lastModButton.firstChild.innerHTML !== null
 			&& lastModButton.firstChild.childElementCount == 0) {
 			if (lastmodtime == null) {
 				// No modification time -> hide the indicator
-				L.DomUtil.setStyle(lastModButton, 'display', 'none');
+				window.L.DomUtil.setStyle(lastModButton, 'display', 'none');
 				return;
 			}
 			var mainSpan = document.createElement('span');

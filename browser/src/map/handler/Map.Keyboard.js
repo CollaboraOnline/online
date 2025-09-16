@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
+ * window.L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
  *
  * It handles keyboard interactions which are NOT text input, including those which
  * don't require edit permissions (e.g. page scroll). Text input is handled
@@ -9,13 +9,13 @@
 
 /* global app UNOKey UNOModifier TileManager */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	keyboard: true,
 	keyboardPanOffset: 20,
 	keyboardZoomOffset: 1
 });
 
-L.Map.Keyboard = L.Handler.extend({
+window.L.Map.Keyboard = window.L.Handler.extend({
 
 	keymap: {
 		8   : UNOKey.BACKSPACE,
@@ -311,13 +311,13 @@ L.Map.Keyboard = L.Handler.extend({
 			container.tabIndex = '0';
 		}
 
-		L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
-		L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
+		window.L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		window.L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	removeHooks: function () {
-		L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
-		L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
+		window.L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		window.L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	_ignoreKeyEvent: function(ev) {
@@ -500,7 +500,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 		if (!keyEventFn && docLayer && docLayer.postKeyboardEvent) {
 			// default is to post keyboard events on the document
-			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
+			keyEventFn = window.L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
 
 		this.modifier = 0;
@@ -643,11 +643,11 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		L.DomEvent.stopPropagation(ev);
+		window.L.DomEvent.stopPropagation(ev);
 	},
 
 	_isCtrlKey: function (e) {
-		if (window.ThisIsTheiOSApp || L.Browser.mac)
+		if (window.ThisIsTheiOSApp || window.L.Browser.mac)
 			return e.metaKey;
 		else
 			return e.ctrlKey;

@@ -21,7 +21,7 @@ JSDialog.buttonBox = function (
 	data: ContainerWidgetJSON,
 	builder: JSBuilder,
 ) {
-	var container = L.DomUtil.create(
+	var container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass +
 			' ui-button-box ' +
@@ -41,7 +41,7 @@ JSDialog.buttonBox = function (
 		}
 	}
 
-	var left = L.DomUtil.create(
+	var left = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-button-box-left',
 		container,
@@ -55,13 +55,13 @@ JSDialog.buttonBox = function (
 		}
 	}
 
-	var right = L.DomUtil.create(
+	var right = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-button-box-right',
 		container,
 	);
 	if (data.layoutstyle && data.layoutstyle === 'end')
-		L.DomUtil.addClass(container, 'end');
+		window.L.DomUtil.addClass(container, 'end');
 
 	for (const i in rightAlignButton) {
 		const child = rightAlignButton[i];

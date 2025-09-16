@@ -50,7 +50,7 @@ abstract class SidebarBase {
 			callback: this.callback.bind(this),
 		});
 		if (!this.container) {
-			this.container = L.DomUtil.createWithId(
+			this.container = window.L.DomUtil.createWithId(
 				'div',
 				`${this.type}-container`,
 				$(`#${this.type}-panel`).get(0),

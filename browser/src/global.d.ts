@@ -72,17 +72,17 @@ declare namespace L {
     }
 
     class Control {
-        protected _map: L.Map; // Expose _map as a protected property
+        protected _map: window.L.Map; // Expose _map as a protected property
 
         constructor(options?: any);
-        addTo(map: L.Map): this;
+        addTo(map: window.L.Map): this;
         remove(): this;
         // Add other methods and properties as needed
         getPosition(): string;
         setPosition(position: string): this;
         getContainer(): HTMLElement | undefined;
-        onAdd(map: L.Map): HTMLElement;
-        onRemove(map: L.Map): void;
+        onAdd(map: window.L.Map): HTMLElement;
+        onRemove(map: window.L.Map): void;
 
             // Properties
             options: any; // Replace 'any' with the appropriate type if known
@@ -90,21 +90,21 @@ declare namespace L {
             _position: string;
 
             // Methods
-            addControl(control: L.Control): this;
-            removeControl(control: L.Control): this;
+            addControl(control: window.L.Control): this;
+            removeControl(control: window.L.Control): this;
             getContainer(): HTMLElement | undefined;
             setContainer(container: HTMLElement): void;
             getOptions(): any;
             setOptions(options: any): void;
-            getMap(): L.Map | undefined;
-            setMap(map: L.Map): void;
+            getMap(): window.L.Map | undefined;
+            setMap(map: window.L.Map): void;
             menubar(): void; // Add menubar functionality if applicable
 
         static extend(props: any): any;
     }
 
     const control: Control;
-    const map: L.Map;
+    const map: window.L.Map;
 }
 */
 // Add the app declaration
@@ -175,7 +175,7 @@ interface Window {
 		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 		colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 		console: Console;
-		map: any; // TODO should be L.Map
+		map: any; // TODO should be window.L.Map
 		// file defined in: src/docstate.ts
 		file: {
 			editComment: boolean;

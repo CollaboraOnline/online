@@ -9,11 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.Dialog used for displaying alerts
+ * window.L.Control.Dialog used for displaying alerts
  */
 
 /* global _ sanitizeUrl JSDialog */
-L.Control.AlertDialog = L.Control.extend({
+window.L.Control.AlertDialog = window.L.Control.extend({
 	onAdd: function (map) {
 		// TODO: Better distinction between warnings and errors
 		map.on('error', this._onError, this);
@@ -110,6 +110,6 @@ L.Control.AlertDialog = L.Control.extend({
 	}
 });
 
-L.control.alertDialog = function (options) {
-	return new L.Control.AlertDialog(options);
+window.L.control.alertDialog = function (options) {
+	return new window.L.Control.AlertDialog(options);
 };
