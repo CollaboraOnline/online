@@ -3147,8 +3147,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (scrollToCursor &&
 			    !this._map.calcInputBarHasFocus()) {
 				const scroll = this._calculateScrollForNewCellCursor();
-				if (scroll.x !== 0 || scroll.y !== 0)
-					app.activeDocument.activeView.scroll(scroll.pX, scroll.pY);
+				if (scroll.x !== 0 || scroll.y !== 0) {
+					scroll.x += app.activeDocument.activeView.viewedRectangle.x1;
+					scroll.y += app.activeDocument.activeView.viewedRectangle.y1;
+					app.activeDocument.activeView.scrollTo(scroll.pX, scroll.pY);
+				}
 
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
 			}

@@ -1195,7 +1195,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_calculateScrollForNewCellCursor: function () {
-		var scroll = new app.definitions.simplePoint(0, 0);
+		var scroll = new cool.SimplePoint(0, 0);
 
 		if (!app.calc.cellCursorVisible) {
 			return scroll;
