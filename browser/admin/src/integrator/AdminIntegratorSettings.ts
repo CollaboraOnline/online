@@ -590,7 +590,7 @@ class SettingIframe {
 			btn.type = 'button';
 			btn.className = `browser-setting-tab`;
 			btn.id = `bs-tab-${tab.id}`;
-			btn.textContent = _(tab.label);
+			btn.textContent = tab.label;
 			btn.addEventListener('click', () => {
 				navContainer
 					.querySelectorAll('.browser-setting-tab')
@@ -817,7 +817,7 @@ class SettingIframe {
 			fieldset.classList.add('grid-options-fieldset');
 		}
 		const legend = document.createElement('legend');
-		legend.textContent = _(this.settingLabels[key] || key);
+		legend.textContent = this.settingLabels[key] || key;
 		fieldset.appendChild(legend);
 		const childContent = this.renderSettingsOption(value, uniqueId);
 		fieldset.appendChild(childContent);
@@ -881,7 +881,7 @@ class SettingIframe {
 		const textElement = document.createElement('span');
 		textElement.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = _(labelText);
+		textElement.textContent = labelText;
 		checkboxContent.appendChild(textElement);
 
 		if (warningText) {
@@ -915,7 +915,7 @@ class SettingIframe {
 		uniqueId: string,
 		data: any,
 	): HTMLSpanElement {
-		const labelText = _(this.settingLabels[key] || key);
+		const labelText = this.settingLabels[key] || key;
 
 		return this.createCheckbox(
 			uniqueId,
