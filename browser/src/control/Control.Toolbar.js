@@ -1124,6 +1124,9 @@ function setupToolbar(e) {
 			toolbar.showItem('cancelsearch', false);
 			L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
+			const searchbox = document.getElementById('searchbox');
+			if(searchbox && !searchbox.hasAttribute('aria-live'))
+				searchbox.setAttribute('aria-live', 'polite');
 			app.searchService.resetSelection();
 			setTimeout(function () {
 				$('#findthis').removeClass('search-not-found');
