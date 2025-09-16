@@ -78,7 +78,7 @@ interface SlideInfo {
 	index: number;
 	name: string;
 	notes: string;
-	ally?: string;
+	a11y?: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
@@ -123,7 +123,7 @@ class SlideShowPresenter {
 	_canvasLoader: CanvasLoader | null = null;
 	_progressBarContainer: HTMLDivElement | null = null;
 	_slideNavContainer: HTMLDivElement | null = null;
-	_enableAlly: boolean = false;
+	_enableA11y: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
@@ -145,11 +145,11 @@ class SlideShowPresenter {
 	private _isFollower: boolean = false;
 	private _isFollowing: boolean = false;
 
-	constructor(map: any, enableAlly: boolean) {
+	constructor(map: any, enableA11y: boolean) {
 		this._cypressSVGPresentationTest =
 			L.Browser.cypressTest || 'Cypress' in window;
 		this._map = map;
-		this._enableAlly = enableAlly;
+		this._enableA11y = enableA11y;
 		this._init();
 		this.addHooks();
 	}
@@ -470,7 +470,7 @@ class SlideShowPresenter {
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
 
-		if (this._enableAlly) {
+		if (this._enableA11y) {
 			canvas.setAttribute('aria-live', 'assertive');
 		}
 

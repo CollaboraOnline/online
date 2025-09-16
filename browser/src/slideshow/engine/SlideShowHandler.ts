@@ -223,14 +223,14 @@ class SlideShowHandler {
 		);
 	}
 
-	addAllyString(allyString: string) {
-		if (this.presenter._enableAlly) {
+	addA11yString(a11yString: string) {
+		if (this.presenter._enableA11y) {
 			const canvas = this.getContext()._canvas;
 			if (canvas) {
-				const allyContainer = L.DomUtil.create('div', '');
+				const a11yContainer = L.DomUtil.create('div', '');
 				canvas.innerHTML = '';
-				allyContainer.innerHTML = app.LOUtil.sanitize(allyString);
-				canvas.appendChild(allyContainer);
+				a11yContainer.innerHTML = app.LOUtil.sanitize(a11yString);
+				canvas.appendChild(a11yContainer);
 			}
 		}
 	}
@@ -869,8 +869,8 @@ class SlideShowHandler {
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
 
 		const slideinfo = this.getSlideInfo(nNewSlide);
-		if (slideinfo.ally) {
-			this.addAllyString(slideinfo.ally);
+		if (slideinfo.a11y) {
+			this.addA11yString(slideinfo.a11y);
 		}
 	}
 
