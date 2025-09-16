@@ -299,7 +299,11 @@ JSDialog.OverflowGroup = function (
 				{
 					type: 'menubutton',
 					id: id,
-					text: data.name ? data.name : firstItem ? (firstItem as any).text : '',
+					text: data.name
+						? data.name
+						: firstItem
+							? (firstItem as any).text
+							: '',
 					icon: data.icon ? data.icon : getToolitemIcon(firstItem),
 					command: firstItem ? (firstItem as any).command : '',
 					noLabel: !data.name,
