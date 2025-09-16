@@ -1855,10 +1855,10 @@ bool ChildSession::insertFile(const StringVector& tokens)
             macaron::Base64::Decode(data, binaryData);
             const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
             std::ofstream fileStream;
-            fileStream.open(tempFile);
+            fileStream.open(tempFile, std::ios::out | std::ios::binary);
             fileStream.write(binaryData.data(), binaryData.size());
             fileStream.close();
-            url = "file://" + tempFile;
+            url = Poco::URI(Poco::Path(tempFile)).toString();
         }
 
         std::string command;
