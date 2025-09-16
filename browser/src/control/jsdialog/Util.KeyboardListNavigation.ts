@@ -53,6 +53,7 @@ function moveToFocusableEntry(
 		direction === 'next'
 	) {
 		currentElement.classList.add('selected');
+		currentElement.setAttribute('aria-selected', 'true');
 		return;
 	}
 
@@ -64,7 +65,9 @@ function moveToFocusableEntry(
 	if (siblingElement) {
 		(siblingElement as HTMLElement).focus();
 		siblingElement.classList.add('selected');
+		siblingElement.setAttribute('aria-selected', 'true');
 		currentElement.classList.remove('selected');
+		currentElement.removeAttribute('aria-selected');
 	}
 }
 
