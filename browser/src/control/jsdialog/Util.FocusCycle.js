@@ -82,16 +82,15 @@ function makeFocusCycle(container, failedToFindFocusFunc) {
 
 	container.addEventListener('focusin', function(event) {
 		if (event.target == endMarker) {
-			var firstFocusElement = getFocusableElements(container);
-			if (firstFocusElement && firstFocusElement.length) {
-				firstFocusElement[0].focus();
+			var focusables = getFocusableElements(container);
+			if (focusables && focusables.length) {
+				focusables[0].focus();
 				return;
 			}
 		} else if (event.target == beginMarker) {
 			var focusables = getFocusableElements(container);
-			var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
-			if (lastFocusElement) {
-				lastFocusElement.focus();
+			if (focusables && focusables.length) {
+				focusables[focusables.length - 1].focus();
 				return;
 			}
 		}
