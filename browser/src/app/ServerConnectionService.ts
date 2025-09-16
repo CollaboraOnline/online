@@ -18,6 +18,7 @@
 interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
+	signatureCertificate?: string;
 }
 
 class ServerConnectionService {
