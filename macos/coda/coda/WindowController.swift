@@ -32,6 +32,45 @@ struct CommandStateChange: Decodable {
 /// Window controller that manages the document window & menus
 class WindowController: NSWindowController, NSMenuItemValidation {
 
+    /// Default to some nicer size when opening the document the 1st time.
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        guard let window = window else { return }
+
+        // Let macOS remember the user's last size/position after first launch.
+        window.setFrameAutosaveName("DocumentWindow")
+
+        // If there isn't a saved frame yet, apply our default.
+        if !window.setFrameUsingName("DocumentWindow") {
+            applyDefaultFrame(window, widthFraction: 0.95, heightFraction: 0.95)
+        }
+    }
+
+    /// Fractions of visible width & height, centered on the target screen.
+    private func applyDefaultFrame(_ window: NSWindow, widthFraction: CGFloat, heightFraction: CGFloat) {
+        // Choose the screen the window will appear on (fallback to main/first if unknown).
+        let screen = window.screen ?? NSScreen.main ?? NSScreen.screens.first!
+        let vf = screen.visibleFrame
+
+        // Fraction for width, "as tall as possible" for the height
+        let targetW = floor(vf.width * widthFraction)
+        let targetH = floor(vf.height * heightFraction)
+
+        // Center horizontally; align to bottom of visible area.
+        let x = vf.origin.x + (vf.width - targetW) / 2.0
+        let y = vf.origin.y + (vf.height - targetH) / 2.0
+
+        let minSize = window.minSize
+        let maxSize = window.maxSize
+
+        // Respect any min/max constraints the window may have.
+        let clampedW = max(minSize.width, min(maxSize.width > 0 ? maxSize.width : .greatestFiniteMagnitude, targetW))
+        let clampedH = max(minSize.height, min(maxSize.height > 0 ? maxSize.height : .greatestFiniteMagnitude, targetH))
+        let clampedFrame = NSRect(x: x, y: y, width: clampedW, height: clampedH)
+
+        window.setFrame(clampedFrame, display: false, animate: false)
+    }
+
     /// Track menu states here, to be able to show the state in the menu
     var commandState: [String: String] = [:]
 
