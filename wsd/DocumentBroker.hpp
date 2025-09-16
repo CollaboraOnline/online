@@ -1709,6 +1709,14 @@ private:
     std::string applyViewAccessibility(const std::string& message,
                                        const std::string& viewId);
 
+    /// Apply signature view settings to the message
+    std::string applySignViewSettings(const std::string& message,
+                                      const std::shared_ptr<ClientSession>& session);
+
+    /// Apply all view settings (signature and accessibility) to the message
+    std::string applyViewSetting(const std::string& message, const std::string& viewId,
+                                 const std::shared_ptr<ClientSession>& session);
+
     /// What type are we: affects priority.
     const Poco::URI _uriPublic;
 
@@ -1841,6 +1849,8 @@ private:
     bool _isViewFileExtension;
 
     bool _isViewSettingsAccessibilityEnabled;
+
+    bool _isViewSettingsUpdated;
 
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit : 1;
