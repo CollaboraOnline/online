@@ -3563,9 +3563,25 @@ void lokit_main(
             if (usingMountNamespace)
             {
                 // create another namespace, map back to original uid/gid after mount
+                cap_t caps = cap_get_proc();
+                if (caps != nullptr)
+                {
+                    char* capText = cap_to_text(caps, nullptr);
+                    LOG_TRC("Caps[" << capText << "] before entering nested usernamespace");
+                    cap_free(capText);
+                    cap_free(caps);
+                }
                 LOG_DBG("Move into user namespace as uid " << origuid);
                 if (!JailUtil::enterUserNS(origuid, origgid))
                     LOG_ERR("Linux user namespace for kit failed: " << strerror(errno));
+                caps = cap_get_proc();
+                if (caps != nullptr)
+                {
+                    char* capText = cap_to_text(caps, nullptr);
+                    LOG_TRC("Caps[" << capText << "] after entering nested usernamespace");
+                    cap_free(capText);
+                    cap_free(caps);
+                }
             }
 
             assert(origuid == geteuid());
