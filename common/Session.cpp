@@ -14,15 +14,19 @@
 #include "Session.hpp"
 
 #include <common/Anonymizer.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Uri.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/Exception.h>
+#include <Poco/JSON/Object.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>
 #include <Poco/URI.h>
+
+#include <sstream>
 
 using namespace COOLProtocol;
 
@@ -143,6 +147,56 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         else if (name == "authorprivateinfo")
         {
             _userPrivateInfo = Uri::decode(value);
+            ++offset;
+        }
+        else if (name == "signatureconfig")
+        {
+            if (_userPrivateInfo.empty())
+            {
+                LOG_WRN(
+                    "signatureconfig: User private info not set, skipping signature configuration");
+                ++offset;
+                continue;
+            }
+
+            std::string decodedSignatureData = Uri::decode(value);
+            if (decodedSignatureData == "{}")
+            {
+                LOG_INF("signatureconfig: Empty signature data received, skipping processing");
+                ++offset;
+                continue;
+            }
+
+            Poco::JSON::Object::Ptr signatureDataObject;
+            if (!JsonUtil::parseJSON(decodedSignatureData, signatureDataObject))
+            {
+                LOG_ERR("signatureconfig: Failed to parse signature data as JSON: "
+                        << decodedSignatureData);
+                ++offset;
+                continue;
+            }
+
+            Poco::JSON::Object::Ptr userPrivateInfoObject;
+            if (!JsonUtil::parseJSON(_userPrivateInfo, userPrivateInfoObject))
+            {
+                LOG_ERR("signatureconfig: Failed to parse user private info as JSON: "
+                        << _userPrivateInfo);
+                ++offset;
+                continue;
+            }
+
+            this->setSignToUserPrivateConfig("SignatureCert", signatureDataObject,
+                                             userPrivateInfoObject);
+            this->setSignToUserPrivateConfig("SignatureKey", signatureDataObject,
+                                             userPrivateInfoObject);
+            this->setSignToUserPrivateConfig("SignatureCa", signatureDataObject,
+                                             userPrivateInfoObject);
+
+            std::stringstream privateInfoSs;
+            userPrivateInfoObject->stringify(privateInfoSs);
+            _userPrivateInfo = privateInfoSs.str();
+            LOG_INF("signatureconfig: Successfully updated user private info with signature data");
+
             ++offset;
         }
         else if (name == "serverprivateinfo")
@@ -373,6 +427,31 @@ void Session::dumpState(std::ostream& os)
        << "\n\t\tlang: " << _lang
        << "\n\t\ttimezone: " << _timeZone
        << '\n';
+}
+
+void Session::setSignToUserPrivateConfig(const std::string& key,
+                                         Poco::JSON::Object::Ptr signatureDataObject,
+                                         Poco::JSON::Object::Ptr userPrivateInfoObject)
+{
+    if (!signatureDataObject->has(key))
+    {
+        LOG_TRC("signatureconfig: Component " << key << " not found in signature data");
+        return;
+    }
+
+    try
+    {
+        std::string componentValue = signatureDataObject->get(key).toString();
+        LOG_TRC("signatureconfig: Processing component '" << key << "' with length "
+                                                          << componentValue.length());
+        componentValue = Util::replace(componentValue, "\\n", "\n");
+        userPrivateInfoObject->set(key, componentValue);
+        LOG_INF("signatureconfig: Successfully added " << key);
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERR("signatureconfig: Failed to process component '" << key << "': " << e.what());
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
