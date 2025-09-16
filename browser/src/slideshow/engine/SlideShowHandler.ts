@@ -398,7 +398,7 @@ class SlideShowHandler {
 		try {
 			this.presentSlide(nNewSlide);
 		} catch (message) {
-			console.error('notifyTransitionEnd: ' + message);
+			app.console.error('notifyTransitionEnd: ' + message);
 		}
 
 		this.presenter._map.fire('transitionend', { slide: nNewSlide });
@@ -859,7 +859,7 @@ class SlideShowHandler {
 							return;
 						}
 					} catch (message) {
-						console.error('displaySlide failed: ' + message);
+						app.console.error('displaySlide failed: ' + message);
 					}
 				}
 			}
@@ -962,7 +962,7 @@ class SlideShowHandler {
 	): WebGLTexture | ImageBitmap | null {
 		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
 		if (!slideImage) {
-			console.error('SlideShowHandler: cannot get texture');
+			app.console.error('SlideShowHandler: cannot get texture');
 			return null;
 		}
 
@@ -1019,12 +1019,12 @@ class SlideShowHandler {
 	}
 
 	public notifyFirstAutoEffectStarted() {
-		console.debug('SlideShowHandler.notifyFirstAutoEffectStarted');
+		app.console.debug('SlideShowHandler.notifyFirstAutoEffectStarted');
 		this.bIsFirstAutoEffectRunning = true;
 	}
 
 	public notifyFirstAutoEffectEnded() {
-		console.debug('SlideShowHandler.notifyFirstAutoEffectEnded');
+		app.console.debug('SlideShowHandler.notifyFirstAutoEffectEnded');
 		this.bIsFirstAutoEffectRunning = false;
 	}
 
@@ -1033,7 +1033,7 @@ class SlideShowHandler {
 	}
 
 	private skipFirstAutoEffect() {
-		console.debug('SlideShowHandler.skipFirstAutoEffect');
+		app.console.debug('SlideShowHandler.skipFirstAutoEffect');
 		this.bIsSkipping = true;
 		this.aEventMultiplexer.notifySkipEffectEvent();
 		this.update();

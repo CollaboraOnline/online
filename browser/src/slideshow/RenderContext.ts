@@ -92,7 +92,7 @@ class RenderContextGl extends RenderContext {
 			failIfMajorPerformanceCaveat: true,
 		}) as WebGL2RenderingContext;
 		if (!this.gl) {
-			console.error('WebGL2 not supported');
+			app.console.error('WebGL2 not supported');
 			throw new Error('WebGL2 not supported');
 		}
 	}
@@ -137,7 +137,7 @@ class RenderContextGl extends RenderContext {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
 		if (image instanceof HTMLImageElement)
-			console.debug(`Texture loaded successfully`);
+			app.console.debug(`Texture loaded successfully`);
 		return texture;
 	}
 
@@ -218,7 +218,7 @@ class RenderContextGl extends RenderContext {
 			gl.deleteShader(shader);
 			throw new Error(`Could not compile shader: ${info}`);
 		}
-		console.log(
+		app.console.log(
 			'Shader compiled successfully:',
 			type === gl.VERTEX_SHADER ? 'VERTEX' : 'FRAGMENT',
 		);
@@ -244,7 +244,7 @@ class RenderContextGl extends RenderContext {
 			gl.deleteProgram(program);
 			throw new Error(`Could not link program: ${info}`);
 		}
-		console.log('Program linked successfully');
+		app.console.log('Program linked successfully');
 		return program;
 	}
 }
@@ -255,7 +255,7 @@ class RenderContext2d extends RenderContext {
 
 		this.gl = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 		if (!this.gl) {
-			console.error('Canvas rendering not supported');
+			app.console.error('Canvas rendering not supported');
 			throw new Error('Canvas rendering not supported');
 		}
 	}

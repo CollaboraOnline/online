@@ -85,7 +85,7 @@ abstract class VideoRenderer {
 
 	public pauseVideo() {
 		if (!this.videoRenderInfo) return;
-		console.debug('VideoRenderer.pauseVideo');
+		app.console.debug('VideoRenderer.pauseVideo');
 		this.videoRenderInfo.videoElement.pause();
 	}
 
@@ -193,7 +193,7 @@ class VideoRenderer2d extends VideoRenderer {
 		if (this.isDisposed()) return;
 		const ctx = this._context.get2dGl();
 		if (!ctx) {
-			console.error('Canvas 2D context not available');
+			app.console.error('Canvas 2D context not available');
 			return;
 		}
 		const video = this.videoRenderInfo;
@@ -350,7 +350,7 @@ class VideoRendererGl extends VideoRenderer {
 
 		const program = VideoRendererGl._program;
 		if (!program) {
-			console.log('VideoRenderer: program is not valid');
+			app.console.log('VideoRenderer: program is not valid');
 			return;
 		}
 
@@ -401,11 +401,11 @@ class VideoRendererGl extends VideoRenderer {
 	public render() {
 		if (this.isDisposed()) return;
 
-		console.debug('SlideRendererGl.render');
+		app.console.debug('SlideRendererGl.render');
 		const gl = this._context.getGl();
 
 		if (!VideoRendererGl._program) {
-			console.log('VideoRendererGl: program is not valid');
+			app.console.log('VideoRendererGl: program is not valid');
 			return;
 		}
 

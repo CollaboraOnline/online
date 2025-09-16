@@ -225,7 +225,7 @@ class Transition3d extends TransitionBase {
 
 		this.otherUniformsInitialization();
 
-		console.log('Uniforms initialized');
+		app.console.log('Uniforms initialized');
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-function

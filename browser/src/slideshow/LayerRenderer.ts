@@ -226,11 +226,11 @@ class LayerRendererGl implements LayerRenderer {
 		properties?: AnimatedElementRenderProperties,
 	): void {
 		if (this.disposed) {
-			console.log('LayerRenderer is disposed');
+			app.console.log('LayerRenderer is disposed');
 			return;
 		}
 		if (!imageInfo) {
-			console.log('LayerRenderer.drawBitmap: no image');
+			app.console.log('LayerRenderer.drawBitmap: no image');
 			return;
 		}
 
@@ -257,7 +257,7 @@ class LayerRendererGl implements LayerRenderer {
 
 		if (this.textureCache.has(textureKey)) {
 			texture = this.textureCache.get(textureKey);
-			// console.debug(`LayerDrawing.drawBitmap: cache hit: key: ${textureKey}`);
+			// app.console.debug(`LayerDrawing.drawBitmap: cache hit: key: ${textureKey}`);
 		} else {
 			if (imageInfo instanceof ImageBitmap) {
 				texture = this.glContext.loadTexture(imageInfo);
@@ -421,7 +421,7 @@ class LayerRenderer2d implements LayerRenderer {
 	): void {
 		if (this.disposed) return;
 		if (!imageInfo) {
-			console.log('Canvas2DRenderer.drawBitmap: no image');
+			app.console.log('Canvas2DRenderer.drawBitmap: no image');
 			return;
 		}
 		if (imageInfo instanceof ImageBitmap) {
