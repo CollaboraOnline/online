@@ -454,11 +454,17 @@ static void do_cut_or_copy(ClipboardOp op, int appDocId)
             wformat = CF_UNICODETEXT;
         else if (strcmp(mimeTypes[i], "text/rtf") == 0)
             format = RegisterClipboardFormatW(L"Rich Text Format");
+        else if (strcmp(mimeTypes[i], "text/html") == 0)
+            format = RegisterClipboardFormatW(L"HTML (HyperText Markup Language)");
         else if (strcmp(mimeTypes[i], "image/png") == 0)
         {
             format = RegisterClipboardFormatW(L"image/png");
             format2 = RegisterClipboardFormatW(L"PNG");
         }
+        else if (strcmp(mimeTypes[i], "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"") == 0)
+            format = RegisterClipboardFormatW(L"Star Embed Source (XML)");
+        else if (std::string(mimeTypes[i]).starts_with("application/x-openoffice-objectdescriptor-xml;"))
+            format = RegisterClipboardFormatW(L"Star Object Descriptor (XML)");
 
         if (wformat)
         {
@@ -550,8 +556,9 @@ static void do_paste_or_read(ClipboardOp op, int appDocId)
             std::string mimeType;
 
             if (name == L"Star Embed Source (XML)")
-                // This doesn't seem to work, sadly
-                mimeType = "application/x-openoffice-embed-source-xml";
+                mimeType = "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"";
+            else if (name == L"Star Object Descriptor (XML)")
+                mimeType = "application/x-openoffice-objectdescriptor-xml;windows_formatname=\"Star Object Descriptor (XML)\"";
             else if (name == L"PNG")
                 mimeType = "image/png";
             else if (name == L"Rich Text Format")
@@ -561,6 +568,8 @@ static void do_paste_or_read(ClipboardOp op, int appDocId)
                      // but why not be future-safe.
                      name == L"image/svg+xml")
                 mimeType = Util::wide_string_to_string(name);
+            else if (name == L"HTML (HyperText Markup Language)")
+                mimeType = "text/html";
 
             if (mimeType != "" && doneMimeTypes.count(mimeType) == 0)
             {
