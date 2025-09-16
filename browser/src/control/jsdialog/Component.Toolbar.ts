@@ -124,7 +124,7 @@ class Toolbar {
 		});
 	}
 
-	isItemEnabled(id: string): boolean {
+	isItemDisabled(id: string): boolean {
 		const item = this.parentContainer.querySelector('[id="' + id + '"]');
 		if (!item) return true;
 		return (
@@ -135,7 +135,7 @@ class Toolbar {
 	enableItem(command: string, enable: boolean) {
 		if (!command) return;
 
-		if (this.isItemEnabled(command) === !enable) return;
+		if (this.isItemDisabled(command) === !enable) return;
 
 		this.builder.executeAction(this.parentContainer, {
 			control_id: command,
