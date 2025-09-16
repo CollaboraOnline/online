@@ -369,7 +369,7 @@ class SlideShowPresenter {
 
 	public getNotes(slide: number) {
 		const info = this.getSlideInfo(slide);
-		return info.notes;
+		return info ? info.notes : null;
 	}
 
 	public getVideoRenderer(
