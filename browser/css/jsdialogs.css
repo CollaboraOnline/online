@@ -77,7 +77,6 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 .jsdialog-window.modalpopup:not(.snackbar),
 .hyperlink-pop-up-container {
 	min-width: 198px;
-	max-width: 498px;
 	border: 1px solid var(--color-border-darker) !important;
 	border-radius: var(--border-radius);
 	box-shadow: 0 0 3px var(--color-box-shadow);
