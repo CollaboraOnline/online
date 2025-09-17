@@ -29,6 +29,7 @@
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
+	entry.setAttribute('role', 'option');
 
 	if (data.hasSubMenu)
 		L.DomUtil.addClass(entry, 'ui-has-menu');
@@ -40,6 +41,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	if (data.icon) {
 		var icon = L.DomUtil.create('img', 'ui-combobox-icon', entry);
+		icon.alt = '';
 		builder._isStringCloseToURL(data.icon) ? icon.src = data.icon : app.LOUtil.setImage(icon,  app.LOUtil.getIconNameOfCommand(data.icon), builder.map);
 	}
 
@@ -50,8 +52,10 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var content = L.DomUtil.create('span', '', entry);
 	content.innerText = data.text;
 
-	if (data.selected)
+    if (data.selected) {
+        entry.setAttribute('aria-selected', 'true');
 		L.DomUtil.addClass(entry, 'selected');
+    }
 
 	if (data.checked)
 		L.DomUtil.addClass(entry, 'checked');
@@ -69,7 +73,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	entry.addEventListener('click', clickFunction);
 	entry.addEventListener('keypress', function (event) {
-		if (event.key === 'Enter') {
+        if (event.key === 'Enter' || event.key === ' ') {
 			clickFunction();
 			event.preventDefault();
 		}
