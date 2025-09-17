@@ -88,6 +88,7 @@ class QuickFindPanel extends SidebarBase {
 			modifiedData.children.unshift({
 				id: 'quickfind-placeholder',
 				type: 'fixedtext',
+				renderAsStatic: true,
 				text: _('Type in the search box to find anything in your document'),
 				visible: true,
 			});
