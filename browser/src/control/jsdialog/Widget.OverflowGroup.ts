@@ -28,6 +28,28 @@ function migrateItems(from: HTMLElement, to: HTMLElement) {
 		const htmlButton = button as HTMLElement;
 		to.appendChild(htmlButton);
 	});
+
+	const parentContainerData = to.getBoundingClientRect();
+	if (parentContainerData.right > window.innerWidth) {
+		setupOverflowMenuPosition(parentContainerData, to);
+	}
+}
+
+function setupOverflowMenuPosition(
+	parentContainerData: DOMRect,
+	overflowDialog: HTMLElement,
+) {
+	// Overflow amount
+	const overflowAmount = parentContainerData.right - window.innerWidth;
+
+	// Read current inline margin (not computed style)
+	const currentMarginInlineStart = parseFloat(
+		overflowDialog.style.marginInlineStart || '0',
+	);
+
+	// Adjust
+	const newMarginInlineStart = currentMarginInlineStart - overflowAmount - 4; // extra 4px is for the added padding for overflowpoup
+	overflowDialog.style.marginInlineStart = `${newMarginInlineStart}px`;
 }
 
 function createMoreButton(
