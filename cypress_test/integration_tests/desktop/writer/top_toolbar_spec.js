@@ -58,7 +58,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#stylesview').scrollTo('bottom') ;
+		cy.cGet('#stylesview-iconview').scrollTo('bottom');
 		cy.cGet('.notebookbar.ui-iconview-entry img[title=Title]').click();
 		refreshCopyPasteContainer();
 		helper.copy();

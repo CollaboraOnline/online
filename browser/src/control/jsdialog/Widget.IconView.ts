@@ -176,12 +176,65 @@ JSDialog.iconView = function (
 	data: IconViewJSON,
 	builder: JSBuilder,
 ) {
+	const commonContainer = L.DomUtil.create(
+		'div',
+		builder.options.cssClass + ' ui-iconview-window',
+		parentContainer,
+	);
+	commonContainer.id = data.id;
+
 	const container = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview',
-		parentContainer,
+		commonContainer,
 	);
-	container.id = data.id;
+	container.id = data.id + '-iconview';
+
+	if (data.isExpandable === true) {
+		const button = document.createElement('button');
+		button.id = data.id + '-button';
+		button.className = 'ui-content unobutton ui-iconview-expander-button';
+		commonContainer.appendChild(button);
+
+		const buttonImage = L.DomUtil.create('img', '', button);
+		app.LOUtil.setImage(buttonImage, 'lc_searchnext.svg', builder.map);
+
+		button.onclick = () => {
+			// the iconview in the dropdown should not have the expander button
+			const isExpandable = data.isExpandable;
+			data.isExpandable = false;
+
+			JSDialog.OpenDropdown(
+				data.id,
+				commonContainer,
+				[{ type: 'json', content: data }],
+				builder._defaultCallbackHandlerSendMessage,
+			);
+			bIsExpanded = true;
+			data.isExpandable = isExpandable;
+		};
+
+		container._onDropDown = function (opened: boolean) {
+			if (opened) {
+				app.layoutingService.appendLayoutingTask(() => {
+					app.layoutingService.appendLayoutingTask(() => {
+						const expander = JSDialog.GetDropdown(data.id);
+						if (!expander) {
+							app.console.error(
+								'iconview._onDropDown: expander missing: "' + data.id + '"',
+							);
+							return;
+						}
+						const overlay = expander.parentNode;
+						overlay.style.position = 'fixed';
+						overlay.style.zIndex = '20000';
+						commonContainer.appendChild(overlay);
+					});
+				});
+			}
+		};
+		commonContainer._onDropDown = container._onDropDown;
+	}
 
 	const disabled = data.enabled === false;
 	if (disabled) L.DomUtil.addClass(container, 'disabled');
@@ -208,9 +261,16 @@ JSDialog.iconView = function (
 		}
 	};
 
+	// close dropdown when the window is resized. this
+	// is to prevent dropdown from hanging in the corner
+	// when the overflowgroups collapse displacing the
+	// underlying iconview.
+	let bIsExpanded = false;
+
 	// update indexes on resize
 	const resizeObserver = new ResizeObserver(() => {
 		updateAllIndexes();
+		if (bIsExpanded) JSDialog.CloseDropdown(data.id);
 	});
 	resizeObserver.observe(container);
 
@@ -292,5 +352,7 @@ JSDialog.iconView = function (
 			builder.callback('iconview', 'activate', data, selectedIndex, builder);
 	});
 
+	commonContainer.updateRenders = container.updateRenders;
+	commonContainer.onSelect = container.onSelect;
 	return false;
 };
