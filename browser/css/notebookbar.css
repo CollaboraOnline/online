@@ -483,6 +483,24 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin-left: 10px;
 }
 
+#masterpageall_icons-iconview {
+	height: 64px;
+	width: 14vw !important;
+	padding: 0px;
+	border: 1px solid var(--color-stylesview-border);
+	border-radius: var(--border-radius);
+	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	scrollbar-width: none;
+	grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
+	background-color: var(--color-stylesview-background);
+	filter: brightness(var(--brightness-stylesview));
+	box-sizing: border-box;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	row-gap: 0;
+	margin-left: 5px;
+}
 
 .one-child-popup .ui-iconview {
 	height: auto !important;
@@ -508,7 +526,16 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin-top: 46px !important;
 }
 
+#masterpageall_icons-dropdown {
+	margin-top: 40px !important;
+}
+
+#masterpageall_icons {
+	justify-content: center;
+}
+
 #stylesview-button,
+#masterpageall_icons-button,
 #transitions_icons-button {
 	border: 1px solid var(--color-stylesview-border);
 	border-top-right-radius: var(--border-radius);
