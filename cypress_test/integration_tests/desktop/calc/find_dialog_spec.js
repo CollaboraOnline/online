@@ -129,3 +129,38 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 });
+
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Jump to result.', function() {
+
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/search_jump.ods');
+		cy.cGet(helper.addressInputSelector).should('have.value', 'C2707');
+	});
+
+	it('Search existing word.', function() {
+		helper.setDummyClipboardForCopy();
+		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('result');
+
+		findHelper.findNext();
+
+		// First cell should be selected
+		cy.cGet(helper.addressInputSelector).should('have.value', 'C8');
+		helper.copy();
+		cy.cGet('#copy-paste-container table td').should('have.text', 'result top');
+		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+
+		findHelper.findNext();
+		cy.cGet(helper.addressInputSelector).should('have.value', 'C300');
+		desktopHelper.assertScrollbarPosition('vertical', 40, 60);
+
+		findHelper.findNext();
+
+		cy.cGet(helper.addressInputSelector).should('have.value', 'C2303');
+		helper.copy();
+		cy.cGet('#copy-paste-container table td').should('have.text', 'result bottom');
+
+		findHelper.findNext();
+		cy.cGet(helper.addressInputSelector).should('have.value', 'C8');
+	});
+});
