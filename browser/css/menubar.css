@@ -37,12 +37,10 @@
 }
 
 .document-title {
-	height: 32px;
 	white-space: nowrap;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
-	gap: 5px;
 	flex-direction: column;
 	flex: 1 1 auto;
 }
