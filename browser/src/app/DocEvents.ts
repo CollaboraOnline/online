@@ -50,8 +50,6 @@ class DocEvents {
     }
 }
 
-app.definitions.events = DocEvents;
-
 // Initiate
 app.events = new DocEvents();
 app.events.initiate();
