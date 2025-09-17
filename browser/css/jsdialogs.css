@@ -364,6 +364,10 @@ algned to the bottom */
 	margin-bottom: 14px;
 }
 
+.nofold {
+	margin-bottom: 24px !important;
+}
+
 .ui-overflow-manager > .notebookbar.ui-iconview {
 	align-content: initial; /* fixes scrolling range, for example in #stylesview */
 }

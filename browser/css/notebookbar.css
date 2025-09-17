@@ -500,10 +500,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	justify-content: center;
 }
 
-.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
-	margin-bottom: 24px;
-}
-
 #stylesview-dropdown {
 	margin-top: 37px !important;
 }

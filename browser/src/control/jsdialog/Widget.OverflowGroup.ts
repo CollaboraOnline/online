@@ -228,7 +228,9 @@ JSDialog.OverflowGroup = function (
 ) {
 	const overflowGroupContainer = L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' ui-overflow-group',
+		builder.options.cssClass +
+			' ui-overflow-group' +
+			(data.nofold ? ' nofold' : ''),
 		parentContainer,
 	);
 	overflowGroupContainer.id = data.id;
