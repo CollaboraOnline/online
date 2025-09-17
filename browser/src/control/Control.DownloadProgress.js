@@ -11,7 +11,7 @@
 /*
  * L.Control.DownloadProgress.
  */
-/* global _ $ JSDialog app */
+/* global _ JSDialog app */
 L.Control.DownloadProgress = L.Control.extend({
 	options: {
 		snackbarTimeout: 20000,
@@ -217,11 +217,21 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_setProgressCursor: function() {
-		$('#map').css('cursor', 'progress');
+		var mapEl = document.getElementById('map');
+		if (!mapEl) {
+			console.warn('Element #map not found');
+			return;
+		}
+		mapEl.style.cursor = 'progress';
 	},
 
 	_setNormalCursor: function() {
-		$('#map').css('cursor', 'default');
+		var mapEl = document.getElementById('map');
+		if (!mapEl) {
+			console.warn('Element #map not found');
+			return;
+		}
+		mapEl.style.cursor = 'default';
 	},
 
 	startProgressMode: function() {
