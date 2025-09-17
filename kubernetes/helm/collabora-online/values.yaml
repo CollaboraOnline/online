@@ -135,6 +135,20 @@ podLabels: {}
 podSecurityContext: {}
 #  fsGroup: 2000
 
+# https://github.com/CollaboraOnline/online/blob/master/docker/cool-seccomp-profile.json
+# use DaemonSet to install seccomp profile to node's /var/lib/kubelet/seccomp directory
+# once this option is enabled you can set following securityContext to use cool-seccomp-profile
+# securityContext:
+#   privileged: false
+#   runAsNonRoot: true
+#   allowPrivilegeEscalation: false
+#   seccompProfile:
+#     type: "Localhost"
+#     localhostProfile: "cool-seccomp-profile.json"
+#   capabilities:
+#     drop: ["ALL"]
+installCOOLSeccompProfile: false
+
 securityContext: {}
 #  readOnlyRootFilesystem: false
 #  privileged: true
