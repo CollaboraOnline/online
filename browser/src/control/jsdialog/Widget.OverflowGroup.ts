@@ -16,7 +16,7 @@
 
 declare var JSDialog: any;
 
-function migrateItems(from: HTMLElement, to: HTMLElement) {
+function migrateItems(from: HTMLElement, to: HTMLElement, ensureVisible: boolean = false) {
 	if (!from) {
 		app.console.debug('overflow manager: no source for migration');
 		return;
@@ -28,6 +28,14 @@ function migrateItems(from: HTMLElement, to: HTMLElement) {
 		const htmlButton = button as HTMLElement;
 		to.appendChild(htmlButton);
 	});
+
+	if (ensureVisible) {
+		const width = to.clientWidth;
+		const posX = !to.style.marginInlineStart ? 0 :
+			!to.style.marginInlineStart.endsWith('px') ? 0 :
+				parseFloat(to.style.marginInlineStart.slice(0, to.style.marginInlineStart.length - 2));
+		to.style.transform = `translateX(${Math.min(0, window.innerWidth - width - posX)}px)`;
+	}
 }
 
 function createMoreButton(
@@ -184,7 +192,7 @@ function setupOverflowMenu(
 					menu?.classList.add('ui-toolbar');
 					menu?.classList.add('ui-overflow-group-popup');
 
-					migrateItems(hiddenItems, menu);
+					migrateItems(hiddenItems, menu, true);
 				});
 			});
 		} else {
