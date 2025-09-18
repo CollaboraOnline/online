@@ -333,7 +333,7 @@ JSDialog.OverflowGroup = function (
 									: app.map.sendUnoCommand((firstItem as any).command);
 							}
 						: undefined,
-			} as any as WidgetJSON,
+			} as MenuButtonWidgetJSON,
 		],
 		false,
 	);
