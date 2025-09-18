@@ -511,9 +511,9 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							'command': '.uno:ReportIssue',
 							'accessibility': { focusBack: true, combination: 'K', de: null }
 						},
-						{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
 					]
 				},
+				{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
 				hasLatestUpdates ?
 					{
 						'type': 'toolbox',
