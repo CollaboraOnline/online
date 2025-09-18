@@ -15,6 +15,8 @@
 #include <QMainWindow>
 #include "FakeSocket.hpp"
 #include "MobileApp.hpp"
+#include <cstdlib>
+#include <cstring>
 
 #include <QMenuBar>
 #include <QMenu>
@@ -29,6 +31,16 @@ unsigned generateNewAppDocId()
     static unsigned appIdCounter = 60407;
     DocumentData::allocate(appIdCounter);
     return appIdCounter++;
+}
+
+std::string getTopSrcDir(const std::string& defaultPath)
+{
+    const char* envPath = std::getenv("COOL_TOPSRCDIR");
+    if (envPath && std::strlen(envPath) > 0)
+    {
+        return std::string(envPath);
+    }
+    return defaultPath;
 }
 } // namespace
 
@@ -80,7 +92,7 @@ void WebView::load(const std::string& fileURL)
     _webView->page()->setWebChannel(channel);
 
     const std::string urlAndQuery = std::string("file://") +
-                                    TOPSRCDIR "/browser/dist/cool.html" // same HTML frontend
+                                    getTopSrcDir(TOPSRCDIR) + "/browser/dist/cool.html"
                                               "?file_path=" +
                                     _document._fileURL +
                                     "&closebutton=1" // mirror original query-params
