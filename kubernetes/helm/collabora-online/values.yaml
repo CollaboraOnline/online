@@ -23,6 +23,12 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# Service Account for DaemonSet installing seccomp profile
+daemonSetServiceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
 collabora:
   # example to add aliasgroups
   # - host: "<protocol>://<host-name>:<port>"
