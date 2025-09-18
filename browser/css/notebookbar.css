@@ -540,8 +540,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	border-top-right-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
 	height: 64px;
-	margin-inline-start: -5px;
-	padding-right: 2px;
+	margin-inline-start: -7px;
+	padding-right: 0px;
 }
 
 #stylesview-button.vertical {
