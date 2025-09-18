@@ -154,7 +154,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasSave = !this.map['wopi'].HideSaveOption;
 		var content = [];
 
-		if (window.ThisIsTheWindowsApp) {
+		if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			content.push({
 				'type': 'toolbox',
 				'children': [
