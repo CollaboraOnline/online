@@ -289,8 +289,20 @@ class SlideShowHandler {
 		if (curMetaSlide.animationsHandler) {
 			const aAnimatedElementMap =
 				curMetaSlide.animationsHandler.getAnimatedElementMap();
+			let effect = 0;
+			const currentEffect = this.nCurrentEffect;
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
-				aAnimatedElement.notifyNextEffectStart(this.nCurrentEffect);
+				aAnimatedElement.notifyNextEffectStart(currentEffect);
+				if (effect === currentEffect) {
+					setTimeout(
+						this.addA11yString.bind(
+							this,
+							_('Animation Start: ') + aAnimatedElement.getTitle(),
+						),
+						500,
+					);
+				}
+				effect++;
 			});
 		}
 	}

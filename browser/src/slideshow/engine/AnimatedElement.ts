@@ -411,6 +411,7 @@ class AnimatedElement {
 
 	private sId: string;
 	private slideHash: string;
+	private _title: string;
 	private slideWidth: number;
 	private slideHeight: number;
 	private canvasWidth: number;
@@ -461,12 +462,14 @@ class AnimatedElement {
 	constructor(
 		sId: string,
 		slideHash: string,
+		title: string,
 		slideWidth: number,
 		slideHeight: number,
 	) {
 		ANIMDBG.print(`AnimatedElement(${sId}, ${slideHash})`);
 		this.sId = sId;
 		this.slideHash = slideHash;
+		this._title = title;
 		this.slideWidth = slideWidth;
 		this.slideHeight = slideHeight;
 		this.bIsValid = false;
@@ -483,6 +486,10 @@ class AnimatedElement {
 
 	public isValid() {
 		return this.bIsValid;
+	}
+
+	public getTitle() {
+		return this._title;
 	}
 
 	private isGlSupported() {
