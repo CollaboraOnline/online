@@ -74,6 +74,34 @@ window.L.Map = window.L.Evented.extend({
 		this._initContainer(id);
 		this._initLayout();
 
+		// Temporary WIP hack to make Qt app usable without a window frame.
+		if (window.ThisIsTheQtApp && !this._qtWindowMoveHooksInstalled) {
+			this._qtWindowMoveHooksInstalled = true;
+
+			const menuEl = document.getElementById('main-menu');
+			const navBar = document.querySelector('nav.main-nav');
+
+			// Disable pointer events on document titlebar so it could be moved from by the user
+			const documentTitlebar = document.getElementById('document-titlebar');
+			if (documentTitlebar) {
+				documentTitlebar.style.pointerEvents = 'none';
+			}
+			// Set right padding on navbar so there is space for Qt created window controls
+			if (navBar) {
+				navBar.style.paddingRight = '90px';
+			}
+			// Resize from top edge when grabbed near the top border
+			const beginSystemMove = (e) => {
+				if (e.button !== 0) return;
+				const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+				if (tag === 'input' || tag === 'button' || tag === 'select' || tag === 'textarea') return;
+				window.postMobileMessage('WINDOW_START_MOVE');
+				e.preventDefault();
+			};
+			if (menuEl) menuEl.addEventListener('mousedown', beginSystemMove);
+			if (navBar) navBar.addEventListener('mousedown', beginSystemMove);
+		}
+
 		// Start with readonly toolbars on desktop
 		if (window.mode.isDesktop()) {
 			window.L.DomUtil.addClass(window.L.DomUtil.get('toolbar-wrapper'), 'readonly');
