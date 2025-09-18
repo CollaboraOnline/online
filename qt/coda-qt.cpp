@@ -311,6 +311,22 @@ QVariant Bridge::cool(const QString& messageStr)
         std::string content = message.substr(CLIPBOARDSET.size());
         setClipboardFromContent(_document._appDocId, content);
     }
+    else if (message == "uno .uno:Open")
+    {
+        const QString filePath = QFileDialog::getOpenFileName(
+            nullptr, QObject::tr("Open File"), QString(),
+            QObject::tr("All Files (*);;"
+                        "Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;"
+                        "Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;"
+                        "Presentations (*.odp *.otp *.ppt *.pptx)"
+                        )
+        );
+        if (!filePath.isEmpty())
+        {
+            WebView* webViewInstance = new WebView(nullptr);
+            webViewInstance->load(filePath.toStdString());
+        }
+    }
     else if (message == "PRINT")
     {
     }

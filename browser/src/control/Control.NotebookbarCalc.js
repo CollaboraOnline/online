@@ -140,7 +140,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 		var hasShare = this.map['wopi'].EnableShare;
 		var hasRevisionHistory = window.L.Params.revHistoryEnabled;
 
-		if (window.ThisIsTheWindowsApp) {
+		if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			content.push({
 				'type': 'toolbox',
 				'children': [
