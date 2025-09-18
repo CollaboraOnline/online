@@ -30,7 +30,7 @@ class OverflowManager {
 	}
 
 	calculateMaxWidth(): number {
-		const margin = 5;
+		const margin = 20; // how many px more has to be visible after last widget
 		let nextElement = this.parentContainer.nextSibling as HTMLElement;
 		// floating right element after spacer
 		if (nextElement && nextElement.classList.contains('ui-spacer'))
