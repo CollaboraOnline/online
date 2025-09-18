@@ -232,6 +232,12 @@ interface PushButtonWidget extends WidgetJSON {
 	text?: string;
 }
 
+// type: 'menubutton'
+interface MenuButtonWidgetJSON extends WidgetJSON {
+	menu?: Array<MenuDefinition>; // custom menu
+	applyCallback?: () => void; // split button callback for left part
+}
+
 // type: 'buttonbox'
 interface ButtonBoxWidget extends WidgetJSON {
 	layoutstyle: string;
