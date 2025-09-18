@@ -806,7 +806,7 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		// Don't do this in CODA-W, there it is the sending of
 		// the PASTE message in document,onpaste() in
 		// Clipboard.js that does the paste.
-		if (e.type === 'keydown' && window.ThisIsAMobileApp && !window.ThisIsTheWindowsApp) {
+		if (e.type === 'keydown' && window.ThisIsAMobileApp && !window.ThisIsTheWindowsApp && !window.ThisIsTheQtApp) {
 			if (this.keyCodes.C.includes(e.keyCode)) {
 				app.socket.sendMessage('uno .uno:Copy');
 				return true;
