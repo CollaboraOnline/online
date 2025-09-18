@@ -159,17 +159,15 @@ class ServerAuditDialog {
 		let hasErrors = false;
 		if (app.serverAudit) {
 			app.serverAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok') {
+				if (this.isErrorEntry(entry))
 					hasErrors = true;
-				}
 			});
 		}
 
 		if (app.clientAudit) {
 			app.clientAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok') {
+				if (entry.status !== 'ok')
 					hasErrors = true;
-				}
 			});
 		}
 
@@ -178,7 +176,7 @@ class ServerAuditDialog {
 
 	private countErrors(): number {
 		return (
-			(app.serverAudit?.filter((entry: AuditEntry) => entry.status !== 'ok')
+			(app.serverAudit?.filter((entry: AuditEntry) => this.isErrorEntry(entry))
 				.length ?? 0) +
 			(app.clientAudit?.filter((entry: AuditEntry) => entry.status !== 'ok')
 				.length ?? 0)
@@ -260,13 +258,18 @@ class ServerAuditDialog {
 		);
 	}
 
+	private isErrorEntry(entry: AuditEntry) : boolean
+	{
+		return !entry.code.startsWith('info_') &&
+			entry.status !== 'ok';
+	}
+
 	private onServerAudit() {
 		if (app.serverAudit.length) {
 			let hasErrors = false;
 			app.serverAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok') {
+				if (this.isErrorEntry(entry))
 					hasErrors = true;
-				}
 			});
 
 			// only show the snackbar if there are specific warnings
