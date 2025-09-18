@@ -79,7 +79,7 @@ void WebView::load(const std::string& fileURL)
     LOG_TRC("Open URL: " << urlAndQuery);
     _webView->load(QUrl(QString::fromStdString(urlAndQuery)));
 
-    _mainWindow->resize(720, 1600);
+    _mainWindow->resize(1600, 900);
     _mainWindow->show();
 }
 
