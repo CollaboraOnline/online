@@ -867,11 +867,6 @@ class SlideShowHandler {
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
-
-		const slideinfo = this.getSlideInfo(nNewSlide);
-		if (slideinfo.a11y) {
-			this.addA11yString(slideinfo.a11y);
-		}
 	}
 
 	exitSlideShow() {
@@ -980,6 +975,11 @@ class SlideShowHandler {
 	}
 
 	private presentSlide(nSlideIndex: number) {
+		const slideInfo = this.getSlideInfo(nSlideIndex);
+		if (slideInfo.a11y) {
+			setTimeout(this.addA11yString.bind(this, slideInfo.a11y), 500);
+		}
+
 		let slideTexture = this.enteringSlideTexture;
 		if (!slideTexture) slideTexture = this.getTexture(nSlideIndex);
 		this.slideRenderer.renderSlide(
