@@ -26,6 +26,8 @@
 #include <QByteArray>
 #include <QClipboard>
 #include <QDir>
+#include <QTemporaryFile>
+#include <QProcess>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMainWindow>
@@ -39,6 +41,16 @@
 #include <QWebEngineProfile>
 #include <QWebEngineView>
 #include <QWindow>
+#include <QMessageBox>
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QComboBox>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QPrinterInfo>
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
@@ -166,6 +178,177 @@ void setClipboardFromContent(unsigned appDocId, const std::string& content)
         DocumentData::get(appDocId).loKitDocument->setClipboard(streams.size(), mimeTypes.data(),
                                                                 sizes.data(), streams.data());
     }
+}
+
+static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
+{
+    // Create a temporary PDF file for printing
+    const std::string tempFile = FileUtil::createRandomTmpDir() + "/print.pdf";
+    const std::string tempFileUri = Poco::URI(Poco::Path(tempFile)).toString();
+
+    lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+    if (!loKitDoc)
+    {
+        LOG_ERR("printDocument: no loKitDocument");
+        return;
+    }
+
+    loKitDoc->saveAs(tempFileUri.c_str(), "pdf", nullptr);
+
+    // Verify the PDF was created
+    struct stat st;
+    if (FileUtil::getStatOfFile(tempFile, st) != 0)
+    {
+        LOG_ERR("printDocument: failed to create PDF file: " << tempFile);
+        return;
+    }
+
+    // Create a simple custom print dialog, qt's print dialog is overkill for now.
+    QDialog customPrintDialog(parent);
+    customPrintDialog.setWindowTitle(QObject::tr("Print Document"));
+    customPrintDialog.setModal(true);
+    customPrintDialog.resize(400, 200);
+
+    QVBoxLayout* layout = new QVBoxLayout(&customPrintDialog);
+
+    // Printer selection
+    QLabel* printerLabel = new QLabel(QObject::tr("Select Printer:"), &customPrintDialog);
+    layout->addWidget(printerLabel);
+
+    QComboBox* printerCombo = new QComboBox(&customPrintDialog);
+    // Get available printers
+    QStringList printers = QPrinterInfo::availablePrinterNames();
+    printerCombo->addItems(printers);
+    if (printers.isEmpty())
+    {
+        printerCombo->addItem(QObject::tr("Default Printer"));
+    }
+    layout->addWidget(printerCombo);
+
+    // Print to file option
+    QCheckBox* printToFileCheck = new QCheckBox(QObject::tr("Print to File"), &customPrintDialog);
+    layout->addWidget(printToFileCheck);
+
+    QLineEdit* filePathEdit = new QLineEdit(&customPrintDialog);
+    filePathEdit->setPlaceholderText(QObject::tr("Enter file path..."));
+    filePathEdit->setEnabled(false);
+    layout->addWidget(filePathEdit);
+
+    // Connect print to file checkbox
+    QObject::connect(printToFileCheck, &QCheckBox::toggled,
+                     [filePathEdit](bool checked)
+                     {
+                         filePathEdit->setEnabled(checked);
+                         if (checked)
+                         {
+                             QString fileName = QFileDialog::getSaveFileName(
+                                 filePathEdit, QObject::tr("Save Print Output As"),
+                                 QDir::home().filePath("document.pdf"),
+                                 QObject::tr("PDF Files (*.pdf);;All Files (*)"));
+                             if (!fileName.isEmpty())
+                             {
+                                 filePathEdit->setText(fileName);
+                             }
+                         }
+                     });
+
+    // Buttons
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    QPushButton* printButton = new QPushButton(QObject::tr("Print"), &customPrintDialog);
+    QPushButton* cancelButton = new QPushButton(QObject::tr("Cancel"), &customPrintDialog);
+    buttonLayout->addWidget(printButton);
+    buttonLayout->addWidget(cancelButton);
+    layout->addLayout(buttonLayout);
+
+    // Connect buttons
+    QObject::connect(printButton, &QPushButton::clicked, &customPrintDialog, &QDialog::accept);
+    QObject::connect(cancelButton, &QPushButton::clicked, &customPrintDialog, &QDialog::reject);
+
+    if (customPrintDialog.exec() == QDialog::Accepted)
+    {
+        // Check if user selected "Print to File"
+        if (printToFileCheck->isChecked() && !filePathEdit->text().isEmpty())
+        {
+            QString outputFile = filePathEdit->text();
+            LOG_INF("printDocument: User selected print to file: " << outputFile.toStdString());
+
+            if (FileUtil::copyAtomic(tempFile, outputFile.toStdString(), false))
+            {
+                LOG_INF(
+                    "printDocument: PDF successfully saved to file: " << outputFile.toStdString());
+            }
+            else
+            {
+                LOG_ERR("printDocument: Failed to copy PDF to file: " << outputFile.toStdString());
+                QMessageBox::warning(parent, QObject::tr("Print to File Error"),
+                                     QObject::tr("Failed to save document to file. Please check "
+                                                 "the file path and permissions."));
+            }
+        }
+        else
+        {
+            // User selected a physical printer - print using system commands
+            QString printerName = printerCombo->currentText();
+            if (printerName == QObject::tr("Default Printer"))
+            {
+                printerName = "";
+            }
+
+            // Print the PDF using system command with the selected printer
+            std::string printCmd;
+            if (!printerName.isEmpty())
+            {
+                printCmd = "lp -d \"" + printerName.toStdString() + "\" \"" + tempFile + "\"";
+            }
+            else
+            {
+                printCmd = "lp \"" + tempFile + "\"";
+            }
+
+            int result = std::system(printCmd.c_str());
+
+            if (result != 0)
+            {
+                // Fallback to lpr with printer name
+                if (!printerName.isEmpty())
+                {
+                    printCmd = "lpr -P \"" + printerName.toStdString() + "\" \"" + tempFile + "\"";
+                }
+                else
+                {
+                    printCmd = "lpr \"" + tempFile + "\"";
+                }
+                result = std::system(printCmd.c_str());
+
+                if (result != 0)
+                {
+                    LOG_ERR(
+                        "printDocument: failed to print PDF. Tried both 'lp' and 'lpr' commands");
+                    QMessageBox::warning(
+                        parent, QObject::tr("Print Error"),
+                        QObject::tr(
+                            "Failed to print document. Please check your printer settings."));
+                }
+                else
+                {
+                    LOG_INF("printDocument: PDF sent to printer '" << printerName.toStdString()
+                                                                   << "' using 'lpr'");
+                }
+            }
+            else
+            {
+                LOG_INF("printDocument: PDF sent to printer '" << printerName.toStdString()
+                                                               << "' using 'lp'");
+            }
+        }
+    }
+    else
+    {
+        LOG_INF("printDocument: Print cancelled by user");
+    }
+
+    // Clean up the temporary file
+    FileUtil::unlinkFile(tempFile);
 }
 
 void Bridge::evalJS(const std::string& script)
@@ -330,6 +513,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "PRINT")
     {
+        printDocument(_document._appDocId, _webView);
     }
     else if (message.starts_with(DOWNLOADAS))
     {
