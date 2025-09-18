@@ -72,3 +72,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the SeccompProfileDaemonSet service account to use
+*/}}
+{{- define "collabora-online.daemonServiceAccountName" -}}
+{{- if .Values.daemonSetServiceAccount.create }}
+{{- printf "%s-daemonset" (default (include "collabora-online.fullname" .) .Values.daemonSetServiceAccount.name) }}
+{{- else }}
+{{- default "default" .Values.daemonSetServiceAccount.name }}
+{{- end }}
+{{- end }}

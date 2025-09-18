@@ -156,7 +156,7 @@ spec:
               readOnly: true
             {{- end }}
             {{- if .Values.extraVolumeMounts }}
-            {{- .Values.extraVolumeMounts | nindent 12 }}
+            {{- .Values.extraVolumeMounts | toYaml | nindent 12 }}
             {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -198,6 +198,6 @@ spec:
             claimName: {{ include "collabora-online.fullname" . }}-custom-fonts
         {{- end }}
         {{- if .Values.extraVolumes }}
-        {{- .Values.extraVolumes | nindent 8 }}
+        {{- .Values.extraVolumes | toYaml | nindent 8 }}
         {{- end }}
 {{- end }}
