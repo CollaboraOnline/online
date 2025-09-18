@@ -174,7 +174,7 @@ class BrowserProperties {
 			// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
 			// requirement.
 			isMobile: function() {
-				if (global.ThisIsTheWindowsApp)
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
 					return false;
 
 				if (global.mode.isChromebook())
@@ -188,7 +188,7 @@ class BrowserProperties {
 			},
 			// Mobile device with big screen size.
 			isTablet: function() {
-				if (global.ThisIsTheWindowsApp)
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
 					return false;
 
 				if (global.mode.isChromebook())
@@ -197,7 +197,7 @@ class BrowserProperties {
 				return global.L.Browser.mobile && !global.mode.isMobile();
 			},
 			isDesktop: function() {
-				if (global.ThisIsTheWindowsApp)
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
 					return true;
 
 				if (global.mode.isChromebook())
@@ -1008,7 +1008,7 @@ function getInitializerClass() {
 		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
 		// Instead, let's just guess
 		guessOnscreenKeyboard: function() {
-			if (global.ThisIsTheWindowsApp)
+			if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
 				return false;
 			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
 			return (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
