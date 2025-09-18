@@ -479,7 +479,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #transitions_icons {
-	margin-top: 10px;
 	margin-left: 10px;
 }
 
@@ -523,7 +522,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #transitions_icons-dropdown {
-	margin-top: 46px !important;
+	margin-top: 40px !important;
 }
 
 #masterpageall_icons-dropdown {
