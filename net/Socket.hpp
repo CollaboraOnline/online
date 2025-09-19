@@ -1263,7 +1263,18 @@ public:
         {
             _doneDisconnect = true;
             if (_socketHandler)
+            {
                 _socketHandler->onDisconnect();
+
+                // The SocketHandler has a weak pointer to us and we could
+                // be getting destroyed at this point, so it won't get a
+                // reference to us from the weak pointer, and so can't disconnect.
+                if (!isShutdown())
+                {
+                    asyncShutdown(); // signal
+                    shutdownConnection(); // real -> setShutdown()
+                }
+            }
         }
 
         if (isOpen())
