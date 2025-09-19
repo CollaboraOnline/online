@@ -2430,6 +2430,20 @@ kbd,
 	margin-right: 2px;
 }
 
+#HyperlinkDocPage #grid5 {
+	grid-template-columns: 87px 1fr 38px !important;
+}
+
+[id^='Hyperlink'] .ui-grid-cell:empty,
+[id^='Hyperlink'] .hidden {
+	display: none;
+}
+
+/* grid requires all elements to occupy space, but we can reduce their sizing */
+[id^='Hyperlink'] #browse button {
+	margin: auto;
+	max-height: 32px;
+}
 
 /* feature_lock */
 #modal-dialog-unlock-features-popup {
