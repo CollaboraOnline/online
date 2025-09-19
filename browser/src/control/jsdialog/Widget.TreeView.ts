@@ -496,7 +496,7 @@ class TreeViewControl {
 			const cell = window.L.DomUtil.create(
 				'span',
 				builder.options.cssClass +
-					` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
+					` ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
 				parent,
 			);
 			const img = window.L.DomUtil.create(

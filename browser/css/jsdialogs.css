@@ -363,8 +363,10 @@ algned to the bottom */
 	margin-bottom: 14px;
 }
 
-.ui-overflow-manager > .notebookbar.ui-iconview {
-	align-content: initial; /* fixes scrolling range, for example in #stylesview */
+.ui-overflow-manager > .notebookbar.ui-iconview,
+.ui-overflow-manager > .notebookbar.ui-treeview {
+	/* fixes scrolling range, for example in #stylesview or Animations tab */
+	align-content: initial;
 }
 
 .ui-overflow-manager > .notebookbar:not(.ui-separator):not(.ui-overflow-group):not(:has(.ui-overflow-group-container-with-label)) {
@@ -1061,6 +1063,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 	box-sizing: border-box;
 	height: 24px;
+	min-width: 70px;
 }
 
 .ui-listbox-container {
