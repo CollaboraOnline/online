@@ -2151,7 +2151,11 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 if (strcasecmp(pdfVer.c_str(), "PDF/A-1b") &&
                     strcasecmp(pdfVer.c_str(), "PDF/A-2b") &&
                     strcasecmp(pdfVer.c_str(), "PDF/A-3b") &&
-                    strcasecmp(pdfVer.c_str(), "PDF-1.5") && strcasecmp(pdfVer.c_str(), "PDF-1.6"))
+                    strcasecmp(pdfVer.c_str(), "PDF/A-4") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-1.5") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-1.6") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-1.7") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-2.0"))
                 {
                     LOG_ERR("Wrong PDF type: " << pdfVer << ". Conversion aborted.");
                     http::Response httpResponse(http::StatusCode::BadRequest);
