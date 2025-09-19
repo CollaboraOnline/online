@@ -827,6 +827,11 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	margin-left: 0px;
 }
 
+#ElementsDeck #elements {
+	display: inline-flex;
+	flex-wrap: wrap;
+}
+
 /* Sidebar - Style List */
 #StyleListDeck #left .sidebar.unotoolbutton {
 	margin: 0 5px;
