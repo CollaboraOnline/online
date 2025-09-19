@@ -58,6 +58,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 		// Search next instance
 		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 		findHelper.findNext();
 		findHelper.closeFindDialog();
 
@@ -78,6 +79,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 		// Search prev instance
 		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 		findHelper.findPrev();
 		findHelper.closeFindDialog();
 
@@ -116,6 +118,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 		// Search next instance
 		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 		findHelper.findNext();
 		findHelper.closeFindDialog();
 
@@ -135,6 +138,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 		// Search next instance, which is in the beginning of the document.
 		findHelper.openFindDialog();
+		findHelper.typeIntoSearchField('a');
 		findHelper.findNext();
 		findHelper.closeFindDialog();
 
