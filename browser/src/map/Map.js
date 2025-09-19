@@ -292,6 +292,8 @@ window.L.Map = window.L.Evented.extend({
 				if (window.ThisIsTheAndroidApp) {
 					window.postMobileMessage('hideProgressbar');
 				}
+
+				app.activeDocument.activeView.sendClientVisibleArea(true);
 			} else if (this._docLayer && app.sectionContainer) {
 				// remove the comments and changes
 				var commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
