@@ -327,7 +327,6 @@ body {
 
 #quickfind-dock-wrapper {
 	display: none;
-	background: var(--color-background-lighter);
 	position: relative;
 	z-index: 990;
 	max-width: 350px;
