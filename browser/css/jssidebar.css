@@ -442,3 +442,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #TemplatePanel #highlightstyles input {
 	margin-left: 0px;
 }
+
+#ElementsDeck #elements {
+	display: inline-flex;
+	flex-wrap: wrap;
+}
