@@ -34,6 +34,7 @@
 	border: 1px solid transparent;
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
+	height: max-content;
 }
 
 /* toolbuttons non selected hover */
