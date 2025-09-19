@@ -61,6 +61,7 @@ class ContextToolbar {
 	}
 
 	showContextToolbarImpl(): void {
+		URLPopUpSection.closeURLPopUp();
 		this.pendingShow = false;
 
 		if (!this.initialized) {
