@@ -38,6 +38,8 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 	});
 
 	function checkMathElementsVisibility() {
+		cy.viewport(2000, 1080);
+
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert .unoInsertObjectStarMath').click();
 
