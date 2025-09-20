@@ -44,8 +44,10 @@ class ServerAuditDialog {
 		this.map = map;
 		this.map.on('receivedserveraudit', this.onServerAudit.bind(this), this);
 
+		// Priorities: 1 - security, 10 - config, 20 - integration, 30 - general info ...
 		this.errorCodes = {
 			is_admin: {
+				priority: 20,
 				missing: [
 					_('The IsAdminUser property is not set by integration'),
 					'SDK: IsAdminUser',
@@ -65,6 +67,7 @@ class ServerAuditDialog {
 				],
 			},
 			certwarning: {
+				priority: 1,
 				sslverifyfail: [
 					_('Your WOPI server is not secure: SSL verification failed'),
 					'SDK: ssl-configuration',
@@ -77,6 +80,7 @@ class ServerAuditDialog {
 				],
 			},
 			postmessage: {
+				priority: 21,
 				ok: [
 					_('PostMessage API is initialized'),
 					'SDK: post-message-initialization',
@@ -89,9 +93,11 @@ class ServerAuditDialog {
 				],
 			},
 			hardwarewarning: {
+				priority: 10,
 				lowresources: [
 					_(
-						'Your server is configured with insufficient hardware resources, which may lead to poor performance.'),
+						'Your server is configured with insufficient hardware resources, which may lead to poor performance.',
+					),
 					'SDK: hardware-requirements',
 					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
 				],
@@ -102,53 +108,40 @@ class ServerAuditDialog {
 				],
 			},
 			seccomp: {
+				priority: 3,
 				none: [
 					_(
-						'BPF filtering of potentially risky system calls (seccomp) is not enabled; a security hazard.'),
+						'BPF filtering of potentially risky system calls (seccomp) is not enabled; a security hazard.',
+					),
 					'SDK: seccomp',
-					''
+					'',
 				],
-				ok: [
-					_('system call security filtering enabled'),
-					'SDK: seccomp',
-					''
-				],
+				ok: [_('system call security filtering enabled'), 'SDK: seccomp', ''],
 			},
 			bindmounted: {
+				priority: 11,
 				slow: [
 					_('Slow Kit jail setup with copying, cannot bind-mount.'),
 					'SDK: bindmount',
-					''
+					'',
 				],
-				ok: [
-					_('Fast kit jail bind mounting enabled'),
-					'SDK: bindmount',
-					''
-				],
+				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
 			},
 			contained: {
+				priority: 2,
 				uncontained: [
-					_('Documents are not effectively contained: missing capabilities or namespaces.'),
+					_(
+						'Documents are not effectively contained: missing capabilities or namespaces.',
+					),
 					'SDK: nocaps',
-					''
+					'',
 				],
-				ok: [
-					_('Each document is securely contained'),
-					'SDK: nocaps',
-					''
-				],
+				ok: [_('Each document is securely contained'), 'SDK: nocaps', ''],
 			},
 			info_namespaces: {
-				true: [
-					_('Using namespaces.'),
-					'SDK: nocaps',
-					''
-				],
-				false: [
-					_('Not using namespaces'),
-					'SDK: nocaps',
-					''
-				],
+				priority: 30,
+				true: [_('Using namespaces.'), 'SDK: nocaps', ''],
+				false: [_('Not using namespaces'), 'SDK: nocaps', ''],
 			},
 		};
 	}
@@ -170,13 +163,19 @@ class ServerAuditDialog {
 		);
 	}
 
-	private getEntries(source: any): Array<TreeEntryJSON> {
+	private getEntries(sourceUnsorted: any): Array<TreeEntryJSON> {
 		const entries = new Array<TreeEntryJSON>();
 
-		if (!source) return entries;
+		if (!sourceUnsorted) return entries;
 
 		const errorIcon = { collapsed: 'serverauditerror.svg' };
 		const okIcon = { collapsed: 'serverauditok.svg' };
+
+		const source = sourceUnsorted.sort(
+			(x: AuditEntry, y: AuditEntry) =>
+				(this.errorCodes[x.code] ? this.errorCodes[x.code].priority : 100) -
+				(this.errorCodes[y.code] ? this.errorCodes[y.code].priority : 100),
+		);
 
 		source.forEach((entry: AuditEntry) => {
 			const found = this.errorCodes[entry.code];
@@ -186,7 +185,9 @@ class ServerAuditDialog {
 					entries.push({
 						row: 0,
 						columns: [
-							entry.status === 'ok' || this.isInfoEntry(entry) ? okIcon : errorIcon,
+							entry.status === 'ok' || this.isInfoEntry(entry)
+								? okIcon
+								: errorIcon,
 							{ text: status[0] },
 							status[1] && status[2]
 								? {
@@ -198,8 +199,7 @@ class ServerAuditDialog {
 					} as TreeEntryJSON);
 				}
 			} else if (this.isInfoEntry(entry)) {
-				if (entry.code === 'info_setup_ms')
-				{
+				if (entry.code === 'info_setup_ms') {
 					const ms = Number.parseInt(entry.status);
 					const good = ms < 3000;
 					entries.push({
@@ -210,9 +210,7 @@ class ServerAuditDialog {
 							{ text: entry.status + ' ms' },
 						],
 					} as TreeEntryJSON);
-				}
-				else
-					console.warn('Unknown server audit info: ' + entry.code);
+				} else console.warn('Unknown server audit info: ' + entry.code);
 			} else {
 				console.warn('Unknown server audit entry: ' + entry.code);
 			}
@@ -225,15 +223,13 @@ class ServerAuditDialog {
 		let hasErrors = false;
 		if (app.serverAudit) {
 			app.serverAudit.forEach((entry: any) => {
-				if (this.isErrorEntry(entry))
-					hasErrors = true;
+				if (this.isErrorEntry(entry)) hasErrors = true;
 			});
 		}
 
 		if (app.clientAudit) {
 			app.clientAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok')
-					hasErrors = true;
+				if (entry.status !== 'ok') hasErrors = true;
 			});
 		}
 
@@ -324,13 +320,11 @@ class ServerAuditDialog {
 		);
 	}
 
-	private isInfoEntry(entry: AuditEntry) : boolean
-	{
+	private isInfoEntry(entry: AuditEntry): boolean {
 		return entry.code.startsWith('info_');
 	}
 
-	private isErrorEntry(entry: AuditEntry) : boolean
-	{
+	private isErrorEntry(entry: AuditEntry): boolean {
 		return !this.isInfoEntry(entry) && entry.status !== 'ok';
 	}
 
@@ -338,8 +332,7 @@ class ServerAuditDialog {
 		if (app.serverAudit.length) {
 			let hasErrors = false;
 			app.serverAudit.forEach((entry: any) => {
-				if (this.isErrorEntry(entry))
-					hasErrors = true;
+				if (this.isErrorEntry(entry)) hasErrors = true;
 			});
 
 			// only show the snackbar if there are specific warnings
