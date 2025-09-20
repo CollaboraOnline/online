@@ -120,13 +120,17 @@ class Tooltip {
 	}
 
 	show(elem, textContent) {
+		let win = this._options.window ? this._options.window : window;
 		// `textContent` adds flexibility, enabling custom messages like document "Saved" instead of the fixed "cool-tooltip."
 		let content = textContent ? textContent : elem.dataset.cooltip,
-			rectView = new DOMRect(0, 0, window.innerWidth, window.innerHeight),
+			rectView = new DOMRect(0, 0, win.innerWidth, win.innerHeight),
 			rectElem = elem.getBoundingClientRect(),
 			rectCont,
 			rectTooltip,
 			index = 0;
+
+		rectElem.x += win.scrollX;
+		rectElem.y += win.scrollY;
 
 		this._container.textContent = content;
 		if (!this._container.textContent) return;
