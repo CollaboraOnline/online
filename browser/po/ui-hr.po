@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-02-10 09:03+0000\n"
+"PO-Revision-Date: 2025-09-12 12:13+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -108,7 +108,7 @@ msgstr "Proteklo vrijeme"
 # Pootle za 'Idle time' predlaže 'Vrijeme bez posla', ali mislim da to nije najbolje rješenje. Engleski 'Idle time' označava aktivno vrijeme, vrijeme koje je trebalo biti utrošeno na posao, ali nije. Automatski predložen hrvatski prijevod (donekle) znači to isto, ali isto tako može označavati i vrijeme koje uopće nije bilo predloženo za obavljanje posla (slobodni dan, ugašeno računalo: vrijeme koje i nije trebalo biti utrošeno na posao). Prijevod 'Vrijeme čekanja' odnosi se na aktivno vrijeme unutar kojega zaposlenik ili računalo čeka da mu se posao dodijeli, odnosno - čini mi se - bolje sugerira da je posao na čekanju, označava vrijeme za koje je računalo aktivno, ali se na njemu ne radi aktivno. Vjerojatno ova značajka određuje nakon koliko se takva vremena računalo ili program gasi, odnosno vrijeme nakon kojega se gasi sesija (ili slično). Zbog toga i prijevod 'Vrijeme čekanja' (prije negoli se dogodi nešto drugo, recimo pokretanje zaštite ekrana (screen saver) ili se računalo gasi i sl.).
 #: admin/admin.strings.js:36
 msgid "Idle time"
-msgstr "Bezposleno vrijeme"
+msgstr "Vrijeme neaktivnosti"
 
 #: admin/admin.strings.js:37
 msgid "Modified"
@@ -116,7 +116,7 @@ msgstr "Promijenjeno"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr "Preuzeto"
+msgstr "Preneseno"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
@@ -353,7 +353,7 @@ msgstr "Server je bio isključen. Ponovo učitaj stranicu."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
-msgstr "Pogreška u vezi"
+msgstr "Greška u vezi"
 
 #: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
@@ -369,160 +369,164 @@ msgstr "Stvarno želiš isključiti server?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:114
 msgid "Accessibility"
-msgstr ""
+msgstr "Dostupnost"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
-#, fuzzy
 msgid "Dark mode"
 msgstr "Tamni modus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
 msgid "Compact layout"
-msgstr ""
+msgstr "Kompaktni raspored"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show status bar"
 msgstr "Prikaži traku stanja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
-#, fuzzy
 msgid "Show ruler"
 msgstr "Prikaži ravnalo"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Provjera dostupnosti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 #: src/control/Control.NavigatorPanel.ts:204
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Prikaži bočnu traku"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Custom Animation"
-msgstr ""
+msgstr "Prilagođena animacija"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Master Pages"
-msgstr ""
+msgstr "Master stranice"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Slide Transition"
-msgstr ""
+msgstr "Prijelaz slajdova"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:128
-#, fuzzy
 msgid "Style List"
 msgstr "Popis stilova"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:223
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Nevaljana JSON datoteka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:227
 msgid "Error reading file"
-msgstr ""
+msgstr "Greška u čitanju datoteke"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:239
 msgid "Autotext"
-msgstr ""
+msgstr "Automatski tekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:241
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Prenesi isječke teksta za ponovno korištenje (.bau). Za umetanje teksta u "
+"dokument, upiši prečac za unos automatskog teksta i pritisni F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:247
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Prenesi automatski tekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:251
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Prilagođeni riječnici"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:253
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Dodaj ili uredi riječi u rječniku za provjeru pravopisa. Riječi u tvom "
+"korisničkom rječniku (.dic) će biti dostupne za provjeru pravopisa."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:259
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Prenesi korisnički rječnik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:263
 msgid "Document settings"
-msgstr ""
+msgstr "Postavke dokumenta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:264
 #: admin/src/integrator/Xcu.ts:297
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Prilagodi ponašanje Office dokumenata."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:270
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Prenesi Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:321
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL dijeljene konfiguracije nedostaje u početnim varijablama."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:327
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Pristupni token nedostaje u početnim varijablama."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Dogodila se greška. Pokušaj osvježiti stranicu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Dogodila se greška prilikom dohvaćanja datoteke postavki. Pokušaj osvježiti "
+"stranicu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:505
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
+"Dogodila se greška prilikom dohvaćanja korisničkog rječnika. Pokušaj "
+"osvježiti stranicu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:515
 msgid "Interface Settings"
-msgstr ""
+msgstr "Postavke sučelja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:517
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Postavi zadane postavke sučelja."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:625
 msgid "Select a tab to browser settings."
-msgstr ""
+msgstr "Odaberi karticu za postavke preglednika."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:638
 #: admin/src/integrator/Xcu.ts:357
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Resetiraj na zadane postavke dokumenta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:642
 #: admin/src/integrator/Xcu.ts:371
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Stvarno želiš ponovo postaviti postavke dokumenta?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:659
 #: admin/src/integrator/Xcu.ts:386
 msgid "Save Document settings"
-msgstr ""
+msgstr "Postavke za spremanje dokumenata"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:989
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Prikaz trake grupiranih fukcija"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:996
 #: src/control/Control.NotebookbarCalc.js:1494
@@ -534,7 +538,7 @@ msgstr "Kompaktni prikaz"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1069
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Dogodila se greška prilikom prijenosa datoteke. Pokušaj ponovo."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1145
 #: src/control/Control.ContextMenu.js:250 src/docdispatcher.ts:532
@@ -546,6 +550,7 @@ msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Dogodila se greška prilikom brisanja datoteke. Pokušaj osvježiti stranicu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1198
 msgid "Edit"
@@ -553,35 +558,36 @@ msgstr "Uredi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1224
 msgid "View Settings"
-msgstr ""
+msgstr "Postavke prikaza"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1225
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Prilagodi postavke prikaza."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1235
 msgid "Option"
-msgstr ""
+msgstr "Opcije"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1281
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
+"(Upozorenje: Pristupačnost serveru mora biti aktivirana za prebacivanje)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1315
 msgid "Reset to default View settings"
-msgstr ""
+msgstr "Resetiraj na zadane postavke prikaza"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1319
 msgid "Are you sure you want to reset View Settings?"
-msgstr ""
+msgstr "Stvarno želiš resetirati postavke prikaza?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1342
 msgid "Save View Settings"
-msgstr ""
+msgstr "Spremi postavke prikaza"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr ""
+msgstr "Upiši Zotero API ključ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -590,51 +596,51 @@ msgstr "Greška"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standardni rječnik"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Provjera pravopisa zanemaruje riječi"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Rječnik iznimaka"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Riječi iznimaka se podcrtavaju prilikom provjere pravopisa"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Učitavanje korisničkog rječnika …"
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Tipkaj za dodavanje riječ"
 
 #: admin/src/integrator/WordBook.ts:338
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Nevažeći format rječnika. Provjeri datoteku."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Dogodila se greška prilikom učitavanja datoteke rječnika"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Dogodila se greška prilikom učitavanja postavki dokumenta."
 
 #: admin/src/integrator/Xcu.ts:293
 msgid "Document Settings"
-msgstr ""
+msgstr "Postavke dokumenta"
 
 #: admin/src/integrator/Xcu.ts:344
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Otvori karticu za prikaz postavki."
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -689,10 +695,12 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Sustav trenutačno prilagođava resurse. Pričekaj trenutak dok pokušamo "
+"ponoviti tvoj zahtjev …"
 
 #: js/global.js:1591
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "Dokument se migrira na novi server. Pokušaj ponovno uskoro..."
 
 #: js/global.js:1593
 msgid "Failed to get RouteToken from controller"
@@ -708,7 +716,7 @@ msgstr "Zatvori pomoću Ctrl+Shift+Alt+D"
 
 #: src/app/Debug.ts:1384
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Obrada događaja je otkazana za neočekivano dugo vrijeme: {0} ms"
 
 #: src/canvas/sections/CommentListSection.ts:166
 msgid "A comment is being edited"
@@ -765,7 +773,7 @@ msgstr "Otvori u potpunom prikazu"
 
 #: src/canvas/sections/CommentListSection.ts:1222
 msgid "Show in navigator"
-msgstr ""
+msgstr "Prikaži u navigatoru"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 #: src/control/Control.JSDialogBuilder.js:1913
@@ -805,13 +813,12 @@ msgid "Autosaved"
 msgstr "Automatski spremljeno"
 
 #: src/canvas/sections/CommentSection.ts:46
-#, fuzzy
 msgid "Edit comment"
-msgstr "Uredi dokument"
+msgstr "Uredi komentar"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Reply comment"
-msgstr ""
+msgstr "Odgovori na komentar"
 
 #: src/canvas/sections/CommentSection.ts:48
 msgid "Open menu"
@@ -819,7 +826,7 @@ msgstr "Otvori izbornik"
 
 #: src/canvas/sections/CommentSection.ts:344
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Pritisni Ctrl + Enter za objavljivanje"
 
 #: src/canvas/sections/CommentSection.ts:408
 #: src/canvas/sections/CommentSection.ts:409
@@ -836,9 +843,8 @@ msgid "Resolved"
 msgstr "Riješeno"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:458
-#, fuzzy
 msgid "Document contains unsupported media"
-msgstr "Dokument sadrži nepodržani video"
+msgstr "Dokument sadrži nepodržane medije"
 
 #: src/canvas/sections/URLPopUpSection.ts:66
 msgid "Copy link location"
@@ -870,7 +876,7 @@ msgstr "„Slow Proxy”"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Vremenska zona:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1354,7 +1360,7 @@ msgstr "Umetni elektronski potpis"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Proširi traku formula"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1362,7 +1368,7 @@ msgstr "Čarobnjak funkcija"
 
 #: src/control/Control.FormulaBarJSDialog.js:74
 msgid "Select Function"
-msgstr ""
+msgstr "Odaberi funkciju"
 
 #: src/control/Control.FormulaBarJSDialog.js:80
 #: src/control/Control.NotebookbarWriter.js:120
@@ -1377,7 +1383,7 @@ msgstr "Prihvati"
 
 #: src/control/Control.FormulaBarJSDialog.js:170
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Sažmi traku formula"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1476,7 +1482,7 @@ msgstr "Umetni komentar"
 
 #: src/control/Control.JSDialogBuilder.js:2271
 msgid "Open {name}"
-msgstr ""
+msgstr "Otvori {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2596
 #: src/control/Control.Menubar.ts:925
@@ -1509,7 +1515,7 @@ msgstr "Jezik"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr ""
+msgstr "Nije pronađen nijedan rezultat!"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
 #: src/control/Control.Menubar.ts:1048
@@ -1642,7 +1648,7 @@ msgstr "Popravi"
 #: src/control/Control.NotebookbarWriter.js:1686
 #: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
-msgstr "Početna vrijednost uvećanja"
+msgstr "Resetiraj zumiranje"
 
 #: src/control/Control.Menubar.ts:166 src/control/Control.Menubar.ts:489
 #: src/control/Control.Menubar.ts:649 src/control/Control.Menubar.ts:793
@@ -1740,7 +1746,7 @@ msgstr "Dodaj citat"
 #: src/control/Control.Menubar.ts:342
 #: src/control/Control.NotebookbarWriter.js:2335
 msgid "Add Citation Note"
-msgstr "Dodaj napomenu uz citat"
+msgstr "Dodaj bilješku uz citat"
 
 #: src/control/Control.Menubar.ts:343
 #: src/control/Control.NotebookbarWriter.js:2308
@@ -1917,17 +1923,17 @@ msgstr "Slajdovi preko cijele stranice"
 #: src/control/Control.Menubar.ts:458
 #: src/control/Control.NotebookbarBuilder.js:654
 msgid "Notes Pages"
-msgstr "Stranice s napomenama"
+msgstr "Stranice bilješki"
 
 #: src/control/Control.Menubar.ts:492
 #: src/control/Control.NotebookbarImpress.js:605
 msgid "Notes View"
-msgstr "Prikaz napomena"
+msgstr "Prikaz bilješki"
 
 #: src/control/Control.Menubar.ts:496
 #: src/control/Control.NotebookbarImpress.js:611
 msgid "Master View"
-msgstr "Prikaz „Master” stranice"
+msgstr "Prikaz Master slajda"
 
 #: src/control/Control.Menubar.ts:506
 msgid "Local Multimedia..."
@@ -2058,12 +2064,12 @@ msgstr "Gornjih N posto …"
 #: src/control/Control.Menubar.ts:910
 #: src/control/jsdialog/Definitions.Menu.ts:1814
 msgid "Bottom N elements..."
-msgstr "Doljnih N elemenata …"
+msgstr "Donjih N elemenata …"
 
 #: src/control/Control.Menubar.ts:911
 #: src/control/jsdialog/Definitions.Menu.ts:1818
 msgid "Bottom N percent..."
-msgstr "Doljnih N posto …"
+msgstr "Donjih N posto …"
 
 #: src/control/Control.Menubar.ts:912
 #: src/control/jsdialog/Definitions.Menu.ts:1822
@@ -2106,7 +2112,7 @@ msgstr "Ukloni područje ispisa"
 
 #: src/control/Control.Menubar.ts:1586 src/control/Control.StatusBar.js:517
 msgid "Reset to Default Language"
-msgstr "Vrati na standardni jezik"
+msgstr "Resetiraj na zadani jezik"
 
 #: src/control/Control.Menubar.ts:1617 src/control/Control.Menubar.ts:1618
 #: src/control/Control.Menubar.ts:1619 src/control/Control.Toolbar.js:247
@@ -2173,11 +2179,11 @@ msgstr "Kraj gradijenta"
 
 #: src/control/Control.NavigatorPanel.ts:104
 msgid "Navigation"
-msgstr ""
+msgstr "Navigacija"
 
 #: src/control/Control.NavigatorPanel.ts:125
 msgid "Close Navigation"
-msgstr ""
+msgstr "Zatvori navigaciju"
 
 #: src/control/Control.NavigatorPanel.ts:159
 #: src/control/Control.NotebookbarImpress.js:1370
@@ -2187,39 +2193,39 @@ msgstr "Slajdovi"
 
 #: src/control/Control.NavigatorPanel.ts:166
 msgid "Outline"
-msgstr ""
+msgstr "Struktura"
 
 #: src/control/Control.NavigatorPanel.ts:173
 msgid "Results"
-msgstr ""
+msgstr "Rezultati"
 
 #: src/control/Control.NavigatorPanel.ts:381
 msgid "Search..."
-msgstr ""
+msgstr "Traži …"
 
 #: src/control/Control.QuickFindPanel.ts:74
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Tipkaj u polje pretrage za pronalaženje bilo čega u tvom dokumentu"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Prijelaz"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:55
 msgid "Variant"
-msgstr ""
+msgstr "Varijanta"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:70
 msgid "Duration"
-msgstr ""
+msgstr "Trajanje"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:97
 msgid "On mouse click"
-msgstr ""
+msgstr "Klikom miša"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Nakon"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2287,9 +2293,8 @@ msgid "Page Layout"
 msgstr "Rapored stranice"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formula"
+msgstr "Formule"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2312,9 +2317,8 @@ msgstr "Format"
 #: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarWriter.js:94
-#, fuzzy
 msgid "Shape"
-msgstr "Oblici"
+msgstr "Oblik"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2389,7 +2393,7 @@ msgstr "Preimenuj"
 #: src/control/Control.NotebookbarImpress.js:701
 #: src/control/Control.NotebookbarWriter.js:583
 msgid "Clipboard"
-msgstr ""
+msgstr "Međuspremnik"
 
 #: src/control/Control.NotebookbarCalc.js:456
 #: src/control/Control.NotebookbarDraw.js:654
@@ -2400,11 +2404,11 @@ msgstr "Font"
 #: src/control/Control.NotebookbarCalc.js:603
 #: src/control/Control.NotebookbarDraw.js:795
 msgid "Alignment"
-msgstr ""
+msgstr "Poravnanje"
 
 #: src/control/Control.NotebookbarCalc.js:730
 msgid "Merge & Center"
-msgstr ""
+msgstr "Spoji i centriraj"
 
 #: src/control/Control.NotebookbarCalc.js:740
 #: src/control/Control.NotebookbarCalc.js:756
@@ -2456,7 +2460,7 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:842
 msgid "Cells"
-msgstr ""
+msgstr "Polja"
 
 #: src/control/Control.NotebookbarCalc.js:944
 #: src/control/jsdialog/Definitions.Menu.ts:2248
@@ -2485,7 +2489,7 @@ msgstr "Loše"
 
 #: src/control/Control.NotebookbarCalc.js:1000
 msgid "Editing"
-msgstr ""
+msgstr "Uređivanje"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:1178
@@ -2497,18 +2501,18 @@ msgstr "Zamijeni položaj"
 #: src/control/Control.NotebookbarCalc.js:1088
 #: src/control/Control.NotebookbarWriter.js:1816
 msgid "Margin"
-msgstr ""
+msgstr "Margina"
 
 #: src/control/Control.NotebookbarCalc.js:1095
 #: src/control/Control.NotebookbarWriter.js:1823
 msgid "Size"
-msgstr ""
+msgstr "Veličina"
 
 #: src/control/Control.NotebookbarCalc.js:1127
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:621
 msgid "Grid"
-msgstr ""
+msgstr "Mreža"
 
 #: src/control/Control.NotebookbarCalc.js:1156
 msgid "Row Height"
@@ -2553,7 +2557,7 @@ msgstr "Izbriši stupce"
 #: src/control/Control.NotebookbarWriter.js:3259
 #: src/control/Control.NotebookbarWriter.js:3582
 msgid "Align"
-msgstr ""
+msgstr "Poravnaj"
 
 #: src/control/Control.NotebookbarCalc.js:1317
 #: src/control/Control.NotebookbarCalc.js:2870
@@ -2566,18 +2570,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3318
 #: src/control/Control.NotebookbarWriter.js:3641
 msgid "Arrange"
-msgstr ""
+msgstr "Rasporedi"
 
 #: src/control/Control.NotebookbarCalc.js:1379
 msgid "Freeze"
-msgstr ""
+msgstr "Zamrzni"
 
 #: src/control/Control.NotebookbarCalc.js:1433
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:500
 #: src/control/Control.NotebookbarWriter.js:1672
 msgid "Zoom"
-msgstr ""
+msgstr "Zumiraj"
 
 #: src/control/Control.NotebookbarCalc.js:1440
 #: src/control/Control.NotebookbarDraw.js:410
@@ -2609,15 +2613,15 @@ msgstr "Traka stanja"
 #: src/control/Control.NotebookbarWriter.js:3367
 #: src/control/Control.NotebookbarWriter.js:3690
 msgid "Group"
-msgstr ""
+msgstr "Grupa"
 
 #: src/control/Control.NotebookbarCalc.js:1582
 msgid "Ungroup"
-msgstr ""
+msgstr "Razgrupiraj"
 
 #: src/control/Control.NotebookbarCalc.js:1604
 msgid "Pivot Table"
-msgstr ""
+msgstr "Pivot tablica"
 
 #: src/control/Control.NotebookbarCalc.js:1653
 #: src/control/Control.NotebookbarDraw.js:996
@@ -2627,7 +2631,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:951
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Ilustracije"
 
 #: src/control/Control.NotebookbarCalc.js:1723
 #: src/control/Control.NotebookbarDraw.js:1010
@@ -2647,63 +2651,61 @@ msgstr "Asistent"
 
 #: src/control/Control.NotebookbarCalc.js:1939
 msgid "Insert Function"
-msgstr ""
+msgstr "Funkcija umetanja"
 
 #: src/control/Control.NotebookbarCalc.js:1947
-#, fuzzy
 msgid "Function Library"
-msgstr "Čarobnjak funkcija"
+msgstr "Biblioteka funkcija"
 
 #: src/control/Control.NotebookbarCalc.js:1961
 msgid "AutoSum"
-msgstr ""
+msgstr "Automatski zbroj"
 
 #: src/control/Control.NotebookbarCalc.js:1974
 msgid "Financial"
-msgstr ""
+msgstr "Financijski"
 
 #: src/control/Control.NotebookbarCalc.js:1992
 msgid "Logical"
-msgstr ""
+msgstr "Logički"
 
 #: src/control/Control.NotebookbarCalc.js:2022
 msgid "Date & Time"
-msgstr ""
+msgstr "Datum i vrijeme"
 
 #: src/control/Control.NotebookbarCalc.js:2034
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Pretraživanje i referenca"
 
 #: src/control/Control.NotebookbarCalc.js:2052
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matematika i trigonometrija"
 
 #: src/control/Control.NotebookbarCalc.js:2064
 msgid "More Functions"
-msgstr ""
+msgstr "Više funkcija"
 
 #: src/control/Control.NotebookbarCalc.js:2109
 msgid "Range"
-msgstr ""
+msgstr "Opseg"
 
 #: src/control/Control.NotebookbarCalc.js:2192
 msgid "Sort"
-msgstr ""
+msgstr "Razvrstaj"
 
 #: src/control/Control.NotebookbarCalc.js:2238
 msgid "Filter"
-msgstr ""
+msgstr "Filtar"
 
 #: src/control/Control.NotebookbarCalc.js:2485
 #: src/control/Control.NotebookbarImpress.js:1897
 #: src/control/Control.NotebookbarWriter.js:2525
-#, fuzzy
 msgid "Comments"
-msgstr "Komentar"
+msgstr "Komentari"
 
 #: src/control/Control.NotebookbarCalc.js:2590
 msgid "Format Cells"
-msgstr ""
+msgstr "Formatiraj polja"
 
 #: src/control/Control.NotebookbarCalc.js:2736
 #: src/control/Control.NotebookbarCalc.js:3093
@@ -2711,13 +2713,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3204
 #: src/control/Control.NotebookbarWriter.js:3527
 msgid "Wrap"
-msgstr ""
+msgstr "Prelomi"
 
 #: src/control/Control.NotebookbarCalc.js:2975
 #: src/control/Control.NotebookbarImpress.js:2616
 #: src/control/Control.NotebookbarWriter.js:3413
 msgid "Image Controls"
-msgstr ""
+msgstr "Upravljanje slikama"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:57
@@ -2749,28 +2751,27 @@ msgstr "Ravnalo"
 #: src/control/Control.NotebookbarWriter.js:787
 #: src/control/Control.NotebookbarWriter.js:2970
 msgid "Paragraph"
-msgstr ""
+msgstr "Odlomak"
 
 #: src/control/Control.NotebookbarDraw.js:1207
 #: src/control/Control.NotebookbarDraw.js:1407
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Stranica"
 
 #: src/control/Control.NotebookbarDraw.js:1559
 #: src/control/Control.NotebookbarImpress.js:1596
 #: src/control/Control.NotebookbarWriter.js:2392
-#, fuzzy
 msgid "Field"
-msgstr "Polja"
+msgstr "Polje"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "Dizajn"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Slide Show"
-msgstr ""
+msgstr "Dijaprojekcija"
 
 #: src/control/Control.NotebookbarImpress.js:142
 msgid "Master"
@@ -2790,7 +2791,7 @@ msgstr "Prikaži u prozoru"
 
 #: src/control/Control.NotebookbarImpress.js:598
 msgid "Slide Views"
-msgstr ""
+msgstr "Prikazi slajdova"
 
 #: src/control/Control.NotebookbarImpress.js:630
 msgid "Show Grid"
@@ -2802,53 +2803,52 @@ msgstr "Privlači na mrežu"
 
 #: src/control/Control.NotebookbarImpress.js:762
 msgid "Slide Layout"
-msgstr ""
+msgstr "Raspored slajda"
 
 #: src/control/Control.NotebookbarImpress.js:773
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 #: src/control/Control.NotebookbarImpress.js:784
-#, fuzzy
 msgid "Change Layout"
-msgstr "Rapored stranice"
+msgstr "Promijeni rapored"
 
 #: src/control/Control.NotebookbarImpress.js:792
 msgid "Reset Layout"
-msgstr ""
+msgstr "Resetiraj raspored"
 
 #: src/control/Control.NotebookbarImpress.js:806
 msgid "Character"
-msgstr ""
+msgstr "Znak"
 
 #: src/control/Control.NotebookbarImpress.js:1067
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Razmak i boja"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Predlošci master slajda"
 
 #: src/control/Control.NotebookbarImpress.js:1777
 msgid "Slide Size"
-msgstr ""
+msgstr "Veličina slajda"
 
 #: src/control/Control.NotebookbarImpress.js:1800
 msgid "Background Image"
-msgstr ""
+msgstr "Slika pozadine"
 
 #: src/control/Control.NotebookbarImpress.js:2001
 msgid "Merge & Split"
-msgstr ""
+msgstr "Spoji i rastavi"
 
 #: src/control/Control.NotebookbarImpress.js:2040
 #: src/control/Control.NotebookbarWriter.js:2920
 msgid "Select"
-msgstr ""
+msgstr "Odaberi"
 
 #: src/control/Control.NotebookbarImpress.js:2649
 msgid "Effects"
-msgstr ""
+msgstr "Efekti"
 
 #: src/control/Control.NotebookbarWriter.js:81
 msgid "Form"
@@ -2856,11 +2856,11 @@ msgstr "Obrazac"
 
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Go Online"
-msgstr "Prebaci na mrežni način rada"
+msgstr "Poveži se na internet"
 
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Go Offline"
-msgstr "Prebaci na izvanmrežni način rada"
+msgstr "Odspji se s interneta"
 
 #: src/control/Control.NotebookbarWriter.js:926
 msgid "Scroll up"
@@ -2872,19 +2872,19 @@ msgstr "Klizni prema dolje"
 
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Popisi/Predznaci"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
-msgstr ""
+msgstr "Zaglavlje i podnožje"
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Odjeljak"
 
 #: src/control/Control.NotebookbarWriter.js:1538
 msgid "Symbols"
-msgstr ""
+msgstr "Simboli"
 
 #: src/control/Control.NotebookbarWriter.js:1602
 msgid "Rich Text"
@@ -2900,32 +2900,31 @@ msgstr "Rasklopiv izbornik"
 
 #: src/control/Control.NotebookbarWriter.js:2181
 msgid "Table of content"
-msgstr ""
+msgstr "Sadržaj"
 
 #: src/control/Control.NotebookbarWriter.js:2227
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Fusnota/Završna bilješka"
 
 #: src/control/Control.NotebookbarWriter.js:2600
 msgid "Tracking"
-msgstr ""
+msgstr "Praćenje"
 
 #: src/control/Control.NotebookbarWriter.js:2858
 msgid "Split"
-msgstr ""
+msgstr "Rastavi"
 
 #: src/control/Control.NotebookbarWriter.js:3042
 msgid "Number Format"
-msgstr ""
+msgstr "Format brojeva"
 
 #: src/control/Control.PartsPreview.js:186
-#, fuzzy
 msgid "preview of page %1"
-msgstr "pregled stranice "
+msgstr "pregled stranice %1"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "Slide %1"
-msgstr ""
+msgstr "Slajd %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
@@ -3005,7 +3004,7 @@ msgstr "Nema problema"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Upozorenja:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -3033,7 +3032,7 @@ msgstr "Klizni na zadnji list"
 
 #: src/control/Control.SheetsBar.js:79
 msgid "Insert sheet"
-msgstr "Umetnuti list"
+msgstr "Umetni list"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
@@ -3051,12 +3050,12 @@ msgstr "Prosjek"
 
 #: src/control/Control.StatusBar.js:188
 msgid "CountA"
-msgstr "Ukupni broj A"
+msgstr "BrojA"
 
 #: src/control/Control.StatusBar.js:189
 #: src/control/jsdialog/Definitions.Menu.ts:167
 msgid "Count"
-msgstr "Ukupni broj"
+msgstr "Broj"
 
 #: src/control/Control.StatusBar.js:190
 msgid "Maximum"
@@ -3073,7 +3072,7 @@ msgstr "Zbroj"
 
 #: src/control/Control.StatusBar.js:193
 msgid "Selection count"
-msgstr "Ukupni broj odabira"
+msgstr "Broj odabira"
 
 #: src/control/Control.StatusBar.js:389
 msgid ""
@@ -3149,7 +3148,7 @@ msgstr "Aktivni list"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr "Standardni stil"
+msgstr "Zadani stil"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
@@ -3193,7 +3192,7 @@ msgstr "Praćenje urednika"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr "Prekini praćenje"
+msgstr "Prestani pratiti"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
@@ -3251,13 +3250,13 @@ msgstr "Učitavanje …"
 #: src/slideshow/PresenterConsole.js:31
 #: src/slideshow/SlideShowPresenter.ts:569
 msgid "Previous"
-msgstr "Prethodni"
+msgstr "Prethodno"
 
 #: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
 #: src/slideshow/PresenterConsole.js:32
 #: src/slideshow/SlideShowPresenter.ts:577
 msgid "Next"
-msgstr "Sljedeći"
+msgstr "Sljedeće"
 
 #: src/control/Control.Zotero.js:294
 msgid "Language:"
@@ -3281,7 +3280,7 @@ msgstr "Fusnote"
 
 #: src/control/Control.Zotero.js:436
 msgid "Endnotes"
-msgstr "Završne napomene"
+msgstr "Završne bilješke"
 
 #: src/control/Control.Zotero.js:523
 msgid "My Publications"
@@ -3305,7 +3304,7 @@ msgstr "Neuspjelo učitavanje zbirki"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Učitavanje referenci"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -3357,15 +3356,15 @@ msgstr "Potvrdi"
 
 #: src/control/Control.Zotero.js:1339
 msgid "Add Note"
-msgstr "Dodaj napomenu"
+msgstr "Dodaj bilješku"
 
 #: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
-msgstr "Napomene"
+msgstr "Bilješke"
 
 #: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
-msgstr "Dogodila se greška pri dohvaćanju napomena"
+msgstr "Dogodila se greška pri dohvaćanju bilješki"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
@@ -3497,7 +3496,7 @@ msgstr "Gornja margina"
 
 #: src/control/VRuler.ts:360
 msgid "Bottom Margin"
-msgstr "Doljna margina"
+msgstr "Donja margina"
 
 #: src/control/jsdialog/Definitions.Menu.ts:112
 #: src/control/jsdialog/Definitions.Menu.ts:1728
@@ -3506,11 +3505,11 @@ msgstr "Normalno"
 
 #: src/control/jsdialog/Definitions.Menu.ts:117
 msgid "Wide"
-msgstr ""
+msgstr "Široko"
 
 #: src/control/jsdialog/Definitions.Menu.ts:122
 msgid "Narrow"
-msgstr ""
+msgstr "Usko"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Min"
@@ -3522,11 +3521,11 @@ msgstr "Maks."
 
 #: src/control/jsdialog/Definitions.Menu.ts:1444
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Uredi minigrafikon"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1455
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Izbriši minigrafikon"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1491
 msgid "Portrait"
@@ -3538,123 +3537,123 @@ msgstr "Polegnuto"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1504
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1505
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1506
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1507
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1508
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Letter"
-msgstr ""
+msgstr "Letter"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1511
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Long Bond"
-msgstr ""
+msgstr "Long Bond"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "User"
-msgstr ""
+msgstr "Korisnički"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "DL Envelope"
-msgstr ""
+msgstr "DL kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6 Envelope"
-msgstr ""
+msgstr "C6 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "C6/5 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C5 Envelope"
-msgstr ""
+msgstr "C5 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1525
 msgid "C4 Envelope"
-msgstr ""
+msgstr "C4 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1528
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "#6¾ kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1533
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#9 Envelope"
-msgstr ""
+msgstr "#9 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#10 Envelope"
-msgstr ""
+msgstr "#10 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#11 Envelope"
-msgstr ""
+msgstr "#11 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1539
 msgid "#12 Envelope"
-msgstr ""
+msgstr "#12 kuverta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1542
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Japanska razglednica"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1714
 msgid "Insert Local Image"
@@ -3682,205 +3681,203 @@ msgstr "Jako široko"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1760
 msgid "All users"
-msgstr ""
+msgstr "Svi korisnici"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1765
 msgid "This user"
-msgstr ""
+msgstr "Ovaj korisnik"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1863
 msgid "No Borders"
-msgstr ""
+msgstr "Bez rubova"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1869
 msgid "Left Border"
-msgstr ""
+msgstr "Lijevi rub"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1875
 msgid "Right Border"
-msgstr ""
+msgstr "Desni rub"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1881
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Lijevi i desni rubovi"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1887
 msgid "Top Border"
-msgstr ""
+msgstr "Gornji rub"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1893
 msgid "Bottom Border"
-msgstr ""
+msgstr "Donji rub"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1899
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Gornji i donji rub"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1905
 msgid "Outer Border"
-msgstr ""
+msgstr "Vanjski rub"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1911
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Sve vodoravne linije"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Vanjski rub i vodoravne linije"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Vanjski rub i okomite linije"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1929
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Vanjski rubovi i sve unutarnje linije"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1934
 msgid "Line color"
-msgstr ""
+msgstr "Boja linije"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1945
-#, fuzzy
 msgid "Line style"
-msgstr "Stil linija:"
+msgstr "Stil linije"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1948
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Fina (0,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1957
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Vrlo tanka (0,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1966
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Tanka (0,75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1975
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Srednja (1,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1984
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Debela (2,25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Vrlo debela (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2002
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Dupla fina (1,10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2011
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Dupla fina (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2020
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Tanka/Srednja (3,00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2029
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Srednja/Fina (3,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2038
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Srednja/Srednja (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2098
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Standardno (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2103
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Široki ekran (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2113
 msgid "Blank Slide"
-msgstr ""
+msgstr "Prazni slajd"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2114
 msgid "Title Slide"
-msgstr ""
+msgstr "Naslovni slajd"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2115
 msgid "Title, Content"
-msgstr ""
+msgstr "Naslov, sadržaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2116
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Naslov i 2 sadržaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2117
 msgid "Title Only"
-msgstr ""
+msgstr "Samo naslov"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2118
 msgid "Centered Text"
-msgstr ""
+msgstr "Centrirani tekst"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2119
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Naslov, 2 sadržaj i sadržaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2120
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Naslov, sadržaj i 2 sadržaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2121
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Naslov, 2 sadržaj preko sadržaja"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2122
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Naslov, sadržaj preko sadržaja"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2123
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Naslov, 4 sadržaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2124
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Naslov, 6 sadržaj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2125
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Okomiti naslov, tekst, dijagram"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2126
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Okomiti naslov, okomiti tekst"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2127
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Naslov, okomiti tekst"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2128
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Naslov, okomiti tekst, ilustracija"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2253
 msgid "Grayscale"
-msgstr ""
+msgstr "Sive nijanse"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2258
 msgid "Black/White"
-msgstr ""
+msgstr "Crno/bijelo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2263
 msgid "Watermark"
-msgstr ""
+msgstr "Vodeni žig"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
-#, fuzzy
 msgid "Insert comment"
 msgstr "Umetni komentar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr ""
+msgstr "Popis komentara"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -3889,7 +3886,7 @@ msgstr "Odbaci"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:148
 msgid "Unknown color"
-msgstr ""
+msgstr "Nepoznata boja"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:228
 msgid "No fill"
@@ -3905,23 +3902,23 @@ msgstr "Nedavni"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:97
 msgid "Top: {top}"
-msgstr ""
+msgstr "Gore: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:102
 msgid "Left: {left}"
-msgstr ""
+msgstr "Liijevo: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:112
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Dolje: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:117
 msgid "Right: {right}"
-msgstr ""
+msgstr "Desno: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Prilagođene margine …"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 msgid "Read-only"
@@ -3938,7 +3935,7 @@ msgstr "Modus uređivanja"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Broj stranica. Klikni za otvaranje dijaloga „Idi na stranicu”."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:93
 msgid "Word Counter"
@@ -3986,9 +3983,8 @@ msgid "Cell borders"
 msgstr "Rubovi polja"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
-msgstr "Još više opcija za {name}"
+msgstr "Više opcija za {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1480
 msgid "Headings and objects that you add to the document will appear here"
@@ -4218,7 +4214,7 @@ msgid ""
 msgstr ""
 "Ovo je nepodržana verzija za {productname}. Kako bi se izbjegao dojam da je "
 "prikladna za implementaciju u poduzećima, pojavljuje se ova poruka, kad se "
-"istovremeno koristi više od {docs} dokumenata ili {veza} veza."
+"istovremeno koristi više od {docs} dokumenta ili {connections} veza."
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -4250,7 +4246,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr "Greška ovlaštenja: '{errormessage}'."
+msgstr "Greška u ovlaštenju je bila: „{errormessage}“."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -4428,11 +4424,11 @@ msgstr "Dokument se ne može izvesti. Pokušaj ponovo."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
-msgstr "Neuspjelo prenošenje datoteke na server, datoteka nije pronađena."
+msgstr "Prijenos datoteke na server nije uspio, datoteka nije pronađena."
 
 #: src/errormessages.js:65
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Neuspjelo prenošenje datoteke na server, datoteka je prevelika."
+msgstr "Prijenos datoteke na server nije uspio, datoteka je prevelika."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
@@ -4492,7 +4488,8 @@ msgstr "Potraži odjeljak pristupačnosti u coolwsd.xml za postavke servera. "
 
 #: src/layer/marker/TextInput.js:454
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr "Također uključi čitač ekrana u {parentControl}."
+msgstr ""
+"Također provjeri je li glasovno navođenje uključeno pod {parentControl}."
 
 #: src/layer/marker/TextInput.js:456
 msgid "the Help tab"
@@ -4540,6 +4537,8 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Tvoj preglednik ima vrlo ograničen pristup međuspremniku, stoga umjesto toga "
+"koristi gumbe za lijepljenje na ekranskoj tipkovnici."
 
 #: src/map/Clipboard.js:1374
 msgid ""
@@ -4734,7 +4733,7 @@ msgstr "Umanji prikaz"
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Pregled slajda {1}"
 
 #: src/slideshow/PresenterConsole.js:1235
 msgid "Slide {0} of {1}"
@@ -4755,16 +4754,16 @@ msgstr "Pritisni za izlaz iz prezentacije …"
 
 #: src/slideshow/SlideShowPresenter.ts:561
 msgid "End Show"
-msgstr ""
+msgstr "Završi projekciju"
 
 #: src/slideshow/SlideShowPresenter.ts:589
 #: src/slideshow/SlideShowPresenter.ts:600
 msgid "Disable Animations"
-msgstr ""
+msgstr "Deaktiviraj animacije"
 
 #: src/slideshow/SlideShowPresenter.ts:599
 msgid "Enable Animations"
-msgstr ""
+msgstr "Aktiviraj animacije"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
@@ -4803,10 +4802,10 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
-"Pregledaj <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">napomene uz izdanje</a> i saznaj sve o "
-"najnovijem Collabora Online izdanju za razvoj, koje je prikladno za obične "
-"korisnike i male timove."
+"Pregledaj <a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">bilješke uz "
+"izdanje</a> i saznaj sve o najnovijem Collabora Online izdanju za razvoj, "
+"koje je prikladno za obične korisnike i male timove."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
