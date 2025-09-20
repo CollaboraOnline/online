@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-09-02 11:34+0000\n"
+"PO-Revision-Date: 2025-09-15 07:23+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.13.1-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -405,7 +405,7 @@ msgstr "Animacija po meri"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Master Pages"
-msgstr ""
+msgstr "Glavne strani"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Slide Transition"
@@ -583,7 +583,7 @@ msgstr "Shrani nastavitve pogleda"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1486
 msgid "Enter Zotero API Key"
-msgstr ""
+msgstr "Vnesite API-ključ Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1513
 #: src/map/handler/Map.WOPI.js:695
@@ -2199,7 +2199,7 @@ msgstr "Išči ..."
 
 #: src/control/Control.QuickFindPanel.ts:74
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "V iskalno polje vnesite iskani niz v dokumentu"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2219,7 +2219,7 @@ msgstr "S klikom miške"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "After"
-msgstr ""
+msgstr "Za"
 
 #: src/control/Control.Notebookbar.js:657
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2821,7 +2821,7 @@ msgstr "Razmik in barva"
 
 #: src/control/Control.NotebookbarImpress.js:1756
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Predloge matric prosojnice"
 
 #: src/control/Control.NotebookbarImpress.js:1777
 msgid "Slide Size"
@@ -3708,7 +3708,7 @@ msgstr "Spodnja obroba"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1899
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Vrhnja in spodnja obroba"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1905
 msgid "Outer Border"
@@ -3720,15 +3720,15 @@ msgstr "Vse vodoravne črte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Zunanje obrobe in vodoravne črte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Zunanje obrobe in navpične črte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1929
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Zunanje obrobe in vse notranje črte"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1934
 msgid "Line color"
@@ -3867,13 +3867,12 @@ msgid "Watermark"
 msgstr "Vodni žig"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2271
-#, fuzzy
 msgid "Insert comment"
 msgstr "Vstavi komentar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2275
 msgid "Comments list"
-msgstr ""
+msgstr "Seznam komentarjev"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
