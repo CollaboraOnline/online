@@ -1,5 +1,8 @@
 #pragma once
 
+//  This file's purpose is to reduce clutter in other files
+//  by isolating conditional unix-related includes.
+
 #if !MOBILEAPP
 
 #include <cerrno>
@@ -18,9 +21,17 @@
 
 #include <common/JailUtil.hpp>
 #include <common/Watchdog.hpp>
-#include <wsd/PlatformUnix.hpp>
-#include <wsd/SslConfig.hpp>
 #include <wsd/RemoteConfig.hpp>
 #include <wsd/SpecialBrokers.hpp>
 
-#endif
+#ifdef __linux__
+#include <common/security.h>
+#include <sys/inotify.h>
+#endif // __linux__
+
+#if ENABLE_SSL
+#include <Poco/Net/SSLManager.h>
+#include <SslSocket.hpp>
+#endif // ENABLE_SSL
+
+#endif // !MOBILEAPP
