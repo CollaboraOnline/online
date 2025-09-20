@@ -40,8 +40,8 @@
     <string name="pref_viewmode_summary">Prikaži datoteke kao mrežu ili kao popis.</string>
     <string name="pref_file_explorer_title">Raspored upravljača datoteka</string>
     <string name="pref_sort_title">Redoslijed datoteka</string>
-    <string name="pref_filter_title">Standardno filtriranje datoteka</string>
-    <string name="pref_filter_summary">Postavi standardno filtriranje datoteka.</string>
+    <string name="pref_filter_title">Zadani filtar datoteka</string>
+    <string name="pref_filter_summary">Postavi zadani filtar datoteka koji će se koristiti.</string>
     <string name="pref_show_debug_info">Prikaži podatke otklanjanje grešaka</string>
     <string name="pref_show_debug_info_summary">Aktiviraj za prikaz informacija o otklanjanju grešaka u prikazivaču dokumenata</string>
     <string name="sort">Redoslijed</string>
@@ -101,7 +101,7 @@
     <string name="no_recent_items">Otvori dokument koristeći ikonu mape u alatnoj traci.</string>
     <string name="theme_light">Svijetla</string>
     <string name="theme_dark">Tamna</string>
-    <string name="theme_system_default">Standardna tema sustava</string>
+    <string name="theme_system_default">Zadana tema sustava</string>
     <string name="choose_theme">Odaberi temu</string>
     <string name="theme">Tema</string>
     <string name="remove_from_list">Ukloni s popisa</string>
