@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 13:39+0200\n"
-"PO-Revision-Date: 2025-07-26 07:06+0000\n"
+"PO-Revision-Date: 2025-09-09 10:54+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -372,53 +372,49 @@ msgid "Accessibility"
 msgstr "Aksesibilitas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:118
-#, fuzzy
 msgid "Dark mode"
-msgstr "Modus Gelap"
+msgstr "Mode gelap"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:119
 msgid "Compact layout"
-msgstr ""
+msgstr "Tata letak ringkas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:120
-#, fuzzy
 msgid "Show status bar"
-msgstr "Tampilkan Bilah Status"
+msgstr "Tampilkan bilah status"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:121
-#, fuzzy
 msgid "Show ruler"
-msgstr "Tampilkan Penggaris"
+msgstr "Tampilkan penggaris"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:122
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Pemeriksa Aksesibilitas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:123
 #: src/control/Control.NavigatorPanel.ts:204
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:124
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Tampilkan Bilah Sisi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:125
 msgid "Custom Animation"
-msgstr ""
+msgstr "Animasi Ubahan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:126
 msgid "Master Pages"
-msgstr ""
+msgstr "Halaman Induk"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:127
 msgid "Slide Transition"
-msgstr ""
+msgstr "Transisi Salindia"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:128
-#, fuzzy
 msgid "Style List"
-msgstr "Daftar gaya"
+msgstr "Daftar Gaya"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:223
 msgid "Invalid JSON file"
@@ -444,42 +440,44 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:251
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Kamus ubahan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:253
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Tambahkan atau sunting kata-kata dalam kamus ejaan. Kata-kata dalam buku "
+"kata Anda (.dic) akan tersedia untuk pemeriksaan ejaan."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:259
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Unggah Buku Kata"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:263
 msgid "Document settings"
-msgstr ""
+msgstr "Pengaturan dokumen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:264
 #: admin/src/integrator/Xcu.ts:297
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Sesuaikan bagaimana dokumen kantor berperilaku."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:270
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Unggah Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:321
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL Konfigurasi bersama kurang dalam variabel awal."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:327
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Token akses kurang dalam variabel awal."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Ada yang salah. Silakan coba menyegarkan halaman."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:480
 msgid ""
