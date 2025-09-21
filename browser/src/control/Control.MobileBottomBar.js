@@ -15,7 +15,7 @@
 /* global app JSDialog _ _UNO */
 class MobileBottomBar extends JSDialog.Toolbar {
 	constructor(map) {
-		super(map, 'toolbar-down')
+		super(map, 'MobileBottomBar', 'toolbar-down')
 
 		map.on('commandstatechanged', window.onCommandStateChanged);
 		map.on('updatetoolbarcommandvalues', window.onCommandStateChanged);

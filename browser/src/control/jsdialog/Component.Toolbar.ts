@@ -18,30 +18,21 @@ declare var JSDialog: any;
 
 type ToolbarItem = any;
 
-class Toolbar {
-	protected map: any;
+class Toolbar extends JSDialogComponent {
 	protected docType: string;
-	protected builder: JSBuilder;
 	protected callback: JSDialogCallback;
 	protected toolbarElementId: string;
-	protected parentContainer: Element;
+	protected parentContainer: Element; // FIXME: can we drop as we have container in base?
 	protected customItems: Array<ToolbarItem>;
 
-	constructor(map: any, toolbarElementId: string) {
-		this.map = map;
+	constructor(map: any, name: string, toolbarElementId: string) {
+		super(map, name, 'toolbar');
+
 		this.docType = map.getDocType();
 		this.customItems = [];
 		this.toolbarElementId = toolbarElementId;
 
-		this.builder = new window.L.control.jsDialogBuilder({
-			mobileWizard: this,
-			map: this.map,
-			cssClass: 'jsdialog',
-			noLabelsForUnoButtons: true,
-			callback: this.callback ? this.callback.bind(this) : undefined,
-			suffix: 'toolbar',
-		});
-
+		this.createBuilder();
 		this.reset();
 		this.create();
 		this.updateVisibilityForToolbar('');
@@ -51,13 +42,30 @@ class Toolbar {
 		return [];
 	}
 
-	reset() {
-		this.parentContainer = window.L.DomUtil.get(this.toolbarElementId);
+	protected createBuilder() {
+		this.builder = new window.L.control.jsDialogBuilder({
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'jsdialog',
+			noLabelsForUnoButtons: true,
+			callback: this.callback ? this.callback.bind(this) : undefined,
+			suffix: 'toolbar',
+		});
+	}
+
+	protected setupContainer(parentContainer?: HTMLElement /* ignored */) {
+		this.container = this.parentContainer = window.L.DomUtil.get(
+			this.toolbarElementId,
+		);
 
 		// In case it contains garbage
 		if (this.parentContainer) this.parentContainer.replaceChildren();
 
 		window.L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
+	}
+
+	reset() {
+		this.setupContainer(undefined);
 	}
 
 	create() {

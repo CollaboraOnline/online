@@ -15,7 +15,7 @@
 /* global $ app JSDialog _ _UNO  getPermissionModeElements URLPopUpSection */
 class StatusBar extends JSDialog.Toolbar {
 	constructor(map) {
-		super(map, 'toolbar-down');
+		super(map, 'Statusbar', 'toolbar-down');
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('languagesupdated', this.onLanguagesUpdated, this);
