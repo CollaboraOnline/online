@@ -463,6 +463,33 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	row-gap: 0;
 }
 
+#masterpageall_icons {
+	height: 60px;
+	width: 15vw !important;
+	max-width: 265px;
+	min-width: 90px;
+	padding: 0px;
+	border: 1px solid var(--color-stylesview-border);
+	border-radius: var(--border-radius);
+	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	scrollbar-width: none;
+	display: grid;
+	overflow: auto;
+	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
+	background-color: var(--color-stylesview-background);
+	filter: brightness(var(--brightness-stylesview));
+	box-sizing: border-box;
+	row-gap: 0;
+	margin-left: 5px;
+	margin-top: 2px;
+	margin-bottom: 3px;
+}
+
+#design-master-page-group-content {
+	margin-bottom: 3px;
+}
+
 #stylesview-btn {
 	border: 1px solid var(--color-stylesview-border);
 	border-top-right-radius: var(--border-radius);
@@ -782,10 +809,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #masterpageall_icons .notebookbar.ui-iconview-entry {
-	height: 2.75rem;
+	align-self: start;
+	margin-top: 6px;
 }
 
 #masterpageall_icons .notebookbar.ui-iconview-entry img {
-	height: 100%;
-	width: 100%;
+	height: 45px;
+	width: 80px;
 }

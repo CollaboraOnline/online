@@ -1370,10 +1370,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding: 2px;
 }
 
-#masterpageall_icons.ui-iconview {
-	display: flex;
-}
-
 .ui-iconview.mobile-wizard {
 	justify-content: space-around;
 }
