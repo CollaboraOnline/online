@@ -266,6 +266,7 @@ class LOUtil {
 			closemobile: 'closedocmobile',
 			'file-saveas': 'saveas',
 			'home-search': 'recsearch',
+			searchdialog3finitialfocusreplace3abool3dtrue: 'searchdialog',
 			'addmb-menu': 'ok',
 			closetablet: 'view',
 			defineprintarea: 'menuprintranges',

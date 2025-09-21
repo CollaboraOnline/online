@@ -1030,7 +1030,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 										'id': 'home-search-dialog',
 										'type': 'toolitem',
 										'text': _('Replace'),
-										'command': '.uno:SearchDialog',
+										'command': '.uno:SearchDialog?InitialFocusReplace:bool=true',
 										'accessibility': { focusBack: false, 	combination: 'FD',	de: 'US' }
 									}
 								]
