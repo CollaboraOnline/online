@@ -251,7 +251,9 @@ JSDialog.OverflowGroup = function (
 ) {
 	const overflowGroupContainer = L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' ui-overflow-group',
+		builder.options.cssClass +
+			' ui-overflow-group' +
+			(data.nofold ? ' nofold' : ''),
 		parentContainer,
 	);
 	overflowGroupContainer.id = data.id;
@@ -312,6 +314,8 @@ JSDialog.OverflowGroup = function (
 		{ type: 'separator' },
 	] as Array<MenuDefinition>;
 	builder._menus.set(data.id, builtMenu);
+
+	if (data.nofold === true) return false;
 
 	// button
 	const id = 'overflow-button-' + data.id;
