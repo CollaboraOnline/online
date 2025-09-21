@@ -1272,7 +1272,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 										'id': 'home-search-dialog',
 										'type': 'toolitem',
 										'text': _('Replace'),
-										'command': '.uno:SearchDialog',
+										'command': '.uno:SearchDialog?InitialFocusReplace:bool=true',
 										'accessibility': { focusBack: false, 	combination: 'FD',	de: null }
 									}
 								]
