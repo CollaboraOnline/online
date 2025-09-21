@@ -28,7 +28,7 @@ abstract class SidebarBase extends JSDialogComponent {
 	wrapper: HTMLElement;
 
 	constructor(map: any, type: SidebarType) {
-		super(map, 'Sidebar', type);
+		super(map, type, type);
 		this.type = type;
 		this.onAdd(map);
 	}
