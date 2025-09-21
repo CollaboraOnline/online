@@ -33,13 +33,13 @@ interface JSBuilderOptions {
 	cssClass: string; // class added to every widget root
 	windowId: number; // window id to be sent with dialogevent
 	map: any; // reference to map
-	mobileWizard: any; // reference to the parent container	FIXME: rename
-	useSetTabs: boolean; // custom tabs placement handled by the parent container
-	useScrollAnimation: boolean; // do we use animation for scrollIntoView
+	mobileWizard: JSDialogComponent; // reference to the parent component FIXME: rename
+	useSetTabs?: boolean; // custom tabs placement handled by the parent container
+	useScrollAnimation?: boolean; // do we use animation for scrollIntoView
 
 	// modifiers
-	noLabelsForUnoButtons: boolean; // create only icon without label
-	useInLineLabelsForUnoButtons: boolean; // create labels next to the icon
+	noLabelsForUnoButtons?: boolean; // create only icon without label
+	useInLineLabelsForUnoButtons?: boolean; // create labels next to the icon
 	suffix: string; // add a suffix to the element ID to make it unique among different builder instances.
 }
 
