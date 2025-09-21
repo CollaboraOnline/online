@@ -12,7 +12,6 @@
  * JSDialog.QuickFindPanel
  */
 
-/* global app */
 const QUICKFIND_WINDOW_ID = -5;
 class QuickFindPanel extends SidebarBase {
 	constructor(map: any) {
