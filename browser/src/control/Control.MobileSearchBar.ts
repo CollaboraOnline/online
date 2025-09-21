@@ -16,7 +16,7 @@
 /* global _ _UNO */
 class MobileSearchBar extends Toolbar {
 	constructor(map: any) {
-		super(map, 'toolbar-search');
+		super(map, 'MobileSearchBar', 'toolbar-search');
 	}
 
 	getToolItems(): Array<ToolbarItem> {

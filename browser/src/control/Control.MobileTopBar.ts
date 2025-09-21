@@ -14,7 +14,7 @@
 
 class MobileTopBar extends JSDialog.Toolbar {
 	constructor(map: any) {
-		super(map, 'toolbar-up');
+		super(map, 'MobileTopBar', 'toolbar-up');
 
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
