@@ -21,7 +21,8 @@ class QuickFindPanel extends SidebarBase {
 
 	onAdd(map: any) {
 		super.onAdd(map);
-		this.builder.setWindowId(QUICKFIND_WINDOW_ID);
+
+		this.builder?.setWindowId(QUICKFIND_WINDOW_ID);
 
 		this.map = map;
 		this.map.on('quickfind', this.onQuickFind, this);
@@ -99,12 +100,16 @@ class QuickFindPanel extends SidebarBase {
 	onQuickFind(data: any) {
 		const quickFindData = data.data;
 
-		if (this.container) this.container.innerHTML = '';
-		else console.error('QuickFind: no container');
+		if (!this.container) {
+			app.console.error('QuickFind: no container');
+			return;
+		}
+
+		this.container.innerHTML = '';
 
 		const modifiedData = this.addPlaceholderIfEmpty(quickFindData);
 
-		this.builder.build(this.container, [modifiedData], false);
+		this.builder?.build(this.container, [modifiedData], false);
 
 		app.showQuickFind = true;
 		// this will update the indentation marks for elements like ruler
