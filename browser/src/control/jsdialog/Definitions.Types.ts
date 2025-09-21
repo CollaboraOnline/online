@@ -179,6 +179,7 @@ interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
 	name: string; // visible name of a group
 	icon?: string; // Optional icon name. Otherwise it will be guessed.
 	more?: MoreOptions;
+	nofold?: boolean; // for widgets which use overflowgroup just for the label
 }
 interface MoreOptions {
 	command: string;
