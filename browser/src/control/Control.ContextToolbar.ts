@@ -14,10 +14,8 @@
  * This toolbar should appear over selection when related selection is done using mouse
  */
 
-class ContextToolbar {
+class ContextToolbar extends JSDialogComponent {
 	container!: HTMLElement;
-	builder: JSBuilder;
-	map: any;
 	initialized: boolean = false;
 	lastIinputEvent?: any = {};
 	pendingShow: boolean = false;
@@ -26,7 +24,12 @@ class ContextToolbar {
 	additionalContextButtons: Array<WidgetJSON> = [];
 
 	constructor(map: any) {
-		this.map = map;
+		super(map, 'ContextToolbar', 'notebookbar');
+		this.createBuilder();
+		this.setupContainer(undefined);
+	}
+
+	protected createBuilder() {
 		this.builder = new window.L.control.notebookbarBuilder({
 			windowId: -2,
 			mobileWizard: this,
@@ -34,10 +37,9 @@ class ContextToolbar {
 			cssClass: 'notebookbar',
 			suffix: 'context-toolbar',
 		} as JSBuilderOptions);
-		this.createContextToolbarElement();
 	}
 
-	createContextToolbarElement(): void {
+	protected setupContainer(parentContainer?: HTMLElement /* ignored */): void {
 		this.container = window.L.DomUtil.createWithId(
 			'div',
 			'context-toolbar',
@@ -47,7 +49,7 @@ class ContextToolbar {
 	}
 
 	showContextToolbar(): void {
-		const map = this.builder.map;
+		const map = this.map;
 		if (
 			map.isReadOnlyMode() ||
 			!window.mode.isDesktop() ||
@@ -72,32 +74,24 @@ class ContextToolbar {
 				contextToolbarItems.push(item);
 			}
 
-			this.builder.build(this.container, contextToolbarItems, false);
+			this.builder?.build(this.container, contextToolbarItems, false);
 
 			this.initialized = true;
 		}
 
-		this.builder.map.on('jsdialogaction', this.onJSAction, this);
-		this.builder.map.on('jsdialogupdate', this.onJSUpdate, this);
+		this.registerMessageHandlers();
+
 		document.addEventListener('pointermove', this.pointerMove);
-		this.builder.map.on(
-			'commandstatechanged',
-			this.onCommandStateChanged,
-			this,
-		);
+		this.map.on('commandstatechanged', this.onCommandStateChanged, this);
 		this.changeOpacity(1);
 		this.showHideToolbar(true);
 	}
 
 	hideContextToolbar(): void {
-		this.builder.map.off('jsdialogaction', this.onJSAction, this);
-		this.builder.map.off('jsdialogupdate', this.onJSUpdate, this);
+		this.unregisterMessageHandlers();
+
 		document.removeEventListener('pointermove', this.pointerMove);
-		this.builder.map.off(
-			'commandstatechanged',
-			this.onCommandStateChanged,
-			this,
-		);
+		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
 		this.showHideToolbar(false);
 	}
 
@@ -130,7 +124,7 @@ class ContextToolbar {
 
 	getWriterTextContext(): WidgetJSON[] {
 		const fontEntries = Object.keys(
-			this.builder.map._docLayer._toolbarCommandValues['.uno:CharFontName'],
+			this.map._docLayer._toolbarCommandValues['.uno:CharFontName'],
 		);
 		const sizeEntries = [
 			'6',
@@ -336,20 +330,8 @@ class ContextToolbar {
 
 		// update context toolbar
 		document.getElementById('context-toolbar')?.remove();
-		this.createContextToolbarElement();
+		this.setupContainer(undefined);
 		this.initialized = false;
-	}
-
-	onJSAction(e: any): any {
-		if (e.data.jsontype !== 'notebookbar') return;
-
-		this.builder.executeAction(this.container, e.data.data);
-	}
-
-	onJSUpdate(e: any): any {
-		if (e.data.jsontype !== 'notebookbar') return;
-
-		this.builder.updateWidget(this.container, e.data.control);
 	}
 
 	setLastInputEventType(e: any) {
