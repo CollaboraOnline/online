@@ -355,7 +355,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
  buttons inside of grid are still center aligned but the sub container would be
 algned to the bottom */
 .ui-overflow-manager .horizontal.notebookbar {
-	align-items: end;
+	align-items: center;
 }
 .notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
@@ -1341,7 +1341,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .notebookbar .ui-overflow-group-inner {
-	height: 4rem;
+	height: 4.25rem;
 	align-content: center;
 }
 
