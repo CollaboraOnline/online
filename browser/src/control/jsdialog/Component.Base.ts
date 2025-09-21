@@ -15,8 +15,6 @@
  *                  messages from JSDialogMessageRouter
  */
 
-declare var JSDialog: any;
-
 abstract class JSDialogComponent {
 	protected map: any;
 	protected name: string;
