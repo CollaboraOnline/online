@@ -34,13 +34,23 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	setBuilder: function(builder, model) {
 		this.builder = builder;
 		this.model = model;
-		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
 	},
 
+	// happens only once
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
 		this.additionalShortcutButtons = [];
+
+		// initialize the model only once, remember updates from core
+		if (this.model.getSnapshot() === null)
+			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
+
+		this.map.on('notebookbar', this.onNotebookbar, this);
+	},
+
+	// on show
+	create: function() {
 		var docType = this._map.getDocType();
 
 		if (document.documentElement.dir === 'rtl')
@@ -55,9 +65,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
 		this.parentContainer = window.L.DomUtil.get('toolbar-up');
 
+		this.loadTab();
+
 		this.onContextChange = this.onContextChange.bind(this);
 		app.events.on('contextchange', this.onContextChange);
-		this.map.on('notebookbar', this.onNotebookbar, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
@@ -111,9 +122,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	onRemove: function() {
-		this.map.off('notebookbar');
-		this.map.off('jsdialogupdate', this.onJSUpdate, this);
-		this.map.off('jsdialogaction', this.onJSAction, this);
 		app.events.off('contextchange', this.onContextChange);
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
@@ -192,16 +200,12 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$(this.container).remove();
 	},
 
-	loadTab: function(tabJSON) {
+	loadTab: function() {
 		app.console.debug('Notebookbar: loadTab');
 
 		this.clearNotebookbar();
 
 		this.container = window.L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
-
-		// initialize the model only once, remember updates from core
-		if (this.model.getSnapshot() === null)
-			this.model.fullUpdate(tabJSON);
 
 		this.builder.build(this.container, [this.model.getSnapshot()]);
 
