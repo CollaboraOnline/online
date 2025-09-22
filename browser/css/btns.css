@@ -181,6 +181,15 @@ button.has-img {
 	min-width: auto !important;
 }
 
+#container .ui-grid-cell button.jsdialog.has-img:not(.sidebar) {
+	display: grid;
+	grid-template-columns: 24px 1fr;
+	text-align: start;
+	gap: 5px;
+	width: 100% !important;
+	margin: 2px !important;
+}
+
 /* Thesaurus <- button */
 button#left.has-img > img {
 	width: 16px;
