@@ -953,8 +953,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'overflowgroup',
-				'id': 'home-illustrations',
-				'name':_('Illustrations'),
+				'id': 'home-insert',
+				'name':_('Insert'),
 				'accessibility': { focusBack: false,	combination: 'IT',	de:	null },
 				'children': [
 					{
