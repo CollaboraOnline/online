@@ -12,9 +12,11 @@
 #include <config.h>
 
 #include "Authorization.hpp"
-#include "Log.hpp"
-#include "StringVector.hpp"
+
+#include <common/Log.hpp>
+#include <common/StringVector.hpp>
 #include <common/Uri.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
@@ -96,6 +98,7 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
 Authorization Authorization::create(const Poco::URI& uri)
 {
     bool noHeader = false;
+    duration expiryEpoch = duration::zero();
     Authorization::Type type = Authorization::Type::None;
     std::string decoded;
     for (const auto& param : uri.getQueryParameters())
@@ -114,10 +117,18 @@ Authorization Authorization::create(const Poco::URI& uri)
                 noHeader = true;
             }
         }
+        else if (param.first == "access_token_ttl")
+        {
+            expiryEpoch = duration(Util::u64FromString(param.second, 0).first);
+        }
     }
 
     if (!decoded.empty())
-        return Authorization(type, std::move(decoded), noHeader);
+    {
+        Authorization auth(type, std::move(decoded), noHeader);
+        auth.setExpiryEpoch(expiryEpoch);
+        return auth;
+    }
 
     return Authorization();
 }
