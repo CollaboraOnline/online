@@ -960,6 +960,8 @@ L.Control.JSDialog = L.Control.extend({
 		if (!dialogContainer)
 			return;
 
+		const entryChanges = data.jsontype === 'popup' && innerData.action_type && innerData.action_type === 'rendered_entry';
+
 		// focus on element outside view will move viewarea leaving blank space on the bottom
 		if (innerData.action_type === 'grab_focus') {
 			app.layoutingService.appendLayoutingTask(() => {
@@ -973,6 +975,13 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		builder.executeAction(dialogContainer, innerData);
+
+		if (entryChanges) {
+			app.layoutingService.appendLayoutingTask(() => {
+				// After entry changes we might have bigger/smaller content and need to repositon the dialog.
+				dialog.updatePos(dialog);
+			});
+		}
 	},
 
 	_clamp: function(value, min, max) {
