@@ -28,9 +28,15 @@ class ClientAuditor {
 		else entries.push({ code: 'postmessage', status: 'hostnotready' });
 	}
 
+	private static checkProxyProtocol(entries: Array<AuditEntry>) {
+		if (window.socketProxy) entries.push({ code: 'proxy', status: 'slow' });
+		else entries.push({ code: 'proxy', status: 'ok' });
+	}
+
 	public static performClientAudit(): Array<AuditEntry> {
 		const entries = new Array<AuditEntry>();
 		ClientAuditor.checkPostMessages(entries);
+		ClientAuditor.checkProxyProtocol(entries);
 		return entries;
 	}
 }
@@ -105,6 +111,15 @@ class ServerAuditDialog {
 					'',
 				],
 				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
+			},
+			proxy: {
+				priority: 12,
+				slow: [
+					_('Poorly performing proxying of all network requests.'),
+					'',
+					'',
+				],
+				ok: [_('direct network connection'), '', ''],
 			},
 
 			is_admin: {
