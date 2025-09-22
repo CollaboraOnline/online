@@ -474,13 +474,9 @@ class UIManager extends window.L.Control {
 			this.map.mobileBottomBar = JSDialog.MobileBottomBar(this.map);
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
 			this.map.mobileSearchBar = JSDialog.MobileSearchBar(this.map);
-		} else if (enableNotebookbar) {
-			// component and UI
-			this.createNotebookbarControl(docType);
-			// makeSpaceForNotebookbar call in onUpdatePermission
 		} else {
-			// just component, no UI yet
-			this.notebookbar = JSDialog.NotebookbarBase(this.map);
+			this.createNotebookbarControl(docType, enableNotebookbar);
+			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
 		if (!window.prefs.getBoolean(`${docType}.ShowToolbar`, true)) {
@@ -573,8 +569,7 @@ class UIManager extends window.L.Control {
 	 */
 	initializeLateComponents(): void {
 		app.console.debug('UIManager: late components init');
-		if (this.getCurrentMode() === 'notebookbar')
-			this.initializeNotebookbarInCore();
+		this.initializeNotebookbarInCore();
 		this.initializeSidebar();
 		this.initializeQuickFindInCore();
 	}
@@ -683,7 +678,7 @@ class UIManager extends window.L.Control {
 	 * Creates and adds a notebookbar control based on document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', etc.)
 	 */
-	createNotebookbarControl(docType: string): void {
+	createNotebookbarControl(docType: string, showUI: boolean): void {
 		if (docType === 'spreadsheet') {
 			var notebookbar = window.L.control.notebookbarCalc();
 		} else if (docType === 'presentation') {
@@ -694,9 +689,13 @@ class UIManager extends window.L.Control {
 			notebookbar = window.L.control.notebookbarWriter();
 		}
 
-		if (!this.notebookbar)
-			this.notebookbar = JSDialog.NotebookbarBase(this.map);
-		this.notebookbar.onAdd(notebookbar);
+		this.notebookbar = JSDialog.NotebookbarBase(this.map, notebookbar);
+		if (showUI)
+			this.showNotebookbarControl();
+	}
+
+	showNotebookbarControl(): void {
+		this.notebookbar.onAdd();
 		this.map.fire('a11ystatechanged');
 		app.UI.notebookbarAccessibility.initialize();
 	}
@@ -719,7 +718,7 @@ class UIManager extends window.L.Control {
 	refreshNotebookbar(): void {
 			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
 			this.removeNotebookbarUI();
-			this.createNotebookbarControl(this.map.getDocType());
+			this.showNotebookbarControl();
 			if (this._map._permission === 'edit') {
 				$('.main-nav').removeClass('readonly');
 			}
@@ -1206,7 +1205,10 @@ class UIManager extends window.L.Control {
 		// do it always apart of mobile as we need it for contextual toolbar
 		if (window.mode.isMobile()) return;
 
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+		if (!this.notebookbar.impl.initialized) {
+			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
+			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+		}
 	}
 
 	// QuickFindPanel
