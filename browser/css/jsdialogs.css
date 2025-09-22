@@ -2404,6 +2404,13 @@ kbd,
 
 /* Insert hyperlink dialog */
 
+
+#HyperlinkDocPage,
+#HyperlinkInternetPage,
+#HyperlinkMailPage {
+	width: 100%;
+}
+
 #HyperlinkInternetPage #grid2,
 #HyperlinkInternetPage #label2,
 #HyperlinkInternetPage #lbProtocol,
@@ -2437,6 +2444,7 @@ kbd,
 	grid-template-columns: 87px 1fr 38px !important;
 }
 
+#HyperlinkDocPage #frame1,
 [id^='Hyperlink'] .ui-grid-cell:empty,
 [id^='Hyperlink'] .hidden {
 	display: none;
