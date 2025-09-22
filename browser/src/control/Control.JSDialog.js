@@ -654,6 +654,8 @@ L.Control.JSDialog = L.Control.extend({
 		*/
 		let cellRectangle;
 
+		this.parentAutofilter = instance.form;
+
 		if (app.calc.autoFilterCell) {
 			// This is an AutoFilterDialog. We have the row and column indexes. Get cell rectangle with this info.
 			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
@@ -708,7 +710,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	calculateSubmenuAutoFilterPosition: function(instance, parentAutofilter) {
-		var parentAutofilter = parentAutofilter.getBoundingClientRect();
+		var parentAutofilter = parentAutofilter.getElementsByClassName("ui-treeview-entry selected")[0].getBoundingClientRect();
 		instance.posx = parentAutofilter.right;
 		instance.posy = parentAutofilter.top;
 
