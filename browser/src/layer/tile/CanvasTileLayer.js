@@ -2489,15 +2489,16 @@ L.CanvasTileLayer = L.Layer.extend({
 				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
 				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
 
+				let viewedRectangle = app.activeDocument.activeView.viewedRectangle;
 				var scrollX = 0, scrollY = 0;
-				if (newSelection.pX2 > app.activeDocument.activeView.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
-					scrollX = newSelection.pX2 - app.activeDocument.activeView.viewedRectangle.pX2 + spacingX;
-				else if (newSelection.pX1 < app.activeDocument.activeView.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
-					scrollX = newSelection.pX1 - app.activeDocument.activeView.viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY2 > app.activeDocument.activeView.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
-					scrollY = newSelection.pY2 - app.activeDocument.activeView.viewedRectangle.pY2 + spacingY;
-				else if (newSelection.pY1 < app.activeDocument.activeView.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
-					scrollY = newSelection.pY1 - app.activeDocument.activeView.viewedRectangle.pY1 - spacingY;
+				if (newSelection.pX2 > viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
+					scrollX = newSelection.pX2 - viewedRectangle.pX2 + spacingX;
+				else if (newSelection.pX1 < viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
+					scrollX = newSelection.pX1 - viewedRectangle.pX1 - spacingX;
+				if (newSelection.pY2 > viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
+					scrollY = newSelection.pY2 - viewedRectangle.pY2 + spacingY;
+				else if (newSelection.pY1 < viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
+					scrollY = newSelection.pY1 - viewedRectangle.pY1 - spacingY;
 				if (scrollX !== 0 || scrollY !== 0) {
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.querySelector('#addressInput input').value;
