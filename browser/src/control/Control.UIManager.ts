@@ -569,8 +569,7 @@ class UIManager extends window.L.Control {
 	 */
 	initializeLateComponents(): void {
 		app.console.debug('UIManager: late components init');
-		if (this.getCurrentMode() === 'notebookbar')
-			this.initializeNotebookbarInCore();
+		this.initializeNotebookbarInCore();
 		this.initializeSidebar();
 		this.initializeQuickFindInCore();
 	}
