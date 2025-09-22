@@ -17,10 +17,13 @@
 declare var JSDialog: any;
 
 enum SidebarType {
-	Sidebar = 'sidebar',
-	Navigator = 'navigator',
-	QuickFind = 'quickfind',
+	Sidebar = 'sidebar', // core
+	Navigator = 'navigator', // core
+	QuickFind = 'quickfind', // core
 }
+
+const SIDEBAR_WINDOW_ID = 0;
+
 abstract class SidebarBase extends JSDialogComponent {
 	type: SidebarType;
 
@@ -37,11 +40,12 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.builder = new window.L.control.jsDialogBuilder({
 			mobileWizard: this,
 			map: this.map,
+			windowId: SIDEBAR_WINDOW_ID,
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
 			useScrollAnimation: false, // icon views cause jump on sidebar open
 			suffix: 'sidebar',
 			callback: this.callback.bind(this),
-		});
+		} as JSBuilderOptions);
 	}
 
 	protected setupContainer(parentContainer?: HTMLElement) {
