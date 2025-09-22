@@ -281,7 +281,10 @@ class NavigatorPanel extends SidebarBase {
 			app.showNavigator = true;
 			// this will update the indentation marks for elements like ruler
 			app.map.fire('fixruleroffset');
-			if (app.map.isPresentationOrDrawing()) {
+			if (
+				app.map.isPresentationOrDrawing() &&
+				!this.isNavigationPanelVisible()
+			) {
 				this.switchNavigationTab('tab-slide-sorter');
 			} else {
 				this.switchNavigationTab('tab-navigator');
@@ -357,6 +360,10 @@ class NavigatorPanel extends SidebarBase {
 			this.navigationPanel.classList.add('visible');
 			this.floatingNavIcon.classList.remove('visible');
 		});
+	}
+
+	isNavigationPanelVisible(): boolean {
+		return this.navigationPanel.classList.contains('visible');
 	}
 
 	closeNavigation() {
