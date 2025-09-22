@@ -581,9 +581,16 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #transitions_icons.ui-iconview.notebookbar {
+	height: 55px;
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
+	scroll-snap-type: y mandatory;
+	scroll-behavior: smooth;
+}
+
+#transitions_icons.ui-iconview.notebookbar > *  {
+	scroll-snap-align: start;
 }
 
 /* Table Tab */
