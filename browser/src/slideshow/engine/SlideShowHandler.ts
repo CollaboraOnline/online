@@ -228,6 +228,7 @@ class SlideShowHandler {
 			const canvas = this.getContext()._canvas;
 			if (canvas) {
 				const a11yContainer = window.L.DomUtil.create('div', '');
+				a11yContainer.tabIndex = -1;
 				canvas.innerHTML = '';
 				a11yContainer.innerHTML = app.LOUtil.sanitize(a11yString);
 				canvas.appendChild(a11yContainer);
