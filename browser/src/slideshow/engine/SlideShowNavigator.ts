@@ -189,10 +189,17 @@ class SlideShowNavigator {
 		NAVDBG.print(
 			'SlideShowNavigator.quit: current index: ' + this.currentSlide,
 		);
-		this.endPresentation(true);
-		this.currentSlide = undefined;
-		this.prevSlide = undefined;
-		this.removeHandlers();
+
+		this.slideShowHandler.exitSlideShow();
+		setTimeout(
+			function () {
+				this.endPresentation(true);
+				this.currentSlide = undefined;
+				this.prevSlide = undefined;
+				this.removeHandlers();
+			}.bind(this),
+			500,
+		);
 	}
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
