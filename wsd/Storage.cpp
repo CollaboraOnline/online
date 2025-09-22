@@ -180,10 +180,12 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
                                       << "] as FileSystem");
             return StorageBase::StorageType::FileSystem;
         }
-#endif // ENABLE_LOCAL_FILESYSTEM
 
         LOG_DBG("Local Storage is disabled by default. Enable in the config file or on the "
                 "command-line to enable.");
+#else
+        LOG_DBG("Local Storage is disabled in this build. Enable in the config file.");
+#endif // ENABLE_LOCAL_FILESYSTEM
     }
 #if !MOBILEAPP
     else if (HostUtil::isWopiEnabled())
