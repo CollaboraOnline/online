@@ -46,6 +46,67 @@ class ServerAuditDialog {
 
 		// Priorities: 1 - security, 10 - config, 20 - integration, 30 - general info ...
 		this.errorCodes = {
+			certwarning: {
+				priority: 1,
+				sslverifyfail: [
+					_('Your WOPI server is not secure: SSL verification failed'),
+					'SDK: ssl-configuration',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
+				],
+				ok: [
+					_('No problems with SSL verification detected'),
+					'SDK: ssl-configuration',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
+				],
+			},
+			contained: {
+				priority: 2,
+				uncontained: [
+					_(
+						'Documents are not effectively contained: missing capabilities or namespaces.',
+					),
+					'SDK: nocaps',
+					'',
+				],
+				ok: [_('Each document is securely contained'), 'SDK: nocaps', ''],
+			},
+			seccomp: {
+				priority: 3,
+				none: [
+					_(
+						'BPF filtering of potentially risky system calls (seccomp) is not enabled; a security hazard.',
+					),
+					'SDK: seccomp',
+					'',
+				],
+				ok: [_('system call security filtering enabled'), 'SDK: seccomp', ''],
+			},
+
+			hardwarewarning: {
+				priority: 10,
+				lowresources: [
+					_(
+						'Your server is configured with insufficient hardware resources, which may lead to poor performance.',
+					),
+					'SDK: hardware-requirements',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
+				ok: [
+					_('Hardware resources are sufficient for optimal performance'),
+					'SDK: hardware-requirements',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
+			},
+			bindmounted: {
+				priority: 11,
+				slow: [
+					_('Slow Kit jail setup with copying, cannot bind-mount.'),
+					'SDK: bindmount',
+					'',
+				],
+				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
+			},
+
 			is_admin: {
 				priority: 20,
 				missing: [
@@ -66,19 +127,6 @@ class ServerAuditDialog {
 					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=IsAdminUser#isadminuser',
 				],
 			},
-			certwarning: {
-				priority: 1,
-				sslverifyfail: [
-					_('Your WOPI server is not secure: SSL verification failed'),
-					'SDK: ssl-configuration',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
-				],
-				ok: [
-					_('No problems with SSL verification detected'),
-					'SDK: ssl-configuration',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
-				],
-			},
 			postmessage: {
 				priority: 21,
 				ok: [
@@ -92,52 +140,7 @@ class ServerAuditDialog {
 					'https://sdk.collaboraonline.com/docs/postmessage_api.html#initialization',
 				],
 			},
-			hardwarewarning: {
-				priority: 10,
-				lowresources: [
-					_(
-						'Your server is configured with insufficient hardware resources, which may lead to poor performance.',
-					),
-					'SDK: hardware-requirements',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
-				],
-				ok: [
-					_('Hardware resources are sufficient for optimal performance'),
-					'SDK: hardware-requirements',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
-				],
-			},
-			seccomp: {
-				priority: 3,
-				none: [
-					_(
-						'BPF filtering of potentially risky system calls (seccomp) is not enabled; a security hazard.',
-					),
-					'SDK: seccomp',
-					'',
-				],
-				ok: [_('system call security filtering enabled'), 'SDK: seccomp', ''],
-			},
-			bindmounted: {
-				priority: 11,
-				slow: [
-					_('Slow Kit jail setup with copying, cannot bind-mount.'),
-					'SDK: bindmount',
-					'',
-				],
-				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
-			},
-			contained: {
-				priority: 2,
-				uncontained: [
-					_(
-						'Documents are not effectively contained: missing capabilities or namespaces.',
-					),
-					'SDK: nocaps',
-					'',
-				],
-				ok: [_('Each document is securely contained'), 'SDK: nocaps', ''],
-			},
+
 			info_namespaces: {
 				priority: 30,
 				true: [_('Using namespaces.'), 'SDK: nocaps', ''],
