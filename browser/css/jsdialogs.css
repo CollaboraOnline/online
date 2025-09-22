@@ -2856,3 +2856,9 @@ kbd,
 #ContentControlDialog #tabindexlabel {
 	width: max-content;
 }
+
+/* Writer - Format - Page Style */
+div [id^='TemplateDialog'] #tabcontrol #Area.jsdialog,
+#PageTemplateDialog #tabcontrol #Background.jsdialog {
+	align-self: start;
+}
