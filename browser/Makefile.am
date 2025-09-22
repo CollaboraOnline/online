@@ -495,7 +495,6 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarBase.ts \
 	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
-	src/control/Notebookbar.ImpressTransitionTab.ts \
 	src/control/Notebookbar.WriterReferencesTab.ts \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
@@ -507,6 +506,8 @@ COOL_JS_LST =\
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
+	src/control/Notebookbar.ImpressTransitionTab.ts \
+	src/control/Sidebar.ImpressTransitions.ts \
 	src/control/Control.NavigatorPanel.ts \
 	src/control/Control.QuickFindPanel.ts \
 	src/control/AutoCompletePopup.ts \
@@ -1091,6 +1092,7 @@ pot:
 		src/control/Control.UIManager.ts \
 		src/control/Control.UserList.ts \
 		src/control/Control.Zotero.js \
+		src/control/Sidebar.ImpressTransitions.ts \
 		src/control/HRuler.ts \
 		src/control/Parts.js \
 		src/control/Permission.js \

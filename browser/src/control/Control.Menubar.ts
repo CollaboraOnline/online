@@ -500,6 +500,7 @@ class Menubar extends window.L.Control {
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
 				   {uno: '.uno:ModifyPage'},
+					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), id: 'transitiondeck', type: 'action'},
 				   {uno: '.uno:CustomAnimation'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
@@ -2185,7 +2186,8 @@ class Menubar extends window.L.Control {
 			|| id === 'home-search'
 			|| id === 'print-active-sheet'
 			|| id === 'print-all-sheets'
-			|| id === 'serveraudit') {
+			|| id === 'serveraudit'
+			|| id === 'transitiondeck') {
 			app.dispatcher.dispatch(id);
 		} else if (id === ('settings-dialog')) {
 			this._map.settings.showSettingsDialog();
@@ -2327,7 +2329,11 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch(command);
 		} else if (id === 'columnrowhighlight') {
 			app.dispatcher.dispatch('columnrowhighlight');
+		} else {
+			// not found
+			app.console.warn('Menubar: unknown action for id: ' + id);
 		}
+
 		// Inform the host if asked
 		if (postmessage)
 			this._map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });
