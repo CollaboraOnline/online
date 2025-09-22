@@ -17,22 +17,33 @@ class NotebookbarBase extends JSDialogComponent {
 	/// reference to old JS Notebookbar
 	impl: any = null;
 
-	constructor(map: any) {
+	constructor(map: any, impl: any) {
 		super(map, 'Notebookbar', 'notebookbar');
 		this.map = map;
-	}
-
-	public onAdd(impl: any) {
 		this.impl = impl;
 
-		this.map.addControl(this.impl);
 		this.createBuilder();
 		this.impl.setBuilder(this.builder, this.model);
-		this.setupContainer(this.impl.container);
+
+		this.map.addControl(this.impl);
 
 		this.registerMessageHandlers();
 	}
 
+	// when we show the UI
+	public onAdd() {
+		this.impl.create();
+		this.setupContainer(this.impl.container);
+		if (this.builder) {
+			this.map.on(
+				'commandstatechanged',
+				this.builder.onCommandStateChanged,
+				this.builder,
+			);
+		}
+	}
+
+	// when we hide the UI
 	public onRemove() {
 		if (this.builder)
 			this.map.off(
@@ -40,12 +51,8 @@ class NotebookbarBase extends JSDialogComponent {
 				this.builder.onCommandStateChanged,
 				this.builder,
 			);
-		this.unregisterMessageHandlers();
-		if (this.impl) {
-			this.map.removeControl(this.impl);
-			delete this.impl;
-			this.impl = null;
-		}
+
+		if (this.impl) this.impl.onRemove();
 	}
 
 	protected createBuilder() {
@@ -57,12 +64,6 @@ class NotebookbarBase extends JSDialogComponent {
 			useSetTabs: true,
 			suffix: 'notebookbar',
 		});
-		if (this.builder)
-			this.map.on(
-				'commandstatechanged',
-				this.builder.onCommandStateChanged,
-				this.builder,
-			);
 	}
 
 	protected setupContainer(parentContainer?: HTMLElement) {
@@ -142,6 +143,6 @@ class NotebookbarBase extends JSDialogComponent {
 	}
 }
 
-JSDialog.NotebookbarBase = function (map: any) {
-	return new NotebookbarBase(map);
+JSDialog.NotebookbarBase = function (map: any, impl: any) {
+	return new NotebookbarBase(map, impl);
 };
