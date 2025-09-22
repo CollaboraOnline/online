@@ -359,8 +359,8 @@ algned to the bottom */
 }
 .notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
-	height: 49px !important;
-	margin-bottom: 14px;
+	height: 4.25rem !important;
+	margin-bottom: 12px;
 }
 
 .ui-overflow-manager > .notebookbar.ui-iconview {
@@ -368,9 +368,9 @@ algned to the bottom */
 }
 
 .ui-overflow-manager > .notebookbar:not(.ui-separator):not(.ui-overflow-group):not(:has(.ui-overflow-group-container-with-label)) {
-	height: 49px;
+	height: 4.25rem;
 	/* 14px extra margin for containers without label */
-	margin-bottom: 14px;
+	margin-bottom: 12px;
 }
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
 	justify-content: end;
