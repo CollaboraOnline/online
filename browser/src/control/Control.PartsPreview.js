@@ -255,7 +255,8 @@ L.Control.PartsPreview = L.Control.extend({
 				nPos = that._findClickedPart(frame);
 
 			$trigger.contextMenu(true);
-			that._setPart(e);
+			if (!that._isSelected(e))
+				that._setPart(e);
 			$.contextMenu({
 				selector: '#'+frame.id,
 				className: 'cool-font',
@@ -291,7 +292,8 @@ L.Control.PartsPreview = L.Control.extend({
 				return;
 			}
 			$trigger.contextMenu(true);
-			that._setPart(e);
+			if (!that._isSelected(e))
+				that._setPart(e);
 
 			$.contextMenu({
 				selector: '#' + img.id,
@@ -469,6 +471,15 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 		}
 		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
+	},
+
+	_isSelected: function (e) {
+		var part = this._findClickedPart(e.target.parentNode);
+		var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
+		if (partId < 0)
+			return false;
+		else
+			return app.impress.isSlideSelected(partId);
 	},
 
 	_setPart: function (e) {
