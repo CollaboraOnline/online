@@ -43,7 +43,10 @@ class ImpressTransitionTab implements NotebookbarTab {
 					{
 						id: 'transitions_icons',
 						type: 'iconview',
-					},
+						entries: [...Array(29).keys()].map((n: number) => {
+							return { ondemand: true, selected: false, row: n };
+						}),
+					} as IconViewJSON,
 				],
 			} as OverflowGroupWidgetJSON,
 			{
