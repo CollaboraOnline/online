@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2025-09-20 19:02+0000\n"
+"PO-Revision-Date: 2025-09-23 07:30+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1637,9 +1637,8 @@ msgstr "HTML soubor (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:74
-#, fuzzy
 msgid "Options"
-msgstr "Možnost"
+msgstr "Možnosti"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:771
@@ -2803,7 +2802,7 @@ msgstr "Prezentovat v okně"
 
 #: src/control/Control.NotebookbarImpress.js:496
 msgid "Follow me Presentation"
-msgstr ""
+msgstr "Následujte mě Prezentace"
 
 #: src/control/Control.NotebookbarImpress.js:622
 msgid "Slide Views"
@@ -3932,7 +3931,7 @@ msgstr "Vlastní okraje…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Další formáty papíru..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4784,7 +4783,7 @@ msgstr "Povolit animace"
 
 #: src/slideshow/SlideShowPresenter.ts:694
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Sledovat prezentaci"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
