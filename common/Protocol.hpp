@@ -32,6 +32,17 @@ namespace COOLProtocol
     constexpr unsigned ProtocolMajorVersionNumber = 0;
     constexpr unsigned ProtocolMinorVersionNumber = 1;
 
+    static constexpr const char* binaryMessageTypes[] {
+        "tile:",
+        "tilecombine:",
+        "delta:",
+        "renderfont:",
+        "rendersearchresult:",
+        "slidelayer:",
+        "windowpaint:",
+        "urp:"
+    };
+
     inline std::string GetProtocolVersion()
     {
         return std::to_string(ProtocolMajorVersionNumber) + '.'
