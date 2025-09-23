@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2025-09-02 20:03+0000\n"
+"PO-Revision-Date: 2025-09-23 18:37+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13.1-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1630,9 +1630,8 @@ msgstr "Файл HTML (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:74
-#, fuzzy
 msgid "Options"
-msgstr "Варіант'"
+msgstr "Опції"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:771
@@ -2295,7 +2294,7 @@ msgstr "Домівка"
 #: src/control/Control.NotebookbarWriter.js:50
 #: src/control/Control.NotebookbarWriter.js:2527
 msgid "Insert"
-msgstr "Вставити"
+msgstr "'Вставити"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1282
@@ -2795,7 +2794,7 @@ msgstr "Показати у вікні"
 
 #: src/control/Control.NotebookbarImpress.js:496
 msgid "Follow me Presentation"
-msgstr ""
+msgstr "Презентація «Слідуй за мною»"
 
 #: src/control/Control.NotebookbarImpress.js:622
 msgid "Slide Views"
@@ -3925,7 +3924,7 @@ msgstr "Налаштовані поля…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Більше розмірів паперу..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4777,7 +4776,7 @@ msgstr "Увімкнути анімацію"
 
 #: src/slideshow/SlideShowPresenter.ts:694
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Слідкуйте за презентацією"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
