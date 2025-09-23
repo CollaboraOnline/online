@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2025-09-02 20:03+0000\n"
+"PO-Revision-Date: 2025-09-23 09:47+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "help/ga/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
 "n>6 && n<11) ? 3 : 4;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1447,18 +1447,17 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
-msgstr ""
+msgstr "Cuir isteach"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-38
 msgid "Insert date"
-msgstr ""
+msgstr "Cuir isteach dáta"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> or <kbd>,</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Saighead Suas</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> nó <kbd>,</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:276-38
@@ -2335,7 +2334,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:521-34
 msgid "filter"
-msgstr "scagaire"
+msgstr "scag"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:523-11
 msgid ""
