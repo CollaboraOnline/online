@@ -488,6 +488,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin-left: 10px;
 }
 
+#transitions_icons.sidebar {
+	height: inherit;
+	width: 100%;
+}
+
 #stylesview-btn {
 	border: 1px solid var(--color-stylesview-border);
 	border-top-right-radius: var(--border-radius);
