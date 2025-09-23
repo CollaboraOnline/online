@@ -2499,41 +2499,54 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
-		if (this.isCalc() && oldSelection) {
-			if (!app.activeDocument.activeView.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
-				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
-				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
+		if (!oldSelection)
+			return;
 
-				let viewedRectangle = app.activeDocument.activeView.viewedRectangle;
-				var scrollX = 0, scrollY = 0;
-				if (newSelection.pX2 > viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
+		if (newSelection.equals(oldSelection.toArray()))
+			return;
+
+		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const directionDownOrRight = (newSelection.pX2 !== oldSelection.pX2) || (newSelection.pY2 !== oldSelection.pY2);
+
+		let needsScroll = false;
+		let xVisible;
+		let yVisible;
+
+		if (directionDownOrRight) {
+			xVisible = app.isXVisibleInTheDisplayedArea(newSelection.x2);
+			yVisible = app.isYVisibleInTheDisplayedArea(newSelection.y2);
+			needsScroll = !xVisible || !yVisible;
+		}
+		else {
+			xVisible = app.isXVisibleInTheDisplayedArea(newSelection.x1);
+			yVisible = app.isYVisibleInTheDisplayedArea(newSelection.y1);
+			needsScroll = !xVisible || !yVisible;
+		}
+
+		if (needsScroll) {
+			const spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
+			const spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
+			let scrollX = 0, scrollY = 0;
+
+			if (directionDownOrRight) {
+				if (!xVisible)
 					scrollX = newSelection.pX2 - viewedRectangle.pX2 + spacingX;
-				else if (newSelection.pX1 < viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
-					scrollX = newSelection.pX1 - viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY2 > viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
+
+				if (!yVisible)
 					scrollY = newSelection.pY2 - viewedRectangle.pY2 + spacingY;
-				else if (newSelection.pY1 < viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
+			}
+			else {
+				if (!xVisible)
+					scrollX = newSelection.pX1 - viewedRectangle.pX1 - spacingX;
+
+				if (!yVisible)
 					scrollY = newSelection.pY1 - viewedRectangle.pY1 - spacingY;
-				else if (newSelection.pY2 < viewedRectangle.pY1 && newSelection.pY2 < oldSelection.pY2)
-				{
-					let cellHeight = newSelection.pY2 - oldSelection.pY2;
-					scrollY = newSelection.pY2 - viewedRectangle.pY1 - spacingY + cellHeight;
-				}
-				else if (newSelection.pX2 < viewedRectangle.pX1 && newSelection.pX2 < oldSelection.pX2)
-				{
-					let cellWidth = newSelection.pX2 - oldSelection.pX2;
-					scrollX = newSelection.pX2 - viewedRectangle.pX1 - spacingX + cellWidth;
-				}
-				if (scrollX !== 0 || scrollY !== 0) {
-					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
-						var address = document.querySelector('#addressInput input').value;
-						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
-							let scroll = new cool.SimplePoint(0,0);
-							scroll.pX = scrollX;
-							scroll.pY = scrollY;
-							this.scrollByPoint(scroll);
-						}
-					}
+			}
+
+			if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
+				const address = document.querySelector('#addressInput input').value;
+				if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
+					app.activeDocument.activeView.scroll(scrollX, scrollY);
 				}
 			}
 		}
@@ -2545,9 +2558,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			var oldSelection = TextSelections.getEndRectangle();
 			TextSelections.setEndRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
-			this._updateScrollOnCellSelection(oldSelection, TextSelections.getEndRectangle());
 		}
 		else
 			TextSelections.setEndRectangle(null);
@@ -2559,9 +2570,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			let oldSelection = TextSelections.getStartRectangle();
 			TextSelections.setStartRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
-			this._updateScrollOnCellSelection(oldSelection, TextSelections.getStartRectangle());
 		}
 		else
 			TextSelections.setStartRectangle(null);
