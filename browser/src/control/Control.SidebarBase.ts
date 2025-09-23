@@ -22,8 +22,6 @@ enum SidebarType {
 	QuickFind = 'quickfind', // core
 }
 
-const SIDEBAR_WINDOW_ID = 0;
-
 abstract class SidebarBase extends JSDialogComponent {
 	type: SidebarType;
 
@@ -40,7 +38,7 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.builder = new window.L.control.jsDialogBuilder({
 			mobileWizard: this,
 			map: this.map,
-			windowId: SIDEBAR_WINDOW_ID,
+			windowId: WindowId.Sidebar,
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
 			useScrollAnimation: false, // icon views cause jump on sidebar open
 			suffix: 'sidebar',

@@ -12,7 +12,6 @@
  * JSDialog.QuickFindPanel
  */
 
-const QUICKFIND_WINDOW_ID = -5;
 class QuickFindPanel extends SidebarBase {
 	constructor(map: any) {
 		super(map, SidebarType.QuickFind);
@@ -21,7 +20,7 @@ class QuickFindPanel extends SidebarBase {
 	onAdd(map: any) {
 		super.onAdd(map);
 
-		this.builder?.setWindowId(QUICKFIND_WINDOW_ID);
+		this.builder?.setWindowId(WindowId.QuickFind);
 
 		this.map = map;
 		this.map.on('quickfind', this.onQuickFind, this);
