@@ -225,7 +225,8 @@ function findFirstToolitem(
 	for (const item of items) {
 		if (
 			item.type.indexOf('toolitem') >= 0 ||
-			item.type.indexOf('colorlistbox') >= 0
+			item.type.indexOf('colorlistbox') >= 0 ||
+			item.type.indexOf('menubutton') >= 0
 		)
 			return item;
 		else if (item.children && item.children.length) {
