@@ -436,6 +436,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Styles preview */
 
+#home-stylesview-group-content {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
 #stylesview {
 	height: 64px;
 	width: 35vw;
