@@ -2499,6 +2499,16 @@ L.CanvasTileLayer = L.Layer.extend({
 					scrollY = newSelection.pY2 - viewedRectangle.pY2 + spacingY;
 				else if (newSelection.pY1 < viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
 					scrollY = newSelection.pY1 - viewedRectangle.pY1 - spacingY;
+				else if (newSelection.pY2 < viewedRectangle.pY1 && newSelection.pY2 < oldSelection.pY2)
+				{
+					let cellHeight = newSelection.pY2 - oldSelection.pY2;
+					scrollY = newSelection.pY2 - viewedRectangle.pY1 - spacingY + cellHeight;
+				}
+				else if (newSelection.pX2 < viewedRectangle.pX1 && newSelection.pX2 < oldSelection.pX2)
+				{
+					let cellWidth = newSelection.pX2 - oldSelection.pX2;
+					scrollX = newSelection.pX2 - viewedRectangle.pX1 - spacingX + cellWidth;
+				}
 				if (scrollX !== 0 || scrollY !== 0) {
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.querySelector('#addressInput input').value;
