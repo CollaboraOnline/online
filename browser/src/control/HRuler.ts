@@ -167,26 +167,20 @@ class HRuler extends Ruler {
 		});
 		this._firstLineHammer.on(
 			'panstart',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: any,
-			) {
+			window.touch.touchOnly((event) => {
 				this._initiateIndentationDrag(event);
 			}),
 		);
 		this._firstLineHammer.on(
 			'panmove',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: any,
-			) {
+			window.touch.touchOnly((event) => {
 				this._moveIndentation(event);
 			}),
 		);
 		this._firstLineHammer.on(
 			'panend',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: Event,
-			) {
-				this._moveIndentationEnd(event);
+			window.touch.touchOnly((event) => {
+				this._moveIndentationEnd(event as Event);
 			}),
 		);
 
@@ -198,26 +192,20 @@ class HRuler extends Ruler {
 		});
 		this._pStartHammer.on(
 			'panstart',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: any,
-			) {
+			window.touch.touchOnly((event) => {
 				this._initiateIndentationDrag(event);
 			}),
 		);
 		this._pStartHammer.on(
 			'panmove',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: any,
-			) {
+			window.touch.touchOnly((event) => {
 				this._moveIndentation(event);
 			}),
 		);
 		this._pStartHammer.on(
 			'panend',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: Event,
-			) {
-				this._moveIndentationEnd(event);
+			window.touch.touchOnly((event) => {
+				this._moveIndentationEnd(event as Event);
 			}),
 		);
 
@@ -229,51 +217,39 @@ class HRuler extends Ruler {
 		});
 		this._pEndHammer.on(
 			'panstart',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: any,
-			) {
+			window.touch.touchOnly((event) => {
 				this._initiateIndentationDrag(event);
 			}),
 		);
 		this._pEndHammer.on(
 			'panmove',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: any,
-			) {
+			window.touch.touchOnly((event) => {
 				this._moveIndentation(event);
 			}),
 		);
 		this._pEndHammer.on(
 			'panend',
-			(window as typeof window & { touch: any }).touch.touchOnly(function (
-				event: Event,
-			) {
-				this._moveIndentationEnd(event);
+			window.touch.touchOnly((event) => {
+				this._moveIndentationEnd(event as Event);
 			}),
 		);
 
 		window.L.DomEvent.on(
 			this._firstLineMarker,
 			'mousedown',
-			(window as typeof window & { touch: any }).touch.mouseOnly(
-				this._initiateIndentationDrag,
-			),
+			window.touch.mouseOnly(this._initiateIndentationDrag),
 			this,
 		);
 		window.L.DomEvent.on(
 			this._pStartMarker,
 			'mousedown',
-			(window as typeof window & { touch: any }).touch.mouseOnly(
-				this._initiateIndentationDrag,
-			),
+			window.touch.mouseOnly(this._initiateIndentationDrag),
 			this,
 		);
 		window.L.DomEvent.on(
 			this._pEndMarker,
 			'mousedown',
-			(window as typeof window & { touch: any }).touch.mouseOnly(
-				this._initiateIndentationDrag,
-			),
+			window.touch.mouseOnly(this._initiateIndentationDrag),
 			this,
 		);
 	}
@@ -923,11 +899,7 @@ class HRuler extends Ruler {
 	}
 
 	_initiateIndentationDrag(e: any) {
-		if (
-			this.getWindowProperty<boolean>('ThisIsTheiOSApp') &&
-			!this._map.isEditMode()
-		)
-			return;
+		if (window.ThisIsTheiOSApp && !this._map.isEditMode()) return;
 
 		this._map.rulerActive = true;
 
@@ -1027,7 +999,7 @@ class HRuler extends Ruler {
 		if (e.type === 'touchend')
 			posChange = this._lastposition - this._initialposition;
 		else posChange = e.originalEvent.clientX - this._initialposition;
-		var unoObj: Params = {},
+		var unoObj: any = {},
 			marginType,
 			fact;
 
@@ -1048,7 +1020,7 @@ class HRuler extends Ruler {
 
 		this._rFace.style.cursor = 'default';
 
-		unoObj[marginType] = { type: '', value: null };
+		unoObj[marginType] = {};
 		unoObj[marginType]['type'] = 'string';
 		unoObj[marginType]['value'] =
 			(fact * posChange) /
