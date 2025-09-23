@@ -271,11 +271,14 @@ static bool isMessageOfType(const char* message, const std::string& type, int le
 
 static void send2JS(const HWND hWnd, const char* buffer, int length)
 {
+    // Same list of message types as in Message::detectType. (Except that "urp:" is irrelevant in
+    // the MOBILEAPP case, I think?) Would be great to have these in just one place.
     const bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
                                 isMessageOfType(buffer, "tilecombine:", length) ||
                                 isMessageOfType(buffer, "delta:", length) ||
                                 isMessageOfType(buffer, "renderfont:", length) ||
                                 isMessageOfType(buffer, "rendersearchlist:", length) ||
+                                isMessageOfType(buffer, "slidelayer:", length) ||
                                 isMessageOfType(buffer, "windowpaint:", length));
     std::string pretext{ binaryMessage
                              ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
