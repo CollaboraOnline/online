@@ -58,6 +58,9 @@ class HRuler extends Ruler {
 		this._map = map;
 		Object.assign(this.options, options);
 		this.onAdd(); // VRuler created
+
+		if (app.map._docLayer._docType === 'presentation')
+			this.options.tileMargin = 0;
 	}
 
 	onAdd() {
@@ -371,20 +374,21 @@ class HRuler extends Ruler {
 	_updateParagraphIndentations() {
 		var items = this._map['stateChangeHandler'];
 		var state = items.getItemValue('.uno:LeftRightParaMargin');
+		// in impress/draw values are not as per Inch factore we should consider this case
+		var conversionFactorToInches = app.map.isPresentationOrDrawing() ? 1.76 : 1;
 
 		if (!state) return;
 
-		this.options.firstLineIndent = parseFloat(
-			state.firstline.replace(',', '.'),
-		);
-		this.options.leftParagraphIndent = parseFloat(state.left.replace(',', '.'));
-		this.options.rightParagraphIndent = parseFloat(
-			state.right.replace(',', '.'),
-		);
+		this.options.firstLineIndent =
+			parseFloat(state.firstline.replace(',', '.')) / conversionFactorToInches;
+		this.options.leftParagraphIndent =
+			parseFloat(state.left.replace(',', '.')) / conversionFactorToInches;
+		this.options.rightParagraphIndent =
+			parseFloat(state.right.replace(',', '.')) / conversionFactorToInches;
 		this.options.unit = state.unit;
 
 		var pxPerMm100 =
-			this._map._docLayer._docPixelSize.x /
+			app.map._docLayer._docPixelSize.x /
 			((app.activeDocument.fileSize.x * 2540) / 1440);
 
 		// Conversion to mm100.
@@ -419,14 +423,17 @@ class HRuler extends Ruler {
 		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
 		this._firstLineMarker.style.left =
 			fLinePosition -
+			this._getNavigationSidebarWidth() -
 			this._firstLineMarker.getBoundingClientRect().width / 2.0 +
 			'px';
 		this._pStartMarker.style.left =
 			pStartPosition -
+			this._getNavigationSidebarWidth() -
 			this._pStartMarker.getBoundingClientRect().width / 2.0 +
 			'px';
 		this._pEndMarker.style.left =
 			pEndPosition -
+			this._getNavigationSidebarWidth() -
 			this._pEndMarker.getBoundingClientRect().width / 2.0 +
 			'px';
 
@@ -504,7 +511,7 @@ class HRuler extends Ruler {
 		this._rTSContainer.replaceChildren();
 
 		var pxPerMm100 =
-			this._map._docLayer._docPixelSize.x /
+			app.map._docLayer._docPixelSize.x /
 			((app.activeDocument.fileSize.x * 2540) / 1440);
 		this._rTSContainer.tabStops = [];
 		for (
