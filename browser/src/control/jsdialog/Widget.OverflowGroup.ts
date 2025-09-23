@@ -213,6 +213,18 @@ function setupOverflowMenu(
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
+
+					// calculate baseline-aligned position specifically for overflow menus
+					const tabContainer = overflowMenuButton.closest(
+						'.ui-tabs-content, [id$="-container"]',
+					);
+
+					if (tabContainer) {
+						// use tab container's bottom as baseline for overflow menus only
+						const tabRect = tabContainer.getBoundingClientRect();
+						menu.style.marginTop = tabRect.bottom + 'px';
+					}
+
 					overflowGroupContainer.appendChild(overflowNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
