@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2024-09-24 12:47+0000\n"
+"PO-Revision-Date: 2025-09-23 07:30+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sl/>\n"
@@ -13,10 +13,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.14-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -1460,19 +1460,18 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
-msgstr ""
+msgstr "Vstavi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-38
 msgid "Insert date"
-msgstr ""
+msgstr "Vstavite datum"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> or <kbd>,</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzgor</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> ali "
+"<kbd>,</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:276-38
