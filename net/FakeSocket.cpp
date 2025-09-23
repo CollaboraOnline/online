@@ -203,57 +203,82 @@ static std::string pollBits(int bits)
     return result;
 }
 
+/**
+ * Scan a set of pollfds and set their revents according to the fake-socket state.
+ *
+ * Returns true if any pollfd has any revent ("returned event") set
+ * (ie. at least one fd is "ready").
+ */
 static bool checkForPoll(struct pollfd *pollfds, int nfds)
 {
     bool retval = false;
+
     for (int i = 0; i < nfds; i++)
     {
-        const int K = ((pollfds[i].fd)&1);
-        const int N = 1 - K;
+        struct pollfd &pfd = pollfds[i];
 
-        if (pollfds[i].fd < 0 || static_cast<unsigned>(pollfds[i].fd/2) >= fds.size())
+        const int fdRaw = pfd.fd;                                    // raw fd value from the pollfd
+        const unsigned pairIndex = static_cast<unsigned>(fdRaw / 2); // which FakeSocketPair
+        const int K = (fdRaw & 1);                                   // "this" endpoint index for the current FakeSocketPair
+        const int N = 1 - K;                                         // the "peer" endpoint index
+
+        // Validate the fd: negative or pair index out of range -> POLLNVAL
+        if (fdRaw < 0 || pairIndex >= fds.size())
         {
-            pollfds[i].revents = POLLNVAL;
+            pfd.revents = POLLNVAL;
             retval = true;
+            continue;
         }
-        else
+
+        // pairIndex is in range, check that the endpoint exists
+        const auto& currentPair = fds[pairIndex];
+        if (currentPair->fd[K] == -1)
         {
-            if (fds[pollfds[i].fd/2]->fd[K] == -1)
+            // this endpoint is closed
+            pfd.revents = POLLNVAL;
+            retval = true;
+            continue;
+        }
+
+        // start with no events to return
+        pfd.revents = 0;
+
+        // POLLIN readiness:
+        //  - readable[K] means there is a buffered record waiting to be read.
+        //  - For endpoint K==0 (the "listener" half), POLLIN also signals a pending accept
+        //    when listening && connectingFd != -1.
+        if (pfd.events & POLLIN)
+        {
+            if (currentPair->readable[K] ||
+                (K == 0 && currentPair->listening && currentPair->connectingFd != -1))
             {
-                pollfds[i].revents = POLLNVAL;
+                pfd.revents |= POLLIN;
                 retval = true;
             }
-            else
-                pollfds[i].revents = 0;
         }
 
-        if (pollfds[i].revents == 0)
+        // POLLOUT readiness:
+        // With multiple buffers, we consider the socket writable unless the peer
+        // endpoint is gone or has been shut down.
+        if (pfd.events & POLLOUT)
         {
-            if (pollfds[i].events & POLLIN)
+            if (currentPair->fd[N] != -1 && !currentPair->shutdown[N])
             {
-                if (fds[pollfds[i].fd/2]->readable[K] ||
-                    (K == 0 && fds[pollfds[i].fd/2]->listening && fds[pollfds[i].fd/2]->connectingFd != -1))
-                {
-                    pollfds[i].revents |= POLLIN;
-                    retval = true;
-                }
-            }
-            // With multiple buffers, a socket is always writable unless the peer is closed or shut down
-            if (pollfds[i].events & POLLOUT)
-            {
-                if (fds[pollfds[i].fd/2]->fd[N] != -1 && !fds[pollfds[i].fd/2]->shutdown[N])
-                {
-                    pollfds[i].revents |= POLLOUT;
-                    retval = true;
-                }
-            }
-            if (fds[pollfds[i].fd/2]->shutdown[N])
-            {
-                    pollfds[i].revents |= POLLHUP;
-                    retval = true;
+                pfd.revents |= POLLOUT;
+                retval = true;
             }
         }
+
+        // POLLHUP:
+        // If the peer has been shut down, report HUP unconditionally; even if the caller
+        // didn't request it in .events (mirrors the real poll()).
+        if (currentPair->shutdown[N])
+        {
+            pfd.revents |= POLLHUP;
+            retval = true;
+        }
     }
+
     return retval;
 }
 
