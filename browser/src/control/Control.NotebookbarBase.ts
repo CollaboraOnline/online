@@ -50,7 +50,7 @@ class NotebookbarBase extends JSDialogComponent {
 
 	protected createBuilder() {
 		this.builder = new window.L.control.notebookbarBuilder({
-			windowId: -2,
+			windowId: WindowId.Notebookbar,
 			mobileWizard: this.impl,
 			map: this.map,
 			cssClass: 'notebookbar',
