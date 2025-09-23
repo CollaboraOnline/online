@@ -701,13 +701,26 @@ window.L.Clipboard = window.L.Class.extend({
 			return;
 		}
 
+		// When copying from the context menu we seem to lose focus before dispatching .uno:CopySlide and
+		// onblur is called and partsFocused is false so we don't do an explicit uno:CopySlide in
+		// the execCommand('copy') callback, workaround this here while we still know we want to do a
+		// copy slide.
+		const presentationContextMenuCopy = cmd == ".uno:CopySlide" && this._map.getDocType() === 'presentation';
+		if (presentationContextMenuCopy)
+                    this._map._docLayer._preview.contextMenuCopyActive = true;
+
 		if (!window.ThisIsTheiOSApp && // in mobile apps, we want to drop straight to navigatorClipboardRead as execCommand will require user interaction...
 			document.execCommand(operation) &&
 			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
 			this._unoCommandForCopyCutPaste = null;
+			if (presentationContextMenuCopy)
+			    this._map._docLayer._preview.contextMenuCopyActive = false;
 			return;
 		}
+
+		if (presentationContextMenuCopy)
+		    this._map._docLayer._preview.contextMenuCopyActive = false;
 
 		if (operation == 'paste' && this._navigatorClipboardRead(false)) {
 			// execCommand(paste) failed, the new clipboard API is available, tried that
@@ -1101,7 +1114,9 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_doCopyCut: function(ev, unoName) {
-		if (this._map.getDocType() === 'presentation' && this._map._docLayer._preview.partsFocused) {
+		if (this._map.getDocType() === 'presentation' &&
+			(this._map._docLayer._preview.partsFocused ||
+			 this._map._docLayer._preview.contextMenuCopyActive)) {
 			unoName = 'CopySlide';
 		}
 		window.app.console.log(unoName);
