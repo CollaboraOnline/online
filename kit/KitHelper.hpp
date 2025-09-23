@@ -51,9 +51,8 @@ namespace LOKitHelper
 
     inline std::string getPartData(LibreOfficeKitDocument *loKitDocument, int part)
     {
-        char* ptrToData = loKitDocument->pClass->getPartInfo(loKitDocument, part);
-        std::string result(ptrToData);
-        std::free(ptrToData);
+        ScopedString ptrToData(loKitDocument->pClass->getPartInfo(loKitDocument, part));
+        std::string result(ptrToData.get());
         return result;
     }
 
