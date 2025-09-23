@@ -694,8 +694,7 @@ class HRuler extends Ruler {
 			);
 		}
 
-		var unoObj: Params = {},
-			indentType = '';
+		var unoObj: any = {};
 
 		// Calculation step..
 		// The new coordinate of element subject to indentation is sent as a percentage of the page width..
@@ -703,48 +702,55 @@ class HRuler extends Ruler {
 		// We can use TabStopContainer's position as the reference point, as they share the same reference point..
 		var element = document.getElementById(this._indentationElementId);
 
-		var leftValue;
 		// The halfWidth of the shape..
 		var halfWidth =
 			(element.getBoundingClientRect().right -
 				element.getBoundingClientRect().left) *
 			0.5;
 
-		// We need the pageWidth in pixels, so we can not use "this.options.pageWidth" here, since that's in mm..
-		var pageWidth = parseFloat(this._rFace.style.width.replace('px', ''));
+		var firstLineMargin =
+			this.options.firstLineIndent / this.options.DraggableConvertRatio;
+		var leftValue =
+			this.options.leftParagraphIndent / this.options.DraggableConvertRatio;
+		var rightValue =
+			this.options.rightParagraphIndent / this.options.DraggableConvertRatio;
 
+		// Calculate and update left, right and firstLine margin according to selected marker
 		if (element.id === 'lo-fline-marker') {
-			indentType = 'FirstLineIndent';
-			// FirstLine indentation is always positioned according to the left indent..
-			// We don't need to add halfWidth here..
-			leftValue =
-				parseFloat(this._firstLineMarker.style.left.replace('px', '')) -
-				parseFloat(this._pStartMarker.style.left.replace('px', ''));
-		} else if (element.id === 'lo-pstart-marker') {
-			indentType = 'LeftParaIndent';
-			leftValue =
-				element.getBoundingClientRect().left -
-				this._rTSContainer.getBoundingClientRect().left +
-				halfWidth;
+			firstLineMargin = Math.ceil(
+				(this._firstLineMarker.getBoundingClientRect().left -
+					this._pStartMarker.getBoundingClientRect().left +
+					halfWidth) /
+					this.options.DraggableConvertRatio,
+			);
+			this.options.firstLineIndent =
+				firstLineMargin * this.options.DraggableConvertRatio;
 		} else if (element.id === 'lo-pend-marker') {
-			indentType = 'RightParaIndent';
-			// Right marker is positioned from right, this is rightValue..
-			leftValue =
-				this._rTSContainer.getBoundingClientRect().right -
-				element.getBoundingClientRect().right +
-				halfWidth;
-		}
-
-		leftValue = leftValue / pageWidth; // Now it's a percentage..
-
-		if (indentType !== '') {
-			unoObj[indentType] = { type: '', value: null };
-			unoObj[indentType]['type'] = 'string';
-			unoObj[indentType]['value'] = leftValue;
-			app.socket.sendMessage(
-				'uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj),
+			rightValue = Math.ceil(
+				(this._rTSContainer.getBoundingClientRect().right -
+					this._pEndMarker.getBoundingClientRect().right +
+					halfWidth) /
+					this.options.DraggableConvertRatio,
+			);
+		} else if (element.id === 'lo-pstart-marker') {
+			leftValue = Math.ceil(
+				(this._pStartMarker.getBoundingClientRect().left -
+					this._rTSContainer.getBoundingClientRect().left +
+					halfWidth) /
+					this.options.DraggableConvertRatio,
 			);
 		}
+
+		// it is kind of necessary to send all prams details to set values right in CORE other vise for missing values it will take default as 0
+		unoObj['LRSpace.FirstLineIndent'] = {
+			type: 'long',
+			value: firstLineMargin,
+		};
+		unoObj['LRSpace.LeftMargin'] = { type: 'long', value: leftValue };
+		unoObj['LRSpace.RightMargin'] = { type: 'long', value: rightValue };
+
+		// Send the command
+		this._map.sendUnoCommand('.uno:LeftRightParaMargin', unoObj);
 
 		this._indentationElementId = '';
 		this._markerVerticalLine.style.display = 'none';
