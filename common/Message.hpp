@@ -148,17 +148,11 @@ private:
 
     Type detectType() const
     {
-        if (_tokens.equals(0, "tile:") ||
-            _tokens.equals(0, "tilecombine:") ||
-            _tokens.equals(0, "delta:") ||
-            _tokens.equals(0, "renderfont:") ||
-            _tokens.equals(0, "rendersearchresult:") ||
-            _tokens.equals(0, "slidelayer:") ||
-            _tokens.equals(0, "windowpaint:") ||
-            _tokens.equals(0, "urp:") )
-        {
-            return Type::Binary;
-        }
+        for (auto i : COOLProtocol::binaryMessageTypes)
+            if (_tokens.equals(0, i))
+            {
+                return Type::Binary;
+            }
 
         if (_data.size() > 0 && (_data[_data.size() - 1] == '}' || _data[_data.size() - 1] == ']'))
         {
