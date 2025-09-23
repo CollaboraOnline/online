@@ -1821,6 +1821,8 @@ private:
 
     bool _isViewSettingsAccessibilityEnabled;
 
+    bool _isViewSettingsUpdated;
+
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit : 1;
 

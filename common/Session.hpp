@@ -21,6 +21,7 @@
 
 #include <Poco/Path.h>
 #include <Poco/Types.h>
+#include <Poco/JSON/Object.h>
 
 #include "Protocol.hpp"
 #include "Log.hpp"
@@ -235,7 +236,10 @@ public:
 
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
 
-    void setUserPrivateInfo(const std::string& userPrivateInfo) { _userPrivateInfo = userPrivateInfo; }
+    void setUserPrivateInfo(const std::string& userPrivateInfo) {
+        LOG_INF("HACK: Signature Certificate: q2 setUserPrivateInfo, this of " << this << " from " << _userPrivateInfo << " to " << userPrivateInfo);
+
+        _userPrivateInfo = userPrivateInfo; }
 
     void setServerPrivateInfo(const std::string& serverPrivateInfo) { _serverPrivateInfo = serverPrivateInfo; }
 
@@ -271,7 +275,10 @@ public:
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }
 
-    const std::string& getUserPrivateInfo() const { return _userPrivateInfo; }
+    const std::string& getUserPrivateInfo() const {
+        LOG_INF("HACK: Signature Certificate: q2 getUserPrivateInfo, this of " << this << " _userPrivateInfo " << _userPrivateInfo );
+
+        return _userPrivateInfo; }
 
     const std::string& getServerPrivateInfo() const { return _serverPrivateInfo; }
 
@@ -317,6 +324,14 @@ public:
 
     void setZoteroAPIKey(const std::string& val) { _zoteroAPIKey = val; }
 
+    const std::string& getSignatureCertificate() const { return _signatureCertificate; }
+    void setSignatureCertificate(const std::string& cert) { _signatureCertificate = cert; }
+
+    const std::string& getSignatureKey() const { return _signatureKey; }
+    void setSignatureKey(const std::string& key) { _signatureKey = key; }
+
+    const std::string& getSignatureCa() const { return _signatureCa; }
+    void setSignatureCa(const std::string& ca) { _signatureCa = ca; }
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -335,8 +350,11 @@ protected:
 
     inline void logPrefix(std::ostream& os) const { os << _name << ": "; }
 
-private:
+    void setSignToUserPrivateConfig(const std::string& key,
+                                    Poco::JSON::Object::Ptr signatureDataObject,
+                                    Poco::JSON::Object::Ptr userPrivateInfoObject);
 
+private:
     void shutdown(bool goingAway = false, const std::string& statusMessage = std::string());
 
     virtual bool _handleInput(const char* buffer, int length) = 0;
@@ -472,6 +490,11 @@ private:
 
     /// Zotero API Key
     std::string _zoteroAPIKey;
+
+    /// Digital signature certificate, key, and CA
+    std::string _signatureCertificate;
+    std::string _signatureKey;
+    std::string _signatureCa;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
