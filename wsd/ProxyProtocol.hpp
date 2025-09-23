@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "StateEnum.hpp"
+#include <map>
 #include <memory>
 #include <net/Socket.hpp>
 
@@ -47,7 +49,13 @@ public:
         // connections & sockets come and go a lot.
     }
 
-public:
+    STATE_ENUM(
+        ParseStatus,
+        SUCCESS, // true
+        PROTOCOL_ERROR, // false - but we should give up here and close the connection & session
+        AGAIN // false - but we should wait for more data to be read from the socket
+    );
+
     /// Clear all external references
     void dispose() override { _msgHandler.reset(); }
 
@@ -59,7 +67,11 @@ public:
     void dumpState(std::ostream&, const std::string&) const override {}
     // instead do it centrally.
     void dumpProxyState(std::ostream& os);
-    bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
+
+    // Non-destructive message parsing
+    ParseStatus parseEmitIncoming(const std::shared_ptr<StreamSocket>& socket);
+    ParseStatus hasCompleteMessage(const Buffer& in, size_t& frameSize);
+    void processBufferedMessages();
 
     void handleRequest(const std::shared_ptr<StreamSocket> &socket);
 
@@ -88,6 +100,21 @@ private:
             insert(end(), terminator, terminator + 1);
         }
     };
+
+    struct BufferedMessage
+    {
+        uint64_t serial;
+        std::vector<char> data;
+
+        BufferedMessage(uint64_t s, const std::vector<char>& d)
+            : serial(s)
+            , data(d)
+        {
+        }
+    };
+
+    std::map<uint64_t, std::unique_ptr<BufferedMessage>> _serialQueue;
+
     /// queue things when we have no socket to hand.
     std::vector<std::shared_ptr<Message>> _writeQueue;
     std::vector<std::weak_ptr<StreamSocket>> _outSockets;
