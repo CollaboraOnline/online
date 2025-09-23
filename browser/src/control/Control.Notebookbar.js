@@ -13,7 +13,7 @@
  * window.L.Control.Notebookbar - container for tabbed menu on the top of application
  */
 
-/* global $ _ _UNO JSDialog app */
+/* global $ _ _UNO JSDialog app WindowId */
 window.L.Control.Notebookbar = window.L.Control.extend({
 
 	_showNotebookbar: false,
@@ -40,7 +40,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this._RTL = true;
 
 		this.builder = new window.L.control.notebookbarBuilder({
-			windowId: -2,
+			windowId: WindowId.Notebookbar,
 			mobileWizard: this,
 			map: map,
 			cssClass: 'notebookbar',
