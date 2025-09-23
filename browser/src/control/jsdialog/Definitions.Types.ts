@@ -62,7 +62,7 @@ interface JSBuilder {
 	callback: JSDialogCallback;
 	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
-	setWindowId: (id: number) => void;
+	setWindowId: (id: WindowId | number) => void;
 	onCommandStateChanged: (event: any) => void;
 
 	// helpers FIXME: put as local in Control.Containers.ts
