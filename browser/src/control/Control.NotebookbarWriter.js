@@ -917,10 +917,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'stylesview',
-				'type': 'iconview',
-				'entries': [],
-				'vertical': 'false'
+			   'type': 'overflowgroup',
+			   'id': 'home-stylesview-group',
+			   'nofold': true,
+			   'name':_('Styles'),
+			   'children' : [
+					{
+						   'id': 'stylesview',
+						   'type': 'iconview',
+						   'entries': [],
+						   'vertical': 'false'
+					},
+			   ]
 			},
 			{
 				'id': 'stylesview-btn',
