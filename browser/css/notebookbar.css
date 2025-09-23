@@ -441,15 +441,20 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin-bottom: 2px;
 }
 
-#stylesview {
-	height: 64px;
-	width: 35vw;
+#design-master-page-group-content {
+	margin-bottom: 3px;
+}
+
+#transitions-group-content {
+	margin-bottom: 5px;
+}
+
+#stylesview,
+#masterpageall_icons,
+#transitions_icons {
 	overflow: auto;
 	display: grid;
-	/* Preview base64's width = 100px + container border's etc */
-	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
-	/* Preview base64's height = 30px  + container border's etc */
-	grid-template-rows: repeat(auto-fit, minmax(33px, 1fr));
+	row-gap: 0;
 	padding: 0px;
 	border: 1px solid var(--color-stylesview-border);
 	border-radius: var(--border-radius);
@@ -458,9 +463,17 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
 	box-sizing: border-box;
+}
+
+#stylesview {
+	height: 64px;
+	width: 35vw;
+	/* Preview base64's width = 100px + container border's etc */
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	/* Preview base64's height = 30px  + container border's etc */
+	grid-template-rows: repeat(auto-fit, minmax(33px, 1fr));
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	row-gap: 0;
 }
 
 #masterpageall_icons {
@@ -468,45 +481,18 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	width: 15vw !important;
 	max-width: 265px;
 	min-width: 90px;
-	padding: 0px;
-	border: 1px solid var(--color-stylesview-border);
-	border-radius: var(--border-radius);
-	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	scrollbar-width: none;
-	display: grid;
-	overflow: auto;
 	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
 	grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
-	background-color: var(--color-stylesview-background);
-	filter: brightness(var(--brightness-stylesview));
-	box-sizing: border-box;
-	row-gap: 0;
 	margin-left: 5px;
 	margin-top: 2px;
-	margin-bottom: 3px;
-}
-
-#transitions-group-content,
-#design-master-page-group-content {
 	margin-bottom: 3px;
 }
 
 #transitions_icons {
 	height: 59px;
 	width: 35vw;
-	overflow: auto;
-	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
 	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
-	padding: 0px;
-	border: 1px solid var(--color-stylesview-border);
-	border-radius: var(--border-radius);
-	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	scrollbar-width: none;
-	background-color: var(--color-stylesview-background);
-	filter: brightness(var(--brightness-stylesview));
-	box-sizing: border-box;
-	row-gap: 0;
 	margin-left: 10px;
 	margin-top: 7px;
 }
