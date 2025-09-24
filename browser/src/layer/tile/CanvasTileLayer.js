@@ -606,8 +606,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// Cursor marker
 		this._cursorMarker = null;
 
-		this._initializeTableOverlay();
-
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
 		this._previewInvalidations = [];
@@ -710,7 +708,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		app.sectionContainer.addSection(new app.definitions.CommentSection());
 
 		this._syncTileContainerSize();
-		this._setupTableOverlay();
 	},
 
 	// Returns true if the document type is Writer.
@@ -1152,7 +1149,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('tableselected:')) {
-			this._onTableSelectedMsg(textMsg);
+			app.activeDocument.tableMiddleware.onTableSelectedMsg(textMsg);
 		}
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);

@@ -57,7 +57,7 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 	}
 
 	public setMarkerSize(width: number, height: number): void {
-		this.size = [width, height];
+		this.size = [width * app.dpiScale, height * app.dpiScale];
 		const container = this.getHTMLObject();
 		if (container) {
 			container.style.width = `${width}px`;

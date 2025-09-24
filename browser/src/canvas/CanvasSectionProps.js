@@ -52,6 +52,8 @@ app.CSections.CellCursor = 			{ name: 'OwnCellCursor'     , zIndex: 5 };
 app.CSections.FocusCell =             { name: 'focus cell'		, zIndex: 5 };
 app.CSections.DefaultForDocumentObjects = {                         zIndex: 9 };
 app.CSections.HTMLObject     =        {                             zIndex: 9 };
+app.CSections.TableResizeMarker =     { name: 'table resize marker' };
+app.CSections.TableSelectMarker =     { name: 'table select marker' };
 
 app.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 };
 app.CSections.CalcValidityDropDown =  { name: 'calc validity dropdown', zIndex: 11 };
