@@ -13,11 +13,16 @@
 class DocumentBase {
 	public readonly type: string = 'DocumentBase';
 	public activeView: ViewLayoutBase;
+	public tableMiddleware: TableMiddleware;
+
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {
 		this.activeView = new ViewLayoutBase();
 		this._fileSize = new cool.SimplePoint(0, 0);
+		this.tableMiddleware = new TableMiddleware();
+
+		this.tableMiddleware.setupTableOverlay();
 	}
 
 	public get fileSize(): cool.SimplePoint {
