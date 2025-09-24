@@ -16,9 +16,9 @@ components.
 Turn on WSL, the Windows Subsystem for Linux, and install a distro.
 I use the default, Ubuntu, others presumably work, too. In an
 administrator Command Prompt:
-  
+
 	wsl --install Ubuntu
-  
+
 In that Ubuntu, install various things that will be needed later. Most
 of this is needed just to run the configure script in online. That
 configure script checks for tons of things that are completely
@@ -26,8 +26,8 @@ irrelevant for CODA, but oh well. Patches welcome.
 
 This is not necessarily a comprehensive list, you might notice more
 missing things as you go along.
-  
-	sudo apt install libtool python3-lxml python3-polib g++ pkg-config 
+
+	sudo apt install libtool python3-lxml python3-polib g++ pkg-config
 	sudo apt install libpng-dev libzstd-dev libcppunit-dev libpam-dev
 
 The following things are more essential, for bulding the JavaScript
@@ -90,19 +90,15 @@ The above is for a debug build, for a release build, a known to work autogen.inp
 (The use of --disable-gallaries in the latter is not essential, could
 be used in the debug one, too.)
 
-### Buikding also LibreOffice using WSL
+### Building also LibreOffice using WSL
 
-Apparently it should be possible nowadays to build LibreOffice core
-for Windows using WSL, not Cygwin. That sounds like a great idea. But
-I haven't tried it. Possibly it works only in the current master
-branch, not in the coda-25.04 branch (which is based on the co-25.04
-branch, which is based on master some year ago, as far as I know). But
-if you experiment with it and notice that it works, by all means edit
-this file.
+Apparently it is possible nowadays to build LibreOffice core
+for Windows using WSL, not Cygwin. Especialy when/if somebody would
+want or need to work on CODA on ARM64 Windows, it is good to manage
+without Cygwin, as Cygwin is available only for x64 Windows.
 
-Especialy when/if somebody would want or need to work on CODA on ARM64
-Windows, it would be good to be able to manage without Cygwin, as
-Cygwin is available only for x64 Windows.
+The coda-25.04 branch was successfully built under WSL following the
+instructions on [TDF Wiki](https://wiki.documentfoundation.org/Development/BuildingOnWSLWindows).
 
 ## Build direct dependencies of CODA-W
 
