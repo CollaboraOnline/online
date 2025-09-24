@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2025-09-03 12:42+0000\n"
+"PO-Revision-Date: 2025-09-24 19:15+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13.1-rc\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1628,9 +1628,8 @@ msgstr "HTML file (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:74
-#, fuzzy
 msgid "Options"
-msgstr "Option"
+msgstr "Options"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:771
@@ -2793,7 +2792,7 @@ msgstr "Present in Window"
 
 #: src/control/Control.NotebookbarImpress.js:496
 msgid "Follow me Presentation"
-msgstr ""
+msgstr "Follow me Presentation"
 
 #: src/control/Control.NotebookbarImpress.js:622
 msgid "Slide Views"
@@ -3921,7 +3920,7 @@ msgstr "Custom Margins…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "More Paper Sizes..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4765,7 +4764,7 @@ msgstr "Enable Animations"
 
 #: src/slideshow/SlideShowPresenter.ts:694
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Follow Presentation"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
