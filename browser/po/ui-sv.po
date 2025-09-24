@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2025-09-07 11:05+0000\n"
+"PO-Revision-Date: 2025-09-24 19:15+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1632,7 +1632,6 @@ msgstr "HTML-fil (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:74
-#, fuzzy
 msgid "Options"
 msgstr "Alternativ"
 
@@ -2797,7 +2796,7 @@ msgstr "Presentera i fönster"
 
 #: src/control/Control.NotebookbarImpress.js:496
 msgid "Follow me Presentation"
-msgstr ""
+msgstr "Följ mig-presentation"
 
 #: src/control/Control.NotebookbarImpress.js:622
 msgid "Slide Views"
@@ -3927,7 +3926,7 @@ msgstr "Anpassade marginaler …"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Fler pappersstorlekar ..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4246,7 +4245,7 @@ msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"WOPI-värden är inte aktoriserad. Försök igen senare. Kontakta "
+"WOPI-värden är inte auktoriserad. Försök igen senare. Kontakta "
 "administratören ifall problemet kvarstår."
 
 #: src/errormessages.js:29
@@ -4774,7 +4773,7 @@ msgstr "Aktivera animationer"
 
 #: src/slideshow/SlideShowPresenter.ts:694
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Följ-presentation"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
