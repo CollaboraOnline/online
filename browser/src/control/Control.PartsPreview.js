@@ -25,7 +25,6 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		maxHeight: window.mode.isDesktop() ? 180: (window.mode.isTablet() ? 120: 60)
 	},
 	partsFocused: false,
-	contextMenuCopyActive: false,
 
 	initialize: function (container, preview, options) {
 		window.L.setOptions(this, options);
@@ -231,6 +230,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 		var that = this;
 		img.onfocus = function () {
+			that._map._clip.clearSelection();
+			that._map._clip.setTextSelectionType('slide');
 			that.partsFocused = true;
 		};
 
