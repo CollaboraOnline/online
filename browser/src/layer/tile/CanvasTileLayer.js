@@ -1351,7 +1351,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			var serverAudit = textMsg.substr(12).trim();
 			if (serverAudit !== 'disabled') {
 				// if isAdminUser property is not set by integration - enable audit dialog for all users
-				if (app.isAdminUser !== false)
+				if (app.isAdminUser === false)
+					this._map.uiManager.notebookbar.hideItem('server-audit');
+				else
 					this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
 
 				var json = JSON.parse(serverAudit);
