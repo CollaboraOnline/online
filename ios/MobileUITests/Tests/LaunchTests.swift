@@ -26,4 +26,19 @@ final class LaunchTests: XCTestCase {
             app.terminate()
         }
     }
+
+    @MainActor
+    func testOpenOdt() throws {
+        let app = XCUIApplication()
+        Launch.precopyTestFile(app: app, filename: "hello.odt")
+
+        Launch.testFile(app: app, filename: "hello.odt")
+            
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = "Document"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        
+        app.terminate()
+    }
 }
