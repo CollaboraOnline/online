@@ -65,6 +65,16 @@
 					<string>Local Baseline</string>
 				</dict>
 			</dict>
+			<key>testWriterReopenPerformance()</key>
+			<dict>
+				<key>com.apple.dt.XCTMetric_Clock.time.monotonic</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>12.300000</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>Local Baseline</string>
+				</dict>
+			</dict>
 		</dict>
 	</dict>
 </dict>

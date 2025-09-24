@@ -74,4 +74,34 @@ final class LaunchTests: XCTestCase {
             app.terminate()
         }
     }
+    
+    @MainActor
+    func testWriterReopenPerformance() throws {
+        let app = XCUIApplication()
+        Launch.precopyTestFile(app: app, filename: "hello.odt")
+        
+        let measureOptions = XCTMeasureOptions()
+        measureOptions.invocationOptions = [.manuallyStart, .manuallyStop]
+        
+        measure(
+            metrics: [XCTClockMetric()],
+            options: measureOptions
+        ) {
+            Launch.testFile(app: app, filename: "hello.odt")
+            Lifecycle.closeDocument(app: app)
+            
+            startMeasuring()
+            
+            Launch.testFile(app: app, filename: "hello.odt")
+
+            let webview = app.webViews.containing(.other, identifier: "Online Editor").firstMatch;
+            XCTAssert(webview.waitForExistence(timeout: 10), "App did not open file in time")
+            let loading = webview.staticTexts["Loading…"]
+            XCTAssert(loading.waitForNonExistence(timeout: 120), "App did not finish loading in time")
+            
+            stopMeasuring()
+            
+            app.terminate()
+        }
+    }
 }
