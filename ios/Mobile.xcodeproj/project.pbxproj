@@ -91,6 +91,7 @@
 		BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC84C2452F82800FB02BD /* MobileApp.cpp */; };
 		BEDCC8992456FFAD00FB02BD /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC8982456FFAC00FB02BD /* SceneDelegate.mm */; };
 		BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFB1EE021C29CC70081D757 /* L10n.mm */; };
+		C78C8ED62E90027E0011B574 /* data in Resources */ = {isa = PBXBuildFile; fileRef = C78C8ED32E9001F00011B574 /* data */; };
 		C79282312DF89BB2001EA43B /* MobileSocket.mm in Sources */ = {isa = PBXBuildFile; fileRef = C79282302DF89BB2001EA43B /* MobileSocket.mm */; };
 		D49B580F2D1077F700E0E607 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49B580E2D1077F700E0E607 /* UniformTypeIdentifiers.framework */; };
 		D4A0F3D72D64E86C00472DEE /* CoolURLSchemeHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4A0F3D62D64E86C00472DEE /* CoolURLSchemeHandler.mm */; };
@@ -1497,6 +1498,7 @@
 		BEFB1EDF21C29CC70081D757 /* L10n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L10n.h; sourceTree = "<group>"; };
 		BEFB1EE021C29CC70081D757 /* L10n.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = L10n.mm; sourceTree = "<group>"; };
 		C73BEA612E8429C4009E12D3 /* MobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C78C8ED32E9001F00011B574 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../test/data; sourceTree = "<group>"; };
 		C792822F2DF89BB2001EA43B /* MobileSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileSocket.h; sourceTree = "<group>"; };
 		C79282302DF89BB2001EA43B /* MobileSocket.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MobileSocket.mm; sourceTree = "<group>"; };
 		D49B580E2D1077F700E0E607 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
@@ -2656,6 +2658,7 @@
 		BE8D771E2136762500AC58EA = {
 			isa = PBXGroup;
 			children = (
+				C78C8ED32E9001F00011B574 /* data */,
 				BE6362BE2153A79200F4237E /* Core */,
 				BE5EB5B5213FE1F900E0826C /* Online */,
 				BE8D77292136762500AC58EA /* Mobile */,
@@ -3687,6 +3690,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C78C8ED62E90027E0011B574 /* data in Resources */,
 				BE8D85D6214055F3009F1860 /* rc in Resources */,
 				BECD984124336DD400016117 /* device-tablet.css in Resources */,
 				BE8D85D0214055F3009F1860 /* services in Resources */,
@@ -3744,7 +3748,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${SOURCE_ROOT}/modify_bundle_version.sh\n";
+			shellScript = "${SOURCE_ROOT}/modify_bundle_version.sh\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    rm -r \"${BUILT_PRODUCTS_DIR}/Mobile.app/data\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
