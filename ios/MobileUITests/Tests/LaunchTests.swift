@@ -41,4 +41,37 @@ final class LaunchTests: XCTestCase {
         
         app.terminate()
     }
+    
+    @MainActor
+    func testWriterOpenPerformance() throws {
+        let app = XCUIApplication()
+        Launch.precopyTestFile(app: app, filename: "hello.odt")
+        
+        measure(metrics: [XCTClockMetric()]) {
+            Launch.testFile(app: app, filename: "hello.odt")
+            app.terminate()
+        }
+    }
+    
+    @MainActor
+    func testCalcOpenPerformance() throws {
+        let app = XCUIApplication()
+        Launch.precopyTestFile(app: app, filename: "hello.ods")
+        
+        measure(metrics: [XCTClockMetric()]) {
+            Launch.testFile(app: app, filename: "hello.ods")
+            app.terminate()
+        }
+    }
+    
+    @MainActor
+    func testImpressOpenPerformance() throws {
+        let app = XCUIApplication()
+        Launch.precopyTestFile(app: app, filename: "hello.odp")
+        
+        measure(metrics: [XCTClockMetric()]) {
+            Launch.testFile(app: app, filename: "hello.odp")
+            app.terminate()
+        }
+    }
 }
