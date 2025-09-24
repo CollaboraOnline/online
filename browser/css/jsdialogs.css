@@ -360,7 +360,7 @@ algned to the bottom */
 .notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
 	height: 64px !important;
-	margin-bottom: 12px;
+	margin-bottom: 14px;
 }
 
 .ui-overflow-manager > .notebookbar.ui-iconview {
@@ -369,11 +369,17 @@ algned to the bottom */
 
 .ui-overflow-manager > .notebookbar:not(.ui-separator):not(.ui-overflow-group):not(:has(.ui-overflow-group-container-with-label)) {
 	height: 64px;
-	/* 12px extra margin for containers without label */
-	margin-bottom: 12px;
+	/* 14px extra margin for containers without label */
+	margin-bottom: 14px;
 }
+
+.ui-overflow-manager > .notebookbar.vertical:not(.ui-separator) {
+	height: 64px !important;
+	margin-bottom: 14px !important;
+}
+
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
-	justify-content: end;
+	justify-content: center;
 }
 
 .ui-toggle button,
