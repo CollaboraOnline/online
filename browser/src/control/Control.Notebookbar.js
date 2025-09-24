@@ -28,6 +28,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	FORMULAS_TAB_ID: 'Formula-tab-label',
 
 	additionalShortcutButtons: [],
+	hiddenItems: [],
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -710,4 +711,21 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			childrenArray = this.getOptionsSectionData();
 		builder.build(optionsSection, childrenArray);
 	},
+
+	hideItem: function(itemId) {
+		app.console.debug('Notebookbar: hide item: ' + itemId);
+
+		if (!this.hiddenItems.includes(itemId))
+			this.hiddenItems.push(itemId);
+
+		app.map.fire('jsdialogaction', { data: {
+				jsontype: 'notebookbar',
+				action: 'action',
+				data: {
+					control_id: itemId,
+					action_type: 'hide'
+				}
+			}
+		});
+	}
 });

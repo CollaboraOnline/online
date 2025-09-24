@@ -362,9 +362,6 @@ class ServerAuditDialog {
 					this.open.bind(this),
 				);
 			}
-
-			// but if we any results, enable the toolbar entry for the server audit
-			this.map.uiManager.refreshUI();
 		}
 	}
 
