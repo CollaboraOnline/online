@@ -151,7 +151,9 @@
   <ItemDefinitionGroup>
     <PostBuildEvent>
       <Command>
-        xcopy ..\..\..\browser\dist $(OutDir)cool\ /s /f /y
+        robocopy ..\..\..\browser\dist $(OutDir)cool *.* /E /XF debug.html framed.doc.html framed.html load.doc.html multidocs.html tsconfig.tsbuildinfo /XD src
+        xcopy ..\..\..\browser\dist\src\layer\tile\CanvasTileUtils.js $(OutDir)cool\src\layer\tile\ /f /y
+        xcopy ..\..\..\browser\dist\src\layer\tile\TileWorker.js $(OutDir)cool\src\layer\tile\ /f /y
         xcopy $(LO_PATH) $(OutDir)lo\ /s /f /y /exclude:..\xcopy.excludes
         xcopy ..\templates $(OutDir)templates\ /s /f /y
       </Command>
