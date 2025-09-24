@@ -214,6 +214,10 @@ windows/coda/.vs
 windows/coda/CODA/bin
 windows/coda/CODA/obj
 windows/coda/CODALib/x64
+windows/coda/CODA/x64/
+windows/coda/PrintPDFAndDelete/obj/
+windows/coda/packages/
+windows/coda/x64/
 
 # CODA-W generated files
 windows/coda/config.props
