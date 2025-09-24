@@ -6,12 +6,61 @@
 	<dict>
 		<key>LaunchTests</key>
 		<dict>
+			<key>testCalcOpenPerformance()</key>
+			<dict>
+				<key>com.apple.dt.XCTMetric_Clock.time.monotonic</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>15.900000</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>Local Baseline</string>
+				</dict>
+			</dict>
+			<key>testFileOpenPerformance()</key>
+			<dict>
+				<key>com.apple.dt.XCTMetric_ApplicationLaunch-AppLaunch.duration</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>2.890685</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>Local Baseline</string>
+				</dict>
+				<key>com.apple.dt.XCTMetric_Clock.time.monotonic</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>13.000000</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>Local Baseline</string>
+					<key>maxPercentRelativeStandardDeviation</key>
+					<real>15.000000</real>
+				</dict>
+			</dict>
+			<key>testImpressOpenPerformance()</key>
+			<dict>
+				<key>com.apple.dt.XCTMetric_Clock.time.monotonic</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>15.500000</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>Local Baseline</string>
+				</dict>
+			</dict>
 			<key>testLaunchPerformance()</key>
 			<dict>
 				<key>com.apple.dt.XCTMetric_ApplicationLaunch-AppLaunch.duration</key>
 				<dict>
 					<key>baselineAverage</key>
 					<real>2.682139</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>Local Baseline</string>
+				</dict>
+			</dict>
+			<key>testWriterOpenPerformance()</key>
+			<dict>
+				<key>com.apple.dt.XCTMetric_Clock.time.monotonic</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>15.600000</real>
 					<key>baselineIntegrationDisplayName</key>
 					<string>Local Baseline</string>
 				</dict>
