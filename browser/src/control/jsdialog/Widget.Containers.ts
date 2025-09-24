@@ -53,10 +53,13 @@ JSDialog.grid = function (
 	const cols = builder._getGridColumns(data.children);
 
 	const processedChildren = [];
+	const isSingleChild = data.children && data.children.length === 1;
 
 	const table = window.L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' ui-grid',
+		builder.options.cssClass +
+			' ui-grid' +
+			(isSingleChild ? ' single-child-grid' : ''),
 		parentContainer,
 	);
 	table.id = data.id;
