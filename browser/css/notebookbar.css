@@ -240,7 +240,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .notebookbar.ui-separator.vertical {
 	width: 1px;
 	background-color: var(--color-toolbar-border);
-	height: 4rem;
+	height: 64px;
 	margin: 0 2px;
 	box-sizing: border-box;
 }
@@ -436,22 +436,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Styles preview */
 
-#home-stylesview-group-content {
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-#design-master-page-group-content {
-	margin-bottom: 3px;
-}
-
-#transitions-group-content {
-	margin-bottom: 5px;
-}
-
 #stylesview,
 #masterpageall_icons,
 #transitions_icons {
+	height: 64px;
 	overflow: auto;
 	display: grid;
 	row-gap: 0;
@@ -466,7 +454,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #stylesview {
-	height: 64px;
 	width: 35vw;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
@@ -477,24 +464,19 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #masterpageall_icons {
-	height: 60px;
 	width: 15vw !important;
 	max-width: 265px;
 	min-width: 90px;
 	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
 	grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
 	margin-left: 5px;
-	margin-top: 2px;
-	margin-bottom: 3px;
 }
 
-#transitions_icons {
-	height: 59px;
+#transitions_icons:not(.sidebar) {
 	width: 35vw;
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
 	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
 	margin-left: 10px;
-	margin-top: 7px;
 }
 
 #stylesview-btn {
@@ -620,7 +602,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #transitions_icons.ui-iconview.notebookbar {
-	height: 55px;
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
