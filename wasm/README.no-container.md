@@ -73,7 +73,16 @@ This will install into `/opt/poco.emsc.3.1.30`.
 Once the build is done, copy the browser/dist to a safe locataion.
 E.g. cp -a browser/dist dist_wasm
 Next, re-configure Online and rebuild with normal config/settings (i.e. without WASM).
-Alternatively, you may have opted to build WASM in a separate directory.
+
+You will need to set "Enable WASM support" to true in coolwsd.xml.in, and you may need to increase
+MaxFileSizeToCacheInBytes in wsd/FileServer.cpp to avoid
+```
+[ coolwsd ] ERR  Failed to read file [.../browser/dist/wasm/online.wasm] or is too large to cache and serve| wsd/FileServer.cpp:1285
+```
+failures.
+
+Alternatively to re-configuring the existing Online build directory, you may have opted to build
+WASM in a separate directory.
 Either way, in the normal Online build directory, copy the wasm dist directory
 into the browser/dist, like this:
 cp -a dist_wasm browser/dist/wasm
