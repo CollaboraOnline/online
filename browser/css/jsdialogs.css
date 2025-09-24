@@ -359,7 +359,7 @@ algned to the bottom */
 }
 .notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
-	height: 4.25rem !important;
+	height: 64px !important;
 	margin-bottom: 12px;
 }
 
@@ -368,8 +368,8 @@ algned to the bottom */
 }
 
 .ui-overflow-manager > .notebookbar:not(.ui-separator):not(.ui-overflow-group):not(:has(.ui-overflow-group-container-with-label)) {
-	height: 4.25rem;
-	/* 14px extra margin for containers without label */
+	height: 64px;
+	/* 12px extra margin for containers without label */
 	margin-bottom: 12px;
 }
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
@@ -1341,7 +1341,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .notebookbar .ui-overflow-group-inner {
-	height: 4.25rem;
+	height: 64px;
 	align-content: center;
 }
 
@@ -1410,6 +1410,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-iconview-separator {
 	flex: 0 0 99%;
+}
+
+.ui-iconview-entry-title {
+	font-size: var(--default-font-size);
 }
 
 .icon-view-item-container {
