@@ -255,6 +255,33 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	color: var(--color-main-text);
 }
 
+/* Insert Tab -> Symbols -> always align items at the start of the container
+	to position the Qrcode icon at the top when there is no other toolbutton
+*/
+.horizontal.notebookbar #insert-illustrations-content .ui-overflow-group-content,
+.horizontal.notebookbar  #insert-symbols-content .ui-overflow-group-content {
+	align-items: start;
+}
+
+.notebookbar #insert-text-content .notebookbar.vertical,
+.notebookbar #insert-text-content .notebookbar.horizontal {
+	height: 100%;
+}
+
+/* When there is no text toolbutton, set height to auto to avoid a big empty space */
+.notebookbar #insert-text-content .notebookbar.horizontal:empty {
+	height: auto;
+}
+
+/* When the Fontwork Gallery is not used, hide it to avoid an empty space */
+.notebookbar.horizontal.toolbox:has(.unoFontworkGalleryFloater.hidden) {
+  display: none !important;
+}
+/* Always align the vertical text at start incase the fontwork gallery is hidden */
+.horizontal.notebookbar .unotoolbutton.unoVerticalText {
+	align-self: start;
+}
+
 /* unobuttons */
 
 /* avoid bug with arrow in new line when window is small */
