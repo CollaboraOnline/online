@@ -234,7 +234,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoInsertTable button').click({force: true});
+		cy.cGet('#Home-container .unoInsertTable #home-insert-table-button').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
