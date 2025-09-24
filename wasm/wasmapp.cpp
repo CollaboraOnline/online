@@ -227,16 +227,13 @@ int main(int argc, char* argv_main[])
         {
             Util::setThreadName("COOLWSD::run");
 
-            if ((false)) { //TODO: clarify which configuration wants to use this
-                const std::string docURL = std::string(argv_main[1]);
-                const std::string encodedWOPI = std::string(argv_main[2]);
-                const std::string isWOPI = std::string(argv_main[3]);
+            const std::string docURL = std::string(argv_main[1]);
+            const std::string encodedWOPI = std::string(argv_main[2]);
+            const std::string isWOPI = std::string(argv_main[3]);
 
-                std::string url;
-                if (isWOPI == "true")
-                    url = "/wasm/" + encodedWOPI;
-                else
-                    url = docURL + "/contents";
+            if (isWOPI == "true")
+            {
+                std::string url = "/wasm/" + encodedWOPI;
 
                 printf("isWOPI is %s: Fetching from url %s\n", isWOPI.c_str(), url.c_str());
 
