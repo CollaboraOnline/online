@@ -375,7 +375,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		}
 	},
 
-	_syncTileContainerSize: function() {
+	_syncTileContainerSize: function(force = false) {
 		if (!this._map) return false;
 
 		if (!this._container) return false;
@@ -401,7 +401,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		const sizeChanged = oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1];
 
 		// Early exit. If there is no need to update the size, return here.
-		if (sizeChanged) {
+		if (sizeChanged || force) {
 			this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
 
 			this._map.invalidateSize(false, new cool.Point(oldMapSize[0], oldMapSize[1]));
@@ -414,7 +414,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		// Center the view w.r.t the new map-pane position using the current zoom.
 		this._map.setView(this._map.getCenter());
 
-		if (sizeChanged) {
+		if (sizeChanged || force) {
 			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
 			this._nonDesktopChecksAfterResizeEvent(heightIncreased);
 
