@@ -1108,6 +1108,20 @@ int main(int argc, char**argv)
         return ss.str();
     }
 
+    /// Converts a unix-epoch time to steady_clock.
+    /// Without timezone, this can be unreliable.
+    inline std::chrono::steady_clock::time_point getSteadyClockFromEpoch(uint64_t epoch)
+    {
+        // Sun Sep 09 2001 01:46:40 GMT+0000 x 1000 (i.e. in milliseconds).
+        if (epoch > 1'000'000'000'000)
+        {
+            epoch /= 1000; // Convert to seconds.
+        }
+
+        const auto sys = std::chrono::system_clock::from_time_t(epoch);
+        return Util::convertChronoClock<std::chrono::steady_clock::time_point>(sys);
+    }
+
     /**
      * Avoid using the configuration layer and rely on defaults which is only useful for special
      * test tool targets (typically fuzzing) where start-up speed is critical.
