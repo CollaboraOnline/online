@@ -70,6 +70,14 @@ This will install into `/opt/poco.emsc.3.1.30`.
 
 ## Running WASM Online
 
+There are two modes in which you can use the Wasm binary, either served from a COOL instance or
+served stand-alone from a plain web server.
+
+Notice that as of now, in either mode only the default sample.docx will be loaded.
+But the below steps should get one up and running.
+
+### Served from a COOL instance
+
 Once the build is done, copy the browser/dist to a safe locataion.
 E.g. cp -a browser/dist dist_wasm
 Next, re-configure Online and rebuild with normal config/settings (i.e. without WASM).
@@ -89,5 +97,8 @@ cp -a dist_wasm browser/dist/wasm
 
 Now point your browser to https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/unused/path
 
-Notice that as of now, only the default sample.docx will be loaded.
-But the above steps should get one up and running.
+### Served stand-alone from a plain web server
+
+Once the build is done, you can serve the browser/dist tree from a web server (e.g., via `emrun
+browser/dist/cool.html`) and point your browser at that served cool.html page (e.g.,
+<http://localhost:6931/cool.html> for the emrun example).
