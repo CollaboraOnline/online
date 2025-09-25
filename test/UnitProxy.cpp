@@ -22,7 +22,6 @@
 // Inside the WSD process
 class UnitProxy : public UnitWSD
 {
-    std::thread _worker;
     std::shared_ptr<SocketPoll>  _poll;
     http::Request _req;
     bool _sentRequest;

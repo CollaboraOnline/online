@@ -47,6 +47,7 @@ all_la_unit_tests = \
 	unit-wopi-save-on-exit.la \
 	unit-uno-command.la \
 	unit-proxy.la \
+	unit-proxy-protocol.la \
 	unit-each-view.la \
 	unit-load.la \
 	unit-integration.la \
@@ -351,6 +352,8 @@ unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
+unit_proxy_protocol_la_SOURCES = UnitProxyProtocol.cpp
+unit_proxy_protocol_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
