@@ -26,7 +26,7 @@ class ProxyProtocolHandler : public ProtocolHandlerInterface
 {
 public:
     ProxyProtocolHandler() :
-        _inSerial(0),
+        _inSerial(-1),
         _outSerial(0)
     {
     }
@@ -119,7 +119,7 @@ private:
     /// queue things when we have no socket to hand.
     std::vector<std::shared_ptr<Message>> _writeQueue;
     std::vector<std::weak_ptr<StreamSocket>> _outSockets;
-    uint64_t _inSerial;
+    int64_t _inSerial;
     uint64_t _outSerial;
 };
 
