@@ -1,0 +1,4723 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-22 12:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: admin/admin.strings.js:15
+msgid "Admin console"
+msgstr ""
+
+#: admin/admin.strings.js:16
+msgid "Settings"
+msgstr ""
+
+#: admin/admin.strings.js:17
+msgid "Overview"
+msgstr ""
+
+#: admin/admin.strings.js:18
+msgid "(current)"
+msgstr ""
+
+#: admin/admin.strings.js:19
+msgid "Analytics"
+msgstr ""
+
+#: admin/admin.strings.js:20
+msgid "History"
+msgstr ""
+
+#: admin/admin.strings.js:21
+msgid "Log"
+msgstr ""
+
+#: admin/admin.strings.js:22
+msgid "Dashboard"
+msgstr ""
+
+#: admin/admin.strings.js:23
+msgid "Users online"
+msgstr ""
+
+#: admin/admin.strings.js:24
+msgid "User Name"
+msgstr ""
+
+#: admin/admin.strings.js:25
+msgid "Documents open"
+msgstr ""
+
+#: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
+#: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
+msgid " user(s)."
+msgstr ""
+
+#: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
+msgid " document(s) open."
+msgstr ""
+
+#: admin/admin.strings.js:28
+msgid "Number of Documents"
+msgstr ""
+
+#: admin/admin.strings.js:29
+msgid "Memory consumed"
+msgstr ""
+
+#: admin/admin.strings.js:30
+msgid "Bytes sent"
+msgstr ""
+
+#: admin/admin.strings.js:31
+msgid "Bytes received"
+msgstr ""
+
+#: admin/admin.strings.js:32
+msgid "PID"
+msgstr ""
+
+#: admin/admin.strings.js:33 admin/src/AdminClusterOverview.js:352
+msgid "Document"
+msgstr ""
+
+#: admin/admin.strings.js:34
+msgid "Views"
+msgstr ""
+
+#: admin/admin.strings.js:35
+msgid "Elapsed time"
+msgstr ""
+
+#: admin/admin.strings.js:36
+msgid "Idle time"
+msgstr ""
+
+#: admin/admin.strings.js:37
+msgid "Modified"
+msgstr ""
+
+#: admin/admin.strings.js:38
+msgid "Uploaded"
+msgstr ""
+
+#: admin/admin.strings.js:39
+msgid "WOPI host"
+msgstr ""
+
+#: admin/admin.strings.js:40
+msgid "Kill"
+msgstr ""
+
+#: admin/admin.strings.js:41
+msgid "Graphs"
+msgstr ""
+
+#: admin/admin.strings.js:42
+msgid "Memory Graph"
+msgstr ""
+
+#: admin/admin.strings.js:43
+msgid "CPU Graph"
+msgstr ""
+
+#: admin/admin.strings.js:44
+msgid "Network Graph"
+msgstr ""
+
+#: admin/admin.strings.js:45
+#: admin/src/integrator/AdminIntegratorSettings.ts:687
+#: admin/src/integrator/AdminIntegratorSettings.ts:1381
+#: admin/src/integrator/WordBook.ts:394
+#: src/canvas/sections/CommentListSection.ts:514
+#: src/canvas/sections/CommentSection.ts:178
+#: src/control/Control.Notebookbar.js:301
+#: src/control/Control.NotebookbarDraw.js:29
+#: src/control/Control.NotebookbarDraw.js:163
+#: src/control/Control.NotebookbarImpress.js:30
+#: src/map/handler/Map.Settings.ts:83
+msgid "Save"
+msgstr ""
+
+#: admin/admin.strings.js:46
+msgid "Cache size of memory statistics"
+msgstr ""
+
+#: admin/admin.strings.js:47
+msgid "Time interval of memory statistics (in ms)"
+msgstr ""
+
+#: admin/admin.strings.js:48
+msgid "Cache size of CPU statistics"
+msgstr ""
+
+#: admin/admin.strings.js:49
+msgid "Time interval of CPU statistics (in ms)"
+msgstr ""
+
+#: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
+msgid "Kill session."
+msgstr ""
+
+#: admin/admin.strings.js:51
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin/admin.strings.js:52
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin/admin.strings.js:53
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
+#: admin/admin.strings.js:54
+msgid "Documents:"
+msgstr ""
+
+#: admin/admin.strings.js:55
+msgid "Expired:"
+msgstr ""
+
+#: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
+#: src/control/Control.Zotero.js:211
+msgid "Refresh"
+msgstr ""
+
+#: admin/admin.strings.js:57
+msgid "Shutdown Server"
+msgstr ""
+
+#: admin/admin.strings.js:58
+msgid "Server uptime"
+msgstr ""
+
+#: admin/admin.strings.js:59
+msgid "Refresh Log"
+msgstr ""
+
+#: admin/admin.strings.js:60
+msgid "Channel Filter:"
+msgstr ""
+
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.StatusBar.js:194 src/control/Control.StatusBar.js:199
+msgid "None"
+msgstr ""
+
+#: admin/admin.strings.js:62
+msgid "Set Log Levels"
+msgstr ""
+
+#: admin/admin.strings.js:63
+msgid "Log Levels"
+msgstr ""
+
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:166
+#: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
+#: src/control/Control.AlertDialog.js:101
+#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
+#: src/core/Socket.js:436 src/core/Socket.js:1217 src/core/Socket.js:1222
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
+msgid "Close"
+msgstr ""
+
+#: admin/admin.strings.js:65
+msgid "Update Log Levels"
+msgstr ""
+
+#: admin/admin.strings.js:66
+msgid "Version Information"
+msgstr ""
+
+#: admin/admin.strings.js:67
+msgid "License"
+msgstr ""
+
+#: admin/admin.strings.js:68 src/control/Control.Menubar.ts:421
+#: src/control/Control.Menubar.ts:598 src/control/Control.Menubar.ts:737
+#: src/control/Control.Menubar.ts:1030 src/control/Control.Menubar.ts:1098
+#: src/control/Control.Menubar.ts:1163 src/control/Control.Menubar.ts:1218
+#: src/control/Control.Menubar.ts:1293
+#: src/control/Control.NotebookbarWriter.js:551
+msgid "About"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:105
+msgid "CPU History"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:116
+msgid "Memory History"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:356
+msgid "Memory"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:540
+msgid "Please wait kubernetes cluster is scaling..."
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
+msgid "Failed to set jwt authentication cookie over insecure connection"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
+msgid "Warning"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
+#: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
+#: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
+#: admin/src/integrator/AdminIntegratorSettings.ts:1565 src/app/Debug.ts:1391
+#: src/canvas/sections/CommentListSection.ts:1474
+#: src/control/Control.AboutDialog.ts:155
+#: src/control/Control.AlertDialog.js:54
+#: src/control/Control.DocumentRepair.js:77
+#: src/control/Control.ESignatureDialog.ts:132
+#: src/control/Control.LanguageDialog.js:119
+#: src/control/Control.ServerAuditDialog.ts:239
+#: src/control/Control.Tabs.js:397 src/control/Control.Tabs.js:406
+#: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
+#: src/control/Parts.js:483 src/control/Permission.js:89
+#: src/control/Permission.js:99 src/control/Permission.js:149
+#: src/control/Toolbar.js:746 src/core/Socket.js:721 src/core/Socket.js:1187
+#: src/core/Socket.js:1257 src/core/Socket.js:1433 src/core/Socket.js:1437
+#: src/docdispatcher.ts:543 src/main.js:92 src/main.js:95 src/main.js:135
+#: src/map/Clipboard.js:1296 src/map/handler/Map.Feedback.js:96
+#: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
+#: src/map/handler/Map.SlideShow.js:297 src/map/handler/Map.SlideShow.js:308
+#: src/map/handler/Map.WOPI.js:695 src/slideshow/SlideShowPresenter.ts:1003
+#: src/slideshow/SlideShowPresenter.ts:1018
+#: src/slideshow/SlideShowPresenter.ts:1033
+#: src/slideshow/SlideShowPresenter.ts:1056
+msgid "OK"
+msgstr ""
+
+#: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
+#: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
+#: admin/src/integrator/WordBook.ts:386
+#: src/canvas/sections/CommentListSection.ts:509
+#: src/canvas/sections/CommentSection.ts:177
+#: src/canvas/sections/CommentSection.ts:180
+#: src/control/Control.DocumentRepair.js:71
+#: src/control/Control.DownloadProgress.js:83
+#: src/control/Control.LanguageDialog.js:113
+#: src/control/Control.MobileTopBar.ts:43
+#: src/control/Control.UIManager.ts:1751 src/control/Control.UIManager.ts:1832
+#: src/control/Control.UIManager.ts:1986 src/control/Control.UIManager.ts:2164
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1458
+#: src/map/handler/Map.Settings.ts:78
+msgid "Cancel"
+msgstr ""
+
+#: admin/src/AdminSocketAnalytics.js:247
+msgid "Received"
+msgstr ""
+
+#: admin/src/AdminSocketAnalytics.js:251
+msgid "Sent"
+msgstr ""
+
+#: admin/src/AdminSocketAnalytics.js:255
+msgid "Connections"
+msgstr ""
+
+#: admin/src/AdminSocketBase.js:62
+msgid "Server has been shut down; please reload the page."
+msgstr ""
+
+#: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
+msgid "Connection error"
+msgstr ""
+
+#: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
+msgid "Confirmation"
+msgstr ""
+
+#: admin/src/AdminSocketOverview.js:107
+msgid "Are you sure you want to terminate this session?"
+msgstr ""
+
+#: admin/src/AdminSocketSettings.js:46
+msgid "Are you sure you want to shut down the server?"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:143
+msgid "Accessibility"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:147
+#: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
+#: src/control/Control.Menubar.ts:653 src/control/Control.Menubar.ts:800
+#: src/control/Control.Menubar.ts:1082 src/control/Control.Menubar.ts:1135
+#: src/control/Control.Menubar.ts:1196 src/control/Control.Menubar.ts:1256
+#: src/control/Control.NotebookbarCalc.js:1548
+#: src/control/Control.NotebookbarDraw.js:554
+#: src/control/Control.NotebookbarImpress.js:675
+#: src/control/Control.NotebookbarWriter.js:1777
+msgid "Dark Mode"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:148
+msgid "Compact layout"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:149
+msgid "Show status bar"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:150
+#: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
+msgid "Show Ruler"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:151
+msgid "Accessibility Checker"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:152
+#: src/control/Control.NavigatorPanel.ts:216
+msgid "Navigator"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:153
+msgid "Show Sidebar"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:154
+msgid "Custom Animation"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:155
+msgid "Master Pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:156
+msgid "Slide Transition"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:157
+msgid "Style List"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:252
+msgid "Invalid JSON file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:256
+msgid "Error reading file"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:268
+msgid "Autotext"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:270
+msgid ""
+"Upload reusable text snippets (.bau). To insert the text in your document, "
+"type the shortcut for an AutoText entry and press F3."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:276
+msgid "Upload Autotext"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:280
+msgid "Custom dictionaries"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:282
+msgid ""
+"Add or edit words in a spell check dictionary. Words in your wordbook (."
+"dic) will be available for spelling checks."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:288
+msgid "Upload Wordbook"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:292
+msgid "Document settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:293
+#: admin/src/integrator/Xcu.ts:342
+msgid "Adjust how office documents behave."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:299
+msgid "Upload Xcu"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:350
+msgid "Shared Config URL is missing in initial variables."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:356
+msgid "Access token is missing in initial variables."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:392
+msgid "Something went wrong. Please try to refresh the page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:509
+msgid ""
+"Something went wrong while fetching setting file. Please try to refresh the "
+"page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:534
+msgid ""
+"Something went wrong while fetching wordbook. Please try to refresh the "
+"page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:544
+msgid "Interface Settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:546
+msgid "Set default interface preferences."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:654
+msgid "Select a tab to browser settings."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:667
+#: admin/src/integrator/Xcu.ts:402
+msgid "Reset to default Document settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:671
+#: admin/src/integrator/Xcu.ts:416
+msgid "Are you sure you want to reset Document settings?"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:688
+#: admin/src/integrator/Xcu.ts:431
+msgid "Save Document settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1029
+msgid "Notebookbar view"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1036
+#: src/control/Control.NotebookbarCalc.js:1510
+#: src/control/Control.NotebookbarDraw.js:481
+#: src/control/Control.NotebookbarImpress.js:578
+#: src/control/Control.NotebookbarWriter.js:1732
+msgid "Compact view"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1109
+msgid "Something went wrong while uploading the file. Please try again."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1185
+#: src/control/Control.ContextMenu.js:250 src/docdispatcher.ts:540
+msgid "Delete"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1223
+msgid ""
+"Something went wrong while deleting the file. Please try refreshing the "
+"page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1238
+msgid "Edit"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1264
+msgid "View Settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1265
+msgid "Adjust view settings."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1275
+msgid "Option"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1321
+msgid "(Warning: Server accessibility must be enabled to toggle)"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1355
+msgid "Reset to default View settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1359
+msgid "Are you sure you want to reset View Settings?"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1382
+msgid "Save View Settings"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1526
+msgid "Enter Zotero API Key"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:1553
+#: src/map/handler/Map.WOPI.js:695
+msgid "Error"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:117
+msgid "Standard dictionary"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:118
+msgid "Words are ignored by the spell checker"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:122
+msgid "Dictionary of exceptions"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:123
+msgid "Exception words are underlined while checking spelling"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:132
+msgid "Loading Wordbook..."
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:333
+msgid "Type to add a word"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:338
+msgid "Add"
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:466
+msgid "Invalid dictionary format. Please check the file."
+msgstr ""
+
+#: admin/src/integrator/WordBook.ts:486
+msgid "Something went wrong while uploading dictionary file"
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:184
+msgid "Something went wrong while loading Document settings."
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:338
+msgid "Document Settings"
+msgstr ""
+
+#: admin/src/integrator/Xcu.ts:389
+msgid "Select a tab to view settings."
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "kB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "MB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "GB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "TB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "PB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "EB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "ZB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "YB"
+msgstr ""
+
+#: admin/src/Util.js:26
+msgid "BB"
+msgstr ""
+
+#: admin/src/Util.js:86 admin/src/Util.js:88
+msgid " hrs"
+msgstr ""
+
+#: admin/src/Util.js:92 admin/src/Util.js:94
+msgid " mins"
+msgstr ""
+
+#: admin/src/Util.js:97
+msgid " s"
+msgstr ""
+
+#: js/global.js:1592
+msgid ""
+"The system is currently adjusting resources. Please wait a moment while we "
+"retry your request..."
+msgstr ""
+
+#: js/global.js:1594
+msgid "The document is being migrated to a new server. Retrying shortly..."
+msgstr ""
+
+#: js/global.js:1596
+msgid "Failed to get RouteToken from controller"
+msgstr ""
+
+#: src/app/Debug.ts:136
+msgid "Debug Tools"
+msgstr ""
+
+#: src/app/Debug.ts:138
+msgid "Ctrl+Shift+Alt+D to exit"
+msgstr ""
+
+#: src/app/Debug.ts:1384
+msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:165
+msgid "A comment is being edited"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:166
+msgid "Please save or discard the comment currently being edited."
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1175
+msgid "Modify"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1181
+#: src/canvas/sections/CommentSection.ts:181
+msgid "Reply"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1187
+msgid "Remove"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1193
+msgid "Remove Thread"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1199
+msgid "Resolve"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1199
+msgid "Unresolve"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1205
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1205
+msgid "Resolve Thread"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1211
+msgid "Promote to top comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1217
+msgid "Show on the side"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1217
+msgid "Open in full view"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1223
+msgid "Show in navigator"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1251
+#: src/control/Control.JSDialogBuilder.js:1920
+#: src/layer/tile/CanvasTileLayer.js:3453
+#: src/layer/tile/CanvasTileLayer.js:3464
+msgid "Comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1472
+#: src/canvas/sections/CommentListSection.ts:1485
+msgid "Comments Updated"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1473
+msgid "Another user has removed this comment."
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1486
+msgid ""
+"Another user has updated the comment. Would you like to overwrite those "
+"changes?"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1487 src/core/Socket.js:1462
+msgid "Overwrite"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1488
+msgid "Update"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1589
+#: src/canvas/sections/CommentListSection.ts:1663
+msgid "Autosaved"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:45
+msgid "Edit comment"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:46
+msgid "Reply comment"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:47
+msgid "Open menu"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:335
+msgid "Press Ctrl + Enter to post"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:399
+#: src/canvas/sections/CommentSection.ts:400
+msgid "Accept change"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:406
+#: src/canvas/sections/CommentSection.ts:407
+msgid "Reject change"
+msgstr ""
+
+#: src/canvas/sections/CommentSection.ts:430
+msgid "Resolved"
+msgstr ""
+
+#: src/canvas/sections/ShapeHandlesSection.ts:458
+msgid "Document contains unsupported media"
+msgstr ""
+
+#: src/canvas/sections/URLPopUpSection.ts:66
+msgid "Copy link location"
+msgstr ""
+
+#: src/canvas/sections/URLPopUpSection.ts:80
+msgid "Edit link"
+msgstr ""
+
+#: src/canvas/sections/URLPopUpSection.ts:95
+msgid "Remove link"
+msgstr ""
+
+#: src/control/ColorPicker.ts:270
+msgid "No color"
+msgstr ""
+
+#: src/control/ColorPicker.ts:275
+msgid "Automatic color"
+msgstr ""
+
+#: src/control/Control.AboutDialog.ts:112
+msgid "This version of {productname} is powered by"
+msgstr ""
+
+#: src/control/Control.AboutDialog.ts:135
+msgid "\"Slow Proxy\""
+msgstr ""
+
+#: src/control/Control.AboutDialog.ts:147
+msgid "Time zone:"
+msgstr ""
+
+#: src/control/Control.AboutDialog.ts:185
+msgid "Copy all version information in English"
+msgstr ""
+
+#: src/control/Control.AddressInputField.ts:67
+msgid "cell address"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:53
+msgid "External link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:66
+msgid "Copied external sources are not allowed"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:67
+msgid "It seems you have copied a selection that includes external images."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:68
+msgid ""
+"Downloading external resources is forbidden but pasting images is still "
+"possible. Please right click in the image, choose \"Copy Image\" and paste "
+"it into the document instead."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:72
+msgid "External data source not allowed"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:73
+msgid "It seems you have tried to insert external data."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:74
+msgid ""
+"Selected external data source is forbidden. Please contact the system "
+"administrator."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1297
+msgid "Don’t show this again"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:105
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr ""
+
+#: src/control/Control.Command.js:90
+msgid "Unlock"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:275
+msgid "Paste Special"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:282
+msgid "Copy Cells"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:287
+msgid "Fill Series"
+msgstr ""
+
+#: src/control/Control.DocumentNameInput.js:113
+msgid "Path"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:27
+#: src/control/Control.DocumentRepair.js:28
+msgid "Repair Document"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:124
+#: src/control/Control.UserList.ts:387
+msgid "You"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:140
+msgid "Type"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:140
+msgid "What?"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:140
+msgid "Who?"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:140
+msgid "When?"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:159
+msgid "You have not done anything to rollback yet..."
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:169
+msgid "Redo"
+msgstr ""
+
+#: src/control/Control.DocumentRepair.js:170
+msgid "Undo"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:43
+msgid "Download Selection"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:48
+msgid ""
+"If you want to share large elements outside of {productname} it's necessary "
+"to first download them."
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:61
+#: src/control/Control.NotebookbarCalc.js:298
+#: src/control/Control.NotebookbarDraw.js:298
+#: src/control/Control.NotebookbarImpress.js:361
+#: src/control/Control.NotebookbarWriter.js:320
+msgid "Download"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:82
+msgid "Downloading clipboard content"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:89
+#: src/control/Control.DownloadProgress.js:114
+#: src/control/Control.PartsPreview.js:300
+msgid "Copy"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:112
+msgid "Download completed and ready to be copied to clipboard."
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:113
+msgid ""
+"From now on clipboard notifications will discreetly appear at the bottom."
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:273
+msgid "Content copied to clipboard"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:303
+msgid "Download failed"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:127
+msgid "Andorra"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:128
+msgid "United Arab Emirates"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:129
+msgid "Albania"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:130
+msgid "Armenia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:131
+msgid "Argentina"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:132
+msgid "Austria"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:133
+msgid "Australia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:134
+msgid "Åland Islands"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:135
+msgid "Azerbaijan"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:136
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:137
+msgid "Belgium"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:138
+msgid "Bulgaria"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:139
+msgid "Brazil"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:140
+msgid "Belarus"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:141
+msgid "Canada"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:142
+msgid "Switzerland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:143
+msgid "Chile"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:144
+msgid "China"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:145
+msgid "Cyprus"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:146
+msgid "Czech Republic"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:147
+msgid "Germany"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:148
+msgid "Denmark"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:149
+msgid "Estonia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:150
+msgid "Spain"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:151
+msgid "Finland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:152
+msgid "France"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:153
+msgid "United Kingdom"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:154
+msgid "Georgia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:155
+msgid "Guernsey"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:156
+msgid "Greece"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:157
+msgid "Croatia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:158
+msgid "Hungary"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:159
+msgid "Indonesia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:160
+msgid "Ireland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:161
+msgid "Israel"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:162
+msgid "India"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:163
+msgid "Iceland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:164
+msgid "Italy"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:165
+msgid "Japan"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:166
+msgid "Kenya"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:167
+msgid "South Korea"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:168
+msgid "Kazakhstan"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:169
+msgid "Liechtenstein"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:170
+msgid "Lithuania"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:171
+msgid "Luxembourg"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:172
+msgid "Latvia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:173
+msgid "Monaco"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:174
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:175
+msgid "Montenegro"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:176
+msgid "North Macedonia, Republic of"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:177
+msgid "Malta"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:178
+msgid "Mexico"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:179
+msgid "Netherlands"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:180
+msgid "Norway"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:181
+msgid "New Zealand"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:182
+msgid "Philippines"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:183
+msgid "Poland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:184
+msgid "Portugal"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:185
+msgid "Qatar"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:186
+msgid "Romania"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:187
+msgid "Serbia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:188
+msgid "Russian Federation"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:189
+msgid "Saudi Arabia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:190
+msgid "Sweden"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:191
+msgid "Singapore"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:192
+msgid "Slovenia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:193
+msgid "Slovakia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:194
+msgid "San Marino"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:195
+msgid "Turkey"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:196
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:197
+msgid "Ukraine"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:198
+msgid "United States of America"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:199
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:200
+msgid "Kosovo"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:201
+msgid "South Africa"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:335
+msgid "The document is being signed and will be availably shortly"
+msgstr ""
+
+#: src/control/Control.ESignatureDialog.ts:91
+msgid "Country:"
+msgstr ""
+
+#: src/control/Control.ESignatureDialog.ts:120
+msgid "Provider:"
+msgstr ""
+
+#: src/control/Control.ESignatureDialog.ts:175
+#: src/control/Control.ESignatureDialog.ts:176
+msgid "Insert Electronic Signature"
+msgstr ""
+
+#: src/control/Control.FormulaBarJSDialog.js:18
+msgid "Expand Formula Bar"
+msgstr ""
+
+#: src/control/Control.FormulaBarJSDialog.js:19
+msgid "Function Wizard"
+msgstr ""
+
+#: src/control/Control.FormulaBarJSDialog.js:74
+msgid "Select Function"
+msgstr ""
+
+#: src/control/Control.FormulaBarJSDialog.js:80
+#: src/control/Control.NotebookbarWriter.js:114
+#: src/control/Control.NotebookbarWriter.js:1569
+msgid "Formula"
+msgstr ""
+
+#: src/control/Control.FormulaBarJSDialog.js:86
+#: src/control/Control.MobileTopBar.ts:42
+msgid "Accept"
+msgstr ""
+
+#: src/control/Control.FormulaBarJSDialog.js:170
+msgid "Collapse Formula Bar"
+msgstr ""
+
+#: src/control/Control.IdleHandler.ts:43
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
+#: src/control/Control.IdleHandler.ts:45
+msgid "Idle document - please tap to reload and resume editing"
+msgstr ""
+
+#: src/control/Control.JSDialog.js:331
+msgid "Close dialog"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:504
+msgid "Solid"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:507
+msgid "Linear"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:510
+msgid "Axial"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:513
+msgid "Radial"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:516
+msgid "Ellipsoid"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:520
+msgid "Quadratic"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:523
+msgid "Square"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:526
+msgid "Fixed size"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1434
+msgid "From"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1437
+msgid "To"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1440
+msgid "Color"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1516
+msgid "Select range"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1644
+#: src/control/Control.NotebookbarBuilder.js:150
+msgid "Font Name"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1646 src/control/Toolbar.js:135
+msgid "Font Size"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.NotebookbarCalc.js:939
+#: src/control/Control.NotebookbarCalc.js:2569
+#: src/control/Control.NotebookbarDraw.js:1752
+#: src/control/Control.NotebookbarImpress.js:1295
+#: src/control/Control.NotebookbarWriter.js:1053
+#: src/control/Control.TopToolbar.js:484
+msgid "Style"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1906
+msgid "reply"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1909
+msgid "replies"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1984
+msgid "Insert Comment"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:2278
+msgid "Open {name}"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:2603
+#: src/control/Control.Menubar.ts:929
+msgid "Rows"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:2604
+#: src/control/Control.Menubar.ts:932
+msgid "Columns"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:2624
+msgid "Insert Table"
+msgstr ""
+
+#: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:393
+#: src/control/Control.Menubar.ts:395 src/control/Control.Menubar.ts:397
+#: src/control/Control.Menubar.ts:586 src/control/Control.Menubar.ts:728
+#: src/control/Control.Menubar.ts:1017 src/control/Control.StatusBar.js:518
+msgid "None (Do not check spelling)"
+msgstr ""
+
+#: src/control/Control.LanguageDialog.js:82
+msgid "Select language"
+msgstr ""
+
+#: src/control/Control.LanguageDialog.js:103
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Mention.ts:181
+msgid "No search results found!"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
+#: src/control/Control.Menubar.ts:1052
+#: src/control/Control.NotebookbarBuilder.js:334
+#: src/control/Control.NotebookbarBuilder.js:547
+msgid "ODF text document (.odt)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:98 src/control/Control.Menubar.ts:113
+#: src/control/Control.Menubar.ts:1053
+#: src/control/Control.NotebookbarBuilder.js:346
+#: src/control/Control.NotebookbarBuilder.js:559
+msgid "Word 2003 Document (.doc)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:99 src/control/Control.Menubar.ts:114
+#: src/control/Control.Menubar.ts:1054
+#: src/control/Control.NotebookbarBuilder.js:342
+#: src/control/Control.NotebookbarBuilder.js:555
+msgid "Word Document (.docx)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:100 src/control/Control.Menubar.ts:115
+#: src/control/Control.Menubar.ts:1055
+#: src/control/Control.NotebookbarBuilder.js:338
+#: src/control/Control.NotebookbarBuilder.js:551
+msgid "Rich Text (.rtf)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
+#: src/control/Control.Menubar.ts:434 src/control/Control.Menubar.ts:440
+#: src/control/Control.Menubar.ts:607 src/control/Control.Menubar.ts:614
+#: src/control/Control.Menubar.ts:750 src/control/Control.Menubar.ts:755
+#: src/control/Control.Menubar.ts:1040 src/control/Control.Menubar.ts:1049
+#: src/control/Control.Menubar.ts:1106 src/control/Control.Menubar.ts:1114
+#: src/control/Control.Menubar.ts:1171 src/control/Control.Menubar.ts:1178
+#: src/control/Control.Menubar.ts:1226 src/control/Control.Menubar.ts:1236
+msgid "Export as"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:103 src/control/Control.Menubar.ts:110
+#: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:441
+#: src/control/Control.Menubar.ts:608 src/control/Control.Menubar.ts:615
+#: src/control/Control.Menubar.ts:751 src/control/Control.Menubar.ts:756
+#: src/control/Control.Menubar.ts:1041 src/control/Control.Menubar.ts:1050
+#: src/control/Control.Menubar.ts:1107 src/control/Control.Menubar.ts:1115
+#: src/control/Control.Menubar.ts:1172 src/control/Control.Menubar.ts:1179
+#: src/control/Control.Menubar.ts:1227 src/control/Control.Menubar.ts:1237
+#: src/control/Control.NotebookbarBuilder.js:355
+#: src/control/Control.NotebookbarBuilder.js:393
+#: src/control/Control.NotebookbarBuilder.js:429
+#: src/control/Control.NotebookbarBuilder.js:608
+#: src/control/Control.NotebookbarBuilder.js:619
+#: src/control/Control.NotebookbarBuilder.js:626
+#: src/control/Control.NotebookbarBuilder.js:633
+#: src/control/Control.NotebookbarDraw.js:312
+msgid "PDF Document (.pdf)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:104 src/control/Control.Menubar.ts:116
+#: src/control/Control.Menubar.ts:1042 src/control/Control.Menubar.ts:1056
+#: src/control/Control.NotebookbarBuilder.js:350
+#: src/control/Control.NotebookbarBuilder.js:612
+msgid "EPUB (.epub)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:106 src/control/Control.UIManager.ts:325
+msgid "Rename Document"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:438
+#: src/control/Control.Menubar.ts:611 src/control/Control.Menubar.ts:753
+#: src/control/Control.Menubar.ts:1044 src/control/Control.Menubar.ts:1109
+#: src/control/Control.Menubar.ts:1174 src/control/Control.Menubar.ts:1229
+msgid "Share..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:108 src/control/Control.Menubar.ts:439
+#: src/control/Control.Menubar.ts:613 src/control/Control.Menubar.ts:754
+#: src/control/Control.Menubar.ts:1045 src/control/Control.Menubar.ts:1110
+#: src/control/Control.Menubar.ts:1176 src/control/Control.Menubar.ts:1230
+msgid "See revision history"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:109 src/control/Control.Menubar.ts:440
+#: src/control/Control.Menubar.ts:614 src/control/Control.Menubar.ts:755
+#: src/control/Control.Menubar.ts:1049 src/control/Control.Menubar.ts:1114
+#: src/control/Control.Menubar.ts:1178 src/control/Control.Menubar.ts:1236
+msgid "Download as"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:111 src/control/Control.Menubar.ts:442
+#: src/control/Control.Menubar.ts:616 src/control/Control.Menubar.ts:757
+#: src/control/Control.Menubar.ts:1051 src/control/Control.Menubar.ts:1116
+#: src/control/Control.Menubar.ts:1180 src/control/Control.Menubar.ts:1238
+#: src/control/Control.NotebookbarBuilder.js:365
+#: src/control/Control.NotebookbarBuilder.js:399
+#: src/control/Control.NotebookbarBuilder.js:441
+msgid "PDF Document (.pdf) as..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:762
+msgid "HTML file (.html)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:120 src/control/Control.Menubar.ts:456
+#: src/control/Control.Menubar.ts:621 src/control/Control.Menubar.ts:765
+#: src/control/Control.NotebookbarCalc.js:375
+#: src/control/Control.NotebookbarDraw.js:406
+#: src/control/Control.NotebookbarImpress.js:438
+#: src/control/Control.NotebookbarWriter.js:412
+#: src/map/handler/Map.Settings.ts:74
+msgid "Options"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
+#: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:771
+#: src/control/Control.Toolbar.js:1104
+msgid "Close document"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:128 src/control/Control.Menubar.ts:467
+#: src/control/Control.Menubar.ts:628 src/control/Control.Menubar.ts:776
+#: src/control/Control.Menubar.ts:1061 src/control/Control.Menubar.ts:1125
+#: src/control/Control.Menubar.ts:1186 src/control/Control.Menubar.ts:1246
+#: src/control/Control.NotebookbarCalc.js:313
+#: src/control/Control.NotebookbarDraw.js:342
+#: src/control/Control.NotebookbarImpress.js:376
+#: src/control/Control.NotebookbarWriter.js:335
+msgid "Repair"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:158 src/control/Control.Menubar.ts:164
+#: src/control/Control.Menubar.ts:479 src/control/Control.Menubar.ts:485
+#: src/control/Control.Menubar.ts:640 src/control/Control.Menubar.ts:646
+#: src/control/Control.Menubar.ts:788 src/control/Control.Menubar.ts:794
+#: src/control/Control.NotebookbarCalc.js:1470
+#: src/control/Control.NotebookbarDraw.js:441
+#: src/control/Control.NotebookbarImpress.js:538
+#: src/control/Control.NotebookbarWriter.js:1692
+#: src/control/Control.StatusBar.js:250
+msgid "Reset zoom"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:491
+#: src/control/Control.Menubar.ts:652 src/control/Control.Menubar.ts:797
+msgid "Toggle UI Mode"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:493
+#: src/control/Control.Menubar.ts:657 src/control/Control.Menubar.ts:798
+msgid "Show Status Bar"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:495
+#: src/control/Control.Menubar.ts:658 src/control/Control.Menubar.ts:799
+msgid "Hide Menu Bar"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
+#: src/control/Control.Menubar.ts:654 src/control/Control.Menubar.ts:801
+#: src/control/Control.Menubar.ts:1083 src/control/Control.Menubar.ts:1136
+#: src/control/Control.Menubar.ts:1197 src/control/Control.Menubar.ts:1257
+#: src/control/Control.NotebookbarCalc.js:1555
+#: src/control/Control.NotebookbarDraw.js:561
+#: src/control/Control.NotebookbarImpress.js:682
+#: src/control/Control.NotebookbarWriter.js:1784
+msgid "Invert Background"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:804
+#: src/control/Control.NotebookbarCalc.js:2596
+#: src/control/Control.NotebookbarWriter.js:946
+#: src/control/Control.NotebookbarWriter.js:1080
+msgid "Style list"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:182 src/control/Control.Menubar.ts:506
+#: src/control/Control.Menubar.ts:661 src/control/Control.Menubar.ts:815
+#: src/control/Control.Menubar.ts:1299 src/control/Control.Menubar.ts:1349
+#: src/control/Control.Menubar.ts:1363 src/control/Control.Menubar.ts:1386
+msgid "Local Image..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:206 src/control/Control.Menubar.ts:208
+#: src/control/Control.Menubar.ts:1316 src/control/Control.Menubar.ts:1318
+msgid "All"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:218 src/control/Control.Menubar.ts:517
+#: src/control/Control.Menubar.ts:668 src/control/Control.Menubar.ts:827
+#: src/control/Control.NotebookbarCalc.js:1776
+#: src/control/Control.NotebookbarDraw.js:1583
+#: src/control/Control.NotebookbarImpress.js:1584
+#: src/control/Control.NotebookbarWriter.js:1338
+msgid "Smart Picker"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:219 src/control/Control.Menubar.ts:518
+#: src/control/Control.Menubar.ts:669 src/control/Control.Menubar.ts:828
+msgid "AI Assistant"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:260
+msgid "Text orientation"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:330
+#: src/control/Notebookbar.WriterReferencesTab.ts:25
+msgid "References"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:333
+#: src/control/Notebookbar.WriterReferencesTab.ts:72
+msgid "Update Index"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:342
+#: src/control/Notebookbar.WriterReferencesTab.ts:215
+msgid "Add Citation"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:343
+#: src/control/Notebookbar.WriterReferencesTab.ts:232
+msgid "Add Citation Note"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:344
+#: src/control/Notebookbar.WriterReferencesTab.ts:201
+msgid "Add Bibliography"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:346
+#: src/control/Notebookbar.WriterReferencesTab.ts:255
+msgid "Refresh Citations"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:347
+#: src/control/Notebookbar.WriterReferencesTab.ts:272
+#: src/control/Control.Zotero.js:1531
+msgid "Unlink Citations"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:348
+#: src/control/Notebookbar.WriterReferencesTab.ts:289
+msgid "Citation Preferences"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:376 src/control/Control.Menubar.ts:1338
+msgid "Insert Rich Text"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:377 src/control/Control.Menubar.ts:1339
+msgid "Insert Checkbox"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:378 src/control/Control.Menubar.ts:1340
+msgid "Insert Dropdown"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:379 src/control/Control.Menubar.ts:1341
+msgid "Insert Picture"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:380 src/control/Control.Menubar.ts:1342
+msgid "Insert Date"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:381 src/control/Control.Menubar.ts:1343
+#: src/control/Control.NotebookbarCalc.js:328
+#: src/control/Control.NotebookbarDraw.js:356
+#: src/control/Control.NotebookbarImpress.js:391
+#: src/control/Control.NotebookbarWriter.js:350
+#: src/control/Control.NotebookbarWriter.js:1648
+msgid "Properties"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:401 src/control/Control.Menubar.ts:1087
+#: src/control/Control.NotebookbarWriter.js:472
+msgid "Screen Reading"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:414
+#: src/control/Control.NotebookbarWriter.js:436
+msgid "Forum"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:415 src/control/Control.Menubar.ts:592
+#: src/control/Control.Menubar.ts:731 src/control/Control.Menubar.ts:1024
+#: src/control/Control.NotebookbarWriter.js:448
+msgid "Online Help"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:416 src/control/Control.Menubar.ts:593
+#: src/control/Control.Menubar.ts:732 src/control/Control.Menubar.ts:1025
+#: src/control/Control.NotebookbarWriter.js:461
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:417 src/control/Control.Menubar.ts:594
+#: src/control/Control.Menubar.ts:733 src/control/Control.Menubar.ts:1026
+#: src/control/Control.NotebookbarWriter.js:510
+msgid "Report an issue"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:418 src/control/Control.Menubar.ts:595
+#: src/control/Control.Menubar.ts:734 src/control/Control.Menubar.ts:1027
+#: src/control/Control.Menubar.ts:1096 src/control/Control.Menubar.ts:1161
+#: src/control/Control.Menubar.ts:1216 src/control/Control.Menubar.ts:1291
+#: src/control/Control.NotebookbarWriter.js:524
+msgid "Latest Updates"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:419 src/control/Control.Menubar.ts:596
+#: src/control/Control.Menubar.ts:735 src/control/Control.Menubar.ts:1028
+#: src/control/Control.Menubar.ts:1097 src/control/Control.Menubar.ts:1162
+#: src/control/Control.Menubar.ts:1217 src/control/Control.Menubar.ts:1292
+#: src/control/Control.NotebookbarWriter.js:538
+msgid "Send Feedback"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:597
+#: src/control/Control.Menubar.ts:736 src/control/Control.Menubar.ts:1029
+#: src/control/Control.NotebookbarWriter.js:494
+#: src/control/Control.ServerAuditDialog.ts:196
+#: src/control/Control.ServerAuditDialog.ts:197
+msgid "Server audit"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:423 src/control/Control.Menubar.ts:600
+#: src/control/Control.Menubar.ts:739 src/control/Control.Menubar.ts:1032
+msgid "Last modification"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:430 src/control/Control.Menubar.ts:443
+#: src/control/Control.Menubar.ts:1117
+#: src/control/Control.NotebookbarBuilder.js:407
+#: src/control/Control.NotebookbarBuilder.js:581
+msgid "ODF presentation (.odp)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:431 src/control/Control.Menubar.ts:444
+#: src/control/Control.Menubar.ts:1118
+#: src/control/Control.NotebookbarBuilder.js:419
+#: src/control/Control.NotebookbarBuilder.js:589
+msgid "PowerPoint 2003 Presentation (.ppt)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:432 src/control/Control.Menubar.ts:445
+#: src/control/Control.Menubar.ts:1119
+#: src/control/Control.NotebookbarBuilder.js:415
+#: src/control/Control.NotebookbarBuilder.js:585
+msgid "PowerPoint Presentation (.pptx)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:437 src/control/Control.Menubar.ts:610
+msgid "Save Comments"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:446
+#: src/control/Control.NotebookbarBuilder.js:423
+msgid "HTML Document (.html)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:447
+#: src/control/Control.NotebookbarBuilder.js:454
+msgid "Shockwave Flash (.swf)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:448
+#: src/control/Control.NotebookbarBuilder.js:466
+msgid "Scalable Vector Graphics (.svg)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:449
+#: src/control/Control.NotebookbarBuilder.js:478
+msgid "Current slide as Bitmap (.bmp)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:450
+#: src/control/Control.NotebookbarBuilder.js:490
+msgid "Current slide as Graphics Interchange Format (.gif)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:451
+#: src/control/Control.NotebookbarBuilder.js:502
+msgid "Current slide as Portable Network Graphics (.png)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:452
+#: src/control/Control.NotebookbarBuilder.js:514
+msgid "Current slide as Tag Image File Format (.tiff)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:459
+#: src/control/Control.NotebookbarBuilder.js:652
+msgid "Full Page Slides"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:460
+#: src/control/Control.NotebookbarBuilder.js:656
+msgid "Notes Pages"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:494
+#: src/control/Control.NotebookbarImpress.js:629
+msgid "Notes View"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:498
+#: src/control/Control.NotebookbarImpress.js:635
+msgid "Master View"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:508
+msgid "Local Multimedia..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:577 src/control/Control.Menubar.ts:1160
+#: src/control/Control.PresentationBar.js:128
+msgid "Fullscreen presentation"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:578
+msgid "Present current slide"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:579
+msgid "Present in new window"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:580
+#: src/control/Control.NotebookbarImpress.js:488
+#: src/slideshow/PresenterConsole.js:249
+msgid "Presenter Console"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:617 src/control/Control.Menubar.ts:1120
+#: src/control/Control.Menubar.ts:1181
+#: src/control/Control.NotebookbarBuilder.js:411
+#: src/control/Control.NotebookbarBuilder.js:524
+msgid "ODF Drawing (.odg)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:746 src/control/Control.Menubar.ts:758
+#: src/control/Control.Menubar.ts:1239
+#: src/control/Control.NotebookbarBuilder.js:373
+#: src/control/Control.NotebookbarBuilder.js:566
+msgid "ODF spreadsheet (.ods)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:747 src/control/Control.Menubar.ts:759
+#: src/control/Control.Menubar.ts:1240
+#: src/control/Control.NotebookbarBuilder.js:381
+#: src/control/Control.NotebookbarBuilder.js:574
+msgid "Excel 2003 Spreadsheet (.xls)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:748 src/control/Control.Menubar.ts:760
+#: src/control/Control.Menubar.ts:1241
+#: src/control/Control.NotebookbarBuilder.js:377
+#: src/control/Control.NotebookbarBuilder.js:570
+msgid "Excel Spreadsheet (.xlsx)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:761
+msgid "CSV file (.csv)"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:768
+#: src/control/jsdialog/Definitions.Menu.ts:1572
+msgid "Active sheet"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
+#: src/control/jsdialog/Definitions.Menu.ts:1573
+msgid "All Sheets"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:807
+#: src/control/Control.NotebookbarCalc.js:1441
+msgid "Focus Cell"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:901
+#: src/control/jsdialog/Definitions.Menu.ts:1778
+msgid "Highlight cells with..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:902
+#: src/control/jsdialog/Definitions.Menu.ts:1781
+msgid "Values greater than..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:903
+#: src/control/jsdialog/Definitions.Menu.ts:1785
+msgid "Values less than..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:904
+#: src/control/jsdialog/Definitions.Menu.ts:1789
+msgid "Values equal to..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:905
+#: src/control/jsdialog/Definitions.Menu.ts:1793
+msgid "Values between..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:906
+#: src/control/jsdialog/Definitions.Menu.ts:1797
+msgid "Values duplicate..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:907
+#: src/control/jsdialog/Definitions.Menu.ts:1801
+msgid "Containing text..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:909 src/control/Control.Menubar.ts:919
+#: src/control/jsdialog/Definitions.Menu.ts:1805
+#: src/control/jsdialog/Definitions.Menu.ts:1836
+msgid "More highlights..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:911
+#: src/control/jsdialog/Definitions.Menu.ts:1809
+msgid "Top/Bottom Rules..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:912
+#: src/control/jsdialog/Definitions.Menu.ts:1812
+msgid "Top N elements..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:913
+#: src/control/jsdialog/Definitions.Menu.ts:1816
+msgid "Top N percent..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:914
+#: src/control/jsdialog/Definitions.Menu.ts:1820
+msgid "Bottom N elements..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:915
+#: src/control/jsdialog/Definitions.Menu.ts:1824
+msgid "Bottom N percent..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:916
+#: src/control/jsdialog/Definitions.Menu.ts:1828
+msgid "Above Average..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:917
+#: src/control/jsdialog/Definitions.Menu.ts:1832
+msgid "Below Average..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1036 src/control/Control.Menubar.ts:1102
+#: src/control/Control.Menubar.ts:1167 src/control/Control.Menubar.ts:1222
+#: src/control/Control.MobileSearchBar.ts:30
+#: src/control/Control.NotebookbarCalc.js:1029
+#: src/control/Control.NotebookbarDraw.js:1171
+#: src/control/Control.NotebookbarDraw.js:1184
+#: src/control/Control.NotebookbarImpress.js:1250
+#: src/control/Control.NotebookbarImpress.js:1263
+#: src/control/Control.NotebookbarWriter.js:1008
+#: src/control/Control.NotebookbarWriter.js:1021
+#: src/control/Control.Zotero.js:220 src/control/Toolbar.js:580
+#: src/control/Toolbar.js:581
+msgid "Search"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1089
+#: src/control/Control.NotebookbarCalc.js:1094
+#: src/control/Control.NotebookbarWriter.js:1812
+msgid "Page Setup"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1233
+msgid "Define print area"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1234
+msgid "Remove print area"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1590 src/control/Control.StatusBar.js:517
+msgid "Reset to Default Language"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1621 src/control/Control.Menubar.ts:1622
+#: src/control/Control.Menubar.ts:1623 src/control/Control.Toolbar.js:247
+#: src/control/jsdialog/Definitions.Menu.ts:2058
+msgid "More..."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1965
+msgid "Use Compact view"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:1967
+msgid "Use Tabbed view"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:2121
+msgid "Insert Shape"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:2203
+msgid "The signature line can now be moved or resized as needed."
+msgstr ""
+
+#: src/control/Control.Menubar.ts:2205
+msgid "Finish electronic signing"
+msgstr ""
+
+#: src/control/Control.Menubar.ts:2400
+msgid "file type icon"
+msgstr ""
+
+#: src/control/Control.MobileBottomBar.js:28
+#: src/control/Control.MobileBottomBar.js:130
+#: src/control/Control.MobileBottomBar.js:198
+msgid "Show the search bar"
+msgstr ""
+
+#: src/control/Control.MobileBottomBar.js:37
+#: src/control/Control.TopToolbar.js:145
+msgid "Borders"
+msgstr ""
+
+#: src/control/Control.MobileSearchBar.ts:28
+msgid "Hide the search bar"
+msgstr ""
+
+#: src/control/Control.MobileSearchBar.ts:48
+msgid "Clear the search field"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:546
+msgid "Background Color"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:548
+msgid "Gradient Start"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:550
+msgid "Gradient End"
+msgstr ""
+
+#: src/control/Control.NavigatorPanel.ts:112
+msgid "Navigation"
+msgstr ""
+
+#: src/control/Control.NavigatorPanel.ts:133
+msgid "Close Navigation"
+msgstr ""
+
+#: src/control/Control.NavigatorPanel.ts:171
+#: src/control/Control.NotebookbarImpress.js:1394
+#: src/slideshow/PresenterConsole.js:34
+msgid "Slides"
+msgstr ""
+
+#: src/control/Control.NavigatorPanel.ts:178
+msgid "Outline"
+msgstr ""
+
+#: src/control/Control.NavigatorPanel.ts:185
+msgid "Results"
+msgstr ""
+
+#: src/control/Control.NavigatorPanel.ts:393
+msgid "Search..."
+msgstr ""
+
+#: src/control/Control.QuickFindPanel.ts:89
+msgid "Type in the search box to find anything in your document"
+msgstr ""
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:24
+msgid "Transition"
+msgstr ""
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:55
+msgid "Variant"
+msgstr ""
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:70
+msgid "Duration"
+msgstr ""
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:97
+msgid "On mouse click"
+msgstr ""
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:105
+msgid "After"
+msgstr ""
+
+#: src/control/Notebookbar.WriterReferencesTab.ts:41
+msgid "Table of content"
+msgstr ""
+
+#: src/control/Notebookbar.WriterReferencesTab.ts:95
+msgid "Footnote/Endnote"
+msgstr ""
+
+#: src/control/Notebookbar.WriterReferencesTab.ts:301
+#: src/control/Control.NotebookbarDraw.js:1576
+#: src/control/Control.NotebookbarImpress.js:1620
+msgid "Field"
+msgstr ""
+
+#: src/control/Control.Notebookbar.js:685
+#: src/control/Control.NotebookbarCalc.js:194
+#: src/control/Control.NotebookbarCalc.js:228
+#: src/control/Control.NotebookbarDraw.js:209
+#: src/control/Control.NotebookbarDraw.js:243
+#: src/control/Control.NotebookbarImpress.js:64
+#: src/control/Control.NotebookbarImpress.js:255
+#: src/control/Control.NotebookbarImpress.js:289
+#: src/control/Control.NotebookbarWriter.js:218
+#: src/control/Control.NotebookbarWriter.js:251
+msgid "Share"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:220
+msgid "Tap to expand"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:221
+#: src/control/Control.NotebookbarBuilder.js:268
+msgid "Tap to collapse"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:360
+#: src/control/Control.NotebookbarBuilder.js:389
+msgid "HTML File (.html)"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:385
+msgid "CSV File (.csv)"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:528
+msgid "Image (.png)"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:23
+#: src/control/Control.NotebookbarDraw.js:57
+#: src/control/Control.NotebookbarImpress.js:77
+#: src/control/Control.NotebookbarWriter.js:37
+msgid "File"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:29
+#: src/control/Control.NotebookbarDraw.js:63
+#: src/control/Control.NotebookbarImpress.js:83
+#: src/control/Control.NotebookbarWriter.js:43
+msgid "Home"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:36
+#: src/control/Control.NotebookbarCalc.js:1188
+#: src/control/Control.NotebookbarDraw.js:70
+#: src/control/Control.NotebookbarDraw.js:1132
+#: src/control/Control.NotebookbarImpress.js:90
+#: src/control/Control.NotebookbarImpress.js:1987
+#: src/control/Control.NotebookbarWriter.js:50
+#: src/control/Control.NotebookbarWriter.js:2527
+msgid "Insert"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:42
+#: src/control/Control.NotebookbarDraw.js:1282
+msgid "Page Layout"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:48
+msgid "Formulas"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:54
+msgid "Data"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:60
+#: src/control/Control.NotebookbarDraw.js:82
+#: src/control/Control.NotebookbarImpress.js:109
+#: src/control/Control.NotebookbarWriter.js:63
+msgid "Review"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:66
+#: src/control/Control.NotebookbarDraw.js:88
+#: src/control/Control.NotebookbarImpress.js:115
+#: src/control/Control.NotebookbarWriter.js:69
+msgid "Format"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:72
+#: src/control/Control.NotebookbarDraw.js:101
+#: src/control/Control.NotebookbarWriter.js:88
+msgid "Shape"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:79
+#: src/control/Control.NotebookbarDraw.js:108
+#: src/control/Control.NotebookbarWriter.js:95
+#: src/control/Control.NotebookbarWriter.js:1632
+msgid "Picture"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:86
+#: src/control/Control.NotebookbarDraw.js:115
+#: src/control/Control.NotebookbarImpress.js:149
+#: src/control/Control.NotebookbarWriter.js:102
+msgid "View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:92
+#: src/control/Control.NotebookbarCalc.js:1682
+#: src/control/Control.NotebookbarCalc.js:2657
+msgid "Sparkline"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:99
+#: src/control/Control.NotebookbarDraw.js:121
+#: src/control/Control.NotebookbarImpress.js:155
+#: src/control/Control.NotebookbarWriter.js:108
+#: src/control/Control.ServerAuditDialog.ts:216
+msgid "Help"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:157
+#: src/control/Control.NotebookbarImpress.js:216
+#: src/control/Control.NotebookbarWriter.js:179
+#: src/control/Control.NotebookbarWriter.js:320
+msgid "Save As"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:176
+#: src/control/Control.NotebookbarDraw.js:190
+#: src/control/Control.NotebookbarImpress.js:236
+#: src/control/Control.NotebookbarWriter.js:199
+msgid "Export As"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:202
+#: src/control/Control.NotebookbarCalc.js:251
+#: src/control/Control.NotebookbarDraw.js:217
+#: src/control/Control.NotebookbarDraw.js:267
+#: src/control/Control.NotebookbarImpress.js:263
+#: src/control/Control.NotebookbarImpress.js:312
+#: src/control/Control.NotebookbarWriter.js:226
+#: src/control/Control.NotebookbarWriter.js:275
+msgid "See history"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:341
+#: src/control/Control.NotebookbarDraw.js:370
+#: src/control/Control.NotebookbarImpress.js:404
+#: src/control/Control.NotebookbarWriter.js:363
+msgid "Signature"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:357
+#: src/control/Control.NotebookbarDraw.js:387
+#: src/control/Control.NotebookbarImpress.js:420
+#: src/control/Control.NotebookbarWriter.js:379
+#: src/control/Control.UIManager.ts:325
+msgid "Rename"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:411
+#: src/control/Control.NotebookbarDraw.js:611
+#: src/control/Control.NotebookbarImpress.js:725
+#: src/control/Control.NotebookbarWriter.js:589
+msgid "Clipboard"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:472
+#: src/control/Control.NotebookbarDraw.js:671
+#: src/control/Control.NotebookbarWriter.js:648 src/control/Toolbar.js:56
+msgid "Font"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:619
+#: src/control/Control.NotebookbarDraw.js:812
+msgid "Alignment"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:746
+msgid "Merge & Center"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:756
+#: src/control/Control.NotebookbarCalc.js:772
+msgid "Number"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:771
+msgid "General"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:773
+msgid "Percent"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:774
+msgid "Currency"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:775
+#: src/control/Control.NotebookbarWriter.js:1640
+#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
+msgid "Date"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:776
+msgid "Time"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:777
+msgid "Scientific"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:778
+msgid "Fraction"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:779
+msgid "Boolean Value"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:780
+#: src/control/Control.NotebookbarCalc.js:1855
+#: src/control/Control.NotebookbarCalc.js:2020
+#: src/control/Control.NotebookbarDraw.js:1666
+#: src/control/Control.NotebookbarImpress.js:1694
+#: src/control/Control.NotebookbarWriter.js:1487
+msgid "Text"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:858
+msgid "Cells"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:960
+#: src/control/jsdialog/Definitions.Menu.ts:2254
+msgid "Default"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:967
+msgid "Heading 1"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:974
+msgid "Heading 2"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:987
+msgid "Good"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:994
+msgid "Neutral"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1001
+msgid "Bad"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1016
+msgid "Editing"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1040
+#: src/control/Control.NotebookbarDraw.js:1195
+#: src/control/Control.NotebookbarImpress.js:1274
+#: src/control/Control.NotebookbarWriter.js:1032
+msgid "Replace"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1104
+#: src/control/Control.NotebookbarWriter.js:1822
+msgid "Margin"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1111
+#: src/control/Control.NotebookbarWriter.js:1829
+msgid "Size"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1143
+#: src/control/Control.NotebookbarDraw.js:525
+#: src/control/Control.NotebookbarImpress.js:645
+msgid "Grid"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1172
+msgid "Row Height"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1180
+msgid "Column Width"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1200
+msgid "Insert Rows Above"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1207
+msgid "Insert Columns Before"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1214
+msgid "Delete Rows"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1226
+msgid "Insert Rows Below"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1233
+msgid "Insert Columns After"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1240
+msgid "Delete Columns"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1263
+#: src/control/Control.NotebookbarCalc.js:2819
+#: src/control/Control.NotebookbarCalc.js:3176
+#: src/control/Control.NotebookbarDraw.js:1298
+#: src/control/Control.NotebookbarImpress.js:2282
+#: src/control/Control.NotebookbarImpress.js:2489
+#: src/control/Control.NotebookbarImpress.js:2793
+#: src/control/Control.NotebookbarWriter.js:2053
+#: src/control/Control.NotebookbarWriter.js:2989
+#: src/control/Control.NotebookbarWriter.js:3312
+msgid "Align"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1333
+#: src/control/Control.NotebookbarCalc.js:2886
+#: src/control/Control.NotebookbarCalc.js:3243
+#: src/control/Control.NotebookbarDraw.js:1365
+#: src/control/Control.NotebookbarImpress.js:2349
+#: src/control/Control.NotebookbarImpress.js:2556
+#: src/control/Control.NotebookbarImpress.js:2860
+#: src/control/Control.NotebookbarWriter.js:2124
+#: src/control/Control.NotebookbarWriter.js:3048
+#: src/control/Control.NotebookbarWriter.js:3371
+msgid "Arrange"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1395
+msgid "Freeze"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1449
+#: src/control/Control.NotebookbarDraw.js:420
+#: src/control/Control.NotebookbarImpress.js:524
+#: src/control/Control.NotebookbarWriter.js:1678
+msgid "Zoom"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1456
+#: src/control/Control.NotebookbarDraw.js:427
+#: src/control/Control.NotebookbarImpress.js:458
+#: src/control/Control.NotebookbarWriter.js:1664
+msgid "Read mode"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1523
+#: src/control/Control.NotebookbarDraw.js:518
+#: src/control/Control.NotebookbarImpress.js:615
+#: src/control/Control.NotebookbarWriter.js:1769
+msgid "Collapse Tabs"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1535
+#: src/control/Control.NotebookbarDraw.js:506
+#: src/control/Control.NotebookbarImpress.js:603
+#: src/control/Control.NotebookbarWriter.js:1757
+msgid "Status Bar"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1591
+#: src/control/Control.NotebookbarCalc.js:2330
+#: src/control/Control.NotebookbarCalc.js:2939
+#: src/control/Control.NotebookbarCalc.js:3296
+#: src/control/Control.NotebookbarImpress.js:2609
+#: src/control/Control.NotebookbarImpress.js:2913
+#: src/control/Control.NotebookbarWriter.js:3097
+#: src/control/Control.NotebookbarWriter.js:3420
+msgid "Group"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1598
+msgid "Ungroup"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1620
+msgid "Pivot Table"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1669
+#: src/control/Control.NotebookbarDraw.js:1013
+#: src/control/Control.NotebookbarDraw.js:1470
+#: src/control/Control.NotebookbarImpress.js:1161
+#: src/control/Control.NotebookbarImpress.js:1440
+#: src/control/Control.NotebookbarWriter.js:957
+#: src/control/Control.NotebookbarWriter.js:1246
+msgid "Illustrations"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1739
+#: src/control/Control.NotebookbarDraw.js:1027
+#: src/control/Control.NotebookbarDraw.js:1521
+#: src/control/Control.NotebookbarImpress.js:1175
+#: src/control/Control.NotebookbarImpress.js:1518
+#: src/control/Control.NotebookbarWriter.js:1291
+msgid "Shapes"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1784
+#: src/control/Control.NotebookbarDraw.js:1591
+#: src/control/Control.NotebookbarImpress.js:1605
+#: src/control/Control.NotebookbarWriter.js:1359
+msgid "Assistant"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1955
+msgid "Insert Function"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1963
+msgid "Function Library"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1977
+msgid "AutoSum"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1990
+msgid "Financial"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2008
+msgid "Logical"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2038
+msgid "Date & Time"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2050
+msgid "Lookup & Reference"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2068
+msgid "Math & Trig"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2080
+msgid "More Functions"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2125
+msgid "Range"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2208
+msgid "Sort"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2254
+msgid "Filter"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2501
+#: src/control/Control.NotebookbarImpress.js:1950
+#: src/control/Control.NotebookbarWriter.js:2251
+msgid "Comments"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2606
+msgid "Format Cells"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2752
+#: src/control/Control.NotebookbarCalc.js:3109
+#: src/control/Control.NotebookbarWriter.js:1955
+#: src/control/Control.NotebookbarWriter.js:2934
+#: src/control/Control.NotebookbarWriter.js:3257
+msgid "Wrap"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:2991
+#: src/control/Control.NotebookbarImpress.js:2669
+#: src/control/Control.NotebookbarWriter.js:3143
+msgid "Image Controls"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:76
+#: src/control/Control.NotebookbarWriter.js:56
+msgid "Layout"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:94
+#: src/control/Control.NotebookbarDraw.js:1490
+#: src/control/Control.NotebookbarImpress.js:121
+#: src/control/Control.NotebookbarImpress.js:1487
+#: src/control/Control.NotebookbarWriter.js:81
+#: src/control/Control.NotebookbarWriter.js:1238
+msgid "Table"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:321
+msgid "PDF Document (.pdf) - Expert"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:494
+#: src/control/Control.NotebookbarImpress.js:591
+#: src/control/Control.NotebookbarWriter.js:1745
+msgid "Ruler"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:899
+#: src/control/Control.NotebookbarImpress.js:975
+#: src/control/Control.NotebookbarImpress.js:2162
+#: src/control/Control.NotebookbarWriter.js:793
+#: src/control/Control.NotebookbarWriter.js:2700
+msgid "Paragraph"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:1224
+#: src/control/Control.NotebookbarDraw.js:1424
+#: src/control/Control.NotebookbarWriter.js:1215
+msgid "Page"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:96
+msgid "Design"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:103
+msgid "Slide Show"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:142
+msgid "Master"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:464
+msgid "From Beginning"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:471
+msgid "From Current Slide"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:480
+msgid "Present in Window"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:496
+msgid "Follow me Presentation"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:622
+msgid "Slide Views"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:654
+msgid "Show Grid"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:661
+msgid "Snap to Grid"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:786
+#: src/control/Control.NotebookbarImpress.js:1801
+msgid "Slide Layout"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:797
+msgid "New"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:808
+#: src/control/Control.NotebookbarImpress.js:1811
+msgid "Change Layout"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:816
+#: src/control/Control.NotebookbarImpress.js:1818
+msgid "Reset Layout"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:830
+msgid "Character"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:1091
+msgid "Spacing & Color"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:1780
+msgid "Master Slide Templates"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:1830
+msgid "Slide Size"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:1853
+msgid "Background Image"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:2054
+msgid "Merge & Split"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:2093
+#: src/control/Control.NotebookbarWriter.js:2650
+msgid "Select"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:2702
+msgid "Effects"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:75
+msgid "Form"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:395
+msgid "Go Online"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:395
+msgid "Go Offline"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:932
+msgid "Scroll up"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:939
+msgid "Scroll down"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1090
+msgid "Lists/Bullets"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1379
+msgid "Header & Footer"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1448
+msgid "Section"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1544
+msgid "Symbols"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1608
+msgid "Rich Text"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1616
+msgid "Checkbox"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1624
+msgid "Dropdown"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:2326
+msgid "Tracking"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:2588
+msgid "Split"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:2772
+msgid "Number Format"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:186
+msgid "preview of page %1"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:188
+msgid "Slide %1"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:263
+msgid "Paste Slide"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:311
+msgid "Paste"
+msgstr ""
+
+#: src/control/Control.SaveState.ts:38
+msgid "Saving"
+msgstr ""
+
+#: src/control/Control.SaveState.ts:53
+msgid "Saved"
+msgstr ""
+
+#: src/control/Control.Scroll.Annotation.js:19
+msgid "Scroll up annotations"
+msgstr ""
+
+#: src/control/Control.Scroll.Annotation.js:21
+msgid "Scroll down annotations"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:50
+msgid "The IsAdminUser property is not set by integration"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:56
+msgid ""
+"Used deprecated is_admin field, integration should use IsAdminUser property "
+"instead"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:62
+msgid "The IsAdminUser user property is set by integration"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:69
+msgid "Your WOPI server is not secure: SSL verification failed"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:74
+msgid "No problems with SSL verification detected"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:81
+msgid "PostMessage API is initialized"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:86
+msgid "Integrator is not ready for PostMessage calls"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:94
+msgid ""
+"Your server is configured with insufficient hardware resources, which may "
+"lead to poor performance."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:100
+msgid "Hardware resources are sufficient for optimal performance"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:215
+msgid "Status"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:225
+msgid "No issues found"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:230
+msgid "Alerts:"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:276
+msgid "Check security warnings of your server"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:277
+msgid "OPEN"
+msgstr ""
+
+#: src/control/Control.SheetsBar.js:49
+msgid "Scroll to the first sheet"
+msgstr ""
+
+#: src/control/Control.SheetsBar.js:56
+msgid "Scroll left"
+msgstr ""
+
+#: src/control/Control.SheetsBar.js:64
+msgid "Scroll right"
+msgstr ""
+
+#: src/control/Control.SheetsBar.js:72
+msgid "Scroll to the last sheet"
+msgstr ""
+
+#: src/control/Control.SheetsBar.js:79
+msgid "Insert sheet"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:152
+msgid "On"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:154
+#: src/control/jsdialog/Definitions.Menu.ts:1761
+msgid "Off"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:187
+#: src/control/jsdialog/Definitions.Menu.ts:163
+msgid "Average"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:188
+msgid "CountA"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:189
+#: src/control/jsdialog/Definitions.Menu.ts:166
+msgid "Count"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:190
+msgid "Maximum"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:191
+msgid "Minimum"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:192
+#: src/control/jsdialog/Definitions.Menu.ts:162
+msgid "Sum"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:193
+msgid "Selection count"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:389
+msgid ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:439
+msgid "Select multiple cells"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:456
+msgid "Selection mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:534
+msgid "Set Language for All text"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:537
+msgid "Set Language for Paragraph"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:538
+msgid "Set Language for Selection"
+msgstr ""
+
+#: src/control/Control.Tabs.js:53
+msgid "Insert sheet before this"
+msgstr ""
+
+#: src/control/Control.Tabs.js:58
+msgid "Insert sheet after this"
+msgstr ""
+
+#: src/control/Control.Tabs.js:97
+msgid "Move Sheet Left"
+msgstr ""
+
+#: src/control/Control.Tabs.js:103
+msgid "Move Sheet Right"
+msgstr ""
+
+#: src/control/Control.Tabs.js:114
+msgid "Copy Sheet..."
+msgstr ""
+
+#: src/control/Control.Tabs.js:395
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr ""
+
+#: src/control/Control.Tabs.js:406
+msgid "Rename sheet"
+msgstr ""
+
+#: src/control/Control.Tabs.js:406
+msgid "Enter new sheet name"
+msgstr ""
+
+#: src/control/Control.Toolbar.js:968
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to "
+"resolve"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:109
+msgid "Active Sheet"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:123
+msgid "Default Style"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:189
+msgid "Insert table"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:192
+msgid "Insert shapes"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:194
+msgid "Insert connectors"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1099
+msgid "Hide Menu"
+msgstr ""
+
+#: src/control/Control.UIManager.ts:325
+msgid "Enter new name"
+msgstr ""
+
+#: src/control/Control.UIManager.ts:1126
+msgid "Show Menu"
+msgstr ""
+
+#: src/control/Control.UserList.ts:56
+msgid "{user} has joined"
+msgstr ""
+
+#: src/control/Control.UserList.ts:57
+msgid "{user} has left"
+msgstr ""
+
+#: src/control/Control.UserList.ts:58
+msgid "Following {user}"
+msgstr ""
+
+#: src/control/Control.UserList.ts:59
+msgid "Following the editor"
+msgstr ""
+
+#: src/control/Control.UserList.ts:60
+msgid "Stop following"
+msgstr ""
+
+#: src/control/Control.UserList.ts:61
+msgid "Avatar for {user}"
+msgstr ""
+
+#: src/control/Control.UserList.ts:81
+msgid "%n users"
+msgstr ""
+
+#: src/control/Control.UserList.ts:82
+msgid "1 user"
+msgstr ""
+
+#: src/control/Control.UserList.ts:83
+msgid "0 users"
+msgstr ""
+
+#: src/control/Control.UserList.ts:87
+msgid "User List Summary"
+msgstr ""
+
+#: src/control/Control.UserList.ts:495
+msgid "Following"
+msgstr ""
+
+#: src/control/Control.UserList.ts:552
+msgid "Always follow the editor"
+msgstr ""
+
+#: src/control/Control.Zotero.js:143
+msgid "Zotero API key is not configured"
+msgstr ""
+
+#: src/control/Control.Zotero.js:162
+msgid "Zotero API key is incorrect"
+msgstr ""
+
+#: src/control/Control.Zotero.js:189
+msgid "Zotero Warning"
+msgstr ""
+
+#: src/control/Control.Zotero.js:190
+msgid ""
+"The document contains some citations which may be unreachable through web "
+"API. It may cause some problems while editing citations or bibliography."
+msgstr ""
+
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1378
+msgid "Loading..."
+msgstr ""
+
+#: src/control/Control.Zotero.js:257 src/control/Control.Zotero.js:454
+#: src/slideshow/PresenterConsole.js:31
+#: src/slideshow/SlideShowPresenter.ts:651
+msgid "Previous"
+msgstr ""
+
+#: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
+#: src/slideshow/PresenterConsole.js:32
+#: src/slideshow/SlideShowPresenter.ts:659
+msgid "Next"
+msgstr ""
+
+#: src/control/Control.Zotero.js:292
+msgid "Language:"
+msgstr ""
+
+#: src/control/Control.Zotero.js:307
+msgid "Store as:"
+msgstr ""
+
+#: src/control/Control.Zotero.js:313 src/control/Control.Zotero.js:436
+msgid "Fields"
+msgstr ""
+
+#: src/control/Control.Zotero.js:314 src/control/Control.Zotero.js:436
+msgid "Bookmarks"
+msgstr ""
+
+#: src/control/Control.Zotero.js:434
+msgid "Footnotes"
+msgstr ""
+
+#: src/control/Control.Zotero.js:434
+msgid "Endnotes"
+msgstr ""
+
+#: src/control/Control.Zotero.js:521
+msgid "My Publications"
+msgstr ""
+
+#: src/control/Control.Zotero.js:527 src/control/Control.Zotero.js:746
+msgid "My Library"
+msgstr ""
+
+#: src/control/Control.Zotero.js:528
+msgid "Group Libraries"
+msgstr ""
+
+#: src/control/Control.Zotero.js:762
+msgid "Failed to load groups"
+msgstr ""
+
+#: src/control/Control.Zotero.js:780 src/control/Control.Zotero.js:1124
+msgid "Failed to load collections"
+msgstr ""
+
+#: src/control/Control.Zotero.js:788
+msgid "Loading references"
+msgstr ""
+
+#: src/control/Control.Zotero.js:822
+msgid "Citation Style"
+msgstr ""
+
+#: src/control/Control.Zotero.js:827
+msgid "Styles"
+msgstr ""
+
+#: src/control/Control.Zotero.js:827
+msgid "An error occurred while fetching style list"
+msgstr ""
+
+#: src/control/Control.Zotero.js:835
+msgid "Failed to load styles"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
+msgid "Title"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
+msgid "Creator(s)"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
+msgid "Your library is empty"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1164
+msgid "Failed to load items"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1216
+msgid "Citation warning"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1217
+msgid ""
+"Once citations are entered their storage and display type can not be "
+"changed."
+msgstr ""
+
+#: src/control/Control.Zotero.js:1218 src/control/Control.Zotero.js:1533
+msgid "Confirm"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1337
+msgid "Add Note"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
+msgid "Notes"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1340
+msgid "An error occurred while fetching notes"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1471
+msgid "Updated citations"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1473
+msgid "Citations update failed"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1477
+msgid "Updating citations"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1532
+msgid ""
+"Unlinking citations will prevent Collabora Online from updating citations "
+"and bibliography in this document."
+msgstr ""
+
+#: src/control/HRuler.ts:614
+msgid "Left Margin"
+msgstr ""
+
+#: src/control/HRuler.ts:615
+msgid "Right Margin"
+msgstr ""
+
+#: src/control/HRuler.ts:921
+msgid "Insert tabstop"
+msgstr ""
+
+#: src/control/HRuler.ts:928
+msgid "Delete tabstop"
+msgstr ""
+
+#: src/control/Parts.js:483
+msgid "Show sheets"
+msgstr ""
+
+#: src/control/Permission.js:27 src/control/Permission.js:28
+msgid "Edit document"
+msgstr ""
+
+#: src/control/Permission.js:85
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:87 src/control/Permission.js:97
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:95
+msgid "The document could not be locked."
+msgstr ""
+
+#: src/control/Permission.js:149
+msgid "Enter a file name"
+msgstr ""
+
+#: src/control/Permission.js:168
+msgid "Save as ODF format"
+msgstr ""
+
+#: src/control/Permission.js:169
+msgid "Continue editing"
+msgstr ""
+
+#: src/control/Permission.js:169
+msgid "Continue read only"
+msgstr ""
+
+#: src/control/Permission.js:182
+msgid ""
+"This document may contain formatting or content that cannot be saved in the "
+"current file format."
+msgstr ""
+
+#: src/control/Signing.js:21
+msgid "The document is not signed."
+msgstr ""
+
+#: src/control/Signing.js:32
+msgid "This document is digitally signed and the signature is valid."
+msgstr ""
+
+#: src/control/Signing.js:36
+msgid "This document has an invalid signature."
+msgstr ""
+
+#: src/control/Signing.js:40
+msgid "The signature was valid, but the document has been modified."
+msgstr ""
+
+#: src/control/Signing.js:44
+msgid "The signature is OK, but the certificate could not be validated."
+msgstr ""
+
+#: src/control/Signing.js:48
+msgid "The signature is OK, but the document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:52
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Toolbar.js:253 src/control/Toolbar.js:266
+msgid "Downloading..."
+msgstr ""
+
+#: src/control/Toolbar.js:282 src/control/jsdialog/Widget.HTMLContent.ts:175
+msgid "Saving..."
+msgstr ""
+
+#: src/control/Toolbar.js:301
+msgid "Renaming..."
+msgstr ""
+
+#: src/control/VRuler.ts:363
+msgid "Top Margin"
+msgstr ""
+
+#: src/control/VRuler.ts:364
+msgid "Bottom Margin"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:111
+#: src/control/jsdialog/Definitions.Menu.ts:1734
+msgid "Normal"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:116
+msgid "Wide"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:121
+msgid "Narrow"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:164
+msgid "Min"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:165
+msgid "Max"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1443
+msgid "Edit Single Sparkline"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1454
+msgid "Delete Single Sparkline"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1490
+msgid "Portrait"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1496
+msgid "Landscape"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1502
+msgid "A6"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1503
+msgid "A5"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1504
+msgid "A4"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1505
+msgid "A3"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1506
+msgid "B6 (ISO)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1507
+msgid "B5 (ISO)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1508
+msgid "B4 (ISO)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1509
+msgid "Letter"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1510
+msgid "Legal"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1511
+msgid "Long Bond"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1512
+msgid "Tabloid"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1513
+msgid "B6 (JIS)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1514
+msgid "B5 (JIS)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1515
+msgid "B4 (JIS)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1516
+msgid "16 Kai"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1517
+msgid "32 Kai"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1518
+msgid "Big 32 Kai"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1519
+msgid "User"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1520
+msgid "DL Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1521
+msgid "C6 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1522
+msgid "C6/5 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1523
+msgid "C5 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1524
+msgid "C4 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1527
+msgid "#6¾ Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1532
+msgid "#7¾ (Monarch) Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1535
+msgid "#9 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1536
+msgid "#10 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1537
+msgid "#11 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1538
+msgid "#12 Envelope"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1541
+msgid "Japanese Postcard"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1720
+msgid "Insert Local Image"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1726
+msgid "Insert Local Multimedia"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1732
+msgid "Very Tight"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1733
+msgid "Tight"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1735
+msgid "Loose"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1736
+msgid "Very Loose"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1766
+msgid "All users"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1771
+msgid "This user"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1869
+msgid "No Borders"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1875
+msgid "Left Border"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1881
+msgid "Right Border"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1887
+msgid "Left And Right Borders"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1893
+msgid "Top Border"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1899
+msgid "Bottom Border"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1905
+msgid "Top And Bottom Border"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1911
+msgid "Outer Border"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1917
+msgid "All Horizontal Lines"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1923
+msgid "Outer Border And Horizontal Lines"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1929
+msgid "Outer Border and Vertical Lines"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1935
+msgid "Outer Borders And All Inner lines"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1940
+msgid "Line color"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1951
+msgid "Line style"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1954
+msgid "Hairline (0.05 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1963
+msgid "Very thin (0.50 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1972
+msgid "Thin (0.75 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1981
+msgid "Medium (1.50 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1990
+msgid "Thick (2.25 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:1999
+msgid "Extra thick (4.50 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2008
+msgid "Double Hairline (1.10 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2017
+msgid "Double Hairline (2.35 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2026
+msgid "Thin/Medium (3.00 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2035
+msgid "Medium/Hairline (3.05 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2044
+msgid "Medium/Medium (4.50 pt)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2104
+msgid "Standard (4:3)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2109
+msgid "Widescreen (16:9)"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2119
+msgid "Blank Slide"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2120
+msgid "Title Slide"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2121
+msgid "Title, Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2122
+msgid "Title and 2 Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2123
+msgid "Title Only"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2124
+msgid "Centered Text"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2125
+msgid "Title, 2 Content and Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2126
+msgid "Title, Content and 2 Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2127
+msgid "Title, 2 Content over Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2128
+msgid "Title, Content over Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2129
+msgid "Title, 4 Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2130
+msgid "Title, 6 Content"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2131
+msgid "Vertical Title, Text, Chart"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2132
+msgid "Vertical Title, Vertical Text"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2133
+msgid "Title, Vertical Text"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2134
+msgid "Title, Vertical Text, Clipart"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2259
+msgid "Grayscale"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2264
+msgid "Black/White"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2269
+msgid "Watermark"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2277
+msgid "Insert comment"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:2281
+msgid "Comments list"
+msgstr ""
+
+#: src/control/jsdialog/Util.SnackbarController.ts:122
+msgid "Dismiss"
+msgstr ""
+
+#: src/control/jsdialog/Widget.ColorPicker.ts:46
+#: src/control/jsdialog/Widget.ColorPicker.ts:148
+msgid "Unknown color"
+msgstr ""
+
+#: src/control/jsdialog/Widget.ColorPicker.ts:228
+msgid "No fill"
+msgstr ""
+
+#: src/control/jsdialog/Widget.ColorPicker.ts:228
+msgid "Automatic"
+msgstr ""
+
+#: src/control/jsdialog/Widget.ColorPicker.ts:413
+msgid "Recent"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:98
+msgid "Top: {top}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:103
+msgid "Left: {left}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:113
+msgid "Bottom: {bottom}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:118
+msgid "Right: {right}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageMarginEntry.ts:142
+msgid "Custom Margins…"
+msgstr ""
+
+#: src/control/jsdialog/Widget.PageSizeEntry.ts:69
+msgid "More Paper Sizes..."
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:46
+msgid "Read-only"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:47
+#: src/control/jsdialog/Widget.HTMLContent.ts:55
+msgid "Permission Mode"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:54
+msgid "Edit mode"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:81
+msgid "Number of Pages. Click to open the Go to Page dialog box."
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:92
+msgid "Word Counter"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:101
+msgid "Number of Sheets"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:112
+msgid "Entering text mode"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:121
+msgid "Selection Mode"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:130
+msgid "Selected range of cells"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:139
+msgid "Choice of functions"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:148
+msgid "Number of Slides"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:159
+msgid "Number of Pages"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:170
+#: src/control/jsdialog/Widget.HTMLContent.ts:182
+msgid "Your changes have been saved"
+msgstr ""
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:194
+msgid "Show Comments"
+msgstr ""
+
+#: src/control/jsdialog/Widget.MobileBorderSelector.js:96
+msgid "Cell borders"
+msgstr ""
+
+#: src/control/jsdialog/Widget.SidebarContainers.ts:72
+msgid "More options for {1}"
+msgstr ""
+
+#: src/control/jsdialog/Widget.TreeView.ts:1511
+msgid "Headings and objects that you add to the document will appear here"
+msgstr ""
+
+#: src/core/Socket.js:69
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr ""
+
+#: src/core/Socket.js:702
+msgid "Server is now reachable. We have to refresh the page now."
+msgstr ""
+
+#: src/core/Socket.js:704
+msgid "Server is now reachable..."
+msgstr ""
+
+#: src/core/Socket.js:708
+msgid "RELOAD"
+msgstr ""
+
+#: src/core/Socket.js:721
+msgid "Cluster configuration warning"
+msgstr ""
+
+#: src/core/Socket.js:724
+msgid "Wrong server, reconnecting..."
+msgstr ""
+
+#: src/core/Socket.js:733
+msgid "COOLWSD version:"
+msgstr ""
+
+#: src/core/Socket.js:758
+msgid "Served by:"
+msgstr ""
+
+#: src/core/Socket.js:764
+msgid "Unsupported server version."
+msgstr ""
+
+#: src/core/Socket.js:768
+msgid "LOKit version:"
+msgstr ""
+
+#: src/core/Socket.js:893
+msgid "Document is getting migrated"
+msgstr ""
+
+#: src/core/Socket.js:920
+msgid "Session terminated by document owner"
+msgstr ""
+
+#: src/core/Socket.js:931
+msgid "Server is shutting down for maintenance (auto-saving)"
+msgstr ""
+
+#: src/core/Socket.js:937
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
+#: src/core/Socket.js:941
+msgid "Server is down, restarting automatically. Please wait."
+msgstr ""
+
+#: src/core/Socket.js:968
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:974
+msgid ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr ""
+
+#: src/core/Socket.js:980
+msgid "Reloading the document after rename"
+msgstr ""
+
+#: src/core/Socket.js:1139
+msgid "Document requires password to view."
+msgstr ""
+
+#: src/core/Socket.js:1142
+msgid "Document requires password to modify."
+msgstr ""
+
+#: src/core/Socket.js:1144
+msgid "Hit Cancel to open in view-only mode."
+msgstr ""
+
+#: src/core/Socket.js:1148
+msgid "Wrong password provided. Please try again."
+msgstr ""
+
+#: src/core/Socket.js:1186
+msgid "Only the document owner can change the password."
+msgstr ""
+
+#: src/core/Socket.js:1217 src/core/Socket.js:1222
+msgid "Missing Fonts"
+msgstr ""
+
+#: src/core/Socket.js:1254
+msgid "Someone"
+msgstr ""
+
+#: src/core/Socket.js:1255
+msgid "{username} saved this document as {filename}. Do you want to join?"
+msgstr ""
+
+#: src/core/Socket.js:1272
+msgid "The document is being renamed and will reload shortly"
+msgstr ""
+
+#: src/core/Socket.js:1275
+msgid "The document is switching to Offline mode and will reload shortly"
+msgstr ""
+
+#: src/core/Socket.js:1378
+msgid "Connecting..."
+msgstr ""
+
+#: src/core/Socket.js:1393
+msgid "Server is shutting down"
+msgstr ""
+
+#: src/core/Socket.js:1433
+msgid "Exported to storage"
+msgstr ""
+
+#: src/core/Socket.js:1433
+msgid "Successfully exported: "
+msgstr ""
+
+#: src/core/Socket.js:1461
+msgid "Discard"
+msgstr ""
+
+#: src/core/Socket.js:1473
+msgid "Save to new file"
+msgstr ""
+
+#: src/core/Socket.js:1483
+msgid "Document has been changed"
+msgstr ""
+
+#: src/core/Socket.js:1484
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr ""
+
+#: src/core/Socket.js:1749
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr ""
+
+#: src/core/Socket.js:1766
+msgid "Reconnecting..."
+msgstr ""
+
+#: src/core/Socket.js:1776
+msgid "The server has been disconnected."
+msgstr ""
+
+#: src/docdispatcher.ts:533
+msgid "Are you sure you want to delete this slide?"
+msgstr ""
+
+#: src/docdispatcher.ts:536
+msgid "Are you sure you want to delete this page?"
+msgstr ""
+
+#: src/docstate.ts:115
+msgid "Standard"
+msgstr ""
+
+#: src/docstate.ts:260
+msgid "Theme colors"
+msgstr ""
+
+#: src/docstate.ts:261
+msgid "Document colors"
+msgstr ""
+
+#: src/docstatefunctions.js:247
+msgid ", cluster configuration error: mis-matching serverid"
+msgstr ""
+
+#: src/dom/NotebookbarAccessibility.js:234
+msgid "{0} tab selected"
+msgstr ""
+
+#: src/errormessages.js:22
+msgid "No disk space left on server."
+msgstr ""
+
+#: src/errormessages.js:23
+msgid ""
+"The host URL is empty. The coolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+
+#: src/errormessages.js:24
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears "
+"when more than {docs} documents or {connections} connections are in use "
+"concurrently."
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "More information and support"
+msgstr ""
+
+#: src/errormessages.js:26
+msgid ""
+"This service is limited to {0} documents, and {1} connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+
+#: src/errormessages.js:27
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+
+#: src/errormessages.js:28
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+
+#: src/errormessages.js:29
+msgid "Authorization error was: '{errormessage}'."
+msgstr ""
+
+#: src/errormessages.js:30
+msgid "Wrong or missing WOPISrc parameter, please contact support."
+msgstr ""
+
+#: src/errormessages.js:31
+msgid ""
+"Your session will expire in {time}. Please save your work and refresh the "
+"session (or webpage) to continue. You might need to login again."
+msgstr ""
+
+#: src/errormessages.js:32
+msgid ""
+"Your session has expired. Further changes to the document might not be "
+"saved. Please refresh the session (or webpage) to continue. You might need "
+"to login again."
+msgstr ""
+
+#: src/errormessages.js:33
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+
+#: src/errormessages.js:34
+msgid "Invalid link: '{url}'"
+msgstr ""
+
+#: src/errormessages.js:35
+msgid ""
+"You are leaving the document. The following web page will open in a new "
+"tab: "
+msgstr ""
+
+#: src/errormessages.js:36
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+
+#: src/errormessages.js:37
+msgid "Cleaning up the document from the last session."
+msgstr ""
+
+#: src/errormessages.js:38
+msgid ""
+"We are in the process of cleaning up this document from the last session, "
+"please try again later."
+msgstr ""
+
+#: src/errormessages.js:39
+msgid ""
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
+"please contact your system administrator. Continuing with editing may "
+"result in multiple users not seeing each other, conflicts in the document "
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken "
+"{1} but connected to serverId {2}"
+msgstr ""
+
+#: src/errormessages.js:40
+msgid ""
+"Failed to establish socket connection or socket connection closed "
+"unexpectedly. The reverse proxy might be misconfigured, please contact the "
+"administrator. For more info on proxy configuration please checkout https://"
+"sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
+msgstr ""
+
+#: src/errormessages.js:41
+msgid ""
+"Failed to establish socket connection or socket connection closed "
+"unexpectedly."
+msgstr ""
+
+#: src/errormessages.js:44
+msgid "Failed to load document."
+msgstr ""
+
+#: src/errormessages.js:45
+msgid "Save failed due to no disk space left. Document will now be read-only."
+msgstr ""
+
+#: src/errormessages.js:46
+msgid ""
+"The document is too large or no disk space left to save. Document will now "
+"be read-only."
+msgstr ""
+
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
+msgstr ""
+
+#: src/errormessages.js:48
+msgid "Document cannot be saved."
+msgstr ""
+
+#: src/errormessages.js:49
+msgid "Document cannot be renamed."
+msgstr ""
+
+#: src/errormessages.js:53
+msgid ""
+"Failed to read document from storage, please try to load the document again."
+msgstr ""
+
+#: src/errormessages.js:54
+msgid ""
+"Save failed due to no storage space left. Document will now be read-only. "
+"Please make sure enough disk space is available and try to save again."
+msgstr ""
+
+#: src/errormessages.js:55
+msgid ""
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
+msgstr ""
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
+
+#: src/errormessages.js:57
+msgid "Document cannot be saved, please check your permissions."
+msgstr ""
+
+#: src/errormessages.js:58
+msgid "Document cannot be renamed, please check your permissions."
+msgstr ""
+
+#: src/errormessages.js:59
+msgid "Document cannot be exported. Please try again."
+msgstr ""
+
+#: src/errormessages.js:64
+msgid "Uploading file to server failed, file not found."
+msgstr ""
+
+#: src/errormessages.js:65
+msgid "Uploading file to server failed, the file is too large."
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:235
+msgid "Out of table"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:238
+msgid "Table with {0} rows and {1} columns"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:243
+msgid "Row {0} through {1}"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:246
+msgid "Row {0}"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:254
+msgid "Column {0} through {1}"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:257
+msgid "Column {0}"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:285
+msgid "Editing activated. "
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:304
+msgid "{0} selected"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:306
+msgid "Has text: "
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:311
+msgid "{0} unselected"
+msgstr ""
+
+#: src/layer/marker/A11yTextInput.js:315
+msgid "{0} deleted"
+msgstr ""
+
+#: src/layer/marker/TextInput.js:451
+msgid "Screen reader support for text content is disabled. "
+msgstr ""
+
+#: src/layer/marker/TextInput.js:452
+msgid "You need to enable it both at server level and in the UI. "
+msgstr ""
+
+#: src/layer/marker/TextInput.js:453
+msgid "Look for the accessibility section in coolwsd.xml for server setting. "
+msgstr ""
+
+#: src/layer/marker/TextInput.js:454
+msgid "Also check the voice over toggle under {parentControl}."
+msgstr ""
+
+#: src/layer/marker/TextInput.js:456
+msgid "the Help tab"
+msgstr ""
+
+#: src/layer/marker/TextInput.js:456
+msgid "the View menu"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:1581
+msgid "Functions"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:1841
+msgid "Named Range"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:3481
+msgid "No Comments"
+msgstr ""
+
+#: src/main.js:134
+msgid "Warning! The browser you are using is not supported."
+msgstr ""
+
+#: src/map/Clipboard.js:176
+msgid ""
+"To paste outside {productname}, please first click the 'download' button"
+msgstr ""
+
+#: src/map/Clipboard.js:184
+msgid "Copying from the document disabled"
+msgstr ""
+
+#: src/map/Clipboard.js:285
+msgid "warning: copy/paste request timed out"
+msgstr ""
+
+#: src/map/Clipboard.js:329
+msgid "Failed to download clipboard, please re-copy"
+msgstr ""
+
+#: src/map/Clipboard.js:1318
+msgid ""
+"Your browser has very limited access to the clipboard, so please use the "
+"paste buttons on your on-screen keyboard instead."
+msgstr ""
+
+#: src/map/Clipboard.js:1374
+msgid ""
+"A download due to a large copy/paste operation has already started. Please, "
+"wait for the current download or cancel it before starting a new one"
+msgstr ""
+
+#: src/map/Clipboard.js:1396
+msgid "Paste from this document"
+msgstr ""
+
+#: src/map/Clipboard.js:1396
+msgid "Cancel paste special"
+msgstr ""
+
+#: src/map/Clipboard.js:1418
+msgid "Your browser has very limited access to the clipboard"
+msgstr ""
+
+#: src/map/Clipboard.js:1423
+msgid "Please use following combination to see more options:"
+msgstr ""
+
+#: src/map/Clipboard.js:1441
+msgid "Close popup to ignore paste special"
+msgstr ""
+
+#: src/map/Map.js:218
+msgid "Initializing..."
+msgstr ""
+
+#: src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503 src/map/Map.js:506
+msgid "Last saved:"
+msgstr ""
+
+#: src/map/Map.js:1513
+msgid "Please wait!"
+msgstr ""
+
+#: src/map/handler/Map.Feedback.js:95
+msgid "Please send us your feedback"
+msgstr ""
+
+#: src/map/handler/Map.FileInserter.js:174
+msgid ""
+"The file of type: {0} cannot be uploaded to server since the file has no "
+"name"
+msgstr ""
+
+#: src/map/handler/Map.FileInserter.js:176
+msgid ""
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr ""
+
+#: src/map/handler/Map.FileInserter.js:214
+msgid "Uploading..."
+msgstr ""
+
+#: src/map/handler/Map.FileInserter.js:239
+msgid "Uploading file to server failed with status: {0}"
+msgstr ""
+
+#: src/map/handler/Map.Print.js:44
+msgid "Print dialog"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:59
+#: src/slideshow/SlideShowPresenter.ts:1000
+msgid "Empty Slide Show"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:167
+#: src/slideshow/SlideShowPresenter.ts:1028
+msgid "Windowed Presentation Blocked"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:168
+#: src/slideshow/SlideShowPresenter.ts:1030
+msgid ""
+"Presentation was blocked. Please allow pop-ups in your browser. This lets "
+"slide shows to be displayed in separated windows, allowing for easy screen "
+"sharing."
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:172
+#: src/slideshow/SlideShowPresenter.ts:830
+msgid "Windowed Presentation: "
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:202
+#: src/slideshow/SlideShowPresenter.ts:872
+msgid "Presenting in window"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:203
+#: src/slideshow/SlideShowPresenter.ts:873
+msgid "Close Presentation"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:230
+msgid "Presenting in fullscreen"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:231
+msgid "End Presentation"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:295
+#: src/slideshow/SlideShowPresenter.ts:1015
+msgid "Already presenting"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:296
+#: src/slideshow/SlideShowPresenter.ts:1016
+msgid "You are already presenting this document"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:306
+#: src/slideshow/SlideShowPresenter.ts:1053
+msgid "Presentation disabled"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:307
+#: src/slideshow/SlideShowPresenter.ts:1054
+msgid "Presentation mode has been disabled for this document"
+msgstr ""
+
+#: src/map/handler/Map.VersionBar.js:50
+msgid "Your Collabora Online server needs updating. Version {0} is available."
+msgstr ""
+
+#: src/map/handler/Map.WOPI.js:176
+msgid "Creating new file from template..."
+msgstr ""
+
+#: src/map/handler/Map.WOPI.js:695
+msgid "File name should contain an extension."
+msgstr ""
+
+#: src/map/handler/Map.WOPI.js:703
+msgid "Creating copy..."
+msgstr ""
+
+#: src/map/handler/Map.Welcome.js:92
+msgid "Welcome Dialog"
+msgstr ""
+
+#: src/slideshow/PauseTimer.ts:141
+msgid "Pause... ( %SECONDS% )"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:29
+msgid "Current Slide"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:30
+msgid "Next Slide"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:35
+msgid "Pause"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:36
+msgid "Restart"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:37
+msgid "Resume"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:38
+msgid "Go Back"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:39
+msgid "Zoom In"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:40
+msgid "Zoom Out"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:178
+msgid "Preview Slide {1}"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:1241
+msgid "Slide {0} of {1}"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:1265
+msgid "No Notes"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:1353
+msgid "Repeat in {0} seconds"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:1358
+#: src/slideshow/SlideShowPresenter.ts:529
+msgid "Click to exit presentation..."
+msgstr ""
+
+#: src/slideshow/SlideShowPresenter.ts:643
+msgid "End Show"
+msgstr ""
+
+#: src/slideshow/SlideShowPresenter.ts:671
+#: src/slideshow/SlideShowPresenter.ts:683
+msgid "Disable Animations"
+msgstr ""
+
+#: src/slideshow/SlideShowPresenter.ts:682
+msgid "Enable Animations"
+msgstr ""
+
+#: src/slideshow/SlideShowPresenter.ts:694
+msgid "Follow Presentation"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.head.title:9-3
+msgid "Collabora Online Welcome"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
+msgid "Explore The New {coolversion}"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
+msgid "Collabora Online Development Edition"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
+msgid ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. Various <a "
+"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
+"collabora-office-android-ios/\">apps</a> are also available for mobile."
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
+msgid "Discover All The Changes"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
+msgid ""
+"Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
+"code-25-04-release-notes/\">release notes</a> and learn all about: The "
+"latest Collabora Online Development Edition, aimed at home users and small "
+"teams."
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
+msgid "Get Involved"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
+msgid "https://collaboraonline.github.io/"
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
+msgid ""
+"Are you interested in contributing but don’t know where to start? Head over "
+"to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
+"You can also help out with <a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
+"\">filing a bug report</a> with all the essential steps on how to reproduce "
+"it."
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div:55-5
+msgid ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
+msgstr ""
