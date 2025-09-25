@@ -1723,7 +1723,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'children': [
 									{
 										'id': 'insert-vertical-text',
-										'type': 'toolitem',
+										'type': app.LOUtil.isFileODF(this.map) ? 'toolitem' : 'bigtoolitem',
 										'text': _UNO('.uno:VerticalText', 'presentation'),
 										'command': '.uno:VerticalText',
 										'accessibility': { focusBack: true, combination: 'VT', de: null }
