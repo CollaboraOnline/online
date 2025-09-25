@@ -52,6 +52,9 @@
 #include <common/Uri.hpp>
 #include <common/Watchdog.hpp>
 #include <kit/DeltaSimd.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 static bool NoCapsForKit = false;
 static bool NoSeccomp = false;
@@ -84,6 +87,18 @@ static std::map<pid_t, std::string> subForKitPids;
 static std::unique_ptr<SocketPoll> ForKitPoll;
 
 extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
+
+// Tell the linker to wrap 'open' and map to '__wrap_open'
+// Calls to __real_open will be mapped back to the real open()
+extern "C" {
+int __real_open(const char *pathname, int flags, mode_t mode);
+
+int __wrap_open(const char *pathname, int flags, mode_t mode)
+{
+//    printf("Intercepted call to open(): %s\n", pathname);
+    return __real_open(pathname, flags, mode);
+}
+}
 
 void dump_forkit_state()
 {
@@ -329,7 +344,7 @@ static void cleanupChildren(const std::string& childRoot)
                     ++segFaultCount;
 
                     std::string noteCrashFile(it->second + "/tmp/kit-crashed");
-                    int noteCrashFD = open(noteCrashFile.c_str(), O_CREAT | O_TRUNC | O_WRONLY,
+                    int noteCrashFD = __real_open(noteCrashFile.c_str(), O_CREAT | O_TRUNC | O_WRONLY,
                                            S_IRUSR | S_IWUSR);
                     if (noteCrashFD < 0)
                         LOG_ERR("Couldn't create file: " << noteCrashFile
