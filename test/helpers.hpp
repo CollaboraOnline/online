@@ -177,7 +177,6 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
 {
     const std::string testname = prefix;
 
-
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
     documentPath = getTempFileCopyPath(TDOC, docFilename, prefix);
     std::string encodedUri;
