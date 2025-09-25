@@ -59,7 +59,7 @@ function getPermissionModeElements(
 	return permissionModeDiv;
 }
 
-function getStatusbarItemElements(
+function getStatusbarItemElement(
 	id: string,
 	title: string,
 	text: string,
@@ -76,7 +76,7 @@ function getStatusbarItemElements(
 }
 
 function getPageNumberElements(text: string, builder: any) {
-	const element = getStatusbarItemElements(
+	const element = getStatusbarItemElement(
 		'StatePageNumber',
 		_('Number of Pages. Click to open the Go to Page dialog box.'),
 		text,
@@ -87,7 +87,7 @@ function getPageNumberElements(text: string, builder: any) {
 }
 
 function getWordCountElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	return getStatusbarItemElement(
 		'StateWordCount',
 		_('Word Counter'),
 		text,
@@ -96,7 +96,7 @@ function getWordCountElements(text: string, builder: any) {
 }
 
 function getStatusDocPosElements(text: string, builder: any) {
-	const element = getStatusbarItemElements(
+	const element = getStatusbarItemElement(
 		'StatusDocPos',
 		_('Number of Sheets'),
 		text,
@@ -107,7 +107,7 @@ function getStatusDocPosElements(text: string, builder: any) {
 }
 
 function getInsertModeElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	return getStatusbarItemElement(
 		'InsertMode',
 		_('Entering text mode'),
 		text,
@@ -116,7 +116,7 @@ function getInsertModeElements(text: string, builder: any) {
 }
 
 function getSelectionModeElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	return getStatusbarItemElement(
 		'StatusSelectionMode',
 		_('Selection Mode'),
 		text,
@@ -125,7 +125,7 @@ function getSelectionModeElements(text: string, builder: any) {
 }
 
 function getRowColSelCountElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	return getStatusbarItemElement(
 		'RowColSelCount',
 		_('Selected range of cells'),
 		text,
@@ -134,7 +134,7 @@ function getRowColSelCountElements(text: string, builder: any) {
 }
 
 function getStateTableCellElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	return getStatusbarItemElement(
 		'StateTableCell',
 		_('Choice of functions'),
 		text,
@@ -143,7 +143,7 @@ function getStateTableCellElements(text: string, builder: any) {
 }
 
 function getSlideStatusElements(text: string, builder: any) {
-	const element = getStatusbarItemElements(
+	const element = getStatusbarItemElement(
 		'SlideStatus',
 		_('Number of Slides'),
 		text,
@@ -154,7 +154,7 @@ function getSlideStatusElements(text: string, builder: any) {
 }
 
 function getPageStatusElements(text: string, builder: any) {
-	const element = getStatusbarItemElements(
+	const element = getStatusbarItemElement(
 		'PageStatus',
 		_('Number of Pages'),
 		text,
@@ -165,7 +165,7 @@ function getPageStatusElements(text: string, builder: any) {
 }
 
 function getDocumentStatusElements(text: string, builder: any) {
-	const docstat = getStatusbarItemElements(
+	const docstat = getStatusbarItemElement(
 		'DocumentStatus',
 		_('Your changes have been saved'),
 		'',
@@ -189,7 +189,7 @@ function getDocumentStatusElements(text: string, builder: any) {
 }
 
 function getShowCommentsStatusElements(text: string, builder: any) {
-	return getStatusbarItemElements(
+	return getStatusbarItemElement(
 		'ShowComments',
 		_('Show Comments'),
 		text,
