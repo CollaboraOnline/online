@@ -650,20 +650,19 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'children': [
 							{
 								'id': 'home-grid-visible',
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _('Show Grid'),
 								'command': '.uno:GridVisible',
 								'accessibility': { focusBack: true, combination: 'GV', de: null }
 							},
 							{
 								'id': 'home-grid-use',
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _('Snap to Grid'),
 								'command': '.uno:GridUse',
 								'accessibility': { focusBack: true, combination: 'GU', de: null }
 							}
 						],
-						'vertical': 'true'
 					},
 				]
 			},
