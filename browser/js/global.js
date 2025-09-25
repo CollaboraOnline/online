@@ -1172,6 +1172,7 @@ function getInitializerClass() {
 		this.minIdlePollsToThrottle = 3; // This many 'no data' responses and we throttle.
 		this.throttleFactor = 1.15; // How rapidly to throttle. 15% takes 4s to go from 25 to 500ms.
 		this.lastDataTimestamp = performance.now(); // The last time we got any data.
+		this.serialQueue = new Map();
 		this.onclose = function() {
 		};
 		this.onerror = function() {
@@ -1185,8 +1186,28 @@ function getInitializerClass() {
 		this.decode = function(bytes,start,end) {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
+		this.processBufferedMessages = function (expectedSerial) {
+			while (this.serialQueue.size !== 0) {
+				if (!this.serialQueue.has(expectedSerial))
+					break;
+
+				let bufferedMessage = this.serialQueue.set(expectedSerial);
+				this.inSerial = bufferedMessage.serial;
+
+				try {
+					this.onmessage({ data: bufferedMessage.data });
+				} catch (e) {
+					global.app.console.error(e);
+					global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
+					// It's better to ignore any failures rather than to lose the rest of the messages in this packet
+				}
+
+				this.serialQueue.delete(expectedSerial);
+				expectedSerial++;
+			}
+		},
 		this.parseIncomingArray = function(arr) {
-			//global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
+			// global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
 				var left = arr.length - i;
@@ -1240,16 +1261,27 @@ function getInitializerClass() {
 				else
 					data = this.doSlice(arr, i, i + size);
 
-				if (serial !== that.inSerial + 1) {
-					global.app.console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
-				}
-				that.inSerial = serial;
-				try {
-					this.onmessage({ data: data });
-				} catch (e) {
-					global.app.console.error(e);
-					global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
-					// It's better to ignore any failures rather than to lose the rest of the messages in this packet
+				if (serial === that.inSerial + 1) {
+					that.inSerial = serial;
+
+					try {
+						this.onmessage({ data: data });
+					} catch (e) {
+						global.app.console.error(e);
+						global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
+						// It's better to ignore any failures rather than to lose the rest of the messages in this packet
+					}
+					this.processBufferedMessages(serial + 1);
+				} else {
+					this.serialQueue.set(serial, {
+						'data': data,
+						'serial': serial
+					});
+
+					if (serial > this.inSerial + 5) {
+						this.inSerial = serial - 1;
+						this.processBufferedMessages(this.inSerial + 1);
+					}
 				}
 
 				i += size; // skip trailing '\n' in loop-increment
