@@ -1731,9 +1731,6 @@ function getInitializerClass() {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
 			}).join('&');
 		}
-	} else if (global.ThisIsTheEmscriptenApp) {
-		// This is of course just a horrible temporary hack
-		global.docURL = 'file:///sample.docx';
 	} else {
 		global.docURL = filePath;
 	}

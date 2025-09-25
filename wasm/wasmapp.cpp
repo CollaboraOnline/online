@@ -20,12 +20,13 @@
 
 #include <emscripten/fetch.h>
 
+#include <cstdlib>
+
 int coolwsd_server_socket_fd = -1;
 
 const char* user_name;
 
-#define FILE_PATH "/sample.docx"
-static std::string fileURL = "file://" FILE_PATH;
+static std::string fileURL;
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
@@ -247,18 +248,24 @@ int main(int argc, char* argv_main[])
                 {
                     printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
                            fetch->url);
-                    // For now, we have a hard-coded filename that we open. Clobber it.
+                    char const FILE_PATH[] = "/tempdoc";
                     FILE* f = fopen(FILE_PATH, "w");
                     const int wrote = fwrite(fetch->data, 1, fetch->numBytes, f);
                     fclose(f);
-                    printf("Wrote %d bytes into " FILE_PATH "\n", wrote);
+                    printf("Wrote %d bytes into %s\n", wrote, FILE_PATH);
+                    fileURL = std::string("file://") + FILE_PATH;
                 }
                 else
                 {
                     printf("Downloading %s failed, HTTP failure status code: %d.\n", fetch->url,
                            fetch->status);
+                    std::exit(EXIT_FAILURE); //TODO: error handling
                 }
                 emscripten_fetch_close(fetch);
+            }
+            else
+            {
+                fileURL = docURL;
             }
 
             coolwsd = new COOLWSD();

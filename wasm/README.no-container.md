@@ -60,12 +60,10 @@ This will install into `/opt/poco.emsc.3.1.30`.
 
 ## Build Online itself
 
-    # 1. Update the directories in the command below to match your system.
-    # 2. Make sure that a document called sample.docx exists in the root of
-    #    the directory set as --with-wasm-additional-files.
+    # Update the directories in the command below to match your system.
 
     ./autogen.sh
-	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten --with-wasm-additional-files=/home/tml/lo/online-hacking/my-sample-docs
+	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten
     emmake make CC=emcc CXX=em++
 
 ## Running WASM Online
@@ -73,8 +71,7 @@ This will install into `/opt/poco.emsc.3.1.30`.
 There are two modes in which you can use the Wasm binary, either served from a COOL instance or
 served stand-alone from a plain web server.
 
-Notice that as of now, in either mode only the default sample.docx will be loaded.
-But the below steps should get one up and running.
+The below steps should get one up and running.
 
 ### Served from a COOL instance
 
@@ -95,10 +92,14 @@ Either way, in the normal Online build directory, copy the wasm dist directory
 into the browser/dist, like this:
 cp -a dist_wasm browser/dist/wasm
 
-Now point your browser to https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/unused/path
+Now point your browser to some https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/existing/document
+(where /some/existing/document denotes some exisiting document made available by that server).
 
 ### Served stand-alone from a plain web server
 
 Once the build is done, you can serve the browser/dist tree from a web server (e.g., via `emrun
-browser/dist/cool.html`) and point your browser at that served cool.html page (e.g.,
-<http://localhost:6931/cool.html> for the emrun example).
+browser/dist/cool.html`) and point your browser at that served cool.html page with a
+file_path=/some/exisiting/document query paramter, where /some/exisiting/document is the absolute
+path of an exisiting document in the Emscripten file system (cf. online's
+--with-wasm-additional-files configure option; e.g., some
+<http://localhost:6931/cool.html?file_path=/test.odt> for the emrun example).
