@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-22 12:23+0200\n"
-"PO-Revision-Date: 2025-09-23 07:30+0000\n"
+"PO-Revision-Date: 2025-09-25 12:41+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
@@ -2799,7 +2799,7 @@ msgstr "Predstavi v oknu"
 
 #: src/control/Control.NotebookbarImpress.js:496
 msgid "Follow me Presentation"
-msgstr ""
+msgstr "Predstavitev Sledi mi"
 
 #: src/control/Control.NotebookbarImpress.js:622
 msgid "Slide Views"
