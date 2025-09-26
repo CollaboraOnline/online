@@ -206,7 +206,14 @@ void ProxyProtocolHandler::processBufferedMessages()
         uint64_t expectedSerial = _inSerial + 1;
         auto it = _serialQueue.find(expectedSerial);
         if (it == _serialQueue.end())
+        {
+            LOG_DBG("Cannot find serial[" << expectedSerial << ']');
             break;
+        }
+        else
+        {
+            LOG_DBG("Found serial[" << expectedSerial << ']');
+        }
 
         // Process the buffered message
         LOG_TRC("Processing serial[" << it->second->serial << ']');
@@ -272,7 +279,6 @@ void ProxyProtocolHandler::sendAndClose(const std::shared_ptr<StreamSocket> &str
     streamSocket->asyncShutdown();
 }
 
-// TODO: handle input that was not fully read by the previous message
 void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 {
     auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
