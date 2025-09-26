@@ -51,9 +51,9 @@ public:
 
     STATE_ENUM(
         ParseStatus,
-        SUCCESS, // true
-        PROTOCOL_ERROR, // false - but we should give up here and close the connection & session
-        AGAIN // false - but we should wait for more data to be read from the socket
+        AGAIN,         // we need to wait for more data to arrive
+        COMPLETE,      // we got a complete stream, and we're done
+        PROTOCOL_ERROR // the stream is mangled - terminate ...
     );
 
     /// Clear all external references
@@ -70,7 +70,7 @@ public:
 
     // Non-destructive message parsing
     ParseStatus parseEmitIncoming(const std::shared_ptr<StreamSocket>& socket);
-    ParseStatus hasCompleteMessage(const Buffer& in, size_t& frameSize);
+    bool hasCompleteMessage(const Buffer& in);
     void processBufferedMessages();
 
     void handleRequest(const std::shared_ptr<StreamSocket> &socket);
