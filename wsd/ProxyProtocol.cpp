@@ -230,6 +230,8 @@ void ProxyProtocolHandler::handleRequest(const std::shared_ptr<StreamSocket> &st
         switch (result)
         {
         case ParseStatus::SUCCESS:
+            sendAndClose(streamSocket);
+            break;
         case ParseStatus::AGAIN:
             break;
         case ParseStatus::PROTOCOL_ERROR:
@@ -242,7 +244,10 @@ void ProxyProtocolHandler::handleRequest(const std::shared_ptr<StreamSocket> &st
         }
         };
     }
+}
 
+void ProxyProtocolHandler::sendAndClose(const std::shared_ptr<StreamSocket> &streamSocket)
+{
     bool sentMsg = flushQueueTo(streamSocket);
     // FIXME: we should really restore a blocking 'wait' message
     if (!sentMsg)
@@ -277,6 +282,8 @@ void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
         break;
     }
     case ParseStatus::SUCCESS:
+        sendAndClose(streamSocket);
+        break;
     case ParseStatus::AGAIN:
         break;
     };

@@ -74,6 +74,7 @@ public:
     void processBufferedMessages();
 
     void handleRequest(const std::shared_ptr<StreamSocket> &socket);
+    void sendAndClose(const std::shared_ptr<StreamSocket> &socket);
 
     /// tell our handler we've received a close.
     void notifyDisconnected();
