@@ -577,7 +577,32 @@ class CanvasSectionContainer {
 		while (layoutingService.runTheTopTask());
 	}
 
+	private checkCanvasSizeAfterDisplayChanges(): boolean {
+		/*
+			If renewAllSections is called when canvas is invisible, its size is checked, and an invisible element's size seems 0.
+			That 0, since it is read, is applied to the canvas element.
+			When the element is made visible again, canvas size is still 0 (we set it manually).
+			To avoid this, we check if canvas size is 0, if it is, we check the document container's size.
+		*/
+		if (this.width === 0 || this.height === 0) {
+			const documentContainer = document.getElementById('document-container');
+			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
+				if (app.map._docLayer) {
+					app.map._docLayer._syncTileContainerSize(true);
+					app.activeDocument.activeView.sendClientVisibleArea();
+					this.requestReDraw();
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	private resizeCanvas() {
+		if (!this.checkCanvasSizeAfterDisplayChanges())
+			return;
+
 		if (!this.needsResize) {
 			return;
 		}
