@@ -226,6 +226,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	z-index: 11;
 }
 
+#toolbar-wrapper.hasnotebookbar #toolbar-up {
+	padding-inline-start: 5px;
+}
+
 .hasnotebookbar > #toolbar-row {
 	height: 82px;
 }
