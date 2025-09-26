@@ -28,7 +28,7 @@
 #include <common/Util.hpp>
 #include <Socket.hpp>
 
-#include <cassert>
+#include <memory>
 #include <string>
 
 void DocumentBroker::handleProxyRequest(
@@ -106,11 +106,45 @@ void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socke
 
     socket->send(httpResponse);
     socket->asyncShutdown();
-    return;
 }
 
-bool ProxyProtocolHandler::parseEmitIncoming(
-    const std::shared_ptr<StreamSocket> &socket)
+ProxyProtocolHandler::ParseStatus ProxyProtocolHandler::hasCompleteMessage(const Buffer& in, size_t& frameSize)
+{
+    // Find serial end
+    size_t pos = 1;
+    while (pos < in.size() && in[pos] != '\n')
+        pos++;
+    if (pos >= in.size())
+        return ParseStatus::AGAIN;
+    pos++; // Skip \n
+
+    // Find length end
+    size_t lengthStart = pos;
+    while (pos < in.size() && in[pos] != '\n')
+        pos++;
+    if (pos >= in.size())
+        return ParseStatus::AGAIN;
+
+    char lengthStr[32];
+    size_t lengthFieldSize = pos - lengthStart;
+    if (lengthFieldSize >= sizeof(lengthStr))
+        return ParseStatus::AGAIN;
+
+    std::memcpy(lengthStr, in.data() + lengthStart, lengthFieldSize);
+    lengthStr[lengthFieldSize] = '\0';
+    uint64_t contentLength = strtoull(lengthStr, nullptr, 16);
+
+    pos++; // Skip length's \n
+    frameSize = pos + contentLength + 1; // +1 for final \n
+
+    if (in.size() >= frameSize)
+        return ParseStatus::SUCCESS;
+
+    return ParseStatus::AGAIN;
+}
+
+ProxyProtocolHandler::ParseStatus
+ProxyProtocolHandler::parseEmitIncoming(const std::shared_ptr<StreamSocket>& socket)
 {
     Buffer& in = socket->getInBuffer();
 
@@ -119,58 +153,97 @@ bool ProxyProtocolHandler::parseEmitIncoming(
     socket->dumpState(oss);
     LOG_TRC("Parse message:\n" << oss.str());
 #endif
-
     while (in.size() > 0)
     {
-        // Type
+        size_t frameSize;
+
         if ((in[0] != 'T' && in[0] != 'B') || in.size() < 2)
         {
             LOG_ERR("Invalid message type " << in[0]);
-            return false;
+            return ParseStatus::PROTOCOL_ERROR;
         }
+
+        if (hasCompleteMessage(in, frameSize) == ParseStatus::AGAIN)
+        {
+            return ParseStatus::AGAIN; // Wait for more data
+        }
+
         auto it = in.begin() + 1;
 
-        // Serial
-        for (; it != in.end() && *it != '\n'; ++it);
+        for (; it != in.end() && *it != '\n'; ++it)
+            ;
         *it = '\0';
-        uint64_t serial = strtoll( &in[1], nullptr, 16 );
-        in.erase(in.begin(), it + 1);
-        if (in.size() < 2)
-        {
-            LOG_ERR("Invalid message framing size " << in.size());
-            return false;
-        }
 
-        // Length
+        uint64_t serial = strtoull(&in[1], nullptr, 16);
+        in.erase(in.begin(), it + 1);
+
         it = in.begin();
-        for (; it != in.end() && *it != '\n'; ++it);
+        for (; it != in.end() && *it != '\n'; ++it)
+            ;
         *it = '\0';
-        uint64_t len = strtoll( in.data(), nullptr, 16 );
+        uint64_t len = strtoull(in.data(), nullptr, 16);
         in.erase(in.begin(), it + 1);
-        if (len > in.size())
-        {
-            LOG_ERR("Invalid message length " << len << " vs " << in.size());
-            return false;
-        }
 
-        // far from efficient:
-        std::vector<char> data;
-        data.insert(data.begin(), in.begin(), in.begin() + len + 1);
+        std::vector<char> data(in.begin(), in.begin() + len);
         in.eraseFirst(len);
 
-        if (in.size() < 1 || in[0] != '\n')
-        {
-            LOG_ERR("Missing final newline");
-            return false;
-        }
-        in.eraseFirst(1);
+        LOG_TRC("Adding message with serial[" << serial << "] to queue");
+        _serialQueue[serial] = std::make_unique<BufferedMessage>(serial, data);
 
-        if (serial != _inSerial + 1)
-            LOG_ERR("Serial mismatch " << serial << " vs. " << (_inSerial + 1));
-        _inSerial = serial;
-        _msgHandler->handleMessage(data);
+        // Check for trailing \n after content
+        if (in.size() < 1 || in[0] != '\n')
+            return ParseStatus::AGAIN;
+
+        // Check what comes after the \n
+        if (in.size() >= 3 && in[1] == 'E' && in[2] == '\n')
+        {
+            in.eraseFirst(3); // Remove \nE\n
+            processBufferedMessages();
+            break;
+        }
+        else if (in.size() >= 2 && (in[1] == 'T' || in[1] == 'B'))
+        {
+            in.eraseFirst(1); // Remove just the \n, keep next message
+        }
+        else if (in.size() < 3)
+        {
+            return ParseStatus::AGAIN;
+        }
+        else
+        {
+            LOG_ERR("Invalid framing after message content");
+            return ParseStatus::PROTOCOL_ERROR;
+        }
     }
-    return true;
+    return ParseStatus::SUCCESS;
+}
+
+void ProxyProtocolHandler::processBufferedMessages()
+{
+    while (!_serialQueue.empty())
+    {
+        uint64_t expectedSerial = _inSerial + 1;
+        auto it = _serialQueue.find(expectedSerial);
+        if (it == _serialQueue.end())
+        {
+            LOG_DBG("Cannot find serial[" << expectedSerial << ']');
+            break;
+        }
+        else
+        {
+            LOG_DBG("Found serial[" << expectedSerial << ']');
+        }
+
+        // Process the buffered message
+        LOG_TRC("Processing serial[" << it->second->serial << ']');
+        _inSerial = it->second->serial;
+
+        if (_msgHandler)
+            _msgHandler->handleMessage(it->second->data);
+
+        _serialQueue.erase(it);
+        expectedSerial++;
+    }
 }
 
 void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<StreamSocket> &streamSocket)
@@ -182,56 +255,70 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
     {
         if (!_msgHandler)
             LOG_WRN("proxy: unusual - incoming message with no-one to handle it");
-        else if (!parseEmitIncoming(streamSocket))
+        else
         {
-            std::ostringstream oss(Util::makeDumpStateStream());
-            streamSocket->dumpState(oss);
-            LOG_ERR("proxy: bad socket structure " << oss.str());
+            ParseStatus result = parseEmitIncoming(streamSocket);
+            switch (result)
+            {
+                case ParseStatus::SUCCESS:
+                    sendAndClose(streamSocket);
+                    break;
+                case ParseStatus::AGAIN:
+                    break;
+                case ParseStatus::PROTOCOL_ERROR:
+                {
+                    std::ostringstream oss(Util::makeDumpStateStream());
+                    streamSocket->dumpState(oss);
+                    // TODO: We should shut down this connection and client session quite hard
+                    LOG_ERR("proxy: bad socket structure " << oss.str());
+                    break;
+                }
+            };
         }
     }
+}
 
+void ProxyProtocolHandler::sendAndClose(const std::shared_ptr<StreamSocket> &streamSocket)
+{
     bool sentMsg = flushQueueTo(streamSocket);
-    if (!sentMsg && isWaiting)
+    if (!sentMsg)
     {
-        LOG_TRC("proxy: queue a waiting out socket #" << streamSocket->getFD());
-        // longer running 'write socket' (marked 'read' by the client)
-        _outSockets.push_back(streamSocket);
-        if (_outSockets.size() > 16)
-        {
-            LOG_ERR("proxy: Unexpected - client opening many concurrent waiting connections " << _outSockets.size());
-            // cleanup older waiting sockets.
-            auto sockWeak = _outSockets.front();
-            _outSockets.erase(_outSockets.begin());
-            auto sock = sockWeak.lock();
-            if (sock)
-                sock->asyncShutdown();
-        }
+        // FIXME: we should really wait around a bit.
+        LOG_TRC("Nothing to send - closing immediately");
+
+        http::Response httpResponse(http::StatusCode::OK);
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.add("X-Content-Type-Options", "nosniff");
+        httpResponse.setContentLength(0);
+        streamSocket->send(httpResponse);
     }
     else
-    {
-        if (!sentMsg)
-        {
-            // FIXME: we should really wait around a bit.
-            LOG_TRC("Nothing to send - closing immediately");
+        LOG_TRC("Returned a reply immediately");
 
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.add("X-Content-Type-Options", "nosniff");
-            httpResponse.setContentLength(0);
-            streamSocket->send(httpResponse);
-        }
-        else
-            LOG_TRC("Returned a reply immediately");
-
-        streamSocket->asyncShutdown();
-    }
+    streamSocket->asyncShutdown();
 }
 
 void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 {
-    std::ostringstream oss(Util::makeDumpStateStream());
-    disposition.getSocket()->dumpState(oss);
-    LOG_ERR("If you got here, it means we failed to parse this properly in handleRequest: " << oss.str());
+    auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
+    ParseStatus result = parseEmitIncoming(streamSocket);
+    switch (result)
+    {
+    case ParseStatus::PROTOCOL_ERROR:
+    {
+        std::ostringstream oss(Util::makeDumpStateStream());
+        streamSocket->dumpState(oss);
+        // TODO: We should shut down this connection and client session quite hard
+        LOG_ERR("proxy: bad socket structure " << oss.str());
+        disposition.setClosed();
+        break;
+    }
+    case ParseStatus::SUCCESS:
+        sendAndClose(streamSocket);
+        break;
+    case ParseStatus::AGAIN:
+        break;
+    };
 }
 
 void ProxyProtocolHandler::notifyDisconnected()
