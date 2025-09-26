@@ -74,8 +74,7 @@ void DocumentBroker::handleProxyRequest(
         return;
     }
 
-    const bool isWaiting = requestDetails.equals(RequestDetails::Field::Command, "wait");
-    proxy->handleRequest(isWaiting, socket);
+    proxy->handleRequest(socket);
 }
 
 void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socket,
@@ -173,58 +172,35 @@ bool ProxyProtocolHandler::parseEmitIncoming(
     return true;
 }
 
-void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<StreamSocket> &streamSocket)
+void ProxyProtocolHandler::handleRequest(const std::shared_ptr<StreamSocket> &streamSocket)
 {
-    LOG_INF("proxy: handle request type: " << (isWaiting ? "wait" : "respond") <<
-            " on socket #" << streamSocket->getFD());
+    LOG_INF("proxy: handle request on socket #" << streamSocket->getFD());
 
-    if (!isWaiting)
+    if (!_msgHandler)
+        LOG_WRN("proxy: unusual - incoming message with no-one to handle it");
+    else if (!parseEmitIncoming(streamSocket))
     {
-        if (!_msgHandler)
-            LOG_WRN("proxy: unusual - incoming message with no-one to handle it");
-        else if (!parseEmitIncoming(streamSocket))
-        {
-            std::ostringstream oss(Util::makeDumpStateStream());
-            streamSocket->dumpState(oss);
-            LOG_ERR("proxy: bad socket structure " << oss.str());
-        }
+        std::ostringstream oss(Util::makeDumpStateStream());
+        streamSocket->dumpState(oss);
+        LOG_ERR("proxy: bad socket structure " << oss.str());
     }
 
     bool sentMsg = flushQueueTo(streamSocket);
-    if (!sentMsg && isWaiting)
+    // FIXME: we should really restore a blocking 'wait' message
+    if (!sentMsg)
     {
-        LOG_TRC("proxy: queue a waiting out socket #" << streamSocket->getFD());
-        // longer running 'write socket' (marked 'read' by the client)
-        _outSockets.push_back(streamSocket);
-        if (_outSockets.size() > 16)
-        {
-            LOG_ERR("proxy: Unexpected - client opening many concurrent waiting connections " << _outSockets.size());
-            // cleanup older waiting sockets.
-            auto sockWeak = _outSockets.front();
-            _outSockets.erase(_outSockets.begin());
-            auto sock = sockWeak.lock();
-            if (sock)
-                sock->asyncShutdown();
-        }
+        LOG_TRC("Nothing to send - closing immediately");
+
+        http::Response httpResponse(http::StatusCode::OK);
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.add("X-Content-Type-Options", "nosniff");
+        httpResponse.setContentLength(0);
+        streamSocket->send(httpResponse);
     }
     else
-    {
-        if (!sentMsg)
-        {
-            // FIXME: we should really wait around a bit.
-            LOG_TRC("Nothing to send - closing immediately");
+        LOG_TRC("Returned a reply immediately");
 
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.add("X-Content-Type-Options", "nosniff");
-            httpResponse.setContentLength(0);
-            streamSocket->send(httpResponse);
-        }
-        else
-            LOG_TRC("Returned a reply immediately");
-
-        streamSocket->asyncShutdown();
-    }
+    streamSocket->asyncShutdown();
 }
 
 void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
