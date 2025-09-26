@@ -235,6 +235,8 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
             switch (result)
             {
                 case ParseStatus::SUCCESS:
+                    sendAndClose(streamSocket);
+                    break;
                 case ParseStatus::AGAIN:
                     break;
                 case ParseStatus::PROTOCOL_ERROR:
@@ -248,42 +250,26 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
             };
         }
     }
+}
 
+void ProxyProtocolHandler::sendAndClose(const std::shared_ptr<StreamSocket> &streamSocket)
+{
     bool sentMsg = flushQueueTo(streamSocket);
-    if (!sentMsg && isWaiting)
+    if (!sentMsg)
     {
-        LOG_TRC("proxy: queue a waiting out socket #" << streamSocket->getFD());
-        // longer running 'write socket' (marked 'read' by the client)
-        _outSockets.push_back(streamSocket);
-        if (_outSockets.size() > 16)
-        {
-            LOG_ERR("proxy: Unexpected - client opening many concurrent waiting connections " << _outSockets.size());
-            // cleanup older waiting sockets.
-            auto sockWeak = _outSockets.front();
-            _outSockets.erase(_outSockets.begin());
-            auto sock = sockWeak.lock();
-            if (sock)
-                sock->asyncShutdown();
-        }
+        // FIXME: we should really wait around a bit.
+        LOG_TRC("Nothing to send - closing immediately");
+
+        http::Response httpResponse(http::StatusCode::OK);
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.add("X-Content-Type-Options", "nosniff");
+        httpResponse.setContentLength(0);
+        streamSocket->send(httpResponse);
     }
     else
-    {
-        if (!sentMsg)
-        {
-            // FIXME: we should really wait around a bit.
-            LOG_TRC("Nothing to send - closing immediately");
+        LOG_TRC("Returned a reply immediately");
 
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.add("X-Content-Type-Options", "nosniff");
-            httpResponse.setContentLength(0);
-            streamSocket->send(httpResponse);
-        }
-        else
-            LOG_TRC("Returned a reply immediately");
-
-        streamSocket->asyncShutdown();
-    }
+    streamSocket->asyncShutdown();
 }
 
 // TODO: handle input that was not fully read by the previous message
@@ -303,6 +289,8 @@ void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
         break;
     }
     case ParseStatus::SUCCESS:
+        sendAndClose(streamSocket);
+        break;
     case ParseStatus::AGAIN:
         break;
     };
