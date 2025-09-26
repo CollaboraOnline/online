@@ -1381,6 +1381,8 @@ function getInitializerClass() {
 			req.addEventListener('loadend', function() {
 				that.msgInflight--;
 			});
+			if (that.sendQueue !== '')
+				that.sendQueue = that.sendQueue + 'E\n';
 			req.send(that.sendQueue);
 			that.sendQueue = '';
 			that.msgInflight++;

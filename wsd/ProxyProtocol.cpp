@@ -108,8 +108,7 @@ void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socke
     socket->asyncShutdown();
 }
 
-ProxyProtocolHandler::ParseStatus ProxyProtocolHandler::hasCompleteMessage(const Buffer& in,
-                                                                           size_t& frameSize)
+ProxyProtocolHandler::ParseStatus ProxyProtocolHandler::hasCompleteMessage(const Buffer& in, size_t& frameSize)
 {
     // Find serial end
     size_t pos = 1;
@@ -188,13 +187,33 @@ ProxyProtocolHandler::parseEmitIncoming(const std::shared_ptr<StreamSocket>& soc
         std::vector<char> data(in.begin(), in.begin() + len);
         in.eraseFirst(len);
 
-        if (in.size() < 1 || in[0] != '\n')
-            return ParseStatus::PROTOCOL_ERROR;
-        in.eraseFirst(1);
-
         LOG_TRC("Adding message with serial[" << serial << "] to queue");
         _serialQueue[serial] = std::make_unique<BufferedMessage>(serial, data);
-        processBufferedMessages();
+
+        // Check for trailing \n after content
+        if (in.size() < 1 || in[0] != '\n')
+            return ParseStatus::AGAIN;
+
+        // Check what comes after the \n
+        if (in.size() >= 3 && in[1] == 'E' && in[2] == '\n')
+        {
+            in.eraseFirst(3); // Remove \nE\n
+            processBufferedMessages();
+            break;
+        }
+        else if (in.size() >= 2 && (in[1] == 'T' || in[1] == 'B'))
+        {
+            in.eraseFirst(1); // Remove just the \n, keep next message
+        }
+        else if (in.size() < 3)
+        {
+            return ParseStatus::AGAIN;
+        }
+        else
+        {
+            LOG_ERR("Invalid framing after message content");
+            return ParseStatus::PROTOCOL_ERROR;
+        }
     }
     return ParseStatus::SUCCESS;
 }

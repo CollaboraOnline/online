@@ -20,7 +20,7 @@
  * Implementation that builds a websocket like protocol from many
  * individual proxied HTTP requests back to back.
  *
- * we use a trivial framing: [T(ext)|B(inary)]<hex-serial->\n<hex-length>\n<content>\n
+ * we use a trivial framing: [T(ext)|B(inary)]<hex-serial->\n<hex-length>\n<content>\nE\n
  */
 class ProxyProtocolHandler : public ProtocolHandlerInterface
 {
