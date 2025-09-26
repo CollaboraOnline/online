@@ -159,42 +159,90 @@ class NavigatorPanel extends SidebarBase {
 				navContainer,
 			);
 			navOptions.id = 'navigation-options';
+			navOptions.setAttribute('role', 'tablist');
 
 			if (this.map.isPresentationOrDrawing()) {
 				// Create Slide Sorter tab
 				var slideSorterTab = window.L.DomUtil.create(
-					'div',
-					'tab selected',
+					'button',
+					'tab',
 					navOptions,
 				);
 				slideSorterTab.id = 'tab-slide-sorter';
 				slideSorterTab.textContent = _('Slides');
+
+				if (this.presentationControlsWrapper) {
+					slideSorterTab.setAttribute(
+						'aria-controls',
+						'presentation-controls-wrapper',
+					);
+
+					this.presentationControlsWrapper.setAttribute('role', 'tabpanel');
+					this.presentationControlsWrapper.setAttribute(
+						'aria-labelledby',
+						'tab-slide-sorter',
+					);
+				}
 				navigationTabs.push(slideSorterTab);
 			}
 
 			// Create Navigator tab
-			var navigatorTab = window.L.DomUtil.create('div', 'tab', navOptions);
+			var navigatorTab = window.L.DomUtil.create('button', 'tab', navOptions);
 			navigatorTab.id = 'tab-navigator';
 			navigatorTab.textContent = _('Outline');
+			if (this.navigatorDockWrapper) {
+				navigatorTab.setAttribute('aria-controls', 'navigator-dock-wrapper');
+
+				this.navigatorDockWrapper.setAttribute('role', 'tabpanel');
+				this.navigatorDockWrapper.setAttribute(
+					'aria-labelledby',
+					'tab-navigator',
+				);
+			}
 			navigationTabs.push(navigatorTab);
 
 			if (this.map.isText()) {
 				// Create Quick Find tab
-				var quickFindTab = window.L.DomUtil.create('div', 'tab', navOptions);
+				var quickFindTab = window.L.DomUtil.create('button', 'tab', navOptions);
 				quickFindTab.id = 'tab-quick-find';
 				quickFindTab.textContent = _('Results');
+
+				if (this.quickFindWrapper) {
+					quickFindTab.setAttribute('aria-controls', 'quickfind-dock-wrapper');
+
+					this.quickFindWrapper.setAttribute('role', 'tabpanel');
+					this.quickFindWrapper.setAttribute(
+						'aria-labelledby',
+						'tab-quick-find',
+					);
+				}
 				navigationTabs.push(quickFindTab);
 			}
 
-			// Tab Click Event Listener
-			navigationTabs.forEach((tab) => {
-				tab.addEventListener(
-					'click',
-					function () {
-						this.switchNavigationTab(tab.id);
-					}.bind(this),
-				);
-			});
+			if (navigationTabs.length > 0) {
+				// Set up ARIA attributes for tabs
+				navigationTabs.forEach((tab, index) => {
+					tab.setAttribute('role', 'tab');
+					// Only first tab initially selected
+					if (index === 0) {
+						tab.setAttribute('aria-selected', 'true');
+						tab.classList.add('selected');
+					} else {
+						tab.setAttribute('aria-selected', 'false');
+						tab.setAttribute('tabindex', '-1');
+					}
+				});
+
+				// Tab Click Event Listener
+				navigationTabs.forEach((tab) => {
+					tab.addEventListener(
+						'click',
+						function () {
+							this.switchNavigationTab(tab.id);
+						}.bind(this),
+					);
+				});
+			}
 		}
 
 		if (this.navigationPanel) {
