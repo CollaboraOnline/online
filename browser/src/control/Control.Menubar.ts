@@ -501,7 +501,7 @@ class Menubar extends window.L.Control {
 				   {type: 'separator'},
 				   {uno: '.uno:ModifyPage'},
 					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), id: 'transitiondeck', type: 'action'},
-				   {uno: '.uno:CustomAnimation'},
+				   {name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -2187,6 +2187,7 @@ class Menubar extends window.L.Control {
 			|| id === 'print-active-sheet'
 			|| id === 'print-all-sheets'
 			|| id === 'serveraudit'
+			|| id === 'animationdeck'
 			|| id === 'transitiondeck') {
 			app.dispatcher.dispatch(id);
 		} else if (id === ('settings-dialog')) {
