@@ -24,8 +24,8 @@ class ProxyProtocolHandler : public ProtocolHandlerInterface
 {
 public:
     ProxyProtocolHandler() :
-        _inSerial(0),
-        _outSerial(0)
+        _inSerial(1),
+        _outSerial(1)
     {
     }
 
