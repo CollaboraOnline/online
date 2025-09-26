@@ -31,6 +31,8 @@ class OverflowManager {
 
 	calculateMaxWidth(): number {
 		const margin = 20; // how many px more has to be visible after last widget
+		const computedStyle = getComputedStyle(this.parentContainer);
+		const inlineStartPadding = parseInt(computedStyle.paddingInlineStart) || 5;
 		let nextElement = this.parentContainer.nextSibling as HTMLElement;
 		// floating right element after spacer
 		if (nextElement && nextElement.classList.contains('ui-spacer'))
@@ -45,7 +47,7 @@ class OverflowManager {
 
 		const startPosition = this.parentContainer.offsetLeft;
 
-		return nextElementPosition - startPosition - margin;
+		return nextElementPosition - startPosition - margin - inlineStartPadding;
 	}
 
 	hasOverflow(maxWidth: number): boolean {
