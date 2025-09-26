@@ -1186,26 +1186,30 @@ function getInitializerClass() {
 		this.decode = function(bytes,start,end) {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
-		this.processBufferedMessages = function (expectedSerial) {
-			while (this.serialQueue.size !== 0) {
-				if (!this.serialQueue.has(expectedSerial))
-					break;
 
-				let bufferedMessage = this.serialQueue.set(expectedSerial);
-				this.inSerial = bufferedMessage.serial;
+		this.processBufferedMessages = function () {
+			var expectedSerial = this.inSerial + 1;
+
+			while (this.serialQueue.size !== 0) {
+				if (!this.serialQueue.has(expectedSerial)) {
+					break;
+				}
+
+				let bufferedMessage = this.serialQueue.get(expectedSerial);
+				this.inSerial = expectedSerial;
 
 				try {
 					this.onmessage({ data: bufferedMessage.data });
 				} catch (e) {
 					global.app.console.error(e);
-					global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
-					// It's better to ignore any failures rather than to lose the rest of the messages in this packet
+					global.app.console.warn(`Failed processing ProxySocket message: ${e}`);
 				}
 
 				this.serialQueue.delete(expectedSerial);
 				expectedSerial++;
 			}
 		},
+
 		this.parseIncomingArray = function(arr) {
 			// global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
@@ -1261,29 +1265,11 @@ function getInitializerClass() {
 				else
 					data = this.doSlice(arr, i, i + size);
 
-				if (serial === that.inSerial + 1) {
-					that.inSerial = serial;
-
-					try {
-						this.onmessage({ data: data });
-					} catch (e) {
-						global.app.console.error(e);
-						global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
-						// It's better to ignore any failures rather than to lose the rest of the messages in this packet
-					}
-					this.processBufferedMessages(serial + 1);
-				} else {
-					this.serialQueue.set(serial, {
-						'data': data,
-						'serial': serial
-					});
-
-					if (serial > this.inSerial + 5) {
-						this.inSerial = serial - 1;
-						this.processBufferedMessages(this.inSerial + 1);
-					}
-				}
-
+				this.serialQueue.set(serial, {
+					'data': data,
+					'serial': serial
+				});
+				this.processBufferedMessages();
 				i += size; // skip trailing '\n' in loop-increment
 			}
 		};
