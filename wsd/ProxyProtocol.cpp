@@ -192,42 +192,24 @@ ProxyProtocolHandler::parseEmitIncoming(const std::shared_ptr<StreamSocket>& soc
             return ParseStatus::PROTOCOL_ERROR;
         in.eraseFirst(1);
 
-        if (serial == _inSerial + 1)
-        {
-            LOG_TRC("Processing in-order message serial[" << serial << "]");
-            _inSerial = serial;
-            _msgHandler->handleMessage(data);
-            processBufferedMessages(_inSerial + 1);
-        }
-        else
-        {
-            LOG_TRC("Buffering out-of-order message serial[" << serial << "] expected["
-                                                             << _inSerial + 1 << ']');
-
-            _serialQueue[serial] = std::make_unique<BufferedMessage>(serial, data);
-
-            if (serial > _inSerial + 5)
-            {
-                LOG_WRN("Large gap detected - skipping from " << (_inSerial + 1) << " to "
-                                                              << serial);
-                _inSerial = serial - 1;
-                processBufferedMessages(_inSerial + 1);
-            }
-        }
+        LOG_TRC("Adding message with serial[" << serial << "] to queue");
+        _serialQueue[serial] = std::make_unique<BufferedMessage>(serial, data);
+        processBufferedMessages();
     }
     return ParseStatus::SUCCESS;
 }
 
-void ProxyProtocolHandler::processBufferedMessages(uint64_t expectedSerial)
+void ProxyProtocolHandler::processBufferedMessages()
 {
     while (!_serialQueue.empty())
     {
+        int64_t expectedSerial = _inSerial + 1;
         auto it = _serialQueue.find(expectedSerial);
         if (it == _serialQueue.end())
             break;
 
         // Process the buffered message
-        LOG_TRC("Processing buffered message serial[" << it->second->serial << ']');
+        LOG_TRC("Processing serial[" << it->second->serial << ']');
         _inSerial = it->second->serial;
 
         if (_msgHandler)

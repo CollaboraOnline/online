@@ -71,7 +71,7 @@ public:
     // Non-destructive message parsing
     ParseStatus parseEmitIncoming(const std::shared_ptr<StreamSocket>& socket);
     ParseStatus hasCompleteMessage(const Buffer& in, size_t& frameSize);
-    void processBufferedMessages(uint64_t expectedSerial);
+    void processBufferedMessages();
 
     void handleRequest(bool isWaiting, const std::shared_ptr<StreamSocket> &socket);
 
