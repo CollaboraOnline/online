@@ -401,14 +401,17 @@ class Xcu {
 		const saveButton = document.createElement('button');
 		saveButton.type = 'button';
 		saveButton.id = 'document-settings-save-button';
-		saveButton.classList.add('button', 'button-primary');
+		saveButton.classList.add('button', 'button-primary', 'button--text-only');
 		saveButton.title = _('Save Document settings');
-		saveButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button--text-only">Save</span>
-			</span>
-			`;
 
+		const wrapperSpan = document.createElement('span');
+		wrapperSpan.classList.add('button__wrapper');
+		saveButton.appendChild(wrapperSpan);
+
+		const textSpan = document.createElement('span');
+		textSpan.classList.add('button__text');
+		textSpan.textContent = _('Save');
+		wrapperSpan.appendChild(textSpan);
 		saveButton.addEventListener('click', async () => {
 			saveButton.disabled = true;
 			await this.generateXcuAndUpload();
