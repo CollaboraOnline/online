@@ -37,7 +37,7 @@
             else {
                 var filePath = params.get('file_path').substr(1);
                 params.delete('file_path');
-                var wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
+                wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
             }
             return localUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
         }
