@@ -1164,8 +1164,8 @@ function getInitializerClass() {
 		this.id = global.proxySocketCounter++;
 		this.msgInflight = 0;
 		this.openInflight = 0;
-		this.inSerial = 0; // monotonic serial of the last processed received message
-		this.outSerial = 0; // monotonic serial of the next message to send.
+		this.inSerial = 1; // monotonic serial of the last processed received message
+		this.outSerial = 1; // monotonic serial of the next message to send.
 		this.minPollMs = 25; // Anything less than ~25 ms can overwhelm the HTTP server.
 		this.maxPollMs = 500; // We can probably go as much as 1-2 seconds without ill-effect.
 		this.curPollMs = this.minPollMs; // The current poll period.
