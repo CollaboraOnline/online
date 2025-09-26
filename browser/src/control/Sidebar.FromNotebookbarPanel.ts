@@ -9,13 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * Sidebar.ImpressTransitions - transitions sidebar, previously based on core
- *                              now we moved it to notebookbar but we need to
- *                              keep sidebar for compact mode. It will reuse
- *                              notebookbar widgets in the core.
+ * Sidebar.FromNotebookbarPanel - sidebar, previously based on core
+ *                               now  moved to notebookbar but we need to
+ *                               keep sidebar for compact mode. It will reuse
+ *                               notebookbar widgets in the core.
  */
 
-class ImpressTransitionsPanel extends Sidebar {
+class SidebarFromNotebookbarPanel extends Sidebar {
 	constructor(map: any) {
 		super(map);
 
@@ -23,15 +23,29 @@ class ImpressTransitionsPanel extends Sidebar {
 		this.type = this.allowedJsonType = SidebarType.Notebookbar;
 		this.builder?.setWindowId(WindowId.Notebookbar);
 
-		this.map.off('sidebar', this.onSidebar, this); // from base class
-		this.map.on('transitiondeck', this.onSidebar, this);
+		this.map.off('sidebar', this.onSidebar, this); // from Sidebar class
+		this.map.on('customsidebar', this.onSidebar, this);
 	}
 
 	onRemove() {
 		super.onRemove();
-		this.map.off('transitiondeck');
+		this.map.off('customsidebar');
 	}
 
+	public openTransitionSidebar() {
+		// we need to clean the core based sidebars
+		this.closeSidebar();
+		this.setupTargetDeck(null);
+		// TODO: change state of old sidebar uno commands
+
+		this.openSidebar(
+			'transitions',
+			_('Transitions'),
+			JSDialog.ImpressTransitionTab.getContent(),
+		);
+	}
+
+	// reuse Sidebar container
 	protected setupContainer(parentContainer?: HTMLElement) {
 		this.container = document.getElementById(
 			`${this.type}-container`,
@@ -44,13 +58,8 @@ class ImpressTransitionsPanel extends Sidebar {
 		) as HTMLDivElement;
 	}
 
-	public openTransitionSidebar() {
-		// we need to clean the core based sidebars
-		this.closeSidebar();
-		this.setupTargetDeck(null);
-		// TODO: change state of old sidebar uno commands
-
-		app.map.fire('transitiondeck', {
+	protected openSidebar(id: string, title: string, content: Array<WidgetJSON>) {
+		app.map.fire('customsidebar', {
 			data: {
 				id: WindowId.Notebookbar,
 				jsontype: 'sidebar',
@@ -58,23 +67,23 @@ class ImpressTransitionsPanel extends Sidebar {
 				visible: true,
 				children: [
 					{
-						id: 'transitionsdeck',
+						id: id + '-deck',
 						type: 'deck',
 						enabled: true,
 						visible: true,
-						text: _('Transitions'),
-						name: 'TransitionsDeck',
+						text: title,
+						name: id + '-deck',
 						children: [
 							{
-								id: 'transitionspanel',
-								name: 'TransitionsPanel',
-								text: _('Transitions'),
+								id: id + '-panel',
+								name: id + '-panel',
+								text: title,
 								visible: true,
 								enabled: true,
 								expanded: true,
 								hidden: false,
 								type: 'panel',
-								children: JSDialog.ImpressTransitionTab.getContent(),
+								children: content,
 							},
 						],
 					},
@@ -84,6 +93,6 @@ class ImpressTransitionsPanel extends Sidebar {
 	}
 }
 
-JSDialog.ImpressTransitionsPanel = function (map: any) {
-	return new ImpressTransitionsPanel(map);
+JSDialog.SidebarFromNotebookbarPanel = function (map: any) {
+	return new SidebarFromNotebookbarPanel(map);
 };

@@ -543,7 +543,7 @@ class UIManager extends window.L.Control {
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
-			this.map.transitionsSidebar = JSDialog.ImpressTransitionsPanel(this.map);
+			this.map.sidebarFromNotebookbar = JSDialog.SidebarFromNotebookbarPanel(this.map);
 		}
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
 			this.map.navigator.initializeNavigator(docType);
