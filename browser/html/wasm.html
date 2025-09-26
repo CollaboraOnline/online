@@ -27,19 +27,19 @@
         function constructWopiUrl() {
             var localServer = window.location.protocol + "//" + window.location.host;
             var localUrl = localServer + window.location.pathname + "?";
-            localUrl = localUrl.replace("wasm.html", "/wasm/cool.html");
+            localUrl = localUrl.replace("/wasm.html", "/wasm/cool.html");
             var params = new URLSearchParams(window.location.search);
             var wopiSrc = params.get('WOPISrc');
             if (wopiSrc) {
                 params.delete('WOPISrc');
-                wopiSrc = encodeURIComponent(wopiSrc);
             }
             else {
                 var filePath = params.get('file_path').substr(1);
                 params.delete('file_path');
-                wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
+                wopiSrc = localServer + "/wopi/files/" + filePath;
             }
-            return localUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
+            return localUrl + params.toString() + (params.size === 0 ? '' : '&') + "WOPISrc="
+                + encodeURIComponent(wopiSrc);
         }
         var form = document.getElementById("form");
         form.action = constructWopiUrl();
