@@ -1015,6 +1015,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
 				var item = data.tabs[tabIdx];
 
+				var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
+				contentDiv.id = item.name;
+				contentDiv.setAttribute('role', 'tabpanel');
+
 				var title = builder._cleanText(item.text);
 
 				var tab = window.L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
@@ -1022,6 +1026,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
+				tab.setAttribute('aria-controls', contentDiv.id);
 				builder._addAriaLabel(tab, item, builder);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
@@ -1051,10 +1056,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				tabs[tabIdx] = tab;
 				tabIds[tabIdx] = item.name;
-
-				var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
-				contentDiv.id = item.name;
-				contentDiv.setAttribute('role', 'tabpanel');
 
 				if (!isSelectedTab)
 					$(contentDiv).addClass('hidden');
