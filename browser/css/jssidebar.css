@@ -532,6 +532,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Tab Style */
 #navigation-options .tab {
 	flex: 0 1 auto;
+	border: 1px solid transparent;
+	background: transparent;
 	padding: 6px 8px;
 	margin-block: 0 4px;
 	cursor: pointer;
@@ -550,12 +552,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 /* Hover Effect */
 #navigation-options .tab:hover {
-	background: var(--color-background-darker);
+	background: var(--color-background-darker) !important;
 }
 
 /* Active/Selected Tab */
 [data-bg-theme='light'] #navigation-options .tab.selected {
-	color: rgba(var(--doc-type), 1);
+	color: rgba(var(--doc-type), 1) !important;
 }
 #navigation-options .tab.selected:after {
 	border-bottom-color: rgba(var(--doc-type), 1);
