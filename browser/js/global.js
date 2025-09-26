@@ -1375,9 +1375,11 @@ function getInitializerClass() {
 			req.addEventListener('loadend', function() {
 				that.msgInflight--;
 			});
-			req.send(that.sendQueue);
+			const toSend = that.sendQueue;
 			that.sendQueue = '';
 			that.msgInflight++;
+			// terminate all messages with an end-marker
+			req.send(toSend.concat('.'));
 		};
 		this.getSessionId = function() {
 			if (this.openInflight > 0)
