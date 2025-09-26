@@ -261,12 +261,25 @@ void ProxyProtocolHandler::handleRequest(const std::shared_ptr<StreamSocket> &st
     streamSocket->asyncShutdown();
 }
 
-// TODO: handle input that was not fully read by the previous message
+// This continues reading input for larger messages that get split up
 void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 {
-    std::ostringstream oss(Util::makeDumpStateStream());
-    disposition.getSocket()->dumpState(oss);
-    LOG_ERR("If you got here, it means we failed to parse this properly in handleRequest: " << oss.str());
+    auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
+    ParseStatus result = parseEmitIncoming(streamSocket);
+    switch (result)
+    {
+    case ParseStatus::PROTOCOL_ERROR:
+    {
+        std::ostringstream oss(Util::makeDumpStateStream());
+        streamSocket->dumpState(oss);
+        LOG_ERR("proxy: bad socket structure " << oss.str());
+        disposition.setClosed();
+        break;
+    }
+    case ParseStatus::SUCCESS:
+    case ParseStatus::AGAIN:
+        break;
+    };
 }
 
 void ProxyProtocolHandler::notifyDisconnected()
