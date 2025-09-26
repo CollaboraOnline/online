@@ -205,6 +205,8 @@ button#left.has-img > img {
 }
 
 /* Writer - Format - Page Style - Columns */
-div[id^='TemplateDialog'] #Columns :is(#back, #next) button.has-img {
+/* Writer - Format - Columns */
+div[id^='TemplateDialog'] #Columns :is(#back, #next) button.has-img,
+#ColumnDialog :is(#back, #next) button.has-img {
 	width: 100%;
 }
