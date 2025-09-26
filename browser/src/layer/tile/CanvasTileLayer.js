@@ -870,6 +870,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._moveInProgress = false;
 		this._moveTileRequests = [];
 		app.updateFollowingUsers();
+
+		//hide chart context-toolbar if needed, or reposition it
+		this.updateChartContextToolbar();
 	},
 
 	_requestNewTiles: function () {
@@ -1010,6 +1013,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._map.fire('resettopbottompagespacing');
 			GraphicSelection.onMessage(textMsg);
+			if (GraphicSelection.extraInfo && GraphicSelection.extraInfo.isChartPage
+				&& GraphicSelection.extraInfo.isChartPage === true)
+			{
+				if (!this._map.chartContextToolbar)
+					this.map.chartContextToolbar = window.L.control.ChartContextToolbar(this.map);
+				if (this._map.chartContextToolbar)
+					this._map.chartContextToolbar.showChartContextToolbar();
+			}
 		}
 		else if (textMsg.startsWith('graphicinnertextarea:')) {
 			return; // Not used.
@@ -1387,6 +1398,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				this._map.fire(event, parameter);
 			}
 		}
+		//hide chart context-toolbar if needed, or reposition it
+		this.updateChartContextToolbar();
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
@@ -2775,6 +2788,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		if (this._map.contextToolbar)
 			this._map.contextToolbar.setLastInputEventType({input: "mouse", type: type});
+		if (this._map.chartContextToolbar)
+			this._map.chartContextToolbar.setLastInputEventType({input: "mouse", type: type});
 
 		app.socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
@@ -4199,6 +4214,21 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	isCalcRTL: function () {
 		return this.isCalc() && this.isLayoutRTL();
+	},
+
+	updateChartContextToolbar: function () {
+		//hide chart context-toolbar if needed, or reposition it
+		if (this._map.chartContextToolbar && this._map.chartContextToolbar.shown)
+		{
+			var isChartPage = GraphicSelection && GraphicSelection.extraInfo
+							  && GraphicSelection.extraInfo.isChartPage
+							  && GraphicSelection.extraInfo.isChartPage === true;
+			if (!isChartPage) {
+				this._map.chartContextToolbar.hideChartContextToolbar();
+			} else {
+				this._map.chartContextToolbar.reposChartContextToolbar();
+			}
+		}
 	}
 
 });
