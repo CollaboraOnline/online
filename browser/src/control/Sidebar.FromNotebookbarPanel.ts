@@ -32,7 +32,7 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		this.map.off('customsidebar');
 	}
 
-	public openTransitionSidebar() {
+	public openTransitionsSidebar() {
 		// we need to clean the core based sidebars
 		this.closeSidebar();
 		this.setupTargetDeck(null);
@@ -42,6 +42,19 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 			'transitions',
 			_('Transitions'),
 			JSDialog.ImpressTransitionTab.getContent(),
+		);
+	}
+
+	public openAnimationsSidebar() {
+		// we need to clean the core based sidebars
+		this.closeSidebar();
+		this.setupTargetDeck(null);
+		// TODO: change state of old sidebar uno commands
+
+		this.openSidebar(
+			'animations',
+			_('Animations'),
+			JSDialog.ImpressAnimationTab.getContent(),
 		);
 	}
 
