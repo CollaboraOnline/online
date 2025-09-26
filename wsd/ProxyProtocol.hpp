@@ -119,7 +119,7 @@ private:
     /// queue things when we have no socket to hand.
     std::vector<std::shared_ptr<Message>> _writeQueue;
     std::vector<std::weak_ptr<StreamSocket>> _outSockets;
-    int64_t _inSerial;
+    uint64_t _inSerial;
     uint64_t _outSerial;
 };
 

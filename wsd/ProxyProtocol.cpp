@@ -175,7 +175,7 @@ ProxyProtocolHandler::parseEmitIncoming(const std::shared_ptr<StreamSocket>& soc
             ;
         *it = '\0';
 
-        int64_t serial = strtoull(&in[1], nullptr, 16);
+        uint64_t serial = strtoull(&in[1], nullptr, 16);
         in.erase(in.begin(), it + 1);
 
         it = in.begin();
@@ -203,7 +203,7 @@ void ProxyProtocolHandler::processBufferedMessages()
 {
     while (!_serialQueue.empty())
     {
-        int64_t expectedSerial = _inSerial + 1;
+        uint64_t expectedSerial = _inSerial + 1;
         auto it = _serialQueue.find(expectedSerial);
         if (it == _serialQueue.end())
             break;
