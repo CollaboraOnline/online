@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-22 12:23+0200\n"
+"POT-Creation-Date: 2025-09-26 14:55+0200\n"
 "PO-Revision-Date: 2025-09-23 07:30+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: cs\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,12 +146,12 @@ msgid "Network Graph"
 msgstr "Graf sítě"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:687
-#: admin/src/integrator/AdminIntegratorSettings.ts:1381
+#: admin/src/integrator/AdminIntegratorSettings.ts:731
+#: admin/src/integrator/AdminIntegratorSettings.ts:1425
 #: admin/src/integrator/WordBook.ts:394
 #: src/canvas/sections/CommentListSection.ts:514
 #: src/canvas/sections/CommentSection.ts:178
-#: src/control/Control.Notebookbar.js:301
+#: src/control/Control.Notebookbar.js:307
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -296,28 +296,28 @@ msgstr "Upozornění"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1565 src/app/Debug.ts:1391
+#: admin/src/integrator/AdminIntegratorSettings.ts:1609 src/app/Debug.ts:1391
 #: src/canvas/sections/CommentListSection.ts:1474
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:239
+#: src/control/Control.ServerAuditDialog.ts:317
 #: src/control/Control.Tabs.js:397 src/control/Control.Tabs.js:406
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:746 src/core/Socket.js:721 src/core/Socket.js:1187
 #: src/core/Socket.js:1257 src/core/Socket.js:1433 src/core/Socket.js:1437
-#: src/docdispatcher.ts:543 src/main.js:92 src/main.js:95 src/main.js:135
-#: src/map/Clipboard.js:1296 src/map/handler/Map.Feedback.js:96
+#: src/docdispatcher.ts:543 src/main.js:88 src/main.js:91 src/main.js:131
+#: src/map/Clipboard.js:1295 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
 #: src/map/handler/Map.SlideShow.js:297 src/map/handler/Map.SlideShow.js:308
-#: src/map/handler/Map.WOPI.js:695 src/slideshow/SlideShowPresenter.ts:1003
-#: src/slideshow/SlideShowPresenter.ts:1018
-#: src/slideshow/SlideShowPresenter.ts:1033
-#: src/slideshow/SlideShowPresenter.ts:1056
+#: src/map/handler/Map.WOPI.js:695 src/slideshow/SlideShowPresenter.ts:1007
+#: src/slideshow/SlideShowPresenter.ts:1022
+#: src/slideshow/SlideShowPresenter.ts:1037
+#: src/slideshow/SlideShowPresenter.ts:1060
 msgid "OK"
 msgstr "OK"
 
@@ -381,8 +381,8 @@ msgstr "Zpřístupnění"
 #: src/control/Control.Menubar.ts:1196 src/control/Control.Menubar.ts:1256
 #: src/control/Control.NotebookbarCalc.js:1548
 #: src/control/Control.NotebookbarDraw.js:554
-#: src/control/Control.NotebookbarImpress.js:675
-#: src/control/Control.NotebookbarWriter.js:1777
+#: src/control/Control.NotebookbarImpress.js:674
+#: src/control/Control.NotebookbarWriter.js:1763
 msgid "Dark Mode"
 msgstr "Tmavý režim"
 
@@ -428,19 +428,201 @@ msgstr "Přechod mezi snímky"
 msgid "Style List"
 msgstr "Seznam stylů"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:252
+#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: src/control/Control.NotebookbarCalc.js:1143
+#: src/control/Control.NotebookbarDraw.js:525
+#: src/control/Control.NotebookbarImpress.js:645
+msgid "Grid"
+msgstr "Mřížka"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:161
+msgid "Print"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:162
+msgid "Other"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:163
+#: src/control/Control.NotebookbarImpress.js:654
+msgid "Show Grid"
+msgstr "Zobrazit mřížku"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:164
+#, fuzzy
+msgid "Snap to grid"
+msgstr "Přichytit k mřížce"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:165
+#: admin/src/integrator/AdminIntegratorSettings.ts:171
+msgid "Size to grid"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:166
+msgid "Synchronize axes"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
+msgid "Snap grid"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:168
+msgid "Empty Pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:169
+msgid "Force Breaks"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:170
+#: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
+#: src/control/jsdialog/Definitions.Menu.ts:1573
+msgid "All Sheets"
+msgstr "Všechny listy"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:172
+msgid "Content"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
+msgid "Drawing"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:174
+#: src/control/Control.NotebookbarDraw.js:1224
+#: src/control/Control.NotebookbarDraw.js:1424
+#: src/control/Control.NotebookbarWriter.js:1223
+msgid "Page"
+msgstr "Stránka"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:175
+msgid "Fit to page"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:176
+msgid "Tile pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
+msgid "Booklet"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:178
+msgid "Booklet front"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
+msgid "Booket back"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:180
+msgid "Page name"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:181
+#: src/control/Control.NotebookbarCalc.js:775
+#: src/control/Control.NotebookbarWriter.js:1626
+#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
+msgid "Date"
+msgstr "Datum"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: src/control/Control.NotebookbarCalc.js:776
+msgid "Time"
+msgstr "Čas"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:183
+msgid "Hidden pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:184
+msgid "From printer setup"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
+msgid "Presentation"
+msgstr "Prezentace"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:186
+#: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
+msgid "Notes"
+msgstr "Poznámky"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:187
+msgid "Handouts"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:188
+#: src/control/Control.NavigatorPanel.ts:178
+msgid "Outline"
+msgstr "Obrys"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
+msgid "Handout horizontal"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:190
+msgid "Images"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:191
+#, fuzzy
+msgid "Tables"
+msgstr "Tabulka"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:192
+msgid "Controls"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:193
+msgid "Background"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:194
+msgid "Print Black"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:195
+msgid "Hidden text"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
+msgid "Placeholders"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:197
+msgid "Left pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:198
+msgid "Right pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:199
+msgid "Brochure"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:200
+msgid "Brochure Right to Left"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
+msgid "Images and Objects"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
 msgstr "Neplatný soubor JSON"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:256
+#: admin/src/integrator/AdminIntegratorSettings.ts:300
 msgid "Error reading file"
 msgstr "Chyba při čtení souboru"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:268
+#: admin/src/integrator/AdminIntegratorSettings.ts:312
 msgid "Autotext"
 msgstr "Automatický text"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:270
+#: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -449,15 +631,15 @@ msgstr ""
 "dokumentu, zadejte zkratku pro položku automatického textu a stiskněte "
 "klávesu F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:276
+#: admin/src/integrator/AdminIntegratorSettings.ts:320
 msgid "Upload Autotext"
 msgstr "Nahrát automatický text"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:280
+#: admin/src/integrator/AdminIntegratorSettings.ts:324
 msgid "Custom dictionaries"
 msgstr "Vlastní slovníky"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:282
+#: admin/src/integrator/AdminIntegratorSettings.ts:326
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -465,139 +647,139 @@ msgstr ""
 "Přidání nebo úprava slov ve slovníku pro kontrolu pravopisu. Slova ve vašem "
 "slovníku (.dic) budou k dispozici pro kontrolu pravopisu."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:288
+#: admin/src/integrator/AdminIntegratorSettings.ts:332
 msgid "Upload Wordbook"
 msgstr "Nahrát slovník"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:292
+#: admin/src/integrator/AdminIntegratorSettings.ts:336
 msgid "Document settings"
 msgstr "Nastavení dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:293
-#: admin/src/integrator/Xcu.ts:342
+#: admin/src/integrator/AdminIntegratorSettings.ts:337
+#: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
 msgstr "Upravte chování kancelářských dokumentů."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:299
+#: admin/src/integrator/AdminIntegratorSettings.ts:343
 msgid "Upload Xcu"
 msgstr "Nahrát Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:350
+#: admin/src/integrator/AdminIntegratorSettings.ts:394
 msgid "Shared Config URL is missing in initial variables."
 msgstr "V počátečních proměnných chybí URL adresa sdílené konfigurace."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:356
+#: admin/src/integrator/AdminIntegratorSettings.ts:400
 msgid "Access token is missing in initial variables."
 msgstr "V počátečních proměnných chybí přístupový token."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:392
+#: admin/src/integrator/AdminIntegratorSettings.ts:436
 msgid "Something went wrong. Please try to refresh the page."
 msgstr "Něco se pokazilo. Zkuste stránku obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:509
+#: admin/src/integrator/AdminIntegratorSettings.ts:553
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
 "Při načítání souboru s nastavením se něco pokazilo. Zkuste stránku obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:534
+#: admin/src/integrator/AdminIntegratorSettings.ts:578
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr "Při načítání slovníku se něco pokazilo. Zkuste stránku obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:544
+#: admin/src/integrator/AdminIntegratorSettings.ts:588
 msgid "Interface Settings"
 msgstr "Nastavení rozhraní"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:546
+#: admin/src/integrator/AdminIntegratorSettings.ts:590
 msgid "Set default interface preferences."
 msgstr "Nastavte výchozí předvolby rozhraní."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:654
+#: admin/src/integrator/AdminIntegratorSettings.ts:698
 msgid "Select a tab to browser settings."
 msgstr "Vyberte kartu nastavení prohlížeče."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:667
-#: admin/src/integrator/Xcu.ts:402
+#: admin/src/integrator/AdminIntegratorSettings.ts:711
+#: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
 msgstr "Obnovení výchozího nastavení dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:671
-#: admin/src/integrator/Xcu.ts:416
+#: admin/src/integrator/AdminIntegratorSettings.ts:715
+#: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
 msgstr "Opravdu chcete obnovit nastavení dokumentu?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:688
-#: admin/src/integrator/Xcu.ts:431
+#: admin/src/integrator/AdminIntegratorSettings.ts:732
+#: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
 msgstr "Uložit nastavení dokumentu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1029
+#: admin/src/integrator/AdminIntegratorSettings.ts:1073
 msgid "Notebookbar view"
 msgstr "Zobrazení lišty karet"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1036
+#: admin/src/integrator/AdminIntegratorSettings.ts:1080
 #: src/control/Control.NotebookbarCalc.js:1510
 #: src/control/Control.NotebookbarDraw.js:481
 #: src/control/Control.NotebookbarImpress.js:578
-#: src/control/Control.NotebookbarWriter.js:1732
+#: src/control/Control.NotebookbarWriter.js:1718
 msgid "Compact view"
 msgstr "Kompaktní zobrazení"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1109
+#: admin/src/integrator/AdminIntegratorSettings.ts:1153
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Při nahrávání souboru se něco pokazilo. Zkuste to znovu."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1185
+#: admin/src/integrator/AdminIntegratorSettings.ts:1229
 #: src/control/Control.ContextMenu.js:250 src/docdispatcher.ts:540
 msgid "Delete"
 msgstr "Smazat"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1223
+#: admin/src/integrator/AdminIntegratorSettings.ts:1267
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr "Při mazání souboru se něco pokazilo. Zkuste stránku obnovit."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1238
+#: admin/src/integrator/AdminIntegratorSettings.ts:1282
 msgid "Edit"
 msgstr "Upravit"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1264
+#: admin/src/integrator/AdminIntegratorSettings.ts:1308
 msgid "View Settings"
 msgstr "Zobrazit nastavení"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1265
+#: admin/src/integrator/AdminIntegratorSettings.ts:1309
 msgid "Adjust view settings."
 msgstr "Úprava nastavení zobrazení."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1275
+#: admin/src/integrator/AdminIntegratorSettings.ts:1319
 msgid "Option"
 msgstr "Možnost"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1321
+#: admin/src/integrator/AdminIntegratorSettings.ts:1365
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr "(Upozornění: Pro přepnutí musí být povoleno zpřístupnění serveru)"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1355
+#: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid "Reset to default View settings"
 msgstr "Obnovit výchozí nastavení zobrazení"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1359
+#: admin/src/integrator/AdminIntegratorSettings.ts:1403
 msgid "Are you sure you want to reset View Settings?"
 msgstr "Opravdu chcete obnovit nastavení zobrazení?"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1382
+#: admin/src/integrator/AdminIntegratorSettings.ts:1426
 msgid "Save View Settings"
 msgstr "Uložit nastavení zobrazení"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1526
+#: admin/src/integrator/AdminIntegratorSettings.ts:1570
 msgid "Enter Zotero API Key"
 msgstr "Zadejte klíč API Zotero"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1553
+#: admin/src/integrator/AdminIntegratorSettings.ts:1597
 #: src/map/handler/Map.WOPI.js:695
 msgid "Error"
 msgstr "Chyba"
@@ -638,15 +820,15 @@ msgstr "Nesprávný formát slovníku. Zkontrolujte prosím soubor."
 msgid "Something went wrong while uploading dictionary file"
 msgstr "Při nahrávání slovníkového souboru se něco pokazilo"
 
-#: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:184
+#: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
 msgstr "Při nahrávání nastavení dokumentu se něco pokazilo."
 
-#: admin/src/integrator/Xcu.ts:338
+#: admin/src/integrator/Xcu.ts:312
 msgid "Document Settings"
 msgstr "Nastavení dokumentu"
 
-#: admin/src/integrator/Xcu.ts:389
+#: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
 msgstr "Výběrem karty zobrazíte nastavení."
 
@@ -785,8 +967,8 @@ msgstr "Zobrazit v navigátoru"
 
 #: src/canvas/sections/CommentListSection.ts:1251
 #: src/control/Control.JSDialogBuilder.js:1920
-#: src/layer/tile/CanvasTileLayer.js:3453
-#: src/layer/tile/CanvasTileLayer.js:3464
+#: src/layer/tile/CanvasTileLayer.js:3479
+#: src/layer/tile/CanvasTileLayer.js:3490
 msgid "Comment"
 msgstr "Komentář"
 
@@ -934,7 +1116,7 @@ msgid ""
 msgstr ""
 "Vybrané externí zdroje dat jsou zakázané. Obraťte se na správce systému."
 
-#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1297
+#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1296
 msgid "Don’t show this again"
 msgstr "Nezobrazovat toto znovu"
 
@@ -1026,7 +1208,7 @@ msgstr "Stahování obsahu schránky"
 
 #: src/control/Control.DownloadProgress.js:89
 #: src/control/Control.DownloadProgress.js:114
-#: src/control/Control.PartsPreview.js:300
+#: src/control/Control.PartsPreview.js:304
 msgid "Copy"
 msgstr "Kopírovat"
 
@@ -1381,7 +1563,7 @@ msgstr "Vybrat funkci"
 
 #: src/control/Control.FormulaBarJSDialog.js:80
 #: src/control/Control.NotebookbarWriter.js:114
-#: src/control/Control.NotebookbarWriter.js:1569
+#: src/control/Control.NotebookbarWriter.js:1566
 msgid "Formula"
 msgstr "Vzorec"
 
@@ -1471,8 +1653,8 @@ msgstr "Velikost písma"
 #: src/control/Control.NotebookbarCalc.js:939
 #: src/control/Control.NotebookbarCalc.js:2569
 #: src/control/Control.NotebookbarDraw.js:1752
-#: src/control/Control.NotebookbarImpress.js:1295
-#: src/control/Control.NotebookbarWriter.js:1053
+#: src/control/Control.NotebookbarImpress.js:1294
+#: src/control/Control.NotebookbarWriter.js:1061
 #: src/control/Control.TopToolbar.js:484
 msgid "Style"
 msgstr "Styl"
@@ -1664,7 +1846,7 @@ msgstr "Opravit"
 #: src/control/Control.NotebookbarCalc.js:1470
 #: src/control/Control.NotebookbarDraw.js:441
 #: src/control/Control.NotebookbarImpress.js:538
-#: src/control/Control.NotebookbarWriter.js:1692
+#: src/control/Control.NotebookbarWriter.js:1678
 #: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
 msgstr "Obnovit přiblížení"
@@ -1690,15 +1872,15 @@ msgstr "Skrýt hlavní nabídku"
 #: src/control/Control.Menubar.ts:1197 src/control/Control.Menubar.ts:1257
 #: src/control/Control.NotebookbarCalc.js:1555
 #: src/control/Control.NotebookbarDraw.js:561
-#: src/control/Control.NotebookbarImpress.js:682
-#: src/control/Control.NotebookbarWriter.js:1784
+#: src/control/Control.NotebookbarImpress.js:681
+#: src/control/Control.NotebookbarWriter.js:1770
 msgid "Invert Background"
 msgstr "Invertovat pozadí"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:804
 #: src/control/Control.NotebookbarCalc.js:2596
-#: src/control/Control.NotebookbarWriter.js:946
-#: src/control/Control.NotebookbarWriter.js:1080
+#: src/control/Control.NotebookbarWriter.js:954
+#: src/control/Control.NotebookbarWriter.js:1088
 msgid "Style list"
 msgstr "Seznam stylů"
 
@@ -1718,8 +1900,8 @@ msgstr "Vše"
 #: src/control/Control.Menubar.ts:668 src/control/Control.Menubar.ts:827
 #: src/control/Control.NotebookbarCalc.js:1776
 #: src/control/Control.NotebookbarDraw.js:1583
-#: src/control/Control.NotebookbarImpress.js:1584
-#: src/control/Control.NotebookbarWriter.js:1338
+#: src/control/Control.NotebookbarImpress.js:1583
+#: src/control/Control.NotebookbarWriter.js:1346
 msgid "Smart Picker"
 msgstr "Chytrý výběr"
 
@@ -1798,7 +1980,7 @@ msgstr "Vložit datum"
 #: src/control/Control.NotebookbarDraw.js:356
 #: src/control/Control.NotebookbarImpress.js:391
 #: src/control/Control.NotebookbarWriter.js:350
-#: src/control/Control.NotebookbarWriter.js:1648
+#: src/control/Control.NotebookbarWriter.js:1634
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1849,8 +2031,8 @@ msgstr "Odeslat zpětnou vazbu"
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:597
 #: src/control/Control.Menubar.ts:736 src/control/Control.Menubar.ts:1029
 #: src/control/Control.NotebookbarWriter.js:494
-#: src/control/Control.ServerAuditDialog.ts:196
-#: src/control/Control.ServerAuditDialog.ts:197
+#: src/control/Control.ServerAuditDialog.ts:274
+#: src/control/Control.ServerAuditDialog.ts:275
 msgid "Server audit"
 msgstr "Audit serveru"
 
@@ -1999,11 +2181,6 @@ msgstr "Soubor CSV (.csv)"
 msgid "Active sheet"
 msgstr "Aktivní list"
 
-#: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
-#: src/control/jsdialog/Definitions.Menu.ts:1573
-msgid "All Sheets"
-msgstr "Všechny listy"
-
 #: src/control/Control.Menubar.ts:807
 #: src/control/Control.NotebookbarCalc.js:1441
 msgid "Focus Cell"
@@ -2091,10 +2268,10 @@ msgstr "Pod průměrem..."
 #: src/control/Control.NotebookbarCalc.js:1029
 #: src/control/Control.NotebookbarDraw.js:1171
 #: src/control/Control.NotebookbarDraw.js:1184
-#: src/control/Control.NotebookbarImpress.js:1250
-#: src/control/Control.NotebookbarImpress.js:1263
-#: src/control/Control.NotebookbarWriter.js:1008
-#: src/control/Control.NotebookbarWriter.js:1021
+#: src/control/Control.NotebookbarImpress.js:1249
+#: src/control/Control.NotebookbarImpress.js:1262
+#: src/control/Control.NotebookbarWriter.js:1016
+#: src/control/Control.NotebookbarWriter.js:1029
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:580
 #: src/control/Toolbar.js:581
 msgid "Search"
@@ -2102,7 +2279,7 @@ msgstr "Hledat"
 
 #: src/control/Control.Menubar.ts:1089
 #: src/control/Control.NotebookbarCalc.js:1094
-#: src/control/Control.NotebookbarWriter.js:1812
+#: src/control/Control.NotebookbarWriter.js:1798
 msgid "Page Setup"
 msgstr "Nastavení stránky"
 
@@ -2189,20 +2366,16 @@ msgid "Close Navigation"
 msgstr "Zavřít Navigaci"
 
 #: src/control/Control.NavigatorPanel.ts:171
-#: src/control/Control.NotebookbarImpress.js:1394
+#: src/control/Control.NotebookbarImpress.js:1393
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
 msgstr "Snímky"
-
-#: src/control/Control.NavigatorPanel.ts:178
-msgid "Outline"
-msgstr "Obrys"
 
 #: src/control/Control.NavigatorPanel.ts:185
 msgid "Results"
 msgstr "Výsledky"
 
-#: src/control/Control.NavigatorPanel.ts:393
+#: src/control/Control.NavigatorPanel.ts:400
 msgid "Search..."
 msgstr "Vyhledat..."
 
@@ -2214,19 +2387,24 @@ msgstr "Zadejte do vyhledávacího pole, abyste našli cokoli ve svém dokumentu
 msgid "Transition"
 msgstr "Přechod"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:55
+#: src/control/Notebookbar.ImpressTransitionTab.ts:41
+#, fuzzy
+msgid "Transitions"
+msgstr "Přechod"
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
 msgstr "Varianta"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:70
+#: src/control/Notebookbar.ImpressTransitionTab.ts:78
 msgid "Duration"
 msgstr "Doba trvání"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:97
+#: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "On mouse click"
 msgstr "Při kliknutí myší"
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:105
+#: src/control/Notebookbar.ImpressTransitionTab.ts:113
 msgid "After"
 msgstr "Po"
 
@@ -2240,11 +2418,11 @@ msgstr "Poznámka pod čarou / vysvětlivka"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:301
 #: src/control/Control.NotebookbarDraw.js:1576
-#: src/control/Control.NotebookbarImpress.js:1620
+#: src/control/Control.NotebookbarImpress.js:1619
 msgid "Field"
 msgstr "Pole"
 
-#: src/control/Control.Notebookbar.js:685
+#: src/control/Control.Notebookbar.js:691
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2300,7 +2478,8 @@ msgstr "Domů"
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarImpress.js:1987
 #: src/control/Control.NotebookbarWriter.js:50
-#: src/control/Control.NotebookbarWriter.js:2527
+#: src/control/Control.NotebookbarWriter.js:965
+#: src/control/Control.NotebookbarWriter.js:2513
 msgid "Insert"
 msgstr "Vložit"
 
@@ -2333,14 +2512,16 @@ msgstr "Formát"
 
 #: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:101
+#: src/control/Control.NotebookbarImpress.js:128
 #: src/control/Control.NotebookbarWriter.js:88
 msgid "Shape"
 msgstr "Tvar"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
+#: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:95
-#: src/control/Control.NotebookbarWriter.js:1632
+#: src/control/Control.NotebookbarWriter.js:1618
 msgid "Picture"
 msgstr "Obrázek"
 
@@ -2361,7 +2542,7 @@ msgstr "Minigraf"
 #: src/control/Control.NotebookbarDraw.js:121
 #: src/control/Control.NotebookbarImpress.js:155
 #: src/control/Control.NotebookbarWriter.js:108
-#: src/control/Control.ServerAuditDialog.ts:216
+#: src/control/Control.ServerAuditDialog.ts:294
 msgid "Help"
 msgstr "Nápověda"
 
@@ -2407,7 +2588,7 @@ msgstr "Přejmenovat"
 
 #: src/control/Control.NotebookbarCalc.js:411
 #: src/control/Control.NotebookbarDraw.js:611
-#: src/control/Control.NotebookbarImpress.js:725
+#: src/control/Control.NotebookbarImpress.js:724
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
 msgstr "Schránka"
@@ -2444,16 +2625,6 @@ msgstr "Procento"
 msgid "Currency"
 msgstr "Měna"
 
-#: src/control/Control.NotebookbarCalc.js:775
-#: src/control/Control.NotebookbarWriter.js:1640
-#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
-msgid "Date"
-msgstr "Datum"
-
-#: src/control/Control.NotebookbarCalc.js:776
-msgid "Time"
-msgstr "Čas"
-
 #: src/control/Control.NotebookbarCalc.js:777
 msgid "Scientific"
 msgstr "Vědecký"
@@ -2470,8 +2641,8 @@ msgstr "Booleovská hodnota"
 #: src/control/Control.NotebookbarCalc.js:1855
 #: src/control/Control.NotebookbarCalc.js:2020
 #: src/control/Control.NotebookbarDraw.js:1666
-#: src/control/Control.NotebookbarImpress.js:1694
-#: src/control/Control.NotebookbarWriter.js:1487
+#: src/control/Control.NotebookbarImpress.js:1693
+#: src/control/Control.NotebookbarWriter.js:1495
 msgid "Text"
 msgstr "Text"
 
@@ -2510,26 +2681,20 @@ msgstr "Úpravy"
 
 #: src/control/Control.NotebookbarCalc.js:1040
 #: src/control/Control.NotebookbarDraw.js:1195
-#: src/control/Control.NotebookbarImpress.js:1274
-#: src/control/Control.NotebookbarWriter.js:1032
+#: src/control/Control.NotebookbarImpress.js:1273
+#: src/control/Control.NotebookbarWriter.js:1040
 msgid "Replace"
 msgstr "Nahradit"
 
 #: src/control/Control.NotebookbarCalc.js:1104
-#: src/control/Control.NotebookbarWriter.js:1822
+#: src/control/Control.NotebookbarWriter.js:1808
 msgid "Margin"
 msgstr "Okraj"
 
 #: src/control/Control.NotebookbarCalc.js:1111
-#: src/control/Control.NotebookbarWriter.js:1829
+#: src/control/Control.NotebookbarWriter.js:1815
 msgid "Size"
 msgstr "Velikost"
-
-#: src/control/Control.NotebookbarCalc.js:1143
-#: src/control/Control.NotebookbarDraw.js:525
-#: src/control/Control.NotebookbarImpress.js:645
-msgid "Grid"
-msgstr "Mřížka"
 
 #: src/control/Control.NotebookbarCalc.js:1172
 msgid "Row Height"
@@ -2570,9 +2735,9 @@ msgstr "Smazat sloupce"
 #: src/control/Control.NotebookbarImpress.js:2282
 #: src/control/Control.NotebookbarImpress.js:2489
 #: src/control/Control.NotebookbarImpress.js:2793
-#: src/control/Control.NotebookbarWriter.js:2053
-#: src/control/Control.NotebookbarWriter.js:2989
-#: src/control/Control.NotebookbarWriter.js:3312
+#: src/control/Control.NotebookbarWriter.js:2039
+#: src/control/Control.NotebookbarWriter.js:2975
+#: src/control/Control.NotebookbarWriter.js:3298
 msgid "Align"
 msgstr "Zarovnat"
 
@@ -2583,9 +2748,9 @@ msgstr "Zarovnat"
 #: src/control/Control.NotebookbarImpress.js:2349
 #: src/control/Control.NotebookbarImpress.js:2556
 #: src/control/Control.NotebookbarImpress.js:2860
-#: src/control/Control.NotebookbarWriter.js:2124
-#: src/control/Control.NotebookbarWriter.js:3048
-#: src/control/Control.NotebookbarWriter.js:3371
+#: src/control/Control.NotebookbarWriter.js:2110
+#: src/control/Control.NotebookbarWriter.js:3034
+#: src/control/Control.NotebookbarWriter.js:3357
 msgid "Arrange"
 msgstr "Uspořádat"
 
@@ -2596,28 +2761,28 @@ msgstr "Ukotvit"
 #: src/control/Control.NotebookbarCalc.js:1449
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:524
-#: src/control/Control.NotebookbarWriter.js:1678
+#: src/control/Control.NotebookbarWriter.js:1664
 msgid "Zoom"
 msgstr "Přiblížení"
 
 #: src/control/Control.NotebookbarCalc.js:1456
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:458
-#: src/control/Control.NotebookbarWriter.js:1664
+#: src/control/Control.NotebookbarWriter.js:1650
 msgid "Read mode"
 msgstr "Režim čtení"
 
 #: src/control/Control.NotebookbarCalc.js:1523
 #: src/control/Control.NotebookbarDraw.js:518
 #: src/control/Control.NotebookbarImpress.js:615
-#: src/control/Control.NotebookbarWriter.js:1769
+#: src/control/Control.NotebookbarWriter.js:1755
 msgid "Collapse Tabs"
 msgstr "Sbalit karty"
 
 #: src/control/Control.NotebookbarCalc.js:1535
 #: src/control/Control.NotebookbarDraw.js:506
 #: src/control/Control.NotebookbarImpress.js:603
-#: src/control/Control.NotebookbarWriter.js:1757
+#: src/control/Control.NotebookbarWriter.js:1743
 msgid "Status Bar"
 msgstr "Stavový řádek"
 
@@ -2627,8 +2792,8 @@ msgstr "Stavový řádek"
 #: src/control/Control.NotebookbarCalc.js:3296
 #: src/control/Control.NotebookbarImpress.js:2609
 #: src/control/Control.NotebookbarImpress.js:2913
-#: src/control/Control.NotebookbarWriter.js:3097
-#: src/control/Control.NotebookbarWriter.js:3420
+#: src/control/Control.NotebookbarWriter.js:3083
+#: src/control/Control.NotebookbarWriter.js:3406
 msgid "Group"
 msgstr "Seskupit"
 
@@ -2643,26 +2808,25 @@ msgstr "Kontingenční tabulka"
 #: src/control/Control.NotebookbarCalc.js:1669
 #: src/control/Control.NotebookbarDraw.js:1013
 #: src/control/Control.NotebookbarDraw.js:1470
-#: src/control/Control.NotebookbarImpress.js:1161
-#: src/control/Control.NotebookbarImpress.js:1440
-#: src/control/Control.NotebookbarWriter.js:957
-#: src/control/Control.NotebookbarWriter.js:1246
+#: src/control/Control.NotebookbarImpress.js:1160
+#: src/control/Control.NotebookbarImpress.js:1439
+#: src/control/Control.NotebookbarWriter.js:1254
 msgid "Illustrations"
 msgstr "Ilustrace"
 
 #: src/control/Control.NotebookbarCalc.js:1739
 #: src/control/Control.NotebookbarDraw.js:1027
 #: src/control/Control.NotebookbarDraw.js:1521
-#: src/control/Control.NotebookbarImpress.js:1175
-#: src/control/Control.NotebookbarImpress.js:1518
-#: src/control/Control.NotebookbarWriter.js:1291
+#: src/control/Control.NotebookbarImpress.js:1174
+#: src/control/Control.NotebookbarImpress.js:1517
+#: src/control/Control.NotebookbarWriter.js:1299
 msgid "Shapes"
 msgstr "Tvary"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 #: src/control/Control.NotebookbarDraw.js:1591
-#: src/control/Control.NotebookbarImpress.js:1605
-#: src/control/Control.NotebookbarWriter.js:1359
+#: src/control/Control.NotebookbarImpress.js:1604
+#: src/control/Control.NotebookbarWriter.js:1367
 msgid "Assistant"
 msgstr "Asistent"
 
@@ -2716,7 +2880,7 @@ msgstr "Filtr"
 
 #: src/control/Control.NotebookbarCalc.js:2501
 #: src/control/Control.NotebookbarImpress.js:1950
-#: src/control/Control.NotebookbarWriter.js:2251
+#: src/control/Control.NotebookbarWriter.js:2237
 msgid "Comments"
 msgstr "Komentáře"
 
@@ -2726,15 +2890,15 @@ msgstr "Formát buněk"
 
 #: src/control/Control.NotebookbarCalc.js:2752
 #: src/control/Control.NotebookbarCalc.js:3109
-#: src/control/Control.NotebookbarWriter.js:1955
-#: src/control/Control.NotebookbarWriter.js:2934
-#: src/control/Control.NotebookbarWriter.js:3257
+#: src/control/Control.NotebookbarWriter.js:1941
+#: src/control/Control.NotebookbarWriter.js:2920
+#: src/control/Control.NotebookbarWriter.js:3243
 msgid "Wrap"
 msgstr "Obtékání textu"
 
 #: src/control/Control.NotebookbarCalc.js:2991
 #: src/control/Control.NotebookbarImpress.js:2669
-#: src/control/Control.NotebookbarWriter.js:3143
+#: src/control/Control.NotebookbarWriter.js:3129
 msgid "Image Controls"
 msgstr "Ovládací pole obrázku"
 
@@ -2746,9 +2910,9 @@ msgstr "Rozvržení"
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1490
 #: src/control/Control.NotebookbarImpress.js:121
-#: src/control/Control.NotebookbarImpress.js:1487
+#: src/control/Control.NotebookbarImpress.js:1486
 #: src/control/Control.NotebookbarWriter.js:81
-#: src/control/Control.NotebookbarWriter.js:1238
+#: src/control/Control.NotebookbarWriter.js:1246
 msgid "Table"
 msgstr "Tabulka"
 
@@ -2758,23 +2922,17 @@ msgstr "Dokument PDF (.pdf) - expertní"
 
 #: src/control/Control.NotebookbarDraw.js:494
 #: src/control/Control.NotebookbarImpress.js:591
-#: src/control/Control.NotebookbarWriter.js:1745
+#: src/control/Control.NotebookbarWriter.js:1731
 msgid "Ruler"
 msgstr "Pravítka"
 
 #: src/control/Control.NotebookbarDraw.js:899
-#: src/control/Control.NotebookbarImpress.js:975
+#: src/control/Control.NotebookbarImpress.js:974
 #: src/control/Control.NotebookbarImpress.js:2162
 #: src/control/Control.NotebookbarWriter.js:793
-#: src/control/Control.NotebookbarWriter.js:2700
+#: src/control/Control.NotebookbarWriter.js:2686
 msgid "Paragraph"
 msgstr "Odstavec"
-
-#: src/control/Control.NotebookbarDraw.js:1224
-#: src/control/Control.NotebookbarDraw.js:1424
-#: src/control/Control.NotebookbarWriter.js:1215
-msgid "Page"
-msgstr "Stránka"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
@@ -2808,42 +2966,38 @@ msgstr "Následujte mě Prezentace"
 msgid "Slide Views"
 msgstr "Pohled na snímky"
 
-#: src/control/Control.NotebookbarImpress.js:654
-msgid "Show Grid"
-msgstr "Zobrazit mřížku"
-
 #: src/control/Control.NotebookbarImpress.js:661
 msgid "Snap to Grid"
 msgstr "Přichytit k mřížce"
 
-#: src/control/Control.NotebookbarImpress.js:786
+#: src/control/Control.NotebookbarImpress.js:785
 #: src/control/Control.NotebookbarImpress.js:1801
 msgid "Slide Layout"
 msgstr "Rozvržení snímku"
 
-#: src/control/Control.NotebookbarImpress.js:797
+#: src/control/Control.NotebookbarImpress.js:796
 msgid "New"
 msgstr "Nový"
 
-#: src/control/Control.NotebookbarImpress.js:808
+#: src/control/Control.NotebookbarImpress.js:807
 #: src/control/Control.NotebookbarImpress.js:1811
 msgid "Change Layout"
 msgstr "Změnit rozvržení"
 
-#: src/control/Control.NotebookbarImpress.js:816
+#: src/control/Control.NotebookbarImpress.js:815
 #: src/control/Control.NotebookbarImpress.js:1818
 msgid "Reset Layout"
 msgstr "Obnovit rozvržení"
 
-#: src/control/Control.NotebookbarImpress.js:830
+#: src/control/Control.NotebookbarImpress.js:829
 msgid "Character"
 msgstr "Znak"
 
-#: src/control/Control.NotebookbarImpress.js:1091
+#: src/control/Control.NotebookbarImpress.js:1090
 msgid "Spacing & Color"
 msgstr "Rozestupy a barva"
 
-#: src/control/Control.NotebookbarImpress.js:1780
+#: src/control/Control.NotebookbarImpress.js:1779
 msgid "Master Slide Templates"
 msgstr "Šablony hlavních slidů"
 
@@ -2860,7 +3014,7 @@ msgid "Merge & Split"
 msgstr "Sloučit a rozdělit"
 
 #: src/control/Control.NotebookbarImpress.js:2093
-#: src/control/Control.NotebookbarWriter.js:2650
+#: src/control/Control.NotebookbarWriter.js:2636
 msgid "Select"
 msgstr "Vybrat"
 
@@ -2880,51 +3034,56 @@ msgstr "Přejít na online režim"
 msgid "Go Offline"
 msgstr "Přejít na offline režim"
 
-#: src/control/Control.NotebookbarWriter.js:932
+#: src/control/Control.NotebookbarWriter.js:923
+#: src/control/Control.Zotero.js:827
+msgid "Styles"
+msgstr "Styly"
+
+#: src/control/Control.NotebookbarWriter.js:940
 msgid "Scroll up"
 msgstr "Posunout nahoru"
 
-#: src/control/Control.NotebookbarWriter.js:939
+#: src/control/Control.NotebookbarWriter.js:947
 msgid "Scroll down"
 msgstr "Posunout dolů"
 
-#: src/control/Control.NotebookbarWriter.js:1090
+#: src/control/Control.NotebookbarWriter.js:1098
 msgid "Lists/Bullets"
 msgstr "Seznamy/odrážky"
 
-#: src/control/Control.NotebookbarWriter.js:1379
+#: src/control/Control.NotebookbarWriter.js:1387
 msgid "Header & Footer"
 msgstr "Záhlaví a zápatí"
 
-#: src/control/Control.NotebookbarWriter.js:1448
+#: src/control/Control.NotebookbarWriter.js:1456
 msgid "Section"
 msgstr "Sekce"
 
-#: src/control/Control.NotebookbarWriter.js:1544
+#: src/control/Control.NotebookbarWriter.js:1541
 msgid "Symbols"
 msgstr "Symboly"
 
-#: src/control/Control.NotebookbarWriter.js:1608
+#: src/control/Control.NotebookbarWriter.js:1594
 msgid "Rich Text"
 msgstr "Formátovaný text"
 
-#: src/control/Control.NotebookbarWriter.js:1616
+#: src/control/Control.NotebookbarWriter.js:1602
 msgid "Checkbox"
 msgstr "Zaškrtávací pole"
 
-#: src/control/Control.NotebookbarWriter.js:1624
+#: src/control/Control.NotebookbarWriter.js:1610
 msgid "Dropdown"
 msgstr "Rozbalovací pole"
 
-#: src/control/Control.NotebookbarWriter.js:2326
+#: src/control/Control.NotebookbarWriter.js:2312
 msgid "Tracking"
 msgstr "Sledování"
 
-#: src/control/Control.NotebookbarWriter.js:2588
+#: src/control/Control.NotebookbarWriter.js:2574
 msgid "Split"
 msgstr "Rozdělit"
 
-#: src/control/Control.NotebookbarWriter.js:2772
+#: src/control/Control.NotebookbarWriter.js:2758
 msgid "Number Format"
 msgstr "Formát čísla"
 
@@ -2936,11 +3095,11 @@ msgstr "náhled stránky %1"
 msgid "Slide %1"
 msgstr "Slide %1"
 
-#: src/control/Control.PartsPreview.js:263
+#: src/control/Control.PartsPreview.js:266
 msgid "Paste Slide"
 msgstr "Vložit snímek"
 
-#: src/control/Control.PartsPreview.js:311
+#: src/control/Control.PartsPreview.js:317
 msgid "Paste"
 msgstr "Vložit"
 
@@ -2960,39 +3119,34 @@ msgstr "Posunout na komentář výše"
 msgid "Scroll down annotations"
 msgstr "Posunout na komentář níže"
 
-#: src/control/Control.ServerAuditDialog.ts:50
-msgid "The IsAdminUser property is not set by integration"
-msgstr "Integrací není nastavena vlastnost IsAdminUser"
-
-#: src/control/Control.ServerAuditDialog.ts:56
-msgid ""
-"Used deprecated is_admin field, integration should use IsAdminUser property "
-"instead"
-msgstr ""
-"Používá se zastaralé pole is_admin, integrace by místo něj měla použít "
-"vlastnost IsAdminUser"
-
-#: src/control/Control.ServerAuditDialog.ts:62
-msgid "The IsAdminUser user property is set by integration"
-msgstr "Integrací je nastavena uživatelská vlastnost IsAdminUser"
-
-#: src/control/Control.ServerAuditDialog.ts:69
+#: src/control/Control.ServerAuditDialog.ts:58
 msgid "Your WOPI server is not secure: SSL verification failed"
 msgstr "Server WOPI není zabezpečený: nepodařilo se ověřit SSL"
 
-#: src/control/Control.ServerAuditDialog.ts:74
+#: src/control/Control.ServerAuditDialog.ts:63
 msgid "No problems with SSL verification detected"
 msgstr "Nezaznamenány žádné problémy s ověřením SSL"
 
-#: src/control/Control.ServerAuditDialog.ts:81
-msgid "PostMessage API is initialized"
-msgstr "PostMessage API bylo inicializováno"
+#: src/control/Control.ServerAuditDialog.ts:72
+msgid ""
+"Documents are not effectively contained: missing capabilities or namespaces."
+msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:86
-msgid "Integrator is not ready for PostMessage calls"
-msgstr "Integrátor není připraven na volání PostMessage"
+#: src/control/Control.ServerAuditDialog.ts:77
+msgid "Each document is securely contained"
+msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:94
+#: src/control/Control.ServerAuditDialog.ts:83
+msgid ""
+"BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
+"security hazard."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:88
+msgid "system call security filtering enabled"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
@@ -3000,27 +3154,79 @@ msgstr ""
 "Server je nakonfigurován s nedostatečnými hardwarovými zdroji, což může "
 "způsobovat pomalý běh."
 
-#: src/control/Control.ServerAuditDialog.ts:100
+#: src/control/Control.ServerAuditDialog.ts:101
 msgid "Hardware resources are sufficient for optimal performance"
 msgstr "Hardwarové zdroje nejsou dostatečné pro optimální běh"
 
-#: src/control/Control.ServerAuditDialog.ts:215
+#: src/control/Control.ServerAuditDialog.ts:109
+msgid "Slow Kit jail setup with copying, cannot bind-mount."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:113
+msgid "Fast kit jail bind mounting enabled"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:118
+msgid "Poorly performing proxying of all network requests."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:122
+msgid "direct network connection"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:128
+msgid "The IsAdminUser property is not set by integration"
+msgstr "Integrací není nastavena vlastnost IsAdminUser"
+
+#: src/control/Control.ServerAuditDialog.ts:134
+msgid ""
+"Used deprecated is_admin field, integration should use IsAdminUser property "
+"instead"
+msgstr ""
+"Používá se zastaralé pole is_admin, integrace by místo něj měla použít "
+"vlastnost IsAdminUser"
+
+#: src/control/Control.ServerAuditDialog.ts:140
+msgid "The IsAdminUser user property is set by integration"
+msgstr "Integrací je nastavena uživatelská vlastnost IsAdminUser"
+
+#: src/control/Control.ServerAuditDialog.ts:148
+msgid "PostMessage API is initialized"
+msgstr "PostMessage API bylo inicializováno"
+
+#: src/control/Control.ServerAuditDialog.ts:153
+msgid "Integrator is not ready for PostMessage calls"
+msgstr "Integrátor není připraven na volání PostMessage"
+
+#: src/control/Control.ServerAuditDialog.ts:161
+msgid "Using namespaces."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:162
+msgid "Not using namespaces"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:227
+msgid "Document container started in"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
 msgstr "Stav"
 
-#: src/control/Control.ServerAuditDialog.ts:225
+#: src/control/Control.ServerAuditDialog.ts:303
 msgid "No issues found"
 msgstr "Nenalezeny žádné problémy"
 
-#: src/control/Control.ServerAuditDialog.ts:230
+#: src/control/Control.ServerAuditDialog.ts:308
 msgid "Alerts:"
 msgstr "Upozornění:"
 
-#: src/control/Control.ServerAuditDialog.ts:276
+#: src/control/Control.ServerAuditDialog.ts:360
 msgid "Check security warnings of your server"
 msgstr "Zkontrolujte bezpečnostní upozornění serveru"
 
-#: src/control/Control.ServerAuditDialog.ts:277
+#: src/control/Control.ServerAuditDialog.ts:361
 msgid "OPEN"
 msgstr "OTEVŘÍT"
 
@@ -3259,13 +3465,13 @@ msgstr "Načítání…"
 
 #: src/control/Control.Zotero.js:257 src/control/Control.Zotero.js:454
 #: src/slideshow/PresenterConsole.js:31
-#: src/slideshow/SlideShowPresenter.ts:651
+#: src/slideshow/SlideShowPresenter.ts:655
 msgid "Previous"
 msgstr "Předchozí"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
-#: src/slideshow/SlideShowPresenter.ts:659
+#: src/slideshow/SlideShowPresenter.ts:663
 msgid "Next"
 msgstr "Další"
 
@@ -3322,10 +3528,6 @@ msgid "Citation Style"
 msgstr "Citační styl"
 
 #: src/control/Control.Zotero.js:827
-msgid "Styles"
-msgstr "Styly"
-
-#: src/control/Control.Zotero.js:827
 msgid "An error occurred while fetching style list"
 msgstr "Při načítání seznamu stylů došlo k chybě"
 
@@ -3367,10 +3569,6 @@ msgstr "Potvrdit"
 msgid "Add Note"
 msgstr "Přidat poznámku"
 
-#: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
-msgid "Notes"
-msgstr "Poznámky"
-
 #: src/control/Control.Zotero.js:1340
 msgid "An error occurred while fetching notes"
 msgstr "Při načítání poznámek došlo k chybě"
@@ -3395,19 +3593,19 @@ msgstr ""
 "Zrušení odkazů na citace způsobí, že v Collabora Online nebude v tomto "
 "dokumentu možné aktualizovat citace a seznam použité literatury."
 
-#: src/control/HRuler.ts:614
+#: src/control/HRuler.ts:591 src/control/HRuler.ts:763
 msgid "Left Margin"
 msgstr "Levý okraj"
 
-#: src/control/HRuler.ts:615
+#: src/control/HRuler.ts:592 src/control/HRuler.ts:764
 msgid "Right Margin"
 msgstr "Pravý okraj"
 
-#: src/control/HRuler.ts:921
+#: src/control/HRuler.ts:1072
 msgid "Insert tabstop"
 msgstr "Vložit tabulátor"
 
-#: src/control/HRuler.ts:928
+#: src/control/HRuler.ts:1079
 msgid "Delete tabstop"
 msgstr "Smazat tabulátor"
 
@@ -4512,19 +4710,19 @@ msgstr "karta Nápověda"
 msgid "the View menu"
 msgstr "nabídka Zobrazit"
 
-#: src/layer/tile/CanvasTileLayer.js:1581
+#: src/layer/tile/CanvasTileLayer.js:1587
 msgid "Functions"
 msgstr "Funkce"
 
-#: src/layer/tile/CanvasTileLayer.js:1841
+#: src/layer/tile/CanvasTileLayer.js:1847
 msgid "Named Range"
 msgstr "Pojmenovaná oblast"
 
-#: src/layer/tile/CanvasTileLayer.js:3481
+#: src/layer/tile/CanvasTileLayer.js:3507
 msgid "No Comments"
 msgstr "Bez komentářů"
 
-#: src/main.js:134
+#: src/main.js:130
 msgid "Warning! The browser you are using is not supported."
 msgstr "Pozor! Používáte nepodporovaný prohlížeč."
 
@@ -4545,7 +4743,7 @@ msgstr "Upozornění: vypršel časový limit pro kopírování/vkládání"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Nepodařilo se stáhnout schránku, zkuste zkopírovat znovu"
 
-#: src/map/Clipboard.js:1318
+#: src/map/Clipboard.js:1317
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
@@ -4553,7 +4751,7 @@ msgstr ""
 "Váš prohlížeč má velmi omezený přístup ke schránce, proto místo toho "
 "používejte tlačítka pro vkládání na klávesnici na obrazovce."
 
-#: src/map/Clipboard.js:1374
+#: src/map/Clipboard.js:1373
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -4561,23 +4759,23 @@ msgstr ""
 "Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte na "
 "jeho dokončení, nebo ho před zahájením nového nejprve zrušte."
 
-#: src/map/Clipboard.js:1396
+#: src/map/Clipboard.js:1395
 msgid "Paste from this document"
 msgstr "Vložit z tohoto dokumentu"
 
-#: src/map/Clipboard.js:1396
+#: src/map/Clipboard.js:1395
 msgid "Cancel paste special"
 msgstr "Zrušit vložení jinak"
 
-#: src/map/Clipboard.js:1418
+#: src/map/Clipboard.js:1417
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Prohlížeč má velmi omezený přístup ke schránce"
 
-#: src/map/Clipboard.js:1423
+#: src/map/Clipboard.js:1422
 msgid "Please use following combination to see more options:"
 msgstr "Následující kombinací zobrazíte další možnosti:"
 
-#: src/map/Clipboard.js:1441
+#: src/map/Clipboard.js:1440
 msgid "Close popup to ignore paste special"
 msgstr "Zavřením okna vložení jinak ignorujete"
 
@@ -4626,17 +4824,17 @@ msgid "Print dialog"
 msgstr "Dialogové okno Tisk"
 
 #: src/map/handler/Map.SlideShow.js:59
-#: src/slideshow/SlideShowPresenter.ts:1000
+#: src/slideshow/SlideShowPresenter.ts:1004
 msgid "Empty Slide Show"
 msgstr "Prázdná prezentace"
 
 #: src/map/handler/Map.SlideShow.js:167
-#: src/slideshow/SlideShowPresenter.ts:1028
+#: src/slideshow/SlideShowPresenter.ts:1032
 msgid "Windowed Presentation Blocked"
 msgstr "Prezentace v okně zablokována"
 
 #: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:1030
+#: src/slideshow/SlideShowPresenter.ts:1034
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -4647,17 +4845,17 @@ msgstr ""
 "snadné sdílet obrazovku."
 
 #: src/map/handler/Map.SlideShow.js:172
-#: src/slideshow/SlideShowPresenter.ts:830
+#: src/slideshow/SlideShowPresenter.ts:834
 msgid "Windowed Presentation: "
 msgstr "Prezentace v okně: "
 
 #: src/map/handler/Map.SlideShow.js:202
-#: src/slideshow/SlideShowPresenter.ts:872
+#: src/slideshow/SlideShowPresenter.ts:876
 msgid "Presenting in window"
 msgstr "Prezentuje se v okně"
 
 #: src/map/handler/Map.SlideShow.js:203
-#: src/slideshow/SlideShowPresenter.ts:873
+#: src/slideshow/SlideShowPresenter.ts:877
 msgid "Close Presentation"
 msgstr "Zavřít prezentaci"
 
@@ -4670,22 +4868,22 @@ msgid "End Presentation"
 msgstr "Ukončit prezentaci"
 
 #: src/map/handler/Map.SlideShow.js:295
-#: src/slideshow/SlideShowPresenter.ts:1015
+#: src/slideshow/SlideShowPresenter.ts:1019
 msgid "Already presenting"
 msgstr "Již se prezentuje"
 
 #: src/map/handler/Map.SlideShow.js:296
-#: src/slideshow/SlideShowPresenter.ts:1016
+#: src/slideshow/SlideShowPresenter.ts:1020
 msgid "You are already presenting this document"
 msgstr "Tento dokument se již prezentuje"
 
 #: src/map/handler/Map.SlideShow.js:306
-#: src/slideshow/SlideShowPresenter.ts:1053
+#: src/slideshow/SlideShowPresenter.ts:1057
 msgid "Presentation disabled"
 msgstr "Prezentace zakázána"
 
 #: src/map/handler/Map.SlideShow.js:307
-#: src/slideshow/SlideShowPresenter.ts:1054
+#: src/slideshow/SlideShowPresenter.ts:1058
 msgid "Presentation mode has been disabled for this document"
 msgstr "Režim prezentace byl pro tento dokument zakázán"
 
@@ -4764,24 +4962,24 @@ msgid "Repeat in {0} seconds"
 msgstr "Opakovat za {0} sekund"
 
 #: src/slideshow/PresenterConsole.js:1358
-#: src/slideshow/SlideShowPresenter.ts:529
+#: src/slideshow/SlideShowPresenter.ts:535
 msgid "Click to exit presentation..."
 msgstr "Prezentaci ukončíte kliknutím..."
 
-#: src/slideshow/SlideShowPresenter.ts:643
+#: src/slideshow/SlideShowPresenter.ts:647
 msgid "End Show"
 msgstr "Ukončit prezentaci"
 
-#: src/slideshow/SlideShowPresenter.ts:671
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:675
+#: src/slideshow/SlideShowPresenter.ts:687
 msgid "Disable Animations"
 msgstr "Zakázat animace"
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:686
 msgid "Enable Animations"
 msgstr "Povolit animace"
 
-#: src/slideshow/SlideShowPresenter.ts:694
+#: src/slideshow/SlideShowPresenter.ts:698
 msgid "Follow Presentation"
 msgstr "Sledovat prezentaci"
 
@@ -4877,9 +5075,6 @@ msgstr ""
 
 #~ msgid "Document is migrating to new server, retrying..."
 #~ msgstr "Dokument je migrován na nový server, zkouší se znovu..."
-
-#~ msgid "Presentation"
-#~ msgstr "Prezentace"
 
 #~ msgid "Cancel the search"
 #~ msgstr "Zrušit vyhledávání"

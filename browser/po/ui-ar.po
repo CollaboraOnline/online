@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-22 12:23+0200\n"
+"POT-Creation-Date: 2025-09-26 14:55+0200\n"
 "PO-Revision-Date: 2025-06-28 13:06+0000\n"
 "Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
@@ -143,12 +143,12 @@ msgid "Network Graph"
 msgstr "رسم بياني للشبكة"
 
 #: admin/admin.strings.js:45
-#: admin/src/integrator/AdminIntegratorSettings.ts:687
-#: admin/src/integrator/AdminIntegratorSettings.ts:1381
+#: admin/src/integrator/AdminIntegratorSettings.ts:731
+#: admin/src/integrator/AdminIntegratorSettings.ts:1425
 #: admin/src/integrator/WordBook.ts:394
 #: src/canvas/sections/CommentListSection.ts:514
 #: src/canvas/sections/CommentSection.ts:178
-#: src/control/Control.Notebookbar.js:301
+#: src/control/Control.Notebookbar.js:307
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -293,28 +293,28 @@ msgstr "تحذير"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1565 src/app/Debug.ts:1391
+#: admin/src/integrator/AdminIntegratorSettings.ts:1609 src/app/Debug.ts:1391
 #: src/canvas/sections/CommentListSection.ts:1474
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:239
+#: src/control/Control.ServerAuditDialog.ts:317
 #: src/control/Control.Tabs.js:397 src/control/Control.Tabs.js:406
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:483 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:746 src/core/Socket.js:721 src/core/Socket.js:1187
 #: src/core/Socket.js:1257 src/core/Socket.js:1433 src/core/Socket.js:1437
-#: src/docdispatcher.ts:543 src/main.js:92 src/main.js:95 src/main.js:135
-#: src/map/Clipboard.js:1296 src/map/handler/Map.Feedback.js:96
+#: src/docdispatcher.ts:543 src/main.js:88 src/main.js:91 src/main.js:131
+#: src/map/Clipboard.js:1295 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
 #: src/map/handler/Map.SlideShow.js:297 src/map/handler/Map.SlideShow.js:308
-#: src/map/handler/Map.WOPI.js:695 src/slideshow/SlideShowPresenter.ts:1003
-#: src/slideshow/SlideShowPresenter.ts:1018
-#: src/slideshow/SlideShowPresenter.ts:1033
-#: src/slideshow/SlideShowPresenter.ts:1056
+#: src/map/handler/Map.WOPI.js:695 src/slideshow/SlideShowPresenter.ts:1007
+#: src/slideshow/SlideShowPresenter.ts:1022
+#: src/slideshow/SlideShowPresenter.ts:1037
+#: src/slideshow/SlideShowPresenter.ts:1060
 msgid "OK"
 msgstr "موافق"
 
@@ -378,8 +378,8 @@ msgstr "إمكانية الوصول"
 #: src/control/Control.Menubar.ts:1196 src/control/Control.Menubar.ts:1256
 #: src/control/Control.NotebookbarCalc.js:1548
 #: src/control/Control.NotebookbarDraw.js:554
-#: src/control/Control.NotebookbarImpress.js:675
-#: src/control/Control.NotebookbarWriter.js:1777
+#: src/control/Control.NotebookbarImpress.js:674
+#: src/control/Control.NotebookbarWriter.js:1763
 msgid "Dark Mode"
 msgstr "الوضع المظلم"
 
@@ -426,19 +426,201 @@ msgstr ""
 msgid "Style List"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:252
+#: admin/src/integrator/AdminIntegratorSettings.ts:160
+#: src/control/Control.NotebookbarCalc.js:1143
+#: src/control/Control.NotebookbarDraw.js:525
+#: src/control/Control.NotebookbarImpress.js:645
+msgid "Grid"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:161
+msgid "Print"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:162
+msgid "Other"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:163
+#: src/control/Control.NotebookbarImpress.js:654
+msgid "Show Grid"
+msgstr "عرض الشبكة"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:164
+#, fuzzy
+msgid "Snap to grid"
+msgstr "الالتقاط إلى الشبكة"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:165
+#: admin/src/integrator/AdminIntegratorSettings.ts:171
+msgid "Size to grid"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:166
+msgid "Synchronize axes"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:167
+msgid "Snap grid"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:168
+msgid "Empty Pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:169
+msgid "Force Breaks"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:170
+#: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
+#: src/control/jsdialog/Definitions.Menu.ts:1573
+msgid "All Sheets"
+msgstr "جميع الأوراق"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:172
+msgid "Content"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:173
+msgid "Drawing"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:174
+#: src/control/Control.NotebookbarDraw.js:1224
+#: src/control/Control.NotebookbarDraw.js:1424
+#: src/control/Control.NotebookbarWriter.js:1223
+msgid "Page"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:175
+msgid "Fit to page"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:176
+msgid "Tile pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:177
+msgid "Booklet"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:178
+msgid "Booklet front"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:179
+msgid "Booket back"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:180
+msgid "Page name"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:181
+#: src/control/Control.NotebookbarCalc.js:775
+#: src/control/Control.NotebookbarWriter.js:1626
+#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
+msgid "Date"
+msgstr "تاريخ"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:182
+#: src/control/Control.NotebookbarCalc.js:776
+msgid "Time"
+msgstr "وقت"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:183
+msgid "Hidden pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:184
+msgid "From printer setup"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:185
+msgid "Presentation"
+msgstr "عرض"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:186
+#: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
+msgid "Notes"
+msgstr "ملاحظات"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:187
+msgid "Handouts"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:188
+#: src/control/Control.NavigatorPanel.ts:178
+msgid "Outline"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:189
+msgid "Handout horizontal"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:190
+msgid "Images"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:191
+#, fuzzy
+msgid "Tables"
+msgstr "‫‫الجدول"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:192
+msgid "Controls"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:193
+msgid "Background"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:194
+msgid "Print Black"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:195
+msgid "Hidden text"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:196
+msgid "Placeholders"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:197
+msgid "Left pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:198
+msgid "Right pages"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:199
+msgid "Brochure"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:200
+msgid "Brochure Right to Left"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:201
+msgid "Images and Objects"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
 msgstr "ملف JSON غير صالح"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:256
+#: admin/src/integrator/AdminIntegratorSettings.ts:300
 msgid "Error reading file"
 msgstr "خطأ في قراءة الملف"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:268
+#: admin/src/integrator/AdminIntegratorSettings.ts:312
 msgid "Autotext"
 msgstr "نص تلقائي"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:270
+#: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
@@ -446,15 +628,15 @@ msgstr ""
 "تحميل مقتطفات نصية متكررة الاستخدام (.bau). لإدخال النص في مستندك، أكتُب "
 "اختصار إدخالية النص التلقائي ثم اضغَط على F3."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:276
+#: admin/src/integrator/AdminIntegratorSettings.ts:320
 msgid "Upload Autotext"
 msgstr "رفع النص التلقائي"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:280
+#: admin/src/integrator/AdminIntegratorSettings.ts:324
 msgid "Custom dictionaries"
 msgstr "قواميس مخصصة"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:282
+#: admin/src/integrator/AdminIntegratorSettings.ts:326
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
@@ -462,139 +644,139 @@ msgstr ""
 "أضِف أو عدِّل كلمات في قاموس التدقيق الإملائي. الكلمات المدرجة في الملف (."
 "dic) ستكون متاحة للتدقيق اللغوي."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:288
+#: admin/src/integrator/AdminIntegratorSettings.ts:332
 msgid "Upload Wordbook"
 msgstr "رفع ملف الكلمات للتدقيق اللغوي"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:292
+#: admin/src/integrator/AdminIntegratorSettings.ts:336
 msgid "Document settings"
 msgstr "إعدادات المستند"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:293
-#: admin/src/integrator/Xcu.ts:342
+#: admin/src/integrator/AdminIntegratorSettings.ts:337
+#: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
 msgstr "تضبيط كيفية تصرف المستندات المكتبية."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:299
+#: admin/src/integrator/AdminIntegratorSettings.ts:343
 msgid "Upload Xcu"
 msgstr "رفع Xcu"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:350
+#: admin/src/integrator/AdminIntegratorSettings.ts:394
 msgid "Shared Config URL is missing in initial variables."
 msgstr "عنوان URL للتهيئة المشتركة ناقص في المتغيرات المبدئية."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:356
+#: admin/src/integrator/AdminIntegratorSettings.ts:400
 msgid "Access token is missing in initial variables."
 msgstr "أَمَارَات الوصول ناقصة في المتغيرات المبدئية."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:392
+#: admin/src/integrator/AdminIntegratorSettings.ts:436
 msgid "Something went wrong. Please try to refresh the page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:509
+#: admin/src/integrator/AdminIntegratorSettings.ts:553
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:534
+#: admin/src/integrator/AdminIntegratorSettings.ts:578
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:544
+#: admin/src/integrator/AdminIntegratorSettings.ts:588
 msgid "Interface Settings"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:546
+#: admin/src/integrator/AdminIntegratorSettings.ts:590
 msgid "Set default interface preferences."
 msgstr "أنظُر تفضيلات الواجهة التلقائية."
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:654
+#: admin/src/integrator/AdminIntegratorSettings.ts:698
 msgid "Select a tab to browser settings."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:667
-#: admin/src/integrator/Xcu.ts:402
+#: admin/src/integrator/AdminIntegratorSettings.ts:711
+#: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:671
-#: admin/src/integrator/Xcu.ts:416
+#: admin/src/integrator/AdminIntegratorSettings.ts:715
+#: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:688
-#: admin/src/integrator/Xcu.ts:431
+#: admin/src/integrator/AdminIntegratorSettings.ts:732
+#: admin/src/integrator/Xcu.ts:405
 #, fuzzy
 msgid "Save Document settings"
 msgstr "إعدادات المستند"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1029
+#: admin/src/integrator/AdminIntegratorSettings.ts:1073
 msgid "Notebookbar view"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1036
+#: admin/src/integrator/AdminIntegratorSettings.ts:1080
 #: src/control/Control.NotebookbarCalc.js:1510
 #: src/control/Control.NotebookbarDraw.js:481
 #: src/control/Control.NotebookbarImpress.js:578
-#: src/control/Control.NotebookbarWriter.js:1732
+#: src/control/Control.NotebookbarWriter.js:1718
 msgid "Compact view"
 msgstr "عرض مُدمَج"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1109
+#: admin/src/integrator/AdminIntegratorSettings.ts:1153
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1185
+#: admin/src/integrator/AdminIntegratorSettings.ts:1229
 #: src/control/Control.ContextMenu.js:250 src/docdispatcher.ts:540
 msgid "Delete"
 msgstr "حذف"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1223
+#: admin/src/integrator/AdminIntegratorSettings.ts:1267
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1238
+#: admin/src/integrator/AdminIntegratorSettings.ts:1282
 msgid "Edit"
 msgstr "تحرير"
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1264
+#: admin/src/integrator/AdminIntegratorSettings.ts:1308
 msgid "View Settings"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1265
+#: admin/src/integrator/AdminIntegratorSettings.ts:1309
 msgid "Adjust view settings."
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1275
+#: admin/src/integrator/AdminIntegratorSettings.ts:1319
 msgid "Option"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1321
+#: admin/src/integrator/AdminIntegratorSettings.ts:1365
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1355
+#: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid "Reset to default View settings"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1359
+#: admin/src/integrator/AdminIntegratorSettings.ts:1403
 msgid "Are you sure you want to reset View Settings?"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1382
+#: admin/src/integrator/AdminIntegratorSettings.ts:1426
 msgid "Save View Settings"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1526
+#: admin/src/integrator/AdminIntegratorSettings.ts:1570
 msgid "Enter Zotero API Key"
 msgstr ""
 
-#: admin/src/integrator/AdminIntegratorSettings.ts:1553
+#: admin/src/integrator/AdminIntegratorSettings.ts:1597
 #: src/map/handler/Map.WOPI.js:695
 msgid "Error"
 msgstr "خطأ"
@@ -635,16 +817,16 @@ msgstr ""
 msgid "Something went wrong while uploading dictionary file"
 msgstr ""
 
-#: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:184
+#: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
 msgstr ""
 
-#: admin/src/integrator/Xcu.ts:338
+#: admin/src/integrator/Xcu.ts:312
 #, fuzzy
 msgid "Document Settings"
 msgstr "إعدادات المستند"
 
-#: admin/src/integrator/Xcu.ts:389
+#: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
 msgstr ""
 
@@ -781,8 +963,8 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1251
 #: src/control/Control.JSDialogBuilder.js:1920
-#: src/layer/tile/CanvasTileLayer.js:3453
-#: src/layer/tile/CanvasTileLayer.js:3464
+#: src/layer/tile/CanvasTileLayer.js:3479
+#: src/layer/tile/CanvasTileLayer.js:3490
 msgid "Comment"
 msgstr "التعليق"
 
@@ -930,7 +1112,7 @@ msgid ""
 "administrator."
 msgstr "مصدر البيانات الخارجي المحدد محظور. الرجاء الاتصال بمشرف النظام عندك."
 
-#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1297
+#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1296
 msgid "Don’t show this again"
 msgstr "لا تُظهِر هذا مُجدَّداً"
 
@@ -1022,7 +1204,7 @@ msgstr "تنزيل محتوى الحافظة"
 
 #: src/control/Control.DownloadProgress.js:89
 #: src/control/Control.DownloadProgress.js:114
-#: src/control/Control.PartsPreview.js:300
+#: src/control/Control.PartsPreview.js:304
 msgid "Copy"
 msgstr "نسخ"
 
@@ -1374,7 +1556,7 @@ msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:80
 #: src/control/Control.NotebookbarWriter.js:114
-#: src/control/Control.NotebookbarWriter.js:1569
+#: src/control/Control.NotebookbarWriter.js:1566
 msgid "Formula"
 msgstr "المعادلة"
 
@@ -1460,8 +1642,8 @@ msgstr "حجم الخط"
 #: src/control/Control.NotebookbarCalc.js:939
 #: src/control/Control.NotebookbarCalc.js:2569
 #: src/control/Control.NotebookbarDraw.js:1752
-#: src/control/Control.NotebookbarImpress.js:1295
-#: src/control/Control.NotebookbarWriter.js:1053
+#: src/control/Control.NotebookbarImpress.js:1294
+#: src/control/Control.NotebookbarWriter.js:1061
 #: src/control/Control.TopToolbar.js:484
 msgid "Style"
 msgstr "النمط"
@@ -1653,7 +1835,7 @@ msgstr "أصلح"
 #: src/control/Control.NotebookbarCalc.js:1470
 #: src/control/Control.NotebookbarDraw.js:441
 #: src/control/Control.NotebookbarImpress.js:538
-#: src/control/Control.NotebookbarWriter.js:1692
+#: src/control/Control.NotebookbarWriter.js:1678
 #: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
 msgstr "صفّر مستوى التكبير"
@@ -1679,15 +1861,15 @@ msgstr "إخفاء شريط القوائم"
 #: src/control/Control.Menubar.ts:1197 src/control/Control.Menubar.ts:1257
 #: src/control/Control.NotebookbarCalc.js:1555
 #: src/control/Control.NotebookbarDraw.js:561
-#: src/control/Control.NotebookbarImpress.js:682
-#: src/control/Control.NotebookbarWriter.js:1784
+#: src/control/Control.NotebookbarImpress.js:681
+#: src/control/Control.NotebookbarWriter.js:1770
 msgid "Invert Background"
 msgstr "عكس الخلفية"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:804
 #: src/control/Control.NotebookbarCalc.js:2596
-#: src/control/Control.NotebookbarWriter.js:946
-#: src/control/Control.NotebookbarWriter.js:1080
+#: src/control/Control.NotebookbarWriter.js:954
+#: src/control/Control.NotebookbarWriter.js:1088
 msgid "Style list"
 msgstr ""
 
@@ -1707,8 +1889,8 @@ msgstr "الكل"
 #: src/control/Control.Menubar.ts:668 src/control/Control.Menubar.ts:827
 #: src/control/Control.NotebookbarCalc.js:1776
 #: src/control/Control.NotebookbarDraw.js:1583
-#: src/control/Control.NotebookbarImpress.js:1584
-#: src/control/Control.NotebookbarWriter.js:1338
+#: src/control/Control.NotebookbarImpress.js:1583
+#: src/control/Control.NotebookbarWriter.js:1346
 msgid "Smart Picker"
 msgstr "المنتقى الذكي"
 
@@ -1787,7 +1969,7 @@ msgstr "أدخل جدول"
 #: src/control/Control.NotebookbarDraw.js:356
 #: src/control/Control.NotebookbarImpress.js:391
 #: src/control/Control.NotebookbarWriter.js:350
-#: src/control/Control.NotebookbarWriter.js:1648
+#: src/control/Control.NotebookbarWriter.js:1634
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -1838,8 +2020,8 @@ msgstr "ارسل رأيك"
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:597
 #: src/control/Control.Menubar.ts:736 src/control/Control.Menubar.ts:1029
 #: src/control/Control.NotebookbarWriter.js:494
-#: src/control/Control.ServerAuditDialog.ts:196
-#: src/control/Control.ServerAuditDialog.ts:197
+#: src/control/Control.ServerAuditDialog.ts:274
+#: src/control/Control.ServerAuditDialog.ts:275
 msgid "Server audit"
 msgstr "سجل حركات الخادوم"
 
@@ -1988,11 +2170,6 @@ msgstr "ملف (.csv) CSV"
 msgid "Active sheet"
 msgstr "الورقة النشطة"
 
-#: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
-#: src/control/jsdialog/Definitions.Menu.ts:1573
-msgid "All Sheets"
-msgstr "جميع الأوراق"
-
 #: src/control/Control.Menubar.ts:807
 #: src/control/Control.NotebookbarCalc.js:1441
 msgid "Focus Cell"
@@ -2080,10 +2257,10 @@ msgstr "تحت المتوسط ..."
 #: src/control/Control.NotebookbarCalc.js:1029
 #: src/control/Control.NotebookbarDraw.js:1171
 #: src/control/Control.NotebookbarDraw.js:1184
-#: src/control/Control.NotebookbarImpress.js:1250
-#: src/control/Control.NotebookbarImpress.js:1263
-#: src/control/Control.NotebookbarWriter.js:1008
-#: src/control/Control.NotebookbarWriter.js:1021
+#: src/control/Control.NotebookbarImpress.js:1249
+#: src/control/Control.NotebookbarImpress.js:1262
+#: src/control/Control.NotebookbarWriter.js:1016
+#: src/control/Control.NotebookbarWriter.js:1029
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:580
 #: src/control/Toolbar.js:581
 msgid "Search"
@@ -2091,7 +2268,7 @@ msgstr "البحث"
 
 #: src/control/Control.Menubar.ts:1089
 #: src/control/Control.NotebookbarCalc.js:1094
-#: src/control/Control.NotebookbarWriter.js:1812
+#: src/control/Control.NotebookbarWriter.js:1798
 msgid "Page Setup"
 msgstr "اعداد الصفحة"
 
@@ -2177,20 +2354,16 @@ msgid "Close Navigation"
 msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:171
-#: src/control/Control.NotebookbarImpress.js:1394
+#: src/control/Control.NotebookbarImpress.js:1393
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
 msgstr "الشرائح"
-
-#: src/control/Control.NavigatorPanel.ts:178
-msgid "Outline"
-msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:185
 msgid "Results"
 msgstr ""
 
-#: src/control/Control.NavigatorPanel.ts:393
+#: src/control/Control.NavigatorPanel.ts:400
 msgid "Search..."
 msgstr ""
 
@@ -2202,19 +2375,23 @@ msgstr ""
 msgid "Transition"
 msgstr ""
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:55
+#: src/control/Notebookbar.ImpressTransitionTab.ts:41
+msgid "Transitions"
+msgstr ""
+
+#: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
 msgstr ""
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:70
+#: src/control/Notebookbar.ImpressTransitionTab.ts:78
 msgid "Duration"
 msgstr ""
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:97
+#: src/control/Notebookbar.ImpressTransitionTab.ts:105
 msgid "On mouse click"
 msgstr ""
 
-#: src/control/Notebookbar.ImpressTransitionTab.ts:105
+#: src/control/Notebookbar.ImpressTransitionTab.ts:113
 msgid "After"
 msgstr ""
 
@@ -2228,12 +2405,12 @@ msgstr ""
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:301
 #: src/control/Control.NotebookbarDraw.js:1576
-#: src/control/Control.NotebookbarImpress.js:1620
+#: src/control/Control.NotebookbarImpress.js:1619
 #, fuzzy
 msgid "Field"
 msgstr "حقول"
 
-#: src/control/Control.Notebookbar.js:685
+#: src/control/Control.Notebookbar.js:691
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2289,7 +2466,8 @@ msgstr "الصفحة الرئيسية"
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarImpress.js:1987
 #: src/control/Control.NotebookbarWriter.js:50
-#: src/control/Control.NotebookbarWriter.js:2527
+#: src/control/Control.NotebookbarWriter.js:965
+#: src/control/Control.NotebookbarWriter.js:2513
 msgid "Insert"
 msgstr "إدراج"
 
@@ -2323,6 +2501,7 @@ msgstr "نَسَق"
 
 #: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:101
+#: src/control/Control.NotebookbarImpress.js:128
 #: src/control/Control.NotebookbarWriter.js:88
 #, fuzzy
 msgid "Shape"
@@ -2330,8 +2509,9 @@ msgstr "الأشكال"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
+#: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:95
-#: src/control/Control.NotebookbarWriter.js:1632
+#: src/control/Control.NotebookbarWriter.js:1618
 msgid "Picture"
 msgstr "صورة"
 
@@ -2352,7 +2532,7 @@ msgstr "خط التألق"
 #: src/control/Control.NotebookbarDraw.js:121
 #: src/control/Control.NotebookbarImpress.js:155
 #: src/control/Control.NotebookbarWriter.js:108
-#: src/control/Control.ServerAuditDialog.ts:216
+#: src/control/Control.ServerAuditDialog.ts:294
 msgid "Help"
 msgstr "مساعدة"
 
@@ -2398,7 +2578,7 @@ msgstr "إعادة تسمية"
 
 #: src/control/Control.NotebookbarCalc.js:411
 #: src/control/Control.NotebookbarDraw.js:611
-#: src/control/Control.NotebookbarImpress.js:725
+#: src/control/Control.NotebookbarImpress.js:724
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
 msgstr ""
@@ -2435,16 +2615,6 @@ msgstr "نسبة مئوية"
 msgid "Currency"
 msgstr "عملة"
 
-#: src/control/Control.NotebookbarCalc.js:775
-#: src/control/Control.NotebookbarWriter.js:1640
-#: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
-msgid "Date"
-msgstr "تاريخ"
-
-#: src/control/Control.NotebookbarCalc.js:776
-msgid "Time"
-msgstr "وقت"
-
 #: src/control/Control.NotebookbarCalc.js:777
 msgid "Scientific"
 msgstr "علمي"
@@ -2461,8 +2631,8 @@ msgstr "القيمة المنطقية"
 #: src/control/Control.NotebookbarCalc.js:1855
 #: src/control/Control.NotebookbarCalc.js:2020
 #: src/control/Control.NotebookbarDraw.js:1666
-#: src/control/Control.NotebookbarImpress.js:1694
-#: src/control/Control.NotebookbarWriter.js:1487
+#: src/control/Control.NotebookbarImpress.js:1693
+#: src/control/Control.NotebookbarWriter.js:1495
 msgid "Text"
 msgstr "نص"
 
@@ -2501,25 +2671,19 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1040
 #: src/control/Control.NotebookbarDraw.js:1195
-#: src/control/Control.NotebookbarImpress.js:1274
-#: src/control/Control.NotebookbarWriter.js:1032
+#: src/control/Control.NotebookbarImpress.js:1273
+#: src/control/Control.NotebookbarWriter.js:1040
 msgid "Replace"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1104
-#: src/control/Control.NotebookbarWriter.js:1822
+#: src/control/Control.NotebookbarWriter.js:1808
 msgid "Margin"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1111
-#: src/control/Control.NotebookbarWriter.js:1829
+#: src/control/Control.NotebookbarWriter.js:1815
 msgid "Size"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:1143
-#: src/control/Control.NotebookbarDraw.js:525
-#: src/control/Control.NotebookbarImpress.js:645
-msgid "Grid"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1172
@@ -2561,9 +2725,9 @@ msgstr "حذف أعمدة"
 #: src/control/Control.NotebookbarImpress.js:2282
 #: src/control/Control.NotebookbarImpress.js:2489
 #: src/control/Control.NotebookbarImpress.js:2793
-#: src/control/Control.NotebookbarWriter.js:2053
-#: src/control/Control.NotebookbarWriter.js:2989
-#: src/control/Control.NotebookbarWriter.js:3312
+#: src/control/Control.NotebookbarWriter.js:2039
+#: src/control/Control.NotebookbarWriter.js:2975
+#: src/control/Control.NotebookbarWriter.js:3298
 msgid "Align"
 msgstr ""
 
@@ -2574,9 +2738,9 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:2349
 #: src/control/Control.NotebookbarImpress.js:2556
 #: src/control/Control.NotebookbarImpress.js:2860
-#: src/control/Control.NotebookbarWriter.js:2124
-#: src/control/Control.NotebookbarWriter.js:3048
-#: src/control/Control.NotebookbarWriter.js:3371
+#: src/control/Control.NotebookbarWriter.js:2110
+#: src/control/Control.NotebookbarWriter.js:3034
+#: src/control/Control.NotebookbarWriter.js:3357
 msgid "Arrange"
 msgstr ""
 
@@ -2587,28 +2751,28 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1449
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:524
-#: src/control/Control.NotebookbarWriter.js:1678
+#: src/control/Control.NotebookbarWriter.js:1664
 msgid "Zoom"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1456
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:458
-#: src/control/Control.NotebookbarWriter.js:1664
+#: src/control/Control.NotebookbarWriter.js:1650
 msgid "Read mode"
 msgstr "وضع القراءة"
 
 #: src/control/Control.NotebookbarCalc.js:1523
 #: src/control/Control.NotebookbarDraw.js:518
 #: src/control/Control.NotebookbarImpress.js:615
-#: src/control/Control.NotebookbarWriter.js:1769
+#: src/control/Control.NotebookbarWriter.js:1755
 msgid "Collapse Tabs"
 msgstr "طي علامات التبويب"
 
 #: src/control/Control.NotebookbarCalc.js:1535
 #: src/control/Control.NotebookbarDraw.js:506
 #: src/control/Control.NotebookbarImpress.js:603
-#: src/control/Control.NotebookbarWriter.js:1757
+#: src/control/Control.NotebookbarWriter.js:1743
 msgid "Status Bar"
 msgstr "شريط الحالة"
 
@@ -2618,8 +2782,8 @@ msgstr "شريط الحالة"
 #: src/control/Control.NotebookbarCalc.js:3296
 #: src/control/Control.NotebookbarImpress.js:2609
 #: src/control/Control.NotebookbarImpress.js:2913
-#: src/control/Control.NotebookbarWriter.js:3097
-#: src/control/Control.NotebookbarWriter.js:3420
+#: src/control/Control.NotebookbarWriter.js:3083
+#: src/control/Control.NotebookbarWriter.js:3406
 msgid "Group"
 msgstr ""
 
@@ -2634,26 +2798,25 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1669
 #: src/control/Control.NotebookbarDraw.js:1013
 #: src/control/Control.NotebookbarDraw.js:1470
-#: src/control/Control.NotebookbarImpress.js:1161
-#: src/control/Control.NotebookbarImpress.js:1440
-#: src/control/Control.NotebookbarWriter.js:957
-#: src/control/Control.NotebookbarWriter.js:1246
+#: src/control/Control.NotebookbarImpress.js:1160
+#: src/control/Control.NotebookbarImpress.js:1439
+#: src/control/Control.NotebookbarWriter.js:1254
 msgid "Illustrations"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1739
 #: src/control/Control.NotebookbarDraw.js:1027
 #: src/control/Control.NotebookbarDraw.js:1521
-#: src/control/Control.NotebookbarImpress.js:1175
-#: src/control/Control.NotebookbarImpress.js:1518
-#: src/control/Control.NotebookbarWriter.js:1291
+#: src/control/Control.NotebookbarImpress.js:1174
+#: src/control/Control.NotebookbarImpress.js:1517
+#: src/control/Control.NotebookbarWriter.js:1299
 msgid "Shapes"
 msgstr "الأشكال"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 #: src/control/Control.NotebookbarDraw.js:1591
-#: src/control/Control.NotebookbarImpress.js:1605
-#: src/control/Control.NotebookbarWriter.js:1359
+#: src/control/Control.NotebookbarImpress.js:1604
+#: src/control/Control.NotebookbarWriter.js:1367
 msgid "Assistant"
 msgstr ""
 
@@ -2708,7 +2871,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2501
 #: src/control/Control.NotebookbarImpress.js:1950
-#: src/control/Control.NotebookbarWriter.js:2251
+#: src/control/Control.NotebookbarWriter.js:2237
 #, fuzzy
 msgid "Comments"
 msgstr "التعليق"
@@ -2719,15 +2882,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2752
 #: src/control/Control.NotebookbarCalc.js:3109
-#: src/control/Control.NotebookbarWriter.js:1955
-#: src/control/Control.NotebookbarWriter.js:2934
-#: src/control/Control.NotebookbarWriter.js:3257
+#: src/control/Control.NotebookbarWriter.js:1941
+#: src/control/Control.NotebookbarWriter.js:2920
+#: src/control/Control.NotebookbarWriter.js:3243
 msgid "Wrap"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2991
 #: src/control/Control.NotebookbarImpress.js:2669
-#: src/control/Control.NotebookbarWriter.js:3143
+#: src/control/Control.NotebookbarWriter.js:3129
 msgid "Image Controls"
 msgstr ""
 
@@ -2739,9 +2902,9 @@ msgstr "مُخطَّط"
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1490
 #: src/control/Control.NotebookbarImpress.js:121
-#: src/control/Control.NotebookbarImpress.js:1487
+#: src/control/Control.NotebookbarImpress.js:1486
 #: src/control/Control.NotebookbarWriter.js:81
-#: src/control/Control.NotebookbarWriter.js:1238
+#: src/control/Control.NotebookbarWriter.js:1246
 msgid "Table"
 msgstr "‫‫الجدول"
 
@@ -2751,22 +2914,16 @@ msgstr "مستند PDF (.pdf) - خبير"
 
 #: src/control/Control.NotebookbarDraw.js:494
 #: src/control/Control.NotebookbarImpress.js:591
-#: src/control/Control.NotebookbarWriter.js:1745
+#: src/control/Control.NotebookbarWriter.js:1731
 msgid "Ruler"
 msgstr "مسطرة"
 
 #: src/control/Control.NotebookbarDraw.js:899
-#: src/control/Control.NotebookbarImpress.js:975
+#: src/control/Control.NotebookbarImpress.js:974
 #: src/control/Control.NotebookbarImpress.js:2162
 #: src/control/Control.NotebookbarWriter.js:793
-#: src/control/Control.NotebookbarWriter.js:2700
+#: src/control/Control.NotebookbarWriter.js:2686
 msgid "Paragraph"
-msgstr ""
-
-#: src/control/Control.NotebookbarDraw.js:1224
-#: src/control/Control.NotebookbarDraw.js:1424
-#: src/control/Control.NotebookbarWriter.js:1215
-msgid "Page"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:96
@@ -2801,43 +2958,39 @@ msgstr ""
 msgid "Slide Views"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:654
-msgid "Show Grid"
-msgstr "عرض الشبكة"
-
 #: src/control/Control.NotebookbarImpress.js:661
 msgid "Snap to Grid"
 msgstr "الالتقاط إلى الشبكة"
 
-#: src/control/Control.NotebookbarImpress.js:786
+#: src/control/Control.NotebookbarImpress.js:785
 #: src/control/Control.NotebookbarImpress.js:1801
 msgid "Slide Layout"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:797
+#: src/control/Control.NotebookbarImpress.js:796
 msgid "New"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:808
+#: src/control/Control.NotebookbarImpress.js:807
 #: src/control/Control.NotebookbarImpress.js:1811
 #, fuzzy
 msgid "Change Layout"
 msgstr "مُخطَّط الصفحة"
 
-#: src/control/Control.NotebookbarImpress.js:816
+#: src/control/Control.NotebookbarImpress.js:815
 #: src/control/Control.NotebookbarImpress.js:1818
 msgid "Reset Layout"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:830
+#: src/control/Control.NotebookbarImpress.js:829
 msgid "Character"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:1091
+#: src/control/Control.NotebookbarImpress.js:1090
 msgid "Spacing & Color"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:1780
+#: src/control/Control.NotebookbarImpress.js:1779
 msgid "Master Slide Templates"
 msgstr ""
 
@@ -2854,7 +3007,7 @@ msgid "Merge & Split"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:2093
-#: src/control/Control.NotebookbarWriter.js:2650
+#: src/control/Control.NotebookbarWriter.js:2636
 msgid "Select"
 msgstr ""
 
@@ -2874,51 +3027,56 @@ msgstr "الاتصال بالإنترنت"
 msgid "Go Offline"
 msgstr "قطع الاتصال بالإنترنت"
 
-#: src/control/Control.NotebookbarWriter.js:932
+#: src/control/Control.NotebookbarWriter.js:923
+#: src/control/Control.Zotero.js:827
+msgid "Styles"
+msgstr "أنماط"
+
+#: src/control/Control.NotebookbarWriter.js:940
 msgid "Scroll up"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:939
+#: src/control/Control.NotebookbarWriter.js:947
 msgid "Scroll down"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1090
+#: src/control/Control.NotebookbarWriter.js:1098
 msgid "Lists/Bullets"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1379
+#: src/control/Control.NotebookbarWriter.js:1387
 msgid "Header & Footer"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1448
+#: src/control/Control.NotebookbarWriter.js:1456
 msgid "Section"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1544
+#: src/control/Control.NotebookbarWriter.js:1541
 msgid "Symbols"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1608
+#: src/control/Control.NotebookbarWriter.js:1594
 msgid "Rich Text"
 msgstr "نص منسق"
 
-#: src/control/Control.NotebookbarWriter.js:1616
+#: src/control/Control.NotebookbarWriter.js:1602
 msgid "Checkbox"
 msgstr "خانة الاختيار"
 
-#: src/control/Control.NotebookbarWriter.js:1624
+#: src/control/Control.NotebookbarWriter.js:1610
 msgid "Dropdown"
 msgstr "قائمة منسدلة"
 
-#: src/control/Control.NotebookbarWriter.js:2326
+#: src/control/Control.NotebookbarWriter.js:2312
 msgid "Tracking"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:2588
+#: src/control/Control.NotebookbarWriter.js:2574
 msgid "Split"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:2772
+#: src/control/Control.NotebookbarWriter.js:2758
 msgid "Number Format"
 msgstr ""
 
@@ -2931,11 +3089,11 @@ msgstr "مُعاينة الصفحة "
 msgid "Slide %1"
 msgstr ""
 
-#: src/control/Control.PartsPreview.js:263
+#: src/control/Control.PartsPreview.js:266
 msgid "Paste Slide"
 msgstr "لصق الشريحة"
 
-#: src/control/Control.PartsPreview.js:311
+#: src/control/Control.PartsPreview.js:317
 msgid "Paste"
 msgstr "لصقٌ"
 
@@ -2955,11 +3113,64 @@ msgstr "مرّر التعليقات التوضيحية لأعلى"
 msgid "Scroll down annotations"
 msgstr "مرّر التعليقات التوضيحية لأسفل"
 
-#: src/control/Control.ServerAuditDialog.ts:50
+#: src/control/Control.ServerAuditDialog.ts:58
+msgid "Your WOPI server is not secure: SSL verification failed"
+msgstr "خادم WOPI الخاص بك غير آمن: فشل التحقق من طبقة المقابس الآمنة (SSL)"
+
+#: src/control/Control.ServerAuditDialog.ts:63
+msgid "No problems with SSL verification detected"
+msgstr "لم يتم اكتشاف أي إشكالية عند التحقق من شهائد المصادقة SSL"
+
+#: src/control/Control.ServerAuditDialog.ts:72
+msgid ""
+"Documents are not effectively contained: missing capabilities or namespaces."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:77
+msgid "Each document is securely contained"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:83
+msgid ""
+"BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
+"security hazard."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:88
+msgid "system call security filtering enabled"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:95
+msgid ""
+"Your server is configured with insufficient hardware resources, which may "
+"lead to poor performance."
+msgstr "موارد العتاد في خادومك غير كافية؛ الأمر الذي سيؤدي إلى ضعف في أدائه."
+
+#: src/control/Control.ServerAuditDialog.ts:101
+msgid "Hardware resources are sufficient for optimal performance"
+msgstr "موارد العتاد كافية لتحقيق الأداء المطلوب"
+
+#: src/control/Control.ServerAuditDialog.ts:109
+msgid "Slow Kit jail setup with copying, cannot bind-mount."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:113
+msgid "Fast kit jail bind mounting enabled"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:118
+msgid "Poorly performing proxying of all network requests."
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:122
+msgid "direct network connection"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
 msgstr "لم يتم تعيين الخاصية IsAdminUser بواسطة التكامل"
 
-#: src/control/Control.ServerAuditDialog.ts:56
+#: src/control/Control.ServerAuditDialog.ts:134
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
@@ -2967,53 +3178,47 @@ msgstr ""
 "تم استخدام حقل is_admin المهمل، ويجب أن يستخدم التكامل خاصية IsAdminUser "
 "بدلاً من ذلك"
 
-#: src/control/Control.ServerAuditDialog.ts:62
+#: src/control/Control.ServerAuditDialog.ts:140
 msgid "The IsAdminUser user property is set by integration"
 msgstr "تمّ تعيين خاصية المستخدم IsAdminUser بواسطة التكامل"
 
-#: src/control/Control.ServerAuditDialog.ts:69
-msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr "خادم WOPI الخاص بك غير آمن: فشل التحقق من طبقة المقابس الآمنة (SSL)"
-
-#: src/control/Control.ServerAuditDialog.ts:74
-msgid "No problems with SSL verification detected"
-msgstr "لم يتم اكتشاف أي إشكالية عند التحقق من شهائد المصادقة SSL"
-
-#: src/control/Control.ServerAuditDialog.ts:81
+#: src/control/Control.ServerAuditDialog.ts:148
 msgid "PostMessage API is initialized"
 msgstr "واجهة التطبيق PostMassage تمّت تهيئتها المبدئية"
 
-#: src/control/Control.ServerAuditDialog.ts:86
+#: src/control/Control.ServerAuditDialog.ts:153
 msgid "Integrator is not ready for PostMessage calls"
 msgstr "المُكامِل غير جاهز لاستقبال استدعاءات PostMessage"
 
-#: src/control/Control.ServerAuditDialog.ts:94
-msgid ""
-"Your server is configured with insufficient hardware resources, which may "
-"lead to poor performance."
-msgstr "موارد العتاد في خادومك غير كافية؛ الأمر الذي سيؤدي إلى ضعف في أدائه."
+#: src/control/Control.ServerAuditDialog.ts:161
+msgid "Using namespaces."
+msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:100
-msgid "Hardware resources are sufficient for optimal performance"
-msgstr "موارد العتاد كافية لتحقيق الأداء المطلوب"
+#: src/control/Control.ServerAuditDialog.ts:162
+msgid "Not using namespaces"
+msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:215
+#: src/control/Control.ServerAuditDialog.ts:227
+msgid "Document container started in"
+msgstr ""
+
+#: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
 msgstr "الحالة"
 
-#: src/control/Control.ServerAuditDialog.ts:225
+#: src/control/Control.ServerAuditDialog.ts:303
 msgid "No issues found"
 msgstr "لم يتم اكتشاف أي إشكالية"
 
-#: src/control/Control.ServerAuditDialog.ts:230
+#: src/control/Control.ServerAuditDialog.ts:308
 msgid "Alerts:"
 msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:276
+#: src/control/Control.ServerAuditDialog.ts:360
 msgid "Check security warnings of your server"
 msgstr "تحقّق من التحذيرات الأمنية لخادومك"
 
-#: src/control/Control.ServerAuditDialog.ts:277
+#: src/control/Control.ServerAuditDialog.ts:361
 msgid "OPEN"
 msgstr "مفتوح"
 
@@ -3251,13 +3456,13 @@ msgstr "يحمّل..."
 
 #: src/control/Control.Zotero.js:257 src/control/Control.Zotero.js:454
 #: src/slideshow/PresenterConsole.js:31
-#: src/slideshow/SlideShowPresenter.ts:651
+#: src/slideshow/SlideShowPresenter.ts:655
 msgid "Previous"
 msgstr "السابق"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
-#: src/slideshow/SlideShowPresenter.ts:659
+#: src/slideshow/SlideShowPresenter.ts:663
 msgid "Next"
 msgstr "التالي"
 
@@ -3314,10 +3519,6 @@ msgid "Citation Style"
 msgstr "نمط الاقتباس"
 
 #: src/control/Control.Zotero.js:827
-msgid "Styles"
-msgstr "أنماط"
-
-#: src/control/Control.Zotero.js:827
 msgid "An error occurred while fetching style list"
 msgstr "حدث خطأ أثناء جلب قائمة الأنماط"
 
@@ -3359,10 +3560,6 @@ msgstr "أكد"
 msgid "Add Note"
 msgstr "اضف ملاحظة"
 
-#: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
-msgid "Notes"
-msgstr "ملاحظات"
-
 #: src/control/Control.Zotero.js:1340
 msgid "An error occurred while fetching notes"
 msgstr "حدث خطأ أثناء جلب الملاحظات"
@@ -3387,19 +3584,19 @@ msgstr ""
 "سيؤدي إلغاء ربط الاستشهادات إلى منع Collabora Online من تحديث الاستشهادات "
 "والمراجع في هذا المستند."
 
-#: src/control/HRuler.ts:614
+#: src/control/HRuler.ts:591 src/control/HRuler.ts:763
 msgid "Left Margin"
 msgstr "الهامش الأيسر"
 
-#: src/control/HRuler.ts:615
+#: src/control/HRuler.ts:592 src/control/HRuler.ts:764
 msgid "Right Margin"
 msgstr "الهامش الأيمن"
 
-#: src/control/HRuler.ts:921
+#: src/control/HRuler.ts:1072
 msgid "Insert tabstop"
 msgstr "إدراج علامة وقف التبويب"
 
-#: src/control/HRuler.ts:928
+#: src/control/HRuler.ts:1079
 msgid "Delete tabstop"
 msgstr "حذف علامة وقف التبويب"
 
@@ -4490,19 +4687,19 @@ msgstr "علامة تبويب \"المساعدة\""
 msgid "the View menu"
 msgstr "قائمة العرض"
 
-#: src/layer/tile/CanvasTileLayer.js:1581
+#: src/layer/tile/CanvasTileLayer.js:1587
 msgid "Functions"
 msgstr "الدوال"
 
-#: src/layer/tile/CanvasTileLayer.js:1841
+#: src/layer/tile/CanvasTileLayer.js:1847
 msgid "Named Range"
 msgstr "النطاق المُسمّى"
 
-#: src/layer/tile/CanvasTileLayer.js:3481
+#: src/layer/tile/CanvasTileLayer.js:3507
 msgid "No Comments"
 msgstr "لا تعليقات"
 
-#: src/main.js:134
+#: src/main.js:130
 msgid "Warning! The browser you are using is not supported."
 msgstr "تحذير! المتصفح الذي تستخدمه غير مدعوم."
 
@@ -4523,13 +4720,13 @@ msgstr "تحذير: انتهت مهلة طلب النسخ/اللصق"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "فشل تنزيل الحافظة، يرجى إعادة النسخ"
 
-#: src/map/Clipboard.js:1318
+#: src/map/Clipboard.js:1317
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
 
-#: src/map/Clipboard.js:1374
+#: src/map/Clipboard.js:1373
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -4537,23 +4734,23 @@ msgstr ""
 "لقد بدأ التنزيل بالفعل بسبب عملية نسخ/لصق كبيرة. يُرجى الانتظار حتى يتم "
 "التنزيل الحالي أو إلغاؤه قبل البدء في تنزيل جديد"
 
-#: src/map/Clipboard.js:1396
+#: src/map/Clipboard.js:1395
 msgid "Paste from this document"
 msgstr "لصق من هذا المستند"
 
-#: src/map/Clipboard.js:1396
+#: src/map/Clipboard.js:1395
 msgid "Cancel paste special"
 msgstr "إلغاء اللصق الخاص"
 
-#: src/map/Clipboard.js:1418
+#: src/map/Clipboard.js:1417
 msgid "Your browser has very limited access to the clipboard"
 msgstr "مستعرضك لديه إمكانية وصول محدودة إلى الحافظة"
 
-#: src/map/Clipboard.js:1423
+#: src/map/Clipboard.js:1422
 msgid "Please use following combination to see more options:"
 msgstr "رجاءً، استعمل التشكيلة التالية لعرض مزيد من الخيارات:"
 
-#: src/map/Clipboard.js:1441
+#: src/map/Clipboard.js:1440
 msgid "Close popup to ignore paste special"
 msgstr "إغلِق النافذة المنبثقة لتجاهل اللصق الخاص"
 
@@ -4599,17 +4796,17 @@ msgid "Print dialog"
 msgstr "مربع حوار الطباعة"
 
 #: src/map/handler/Map.SlideShow.js:59
-#: src/slideshow/SlideShowPresenter.ts:1000
+#: src/slideshow/SlideShowPresenter.ts:1004
 msgid "Empty Slide Show"
 msgstr "عرض شريحة فارغة"
 
 #: src/map/handler/Map.SlideShow.js:167
-#: src/slideshow/SlideShowPresenter.ts:1028
+#: src/slideshow/SlideShowPresenter.ts:1032
 msgid "Windowed Presentation Blocked"
 msgstr "إيقاف العرض في نافذة"
 
 #: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:1030
+#: src/slideshow/SlideShowPresenter.ts:1034
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -4619,17 +4816,17 @@ msgstr ""
 "إمكانية عرض عروض الشرائح في نوافذ منفصلة، مما يسمح بمشاركة الشاشة بسهولة."
 
 #: src/map/handler/Map.SlideShow.js:172
-#: src/slideshow/SlideShowPresenter.ts:830
+#: src/slideshow/SlideShowPresenter.ts:834
 msgid "Windowed Presentation: "
 msgstr "عرض في نافذة: "
 
 #: src/map/handler/Map.SlideShow.js:202
-#: src/slideshow/SlideShowPresenter.ts:872
+#: src/slideshow/SlideShowPresenter.ts:876
 msgid "Presenting in window"
 msgstr "عرض في نافذة"
 
 #: src/map/handler/Map.SlideShow.js:203
-#: src/slideshow/SlideShowPresenter.ts:873
+#: src/slideshow/SlideShowPresenter.ts:877
 msgid "Close Presentation"
 msgstr "إغلاق العرض"
 
@@ -4642,22 +4839,22 @@ msgid "End Presentation"
 msgstr "نهاية العرض"
 
 #: src/map/handler/Map.SlideShow.js:295
-#: src/slideshow/SlideShowPresenter.ts:1015
+#: src/slideshow/SlideShowPresenter.ts:1019
 msgid "Already presenting"
 msgstr "يتم عرضه حالياً"
 
 #: src/map/handler/Map.SlideShow.js:296
-#: src/slideshow/SlideShowPresenter.ts:1016
+#: src/slideshow/SlideShowPresenter.ts:1020
 msgid "You are already presenting this document"
 msgstr "أنت تعرض هذه المستند حالياً"
 
 #: src/map/handler/Map.SlideShow.js:306
-#: src/slideshow/SlideShowPresenter.ts:1053
+#: src/slideshow/SlideShowPresenter.ts:1057
 msgid "Presentation disabled"
 msgstr "تمّ تعطيل العرض"
 
 #: src/map/handler/Map.SlideShow.js:307
-#: src/slideshow/SlideShowPresenter.ts:1054
+#: src/slideshow/SlideShowPresenter.ts:1058
 msgid "Presentation mode has been disabled for this document"
 msgstr "وضعية العرض لهذا المستند تمّ تعطيلها"
 
@@ -4736,24 +4933,24 @@ msgid "Repeat in {0} seconds"
 msgstr ""
 
 #: src/slideshow/PresenterConsole.js:1358
-#: src/slideshow/SlideShowPresenter.ts:529
+#: src/slideshow/SlideShowPresenter.ts:535
 msgid "Click to exit presentation..."
 msgstr "إضغَط للخروج من العرض ..."
 
-#: src/slideshow/SlideShowPresenter.ts:643
+#: src/slideshow/SlideShowPresenter.ts:647
 msgid "End Show"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:671
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:675
+#: src/slideshow/SlideShowPresenter.ts:687
 msgid "Disable Animations"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:686
 msgid "Enable Animations"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:694
+#: src/slideshow/SlideShowPresenter.ts:698
 msgid "Follow Presentation"
 msgstr ""
 
@@ -4850,9 +5047,6 @@ msgstr ""
 
 #~ msgid "Document is migrating to new server, retrying..."
 #~ msgstr "المستند يتمّ ترحيله إلى خادوم جديد. جارٍ الآن إعادة المحاولة ..."
-
-#~ msgid "Presentation"
-#~ msgstr "عرض"
 
 #~ msgid "Cancel the search"
 #~ msgstr "ألغِ البحث"
