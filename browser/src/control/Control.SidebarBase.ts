@@ -102,21 +102,23 @@ abstract class SidebarBase extends JSDialogComponent {
 		const innerData = e?.data?.data;
 		const controlId = innerData?.control_id;
 
-		// Panels share the same name for main containers, do not execute actions for them
-		// if panel has to be shown or hidden, full update will appear
-		if (
-			controlId.indexOf('contents') === 0 ||
-			controlId.indexOf('titlebar') === 0 ||
-			controlId.indexOf('expander') === 0 ||
-			controlId.indexOf('addonimage') === 0
-		) {
-			window.app.console.log(
-				'Ignored action: ' +
-					innerData.action_type +
-					' for control: ' +
-					controlId,
-			);
-			return;
+		if (controlId) {
+			// Panels share the same name for main containers, do not execute actions for them
+			// if panel has to be shown or hidden, full update will appear
+			if (
+				controlId.indexOf('contents') === 0 ||
+				controlId.indexOf('titlebar') === 0 ||
+				controlId.indexOf('expander') === 0 ||
+				controlId.indexOf('addonimage') === 0
+			) {
+				window.app.console.log(
+					'Ignored action: ' +
+						innerData.action_type +
+						' for control: ' +
+						controlId,
+				);
+				return;
+			}
 		}
 
 		super.onJSAction(e);
