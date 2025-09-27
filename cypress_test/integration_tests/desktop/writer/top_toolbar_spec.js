@@ -241,7 +241,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container table').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.typeIntoDocument('{shift}{del}');
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
+		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
 	it('Insert image.', function() {

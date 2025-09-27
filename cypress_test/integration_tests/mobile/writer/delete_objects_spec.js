@@ -58,7 +58,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		// Push insert table button
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		// Two rows
@@ -66,14 +66,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		// Four cells
 		cy.cGet('#copy-paste-container td').should('have.length', 4);
 		//delete
-		cy.cGet('.leaflet-marker-icon.table-select-marker').eq(0).trigger('pointerdown', eventOptions).wait(1000);
+		cy.cGet('.table-select-marker').eq(0).trigger('pointerdown', eventOptions).wait(1000);
 
 		cy.cGet('.menu-entry-icon.tabledeletemenu').parent()
 			.click()
 			.cGet('.menu-entry-icon.deletetable').parent()
 			.click();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
+		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
 	it('Delete Fontwork', function() {

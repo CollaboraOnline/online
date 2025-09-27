@@ -23,8 +23,8 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		impressHelper.selectTableInTheCenter();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 3);
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 2);
+		cy.cGet('.table-row-resize-marker').should('have.length', 3);
+		cy.cGet('.table-column-resize-marker').should('have.length', 2);
 		cy.cGet('text.SVGTextShape').click({force: true});
 		cy.wait(1000);
 	}
@@ -40,7 +40,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('insertrowsbefore');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 4);
 
 		retriggerNewSvgForTableInTheCenter();
@@ -68,7 +68,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('insertrowsafter');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 4);
 
 		retriggerNewSvgForTableInTheCenter();
@@ -96,12 +96,12 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('deleterows');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 2);
 
 		clickOnTableOperation('insertcolumnsbefore');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
@@ -129,11 +129,11 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('deleterows');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 2);
+		cy.cGet('.table-row-resize-marker').should('have.length', 2);
 
 		clickOnTableOperation('insertcolumnsafter');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 3);
+		cy.cGet('.table-column-resize-marker').should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -158,7 +158,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('deleterows');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
@@ -181,12 +181,12 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		clickOnTableOperation('insertcolumnsbefore');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('have.length', 3);
 
 		clickOnTableOperation('deletecolumns');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
@@ -210,7 +210,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 	it('Merge Row', function() {
 		selectFullTable();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 3);
 
 		clickOnTableOperation('entirerow');
@@ -240,7 +240,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 	it('Merge Column', function() {
 		selectFullTable();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 3);
 
 		clickOnTableOperation('entirecolumn');
@@ -274,7 +274,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('not.exist');
 
 		cy.cGet('#document-container g.Page g')
