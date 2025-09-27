@@ -406,6 +406,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin: auto !important;
 	display: block;
 }
+
+.ui-pushbutton.notebookbar img {
+	height: 24px;
+}
+
 .has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
@@ -443,7 +448,9 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 #stylesview,
 #masterpageall_icons,
-#transitions_icons {
+#transitions_icons,
+#custom_animation_list,
+#effect_list {
 	height: var(--notebookbar-element-height);
 	overflow: auto;
 	display: grid;
@@ -482,6 +489,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
 	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
 	margin-left: 10px;
+}
+
+#transitions_icons.sidebar {
+	height: inherit;
+	width: 100%;
 }
 
 #stylesview-btn {
@@ -616,6 +628,44 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 #transitions_icons.ui-iconview.notebookbar > * {
 	scroll-snap-align: start;
+}
+
+/* Animation Tab */
+#Animation.notebookbar .ui-grid,
+#Animation.notebookbar #effect_list,
+#Animation.notebookbar #custom_animation_list {
+	min-height: initial;
+	height: var(--notebookbar-element-height);
+	margin: 0px 5px;
+	justify-content: stretch;
+}
+
+#Animation.notebookbar #custom_animation_list {
+	display: block;      /* force to allow full scroll range */
+	min-width: 308px;    /* to avoid flicker and too much changes */
+	overflow-y: scroll;  /* to avoid flicker always show scroll */
+	width: max-content;  /* adjust to the generated size */
+	scrollbar-width: initial;
+}
+
+#Animation.notebookbar #custom_animation_list div {
+	padding: 0px;
+	margin: 0px;
+}
+
+#Animation.notebookbar #custom_animation_list .ui-treeview-cell-text-content {
+	display: grid;
+}
+
+#Animation.notebookbar .ui-grid button {
+	width: 100%;
+	justify-content: start;
+	margin: 0px;
+	height: 30px;
+}
+
+#Animation.notebookbar .ui-listbox-container {
+	min-width: 100px;
 }
 
 /* Table Tab */

@@ -41,10 +41,10 @@ class Sidebar extends SidebarBase {
 		// No longer used:
 		// 'SdSlideTransitionDeck'
 		// 'SdMasterPagesDeck',
+		// 'SdCustomAnimationDeck',
 
 		const decks = [
 			'PropertyDeck',
-			'SdCustomAnimationDeck',
 			'NavigatorDeck',
 			'StyleListDeck',
 			'A11yCheckDeck',
@@ -61,9 +61,9 @@ class Sidebar extends SidebarBase {
 		// No longer used:
 		// if (deckId === 'SdSlideTransitionDeck') return '.uno:SlideChangeWindow';
 		// else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
+		// else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
 
 		if (deckId === 'PropertyDeck') return '.uno:SidebarDeck.PropertyDeck';
-		else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
 		else if (deckId === 'NavigatorDeck') return '.uno:Navigator';
 		else if (deckId === 'StyleListDeck')
 			return '.uno:SidebarDeck.StyleListDeck';
@@ -72,7 +72,7 @@ class Sidebar extends SidebarBase {
 		return '';
 	}
 
-	setupTargetDeck(unoCommand: string) {
+	setupTargetDeck(unoCommand: string | null) {
 		this.targetDeckCommand = unoCommand;
 	}
 
@@ -88,7 +88,6 @@ class Sidebar extends SidebarBase {
 
 	onSidebar(data: FireEvent) {
 		var sidebarData = data.data;
-		this.builder.setWindowId(sidebarData.id);
 		$(this.container).empty();
 
 		if (
@@ -140,6 +139,8 @@ class Sidebar extends SidebarBase {
 
 				this.builder.build(this.container, [sidebarData], false);
 				if (!this.isVisible()) {
+					if ((this.builder as any).windowId === WindowId.Sidebar)
+						$('#sidebar-dock-wrapper').addClass('coreBased');
 					$('#sidebar-dock-wrapper').addClass('visible');
 
 					// schedule focus after animation so it will not shift the browser page

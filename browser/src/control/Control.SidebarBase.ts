@@ -17,10 +17,12 @@
 declare var JSDialog: any;
 
 enum SidebarType {
-	Sidebar = 'sidebar',
-	Navigator = 'navigator',
-	QuickFind = 'quickfind',
+	Sidebar = 'sidebar', // core
+	Navigator = 'navigator', // core
+	QuickFind = 'quickfind', // core
+	Notebookbar = 'notebookbar', // online side panel, which sens messages to NB in core
 }
+
 abstract class SidebarBase extends JSDialogComponent {
 	type: SidebarType;
 
@@ -37,11 +39,12 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.builder = new window.L.control.jsDialogBuilder({
 			mobileWizard: this,
 			map: this.map,
+			windowId: WindowId.Sidebar,
 			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
 			useScrollAnimation: false, // icon views cause jump on sidebar open
 			suffix: 'sidebar',
 			callback: this.callback.bind(this),
-		});
+		} as JSBuilderOptions);
 	}
 
 	protected setupContainer(parentContainer?: HTMLElement) {
@@ -70,12 +73,15 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.unregisterMessageHandlers();
 	}
 
+	/// this is used to determine if we need to send uno command - only for core decks
 	isVisible(): boolean {
-		return $(`#${this.type}-dock-wrapper`).hasClass('visible');
+		const node = $(`#${this.type}-dock-wrapper`);
+		return node.hasClass('visible') && node.hasClass('coreBased');
 	}
 
 	closeSidebar() {
 		$(`#${this.type}-dock-wrapper`).removeClass('visible');
+		$(`#${this.type}-dock-wrapper`).removeClass('coreBased');
 
 		if (!this.map.editorHasFocus()) {
 			this.map.fire('editorgotfocus');

@@ -33,7 +33,7 @@ class AddressInputField {
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'addressInput jsdialog',
-			windowId: -4,
+			windowId: WindowId.AddressInput,
 			suffix: 'address',
 		});
 

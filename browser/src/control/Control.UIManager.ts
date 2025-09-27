@@ -543,6 +543,7 @@ class UIManager extends window.L.Control {
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
+			this.map.sidebarFromNotebookbar = JSDialog.SidebarFromNotebookbarPanel(this.map);
 		}
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
 			this.map.navigator.initializeNavigator(docType);
@@ -569,8 +570,7 @@ class UIManager extends window.L.Control {
 	 */
 	initializeLateComponents(): void {
 		app.console.debug('UIManager: late components init');
-		if (this.getCurrentMode() === 'notebookbar')
-			this.initializeNotebookbarInCore();
+		this.initializeNotebookbarInCore();
 		this.initializeSidebar();
 		this.initializeQuickFindInCore();
 	}
@@ -588,17 +588,7 @@ class UIManager extends window.L.Control {
 				this.map.sidebar.setAsInitialized();
 			}
 
-			if (showSidebar && this.map.getDocType() === 'presentation') {
-				if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
-					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:SlideChangeWindow');
-					this.map.sidebar.setupTargetDeck('.uno:SlideChangeWindow');
-				} else if (this.getBooleanDocTypePref('SdCustomAnimationDeck', false)) {
-					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:CustomAnimation');
-					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
-				}
-			} else if (showSidebar && this.getBooleanDocTypePref('StyleListDeck', false)) {
+			if (showSidebar && this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:SidebarDeck.StyleListDeck');
 				this.map.sidebar.setupTargetDeck('.uno:SidebarDeck.StyleListDeck');

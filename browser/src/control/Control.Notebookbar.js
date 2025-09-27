@@ -13,7 +13,7 @@
  * window.L.Control.Notebookbar - container for tabbed menu on the top of application
  */
 
-/* global $ _ _UNO JSDialog app */
+/* global $ _ _UNO JSDialog app WindowId */
 window.L.Control.Notebookbar = window.L.Control.extend({
 
 	_showNotebookbar: false,
@@ -40,7 +40,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this._RTL = true;
 
 		this.builder = new window.L.control.notebookbarBuilder({
-			windowId: -2,
+			windowId: WindowId.Notebookbar,
 			mobileWizard: this,
 			map: map,
 			cssClass: 'notebookbar',
@@ -418,13 +418,15 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	shouldIgnoreContextChange(contexts, appId) {
 		// New -> old context name pairs.
-		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
+		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage'],
+			['Graphic', 'DrawPage', 'Animation'], ['DrawPage', 'Graphic', 'Animation']];
 		if (appId === 'com.sun.star.text.TextDocument') {
 			ignored.push(['Text', '']);
 		}
 
 		for (let i = 0; i < ignored.length; i++) {
-			if (contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
+			if ((ignored[i].length < 3 || this._lastSelectedTabName === ignored[i][2])
+				&& contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
 				return true;
 		}
 
