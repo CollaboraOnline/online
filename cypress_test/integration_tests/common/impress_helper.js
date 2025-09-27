@@ -108,7 +108,7 @@ function selectTableInTheCenter() {
 		return cy.cGet('.leaflet-cursor-container').should('be.visible');
 	});
 
-	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
+	cy.cGet('.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	cy.cGet('#document-container svg g.Page g').should('exist');
 
 	cy.log('<< selectTableInTheCenter - end');

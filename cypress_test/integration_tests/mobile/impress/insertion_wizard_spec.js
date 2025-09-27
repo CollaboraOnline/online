@@ -78,7 +78,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 
 		// We have two columns
-		cy.cGet('.table-column-resize-marker').should('have.length', 2);
+		cy.cGet('.table-column-resize-marker').should('have.length', 3);
 
 		// and two rows
 		cy.cGet('.table-row-resize-marker').should('have.length', 2);
@@ -99,10 +99,10 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 
 		// We have three columns
-		cy.cGet('.table-column-resize-marker').should('have.length', 3);
+		cy.cGet('.table-column-resize-marker').should('have.length', 4);
 
 		// and three rows
 		cy.cGet('.table-row-resize-marker').should('have.length',3);
