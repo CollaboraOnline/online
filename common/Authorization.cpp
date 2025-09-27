@@ -116,7 +116,7 @@ Authorization Authorization::create(const Poco::URI& uri)
     }
 
     if (!decoded.empty())
-        return Authorization(type, decoded, noHeader);
+        return Authorization(type, std::move(decoded), noHeader);
 
     return Authorization();
 }
