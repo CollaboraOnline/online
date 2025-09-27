@@ -1887,7 +1887,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'children': [
 									{
 										'id': 'insert-vertical-text',
-										'type': 'toolitem',
+										'type': app.LOUtil.isFileODF(this.map) ? 'toolitem' : 'bigtoolitem',
 										'text': _UNO('.uno:VerticalText', 'spreadsheet'),
 										'command': '.uno:VerticalText',
 										'accessibility': { focusBack: true,	combination: 'IV', de: null }
