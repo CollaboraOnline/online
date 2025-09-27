@@ -1691,10 +1691,12 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		else if (action === 'SearchHighlight') {
 			id = obj[dataroot].id;
-			const selection = obj[dataroot].searchSelection.split(",");
 			const comment = this.getComment(id);
-			comment.selectText(parseInt(selection[0]), parseInt(selection[1]), parseInt(selection[2]), parseInt(selection[3]));
-			this.showHideComment(comment);
+			if (comment) {
+				const selection = obj[dataroot].searchSelection.split(",");
+				comment.selectText(parseInt(selection[0]), parseInt(selection[1]), parseInt(selection[2]), parseInt(selection[3]));
+				this.showHideComment(comment);
+			}
 		}
 		if ((<any>window).mode.isMobile()) {
 			var shouldOpenWizard = false;
