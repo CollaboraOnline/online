@@ -55,7 +55,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		helper.typeIntoDocument('{shift}{enter}');
 
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		cy.cGet('#test-div-shapeHandlesSection').then(function(element) {
 			const x = element[0].getBoundingClientRect().left;
 			const y = element[0].getBoundingClientRect().top;
@@ -64,7 +64,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		});
 
 		cy.cGet('body').contains('.context-menu-item', 'Delete').click();
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
+		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
 	it('Delete Fontwork', function() {
