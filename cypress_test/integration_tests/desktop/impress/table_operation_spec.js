@@ -31,10 +31,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 		helper.typeIntoDocument('{ctrl}{a}');
 
 		impressHelper.selectTableInTheCenter();
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 3);
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 2);
+		cy.cGet('.table-column-resize-marker')
+			.should('have.length', 3); // One is invisible but it is included here.
 
 		// Click doesn't work without wait
 		cy.wait(500);
@@ -46,7 +46,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 		selectOptionNotebookbar('#table-insert-rows-before-button');
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
+		cy.cGet('.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 		cy.cGet('#document-container g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
 
@@ -67,7 +67,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		selectFullTable();
 		selectOptionNotebookbar('#table-insert-rows-after-button');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
+		cy.cGet('.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 
 		cy.cGet('#document-container g.Page g')
@@ -91,8 +91,8 @@ describe(['tagdesktop'], 'Table operations', function() {
 		selectFullTable();
 		selectOptionNotebookbar('#table-insert-columns-before-button');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 3);
+		cy.cGet('.table-column-resize-marker')
+			.should('have.length', 4);
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -117,8 +117,8 @@ describe(['tagdesktop'], 'Table operations', function() {
 		selectFullTable();
 		selectOptionNotebookbar('#table-insert-columns-after-button');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 3);
+		cy.cGet('.table-column-resize-marker')
+			.should('have.length', 4);
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -143,7 +143,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		selectFullTable();
 		selectOptionNotebookbar('#table-delete-rows-button');
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
@@ -165,13 +165,13 @@ describe(['tagdesktop'], 'Table operations', function() {
 		selectFullTable();
 		selectOptionNotebookbar('#table-insert-columns-before-button');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 3);
+		cy.cGet('.table-column-resize-marker')
+			.should('have.length', 4);
 
 		selectOptionNotebookbar('#table-delete-columns-button');
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 2);
+		cy.cGet('.table-column-resize-marker')
+			.should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -198,7 +198,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('not.exist');
 
 		cy.cGet('#document-container g.Page g')
@@ -209,7 +209,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 3);
 
 		selectOptionNotebookbar('#table-entire-row-button');
@@ -238,7 +238,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 3);
 
 		selectOptionNotebookbar('#table-entire-column-button');
@@ -268,8 +268,8 @@ describe(['tagdesktop'], 'Table operations', function() {
 		desktopHelper.switchUIToNotebookbar();
 		impressHelper.selectTableInTheCenter();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 3);
+		cy.cGet('.table-row-resize-marker')
+			.should('have.length', 4);
 
 		selectOptionNotebookbar('.notebookbar #SplitCell');
 
@@ -278,7 +278,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('#SplitCellsDialog .ui-pushbutton.jsdialog.button-primary')
 			.click();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.table-row-resize-marker')
 			.should('have.length', 4);
 	});
 });

@@ -84,7 +84,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			.click();
 
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('exist');
 
 		//delete
@@ -96,7 +96,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('.menu-entry-icon.delete').parent()
 			.click();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.table-column-resize-marker')
 			.should('not.exist');
 	});
 
