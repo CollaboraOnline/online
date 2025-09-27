@@ -162,7 +162,6 @@
 /src/canvas/sections/ScrollSection.ts
 /src/layer/tile/SheetGeometry.ts
 /src/layer/tile/SheetSwitch.ts
-/src/layer/tile/TileLayer.TableOverlay.js
 /src/canvas/sections/TilesSection.ts
 /src/layer/tile/WriterTileLayer.js
 /src/layer/vector/Canvas.js

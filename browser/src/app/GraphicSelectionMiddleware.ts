@@ -208,7 +208,10 @@ class GraphicSelection {
 			}
 
 			this.handlesSection.setPosition(this.rectangle.pX1, this.rectangle.pY1);
-			extraInfo.hasTableSelection = app.map._docLayer.hasTableSelection(); // scaleSouthAndEastOnly
+
+			extraInfo.hasTableSelection =
+				app.activeDocument.tableMiddleware.hasTableSelection(); // scaleSouthAndEastOnly
+
 			this.handlesSection.refreshInfo(this.extraInfo);
 			this.handlesSection.setShowSection(true);
 			app.sectionContainer.requestReDraw();
