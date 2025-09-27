@@ -77,20 +77,22 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 
 		if (commandName == '.uno:PageLinks') {
 			let links = [];
-			for (const link of state.links) {
-				const end1 = link.rectangle.indexOf('x');
-				const end2 = link.rectangle.indexOf('@');
-				const end3 = link.rectangle.indexOf(',');
-				const new_link = {
-					rectangle: new cool.SimpleRectangle(
-						parseFloat(link.rectangle.substring(end2 + 2, end3)),
-						parseFloat(link.rectangle.substring(end3 + 1)),
-						parseFloat(link.rectangle.substring(0, end1)),
-						parseFloat(link.rectangle.substring(end1 + 1, end2))
-					),
-					uri: link.uri
-				};
-				links.push(new_link);
+			if (state && state.links) {
+				for (const link of state.links) {
+					const end1 = link.rectangle.indexOf('x');
+					const end2 = link.rectangle.indexOf('@');
+					const end3 = link.rectangle.indexOf(',');
+					const new_link = {
+						rectangle: new cool.SimpleRectangle(
+							parseFloat(link.rectangle.substring(end2 + 2, end3)),
+							parseFloat(link.rectangle.substring(end3 + 1)),
+							parseFloat(link.rectangle.substring(0, end1)),
+							parseFloat(link.rectangle.substring(end1 + 1, end2))
+						),
+						uri: link.uri
+					};
+					links.push(new_link);
+				}
 			}
 			this._items[commandName] = links;
 		}
