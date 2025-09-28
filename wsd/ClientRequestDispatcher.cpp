@@ -1006,11 +1006,17 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         if (requestDetails.isProxy())
         {
             if (!COOLWSD::IsProxyPrefixEnabled)
+            {
+                LOG_ERR("ProxyPrefix but not enabled");
                 throw BadRequestException(
                     "ProxyPrefix present but net.proxy_prefix is not enabled");
+            }
 
             if (!socket->isLocal())
+            {
+                LOG_ERR("ProxyPrefix request from non-local socket");
                 throw BadRequestException("ProxyPrefix request from non-local socket");
+            }
         }
 
         CleanupRequestVettingStations();
