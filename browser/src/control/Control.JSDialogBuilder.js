@@ -587,11 +587,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {
 		var mainContainer = window.L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
-		if (data && data.id)
-			mainContainer.id = data.id;
-
-		if (data && data.name)
-			mainContainer.id = data.name; // use legacy panel id FIXME: convert all CSS and cypress to vcl id
+		if (data) {
+			if (data.id)
+				mainContainer.id = data.id;
+			if (data.name)
+				mainContainer.id = data.name; // use legacy panel id FIXME: convert all CSS and cypress to vcl id
+		}
 
 		var sectionTitle = window.L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
