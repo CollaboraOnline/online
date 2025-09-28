@@ -1006,7 +1006,7 @@ class SlideShowPresenter {
 			'',
 			_('OK'),
 			() => {
-				0;
+				/*do nothing*/
 			},
 			false,
 			'allslidehidden-modal-response',
