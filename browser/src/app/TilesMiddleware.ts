@@ -46,7 +46,7 @@ class TileCoordData {
 		this.y = top;
 		this.z = zoom !== null ? zoom : app.map.getZoom();
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
-		this.mode = mode !== undefined ? mode : 0;
+		this.mode = mode !== null ? mode : 0;
 
 		this.scale = Math.pow(1.2, this.z - 10);
 	}
