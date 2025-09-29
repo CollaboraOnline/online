@@ -177,11 +177,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
-	public static moveHTMLObjectToMapElement(htmlObjectSection: HTMLObjectSection) {
-		htmlObjectSection.getHTMLObject().remove();
-		document.getElementById('map').appendChild(htmlObjectSection.getHTMLObject());
-	}
-
 	getShapeWidth(twips = true) {
 		let middleLeft = this.sectionProperties.info.handles.kinds.rectangle['4'][0];
 		middleLeft = new cool.SimplePoint(parseInt(middleLeft.point.x), parseInt(middleLeft.point.y));
