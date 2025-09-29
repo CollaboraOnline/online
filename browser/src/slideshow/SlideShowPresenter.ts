@@ -154,6 +154,7 @@ class SlideShowPresenter {
 		this._enableA11y = enableA11y;
 		this._init();
 		this.addHooks();
+		this._map.uiManager.showButton('slide-presentation-follow', false);
 	}
 
 	addHooks() {
@@ -180,7 +181,7 @@ class SlideShowPresenter {
 
 		// Follow me slide hooks
 		this._map.on(
-			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect',
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect slideshowfollowon',
 			this.handleFollowMeEvents,
 			this,
 		);
@@ -210,7 +211,7 @@ class SlideShowPresenter {
 
 		// Follow me slide hooks
 		this._map.off(
-			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect',
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect slideshowfollowon',
 			this.handleFollowMeEvents,
 			this,
 		);
@@ -220,6 +221,8 @@ class SlideShowPresenter {
 		this.setFollower(true);
 		switch (info.type) {
 			case 'newfollowmepresentation':
+				this._map.uiManager.showButton('slide-presentation-follow-me', false);
+				this._map.uiManager.showButton('slide-presentation-follow', true);
 				this._onStartInWindow({
 					startSlideNumber:
 						this._slideShowNavigator.getLeaderSlide() === -1
@@ -255,9 +258,16 @@ class SlideShowPresenter {
 			case 'endpresentation':
 				this.setLeader(false);
 				this.setFollower(false);
+				this._map.uiManager.showButton('slide-presentation-follow-me', true);
+				this._map.uiManager.showButton('slide-presentation-follow', false);
 				if (!this.isFollowing()) return;
 				this.setFollowing(false);
 				this.endPresentation(true);
+
+				break;
+			case 'slideshowfollowon':
+				this._map.uiManager.showButton('slide-presentation-follow-me', false);
+				this._map.uiManager.showButton('slide-presentation-follow', true);
 				break;
 		}
 	}

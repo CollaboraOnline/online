@@ -962,7 +962,8 @@ class UIManager extends window.L.Control {
 				toolbar.showItem(buttonId, show);
 			}
 		});
-
+		if (!window.app.map.topToolbar)
+			return found;
 		const topToolbarHas = window.app.map.topToolbar.hasItem(buttonId);
 		found = found || topToolbarHas;
 		if (topToolbarHas)
