@@ -21,11 +21,13 @@ abstract class JSDialogComponent {
 	protected builder?: JSBuilder;
 	protected container?: HTMLElement;
 	protected allowedJsonType: string;
+	protected model: JSDialogModelState;
 
 	constructor(map: any, name: string, allowedJsonType: string) {
 		this.map = map;
 		this.name = name;
 		this.allowedJsonType = allowedJsonType;
+		this.model = new JSDialogModelState(name);
 	}
 
 	/// connects component to the JSDialogMessageRouter
@@ -62,7 +64,11 @@ abstract class JSDialogComponent {
 				' handles update message: ' +
 				JSON.stringify(data.control),
 		);
+
+		this.model.widgetUpdate(data);
 		this.builder.updateWidget(this.container, data.control);
+
+		return true;
 	}
 
 	/// handle action message
@@ -81,6 +87,10 @@ abstract class JSDialogComponent {
 				' handles action message: ' +
 				JSON.stringify(data.data),
 		);
+
+		this.model.widgetAction(data);
 		this.builder.executeAction(this.container, data.data);
+
+		return true;
 	}
 }

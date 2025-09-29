@@ -99,12 +99,19 @@ interface DialogJSON extends WidgetJSON {
 	responses?: Array<DialogResponse>;
 }
 
+interface ActionData {
+	control_id: string;
+	action_type: string;
+	data: any;
+}
+
 // JSDialog message (full, update or action)
 interface JSDialogJSON extends DialogJSON {
 	id: string; // unique windowId
 	jsontype: string; // specifies target component, on root level only
 	action?: string; // optional name of an action
 	control?: WidgetJSON;
+	data?: ActionData;
 }
 
 // JSDialog message for popup
