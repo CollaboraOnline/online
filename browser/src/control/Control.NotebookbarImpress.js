@@ -492,7 +492,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'type': 'bigcustomtoolitem',
 					'text': _('Presenter Console'),
 					'command': 'presenterconsole',
-					'accessibility': { focusBack: true, combination: 'PW', de: null }
+					'accessibility': { focusBack: true, combination: 'PC', de: null }
 				}: {},
 			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
 				{
@@ -500,7 +500,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'type': 'bigcustomtoolitem',
 					'text': _('Start Follow-me Presentation'),
 					'command': 'followmepresentation',
-					'accessibility': { focusBack: true, combination: 'PW', de: null }
+					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
 			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
 				{
@@ -508,7 +508,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'type': 'bigcustomtoolitem',
 					'text': _('Follow Presentation'),
 					'command': 'followpresentation',
-					'accessibility': { focusBack: true, combination: 'PW', de: null }
+					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
 			{ type: 'separator', id: 'slide-zoomin-break', orientation: 'vertical' },
 			{
