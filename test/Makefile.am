@@ -33,6 +33,7 @@ all_la_unit_tests = \
 	unit-tiletest.la \
 	unit-wopi-documentconflict.la \
 	unit-wopi-stuck-save.la \
+	unit-wopi-transient-connect-fault.la \
 	unit-perf.la \
 	unit-close.la \
 	unit-user-presets.la \
@@ -276,6 +277,8 @@ unit_wopi_save_on_exit_la_SOURCES = UnitWOPISaveOnExit.cpp
 unit_wopi_save_on_exit_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_stuck_save_la_SOURCES = UnitWOPIStuckSave.cpp
 unit_wopi_stuck_save_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_transient_connect_fault_la_SOURCES = UnitWOPITransientConnectFault.cpp
+unit_wopi_transient_connect_fault_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fail_upload_la_SOURCES = UnitWOPIFailUpload.cpp
 unit_wopi_fail_upload_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
