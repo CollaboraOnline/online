@@ -1498,6 +1498,7 @@ static const std::string PERMISSION = "%PERMISSION%";
 static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
 static const std::string IFRAME_TYPE = "%IFRAME_TYPE%";
 static const std::string UI_THEME = "%UI_THEME%";
+static const std::string VERSION = "%VERSION%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -2434,6 +2435,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
     Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
     Poco::replaceInPlace(adminFile, UI_THEME, urv[UI_THEME]);
+    Poco::replaceInPlace(adminFile, VERSION, Util::getCoolVersionHash());
 #if ENABLE_DEBUG
     const bool enableDebug = true;
 #else
