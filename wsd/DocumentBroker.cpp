@@ -3079,6 +3079,24 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     handleUploadToStorageFailed(uploadResult);
 }
 
+void DocumentBroker::reportUploadToStorageFailed()
+{
+    const auto session = _uploadRequest->session();
+    if (session)
+    {
+        LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
+                                            << "]. Notifying client.");
+        const std::string msg = std::string("error: cmd=storage kind=")
+                                + (_uploadRequest->isRename() ? "renamefailed" : "savefailed");
+        session->sendTextFrame(msg);
+    }
+    else
+    {
+        LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
+                                            << "]. The client session is closed.");
+    }
+}
+
 void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult& uploadResult)
 {
     assert(uploadResult.getResult() != StorageBase::UploadResult::Result::OK &&
@@ -3167,20 +3185,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         // document's last modified timestamp.
         startActivity(DocumentState::Activity::SyncFileTimestamp);
 
-        const auto session = _uploadRequest->session();
-        if (session)
-        {
-            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
-                                                << "]. Notifying client.");
-            const std::string msg = std::string("error: cmd=storage kind=")
-                                    + (_uploadRequest->isRename() ? "renamefailed" : "savefailed");
-            session->sendTextFrame(msg);
-        }
-        else
-        {
-            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
-                                                << "]. The client session is closed.");
-        }
+        reportUploadToStorageFailed();
 
         // Notify all.
         broadcastSaveResult(false, "Save failed", uploadResult.getReason());
