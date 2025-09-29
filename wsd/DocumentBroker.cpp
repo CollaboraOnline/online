@@ -3114,8 +3114,8 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         // Make everyone readonly and tell everyone that the file is too large for the storage.
         for (const auto& sessionIt : _sessions)
         {
-            sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savetoolarge");
             sessionIt.second->setWritable(false);
+            sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savetoolarge");
         }
 
         broadcastSaveResult(false, "Too large", uploadResult.getReason());
@@ -3129,8 +3129,8 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         // Make everyone readonly and tell everyone that storage is low on diskspace.
         for (const auto& sessionIt : _sessions)
         {
-            sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
             sessionIt.second->setWritable(false);
+            sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
         }
 
         broadcastSaveResult(false, "Disk full", uploadResult.getReason());
