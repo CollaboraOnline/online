@@ -25,7 +25,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		this.getHTMLObject().remove();
 		document.getElementById('map').appendChild(this.getHTMLObject());
 
-		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
         this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
