@@ -139,6 +139,15 @@ class CanvasSectionObject {
 		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
 	}
 
+	// Move the HTML object of an HTMLObjectSection into map element. For avoiding z-index (event handling order) issues.
+	moveHTMLObjectToMapElement(): void {
+		if (this instanceof HTMLObjectSection) {
+			this.getHTMLObject().style.opacity = 1;
+			this.getHTMLObject().remove();
+			document.getElementById('map').appendChild(this.getHTMLObject());
+		}
+	}
+
 	startAnimating(options: any): boolean {
 		return this.containerObject.startAnimating(this.name, options);
 	}
