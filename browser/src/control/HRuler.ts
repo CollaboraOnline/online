@@ -890,7 +890,7 @@ class HRuler extends Ruler {
 			);
 		}
 
-		// it is kind of necessary to send all prams details to set values right in CORE other vise for missing values it will take default as 0
+		// it is kind of necessary to send all prams details to set values right in CORE otherwise for missing values it will take default as 0
 		unoObj['LRSpace.FirstLineIndent'] = {
 			type: 'long',
 			value: firstLineMargin,
