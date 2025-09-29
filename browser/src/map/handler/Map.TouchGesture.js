@@ -269,7 +269,7 @@ window.L.Map.TouchGesture = window.L.Handler.extend({
 		if (TextSelections.getStartRectangle() && TextSelections.getEndRectangle()) {
 			// Oversimplication. See "inBand" function.
 			textSelection = new cool.SimpleRectangle(0, TextSelections.getEndRectangle().y1, app.activeDocument.fileSize.x, 0);
-			textSelection.height = TextSelections.getEndRectangle().rectangle.y2 - TextSelections.getStartRectangle().y1;
+			textSelection.height = TextSelections.getEndRectangle().y2 - TextSelections.getStartRectangle().y1;
 		}
 
 		if ((textSelection && textSelection.containsPoint(posInTwips.toArray()))
