@@ -209,10 +209,23 @@ interface ToolboxWidgetJSON extends WidgetJSON {
 interface ToolItemWidgetJSON extends WidgetJSON {
 	class?: string; // css class
 	noLabel?: boolean;
-	command: string; // command to trigger options for a panel
-	text: string; // title to show or for tooltip
+	command?: string; // command to trigger options for a panel
+	text?: string; // title to show or for tooltip
 	icon?: string; // url to an svg
 	postmessage?: boolean; // postmessage to WOPI in case the toolitem is added via postmessage
+	beforeId?: string; // for added via postmessage, before which to put
+	context?: string; // in which context we show the item
+	desktop?: boolean; // do we show on desktop
+	tablet?: boolean; // do we show on tablet
+	mobile?: boolean; // do we show on mobile
+	mobilebrowser?: boolean; // do we show on mobile in the browser
+	iosapptablet?: boolean; // do we show in app on ios
+	hidden?: boolean; // is hidden
+	visible?: boolean; // is visible
+	pressAndHold?: boolean; // for mobile
+	w2icon?: string; // DEPRECATED: w2 icon name
+	placeholder?: string; // DEPRECATED: w2 placeholder text
+	items?: Array<ToolItemWidgetJSON>; // DEPRECATED: w2 menus
 }
 
 interface PanelWidgetJSON extends WidgetJSON {

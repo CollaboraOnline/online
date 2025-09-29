@@ -16,14 +16,12 @@
 
 declare var JSDialog: any;
 
-type ToolbarItem = any;
-
 class Toolbar extends JSDialogComponent {
 	protected docType: string;
 	protected callback: JSDialogCallback;
 	protected toolbarElementId: string;
 	protected parentContainer: Element; // FIXME: can we drop as we have container in base?
-	protected customItems: Array<ToolbarItem>;
+	protected customItems: Array<ToolItemWidgetJSON>;
 
 	constructor(map: any, name: string, toolbarElementId: string) {
 		super(map, name, 'toolbar');
@@ -38,7 +36,7 @@ class Toolbar extends JSDialogComponent {
 		this.updateVisibilityForToolbar('');
 	}
 
-	getToolItems(): Array<ToolbarItem> {
+	getToolItems(): Array<ToolItemWidgetJSON> {
 		return [];
 	}
 
@@ -71,8 +69,21 @@ class Toolbar extends JSDialogComponent {
 	create() {
 		this.reset();
 
-		var items = this.getToolItems();
-		this.builder.build(this.parentContainer, items, undefined);
+		const items = this.getToolItems();
+		const json = {
+			id: this.toolbarElementId,
+			dialogid: this.toolbarElementId,
+			jsontype: 'toolbar',
+			type: 'toolbox',
+			children: items,
+		} as JSDialogJSON;
+
+		this.model.fullUpdate(json);
+		this.builder.build(
+			this.parentContainer,
+			this.model.getSnapshot().children,
+			undefined,
+		);
 
 		JSDialog.MakeScrollable(
 			this.parentContainer,
@@ -105,8 +116,13 @@ class Toolbar extends JSDialogComponent {
 		);
 	}
 
-	insertItem(beforeId: string, items: Array<ToolbarItem>) {
-		this.customItems.push({ beforeId: beforeId, items: items });
+	insertItem(beforeId: string, items: Array<ToolItemWidgetJSON>) {
+		this.customItems.push({
+			id: 'custom-before-' + beforeId,
+			type: 'toolitem',
+			beforeId: beforeId,
+			items: items,
+		});
 		this.create();
 	}
 
@@ -160,7 +176,7 @@ class Toolbar extends JSDialogComponent {
 		});
 	}
 
-	updateItem(data: ToolbarItem) {
+	updateItem(data: ToolItemWidgetJSON) {
 		this.builder.updateWidget(this.parentContainer, data);
 		this.updateVisibilityForToolbar('');
 		app.layoutingService.appendLayoutingTask(() => {
