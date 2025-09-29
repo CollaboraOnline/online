@@ -21,7 +21,7 @@ class ContextToolbar extends JSDialogComponent {
 	pendingShow: boolean = false;
 	// roughly twice the height(76px) of default context toolbar in each direction from boundary
 	disappearingBoundary: number = 150; // px
-	additionalContextButtons: Array<WidgetJSON> = [];
+	additionalContextButtons: Array<ToolItemWidgetJSON> = [];
 
 	constructor(map: any) {
 		super(map, 'ContextToolbar', 'notebookbar');
@@ -122,7 +122,7 @@ class ContextToolbar extends JSDialogComponent {
 		});
 	}
 
-	getWriterTextContext(): WidgetJSON[] {
+	getWriterTextContext(): ToolItemWidgetJSON[] {
 		const fontEntries = Object.keys(
 			this.map._docLayer._toolbarCommandValues['.uno:CharFontName'],
 		);
