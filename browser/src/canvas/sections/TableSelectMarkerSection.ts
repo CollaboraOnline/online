@@ -39,23 +39,15 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
+		this.stopPropagating(e);
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
-	}
-
-	private stopEvents(e: MouseEvent) {
-		this.stopPropagating();
-
-		// We shouldn't need below 2 when we remove map element.
-		e.preventDefault();
-		e.stopImmediatePropagation();
+		this.stopPropagating(e);
 	}
 
 	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
+		this.stopPropagating(e);
 		if (this.sectionProperties.markerType === 'column') {
 			const x1 = Math.round(
 				(this.position[0] + this.size[0] * 0.5) * app.pixelsToTwips,

@@ -38,14 +38,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.initialPosition = this.position.slice();
 	}
 
-	private stopEvents(e: MouseEvent) {
-		this.stopPropagating();
-
-		// We shouldn't need below 2 when we remove map element.
-		e.preventDefault();
-		e.stopImmediatePropagation();
-	}
-
 	private calculateLeftMostAndRightMostAvailableX() {
 		const previous =
 			this.sectionProperties.index === 0
@@ -131,7 +123,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
+		this.stopPropagating(e);
 
 		// Calculate on mouse enter so we don't need to recaulculate on every mouse move.
 		if (this.sectionProperties.markerType === 'column')
@@ -142,13 +134,13 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
+		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
 		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
+		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = point;
 	}
 
@@ -226,7 +218,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopEvents(e);
+		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
 
 		if (
@@ -281,7 +273,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		e: MouseEvent,
 	): void {
 		if (this.containerObject.isDraggingSomething()) {
-			this.stopEvents(e);
+			this.stopPropagating(e);
 
 			// We only allow horizontal movement for column markers and vertical for row markers.
 
