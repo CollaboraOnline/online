@@ -2807,7 +2807,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
             case StorageBase::AsyncUpload::State::None: // Unexpected: fallback.
             case StorageBase::AsyncUpload::State::Error:
                 _uploadRequest->setComplete();
-                broadcastSaveResult(false, "Could not upload document to storage");
+                broadcastSaveResult(false, "Could not upload document to storage",
+                                    asyncUp.result().getReason());
                 // [[fallthrough]]
         }
 
