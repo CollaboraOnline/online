@@ -131,6 +131,7 @@ class SlideShowPresenter {
 	private _slideShowNavigator: SlideShowNavigator;
 	private _metaPresentation: MetaPresentation;
 	private _startSlide: number;
+	private _startEffect: number;
 	private _presentationInfoChanged: boolean = false;
 	private _navigateSkipTransition: boolean = false;
 	_skipNextSlideShowInfoChangedMsg: boolean = false;
@@ -219,8 +220,16 @@ class SlideShowPresenter {
 		this.setFollower(true);
 		switch (info.type) {
 			case 'newfollowmepresentation':
-				this.setFollowing(true);
-				this._onStartInWindow(0);
+				this._onStartInWindow({
+					startSlideNumber:
+						this._slideShowNavigator.getLeaderSlide() === -1
+							? 0
+							: this._slideShowNavigator.getLeaderSlide(),
+					startEffectNumber:
+						this._slideShowNavigator.getLeaderEffect() === -1
+							? undefined
+							: this._slideShowNavigator.getLeaderEffect(),
+				});
 				break;
 			case 'dispatcheffect':
 				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
@@ -1096,6 +1105,7 @@ class SlideShowPresenter {
 	_onStartInWindow(that: any) {
 		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
+		this._startEffect = that?.startEffectNumber;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
 			return;
@@ -1189,6 +1199,7 @@ class SlideShowPresenter {
 		this._slideShowNavigator.startPresentation(
 			this._startSlide,
 			skipTransition,
+			this._startEffect,
 		);
 	}
 

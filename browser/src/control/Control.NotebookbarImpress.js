@@ -498,8 +498,16 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				{
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
-					'text': _('Follow me Presentation'),
+					'text': _('Start Follow-me Presentation'),
 					'command': 'followmepresentation',
+					'accessibility': { focusBack: true, combination: 'PW', de: null }
+				} : {},
+			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
+				{
+					'id': 'slide-presentation-follow',
+					'type': 'bigcustomtoolitem',
+					'text': _('Follow Presentation'),
+					'command': 'followpresentation',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
 			{ type: 'separator', id: 'slide-zoomin-break', orientation: 'vertical' },

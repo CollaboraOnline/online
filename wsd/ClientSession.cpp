@@ -1413,6 +1413,23 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         if (tokens.equals(0, "slideshowfollow"))
         {
+            if(tokens.equals(1, "newfollowmepresentation"))
+                docBroker->setIsFollowmeSlideShowOn(true);
+            else if(tokens.equals(1, "endpresentation"))
+                docBroker->setIsFollowmeSlideShowOn(false);
+            else if(tokens.equals(1, "effect")){
+                Poco::JSON::Parser parser;
+                auto result = parser.parse(tokens[2]);
+                int effectNumber = JsonUtil::getJSONValue<int>(result.extract<Poco::JSON::Object::Ptr>(), "currentEffect");
+                docBroker->setLeaderEffect(effectNumber);
+            }
+            else if(tokens.equals(1, "displayslide")) {
+                Poco::JSON::Parser parser;
+                auto result = parser.parse(tokens[2]);
+                int slideNumber = JsonUtil::getJSONValue<int>(result.extract<Poco::JSON::Object::Ptr>(), "currentSlide");
+                docBroker->setLeaderSlide(slideNumber);
+                docBroker->setLeaderEffect(-1);
+            }
             docBroker->broadcastMessageToOthers(tokens.substrFromToken(0), client_from_this());
             return true;
         }
@@ -1769,6 +1786,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 #if ENABLE_FEATURE_RESTRICTION
         sendRestrictionInfo();
 #endif
+        if (docBroker->getIsFollowmeSlideShowOn())
+        {
+            sendTextFrame("slideshowfollow slideshowfollowon");
+            sendTextFrame("slideshowfollow displayslide {\"currentSlide\": " + std::to_string(docBroker->getLeaderSlide()) +"}");
+            sendTextFrame("slideshowfollow effect {\"currentEffect\": " + std::to_string(docBroker->getLeaderEffect()) +"}");
+        }
 
         return forwardToChild(oss.str(), docBroker);;
     }

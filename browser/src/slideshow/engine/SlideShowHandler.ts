@@ -609,6 +609,10 @@ class SlideShowHandler {
 		return true;
 	}
 
+	skipNEffects(nEffectNumber: number) {
+		for (let i = 0; i <= nEffectNumber; i++) if (!this.skipNextEffect()) break;
+	}
+
 	/** skipPlayingOrNextEffect
 	 *  Skip the next effect to be played that belongs to the main animation
 	 *  sequence  or all playing effects.
@@ -855,6 +859,7 @@ class SlideShowHandler {
 		nNewSlide: number,
 		nOldSlide: number | undefined,
 		bSkipSlideTransition: boolean,
+		nSlideEffect: number = undefined,
 	) {
 		NAVDBG.print(
 			'SlideShowHandler.displaySlide: nNewSlide: ' +
@@ -930,6 +935,8 @@ class SlideShowHandler {
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
+		// can jump to specific animation only after everything is loaded
+		if (nSlideEffect !== undefined) this.skipNEffects(nSlideEffect);
 	}
 
 	exitSlideShow() {
