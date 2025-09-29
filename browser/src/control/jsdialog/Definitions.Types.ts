@@ -63,6 +63,7 @@ interface JSBuilder {
 	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
 	setWindowId: (id: number) => void;
+	onCommandStateChanged: (event: any) => void;
 
 	// helpers FIXME: put as local in Control.Containers.ts
 	_getGridColumns: (data: WidgetJSON[]) => number;

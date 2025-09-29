@@ -31,10 +31,10 @@ class QuickFindPanel extends SidebarBase {
 		this.map.off('quickfind', this.onQuickFind, this);
 	}
 
-	onJSUpdate(e: FireEvent): void {
+	onJSUpdate(e: FireEvent) {
 		var data = e.data;
 
-		super.onJSUpdate(e);
+		if (!super.onJSUpdate(e)) return false;
 
 		// handle placeholder text and quickfind controls visibility
 		app.layoutingService.appendLayoutingTask(() => {
@@ -47,6 +47,8 @@ class QuickFindPanel extends SidebarBase {
 				this.handleSearchFindsTreelistbox(data.control);
 			}
 		});
+
+		return true;
 	}
 
 	handleNumberOfSearchFinds(control: any): void {

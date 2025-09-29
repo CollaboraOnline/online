@@ -299,11 +299,11 @@ class NavigatorPanel extends SidebarBase {
 		}
 	}
 
-	onJSUpdate(e: FireEvent): void {
+	onJSUpdate(e: FireEvent) {
 		if (this.highlightTerm && this.highlightTerm.trim().length > 0) {
 			e.data.control.highlightTerm = this.highlightTerm;
 		}
-		super.onJSUpdate(e);
+		return super.onJSUpdate(e);
 	}
 
 	closeSidebar() {
