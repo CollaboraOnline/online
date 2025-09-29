@@ -80,6 +80,12 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	});
 
 	if (data.hasSubMenu) {
+		entry.setAttribute('aria-haspopup', true);
+		entry.setAttribute('aria-expanded', false);
+		entry._onDropDown = function(open) {
+			entry.setAttribute('aria-expanded', open);
+		};
+
 		entry.addEventListener('mouseover', function () {
 			builder.callback('combobox', 'showsubmenu', {id: data.comboboxId}, entryData, builder);
 		});
