@@ -2844,7 +2844,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
 #endif // !MOBILEAPP && !WASMAPP
 
             default:
-                break;
+                reportUploadToStorageFailed();
+            break;
         }
     };
 
