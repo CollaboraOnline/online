@@ -784,7 +784,7 @@ class TreeViewControl {
 				doubleClickFunction,
 			);
 
-			this.setupEntryKeyEvent(
+			this.setupEntryKeyboardEvents(
 				tr,
 				entry,
 				selectionElement,
@@ -872,7 +872,7 @@ class TreeViewControl {
 		}
 	}
 
-	setupEntryKeyEvent(
+	setupEntryKeyboardEvents(
 		tr: HTMLElement,
 		entry: TreeEntryJSON,
 		selectionElement: HTMLInputElement,
@@ -881,12 +881,13 @@ class TreeViewControl {
 	) {
 		if (entry.enabled === false) return;
 
+		let preventDef = false;
+
 		tr.addEventListener('keydown', (event) => {
 			if (event.key === ' ' && expander) {
 				expander.click();
 				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
 			} else if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction(event);
 				if (selectionElement) selectionElement.click();
@@ -894,10 +895,28 @@ class TreeViewControl {
 					expander.click();
 				}
 				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
+			} else if (event.key === 'ArrowLeft') {
+				// Always collapse if expanded
+				if (expander && !window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					expander.click();
+					tr.focus();
+					preventDef = true;
+				}
+			} else if (event.key === 'ArrowRight') {
+				// Always expand if collapsed
+				if (expander && window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					expander.click();
+					tr.focus();
+					preventDef = true;
+				}
 			} else if (event.key === 'Tab') {
 				if (!window.L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr); // remove tabIndex
+			}
+
+			if (preventDef) {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		});
 	}
