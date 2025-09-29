@@ -151,11 +151,23 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		}
 	}
 
-	private onDragEndColumn() {
-		const offset =
-			Math.round(this.position[0] - this.sectionProperties.initialPosition[0]) *
-			app.pixelsToTwips;
+	private getParametersForRow() {
+		let index: number, type: string;
+		if (
+			this.sectionProperties.index ===
+			app.activeDocument.tableMiddleware.tableResizeRowMarkers.length - 1
+		) {
+			type = 'row-right';
+			index = 0;
+		} else {
+			type = 'row-middle';
+			index = this.sectionProperties.index;
+		}
 
+		return { index: index, type: type };
+	}
+
+	private getParametersForColumn() {
 		let index: number, type: string;
 		if (this.sectionProperties.index === 0) {
 			type = 'column-left';
@@ -171,49 +183,36 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 			index = this.sectionProperties.index - 1;
 		}
 
-		const params = {
-			BorderType: {
-				type: 'string',
-				value: type,
-			},
-			Index: {
-				type: 'uint16',
-				value: index,
-			},
-			Offset: {
-				type: 'int32',
-				value: offset,
-			},
-		};
-
-		app.map.sendUnoCommand('.uno:TableChangeCurrentBorderPosition', params);
+		return { index: index, type: type };
 	}
 
-	private onDragEndRow() {
-		const offset =
-			Math.round(this.position[1] - this.sectionProperties.initialPosition[1]) *
-			app.pixelsToTwips;
+	private onDragEnd(markerType: string) {
+		let offset;
 
-		let index: number, type: string;
-		if (
-			this.sectionProperties.index ===
-			app.activeDocument.tableMiddleware.tableResizeRowMarkers.length - 1
-		) {
-			type = 'row-right';
-			index = 0;
+		if (markerType === 'column') {
+			offset =
+				Math.round(
+					this.position[0] - this.sectionProperties.initialPosition[0],
+				) * app.pixelsToTwips;
 		} else {
-			type = 'row-middle';
-			index = this.sectionProperties.index;
+			offset =
+				Math.round(
+					this.position[1] - this.sectionProperties.initialPosition[1],
+				) * app.pixelsToTwips;
 		}
 
-		const params = {
+		let parameters;
+		if (markerType === 'column') parameters = this.getParametersForColumn();
+		else parameters = this.getParametersForRow();
+
+		const commandArguments = {
 			BorderType: {
 				type: 'string',
-				value: type,
+				value: parameters.type,
 			},
 			Index: {
 				type: 'uint16',
-				value: index,
+				value: parameters.index,
 			},
 			Offset: {
 				type: 'int32',
@@ -221,7 +220,10 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 			},
 		};
 
-		app.map.sendUnoCommand('.uno:TableChangeCurrentBorderPosition', params);
+		app.map.sendUnoCommand(
+			'.uno:TableChangeCurrentBorderPosition',
+			commandArguments,
+		);
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
@@ -232,9 +234,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name
 		) {
-			if (this.sectionProperties.markerType === 'column')
-				this.onDragEndColumn();
-			else this.onDragEndRow();
+			this.onDragEnd(this.sectionProperties.markerType);
 		}
 	}
 
