@@ -28,6 +28,8 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		);
 
 		this.sectionProperties.markerType = markerType;
+		this.moveHTMLObjectToMapElement();
+		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
