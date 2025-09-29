@@ -24,8 +24,6 @@
 
 int coolwsd_server_socket_fd = -1;
 
-const char* user_name;
-
 static std::string fileURL;
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
