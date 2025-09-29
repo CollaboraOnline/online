@@ -109,8 +109,19 @@ class CanvasSectionObject {
 		this.containerObject.reNewAllSections();
 	}
 
-	stopPropagating(): void {
+	stopPropagating(e: MouseEvent = null): void {
 		this.containerObject.lowestPropagatedBoundSection = this.name;
+
+		// We shouldn't need e when we remove map element.
+		if (e) { // This addition doesn't effect current uses of this function, since they don't send e here.
+			if (e.preventDefault)
+				e.preventDefault();
+
+			if (e.stopImmediatePropagation)
+				e.stopImmediatePropagation();
+
+			(e as any).preventedDefault = true; // Tap events are first handled by touchGesture. We need to let it know if we handled the event.
+		}
 	}
 
 	startAnimating(options: any): boolean {
@@ -165,6 +176,26 @@ class CanvasSectionObject {
 
 		if (this.containerObject.testing)
 			this.containerObject.createUpdateSingleDivElement(this);
+	}
+
+	/*
+		This function is (for now) required because sometimes
+		we need to handle the event before leaflet. So we check if the mouse pointer
+		is inside the section.
+	*/
+	containsPoint(point: number[]) {
+		if (
+			this.position[0] <= point[0] &&
+			this.position[0] + this.size[0] >= point[0]
+		) {
+			if (
+				this.position[1] <= point[1] &&
+				this.position[1] + this.size[1] >= point[1]
+			)
+				return true;
+		}
+
+		return false;
 	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.
