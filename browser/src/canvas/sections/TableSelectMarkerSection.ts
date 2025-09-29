@@ -46,6 +46,17 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		this.stopPropagating(e);
+
+		// Hammer.js doesn't fire onClick event after touchEnd event.
+		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
+		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
+		if (
+			(!this.containerObject.isDraggingSomething() &&
+				(<any>window).mode.isMobile()) ||
+			(<any>window).mode.isTablet()
+		) {
+			this.onClick(point, e);
+		}
 	}
 
 	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
