@@ -105,8 +105,10 @@ window.L.TextInput = window.L.Layer.extend({
 	},
 
 	_addCursorHandler() {
-		if (document.getElementById('canvas-container'))
+		if (document.getElementById('canvas-container')) {
 			this._cursorHandler = new CursorHandler();
+			app.sectionContainer.addSection(this._cursorHandler);
+		}
 		else {
 			setTimeout(() => {
 				this._addCursorHandler();
@@ -171,7 +173,8 @@ window.L.TextInput = window.L.Layer.extend({
 		window.L.DomEvent.off(this._textArea, 'focus blur', this._onFocusBlur, this);
 		window.L.DomEvent.off(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
 
-		app.sectionContainer.removeSection(this._cursorHandler.name);
+		if (this._cursorHandler)
+			app.sectionContainer.removeSection(this._cursorHandler.name);
 	},
 
 	disable: function () {
@@ -509,14 +512,11 @@ window.L.TextInput = window.L.Layer.extend({
 
 		// Move and display under-caret marker
 
-		if (window.touch.currentlyUsingTouchscreen() && this._map._docLayer._textCSelections.empty()) {
-			if (!app.sectionContainer.doesSectionExist(this._cursorHandler.name))
-				app.sectionContainer.addSection(this._cursorHandler);
-
+		if (window.touch.currentlyUsingTouchscreen() && this._map._docLayer._textCSelections.empty() && this._cursorHandler) {
 			this._cursorHandler.setPosition(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY1 + (CursorHandler.objectHeight * 0.4 * app.dpiScale));
 			this._cursorHandler.setShowSection(true);
 			app.sectionContainer.requestReDraw();
-		} else {
+		} else if (this._cursorHandler) {
 			this._cursorHandler.setShowSection(false);
 		}
 
@@ -538,7 +538,10 @@ window.L.TextInput = window.L.Layer.extend({
 		}
 		if (this._map._docLayer._cursorMarker.isDomAttached())
 			this._map._docLayer._cursorMarker.remove();
-		this._cursorHandler.setShowSection(false);
+
+		if (this._cursorHandler)
+			this._cursorHandler.setShowSection(false);
+
 		// shape handlers visible again (if selected)
 		this._map.fire('handlerstatus', {hidden: false});
 	},
