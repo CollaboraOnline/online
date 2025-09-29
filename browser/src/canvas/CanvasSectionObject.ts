@@ -90,6 +90,7 @@ class CanvasSectionObject {
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft(): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
+	getHTMLObject(): HTMLElement { return; } // Implemented in HTMLObjectSection.
 
 	setDrawingOrder(drawingOrder: number): void {
 		this.drawingOrder = drawingOrder;
@@ -141,11 +142,15 @@ class CanvasSectionObject {
 
 	// Move the HTML object of an HTMLObjectSection into map element. For avoiding z-index (event handling order) issues.
 	moveHTMLObjectToMapElement(): void {
-		if (this instanceof HTMLObjectSection) {
-			this.getHTMLObject().style.opacity = 1;
-			this.getHTMLObject().remove();
-			document.getElementById('map').appendChild(this.getHTMLObject());
-		}
+		const element: any = this.getHTMLObject() as any;
+
+		if (!element)
+			return;
+
+		// Linting sees opacity as a string property, but it is integer. Use any for now.
+		element.style.opacity = 1;
+		this.getHTMLObject().remove();
+		document.getElementById('map').appendChild(this.getHTMLObject());
 	}
 
 	startAnimating(options: any): boolean {
