@@ -1404,6 +1404,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     setenv("SAL_LOG", salLog.c_str(), 0);
 #endif
 
+    if (!conf.getBool("mso_fixed_fields.enable", true)) {
+        setenv("MSO_FIXED_FIELDS", "FALSE", 0);
+    }
+
 #if WASMAPP
     // In WASM, we want to log to the Log Console.
     // Disable logging to file to log to stdout and

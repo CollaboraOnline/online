@@ -65,6 +65,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "deepl.auth_key", "" },
     { "deepl.enabled", "false" },
     { "document_signing.enable", "true" },
+    { "mso_fixed_fields.enable", "true" },
     { "enable_websocket_urp", "false" },
     { "experimental_features", "false" },
     { "extra_export_formats.impress_bmp", "false" },

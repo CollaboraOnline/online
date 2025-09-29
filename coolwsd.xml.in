@@ -391,4 +391,8 @@
         <enable desc="Enable document signing" type="bool" default="true">true</enable>
     </document_signing>
 
+    <mso_fixed_fields desc="Set fields in OOXML (DOCX, ...) + RTF to IsFixed on opening">
+        <enable desc="Enable setting fields to IsFixed" type="bool" default="true">true</enable>
+    </mso_fixed_fields>
+
 </config>
