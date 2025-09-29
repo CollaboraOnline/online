@@ -27,6 +27,31 @@ class JSDialogModelState {
 		this.model = null;
 	}
 
+	/// get model copy
+	public getSnapshot() {
+		if (this.model) {
+			// use new API first
+			if (window.structuredClone) {
+				try {
+					return window.structuredClone(this.model);
+				} catch (e) {
+					app.console.debug('JSDialogModelState: ' + e);
+				}
+			}
+
+			// try fallback
+			try {
+				return JSON.parse(JSON.stringify(this.model));
+			} catch (e) {
+				app.console.debug(
+					'JSDialogModelState: failed to clone the model: ' + e,
+				);
+			}
+		}
+
+		return null;
+	}
+
 	/// replaces complete state of a model
 	public fullUpdate(data: JSDialogJSON) {
 		app.console.debug(
