@@ -92,10 +92,10 @@ abstract class SidebarBase extends JSDialogComponent {
 			window.app.console.log(
 				'Ignored update for control: ' + e.data.control.id,
 			);
-			return;
+			return false;
 		}
 
-		super.onJSUpdate(e);
+		return super.onJSUpdate(e);
 	}
 
 	protected onJSAction(e: FireEvent) {
@@ -117,11 +117,11 @@ abstract class SidebarBase extends JSDialogComponent {
 						' for control: ' +
 						controlId,
 				);
-				return;
+				return false;
 			}
 		}
 
-		super.onJSAction(e);
+		return super.onJSAction(e);
 	}
 
 	markNavigatorTreeView(data: WidgetJSON): boolean {

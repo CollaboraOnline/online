@@ -22,13 +22,20 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	_lastSelectedTabName: null,
 
 	container: null,
-	builder: null,
+	builder: null, // see NotebookbarBase
+	model: null, // see NotebookbarBase
 
 	HOME_TAB_ID: 'Home-tab-label',
 	FORMULAS_TAB_ID: 'Formula-tab-label',
 
 	additionalShortcutButtons: [],
 	hiddenItems: [],
+
+	setBuilder: function(builder, model) {
+		this.builder = builder;
+		this.model = model;
+		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
+	},
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -39,16 +46,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		if (document.documentElement.dir === 'rtl')
 			this._RTL = true;
 
-		this.builder = new window.L.control.notebookbarBuilder({
-			windowId: -2,
-			mobileWizard: this,
-			map: map,
-			cssClass: 'notebookbar',
-			useSetTabs: true,
-			suffix: 'notebookbar',
-		});
-		this.map.on('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
-
 		// remove old toolbar
 		var toolbar = window.L.DomUtil.get('toolbar-up');
 		if (toolbar)
@@ -58,14 +55,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
 		this.parentContainer = window.L.DomUtil.get('toolbar-up');
 
-		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
-
 		this.onContextChange = this.onContextChange.bind(this);
 		app.events.on('contextchange', this.onContextChange);
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
-		this.map.on('jsdialogupdate', this.onJSUpdate, this);
-		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
@@ -124,7 +117,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	onRemove: function() {
 		clearTimeout(this.retry);
-		this.map.off('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
@@ -137,40 +129,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
 		this.resetInCore();
-	},
-
-	onJSUpdate: function (e) {
-		var data = e.data;
-
-		if (data.jsontype !== 'notebookbar')
-			return;
-
-		if (!this.container)
-			return;
-
-		if (!this.builder)
-			return;
-
-		this.setInitialized(true);
-
-		this.builder.updateWidget(this.container, data.control);
-	},
-
-	onJSAction: function (e) {
-		var data = e.data;
-
-		if (data.jsontype !== 'notebookbar')
-			return;
-
-		if (!this.builder)
-			return;
-
-		if (!this.container)
-			return;
-
-		this.setInitialized(true);
-
-		this.builder.executeAction(this.container, data.data);
 	},
 
 	onUpdatePermission: function(e) {
@@ -249,7 +207,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 		this.container = window.L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
 
-		this.builder.build(this.container, [tabJSON]);
+		this.model.fullUpdate(tabJSON);
+		this.builder.build(this.container, [this.model.getSnapshot()]);
 
 		if (this._showNotebookbar === false)
 			this.hideTabs();
