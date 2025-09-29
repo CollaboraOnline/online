@@ -25,7 +25,6 @@
 int coolwsd_server_socket_fd = -1;
 
 static std::string fileURL;
-static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
 
@@ -266,7 +265,7 @@ int main(int argc, char* argv_main[])
                 fileURL = docURL;
             }
 
-            coolwsd = new COOLWSD();
+            COOLWSD *coolwsd = new COOLWSD();
             coolwsd->run(1, argv);
             delete coolwsd;
         })
