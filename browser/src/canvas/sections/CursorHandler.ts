@@ -35,8 +35,4 @@ class CursorHandler extends HTMLObjectSection {
 	setOpacity() {
 		this.getHTMLObject().style.opacity = 0;
 	}
-
-	public onRemove(): void {
-		this.setShowSection(false);
-	}
 }
