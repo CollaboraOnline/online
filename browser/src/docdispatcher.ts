@@ -524,6 +524,15 @@ class Dispatcher {
 			app.map.fire('newpresentinwindow');
 		};
 
+		this.actionsMap['followpresentation'] = this.actionsMap[
+			'presentation-follow'
+		] = () => {
+			app.map.slideShowPresenter.setLeader(false);
+			app.map.slideShowPresenter.setFollower(true);
+			app.map.slideShowPresenter.setFollowing(true);
+			app.map.fire('newfollowmepresentation');
+		};
+
 		this.actionsMap['presenterconsole'] = () => {
 			if ((window as any).canvasSlideshowEnabled)
 				app.map.fire('newpresentinconsole');

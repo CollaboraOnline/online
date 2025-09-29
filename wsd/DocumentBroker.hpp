@@ -550,6 +550,16 @@ public:
 
     void setMigrationMsgReceived() { _migrateMsgReceived = true; }
 
+
+    bool getIsFollowmeSlideShowOn() const {return _docState.getIsFollowmeSlideShowOn();}
+    void setIsFollowmeSlideShowOn(bool isSlideShowRunning)  { _docState.setIsFollowmeSlideShowOn(isSlideShowRunning);}
+
+    int getLeaderSlide() const {return _docState.getLeaderSlide();}
+    void setLeaderSlide(int leaderSlide)  { _docState.setLeaderSlide(leaderSlide);}
+
+    int getLeaderEffect() const {return _docState.getLeaderEffect();}
+    void setLeaderEffect(int leaderEffect)  { _docState.setLeaderEffect(leaderEffect);}
+
 #if !MOBILEAPP && !WASMAPP
     /// Get server audit util
     const ServerAuditUtil& getServerAudit() const { return _serverAudit; }
@@ -1624,6 +1634,15 @@ private:
         DocumentState::KitDisconnected kitDisconnected() const { return _kitDisconnected; }
         bool isKitDisconnected() const { return kitDisconnected() != KitDisconnected::No; }
 
+        bool getIsFollowmeSlideShowOn() const {return _isFollowmeSlideShowOn;}
+        void setIsFollowmeSlideShowOn(bool isSlideShowRunning)  { _isFollowmeSlideShowOn = isSlideShowRunning;}
+
+        int getLeaderSlide() const {return _currentLeaderSlide;}
+        void setLeaderSlide(int leaderSlide)  { _currentLeaderSlide = leaderSlide;}
+
+        int getLeaderEffect() const {return _currentLeaderEffect;}
+        void setLeaderEffect(int leaderEffect)  { _currentLeaderEffect = leaderEffect;}
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "doc state: " << name(status());
@@ -1644,6 +1663,9 @@ private:
         std::atomic<KitDisconnected>
             _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
+        bool _isFollowmeSlideShowOn = false;
+        int _currentLeaderEffect = -1;
+        int _currentLeaderSlide = -1;
     };
 
     /// Transition to a given activity. Returns false if an activity exists.
