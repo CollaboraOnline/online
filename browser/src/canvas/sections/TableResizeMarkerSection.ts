@@ -145,6 +145,10 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = point;
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			this.calculateLeftMostAndRightMostAvailableX();
+			this.calculateTopMostAndBottomMostAvailableY();
+		}
 	}
 
 	private onDragEndColumn() {
