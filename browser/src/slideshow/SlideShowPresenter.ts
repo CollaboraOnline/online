@@ -253,10 +253,10 @@ class SlideShowPresenter {
 				this._slideShowNavigator.setLeaderEffect(info);
 				break;
 			case 'endpresentation':
-				if (!this.isFollowing()) return;
 				this.setLeader(false);
-				this.setFollowing(false);
 				this.setFollower(false);
+				if (!this.isFollowing()) return;
+				this.setFollowing(false);
 				this.endPresentation(true);
 				break;
 		}
