@@ -411,11 +411,25 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
 
     LOG_TRC("proxy: flushQueue of size " << totalSize << " to socket #" << socket->getFD() << " & close");
 
+    uint binaryDataCount = 0, textDataCount = 0;
+    for (const auto& it : _writeQueue)
+    {
+        char messageType = it->front();
+        if (messageType == 'T')
+            textDataCount++;
+        else if (messageType == 'B')
+            binaryDataCount++;
+    }
+
     http::Response httpResponse(http::StatusCode::OK);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.add("X-Content-Type-Options", "nosniff");
     httpResponse.setContentLength(totalSize);
-    httpResponse.set("Content-Type", "application/json; charset=utf-8");
+    if (textDataCount >= binaryDataCount)
+        httpResponse.set("Content-Type", "text/plain; charset=utf-8");
+    else
+        httpResponse.set("Content-Type", "application/octet-stream");
+
     socket->send(httpResponse);
 
     for (const auto& it : _writeQueue)
