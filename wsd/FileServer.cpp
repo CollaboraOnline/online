@@ -1012,6 +1012,12 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return true;
         }
 
+        if (endPoint == "TileWorker.js")
+        {
+            replaceServiceRoot(request, response, requestDetails, socket);
+            return true;
+        }
+
         if (endPoint == "adminIntegratorSettings.html")
         {
             preprocessIntegratorAdminFile(request, response, requestDetails, message, socket);
@@ -1629,6 +1635,23 @@ std::string boolToString(const bool value)
 {
     return value ? std::string("true"): std::string("false");
 }
+}
+
+void FileServerRequestHandler::replaceServiceRoot(const HTTPRequest& request,
+                                                  http::Response& httpResponse,
+                                                  const RequestDetails& requestDetails,
+                                                  const std::shared_ptr<StreamSocket>& socket)
+{
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
+    const std::string relPath = getRequestPathname(request, requestDetails);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string preprocess = *getUncompressedFile(relPath);
+    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), Util::getCoolVersionHash());
+    httpResponse.setBody(preprocess, "text/javascript");
+    socket->send(httpResponse);
+    LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 }
 
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
