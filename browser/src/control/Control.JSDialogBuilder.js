@@ -2068,6 +2068,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			hasImage = false;
 		}
 
+		const itemsToSyncWithContainer = [];
+
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command.replace('.uno:', '') : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
@@ -2093,7 +2095,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			button = window.L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
 
-			JSDialog.SynchronizeDisabledState(div, [button]);
+			itemsToSyncWithContainer.push(button);
 
 			builder._addAriaLabel(button, data, builder);
 
@@ -2268,6 +2270,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 				};
 			}
+			itemsToSyncWithContainer.push(arrowbackground);
 		}
 
 		if (arrowbackground) {
@@ -2286,6 +2289,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 		}
 
+		JSDialog.SynchronizeDisabledState(div, itemsToSyncWithContainer);
 		div._onDropDown = function(open) {
 			// Only set aria-expanded on the button if the arrow is not interactive
 			if (!isArrowInteractive)
