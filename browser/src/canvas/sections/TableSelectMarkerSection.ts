@@ -30,6 +30,7 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.markerType = markerType;
 		this.moveHTMLObjectToMapElement();
 		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		this.sectionProperties.contextMenuActivated = false;
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
@@ -47,6 +48,11 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		this.stopPropagating(e);
 
+		if (this.sectionProperties.contextMenuActivated === true) {
+			this.sectionProperties.contextMenuActivated = false;
+			return;
+		}
+
 		// Hammer.js doesn't fire onClick event after touchEnd event.
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
@@ -57,6 +63,13 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		) {
 			this.onClick(point, e);
 		}
+	}
+
+	onContextMenu(e?: MouseEvent): void {
+		const x = (this.position[0] + this.size[0]) * 0.5 * app.pixelsToTwips;
+		const y = (this.position[1] + this.size[1]) * 0.5 * app.pixelsToTwips;
+		app.map._docLayer._postMouseEvent('buttondown', x, y, 1, 4, 0);
+		this.sectionProperties.contextMenuActivated = true;
 	}
 
 	public onClick(point: cool.SimplePoint, e: MouseEvent): void {

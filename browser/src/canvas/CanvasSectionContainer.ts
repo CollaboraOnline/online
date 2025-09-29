@@ -1049,7 +1049,8 @@ class CanvasSectionContainer {
 
 	private onMouseMove (e: MouseEvent) {
 		// Early exit. If mouse is outside and "draggingSomething = false", then there is no reason to check further.
-		if (!this.mouseIsInside && !this.draggingSomething)
+		// Add an exception for leaflet, check after removing it.
+		if (!this.mouseIsInside && !this.draggingSomething && !this.isLongPressActive())
 			return;
 
 		if (!this.isLongPressActive()) {
