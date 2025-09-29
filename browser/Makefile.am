@@ -360,6 +360,7 @@ COOL_JS_LST =\
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
 	src/canvas/sections/CursorHeaderSection.ts \
+	src/canvas/sections/CursorHandler.ts \
 	src/canvas/sections/TableInsertMarkerSection.ts \
 	src/canvas/sections/ChartContextButtonSection.ts \
 	src/canvas/sections/ContentControlDropdownSubSection.ts \
