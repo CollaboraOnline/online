@@ -785,6 +785,9 @@ private:
     /// Handles the completion of failed uploading to storage.
     void handleUploadToStorageFailed(const StorageBase::UploadResult& uploadResult);
 
+    /// Send the error message about failed upload
+    void reportUploadToStorageFailed();
+
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
                      bool dontSaveIfUnmodified = true, bool isAutosave = false, bool finalWrite = false,
