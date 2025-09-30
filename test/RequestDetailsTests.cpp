@@ -172,7 +172,6 @@ void RequestDetailsTests::testLocal()
 
         const std::string docUri = "file:///home/ash/prj/lo/online/test/data/hello-world.odt";
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
@@ -341,7 +340,6 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT_EQUAL(false, details.isWebSocket());
         LOK_ASSERT_EQUAL(true, details.isGet());
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
@@ -507,21 +505,6 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string("close"), details.getField(RequestDetails::Field::Command));
         LOK_ASSERT_EQUAL(std::string("31"), details.getField(RequestDetails::Field::Serial));
 
-        const std::string docUri_WopiSrc
-            = "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
-              "593_ocqiesh0cngs?access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&access_token_ttl=0&"
-              "reuse_"
-              "cookies=oc_sessionPassphrase%"
-              "3D8nFRqycbs7bP97yxCuJviBbVKdCXmuiXp6ZYH0DfUoy5UZDCTQgLwluvbgRbKrdKodJteG3uNE19KNUAoE"
-              "5typ"
-              "f4oBGwJdFY%252F5W9RNST8wEHWkUVIjZy7vmY0ZX38PlS%3Anc_sameSiteCookielax%3Dtrue%3Anc_"
-              "sameSiteCookiestrict%3Dtrue%3Aocqiesh0cngs%3Dr5ujg4tpvgu9paaf5bguiokgjl%"
-              "3AXCookieName%"
-              "3DXCookieValue%3ASuperCookieName%3DBAZINGA/ws?WOPISrc=http://localhost/nextcloud/"
-              "index.php/apps/richdocuments/wopi/files/593_ocqiesh0cngs&compat=";
-
-        LOK_ASSERT_EQUAL(docUri_WopiSrc, details.getLegacyDocumentURI());
-
         const std::string docUri
             = "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
               "593_ocqiesh0cngs?access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&access_token_ttl=0&"
@@ -609,15 +592,6 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(false, details.isWebSocket());
         LOK_ASSERT_EQUAL(true, details.isGet());
 
-        const std::string docUri_WopiSrc
-            = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-              "165_ocgdpzbkm39u?access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0&"
-              "reuse_cookies=XCookieName%3DXCookieValue%3ASuperCookieName%3DBAZINGA/"
-              "ws?WOPISrc=http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-              "165_ocgdpzbkm39u&compat=";
-
-        LOK_ASSERT_EQUAL(docUri_WopiSrc, details.getLegacyDocumentURI());
-
         const std::string docUri
             = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
               "165_ocgdpzbkm39u?access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0&"
@@ -689,7 +663,6 @@ void RequestDetailsTests::testRequestDetails()
         const std::string docUri
             = "/tmp/slideshow_b8c3225b_setclientpart.odp";
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(std::string(), details.getField(RequestDetails::Field::WOPISrc));
@@ -740,7 +713,6 @@ void RequestDetailsTests::testRequestDetails()
 
         const std::string docUri = "clipboard";
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
@@ -802,7 +774,6 @@ void RequestDetailsTests::testRequestDetails()
               "W90fmgVb3C-00-eSkJBDqDNSYA%3APublicToken%3Dabc%3AZNPCQ003-32383700%3De9c71c3b%"
               "3AJSESSIONID%3Dnode0.node0&permission=edit";
 
-        // LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI()); // Broken.
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         const std::map<std::string, std::string>& params = details.getDocumentURIParams();
