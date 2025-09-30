@@ -10,34 +10,29 @@
  */
 
 /*
- * ChartContextToolbar - definition of chart context toolbar
+ * L.control.ChartContextToolbar - definition of chart context toolbar
  * This toolbar should appear when a chart is selected
  */
 
-class ChartContextToolbar extends JSDialogComponent {
-	container!: HTMLElement;
+class ChartContextToolbar {
+	container: HTMLElement;
+	builder: JSBuilder;
+	map: any;
 	initialized: boolean = false;
 	lastIinputEvent?: any = {};
 	pendingShow: boolean = false;
 	shown: boolean = false;
 
 	constructor(map: any) {
-		super(map, 'ChartContextToolbar', 'notebookbar');
-		this.createBuilder();
-		this.setupContainer(undefined);
-	}
-
-	protected createBuilder() {
+		this.map = map;
 		this.builder = new window.L.control.notebookbarBuilder({
 			windowId: -2,
-			mobileWizard: this,
+			//mobileWizard: this,
 			map: this.map,
 			cssClass: 'notebookbar',
 			suffix: 'context-toolbar',
 		} as JSBuilderOptions);
-	}
 
-	protected setupContainer(parentContainer?: HTMLElement /* ignored */): void {
 		this.container = window.L.DomUtil.createWithId(
 			'div',
 			'context-toolbar',
@@ -56,17 +51,19 @@ class ChartContextToolbar extends JSDialogComponent {
 	showChartContextToolbarImpl(): void {
 		this.pendingShow = false;
 		if (!this.initialized) {
-			this.builder?.build(this.container, this.getWriterTextContext(), false);
+			this.builder.build(this.container, this.getWriterTextContext(), false);
 			this.initialized = true;
 		}
 
-		this.registerMessageHandlers();
+		this.builder.map.on('jsdialogaction', this.onJSAction, this);
+		this.builder.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.changeOpacity(1);
 		this.showHideToolbar(true);
 	}
 
 	hideChartContextToolbar(): void {
-		this.registerMessageHandlers();
+		this.builder.map.off('jsdialogaction', this.onJSAction, this);
+		this.builder.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.showHideToolbar(false);
 	}
 
@@ -137,6 +134,18 @@ class ChartContextToolbar extends JSDialogComponent {
 		];
 	}
 
+	onJSAction(e: any): any {
+		if (e.data.jsontype !== 'notebookbar') return;
+
+		this.builder.executeAction(this.container, e.data.data);
+	}
+
+	onJSUpdate(e: any): any {
+		if (e.data.jsontype !== 'notebookbar') return;
+
+		this.builder.updateWidget(this.container, e.data.control);
+	}
+
 	setLastInputEventType(e: any) {
 		this.lastIinputEvent = e;
 		if (e.type === 'buttonup' && e.input === 'mouse' && this.pendingShow) {
@@ -149,3 +158,7 @@ class ChartContextToolbar extends JSDialogComponent {
 		this.container.style.opacity = opacity.toString();
 	}
 }
+
+window.L.control.ChartContextToolbar = function (map: any) {
+	return new ChartContextToolbar(map);
+};

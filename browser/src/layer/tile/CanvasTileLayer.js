@@ -3,7 +3,7 @@
  * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection */
+/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection ChartContextButtonSection */
 
 function clamp(num, min, max)
 {
@@ -1016,10 +1016,24 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (GraphicSelection.extraInfo && GraphicSelection.extraInfo.isChartPage
 				&& GraphicSelection.extraInfo.isChartPage === true)
 			{
-				if (!this._map.chartContextToolbar)
-					this.map.chartContextToolbar = window.L.control.ChartContextToolbar(this.map);
-				if (this._map.chartContextToolbar)
-					this._map.chartContextToolbar.showChartContextToolbar();
+				if (!this._map.chartContextToolbar0)
+				{
+					//this.map.chartContextToolbar = window.L.control.ChartContextToolbar(this.map);
+					//this.map.chartContextToolbar0 = window.L.Canvas.Sections.ChartContextButtonSection(0);
+					//this.map.chartContextToolbar1 = window.L.Canvas.Sections.ChartContextButtonSection(1);
+					//this.map.chartContextToolbar0 = window.L.Canvas.sections.ChartContextButtonSection(0);
+					//this.map.chartContextToolbar1 = window.L.Canvas.sections.ChartContextButtonSection(1);
+					//const cctoolbar = new ChartContextButtonSection(0);
+					//this.map.chartContextToolbar = cctoolbar;
+					this.map.chartContextToolbar0 = new ChartContextButtonSection(0);
+					this.map.chartContextToolbar1 = new ChartContextButtonSection(1);
+
+				}
+				if (this._map.chartContextToolbar0)
+				{
+					this._map.chartContextToolbar0.showChartContextToolbar();
+					this._map.chartContextToolbar1.showChartContextToolbar();
+				}
 			}
 		}
 		else if (textMsg.startsWith('graphicinnertextarea:')) {
@@ -2788,8 +2802,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		if (this._map.contextToolbar)
 			this._map.contextToolbar.setLastInputEventType({input: "mouse", type: type});
-		if (this._map.chartContextToolbar)
-			this._map.chartContextToolbar.setLastInputEventType({input: "mouse", type: type});
+		if (this._map.chartContextToolbar0)
+		{
+			this._map.chartContextToolbar0.setLastInputEventType({input: "mouse", type: type});
+			this._map.chartContextToolbar1.setLastInputEventType({input: "mouse", type: type});
+		}
 
 		app.socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
@@ -4218,15 +4235,17 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	updateChartContextToolbar: function () {
 		//hide chart context-toolbar if needed, or reposition it
-		if (this._map.chartContextToolbar && this._map.chartContextToolbar.shown)
+		if (this._map.chartContextToolbar0 && this._map.chartContextToolbar0.shown)
 		{
 			var isChartPage = GraphicSelection && GraphicSelection.extraInfo
 							  && GraphicSelection.extraInfo.isChartPage
 							  && GraphicSelection.extraInfo.isChartPage === true;
 			if (!isChartPage) {
-				this._map.chartContextToolbar.hideChartContextToolbar();
+				this._map.chartContextToolbar0.hideChartContextToolbar();
+				this._map.chartContextToolbar1.hideChartContextToolbar();
 			} else {
-				this._map.chartContextToolbar.reposChartContextToolbar();
+				this._map.chartContextToolbar0.reposChartContextToolbar();
+				this._map.chartContextToolbar1.reposChartContextToolbar();
 			}
 		}
 	}

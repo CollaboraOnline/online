@@ -560,7 +560,12 @@ class UIManager extends window.L.Control {
 			}
 		});
 		this.map.contextToolbar = new ContextToolbar(this.map);
-		this.map.chartContextToolbar = new ChartContextToolbar(this.map);
+
+		//const cctoolbar = new ChartContextButtonSection(0);
+		//this.map.chartContextToolbar = cctoolbar;		
+		//this.map.chartContextToolbar = new ChartContextToolbar(this.map);
+		this.map.chartContextToolbar0 = new ChartContextButtonSection(0);
+		this.map.chartContextToolbar1 = new ChartContextButtonSection(1);
 	}
 
 	/**
