@@ -1644,6 +1644,21 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
 
+		const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'METER', 'OUTPUT', 'PROGRESS'];
+
+		const updateLabelForAttribute = function(label, labelledControl) {
+			if (labelledControl.hasAttribute('aria-labelledby')) {
+				label.removeAttribute('for');
+			} else if (!labelableElements.includes(labelledControl.nodeName)
+				|| (labelledControl.nodeName === 'INPUT' && labelledControl.type === 'hidden')) {
+				// Use 'aria-labelledby' instead of 'for' for non-labelable elements
+				labelledControl.setAttribute('aria-labelledby', label.id);
+				label.removeAttribute('for');
+			} else {
+				label.htmlFor = labelledControl.id;
+			}
+		};
+
 		app.layoutingService.appendLayoutingTask(function () {
 			var labelledControl = document.getElementById(data.labelFor);
 			if (labelledControl) {
@@ -1657,6 +1672,18 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				builder._setAccessKey(target, accKey);
 			}
+
+			// we need to schedule it again as some elements are not yet available
+			// i.e. pop-ups: Double click on Chart->Sidebar->Colors
+			app.layoutingService.appendLayoutingTask(function () {
+				var targetElement = document.getElementById(data.labelFor + '-input-' + builder.options.suffix)
+					|| document.getElementById(data.labelFor + '-input')
+					|| document.getElementById(data.labelFor);
+
+				// Reference label to target element correctly
+				if (targetElement)
+					updateLabelForAttribute(fixedtext, targetElement);
+			});
 		});
 
 		fixedtext.id = data.id;
