@@ -17,9 +17,12 @@ class NotebookbarBase extends JSDialogComponent {
 	/// reference to old JS Notebookbar
 	impl: any = null;
 
-	constructor(map: any, impl: any) {
+	constructor(map: any) {
 		super(map, 'Notebookbar', 'notebookbar');
 		this.map = map;
+	}
+
+	public onAdd(impl: any) {
 		this.impl = impl;
 
 		this.map.addControl(this.impl);
@@ -38,9 +41,11 @@ class NotebookbarBase extends JSDialogComponent {
 				this.builder,
 			);
 		this.unregisterMessageHandlers();
-		this.map.removeControl(this.impl);
-		delete this.impl;
-		this.impl = null;
+		if (this.impl) {
+			this.map.removeControl(this.impl);
+			delete this.impl;
+			this.impl = null;
+		}
 	}
 
 	protected createBuilder() {
@@ -66,7 +71,7 @@ class NotebookbarBase extends JSDialogComponent {
 
 	protected onJSUpdate(e: FireEvent) {
 		if (super.onJSUpdate(e)) {
-			this.impl.setInitialized(true);
+			this.impl?.setInitialized(true);
 			return true;
 		}
 		return false;
@@ -74,7 +79,7 @@ class NotebookbarBase extends JSDialogComponent {
 
 	protected onJSAction(e: FireEvent) {
 		if (super.onJSAction(e)) {
-			this.impl.setInitialized(true);
+			this.impl?.setInitialized(true);
 			return true;
 		}
 		return false;
@@ -82,61 +87,61 @@ class NotebookbarBase extends JSDialogComponent {
 
 	/// used to get full model
 	public getFullJSON(): any[] {
-		return this.impl.getFullJSON();
+		return this.impl?.getFullJSON();
 	}
 
 	// shortcuts
 
 	/// used to get shortcut items
 	public getDefaultToolItems(): any[] {
-		return this.impl.getDefaultToolItems();
+		return this.impl?.getDefaultToolItems();
 	}
 
 	public insertButtonToShortcuts(button: ToolItemWidgetJSON) {
-		this.impl.insertButtonToShortcuts(button);
+		this.impl?.insertButtonToShortcuts(button);
 	}
 
 	public reloadShortcutsBar() {
-		this.impl.reloadShortcutsBar();
+		this.impl?.reloadShortcutsBar();
 	}
 
 	public showNotebookbarButton(buttonId: string, show: boolean) {
-		this.impl.showNotebookbarButton(buttonId, show);
+		this.impl?.showNotebookbarButton(buttonId, show);
 	}
 
 	public showNotebookbarCommand(commandId: string, show: boolean) {
-		this.impl.showNotebookbarCommand(commandId, show);
+		this.impl?.showNotebookbarCommand(commandId, show);
 	}
 
 	// tabs
 
 	public getTabs() {
-		return this.impl.getTabs();
+		return this.impl?.getTabs();
 	}
 
 	public setTabs(tabs: any[]) {
-		this.impl.setTabs();
+		this.impl?.setTabs();
 	}
 
 	public showTabs() {
-		this.impl.showTabs();
+		this.impl?.showTabs();
 	}
 
 	public hideTabs() {
-		this.impl.hideTabs();
+		this.impl?.hideTabs();
 	}
 
 	// customization
 
 	public showItem(id: string, show?: boolean) {
-		this.impl.showItem(id /* no show used */);
+		this.impl?.showItem(id /* no show used */);
 	}
 
 	public hideItem(id: string) {
-		this.impl.hideItem(id);
+		this.impl?.hideItem(id);
 	}
 }
 
-JSDialog.NotebookbarBase = function (map: any, impl: any) {
-	return new NotebookbarBase(map, impl);
+JSDialog.NotebookbarBase = function (map: any) {
+	return new NotebookbarBase(map);
 };

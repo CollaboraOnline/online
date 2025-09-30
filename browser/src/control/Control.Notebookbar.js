@@ -110,11 +110,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		}
 	},
 
-	resetInCore: function() {
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
-		this.setInitialized(false);
-	},
-
 	onRemove: function() {
 		clearTimeout(this.retry);
 		this.map.off('notebookbar');
@@ -128,7 +123,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.floatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
-		this.resetInCore();
 	},
 
 	onUpdatePermission: function(e) {
@@ -197,7 +191,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-shortcuts-bar').remove();
 		$(this.container).remove();
-		this.setInitialized(false);
 	},
 
 	loadTab: function(tabJSON) {
@@ -207,7 +200,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 		this.container = window.L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
 
-		this.model.fullUpdate(tabJSON);
+		// initialize the model only once, remember updates from core
+		if (this.model.getSnapshot() === null)
+			this.model.fullUpdate(tabJSON);
+
 		this.builder.build(this.container, [this.model.getSnapshot()]);
 
 		if (this._showNotebookbar === false)
