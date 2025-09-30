@@ -10,6 +10,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* Surely these should be in some common .ts file where all similar lines would be centralised? */
+declare var ThisIsTheMacOSApp: any;
+declare var ThisIsTheQtApp: any;
+declare var ThisIsTheWindowsApp: any;
 
 function isCtrlKey (e: KeyboardEvent) {
     if ((window as any).ThisIsTheiOSApp || window.L.Browser.mac)
@@ -43,8 +47,11 @@ enum Platform {
     IOSAPP      = 2,
     MAC         = 4,
     WINDOWS     = 8,
-    LINUX       = 16, // There is no "Linux" option, so just !mac && !windows
+    LINUX       = 16, // There is no "Linux" option, so it means "none of the others"
     CHROMEOSAPP = 32,
+    CODAWINDOWS = 64,
+    CODAMAC     = 128,
+    CODAQT      = 256,
 }
 
 type shortcutCallback = () => void;
@@ -213,6 +220,9 @@ class KeyboardShortcuts {
         const platform = window.mode.isChromebook() ? Platform.CHROMEOSAPP :
                          window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : // Cannot come before window.mode.isChromebook() as all Chromebook app users are necessarily also Android app users
                          window.ThisIsTheiOSApp ? Platform.IOSAPP :
+                         window.ThisIsTheWindowsApp ? Platform.CODAWINDOWS :
+                         window.ThisIsTheMacOSApp ? Platform.CODAMAC :
+                         window.ThisIsTheQtApp ? Platform.CODAQT :
                          window.L.Browser.mac ? Platform.MAC :
                          window.L.Browser.win ? Platform.WINDOWS :
                          Platform.LINUX;
@@ -297,6 +307,10 @@ const keyboardShortcuts = new KeyboardShortcuts();
 
 // Default shortcuts.
 keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
+
+    // All document types.
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'o', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT, unoAction: '.uno:Open' }),
+
     /*
         Disable F5 or assign it something to prevent browser refresh.
         Disable multi-sheet selection shortcuts in Calc.
