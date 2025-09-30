@@ -25,11 +25,63 @@ class CursorHandler extends HTMLObjectSection {
 			'leaflet-cursor-handler',
 			false,
 		);
+
+		const htmlObject = this.getHTMLObject();
+		const mapElement = document.getElementById('map');
+		if (htmlObject && mapElement) {
+			htmlObject.remove();
+			mapElement.appendChild(this.getHTMLObject());
+		}
+
+		this.sectionProperties.lastPosition = null;
+	}
+
+	onMouseMove(
+		point: cool.SimplePoint,
+		dragDistance: Array<number>,
+		e: MouseEvent,
+	): void {
+		if (
+			this.containerObject.isDraggingSomething() &&
+			this.containerObject.targetSection === this.name
+		) {
+			this.stopPropagating();
+			e.stopPropagation();
+
+			if (!this.sectionProperties.lastPosition)
+				this.sectionProperties.lastPosition = this.position.slice();
+			else {
+				this.setPosition(
+					this.sectionProperties.lastPosition[0] + dragDistance[0],
+					this.sectionProperties.lastPosition[1] + dragDistance[1],
+				);
+			}
+		}
 	}
 
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+		if (
+			this.containerObject.isDraggingSomething() &&
+			this.containerObject.targetSection === this.name
+		) {
+			app.map._docLayer._postMouseEvent(
+				'buttondown',
+				Math.round(this.position[0] * app.pixelsToTwips),
+				Math.round(this.position[1] * app.pixelsToTwips),
+				1,
+				1,
+				0,
+			);
+			app.map._docLayer._postMouseEvent(
+				'buttonup',
+				Math.round(this.position[0] * app.pixelsToTwips),
+				Math.round(this.position[1] * app.pixelsToTwips),
+				1,
+				1,
+				0,
+			);
+		}
+		this.sectionProperties.lastPosition = null;
 	}
 
 	setOpacity() {
