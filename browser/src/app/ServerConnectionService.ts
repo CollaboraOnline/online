@@ -62,7 +62,8 @@ class ServerConnectionService {
 		const isWriter = app.map?._docLayer?.isWriter();
 		if (isWriter && window.zoteroEnabled) {
 			app.console.debug('ServerConnectionService: reload UI for zotero');
-			app.map.uiManager.refreshUI();
+			// app.map.uiManager.refreshUI();
+			// TODO: show zotero items
 		}
 
 		// initialize notebookbar in core

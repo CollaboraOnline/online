@@ -475,8 +475,12 @@ class UIManager extends window.L.Control {
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
 			this.map.mobileSearchBar = JSDialog.MobileSearchBar(this.map);
 		} else if (enableNotebookbar) {
+			// component and UI
 			this.createNotebookbarControl(docType);
 			// makeSpaceForNotebookbar call in onUpdatePermission
+		} else {
+			// just component, no UI yet
+			this.notebookbar = JSDialog.NotebookbarBase(this.map);
 		}
 
 		if (!window.prefs.getBoolean(`${docType}.ShowToolbar`, true)) {
@@ -690,7 +694,9 @@ class UIManager extends window.L.Control {
 			notebookbar = window.L.control.notebookbarWriter();
 		}
 
-		this.notebookbar = JSDialog.NotebookbarBase(this.map, notebookbar);
+		if (!this.notebookbar)
+			this.notebookbar = JSDialog.NotebookbarBase(this.map);
+		this.notebookbar.onAdd(notebookbar);
 		this.map.fire('a11ystatechanged');
 		app.UI.notebookbarAccessibility.initialize();
 	}
@@ -773,10 +779,7 @@ class UIManager extends window.L.Control {
 	 * Removes notebookbar UI components.
 	 */
 	removeNotebookbarUI(): void {
-		if (this.notebookbar) {
-			this.notebookbar.onRemove();
-			this.notebookbar = null;
-		}
+		this.notebookbar.onRemove();
 		$('#map').removeClass('notebookbar-opened');
 	}
 
@@ -927,7 +930,7 @@ class UIManager extends window.L.Control {
 		if (button.tablet === false && window.mode.isTablet()) {
 			return;
 		}
-		if (!this.notebookbar)
+		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
 		else
 			this.notebookbar.insertButtonToShortcuts(button);
@@ -973,7 +976,7 @@ class UIManager extends window.L.Control {
 	 */
 	showButton(buttonId: string, show: boolean): void {
 		var found = false;
-		if (!this.notebookbar) {
+		if (this.getCurrentMode() === 'classic') {
 			found = this.showButtonInClassicToolbar(buttonId, show);
 		} else {
 			if (show) {
@@ -1056,7 +1059,7 @@ class UIManager extends window.L.Control {
 			this.hiddenCommands[command] = true;
 		}
 		var found = false;
-		if (!this.notebookbar) {
+		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
 		} else {
@@ -1383,25 +1386,12 @@ class UIManager extends window.L.Control {
 				}
 
 				if (this.notebookbar && $('#mobile-edit-button').is(':hidden')) {
-					this.map.removeControl(this.notebookbar);
-					this.notebookbar = null;
+					this.notebookbar.onRemove();
 				}
 			} else {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
-	}
-
-	/**
-	 * Refreshes the UI. WARNING: if we got core updates for JSDialog widgets, they will be lost.
-	 */
-	refreshUI(): void {
-		if (this.notebookbar && !this.map._shouldStartReadOnly())
-			this.refreshNotebookbar();
-		else
-			this.refreshMenubar();
-
-		this.refreshTheme();
 	}
 
 	refreshTheme(): void {
@@ -1426,7 +1416,7 @@ class UIManager extends window.L.Control {
 
 		var userPrivateInfo = myViewData.userprivateinfo;
 		if (window.documentSigningEnabled) {
-			if (userPrivateInfo && this.notebookbar) {
+			if (userPrivateInfo && this.getCurrentMode() === 'notebookbar') {
 				const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
 				// Show or hide the signature button on the notebookbar depending on if we
 				// have a signing cert/key specified.
