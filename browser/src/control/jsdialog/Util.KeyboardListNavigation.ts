@@ -46,6 +46,12 @@ function moveToFocusableEntry(
 	currentElement: HTMLElement,
 	direction: 'next' | 'previous',
 ) {
+	const updateAriaSelected = (elem: HTMLElement, value: string) => {
+		if (elem.hasAttribute('aria-selected')) {
+			elem.setAttribute('aria-selected', value);
+		}
+	};
+
 	// If the current element is focused but not selected, add 'selected' class and return
 	if (
 		document.activeElement === currentElement &&
@@ -53,7 +59,7 @@ function moveToFocusableEntry(
 		direction === 'next'
 	) {
 		currentElement.classList.add('selected');
-		currentElement.setAttribute('aria-selected', 'true');
+		updateAriaSelected(currentElement, 'true');
 		return;
 	}
 
@@ -65,9 +71,10 @@ function moveToFocusableEntry(
 	if (siblingElement) {
 		(siblingElement as HTMLElement).focus();
 		siblingElement.classList.add('selected');
-		siblingElement.setAttribute('aria-selected', 'true');
+		updateAriaSelected(siblingElement, 'true');
+
 		currentElement.classList.remove('selected');
-		currentElement.removeAttribute('aria-selected');
+		updateAriaSelected(currentElement, 'false');
 	}
 }
 
