@@ -66,7 +66,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		// Four cells
 		cy.cGet('#copy-paste-container td').should('have.length', 4);
 		//delete
-		cy.cGet('.table-select-marker').eq(0).trigger('pointerdown', eventOptions).wait(1000);
+		cy.cGet('.table-select-marker').eq(0).trigger('contextmenu', eventOptions).wait(1000);
 
 		cy.cGet('.menu-entry-icon.tabledeletemenu').parent()
 			.click()
