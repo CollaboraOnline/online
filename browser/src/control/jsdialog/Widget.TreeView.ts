@@ -86,6 +86,8 @@ class TreeViewControl {
 		);
 		this._container.id = data.id;
 		this._rows = new Map<string, HTMLElement>();
+		if (data.labelledBy)
+			this._container.setAttribute('aria-labelledby', data.labelledBy);
 	}
 
 	get Container() {
