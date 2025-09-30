@@ -27,27 +27,39 @@ class JSDialogModelState {
 		this.model = null;
 	}
 
-	/// get model copy
-	public getSnapshot() {
-		if (this.model) {
-			// use new API first
-			if (window.structuredClone) {
-				try {
-					return window.structuredClone(this.model);
-				} catch (e) {
-					app.console.debug('JSDialogModelState: ' + e);
-				}
-			}
-
-			// try fallback
+	private copyObject(obj: JSDialogJSON | WidgetJSON) {
+		// use new API first
+		if (window.structuredClone) {
 			try {
-				return JSON.parse(JSON.stringify(this.model));
+				return window.structuredClone(obj);
 			} catch (e) {
-				app.console.debug(
-					'JSDialogModelState: failed to clone the model: ' + e,
-				);
+				app.console.debug('JSDialogModelState: ' + e);
 			}
 		}
+
+		// try fallback
+		try {
+			return JSON.parse(JSON.stringify(obj));
+		} catch (e) {
+			app.console.debug('JSDialogModelState: failed to clone the model: ' + e);
+		}
+
+		return null;
+	}
+
+	public safeStringify(obj: any): string {
+		try {
+			return JSON.stringify(obj);
+		} catch (e) {
+			app.console.debug('JSDialogModelState: ' + e);
+		}
+
+		return 'Bad Object';
+	}
+
+	/// get model copy
+	public getSnapshot() {
+		if (this.model) return this.copyObject(this.model);
 
 		return null;
 	}
@@ -66,7 +78,7 @@ class JSDialogModelState {
 		if (!data || !data.control || !data.control.id) {
 			app.console.error(
 				'JSDialogModelState: bad syntax in widgetUpdate: ' +
-					JSON.stringify(data),
+					this.safeStringify(data),
 			);
 			return;
 		}
@@ -74,7 +86,7 @@ class JSDialogModelState {
 		const found = this.getById(data.control.id);
 		if (found) {
 			const id = found.id;
-			const before = JSON.stringify(found);
+			const before = this.safeStringify(found);
 			// data will no longer be used, we don't need deep copy
 			Object.assign(found, data.control);
 
@@ -83,7 +95,7 @@ class JSDialogModelState {
 					'JSDialogModelState: widgetUpdate\n\nBEFORE: ' +
 						before +
 						'\n\nAFTER: ' +
-						JSON.stringify(this.getById(id)),
+						this.safeStringify(this.getById(id)),
 				);
 			}
 		}
@@ -94,7 +106,7 @@ class JSDialogModelState {
 		if (!data || !data.data || !data.data.control_id) {
 			app.console.error(
 				'JSDialogModelState: bad syntax in widgetAction: ' +
-					JSON.stringify(data),
+					this.safeStringify(data),
 			);
 			return;
 		}
