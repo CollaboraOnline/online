@@ -60,7 +60,7 @@ abstract class JSDialogComponent {
 
 		app.console.debug(
 			'Component ' + this.name + ' handles update message: ' + JSDialog.verbose
-				? JSON.stringify(data.control)
+				? this.model.safeStringify(data.control)
 				: data.control.id,
 		);
 
@@ -82,7 +82,7 @@ abstract class JSDialogComponent {
 
 		app.console.debug(
 			'Component ' + this.name + ' handles action message: ' + JSDialog.verbose
-				? JSON.stringify(data.data)
+				? this.model.safeStringify(data.data)
 				: data.data.control_id,
 		);
 
