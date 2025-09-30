@@ -57,6 +57,7 @@ struct FakeSocketPair
     int connectingFd;
     bool shutdown[2];
     bool readable[2];
+    bool eofDetected[2];                      ///< Flag for fakeSocketHasAnyPendingActivityGlobal() to avoid a busy loop after EOF.
     std::vector<std::vector<char>> buffer[2];
 
     FakeSocketPair()
@@ -69,6 +70,8 @@ struct FakeSocketPair
         shutdown[1] = false;
         readable[0] = false;
         readable[1] = false;
+        eofDetected[0] = false;
+        eofDetected[1] = false;
     }
 };
 
@@ -283,18 +286,74 @@ static bool checkForPoll(struct pollfd *pollfds, int nfds)
 }
 
 /**
+ * Scan all the 'fds' we have for fakeSockets, and check if any of them
+ * reports any activity, so that we should rather skip the wait()/wait_until()
+ * in fakeSocketWaitAny().
+ *
+ * NB: Must be called with theMutex held.
+ */
+static bool fakeSocketHasAnyPendingActivityGlobal()
+{
+    for (const auto& pairPtr : fds)
+    {
+        if (!pairPtr)
+            continue;
+
+        FakeSocketPair& p = *pairPtr;
+
+        // Endpoint 0 (even fd) and endpoint 1 (odd fd)
+        for (int K = 0; K < 2; ++K)
+        {
+            // Endpoint closed?
+            if (p.fd[K] == -1)
+                continue;
+
+            const int N = 1 - K;
+
+            // Pending accept on a listening socket?
+            // Only meaningful on K==0
+            if (K == 0 && p.listening && p.connectingFd != -1)
+                return true;
+
+            // Buffered data ready for this endpoint?
+            if (!p.buffer[K].empty())
+                return true;
+
+            // Peer shutdown/closed?
+            // Detect EOF via "readable[K]" so a read() can consume it (0 bytes).
+            // But in fakeSocketRead(), we explicitly stay readable after peer
+            // closed or shut down, so use a flag to return 'true' just once.
+            if ((p.shutdown[N] || p.fd[N] == -1) && p.readable[K] && !p.eofDetected[K])
+            {
+                p.eofDetected[K] = true; // mark EOF consumed
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/**
  * Wait for any event on any of the fake sockets (theCV is notified on write/close/connect/etc.)
  */
 void fakeSocketWaitAny(int timeoutUs)
 {
+    if (timeoutUs == 0)
+        return;
+
     std::unique_lock<std::mutex> lock(theMutex);
+
+    // This check must be run under theMutex taken, so that we
+    // don't enter wait()/wait_until() if we've got new events
+    // that we might have missed since the last poll()
+    if (fakeSocketHasAnyPendingActivityGlobal())
+        return;
+
     if (timeoutUs < 0)
     {
         theCV.wait(lock);
         return;
     }
-    if (timeoutUs == 0)
-        return;
 
     auto const deadline = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutUs);
     theCV.wait_until(lock, deadline);
@@ -673,7 +732,7 @@ int fakeSocketShutdown(int fd)
     }
 
     pair.shutdown[K] = true;
-    pair.readable[K] = true;
+    pair.readable[N] = true; // wake the peer to observe EOF
 
     theCV.notify_all();
 
