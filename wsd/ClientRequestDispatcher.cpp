@@ -2420,8 +2420,8 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
                                                        std::istream& message,
                                                        SocketDisposition& disposition)
 {
-    //FIXME: The DocumentURI includes the WOPISrc, which makes it potentially invalid URI.
-    const std::string url = requestDetails.getLegacyDocumentURI();
+    // cf. RequestVettingStation::handleRequest ...
+    const std::string url = requestDetails.getDocumentURI();
 
     LOG_INF("URL [" << url << "] for Proxy request.");
     auto uriPublic = RequestDetails::sanitizeURI(url);

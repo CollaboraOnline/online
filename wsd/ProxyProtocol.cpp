@@ -90,6 +90,11 @@ void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socke
     LOG_TRC("proxy: Create session for " << _docKey);
     clientSession = createNewClientSession(std::make_shared<ProxyProtocolHandler>(), id,
                                             uriPublic, isReadOnly, requestDetails);
+    if (!clientSession)
+    {
+        LOG_ERR("proxy: Failed to create session");
+        throw BadRequestException("Invalid session details");
+    }
     addSession(clientSession);
     COOLWSD::checkDiskSpaceAndWarnClients(true);
     COOLWSD::checkSessionLimitsAndWarnClients();

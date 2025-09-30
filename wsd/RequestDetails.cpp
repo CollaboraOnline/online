@@ -244,17 +244,12 @@ void RequestDetails::processURI()
                 end = uriRes.find('?'); // e.g. /cool/clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_empty.ods...
         }
 
-        const std::string docUri = uriRes.substr(0, end);
-
-        _fields[Field::LegacyDocumentURI] = Uri::decode(docUri);
-
         // Find the DocumentURI proper.
         end = uriRes.find_first_of("/?", 0, 2);
         _fields[Field::DocumentURI] = Uri::decode(uriRes.substr(0, end));
     }
     else // Otherwise, it's the full URI.
     {
-        _fields[Field::LegacyDocumentURI] = _uriString;
         _fields[Field::DocumentURI] = _uriString;
     }
 
