@@ -48,7 +48,7 @@ void UnitPaste::invokeWSDTest()
 
     for (int i = 0; i < 5; ++i)
     {
-        const std::string text = std::to_string(i + 1) + "_sh9le[;\"CFD7U[#B+_nW=$kXgx{sv9QE#\"l1y\"hr_" + Util::encodeId(Util::rng::getNext());
+        const std::string text = std::to_string(i + 1) + "sh9le[;\"CFD7U[#B+nW=$kXgx{sv9QE#\"l1y\"hr" + Util::encodeId(Util::rng::getNext());
         TST_LOG("Pasting text #" << i + 1 << ": " << text);
 
         // Always delete everything to have an empty doc.
