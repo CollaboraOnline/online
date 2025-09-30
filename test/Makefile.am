@@ -72,7 +72,7 @@ all_la_unit_tests = \
 	unit-oauth.la \
 	unit-wopi-versionrestore.la \
 	unit-rendering-options.la \
-	# unit-paste.la \
+	unit-paste.la \
 	unit-large-paste.la \
 	unit-typing.la \
 	unit-cursor.la \
@@ -303,8 +303,8 @@ unit_any_input_la_SOURCES = UnitAnyInput.cpp
 unit_any_input_la_LIBADD = $(CPPUNIT_LIBS)
 unit_large_paste_la_SOURCES = UnitLargePaste.cpp
 unit_large_paste_la_LIBADD = $(CPPUNIT_LIBS)
-# unit_paste_la_SOURCES = UnitPaste.cpp
-# unit_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_paste_la_SOURCES = UnitPaste.cpp
+unit_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_load_torture_la_SOURCES = UnitLoadTorture.cpp
 unit_load_torture_la_LIBADD = $(CPPUNIT_LIBS)
 unit_save_torture_la_SOURCES = UnitSaveTorture.cpp
