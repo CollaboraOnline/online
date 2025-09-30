@@ -59,10 +59,9 @@ abstract class JSDialogComponent {
 		if (!this.builder) return;
 
 		app.console.debug(
-			'Component ' +
-				this.name +
-				' handles update message: ' +
-				JSON.stringify(data.control),
+			'Component ' + this.name + ' handles update message: ' + JSDialog.verbose
+				? JSON.stringify(data.control)
+				: data.control.id,
 		);
 
 		this.model.widgetUpdate(data);
@@ -82,10 +81,9 @@ abstract class JSDialogComponent {
 		if (!this.container) return;
 
 		app.console.debug(
-			'Component ' +
-				this.name +
-				' handles action message: ' +
-				JSON.stringify(data.data),
+			'Component ' + this.name + ' handles action message: ' + JSDialog.verbose
+				? JSON.stringify(data.data)
+				: data.data.control_id,
 		);
 
 		this.model.widgetAction(data);

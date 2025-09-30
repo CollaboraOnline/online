@@ -47,7 +47,21 @@ class JSDialogModelState {
 		}
 
 		const found = this.getById(data.control.id);
-		if (found) app.console.debug('update');
+		if (found) {
+			const id = found.id;
+			const before = JSON.stringify(found);
+			// data will no longer be used, we don't need deep copy
+			Object.assign(found, data.control);
+
+			if (JSDialog.verbose) {
+				app.console.debug(
+					'JSDialogModelState: widgetUpdate\n\nBEFORE: ' +
+						before +
+						'\n\nAFTER: ' +
+						JSON.stringify(this.getById(id)),
+				);
+			}
+		}
 	}
 
 	/// applies action to a model
@@ -61,7 +75,13 @@ class JSDialogModelState {
 		}
 
 		const found = this.getById(data.data.control_id);
-		if (found) app.console.debug('action');
+		if (found) {
+			if (JSDialog.verbose) {
+				app.console.debug(
+					'JSDialogModelState: widgetAction ' + data.data.control_id,
+				);
+			}
+		}
 	}
 
 	/// returns current state of a widget with given id
