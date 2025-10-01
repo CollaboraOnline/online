@@ -329,9 +329,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'type': 'exportmenubutton',
 				'text': _UNO('.uno:Print', 'presentation'),
 				'command': '.uno:Print',
-				'applyCallback':function () {
-					app.map.print();
-				},
+				'applyCallback': 'print',
 				'accessibility': { focusBack: true, combination: 'PF', de: null }
 			});
 		}
@@ -792,7 +790,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					{
 						'id': 'home-create-slide:NewSlideLayoutMenu',
 						'type': 'menubutton',
-						'applyCallback': () => { app.map.sendUnoCommand('.uno:InsertPage') },
+						'applyCallback': '.uno:InsertPage',
 						'text': _('New'),
 						'command': '.uno:InsertPage',
 						'accessibility': { focusBack: true, combination: 'CS', de: null }

@@ -71,7 +71,18 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
-		var isSplitButton = data.applyCallback;
+
+		var isSplitButton = !!data.applyCallback;
+		// can be function or string with command identifier
+		const applyCallback =
+			(typeof data.applyCallback === 'function') ?
+				data.applyCallback
+				: () => {
+					if (data.applyCallback.indexOf('.uno:') === 0)
+						app.map.sendUnoCommand(data.applyCallback);
+					else
+						app.dispatcher.dispatch(data.applyCallback);
+				};
 
 		if (menuEntries.length == 0) {
 			control.container.setAttribute('disabled', true);
@@ -130,9 +141,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		// make it possible to setup separate callbacks for split button
 		if (isSplitButton) {
-			JSDialog.AddOnClick(control.button, data.applyCallback);
+			JSDialog.AddOnClick(control.button, applyCallback);
 			if (control.label)
-				JSDialog.AddOnClick(control.label, data.applyCallback);
+				JSDialog.AddOnClick(control.label, applyCallback);
 			if (control.arrow)
 				control.arrow.tabIndex = 0;
 		} else {
