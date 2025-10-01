@@ -240,7 +240,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .notebookbar.ui-separator.vertical {
 	width: 1px;
 	background-color: var(--color-toolbar-border);
-	height: 64px;
+	height: var(--notebookbar-element-height);
 	margin: 0 2px;
 	box-sizing: border-box;
 }
@@ -253,6 +253,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	justify-items: center;
 	width: max-content;
 	color: var(--color-main-text);
+}
+
+.horizontal.notebookbar:has(.unoBezier_Unfilled) {
+	height: 100%;
+	align-items: start;
 }
 
 /* unobuttons */
@@ -439,7 +444,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 #stylesview,
 #masterpageall_icons,
 #transitions_icons {
-	height: 64px;
+	height: var(--notebookbar-element-height);
 	overflow: auto;
 	display: grid;
 	row-gap: 0;
@@ -483,7 +488,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	border: 1px solid var(--color-stylesview-border);
 	border-top-right-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
-	height: 64px;
+	height: var(--notebookbar-element-height);
 	margin-inline-start: -5px;
 	box-sizing: border-box;
 }

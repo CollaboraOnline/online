@@ -54,6 +54,9 @@
 
 	/* Ruler */
 	--ruler-height: 20px;
+
+	/* Notebookbar */
+	--notebookbar-element-height: 64px;
 }
 
 html {
