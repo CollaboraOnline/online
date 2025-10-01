@@ -57,6 +57,7 @@ class ShortcutDescriptor {
     key: string | null;
     unoAction: string;
     dispatchAction: string;
+    dispatchData: any;
     viewType: ViewType;
     preventDefault: boolean;
     platform: Platform;
@@ -69,6 +70,7 @@ class ShortcutDescriptor {
         key = null,
         unoAction = null,
         dispatchAction = null,
+        dispatchData = null,
         viewType = null,
         preventDefault = true,
         platform = null,
@@ -111,6 +113,8 @@ class ShortcutDescriptor {
 
         If ommitted, no action will be dispatched when this keybind is pressed */
         dispatchAction?: string,
+        /** The optional data to pass to the sipatcher if dispatchAction is used*/
+        dispatchData?: any,
         /** The view type (Edit or ReadOnly) to restrict this keybind to
 
         If ommitted, the keybind will be active in both Edit and ReadOnly view types */
@@ -145,6 +149,7 @@ class ShortcutDescriptor {
         this.key = key;
         this.unoAction = unoAction;
         this.dispatchAction = dispatchAction;
+        this.dispatchData = dispatchData;
         this.viewType = viewType;
         this.preventDefault = preventDefault;
         this.platform = platform;
@@ -221,7 +226,7 @@ class KeyboardShortcuts {
                 this.map.sendUnoCommand(action);
             } else if (shortcut.dispatchAction) {
                 action = shortcut.dispatchAction;
-                app.dispatcher.dispatch(action);
+                app.dispatcher.dispatch(action, shortcut.dispatchData);
             }
 
             if (shortcut.preventDefault) {
@@ -300,6 +305,8 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', key: 'F1', dispatchAction: 'showhelp' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT, key: 'F1', dispatchAction: 'focustonotebookbar' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'f', dispatchAction: 'home-search' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'p', dispatchAction: 'print' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 's', dispatchAction: 'save', dispatchData: 'keyboard' }),
 
     // Calc.
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageUp' }),
@@ -369,4 +376,4 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
 ));
 
-(window as any).KeyboardShortcuts = keyboardShortcuts;
+window.KeyboardShortcuts = keyboardShortcuts;

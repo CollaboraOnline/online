@@ -284,6 +284,7 @@ interface Window {
 		sendPendingBrowserSettingsUpdate(): void;
 		canPersist: boolean;
 	};
+	KeyboardShortcuts: KeyboardShortcuts;
 
 	allowUpdateNotification: boolean;
 	autoShowWelcome: boolean;
