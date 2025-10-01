@@ -66,6 +66,28 @@ window.L.Control.MobileWizardBuilder = window.L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:XLineStyle'] = this._explorableToolItemHandler;
 	},
 
+	// make a class identifier from parent's id by walking up the tree
+	_getParentId : function(it) {
+		while (it.parent && !it.id)
+			it = it.parent;
+		if (it && it.id)
+			return '-' + it.id;
+		else
+			return '';
+	},
+
+	// link each node to its parent, should do one recursive descent
+	_parentize: function(data, parent) {
+		if (data.parent)
+			return;
+		if (data.children !== undefined) {
+			for (var idx in data.children) {
+				this._parentize(data.children[idx], data);
+			}
+		}
+		data.parent = parent;
+	},
+
 	baseSpinField: function(parentContainer, data, builder, customCallback) {
 		var controls = {};
 		if (data.label) {
