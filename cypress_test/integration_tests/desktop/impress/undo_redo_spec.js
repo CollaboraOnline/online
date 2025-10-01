@@ -7,12 +7,6 @@ var repairHelper = require('../../common/repair_document_helper');
 
 describe(['tagdesktop'], 'Editing Operations', function() {
 
-	function skipMessage() {
-		// FIXME: receiveMessage: {"MessageId":"Doc_ModifiedStatus","SendTime":1741357902023,"Values":{"Modified":true}}
-		// FIXME: that message seems to close blinking cursor
-		cy.wait(1500);
-	}
-
 	function expectInitialText() {
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.dblclickOnSelectedShape();
@@ -32,22 +26,18 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 
 		impressHelper.dblclickOnSelectedShape();
 		helper.expectTextForClipboard('Hello World');
-		cy.wait(1000);
 
 		cy.log('expectTypedText - END');
 	}
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/undo_redo.odp');
-		desktopHelper.switchUIToCompact();
 		// close the default slide-sorter navigation sidebar
 		desktopHelper.closeNavigatorSidebar();
 		desktopHelper.selectZoomLevel('30', false);
 
-		skipMessage();
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.dblclickOnSelectedShape();
-		skipMessage();
 	});
 
 	function undo() {
@@ -76,7 +66,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('Overwrite Text');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-		repairHelper.rollbackPastChange('Undo');
+		repairHelper.rollbackPastChange('Undo', false, true);
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		expectTypedText();
 	});
