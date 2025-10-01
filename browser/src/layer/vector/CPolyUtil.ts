@@ -29,24 +29,13 @@ namespace CPolyUtil {
 			}
 		}
 
-		var points = new Map<cool.Point, cool.Point>();
+		var points = new Set<cool.Point>();
 		for (i = 0; i < rectangles.length; i++) {
 			for (j = 0; j < rectangles[i].length; j++) {
-				if (points.has(rectangles[i][j])) {
-					points.delete(rectangles[i][j]);
-				}
-				else {
-					points.set(rectangles[i][j], rectangles[i][j]);
+				if (!points.delete(rectangles[i][j])) {
+					points.add(rectangles[i][j]);
 				}
 			}
-		}
-
-		function getKeys(points: Map<cool.Point, cool.Point>): Array<cool.Point> {
-			var keys: Array<cool.Point> = [];
-			points.forEach((_: cool.Point, key: cool.Point) => {
-				keys.push(key);
-			});
-			return keys;
 		}
 
 		// cool.Point comparison function for sorting a list of CPoints w.r.t x-coordinate.
@@ -78,17 +67,17 @@ namespace CPolyUtil {
 			}
 		}
 
-		var sortX = getKeys(points).sort(xThenY);
-		var sortY = getKeys(points).sort(yThenX);
+		var sortX = Array.from(points.values()).sort(xThenY);
+		var sortY = Array.from(points.values()).sort(yThenX);
 
 		var edgesH = new Map<cool.Point, cool.Point>();
 		var edgesV = new Map<cool.Point, cool.Point>();
 
-		var len = getKeys(points).length;
+		var len = points.size;
 		i = 0;
 		while (i < len) {
-			var currY = points.get(sortY[i]).y;
-			while (i < len && points.get(sortY[i]).y === currY) {
+			var currY = sortY[i].y;
+			while (i < len && sortY[i].y === currY) {
 				edgesH.set(sortY[i], sortY[i + 1]);
 				edgesH.set(sortY[i + 1], sortY[i]);
 				i += 2;
@@ -97,8 +86,8 @@ namespace CPolyUtil {
 
 		i = 0;
 		while (i < len) {
-			var currX = points.get(sortX[i]).x;
-			while (i < len && points.get(sortX[i]).x === currX) {
+			var currX = sortX[i].x;
+			while (i < len && sortX[i].x === currX) {
 				edgesV.set(sortX[i], sortX[i + 1]);
 				edgesV.set(sortX[i + 1], sortX[i]);
 				i += 2;
@@ -106,10 +95,9 @@ namespace CPolyUtil {
 		}
 
 		var polygons = new Array<CPointSet>();
-		var edgesHKeys = getKeys(edgesH);
 
-		while (edgesHKeys.length > 0) {
-			var p: Array<[cool.Point, number]> = [[edgesHKeys[0], 0]];
+		while (edgesH.size > 0) {
+			var p: Array<[cool.Point, number]> = [[edgesH.keys().next().value, 0]];
 			while (true) {
 				var curr = p[p.length - 1][0];
 				var e = p[p.length - 1][1];
@@ -130,12 +118,11 @@ namespace CPolyUtil {
 			}
 			var polygon = new Array<cool.Point>();
 			for (i = 0; i < p.length; i++) {
-				polygon.push(unitConverter(points.get(p[i][0])));
+				polygon.push(unitConverter(p[i][0]));
 				edgesH.delete(p[i][0]);
 				edgesV.delete(p[i][0]);
 			}
-			polygon.push(unitConverter(points.get(p[0][0])));
-			edgesHKeys = getKeys(edgesH);
+			polygon.push(unitConverter(p[0][0]));
 			polygons.push(CPointSet.fromPointArray(polygon));
 		}
 		return CPointSet.fromSetArray(polygons);
