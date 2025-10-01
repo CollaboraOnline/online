@@ -433,7 +433,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert Special Character.', function() {
-		cy.cGet('#Home-container .unospan-CharmapControl').click({force: true});
+		cy.cGet('#Home-container .unoCharmapControl').click();
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
 

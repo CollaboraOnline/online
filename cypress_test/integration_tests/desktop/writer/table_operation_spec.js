@@ -298,7 +298,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		cy.cGet('#copy-paste-container colgroup').find('col').should('have.length.greaterThan', 0);
 		cy.cGet('#copy-paste-container tbody').find('tr').should('have.length.greaterThan', 0);
 		helper.typeIntoDocument('{leftarrow}');
-		cy.cGet('.unospan-split_merge.unoSplitCell').click();
+		cy.cGet('.sidebar .unoSplitCell:not(.menubutton)').click();
 		cy.cGet('.lokdialog.ui-dialog-content.ui-widget-content').should('exist');
 		cy.cGet('.lokdialog.ui-dialog-content.ui-widget-content').click();
 		cy.cGet('#ok.ui-pushbutton-wrapper.jsdialog').should('exist').click();

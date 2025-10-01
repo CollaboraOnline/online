@@ -1241,7 +1241,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 		}
 
-		if (data.tabs && data.parent.id === 'NotebookBar') {
+		if (data.tabs && data.isNotebookbar) {
 			let that = this;
 			contentDivs.forEach(function(tabPage)
 			{
@@ -1989,16 +1989,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		}
 	},
 
-	// make a class identifier from parent's id by walking up the tree
-	_getParentId : function(it) {
-		while (it.parent && !it.id)
-			it = it.parent;
-		if (it && it.id)
-			return '-' + it.id;
-		else
-			return '';
-	},
-
 	_addAriaLabel(element, data, builder) {
 		if (data.aria)
 			element.setAttribute('aria-label', data.aria.label);
@@ -2041,7 +2031,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var controls = {};
 
-		let div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		controls['container'] = div;
 		div.tabIndex = -1;
@@ -2639,18 +2629,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		builder._explorableMenu(parentContainer, title, data.children, builder, content, data.id);
 	},
 
-	// link each node to its parent, should do one recursive descent
-	_parentize: function(data, parent) {
-		if (data.parent)
-			return;
-		if (data.children !== undefined) {
-			for (var idx in data.children) {
-				this._parentize(data.children[idx], data);
-			}
-		}
-		data.parent = parent;
-	},
-
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
 		app.layoutingService.appendLayoutingTask(() => { this.executeActionImpl(container, data); });
@@ -2954,7 +2932,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
-			this._parentize(childData);
 			var processChildren = true;
 
 			if ((childData.id === undefined || childData.id === '' || childData.id === null)
