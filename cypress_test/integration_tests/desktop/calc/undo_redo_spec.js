@@ -3,13 +3,11 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var repairHelper = require('../../common/repair_document_helper');
-const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/undo_redo.ods');
-		desktopHelper.switchUIToCompact();
 	});
 
 	function undo() {
@@ -42,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 		helper.clearAllText();
 		helper.typeIntoDocument('Hello');
 		helper.typeIntoDocument('{enter}');
-		repairHelper.rollbackPastChange('Undo');
+		repairHelper.rollbackPastChange('Undo', /* mobile */ false, /* nb */ true);
 		calcHelper.dblClickOnFirstCell();
 		helper.selectAllText();
 		helper.copy();
