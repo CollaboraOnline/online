@@ -927,13 +927,15 @@ class UIManager extends window.L.Control {
 	 * @param button - Button configuration object.
 	 */
 	insertCustomButton(button: any): void {
-		if (button.tablet === false && window.mode.isTablet()) {
+		if (button.tablet === false && window.mode.isTablet())
 			return;
-		}
+
 		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
-		else
+		else if (this.notebookbar)
 			this.notebookbar.insertButtonToShortcuts(button);
+		else
+			app.console.debug('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
 	}
 
 	/**
