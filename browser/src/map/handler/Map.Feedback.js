@@ -111,6 +111,7 @@ window.L.Map.Feedback = window.L.Handler.extend({
 		var params = [{ mobile : window.mode.isMobile() },
 			      { cssvar : cssVar},
 			      { wsdhash : window.app.socket.WSDServer.Hash },
+			      { 'version_number' : window.app.socket.WSDServer.Version },
 			      { 'lokit_hash' : lokitHash },
 			      { 'wopi_host_id' : wopiHostId },
 			      { 'proxy_prefix_enabled' : proxyPrefixEnabled },
