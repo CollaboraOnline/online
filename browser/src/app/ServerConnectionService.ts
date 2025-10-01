@@ -58,12 +58,25 @@ class ServerConnectionService {
 	public onFirstTileReceived() {
 		app.console.debug('ServerConnectionService: onFirstTileReceived');
 
-		// first reload notebookbar with zotero if needed
+		// show zotero items if needed
+		const zoteroItems = [
+			'zoteroaddeditbibliography',
+			'zoterocontaineradd',
+			'zoterocontainerrefresh',
+			'zoteroSetDocPrefs',
+			'references-zoterosetdocprefs-break',
+		];
 		const isWriter = app.map?._docLayer?.isWriter();
-		if (isWriter && window.zoteroEnabled) {
-			app.console.debug('ServerConnectionService: reload UI for zotero');
-			// app.map.uiManager.refreshUI();
-			// TODO: show zotero items
+		if (isWriter && window.zoteroEnabled && app.map.zotero) {
+			app.console.debug('ServerConnectionService: show UI for zotero');
+			zoteroItems.forEach((id: string) =>
+				app.map.uiManager.notebookbar.showItem(id),
+			);
+		} else {
+			app.console.debug('ServerConnectionService: hide UI for zotero');
+			zoteroItems.forEach((id: string) =>
+				app.map.uiManager.notebookbar.hideItem(id),
+			);
 		}
 
 		// initialize notebookbar in core

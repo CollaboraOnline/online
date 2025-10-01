@@ -192,107 +192,118 @@ class WriterReferencesTab implements NotebookbarTab {
 			},
 		] as WidgetJSON[];
 
-		if (app.map.zotero) {
-			content = content.concat([
-				{
-					id: 'zoteroaddeditbibliography',
-					class: 'unozoteroaddeditbibliography',
-					type: 'bigcustomtoolitem',
-					text: _('Add Bibliography'),
-					command: 'zoteroaddeditbibliography',
-					accessibility: { focusBack: true, combination: 'AB', de: null },
-				} as ToolItemWidgetJSON,
-				{
-					type: 'container',
-					children: [
-						{
-							type: 'toolbox',
-							children: [
-								{
-									id: 'zoteroAddEditCitation',
-									class: 'unozoteroAddEditCitation',
-									type: 'customtoolitem',
-									text: _('Add Citation'),
-									command: 'zoteroaddeditcitation',
-									accessibility: {
-										focusBack: true,
-										combination: 'AC',
-										de: null,
-									},
-								} as ToolItemWidgetJSON,
-							],
-						},
-						{
-							type: 'toolbox',
-							children: [
-								{
-									id: 'zoteroaddnote',
-									class: 'unozoteroaddnote',
-									type: 'customtoolitem',
-									text: _('Add Citation Note'),
-									command: 'zoteroaddnote',
-									accessibility: {
-										focusBack: true,
-										combination: 'CN',
-										de: null,
-									},
-								} as ToolItemWidgetJSON,
-							],
-						},
-					],
-					vertical: 'true',
-				},
-				{
-					type: 'container',
-					children: [
-						{
-							type: 'toolbox',
-							children: [
-								{
-									id: 'zoterorefresh',
-									class: 'unozoterorefresh',
-									type: 'customtoolitem',
-									text: _('Refresh Citations'),
-									command: 'zoterorefresh',
-									accessibility: {
-										focusBack: true,
-										combination: 'RC',
-										de: null,
-									},
-								} as ToolItemWidgetJSON,
-							],
-						},
-						{
-							type: 'toolbox',
-							children: [
-								{
-									id: 'zoterounlink',
-									class: 'unozoterounlink',
-									type: 'customtoolitem',
-									text: _('Unlink Citations'),
-									command: 'zoterounlink',
-									accessibility: {
-										focusBack: true,
-										combination: 'UC',
-										de: null,
-									},
-								} as ToolItemWidgetJSON,
-							],
-						},
-					],
-					vertical: 'true',
-				},
-				{
-					id: 'zoteroSetDocPrefs',
-					class: 'unozoteroSetDocPrefs',
-					type: 'bigcustomtoolitem',
-					text: _('Citation Preferences'),
-					command: 'zoterosetdocprefs',
-					accessibility: { focusBack: true, combination: 'CP', de: null },
-				} as ToolItemWidgetJSON,
-				{ type: 'separator', id: 'references-zoterosetdocprefs-break' },
-			] as WidgetJSON[]);
-		}
+		// zotero plugin buttons are visible when it is initialized in ServerConnectionService
+		// as initial visibility value we set existance of zotero plugin, later we can show/hide
+		// using notebookbar show/hide item functionality
+		content = content.concat([
+			{
+				id: 'zoteroaddeditbibliography',
+				class: 'unozoteroaddeditbibliography',
+				type: 'bigcustomtoolitem',
+				text: _('Add Bibliography'),
+				command: 'zoteroaddeditbibliography',
+				visible: !!app.map.zotero,
+				accessibility: { focusBack: true, combination: 'AB', de: null },
+			} as ToolItemWidgetJSON,
+			{
+				id: 'zoterocontaineradd',
+				visible: !!app.map.zotero,
+				type: 'container',
+				children: [
+					{
+						type: 'toolbox',
+						children: [
+							{
+								id: 'zoteroAddEditCitation',
+								class: 'unozoteroAddEditCitation',
+								type: 'customtoolitem',
+								text: _('Add Citation'),
+								command: 'zoteroaddeditcitation',
+								accessibility: {
+									focusBack: true,
+									combination: 'AC',
+									de: null,
+								},
+							} as ToolItemWidgetJSON,
+						],
+					},
+					{
+						type: 'toolbox',
+						children: [
+							{
+								id: 'zoteroaddnote',
+								class: 'unozoteroaddnote',
+								type: 'customtoolitem',
+								text: _('Add Citation Note'),
+								command: 'zoteroaddnote',
+								accessibility: {
+									focusBack: true,
+									combination: 'CN',
+									de: null,
+								},
+							} as ToolItemWidgetJSON,
+						],
+					},
+				],
+				vertical: 'true',
+			},
+			{
+				id: 'zoterocontainerrefresh',
+				visible: !!app.map.zotero,
+				type: 'container',
+				children: [
+					{
+						type: 'toolbox',
+						children: [
+							{
+								id: 'zoterorefresh',
+								class: 'unozoterorefresh',
+								type: 'customtoolitem',
+								text: _('Refresh Citations'),
+								command: 'zoterorefresh',
+								accessibility: {
+									focusBack: true,
+									combination: 'RC',
+									de: null,
+								},
+							} as ToolItemWidgetJSON,
+						],
+					},
+					{
+						type: 'toolbox',
+						children: [
+							{
+								id: 'zoterounlink',
+								class: 'unozoterounlink',
+								type: 'customtoolitem',
+								text: _('Unlink Citations'),
+								command: 'zoterounlink',
+								accessibility: {
+									focusBack: true,
+									combination: 'UC',
+									de: null,
+								},
+							} as ToolItemWidgetJSON,
+						],
+					},
+				],
+				vertical: 'true',
+			},
+			{
+				id: 'zoteroSetDocPrefs',
+				class: 'unozoteroSetDocPrefs',
+				type: 'bigcustomtoolitem',
+				text: _('Citation Preferences'),
+				command: 'zoterosetdocprefs',
+				visible: !!app.map.zotero,
+				accessibility: { focusBack: true, combination: 'CP', de: null },
+			} as ToolItemWidgetJSON,
+			{
+				type: 'separator',
+				id: 'references-zoterosetdocprefs-break',
+				visible: !!app.map.zotero,
+			},
+		] as WidgetJSON[]);
 
 		content = content.concat([
 			{
