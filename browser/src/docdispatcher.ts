@@ -22,12 +22,12 @@ class Dispatcher {
 	private actionsMap: any = {};
 
 	private addGeneralCommands() {
-		this.actionsMap['save'] = function () {
+		this.actionsMap['save'] = function (source?: string) {
 			// Save only when not read-only.
-			if (!app.map.isReadOnlyMode()) {
+			if (!app.map.isReadOnlyMode() && !app.map['wopi'].HideSaveOption) {
 				app.map.fire('postMessage', {
 					msgId: 'UI_Save',
-					args: { source: 'toolbar' },
+					args: { source: source || 'toolbar' },
 				});
 				if (!app.map._disableDefaultAction['UI_Save']) {
 					app.map.save(

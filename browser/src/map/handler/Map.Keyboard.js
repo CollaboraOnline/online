@@ -456,20 +456,6 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 				this._map._docLayer._preview.partsFocused = false;
 			}
 		}
-		else if (this._isCtrlKey(ev) && ev.keyCode === this.keyCodes.S) {
-			// Save only when not read-only and when HideSaveOption is false.
-			if (!this._map.isReadOnlyMode() && !this._map['wopi'].HideSaveOption) {
-				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
-				if (!this._map._disableDefaultAction['UI_Save']) {
-					this._map.save(
-						false /* An explicit save should terminate cell edit */,
-						false /* An explicit save should save it again */,
-					);
-				}
-			}
-			ev.preventDefault();
-		}
-
 	},
 
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
@@ -854,12 +840,6 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			// Anyhow, by when editable area is populated with the focused paragraph
 			// we can't select its content or on next editing the content is overwritten.
 			// this._map._textInput.select();
-			return true;
-		case this.keyCodes.P: // p
-			this._map.print();
-			return true;
-		case this.keyCodes.S: // s
-			// Handle save event in globalEventHandler
 			return true;
 		case this.keyCodes.V[DEFAULT]: // v
 		case this.keyCodes.V[MAC]: // v (Safari) needs a separate mapping in keyCodes
