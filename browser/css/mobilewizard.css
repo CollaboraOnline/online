@@ -378,7 +378,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: var(--color-background-dark);
 }
 
-.unotoolbutton.disabled, .mobile-wizard-widebutton.disabled {
+.mobile-wizard .unotoolbutton.disabled, .mobile-wizard-widebutton.disabled {
 	color: silver;
 }
 
@@ -396,12 +396,12 @@ p.mobile-wizard.ui-combobox-text.selected {
 	margin-top: 0px !important;
 }
 
-.ui-content.unospan {
+.mobile-wizard .ui-content.unospan {
 	line-height: 32px;
 	display: table;
 	padding-left: 4%;
 }
-.ui-content.unolabel {
+.mobile-wizard .ui-content.unolabel {
 	vertical-align: middle;
 }
 
