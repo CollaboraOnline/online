@@ -160,10 +160,13 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			if (saveEle) {
 				if (state === 'true' &&  this.map.saveState) {
 					this.map.saveState.showModifiedStatus();
-					document.getElementById('file-save').classList.add('savemodified');
+					const button = document.getElementById('file-save');
+					if (button) button.classList.add('savemodified');
 				} else {
-					document.getElementById('save').classList.remove('savemodified');
-					document.getElementById('file-save').classList.remove('savemodified');
+					const button = document.getElementById('save');
+					if (button) button.classList.remove('savemodified');
+					const fileButton = document.getElementById('file-save');
+					if (fileButton) fileButton.classList.remove('savemodified');
 				}
 			}
 		}
