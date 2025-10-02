@@ -123,7 +123,6 @@ void HTTPWSTest::testExoticLang()
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
-
     const std::string testname = "saveOnDisconnect- ";
 
     const std::string text = helpers::genRandomString(40);
@@ -166,6 +165,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname, text);
+        // if 'selection' is [] empty - we mis-matched in getAllText
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         socket->asyncShutdown();
