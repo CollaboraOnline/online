@@ -138,6 +138,84 @@ function isTextInputField(currentActiveElement){
 	return (currentActiveElement.tagName === 'INPUT' && currentActiveElement.type === 'text') || currentActiveElement.tagName === 'TEXTAREA';
 }
 
+// Find focusable parent element using DOM traversal
+function findFocusableParent(container, currentElement, element, arrowUp) {
+	if (!element)
+		return null;
+	else if (element.tagName === 'NAV' && arrowUp) {
+		return element;
+	}
+	else if (element.tabIndex === -1 || element.tagName == 'A') {
+		return findFocusableParent(container, currentElement, element.parentNode, arrowUp);
+	}
+	else if (container.contains(element) && currentElement !== element && !currentElement.contains(element) && !element.disabled) {
+		return element;
+	}
+	else
+		return null;
+}
+
+// Ray cast to find next element in a given direction
+function rayCastToNextElement(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, arrowUp) {
+	let count = 0;
+	let foundElement;
+	while (count <= 60) {
+		count++;
+		startX += diffX;
+		startY += diffY;
+
+		foundElement = document.elementFromPoint(startX, startY);
+		foundElement = findFocusableParent(container, currentElement, foundElement, arrowUp);
+		if (foundElement) break;
+
+		// If we are here, we'll try secondary and tertiary rays.
+		if (diffX === 0) {
+			foundElement = document.elementFromPoint(boundingRectangle.left, startY);
+			foundElement = findFocusableParent(container, currentElement, foundElement, arrowUp);
+			if (foundElement) break;
+
+			foundElement = document.elementFromPoint(boundingRectangle.right, startY);
+			foundElement = findFocusableParent(container, currentElement, foundElement, arrowUp);
+			if (foundElement) break;
+		}
+		else if (diffY === 0) {
+			foundElement = document.elementFromPoint(startX, boundingRectangle.top);
+			foundElement = findFocusableParent(container, currentElement, foundElement, arrowUp);
+			if (foundElement) break;
+
+			foundElement = document.elementFromPoint(startX, boundingRectangle.bottom);
+			foundElement = findFocusableParent(container, currentElement, foundElement, arrowUp);
+			if (foundElement) break;
+		}
+	}
+
+	if (count === 60)
+		return null;
+	else
+		return foundElement;
+}
+
+// Find next element in container using ray casting
+function findNextElementInContainer(container, currentElement, direction) {
+	let boundingRectangle = currentElement.getBoundingClientRect();
+	let startX = boundingRectangle.left + (boundingRectangle.right - boundingRectangle.left) / 2;
+	let startY = boundingRectangle.top + (boundingRectangle.bottom - boundingRectangle.top) / 2;
+
+	let diffX = 0;
+	let diffY = 0;
+	
+	// Ray casting sensitivity for spatial navigation
+	var rayCastingSensitivity = 10; // Pixels
+
+	if (direction === 'ArrowLeft' || direction === 'ArrowRight')
+		diffX = direction === 'ArrowRight' ? rayCastingSensitivity : (rayCastingSensitivity * -1);
+
+	if (direction === 'ArrowUp' || direction === 'ArrowDown')
+		diffY = direction === 'ArrowDown' ? rayCastingSensitivity : (rayCastingSensitivity * -1);
+
+	return rayCastToNextElement(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, direction === 'ArrowUp');
+}
+
 JSDialog.IsAnyInputFocused = isAnyInputFocused;
 JSDialog.GetFocusableElements = getFocusableElements;
 JSDialog.MakeFocusCycle = makeFocusCycle;
@@ -146,3 +224,6 @@ JSDialog.FindFocusableWithin = findFocusableWithin;
 JSDialog.FindNextFocusableSiblingElement = findNextFocusableSiblingElement;
 JSDialog.IsFocusable = isFocusable;
 JSDialog.IsTextInputField = isTextInputField;
+JSDialog.FindFocusableParent = findFocusableParent;
+JSDialog.RayCastToNextElement = rayCastToNextElement;
+JSDialog.FindNextElementInContainer = findNextElementInContainer;
