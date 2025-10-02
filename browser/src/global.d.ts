@@ -255,6 +255,15 @@ interface Window {
 	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
 	setupToolbar(map: any): void; // TODO should be L.Map
 	makeWsUrl: (url: string) => string;
+	getBorderStyleUNOCommand: (
+		a: number,
+		b: number,
+		c: number,
+		d: number,
+		e: number,
+		f: number,
+		g: number,
+	) => string;
 	L: any;
 }
 
