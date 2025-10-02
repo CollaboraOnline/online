@@ -481,6 +481,12 @@ class Dispatcher {
 
 			app.sectionContainer.requestReDraw();
 		};
+
+		this.actionsMap['defaultborderstyle'] = () => {
+			app.map.sendUnoCommand(
+				window.getBorderStyleUNOCommand(0, 0, 1, 0, 0, 0, 0),
+			);
+		};
 	}
 
 	private addImpressAndDrawCommands() {
@@ -670,6 +676,17 @@ class Dispatcher {
 				app.CSections.CommentList.name,
 			);
 			commentSection.rejectAllTrackedCommentChanges();
+		};
+
+		this.actionsMap['toggletracking'] = () => {
+			const TrackChangesCurrentState =
+				app.map['stateChangeHandler'].getItemValue('.uno:TrackChanges');
+			if (
+				TrackChangesCurrentState === 'true' ||
+				TrackChangesCurrentState === true
+			)
+				app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false');
+			else app.map.sendUnoCommand('.uno:TrackChangesInAllViews');
 		};
 	}
 
