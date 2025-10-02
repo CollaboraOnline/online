@@ -801,6 +801,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	height: var(--btn-img-size);
 }
 
+#context-toolbar.chart {
+	transform: translateX(5%);
+}
+
 #masterpageall_icons .notebookbar.ui-iconview-entry {
 	align-self: start;
 	margin-top: 6px;
