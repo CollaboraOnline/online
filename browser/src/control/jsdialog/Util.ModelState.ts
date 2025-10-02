@@ -39,9 +39,17 @@ class JSDialogModelState {
 
 		// try fallback
 		try {
+			app.console.debug('JSDialogModelState: fallback copy by JSON.parse');
 			return JSON.parse(JSON.stringify(obj));
 		} catch (e) {
 			app.console.debug('JSDialogModelState: failed to clone the model: ' + e);
+		}
+
+		try {
+			app.console.debug('JSDialogModelState: fallback copy by Object.assign');
+			return Object.assign({}, obj);
+		} catch (e) {
+			app.console.debug('JSDialogModelState: ' + e);
 		}
 
 		return null;
@@ -59,7 +67,17 @@ class JSDialogModelState {
 
 	/// get model copy
 	public getSnapshot() {
-		if (this.model) return this.copyObject(this.model);
+		if (this.model) {
+			const snapshot = this.copyObject(this.model);
+			if (snapshot) {
+				return snapshot;
+			} else {
+				app.console.debug(
+					'JSDialogModelState: cannot copy object, use original model',
+				);
+				return this.model;
+			}
+		}
 
 		return null;
 	}
