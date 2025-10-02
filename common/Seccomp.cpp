@@ -28,7 +28,6 @@
 #endif
 #include <malloc.h>
 #include <signal.h>
-#include <sys/capability.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #endif // __linux__
