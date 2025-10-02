@@ -959,7 +959,8 @@ class TreeViewControl {
 		window.L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
-		span.focus();
+		if (this._container.id !== 'searchfinds') span.focus();
+
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 

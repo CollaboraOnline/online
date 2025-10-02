@@ -499,35 +499,46 @@ class NavigatorPanel extends SidebarBase {
 		data: any,
 		builder: JSBuilder,
 	): void {
-		let searchTerm = '';
-		// Update results tab
-		if (object.id === 'navigator-search-button') {
-			searchTerm = (
-				document.getElementById('navigator-search-input') as HTMLInputElement
-			).value;
-			super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
-		} else if (object.id === 'navigator-search') {
-			searchTerm = data;
-			super.callback(
-				objectType,
-				eventType,
-				{ id: 'Find' },
-				searchTerm,
-				builder,
-			);
-		}
-		// Update outline highlighting
-		// Note: only update on 'activate' or button pressed events to be consistent with results tab
-		if (
-			(object.id == 'navigator-search' && eventType == 'activate') ||
-			object.id == 'navigator-search-button'
-		) {
-			var treeContainer = document.getElementById('contenttree') as any;
-			if (treeContainer) treeContainer.highlightEntries(searchTerm);
-			this.highlightTerm = searchTerm;
+		if (!['navigator-search-button', 'navigator-search'].includes(object.id)) {
+			super.callback(objectType, eventType, object, data, builder);
 			return;
 		}
-		super.callback(objectType, eventType, object, data, builder);
+
+		// Switch to "Results tab" first.
+		const resultsTab = document.getElementById('tab-quick-find');
+		if (resultsTab && !resultsTab.classList.contains('selected'))
+			resultsTab.click();
+
+		const nextButtonContainer = document.getElementById('findnext');
+		const nextButton = nextButtonContainer.querySelector('button');
+		const nextButtonVisible =
+			nextButton && (nextButton as any).checkVisibility();
+		const searchTerm = (
+			document.getElementById('navigator-search-input') as HTMLInputElement
+		).value;
+		const termChanged = searchTerm !== this.highlightTerm;
+		this.highlightTerm = searchTerm;
+		const newSearch = termChanged || !nextButtonVisible;
+
+		if (newSearch) {
+			if (object.id === 'navigator-search-button')
+				super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
+			else
+				super.callback(
+					objectType,
+					eventType,
+					{ id: 'Find' },
+					searchTerm,
+					builder,
+				);
+		} else nextButton.click();
+
+		// Update outline highlighting
+		// Note: only update on 'activate' or button pressed events to be consistent with results tab
+		if (eventType === 'activate') {
+			var treeContainer = document.getElementById('contenttree') as any;
+			if (treeContainer) treeContainer.highlightEntries(searchTerm);
+		}
 	}
 }
 
