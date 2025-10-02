@@ -198,11 +198,22 @@ function setupOverflowMenu(
 						);
 						return;
 					}
+
+					// only proceed if hiddenItems has content
+					const hiddenItemsChildren =
+						hiddenItems.querySelectorAll(':scope > *');
+					if (hiddenItemsChildren.length === 0) {
+						app.console.debug(
+							'overflow manager: no items to migrate for "' + dropdownId + '"',
+						);
+						return;
+					}
+
 					// move overflow to the NB structure to be targeted by onJSUpdate and onJSAction
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
-					overflowGroupContainer.appendChild(menu.parentNode);
+					overflowGroupContainer.appendChild(overflowNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
 					menu?.classList.add('ui-overflow-group-popup');
