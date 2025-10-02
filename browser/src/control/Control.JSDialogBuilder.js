@@ -914,80 +914,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		};
 	},
 
-	_rayCastingSensitivity: 10, // Pixels
-
-	_findFocusableParent: function(container, currentElement, element, arrowUp) {
-		if (!element)
-			return null;
-		else if (element.tagName === 'NAV' && arrowUp) {
-			return element;
-		}
-		else if (element.tabIndex === -1 || element.tagName == 'A') {
-			return this._findFocusableParent(container, currentElement, element.parentNode, arrowUp);
-		}
-		else if (container.contains(element) && currentElement !== element && !currentElement.contains(element) && !element.disabled) {
-			return element;
-		}
-		else
-			return null;
-	},
-
-	_rayCastToNextElement: function(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, arrowUp) {
-		let count = 0;
-		let foundElement;
-		while (count <= 60) {
-			count++;
-			startX += diffX;
-			startY += diffY;
-
-			foundElement = document.elementFromPoint(startX, startY);
-			foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-			if (foundElement) break;
-
-			// If we are here, we'll try secondary and tertiary rays.
-			if (diffX === 0) {
-				foundElement = document.elementFromPoint(boundingRectangle.left, startY);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-
-				foundElement = document.elementFromPoint(boundingRectangle.right, startY);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-			}
-			else if (diffY === 0) {
-				foundElement = document.elementFromPoint(startX, boundingRectangle.top);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-
-				foundElement = document.elementFromPoint(startX, boundingRectangle.bottom);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-			}
-		}
-
-		if (count === 60)
-			return null;
-		else
-			return foundElement;
-	},
-
-	_findNextElementInContainer: function(container, currentElement, direction) {
-		let boundingRectangle = currentElement.getBoundingClientRect();
-		let startX = boundingRectangle.left + (boundingRectangle.right - boundingRectangle.left) / 2;
-		let startY = boundingRectangle.top + (boundingRectangle.bottom - boundingRectangle.top) / 2;
-
-		let diffX = 0;
-		let diffY = 0;
-
-		if (direction === 'ArrowLeft' || direction === 'ArrowRight')
-			diffX = direction === 'ArrowRight' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
-
-		if (direction === 'ArrowUp' || direction === 'ArrowDown')
-			diffY = direction === 'ArrowDown' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
-
-		return this._rayCastToNextElement(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, direction === 'ArrowUp');
-	},
-
 	_tabsControlHandler: function(parentContainer, data, builder, tabTooltip) {
 		if (tabTooltip === undefined) {
 			tabTooltip = '';
@@ -1127,7 +1053,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							if (e.key === 'Tab')
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
-							let elementToFocus = this._findNextElementInContainer(container[0], currentElement, key);
+							let elementToFocus = JSDialog.FindNextElementInContainer(container[0], currentElement, key);
 							if (elementToFocus && elementToFocus.tagName !== 'NAV')
 								elementToFocus.focus();
 							else if (elementToFocus)
