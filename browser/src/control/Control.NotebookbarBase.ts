@@ -19,7 +19,6 @@ class NotebookbarBase extends JSDialogComponent {
 
 	constructor(map: any, impl: any) {
 		super(map, 'Notebookbar', 'notebookbar');
-		this.map = map;
 		this.impl = impl;
 
 		this.createBuilder();
@@ -70,7 +69,7 @@ class NotebookbarBase extends JSDialogComponent {
 		this.container = parentContainer;
 	}
 
-	protected onJSUpdate(e: FireEvent) {
+	protected onJSUpdate(e: any) {
 		if (super.onJSUpdate(e)) {
 			this.impl?.setInitialized(true);
 			return true;
@@ -78,7 +77,7 @@ class NotebookbarBase extends JSDialogComponent {
 		return false;
 	}
 
-	protected onJSAction(e: FireEvent) {
+	protected onJSAction(e: any) {
 		if (super.onJSAction(e)) {
 			this.impl?.setInitialized(true);
 			return true;
