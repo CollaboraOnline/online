@@ -278,6 +278,17 @@ function setupOverflowMenu(
 		} else {
 			const menu = JSDialog.GetDropdown(dropdownId);
 			migrateItems(menu, hiddenItems);
+			// Use the correct dropdown ID that matches the dialog registry
+			// i.e. Util.Dropdown.js => _createDropdownId adds the below suffix
+			const actualDropdownId = dropdownId + '-dropdown';
+			const dialogInstance = app.map.jsdialog.dialogs[actualDropdownId];
+
+			if (dialogInstance && overflowMenuButton) {
+				const lastChild = overflowMenuButton.lastElementChild as HTMLElement;
+				if (lastChild) {
+					dialogInstance.lastFocusedElement = lastChild;
+				}
+			}
 		}
 	};
 }
