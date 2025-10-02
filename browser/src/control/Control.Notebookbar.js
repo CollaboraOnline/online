@@ -111,7 +111,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	onRemove: function() {
-		clearTimeout(this.retry);
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
