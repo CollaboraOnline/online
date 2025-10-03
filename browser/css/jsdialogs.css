@@ -2369,15 +2369,6 @@ button.menubutton.sidebar > span {
 	align-items: center;
 }
 
-#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
-#FormulaDialog #ALTBOX #funcdesc {
-	margin: auto 0px;
-	color: var(--color-main-text);
-	font-size: var(--default-font-size);
-	line-height: var(--default-height);
-	padding-left: inherit;
-}
-
 #FormulaDialog #ALTBOX #headline {
 	font-weight: bold;
 }
@@ -2868,4 +2859,15 @@ kbd,
 div [id^='TemplateDialog'] #tabcontrol #Area.jsdialog,
 #PageTemplateDialog #tabcontrol #Background.jsdialog {
 	align-self: start;
+}
+
+/* Apply label styling to static text for consistent appearance */
+#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
+#FormulaDialog #ALTBOX #funcdesc,
+#GotoPageDialog #grid1 #page_count {
+	margin: auto 0px;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
+	padding-left: inherit;
 }
