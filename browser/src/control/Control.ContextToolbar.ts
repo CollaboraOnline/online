@@ -63,7 +63,6 @@ class ContextToolbar extends JSDialogComponent {
 	}
 
 	showContextToolbarImpl(): void {
-		URLPopUpSection.closeURLPopUp();
 		this.pendingShow = false;
 
 		if (!this.initialized) {
@@ -101,7 +100,7 @@ class ContextToolbar extends JSDialogComponent {
 				window.L.DomUtil.addClass(this.container, 'hidden');
 				return;
 			}
-
+			URLPopUpSection.closeURLPopUp();
 			let statRect;
 			if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
 				return;
