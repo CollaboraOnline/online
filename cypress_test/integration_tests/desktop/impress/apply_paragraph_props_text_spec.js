@@ -12,9 +12,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 		cy.cGet('.close-navigation-button').click();
 		cy.cGet('#navigator-sidebar').should('not.exist');
-
-		desktopHelper.hideSidebarImpress();
-		cy.wait(500);
 	});
 
 	function selectText() {
