@@ -57,6 +57,7 @@ struct FakeSocketPair
     int connectingFd;
     bool shutdown[2];
     bool readable[2];
+    bool eofDetected[2];                      ///< Flag for fakeSocketHasAnyPendingActivityGlobal() to avoid a busy loop after EOF.
     std::vector<std::vector<char>> buffer[2];
 
     FakeSocketPair()
@@ -69,6 +70,8 @@ struct FakeSocketPair
         shutdown[1] = false;
         readable[0] = false;
         readable[1] = false;
+        eofDetected[0] = false;
+        eofDetected[1] = false;
     }
 };
 
@@ -203,58 +206,157 @@ static std::string pollBits(int bits)
     return result;
 }
 
+/**
+ * Scan a set of pollfds and set their revents according to the fake-socket state.
+ *
+ * Returns true if any pollfd has any revent ("returned event") set
+ * (ie. at least one fd is "ready").
+ */
 static bool checkForPoll(struct pollfd *pollfds, int nfds)
 {
     bool retval = false;
+
     for (int i = 0; i < nfds; i++)
     {
-        const int K = ((pollfds[i].fd)&1);
-        const int N = 1 - K;
+        struct pollfd &pfd = pollfds[i];
 
-        if (pollfds[i].fd < 0 || static_cast<unsigned>(pollfds[i].fd/2) >= fds.size())
+        const int fdRaw = pfd.fd;                                    // raw fd value from the pollfd
+        const unsigned pairIndex = static_cast<unsigned>(fdRaw / 2); // which FakeSocketPair
+        const int K = (fdRaw & 1);                                   // "this" endpoint index for the current FakeSocketPair
+        const int N = 1 - K;                                         // the "peer" endpoint index
+
+        // Validate the fd: negative or pair index out of range -> POLLNVAL
+        if (fdRaw < 0 || pairIndex >= fds.size())
         {
-            pollfds[i].revents = POLLNVAL;
+            pfd.revents = POLLNVAL;
             retval = true;
+            continue;
         }
-        else
+
+        // pairIndex is in range, check that the endpoint exists
+        const auto& currentPair = fds[pairIndex];
+        if (currentPair->fd[K] == -1)
         {
-            if (fds[pollfds[i].fd/2]->fd[K] == -1)
+            // this endpoint is closed
+            pfd.revents = POLLNVAL;
+            retval = true;
+            continue;
+        }
+
+        // start with no events to return
+        pfd.revents = 0;
+
+        // POLLIN readiness:
+        //  - readable[K] means there is a buffered record waiting to be read.
+        //  - For endpoint K==0 (the "listener" half), POLLIN also signals a pending accept
+        //    when listening && connectingFd != -1.
+        if (pfd.events & POLLIN)
+        {
+            if (currentPair->readable[K] ||
+                (K == 0 && currentPair->listening && currentPair->connectingFd != -1))
             {
-                pollfds[i].revents = POLLNVAL;
+                pfd.revents |= POLLIN;
                 retval = true;
             }
-            else
-                pollfds[i].revents = 0;
         }
 
-        if (pollfds[i].revents == 0)
+        // POLLOUT readiness:
+        // With multiple buffers, we consider the socket writable unless the peer
+        // endpoint is gone or has been shut down.
+        if (pfd.events & POLLOUT)
         {
-            if (pollfds[i].events & POLLIN)
+            if (currentPair->fd[N] != -1 && !currentPair->shutdown[N])
             {
-                if (fds[pollfds[i].fd/2]->readable[K] ||
-                    (K == 0 && fds[pollfds[i].fd/2]->listening && fds[pollfds[i].fd/2]->connectingFd != -1))
-                {
-                    pollfds[i].revents |= POLLIN;
-                    retval = true;
-                }
+                pfd.revents |= POLLOUT;
+                retval = true;
             }
-            // With multiple buffers, a socket is always writable unless the peer is closed or shut down
-            if (pollfds[i].events & POLLOUT)
+        }
+
+        // POLLHUP:
+        // If the peer has been shut down, report HUP unconditionally; even if the caller
+        // didn't request it in .events (mirrors the real poll()).
+        if (currentPair->shutdown[N])
+        {
+            pfd.revents |= POLLHUP;
+            retval = true;
+        }
+    }
+
+    return retval;
+}
+
+/**
+ * Scan all the 'fds' we have for fakeSockets, and check if any of them
+ * reports any activity, so that we should rather skip the wait()/wait_until()
+ * in fakeSocketWaitAny().
+ *
+ * NB: Must be called with theMutex held.
+ */
+static bool fakeSocketHasAnyPendingActivityGlobal()
+{
+    for (const auto& pairPtr : fds)
+    {
+        if (!pairPtr)
+            continue;
+
+        FakeSocketPair& p = *pairPtr;
+
+        // Endpoint 0 (even fd) and endpoint 1 (odd fd)
+        for (int K = 0; K < 2; ++K)
+        {
+            // Endpoint closed?
+            if (p.fd[K] == -1)
+                continue;
+
+            const int N = 1 - K;
+
+            // Pending accept on a listening socket?
+            // Only meaningful on K==0
+            if (K == 0 && p.listening && p.connectingFd != -1)
+                return true;
+
+            // Buffered data ready for this endpoint?
+            if (!p.buffer[K].empty())
+                return true;
+
+            // Peer shutdown/closed?
+            // Detect EOF via "readable[K]" so a read() can consume it (0 bytes).
+            // But in fakeSocketRead(), we explicitly stay readable after peer
+            // closed or shut down, so use a flag to return 'true' just once.
+            if ((p.shutdown[N] || p.fd[N] == -1) && p.readable[K] && !p.eofDetected[K])
             {
-                if (fds[pollfds[i].fd/2]->fd[N] != -1 && !fds[pollfds[i].fd/2]->shutdown[N])
-                {
-                    pollfds[i].revents |= POLLOUT;
-                    retval = true;
-                }
-            }
-            if (fds[pollfds[i].fd/2]->shutdown[N])
-            {
-                    pollfds[i].revents |= POLLHUP;
-                    retval = true;
+                p.eofDetected[K] = true; // mark EOF consumed
+                return true;
             }
         }
     }
-    return retval;
+    return false;
+}
+
+/**
+ * Wait for any event on any of the fake sockets (theCV is notified on write/close/connect/etc.)
+ */
+void fakeSocketWaitAny(int timeoutUs)
+{
+    if (timeoutUs == 0)
+        return;
+
+    std::unique_lock<std::mutex> lock(theMutex);
+
+    // This check must be run under theMutex taken, so that we
+    // don't enter wait()/wait_until() if we've got new events
+    // that we might have missed since the last poll()
+    if (fakeSocketHasAnyPendingActivityGlobal())
+        return;
+
+    if (timeoutUs < 0)
+    {
+        theCV.wait(lock);
+        return;
+    }
+
+    auto const deadline = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutUs);
+    theCV.wait_until(lock, deadline);
 }
 
 int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
@@ -630,7 +732,7 @@ int fakeSocketShutdown(int fd)
     }
 
     pair.shutdown[K] = true;
-    pair.readable[K] = true;
+    pair.readable[N] = true; // wake the peer to observe EOF
 
     theCV.notify_all();
 
