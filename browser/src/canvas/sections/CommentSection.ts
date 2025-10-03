@@ -461,6 +461,10 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private textAreaKeyDown (ev: any): void {
+		if ((<any>window).KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
+			return;
+		}
+
 		if (ev && ev.ctrlKey && ev.key === "Enter") {
 			this.map.mention?.closeMentionPopup(false);
 
