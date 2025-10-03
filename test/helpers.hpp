@@ -75,7 +75,13 @@ std::string genRandomString(const size_t size)
     for (size_t i = 0; i < size; ++i)
     {
         // Sensible characters only, avoiding 0x7f DEL
-        text += static_cast<char>('!' + Util::rng::getNext() % 94);
+        char c = static_cast<char>('!' + Util::rng::getNext() % 94);
+
+        // remove markdown-indicators for now
+        if (c == '|' || c == '_')
+            i--;
+        else
+            text += c;
     }
 
     return text;
