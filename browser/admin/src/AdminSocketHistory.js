@@ -28,9 +28,14 @@ var AdminSocketHistory = AdminSocketBase.extend({
 		this.base.call(this);
 
 		var socketHistory = this;
-		$('#refreshHistory').on('click', function () {
-			return socketHistory.refreshHistory();
-		});
+		const refreshHistoryBtn = document.getElementById('refreshHistory');
+		if (refreshHistoryBtn) {
+			refreshHistoryBtn.addEventListener('click', function () {
+				return socketHistory.refreshHistory();
+			});
+		} else {
+			console.warn('Element #refreshHistory not found');
+		}
 		this.refreshHistory();
 	},
 
@@ -44,8 +49,20 @@ var AdminSocketHistory = AdminSocketBase.extend({
 			jsonObj = JSON.parse(e.data);
 			var doc = jsonObj['History']['documents'];
 			var exdoc = jsonObj['History']['expiredDocuments'];
-			$('#json-doc').find('textarea').text(JSON.stringify(doc));
-			$('#json-ex-doc').find('textarea').text(JSON.stringify(exdoc));
+				const jsonDocEl = document.getElementById('json-doc');
+				if (jsonDocEl) {
+					const ta = jsonDocEl.querySelector('textarea');
+					if (ta) ta.textContent = JSON.stringify(doc);
+				} else {
+					console.warn('Element #json-doc not found');
+				}
+				const jsonExDocEl = document.getElementById('json-ex-doc');
+				if (jsonExDocEl) {
+					const ta2 = jsonExDocEl.querySelector('textarea');
+					if (ta2) ta2.textContent = JSON.stringify(exdoc);
+				} else {
+					console.warn('Element #json-ex-doc not found');
+				}
 		} catch (e) {
 			$('document').alert(e.message);
 		}
