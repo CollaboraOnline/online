@@ -1015,6 +1015,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
 				var item = data.tabs[tabIdx];
 
+				var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
+				contentDiv.id = item.name;
+				contentDiv.setAttribute('role', 'tabpanel');
+
 				var title = builder._cleanText(item.text);
 
 				var tab = window.L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
@@ -1022,6 +1026,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
+				tab.setAttribute('aria-controls', contentDiv.id);
 				builder._addAriaLabel(tab, item, builder);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
@@ -1052,10 +1057,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tabs[tabIdx] = tab;
 				tabIds[tabIdx] = item.name;
 
-				var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
-				contentDiv.id = item.name;
-				contentDiv.setAttribute('role', 'tabpanel');
-
 				if (!isSelectedTab)
 					$(contentDiv).addClass('hidden');
 				contentDivs[tabIdx] = contentDiv;
@@ -1075,144 +1076,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					});
 				});
 
-				var isTabVisible = function (tab) {
-					return !$(tab).hasClass('hidden');
-				};
-
-				var findNextVisibleTab = function(tab, backwards) {
-					const currentIndex = tabs.indexOf(tab);
-					const diff = backwards ? -1 : 1;
-					const total = tabs.length;
-
-					for (let i = 1; i <= total; i++) {
-						const nextIndex = (currentIndex + diff * i + total) % total;
-						const nextTab = tabs[nextIndex];
-						if (isTabVisible(nextTab)) {
-							return nextTab;
-						}
-					}
-
-					// Fallback to current tab if no visible one is found (shouldn't happen)
-					return tab;
-				};
-
-				var moveFocusToPreviousTab = function(tab) {
-					const nextTab = findNextVisibleTab(tab, true);
-					nextTab.click();
-					nextTab.focus(); // Prevent document from taking focus
-				};
-
-				var moveFocusToNextTab = function(tab) {
-					const nextTab = findNextVisibleTab(tab, false);
-					nextTab.click();
-					nextTab.focus(); // Prevent document from taking focus
-				};
-
-				var moveFocusIntoTabPage = function(tab) {
-					var tabIdx = tabs.indexOf(tab);
-					var currentElement = contentDivs[tabIdx];
-
-					function findFirstFocusableElement(currentNode)
-					{
-						var currentChildNodes = currentNode.childNodes;
-
-						if (currentChildNodes.length <= 0) {
-							return null;
-						}
-
-						for (var childIndex = 0; childIndex < currentChildNodes.length; childIndex++) {
-							var currentChildNode = currentChildNodes[childIndex];
-
-							if (currentChildNode.tabIndex === undefined) {
-								return null;
-							}
-							if (currentChildNode.tabIndex === -1) {
-								var firstFocusableElement = findFirstFocusableElement(currentChildNode);
-
-								if (firstFocusableElement !== null) {
-									return firstFocusableElement;
-								}
-							}
-							else
-							{
-								var classListContainsInvalidClass = false;
-								if (currentChildNode.classList !== undefined) {
-									classListContainsInvalidClass = currentChildNode.classList.contains('hidden') ||
-																	currentChildNode.classList.contains('jsdialog-begin-marker') ||
-																	currentChildNode.classList.contains('jsdialog-end-marker');
-								}
-
-								if (!currentChildNode.disabled && !currentChildNode.hidden && !classListContainsInvalidClass) {
-									var firstFocusableChild = findFirstFocusableElement(currentChildNode);
-									if (firstFocusableChild === null) {
-										return currentChildNode;
-									}
-									else {
-										return firstFocusableChild;
-									}
-								}
-							}
-						}
-
-						return null;
-					}
-
-					var firstFocusableElement = findFirstFocusableElement(currentElement);
-
-					if (firstFocusableElement !== null) {
-						firstFocusableElement.focus();
-					}
-				};
-
-				// We are adding this to distinguish "enter" key from real click events.
-				tabs.forEach(function (tab)
-					{
-						tab.addEventListener('keydown', function(e) {
-							var currentTab = e.currentTarget;
-
-							switch (e.key) {
-							case 'ArrowLeft':
-								moveFocusToPreviousTab(currentTab);
-								break;
-
-							case 'ArrowRight':
-								moveFocusToNextTab(currentTab);
-								break;
-
-							case 'ArrowDown':
-								moveFocusIntoTabPage(currentTab);
-								break;
-
-							case 'Home':
-							{
-								var firstTab = tabs[0];
-								if (!isTabVisible(firstTab))
-									firstTab = findNextVisibleTab(firstTab, false);
-								firstTab.focus();
-								break;
-							}
-
-							case 'End':
-							{
-								var lastTab = tabs[tabs.length - 1];
-								if (!isTabVisible(lastTab))
-									lastTab = findNextVisibleTab(lastTab, true);
-								lastTab.focus();
-								break;
-							}
-
-							case 'Enter':
-							case ' ':
-								tab.enterPressed = true;
-								break;
-
-							case 'Escape':
-								builder.map.focus();
-								break;
-							}
-						});
-					}
-				);
+				// Initialize keyboard navigation for tabs
+				JSDialog.KeyboardTabNavigation(tabs, contentDivs);
 			} else {
 				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
