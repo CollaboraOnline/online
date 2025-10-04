@@ -18,6 +18,8 @@ class GraphicSelection {
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
 	public static handlesSection: ShapeHandlesSection = null;
+	public static chartContextToolbar0: ChartContextButtonSection = null;
+	public static chartContextToolbar1: ChartContextButtonSection = null;
 
 	public static hasActiveSelection() {
 		return this.rectangle !== null;
@@ -237,6 +239,38 @@ class GraphicSelection {
 		else if (this.handlesSection) this.handlesSection.setSVG(textMsg);
 	}
 
+	private static checkChartData() {
+		if (
+			GraphicSelection.extraInfo &&
+			GraphicSelection.extraInfo.isChartPage &&
+			GraphicSelection.extraInfo.isChartPage === true
+		) {
+			if (!GraphicSelection.chartContextToolbar0) {
+				GraphicSelection.chartContextToolbar0 = new ChartContextButtonSection(
+					0,
+				);
+				GraphicSelection.chartContextToolbar1 = new ChartContextButtonSection(
+					1,
+				);
+				app.sectionContainer.addSection(GraphicSelection.chartContextToolbar0);
+				app.sectionContainer.addSection(GraphicSelection.chartContextToolbar1);
+			}
+			if (GraphicSelection.chartContextToolbar0) {
+				GraphicSelection.chartContextToolbar0.showChartContextToolbar();
+				GraphicSelection.chartContextToolbar1.showChartContextToolbar();
+			}
+		} else if (GraphicSelection.chartContextToolbar0) {
+			app.sectionContainer.removeSection(
+				GraphicSelection.chartContextToolbar0.name,
+			);
+			app.sectionContainer.removeSection(
+				GraphicSelection.chartContextToolbar1.name,
+			);
+			GraphicSelection.chartContextToolbar0 = null;
+			GraphicSelection.chartContextToolbar1 = null;
+		}
+	}
+
 	public static onMessage(textMsg: string) {
 		URLPopUpSection.closeURLPopUp();
 
@@ -354,6 +388,8 @@ class GraphicSelection {
 				this.onEmbeddedVideoContent(JSON.stringify(extraInfo));
 			}
 		}
+
+		GraphicSelection.checkChartData();
 	}
 }
 
