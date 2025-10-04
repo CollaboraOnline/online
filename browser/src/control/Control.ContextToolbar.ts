@@ -118,6 +118,11 @@ class ContextToolbar extends JSDialogComponent {
 			this.container.style.left = pos.x + 'px';
 			this.container.style.top = pos.y + 'px';
 			window.L.DomUtil.removeClass(this.container, 'hidden');
+			if (this.container.getBoundingClientRect().right > window.innerWidth) {
+				pos.x -=
+					this.container.getBoundingClientRect().right - window.innerWidth + 5;
+			}
+			this.container.style.left = pos.x + 'px';
 		});
 	}
 
