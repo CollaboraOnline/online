@@ -18,14 +18,11 @@
 class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 	static tableAnchorIconSize = [20, 20]; // CSS pixels.
 
-	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
+	constructor (parentHandlerSection: ShapeHandlesSection | null, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
         super(sectionName, size[0], size[1], documentPosition, 'anchor-marker');
 
-		this.getHTMLObject().style.opacity = 1;
-		this.getHTMLObject().remove();
-		document.getElementById('map').appendChild(this.getHTMLObject());
-
-		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		this.moveHTMLObjectToMapElement();
+		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
         this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;

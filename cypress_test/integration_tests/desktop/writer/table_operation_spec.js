@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	it('Insert row before.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#insert .unoInsertRowsBefore').click();
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
+		cy.cGet('.table-row-resize-marker').should('have.length', 4);
 
 		selectFullTable();
 
@@ -41,7 +41,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	it('Insert row after.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#insert .unoInsertRowsAfter').click();
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
+		cy.cGet('.table-row-resize-marker').should('have.length', 4);
 
 		selectFullTable();
 
@@ -60,7 +60,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 		cy.cGet('#insert .unoInsertColumnsBefore').click();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
+		cy.cGet('.table-column-resize-marker').should('have.length', 4);
 
 		selectFullTable();
 
@@ -79,7 +79,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#insert .unoInsertColumnsAfter').click();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
+		cy.cGet('.table-column-resize-marker').should('have.length', 4);
 
 		selectFullTable();
 
@@ -97,7 +97,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#delete .unoDeleteRows').click();
 
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 2);
+		cy.cGet('.table-row-resize-marker').should('have.length', 2);
 
 		selectFullTable();
 
@@ -115,11 +115,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		// Insert column first
 		cy.cGet('#insert .unoInsertColumnsBefore').click();
 
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
+		cy.cGet('.table-column-resize-marker').should('have.length', 4);
 
 		// Then delete it
 		cy.cGet('#delete .unoDeleteColumns').click();
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 3);
+		cy.cGet('.table-column-resize-marker').should('have.length', 3);
 	});
 
 	it('Delete table.', function() {

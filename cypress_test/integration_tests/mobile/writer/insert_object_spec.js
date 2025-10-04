@@ -41,7 +41,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Push insert table button
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		// Two rows
@@ -62,7 +62,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Push insert table button
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		// Three rows
