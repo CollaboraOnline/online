@@ -1772,6 +1772,7 @@ void Document::notifyViewInfo()
                         "SignatureKey",
                         "SignatureCa",
                     };
+                    // later todo replace here?
                     replaceKeysWithPlaceholder(userPrivateInfo, keys);
                     oss << ",\"userprivateinfo\":" << userPrivateInfo;
                 }
@@ -1781,6 +1782,7 @@ void Document::notifyViewInfo()
                     std::initializer_list<std::string> keys = {
                         "ESignatureSecret",
                     };
+                    // later todo replace here?
                     replaceKeysWithPlaceholder(serverPrivateInfo, keys);
                     oss << ",\"serverprivateinfo\":" << serverPrivateInfo;
                 }
@@ -2354,6 +2356,7 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
         renderOptsObj->set(".uno:Author", makePropertyValue("string", userName));
     }
 
+    // todo
     // Extract settings relevant as view options from userPrivateInfo.
     std::string signatureCa;
     JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCa", signatureCa);
