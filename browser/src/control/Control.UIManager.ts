@@ -983,7 +983,9 @@ class UIManager extends window.L.Control {
 		var found = false;
 		if (this.getCurrentMode() === 'classic') {
 			found = this.showButtonInClassicToolbar(buttonId, show);
-		} else {
+		}
+
+		if (this.notebookbar) {
 			if (show) {
 				delete this.hiddenButtons[buttonId];
 			} else {
@@ -1067,7 +1069,9 @@ class UIManager extends window.L.Control {
 		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
-		} else {
+		}
+
+		if (this.notebookbar) {
 			this.notebookbar.reloadShortcutsBar();
 			found ||= this.notebookbar.showNotebookbarCommand(command, show);
 		}
