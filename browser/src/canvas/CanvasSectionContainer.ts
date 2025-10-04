@@ -577,10 +577,30 @@ class CanvasSectionContainer {
 		while (layoutingService.runTheTopTask());
 	}
 
-	private resizeCanvas() {
-		if (!this.needsResize) {
-			return;
+	private isCanvasSizeValidAfterDisplayChange(): boolean {
+		/*
+			In some situations, we receive resize events that cause the canvas to size to 0x0 and we don't receive a subsequent
+			resize event when the size is restored. As a work-around, if we have a zero-sized canvas,
+			double-check the document container size to see if we've missed a resize event
+		*/
+		if (this.width === 0 || this.height === 0) {
+			const documentContainer = document.getElementById('document-container');
+			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
+				if (app.map._docLayer) {
+					app.map._docLayer._syncTileContainerSize(true);
+					app.activeDocument.activeView.sendClientVisibleArea();
+					this.requestReDraw();
+					return false;
+				}
+			}
 		}
+
+		return true;
+	}
+
+	private resizeCanvas() {
+		if (!this.needsResize)
+			return;
 
 		this.needsResize = false;
 		this.canvas.width = this.width;
@@ -599,8 +619,10 @@ class CanvasSectionContainer {
 	private redrawCallback(timestamp: number) {
 		this.drawRequest = null;
 
-		this.resizeCanvas();
+		if (!this.isCanvasSizeValidAfterDisplayChange())
+			return;
 
+		this.resizeCanvas();
 		this.drawSections();
 		this.flushLayoutingTasks();
 		this.canvas.style.visibility = 'unset';
