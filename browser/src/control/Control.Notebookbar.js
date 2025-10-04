@@ -338,13 +338,13 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	showNotebookbarButton: function(buttonId, show) {
+		// TODO: JSDialog native hasItem
 		var button = $(this.container).find('#' + buttonId);
 		if (button) {
-			if (show) {
-				button.show();
-			} else {
-				button.hide();
-			}
+			if (show)
+				this.showItem(buttonId);
+			else
+				this.hideItem(buttonId);
 			return true;
 		} else {
 			return false;
@@ -360,6 +360,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		}
 		var button = $(this.container).find('div.' + cssClass);
 		if (button) {
+			// TODO: remember state like this.showItem
 			if (show) {
 				button.show();
 			} else {
