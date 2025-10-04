@@ -281,7 +281,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private calculateAvailableSpace() {
-		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
+		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX);
 		availableSpace = Math.round(availableSpace / app.dpiScale);
 		return availableSpace;
 	}
@@ -290,8 +290,13 @@ export class CommentSection extends CanvasSectionObject {
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
+		const availableSpaceOnTheRight = availableSpace * 0.5;
+		if (this.sectionProperties.commentWidth > availableSpaceOnTheRight && this.sectionProperties.commentWidth < availableSpace) {
+			app.activeDocument.activeView.viewedRectangle.pX1 = availableSpaceOnTheRight - this.sectionProperties.commentWidth;
+			return false;
+		}
 
-		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
+		return availableSpaceOnTheRight < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
 	}
 
 	public hideAllComments (): void {
@@ -2035,6 +2040,8 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.canvasContainerLeft = document.getElementById('document-container').getBoundingClientRect().left;
 		this.sectionProperties.canvasContainerTop = document.getElementById('document-container').getBoundingClientRect().top;
 
+		// TODO: change the code below based on what calculateAvailableSpace ends
+		// up returning in the final patch.
 		const availableSpace = this.calculateAvailableSpace();
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
