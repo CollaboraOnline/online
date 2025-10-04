@@ -39,7 +39,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (ids.length === 2) {
 			menuId = ids[1];
 			data.id = ids[0];
-		} else {
+		} else if (!data.menu){
 			console.error('Menubutton without correct menu id: ' + data.id);
 		}
 	}
