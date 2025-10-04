@@ -932,10 +932,13 @@ class UIManager extends window.L.Control {
 
 		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
-		else if (this.notebookbar)
+
+		// we always  create notebookbar component, it should get the button in advance
+		// in case of mode switch done by user later
+		if (this.notebookbar)
 			this.notebookbar.insertButtonToShortcuts(button);
 		else
-			app.console.debug('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
+			app.console.error('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
 	}
 
 	/**
@@ -980,7 +983,9 @@ class UIManager extends window.L.Control {
 		var found = false;
 		if (this.getCurrentMode() === 'classic') {
 			found = this.showButtonInClassicToolbar(buttonId, show);
-		} else {
+		}
+
+		if (this.notebookbar) {
 			if (show) {
 				delete this.hiddenButtons[buttonId];
 			} else {
@@ -1064,7 +1069,9 @@ class UIManager extends window.L.Control {
 		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
-		} else {
+		}
+
+		if (this.notebookbar) {
 			this.notebookbar.reloadShortcutsBar();
 			found ||= this.notebookbar.showNotebookbarCommand(command, show);
 		}
