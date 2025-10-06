@@ -33,6 +33,12 @@ class QuickFindPanel extends SidebarBase {
 	onJSUpdate(e: FireEvent) {
 		var data = e.data;
 
+		if (
+			data.control.id === 'searchfinds' &&
+			data.control.type === 'treelistbox'
+		)
+			e.data.control.ignoreFocus = true;
+
 		if (!super.onJSUpdate(e)) return false;
 
 		// handle placeholder text and quickfind controls visibility

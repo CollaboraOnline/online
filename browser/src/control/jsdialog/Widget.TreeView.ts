@@ -81,6 +81,7 @@ class TreeViewControl {
 	readonly PAGE_ENTRY_PREFIX = '-$#~';
 	readonly PAGE_ENTRY_SUFFIX = '~#$-';
 	readonly PAGE_DIVIDER_ROW_CLASS = 'page-divider-row';
+	_ignoreFocus: boolean = false;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container = window.L.DomUtil.create(
@@ -91,6 +92,7 @@ class TreeViewControl {
 		this._rows = new Map<string, HTMLElement>();
 		if (data.labelledBy)
 			this._container.setAttribute('aria-labelledby', data.labelledBy);
+		if (data.ignoreFocus !== undefined) this._ignoreFocus = data.ignoreFocus;
 	}
 
 	get Container() {
@@ -959,7 +961,7 @@ class TreeViewControl {
 		window.L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
-		if (this._container.id !== 'searchfinds') span.focus();
+		if (!this._ignoreFocus) span.focus();
 
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
