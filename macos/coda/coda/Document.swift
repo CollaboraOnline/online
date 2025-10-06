@@ -9,6 +9,9 @@
  */
 
 import Cocoa
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
 import PDFKit
 import WebKit
 
@@ -44,6 +47,9 @@ class Document: NSDocument {
     private var modifiedLock = NSLock()
     private var _isModified: Bool = false
 
+    /// Observe the fileURL changes, so that we can remember the window size per document.
+    private var fileURLObservation: NSKeyValueObservation?
+
     /**
      * Modified status mirrored from the core.
      */
@@ -70,12 +76,12 @@ class Document: NSDocument {
         }
     }
 
-    // MARK: - Initialization
+    // MARK: - deinit
 
-    override init() {
-        super.init()
-        // Initialization code here.
+    deinit {
+        fileURLObservation?.invalidate()
     }
+
 
     // MARK: - NSDocument Overrides
 
@@ -88,6 +94,9 @@ class Document: NSDocument {
 
     /**
      * Creates the window controllers for the document.
+     *
+     * Default to a nicer size when opening the document the 1st time, or update
+     * the window size according to what we remember (per document).
      */
     override func makeWindowControllers() {
         // Load the storyboard and get the window controller.
@@ -96,10 +105,36 @@ class Document: NSDocument {
         guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? WindowController else {
             fatalError("Unable to find DocumentWindowController in storyboard.")
         }
-        self.addWindowController(windowController)
+
+        // Assign a per-document autosave name early
+        let initialName = FrameAutosaveHelper.keyName(for: self)
+        windowController.windowFrameAutosaveName = initialName
+        windowController.shouldCascadeWindows = false
+
+        addWindowController(windowController)
 
         if let viewController = windowController.contentViewController as? ViewController {
             viewController.loadDocument(self)
+        }
+
+        // Ensure the window exists so we can apply a default if no saved frame yet
+        windowController.loadWindow()
+        if let win = windowController.window, !win.setFrameUsingName(initialName) {
+            FrameAutosaveHelper.applyDefaultFrame(win, widthFraction: 0.95, heightFraction: 0.95)
+        }
+
+        // Observe fileURL so we can switch/migrate the autosave key after first save/rename.
+        fileURLObservation = observe(\.fileURL, options: [.new]) { [weak windowController] doc, _ in
+            guard let wc = windowController else { return }
+            let oldName = wc.windowFrameAutosaveName
+            let newName = FrameAutosaveHelper.keyName(for: doc)
+            if newName == oldName { return }
+
+            FrameAutosaveHelper.migrateSavedFrame(from: oldName, to: newName)
+            wc.windowFrameAutosaveName = newName
+
+            // If there’s already a window, try to apply the stored frame for the new key.
+            if let win = wc.window { _ = win.setFrameUsingName(newName) }
         }
     }
 
@@ -325,5 +360,82 @@ class Document: NSDocument {
                 }
             }
         }
+    }
+}
+
+/**
+ * Helper class containing functions for handling autosaving the size of the window.
+ */
+private class FrameAutosaveHelper {
+
+    /**
+     * Resize window to fractions of visible width & height, and center it on the target screen.
+     */
+    static func applyDefaultFrame(_ window: NSWindow, widthFraction: CGFloat, heightFraction: CGFloat) {
+        // Choose the screen the window will appear on (fallback to main/first if unknown).
+        let screen = window.screen ?? NSScreen.main ?? NSScreen.screens.first!
+        let vf = screen.visibleFrame
+
+        // Fraction for width and height
+        let targetW = floor(vf.width * widthFraction)
+        let targetH = floor(vf.height * heightFraction)
+
+        let minSize = window.minSize
+        let maxSize = window.maxSize
+
+        // Respect any min/max constraints the window may have
+        let clampedW = max(minSize.width, min(maxSize.width > 0 ? maxSize.width : .greatestFiniteMagnitude, targetW))
+        let clampedH = max(minSize.height, min(maxSize.height > 0 ? maxSize.height : .greatestFiniteMagnitude, targetH))
+
+        // Position so that the window is centered
+        let x = vf.origin.x + (vf.width - clampedW) / 2.0
+        let y = vf.origin.y + (vf.height - clampedH) / 2.0
+
+        let clampedFrame = NSRect(x: x, y: y, width: clampedW, height: clampedH)
+
+        window.setFrame(clampedFrame, display: false, animate: false)
+    }
+
+    /// Stable per-doc name. Untitled docs share one bucket so they all use the default layout.
+    static func keyName(for doc: NSDocument) -> String {
+        guard let url = doc.fileURL else { return "DocWindow-untitled" }
+
+        if let stable = stableIdentityKey(for: url) {
+            return "DocWindow-\(stable)"
+        } else {
+            // Fallback: based on standardized path (won’t survive moves/renames, but deterministic)
+            return "DocWindow-path-\(hashHex(url.standardizedFileURL.path))"
+        }
+    }
+
+    /// Try to build a move/rename-resistant identity from the file + volume IDs.
+    private static func stableIdentityKey(for url: URL) -> String? {
+        do {
+            let vals = try url.resourceValues(forKeys: [.fileResourceIdentifierKey, .volumeIdentifierKey])
+            guard let fid = vals.fileResourceIdentifier, let vid = vals.volumeIdentifier else { return nil }
+            return "id-\(hashHex("\(vid)|\(fid)"))"
+        } catch { return nil }
+    }
+
+    static func migrateSavedFrame(from old: String, to new: String) {
+        let defaults = UserDefaults.standard
+        let oldKey = "NSWindow Frame \(old)"
+        let newKey = "NSWindow Frame \(new)"
+        if let v = defaults.string(forKey: oldKey) {
+            defaults.set(v, forKey: newKey)
+        }
+    }
+
+    private static func hashHex(_ s: String) -> String {
+        let data = Data(s.utf8)
+        #if canImport(CryptoKit)
+        let digest = SHA256.hash(data: data)
+        return digest.map { String(format: "%02x", $0) }.joined()
+        #else
+        // Deterministic FNV-1a 64-bit fallback
+        var h: UInt64 = 0xcbf29ce484222325
+        for b in data { h ^= UInt64(b); h &*= 0x100000001b3 }
+        return String(format: "%016llx", h)
+        #endif
     }
 }
