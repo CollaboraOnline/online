@@ -20,6 +20,8 @@ interface PainterInterface {
 }
 
 interface DocLayerInterface {
+	_toolbarCommandValues: any;
+
 	_getViewId(): string;
 	_painter: PainterInterface;
 	_docType: string;

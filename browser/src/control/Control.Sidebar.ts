@@ -18,12 +18,12 @@ class Sidebar extends SidebarBase {
 	targetDeckCommand: string;
 	isUserRequest: boolean; /// automatic or user request to show the sidebar
 
-	constructor(map: any) {
+	constructor(map: MapInterface) {
 		super(map, SidebarType.Sidebar);
 		this.isUserRequest = true;
 	}
 
-	onAdd(map: ReturnType<typeof window.L.map>) {
+	onAdd(map: MapInterface) {
 		super.onAdd(map);
 		this.map.on('sidebar', this.onSidebar, this);
 	}
@@ -170,6 +170,6 @@ class Sidebar extends SidebarBase {
 	}
 }
 
-JSDialog.Sidebar = function (map: any) {
+JSDialog.Sidebar = function (map: MapInterface) {
 	return new Sidebar(map);
 };
