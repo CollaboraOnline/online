@@ -3,7 +3,11 @@
  * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection */
+/*
+	global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon
+	Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection
+	TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection FormFieldButton
+*/
 
 function clamp(num, min, max)
 {
@@ -3417,11 +3421,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		textMsg = textMsg.substring('formfieldbutton:'.length + 1);
 		var json = JSON.parse(textMsg);
 		if (json.action === 'show') {
-			this._formFieldButton = new window.L.FormFieldButton(json);
-			this._map.addLayer(this._formFieldButton);
-		} else if (this._formFieldButton) {
-			this._map.removeLayer(this._formFieldButton);
-		}
+			if (this._formFieldButton)
+				app.sectionContainer.removeSection(this._formFieldButton.name);
+
+			this._formFieldButton = new FormFieldButton(json);
+			app.sectionContainer.addSection(this._formFieldButton);
+		} else if (this._formFieldButton)
+			app.sectionContainer.removeSection(this._formFieldButton.name);
 	},
 
 	// converts rectangle in print-twips to tile-twips rectangle of the smallest cell-range that encloses it.
