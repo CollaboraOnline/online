@@ -921,6 +921,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DCOOL_CSS="$(subst $(SPACE),$(COMMA),$(COOL_CSS_M4))" \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DVENDOR="$(VENDOR)" \
+		-DINFO_URL="$(INFO_URL)" \
 		$(srcdir)/html/cool.html.m4 > $@
 
 node_modules: package.json archived-packages

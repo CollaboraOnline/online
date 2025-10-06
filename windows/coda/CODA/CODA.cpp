@@ -669,6 +669,11 @@ static void do_clipboard_set(int appDocId, const char* text)
                                                             streams.data());
 }
 
+static void do_open_hyperlink(HWND hWnd, std::wstring url)
+{
+    ShellExecuteW(hWnd, NULL, url.c_str(), NULL, NULL, SW_SHOW);
+}
+
 static FilenameAndUri fileOpenDialog()
 {
     IFileOpenDialog* dialog;
@@ -1023,6 +1028,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s.starts_with(L"CLIPBOARDSET "))
         {
             do_clipboard_set(data.appDocId, Util::wide_string_to_string(s.substr(13)).c_str());
+        }
+        else if (s.starts_with(L"HYPERLINK "))
+        {
+            do_open_hyperlink(data.hWnd, s.substr(10));
         }
         else if (s.starts_with(L"downloadas "))
         {

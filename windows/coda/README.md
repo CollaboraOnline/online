@@ -154,10 +154,12 @@ a Debug configuration of the CODA project, and the Release libraries
 in a Release configuration. There is some slightly questionable
 #pragmas in <Poco/Foundation.h> to take care of that.)
 
-	./configure --enable-windowsapp --with-app-name=CODA --with-lo-builddir=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release --with-lo-path='C:\cygwin64\home\tml\lo\core-gitlab-coda25-coda-release\instdir' --with-poco-includes=/mnt/c/Users/tml/poco-poco-1.14.2-release/include --with-poco-libs=/mnt/c/Users/tml/poco-poco-1.14.2-release/lib64 --with-zstd-includes=/mnt/c/Users/tml/zstd-1.5.7/lib --with-zstd-libs=/mnt/c/Users/tml/zstd-1.5.7/build/VS2010/bin/x64_Release --with-libpng-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/UnpackedTarball/libpng --with-libpng-libs=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/LinkTarget/StaticLibrary --with-zlib-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/UnpackedTarball/zlib
+	./configure --enable-windowsapp --with-app-name=CODA --with-lo-builddir=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release --with-lo-path='C:\cygwin64\home\tml\lo\core-gitlab-coda25-coda-release\instdir' --with-poco-includes=/mnt/c/Users/tml/poco-poco-1.14.2-release/include --with-poco-libs=/mnt/c/Users/tml/poco-poco-1.14.2-release/lib64 --with-zstd-includes=/mnt/c/Users/tml/zstd-1.5.7/lib --with-zstd-libs=/mnt/c/Users/tml/zstd-1.5.7/build/VS2010/bin/x64_Release --with-libpng-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/UnpackedTarball/libpng --with-libpng-libs=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/LinkTarget/StaticLibrary --with-zlib-includes=/mnt/c/cygwin64/home/tml/lo/core-gitlab-coda25-coda-release/workdir/UnpackedTarball/zlib --with-info-url=https://example.com/coda/info.html
 
 Obviously, adapt as necessary to match your username and where you
-built LibreOffice, zstd, and Poco.
+built LibreOffice, zstd, and Poco. Also change the --with-info-url as
+appropriate. That is the web page that will be shown when clicking the
+leftmost button in the toolbar.
 
 Now you can build the JavaScript bits:
 
