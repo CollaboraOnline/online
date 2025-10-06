@@ -301,18 +301,22 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 					this.position[1];
 				this.context.strokeStyle = '#3388FF';
 				this.context.lineWidth = 2;
+				this.context.beginPath();
 				this.context.moveTo(this.size[0] / 2, this.size[1]);
 				this.context.lineTo(this.size[0] / 2, bottomy);
 				this.context.stroke();
+				this.context.closePath();
 			} else {
 				const rightX =
 					app.activeDocument.tableMiddleware.getTableRightX() -
 					this.position[0];
 				this.context.strokeStyle = '#3388FF';
 				this.context.lineWidth = 2;
+				this.context.beginPath();
 				this.context.moveTo(this.size[0], this.size[1] / 2);
 				this.context.lineTo(this.size[0] + rightX, this.size[1] / 2);
 				this.context.stroke();
+				this.context.closePath();
 			}
 		}
 	}
