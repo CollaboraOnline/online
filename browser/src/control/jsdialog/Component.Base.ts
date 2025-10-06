@@ -16,14 +16,14 @@
  */
 
 abstract class JSDialogComponent {
-	protected map: any;
+	protected map: MapInterface;
 	protected name: string;
 	protected builder?: JSBuilder;
 	protected container?: HTMLElement;
 	protected allowedJsonType: string;
 	protected model: JSDialogModelState;
 
-	constructor(map: any, name: string, allowedJsonType: string) {
+	constructor(map: MapInterface, name: string, allowedJsonType: string) {
 		this.map = map;
 		this.name = name;
 		this.allowedJsonType = allowedJsonType;

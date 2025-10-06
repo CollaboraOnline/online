@@ -23,7 +23,7 @@ class Toolbar extends JSDialogComponent {
 	protected parentContainer: Element; // FIXME: can we drop as we have container in base?
 	protected customItems: Array<ToolItemWidgetJSON>;
 
-	constructor(map: any, name: string, toolbarElementId: string) {
+	constructor(map: MapInterface, name: string, toolbarElementId: string) {
 		super(map, name, 'toolbar');
 
 		this.docType = map.getDocType();

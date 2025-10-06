@@ -29,7 +29,7 @@ abstract class SidebarBase extends JSDialogComponent {
 	documentContainer: HTMLDivElement;
 	wrapper: HTMLElement;
 
-	constructor(map: any, type: SidebarType) {
+	constructor(map: MapInterface, type: SidebarType) {
 		super(map, type, type);
 		this.type = type;
 		this.onAdd(map);
@@ -59,7 +59,7 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.documentContainer = document.querySelector('#document-container');
 	}
 
-	onAdd(map: any) {
+	onAdd(map: MapInterface) {
 		this.map = map;
 		this.createBuilder();
 		this.setupContainer(undefined);

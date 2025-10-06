@@ -32,7 +32,7 @@ interface WidgetJSON {
 interface JSBuilderOptions {
 	cssClass: string; // class added to every widget root
 	windowId: number; // window id to be sent with dialogevent
-	map: any; // reference to map
+	map: MapInterface; // reference to map
 	mobileWizard: JSDialogComponent; // reference to the parent component FIXME: rename
 	useSetTabs?: boolean; // custom tabs placement handled by the parent container
 	useScrollAnimation?: boolean; // do we use animation for scrollIntoView
@@ -49,7 +49,7 @@ interface JSBuilder {
 	_menus: Map<string, Array<MenuDefinition>>;
 
 	options: JSBuilderOptions; // current state
-	map: any; // reference to map
+	map: MapInterface; // reference to map
 	rendersCache: any; // on demand content cache
 
 	build: (

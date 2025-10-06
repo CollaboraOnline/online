@@ -35,14 +35,16 @@ interface MapInterface extends Evented {
 
 	sendUnoCommand(unoCmd: string): void;
 
+	getDocType(): 'text' | 'presentation' | 'spreadsheet' | 'drawing';
+	isText(): boolean;
+	isPresentationOrDrawing(): boolean;
+
 	getDocSize(): cool.Point;
 	getSize(): cool.Point;
 	getCenter(): { lat: number; lng: number };
+	_getCurrentFontName(): string;
 
 	_docLoadedOnce: boolean;
-
-	sidebar: Sidebar;
-
 	_debug: DebugManager;
 	_fatal: boolean;
 	_docPassword: string;
@@ -91,12 +93,23 @@ interface MapInterface extends Evented {
 	welcome: WelcomeInterface;
 	_setLockProps(lockInfo: ParsedJSONResult): void;
 	_setRestrictions(restrictionInfo: ParsedJSONResult): void;
+	hideRestrictedItems(it: any, item: any, button: any): void;
+	disableLockedItem(it: any, item: any, button: any): void;
 	openUnlockPopup(cmd: ParsedJSONResult): void;
+	isLockedUser(): boolean;
+	isRestrictedUser(): boolean;
+
+	focus(): void;
+	editorHasFocus(): boolean;
 
 	_fireInitComplete(condition: string): void;
 	sendInitUNOCommands(): void;
 	initTextInput(docType: string): void;
 	saveAs(filenme: string, format?: string, options?: string): void;
 
+	addControl(control: any): void;
+
 	menubar: Menubar;
+	userList: UserList;
+	sidebar: Sidebar;
 }
