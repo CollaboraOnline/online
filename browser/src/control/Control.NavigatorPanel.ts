@@ -509,9 +509,11 @@ class NavigatorPanel extends SidebarBase {
 		builder: JSBuilder,
 	) {
 		// Switch to "Results tab" first.
-		const resultsTab = document.getElementById('tab-quick-find');
-		if (resultsTab && !resultsTab.classList.contains('selected'))
-			resultsTab.click();
+		if (eventType === 'activate') {
+			const resultsTab = document.getElementById('tab-quick-find');
+			if (resultsTab && !resultsTab.classList.contains('selected'))
+				resultsTab.click();
+		}
 
 		const nextButtonContainer = document.getElementById('findnext');
 		const nextButton = nextButtonContainer.querySelector('button');
