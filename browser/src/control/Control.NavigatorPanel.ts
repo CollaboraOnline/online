@@ -483,18 +483,22 @@ class NavigatorPanel extends SidebarBase {
 		this.builder.build(wrapper, [data], false);
 	}
 
-	override callback(
+	useDefaultCallback(
 		objectType: string,
 		eventType: string,
 		object: any,
 		data: any,
 		builder: JSBuilder,
-	): void {
-		if (!['navigator-search-button', 'navigator-search'].includes(object.id)) {
-			super.callback(objectType, eventType, object, data, builder);
-			return;
-		}
+	) {
+		super.callback(objectType, eventType, object, data, builder);
+	}
 
+	useSearchCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		builder: JSBuilder,
+	) {
 		// Switch to "Results tab" first.
 		const resultsTab = document.getElementById('tab-quick-find');
 		if (resultsTab && !resultsTab.classList.contains('selected'))
@@ -529,6 +533,21 @@ class NavigatorPanel extends SidebarBase {
 		if (eventType === 'activate') {
 			var treeContainer = document.getElementById('contenttree') as any;
 			if (treeContainer) treeContainer.highlightEntries(searchTerm);
+		}
+	}
+
+	override callback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	): void {
+		if (!['navigator-search-button', 'navigator-search'].includes(object.id)) {
+			this.useDefaultCallback(objectType, eventType, object, data, builder);
+			return;
+		} else {
+			this.useSearchCallback(objectType, eventType, object, builder);
 		}
 	}
 }
