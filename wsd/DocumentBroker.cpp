@@ -1691,6 +1691,81 @@ void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
     }
 }
 
+/*
+These functions are helpers for backward compatibility
+In older versions of Richdocument, Zotero API keys were handled by RD
+In newer versions of RD and COOL(25.04.5), the Zotero key is saved in AdminIntegratorSettings
+The following functions help to transfer the Zotero key from RD to COOL without user action
+Without this, the user will have to re-enter the api key in settings or Zotero settings
+will disappear, making the user think functionality is broken
+*/
+void uploadRDZoteroAPIKey(const std::shared_ptr<ClientSession>& session, std::string& zoteroAPIKey,
+                          const Poco::JSON::Object::Ptr& viewsetting,
+                          std::string& viewSettingsString)
+{
+    const_cast<Poco::JSON::Object::Ptr&>(viewsetting)->set("zoteroAPIKey", zoteroAPIKey);
+
+    Poco::URI wopiUri = DocumentBroker::getPresetUploadBaseUrl(session->getPublicUri());
+    if (wopiUri.getPath().starts_with("/index.php"))
+        wopiUri.setPath(wopiUri.getPath().substr(10));
+    wopiUri.addQueryParameter("fileId", "/settings/userconfig/viewsetting/viewsetting.json");
+
+    auto httpRequest =
+        StorageConnectionManager::createHttpRequest(wopiUri, session->getAuthorization());
+    httpRequest.setVerb(http::Request::VERB_POST);
+
+    httpRequest.set("Content-Type", "application/octet-stream");
+
+    viewSettingsString = JsonUtil::jsonToString(viewsetting);
+    httpRequest.setBody(viewSettingsString);
+
+    auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
+    httpSession->setFinishedHandler(
+        [](const std::shared_ptr<http::Session>& wopiSession)
+        {
+            wopiSession->asyncShutdown();
+            const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
+            const http::StatusLine statusLine = httpResponse->statusLine();
+            if (statusLine.statusCode() != http::StatusCode::OK)
+            {
+                LOG_ERR("Failed to upload Richdocument Zotero API key to viewSettings.");
+                return;
+            }
+            LOG_INF("Successfully uploaded Richdocument Zotero API key to viewSettings.");
+        });
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
+}
+
+void fetchAndReuseRDZoteroAPIKey(const std::shared_ptr<ClientSession>& session,
+                                 std::string& zoteroAPIKey,
+                                 const Poco::JSON::Object::Ptr& viewsetting,
+                                 std::string& viewSettingsString)
+{
+    const std::string& userPrivateInfo = session->getUserPrivateInfo();
+    Object::Ptr userPrivateInfoObj;
+    Poco::JSON::Parser parser;
+    Poco::Dynamic::Var var;
+    try
+    {
+        var = parser.parse(userPrivateInfo);
+        userPrivateInfoObj = var.extract<Object::Ptr>();
+    }
+    catch (const std::exception& exception)
+    {
+        LOG_DBG("User private data is not a dictionary: " << exception.what());
+    }
+    if (userPrivateInfoObj)
+    {
+        JsonUtil::findJSONValue(userPrivateInfoObj, "ZoteroAPIKey", zoteroAPIKey);
+    }
+
+    if (!zoteroAPIKey.empty())
+    {
+        LOG_INF("Fetched old Zotero key from richdocuments.");
+        uploadRDZoteroAPIKey(session, zoteroAPIKey, viewsetting, viewSettingsString);
+    }
+}
+
 static std::string extractViewSettings(const std::string& viewSettingsPath,
                                        const std::shared_ptr<ClientSession>& session,
                                        bool& _isViewSettingsAccessibilityEnabled)
@@ -1710,13 +1785,18 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
 
         JsonUtil::findJSONValue(viewsetting, "zoteroAPIKey", zoteroAPIKey);
 
+        if (zoteroAPIKey.empty() && !session->getUserPrivateInfo().empty())
+        {
+            fetchAndReuseRDZoteroAPIKey(session, zoteroAPIKey, viewsetting, viewSettingsString);
+        }
+
         session->setZoteroAPIKey(zoteroAPIKey);
         _isViewSettingsAccessibilityEnabled = accessibilityState == "true";
         session->setAccessibilityState(accessibilityState == "true");
-        std::ostringstream jsonStream;
-        viewsetting->stringify(jsonStream);
-        const std::string& jsonStr = jsonStream.str();
-        viewSettingsString = jsonStr;
+        if (viewSettingsString.empty())
+            viewSettingsString = JsonUtil::jsonToString(viewsetting);
+
+        return viewSettingsString;
     }
     catch (const std::exception& exc)
     {
@@ -1727,6 +1807,8 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
     }
     return viewSettingsString;
 }
+
+
 
 void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
                                          const std::string& configId,
