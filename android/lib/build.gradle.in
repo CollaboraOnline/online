@@ -7,7 +7,7 @@ android {
     namespace 'org.libreoffice.androidlib'
     compileSdkVersion 35
     buildDir = "${rootProject.getBuildDir()}/lib"
-    ndkVersion "22.1.7171670"
+    ndkVersion "28.2.13676358"
     buildFeatures.buildConfig = true
 
     defaultConfig {
