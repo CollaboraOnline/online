@@ -78,6 +78,7 @@ class TreeViewControl {
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
 	_rows: Map<string, HTMLElement>;
+	_ignoreFocus: boolean = false;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container = window.L.DomUtil.create(
@@ -86,6 +87,7 @@ class TreeViewControl {
 		);
 		this._container.id = data.id;
 		this._rows = new Map<string, HTMLElement>();
+		if (data.ignoreFocus !== undefined) this._ignoreFocus = data.ignoreFocus;
 	}
 
 	get Container() {
@@ -922,7 +924,7 @@ class TreeViewControl {
 		window.L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
-		if (this._container.id !== 'searchfinds') span.focus();
+		if (!this._ignoreFocus) span.focus();
 
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
