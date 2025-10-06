@@ -116,7 +116,6 @@
 /src/geometry/PolyUtil.js
 /src/geometry/Transformation.ts
 /src/layer/CalcSplitPanesContext.ts
-/src/layer/FormFieldButtonLayer.js
 /src/layer/Layer.js
 /src/layer/LayerGroup.js
 /src/layer/marker/A11yTextInput.js

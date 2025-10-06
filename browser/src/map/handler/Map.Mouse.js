@@ -38,21 +38,25 @@ window.L.Map.Mouse = window.L.Handler.extend({
 		right: 2
 	},
 
-	_isMouseOnValidityDropdown: function() {
+	_isMouseOnAnHTMLSection: function() {
 		if (app.sectionContainer) {
-			const section = app.sectionContainer.getSectionWithName(app.CSections.CalcValidityDropDown.name);
-			if (section)
-				return section.sectionProperties.mouseEntered;
+			let section = app.sectionContainer.getSectionWithName(app.CSections.CalcValidityDropDown.name);
+			if (section && section.sectionProperties.mouseEntered)
+				return true;
+
+			section = app.sectionContainer.getSectionWithName(app.CSections.FormFieldButton.name);
+			if (section && section.sectionProperties.mouseEntered)
+				return true;
 		}
 
-		return null;
+		return false;
 	},
 
 	_onMouseEvent: window.touch.mouseOnly(function (e) {
 		if (this._map.uiManager.isUIBlocked() || app.map.dontHandleMouse)
 			return;
 
-		if (this._isMouseOnValidityDropdown())
+		if (this._isMouseOnAnHTMLSection())
 			return;
 
 		app.idleHandler.notifyActive();

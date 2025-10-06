@@ -336,6 +336,7 @@ COOL_JS_LST =\
 	src/canvas/sections/TextSelectionHandleSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \
 	src/canvas/sections/OtherViewCellCursorSection.ts \
+	src/canvas/sections/FormFieldButton.ts \
 	src/canvas/sections/OtherViewCursorSection.ts \
 	src/layer/vector/CEventsHandler.ts \
 	src/layer/vector/CPointSet.ts \
@@ -379,7 +380,6 @@ COOL_JS_LST =\
 	src/layer/vector/Path.Drag.js \
 	src/layer/vector/Path.Transform.Util.js \
 	src/layer/vector/Canvas.js \
-	src/layer/FormFieldButtonLayer.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
 	src/dom/NotebookbarAccessibilityDefinitions.js \
