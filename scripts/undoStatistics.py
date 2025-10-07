@@ -879,7 +879,7 @@ if __name__ == "__main__":
         for row in range(min(maxRows, len(currentPreviousMatrix)))
     ]
 
-    userCharPerSecDataTable = [["type speed", "count of\nfastest", "count of\nusual"]]
+    userCharPerSecDataTable = [["type speed", "Fastest Keystroke pairs", "Median Typing Speed"]]
     maxSpeed = 20
     tempTable = [ [ 0 for y in range( 2 ) ] for x in range( maxSpeed+1 ) ]
     for fast, usual in userCharPerSec:
