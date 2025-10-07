@@ -54,4 +54,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via quickfind in
         cy.cGet('#quickfind-dock-wrapper').should('be.visible');
         helper.assertFocus('id', 'navigator-search-input');
     });
+
+    it('Results tab should be activated after a search', function() {
+        helper.typeIntoDocument('{ctrl}f');
+        cy.cGet('#quickfind-dock-wrapper').should('be.visible');
+        helper.assertFocus('id', 'navigator-search-input');
+
+        writerHelper.searchInQuickFind('a');
+
+        // Results tab should be activated.
+        cy.cGet('#tab-quick-find.selected').should('exist');
+
+        cy.cGet('input#navigator-search-input').focus();
+
+        // This should jump to next entry.
+        cy.cGet('input#navigator-search-input').type('{enter}'); // Jump to first item.
+        cy.cGet('input#navigator-search-input').type('{enter}'); // Jump to second item.
+
+        // Index starts from 1.
+        cy.cGet('#QuickFindPanel #searchfinds div:nth-child(3)').should('have.class', 'selected');
+
+        // Search input should still have the focus.
+        helper.assertFocus('id', 'navigator-search-input');
+    });
 });
