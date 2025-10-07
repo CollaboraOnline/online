@@ -128,4 +128,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
+
+    /**
+     * Quit when last doc window closes, but prevent closing in case we have presented the Open panel.
+     *
+     * The scenario was: The user was presented with the Open panel, but immediately when they've
+     * chosen a file, the entire app has Quit, because there was a fraction of a second without any window.
+     */
+    var allowQuitOnLastClose = false
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return allowQuitOnLastClose
+    }
 }
