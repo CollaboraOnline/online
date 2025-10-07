@@ -665,6 +665,7 @@ class SlideShowPresenter {
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
+		closeImg.id = 'endshow';
 		const slideshowCloseText = _('End Show');
 		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
 		closeImg.setAttribute('aria-label', slideshowCloseText);
@@ -673,6 +674,7 @@ class SlideShowPresenter {
 		closeImg.addEventListener('click', this._onQuit);
 
 		const leftImg = window.L.DomUtil.create('img', 'left-img', container);
+		leftImg.id = 'previous';
 		const slideshowPrevText = _('Previous');
 		leftImg.setAttribute('aria-label', slideshowPrevText);
 		leftImg.setAttribute('data-cooltip', slideshowPrevText);
@@ -681,6 +683,7 @@ class SlideShowPresenter {
 		leftImg.addEventListener('click', this._onPrevSlide);
 
 		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
+		rightImg.id = 'next';
 		const slideshowNextText = _('Next');
 		window.L.control.attachTooltipEventListener(rightImg, this._map);
 		rightImg.setAttribute('aria-label', slideshowNextText);
@@ -693,6 +696,7 @@ class SlideShowPresenter {
 			'animations-img skipTransition-false',
 			container,
 		);
+		animationsImage.id = 'disableanimation';
 		const slideshowAnimIniText = _('Disable Animations');
 		animationsImage.setAttribute('aria-label', slideshowAnimIniText);
 		animationsImage.setAttribute('data-cooltip', slideshowAnimIniText);
@@ -716,6 +720,7 @@ class SlideShowPresenter {
 
 		if (this.isFollower()) {
 			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
+			FollowImg.id = 'follow';
 			const followText = _('Follow Presentation');
 			window.L.control.attachTooltipEventListener(FollowImg, this._map);
 			FollowImg.setAttribute('aria-label', followText);
