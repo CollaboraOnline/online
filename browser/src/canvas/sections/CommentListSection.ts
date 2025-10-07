@@ -2055,7 +2055,6 @@ export class CommentSection extends CanvasSectionObject {
 				x += app.map.navigator ? app.map.navigator.navigationPanel.offsetWidth * app.dpiScale : 0;
 			}
 
-
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
 				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos, 0, 2);
@@ -2070,6 +2069,8 @@ export class CommentSection extends CanvasSectionObject {
 			else
 				this.hideArrow();
 
+			if (relayout)
+				this.resizeLastComment();
 			var lastY = 0;
 			if (selectedIndex) {
 				this.loopUp(selectedIndex - 1, x, yOrigin, relayout);
@@ -2260,56 +2261,77 @@ export class CommentSection extends CanvasSectionObject {
 							actHeight = maxMaxHeight;
 						}
 
-						if (i + 1 >= this.sectionProperties.commentList.length) {
-							// check if there is more space after this comment.
-							var maxSize = maxMaxHeight;
-							if (i + 1 < this.sectionProperties.commentList.length)
-								// max size of text should be the space between comments - size of non text parts
-								maxSize = this.sectionProperties.commentList[i + 1].getContainerPosY()
-									- this.sectionProperties.commentList[i].getContainerPosY()
-									- this.sectionProperties.commentList[i].sectionProperties.author.getBoundingClientRect().height
-									- 3 * this.sectionProperties.marginY //top/bottom of comment window + space between comments
-									- 2; // not sure why
+						// check if there is more space after this comment.
+						var maxSize = maxMaxHeight;
+						if (i + 1 < this.sectionProperties.commentList.length)
+							// max size of text should be the space between comments - size of non text parts
+							maxSize = this.sectionProperties.commentList[i + 1].getContainerPosY()
+								- this.sectionProperties.commentList[i].getContainerPosY()
+								- this.sectionProperties.commentList[i].sectionProperties.author.getBoundingClientRect().height
+								- 3 * this.sectionProperties.marginY //top/bottom of comment window + space between comments
+								- 2; // not sure why
 
-							if (maxSize > maxMaxHeight) {
-								maxSize = maxMaxHeight;
-							} else if (growUp && actHeight > maxSize) {
-								// if more space needed as we have after the comment
-								// check it there is any space before the comment
-								var spaceBefore = this.sectionProperties.commentList[i].getContainerPosY();
-								if (i > 0) {
-									spaceBefore -= this.sectionProperties.commentList[i - 1].getContainerPosY()
-										+ this.sectionProperties.commentList[i - 1].getCommentHeight()
-										+ this.sectionProperties.marginY;
-								} else {
-									spaceBefore += app.activeDocument.activeView.viewedRectangle.pY1;
-								}
-								// if there is more space
-								if (spaceBefore > 0) {
-									var moveUp = 0;
-									if (actHeight - maxSize < spaceBefore) {
-										// there is enough space, move up as much as we can;
-										moveUp = actHeight - maxSize;
-									} else {
-										// there is not enough space
-										moveUp = spaceBefore;
-									}
-									// move up
-									const posX = this.sectionProperties.commentList[i].getContainerPosX();
-									const posY = this.sectionProperties.commentList[i].getContainerPosY() - moveUp;
-									this.sectionProperties.commentList[i].sectionProperties.container.style.left = Math.round(posX) + 'px';
-									this.sectionProperties.commentList[i].sectionProperties.container.style.top = Math.round(posY) + 'px';
-									// increase comment height
-									maxSize += moveUp;
-								}
+						if (maxSize > maxMaxHeight) {
+							maxSize = maxMaxHeight;
+						} else if (growUp && actHeight > maxSize) {
+							// if more space needed as we have after the comment
+							// check it there is any space before the comment
+							var spaceBefore = this.sectionProperties.commentList[i].getContainerPosY();
+							if (i > 0) {
+								spaceBefore -= this.sectionProperties.commentList[i - 1].getContainerPosY()
+									+ this.sectionProperties.commentList[i - 1].getCommentHeight()
+									+ this.sectionProperties.marginY;
+							} else {
+								spaceBefore += app.activeDocument.activeView.viewedRectangle.pY1;
 							}
-							if (maxSize > minMaxHeight)
-								this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = Math.round(maxSize) + 'px';
+							// if there is more space
+							if (spaceBefore > 0) {
+								var moveUp = 0;
+								if (actHeight - maxSize < spaceBefore) {
+									// there is enough space, move up as much as we can;
+									moveUp = actHeight - maxSize;
+								} else {
+									// there is not enough space
+									moveUp = spaceBefore;
+								}
+								// move up
+								const posX = this.sectionProperties.commentList[i].getContainerPosX();
+								const posY = this.sectionProperties.commentList[i].getContainerPosY() - moveUp;
+								this.sectionProperties.commentList[i].sectionProperties.container.style.left = Math.round(posX) + 'px';
+								this.sectionProperties.commentList[i].sectionProperties.container.style.top = Math.round(posY) + 'px';
+								// increase comment height
+								maxSize += moveUp;
+							}
 						}
+						if (maxSize > minMaxHeight)
+							this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = Math.round(maxSize) + 'px';
 					}
 				}
 			}
 			this.updateChildLines();
+		}
+	}
+
+	private resizeLastComment (): void {
+		if (app.map._docLayer._docType === 'text' && this.sectionProperties.commentList.length > 0) {
+			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
+			const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
+			//last comment
+			var i = this.sectionProperties.commentList.length-1;
+			// Only if ContentNode is displayed.
+			if (this.sectionProperties.commentList[i].sectionProperties.contentNode.style.display !== 'none'
+				&& !this.sectionProperties.commentList[i].isEdit()) {
+				// act commentText height
+				var actHeight = this.sectionProperties.commentList[i].sectionProperties.contentText.getBoundingClientRect().height;
+				// if the comment is taller then minimal, we may want to make it taller
+				if (actHeight > minMaxHeight) {
+				// but we don't want to make it taller then the maximum
+					if (actHeight > maxMaxHeight) {
+						actHeight = maxMaxHeight;
+					}
+					this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = Math.round(actHeight) + 'px';
+				}
+			}
 		}
 	}
 
