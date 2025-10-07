@@ -1011,8 +1011,12 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                 throw BadRequestException(
                     "ProxyPrefix present but net.proxy_prefix is not enabled");
             }
-
-            if (!socket->isLocal())
+#if ENABLE_DEBUG
+            bool isLocal = true;
+#else
+            bool isLocal = socket->isLocal();
+#endif
+            if (!isLocal)
             {
                 LOG_ERR("ProxyPrefix request from non-local socket");
                 throw BadRequestException("ProxyPrefix request from non-local socket");
