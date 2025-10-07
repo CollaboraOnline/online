@@ -52,4 +52,39 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShow().should('be.visible');
         getSlideShow().compareSnapshot('effect1');
     });
+
+    it('Go to previous effect and slide', function () {
+        cy.cSetActiveFrame('#iframe2');
+        cy.cGet('.notebookbar #slide-presentation-follow-me').click();
+        cy.wait(500);
+
+        //move to nextslide last effect
+        getSlideShow().should('be.visible');
+        for (let i = 0; i < 5; i++) {
+            cy.wait(500);
+            getSlideShowContent().find("#next").click();
+        }
+        getSlideShow().compareSnapshot('slide2_effect3');
+
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().should('be.visible');
+        getSlideShow().compareSnapshot('slide2_effect3');
+
+        // go to previous effect
+        cy.cSetActiveFrame('#iframe2');
+        getSlideShowContent().find("#previous").click();
+        getSlideShow().compareSnapshot('slide2_effect2');
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().compareSnapshot('slide2_effect2');
+
+        //go to previous effect
+        cy.cSetActiveFrame('#iframe2');
+        for (let i = 0; i < 3; i++) {
+            cy.wait(500);
+            getSlideShowContent().find("#previous").click();
+        }
+        getSlideShow().compareSnapshot('effect1');
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().compareSnapshot('effect1');
+    });
 });
