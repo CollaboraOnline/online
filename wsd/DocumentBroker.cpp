@@ -1698,39 +1698,82 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
     std::ifstream ifs(viewSettingsPath);
     try
     {
-        LOG_TRC("Parsing viewsetting json");
+        LOG_TRC("Parsing view settings JSON");
         Poco::JSON::Parser parser;
         auto result = parser.parse(ifs);
+        Poco::JSON::Object::Ptr viewSettings = result.extract<Poco::JSON::Object::Ptr>();
 
-        const Poco::JSON::Object::Ptr& viewsetting = result.extract<Poco::JSON::Object::Ptr>();
+        const std::string& userPrivateInfo = session->getUserPrivateInfo();
+        Object::Ptr userPrivateInfoObj;
+        if (!userPrivateInfo.empty())
+        {
+            try
+            {
+                Poco::JSON::Parser privateInfoParser;
+                Poco::Dynamic::Var var = privateInfoParser.parse(userPrivateInfo);
+                userPrivateInfoObj = var.extract<Object::Ptr>();
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_DBG("User private data is not valid JSON: " << exc.what());
+            }
+        }
+
         std::string accessibilityState, zoteroAPIKey, signatureCertificate, signatureKey, signatureCa;
-
-        JsonUtil::findJSONValue(viewsetting, "accessibilityState", accessibilityState);
+        JsonUtil::findJSONValue(viewSettings, "accessibilityState", accessibilityState);
         _isViewSettingsAccessibilityEnabled = accessibilityState == "true";
         session->setAccessibilityState(accessibilityState == "true");
 
-        JsonUtil::findJSONValue(viewsetting, "zoteroAPIKey", zoteroAPIKey);
+        JsonUtil::findJSONValue(viewSettings, "zoteroAPIKey", zoteroAPIKey);
         session->setZoteroAPIKey(zoteroAPIKey);
 
-        JsonUtil::findJSONValue(viewsetting, "signatureCert", signatureCertificate);
+        bool viewSettingsNeedUpdate = false;
+
+        auto migrateSignatureField = [&](const std::string& viewSettingKey,
+                                          const std::string& privateInfoKey,
+                                          std::string& value) -> bool
+        {
+            JsonUtil::findJSONValue(viewSettings, viewSettingKey, value);
+            if (value.empty() && userPrivateInfoObj)
+            {
+                std::string migratedValue;
+                JsonUtil::findJSONValue(userPrivateInfoObj, privateInfoKey, migratedValue);
+                if (!migratedValue.empty())
+                {
+                    LOG_INF("Migrating signature field [" << viewSettingKey << "] from user private info");
+                    viewSettings->set(viewSettingKey, migratedValue);
+                    value = migratedValue;
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        viewSettingsNeedUpdate |= migrateSignatureField("signatureCert", "SignatureCert", signatureCertificate);
         session->setSignatureCertificate(signatureCertificate);
 
-        JsonUtil::findJSONValue(viewsetting, "signatureKey", signatureKey);
+        viewSettingsNeedUpdate |= migrateSignatureField("signatureKey", "SignatureKey", signatureKey);
         session->setSignatureKey(signatureKey);
 
-        JsonUtil::findJSONValue(viewsetting, "signatureCa", signatureCa);
+        viewSettingsNeedUpdate |= migrateSignatureField("signatureCa", "SignatureCa", signatureCa);
         session->setSignatureCa(signatureCa);
 
         _isViewSettingsUpdated = true;
 
+        if (viewSettingsNeedUpdate)
+        {
+            LOG_INF("View settings updated with migrated signature fields, uploading to WOPI host");
+            session->setViewSettingsJSON(viewSettings);
+            session->uploadViewSettingsToWopiHost();
+        }
+
         std::ostringstream jsonStream;
-        viewsetting->stringify(jsonStream);
-        const std::string& jsonStr = jsonStream.str();
-        viewSettingsString = jsonStr;
+        viewSettings->stringify(jsonStream);
+        viewSettingsString = jsonStream.str();
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to parse viewsetting json with[" << ifs.rdbuf() << "] error[" << exc.what()
+        LOG_ERR("Failed to parse view settings JSON with[" << ifs.rdbuf() << "] error[" << exc.what()
                                                          << "], for session[" << session->getId()
                                                          << ']');
         return viewSettingsString;
@@ -1775,8 +1818,8 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             {
                 settings = extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled, _isViewSettingsUpdated);
                 session->sendTextFrame("viewsetting: " + settings);
-                forwardToChild(session, "addconfig");
             }
+            forwardToChild(session, "addconfig");
         }
         else
         {
@@ -4978,7 +5021,6 @@ std::string DocumentBroker::applySignViewSettings(const std::string& message,
     if (_isViewSettingsUpdated)
     {
         Poco::JSON::Object signatureJson;
-        LOG_INF("HACK: Try to create Object ");
 
         std::string signatureCert = session->getSignatureCertificate();
         std::string signatureKey = session->getSignatureKey();
