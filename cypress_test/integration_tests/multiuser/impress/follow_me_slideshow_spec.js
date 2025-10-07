@@ -39,4 +39,17 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         cy.cGet('.notebookbar #slide-presentation-follow-me').should('be.not.visible');
         cy.cGet('.notebookbar #slide-presentation-follow').should('be.visible');
     });
+
+    it('Go to next effect', function () {
+        cy.cSetActiveFrame('#iframe2');
+        cy.cGet('.notebookbar #slide-presentation-follow-me').click();
+        cy.wait(500);
+        getSlideShow().should('be.visible');
+        getSlideShowContent().find('#slideshow-canvas').click();
+        cy.wait(500);
+
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().should('be.visible');
+        getSlideShow().compareSnapshot('effect1');
+    });
 });
