@@ -132,14 +132,11 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		if (this.sectionProperties.markerType === 'column')
 			this.calculateLeftMostAndRightMostAvailableX();
 		else this.calculateTopMostAndBottomMostAvailableY();
-
-		this.getHTMLObject()?.classList.add('hovered');
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
 		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
-		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
@@ -287,6 +284,8 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 			if (this.sectionProperties.markerType === 'column')
 				this.columnDrag(point);
 			else this.rowDrag(point);
+
+			this.adjustHTMLObjectPosition();
 		}
 	}
 
