@@ -87,4 +87,41 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         cy.cSetActiveFrame('#iframe1');
         getSlideShow().compareSnapshot('effect1');
     });
+
+    it('Follow and unfollow', function () {
+        cy.cSetActiveFrame('#iframe2');
+        cy.cGet('.notebookbar #slide-presentation-follow-me').click();
+        cy.wait(500);
+
+        //move to nextslide last effect
+        getSlideShow().should('be.visible');
+        for (let i = 0; i < 4; i++) {
+            cy.wait(500);
+            getSlideShowContent().find("#next").click();
+        }
+        getSlideShow().compareSnapshot('slide2_effect2');
+
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().should('be.visible');
+        getSlideShow().compareSnapshot('slide2_effect2');
+
+        //unfollow by going 2 slides forward
+        for (let i = 0; i < 3; i++) {
+            cy.wait(500);
+            getSlideShowContent().find("#next").click();
+        }
+        getSlideShow().compareSnapshot('slide4');
+
+        //start following again
+        cy.cSetActiveFrame('#iframe1');
+        cy.wait(500);
+        getSlideShowContent().find("#follow").click();
+        cy.wait(500);
+        getSlideShow().compareSnapshot('slide2_effect2', 0.01);
+
+        cy.cSetActiveFrame('#iframe2');
+        getSlideShowContent().find("#next").click();
+        cy.wait(500);
+        getSlideShow().compareSnapshot('slide2_effect3', 0.01);
+    });
 });
