@@ -493,6 +493,15 @@ class NavigatorPanel extends SidebarBase {
 		super.callback(objectType, eventType, object, data, builder);
 	}
 
+	getSearchTerm(): string | null {
+		const searchInput = document.getElementById(
+			'navigator-search-input',
+		) as HTMLInputElement;
+
+		if (searchInput) return searchInput.value;
+		else return null;
+	}
+
 	useSearchCallback(
 		objectType: string,
 		eventType: string,
@@ -501,18 +510,21 @@ class NavigatorPanel extends SidebarBase {
 	) {
 		// Switch to "Results tab" first.
 		if (eventType === 'activate') {
-			const resultsTab = document.getElementById('tab-quick-find');
-			if (resultsTab && !resultsTab.classList.contains('selected'))
-				resultsTab.click();
+			const resultsTab = this.navigationPanel.querySelector(
+				'#tab-quick-find:not(.selected)',
+			) as HTMLElement;
+			if (resultsTab) resultsTab.click();
 		}
 
-		const nextButtonContainer = document.getElementById('findnext');
-		const nextButton = nextButtonContainer.querySelector('button');
+		const nextButton = this.navigationPanel.querySelector(
+			'#findnext button',
+		) as HTMLElement;
 		const nextButtonVisible =
 			nextButton && (nextButton as any).checkVisibility();
-		const searchTerm = (
-			document.getElementById('navigator-search-input') as HTMLInputElement
-		).value;
+		const searchTerm = this.getSearchTerm();
+
+		if (!searchTerm) return; // There is something wrong. If search input doesn't exist, nothing to do below.
+
 		const termChanged = searchTerm !== this.highlightTerm;
 		this.highlightTerm = searchTerm;
 		const newSearch = termChanged || !nextButtonVisible;
@@ -528,7 +540,7 @@ class NavigatorPanel extends SidebarBase {
 					searchTerm,
 					builder,
 				);
-		} else nextButton.click();
+		} else if (nextButton) nextButton.click();
 
 		// Update outline highlighting
 		// Note: only update on 'activate' or button pressed events to be consistent with results tab
