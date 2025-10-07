@@ -147,4 +147,23 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         cy.wait(500);
         getSlideShow().compareSnapshot('slide2_effect2');
     });
+
+    it('Exit', function () {
+        cy.cSetActiveFrame('#iframe2');
+        cy.cGet('.notebookbar #slide-presentation-follow-me').click();
+        cy.wait(500);
+        getSlideShowContent().find("#next").click();
+        cy.wait(500);
+
+        getSlideShow().compareSnapshot('effect1');
+
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().compareSnapshot('effect1');
+
+        cy.cSetActiveFrame('#iframe2');
+        getSlideShowContent().find("#endshow").click();
+        getSlideShow().should('not.exist');
+        cy.cSetActiveFrame('#iframe1');
+        getSlideShow().should('not.exist');
+    });
 });
