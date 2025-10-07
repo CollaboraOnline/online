@@ -584,6 +584,7 @@ class CanvasSectionContainer {
 			double-check the document container size to see if we've missed a resize event
 		*/
 		if (this.width === 0 || this.height === 0) {
+			app.console.warn('Canvas width or height is zero.');
 			const documentContainer = document.getElementById('document-container');
 			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
 				if (app.map._docLayer) {
