@@ -109,8 +109,9 @@ enum class CODA_OPEN_CONTROL : DWORD
 
 constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
 
-// Ugly to use a global like this
+// Ugly to use globals like this
 static std::wstring new_document_created;
+static HMONITOR monitor_of_dialog;
 
 // Map from IFileDialogCustomize pointer to the corresponding IFileDialog, so that we can close it prematurely
 static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
@@ -145,8 +146,21 @@ public:
     }
 
     // IFileDialogEvents methods
-    // All are dummies
-    IFACEMETHODIMP OnFileOk(IFileDialog*) { return S_OK; };
+    IFACEMETHODIMP OnFileOk(IFileDialog* pFD)
+    {
+        IOleWindow* pOleWindow;
+        if (SUCCEEDED(pFD->QueryInterface(IID_PPV_ARGS(&pOleWindow))))
+        {
+            HWND hDialogWindow;
+            pOleWindow->GetWindow(&hDialogWindow);
+            monitor_of_dialog = MonitorFromWindow(hDialogWindow, MONITOR_DEFAULTTONEAREST);
+        }
+        else
+            monitor_of_dialog = NULL;
+        return S_OK;
+    };
+
+    // The rest are dummies
     IFACEMETHODIMP OnFolderChange(IFileDialog*) { return S_OK; };
     IFACEMETHODIMP OnFolderChanging(IFileDialog*, IShellItem*) { return S_OK; };
     IFACEMETHODIMP OnHelp(IFileDialog*) { return S_OK; };
@@ -899,9 +913,32 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
 {
+    // Set size of document window to be 90% of monitor width and height.
+
+    // FIXME: Should we actually, at least for text documents, ideally peek into the document and
+    // check what its page size is, and in the common case of a portrait orientation text document,
+    // make the document window also (if the monitor is large enough) higher than wider? On small
+    // monitors (1280x768 or less?) we should probably default to making the document window
+    // full-screen?
+
+    int width, height;
+    MONITORINFO monitorInfo;
+
+    monitorInfo.cbSize = sizeof(monitorInfo);
+    if (monitor_of_dialog != NULL && GetMonitorInfoW(monitor_of_dialog, &monitorInfo))
+    {
+        width = 0.9 * monitorInfo.rcWork.right - monitorInfo.rcWork.left;
+        height = 0.9 * monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+    }
+    else
+    {
+        width = 1200;
+        height = 900;
+    }
+
     HWND hWnd = CreateWindowW(
         windowClass, Util::string_to_wide_string(filenameAndUri.filename + " - CODA").c_str(),
-        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1200, 900, NULL, NULL, appInstance,
+        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, appInstance,
         NULL);
 
     auto& data = windowData[hWnd];
