@@ -220,7 +220,7 @@ def generateWriter(srcDir, destDir, base, extn):
 
     # The template has a single paragraph: paste it enough times so that we get a document of ~300
     # pages.
-    pattern = re.compile('.*<text:p .*')
+    pattern = re.compile('.*He heard quiet steps behind him.*')
     for line in fin:
         if pattern.match(line):
             for _ in range(825):
