@@ -16,12 +16,45 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Initialize the COOLWSD
         COWrapper.startServer()
+
+        // Finish window restoration, and try to open the Open panel if no document is open
+        DispatchQueue.main.async { [weak self] in
+            self?.presentOpenPanelIfNeeded()
+        }
+    }
+
+    /**
+     * Don’t auto-create an empty document at launch.
+     */
+    func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        return false
+    }
+
+    func applicationShouldHandleReopen(_ app: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag { presentOpenPanelIfNeeded() }
+        return false
+    }
+
+    /**
+     * Opens the Open panel when no other documents or windows are presented.
+     */
+    private func presentOpenPanelIfNeeded() {
+        let documentController = NSDocumentController.shared
+        let hasDocs = !documentController.documents.isEmpty
+        let hasVisibleWindows = NSApp.windows.contains { $0.isVisible }
+
+        if hasDocs || hasVisibleWindows {
+            return
+        }
+
+        // Show the system Open panel (iCloud variant when available)
+        documentController.openDocument(nil)
     }
 
     /// Holds App Kit’s continuation block while we close documents.
     private var pendingQuitReply: ((Bool) -> Void)?
 
-    /*
+    /**
      * Intercept ⌘Q / Dock-Quit / system shutdown.
      * See https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/AppArchitecture/Tasks/GracefulAppTermination.html
      * for the description how to intercept the document closing and/or delay that until the cleanup is performed.
@@ -49,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return .terminateLater
     }
 
-    /*
+    /**
      * Each NSDocument calls this when its asynchronous closing finishes
      */
     @objc func document(_ doc: NSDocument,
@@ -69,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /*
+    /**
      * Finalise quit or cancel
      */
     private func finishQuit(_ reply: NSApplication.TerminateReply) {
@@ -94,12 +127,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
-    }
-
-    /**
-     * For convenience - quit when last doc window closes
-     */
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        true
     }
 }
