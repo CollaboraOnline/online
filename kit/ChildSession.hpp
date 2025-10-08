@@ -85,6 +85,7 @@ public:
     virtual ~ChildSession();
 
     bool getStatus();
+    bool getPartStatus();
     int getViewId() const { return _viewId; }
     void setViewId(const int viewId) { _viewId = viewId; }
     const std::string& getViewUserId() const { return getUserId(); }

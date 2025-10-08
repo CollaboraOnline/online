@@ -46,6 +46,8 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		this._partHeightTwips = 0; // Single part's height.
 		this._partWidthTwips = 0; // Single part's width. These values are equal to app.activeDocument.fileSize.x & app.activeDocument.fileSize.y when app.file.partBasedView is true.
 
+		this._partDimensions = []; // Width & Height of all the parts
+
 		app.events.on('contextchange', this._onContextChange.bind(this));
 	},
 
@@ -220,12 +222,21 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
+		const statusJSON = JSON.parse(textMsg.replace('partstatus:', '').replace('status:', '').replace('statusupdate:', ''));
 
-		// Since we have two status commands, remove them so we store and compare payloads only.
+		// Since we have three status commands, remove them so we store and compare payloads only.
+		textMsg = textMsg.replace('partstatus: ', '');
 		textMsg = textMsg.replace('status: ', '');
 		textMsg = textMsg.replace('statusupdate: ', '');
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
+			if (statusJSON.partdimensions) {
+				this._partDimensions = [];
+				for (let i = 0; i < this._parts; i++) {
+					this._partDimensions.push(new cool.SimplePoint(statusJSON.partdimensions[i].width, statusJSON.partdimensions[i].height));
+				}
+			}
+			else this._partDimensions = [];
+
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
 
 			this._docType = statusJSON.type;
@@ -237,16 +248,22 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 			this._partWidthTwips = app.activeDocument.fileSize.x;
 
 			if (app.file.fileBasedView) {
-				var totalHeight = this._parts * app.activeDocument.fileSize.y; // Total height in twips.
+				let totalHeight = 0; // Total height in twips.
+				if (this._partDimensions.length === this._parts) {
+					for (let i = 0; i < this._parts; i++) {
+						totalHeight += this.getPartHeight(i);
+					}
+				}
+				else
+					totalHeight = this._parts * app.activeDocument.fileSize.y;
 				totalHeight += (this._parts) * this._spaceBetweenParts; // Space between parts.
 				app.activeDocument.fileSize.y = totalHeight;
 			}
 
 			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
-			app.impress.partList = Object.assign([], statusJSON.parts);
-
-			this._updateMaxBounds(true);
+			let allPagesResized = !this._partDimensions.length;
+			this._updateMaxBounds(true, allPagesResized);
 
 			this._viewId = statusJSON.viewid;
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
@@ -256,38 +273,64 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 				this._selectedPart = statusJSON.selectedpart;
 			}
 
-			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
-			this._map.fire('impressmodechanged', {mode: this._selectedMode});
-
-			if (statusJSON.gridSnapEnabled === true)
-				app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
-			else if (statusJSON.parts.length > 0 && statusJSON.parts[0].gridSnapEnabled === true)
-				app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
-
-			if (statusJSON.gridVisible === true)
-				app.map.stateChangeHandler.setItemValue('.uno:GridVisible', 'true');
-			else if (statusJSON.parts.length > 0 && statusJSON.parts[0].gridVisible === true)
-				app.map.stateChangeHandler.setItemValue('.uno:GridVisible', 'true');
-
 			TileManager.resetPreFetching(true);
 
-			var refreshAnnotation = this._documentInfo !== textMsg;
+			// partdimensions is only included in statusJSON in case of current page resize or switching to a page having different size
+			// The following statements seems unnecessary in those cases
+			if (allPagesResized) {
+				if (statusJSON.gridSnapEnabled === true)
+					app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
+				else if (statusJSON.parts.length > 0 && statusJSON.parts[0].gridSnapEnabled === true)
+					app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
+
+				if (statusJSON.gridVisible === true)
+					app.map.stateChangeHandler.setItemValue('.uno:GridVisible', 'true');
+				else if (statusJSON.parts.length > 0 && statusJSON.parts[0].gridVisible === true)
+					app.map.stateChangeHandler.setItemValue('.uno:GridVisible', 'true');
+
+				app.impress.partList = Object.assign([], statusJSON.parts);
+				var refreshAnnotation = this._documentInfo !== textMsg;
+
+				this._documentInfo = textMsg;
+
+				this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
+				this._map.fire('impressmodechanged', {mode: this._selectedMode});
+
+				this._map.fire('updateparts', {});
+
+				if (refreshAnnotation)
+					app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+			}
 
 			this._documentInfo = textMsg;
-
-			this._map.fire('updateparts', {});
-
-			if (refreshAnnotation)
-				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		}
 
 		if (app.file.fileBasedView)
 			TileManager.updateFileBasedView();
 
-		if (this.invalidatePreviewsUponContextChange === true) {
+		if (this.invalidatePreviewsUponContextChange === true && !statusJSON.partdimensions) {
 			this._invalidateAllPreviews();
 			this.invalidatePreviewsUponContextChange = false;
 		}
+	},
+
+	getPartDimensions: function(partIndex) {
+		if (this._partDimensions && this._partDimensions[partIndex]) {
+			return this._partDimensions[partIndex];
+		}
+		else {
+			return app.activeDocument.fileSize;
+		}
+	},
+
+	getPartWidth: function(partIndex) {
+		const dimensions = this.getPartDimensions(partIndex);
+		return dimensions.x;
+	},
+
+	getPartHeight: function(partIndex) {
+		const dimensions = this.getPartDimensions(partIndex);
+		return dimensions.y;
 	},
 
 	_invalidateAllPreviews: function () {

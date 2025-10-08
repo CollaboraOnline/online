@@ -228,8 +228,15 @@ window.L.Map.include({
 
 		if (docLayer._docType === 'text') return;
 
-		const tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: app.activeDocument.fileSize.x;
-		const tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: app.activeDocument.fileSize.y;
+		// Use part specific dimensions if available, otherwise fall back to document size
+		let tileWidth, tileHeight;
+		if (docLayer._partDimensions.length === docLayer._parts) {
+			tileWidth = docLayer.getPartWidth(part);
+			tileHeight = docLayer.getPartHeight(part);
+		} else {
+			tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: app.activeDocument.fileSize.x;
+			tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: app.activeDocument.fileSize.y;
+		}
 
 		const docRatio = tileWidth / tileHeight;
 		const imgRatio = maxWidth / maxHeight;
