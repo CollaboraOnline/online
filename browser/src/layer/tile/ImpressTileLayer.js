@@ -86,6 +86,13 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		}
 	},
 
+	_selectionContextChanged: function(newContext) {
+		if (newContext === 'Mark objects')
+			app.activeDocument.selectionMiddleware.activate();
+		else if (newContext === '')
+			app.activeDocument.selectionMiddleware.deactivate();
+	},
+
 	_isPCWInsideFlex: function () {
 		var PCW = document.getElementById('main-document-content').querySelector('#presentation-controls-wrapper');
 		return PCW ? true: false;

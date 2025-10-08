@@ -13,11 +13,16 @@
 class DocumentBase {
 	public readonly type: string = 'DocumentBase';
 	public activeView: ViewLayoutBase;
+	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {
 		this.activeView = new ViewLayoutBase();
 		this._fileSize = new cool.SimplePoint(0, 0);
+
+		if (app.map._docLayer._docType === 'presentation')
+			this.selectionMiddleware = new ImpressSelectionMiddleware();
+		else this.selectionMiddleware = null;
 	}
 
 	public get fileSize(): cool.SimplePoint {
