@@ -126,6 +126,12 @@ namespace Util
             _rng.seed(rng::getSeed());
         }
 
+        void seedForTesting(uint_fast64_t seed)
+        {
+            std::unique_lock<std::mutex> lock(_rngMutex);
+            _rng.seed(seed);
+        }
+
         // Returns a new random number.
         unsigned getNext()
         {

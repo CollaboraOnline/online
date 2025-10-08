@@ -105,6 +105,7 @@ namespace Util
 
         uint_fast64_t getSeed();
         void reseed();
+        void seedForTesting(uint_fast64_t seed);
         unsigned getNext();
 
         /// Generate an array of random characters.
