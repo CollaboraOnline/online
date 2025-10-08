@@ -748,6 +748,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		app.map.sendUnoCommand('.uno:TransformDialog', parameters);
 
 		docLayer.requestNewFiledBasedViewTiles();
+
+		this.sectionProperties.lastDragDistance = [0, 0];
 	}
 
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
@@ -1099,7 +1101,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.context.beginPath();
 		this.context.strokeStyle = 'black';
 		this.context.setLineDash([3, 3]);
-		this.context.strokeRect(0, 0, this.size[0], this.size[1]);
+
+		if (this.containerObject.isDraggingSomething() && this.containerObject.targetSection === this.name)
+			this.context.strokeRect(this.sectionProperties.lastDragDistance[0], this.sectionProperties.lastDragDistance[1], this.size[0], this.size[1]);
+		else
+			this.context.strokeRect(0, 0, this.size[0], this.size[1]);
+
 		this.context.setLineDash([]);
 		this.context.closePath();
 	}
