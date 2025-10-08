@@ -78,10 +78,34 @@ std::string genRandomString(const size_t size)
         char c = static_cast<char>('!' + Util::rng::getNext() % 94);
 
         // remove markdown-indicators for now
-        if (c == '|' || c == '_')
-            i--;
-        else
-            text += c;
+        switch (c)
+        {
+            // headings
+            case '#':
+            // ordered list
+            case '.':
+            // unordered list
+            case '-':
+            case '*':
+            // links
+            case '[':
+            case ']':
+            // code
+            case '`':
+            // italic
+            // bold
+            case '_':
+            // strikethrough
+            case '~':
+            // block quote
+            case '>':
+            // table
+            case '|':
+                i--;
+                break;
+            default:
+                text += c;
+        }
     }
 
     return text;
