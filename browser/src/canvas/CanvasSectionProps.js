@@ -46,6 +46,7 @@ app.CSections.RowGroup = 				{ name: 'row group'			, zIndex: 5 };
 app.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 
 app.CSections.Comment =				{ name: 'comment'			, zIndex: 7	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
+app.CSections.SelectionRectangle =  { name: 'selection rectangle', zIndex: 7 };
 
 app.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 5 };
 app.CSections.CellCursor = 			{ name: 'OwnCellCursor'     , zIndex: 5 };
@@ -112,8 +113,9 @@ app.CSections.Splitter.drawingOrder = 				160; // Calc.
 
 /* zIndex = 7 */
 app.CSections.Comment.processingOrder =				1; // Since this is a document object, processing order is not very important. But it should be higher than tiles's processing order. Because tiles section is the document anchor.
-
 app.CSections.Comment.drawingOrder =					1; // Writer & Imnpress & Calc.
+app.CSections.SelectionRectangle.processingOrder =  2;
+app.CSections.SelectionRectangle.drawingOrder = 2;
 
 /* zIndex = 9  */
 app.CSections.HTMLObject.drawingOrder     =           55; // Calc.
