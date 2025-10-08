@@ -125,8 +125,8 @@ void HTTPWSTest::testSaveOnDisconnect()
 {
     const std::string testname = "saveOnDisconnect- ";
 
-    // FIXME was helpers::genRandomString(40);
-    const std::string text = "Test string - Il<VP,tDzyMqL:s]Ws~)hA~*v'Yy[<KwE$?`0d";
+    Util::rng::seedForTesting(200177);
+    const std::string text = helpers::genRandomString(40);
     TST_LOG("Test string: [" << text << "].");
 
     std::string documentPath, documentURL;
