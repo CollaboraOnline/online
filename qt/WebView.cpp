@@ -322,10 +322,10 @@ WebView::WebView(QWidget* parent)
     _mainWindow->setCentralWidget(_webView);
 
     // Make window frameless
-    _mainWindow->setWindowFlag(Qt::FramelessWindowHint, true);
-    _mainWindow->setMouseTracking(true);
-    _webView->setMouseTracking(true);
-    new EdgeResizeOverlay(_mainWindow);
+    //_mainWindow->setWindowFlag(Qt::FramelessWindowHint, true);
+    //_mainWindow->setMouseTracking(true);
+    //_webView->setMouseTracking(true);
+    //new EdgeResizeOverlay(_mainWindow);
 }
 
 void WebView::load(const std::string& fileURL)
