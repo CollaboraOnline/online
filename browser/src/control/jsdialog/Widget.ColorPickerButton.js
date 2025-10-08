@@ -223,9 +223,6 @@ JSDialog.colorPickerButton = function (parentContainer, data, builder) {
 				'commandstatechanged',
 				function (e) {
 					if (e.commandName === data.command) {
-						app.colorLastSelection[data.command] = toHexColor(
-							parseInt(e.state),
-						);
 						updateFunction();
 					}
 				},
