@@ -234,12 +234,20 @@ class SlideShowNavigator {
 		return this.currentLeaderSlide;
 	}
 
+	resetLeaderSlide() {
+		this.currentLeaderSlide = -1;
+	}
+
 	setLeaderEffect(info: any) {
 		this.currentLeaderEffect = info.currentEffect;
 	}
 
 	getLeaderEffect(): number {
 		return this.currentLeaderEffect;
+	}
+
+	resetLeaderEffect() {
+		this.currentLeaderEffect = -1;
 	}
 
 	followLeaderSlide() {
