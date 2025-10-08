@@ -142,7 +142,7 @@ namespace LOKitHelper
         return documentTypeToString(type);
     }
 
-    inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
+    inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument, bool diffSizePages = false)
     {
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
@@ -162,6 +162,25 @@ namespace LOKitHelper
         resultInfo["width"] = std::to_string(width);
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
+
+        if (diffSizePages)
+        {
+            ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
+            if (values)
+            {
+                Poco::JSON::Parser parser;
+                const auto var = parser.parse(values.get());
+                const auto obj = var.extract<Poco::JSON::Object::Ptr>();
+                if (obj && obj->has("parts"))
+                {
+                    const auto parts = obj->getArray("parts");
+                    std::ostringstream os;
+                    parts->stringify(os);
+                    resultInfo["partdimensions"] = os.str();
+                }
+            }
+            return MapToJSONString(resultInfo);
+        }
 
         int mode = 0;
 
