@@ -406,7 +406,7 @@ window.L.Clipboard = window.L.Class.extend({
 		return true;
 	},
 
-	// Returns true if it finished synchronously, and false if it have started an async operation
+	// Returns true if it finished synchronously, and false if it has started an async operation
 	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
 	// FIXME: This comment is a lie if dataTransferToDocumentFallback is called, as it calls _doAsyncDownload
 	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
