@@ -448,7 +448,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 
 	// hide old selection when user starts to select something else
 	textLayer.addEventListener('mousedown', function() {
-		textLayer.addEventListener('mouseleave', textSelectionHandler, {once: true});
+		textLayer.addEventListener('mouseup', textSelectionHandler, {once: true});
 		builder.callback('edit', 'grab_focus', container, null, builder);
 
 		cursorLayer.querySelectorAll('.selection').forEach(function (element) {
