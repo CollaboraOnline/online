@@ -605,6 +605,25 @@ define run_mobile_interference_test
 	wait # waits the background process to be finished
 endef
 
+#########################
+# proxy.php desktop tests
+#########################
+
+check-php-proxy:
+	@mkdir -p workdir
+	curl -L -o workdir/proxy.php https://raw.githubusercontent.com/CollaboraOnline/richdocumentscode/master/proxy.php
+	sed -i 's/localhost/172.17.0.1/g' workdir/proxy.php
+	-docker stop php-proxy 2>/dev/null || true
+	-docker rm php-proxy 2>/dev/null || true
+	docker run -d --name php-proxy -p 80:80 -v $(PWD)/workdir/proxy.php:/var/www/html/proxy.php php:8.2-apache
+	sleep 3
+	-$(MAKE) CYPRESS_INTEGRATION="php-proxy" check-desktop
+	$(MAKE) cleanup-php-proxy
+
+cleanup-php-proxy:
+	-docker stop php-proxy
+	-docker rm php-proxy
+
 #############################
 # Desktop interference tests.
 #############################
