@@ -58,6 +58,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		map.on('tilepreview', this._updatePreview, this);
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
+		map.on('scrolllimit', this._invalidateCurrentPart, this);
 		map.on('scrolllimits', this._invalidateParts, this);
 		map.on('scrolltopart', this._scrollToPart, this);
 		map.on('beforerequestpreview', this._beforeRequestPreview, this);
@@ -866,6 +867,26 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 					      fetchThumbnail: this.options.fetchThumbnail});
 		}
 
+	},
+
+	_invalidateCurrentPart: function () {
+		if (!this._container ||
+		    !this._partsPreviewCont ||
+		    !this._previewInitialized ||
+		    !this._previewTiles)
+			return;
+
+		// When a new slide is inserted
+		if (this._previewTiles[this._map._docLayer._selectedPart] === undefined) {
+			this._invalidateParts();
+			return;
+		}
+		this._previewTiles[this._map._docLayer._selectedPart].fetched = false;
+		this._map.getPreview(this._map._docLayer._selectedPart, this._map._docLayer._selectedPart,
+				     this.options.maxWidth,
+				     this.options.maxHeight,
+				     {autoUpdate: this.options.autoUpdate,
+				      fetchThumbnail: this.options.fetchThumbnail});
 	},
 
 	focusCurrentSlide: function () {

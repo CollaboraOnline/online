@@ -1159,6 +1159,23 @@ bool ChildSession::getStatus()
     return sendTextFrame("status: " + status);
 }
 
+bool ChildSession::getPartStatus()
+{
+    std::string status;
+
+    getLOKitDocument()->setView(_viewId);
+
+    status = LOKitHelper::documentStatus(getLOKitDocument()->get(), true);
+
+    if (status.empty())
+    {
+        LOG_ERR("Failed to get part status.");
+        return false;
+    }
+
+    return sendTextFrame("partstatus:" + status);
+}
+
 namespace
 {
 
@@ -3628,6 +3645,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         {
             if (!_docManager->trackDocModifiedState(payload))
                 sendTextFrame("statechanged: " + payload);
+        }
+        else if (payload.find(".uno:CurrentPageResize") != std::string::npos)
+        {
+            getPartStatus();
         }
         else
             sendTextFrame("statechanged: " + payload);
