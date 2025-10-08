@@ -39,14 +39,6 @@ installLogsCollector({
 	}
 });
 
-if (Cypress.env('INTEGRATION') === 'php-proxy') {
-	Cypress.Server.defaults({
-		ignore: function() {
-			return true;
-		}
-	});
-}
-
 var COMMAND_DELAY = 1000;
 
 // Ignore exceptions coming from nextcloud.
