@@ -45,9 +45,9 @@ enum ViewType {
 enum Platform {
     ANDROIDAPP  = 1,
     IOSAPP      = 2,
-    MAC         = 4,
-    WINDOWS     = 8,
-    LINUX       = 16, // There is no "Linux" option, so it means "none of the others"
+    MAC         = 4, // Browser on macOS
+    WINDOWS     = 8, // Browser on Windows
+    LINUX       = 16, // Actually means "none of the others", presumably browser on Linux
     CHROMEOSAPP = 32,
     CODAWINDOWS = 64,
     CODAMAC     = 128,
@@ -311,6 +311,8 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     // All document types.
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'o', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT, unoAction: '.uno:Open' }),
 
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', platform: Platform.CODAWINDOWS, unoAction: '.uno:CloseWin' }),
+
     /*
         Disable F5 or assign it something to prevent browser refresh.
         Disable multi-sheet selection shortcuts in Calc.
@@ -359,7 +361,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
 	new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'R', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Refresh browser tab & clear cache
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'm', preventDefault: false, platform: Platform.MAC }), // On MacOS, minimize window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'q', preventDefault: false, platform: Platform.MAC }), // On MacOS, quit browser
-    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', preventDefault: false }), // Close current tab
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', platform: Platform.LINUX | Platform.WINDOWS | Platform.MAC, preventDefault: false }), // Close current tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'n', preventDefault: false }), // Open new browser window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 't', preventDefault: false }), // Open new browser tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
