@@ -1680,13 +1680,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'IS', de: null }
 					},
 					{
-						'id': 'insert-function-dialog',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:FunctionDialog', 'spreadsheet'),
-						'command': '.uno:FunctionDialog',
-						'accessibility': { focusBack: true,	combination: 'FD', de: null }
-					},
-					{
 						'id': 'Insert-Section-PivotTable-Ext',
 						'type': 'container',
 						'children': [
