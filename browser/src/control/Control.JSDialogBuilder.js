@@ -1027,6 +1027,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				var tab = window.L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				// avoid duplicated ids: we receive plain number from core, append prefix
 				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
+
+				contentDiv.setAttribute('aria-labelledby', tab.id);
+
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
 				tab.setAttribute('aria-controls', contentDiv.id);
