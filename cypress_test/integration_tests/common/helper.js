@@ -163,12 +163,18 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 	var URI = '';
 
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
-		URI += 'http://' + Cypress.env('SERVER') + '/richproxy/proxy.php?req=';
+		URI += 'http://' + Cypress.env('SERVER') + '/proxy.php?req=';
 	}
 
 	URI += '/browser/' + Cypress.env('WSD_VERSION_HASH') + '/debug.html'
 		+ '?lang=en-US'
 		+ '&file_path=' + Cypress.env('DATA_WORKDIR') + filePath;
+
+	if (Cypress.env('INTEGRATION') === 'php-proxy') {
+		const serverPort = Cypress.env('SERVER_PORT');
+		if (serverPort)
+			URI += '&wopiPort=' + serverPort;
+	}
 
 	if (isMultiUser) {
 		URI = URI.replace('debug.html', 'cypress-multiuser.html');
