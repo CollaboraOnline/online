@@ -1111,6 +1111,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
                 openCOOLWindow(filenameAndUri);
 #endif
         }
+        else if (s == L"uno .uno:CloseWin")
+        {
+            PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
+        }
         else
         {
             do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
