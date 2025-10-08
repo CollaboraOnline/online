@@ -2221,7 +2221,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (json.commandName && json.state !== undefined) {
 				this._map.fire('commandstatechanged', json);
 			}
-		} else {
+		}
+		else if (textMsg.startsWith('.uno:Context=') && this._docType === 'presentation') {
+			this._selectionContextChanged(textMsg.replace('.uno:Context=', ''));
+		}
+		else {
 			var index = textMsg.indexOf('=');
 			var commandName = index !== -1 ? textMsg.substr(0, index) : '';
 			var state = index !== -1 ? textMsg.substr(index + 1) : '';
