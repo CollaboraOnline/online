@@ -261,6 +261,7 @@ COOL_JS_LST =\
 	src/app/TextSelectionMiddleware.ts \
 	src/app/CellSelectionMarkerMiddleware.ts \
 	src/app/TableMiddleware.ts \
+	src/app/ImpressSelectionMiddleware.ts \
 	src/app/ViewLayout.ts \
 	src/app/ViewLayoutMultiPage.ts \
 	src/app/DocumentBase.ts \
@@ -317,6 +318,7 @@ COOL_JS_LST =\
 	src/canvas/sections/PreloadMapSection.ts \
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
+	src/canvas/sections/ImpressSelectionRectangle.ts \
 	src/canvas/sections/TableResizeMarkerSection.ts \
 	src/canvas/sections/TableSelectMarkerSection.ts \
 	src/canvas/sections/FocusCellSection.ts \
