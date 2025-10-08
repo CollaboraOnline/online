@@ -218,15 +218,11 @@ Limitations:
 Running tests with php-proxy
 ----------------------------
 
-You can run any test runner command with php-proxy with setting
-CYPRESS_INTEGRATION environment variable. For example:
+You can tests with proxy.php which uses ProxyProtocol in coolwsd. It is primarily used in richdocumentscode - https://github.com/CollaboraOnline/richdocumentscode
 
-CYPRESS_INTEGRATION="php-proxy" make check
+make check-php-proxy
 
-Prerequisites:
-* Download php-proxy script:
-https://github.com/CollaboraOnline/richdocumentscode/blob/master/proxy.php
-* Put it under /srv/www/htdocs/richproxy/ folder.
+It downloads https://github.com/CollaboraOnline/richdocumentscode/blob/master/proxy.php and start php server in docker.
 
 Other useful flags
 ------------------
