@@ -3,10 +3,11 @@ apply plugin: 'com.android.library'
 // buildhost settings - paths and the like
 apply from: 'libSettings.gradle'
 
+layout.buildDirectory.set(rootProject.layout.buildDirectory.dir("lib"))
+
 android {
     namespace 'org.libreoffice.androidlib'
     compileSdkVersion 35
-    buildDir = "${rootProject.getBuildDir()}/lib"
     ndkVersion "28.2.13676358"
     buildFeatures.buildConfig = true
 
@@ -32,7 +33,10 @@ android {
             enable true
 
             reset ()
-            include @ANDROID_ABI_SPLIT@
+            for (abi in liboAbiSplit) {
+                //noinspection ChromeOsAbiSupport - we generate liboAbiSplit at configure time, so we won't include ChromeOS support if we're not trying to build for it...
+                include(abi)
+            }
         }
     }
 
@@ -62,7 +66,7 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
-            buildStagingDirectory "${rootProject.getBuildDir()}/cmake"
+            buildStagingDirectory "${rootProject.layout.buildDirectory.get()}/cmake"
         }
     }
 }
@@ -309,23 +313,23 @@ preBuild.dependsOn 'createRCfiles',
 
 tasks.register('generateCoolDebugAssets') {
     doLast {
-        exec {
-            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", 'clean'
-        }
-        exec {
-            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/debug/assets/dist", 'BUNDLE=DEBUG'
-        }
+        providers.exec {
+            commandLine 'make', '-C', "${rootProject.layout.buildDirectory.get()}/../../browser", 'clean'
+        }.result.get()
+        providers.exec {
+            commandLine 'make', '-C', "${rootProject.layout.buildDirectory.get()}/../../browser", "DIST_FOLDER=${project.layout.projectDirectory}/src/debug/assets/dist", 'BUNDLE=DEBUG'
+        }.result.get()
     }
 }
 
 tasks.register('generateCoolReleaseAssets') {
     doLast {
-        exec {
-            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", 'clean'
-        }
-        exec {
-            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/release/assets/dist", 'BUNDLE=RELEASE'
-        }
+        providers.exec {
+            commandLine 'make', '-C', "${rootProject.layout.buildDirectory.get()}/../../browser", 'clean'
+        }.result.get()
+        providers.exec {
+            commandLine 'make', '-C', "${rootProject.layout.buildDirectory.get()}/../../browser", "DIST_FOLDER=${project.layout.projectDirectory}/src/release/assets/dist", 'BUNDLE=RELEASE'
+        }.result.get()
     }
 }
 

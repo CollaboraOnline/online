@@ -7,7 +7,7 @@ ext {
     liboBrandingDir     = '@APP_BRANDING_DIR@'
     liboOVersionHash    = '@COOLWSD_VERSION_HASH@'
     liboCoreVersionHash = '@CORE_VERSION_HASH@'
-
+    liboAbiSplit        = [@ANDROID_ABI_SPLIT@]
 }
 android.defaultConfig {
     applicationId '@ANDROID_PACKAGE_NAME@'

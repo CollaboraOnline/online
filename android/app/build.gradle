@@ -3,10 +3,11 @@ apply plugin: 'com.android.application'
 // buildhost settings - paths and the like
 apply from: 'appSettings.gradle'
 
+layout.buildDirectory.set(rootProject.layout.buildDirectory.dir("app"))
+
 android {
     namespace 'org.libreoffice.androidapp'
     compileSdkVersion 35
-    buildDir = "${rootProject.getBuildDir()}/app"
     ndkVersion "28.2.13676358"
     buildFeatures.buildConfig = true
 
@@ -29,7 +30,10 @@ android {
             enable true
 
             reset ()
-            include @ANDROID_ABI_SPLIT@
+            for (abi in liboAbiSplit) {
+                //noinspection ChromeOsAbiSupport - we generate liboAbiSplit at configure time, so we won't include ChromeOS support if we're not trying to build for it...
+                include(abi)
+            }
         }
     }
 
@@ -90,7 +94,7 @@ tasks.register('copyBrandFiles', Copy) {
 }
 
 afterEvaluate {
-	if (!project.ext.liboHasBranding.equals("true") || !file("${liboBrandingDir}").exists()) {
+	if (project.ext.liboHasBranding != "true" || !file("${liboBrandingDir}").exists()) {
 		copyBrandFiles.enabled = false
 	}
 
