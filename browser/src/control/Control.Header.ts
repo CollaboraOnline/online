@@ -55,6 +55,16 @@ export class Header extends CanvasSectionObject {
 		super(name);
 	}
 
+	onInitialize(): void {
+		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
+
+		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
+		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
+		this._map.on('statusupdated', this._reInitRowColumnHeaderStylesAfterModeChange, this);
+
+		this._reInitRowColumnHeaderStylesAfterModeChange();
+	}
+
 	_initHeaderEntryStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = window.L.DomUtil.create('div', className, baseElem);
@@ -148,18 +158,45 @@ export class Header extends CanvasSectionObject {
 
 	_reInitRowColumnHeaderStylesAfterModeChange(): void {
 		// add a separation to update row/column DOM element info
+		var isSheetView = app.calc.isSelectedPartSheetView();
+		var isSheetViewSynced = app.calc.isSelectedPartSheetViewSynced();
+
 		if (this._isColumn) {
 			// update column DOM element info
-			this._initHeaderEntryStyles('spreadsheet-header-column');
-			this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
-			this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
+			if (isSheetView && !isSheetViewSynced) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-column');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
+			}
+			else if (isSheetView) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-column');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
+			}
+			else {
+				this._initHeaderEntryStyles('spreadsheet-header-column');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
+			}
 			this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
 		}
 		else {
 			// update row DOM element info
-			this._initHeaderEntryStyles('spreadsheet-header-row');
-			this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
-			this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
+			if (isSheetView && !isSheetViewSynced) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-row');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
+			}
+			else if (isSheetView) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-row');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
+			}
+			else {
+				this._initHeaderEntryStyles('spreadsheet-header-row');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
+			}
 			this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
 		}
 	}
