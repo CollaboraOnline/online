@@ -1110,17 +1110,36 @@ int main(int argc, char**argv)
         return getSteadyClockAsString(time);
     }
 
+    /// Stringify the given time and print the difference from 'now' in
+    /// a human-friendly format. E.g. Thu Oct 09 02:15:25.682 2025 (4h 43m 32s 211ms ago)
     template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
     {
         const auto elapsed = now - convertChronoClock<U>(time);
-        const auto elapsedM = std::chrono::duration_cast<std::chrono::minutes>(elapsed);
-        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed) - elapsedM;
-        const auto elapsedMS =
-            std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) - elapsedS;
+
+        const auto elapsedH = std::chrono::duration_cast<std::chrono::hours>(elapsed);
+        const auto elapsedMin =
+            std::chrono::duration_cast<std::chrono::minutes>(elapsed - elapsedH);
+        const auto elapsedSec =
+            std::chrono::duration_cast<std::chrono::seconds>(elapsed - elapsedH - elapsedMin);
+        const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            elapsed - elapsedH - elapsedMin - elapsedSec);
+
+        assert(elapsedH + elapsedMin + elapsedSec + elapsedMs ==
+                   std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) &&
+               "Time-difference mismatch, likely a rounding error");
 
         std::stringstream ss;
-        ss << getClockAsString(time) << " (" << elapsedM << ' ' << elapsedS << ' ' << elapsedMS
-           << " ago)";
+        ss << getClockAsString(time) << " (";
+        if (elapsedH > std::chrono::hours::zero())
+            ss << elapsedH << ' ';
+
+        if (elapsedMin > std::chrono::minutes::zero())
+            ss << elapsedMin << ' ';
+
+        if (elapsedSec > std::chrono::seconds::zero())
+            ss << elapsedSec << ' ';
+
+        ss << elapsedMs << " ago)";
         return ss.str();
     }
 
