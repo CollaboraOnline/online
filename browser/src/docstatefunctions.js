@@ -288,6 +288,20 @@ app.calc.isPartProtected = function (part) {
 	return app.map._docLayer._lastStatusJSON.parts[part].protected === 1;
 };
 
+app.calc.isPartSheetView = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+	if (part >= app.map._docLayer._lastStatusJSON.parts.length) return false;
+
+	return app.map._docLayer._lastStatusJSON.parts[part].sheetviewid >= 0;
+};
+
+app.calc.isPartSheetViewSynced = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+	if (part >= app.map._docLayer._lastStatusJSON.parts.length) return false;
+
+	return app.map._docLayer._lastStatusJSON.parts[part].sheetviewsynced === 1;
+};
+
 app.calc.isAnyPartHidden = function () {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
 

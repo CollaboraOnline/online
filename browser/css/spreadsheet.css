@@ -63,6 +63,20 @@
 	background-repeat: no-repeat !important;
 }
 
+.spreadsheet-tab.spreadsheet-tab-sheetview > .lock, .spreadsheet-tab.spreadsheet-tab-sheetview:hover > .lock {
+	width: 16px;
+	height: 16px;
+	background-image: url('images/sheetview.svg') !important;
+	background-repeat: no-repeat !important;
+}
+
+.spreadsheet-tab.spreadsheet-tab-sheetview-unsynced > .lock, .spreadsheet-tab.spreadsheet-tab-sheetview-unsynced:hover > .lock {
+	width: 16px;
+	height: 16px;
+	background-image: url('images/sheetview_unsynced.svg') !important;
+	background-repeat: no-repeat !important;
+}
+
 #spreadsheet-tab-scroll button.spreadsheet-tab-selected:hover {
 	background-color: rgba(var(--doc-type)) !important;
 	color: var(--color-primary-text) !important;
