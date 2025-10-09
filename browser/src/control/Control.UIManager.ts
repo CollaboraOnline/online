@@ -993,7 +993,7 @@ class UIManager extends window.L.Control {
 
 		if (this.notebookbar) {
 			this.notebookbar.reloadShortcutsBar();
-			found = this.notebookbar.showNotebookbarButton(buttonId, show);
+			found = this.notebookbar.showItem(buttonId);
 		}
 
 		if (!found)
