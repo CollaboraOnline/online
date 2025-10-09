@@ -11,6 +11,7 @@
 	--color-text-dark: #333333;  /* select */
 	--color-text-darker: #000;  /* hover */
 	--color-text-lighter: #696969; /* secondard text, disabled */
+	--color-text-light: #e8e8e8;
 	--color-status-badge: #616161;
 	--color-slideshow: #A8A8A8;
 
@@ -57,9 +58,16 @@
 	--color-calc-grid: #c0c0c0;
 	--color-calc-header: #f0f0f0;
 	--color-calc-header-selected: #e1e1e1;
+	--color-calc-header-hover: #fff;
+
+	--color-calc-header-sheetview: #0a0a0a;
+	--color-calc-header-sheetview-selected: #646464;
+	--color-calc-header-sheetview-hover: #646464;
+	--color-calc-header-sheetview-unsynced: #500000;
+
 	--color-text-calc-header-selected: var(--color-text-darker);
 	--color-border-calc-header: #c0c0c0;
-	--color-calc-header-hover: #fff;
+
 	--color-calc-comment: #BF819E;
 	--column-row-highlight: #CCFFFF;
 
