@@ -365,7 +365,6 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		instance.builder.build(instance.content, [instance]);
 		instance.builder.setContainer(instance.content);
 		var primaryBtn = instance.content.querySelector('#' + instance.defaultButtonId + ' button');
-		instance.primaryButton = primaryBtn;
 		if (primaryBtn)
 			window.L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
@@ -859,6 +858,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			this.createContainer(instance, documentFragment);
 			this.createDialog(instance);
 
+			const modifyCallback = JSDialog.getDialogModificationCallback(instance.dialogid);
+			if (modifyCallback) modifyCallback(instance);
+
 			// FIXME: remove this auto-bound instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
 
@@ -1048,21 +1050,6 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		var keyCode = event.keyCode;
 
 		switch (keyCode) {
-		case 13:
-			// ENTER
-			var dialogKeys = Object.keys(this.dialogs);
-			if (dialogKeys.length) {
-				const lastKey = dialogKeys[dialogKeys.length - 1];
-				const dialogInfo = this.dialogs[lastKey];
-				if (dialogInfo && dialogInfo.dialogid === "FindReplaceDialog") {
-					const primaryButton = dialogInfo.primaryButton;
-					if (primaryButton) {
-						primaryButton.click();
-						return true;
-					}
-				}
-			}
-			break;
 		case 27:
 			// ESC
 			var dialogKeys = Object.keys(this.dialogs);
