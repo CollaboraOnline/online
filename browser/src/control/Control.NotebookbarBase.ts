@@ -116,10 +116,6 @@ class NotebookbarBase extends JSDialogComponent {
 		this.impl?.reloadShortcutsBar();
 	}
 
-	public showNotebookbarButton(buttonId: string, show: boolean) {
-		this.impl?.showNotebookbarButton(buttonId, show);
-	}
-
 	public showNotebookbarCommand(commandId: string, show: boolean) {
 		this.impl?.showNotebookbarCommand(commandId, show);
 	}
@@ -144,12 +140,12 @@ class NotebookbarBase extends JSDialogComponent {
 
 	// customization
 
-	public showItem(id: string, show?: boolean) {
-		this.impl?.showItem(id /* no show used */);
+	public showItem(id: string, show?: boolean): boolean {
+		return this.impl?.showItem(id /* no show used */);
 	}
 
-	public hideItem(id: string) {
-		this.impl?.hideItem(id);
+	public hideItem(id: string): boolean {
+		return this.impl?.hideItem(id);
 	}
 }
 

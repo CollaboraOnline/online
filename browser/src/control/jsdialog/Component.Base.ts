@@ -111,9 +111,15 @@ abstract class JSDialogComponent {
 
 	// customization
 
+	/// shows item with given id and returns true if it was found
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	public showItem(id: string, show?: boolean) {}
+	public showItem(id: string, show?: boolean): boolean {
+		return false;
+	}
 
+	/// hides item with given id and returns true if it was found
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	public hideItem(id: string) {}
+	public hideItem(id: string): boolean {
+		return false;
+	}
 }
