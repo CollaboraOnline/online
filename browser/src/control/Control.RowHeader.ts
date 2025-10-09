@@ -51,15 +51,7 @@ export class RowHeader extends cool.Header {
 		this._hitResizeArea = false;
 		this.sectionProperties.docLayer = this._map._docLayer;
 
-		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
-
-		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
-		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
-
-		this._initHeaderEntryStyles('spreadsheet-header-row');
-		this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
-		this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
-		this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
+		super.onInitialize();
 
 		this._menuItem = {
 			'.uno:InsertRowsBefore': {
