@@ -424,7 +424,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';
 		var hasAbout = window.L.DomUtil.get('about-dialog') !== null;
-		var hasServerAudit = !this.hiddenItems.includes('server-audit');
+		var hasServerAudit = this.getHiddenItems() ? !this.getHiddenItems().includes('server-audit') : true;
 
 		var content = [
 				{
