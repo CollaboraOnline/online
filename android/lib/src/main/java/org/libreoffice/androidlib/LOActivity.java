@@ -77,13 +77,13 @@ import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -253,6 +253,28 @@ public class LOActivity extends AppCompatActivity {
         else
             this.rateAppController = null;
         this.mActivity = this;
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!documentLoaded) {
+                    finishAndRemoveTask();
+                    return;
+                }
+
+                if (mMobileWizardVisible) {
+                    // just return one level up in the mobile-wizard (or close it)
+                    callFakeWebsocketOnMessage("mobile: mobilewizardback");
+                    return;
+                } else if (mIsEditModeActive) {
+                    callFakeWebsocketOnMessage("mobile: readonlymode");
+                    return;
+                }
+
+                finishWithProgress();
+            }
+        });
+
         init();
     }
 
@@ -813,25 +835,6 @@ public class LOActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!documentLoaded) {
-            finishAndRemoveTask();
-            return;
-        }
-
-        if (mMobileWizardVisible) {
-            // just return one level up in the mobile-wizard (or close it)
-            callFakeWebsocketOnMessage("mobile: mobilewizardback");
-            return;
-        } else if (mIsEditModeActive) {
-            callFakeWebsocketOnMessage("mobile: readonlymode");
-            return;
-        }
-
-        finishWithProgress();
-    }
-
     private void loadDocument() {
         mProgressDialog.determinate(R.string.loading);
 
@@ -1339,7 +1342,6 @@ public class LOActivity extends AppCompatActivity {
         Intent intent = new Intent(LO_ACTIVITY_BROADCAST);
         intent.putExtra(LO_ACTION_EVENT, event);
         intent.putExtra(LO_ACTION_DATA, data);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public native void saveAs(String fileUri, String format, String options);

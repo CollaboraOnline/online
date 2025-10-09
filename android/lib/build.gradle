@@ -7,13 +7,13 @@ layout.buildDirectory.set(rootProject.layout.buildDirectory.dir("lib"))
 
 android {
     namespace 'org.libreoffice.androidlib'
-    compileSdkVersion 35
+    compileSdk 36
     ndkVersion "28.2.13676358"
     buildFeatures.buildConfig = true
 
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 35
+        minSdk 26
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -74,9 +74,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 
     // https://stackoverflow.com/questions/75263047/duplicate-class-in-kotlin-android
     constraints {
