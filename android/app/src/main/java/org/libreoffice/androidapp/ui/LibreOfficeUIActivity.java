@@ -85,7 +85,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -167,10 +166,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         //documentProviderFactory = DocumentProviderFactory.getInstance();
 
         SettingsListenerModel.getInstance().setListener(this);
-
-        // Register the LOActivity events broadcast receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLOActivityReceiver,
-              new IntentFilter(LOActivity.LO_ACTIVITY_BROADCAST));
 
         // init UI and populate with contents from the provider
         createUI();
@@ -876,20 +871,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         //Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode));
     }
 
-    /** Receiver for receiving messages from LOActivity - like that Save was performed and similar. */
-    private final BroadcastReceiver mLOActivityReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String event = intent.getStringExtra(LOActivity.LO_ACTION_EVENT);
-            Log.d(LOGTAG, "Received a message from LOActivity: " + event);
-
-            // Handle various events from LOActivity
-            if (event.equals("SAVE")) {
-                // TODO probably kill this, we don't need to do anything here any more
-            }
-        }
-    };
-
     /** Uploading back when we return from the LOActivity. */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -967,7 +948,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLOActivityReceiver);
         Log.d(LOGTAG, "onDestroy");
     }
 
