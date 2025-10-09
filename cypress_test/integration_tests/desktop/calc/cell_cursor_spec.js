@@ -53,6 +53,38 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 });
 
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', function() {
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/empty-selections.ods');
+
+		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+	});
+
+	it('Check non-range cell selection with CTRL', function() {
+		calcHelper.clickOnACell(1, 1, 2, 3);
+
+		// Press CTRL and hold.
+		cy.cGet('div.clipboard').type('{ctrl}', { release: false });
+
+		cy.wait(500);
+		calcHelper.clickOnACell(2, 3, 4, 3);
+
+		cy.wait(500);
+		calcHelper.clickOnACell(4, 3, 2, 6);
+
+		// Press SHIFT and hold.
+		cy.cGet('div.clipboard').type('{shift}', { release: false });
+
+		cy.wait(500);
+		calcHelper.clickOnACell(2, 6, 2, 10);
+
+		cy.wait(500);
+
+		cy.cGet('#map').compareSnapshot('selections', 0.02);
+	});
+});
+
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell selection with split panes', function() {
 
 	beforeEach(function() {
