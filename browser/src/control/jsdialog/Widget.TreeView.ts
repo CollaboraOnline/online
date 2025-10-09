@@ -677,7 +677,7 @@ class TreeViewControl {
 		level: number,
 		selectionElement: HTMLInputElement,
 	) {
-		let td, expander, span, text, img, icon, iconId, iconName, link, innerText;
+		let td, expander, span, text, img;
 
 		const rowElements = [];
 
@@ -1728,6 +1728,11 @@ class TreeViewControl {
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 		(this._container as any).highlightEntries =
 			this.highlightEntries.bind(this);
+
+		// Prevent grab_focus(in executeActionImpl) from focusing the container
+		(this._container as any).onFocus = () => {
+			// no-op: focus is already on the correct row
+		};
 
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);
