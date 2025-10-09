@@ -1724,12 +1724,9 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
         _isViewSettingsAccessibilityEnabled = accessibilityState == "true";
         session->setAccessibilityState(accessibilityState == "true");
 
-        JsonUtil::findJSONValue(viewSettings, "zoteroAPIKey", zoteroAPIKey);
-        session->setZoteroAPIKey(zoteroAPIKey);
-
         bool viewSettingsNeedUpdate = false;
 
-        auto migrateSignatureField = [&](const std::string& viewSettingKey,
+        auto migrateViewSettingsField = [&](const std::string& viewSettingKey,
                                           const std::string& privateInfoKey,
                                           std::string& value) -> bool
         {
@@ -1749,13 +1746,16 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
             return false;
         };
 
-        viewSettingsNeedUpdate |= migrateSignatureField("signatureCert", "SignatureCert", signatureCertificate);
+        viewSettingsNeedUpdate |= migrateViewSettingsField("zoteroAPIKey", "ZoteroAPIKey", zoteroAPIKey);
+        session->setZoteroAPIKey(zoteroAPIKey);
+
+        viewSettingsNeedUpdate |= migrateViewSettingsField("signatureCert", "SignatureCert", signatureCertificate);
         session->setSignatureCertificate(signatureCertificate);
 
-        viewSettingsNeedUpdate |= migrateSignatureField("signatureKey", "SignatureKey", signatureKey);
+        viewSettingsNeedUpdate |= migrateViewSettingsField("signatureKey", "SignatureKey", signatureKey);
         session->setSignatureKey(signatureKey);
 
-        viewSettingsNeedUpdate |= migrateSignatureField("signatureCa", "SignatureCa", signatureCa);
+        viewSettingsNeedUpdate |= migrateViewSettingsField("signatureCa", "SignatureCa", signatureCa);
         session->setSignatureCa(signatureCa);
 
         _isViewSettingsUpdated = true;
