@@ -873,7 +873,7 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
 	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
-	@truncate $(if $(filter Darwin,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
+	@truncate $(if $(filter Darwin FreeBSD,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
 $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
