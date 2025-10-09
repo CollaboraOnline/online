@@ -1015,10 +1015,8 @@ int forkit_main(int argc, char** argv)
         Util::forcedExit(EX_SOFTWARE);
     }
 
-#ifdef THREADCOUNTER_USABLE
     if (Util::ThreadCounter().count() != 1)
         LOG_ERR("forkit has more than a single thread after pre-init" << Util::ThreadCounter().count());
-#endif
 
     // Link the network and system files in sysTemplate, if possible.
     JailUtil::SysTemplate::setupDynamicFiles(sysTemplate);

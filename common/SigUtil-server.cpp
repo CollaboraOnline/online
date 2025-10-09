@@ -587,8 +587,8 @@ void resetTerminationFlags()
         prctl(PR_SET_PDEATHSIG, SIGKILL);
 #endif
 #if defined(__FreeBSD__)
-        // pid 0 is self
-        procctl(P_PID, 0, PROC_PDEATHSIG_CTL, SIGKILL)
+        int sig = SIGKILL;
+        procctl(P_PID, 0, PROC_PDEATHSIG_CTL, &sig);
 #endif
     }
 

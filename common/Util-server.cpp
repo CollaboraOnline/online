@@ -19,6 +19,7 @@
 #include <sys/resource.h>
 #elif defined __FreeBSD__
 #include <sys/resource.h>
+#include <sys/user.h>
 #include <unistd.h>
 extern char** environ;
 #endif
@@ -166,6 +167,43 @@ int DirectoryCounter::count()
 
     return tasks;
 }
+
+#ifdef __FreeBSD__
+ThreadCounter::ThreadCounter() { pid = getpid(); }
+
+ThreadCounter::~ThreadCounter() {}
+
+int ThreadCounter::count()
+{
+    size_t len = 0, olen = 0;
+    struct kinfo_proc* kipp = NULL;
+    int name[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID | KERN_PROC_INC_THREAD, pid };
+    int error = sysctl(name, 4, NULL, &len, NULL, 0);
+    if (len == 0 || (error < 0 && errno != EPERM)) {
+        goto fail;
+    }
+    do
+    {
+        len += len / 10;
+        kipp = (struct kinfo_proc *) reallocf(kipp, len);
+        if (kipp == NULL)
+        {
+            goto fail;
+        }
+        olen = len;
+        error = sysctl(name, 4, kipp, &len, NULL, 0);
+    } while (error < 0 && errno == ENOMEM && olen == len);
+
+    if (error < 0 && errno != EPERM) {
+        goto fail;
+    }
+    return len / sizeof(*kipp);
+
+fail:
+    if (kipp)
+        free(kipp);
+    return 0;}
+#endif
 
 int spawnProcess(const std::string& cmd, const StringVector& args)
 {
@@ -526,17 +564,11 @@ void alertAllUsers(const std::string&) {}
 void alertAllUsers(const std::string&, const std::string&) {}
 #endif
 
-SysStopwatch::SysStopwatch()
-{
-    restart();
-}
+SysStopwatch::SysStopwatch() { restart(); }
 
-void SysStopwatch::restart()
-{
-    readTime(_startCPU, _startSys);
-}
+void SysStopwatch::restart() { readTime(_startCPU, _startSys); }
 
-void SysStopwatch::readTime(uint64_t &cpu, uint64_t &sys)
+void SysStopwatch::readTime(uint64_t& cpu, uint64_t& sys)
 {
     cpu = 0;
     sys = 0;

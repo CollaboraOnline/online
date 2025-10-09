@@ -26,9 +26,7 @@
 #include <string_view>
 #include <utility>
 #include <cctype>
-
 #include <memory.h>
-
 #include <thread>
 
 #include <Poco/File.h>
@@ -62,7 +60,6 @@ extern "C"
 #endif
 
 #ifdef __linux__
-#define THREADCOUNTER_USABLE 1
 #define FDCOUNTER_USABLE 1
 #endif
 
@@ -186,12 +183,25 @@ namespace Util
         int count();
     };
 
+    #ifdef __FreeBSD__
+    /// Needs to open dirent before forking in Kit process
+    class ThreadCounter
+    {
+        pid_t pid;
+    public:
+        ThreadCounter();
+        ~ThreadCounter();
+        /// Get number of items in this directory or -1 on error
+        int count();
+    };
+    #else
     /// Needs to open dirent before forking in Kit process
     class ThreadCounter : public DirectoryCounter
     {
     public:
         ThreadCounter() : DirectoryCounter("/proc/self/task") {}
     };
+    #endif
 
     /// Needs to open dirent before forking in Kit process
     class FDCounter : public DirectoryCounter
