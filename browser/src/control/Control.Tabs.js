@@ -249,6 +249,19 @@ window.L.Control.Tabs = window.L.Control.extend({
 					else {
 						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
 					}
+
+					if (app.calc.isPartSheetView(i)) {
+						if (!app.calc.isPartSheetViewSynced(i)) {
+							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview-unsynced');
+						}
+						else {
+							window.L.DomUtil.addClass(tab, 'spreadsheet-tab-sheetview');
+						}
+					}
+					else {
+						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview');
+						window.L.DomUtil.removeClass(tab, 'spreadsheet-tab-sheetview-unsynced');
+					}
 					label.textContent = e.partNames[i];
 					tab.id = id;
 
