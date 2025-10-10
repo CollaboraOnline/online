@@ -2448,7 +2448,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
     SlideLayerCacheMap& slideLayerCache = _docManager->getSlideLayerCache();
 
     // cacheKey example:
-    // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0
+    // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
     // This is all the information browser sends based on which slides are created
     if (auto itr = slideLayerCache.find(cacheKey);
         itr != slideLayerCache.end() && layerNumber < itr->second.size())
