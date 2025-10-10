@@ -1577,6 +1577,18 @@ class SettingIframe {
 		);
 		zoteroContainer.appendChild(zotero);
 
+		const zoteroDiscription = this.createParagraph(
+			_(
+				'To use Zotero specify your API key here. You can create your API key in your ',
+			),
+		);
+		zoteroContainer.appendChild(zoteroDiscription);
+		const zoteroAccountLink = document.createElement('a');
+		zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+		zoteroAccountLink.target = '_blank';
+		zoteroAccountLink.textContent = _('Zotero account API settings.');
+
+		zoteroDiscription.appendChild(zoteroAccountLink);
 		return zoteroContainer;
 	}
 
