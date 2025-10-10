@@ -178,6 +178,7 @@ gtk/mobile
 
 # CODA-Q app
 qt/coda-qt
+qt/flatpak/.flatpak-builder
 # CODA-Q generated files by Qt6's moc
 *.moc.cpp
 

@@ -1,0 +1,301 @@
+{
+  "id": "org.collabora.CODA",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "6.9",
+  "sdk": "org.kde.Sdk",
+  "base": "io.qt.qtwebengine.BaseApp",
+  "base-version": "6.9",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.node20",
+    "org.freedesktop.Sdk.Extension.openjdk21"
+  ],
+  "add-build-extensions": {
+    "org.freedesktop.Sdk.Extension.node20": {
+      "version": "24.08"
+    },
+    "org.freedesktop.Sdk.Extension.openjdk21": {
+      "version": "24.08"
+    }
+  },
+  "command": "coda",
+  "finish-args": [
+    "--share=network",
+    "--share=ipc",
+    "--socket=system-bus",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--socket=pulseaudio",
+    "--socket=cups",
+    "--filesystem=xdg-config/gtk-3.0",
+    "--filesystem=xdg-config/fontconfig:ro",
+    "--filesystem=xdg-run/gvfsd",
+    "--filesystem=host",
+    "--env=COOL_TOPSRCDIR=/app/share/coolwsd",
+    "--env=LIBO_FLATPAK=1",
+    "--own-name=org.libreoffice.LibreOfficeIpc0",
+    "--talk-name=org.gtk.vfs.*",
+    "--talk-name=com.canonical.AppMenu.Registrar",
+    "--device=dri"
+  ],
+  "build-options": {
+    "arch": {
+      "x86_64": {
+        "prepend-pkg-config-path": "/app/lib/x86_64-linux-gnu/pkgconfig"
+      },
+      "aarch64": {
+        "prepend-pkg-config-path": "/app/lib/aarch64-linux-gnu/pkgconfig"
+      }
+    },
+    "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/libexec",
+    "env": {
+      "CFLAGS": "-O2",
+      "CXXFLAGS": "-O2 -DPOCO_UNBUNDLED=1",
+      "POCO_UNBUNDLED": "1",
+      "NINJA_STATUS": "[%p | %f/%t] "
+    },
+    "build-args": [
+      "--share=network"
+    ]
+  },
+  "modules": [
+    {
+      "name": "openjdk",
+      "buildsystem": "simple",
+      "build-commands": [
+        "/usr/lib/sdk/openjdk21/install.sh"
+      ]
+    },
+    {
+      "name": "gvfs",
+      "buildsystem": "meson",
+      "config-opts": [
+        "-Dsystemduserunitdir=no",
+        "-Dtmpfilesdir=no",
+        "-Dinstalled_tests=true",
+        "-Dadmin=false",
+        "-Dafc=false",
+        "-Dafp=false",
+        "-Darchive=false",
+        "-Dcdda=false",
+        "-Ddnssd=false",
+        "-Dgoa=false",
+        "-Dgoogle=false",
+        "-Dgphoto2=false",
+        "-Dhttp=false",
+        "-Dmtp=false",
+        "-Dnfs=false",
+        "-Donedrive=false",
+        "-Dsftp=false",
+        "-Dsmb=false",
+        "-Dudisks2=false",
+        "-Dbluray=false",
+        "-Dfuse=false",
+        "-Dgcr=false",
+        "-Dgcrypt=false",
+        "-Dgudev=false",
+        "-Dkeyring=false",
+        "-Dlogind=false",
+        "-Dlibusb=false",
+        "-Dwsdd=false"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/gvfs/1.56/gvfs-1.56.1.tar.xz",
+          "sha256": "86731ccec679648f8734e237b1de190ebdee6e4c8c0f56f454c31588e509aa10",
+          "x-checker-data": {
+            "type": "gnome",
+            "name": "gvfs",
+            "stable-only": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "krb5",
+      "subdir": "src",
+      "config-opts": [
+        "--disable-static",
+        "--disable-rpath",
+        "--sbindir=/app/bin"
+      ],
+      "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/var"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://kerberos.org/dist/krb5/1.21/krb5-1.21.3.tar.gz",
+          "sha256": "b7a4cd5ead67fb08b980b21abd150ff7217e85ea320c9ed0c6dadd304840ad35",
+          "x-checker-data": {
+            "type": "html",
+            "url": "https://kerberos.org/dist/",
+            "version-pattern": "Kerberos V5 Release ([\\d\\.]+) - current release",
+            "url-template": "https://kerberos.org/dist/krb5/$major.$minor/krb5-$version.tar.gz"
+          }
+        }
+      ]
+    },
+    {
+      "name": "libreoffice",
+      "sources": [
+        {
+	  "type": "git",
+	  "url" : "https://gerrit.libreoffice.org/core",
+	  "commit": "distro/collabora/co-25.04"
+        },
+        {
+          "type": "archive",
+          "url": "https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.14-bin.tar.bz2",
+          "sha512": "05e9f786044b9ba0dcc5e2b40ed2bd4ecfb25896a453ba78e2d4df18896c6be7d1564fd615f483c90c0d26dd1e0fb507c778f0c10712818b1fc8c9acbc0a26c6",
+          "dest": "ant"
+        }
+      ],
+      "buildsystem": "simple",
+      "build-commands": [
+        "./autogen.sh --prefix=/run/build/libreoffice/inst --enable-ext-nlpsolver --enable-release-build --with-ant-home=/run/build/libreoffice/ant --with-jdk-home=/usr/lib/sdk/openjdk21/jvm/openjdk-21 --without-export-validation --without-junit --without-lxml --without-system-abseil --without-system-argon2 --without-system-beanshell --without-system-bluez --without-system-boost --without-system-box2d --without-system-clucene --without-system-coinmp --without-system-cppunit --without-system-dragonbox --without-system-firebird --without-system-frozen --without-system-glm --without-system-gpgmepp --without-system-java-websocket --without-system-jfreereport --without-system-libabw --without-system-libatomic_ops --without-system-libcdr --without-system-libcmis --without-system-libebook --without-system-libepubgen --without-system-libetonyek --without-system-libexttextcat --without-system-libfixmath --without-system-libfreehand --without-system-liblangtag --without-system-libmspub --without-system-libmwaw --without-system-libnumbertext --without-system-libodfgen --without-system-libpagemaker --without-system-libpng --without-system-libqxp --without-system-librevenge --without-system-libstaroffice --without-system-libtommath --without-system-libvisio --without-system-libwpd --without-system-libwpg --without-system-libwps --without-system-libzmf --without-system-lpsolve --without-system-mariadb --without-system-mdds --without-system-odbc --without-system-openldap --without-system-orcus --without-system-poppler --without-system-postgresql --without-system-redland --without-system-rhino --without-system-sane --without-system-xmlsec --without-system-zxcvbn --without-system-zxing --without-system-libeot --with-gdrive-client-id=280867422816-9jc83t6phkfb2q8p94dtk8kr5fa8af3r.apps.googleusercontent.com --with-gdrive-client-secret=Hnzikj7HqdqsUYLru4jmFo1p",
+        "make clean",
+        "make",
+        "make distro-pack-install",
+        "mkdir -p /app/core",
+        "cp -r /run/build/libreoffice/inst/lib/collaboraoffice /app/core/instdir",
+        "cp -r include /app/core/."
+      ]
+    },
+    {
+      "name": "poco",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=/app",
+        "-DENABLE_XML=ON",
+        "-DENABLE_JSON=ON",
+        "-DENABLE_MONGODB=OFF",
+        "-DENABLE_REDIS=OFF",
+        "-DENABLE_DATA=ON",
+        "-DENABLE_DATA_SQLITE=ON",
+        "-DENABLE_DATA_MYSQL=OFF",
+        "-DENABLE_DATA_ODBC=OFF",
+        "-DENABLE_PDF=OFF",
+        "-DENABLE_NETSSL=ON",
+        "-DPOCO_UNBUNDLED=ON"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/pocoproject/poco.git",
+          "tag": "poco-1.12.4"
+        }
+      ]
+    },
+    {
+      "name": "zstd",
+      "buildsystem": "simple",
+      "build-commands": [
+        "make -j${FLATPAK_BUILDER_N_JOBS} PREFIX=/app ZSTD_LEGACY_SUPPORT=0",
+        "make install PREFIX=/app"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/facebook/zstd.git",
+          "tag": "v1.5.6"
+        }
+      ]
+    },
+    {
+      "name": "python3-lxml",
+      "buildsystem": "simple",
+      "build-options": {
+        "build-args": [
+          "--share=network"
+        ]
+      },
+      "build-commands": [
+        "python3 -m ensurepip || true",
+        "python3 -m pip install --no-cache-dir --upgrade pip",
+        "python3 -m pip install --no-cache-dir --prefix=/app 'lxml>=5.2,<5.3'"
+      ]
+    },
+    {
+      "name": "python3-polib",
+      "buildsystem": "simple",
+      "build-options": {
+        "build-args": [
+          "--share=network"
+        ]
+      },
+      "build-commands": [
+        "python3 -m ensurepip || true",
+        "python3 -m pip install --no-cache-dir --upgrade pip",
+        "python3 -m pip install --no-cache-dir --prefix=/app 'polib>=1.2,<1.3'"
+      ]
+    },
+    {
+      "name": "cppunit",
+      "buildsystem": "autotools",
+      "config-opts": [
+        "--disable-static",
+        "--enable-shared",
+        "--prefix=/app"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://git.libreoffice.org/cppunit",
+          "tag": "cppunit-1.15.1"
+        }
+      ]
+    },
+    {
+      "name": "linux-pam",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/linux-pam/linux-pam.git",
+          "tag": "v1.7.1"
+        }
+      ]
+    },
+    {
+      "name": "rsync",
+      "buildsystem": "autotools",
+      "config-opts": [
+        "--prefix=/app"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.samba.org/pub/rsync/src/rsync-3.3.0.tar.gz",
+          "sha256": "7399e9a6708c32d678a72a63219e96f23be0be2336e50fd1348498d07041df90"
+        }
+      ],
+      "cleanup": [
+        "/bin/rsync",
+        "/share/man",
+        "/share/doc",
+        "/share/examples"
+      ]
+    },
+    {
+      "name": "collabora-online",
+      "buildsystem": "simple",
+      "build-commands": [
+        "./autogen.sh",
+        "./configure --enable-qtapp --enable-silent-rules --disable-ssl --prefix=/app --with-poco-includes=/app/include --with-poco-libs=/app/lib --with-lokit-path=/app/core/include --with-lo-path=/app/core/instdir",
+        "make clean && make -j${FLATPAK_BUILDER_N_JOBS} install",
+        "install -Dm755 qt/coda-qt /app/bin/coda"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "../../"
+        }
+      ]
+    }
+  ]
+}
