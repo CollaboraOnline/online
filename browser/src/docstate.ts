@@ -16,6 +16,26 @@
 		* var autoFillSection = new app.definitions.AutoFillMarkerSection();
 */
 window.app = {
+	/*
+	 * These are from <vcl/keycodes.h>. Correspond to the published
+	 * com::sun::star::awt::KeyModifier constants, left-shifted by 12.
+	 */
+	UNOModifier: {
+		SHIFT: 4096,
+		CTRL: 8192,
+		ALT: 16384,
+		CTRLMAC: 32768,
+	},
+	JSButtons: {
+		left: 0,
+		middle: 1,
+		right: 2,
+	},
+	LOButtons: {
+		left: 1,
+		middle: 2,
+		right: 4,
+	},
 	CSections: {},
 	activeDocument: null, // Active document manager.
 	definitions: {}, // Class instances are created using definitions under this variable.

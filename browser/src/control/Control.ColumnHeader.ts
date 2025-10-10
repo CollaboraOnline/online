@@ -13,7 +13,7 @@
  * Control.ColumnHeader
  */
 
-/* global _UNO app UNOModifier */
+/* global _UNO app */
 namespace cool {
 
 export class ColumnHeader extends Header {
@@ -201,10 +201,10 @@ export class ColumnHeader extends Header {
 
 		let modifier = 0;
 		if (e.shiftKey) {
-			modifier += UNOModifier.SHIFT;
+			modifier += app.UNOModifier.SHIFT;
 		}
 		if (e.ctrlKey) {
-			modifier += UNOModifier.CTRL;
+			modifier += app.UNOModifier.CTRL;
 		}
 
 		this._selectColumn(col, modifier);

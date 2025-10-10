@@ -3,11 +3,7 @@
  * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/*
-	global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon
-	Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection
-	TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection FormFieldButton
-*/
+/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection */
 
 function clamp(num, min, max)
 {
@@ -2820,24 +2816,24 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			// functions when possible. Note that the Cmd modifier comes here as CTRL.
 
 			// Cmd+UpArrow -> Ctrl+Home
-			if (unoKeyCode == UNOKey.UP + UNOModifier.CTRL)
-				unoKeyCode = UNOKey.HOME + UNOModifier.CTRL;
+			if (unoKeyCode == UNOKey.UP + app.UNOModifier.CTRL)
+				unoKeyCode = UNOKey.HOME + app.UNOModifier.CTRL;
 			// Cmd+DownArrow -> Ctrl+End
-			else if (unoKeyCode == UNOKey.DOWN + UNOModifier.CTRL)
-				unoKeyCode = UNOKey.END + UNOModifier.CTRL;
+			else if (unoKeyCode == UNOKey.DOWN + app.UNOModifier.CTRL)
+				unoKeyCode = UNOKey.END + app.UNOModifier.CTRL;
 			// Cmd+LeftArrow -> Home
-			else if (unoKeyCode == UNOKey.LEFT + UNOModifier.CTRL)
+			else if (unoKeyCode == UNOKey.LEFT + app.UNOModifier.CTRL)
 				unoKeyCode = UNOKey.HOME;
 			// Cmd+RightArrow -> End
-			else if (unoKeyCode == UNOKey.RIGHT + UNOModifier.CTRL)
+			else if (unoKeyCode == UNOKey.RIGHT + app.UNOModifier.CTRL)
 				unoKeyCode = UNOKey.END;
 			// Option+LeftArrow -> Ctrl+LeftArrow
-			else if (unoKeyCode == UNOKey.LEFT + UNOModifier.ALT)
-				unoKeyCode = UNOKey.LEFT + UNOModifier.CTRL;
+			else if (unoKeyCode == UNOKey.LEFT + app.UNOModifier.ALT)
+				unoKeyCode = UNOKey.LEFT + app.UNOModifier.CTRL;
 			// Option+RightArrow -> Ctrl+RightArrow (Not entirely equivalent, should go
 			// to end of word (or next), LO goes to beginning of next word.)
-			else if (unoKeyCode == UNOKey.RIGHT + UNOModifier.ALT)
-				unoKeyCode = UNOKey.RIGHT + UNOModifier.CTRL;
+			else if (unoKeyCode == UNOKey.RIGHT + app.UNOModifier.ALT)
+				unoKeyCode = UNOKey.RIGHT + app.UNOModifier.CTRL;
 		}
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.TileSectionManager.postKeyboardEvent', { type: type, charCode: charCode });
@@ -2850,10 +2846,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			type === 'input' &&
 			winId === 0
 		) {
-			if (unoKeyCode === UNOKey.SPACE + UNOModifier.CTRL) { // Select whole column.
+			if (unoKeyCode === UNOKey.SPACE + app.UNOModifier.CTRL) { // Select whole column.
 				this._map.wholeColumnSelected = true;
 			}
-			else if (unoKeyCode === UNOKey.SPACE + UNOModifier.SHIFT) { // Select whole row.
+			else if (unoKeyCode === UNOKey.SPACE + app.UNOModifier.SHIFT) { // Select whole row.
 				this._map.wholeRowSelected = true;
 			}
 		}

@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
-/* global app UNOKey UNOModifier TileManager */
+/* global app UNOKey TileManager */
 
 window.L.Map.mergeOptions({
 	keyboard: true,
@@ -321,7 +321,7 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 	},
 
 	_ignoreKeyEvent: function(ev) {
-		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
+		var shift = ev.shiftKey ? app.UNOModifier.SHIFT : 0;
 		if (shift && (ev.keyCode === this.keyCodes.INSERT || ev.keyCode === this.keyCodes.DELETE)) {
 			// don't handle shift+insert, shift+delete
 			// These are converted to 'cut', 'paste' events which are
@@ -490,9 +490,9 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		}
 
 		this.modifier = 0;
-		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
-		var ctrl = (ev.ctrlKey || ev.metaKey) ? UNOModifier.CTRL : 0;
-		var alt = ev.altKey ? UNOModifier.ALT : 0;
+		var shift = ev.shiftKey ? app.UNOModifier.SHIFT : 0;
+		var ctrl = (ev.ctrlKey || ev.metaKey) ? app.UNOModifier.CTRL : 0;
+		var alt = ev.altKey ? app.UNOModifier.ALT : 0;
 		var location = ev.location;
 		this.modifier = shift | ctrl | alt;
 
@@ -532,7 +532,7 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		var DEFAULT =0;
 		//var MAC=1; use this when you encounter a MAC value
 
-		if ((this.modifier == UNOModifier.ALT || this.modifier == UNOModifier.SHIFT + UNOModifier.ALT) &&
+		if ((this.modifier == app.UNOModifier.ALT || this.modifier == app.UNOModifier.SHIFT + app.UNOModifier.ALT) &&
 		    keyCode >= this.keyCodes.NUM0[DEFAULT]) {
 			// Presumably a Mac or iOS client accessing a "special character". Just ignore the alt modifier.
 			// But don't ignore it for Alt + non-printing keys.

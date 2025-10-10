@@ -12,10 +12,9 @@
 /*
  */
 
-/* global _UNO app UNOModifier */
+/* global _UNO app */
 
 declare var _UNO: any;
-declare var UNOModifier: any;
 
 namespace cool {
 
@@ -196,10 +195,10 @@ export class RowHeader extends cool.Header {
 
 		let modifier = 0;
 		if (e.shiftKey) {
-			modifier += UNOModifier.SHIFT;
+			modifier += app.UNOModifier.SHIFT;
 		}
 		if (e.ctrlKey) {
-			modifier += UNOModifier.CTRL;
+			modifier += app.UNOModifier.CTRL;
 		}
 
 		this._selectRow(row, modifier);
