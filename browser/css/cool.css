@@ -242,7 +242,7 @@ body {
 	cursor: col-resize;
 }
 
-.table-column-resize-marker:hover {
+.table-column-resize-marker.hovered {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -250,7 +250,6 @@ body {
 	background-image: url('images/table-column-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: col-resize;
 }
 
 .table-row-resize-marker {
@@ -261,10 +260,9 @@ body {
 	background-image: url('images/table-row-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: row-resize;
 }
 
-.table-row-resize-marker:hover {
+.table-row-resize-marker.hovered {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -272,7 +270,6 @@ body {
 	background-image: url('images/table-row-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: row-resize;
 }
 
 .table-select-marker {
@@ -280,7 +277,6 @@ body {
 	width: var(--btn-size);
 	height: var(--btn-size);
 	background: url('images/table-row-or-column-select-marker.svg') no-repeat center center /12px;
-	cursor: pointer;
 }
 
 .table-select-marker::before {
@@ -581,7 +577,7 @@ body {
 	-moz-user-select: text;
 	-webkit-user-select: text;
 	-ms-user-select: text;
-	z-index: 10;
+	z-index: 12;
 	width: 250px;
 	transition: left .25s;
 }
@@ -770,6 +766,15 @@ body {
 
 .leaflet-container .leaflet-pane.leaflet-calc-background-pane {
 	z-index: 0;
+}
+
+.leaflet-control-container {
+	z-index: 12;
+	width: 100%;
+	position: absolute;
+	height: 100%;
+	user-select: none;
+	pointer-events: none;
 }
 
 .avatar-img {
@@ -1374,7 +1379,6 @@ body {
 }
 
 .table-add-col-row-marker.hovered {
-	cursor: pointer;
 	background-color: var(--color-insert-marker-background-dark) !important;
 	background: url('images/insert-plus-marker-hover.svg') no-repeat center center /20px;
 }

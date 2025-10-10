@@ -78,11 +78,12 @@ class CanvasSectionObject {
 	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onContextMenu(e?: MouseEvent): void { return; }
+	onContextMenu(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onMouseWheel(point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void { return; }
 	onMultiTouchStart(e: TouchEvent): void { return; }
 	onMultiTouchMove(point: cool.SimplePoint, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
+	onDrop(point: cool.SimplePoint, e: DragEvent): void { return; }
 	onResize(): void { return; }
 	onDraw(frameCount?: number, elapsedTime?: number): void { return; }
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.
@@ -123,34 +124,6 @@ class CanvasSectionObject {
 
 			(e as any).preventedDefault = true; // Tap events are first handled by touchGesture. We need to let it know if we handled the event.
 		}
-	}
-
-	// The z-index of map element is higher than the canvas element. When we want canvas to handle event before map, we need this, for now.
-	mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
-		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
-	}
-
-	// Move the HTML object of an HTMLObjectSection into map element. For avoiding z-index (event handling order) issues.
-	moveHTMLObjectToMapElement(): void {
-		const element: any = this.getHTMLObject() as any;
-
-		if (!element)
-			return;
-
-		// Linting sees opacity as a string property, but it is integer. Use any for now.
-		element.style.opacity = 1;
-		this.getHTMLObject().remove();
-		document.getElementById('map').appendChild(this.getHTMLObject());
 	}
 
 	startAnimating(options: any): boolean {

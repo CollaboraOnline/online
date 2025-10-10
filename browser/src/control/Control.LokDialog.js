@@ -12,7 +12,7 @@
  * window.L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global app $ Hammer brandProductName UNOModifier cool */
+/* global app $ Hammer brandProductName app cool */
 
 window.L.WinUtil = {
 
@@ -712,18 +712,18 @@ window.L.Control.LokDialog = window.L.Control.extend({
 
 			var buttons = 0;
 			if (this._map['mouse']) {
-				buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
-				buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
-				buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
+				buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
+				buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
+				buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
 			} else {
 				buttons = 1;
 			}
 
 			var modifier = 0;
-			var shift = e.shiftKey ? UNOModifier.SHIFT : 0;
-			var ctrl = e.ctrlKey ? UNOModifier.CTRL : 0;
-			var alt = e.altKey ? UNOModifier.ALT : 0;
-			var cmd = e.metaKey ? UNOModifier.CTRLMAC : 0;
+			var shift = e.shiftKey ? app.UNOModifier.SHIFT : 0;
+			var ctrl = e.ctrlKey ? app.UNOModifier.CTRL : 0;
+			var alt = e.altKey ? app.UNOModifier.ALT : 0;
+			var cmd = e.metaKey ? app.UNOModifier.CTRLMAC : 0;
 			modifier = shift | ctrl | alt | cmd;
 
 			// 'mousedown' -> 'buttondown'
@@ -1077,8 +1077,8 @@ window.L.Control.LokDialog = window.L.Control.extend({
 				if (previousTouchType === 'touchstart') {
 					// Simulate mouse click
 					if (this._map['mouse']) {
-						this._postWindowMouseEvent('buttondown', childId, firstTouchPositionX, firstTouchPositionY, 1, this._map['mouse'].LOButtons.left, 0);
-						this._postWindowMouseEvent('buttonup', childId, firstTouchPositionX, firstTouchPositionY, 1, this._map['mouse'].LOButtons.left, 0);
+						this._postWindowMouseEvent('buttondown', childId, firstTouchPositionX, firstTouchPositionY, 1, app.LOButtons.left, 0);
+						this._postWindowMouseEvent('buttonup', childId, firstTouchPositionX, firstTouchPositionY, 1, app.LOButtons.left, 0);
 					} else {
 						this._postWindowMouseEvent('buttondown', childId, firstTouchPositionX, firstTouchPositionY, 1, 1, 0);
 						this._postWindowMouseEvent('buttonup', childId, firstTouchPositionX, firstTouchPositionY, 1, 1, 0);
@@ -1097,9 +1097,9 @@ window.L.Control.LokDialog = window.L.Control.extend({
 		window.L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
 			if (this._map['mouse']) {
-				buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
-				buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
-				buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
+				buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
+				buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
+				buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
 			} else {
 				buttons = 1;
 			}

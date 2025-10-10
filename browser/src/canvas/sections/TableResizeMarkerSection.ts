@@ -36,9 +36,8 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.bottomMost = 0;
 		this.sectionProperties.dragStartPosition = null;
 		this.sectionProperties.initialPosition = this.position.slice();
-
-		this.moveHTMLObjectToMapElement();
-		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		this.sectionProperties.hoverCursor =
+			markerType === 'column' ? 'col-resize' : 'row-resize';
 	}
 
 	private calculateLeftMostAndRightMostAvailableX() {
@@ -112,21 +111,22 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
-
 		// Calculate on mouse enter so we don't need to recaulculate on every mouse move.
 		if (this.sectionProperties.markerType === 'column')
 			this.calculateLeftMostAndRightMostAvailableX();
 		else this.calculateTopMostAndBottomMostAvailableY();
+
+		this.getHTMLObject().classList.add('hovered');
+
+		this.context.canvas.style.cursor = this.sectionProperties.hoverCursor;
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
+		this.getHTMLObject().classList.remove('hovered');
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = point;
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			this.calculateLeftMostAndRightMostAvailableX();
@@ -210,7 +210,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
 
 		if (
@@ -263,8 +262,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		e: MouseEvent,
 	): void {
 		if (this.containerObject.isDraggingSomething()) {
-			this.stopPropagating(e);
-
 			// We only allow horizontal movement for column markers and vertical for row markers.
 
 			if (this.sectionProperties.markerType === 'column')

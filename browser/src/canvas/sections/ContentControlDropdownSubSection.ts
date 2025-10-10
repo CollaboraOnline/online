@@ -126,14 +126,6 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		return json;
 	}
 
-	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		app.map.dontHandleMouse = true;
-	}
-
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		app.map.dontHandleMouse = false;
-	}
-
 	public containsPoint(point: number[]) {
 		if (
 			this.position[0] <= point[0] &&

@@ -17,7 +17,9 @@ class SelectionRectangle extends CanvasSectionObject {
 	drawingOrder: number = app.CSections.SelectionRectangle.drawingOrder;
 	zIndex: number = app.CSections.SelectionRectangle.zIndex;
 	documentObject: boolean = true;
+	boundToSection: string = app.CSections.Tiles.name;
 
+	// Same gesture is used to move the screen on touch devices. So we don't draw a selection rectangle on touch events.
 	constructor() {
 		super(app.CSections.SelectionRectangle.name);
 		this.size = app.sectionContainer.getDocumentAnchorSection().size;
@@ -36,6 +38,8 @@ class SelectionRectangle extends CanvasSectionObject {
 		dragDistance: Array<number>,
 		e: MouseEvent,
 	) {
+		if (e.type === 'touchmove') return;
+
 		if (
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name
@@ -48,11 +52,15 @@ class SelectionRectangle extends CanvasSectionObject {
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+		if (e.type === 'touchend') return;
+
 		this.sectionProperties.positionOnMouseDown = null;
 		this.sectionProperties.selectionSize = null;
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+		if (e.type === 'touchstart') return;
+
 		this.sectionProperties.positionOnMouseDown = point;
 	}
 
@@ -61,11 +69,6 @@ class SelectionRectangle extends CanvasSectionObject {
 			app.activeDocument.activeView.viewedRectangle.pX1,
 			app.activeDocument.activeView.viewedRectangle.pY1,
 		);
-	}
-
-	public onResize(): void {
-		this.size = app.sectionContainer.getDocumentAnchorSection().size;
-		this.isVisible = this.containerObject.isDocumentObjectVisible(this);
 	}
 
 	public onDraw(frameCount?: number, elapsedTime?: number): void {
