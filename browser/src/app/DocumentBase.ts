@@ -16,7 +16,11 @@ class DocumentBase {
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {
-		this.activeView = new ViewLayoutBase();
+		if (app.map._docLayer._docType === 'text') {
+			this.activeView = new ViewLayoutWriter();
+		} else {
+			this.activeView = new ViewLayoutBase();
+		}
 		this._fileSize = new cool.SimplePoint(0, 0);
 	}
 

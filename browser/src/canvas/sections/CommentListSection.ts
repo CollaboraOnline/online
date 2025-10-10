@@ -82,6 +82,16 @@ export class CommentSection extends CanvasSectionObject {
 		canvasContainerLeft: number;
 	};
 	disableLayoutAnimation: boolean = false;
+
+	/*
+		when the comments are about to be folded and there's some space on 
+		the left of the document, we move the document to make some space
+		on the right for comments. we then need to take the offset in 
+		account in any further calculations, that's why we store the values.
+	*/
+	movedDocumentToLeft: boolean = false;
+	movedDocumentByOffset: number = 0;
+
 	mobileCommentId: string = 'new-annotation-dialog';
 	mobileCommentModalId: string;
 
@@ -280,18 +290,57 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private calculateAvailableSpace() {
+
+	/*
+		WARN:
+		this should also take into account the 
+		manual changes to the zoom and horizontal scrolls.
+		one might want to set that offset value to zero
+		when the comments collapse/uncollapse.
+	*/
+	public calculateAvailableSpace() {
 		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
 		availableSpace = Math.round(availableSpace / app.dpiScale);
+		// if (availableSpace > this.sectionProperties.commentWidth) this.setMovedDocumentByOffset(0);
+		if (this.movedDocumentToLeft) availableSpace += Math.round(this.movedDocumentByOffset / app.dpiScale);
 		return availableSpace;
 	}
 
+	/*
+		WARN:
+		this might need some rework but if calculateAvailableSpace 
+		accounts for the changes related to document movement
+		it might go away without any changes.
+	*/
 	public shouldCollapse (): boolean {
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
+		if (this.needSomeOfThatLeftSpace()) return false;
 
-		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
+		const collapse = availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
+		if (collapse === true) this.setMovedDocumentByOffset(0);
+		return collapse;
+	}
+
+	public needSomeOfThatLeftSpace(): boolean {
+		const spaceOnRight = this.calculateAvailableSpace();
+		const commentWidth = this.sectionProperties.commentWidth
+		const spaceOnLeft = ((this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5) - this.movedDocumentByOffset;
+		return spaceOnRight < commentWidth && (commentWidth - spaceOnRight) < spaceOnLeft;
+	}
+	
+	public needThisMuchOfThatLeftSpace(): number {
+		const spaceOnRight = this.calculateAvailableSpace();
+		const commentWidth = this.sectionProperties.commentWidth
+		const spaceOnLeft = ((this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5) - this.movedDocumentByOffset;
+		return spaceOnLeft - (commentWidth - spaceOnRight);
+	}
+	
+	public setMovedDocumentByOffset(offset: number) {
+		this.movedDocumentByOffset = offset;
+		if (offset !== 0) this.movedDocumentToLeft = true;
+		if (offset === 0) this.movedDocumentToLeft = false;
 	}
 
 	public hideAllComments (): void {
