@@ -769,11 +769,15 @@ $(DIST_FOLDER)/soffice%: ../wasm/soffice%
 
 WASM_FILES= \
 	$(DIST_FOLDER)/emscripten-module.js \
-	$(DIST_FOLDER)/online.data \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
 	$(DIST_FOLDER)/soffice.data \
 	$(DIST_FOLDER)/soffice.data.js.metadata
+
+if ENABLE_WASM_ADDITIONAL_FILES
+WASM_FILES += \
+	$(DIST_FOLDER)/online.data
+endif
 
 if ENABLE_DEBUG
 WASM_FILES += \
