@@ -1369,7 +1369,45 @@ class SettingIframe {
 			if (typeof value === 'boolean') {
 				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
 			} else if (typeof value === 'string') {
-				fieldset.appendChild(this.createViewSettingsTextBox(key, data));
+				// Add Zotero section with description
+				if (key === 'zoteroAPIKey') {
+					fieldset.appendChild(this.createHeading('Zotero'));
+					const zoteroDescription = this.createParagraph(
+						_(
+							'To use Zotero specify your API key here. You can create your API key in your ',
+						),
+					);
+					zoteroDescription.className = 'view-setting-description';
+
+					const zoteroAccountLink = document.createElement('a');
+					zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+					zoteroAccountLink.target = '_blank';
+					zoteroAccountLink.textContent = _('Zotero account API settings');
+
+					zoteroDescription.appendChild(zoteroAccountLink);
+
+					fieldset.appendChild(zoteroDescription);
+					fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
+				}
+				// Add Document Signing section with description (only once for first field)
+				else if (key === 'signatureCert') {
+					fieldset.appendChild(this.createHeading(_('Document Signing')));
+					const signingDesc = document.createElement('p');
+					signingDesc.className = 'view-setting-description';
+					signingDesc.textContent = _(
+						'To use document signing, specify your signing certificate, key and CA chain here.',
+					);
+					fieldset.appendChild(signingDesc);
+					fieldset.appendChild(
+						this.createViewSettingsTextBox(key, data, false, true),
+					);
+				}
+				// Add remaining signature fields with smaller labels
+				else if (key === 'signatureKey' || key === 'signatureCa') {
+					fieldset.appendChild(
+						this.createViewSettingsTextBox(key, data, false, true),
+					);
+				}
 			}
 		}
 
@@ -1386,11 +1424,20 @@ class SettingIframe {
 	private createViewSettingsTextBox(
 		key: keyof ViewSettings,
 		data: ViewSettings,
+		skipHeading: boolean = false,
+		isSmallHeading: boolean = false,
 	): HTMLDivElement {
 		const text = data[key] as string;
 		const label = this._viewSettingLabels[key] || key;
 
-		return this.createInputField(key as string, label, text, data);
+		return this.createInputField(
+			key as string,
+			label,
+			text,
+			data,
+			skipHeading,
+			isSmallHeading,
+		);
 	}
 
 	private createViewSettingCheckbox(
@@ -1575,12 +1622,21 @@ class SettingIframe {
 		label: string,
 		value: string = '',
 		data: any,
+		skipHeading: boolean = false,
+		isSmallHeading: boolean = false,
 	): HTMLDivElement {
 		const container = document.createElement('div');
 		container.id = `${key}container`;
 		container.classList.add('view-input-container');
 
-		container.appendChild(this.createHeading(label));
+		// Add heading unless skipped
+		if (!skipHeading) {
+			const heading = this.createHeading(label);
+			if (isSmallHeading) {
+				heading.classList.add('view-setting-small-label');
+			}
+			container.appendChild(heading);
+		}
 
 		const isSignatureField = [
 			'signatureCert',
