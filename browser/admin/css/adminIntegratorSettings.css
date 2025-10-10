@@ -328,6 +328,22 @@ ul {
   color: var(--settings-text);
 }
 
+.view-setting-description {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.view-setting-description a {
+  text-decoration: underline;
+}
+
+.view-setting-small-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+}
+
 .view-input-container input[type='text'] {
   width: 100%;
   max-width: 400px;
@@ -513,13 +529,15 @@ ul {
   background-color: var(--settings-btn-primary);
 }
 
-.xcu-settings-fieldset {
+.xcu-settings-fieldset,
+.view-settings-fieldset {
   border: 1px solid var(--settings-border);
   padding: 10px;
   margin: 10px 0;
 }
 
-.xcu-settings-fieldset legend {
+.xcu-settings-fieldset legend,
+.view-settings-fieldset legend {
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 4px;
