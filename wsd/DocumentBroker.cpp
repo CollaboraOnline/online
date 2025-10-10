@@ -215,6 +215,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _documentChangedInStorage(false)
     , _isViewFileExtension(false)
     , _isViewSettingsAccessibilityEnabled(false)
+    , _isViewSettingsUpdated(false)
     , _alwaysSaveOnExit(ConfigUtil::getConfigValue<bool>("per_document.always_save_on_exit", false))
     , _backgroundAutoSave(
           ConfigUtil::getConfigValue<bool>("per_document.background_autosave", true))
@@ -1693,34 +1694,87 @@ void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
 
 static std::string extractViewSettings(const std::string& viewSettingsPath,
                                        const std::shared_ptr<ClientSession>& session,
-                                       bool& _isViewSettingsAccessibilityEnabled)
+                                       bool& _isViewSettingsAccessibilityEnabled,
+                                       bool& _isViewSettingsUpdated)
 {
     std::string viewSettingsString;
     std::ifstream ifs(viewSettingsPath);
     try
     {
-        LOG_TRC("Parsing viewsetting json");
+        LOG_TRC("Parsing view settings JSON");
         Poco::JSON::Parser parser;
         auto result = parser.parse(ifs);
+        Poco::JSON::Object::Ptr viewSettings = result.extract<Poco::JSON::Object::Ptr>();
 
-        const Poco::JSON::Object::Ptr& viewsetting = result.extract<Poco::JSON::Object::Ptr>();
+        const std::string& userPrivateInfo = session->getUserPrivateInfo();
+        Object::Ptr userPrivateInfoObj;
+        if (!userPrivateInfo.empty())
+        {
+            try
+            {
+                Poco::JSON::Parser privateInfoParser;
+                Poco::Dynamic::Var var = privateInfoParser.parse(userPrivateInfo);
+                userPrivateInfoObj = var.extract<Object::Ptr>();
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_DBG("User private data is not valid JSON: " << exc.what());
+            }
+        }
 
-        std::string accessibilityState, zoteroAPIKey;
-        JsonUtil::findJSONValue(viewsetting, "accessibilityState", accessibilityState);
-
-        JsonUtil::findJSONValue(viewsetting, "zoteroAPIKey", zoteroAPIKey);
-
-        session->setZoteroAPIKey(zoteroAPIKey);
+        std::string accessibilityState, zoteroAPIKey, signatureCertificate, signatureKey, signatureCa;
+        JsonUtil::findJSONValue(viewSettings, "accessibilityState", accessibilityState);
         _isViewSettingsAccessibilityEnabled = accessibilityState == "true";
         session->setAccessibilityState(accessibilityState == "true");
-        std::ostringstream jsonStream;
-        viewsetting->stringify(jsonStream);
-        const std::string& jsonStr = jsonStream.str();
-        viewSettingsString = jsonStr;
+
+        bool viewSettingsNeedUpdate = false;
+
+        auto migrateViewSettingsField = [&](const std::string& viewSettingKey,
+                                          const std::string& privateInfoKey,
+                                          std::string& value) -> bool
+        {
+            JsonUtil::findJSONValue(viewSettings, viewSettingKey, value);
+            if (value.empty() && userPrivateInfoObj)
+            {
+                std::string migratedValue;
+                JsonUtil::findJSONValue(userPrivateInfoObj, privateInfoKey, migratedValue);
+                if (!migratedValue.empty())
+                {
+                    LOG_INF("Migrating signature field [" << viewSettingKey << "] from user private info");
+                    viewSettings->set(viewSettingKey, migratedValue);
+                    value = migratedValue;
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        viewSettingsNeedUpdate |= migrateViewSettingsField("zoteroAPIKey", "ZoteroAPIKey", zoteroAPIKey);
+        session->setZoteroAPIKey(zoteroAPIKey);
+
+        viewSettingsNeedUpdate |= migrateViewSettingsField("signatureCert", "SignatureCert", signatureCertificate);
+        session->setSignatureCertificate(signatureCertificate);
+
+        viewSettingsNeedUpdate |= migrateViewSettingsField("signatureKey", "SignatureKey", signatureKey);
+        session->setSignatureKey(signatureKey);
+
+        viewSettingsNeedUpdate |= migrateViewSettingsField("signatureCa", "SignatureCa", signatureCa);
+        session->setSignatureCa(signatureCa);
+
+        _isViewSettingsUpdated = true;
+
+        if (viewSettingsNeedUpdate)
+        {
+            LOG_INF("View settings updated with migrated signature fields, uploading to WOPI host");
+            session->setViewSettingsJSON(viewSettings);
+            session->uploadViewSettingsToWopiHost();
+        }
+
+        viewSettingsString = JsonUtil::jsonToString(viewSettings);
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to parse viewsetting json with[" << ifs.rdbuf() << "] error[" << exc.what()
+        LOG_ERR("Failed to parse view settings JSON with[" << ifs.rdbuf() << "] error[" << exc.what()
                                                          << "], for session[" << session->getId()
                                                          << ']');
         return viewSettingsString;
@@ -1764,8 +1818,7 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             std::string settings;
             if (FileUtil::Stat(viewSettings).exists())
             {
-                settings =
-                    extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled);
+                settings = extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled, _isViewSettingsUpdated);
                 session->sendTextFrame("viewsetting: " + settings);
             }
             forwardToChild(session, "addconfig");
@@ -4960,6 +5013,38 @@ bool DocumentBroker::forwardUrpToChild(const std::string& message)
     return _childProcess && _childProcess->sendUrpMessage(message);
 }
 
+std::string DocumentBroker::applySignViewSettings(const std::string& message,
+                                                  const std::shared_ptr<ClientSession>& session)
+{
+    std::string finalMsg = message;
+    if (_isViewSettingsUpdated)
+    {
+        Poco::JSON::Object::Ptr signatureJson = new Poco::JSON::Object();
+
+        std::string signatureCert = session->getSignatureCertificate();
+        std::string signatureKey = session->getSignatureKey();
+        std::string signatureCa = session->getSignatureCa();
+
+        signatureJson->set("SignatureCert", signatureCert);
+        signatureJson->set("SignatureKey", signatureKey);
+        signatureJson->set("SignatureCa", signatureCa);
+
+        std::string jsonString = JsonUtil::jsonToString(signatureJson);
+
+        std::string encodedJson;
+        Poco::URI::encode(jsonString, "", encodedJson);
+        finalMsg += " signatureconfig=" + encodedJson;
+
+        LOG_INF("Sent signatureconfig with values");
+    }
+    else
+    {
+        finalMsg += " signatureconfig={}";
+    }
+
+    return finalMsg;
+}
+
 std::string DocumentBroker::applyViewAccessibility(const std::string& message,
                                                    const std::string& viewId)
 {
@@ -4996,6 +5081,13 @@ std::string DocumentBroker::applyViewAccessibility(const std::string& message,
         result.append("accessibilityState=true");
     }
     return result;
+}
+
+std::string DocumentBroker::applyViewSetting(const std::string& message, const std::string& viewId,
+                                             const std::shared_ptr<ClientSession>& session)
+{
+    std::string msgWithSignSettings = applySignViewSettings(message, session);
+    return applyViewAccessibility(msgWithSignSettings, viewId);
 }
 
 bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& session,
@@ -5056,19 +5148,20 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
             if (_asyncInstallTask)
             {
                 auto sendLoad = [selfWeak = weak_from_this(), this, viewId = std::move(viewId),
-                                 msg = std::move(msg), binary](bool success) {
+                                 msg = std::move(msg), binary, session](bool success) {
                     if (!success)
                         return;
                     std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
                     if (!selfLifecycle)
                         return;
-                    _childProcess->sendFrame(applyViewAccessibility(msg, viewId), binary);
+
+                    _childProcess->sendFrame(applyViewSetting(msg, viewId, session), binary);
                 };
                 _asyncInstallTask->appendCallback(sendLoad);
                 return true;
             }
 #endif
-            return _childProcess->sendFrame(applyViewAccessibility(msg, viewId), binary);
+            return _childProcess->sendFrame(applyViewSetting(msg, viewId, session), binary);
         }
     }
 

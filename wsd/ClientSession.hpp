@@ -292,6 +292,18 @@ public:
 
     void uploadBrowserSettingsToWopiHost();
 
+    void setViewSettingsJSON(const Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
+    {
+        _viewSettingsJSON = jsonObject;
+    }
+
+    Poco::SharedPtr<Poco::JSON::Object> getViewSettingsJSON() const
+    {
+        return _viewSettingsJSON;
+    }
+
+    void uploadViewSettingsToWopiHost();
+
     /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
@@ -472,6 +484,8 @@ private:
 
     /// If Session is for convert-to
     bool _isConvertTo;
+
+    Poco::SharedPtr<Poco::JSON::Object> _viewSettingsJSON;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
