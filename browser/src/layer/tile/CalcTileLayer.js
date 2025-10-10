@@ -273,19 +273,6 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		return { curX: x, curY: y, width: size.x, height: size.y };
 	},
 
-	_getSelectionHeaderData: function() {
-		if (this._cellCSelections.empty())
-			return { hasSelection: false };
-
-		var bounds = this._cellCSelections.getBounds();
-		window.app.console.assert(bounds.isValid(), 'Non empty selection should have valid bounds');
-		return {
-			hasSelection: true,
-			start: this._corePixelsToTwips(bounds.min).add([1, 1]),
-			end: this._corePixelsToTwips(bounds.max).subtract([1, 1]),
-		};
-	},
-
 	_hasPartsCountOrNamesChanged(lastStatusJSON, statusJSON) {
 		if (!lastStatusJSON)
 			return true;
@@ -661,7 +648,6 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			updaterows: updateRows,
 			updatecolumns: updateCols,
 			cursor: this._getCursorPosSize(),
-			selection: this._getSelectionHeaderData(),
 			context: this
 		});
 	},
