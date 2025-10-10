@@ -207,7 +207,6 @@ window.L.TileSectionManager = window.L.Class.extend({
 		this._splitPos = splitPanesContext ?
 			splitPanesContext.getSplitPos() : new cool.Point(0, 0);
 		this._updatesRunning = false;
-		this._mirrorEventsFromSourceToCanvasSectionContainer(document.getElementById('map'));
 
 		var canvasContainer = document.getElementById('document-container');
 		var that = this;
@@ -218,21 +217,6 @@ window.L.TileSectionManager = window.L.Class.extend({
 
 		this._zoomAtDocEdgeX = true;
 		this._zoomAtDocEdgeY = true;
-	},
-
-	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
-	_mirrorEventsFromSourceToCanvasSectionContainer: function (sourceElement) {
-		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); }, true);
-		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); }, true);
-		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); }, true);
-		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); }, true);
 	},
 
 	getSplitPos: function () {
