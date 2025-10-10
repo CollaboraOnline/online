@@ -4119,10 +4119,9 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
             {
                 Util::setThreadName("lokit_runloop");
                 setupKitEnvironment("notebookbar");
-                Poco::URI userInstallationURI("file", LO_PATH);
                 LibreOfficeKit* kit =
 #if defined(QTAPP)
-                    lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
+                    lok_init_2(LO_PATH "/program", nullptr);
 #elif defined(MACOS)
                     lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
 #elif defined(_WIN32)
