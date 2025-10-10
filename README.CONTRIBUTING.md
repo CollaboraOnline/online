@@ -1,4 +1,4 @@
-## Online Contributor Representation & Certificate of Origin v1.0
+## Online Contributor Representation & Certificate of Origin v1.1
 
 By making a contribution to this project, I certify that:
 
@@ -25,7 +25,11 @@ By making a contribution to this project, I certify that:
 
 (e) I am granting this work to this project under the terms of both
     the Mozilla Public License v2 and the GNU Lesser General Public
-    License version 3 as published by the Free Software Foundation:
+    License version 3 as published by the Free Software Foundation
+
+(f) I agree that my contributions are adequately acknowledged by
+    the "Copyright the Collabora Online contributors." header,
+    and the public records of contribution.
 
 When submitting a patch, to make this certification add a line that
 states:
