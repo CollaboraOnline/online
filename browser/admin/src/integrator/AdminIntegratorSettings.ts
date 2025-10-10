@@ -150,7 +150,7 @@ class SettingIframe {
 	private _viewSetting;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
-		zoteroAPIKey: _('Zotero'),
+		zoteroAPIKey: 'Zotero',
 		signatureCert: _('Signature Certificate'),
 		signatureKey: _('Signature Key'),
 		signatureCa: _('Signature CA'),
