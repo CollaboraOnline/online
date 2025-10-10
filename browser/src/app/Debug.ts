@@ -109,6 +109,10 @@ class DebugManager {
 		this.debugNeverStarted = true;
 	}
 
+	public isOn(): boolean {
+		return this.debugOn;
+	}
+
 	public toggle(): void {
 		if (!this.debugOn) {
 			this._start();
@@ -118,6 +122,9 @@ class DebugManager {
 
 		// redraw canvas with changed debug overlays
 		this._painter.update();
+
+		// notify listeners
+		(this._map as any).fire && (this._map as any).fire('debugtoggle');
 	}
 
 	private _start(): void {
