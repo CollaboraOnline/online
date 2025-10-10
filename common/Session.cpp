@@ -192,9 +192,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             this->setSignToUserPrivateConfig("SignatureCa", signatureDataObject,
                                              userPrivateInfoObject);
 
-            std::stringstream privateInfoSs;
-            userPrivateInfoObject->stringify(privateInfoSs);
-            _userPrivateInfo = privateInfoSs.str();
+            _userPrivateInfo = JsonUtil::jsonToString(userPrivateInfoObject);
             LOG_INF("signatureconfig: Successfully updated user private info with signature data");
 
             ++offset;
