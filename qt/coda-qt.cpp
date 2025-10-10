@@ -650,7 +650,7 @@ int main(int argc, char** argv)
     for (int i = 1; i < argc; i++)
     {
         // Resolve absolute file URL to pass into Online
-        std::string fileURL = Poco::URI(Poco::Path(FileUtil::realpath(argv[i]))).toString();
+        std::string fileURL = Poco::URI(Poco::Path(argv[i])).toString();
         WebView* webViewInstance = new WebView(nullptr);
         webViewInstance->load(fileURL);
     }
