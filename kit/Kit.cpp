@@ -1373,6 +1373,9 @@ void Document::onUnload(const ChildSession& session)
                          << (viewCount != 1 ? "s" : "") << " and " << _sessions.size() << " session"
                          << (_sessions.size() != 1 ? "s" : ""));
 
+    if (viewCount <= 0 && _sessions.size() >=0)
+        LOG_ERR("\n\n\n *************** Bingo ***************\n\n\n\n");
+
     if (viewCount > 0)
     {
         // Broadcast updated view info
