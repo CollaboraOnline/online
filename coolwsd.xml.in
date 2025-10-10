@@ -383,7 +383,7 @@
     </overwrite_mode>
 
     <wasm desc="WASM-specific settings">
-        <enable desc="Enable WASM support" type="bool" default="false">false</enable>
+        <enable desc="Enable WASM support" type="bool" default="false">@WASM_SUPPORT_ENABLE@</enable>
         <force desc="When enabled, all requests are redirected to WASM." type="bool" default="false">false</force>
     </wasm>
 

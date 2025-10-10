@@ -751,25 +751,33 @@ ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 if ENABLE_WASM
-$(DIST_FOLDER)/emscripten-%.js: $(abs_top_srcdir)/wasm/emscripten-%.js
+$(DIST_FOLDER)/emscripten-module.js: ../wasm/emscripten-module.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
+$(DIST_FOLDER)/emscripten-zetajs-example.js: $(abs_top_srcdir)/wasm/emscripten-zetajs-example.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
+$(DIST_FOLDER)/online%: ../wasm/online%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(DIST_FOLDER)/soffice%: ../wasm/soffice%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
 WASM_FILES= \
 	$(DIST_FOLDER)/emscripten-module.js \
-	$(DIST_FOLDER)/online.data \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
 	$(DIST_FOLDER)/soffice.data \
 	$(DIST_FOLDER)/soffice.data.js.metadata
+
+if ENABLE_WASM_ADDITIONAL_FILES
+WASM_FILES += \
+	$(DIST_FOLDER)/online.data
+endif
 
 if ENABLE_DEBUG
 WASM_FILES += \
@@ -801,6 +809,11 @@ endif
 
 endif
 
+WASM_FALLBACK_FILES =
+if ENABLE_WASM_FALLBACK
+WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
+endif
+
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
@@ -820,7 +833,8 @@ build-cool: \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
-	$(WASM_FILES)
+	$(WASM_FILES) \
+	$(WASM_FALLBACK_FILES)
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
@@ -1003,6 +1017,10 @@ $(DIST_FOLDER)/l10n/%.json: $(srcdir)/po/%.po
 $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
+
+$(DIST_FOLDER)/wasm:
+	@mkdir -p $(dir $@)
+	ln -s @WASM_BUILDDIR@/browser/dist $@
 
 if ENABLE_DEBUG
 install-data-hook:
