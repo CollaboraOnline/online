@@ -106,10 +106,11 @@ window.L.Map.include({
 	},
 
 	_initControlPos: function () {
-		var corners = this._controlCorners = {},
-		    l = 'leaflet-',
-		    container = this._controlContainer =
-		            window.L.DomUtil.create('div', l + 'control-container', this._container);
+		var corners = this._controlCorners = {};
+		var l = 'leaflet-';
+
+		// Add the controls to document-container instead of map. Because now, map is behind canvas element.
+		var container = this._controlContainer = window.L.DomUtil.create('div', l + 'control-container', document.getElementById('document-container'));
 
 		function createCorner(vSide, hSide) {
 			var className = l + vSide + ' ' + l + hSide;

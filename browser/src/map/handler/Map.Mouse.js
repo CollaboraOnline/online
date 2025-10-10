@@ -3,7 +3,7 @@
  * window.L.Map.Mouse is handling mouse interaction with the document
  */
 
-/* global UNOModifier app TileManager */
+/* global app TileManager */
 
 window.L.Map.mergeOptions({
 	mouse: true
@@ -26,19 +26,7 @@ window.L.Map.Mouse = window.L.Handler.extend({
 			this._onMouseEvent, this);
 	},
 
-	LOButtons: {
-		left: 1,
-		middle: 2,
-		right: 4
-	},
-
-	JSButtons: {
-		left: 0,
-		middle: 1,
-		right: 2
-	},
-
-	_isMouseOnAnHTMLSection: function() {
+	_isMouseOnValidityDropdown: function() {
 		if (app.sectionContainer) {
 			let section = app.sectionContainer.getSectionWithName(app.CSections.CalcValidityDropDown.name);
 			if (section && section.sectionProperties.mouseEntered)
@@ -53,7 +41,7 @@ window.L.Map.Mouse = window.L.Handler.extend({
 	},
 
 	_onMouseEvent: window.touch.mouseOnly(function (e) {
-		if (this._map.uiManager.isUIBlocked() || app.map.dontHandleMouse)
+		if (this._map.uiManager.isUIBlocked())
 			return;
 
 		if (this._isMouseOnAnHTMLSection())
@@ -67,22 +55,22 @@ window.L.Map.Mouse = window.L.Handler.extend({
 		}
 
 		var modifier = 0;
-		var shift = e.originalEvent.shiftKey ? UNOModifier.SHIFT : 0;
-		var ctrl = e.originalEvent.ctrlKey ? UNOModifier.CTRL : 0;
-		var alt = e.originalEvent.altKey ? UNOModifier.ALT : 0;
-		var cmd = e.originalEvent.metaKey ? UNOModifier.CTRLMAC : 0;
+		var shift = e.originalEvent.shiftKey ? app.UNOModifier.SHIFT : 0;
+		var ctrl = e.originalEvent.ctrlKey ? app.UNOModifier.CTRL : 0;
+		var alt = e.originalEvent.altKey ? app.UNOModifier.ALT : 0;
+		var cmd = e.originalEvent.metaKey ? app.UNOModifier.CTRLMAC : 0;
 		modifier = shift | ctrl | alt | cmd;
 
 		var buttons = 0;
-		buttons |= e.originalEvent.button === this.JSButtons.left ? this.LOButtons.left : 0;
-		buttons |= e.originalEvent.button === this.JSButtons.middle ? this.LOButtons.middle : 0;
-		buttons |= e.originalEvent.button === this.JSButtons.right ? this.LOButtons.right : 0;
+		buttons |= e.originalEvent.button === app.JSButtons.left ? app.LOButtons.left : 0;
+		buttons |= e.originalEvent.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
+		buttons |= e.originalEvent.button === app.JSButtons.right ? app.LOButtons.right : 0;
 
 		// Turn ctrl-left-click into right-click for browsers on macOS
 		if (window.L.Browser.mac) {
-			if (modifier == UNOModifier.CTRL && buttons == this.LOButtons.left) {
+			if (modifier == app.UNOModifier.CTRL && buttons == app.LOButtons.left) {
 				modifier = 0;
-				buttons = this.LOButtons.right;
+				buttons = app.LOButtons.right;
 			}
 		}
 
@@ -121,7 +109,7 @@ window.L.Map.Mouse = window.L.Handler.extend({
 			// Core side is handling the mouseup by itself when the right button is down.
 			// If we fire mouseup for right button, there will be duplicate.
 			// Without this, selected text in a text box is un-selected via a right click. Therefore, copy / cut operations are disabled.
-			if (this._buttonDown === this.LOButtons.right && modifier === 0)
+			if (this._buttonDown === app.LOButtons.right && modifier === 0)
 				return;
 
 			clearTimeout(this._holdMouseEvent);

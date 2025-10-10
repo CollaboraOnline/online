@@ -14,6 +14,7 @@ class DocumentBase {
 	public readonly type: string = 'DocumentBase';
 	public activeView: ViewLayoutBase;
 	public tableMiddleware: TableMiddleware;
+	public mouseControl: MouseControl | null = null;
 
 	protected _fileSize: cool.SimplePoint;
 
@@ -27,6 +28,17 @@ class DocumentBase {
 		this.tableMiddleware = new TableMiddleware();
 
 		this.tableMiddleware.setupTableOverlay();
+		this.addSections();
+	}
+
+	private addSections() {
+		if (app.sectionContainer) {
+			this.mouseControl = new MouseControl(app.CSections.MouseControl.name);
+			app.sectionContainer.addSection(this.mouseControl);
+		} else
+			setTimeout(() => {
+				this.addSections();
+			}, 200);
 	}
 
 	public get fileSize(): cool.SimplePoint {

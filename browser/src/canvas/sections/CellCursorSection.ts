@@ -13,6 +13,7 @@ class CellCursorSection extends CanvasSectionObject {
     zIndex: number = app.CSections.CellCursor.zIndex;
     drawingOrder: number = app.CSections.CellCursor.drawingOrder;
     processingOrder: number = app.CSections.CellCursor.processingOrder;
+	interactable: boolean = false;
 
 	constructor (color: string, weight: number, viewId: number) {
         super(app.CSections.CellCursor.name);
@@ -22,7 +23,6 @@ class CellCursorSection extends CanvasSectionObject {
 		this.sectionProperties.viewId = viewId;
 		this.sectionProperties.weight = weight;
 		this.sectionProperties.color = color;
-		this.sectionProperties.mouseInside = true;
 	}
 
 	public getViewId(): number {
@@ -85,24 +85,5 @@ class CellCursorSection extends CanvasSectionObject {
 				this.context.strokeRect(x + -0.5 + diff, y - 0.5 + diff, tempSizePos[2] - 2 * diff, tempSizePos[3] - 2 * diff);
 			}
 		}
-	}
-
-	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		this.sectionProperties.mouseInside = true;
-		if (!app.file.textCursor.visible) return;
-		const grid: any = document.querySelector('.leaflet-map-pane');
-		grid.classList.remove('spreadsheet-cursor');
-		grid.style.cursor = 'text';
-	}
-
-	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		this.sectionProperties.mouseInside = false;
-		const grid: any = document.querySelector('.leaflet-map-pane');
-		grid.classList.add('spreadsheet-cursor');
-		grid.style.cursor = '';
-	}
-
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
-		this.sectionProperties.mouseInside = true;
 	}
 }

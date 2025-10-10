@@ -349,6 +349,7 @@ COOL_JS_LST =\
 	src/layer/marker/Cursor.ts \
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
+	src/canvas/sections/MouseControl.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -388,7 +389,6 @@ COOL_JS_LST =\
 	src/map/handler/Map.Scroll.js \
 	src/map/handler/Map.DoubleClickZoom.js \
 	src/dom/DomEvent.Pointer.js \
-	src/map/handler/Map.TouchGesture.js \
 	src/map/handler/Map.Keyboard.js \
 	src/map/handler/Map.KeyboardShortcuts.ts \
 	src/map/handler/Map.Welcome.js \
@@ -396,7 +396,6 @@ COOL_JS_LST =\
 	src/map/handler/Map.Settings.ts \
 	src/map/handler/Map.VersionBar.js \
 	src/dom/DomEvent.MultiClick.js \
-	src/map/handler/Map.Mouse.js \
 	src/map/handler/Map.Print.js \
 	src/map/handler/Map.SlideShow.js \
 	src/map/handler/Map.FileInserter.js \

@@ -44,18 +44,6 @@ window.L.Marker = window.L.Layer.extend({
 		this._removeShadow();
 	},
 
-	onDown: function () {
-		if (this._map && this._map.touchGesture) {
-			window.IgnorePanning = true;
-		}
-	},
-
-	onUp: function () {
-		if (this._map && this._map.touchGesture) {
-			window.IgnorePanning = undefined;
-		}
-	},
-
 	getEvents: function () {
 		var events = {viewreset: this.update};
 
