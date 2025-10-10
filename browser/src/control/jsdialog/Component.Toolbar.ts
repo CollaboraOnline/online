@@ -132,10 +132,10 @@ class Toolbar extends JSDialogComponent {
 		return item.classList.contains('hidden');
 	}
 
-	showItem(command: string, show: boolean) {
-		if (!command) return;
+	showItem(command: string, show: boolean): boolean {
+		if (!command) return false;
 
-		if (this.isItemHidden(command) === !show) return;
+		if (this.isItemHidden(command) === !show) return true;
 
 		this.builder.executeAction(this.parentContainer, {
 			control_id: command,

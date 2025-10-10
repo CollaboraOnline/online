@@ -932,10 +932,13 @@ class UIManager extends window.L.Control {
 
 		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
-		else if (this.notebookbar)
+
+		// we always  create notebookbar component, it should get the button in advance
+		// in case of mode switch done by user later
+		if (this.notebookbar)
 			this.notebookbar.insertButtonToShortcuts(button);
 		else
-			app.console.debug('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
+			app.console.error('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
 	}
 
 	/**
@@ -979,22 +982,22 @@ class UIManager extends window.L.Control {
 	 */
 	showButton(buttonId: string, show: boolean): void {
 		var found = false;
-		if (this.getCurrentMode() === 'classic') {
+
+		if (show)
+			delete this.hiddenButtons[buttonId];
+		else
+			this.hiddenButtons[buttonId] = true;
+
+		if (this.getCurrentMode() === 'classic')
 			found = this.showButtonInClassicToolbar(buttonId, show);
-		} else {
-			if (show) {
-				delete this.hiddenButtons[buttonId];
-			} else {
-				this.hiddenButtons[buttonId] = true;
-			}
+
+		if (this.notebookbar) {
 			this.notebookbar.reloadShortcutsBar();
-			found = this.notebookbar.showNotebookbarButton(buttonId, show);
+			found = this.notebookbar.showItem(buttonId);
 		}
 
-		if (!found) {
-			window.app.console.error('Button with id "' + buttonId + '" not found.');
-			return;
-		}
+		if (!found)
+			window.app.console.error('UIManager: Button with id "' + buttonId + '" not found.');
 	}
 
 	/**
@@ -1056,23 +1059,24 @@ class UIManager extends window.L.Control {
 	 * @param show - Flag to show (true) or hide (false).
 	 */
 	showCommand(command: string, show: boolean): void {
-		if (show) {
+		if (show)
 			delete this.hiddenCommands[command];
-		} else {
+		else
 			this.hiddenCommands[command] = true;
-		}
+
 		var found = false;
 		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
-		} else {
+		}
+
+		if (this.notebookbar) {
 			this.notebookbar.reloadShortcutsBar();
 			found ||= this.notebookbar.showNotebookbarCommand(command, show);
 		}
 
-		if (!found) {
-			window.app.console.error('Item with command "' + command + '" not found.');
-		}
+		if (!found)
+			window.app.console.error('UIManager: Item with command "' + command + '" not found.');
 	}
 
 	/**

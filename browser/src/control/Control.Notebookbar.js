@@ -29,7 +29,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	FORMULAS_TAB_ID: 'Formula-tab-label',
 
 	additionalShortcutButtons: [],
-	hiddenItems: [],
 
 	setBuilder: function(builder, model) {
 		this.builder = builder;
@@ -341,20 +340,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.reloadShortcutsBar();
 	},
 
-	showNotebookbarButton: function(buttonId, show) {
-		var button = $(this.container).find('#' + buttonId);
-		if (button) {
-			if (show) {
-				button.show();
-			} else {
-				button.hide();
-			}
-			return true;
-		} else {
-			return false;
-		}
-	},
-
 	showNotebookbarCommand: function(commandId, show) {
 		var cssClass;
 		if (commandId.indexOf('.uno:') == 0) {
@@ -364,6 +349,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		}
 		var button = $(this.container).find('div.' + cssClass);
 		if (button) {
+			// TODO: remember state like this.showItem
 			if (show) {
 				button.show();
 			} else {
@@ -679,22 +665,32 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	// dynamically show/hide items
 
+	// use getter to hide usage of UIManager's hiddenItems for centralization
+	get hiddenItems() {
+		if (!this._map || !this._map.uiManager)
+			return null;
+
+		return this._map.uiManager.hiddenItems;
+	},
+
 	hideItem: function(itemId) {
 		app.console.debug('Notebookbar: hide item: ' + itemId);
 
-		if (!this.hiddenItems.includes(itemId)) {
-			this.hiddenItems.push(itemId);
-			this.showItemImpl(itemId, false);
-		}
+		if (!this.hiddenItems) return false;
+
+		this.showItemImpl(itemId, false);
+
+		return true;
 	},
 
 	showItem: function(itemId) {
 		app.console.debug('Notebookbar: show item: ' + itemId);
 
-		if (this.hiddenItems.includes(itemId)) {
-			this.hiddenItems.splice(this.hiddenItems.indexOf(itemId), 1);
-			this.showItemImpl(itemId, true);
-		}
+		if (!this.hiddenItems) return false;
+
+		this.showItemImpl(itemId, true);
+
+		return true;
 	},
 
 	showItemImpl: function(itemId, show) {
