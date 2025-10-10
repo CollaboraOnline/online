@@ -1020,7 +1020,7 @@ input.clipboard {
 	top: 0;
 	bottom: 0;
 	right: 0;
-	z-index: 9;
+	z-index: 11;
 	user-select: none;
 	-webkit-touch-callout: none !important;
 	-webkit-user-select: none !important;
