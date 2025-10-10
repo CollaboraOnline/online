@@ -187,6 +187,8 @@ function setupOverflowMenu(
 	// fill the updated menu after it is open
 	(overflowMenuButton as any)._onDropDown = (opened: boolean) => {
 		if (opened) {
+			overflowMenuButton.classList.add('overflow-dropdown-active');
+
 			// we need to schedule it 2 times as the first one happens just before
 			// layouting task adds menu container to the DOM
 			app.layoutingService.appendLayoutingTask(() => {
@@ -202,6 +204,18 @@ function setupOverflowMenu(
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
+
+					// calculate baseline-aligned position specifically for overflow menus
+					const tabContainer = overflowMenuButton.closest(
+						'.ui-tabs-content, [id$="-container"]',
+					);
+
+					if (tabContainer) {
+						// use tab container's bottom as baseline for overflow menus only
+						const tabRect = tabContainer.getBoundingClientRect();
+						menu.style.marginTop = tabRect.bottom + 'px';
+					}
+
 					overflowGroupContainer.appendChild(menu.parentNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
@@ -211,6 +225,8 @@ function setupOverflowMenu(
 				});
 			});
 		} else {
+			overflowMenuButton.classList.remove('overflow-dropdown-active');
+
 			const menu = JSDialog.GetDropdown(dropdownId);
 			migrateItems(menu, hiddenItems);
 		}
