@@ -53,9 +53,6 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onInitialize (): void {
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
-		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
-
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
@@ -139,12 +136,16 @@ export class ScrollSection extends CanvasSectionObject {
 		app.activeDocument.activeView.scroll(e.x, e.y);
 	}
 
+	public cancelAutoScroll(): void {
+		clearInterval(this.autoScrollTimer);
+		this.autoScrollTimer = null;
+		this.map.isAutoScrolling = false;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onScrollVelocity (e: any): void {
 		if (e.vx === 0 && e.vy === 0) {
-			clearInterval(this.autoScrollTimer);
-			this.autoScrollTimer = null;
-			this.map.isAutoScrolling = false;
+			this.cancelAutoScroll();
 		} else {
 			clearInterval(this.autoScrollTimer);
 			this.map.isAutoScrolling = true;
@@ -169,7 +170,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	public onHandleAutoScroll (e :any): void {
+	public onHandleAutoScroll (e: any): void {
 		var vx = 0;
 		var vy = 0;
 
@@ -462,11 +463,6 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		this.decreaseScrollBarThickness();
-
-		// just in case if we have blinking cursor visible
-		// we need to change cursor from default style
-		if (this.map._docLayer._cursorMarker)
-			this.map._docLayer._cursorMarker.setMouseCursor();
 	}
 
 	private hideVerticalScrollBar (): void {
@@ -479,11 +475,6 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop() || app.map._docLayer._docType !== 'spreadsheet') { // On desktop, we don't want to hide the vertical scroll bar.
 			this.sectionProperties.drawVerticalScrollBar = false;
 		}
-
-		// just in case if we have blinking cursor visible
-		// we need to change cursor from default style
-		if (this.map._docLayer._cursorMarker)
-			this.map._docLayer._cursorMarker.setMouseCursor();
 	}
 
 	private showHorizontalScrollBar (): void {
@@ -547,9 +538,7 @@ export class ScrollSection extends CanvasSectionObject {
 		else this.hideVerticalScrollBar();
 
 		if (this.sectionProperties.mouseIsOnHorizontalScrollBar || this.sectionProperties.mouseIsOnVerticalScrollBar)
-			this.sectionProperties.mapPane.style.cursor = 'pointer';
-		else
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.context.canvas.style.cursor = 'pointer';
 	}
 
 	public onMouseLeave (): void {
@@ -901,7 +890,13 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseWheel (point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void {
-		if (e.ctrlKey) return;
+		if (e.ctrlKey) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			this.stopPropagating();
+			app.map.scrollHandler._onWheelScroll(e);
+			return;
+		}
 
 		this.map.fire('closepopups'); // close all popups when scrolling
 

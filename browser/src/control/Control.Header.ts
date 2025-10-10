@@ -146,7 +146,7 @@ export class Header extends CanvasSectionObject {
 		return (!!this._headerInfo.getElementData(index)?.isCurrent) || (!!this._headerInfo.getElementData(index)?.isHighlighted);
 	}
 
-	onContextMenu(evt: MouseEvent): void {
+	onContextMenu(point: cool.SimplePoint, evt: MouseEvent): void {
 		if ((window as any).mode.isMobile() && this._map.isEditMode()) {
 			(window as any).contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
@@ -518,7 +518,7 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onMouseEnter(): void {
-		this.containerObject.getCanvasStyle().cursor = this._cursor;
+		this.context.canvas.style.cursor = this._cursor;
 		this._bindContextMenu();
 	}
 
@@ -536,7 +536,6 @@ export class Header extends CanvasSectionObject {
 			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
-		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
 
 	_bindContextMenu(): void {
@@ -614,7 +613,7 @@ export class Header extends CanvasSectionObject {
 
 			if (isMouseOverResizeArea !== this._hitResizeArea) { // Do we need to change cursor (to resize or pointer).
 				const cursor = isMouseOverResizeArea ? this._resizeCursor : this._cursor;
-				this.containerObject.getCanvasStyle().cursor = cursor;
+				this.context.canvas.style.cursor = cursor;
 				this._hitResizeArea = isMouseOverResizeArea;
 			}
 		}
@@ -626,7 +625,7 @@ export class Header extends CanvasSectionObject {
 				return;
 			if (this._dragEntry)
 				return;
-			const modifier = typeof this._lastSelectedIndex === 'number' && this._lastSelectedIndex >= 0 ? UNOModifier.SHIFT : 0;
+			const modifier = typeof this._lastSelectedIndex === 'number' && this._lastSelectedIndex >= 0 ? app.UNOModifier.SHIFT : 0;
 			this._lastSelectedIndex = this._mouseOverEntry.index;
 			this.selectIndex(this._mouseOverEntry.index, modifier);
 		}

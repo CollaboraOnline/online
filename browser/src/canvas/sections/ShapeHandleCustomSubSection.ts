@@ -27,10 +27,8 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.sectionProperties.position = documentPosition.clone();
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
-		this.sectionProperties.previousCursorStyle = null;
 
 		this.sectionProperties.mousePointerType = 'grab';
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number): void {
@@ -48,24 +46,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
-		app.map.dontHandleMouse = true;
-		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
-		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
-		this.stopPropagating();
-		e.stopPropagation();
-		this.containerObject.requestReDraw();
-	}
-
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent) {
-		app.map.dontHandleMouse = false;
-		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
-		this.stopPropagating();
-		e.stopPropagation();
-		this.containerObject.requestReDraw();
-	}
-
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		(window as any).IgnorePanning = true;
+		this.context.canvas.style.cursor = this.sectionProperties.mousePointerType;
 	}
 
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
@@ -81,8 +62,6 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 			this.stopPropagating();
 			e.stopPropagation();
 		}
-
-		(window as any).IgnorePanning = false;
 	}
 
 	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {

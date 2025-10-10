@@ -59,7 +59,6 @@ class FormulaBarSelectionHandle {
 		this.draggable
 			.on(
 				{
-					dragstart: this.onDragStart.bind(this),
 					drag: this._onDrag.bind(this),
 					dragend: this._onDragEnd.bind(this),
 				},
@@ -81,10 +80,6 @@ class FormulaBarSelectionHandle {
 		// Using DomUtil as we need to in order to be draggable later
 	}
 
-	onDragStart() {
-		(<any>window).IgnorePanning = true;
-	}
-
 	_onDrag(event: DraggableDragEvent) {
 		// update selection position, set in Widget.FormulabarEdit.js so it can be repeatedly overidden...
 		if (this.onDrag) {
@@ -95,7 +90,6 @@ class FormulaBarSelectionHandle {
 
 	_onDragEnd(_: unknown) {
 		// update selection position, set in Widget.FormulabarEdit.js so it can be repeatedly overidden...
-		(<any>window).IgnorePanning = undefined;
 		if (this.onDragEnd) {
 			const point = window.L.DomUtil.getPosition(this.element);
 			this.onDragEnd(point);

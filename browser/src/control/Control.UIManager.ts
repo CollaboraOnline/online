@@ -1527,6 +1527,9 @@ class UIManager extends window.L.Control {
 	blockUI(event: any): void {
 		this.blockedUI = true;
 		this.map.fire('showbusy', {label: event ? event.message : null});
+
+		const canvas = document.getElementById('document-canvas');
+		if (canvas) canvas.style.pointerEvents = 'none'; // To remove the need for checking isUIBlocked.
 	}
 
 	/**
@@ -1535,6 +1538,9 @@ class UIManager extends window.L.Control {
 	unblockUI(): void {
 		this.blockedUI = false;
 		this.map.fire('hidebusy');
+
+		const canvas = document.getElementById('document-canvas');
+		if (canvas) canvas.style.pointerEvents = '';
 	}
 
 	// Document area tooltip

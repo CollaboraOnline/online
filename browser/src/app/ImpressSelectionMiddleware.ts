@@ -38,7 +38,9 @@ class ImpressSelectionMiddleware {
 			app.sectionContainer.getDocumentAnchorSection() !== null
 		) {
 			this.selectionRectangleSection = new SelectionRectangle();
-			app.sectionContainer.addSection(this.selectionRectangleSection);
+			app.sectionContainer.addSection(
+				this.selectionRectangleSection as SelectionRectangle,
+			);
 		} else {
 			setTimeout(() => {
 				this.addSectionToCanvas();
