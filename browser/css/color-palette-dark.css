@@ -10,7 +10,6 @@
 	--color-text-dark: #e8e8e8;  /* select */
 	--color-text-darker: #c0bfbc;  /* hover */
 	--color-text-lighter: #fff; /* secondard text, disabled */
-	--color-text-light: #333333;
 	--color-status-badge: #d6d6d6;
 	--color-slideshow: #d6d6d6;
 
@@ -58,12 +57,13 @@
 	--color-calc-header-selected: #646464;
 	--color-calc-header-hover: #646464;
 
-	--color-calc-header-sheetview: #f0f0f0;
-	--color-calc-header-sheetview-selected: #e1e1e1;
+	--color-calc-header-sheetview: #57685D;
+	--color-calc-header-sheetview-selected: #11370B;
 	--color-calc-header-sheetview-hover: #fff;
 	--color-calc-header-sheetview-unsynced: #f00000;
 
 	--color-text-calc-header-selected: #fff;
+	--color-text-calc-header-sheetview-selected: #f0f0f0;
 
 	--color-border-calc-header: var(--color-border-dark);
 	--column-row-highlight: #B0B0B0;

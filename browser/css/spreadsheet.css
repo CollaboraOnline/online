@@ -205,10 +205,10 @@
 
 .spreadsheet-header-sheetview-row,
 .spreadsheet-header-sheetview-column {
-	border: 1px solid var(--color-border-calc-header);
+	border: 1px solid var(--color-border-calc-header-sheetview);
 	background-color: var(--color-calc-header-sheetview);
 	font: var(--default-font-size)/1.5 var(--cool-font);
-	color: var(--color-text-light);
+	color: var(--color-text-calc-header);
 }
 
 .spreadsheet-header-sheetview-row-hover,
