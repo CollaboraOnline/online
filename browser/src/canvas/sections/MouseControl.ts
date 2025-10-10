@@ -23,20 +23,87 @@ class MouseControl extends CanvasSectionObject {
 	borderColor: string = 'green';
 	boundToSection: string = app.CSections.Tiles.name;
 
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		console.error('onmousedown');
+	mouseMoveTimer: any | null = null;
+	currentPosition: cool.SimplePoint = new cool.SimplePoint(0, 0);
+
+	constructor(name: string) {
+		super(name);
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		console.error('onmouseup');
+	private readModifier(e: MouseEvent) {
+		let modifier = 0;
+		const shift = e.shiftKey ? app.UNOModifier.SHIFT : 0;
+		const ctrl = e.ctrlKey ? app.UNOModifier.CTRL : 0;
+		const alt = e.altKey ? app.UNOModifier.ALT : 0;
+		const cmd = e.metaKey ? app.UNOModifier.CTRLMAC : 0;
+		modifier = shift | ctrl | alt | cmd;
+
+		return modifier;
 	}
 
-	onMouseMove(
+	private readButtons(e: MouseEvent) {
+		let buttons = 0;
+		buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
+		buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
+		buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
+
+		return buttons;
+	}
+
+	public onContextMenu(e: MouseEvent): void {
+		const buttons = app.LOButtons.right;
+		const modifier = this.readModifier(e);
+		if (modifier === 0) {
+			app.map._docLayer._postMouseEvent(
+				'buttondown',
+				this.currentPosition.x,
+				this.currentPosition.y,
+				1,
+				buttons,
+				modifier,
+			);
+		}
+	}
+
+	// Gets the mouse position on browser page in CSS pixels.
+	public getMousePagePosition() {
+		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
+		return {
+			x: this.currentPosition.cX + boundingClientRectangle.left,
+			y: this.currentPosition.cY + boundingClientRectangle.top,
+		};
+	}
+
+	public onMouseMove(
 		point: cool.SimplePoint,
 		dragDistance: Array<number>,
 		e: MouseEvent,
 	): void {
-		console.error('onmousemove');
+		this.currentPosition.pX =
+			app.activeDocument.activeView.viewedRectangle.pX1 + point.pX;
+		this.currentPosition.pY =
+			app.activeDocument.activeView.viewedRectangle.pY1 + point.pY;
+
+		clearTimeout(this.mouseMoveTimer);
+
+		this.mouseMoveTimer = setTimeout(() => {
+			app.map._docLayer._postMouseEvent(
+				'move',
+				this.currentPosition.x,
+				this.currentPosition.y,
+				1,
+				0,
+				this.readModifier(e),
+			);
+		}, 100);
+	}
+
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+		TileManager.resetPreFetching(false);
+	}
+
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+		console.error('onmouseup');
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
