@@ -146,15 +146,3 @@ window.UNOKey = {
 	SELECT_TO_BEGIN_OF_PARAGRAPH: 1564,
 	SELECT_TO_END_OF_PARAGRAPH: 1565
 };
-
-/*
- * These are from <vcl/keycodes.h>. Correspond to the published
- * com::sun::star::awt::KeyModifier constants, left-shifted by 12.
- */
-
-window.UNOModifier = {
-	SHIFT: 4096,
-	CTRL: 8192,
-	ALT: 16384,
-	CTRLMAC: 32768
-};

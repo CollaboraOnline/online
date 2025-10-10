@@ -15,6 +15,7 @@ class DocumentBase {
 	public activeView: ViewLayoutBase;
 	public tableMiddleware: TableMiddleware;
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
+	public mouseControl: MouseControl | null = null;
 
 	protected _fileSize: cool.SimplePoint;
 
@@ -32,6 +33,13 @@ class DocumentBase {
 		if (app.map._docLayer._docType === 'presentation')
 			this.selectionMiddleware = new ImpressSelectionMiddleware();
 		else this.selectionMiddleware = null;
+
+		this.addSections();
+	}
+
+	private addSections() {
+		this.mouseControl = new MouseControl(app.CSections.MouseControl.name);
+		app.sectionContainer.addSection(this.mouseControl);
 	}
 
 	public get fileSize(): cool.SimplePoint {
