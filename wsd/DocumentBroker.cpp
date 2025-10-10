@@ -1766,9 +1766,7 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
             session->uploadViewSettingsToWopiHost();
         }
 
-        std::ostringstream jsonStream;
-        viewSettings->stringify(jsonStream);
-        viewSettingsString = jsonStream.str();
+        viewSettingsString = JsonUtil::jsonToString(viewSettings);
     }
     catch (const std::exception& exc)
     {
@@ -4998,19 +4996,17 @@ std::string DocumentBroker::applySignViewSettings(const std::string& message,
     std::string finalMsg = message;
     if (_isViewSettingsUpdated)
     {
-        Poco::JSON::Object signatureJson;
+        Poco::JSON::Object::Ptr signatureJson = new Poco::JSON::Object();
 
         std::string signatureCert = session->getSignatureCertificate();
         std::string signatureKey = session->getSignatureKey();
         std::string signatureCa = session->getSignatureCa();
 
-        signatureJson.set("SignatureCert", signatureCert);
-        signatureJson.set("SignatureKey", signatureKey);
-        signatureJson.set("SignatureCa", signatureCa);
+        signatureJson->set("SignatureCert", signatureCert);
+        signatureJson->set("SignatureKey", signatureKey);
+        signatureJson->set("SignatureCa", signatureCa);
 
-        std::ostringstream jsonStream;
-        signatureJson.stringify(jsonStream);
-        std::string jsonString = jsonStream.str();
+        std::string jsonString = JsonUtil::jsonToString(signatureJson);
 
         std::string encodedJson;
         Poco::URI::encode(jsonString, "", encodedJson);

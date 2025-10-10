@@ -277,6 +277,13 @@ Poco::JSON::Object::Ptr makePropertyValue(const std::string& type, const T& val)
     return obj;
 }
 
+inline std::string jsonToString(const Poco::JSON::Object::Ptr& json)
+{
+    std::ostringstream jsonStream;
+    json->stringify(jsonStream);
+    return jsonStream.str();
+}
+
 } // end namespace JsonUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
