@@ -1779,6 +1779,42 @@ menuDefinitions.set('RecordTrackedChangesMenu', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('AcceptTrackedChangesMenu', [
+	{
+		id: 'review-accept-tracked-change',
+		text: _UNO('.uno:AcceptTrackedChange', 'text'),
+		uno: '.uno:AcceptTrackedChange',
+	},
+	{
+		id: 'review-accept-tracked-change-to-next',
+		text: _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
+		uno: '.uno:AcceptTrackedChangeToNext',
+	},
+	{
+		id: 'acceptalltrackedchanges',
+		text: _UNO('.uno:AcceptAllTrackedChanges', 'text'),
+		uno: '.uno:AcceptAllTrackedChanges',
+	},
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('RejectTrackedChangesMenu', [
+	{
+		id: 'review-reject-tracked-change',
+		text: _UNO('.uno:RejectTrackedChange', 'text'),
+		uno: '.uno:RejectTrackedChange',
+	},
+	{
+		id: 'review-reject-tracked-change-to-next',
+		text: _UNO('.uno:RejectTrackedChangeToNext', 'text'),
+		uno: '.uno:RejectTrackedChangeToNext',
+	},
+	{
+		id: 'rejectalltrackedchanges',
+		text: _UNO('.uno:RejectAllTrackedChanges', 'text'),
+		uno: '.uno:RejectAllTrackedChanges',
+	},
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('ConditionalFormatMenu', [
 	{
 		text: _('Highlight cells with...'),
