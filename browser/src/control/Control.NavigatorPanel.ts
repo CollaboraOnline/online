@@ -483,6 +483,73 @@ class NavigatorPanel extends SidebarBase {
 		this.builder.build(wrapper, [data], false);
 	}
 
+	useDefaultCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		super.callback(objectType, eventType, object, data, builder);
+	}
+
+	getSearchTerm(): string | null {
+		const searchInput = document.getElementById(
+			'navigator-search-input',
+		) as HTMLInputElement;
+
+		if (searchInput) return searchInput.value;
+		else return null;
+	}
+
+	useSearchCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		builder: JSBuilder,
+	) {
+		// Switch to "Results tab" first.
+		if (eventType === 'activate') {
+			const resultsTab = this.navigationPanel.querySelector(
+				'#tab-quick-find:not(.selected)',
+			) as HTMLElement;
+			if (resultsTab) resultsTab.click();
+		}
+
+		const nextButton = this.navigationPanel.querySelector(
+			'#findnext button',
+		) as HTMLElement;
+		const nextButtonVisible =
+			nextButton && (nextButton as any).checkVisibility();
+		const searchTerm = this.getSearchTerm();
+
+		if (!searchTerm) return; // There is something wrong. If search input doesn't exist, nothing to do below.
+
+		const termChanged = searchTerm !== this.highlightTerm;
+		this.highlightTerm = searchTerm;
+		const newSearch = termChanged || !nextButtonVisible;
+
+		if (newSearch) {
+			if (object.id === 'navigator-search-button')
+				super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
+			else
+				super.callback(
+					objectType,
+					eventType,
+					{ id: 'Find' },
+					searchTerm,
+					builder,
+				);
+		} else if (nextButton) nextButton.click();
+
+		// Update outline highlighting
+		// Note: only update on 'activate' or button pressed events to be consistent with results tab
+		if (eventType === 'activate') {
+			var treeContainer = document.getElementById('contenttree') as any;
+			if (treeContainer) treeContainer.highlightEntries(searchTerm);
+		}
+	}
+
 	override callback(
 		objectType: string,
 		eventType: string,
@@ -490,35 +557,12 @@ class NavigatorPanel extends SidebarBase {
 		data: any,
 		builder: JSBuilder,
 	): void {
-		let searchTerm = '';
-		// Update results tab
-		if (object.id === 'navigator-search-button') {
-			searchTerm = (
-				document.getElementById('navigator-search-input') as HTMLInputElement
-			).value;
-			super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
-		} else if (object.id === 'navigator-search') {
-			searchTerm = data;
-			super.callback(
-				objectType,
-				eventType,
-				{ id: 'Find' },
-				searchTerm,
-				builder,
-			);
-		}
-		// Update outline highlighting
-		// Note: only update on 'activate' or button pressed events to be consistent with results tab
-		if (
-			(object.id == 'navigator-search' && eventType == 'activate') ||
-			object.id == 'navigator-search-button'
-		) {
-			var treeContainer = document.getElementById('contenttree') as any;
-			if (treeContainer) treeContainer.highlightEntries(searchTerm);
-			this.highlightTerm = searchTerm;
+		if (!['navigator-search-button', 'navigator-search'].includes(object.id)) {
+			this.useDefaultCallback(objectType, eventType, object, data, builder);
 			return;
+		} else {
+			this.useSearchCallback(objectType, eventType, object, builder);
 		}
-		super.callback(objectType, eventType, object, data, builder);
 	}
 }
 
