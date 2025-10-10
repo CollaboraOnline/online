@@ -20,7 +20,7 @@ class MouseControl extends CanvasSectionObject {
 	zIndex: number = app.CSections.MouseControl.zIndex;
 	drawingOrder: number = app.CSections.MouseControl.drawingOrder;
 	processingOrder: number = app.CSections.MouseControl.processingOrder;
-	borderColor: string = 'dark green';
+	borderColor: string = 'green';
 	boundToSection: string = app.CSections.Tiles.name;
 
 	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
