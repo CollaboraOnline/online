@@ -78,6 +78,9 @@ class TreeViewControl {
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
 	_rows: Map<string, HTMLElement>;
+	readonly PAGE_ENTRY_PREFIX = '-$#~';
+	readonly PAGE_ENTRY_SUFFIX = '~#$-';
+	readonly PAGE_DIVIDER_ROW_CLASS = 'page-divider-row';
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container = window.L.DomUtil.create(
@@ -358,7 +361,13 @@ class TreeViewControl {
 		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
 		tr.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
-		tr.setAttribute('tabindex', '0');
+		if (
+			this.isPageDivider(entry, this.PAGE_ENTRY_PREFIX, this.PAGE_ENTRY_SUFFIX)
+		) {
+			window.L.DomUtil.addClass(tr, this.PAGE_DIVIDER_ROW_CLASS);
+		} else {
+			tr.setAttribute('tabindex', '0');
+		}
 
 		let selectionElement;
 		if (this._hasState) {
@@ -479,9 +488,6 @@ class TreeViewControl {
 		index: any,
 		builder: JSBuilder,
 	) {
-		const PAGE_ENTRY_PREFIX = '-$#~';
-		const PAGE_ENTRY_SUFFIX = '~#$-';
-
 		const text =
 			builder._cleanText(entry.columns[index].text) ||
 			builder._cleanText(entry.text);
@@ -508,7 +514,13 @@ class TreeViewControl {
 			img.alt = text;
 		} else {
 			let cell;
-			if (this.isPageDivider(entry, PAGE_ENTRY_PREFIX, PAGE_ENTRY_SUFFIX)) {
+			if (
+				this.isPageDivider(
+					entry,
+					this.PAGE_ENTRY_PREFIX,
+					this.PAGE_ENTRY_SUFFIX,
+				)
+			) {
 				cell = window.L.DomUtil.create(
 					'span',
 					builder.options.cssClass +
@@ -517,8 +529,8 @@ class TreeViewControl {
 				);
 				cell.innerText = this.getPageEntryText(
 					entry.text,
-					PAGE_ENTRY_PREFIX,
-					PAGE_ENTRY_SUFFIX,
+					this.PAGE_ENTRY_PREFIX,
+					this.PAGE_ENTRY_SUFFIX,
 				);
 			} else if (treeViewData.highlightTerm !== undefined) {
 				cell = this.createHighlightedCell(
@@ -736,46 +748,50 @@ class TreeViewControl {
 			}
 		}
 
-		// setup callbacks
-		var clickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			true,
-			this._singleClickActivate,
-			builder,
-			treeViewData,
-			entry,
-		);
-		var doubleClickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			false,
-			true,
-			builder,
-			treeViewData,
-			entry,
-		);
+		if (
+			!this.isPageDivider(entry, this.PAGE_ENTRY_PREFIX, this.PAGE_ENTRY_SUFFIX)
+		) {
+			// setup callbacks
+			var clickFunction = this.createClickFunction(
+				tr,
+				selectionElement,
+				true,
+				this._singleClickActivate,
+				builder,
+				treeViewData,
+				entry,
+			);
+			var doubleClickFunction = this.createClickFunction(
+				tr,
+				selectionElement,
+				false,
+				true,
+				builder,
+				treeViewData,
+				entry,
+			);
 
-		this.setupEntryMouseEvents(
-			tr,
-			entry,
-			treeViewData,
-			builder,
-			selectionElement,
-			expander,
-			clickFunction,
-			doubleClickFunction,
-		);
+			this.setupEntryMouseEvents(
+				tr,
+				entry,
+				treeViewData,
+				builder,
+				selectionElement,
+				expander,
+				clickFunction,
+				doubleClickFunction,
+			);
 
-		this.setupEntryKeyEvent(
-			tr,
-			entry,
-			selectionElement,
-			expander,
-			clickFunction,
-		);
+			this.setupEntryKeyEvent(
+				tr,
+				entry,
+				selectionElement,
+				expander,
+				clickFunction,
+			);
 
-		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
+			this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
+		}
 	}
 
 	setupEntryContextMenuEvent(
@@ -1242,8 +1258,9 @@ class TreeViewControl {
 
 	setupKeyEvents(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container.addEventListener('keydown', (event) => {
-			const listElements =
-				this._container.querySelectorAll('.ui-treeview-entry');
+			const listElements = this._container.querySelectorAll(
+				`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+			);
 			this.handleKeyEvent(event, listElements, builder, data);
 		});
 	}
@@ -1519,7 +1536,9 @@ class TreeViewControl {
 
 	// when no entry is selected - allow first one to be focusable
 	makeTreeViewFocusable(enable: boolean) {
-		const firstElement = this._container.querySelector('.ui-treeview-entry');
+		const firstElement = this._container.querySelector(
+			`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+		);
 		if (firstElement) {
 			if (enable) (firstElement as HTMLElement).tabIndex = 0;
 			else firstElement.removeAttribute('tabindex');
