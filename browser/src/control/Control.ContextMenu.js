@@ -134,14 +134,16 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 		this.hasContextMenu = false;
 	},
 
-	_onMouseDown: function(e) {
-		this._prevMousePos = {x: e.originalEvent.pageX, y: e.originalEvent.pageY};
+	_onMouseDown: function() {
+		if (app.activeDocument && app.activeDocument.mouseControl)
+			this._prevMousePos = app.activeDocument.mouseControl.getMousePagePosition();
 
 		this._onClosePopup();
 	},
 
-	_onMouseUp: function (e) {
-		this._currMousePos = { x: e.originalEvent.pageX, y: e.originalEvent.pageY };
+	_onMouseUp: function () {
+		if (app.activeDocument && app.activeDocument.mouseControl)
+			this._currMousePos = app.activeDocument.mouseControl.getMousePagePosition();
 	},
 
 	_onKeyDown: function(e) {
@@ -229,9 +231,9 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				}
 			});
 			if (autoFillContextMenu)
-				$('.leaflet-layer').contextMenu(this._currMousePos);
+				$('.leaflet-layer').contextMenu(app.activeDocument.mouseControl.getMousePagePosition());
 			else
-				$('.leaflet-layer').contextMenu(this._prevMousePos);
+				$('.leaflet-layer').contextMenu(app.activeDocument.mouseControl.getMousePagePosition());
 			$('.context-menu-root').focus();
 			this.hasContextMenu = true;
 		}
