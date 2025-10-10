@@ -1813,7 +1813,7 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             const std::string viewSettings = presetsPath + "viewsetting/viewsetting.json";
             if (FileUtil::Stat(viewSettings).exists())
             {
-                settings = extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled, _isViewSettingsUpdated);
+                const std::string settings = extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled, _isViewSettingsUpdated);
                 session->sendTextFrame("viewsetting: " + settings);
             }
             forwardToChild(session, "addconfig");
