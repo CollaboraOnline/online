@@ -751,15 +751,19 @@ ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 if ENABLE_WASM
-$(DIST_FOLDER)/emscripten-%.js: $(abs_top_srcdir)/wasm/emscripten-%.js
+$(DIST_FOLDER)/emscripten-module.js: ../wasm/emscripten-module.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
+$(DIST_FOLDER)/emscripten-zetajs-example.js: $(abs_top_srcdir)/wasm/emscripten-zetajs-example.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
+$(DIST_FOLDER)/online%: ../wasm/online%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(DIST_FOLDER)/soffice%: ../wasm/soffice%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
