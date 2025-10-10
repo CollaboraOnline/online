@@ -141,10 +141,7 @@ class ViewLayoutBase {
 		const result: number = documentAnchor.size[0];
 		this.scrollProperties.xOffset = documentAnchor.myTopLeft[0];
 
-		if (app.map._docLayer._docType !== 'spreadsheet') {
-			this.scrollProperties.horizontalScrollLength =
-				result - this.scrollProperties.horizontalScrollRightOffset;
-		} else {
+		if (app.map._docLayer._docType === 'spreadsheet') {
 			var splitPanesContext: any = app.map.getSplitPanesContext();
 			var splitPos = { x: 0, y: 0 };
 			if (splitPanesContext) {
@@ -155,6 +152,9 @@ class ViewLayoutBase {
 			this.scrollProperties.xOffset += splitPos.x;
 			this.scrollProperties.horizontalScrollLength =
 				result - splitPos.x - this.scrollProperties.horizontalScrollRightOffset;
+		} else {
+			this.scrollProperties.horizontalScrollLength =
+				result - this.scrollProperties.horizontalScrollRightOffset;
 		}
 	}
 
