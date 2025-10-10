@@ -29,11 +29,13 @@ class SheetsBar {
 				map: this.map,
 				cssClass: 'jsdialog',
 				suffix: 'spreadsheet-toolbar',
+				callback: this.onSelectSheet.bind(this),
 			});
 
 		this.create();
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
+		map.on('updateparts', this.onUpdateParts, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 	}
 
@@ -78,13 +80,22 @@ class SheetsBar {
 						type: 'customtoolitem',
 						text: _('Insert sheet'),
 						command: 'insertsheet'
-					}
+					},
+					{
+						id: 'sheetlist:SheetListMenu',
+						type: 'menubutton',
+						noLabel: true,
+						text: _('Show sheet list'),
+						command: 'sheetlist',
+					},
 				]
 			}
 		];
 
 		this.parentContainer.replaceChildren();
 		this.builder.build(this.parentContainer, data);
+		
+		this.updateSheetListMenu();
 	}
 
 	onDocLayerInit() {
@@ -96,6 +107,13 @@ class SheetsBar {
 		}
 	}
 
+	onUpdateParts(e) {
+		this.partNames = e.partNames || [];
+		this.selectedPart = e.selectedPart;
+		this.parts = e.parts;
+		this.updateSheetListMenu();
+	}
+
 	onUpdatePermission(e) {
 		if (e.detail.perm === 'edit') {
 			this.enableInsertion(true);
@@ -103,6 +121,46 @@ class SheetsBar {
 			this.enableInsertion(false);
 		}
 	}
+
+	updateSheetListMenu() {
+		let sheetEntries = [];
+
+		if (!this.partNames || this.partNames.length === 0) {
+			return sheetEntries;
+		}
+		
+		for (let i = 0; i < this.partNames.length; i++) {
+			if (app.calc.isPartHidden(i)) {
+				continue;
+			}
+
+			let displayText = this.partNames[i];
+
+			sheetEntries.push({
+				id: 'selectsheet-' + i,
+				text: displayText,
+				selected: (i === this.selectedPart)
+			});
+		}
+		
+		JSDialog.MenuDefinitions.set('SheetListMenu', sheetEntries);
+
+	}
+
+	onSelectSheet(objectType, eventType, object, data, builder) {
+		if (object.id === 'sheetlist') {
+
+			if (eventType === 'select') {
+				const partIndex = parseInt(data.replace('selectsheet-', ''));
+				if (!isNaN(partIndex) && partIndex !== this.map._docLayer._selectedPart) {
+					this.map._docLayer._clearReferences();
+					this.map.setPart(partIndex, false, true);
+				}
+			}
+			return;
+		}
+		builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
+  }
 
 	enableInsertion(enable) {
 		this.builder.executeAction(this.parentContainer, {
