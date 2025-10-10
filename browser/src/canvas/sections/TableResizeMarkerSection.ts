@@ -37,7 +37,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.dragStartPosition = null;
 		this.sectionProperties.initialPosition = this.position.slice();
 
-		this.moveHTMLObjectToMapElement();
 		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 	}
 
