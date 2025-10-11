@@ -37,7 +37,7 @@ class ScrollProperties {
 class ViewLayoutBase {
 	public readonly type: string = 'ViewLayoutBase';
 
-	private lastViewedRectangle: cool.SimpleRectangle; // Previously viewed rectangle.
+	protected lastViewedRectangle: cool.SimpleRectangle; // Previously viewed rectangle.
 
 	protected clientVisibleAreaCommand: string = ''; // Last visible area command. Checked to avoid sending the same command multiple times.
 	protected _viewedRectangle: cool.SimpleRectangle; // Currently viewed rectangle.
@@ -131,20 +131,17 @@ class ViewLayoutBase {
 		this._viewSize = size;
 	}
 
-	private getDocumentAnchorSection(): CanvasSectionObject {
+	protected getDocumentAnchorSection(): CanvasSectionObject {
 		return app.sectionContainer.getDocumentAnchorSection();
 	}
 
-	private calculateHorizontalScrollLength(
+	protected calculateHorizontalScrollLength(
 		documentAnchor: CanvasSectionObject,
 	): void {
 		const result: number = documentAnchor.size[0];
 		this.scrollProperties.xOffset = documentAnchor.myTopLeft[0];
 
-		if (app.map._docLayer._docType !== 'spreadsheet') {
-			this.scrollProperties.horizontalScrollLength =
-				result - this.scrollProperties.horizontalScrollRightOffset;
-		} else {
+		if (app.map._docLayer._docType === 'spreadsheet') {
 			var splitPanesContext: any = app.map.getSplitPanesContext();
 			var splitPos = { x: 0, y: 0 };
 			if (splitPanesContext) {
@@ -155,10 +152,13 @@ class ViewLayoutBase {
 			this.scrollProperties.xOffset += splitPos.x;
 			this.scrollProperties.horizontalScrollLength =
 				result - splitPos.x - this.scrollProperties.horizontalScrollRightOffset;
+		} else {
+			this.scrollProperties.horizontalScrollLength =
+				result - this.scrollProperties.horizontalScrollRightOffset;
 		}
 	}
 
-	private calculateVerticalScrollLength(
+	protected calculateVerticalScrollLength(
 		documentAnchor: CanvasSectionObject,
 	): void {
 		const result: number = documentAnchor.size[1];
@@ -236,7 +236,7 @@ class ViewLayoutBase {
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
 	}
 
-	private scrollHorizontal(pX: number): void {
+	protected scrollHorizontal(pX: number): void {
 		const scrollProps: ScrollProperties = this.scrollProperties;
 
 		let control = scrollProps.moveBy ? scrollProps.moveBy[0] : 0; // Add pending offset.
@@ -282,7 +282,7 @@ class ViewLayoutBase {
 	// This function shouldn't care about the document content, size etc.
 	// All this cares is the current scroll position and the scroll length.
 	// For making a portion of the document visible, use other methods.
-	private scrollVertical(pY: number): void {
+	protected scrollVertical(pY: number): void {
 		const scrollProps: ScrollProperties = this.scrollProperties;
 
 		let control = scrollProps.moveBy ? scrollProps.moveBy[1] : 0; // Add pending offset.

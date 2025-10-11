@@ -358,6 +358,11 @@ export class ScrollSection extends CanvasSectionObject {
 		});
 	}
 
+	/*
+		this caught my attention as this uses moveBy values
+		which are set in scrollHorizontal and vertical 
+		functions.
+	*/
 	public onDraw(frameCount: number, elapsedTime: number): void {
 		if (app.activeDocument.activeView.scrollProperties.moveBy !== null)
 			this.doMove();
