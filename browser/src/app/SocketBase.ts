@@ -45,12 +45,10 @@ class SocketBase {
 	private _slurpTimerDelay: number | undefined;
 	private _slurpTimerLaunchTime: number | undefined;
 	private timer: ReturnType<typeof setInterval> | undefined;
-	private asyncTraceEventCounter: number;
-	private asyncTracePseudoThread: number;
 	private threadLocalLoggingLevelToggle: boolean;
 
 	private socket?: SockInterface;
-	private traceEvents: TraceEvents;
+	public traceEvents: TraceEvents;
 
 	constructor(map: MapInterface) {
 		window.app.console.debug('socket.initialize:');
@@ -61,10 +59,6 @@ class SocketBase {
 		this._handlingDelayedMessages = false;
 		this._inLayerTransaction = false;
 		this._slurpDuringTransaction = false;
-		this.asyncTraceEventCounter = 0;
-		// simulate a threads per live async event to help the chrome
-		// renderer.
-		this.asyncTracePseudoThread = 1;
 		this.threadLocalLoggingLevelToggle = false;
 		this._accessTokenExpireTimeout = undefined;
 		this._reconnecting = false;
@@ -83,11 +77,30 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
+	// we need typing of this function in TraceEvents.ts
+	public sendTraceEvent(
+		name: any,
+		ph: string,
+		timeRange: undefined | string,
+		args?: any,
+		id?: number | string,
+		tid?: number | string,
+	): void {
+		console.assert(false, 'This should not be called!');
+	}
+
 	get traceEventRecordingToggle(): boolean {
 		return this.traceEvents.getRecordingToggle();
 	}
 
 	public setTraceEventLogging(enabled: boolean) {
 		this.traceEvents.setLogging(enabled);
+	}
+
+	public createAsyncTraceEvent(
+		name: string,
+		args?: any,
+	): CompleteTraceEvent | null {
+		return this.traceEvents.createAsyncTraceEvent(name, args);
 	}
 }

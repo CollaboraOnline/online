@@ -11,15 +11,25 @@
 
 class TraceEvents {
 	private recordingToggle: boolean;
+	private asyncCounter: number;
+	private asyncPseudoThread: number;
 	private socket: SocketBase;
 
 	constructor(socket: SocketBase) {
 		this.socket = socket;
 		this.recordingToggle = false;
+		this.asyncCounter = 0;
+		// simulate a threads per live async event to help the chrome
+		// renderer.
+		this.asyncPseudoThread = 1;
 	}
 
 	public getRecordingToggle(): boolean {
 		return this.recordingToggle;
+	}
+
+	public decrementAsyncPseudoThread(): void {
+		this.asyncPseudoThread--;
 	}
 
 	public setLogging(enabled: boolean) {
@@ -38,5 +48,60 @@ class TraceEvents {
 		// logged from core.)
 
 		// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
+	}
+
+	public createAsyncTraceEvent(
+		name: string,
+		args?: any,
+	): CompleteTraceEvent | null {
+		if (!this.recordingToggle) return null;
+
+		const result: CompleteTraceEvent = {
+			id: -1,
+			tid: -1,
+			active: false,
+			args: {},
+			begin: 0,
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			finish: () => {},
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			abort: () => {},
+		};
+
+		result.id = this.asyncCounter++;
+		result.tid = this.asyncPseudoThread++;
+		result.active = true;
+		result.args = args;
+
+		this.socket.sendTraceEvent(
+			name,
+			'S',
+			undefined,
+			args,
+			result.id,
+			result.tid,
+		);
+
+		const sockObj = this.socket;
+		result.finish = function () {
+			sockObj.traceEvents.decrementAsyncPseudoThread();
+			// 'this' is of type CompleteTraceEvent at call-time.
+			if (this.active) {
+				sockObj.sendTraceEvent(
+					name,
+					'F',
+					undefined,
+					this.args,
+					this.id,
+					this.tid,
+				);
+				this.active = false;
+			}
+		};
+		result.abort = function () {
+			sockObj.traceEvents.decrementAsyncPseudoThread();
+			this.active = false;
+		};
+		return result;
 	}
 }

@@ -1930,33 +1930,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		return (args == null ? '' : (' args=' + JSON.stringify(args)));
 	}
 
-	createAsyncTraceEvent(name, args) {
-		if (!this.traceEventRecordingToggle)
-			return null;
-
-		var result = {};
-		result.id = this.asyncTraceEventCounter++;
-		result.tid = this.asyncTracePseudoThread++;
-		result.active = true;
-		result.args = args;
-
-		this.sendTraceEvent(name, 'S', undefined, args, result.id, result.tid);
-
-		var that = this;
-		result.finish = function () {
-			that.asyncTracePseudoThread--;
-			if (this.active) {
-				that.sendTraceEvent(name, 'F', undefined, this.args, this.id, this.tid);
-				this.active = false;
-			}
-		};
-		result.abort = function () {
-			that.asyncTracePseudoThread--;
-			this.active = false;
-		};
-		return result;
-	}
-
 	createCompleteTraceEvent(name, args) {
 		if (!this.traceEventRecordingToggle)
 			return null;
