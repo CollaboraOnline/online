@@ -163,12 +163,18 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 	var URI = '';
 
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
-		URI += 'http://' + Cypress.env('SERVER') + '/richproxy/proxy.php?req=';
+		URI += 'http://' + Cypress.env('SERVER') + '/proxy.php?req=';
 	}
 
 	URI += '/browser/' + Cypress.env('WSD_VERSION_HASH') + '/debug.html'
 		+ '?lang=en-US'
 		+ '&file_path=' + Cypress.env('DATA_WORKDIR') + filePath;
+
+	if (Cypress.env('INTEGRATION') === 'php-proxy') {
+		const serverPort = Cypress.env('SERVER_PORT');
+		if (serverPort)
+			URI += '&wopiPort=' + serverPort;
+	}
 
 	if (isMultiUser) {
 		URI = URI.replace('debug.html', 'cypress-multiuser.html');
@@ -183,7 +189,7 @@ function loadDocumentNoIntegration(filePath, isMultiUser) {
 				}
 			});
 		}
-	}).then(function(win) {
+	}).then(function() {
 		if (Cypress.config('logServerResponse')) {
 			cy.getFrameWindow()
 				.its('L', {log: false})
@@ -361,20 +367,28 @@ function documentChecks(skipInitializedCheck = false) {
 	cy.log('>> documentChecks - start');
 
 	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
-	if (!skipInitializedCheck)
-		cy.cGet('#map').should('have.class', 'initialized');
+	if (!skipInitializedCheck) {
+		cy.cGet('#map', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
+			.should('have.class', 'initialized');
+	}
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
 		cy.wait(10000);
 	}
 
+	if (!skipInitializedCheck /* TODO: if notebookbar mode */) {
+		doIfOnDesktop(() => {
+			cy.cGet('.notebookbar-scroll-wrapper', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
+				.should('have.class', 'initialized');
+		});
+	}
+
 	// Wait for the sidebar to open.
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
-			var showSidebar = localStorage.getItem('text.ShowSidebar');
-			if (Cypress.env('pdf-view') !== true && showSidebar !== 'false')
-				cy.cframe().find('#sidebar-panel').should('be.visible').should('not.be.empty');
+			if (Cypress.env('pdf-view') !== true)
+				cy.cGet('#sidebar-panel').should('be.visible').should('not.be.empty');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
@@ -399,8 +413,8 @@ function documentChecks(skipInitializedCheck = false) {
 		// Check also that the inputbar is drawn in Calc.
 		doIfInCalc(() => {
 			cy.cGet('#sc_input_window.formulabar').should('exist');
-			cy.cGet('#pos_window-input.addressInput').should('exist');
-			//cy.cGet('#pos_window-input.addressInput').should('not.be.empty');
+			cy.cGet('#pos_window-input-address.addressInput').should('exist');
+			//cy.cGet('#pos_window-input-address.addressInput').should('not.be.empty');
 		});
 	}
 

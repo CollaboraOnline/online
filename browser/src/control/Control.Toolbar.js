@@ -14,7 +14,7 @@
  * Collabora Online toolbar
  */
 
-/* global app $ _ _UNO JSDialog */
+/* global app $ _ _UNO JSDialog URLPopUpSection cool */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function(global) {
@@ -37,35 +37,113 @@ function getUNOCommand(unoData) {
 }
 
 function _setBorders(left, right, bottom, top, horiz, vert, color) {
-	var params = {
-		OuterBorder: {
-			type : '[]any',
-			value : [
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : left }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : right }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : bottom }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : top }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 },
-				{ type : 'long', value : 0 }
-			]
-		},
-		InnerBorder: {
-			type : '[]any',
-			value : [
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : horiz }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : color }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : vert }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-				{ type : 'short', value : 0 },
-				{ type : 'short', value : 127 },
-				{ type : 'long', value : 0 }
-			]
-		}};
-	map.sendUnoCommand('.uno:SetBorderStyle', params);
+	map.sendUnoCommand(
+		getBorderStyleUNOCommand(left, right, bottom, top, horiz, vert, color),
+	);
 }
 
-// close the popup
+function getBorderStyleUNOCommand(
+	left,
+	right,
+	bottom,
+	top,
+	horiz,
+	vert,
+	color,
+) {
+	const params = {
+		OuterBorder: {
+			type: '[]any',
+			value: [
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: left },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: right },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: bottom },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: top },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+				{ type: 'long', value: 0 },
+			],
+		},
+		InnerBorder: {
+			type: '[]any',
+			value: [
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: horiz },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{
+					type: 'com.sun.star.table.BorderLine2',
+					value: {
+						Color: { type: 'com.sun.star.util.Color', value: color },
+						InnerLineWidth: { type: 'short', value: 0 },
+						OuterLineWidth: { type: 'short', value: vert },
+						LineDistance: { type: 'short', value: 0 },
+						LineStyle: { type: 'short', value: 0 },
+						LineWidth: { type: 'unsigned long', value: 0 },
+					},
+				},
+				{ type: 'short', value: 0 },
+				{ type: 'short', value: 127 },
+				{ type: 'long', value: 0 },
+			],
+		},
+	};
+
+	const jsonParams = JSON.stringify(params);
+
+	return `.uno:SetBorderStyle ${jsonParams}`;
+}
+
+global.getBorderStyleUNOCommand = getBorderStyleUNOCommand;
 
 var lastClosePopupCallback = undefined;
 
@@ -110,43 +188,6 @@ function setBorderStyle(num, color) {
 }
 
 global.setBorderStyle = setBorderStyle;
-
-function getBorderStyleMenuElements(closeCallback) {
-	lastClosePopupCallback = closeCallback;
-
-	const table = document.createElement('table');
-	table.id = 'setborderstyle-grid';
-
-	for (let i = 0; i < 12; i++) {
-		let tr = document.createElement('tr');
-		table.appendChild(tr);
-		for (let j = 0; j < 4; j++) {
-			let td = document.createElement('td');
-			tr.appendChild(td);
-			const num = String(i + j + 1);
-			td.className = 'w2ui-tb-image w2ui-icon ' + (i + j < 9 ? 'frame0' + String(i + j + 1): 'frame' + String(i + j + 1));
-			td.onclick = function() { setBorderStyle(parseInt(num)); };
-		}
-		i += 3;
-	}
-
-	let tr = document.createElement('tr');
-	let td = document.createElement('td');
-	td.setAttribute('colspan', 4);
-	td.onclick = function() { setBorderStyle(0); };
-
-	let div = document.createElement('div');
-	div.id = 'div-frame13';
-	div.textContent = _('More...');
-
-	td.appendChild(div);
-	tr.appendChild(td);
-	table.appendChild(tr);
-
-	return table;
-}
-
-global.getBorderStyleMenuElements = getBorderStyleMenuElements;
 
 function setConditionalFormat(num, unoCommand, jsdialogDropdown) {
 	var params = {
@@ -232,6 +273,8 @@ function getConditionalDataBarMenuElements(more, jsdialogDropdown) {
 global.getConditionalDataBarMenuElements = getConditionalDataBarMenuElements;
 
 var sendInsertTableFunction = function(event) {
+	if (event.target.tagName !== 'BUTTON')
+		return;
 	var col = $(event.target).index() + 1;
 	var row = $(event.target).parent().index() + 1;
 	$('.col').removeClass('bright');
@@ -248,6 +291,8 @@ var sendInsertTableFunction = function(event) {
 };
 
 var highlightTableFunction = function(event) {
+	if (event.target.tagName !== 'BUTTON')
+		return;
 	var col = $(event.target).index() + 1;
 	var row = $(event.target).parent().index() + 1;
 	$('.col').removeClass('bright');
@@ -516,7 +561,10 @@ function createShapesPanel(shapeType) {
 }
 
 var onShapeClickFunction = function(e) {
-	app.map.sendUnoCommand('.uno:' + $(e.target).data().uno);
+	let name = $(e.target).data().uno;
+	if (!name)
+		return;
+	app.map.sendUnoCommand('.uno:' + name);
 	closePopup();
 	e.stopPropagation();
 };
@@ -572,7 +620,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 				col.className = 'col w2ui-icon ' + shape.img;
 				col.dataset.uno = shape.uno;
 				col.setAttribute('data-cooltip', shape.text);
-				L.control.attachTooltipEventListener(col, map);
+				window.L.control.attachTooltipEventListener(col, map);
 				col.tabIndex = 0;
 				col.setAttribute('index', r + ':' + c);
 				row.appendChild(col);
@@ -646,12 +694,6 @@ function getConnectorsPopupElements(closeCallback) {
 	popUp.appendChild(grid);
 
 	return wrapperContainer;
-}
-
-function getColorPickerElements(id) {
-	const div = document.createElement('div');
-	div.id = id + '-wrapper';
-	return div;
 }
 
 function getColorPickerData(type) {
@@ -741,7 +783,7 @@ function unoCmdToToolbarId(commandname)
 }
 
 function onInsertGraphic() {
-	var insertGraphic = L.DomUtil.get('insertgraphic');
+	var insertGraphic = window.L.DomUtil.get('insertgraphic');
 	if ('files' in insertGraphic) {
 		for (var i = 0; i < insertGraphic.files.length; i++) {
 			var file = insertGraphic.files[i];
@@ -756,7 +798,7 @@ function onInsertGraphic() {
 }
 
 function onInsertMultimedia() {
-	var insertMultimedia = L.DomUtil.get('insertmultimedia');
+	var insertMultimedia = window.L.DomUtil.get('insertmultimedia');
 	if ('files' in insertMultimedia) {
 		for (var i = 0; i < insertMultimedia.files.length; i++) {
 			var file = insertMultimedia.files[i];
@@ -771,7 +813,7 @@ function onInsertMultimedia() {
 }
 
 function onInsertBackground() {
-	var selectBackground = L.DomUtil.get('selectbackground');
+	var selectBackground = window.L.DomUtil.get('selectbackground');
 	if ('files' in selectBackground) {
 		for (var i = 0; i < selectBackground.files.length; i++) {
 			var file = selectBackground.files[i];
@@ -807,7 +849,6 @@ function processStateChangedCommand(commandName, state) {
 		$('.styles-select').val(state).trigger('change');
 	}
 	else if (commandName === '.uno:FontColor' || commandName === '.uno:Color') {
-		if (!toolbar) return;
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
 		color = parseInt(state);
 		if (color === -1) {
@@ -818,13 +859,12 @@ function processStateChangedCommand(commandName, state) {
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
 
-		div = L.DomUtil.get('fontcolorindicator');
+		div = window.L.DomUtil.get('fontcolorindicator');
 		if (div) {
-			L.DomUtil.setStyle(div, 'background', color);
+			window.L.DomUtil.setStyle(div, 'background', color);
 		}
 	}
 	else if (commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
-		if (!toolbar) return;
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
 		color = parseInt(state);
 		if (color === -1) {
@@ -835,9 +875,9 @@ function processStateChangedCommand(commandName, state) {
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
 
-		div = L.DomUtil.get('backcolorindicator');
+		div = window.L.DomUtil.get('backcolorindicator');
 		if (div) {
-			L.DomUtil.setStyle(div, 'background', color);
+			window.L.DomUtil.setStyle(div, 'background', color);
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
@@ -896,59 +936,6 @@ function onCommandStateChanged(e) {
 	processStateChangedCommand(e.commandName, e.state);
 }
 
-function onUpdateParts(e) {
-	if (e.docType === 'text') {
-		var current = e.currentPage;
-		var count = e.pages;
-	}
-	else {
-		current = e.selectedPart;
-		count = e.parts;
-	}
-
-	// TODO
-	var toolbar = null;
-	if (!toolbar) {
-		return;
-	}
-
-	if (!window.mode.isMobile()) {
-		if (e.docType === 'presentation') {
-			// TODO
-			//toolbar.set('prev', {hint: _('Previous slide')});
-			//toolbar.set('next', {hint: _('Next slide')});
-		}
-		else {
-			toolbar.showItem('presentation', false);
-			toolbar.showItem('insertpage', false);
-			toolbar.showItem('duplicatepage', false);
-			toolbar.showItem('deletepage', false);
-		}
-	}
-
-	if (app.file.fileBasedView) {
-		toolbar.enableItem('prev', true);
-		toolbar.enableItem('next', true);
-		return;
-	}
-
-	if (e.docType !== 'spreadsheet') {
-		if (current === 0) {
-			toolbar.enableItem('prev', false);
-		}
-		else {
-			toolbar.enableItem('prev', true);
-		}
-
-		if (current === count - 1) {
-			toolbar.enableItem('next', false);
-		}
-		else {
-			toolbar.enableItem('next', true);
-		}
-	}
-}
-
 function onCommandResult(e) {
 	var commandName = e.commandName;
 
@@ -995,7 +982,7 @@ function onCommandResult(e) {
 	} else if (commandName === '.uno:OpenHyperlink') {
 		// allow to process other incoming messages first
 		setTimeout(function () {
-			map._docLayer.scrollToPos(new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
+			map._docLayer.scrollToPos(new cool.SimplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 		}, 0);
 	}
 }
@@ -1065,14 +1052,8 @@ $(document).ready(function() {
 function setupToolbar(e) {
 	map = e;
 
-	map.on('focussearch', function () {
-		var entry = L.DomUtil.get('search-input');
-		entry.focus();
-		entry.select();
-	});
-
 	map.on('search', function (e) {
-		var searchInput = L.DomUtil.get('search-input');
+		var searchInput = window.L.DomUtil.get('search-input');
 		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
 		if (!toolbar) {
 			console.debug('Cannot find search bar');
@@ -1082,12 +1063,15 @@ function setupToolbar(e) {
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
 			toolbar.showItem('cancelsearch', false);
-			L.DomUtil.addClass(searchInput, 'search-not-found');
+			window.L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
+			const searchbox = document.getElementById('searchbox');
+			if(searchbox && !searchbox.hasAttribute('aria-live'))
+				searchbox.setAttribute('aria-live', 'polite');
 			app.searchService.resetSelection();
 			setTimeout(function () {
 				$('#findthis').removeClass('search-not-found');
-				L.DomUtil.removeClass(searchInput, 'search-not-found');
+				window.L.DomUtil.removeClass(searchInput, 'search-not-found');
 			}, 800);
 		}
 	});
@@ -1100,9 +1084,9 @@ function setupToolbar(e) {
 				var strTwips = e.coordinates.match(/\d+/g);
 				var linkPosition;
 				if (strTwips.length > 7) {
-					linkPosition = new app.definitions.simplePoint(parseInt(strTwips[6]), parseInt(strTwips[7]));
+					linkPosition = new cool.SimplePoint(parseInt(strTwips[6]), parseInt(strTwips[7]));
 				}
-				app.definitions.urlPopUpSection.showURLPopUP(e.url, new app.definitions.simplePoint(parseInt(strTwips[6]), parseInt(strTwips[1])), linkPosition);
+				URLPopUpSection.showURLPopUP(e.url, new cool.SimplePoint(parseInt(strTwips[6]), parseInt(strTwips[1])), linkPosition);
 			} else {
 				map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 			}
@@ -1112,19 +1096,20 @@ function setupToolbar(e) {
 	app.events.on('updatepermission', onUpdatePermission);
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
-	map.on('updateparts pagenumberchanged', onUpdateParts);
 
-	if (map.options.wopi && L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+	if (map.options.wopi && window.L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').css('display', 'flex');
-		var button = L.DomUtil.get('closebutton');
+		var button = window.L.DomUtil.get('closebutton');
 		if (button) {
-			button.setAttribute('data-cooltip', _('Close document'));
-			L.control.attachTooltipEventListener(button, map);
+			const closeButtonText = _('Close document');
+			button.setAttribute('aria-label', closeButtonText);
+			button.setAttribute('data-cooltip', closeButtonText);
+			window.L.control.attachTooltipEventListener(button, map);
 		}
-	} else if (!L.Params.closeButtonEnabled) {
+	} else if (!window.L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 		$('#closebuttonwrapperseparator').hide();
-	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+	} else if (window.L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').css('display', 'flex');
 	}
 
@@ -1138,22 +1123,13 @@ function setupToolbar(e) {
 }
 
 global.setupToolbar = setupToolbar;
-global.insertTable = insertTable;
 global.getInsertTablePopupElements = getInsertTablePopupElements;
-global.sendInsertTableFunction = sendInsertTableFunction;
-global.highlightTableFunction = highlightTableFunction;
 global.getShapesPopupElements = getShapesPopupElements;
 global.getConnectorsPopupElements = getConnectorsPopupElements;
-global.onShapeClickFunction = onShapeClickFunction;
-global.onShapeKeyUpFunction = onShapeKeyUpFunction;
-global.onShapeKeyDownFunction = onShapeKeyDownFunction;
 global.createShapesPanel = createShapesPanel;
-global.onUpdatePermission = onUpdatePermission;
 global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
-global.getColorPickerElements = getColorPickerElements;
-global.onUpdateParts = onUpdateParts;
 global.getColorPickerData = getColorPickerData;
 }(window));

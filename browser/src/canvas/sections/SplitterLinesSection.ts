@@ -10,15 +10,14 @@
  */
 
 class SplitterLinesSection extends CanvasSectionObject {
-	name: string = L.CSections.Splitter.name;
 	interactable: boolean = false;
-	processingOrder: number = L.CSections.Splitter.processingOrder;
-	drawingOrder: number = L.CSections.Splitter.drawingOrder;
-	zIndex: number = L.CSections.Splitter.zIndex;
+	processingOrder: number = app.CSections.Splitter.processingOrder;
+	drawingOrder: number = app.CSections.Splitter.drawingOrder;
+	zIndex: number = app.CSections.Splitter.zIndex;
 	documentObject: boolean = true;
 
 	constructor() {
-		super();
+		super(app.CSections.Splitter.name);
 	}
 
 	onInitialize(): void {
@@ -46,8 +45,10 @@ class SplitterLinesSection extends CanvasSectionObject {
 		if (splittersDataDiv) {
 			this.sectionProperties.fillColor =
 				getComputedStyle(splittersDataDiv).getPropertyValue('color');
+
 			this.sectionProperties.fillOpacity =
 				getComputedStyle(splittersDataDiv).getPropertyValue('opacity');
+
 			this.sectionProperties.thickness =
 				parseFloat(
 					getComputedStyle(splittersDataDiv)
@@ -68,10 +69,13 @@ class SplitterLinesSection extends CanvasSectionObject {
 		// Create a linear gradient based on the extracted color stops
 		// get raw data from sheet geometry. use index = 1
 		const deafultRowSize = rowData.data.sizecore;
-		// gradient width should be half a default row hight.
+
+		// Gradient width should be half of the default row height.
 		const gradientWidth: number = Math.ceil(deafultRowSize / 2);
-		//adjust horizontal position for RTL mode
+
+		// Adjust horizontal position for RTL mode.
 		splitPos.x = this.isCalcRTL() ? this.size[0] - splitPos.x : splitPos.x;
+
 		// Create a linear gradient based on the extracted color stops
 		selectionBackgroundGradient = this.createSplitLineGradient(
 			splitPos,
@@ -87,6 +91,9 @@ class SplitterLinesSection extends CanvasSectionObject {
 		gradientWidth: number,
 		isVertSplitter: boolean,
 	) {
+		const sPx = splitPos.x * app.dpiScale;
+		const sPy = splitPos.y * app.dpiScale;
+
 		let linearGradient = null;
 		const colorStops = [
 			{ colorCode: this.sectionProperties.fillColor, offset: 0 },
@@ -96,16 +103,16 @@ class SplitterLinesSection extends CanvasSectionObject {
 		if (isVertSplitter) {
 			linearGradient = this.context.createLinearGradient(
 				0,
-				splitPos.y,
+				sPy,
 				0,
-				splitPos.y + gradientWidth,
+				sPy + gradientWidth,
 			);
 		} else {
-			let x0 = splitPos.x;
-			let x1 = splitPos.x + gradientWidth;
+			let x0 = sPx;
+			let x1 = sPx + gradientWidth;
 			if (this.isCalcRTL()) {
-				x0 = splitPos.x - gradientWidth;
-				x1 = splitPos.x;
+				x0 = sPx - gradientWidth;
+				x1 = sPx;
 			}
 			linearGradient = this.context.createLinearGradient(x0, 0, x1, 0);
 		}
@@ -125,18 +132,19 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 	private GetColumnHeaderHeight(): number {
 		if (
-			this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name)
+			this.containerObject.getSectionWithName(app.CSections.ColumnHeader.name)
 		) {
 			return this.containerObject.getSectionWithName(
-				L.CSections.ColumnHeader.name,
+				app.CSections.ColumnHeader.name,
 			).size[1];
 		} else return 0;
 	}
 
 	private GetRowHeaderWidth(): number {
-		if (this.containerObject.getSectionWithName(L.CSections.RowHeader.name)) {
-			return this.containerObject.getSectionWithName(L.CSections.RowHeader.name)
-				.size[0];
+		if (this.containerObject.getSectionWithName(app.CSections.RowHeader.name)) {
+			return this.containerObject.getSectionWithName(
+				app.CSections.RowHeader.name,
+			).size[0];
 		} else return 0;
 	}
 
@@ -152,7 +160,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 				if (splitPos.x) {
 					let width, style;
-					if (this.documentTopLeft[0] === 0) {
+					if (app.activeDocument.activeView.viewedRectangle.pX1 === 0) {
 						width = this.sectionProperties.thickness;
 						style = this.sectionProperties.fillColor;
 					} else {
@@ -172,7 +180,7 @@ class SplitterLinesSection extends CanvasSectionObject {
 
 				if (splitPos.y) {
 					let width, style;
-					if (this.documentTopLeft[1] === 0) {
+					if (app.activeDocument.activeView.viewedRectangle.pY1 === 0) {
 						width = this.sectionProperties.thickness;
 						style = this.sectionProperties.fillColor;
 					} else {

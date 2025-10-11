@@ -78,6 +78,7 @@ interface SlideInfo {
 	index: number;
 	name: string;
 	notes: string;
+	a11y?: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
@@ -88,6 +89,7 @@ interface SlideInfo {
 	nextSlideDuration: number;
 	transitionDirection: boolean;
 	transitionType: string | undefined;
+	transitionLabel: string | undefined;
 	transitionSubtype: string | undefined;
 	transitionFadeColor: string | undefined;
 	background: {
@@ -120,46 +122,199 @@ class SlideShowPresenter {
 	_windowCloseInterval: ReturnType<typeof setInterval> = null;
 	_slideRenderer: SlideRenderer = null;
 	_canvasLoader: CanvasLoader | null = null;
+	_progressBarContainer: HTMLDivElement | null = null;
+	_slideNavContainer: HTMLDivElement | null = null;
+	_enableA11y: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
+	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
 	private _slideShowNavigator: SlideShowNavigator;
 	private _metaPresentation: MetaPresentation;
 	private _startSlide: number;
+	private _startEffect: number;
 	private _presentationInfoChanged: boolean = false;
+	private _navigateSkipTransition: boolean = false;
 	_skipNextSlideShowInfoChangedMsg: boolean = false;
 	private _cypressSVGPresentationTest: boolean = false;
 	private _onKeyDownHandler: (e: KeyboardEvent) => void;
 	private _onImpressModeChanged: any = null;
 	private _startingPresentation: boolean = false;
 	private _hammer: HammerManager;
+	private _wasInDarkMode: boolean = false;
+	private _isLeader: boolean = false;
+	// sometimes user may start presentation by themselves
+	// which means they are not leader but they are not follower either
+	private _isFollower: boolean = false;
+	private _isFollowing: boolean = false;
 
-	constructor(map: any) {
+	constructor(map: any, enableA11y: boolean) {
 		this._cypressSVGPresentationTest =
-			L.Browser.cypressTest || 'Cypress' in window;
+			window.L.Browser.cypressTest || 'Cypress' in window;
 		this._map = map;
+		this._enableA11y = enableA11y;
 		this._init();
 		this.addHooks();
+		this._map.uiManager.showButton('slide-presentation-follow', false);
 	}
 
 	addHooks() {
 		this._map.on('presentationinfo', this.onSlideShowInfo, this);
 		this._map.on('newfullscreen', this._onStart, this);
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
-		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
+		window.L.DomEvent.on(
+			document,
+			'fullscreenchange',
+			this._onFullScreenChange,
+			this,
+		);
 		this._map.on('updateparts', this.onUpdateParts, this);
+		this._map.on(
+			'handleslideshowprogressbar',
+			this.handleSlideShowProgressBar,
+			this,
+		);
+		this._map.on(
+			'presentercanvasclick',
+			this._handlePresenterCanvasClick,
+			this,
+		);
+
+		// Follow me slide hooks
+		this._map.on(
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect slideshowfollowon',
+			this.handleFollowMeEvents,
+			this,
+		);
 	}
 
 	removeHooks() {
 		this._map.off('presentationinfo', this.onSlideShowInfo, this);
 		this._map.off('newfullscreen', this._onStart, this);
 		this._map.off('newpresentinwindow', this._onStartInWindow, this);
-		L.DomEvent.off(
+		window.L.DomEvent.off(
 			document,
 			'fullscreenchange',
 			this._onFullScreenChange,
 			this,
 		);
 		this._map.off('updateparts', this.onUpdateParts, this);
+		this._map.off(
+			'handleslideshowprogressbar',
+			this.handleSlideShowProgressBar,
+			this,
+		);
+		this._map.off(
+			'presentercanvasclick',
+			this._handlePresenterCanvasClick,
+			this,
+		);
+
+		// Follow me slide hooks
+		this._map.off(
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect slideshowfollowon',
+			this.handleFollowMeEvents,
+			this,
+		);
+	}
+
+	handleFollowMeEvents(info: any) {
+		this.setFollower(true);
+		switch (info.type) {
+			case 'newfollowmepresentation':
+				this.setFollowing(true);
+				this._map.uiManager.showButton('slide-presentation-follow-me', false);
+				this._map.uiManager.showButton('slide-presentation-follow', true);
+				this._onStartInWindow({
+					startSlideNumber:
+						this._slideShowNavigator.getLeaderSlide() === -1
+							? 0
+							: this._slideShowNavigator.getLeaderSlide(),
+					startEffectNumber:
+						this._slideShowNavigator.getLeaderEffect() === -1
+							? undefined
+							: this._slideShowNavigator.getLeaderEffect(),
+				});
+				break;
+			case 'dispatcheffect':
+				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
+				break;
+			case 'rewindeffect':
+				if (this.isFollowing()) this._slideShowNavigator.rewindEffect();
+				break;
+			case 'followvideo':
+				if (this.isFollowing()) this._slideShowNavigator.followVideo(info);
+				break;
+			case 'displayslide':
+				this._slideShowNavigator.setLeaderSlide(info);
+				this._slideShowNavigator.resetLeaderEffect();
+				break;
+			case 'effect':
+				this._slideShowNavigator.setLeaderEffect(info);
+				break;
+			case 'skipalleffect':
+				info.currentEffect = Number.POSITIVE_INFINITY;
+				this._slideShowNavigator.setLeaderEffect(info);
+				break;
+			case 'endpresentation':
+				this.setLeader(false);
+				this.setFollower(false);
+				this._slideShowNavigator.resetLeaderEffect();
+				this._slideShowNavigator.resetLeaderSlide();
+				this._map.uiManager.showButton('slide-presentation-follow-me', true);
+				this._map.uiManager.showButton('slide-presentation-follow', false);
+				if (!this.isFollowing()) return;
+				this.setFollowing(false);
+				this.endPresentation(true);
+
+				break;
+			case 'slideshowfollowon':
+				this._map.uiManager.showButton('slide-presentation-follow-me', false);
+				this._map.uiManager.showButton('slide-presentation-follow', true);
+				break;
+		}
+	}
+
+	private _handlePresenterCanvasClick(event: any) {
+		const navigator = this._slideShowNavigator;
+		if (!navigator) return;
+
+		const currentSlideIndex = navigator.currentSlideIndex;
+		if (currentSlideIndex === undefined) return;
+
+		const slideInfo =
+			this._metaPresentation.getSlideInfoByIndex(currentSlideIndex);
+		if (!slideInfo || !slideInfo.videos || slideInfo.videos.length === 0) {
+			return;
+		}
+
+		if (event.relativeX !== undefined && event.relativeY !== undefined) {
+			const x = event.relativeX * this._metaPresentation.slideWidth;
+			const y = event.relativeY * this._metaPresentation.slideHeight;
+
+			const clickedVideo = slideInfo.videos.find((videoInfo) =>
+				this.isPointInVideoArea(videoInfo, x, y),
+			);
+
+			if (clickedVideo) {
+				const videoRenderer = this.getVideoRenderer(
+					slideInfo.hash,
+					clickedVideo,
+				);
+				if (videoRenderer) {
+					videoRenderer.handleClick();
+					return;
+				}
+			}
+		}
+	}
+
+	private isPointInVideoArea(bounds: VideoInfo, x: number, y: number): boolean {
+		return (
+			x >= bounds.x &&
+			x <= bounds.x + bounds.width &&
+			y >= bounds.y &&
+			y <= bounds.y + bounds.height
+		);
 	}
 
 	private _init() {
@@ -242,7 +397,7 @@ class SlideShowPresenter {
 
 	public getNotes(slide: number) {
 		const info = this.getSlideInfo(slide);
-		return info.notes;
+		return info ? info.notes : null;
 	}
 
 	public getVideoRenderer(
@@ -272,10 +427,10 @@ class SlideShowPresenter {
 
 		window.removeEventListener('keydown', this._onKeyDownHandler);
 
-		L.DomUtil.remove(this._slideShowCanvas);
+		window.L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
 		if (this._presenterContainer) {
-			L.DomUtil.remove(this._presenterContainer);
+			window.L.DomUtil.remove(this._presenterContainer);
 			this._presenterContainer = null;
 		}
 		// #7102 on exit from fullscreen we don't get a 'focus' event
@@ -320,13 +475,13 @@ class SlideShowPresenter {
 	}
 
 	private _createPresenterHTML(parent: Element, width: number, height: number) {
-		const presenterContainer = L.DomUtil.create(
+		const presenterContainer = window.L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
 			parent,
 		);
 		presenterContainer.id = 'presenter-container';
-		const slideshowContainer = L.DomUtil.create(
+		const slideshowContainer = window.L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
 			presenterContainer,
@@ -341,12 +496,23 @@ class SlideShowPresenter {
 	}
 
 	_createCanvas(parent: Element, width: number, height: number) {
-		const canvas = L.DomUtil.create('canvas', 'leaflet-slideshow2', parent);
+		const canvas = window.L.DomUtil.create(
+			'canvas',
+			'leaflet-slideshow2',
+			parent,
+		);
 
 		canvas.id = 'slideshow-canvas';
 		// set canvas styles
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
+
+		if (this._enableA11y) {
+			canvas.setAttribute('aria-live', 'assertive');
+		}
+
+		this._progressBarContainer = this._createProgressBar(parent);
+		this._slideNavContainer = this._createSlideNav(parent);
 
 		canvas.addEventListener(
 			'click',
@@ -356,6 +522,7 @@ class SlideShowPresenter {
 			'mousemove',
 			this._slideShowNavigator.onMouseMove.bind(this._slideShowNavigator),
 		);
+		canvas.addEventListener('mousemove', this._showSlideControls.bind(this));
 
 		if (this._hammer) {
 			this._hammer.off('swipe');
@@ -371,7 +538,7 @@ class SlideShowPresenter {
 				.bind(this._slideShowNavigator),
 		);
 
-		this._slideShowHandler.getContext().aCanvas = canvas;
+		this._slideShowHandler.getContext()._canvas = canvas;
 
 		try {
 			this._slideRenderer = new SlideRendererGl(canvas);
@@ -390,9 +557,196 @@ class SlideShowPresenter {
 		);
 		return true;
 	}
+	private _createProgressBar(parent: Element): HTMLDivElement {
+		const progressContainer = window.L.DomUtil.create(
+			'div',
+			'slideshow-progress-container',
+			parent,
+		);
+
+		this._configureProgressBarStyles(progressContainer);
+		this._initializeProgressBarWidget(progressContainer);
+		return progressContainer;
+	}
+
+	private _configureProgressBarStyles(container: HTMLDivElement): void {
+		container.style.position = 'absolute';
+		container.style.bottom = '0';
+		container.style.left = '0';
+		container.style.width = '100%';
+		container.style.zIndex = '1000000000000';
+		container.style.display = 'none';
+		container.style.height = '6px';
+	}
+
+	private _initializeProgressBarWidget(container: HTMLDivElement): void {
+		const progressData = {
+			id: 'slideshow-progress-bar',
+			type: 'progressbar',
+			value: 0,
+			maxValue: 100,
+			infinite: true,
+		};
+
+		const builderOptions = {
+			options: {
+				cssClass: 'slideshow-progress',
+			},
+		};
+
+		JSDialog.progressbar(container, progressData, builderOptions);
+	}
+
+	private _createSlideNav(parent: Element): HTMLDivElement {
+		const slideNavContainer = window.L.DomUtil.create(
+			'div',
+			'slideshow-nav-container',
+			parent,
+		);
+		slideNavContainer.tabIndex = -1;
+		this._configureSlideNavStyles(slideNavContainer);
+		this._initializeSlideNavWidget(slideNavContainer);
+		return slideNavContainer;
+	}
+
+	private _configureSlideNavStyles(container: HTMLDivElement): void {
+		container.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
+		container.style.position = 'absolute';
+		container.style.bottom = '8px';
+		container.style.left = '8px';
+		container.style.zIndex = '1000000000000';
+		container.style.display = 'flex';
+		container.style.padding = '2px';
+		container.style.borderRadius = '25px';
+	}
+
+	private _onA11yString(target: any) {
+		if (!target) {
+			return;
+		}
+
+		this._slideShowHandler.addA11yString(target.getAttribute('aria-label'));
+	}
+
+	private _onPrevSlide = (e: Event) => {
+		e.stopPropagation();
+		this._slideShowNavigator.rewindEffect();
+	};
+
+	private _onNextSlide = (e: Event) => {
+		e.stopPropagation();
+		if (this._navigateSkipTransition) this._slideShowNavigator.skipEffect();
+		else this._slideShowNavigator.dispatchEffect();
+	};
+
+	private _onQuit = (e: Event) => {
+		e.stopPropagation();
+		this.endPresentation(true);
+	};
+
+	_hideSlideControls() {
+		this._slideNavContainer.style.visibility = 'hidden';
+		this._slideNavContainer.style.opacity = '0';
+		this._slideNavContainer.style.transition =
+			'visibility 0s 0.5s, opacity 0.5s ease-in-out';
+	}
+
+	_showSlideControls() {
+		this._slideNavContainer.style.visibility = 'visible';
+		this._slideNavContainer.style.opacity = '1';
+		this._slideNavContainer.style.transition = 'opacity 1s linear';
+
+		clearTimeout(this._slideControlsTimer);
+		this._slideControlsTimer = setTimeout(
+			this._hideSlideControls.bind(this),
+			3000,
+		);
+	}
+
+	private _initializeSlideNavWidget(container: HTMLDivElement): void {
+		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
+		closeImg.id = 'endshow';
+		const slideshowCloseText = _('End Show');
+		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
+		closeImg.setAttribute('aria-label', slideshowCloseText);
+		closeImg.setAttribute('data-cooltip', slideshowCloseText);
+		window.L.control.attachTooltipEventListener(closeImg, this._map);
+		closeImg.addEventListener('click', this._onQuit);
+
+		const leftImg = window.L.DomUtil.create('img', 'left-img', container);
+		leftImg.id = 'previous';
+		const slideshowPrevText = _('Previous');
+		leftImg.setAttribute('aria-label', slideshowPrevText);
+		leftImg.setAttribute('data-cooltip', slideshowPrevText);
+		window.L.control.attachTooltipEventListener(leftImg, this._map);
+		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
+		leftImg.addEventListener('click', this._onPrevSlide);
+
+		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
+		rightImg.id = 'next';
+		const slideshowNextText = _('Next');
+		window.L.control.attachTooltipEventListener(rightImg, this._map);
+		rightImg.setAttribute('aria-label', slideshowNextText);
+		rightImg.setAttribute('data-cooltip', slideshowNextText);
+		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
+		rightImg.addEventListener('click', this._onNextSlide);
+
+		const animationsImage = window.L.DomUtil.create(
+			'img',
+			'animations-img skipTransition-false',
+			container,
+		);
+		animationsImage.id = 'disableanimation';
+		const slideshowAnimIniText = _('Disable Animations');
+		animationsImage.setAttribute('aria-label', slideshowAnimIniText);
+		animationsImage.setAttribute('data-cooltip', slideshowAnimIniText);
+		window.L.control.attachTooltipEventListener(animationsImage, this._map);
+		app.LOUtil.setImage(animationsImage, 'slideshow-transition.svg', this._map);
+		animationsImage.addEventListener(
+			'click',
+			function (this: SlideShowPresenter, e: Event) {
+				this._onA11yString(e.target);
+				this._navigateSkipTransition = !this._navigateSkipTransition;
+				const slideshowAnimToggleText = this._navigateSkipTransition
+					? _('Enable Animations')
+					: _('Disable Animations');
+				animationsImage.setAttribute('aria-label', slideshowAnimToggleText);
+				animationsImage.setAttribute('data-cooltip', slideshowAnimToggleText);
+
+				animationsImage.className =
+					'animations-img skipTransition-' + this._navigateSkipTransition;
+			}.bind(this),
+		);
+
+		if (this.isFollower()) {
+			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
+			FollowImg.id = 'follow';
+			const followText = _('Follow Presentation');
+			window.L.control.attachTooltipEventListener(FollowImg, this._map);
+			FollowImg.setAttribute('aria-label', followText);
+			FollowImg.setAttribute('data-cooltip', followText);
+			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
+			FollowImg.addEventListener('click', (e: Event) => {
+				e.stopPropagation();
+				this._onA11yString(e.target);
+				this._slideShowNavigator.followLeaderSlide();
+			});
+		}
+
+		// Make sure slide controls don't disappear when mouse is over them
+		container.addEventListener(
+			'mouseenter',
+			function (this: SlideShowPresenter) {
+				clearTimeout(this._slideControlsTimer);
+			}.bind(this),
+		);
+		container.addEventListener('click', () => {
+			this.setFollowing(false);
+		});
+	}
 
 	private startTimer(loopAndRepeatDuration: number) {
-		console.debug('SlideShowPresenter.startTimer');
+		app.console.debug('SlideShowPresenter.startTimer');
 		const renderContext = this._slideRenderer._context;
 		const onTimeoutHandler = this._slideShowNavigator.goToFirstSlide.bind(
 			this._slideShowNavigator,
@@ -409,7 +763,12 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
-		console.debug('SlideShowPresenter.endPresentation');
+		this.sendSlideShowFollowMessage('endpresentation');
+		this.checkDarkMode(false);
+		this.setLeader(false);
+		this.setFollowing(false);
+
+		app.console.debug('SlideShowPresenter.endPresentation');
 		if (this._pauseTimer) this._pauseTimer.stopTimer();
 
 		const settings = this._presentationInfo;
@@ -422,6 +781,17 @@ class SlideShowPresenter {
 			return;
 		}
 		this.startTimer(settings.loopAndRepeatDuration);
+	}
+
+	public handleSlideShowProgressBar(event: { isVisible: boolean }): void {
+		try {
+			if (!this._progressBarContainer) return;
+			this._progressBarContainer.style.display = event?.isVisible
+				? 'block'
+				: 'none';
+		} catch (error) {
+			app.console.error('Not able to Slideshow progress bar', error);
+		}
 	}
 
 	private startLoader(): void {
@@ -455,6 +825,7 @@ class SlideShowPresenter {
 				<meta charset="UTF-8">
 				<meta name="viewport" content="width=device-width, initial-scale=1">
 				<title>${sanitizedTitle}</title>
+				<link rel="stylesheet" href="progressbar.css" />
 			</head>
 			<body>
 				<div id="root-in-window"></div>
@@ -491,7 +862,7 @@ class SlideShowPresenter {
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
 
-		this._slideShowWindowProxy = L.DomUtil.createWithId(
+		this._slideShowWindowProxy = window.L.DomUtil.createWithId(
 			'iframe',
 			'slideshow-cypress-iframe',
 			document.body,
@@ -518,22 +889,21 @@ class SlideShowPresenter {
 			window.screen.width,
 			window.screen.height,
 		);
-		this._slideShowCanvas.focus();
 
-		window.addEventListener('resize', this.onSlideWindowResize.bind(this));
+		window.addEventListener('resize', this.onSlideWindowResize);
 		this._getProxyDocumentNode().addEventListener(
 			'keydown',
 			this._onKeyDownHandler,
 		);
 		this._slideShowWindowProxy.addEventListener(
 			'unload',
-			L.bind(this._closeSlideShowWindow, this),
+			window.L.bind(this._closeSlideShowWindow, this),
 		);
 		const slideShowWindow = this._slideShowWindowProxy;
 		this._map.uiManager.showSnackbar(
 			_('Presenting in window'),
 			_('Close Presentation'),
-			L.bind(this._closeSlideShowWindow, this),
+			window.L.bind(this._closeSlideShowWindow, this),
 			-1,
 			false,
 			true,
@@ -550,21 +920,19 @@ class SlideShowPresenter {
 			'beforeunload',
 			this.slideshowWindowCleanUp.bind(this),
 		);
+		this._slideShowCanvas.focus();
 	}
 
-	slideshowWindowCleanUp() {
+	slideshowWindowCleanUp = () => {
 		clearInterval(this._windowCloseInterval);
 		this._slideShowNavigator.quit();
 		this._map.uiManager.closeSnackbar();
 		this._slideShowCanvas = null;
 		this._presenterContainer = null;
 		this._slideShowWindowProxy = null;
-		window.removeEventListener('resize', this.onSlideWindowResize.bind(this));
-		window.removeEventListener(
-			'beforeunload',
-			this.slideshowWindowCleanUp.bind(this),
-		);
-	}
+		window.removeEventListener('resize', this.onSlideWindowResize);
+		window.removeEventListener('beforeunload', this.slideshowWindowCleanUp);
+	};
 
 	_onImpressModeChangedImpl(e: any, inWindow: boolean) {
 		if (this._onImpressModeChanged && e.mode === 0) {
@@ -591,7 +959,7 @@ class SlideShowPresenter {
 		}
 
 		if (app.impress.notesMode) {
-			console.debug(
+			app.console.debug(
 				'SlideShowPresenter._onPrepareScreen: notes mode is enabled, exiting',
 			);
 			// exit notes view mode and wait for status update notification
@@ -649,9 +1017,9 @@ class SlideShowPresenter {
 		return true;
 	}
 
-	onSlideWindowResize() {
+	onSlideWindowResize = () => {
 		this.centerCanvas();
-	}
+	};
 
 	_checkAlreadyPresenting() {
 		if (this._slideShowCanvas) return true;
@@ -666,7 +1034,7 @@ class SlideShowPresenter {
 			'',
 			_('OK'),
 			() => {
-				0;
+				/*do nothing*/
 			},
 			false,
 			'allslidehidden-modal-response',
@@ -723,12 +1091,29 @@ class SlideShowPresenter {
 		);
 	}
 
+	// We want to present the slides in default mode. So we check the state here and change when needed.
+	private checkDarkMode(starting: boolean) {
+		if (starting) {
+			const isDarkMode = window.prefs.getBoolean('darkTheme');
+			if (isDarkMode) {
+				this._wasInDarkMode = true;
+				app.map.uiManager.toggleDarkMode();
+			}
+		} else if (this._wasInDarkMode) {
+			app.map.uiManager.toggleDarkMode();
+			this._wasInDarkMode = false;
+		}
+	}
+
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
 		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
 			return;
+
+		this.checkDarkMode(true);
+
 		// disable slide sorter or it will receive key events
 		this._map._docLayer._preview.partsFocused = false;
 		this._startingPresentation = true;
@@ -737,10 +1122,15 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
+		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
+		this._startEffect = that?.startEffectNumber;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
 			return;
+
+		this.checkDarkMode(true);
+
 		// disable present in console onStartInWindow
 		this._enablePresenterConsole(true);
 		this._startingPresentation = true;
@@ -749,14 +1139,14 @@ class SlideShowPresenter {
 
 	/// called as a response on getpresentationinfo
 	onSlideShowInfo(data: PresentationInfo) {
-		console.debug('SlideShow: received information about presentation');
+		app.console.debug('SlideShow: received information about presentation');
 		this._presentationInfo = data;
 
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
 		if (!this.getCanvas()) {
-			console.debug('onSlideShowInfo: no canvas available');
+			app.console.debug('onSlideShowInfo: no canvas available');
 			return;
 		}
 
@@ -828,6 +1218,7 @@ class SlideShowPresenter {
 		this._slideShowNavigator.startPresentation(
 			this._startSlide,
 			skipTransition,
+			this._startEffect,
 		);
 	}
 
@@ -840,6 +1231,34 @@ class SlideShowPresenter {
 
 		this._presentationInfoChanged = true;
 		app.socket.sendMessage('getpresentationinfo');
+	}
+
+	isLeader(): boolean {
+		return this._isLeader;
+	}
+
+	setLeader(leader: boolean): void {
+		this._isLeader = leader;
+	}
+
+	setFollower(follower: boolean): void {
+		this._isFollower = follower;
+	}
+
+	isFollower(): boolean {
+		return this._isFollower;
+	}
+
+	setFollowing(follow: boolean): void {
+		this._isFollowing = follow;
+	}
+
+	isFollowing(): boolean {
+		return this._isFollowing;
+	}
+
+	sendSlideShowFollowMessage(msg: string): void {
+		if (this.isLeader()) app.socket.sendMessage('slideshowfollow ' + msg);
 	}
 }
 

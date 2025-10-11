@@ -24,7 +24,7 @@
 	--color-stylesview-background: var(--color-background-lighter);
 	--brightness-stylesview: 1;
 
-	--color-canvas: #f5f5f5;
+	--color-canvas: #f0f0f0;
 
 	--color-primary: #0b87e7; /* border-color */
 	--color-primary-text: #fff; /* text color when primary-lighter is background */
@@ -35,6 +35,7 @@
 	--color-border: #b6b6b6;
 	--color-border-dark: #cecece; /* select */
 	--color-border-darker: #c0bfbc;  /* hover */
+	--color-border-dark-63: #a1a1a1;
 	--color-border-lighter: #f1f1f1; /* disabled */
 
 	--color-btn-border: #b6b6b6;
@@ -46,6 +47,8 @@
 	--color-error: #e9322d;
 	--color-warning: #eca700;
 	--color-success: #46ba61;
+
+	--color-presenter-console-btn-hover: #404040;
 
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
 	--color-hyperlink: #000080;
@@ -62,6 +65,12 @@
 	--color-grid-helper-line-solid: #e6e6e6;
 	--color-grid-helper-line-dashed: #191919;
 	--color-smart-guides-helper-line: #f36d4f;
+	--color-insert-marker-background: #DDDD;
+	--color-insert-marker-background-dark: #1c99e0;
+
+	--color-treeview-highlight: #FFEE80;
+	--color-treeview-highlight-text: #222;
+	--color-quickfind-border: #e1dfdd;
 }
 
 [data-bg-theme='light'] {

@@ -1,23 +1,23 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app */
+/* global app cool */
 
 /**
  * @namespace
  * @type {Object}
  */
-L.PathTransform = {};
+window.L.PathTransform = {};
 
 /**
  * Point on the line segment or its extension
  *
- * @param  {L.Point} start
- * @param  {L.Point} final
+ * @param  {cool.Point} start
+ * @param  {cool.Point} final
  * @param  {Number}  distPx
- * @return {L.Point}
+ * @return {cool.Point}
  */
-L.PathTransform.pointOnLine = function(start, final, distPx) {
+window.L.PathTransform.pointOnLine = function(start, final, distPx) {
 	var ratio = 1 + distPx / start.distanceTo(final);
-	return new L.Point(
+	return new cool.Point(
 		start.x + (final.x - start.x) * ratio,
 		start.y + (final.y - start.y) * ratio
 	);
@@ -27,7 +27,7 @@ L.PathTransform.pointOnLine = function(start, final, distPx) {
 /**
  * Deep merge objects.
  */
-L.PathTransform.merge = function() {
+window.L.PathTransform.merge = function() {
 	var i = 1;
 	var key, val;
 	var obj = arguments[i];

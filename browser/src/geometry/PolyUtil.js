@@ -1,21 +1,21 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.PolyUtil contains utility functions for polygons (clipping, etc.).
+ * window.L.PolyUtil contains utility functions for polygons (clipping, etc.).
  */
 
-L.PolyUtil = {};
+window.L.PolyUtil = {};
 
 /*
  * Sutherland-Hodgeman polygon clipping algorithm.
  * Used to avoid rendering parts of a polygon that are not currently visible.
  */
-L.PolyUtil.clipPolygon = function (points, bounds, round) {
+window.L.PolyUtil.clipPolygon = function (points, bounds, round) {
 	var clippedPoints,
 	    edges = [1, 4, 2, 8],
 	    i, j, k,
 	    a, b,
 	    len, edge, p,
-	    lu = L.LineUtil;
+	    lu = window.L.LineUtil;
 
 	for (i = 0, len = points.length; i < len; i++) {
 		points[i]._code = lu._getBitCode(points[i], bounds);
@@ -53,7 +53,7 @@ L.PolyUtil.clipPolygon = function (points, bounds, round) {
 	return points;
 };
 
-L.PolyUtil.rectanglesToPolygons = function (rectangles, docLayer, dontConvert) {
+window.L.PolyUtil.rectanglesToPolygons = function (rectangles, docLayer, dontConvert) {
 	// algorithm found here http://stackoverflow.com/questions/13746284/merging-multiple-adjacent-rectangles-into-one-polygon
 	var eps = 20;
 	// Glue rectangles if the space between them is less then eps

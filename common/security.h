@@ -14,7 +14,9 @@
 
 #pragma once
 
-#ifdef __linux__
+#include <config.h>
+
+#if HAVE_LIBCAP
 #include <sys/capability.h>
 #endif
 #include <sys/types.h>
@@ -81,7 +83,7 @@ inline int hasCorrectUID([[maybe_unused]] const char* appName)
 /** Return 0 if no capability is set on the current binary. Positive number gives the bitfield of caps that are set, negative an error. */
 inline int hasAnyCapability()
 {
-#ifdef __linux__
+#if HAVE_LIBCAP
     cap_t caps = cap_get_proc();
     if (caps == nullptr)
     {
@@ -112,7 +114,7 @@ inline int hasAnyCapability()
 /** Drop all capabilities. return zero on success, negative on error. */
 inline int dropAllCapabilities()
 {
-#ifdef __linux__
+#if HAVE_LIBCAP
     cap_t caps = cap_init();
     if (caps == nullptr)
     {

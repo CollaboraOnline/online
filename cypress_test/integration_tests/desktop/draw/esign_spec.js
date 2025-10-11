@@ -42,7 +42,7 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		// Finish electronic signing:
 		cy.cGet('#snackbar-container #button').click();
 		cy.get('@sendHash').should('be.called');
-		cy.cGet('#ESignatureDialog button#ok').click();
+		cy.cGet('#ESignatureDialog #ok.ui-pushbutton-wrapper').click();
 		cy.get('@windowOpen').should('be.called');
 		const response = {
 			type: "SUCCESS",
@@ -54,7 +54,7 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		});
 		cy.get('@getSignature').should('be.called');
 		// Close the dialog showing the just created signature:
-		cy.cGet('#DigitalSignaturesDialog button#close').click();
+		cy.cGet('#DigitalSignaturesDialog #close.ui-pushbutton-wrapper button').click();
 
 		// Then make sure the document now has a (test / "not OK") signature:
 		cy.cGet('#signstatus-button div').should('have.class', 'sign_not_ok');

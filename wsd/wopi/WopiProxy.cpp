@@ -232,7 +232,7 @@ void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
     _httpSession = StorageConnectionManager::getHttpSession(uriPublic);
     Authorization auth = Authorization::create(uriPublic);
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriPublic, auth);
+    const http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriPublic, auth);
 
     const auto startTime = std::chrono::steady_clock::now();
 

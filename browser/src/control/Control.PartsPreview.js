@@ -9,11 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.PartsPreview
+ * window.L.Control.PartsPreview
  */
 
 /* global _ app $ Hammer _UNO cool TileManager */
-L.Control.PartsPreview = L.Control.extend({
+window.L.Control.PartsPreview = window.L.Control.extend({
 	options: {
 		fetchThumbnail: true,
 		autoUpdate: true,
@@ -27,14 +27,14 @@ L.Control.PartsPreview = L.Control.extend({
 	partsFocused: false,
 
 	initialize: function (container, preview, options) {
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 
 		if (!container) {
-			container = L.DomUtil.get('presentation-controls-wrapper');
+			container = window.L.DomUtil.get('presentation-controls-wrapper');
 		}
 
 		if (!preview) {
-			preview = L.DomUtil.get('slide-sorter');
+			preview = window.L.DomUtil.get('slide-sorter');
 		}
 
 		this._container = container;
@@ -49,7 +49,7 @@ L.Control.PartsPreview = L.Control.extend({
 		this._previewInitialized = false;
 		this._previewTiles = [];
 		this._direction = this.options.allowOrientation ?
-			(!window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y') :
+			(!window.mode.isDesktop() && window.L.DomUtil.isPortrait() ? 'x' : 'y') :
 			this.options.axis;
 
 		map.on('updateparts', this._updateDisabled, this);
@@ -62,7 +62,7 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('scrolltopart', this._scrollToPart, this);
 		map.on('beforerequestpreview', this._beforeRequestPreview, this);
 
-		window.addEventListener('resize', L.bind(this._resize, this));
+		window.addEventListener('resize', window.L.bind(this._resize, this));
 	},
 
 	createScrollbar: function () {
@@ -80,19 +80,19 @@ L.Control.PartsPreview = L.Control.extend({
 				// make room for the preview
 				var docContainer = this._map.options.documentContainer;
 
-				if (!L.DomUtil.hasClass(docContainer, 'parts-preview-document'))
-					L.DomUtil.addClass(docContainer, 'parts-preview-document');
+				if (!window.L.DomUtil.hasClass(docContainer, 'parts-preview-document'))
+					window.L.DomUtil.addClass(docContainer, 'parts-preview-document');
 
 				// Add a special frame just as a drop-site for reordering.
 				var frameClass = 'preview-frame ' + this.options.frameClass;
-				var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
+				var frame = window.L.DomUtil.create('div', frameClass, this._partsPreviewCont);
 				this._addDnDHandlers(frame);
 				frame.setAttribute('draggable', false);
 				frame.setAttribute('id', 'first-drop-site');
 
 				if (window.mode.isDesktop()) {
-					L.DomUtil.setStyle(frame, 'height', '20px');
-					L.DomUtil.setStyle(frame, 'margin', '0em');
+					window.L.DomUtil.setStyle(frame, 'height', '20px');
+					window.L.DomUtil.setStyle(frame, 'margin', '0em');
 				}
 
 				// Create the preview parts
@@ -100,7 +100,7 @@ L.Control.PartsPreview = L.Control.extend({
 					this._previewTiles.push(this._createPreview(i, app.impress.partList[i].hash));
 				}
 				if (!app.file.fileBasedView)
-					L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
+					window.L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
 				this._onScroll(); // Load previews.
 				this._previewInitialized = true;
 			}
@@ -111,12 +111,12 @@ L.Control.PartsPreview = L.Control.extend({
 				if (!app.file.fileBasedView) {
 					// change the border style of the selected preview.
 					for (let j = 0; j < app.impress.partList.length; j++) {
-						L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-currentpart');
-						L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selectedpart');
+						window.L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-currentpart');
+						window.L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selectedpart');
 						if (j === selectedPart)
-							L.DomUtil.addClass(this._previewTiles[j], 'preview-img-currentpart');
+							window.L.DomUtil.addClass(this._previewTiles[j], 'preview-img-currentpart');
 						else if (app.impress.partList[j].selected)
-							L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
+							window.L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
 					}
 				}
 			}
@@ -130,7 +130,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var addPreviewImg = 'preview-img-landscape';
 			var removePreviewFrame = 'preview-frame-portrait';
 			var addPreviewFrame = 'preview-frame-landscape';
-			if (L.DomUtil.isPortrait()) {
+			if (window.L.DomUtil.isPortrait()) {
 				removePreviewImg = 'preview-img-landscape';
 				addPreviewImg = 'preview-img-portrait';
 				removePreviewFrame = 'preview-frame-landscape';
@@ -138,12 +138,12 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 
 			for (i = 0; i < app.impress.partList.length; i++) {
-				L.DomUtil.removeClass(this._previewTiles[i], removePreviewImg);
-				L.DomUtil.addClass(this._previewTiles[i], addPreviewImg);
+				window.L.DomUtil.removeClass(this._previewTiles[i], removePreviewImg);
+				window.L.DomUtil.addClass(this._previewTiles[i], addPreviewImg);
 				if (app.impress.isSlideHidden(i))
-					L.DomUtil.addClass(this._previewTiles[i], 'hidden-slide');
+					window.L.DomUtil.addClass(this._previewTiles[i], 'hidden-slide');
 				else
-					L.DomUtil.removeClass(this._previewTiles[i], 'hidden-slide');
+					window.L.DomUtil.removeClass(this._previewTiles[i], 'hidden-slide');
 			}
 
 			var previewFrame = $(this._partsPreviewCont).find('.preview-frame');
@@ -151,7 +151,7 @@ L.Control.PartsPreview = L.Control.extend({
 			previewFrame.addClass(addPreviewFrame);
 
 			// re-create scrollbar with new direction
-			this._direction = !window.mode.isDesktop() && !window.mode.isTablet() && L.DomUtil.isPortrait() ? 'x' : 'y';
+			this._direction = !window.mode.isDesktop() && !window.mode.isTablet() && window.L.DomUtil.isPortrait() ? 'x' : 'y';
 		}
 	},
 
@@ -176,17 +176,17 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_createPreview: function (i, hashCode) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
-		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
+		var frame = window.L.DomUtil.create('div', frameClass, this._partsPreviewCont);
 		frame.id = 'preview-frame-part-' + this._idNum;
 		this._addDnDHandlers(frame);
-		L.DomUtil.create('span', 'preview-helper', frame);
+		window.L.DomUtil.create('span', 'preview-helper', frame);
 
 		var imgClassName = 'preview-img ' + this.options.imageClass;
-		var img = L.DomUtil.create('img', imgClassName, frame);
+		var img = window.L.DomUtil.create('img', imgClassName, frame);
 		img.setAttribute('alt', _('preview of page %1').replace('%1', String(i + 1)));
 		img.setAttribute('tabindex', '0');
 		img.setAttribute('data-cooltip', _('Slide %1').replace('%1', String(i + 1)));
-		L.control.attachTooltipEventListener(img, this._map);
+		window.L.control.attachTooltipEventListener(img, this._map);
 		img.id = 'preview-img-part-' + this._idNum;
 		img.hash = hashCode;
 		img.src = document.querySelector('meta[name="previewSmile"]').content;
@@ -199,9 +199,9 @@ L.Control.PartsPreview = L.Control.extend({
 					}
 				}.bind(this));
 		}
-		L.DomEvent.on(img, 'click', function (e) {
-			L.DomEvent.stopPropagation(e);
-			L.DomEvent.stop(e);
+		window.L.DomEvent.on(img, 'click', function (e) {
+			window.L.DomEvent.stopPropagation(e);
+			window.L.DomEvent.stop(e);
 			var part = this._findClickedPart(e.target.parentNode);
 			if (part !== null)
 				var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
@@ -216,7 +216,6 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			} else {
 				this._setPart(e);
-				this.partsFocused = true;
 				if (!window.mode.isDesktop()) {
 					// needed so on-screen keyboard doesn't pop up when switching slides,
 					// but would cause PgUp/Down to not work on desktop in slide sorter
@@ -230,15 +229,18 @@ L.Control.PartsPreview = L.Control.extend({
 
 		var that = this;
 		img.onfocus = function () {
+			that._map._clip.clearSelection();
+			that._map._clip.setTextSelectionType('slide');
 			that.partsFocused = true;
 		};
 
 		img.onblur = function () {
+			that._map._clip.clearSelection();
 			that.partsFocused = false;
 		};
 
 		var that = this;
-		L.DomEvent.on(frame, 'contextmenu', function(e) {
+		window.L.DomEvent.on(frame, 'contextmenu', function(e) {
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 			var pcw = document.getElementById('presentation-controls-wrapper');
 			var $trigger = $(pcw);
@@ -254,13 +256,15 @@ L.Control.PartsPreview = L.Control.extend({
 				nPos = that._findClickedPart(frame);
 
 			$trigger.contextMenu(true);
-			that._setPart(e);
+			if (!that._isSelected(e))
+				that._setPart(e);
 			$.contextMenu({
 				selector: '#'+frame.id,
 				className: 'cool-font',
 				items: {
 					paste: {
-						name: _('Paste Slide'),
+						name: app.IconUtil.createMenuItemLink(_('Paste Slide'), 'Paste'),
+						isHtmlName: true,
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
@@ -273,14 +277,15 @@ L.Control.PartsPreview = L.Control.extend({
 						}
 					},
 					newslide: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink( _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'), 'InsertPage'),
+						isHtmlName: true,
 						callback: function() { that._map.insertPage(nPos); }
 					}
 				}
 			});
 		}, this);
 
-		L.DomEvent.on(img, 'contextmenu', function(e) {
+		window.L.DomEvent.on(img, 'contextmenu', function(e) {
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 			var $trigger = $('#' + img.id);
 			if (isMasterView === 'true') {
@@ -288,50 +293,61 @@ L.Control.PartsPreview = L.Control.extend({
 				return;
 			}
 			$trigger.contextMenu(true);
-			that._setPart(e);
+			if (!that._isSelected(e))
+				that._setPart(e);
+
 			$.contextMenu({
 				selector: '#' + img.id,
 				className: 'cool-font',
 				items: {
 					copy: {
-						name: _('Copy'),
+						name: app.IconUtil.createMenuItemLink(_('Copy'), 'Copy'),
+						isHtmlName: true,
 						callback: function() {
 							that.copiedSlide = e;
-							that._map._clip._execCopyCutPaste('CopySlide');
+							that._map._clip.clearSelection();
+							that._map._clip.setTextSelectionType('slide');
+							that._map._clip._execCopyCutPaste('copy', '.uno:CopySlide');
 						},
 						visible: function() {
 							return true;
 						}
 					},
 					paste: {
-						name: _('Paste'),
+						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
+						isHtmlName: true,
 						callback: function() {
-							that._map._clip._execCopyCutPaste('Paste')
+							that._map._clip._execCopyCutPaste('paste', ".uno:Paste")
 						},
 					},
 					newslide: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'), 'InsertPage'),
+						isHtmlName: true,
 						callback: function() { that._map.insertPage(); }
 					},
 					duplicateslide: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DuplicateSlide' : '.uno:DuplicatePage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DuplicateSlide' : '.uno:DuplicatePage', 'presentation'), 'DuplicatePage'),
+						isHtmlName: true,
 						callback: function() { that._map.duplicatePage(); }
 					},
 					delete: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DeleteSlide' : '.uno:DeletePage', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DeleteSlide' : '.uno:DeletePage', 'presentation'), 'DeletePage'),
+						isHtmlName: true,
 						callback: function() { app.dispatcher.dispatch('deletepage'); },
 						visible: function() {
 							return that._map._docLayer._parts > 1;
 						}
 					},
 					slideproperties: {
-						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:SlideSetup' : '.uno:PageSetup', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO(that._map._docLayer._docType == 'presentation' ? '.uno:SlideSetup' : '.uno:PageSetup', 'presentation'), 'PageSetup'),
+						isHtmlName: true,
 						callback: function() {
 							app.socket.sendMessage('uno .uno:PageSetup');
 						}
 					},
 					showslide: {
-						name: _UNO('.uno:ShowSlide', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO('.uno:ShowSlide', 'presentation'), 'ShowSlide'),
+						isHtmlName: true,
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
@@ -344,7 +360,8 @@ L.Control.PartsPreview = L.Control.extend({
 						}
 					},
 					hideslide: {
-						name: _UNO('.uno:HideSlide', 'presentation'),
+						name: app.IconUtil.createMenuItemLink(_UNO('.uno:HideSlide', 'presentation'), 'Hideslide'),
+						isHtmlName: true,
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
@@ -366,8 +383,8 @@ L.Control.PartsPreview = L.Control.extend({
 						   {autoUpdate: this.options.autoUpdate,
 						    fetchThumbnail: false});
 
-		L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
-		L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
+		window.L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
+		window.L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
 
 		this._idNum++;
 
@@ -376,15 +393,12 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_scrollToPart: function() {
 		var partNo = this._map.getCurrentPartNumber();
-		// update the page back and forward buttons status
-		var pagerButtonsEvent = { selectedPart: partNo, parts: this._partsPreviewCont.children.length };
-		window.onUpdateParts(pagerButtonsEvent);
 		//var sliderSize, nodePos, nodeOffset, nodeMargin;
 		var node = this._partsPreviewCont.children[partNo];
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo))) {
 			var nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
-			var scrollDirection = window.mode.isDesktop() || window.mode.isTablet() ? 'scrollTop': (L.DomUtil.isPortrait() ? 'scrollLeft': 'scrollTop');
+			var scrollDirection = window.mode.isDesktop() || window.mode.isTablet() ? 'scrollTop': (window.L.DomUtil.isPortrait() ? 'scrollLeft': 'scrollTop');
 			var that = this;
 			if (this._map._partsDirection < 0) {
 				setTimeout(function() {
@@ -415,7 +429,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * app.twipsToPixels);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
-		var currentScrollX = (app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).containerObject.getDocumentTopLeft()[0] / app.dpiScale);
+		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
 
 		if (viewHeight > partHeightPixels && partNumber > 0)
 			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
@@ -424,7 +438,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (fromBottom)
 			scrollTop += partHeightPixels - viewHeight;
 		scrollTop = Math.round(scrollTop / app.dpiScale);
-		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: currentScrollX, y: scrollTop});
+		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollTo({x: currentScrollX, y: scrollTop});
 	},
 
 	_scrollViewByDirection: function(buttonType) {
@@ -436,8 +450,8 @@ L.Control.PartsPreview = L.Control.extend({
 		var viewHeight = Math.floor(app.sectionContainer.getViewSize()[1]);
 		var viewHeightScaled = Math.round(Math.floor(viewHeight) / app.dpiScale);
 		var scrollBySize = Math.floor(viewHeightScaled * 0.75);
-		var topPx = (app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).containerObject.getDocumentTopLeft()[1] / app.dpiScale);
-		var currentScrollX = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).containerObject.getDocumentTopLeft()[0] / app.dpiScale;
+		var topPx = app.activeDocument.activeView.viewedRectangle.cY1;
+		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
 
 		if (buttonType === 'prev') {
 			if (this._map.getCurrentPartNumber() == 0) {
@@ -456,7 +470,16 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			}
 		}
-		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
+		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
+	},
+
+	_isSelected: function (e) {
+		var part = this._findClickedPart(e.target.parentNode);
+		var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
+		if (partId < 0)
+			return false;
+		else
+			return app.impress.isSlideSelected(partId);
 	},
 
 	_setPart: function (e) {
@@ -579,7 +602,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		if (this._previewInitialized) {
 			clearTimeout(this._resizeTimer);
-			this._resizeTimer = setTimeout(L.bind(this._onScroll, this), 50);
+			this._resizeTimer = setTimeout(window.L.bind(this._onScroll, this), 50);
 		}
 
 		this._height = window.innerHeight;
@@ -629,14 +652,15 @@ L.Control.PartsPreview = L.Control.extend({
 	_deletePreview: function (e) {
 		if (this._map.isPresentationOrDrawing()) {
 			var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
-			L.DomUtil.remove(selectedFrame);
+			window.L.DomUtil.remove(selectedFrame);
 
 			this._previewTiles.splice(e.selectedPart, 1);
+			this.focusCurrentSlide();
 		}
 	},
 
 	_onScroll: function () {
-		setTimeout(L.bind(function () {
+		setTimeout(window.L.bind(function () {
 			for (var i = 0; i < this._previewTiles.length; ++i) {
 				if (this._isPreviewVisible(i)) {
 					var img = this._previewTiles[i];
@@ -691,7 +715,7 @@ L.Control.PartsPreview = L.Control.extend({
 			this._map.setPart(partId);
 			this._map.selectPart(partId, 1, false); // And select.
 		}
-		this.draggedSlide = L.DomUtil.create('img', '', document.body);
+		this.draggedSlide = window.L.DomUtil.create('img', '', document.body);
 		this.draggedSlide.setAttribute('src', e.target.currentSrc);
 		$(this.draggedSlide).css('position', 'absolute');
 		$(this.draggedSlide).css('height', e.target.height);
@@ -850,6 +874,6 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 });
 
-L.control.partsPreview = function (container, preview, options) {
-	return new L.Control.PartsPreview(container, preview, options);
+window.L.control.partsPreview = function (container, preview, options) {
+	return new window.L.Control.PartsPreview(container, preview, options);
 };

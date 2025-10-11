@@ -12,6 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		// when available, currently adds an extra empty update when
 		// grammar checking kicks in at server-side idle after a change.
 		localStorage.setItem('SpellOnline', false);
+		cy.viewport(1920,1080);
 	});
 
 	// Clicking in an empty header area shouldn't invalidate anything
@@ -19,6 +20,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		// Add some main body text of X
 		ceHelper.type('X');
@@ -46,6 +49,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		helper.setupAndLoadDocument('writer/invalidations_headers.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
@@ -88,10 +93,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
+		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
-		cy.cGet('.notebookbar > .unoDefaultBullet > button').click();
+		cy.cGet('.notebookbar > .unoDefaultBullet > button').filter(':visible').click();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
 		cy.cGet('.empty-deltas').then(($before) => {

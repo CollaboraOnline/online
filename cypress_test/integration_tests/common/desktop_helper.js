@@ -12,7 +12,7 @@ function showSidebar() {
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 	cy.cGet('#sidebar').click();
 	cy.cGet('#sidebar').should('have.class', 'selected');
-	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 
 	cy.log('<< showSidebar - end');
 }
@@ -23,7 +23,7 @@ function hideSidebar() {
 	cy.log('>> hideSidebar - start');
 
 	cy.cGet('#sidebar').should('have.class', 'selected');
-	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
 	cy.cGet('#sidebar').click();
 	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
@@ -35,8 +35,8 @@ function hideSidebarImpress() {
 	cy.log('>> hideSidebarImpress - start');
 
 	cy.cGet('#modifypage').should('have.class', 'selected');
-	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-	cy.cGet('#modifypage button').click('left');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
+	cy.cGet('#modifypage button').click();
 	cy.cGet('#modifypage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
@@ -64,40 +64,6 @@ function showStatusBarIfHidden() {
 	cy.log('<< showStatusBarIfHidden - end');
 }
 
-// Make the sidebar visible if it's hidden at the moment.
-function showSidebarIfHidden() {
-	cy.log('>> showSidebarIfHidden - start');
-
-	cy.get('#sidebar')
-		.then(function(sidebarItem) {
-			if (!sidebarItem.hasClass('checked')) {
-				showSidebar();
-			}
-		});
-
-	cy.get('#sidebar-dock-wrapper')
-		.should('be.visible');
-
-	cy.log('<< showSidebarIfHidden - end');
-}
-
-// Hide the sidebar if it's visible at the moment.
-function hideSidebarIfVisible() {
-	cy.log('>> hideSidebarIfVisible - start');
-
-	cy.get('#sidebar')
-		.then(function(sidebarItem) {
-			if (sidebarItem.hasClass('checked')) {
-				hideSidebar();
-			}
-		});
-
-	cy.get('#sidebar-dock-wrapper')
-		.should('not.be.visible');
-
-	cy.log('<< hideSidebarIfVisible - end');
-}
-
 // Select a color from colour palette widget used on top toolbar.
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
@@ -105,7 +71,7 @@ function selectColorFromPalette(color) {
 	cy.log('>> selectColorFromPalette - start');
 
 	cy.cGet('.ui-color-picker').should('be.visible');
-	cy.cGet('.ui-color-picker-entry[name="' + color + '"]').click();
+	cy.cGet('.ui-color-picker-entry[value="' + color + '"]').click();
 	cy.cGet('.ui-color-picker').should('not.exist');
 
 	cy.log('<< selectColorFromPalette - end');
@@ -257,24 +223,18 @@ function resetZoomLevel() {
 	cy.log('<< resetZoomLevel - end');
 }
 
-function insertImage(docType) {
+function insertImage() {
 	cy.log('>> insertImage - start');
 
 	selectZoomLevel('50', false);
 
-	cy.cGet('#toolbar-up .ui-scroll-right').click().click().click();
-
 	const mode = Cypress.env('USER_INTERFACE');
 
-	if (mode === 'notebookbar')
-		cy.cGet('#toolbar-up .ui-scroll-right').click().click();
-
-	if (docType === 'calc' &&  mode === 'notebookbar') {
+	if (mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#Insert-container .unoInsertGraphic').click();
-	}
-	else {
-		cy.cGet('#Home-container .unoInsertGraphic').click();
+		cy.cGet('#Insert-container .unoInsertGraphic').filter(':visible').click();
+	} else {
+		cy.cGet('#toolbar-up .unoInsertGraphic').click();
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
@@ -288,14 +248,8 @@ function insertVideo() {
 
 	selectZoomLevel('50', false);
 
-	cy.cGet('#toolbar-up .ui-scroll-right').click();
-
-	const mode = Cypress.env('USER_INTERFACE');
-
-	if (mode === 'notebookbar') cy.cGet('#toolbar-up .ui-scroll-right').click();
-
 	cy.cGet('#Insert-tab-label').click();
-	cy.cGet('#Insert-container .insertmultimedia').click();
+	cy.cGet('#Insert-container .inline.insertmultimedia').click();
 
 	cy.cGet('#insertmultimedia[type=file]').attachFile(
 		'/desktop/impress/video_to_insert.mp4'
@@ -365,7 +319,7 @@ function switchUIToNotebookbar() {
 		var userInterfaceMode = win['0'].userInterfaceMode;
 		if (userInterfaceMode !== 'notebookbar') {
 			cy.cGet('#menu-view').click();
-			cy.cGet('#menu-toggleuimode').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+			cy.cGet('#menu-toggleuimode').click();
 		}
 		Cypress.env('USER_INTERFACE', 'notebookbar');
 	});
@@ -562,8 +516,6 @@ module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
-module.exports.showSidebarIfHidden = showSidebarIfHidden;
-module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;

@@ -98,6 +98,7 @@ static IMP standardImpOfInputAccessoryView = nil;
     
     CoolURLSchemeHandler * schemeHandler = [[CoolURLSchemeHandler alloc] initWithDocument:self.document];
     [configuration setURLSchemeHandler:schemeHandler forURLScheme:@"cool"];
+    self.schemeHandler = (__bridge void*)schemeHandler;
     
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;

@@ -9,14 +9,13 @@ function getSlideShowContent() {
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Some app', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/slideshow.odp');
-		cy.cGet('.notebookbar #View-tab-label').click();
-		cy.cGet('.notebookbar #view-presentation-button').click();
-		cy.cGet('#view-presentation-entry-0').click();
+		cy.cGet('.notebookbar #Slideshow-tab-label').click();
+		cy.cGet('.notebookbar #slide-fullscreen-presentation-button').click();
 	});
 
 	it('Should see an empty slideshow', function () {
 		getSlideShowContent().should('be.visible');
-		//FIXME: remove explict wait. I tried to assert slideshow's canvas but for some reason cypress can't find slideshow iframe
+		//FIXME: remove explicit wait. I tried to assert slideshow's canvas but for some reason cypress can't find slideshow iframe
 		cy.wait(1000);
 		getSlideShowContent().compareSnapshot('slideshow', 0.15);
 	});

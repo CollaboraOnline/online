@@ -51,6 +51,7 @@ interface IterateNodeInfo extends ContainerNodeInfo {
 
 interface AnimateNodeInfo extends BaseNodeInfo {
 	targetElement?: string;
+	title?: string;
 	subItem?: string;
 	attributeName?: string;
 	values?: string;

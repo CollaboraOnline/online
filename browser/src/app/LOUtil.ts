@@ -27,6 +27,8 @@ interface IconNameMap {
 	[key: string]: string;
 }
 
+declare var DOMPurify: any;
+
 // LOUtil contains various LO related utility functions used
 // throughout the code.
 
@@ -110,7 +112,7 @@ class LOUtil {
 			parseInt(numbers[1]),
 		);
 		const bottomRight = topLeft.add(
-			L.point(parseInt(numbers[2]), parseInt(numbers[3])),
+			cool.Point.toPoint(parseInt(numbers[2]), parseInt(numbers[3])),
 		);
 		return cool.Bounds.toBounds(topLeft, bottomRight);
 	}
@@ -128,8 +130,8 @@ class LOUtil {
 					parseInt(matches[itMatch + 2]),
 					parseInt(matches[itMatch + 3]),
 				);
-				const topRight = topLeft.add(L.point(size.x, 0));
-				const bottomLeft = topLeft.add(L.point(0, size.y));
+				const topRight = topLeft.add(cool.Point.toPoint(size.x, 0));
+				const bottomLeft = topLeft.add(cool.Point.toPoint(0, size.y));
 				const bottomRight = topLeft.add(size);
 				rectangles.push([bottomLeft, bottomRight, topLeft, topRight]);
 			}
@@ -245,7 +247,7 @@ class LOUtil {
 		return defaultImageURL;
 	}
 
-	public static getIconNameOfCommand(name: string, noCommad: boolean) {
+	public static getIconNameOfCommand(name: string, noCommad?: boolean) {
 		if (!name) return '';
 
 		var alreadyClean = noCommad;
@@ -264,6 +266,7 @@ class LOUtil {
 			closemobile: 'closedocmobile',
 			'file-saveas': 'saveas',
 			'home-search': 'recsearch',
+			searchdialog3finitialfocusreplace3abool3dtrue: 'searchdialog',
 			'addmb-menu': 'ok',
 			closetablet: 'view',
 			defineprintarea: 'menuprintranges',
@@ -316,6 +319,10 @@ class LOUtil {
 			shadowpropertypanel: 'shadowed',
 			incrementlevel: 'outlineleft',
 			menurowheight: 'rowheight',
+			menumargins: 'pagemargin',
+			menuorientation: 'orientation',
+			menupagesizescalc: 'pagesize',
+			menupagesizeswriter: 'pagesize',
 			setoptimalrowheight: 'rowheight',
 			cellverttop: 'aligntop',
 			scalignmentpropertypanel: 'aligntop',
@@ -426,10 +433,49 @@ class LOUtil {
 			cancelsearch: 'cancel',
 			printoptions: 'print',
 			togglesheetgrid: 'show',
+			toggleprintgrid: 'printgrid',
 			'hamburger-tablet': 'fold',
 			exportdirectpdf: 'exportpdf',
 			textcolumnspropertypanel: 'entirecolumn',
 			'sidebardeck.stylelistdeck': 'editstyle',
+			assignlayout3fwhatlayout3along3d20: 'layout00',
+			assignlayout3fwhatlayout3along3d0: 'layout01',
+			assignlayout3fwhatlayout3along3d1: 'layout02',
+			assignlayout3fwhatlayout3along3d3: 'layout03',
+			assignlayout3fwhatlayout3along3d19: 'layout04',
+			assignlayout3fwhatlayout3along3d32: 'layout05',
+			assignlayout3fwhatlayout3along3d15: 'layout06',
+			assignlayout3fwhatlayout3along3d12: 'layout07',
+			assignlayout3fwhatlayout3along3d16: 'layout08',
+			assignlayout3fwhatlayout3along3d14: 'layout09',
+			assignlayout3fwhatlayout3along3d18: 'layout10',
+			assignlayout3fwhatlayout3along3d34: 'layout11',
+			assignlayout3fwhatlayout3along3d27: 'layout12',
+			assignlayout3fwhatlayout3along3d28: 'layout13',
+			assignlayout3fwhatlayout3along3d29: 'layout02',
+			assignlayout3fwhatlayout3along3d30: 'layout03',
+			insertpage3fwhatlayout3along3d20: 'layout00',
+			insertpage3fwhatlayout3along3d0: 'layout01',
+			insertpage3fwhatlayout3along3d1: 'layout02',
+			insertpage3fwhatlayout3along3d3: 'layout03',
+			insertpage3fwhatlayout3along3d19: 'layout04',
+			insertpage3fwhatlayout3along3d32: 'layout05',
+			insertpage3fwhatlayout3along3d15: 'layout06',
+			insertpage3fwhatlayout3along3d12: 'layout07',
+			insertpage3fwhatlayout3along3d16: 'layout08',
+			insertpage3fwhatlayout3along3d14: 'layout09',
+			insertpage3fwhatlayout3along3d18: 'layout10',
+			insertpage3fwhatlayout3along3d34: 'layout11',
+			insertpage3fwhatlayout3along3d27: 'layout12',
+			insertpage3fwhatlayout3along3d28: 'layout13',
+			insertpage3fwhatlayout3along3d29: 'layout02',
+			insertpage3fwhatlayout3along3d30: 'layout03',
+			graphicfilterinvert: 'graphicfilterinvert',
+			graphicfilterpopart: 'graphicfilterpopart',
+			graphicfilterremovenoise: 'graphicfilterremovenoise',
+			graphicfiltersharpen: 'graphicfiltersharpen',
+			graphicfiltersobel: 'graphicfiltersobel',
+			effects: 'pictureeffectsmenu',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
@@ -653,6 +699,13 @@ class LOUtil {
 
 	public static Rectangle = cool.Rectangle;
 	public static createRectangle = cool.createRectangle;
+
+	public static sanitize(html: string): string {
+		if (DOMPurify.isSupported) {
+			return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+		}
+		return '';
+	}
 }
 
 app.LOUtil = LOUtil;

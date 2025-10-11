@@ -13,7 +13,7 @@
  */
 
 /* global _ app _UNO JSDialog errorMessages URLPopUpSection */
-L.Map.WOPI = L.Handler.extend({
+window.L.Map.WOPI = window.L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
 	// wouldn't be possible otherwise.
@@ -68,7 +68,7 @@ L.Map.WOPI = L.Handler.extend({
 		this._map.on('viewinfo', this._postLoaded, this);
 
 		this._map.on('wopiprops', this._setWopiProps, this);
-		L.DomEvent.on(window, 'message', this._postMessageListener, this);
+		window.L.DomEvent.on(window, 'message', this._postMessageListener, this);
 
 		this._map.on('updateviewslist', function() { this._postViewsMessage('Views_List'); }, this);
 
@@ -109,7 +109,7 @@ L.Map.WOPI = L.Handler.extend({
 		this._map.off('viewinfo', this._postLoaded, this);
 
 		this._map.off('wopiprops', this._setWopiProps, this);
-		L.DomEvent.off(window, 'message', this._postMessageListener, this);
+		window.L.DomEvent.off(window, 'message', this._postMessageListener, this);
 
 		this._map.off('updateviewslist');
 	},
@@ -185,13 +185,13 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
+		if (this.DisableInsertLocalImage) {
+			JSDialog.MenuDefinitions.set('InsertImageMenu', []);
+			JSDialog.MenuDefinitions.set('InsertMultimediaMenu', []);
+		}
+
 		var menuEntriesImage = JSDialog.MenuDefinitions.get('InsertImageMenu');
 		var menuEntriesMultimedia = JSDialog.MenuDefinitions.get('InsertMultimediaMenu');
-
-		if (this.DisableInsertLocalImage) {
-			menuEntriesImage = [];
-			menuEntriesMultimedia = [];
-		}
 
 		if (this.EnableInsertRemoteImage) {
 			menuEntriesImage.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
@@ -418,9 +418,7 @@ L.Map.WOPI = L.Handler.extend({
 				switch (msg.Values.id) {
 				case 'Navigator':
 				case 'ModifyPage':
-				case 'SlideChangeWindow':
 				case 'CustomAnimation':
-				case 'MasterSlidesPanel':
 					this._map.sendUnoCommand(`.uno:${msg.Values.id}`);
 					return;
 				}
@@ -462,7 +460,13 @@ L.Map.WOPI = L.Handler.extend({
 			msg.Values && msg.Values.id) {
 			this._map.uiManager.insertButton(msg.Values);
 			return;
-		} else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {
+		}
+		else if (msg.MessageId === 'Insert_ContextualButton' &&
+			msg.Values && msg.Values.id) {
+			this._map.uiManager.map.contextToolbar.insertAdditionalContextButton(msg.Values);
+			return;
+		}
+		else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {
 			this._map.sendUnoCommand(msg.Values.Command, msg.Values.Args || '');
 			return;
 		}
@@ -633,17 +637,17 @@ L.Map.WOPI = L.Handler.extend({
 
 				preview.innerText = '';
 				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
-					var image = L.DomUtil.create('img', '', preview);
+					var image = window.L.DomUtil.create('img', '', preview);
 					image.src = msg.Values.image;
 					image.alt = msg.Values.title;
 					image.onload = function() {
 						URLPopUpSection.resetPosition();
 					};
 				} else {
-					L.DomUtil.addClass(preview, 'no-preview');
+					window.L.DomUtil.addClass(preview, 'no-preview');
 				}
 				if (msg.Values.title) {
-					var title = L.DomUtil.create('p', '', preview);
+					var title = window.L.DomUtil.create('p', '', preview);
 					title.innerText = msg.Values.title;
 					URLPopUpSection.resetPosition();
 				}
@@ -783,4 +787,4 @@ L.Map.WOPI = L.Handler.extend({
 });
 
 // This handler would only get 'enabled' by map if map.options.wopi = true
-L.Map.addInitHook('addHandler', 'wopi', L.Map.WOPI);
+window.L.Map.addInitHook('addHandler', 'wopi', window.L.Map.WOPI);

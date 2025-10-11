@@ -25,7 +25,7 @@ class SlideShowContext {
 	public bIsSkipping: boolean;
 	public nSlideWidth: number;
 	public nSlideHeight: number;
-	public aCanvas: HTMLCanvasElement;
+	public _canvas: HTMLCanvasElement;
 
 	constructor(
 		aSlideShowHandler: SlideShowHandler,
@@ -65,7 +65,7 @@ class SlideShowHandler {
 	private aNextEffectEventArray: NextEffectEventArray;
 	private aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap;
 	private aEventMultiplexer: EventMultiplexer;
-	private aContext: SlideShowContext;
+	private _context: SlideShowContext;
 	private bIsIdle: boolean;
 	private bIsEnabled: boolean;
 	private bNoSlideTransition: boolean;
@@ -98,6 +98,19 @@ class SlideShowHandler {
 		TransitionSubType.HEART,
 	]);
 
+	private _labelMap: Record<string, string> = {
+		rewind: _('Previous'),
+		dispatch: _('Next'),
+		skip: _('Skip'),
+		rewindAll: _('First'),
+		skipAll: _('Skip All'),
+		firstPage: _('First Slide'),
+		nextPage: _('Next Slide'),
+		prevPage: _('Previous Slide'),
+		lastPage: _('Last Slide'),
+		quit: _('End Show'),
+	};
+
 	constructor(presenter: SlideShowPresenter) {
 		this.presenter = presenter;
 
@@ -111,7 +124,7 @@ class SlideShowHandler {
 		this.aInteractiveAnimationSequenceMap = null;
 		this.aEventMultiplexer = null;
 
-		this.aContext = new SlideShowContext(
+		this._context = new SlideShowContext(
 			this,
 			this.aTimerEventQueue,
 			this.aEventMultiplexer,
@@ -176,12 +189,12 @@ class SlideShowHandler {
 				'SlideShow.setSlideEvents: aEventMultiplexer is not valid',
 			);
 
-		this.aContext.aNextEffectEventArray = aNextEffectEventArray;
+		this._context.aNextEffectEventArray = aNextEffectEventArray;
 		this.aNextEffectEventArray = aNextEffectEventArray;
-		this.aContext.aInteractiveAnimationSequenceMap =
+		this._context.aInteractiveAnimationSequenceMap =
 			aInteractiveAnimationSequenceMap;
 		this.aInteractiveAnimationSequenceMap = aInteractiveAnimationSequenceMap;
-		this.aContext.aEventMultiplexer = aEventMultiplexer;
+		this._context.aEventMultiplexer = aEventMultiplexer;
 		this.aEventMultiplexer = aEventMultiplexer;
 		this.nCurrentEffect = 0;
 	}
@@ -221,6 +234,19 @@ class SlideShowHandler {
 			aSlideTransition,
 			DirectionType.Forward,
 		);
+	}
+
+	addA11yString(a11yString: string) {
+		if (this.presenter._enableA11y) {
+			const canvas = this.getContext()._canvas;
+			if (canvas) {
+				const a11yContainer = window.L.DomUtil.create('div', '');
+				a11yContainer.tabIndex = -1;
+				canvas.innerHTML = '';
+				a11yContainer.innerHTML = app.LOUtil.sanitize(a11yString);
+				canvas.appendChild(a11yContainer);
+			}
+		}
 	}
 
 	isEnabled() {
@@ -277,8 +303,20 @@ class SlideShowHandler {
 		if (curMetaSlide.animationsHandler) {
 			const aAnimatedElementMap =
 				curMetaSlide.animationsHandler.getAnimatedElementMap();
+			let effect = 0;
+			const currentEffect = this.nCurrentEffect;
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
-				aAnimatedElement.notifyNextEffectStart(this.nCurrentEffect);
+				aAnimatedElement.notifyNextEffectStart(currentEffect);
+				if (effect === currentEffect) {
+					setTimeout(
+						this.addA11yString.bind(
+							this,
+							_('Animation Start: ') + aAnimatedElement.getTitle(),
+						),
+						500,
+					);
+				}
+				effect++;
 			});
 		}
 	}
@@ -356,11 +394,22 @@ class SlideShowHandler {
 				metaNewSlide.animationsHandler.getAnimatedElementMap();
 
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
-				aAnimatedElement.notifySlideStart(this.aContext);
+				aAnimatedElement.notifySlideStart(this._context);
 			});
 		}
 		this.slideCompositor.notifyTransitionStart();
 		this.presenter._map.fire('transitionstart', { slide: nNewSlideIndex });
+
+		const slideInfo = this.getSlideInfo(nNewSlideIndex);
+		if (slideInfo.transitionLabel) {
+			setTimeout(
+				this.addA11yString.bind(
+					this,
+					_('Transition Start: ') + slideInfo.transitionLabel,
+				),
+				500,
+			);
+		}
 	}
 
 	notifyTransitionEnd(nNewSlide: number, nOldSlide: number | undefined) {
@@ -372,7 +421,14 @@ class SlideShowHandler {
 				', this.bIsRewinding: ' +
 				this.bIsRewinding,
 		);
+
+		const slideInfo = this.getSlideInfo(nNewSlide);
+		if (slideInfo.transitionLabel) {
+			this.addA11yString(_('Transition End: '));
+		}
+
 		this.bIsTransitionRunning = false;
+		if (!this.presenter._checkAlreadyPresenting()) return;
 		if (this.bIsRewinding) {
 			this.theMetaPres.getMetaSlideByIndex(nNewSlide).hide();
 			this.slideShowNavigator.rewindToPreviousSlide();
@@ -386,7 +442,7 @@ class SlideShowHandler {
 		try {
 			this.presentSlide(nNewSlide);
 		} catch (message) {
-			console.error('notifyTransitionEnd: ' + message);
+			app.console.error('notifyTransitionEnd: ' + message);
 		}
 
 		this.presenter._map.fire('transitionend', { slide: nNewSlide });
@@ -443,6 +499,8 @@ class SlideShowHandler {
 	nextEffect(): boolean {
 		if (!this.isEnabled()) return false;
 
+		this.addA11yString(this._labelMap['dispatch']);
+
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
 			return true;
@@ -464,6 +522,10 @@ class SlideShowHandler {
 		if (!this.aNextEffectEventArray) return false;
 
 		if (this.nCurrentEffect >= this.aNextEffectEventArray.size()) return false;
+
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect }),
+		);
 
 		this.notifyNextEffectStart();
 
@@ -494,6 +556,8 @@ class SlideShowHandler {
 	 *
 	 */
 	skipAllPlayingEffects() {
+		this.addA11yString(this._labelMap['skipAll']);
+
 		if (this.bIsSkipping || this.bIsRewinding) return true;
 
 		this.bIsSkipping = true;
@@ -545,6 +609,10 @@ class SlideShowHandler {
 		return true;
 	}
 
+	skipNEffects(nEffectNumber: number) {
+		for (let i = 0; i <= nEffectNumber; i++) if (!this.skipNextEffect()) break;
+	}
+
 	/** skipPlayingOrNextEffect
 	 *  Skip the next effect to be played that belongs to the main animation
 	 *  sequence  or all playing effects.
@@ -553,6 +621,8 @@ class SlideShowHandler {
 	 *      False if there is no more effect to skip, true otherwise.
 	 */
 	skipPlayingOrNextEffect() {
+		this.addA11yString(this._labelMap['skip']);
+
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
 			return true;
@@ -640,6 +710,8 @@ class SlideShowHandler {
 			this.automaticAdvanceTimeout = { rewindedEffect: this.nCurrentEffect };
 		}
 
+		this.addA11yString(this._labelMap['rewind']);
+
 		if (!this.hasAnyEffectStarted()) {
 			this.rewindToPreviousSlide();
 			return;
@@ -713,6 +785,9 @@ class SlideShowHandler {
 		}
 
 		this.bIsRewinding = false;
+		this.presenter.sendSlideShowFollowMessage(
+			'effect ' + JSON.stringify({ currentEffect: this.nCurrentEffect - 1 }),
+		);
 	}
 
 	/** rewindToPreviousSlide
@@ -740,6 +815,8 @@ class SlideShowHandler {
 	 *
 	 */
 	rewindAllEffects() {
+		this.addA11yString(this._labelMap['rewindAll']);
+
 		if (!this.hasAnyEffectStarted()) {
 			this.rewindToPreviousSlide();
 			return;
@@ -782,6 +859,7 @@ class SlideShowHandler {
 		nNewSlide: number,
 		nOldSlide: number | undefined,
 		bSkipSlideTransition: boolean,
+		nSlideEffect: number = undefined,
 	) {
 		NAVDBG.print(
 			'SlideShowHandler.displaySlide: nNewSlide: ' +
@@ -792,6 +870,16 @@ class SlideShowHandler {
 		const aMetaDoc = this.theMetaPres;
 		if (nNewSlide >= aMetaDoc.numberOfSlides) {
 			this.exitSlideShow();
+		}
+
+		if (this.theMetaPres.numberOfSlides - 1 == nNewSlide) {
+			this.addA11yString(this._labelMap['lastPage']);
+		} else if (nNewSlide == 0) {
+			this.addA11yString(this._labelMap['firstPage']);
+		} else if (nNewSlide == nOldSlide + 1) {
+			this.addA11yString(this._labelMap['nextPage']);
+		} else if (nNewSlide == nOldSlide - 1) {
+			this.addA11yString(this._labelMap['prevPage']);
 		}
 
 		if (this.isTransitionPlaying()) {
@@ -840,17 +928,20 @@ class SlideShowHandler {
 							return;
 						}
 					} catch (message) {
-						console.error('displaySlide failed: ' + message);
+						app.console.error('displaySlide failed: ' + message);
 					}
 				}
 			}
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
+		// can jump to specific animation only after everything is loaded
+		if (nSlideEffect !== undefined) this.skipNEffects(nSlideEffect);
 	}
 
 	exitSlideShow() {
 		// TODO: implement it;
+		this.addA11yString(this._labelMap['quit']);
 		this.automaticAdvanceTimeout = null;
 	}
 
@@ -902,7 +993,7 @@ class SlideShowHandler {
 	}
 
 	getContext() {
-		return this.aContext;
+		return this._context;
 	}
 
 	private get slideRenderer(): SlideRenderer {
@@ -938,7 +1029,7 @@ class SlideShowHandler {
 	): WebGLTexture | ImageBitmap | null {
 		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
 		if (!slideImage) {
-			console.error('SlideShowHandler: cannot get texture');
+			app.console.error('SlideShowHandler: cannot get texture');
 			return null;
 		}
 
@@ -955,6 +1046,11 @@ class SlideShowHandler {
 	}
 
 	private presentSlide(nSlideIndex: number) {
+		const slideInfo = this.getSlideInfo(nSlideIndex);
+		if (slideInfo.a11y) {
+			setTimeout(this.addA11yString.bind(this, slideInfo.a11y), 500);
+		}
+
 		let slideTexture = this.enteringSlideTexture;
 		if (!slideTexture) slideTexture = this.getTexture(nSlideIndex);
 		this.slideRenderer.renderSlide(
@@ -995,12 +1091,12 @@ class SlideShowHandler {
 	}
 
 	public notifyFirstAutoEffectStarted() {
-		console.debug('SlideShowHandler.notifyFirstAutoEffectStarted');
+		app.console.debug('SlideShowHandler.notifyFirstAutoEffectStarted');
 		this.bIsFirstAutoEffectRunning = true;
 	}
 
 	public notifyFirstAutoEffectEnded() {
-		console.debug('SlideShowHandler.notifyFirstAutoEffectEnded');
+		app.console.debug('SlideShowHandler.notifyFirstAutoEffectEnded');
 		this.bIsFirstAutoEffectRunning = false;
 	}
 
@@ -1009,7 +1105,7 @@ class SlideShowHandler {
 	}
 
 	private skipFirstAutoEffect() {
-		console.debug('SlideShowHandler.skipFirstAutoEffect');
+		app.console.debug('SlideShowHandler.skipFirstAutoEffect');
 		this.bIsSkipping = true;
 		this.aEventMultiplexer.notifySkipEffectEvent();
 		this.update();

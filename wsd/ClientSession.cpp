@@ -13,40 +13,40 @@
 
 #include "ClientSession.hpp"
 
-#include <filesystem>
-#include <ios>
-#include <map>
-#include <sstream>
-#include <string>
-#include <string_view>
-#include <memory>
-#include <unordered_map>
-#include <cctype>
+#include <common/Clipboard.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/HexUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Session.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Util.hpp>
+#include <net/HttpHelper.hpp>
+#include <net/HttpServer.hpp>
+#include <wopi/StorageConnectionManager.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/FileServer.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <Poco/Base64Decoder.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-#include <Poco/JSON/Parser.h>
 
-#include "ConfigUtil.hpp"
-#include "DocumentBroker.hpp"
-#include "COOLWSD.hpp"
-#include "FileServer.hpp"
-#include <common/Common.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Log.hpp>
-#include <common/Protocol.hpp>
-#include <common/Clipboard.hpp>
-#include <common/Session.hpp>
-#include <common/TraceEvent.hpp>
-#include <common/HexUtil.hpp>
-#include <common/Util.hpp>
-#include <common/CommandControl.hpp>
-#include <wsd/TileDesc.hpp>
-#include <net/HttpHelper.hpp>
-#include <wopi/StorageConnectionManager.hpp>
+#include <cctype>
+#include <ios>
+#include <map>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <string_view>
+#include <unordered_map>
 
 using namespace COOLProtocol;
 
@@ -386,6 +386,8 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                     LOG_WRN("parseJSON: failed to parse '" << jailClipFile << "': '" << exception.what() << "'");
                 }
 
+                ifs.close();
+
                 if (json)
                 {
                     std::string url;
@@ -394,8 +396,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                     JsonUtil::findJSONValue(json, "commandName", commandName);
                     http::Session::FinishedCallback finishedCallback =
                         [this, commandName=std::move(commandName),
-                         docBroker](const std::shared_ptr<http::Session>& session)
+                         docBroker, jailClipFile, clipFile](const std::shared_ptr<http::Session>& session)
                     {
+                        session->asyncShutdown();
                         const std::shared_ptr<const http::Response> httpResponse =
                             session->response();
                         if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
@@ -412,12 +415,12 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                             return;
                         }
 
-                        const std::string& body = httpResponse->getBody();
-                        std::istringstream stream(body);
-                        if (ClipboardData::isOwnFormat(stream))
+                        std::ifstream stream(jailClipFile, std::ifstream::in);
+                        const bool ownFormat = ClipboardData::isOwnFormat(stream);
+                        stream.close();
+                        if (ownFormat)
                         {
-                            docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body,
-                                    true);
+                            docBroker->forwardToChild(client_from_this(), "setclipboard name=" + clipFile, true);
                             docBroker->forwardToChild(client_from_this(), "uno " + commandName);
                         }
                         else
@@ -442,9 +445,10 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                                     << url << ']');
                             };
                             httpSession->setConnectFailHandler(std::move(connectFailCallback));
-
                             http::Request httpRequest(Poco::URI(url).getPathAndQuery());
                             httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+                            const std::shared_ptr<http::Response> httpResponse = httpSession->response();
+                            httpResponse->saveBodyToFile(jailClipFile);
                         }
                         else
                         {
@@ -467,7 +471,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
 
             // FIXME: work harder for error detection ?
             http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Content-Length", "0");
+            httpResponse.setContentLength(0);
             httpResponse.set("Connection", "close");
             socket->send(httpResponse);
             socket->asyncShutdown();
@@ -514,6 +518,7 @@ makeSignatureActionSession(std::shared_ptr<ClientSession> clientSession,
         [clientSession = std::move(clientSession),
          commandName = std::move(commandName)](const std::shared_ptr<http::Session>& session)
     {
+        session->asyncShutdown();
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
         resultArguments->set("commandName", commandName);
@@ -584,13 +589,11 @@ bool ClientSession::handleSignatureAction(const StringVector& tokens)
     std::string secret;
     JsonUtil::findJSONValue(serverPrivateInfoObject, "ESignatureSecret", secret);
     requestBodyObject->set("secret", secret);
-    std::string requestBody;
     std::stringstream oss;
     requestBodyObject->stringify(oss);
-    requestBody = oss.str();
     http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
     httpRequest.setVerb(http::Request::VERB_POST);
-    httpRequest.setBody(requestBody, "application/json");
+    httpRequest.setBody(oss.str(), "application/json");
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     httpSession->asyncRequest(httpRequest, docBroker->getPoll());
     return true;
@@ -1371,7 +1374,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens.equals(0, "rendersearchresult") ||
              tokens.equals(0, "geta11yfocusedparagraph") ||
              tokens.equals(0, "geta11ycaretposition") ||
-             tokens.equals(0, "getpresentationinfo"))
+             tokens.equals(0, "getpresentationinfo") ||
+             tokens.equals(0, "slideshowfollow"))
     {
 #if !MOBILEAPP
         if (tokens.equals(0, "uno"))
@@ -1405,6 +1409,29 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         {
             const std::string dummyFrame = "dummymsg";
             return forwardToChild(dummyFrame, docBroker);
+        }
+
+        if (tokens.equals(0, "slideshowfollow"))
+        {
+            if(tokens.equals(1, "newfollowmepresentation"))
+                docBroker->setIsFollowmeSlideShowOn(true);
+            else if(tokens.equals(1, "endpresentation"))
+                docBroker->setIsFollowmeSlideShowOn(false);
+            else if(tokens.equals(1, "effect")){
+                Poco::JSON::Parser parser;
+                auto result = parser.parse(tokens[2]);
+                int effectNumber = JsonUtil::getJSONValue<int>(result.extract<Poco::JSON::Object::Ptr>(), "currentEffect");
+                docBroker->setLeaderEffect(effectNumber);
+            }
+            else if(tokens.equals(1, "displayslide")) {
+                Poco::JSON::Parser parser;
+                auto result = parser.parse(tokens[2]);
+                int slideNumber = JsonUtil::getJSONValue<int>(result.extract<Poco::JSON::Object::Ptr>(), "currentSlide");
+                docBroker->setLeaderSlide(slideNumber);
+                docBroker->setLeaderEffect(-1);
+            }
+            docBroker->broadcastMessageToOthers(tokens.substrFromToken(0), client_from_this());
+            return true;
         }
 
         return forwardToChild(std::string(buffer, length), docBroker);
@@ -1656,6 +1683,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " isAllowChangeComments=true";
         }
 
+        if (isAllowManageRedlines())
+        {
+            oss << " isAllowManageRedlines=true";
+        }
+
         if (loadPart >= 0)
         {
             oss << " part=" << loadPart;
@@ -1754,6 +1786,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 #if ENABLE_FEATURE_RESTRICTION
         sendRestrictionInfo();
 #endif
+        if (docBroker->getIsFollowmeSlideShowOn())
+        {
+            sendTextFrame("slideshowfollow slideshowfollowon");
+            sendTextFrame("slideshowfollow displayslide {\"currentSlide\": " + std::to_string(docBroker->getLeaderSlide()) +"}");
+            sendTextFrame("slideshowfollow effect {\"currentEffect\": " + std::to_string(docBroker->getLeaderEffect()) +"}");
+        }
 
         return forwardToChild(oss.str(), docBroker);;
     }
@@ -1962,12 +2000,14 @@ void ClientSession::setReadOnly(bool bVal)
     sendTextFrame("perm: " + sPerm);
 }
 
-void ClientSession::sendFileMode(const bool readOnly, const bool editComments)
+void ClientSession::sendFileMode(const bool readOnly, const bool editComments, bool manageRedlines)
 {
     std::string result = "filemode:{\"readOnly\": ";
     result += readOnly ? "true": "false";
     result += ", \"editComment\": ";
     result += editComments ? "true": "false";
+    result += ", \"manageRedlines\": ";
+    result += manageRedlines ? "true" : "false";
     result += "}";
     sendTextFrame(result);
 }
@@ -2042,14 +2082,12 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
 }
 
 // Insert our meta origin if we can
+// Note: If @in is Poco::MemoryStream there is a bug in versions < 1.13.3 that
+// Poco::BasicMemoryStreamBuf doesn't implement seekpos, so use of the single
+// argument seekg fails, this can be worked around by using the double argument
+// seekg variant which uses seekoff which was implemented
 bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
 {
-    // back to start
-    std::string line;
-    std::getline(in, line);
-    in.clear();
-    in.seekg(0);
-
     constexpr std::string_view textPlain = "text/plain";
 
     char data[textPlain.size()];
@@ -2063,12 +2101,12 @@ bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
 
     // back to start
     in.clear();
-    in.seekg(0);
+    in.seekg(0, std::ios::beg);
 
     bool json = in.get() == '{';
 
     in.clear();
-    in.seekg(0);
+    in.seekg(0, std::ios::beg);
 
     // copy as far as body
     bool match = Util::copyToMatch(in, out, "<body");
@@ -3004,7 +3042,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 if (error)
                 {
                     http::Response httpResponse(http::StatusCode::InternalServerError);
-                    httpResponse.set("Content-Length", "0");
+                    httpResponse.setContentLength(0);
                     saveAsSocket->sendAndShutdown(httpResponse);
                 }
             }

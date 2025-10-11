@@ -31,7 +31,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
 
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
-		cy.cGet('input#search-input').clear().type('FIRST{enter}');
+		helper.typeIntoDocument('{ctrl}f');
+		cy.cGet('input#searchterm-input-dialog').clear().type('FIRST');
+		cy.cGet('#search').find('button').click();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A10');
 		desktopHelper.assertScrollbarPosition('horizontal', 40, 60);
@@ -48,6 +50,38 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// we should see the top left corner of the sheet
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+	});
+});
+
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', function() {
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/empty-selections.ods');
+
+		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+	});
+
+	it('Check non-range cell selection with CTRL', function() {
+		calcHelper.clickOnACell(1, 1, 2, 3);
+
+		// Press CTRL and hold.
+		cy.cGet('div.clipboard').type('{ctrl}', { release: false });
+
+		cy.wait(500);
+		calcHelper.clickOnACell(2, 3, 4, 3);
+
+		cy.wait(500);
+		calcHelper.clickOnACell(4, 3, 2, 6);
+
+		// Press SHIFT and hold.
+		cy.cGet('div.clipboard').type('{shift}', { release: false });
+
+		cy.wait(500);
+		calcHelper.clickOnACell(2, 6, 2, 10);
+
+		cy.wait(500);
+
+		cy.cGet('#map').compareSnapshot('selections', 0.02);
 	});
 });
 

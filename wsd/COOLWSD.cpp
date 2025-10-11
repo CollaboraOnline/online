@@ -61,25 +61,7 @@
 #include "CommandControl.hpp"
 #endif
 
-#if !MOBILEAPP
-
-#if ENABLE_SSL
-#include <Poco/Net/SSLManager.h>
-#endif
-
-#include <cerrno>
-#include <stdexcept>
-#include <unordered_map>
-
-#include "Admin.hpp"
-#include "Auth.hpp"
-#include "CacheUtil.hpp"
-#include "FileServer.hpp"
-#include "UserMessages.hpp"
-#include <wsd/RemoteConfig.hpp>
-#include <wsd/SpecialBrokers.hpp>
-
-#endif // !MOBILEAPP
+#include <wsd/PlatformDesktop.hpp>
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Exception.h>
@@ -96,6 +78,7 @@
 #include <Poco/Util/XMLConfiguration.h>
 
 #include <common/Anonymizer.hpp>
+#include <common/Globals.hpp>
 #include <ClientRequestDispatcher.hpp>
 #include <Common.hpp>
 #include <Clipboard.hpp>
@@ -106,18 +89,10 @@
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 
-#if !MOBILEAPP
-#include <common/JailUtil.hpp>
-#include <common/Watchdog.hpp>
-#endif
-
 #include <common/Log.hpp>
 #include <MobileApp.hpp>
 #include <Protocol.hpp>
 #include <Session.hpp>
-#if ENABLE_SSL
-#  include <SslSocket.hpp>
-#endif
 #include <wsd/wopi/StorageConnectionManager.hpp>
 #include <wsd/TraceFile.hpp>
 #include <common/ConfigUtil.hpp>
@@ -130,25 +105,7 @@
 
 #include <ServerSocket.hpp>
 
-#if MOBILEAPP
-#include <Kit.hpp>
-#ifdef IOS
-#include "ios.h"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
-#elif defined(__ANDROID__)
-#include "androidapp.hpp"
-#elif WASMAPP
-#include "wasmapp.hpp"
-#endif
-#endif // MOBILEAPP
-
-#ifdef __linux__
-#if !MOBILEAPP
-#include <common/security.h>
-#include <sys/inotify.h>
-#endif
-#endif
+#include <wsd/PlatformMobile.hpp>
 
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::Option;
@@ -180,7 +137,8 @@ static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
 static std::atomic<int> TotalOutstandingForks(0);
 std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
-std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitProcs;
+typedef std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitMap;
+SubForKitMap SubForKitProcs;
 std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex;
@@ -446,6 +404,23 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 #endif
 }
 
+namespace {
+
+SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
+{
+    // copy as it will be used after erase()
+    std::string configId = it->first;
+
+    LastSubForKitBrokerExitTimes.erase(configId);
+    OutstandingForks.erase(configId);
+    it = SubForKitProcs.erase(it);
+    UnitWSD::get().killSubForKit(configId);
+
+    return it;
+}
+
+}
+
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
 void cleanupDocBrokers()
@@ -520,10 +495,7 @@ void cleanupDocBrokers()
             else
             {
                 LOG_DBG("subforkit " << configId << " is unused, dropping it");
-                LastSubForKitBrokerExitTimes.erase(configId);
-                OutstandingForks.erase(configId);
-                it = SubForKitProcs.erase(it);
-                UnitWSD::get().killSubForKit(configId);
+                it = dropSubForKit(it);
             }
         }
 
@@ -1034,6 +1006,17 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
     }
 
     LOG_DBG("getNewChild: Timed out while waiting for new child.");
+
+    if (!configId.empty())
+    {
+        auto it = SubForKitProcs.find(configId);
+        if (it != SubForKitProcs.end())
+        {
+            LOG_WRN("subForKit " << configId << " failed to respond, resetting it");
+            dropSubForKit(it);
+        }
+    }
+
     return nullptr;
 }
 
@@ -1944,9 +1927,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         HardwareResourceWarning = "lowresources";
     }
 
-#elif defined(__EMSCRIPTEN__)
-    // disable threaded image scaling for wasm for now
-    setenv("VCL_NO_THREAD_SCALE", "1", 1);
 #endif
 
     const auto redlining =
@@ -2604,6 +2584,14 @@ bool COOLWSD::checkAndRestoreForKit()
                             " with " << SigUtil::signalName(WTERMSIG(status)));
                 }
 
+                // subforkits exit when their parent forkit, so we can
+                // immediately consider these obsolete
+                for (auto it = SubForKitProcs.begin(); it != SubForKitProcs.end(); )
+                {
+                    LOG_DBG("dropping subforkit " << it->first);
+                    it = dropSubForKit(it);
+                }
+
                 // Spawn a new forkit and try to dust it off and resume.
                 if (!SigUtil::getShutdownRequestFlag() && !createForKit())
                 {
@@ -3032,7 +3020,7 @@ private:
 #endif
 
         // Consume the incoming data by parsing and processing the body.
-        http::Request request;
+        http::RequestParser request;
 #if !MOBILEAPP
         const int64_t read = request.readData(data.data(), data.size());
         if (read < 0)
@@ -3057,6 +3045,7 @@ private:
         {
             std::string jailId;
             std::string configId;
+            std::map<std::string, std::string> admsProps;
 #if !MOBILEAPP
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
@@ -3121,6 +3110,9 @@ private:
                     configId = param.second;
                 else if (param.first == "version")
                     COOLWSD::LOKitVersion = param.second;
+                else if (param.first.size() > 6 &&
+                         param.first.compare(0, 5, "adms_") == 0)
+                    admsProps[param.first.substr(5)] = param.second;
             }
 
             if (pid <= 0)
@@ -3148,7 +3140,7 @@ private:
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
-            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request, admsProps);
 
             if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);
@@ -3371,7 +3363,6 @@ public:
            << "\n  OutstandingForks: " << TotalOutstandingForks
            << "\n  NumPreSpawnedChildren: " << COOLWSD::NumPreSpawnedChildren
            << "\n  ChildSpawnTimeoutMs: " << ChildSpawnTimeoutMs.load()
-           << "\n  Document Brokers: " << DocBrokers.size()
 #if !MOBILEAPP
            << "\n  of which ConvertTo: " << ConvertToBroker::getInstanceCount()
 #endif
@@ -3413,7 +3404,9 @@ public:
         }
         else
 #endif // !MOBILEAPP
+        {
             os << "\nFetchHttpSession: null\n";
+        }
 
         os << "\nServer poll:\n";
         _acceptPoll.dumpState(os);
@@ -3442,9 +3435,12 @@ public:
         COOLWSD::FileRequestHandler->dumpState(os);
 #endif
 
-        os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
-        for (auto &i : DocBrokers)
-            i.second->dumpState(os);
+        {
+            std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
+            os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
+            for (auto& i : DocBrokers)
+                i.second->dumpState(os);
+        }
 
 #if !MOBILEAPP
         os << "\nConverter count: " << ConvertToBroker::getInstanceCount() << '\n';
@@ -3539,7 +3535,9 @@ private:
         std::shared_ptr<ServerSocket> socket = ServerSocket::create(
             ClientListenAddr, ClientPortNumber, ClientPortProto, now, *WebServerPoll, factory);
 
+#if !MOBILEAPP
         const int firstPortNumber = ClientPortNumber;
+#endif
         while (!socket &&
 #ifdef BUILDING_TESTS
                true
@@ -3785,6 +3783,12 @@ int COOLWSD::innerMain()
     {
         LOG_DBG("No remote_font_config");
     }
+
+#elif defined __EMSCRIPTEN__
+
+    // Hard-code a somewhat random log level:
+    Log::setLevel("information");
+
 #endif
 
     // URI with /contents are public and we don't need to anonymize them.
@@ -3797,7 +3801,7 @@ int COOLWSD::innerMain()
     // It is not at all obvious that this is the ideal place to do the HULLO thing and call onopen
     // on TheFakeWebSocket. But it seems to work.
     handle_cool_message("HULLO");
-    MAIN_THREAD_EM_ASM(window.TheFakeWebSocket.onopen());
+    MAIN_THREAD_EM_ASM(globalThis.TheFakeWebSocket.onopen());
 #endif
 
     /// The main-poll does next to nothing:
@@ -4129,6 +4133,9 @@ int COOLWSD::innerMain()
 
     SigUtil::addActivity("finished with status " + std::to_string(returnValue));
 
+    if constexpr (Util::isMobileApp())
+        Util::forcedExit(returnValue);
+
     return returnValue;
 #else // IOS
     return 0;
@@ -4196,6 +4203,8 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
 
 int COOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    SigUtil::resetTerminationFlags();
+
     int returnValue = EXIT_SOFTWARE;
 
     try {
@@ -4353,7 +4362,7 @@ void dump_state()
 void lslr_childroot()
 {
     std::cout << "lslr: " << COOLWSD::ChildRoot << "\n";
-    FileUtil::lslr(COOLWSD::ChildRoot.c_str());
+    FileUtil::lslr(COOLWSD::ChildRoot);
     std::cout << std::flush;
 }
 
@@ -4374,14 +4383,14 @@ void forwardSigUsr2()
 #endif
 }
 
-void forwardSignal(const int signum)
+void forwardSignal([[maybe_unused]] const int signum)
 {
-    const char* name = SigUtil::signalName(signum);
-
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
 
 #if !MOBILEAPP
+    const char* name = SigUtil::signalName(signum);
+
     if (COOLWSD::ForKitProcId > 0)
     {
         LOG_INF("Sending " << name << " to forkit " << COOLWSD::ForKitProcId);

@@ -77,7 +77,6 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 .jsdialog-window.modalpopup:not(.snackbar),
 .hyperlink-pop-up-container {
 	min-width: 198px;
-	max-width: 498px;
 	border: 1px solid var(--color-border-darker) !important;
 	border-radius: var(--border-radius);
 	box-shadow: 0 0 3px var(--color-box-shadow);
@@ -108,7 +107,10 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
 }
-
+[data-docType='spreadsheet'] .jsdialog-container .ui-dialog-content,
+[data-docType='text'] .jsdialog-container .ui-dialog-content {
+	max-height: calc( 90vh - 98px);
+}
 #SortKeyWindow {
 	/* As used in .jsdialog-container .ui-dialog-content 90 % of the viewport
 	   minus 352px:
@@ -193,7 +195,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: block;
 }
 
-.jsdialog.ui-grid {
+.ui-grid {
 	border-spacing: 0px;
 	width: 100%;
 	display: grid;
@@ -242,7 +244,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-scrollwindow:not(.formulabar) {
 	overflow: auto;
 	max-height: 500px;
-	max-width: 700px;
+	max-width: 650px;
 }
 /* - Also used in SpellingDialog where suggestion come in form
      of an image*/
@@ -262,12 +264,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 .jsdialog.ui-separator.vertical {
 	margin: 5px 0px;
-	padding-right: 1px;
 	background-color: var(--color-background-darker);
 }
 
 .ui-toolbar .ui-separator.vertical {
 	height: 14px;
+	width: 1px;
+	padding: 0px; /* Set padding to 0px, as the padding in `browser/css/toolbar.css` overrides it for the separator. */
 	align-self: center;
 	margin: 0 3px;
 }
@@ -339,6 +342,49 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 100%;
 }
 
+.ui-overflow-manager > .notebookbar:not(.ui-separator),
+.ui-overflow-manager:not(:has(.ui-overflow-group)) {
+	box-sizing: border-box;
+	/* same height as .hasnotebookbar > #toolbar-row */
+	height: 82px;
+}
+
+/* ATTENTION the following declaration is targetting containers and childreen
+ that have .horizontal.notebookbar. Ideally we would instead use:
+.ui-overflow-manager > .horizontal.notebookbar so,
+ buttons inside of grid are still center aligned but the sub container would be
+algned to the bottom */
+.ui-overflow-manager .horizontal.notebookbar {
+	align-items: center;
+}
+.notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
+	align-content: center;
+	height: var(--notebookbar-element-height) !important;
+	margin-bottom: 14px;
+}
+
+.ui-overflow-manager > .notebookbar.ui-iconview,
+.ui-overflow-manager > .notebookbar.ui-treeview {
+	/* fixes scrolling range, for example in #stylesview or Animations tab */
+	align-content: initial;
+}
+
+.ui-overflow-manager > .notebookbar:not(.ui-separator):not(.ui-overflow-group):not(:has(.ui-overflow-group-container-with-label)) {
+	height: var(--notebookbar-element-height);
+	/* 14px extra margin for containers without label */
+	margin-bottom: 14px;
+}
+
+.ui-overflow-manager > .notebookbar.vertical:not(.ui-separator) {
+	height: var(--notebookbar-element-height) !important;
+	margin-bottom: 14px !important;
+}
+
+.ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
+	justify-content: center;
+}
+
+.ui-toggle button,
 .ui-tab.jsdialog {
 	float: left !important;
 	font-size: var(--default-font-size) !important;
@@ -349,6 +395,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 24px !important;
 	display: flex !important;
 	align-items: center !important;
+	justify-content: center;
 	padding: 0px 1em !important;
 	border: solid 1px transparent !important;
 	border-radius: var(--border-radius) !important;
@@ -361,6 +408,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	visibility: hidden !important;
 }
 
+.ui-toggle.checked button,
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter) !important;
 	color: var(--color-text-darker) !important;
@@ -401,6 +449,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label {
 	color: #666;
+}
+
+.ui-expander-label.jsdialog {
+	font-family: var(--jquery-ui-font);
 }
 
 .ui-expander-label::before,
@@ -569,6 +621,17 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	white-space: nowrap;
 }
 
+.ui-treeview-image {
+	outline: 1px solid var(--color-btn-border);
+	vertical-align: middle;
+}
+
+/* that rule is for custom rendering like font previews */
+.ui-treeview-entry img.ui-treeview-image {
+	border: 1px solid transparent;
+	max-height: 24px; /* required for hidpi*/
+}
+
 #ServerAuditDialog .ui-treeview-entry {
 	display: grid;
 	grid-template-columns: var(--btn-img-size-m) 6fr 3fr;
@@ -688,8 +751,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .ui-treeview-entry.selected {
-	background-color: var(--color-background-dark);
-	color: var(--color-text-dark);
+	background-color: var(--color-primary);
+	color: var(--color-text-darker);
+	border: 1px solid var(--color-primary);
 }
 
 .ui-treeview.disabled .ui-treeview-entry.selected {
@@ -699,6 +763,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-treeview-entry:hover {
 	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker);
+	border: 1px solid var(--color-background-darker);
+}
+
+.ui-treeview-entry {
+	border: 1px solid transparent;
 }
 
 #mobile-wizard tbody input[type='checkbox'] {
@@ -757,10 +826,14 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	-webkit-box-shadow: 0 0 3px var(--color-box-shadow);
 	box-shadow: 0 0 3px var(--color-box-shadow);
 }
+
 .context-menu-item {
 	color: var(--color-main-text);
 	background-color: transparent;
+	padding-left: 1em;
+	font-size: var(--medium-font-size) !important;
 }
+
 .context-menu-separator {
 	border-bottom: 1px solid var(--color-border-lighter);
 }
@@ -769,13 +842,52 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-lighter);
 	background-color: var(--color-background-lighter);
 }
+
+.context-menu-item.context-menu-submenu::before {
+	content: '';
+}
+
+.context-menu-item.context-menu-submenu::before,
+.context-menu-icon-spacer,
+img.context-menu-icon {
+	width: 1rem;
+	height: 1rem;
+	margin-right: 8px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+/*
+* Hide the spacer icon if the entire context menu list does not contain any <img>.
+* This prevents unnecessary visual gaps when no icons are present.
+*/
+.context-menu-list:not(:has(img)) .context-menu-icon-spacer {
+	display: none;
+}
+
+/*
+ * Applies consistent spacing across all items in a mixed submenu.
+ * 1. The entire context menu list has no <img> at all (icon-less menu)
+ * 2. The submenu contains a checkmark but has no <img>
+ * 3. The submenu contains a radio but has no <img>
+ * 4. The submenu contains a checkmark and also contains <img>
+ * 5. The submenu contains a radio and also contains <img>
+ */
+.context-menu-list:not(:has(img)) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-lo-checkmark):not(:has(img)) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-radio):not(:has(img)) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-lo-checkmark):has(img) .context-menu-item,
+.context-menu-submenu:has(.context-menu-icon-radio):has(img) .context-menu-item {
+	padding-left: 2em;
+}
+
 /* input text */
 
 .ui-dialog .jsdialog.ui-edit:focus-visible {
 	outline-offset: -2px;
 }
 
-.jsdialog.ui-edit, #hyperlink-text-box:not(.mobile-wizard) {
+.jsdialog.ui-edit {
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 	line-height: 28px;
@@ -800,6 +912,15 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border-left: none;
 	border-right: none;
 }
+
+.autofilter #list.ui-treeview {
+	max-height: 250px;
+}
+
+.autofilter #list.ui-treeview,
+.modalpopup #check_list_box.ui-treeview {
+	min-height: inherit !important;
+}
 /* checkbox */
 
 .jsdialog.checkbutton {
@@ -822,13 +943,14 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 /* Radio button */
 
+.ui-radiobutton,
 .radiobutton.jsdialog {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 }
 
-.jsdialog input[type='radio'] {
+.jsdialog input[type='radio']:not(.ui-color-picker-entry) {
 	margin: 1px 8px;
 	border: none;
 	height: 18px;
@@ -836,6 +958,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	display: block;
 }
 
+.ui-radiobutton > label,
 .jsdialog .radiobutton > label {
 	vertical-align: middle;
 	white-space: nowrap;
@@ -849,7 +972,6 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .ui-dialog-content .jsdialog.ui-text {
 	padding-inline-start: 0;
-	margin: auto 5px;
 }
 
 .jsdialog.ui-grid-cell input[type='checkbox'] + label[for^='hidden-part-checkbox'] {
@@ -858,6 +980,23 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .jsdialog.ui-text {
 	padding-inline-start: 8px;
+}
+
+.jsdialog.ui-frame-label {
+	font-weight: bold;
+}
+
+/* fieldset and legend - form grouping */
+
+.jsdialog .ui-fieldset {
+	border: none;
+	padding-inline: 0;
+	padding-block: 0;
+}
+
+.jsdialog .ui-legend {
+	padding-inline: 0;
+	font-weight: bold;
 }
 
 /* spinfield */
@@ -894,6 +1033,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	width: 100%;
 }
 
+:dir(rtl) .spinfield {
+	padding: 4px 4px 4px 0;
+}
+
 .spinfieldunit {
 	font-size: var(--default-font-size);
 	color: var(--color-text-dark);
@@ -926,6 +1069,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 	box-sizing: border-box;
 	height: 24px;
+	min-width: 70px;
 }
 
 .ui-listbox-container {
@@ -990,7 +1134,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px;
 	margin-top: 4px;
 	cursor: pointer;
-	pointer-events: none;
+}
+
+.ui-combobox .ui-listbox-arrow {
+	margin-inline-start: -8px;
 }
 
 :dir(rtl) .ui-listbox-arrow {
@@ -1031,6 +1178,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-inline-start: 1px solid var(--color-border);
 	background-color: transparent;
 	padding-left: 20px;
+	border : none;
 }
 
 .ui-combobox-button:hover {
@@ -1073,7 +1221,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-dark);
 }
 
-.ui-combobox-entry.selected:not(:hover) span {
+.ui-combobox-entry.selected:not(:hover) span,
+.margin-item.selected {
 	border: 1px solid var(--color-primary);
 	background-color: var(--color-primary);
 	color: var(--color-primary-text);
@@ -1174,6 +1323,51 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* buttons: btns.css */
 
+/* Overflow group */
+
+.ui-overflow-manager {
+	display: flex !important;
+}
+
+.ui-overflow-group {
+	flex-flow: column;
+}
+
+.ui-overflow-group,
+.ui-overflow-group-content {
+	display: flex;
+}
+
+.ui-overflow-group-bottom {
+	text-align: center;
+	align-items: center;
+}
+
+.notebookbar.ui-overflow-group-bottom {
+	display: flex;
+	padding: 0 5px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.notebookbar .ui-overflow-group-inner {
+	height: var(--notebookbar-element-height);
+	align-content: center;
+}
+
+.ui-overflow-group-label {
+	font-family: var(--jquery-ui-font);
+	font-size: var(--overflow-group-font-size);
+	color: var(--color-text-lighter);
+	flex-grow: 1;
+	text-align: center;
+}
+
+#design-master-page-group-content.ui-overflow-group-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 /* Icon View */
 
 .ui-iconview {
@@ -1182,6 +1376,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	max-height: 40vh;
+	gap: 2px;
+	padding: 2px;
 }
 
 .ui-iconview.mobile-wizard {
@@ -1202,7 +1398,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-self: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
-	padding-top: 5px;
 	text-wrap: nowrap;
 	font-family: var(--jquery-ui-font);
 }
@@ -1218,8 +1413,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-darker);
 }
 
+.ui-iconview-entry img {
+	vertical-align: middle;
+}
+
 .ui-iconview-separator {
 	flex: 0 0 99%;
+}
+
+.ui-iconview-entry-title {
+	font-size: var(--default-font-size);
 }
 
 .icon-view-item-container {
@@ -1227,7 +1430,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 5px;
 	text-align: center;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
@@ -1355,7 +1557,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Word count dialog */
 
-#label9, #documentlabel-mobile {
+#WordCountDialog #label10,
+#WordCountDialog #documentlabel-mobile {
 	color: #636363 !important;
 }
 
@@ -1472,6 +1675,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: 7px;
 	outline: 1px solid var(--color-background-lighter);
 }
+#context-toolbar .unotoolbutton .selected-color {
+	outline: 1px solid var(--color-border-dark-63);
+}
 
 /* dropdown arrow */
 .unoarrow, .menubutton .arrow {
@@ -1524,6 +1730,18 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding: 8px 10px;
 	margin: 2px 0px;
 	background-color: var(--color-background-dark);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.jsdialog.menubutton img {
+	margin-inline-end: 4px;
+}
+
+button.menubutton.sidebar > span {
+	box-shadow: none !important;
+	font-size: var(--default-font-size) !important;
 }
 
 .jsdialog .unobutton img {
@@ -1534,7 +1752,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .menubutton .arrow {
 	display: table-cell !important;
 	float: right;
-	margin: 5px 0px 5px 5px;
+	margin: 5px 0 0 5px;
 }
 
 .jsdialog.menubutton[disabled] {
@@ -1595,10 +1813,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	cursor: pointer;
 	width: 16px;
 	height: 16px;
+	appearance: none;
+	webkit-appearance: none;
+	margin: 0;
 }
 
-.ui-color-picker-entry:hover {
-	border: 1px solid var(--color-primary);
+.ui-color-picker-entry:hover,
+.ui-color-picker-entry:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 1px;
 }
 
 #ui-color-picker-custom,
@@ -1712,20 +1935,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	stop-opacity: 0.2;
 }
 
-/* progressbar */
-.ui-progressbar {
-	display: flex;
-	align-items: center;
-}
-
-.ui-progressbar progress {
-	width: 100%;
-}
-
-.snackbar .ui-progressbar progress {
-	min-width: 120px;
-	margin-right: 10px;
-}
+/* Progress bar - progressbar.css */
 
 /* snackbar */
 .snackbar {
@@ -1738,7 +1948,18 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .snackbar #snackbar-container-progress {
 	align-items: center;
 	max-width: calc(80vw);
+	row-gap: 4px;
 }
+
+.snackbar .ui-progressbar progress {
+	min-width: 120px;
+	margin-right: 10px;
+}
+
+.snackbar .ui-progressbar progress::-webkit-progress-bar {
+	background-color: #FFFF;
+}
+
 #mobile-wizard.popup.snackbar,
 .snackbar.jsdialog-container .ui-dialog-content {
 	min-width: 200px;
@@ -1780,6 +2001,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: transparent !important;
 	border: none !important;
 	margin: 0 !important;
+	justify-content: center;
 }
 
 .snackbar.jsdialog-container [id$='button'].ui-pushbutton.jsdialog {
@@ -1796,12 +2018,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-template-columns: repeat(2, auto);
 }
 
+#mobile-wizard.popup.snackbar [id$='button'] {
+	padding: 8px;
+}
+
 #mobile-wizard.popup.snackbar [id$='button'],
 .snackbar.jsdialog-container [id$='button'] {
 	color: #469cff !important;
 	font-weight: 600;
 	font-size: var(--header-font-size) !important;
-	padding: 8px;
 	display: flex;
 	align-items: center;
 }
@@ -1840,8 +2065,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	left: var(--click-increment);
 }
 
-.notebookbar .ui-content.unobutton:hover,
-.jsdialog .ui-content.unobutton:hover {
+/* targetting buttons inside of split button */
+.notebookbar .splitbutton > .ui-content.unobutton:hover,
+.jsdialog .splitbutton > .ui-content.unobutton:hover {
 	background-color: var(--color-background-darker);
 }
 
@@ -1892,7 +2118,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Writer - Table of Contents, Index or Bibliography dialog, Columns tab */
 [data-theme='dark'] #ColumnPage #pageexample-img,
-[data-theme='dark'] #ColumnPage #valueset-img {
+[data-theme='dark'] #ColumnPage #column-iconview img {
 	filter: invert(.9)
 }
 
@@ -1922,7 +2148,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-custom-textarea {
+	position: relative;
+}
+
+.ui-custom-textarea-overflow-wrapper {
 	overflow: auto;
+	overscroll-behavior: none;
+	width: 100%;
+	height: 100%;
 	display: grid;
 }
 
@@ -1932,6 +2165,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-custom-textarea,
 .ui-custom-textarea-cursor-layer,
+.ui-custom-textarea-handle-layer,
 .ui-custom-textarea-text-layer {
 	font-family: monospace;
 	line-height: 1.2;
@@ -1941,6 +2175,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-custom-textarea-cursor-layer,
+.ui-custom-textarea-handle-layer,
 .ui-custom-textarea-text-layer {
 	padding: 4px;
 	grid-column: 1;
@@ -1952,6 +2187,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-custom-textarea-cursor-layer {
 	color: transparent;
 	pointer-events: none;
+}
+
+.ui-custom-textarea-handle-layer {
+	position: absolute; /* both lets us position handles absolute to this and pulls us out of the overflow: auto */
 }
 
 .ui-custom-textarea.focused .ui-custom-textarea-cursor-layer span.cursor:not(.hidden) {
@@ -2122,10 +2361,19 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: grid;
 	min-width: 400px;
 }
+
 #FormulaDialog .ui-tabs-content.jsdialog {
 	grid-auto-columns: 250px;
 	margin-right: 0.2em;
 	margin-top: 0px;
+}
+
+#FormulaDialog #box3 :is(#grid2, #grid3) {
+	align-items: center;
+}
+
+#FormulaDialog #ALTBOX #headline {
+	font-weight: bold;
 }
 
 div [id^='TemplateDialog'] {
@@ -2169,12 +2417,55 @@ kbd,
 
 /* Insert hyperlink dialog */
 
+#HyperlinkDocPage,
+#HyperlinkInternetPage,
+#HyperlinkMailPage {
+	width: 100%;
+}
+
 #HyperlinkInternetPage #grid2,
 #HyperlinkInternetPage #label2,
 #HyperlinkInternetPage #lbProtocol,
 #HyperlinkInternetPage #linktyp_ftp,
 #HyperlinkInternetPage #linktyp_internet {
 	display: none;
+}
+
+#HyperlinkInternetPage #grid1,
+#HyperlinkInternetPage #grid3,
+#HyperlinkMailPage #grid3 {
+	grid-template-columns: 1fr 3fr !important;
+	column-gap: 0px !important;
+}
+
+/* Third column has nothing to display */
+#HyperlinkMailPage #grid1 {
+	grid-template-columns: 1fr 3fr 0px !important;
+	column-gap: 0px !important;
+}
+
+/* Unlike frame1, and both frames on the mail page, this only has one element,
+   and is therefore a div not a fieldset. Fieldsets have 2px margin on both sides,
+   so add it here to to align elements. */
+#HyperlinkInternetPage #frame2 {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+#HyperlinkDocPage #grid5 {
+	grid-template-columns: 87px 1fr 38px !important;
+}
+
+#HyperlinkDocPage #frame1,
+[id^='Hyperlink'] .ui-grid-cell:empty,
+[id^='Hyperlink'] .hidden {
+	display: none;
+}
+
+/* grid requires all elements to occupy space, but we can reduce their sizing */
+[id^='Hyperlink'] #browse button {
+	margin: auto;
+	max-height: 32px;
 }
 
 /* feature_lock */
@@ -2341,6 +2632,11 @@ kbd,
 	height: 16px;
 }
 
+#findreplacetabbox {
+	justify-content: start;
+}
+
+
 /* text-area overflow on function wizard window */
 
 #FormulaDialog #ed_formula.ui-textarea {
@@ -2357,4 +2653,234 @@ kbd,
 
 .status-hidden {
 	display: none !important;
+}
+
+/* Writer - Format - Page Style - Borders - Presets and Shadow Style - Position */
+/* Calc - Format - Format Page - Borders - Presets and Shadow Style - Position */
+#BorderPage.jsdialog #presets.ui-iconview,
+#BorderPage.jsdialog #shadows.ui-iconview {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* we want presets and shadows in a single row */
+	overflow: visible;
+}
+
+/* Impress - Sidebar - Layouts */
+/* Impress - Layout - Slide Transition */
+[data-theme='dark'] .sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
+[data-theme='dark'] .sidebar-panel #transitions_icons .ui-iconview-entry img {
+	filter: invert(1);
+}
+
+/* Impress - Sidebar - Layouts */
+/* Draw - Insert - Fontwork */
+.sidebar-panel #layoutpanel_icons .ui-iconview-entry img,
+#FontworkGalleryDialog .ui-iconview-entry img {
+	padding: 5px 0;
+}
+
+/* Writer - Format - Page Style - Area - Image */
+#ImageTabPage #frame1 .ui-grid-cell {
+	display: grid;
+	grid-gap: 4px;
+}
+
+/* Calc - Format - Format Cells - Background - Color */
+/* Format -> Character -> Font Effects -> Font color */
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview,
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors).ui-iconview {
+	grid-template-columns: repeat(12, 1fr);
+	width: max-content;
+	line-height: 0;
+	padding: 5px;
+}
+
+#ColorPage.jsdialog #iconview_colors.ui-iconview,
+#colorwindow_iv_colors.ui-iconview {
+	max-height: 19vh;
+}
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img,
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry img {
+	padding: 1px;
+}
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry:is(:hover, .selected),
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry:is(:hover, .selected) {
+	outline: 2px solid var(--color-primary);
+	border: 1px solid transparent;
+	background-color: transparent;
+	border-radius: 0;
+}
+
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry span,
+:is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry span {
+	font-size: 0; /* Hide placeholder text to prevent layout shifts in color palette iconview widgets due to lazy loading */
+}
+
+/* Writer - Format - Character */
+/* Writer - Format - Paragraph */
+/* Writer - Format - Page Style */
+
+#ParagraphPropertiesDialog #ParaIndentSpacing #maingrid,
+#ParagraphPropertiesDialog #labelTP_NUMPARA #NumParaPage,
+#ParagraphPropertiesDialog #labelTP_DROPCAPS #maingrid52,
+#ParagraphPropertiesDialog #transparence #box1,
+#CharacterPropertiesDialog #fonteffects #FontColor,
+#CharacterPropertiesDialog #fonteffects #TextDecoration,
+#CharacterPropertiesDialog #fonteffects #Effects,
+[id^='TemplateDialog'] #Footnote #FootnoteAreaPage {
+	width: fit-content;
+}
+
+[id^='TemplateDialog'] #Footnote #FootnoteAreaPage .menubutton {
+	margin: 0;
+}
+
+#CharacterPropertiesDialog :is(#font, #fonteffects, #position, #asianlayout) img.jsdialog.ui-drawing-area {
+	width: 650px;
+}
+
+#CharacterPropertiesDialog #position #box7,
+#CharacterPropertiesDialog #FontColor #grid3 {
+	align-items: center;
+}
+
+/* Writer - Format - Paragraph - Text Flow */
+/* Writer - Format - Paragraph - Tabs */
+#ParagraphPropertiesDialog #textflow #checkAcrossPage.checkbutton,
+#ParagraphPropertiesDialog #labelTP_TABULATOR #ParagraphTabsPage {
+	grid-column-gap: 0;
+}
+
+/* Writer - Format - Paragraph - Tabs */
+/* Writer - Format - Paragraph - Area - Color */
+#ParagraphPropertiesDialog #labelTP_TABULATOR #entryED_TABTYPE_DECCHAR-input,
+#ParagraphPropertiesDialog #labelTP_TABULATOR #entryED_FILLCHAR_OTHER-input,
+#ColorPage.jsdialog #rgbpreset input,
+#ColorPage.jsdialog #rgbcustom input {
+	max-width: 100px;
+}
+
+/* Writer - Format - Paragraph - Area - Color */
+#ColorPage.jsdialog #rgbpreset {
+	width: max-content;
+}
+
+/* Writer - Format - Page Style - Columns - Settings */
+
+#ColumnPage.jsdialog #grid4 {
+	align-items: center;
+}
+
+#ColumnPage.jsdialog #column-iconview.ui-iconview {
+	grid-template-columns: repeat(5, 1fr);
+	overflow: visible;
+}
+
+/* Format - Bullets and Numbering */
+
+#BulletsAndNumberingDialog
+:is(#pick_bullet_iconview,
+#pick_numbering_iconview,
+#pick_outline_iconview,
+#pick_graphic_iconview).jsdialog.ui-iconview {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+#BulletsAndNumberingDialog #PickBulletPage #changeBulletBtn.jsdialog.ui-grid-cell {
+	justify-content: flex-end;
+}
+
+#BulletsAndNumberingDialog #pick_graphic_iconview.jsdialog.ui-iconview {
+	min-width: 650px;
+}
+
+#BulletsAndNumberingDialog #PickGraphicPage.jsdialog #pick_graphic_iconview.ui-iconview .ui-iconview-entry span {
+	font-size: 0; /* Hide placeholder text to prevent layout shifts in image page of bullets and numbering dialog due to lazy loading */
+}
+
+#BulletsAndNumberingDialog #NumberingPositionPage #previewwin.jsdialog img.jsdialog.ui-drawing-area {
+	width: 370px;
+}
+
+/* Format - Bullets and Numbering - Select image as bullet -> Go to Customize */
+#BulletsAndNumberingDialog #customize #bitmap-button.unobutton {
+	width: fit-content; /* makes button text visible*/
+}
+
+/* Insert - Line - Sidebar - Line Style */
+/* Insert - Line - Sidebar - Thickness */
+#floating_line_style_iconview.ui-iconview.jsdialog,
+#line_iconview.ui-iconview.jsdialog {
+	grid-template-columns: 1fr; /* we want line style in a single column */
+}
+
+/* Insert - Line - Sidebar - Arrow Styles */
+#floating_line_end_iconview.ui-iconview.jsdialog {
+	grid-template-columns: 1fr 1fr;
+}
+
+/* Insert - Line - Sidebar - Line Style */
+/* Insert - Line - Sidebar - Arrow Styles */
+#floating_line_style_iconview.ui-iconview.jsdialog,
+#floating_line_end_iconview.ui-iconview.jsdialog {
+	font-size: 0; /* Hide placeholder text to prevent layout shifts due to lazy loading */
+}
+
+:is(#floating_line_style_iconview, #floating_line_end_iconview, #line_iconview).ui-iconview .ui-iconview-entry {
+	border: 1px solid transparent !important; /* Prevents layout shift by reserving space for the border on hover */
+}
+
+/* Select Chart - Sidebar - Edit Object - Colors */
+:is(#colorful_palettes, #monochromatic_palettes) .ui-iconview-entry {
+	border: 1px solid transparent;
+}
+
+/* Calc - Insert - Chart - Chart Wizard(Data series) */
+
+#CHART2_HID_SCH_WIZARD_ROADMAP #tp_DataSource #box1.jsdialog.ui-grid-cell {
+	align-items: start;
+}
+
+#CHART2_HID_SCH_WIZARD_ROADMAP #tp_DataSource #grid2 :is(#box5, #box6) {
+	align-items: center;
+}
+
+/* Calc - Insert - Chart - Chart Wizard */
+#subtype_iconview.jsdialog.ui-iconview {
+	grid-template-columns: repeat(4, 1fr);
+	overflow: visible;
+}
+
+#CHART2_HID_SCH_WIZARD_ROADMAP.vertical.jsdialog label {
+	width: max-content;
+}
+
+/* Listbox UI grid */
+.jsdialog.ui-grid[role='listbox'] {
+	max-height: 470px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+/* Writer - Form - Properties(Dropdown) */
+#ContentControlDialog #tabindexlabel {
+	width: max-content;
+}
+
+/* Prevents adding empty space on top of tabpages */
+/* i.e Writer - Format - Page Style */
+.single-child-grid {
+	align-self: start;
+}
+
+/* Apply label styling to static text for consistent appearance */
+#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
+#FormulaDialog #ALTBOX #funcdesc,
+#GotoPageDialog #grid1 #page_count {
+	margin: auto 0px;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
+	padding-left: inherit;
 }

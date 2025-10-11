@@ -10,8 +10,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* global globalThis UIManager */
 /* global errorMessages accessToken accessTokenTTL noAuthHeader accessHeader createOnlineModule */
-/* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
+/* global app $ host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
+/* global ServerConnectionService createEmscriptenModule */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function (global) {
@@ -21,20 +23,20 @@ var wopiParams = {};
 var wopiSrc = global.coolParams.get('WOPISrc');
 
 if (wopiSrc !== '' && accessToken !== '') {
-	wopiParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTTL, 'no_auth_header': noAuthHeader };
+	wopiParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTTL };
+	if (noAuthHeader == "1" || noAuthHeader == "true") {
+		wopiParams.no_auth_header = noAuthHeader;
+	}
 }
 else if (wopiSrc !== '' && accessHeader !== '') {
 	wopiParams = { 'access_header': accessHeader };
 }
 
-if (window.ThisIsTheEmscriptenApp)
-	// Temporary hack
-	var filePath = 'file:///sample.docx';
-else
-	var filePath = global.coolParams.get('file_path');
+var filePath = global.coolParams.get('file_path');
 
 app.localeService = new LocaleService();
 app.setPermission(global.coolParams.get('permission') || 'edit');
+app.serverConnectionService = new ServerConnectionService();
 app.layoutingService = new LayoutingService();
 
 var timestamp = global.coolParams.get('timestamp');
@@ -56,7 +58,7 @@ if (wopiSrc != '') {
 }
 
 var notWopiButIframe = global.coolParams.get('NotWOPIButIframe') != '';
-var map = L.map('map', {
+var map = window.L.map('map', {
 	server: host,
 	doc: docURL,
 	docParams: docParams,
@@ -75,10 +77,10 @@ var map = L.map('map', {
 
 ////// Controls /////
 
-map.uiManager = L.control.uiManager();
+map.uiManager = new UIManager();
 map.addControl(map.uiManager);
-if (!L.Browser.cypressTest)
-	map.tooltip = L.control.tooltip();
+if (!window.L.Browser.cypressTest)
+	map.tooltip = window.L.control.tooltip();
 
 map.uiManager.initializeBasicUI();
 
@@ -89,7 +91,7 @@ if (host === '' && !window.ThisIsAMobileApp) {
 	map.uiManager.showInfoModal('empty-host-url-modal', '', errorMessages.emptyhosturl, '', _('OK'), null, false);
 }
 
-L.Map.THIS = map;
+window.L.Map.THIS = map;
 app.map = map;
 app.idleHandler.map = map;
 
@@ -99,24 +101,11 @@ if (window.ThisIsTheEmscriptenApp) {
 	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
 
-	var Module = {
-		onRuntimeInitialized: function() {
-			map.loadDocument(global.socket);
-		},
-		print: function (text) {
-			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-			console.warn(text);
-		},
-		printErr: function (text) {
-			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-			console.error(text);
-		},
-		arguments_: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
-		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
+	globalThis.Module = createEmscriptenModule(docURL, encodedWOPI, isWopi);
+	globalThis.Module.onRuntimeInitialized = function() {
+		map.loadDocument(global.socket);
 	};
-	createOnlineModule(Module);
-	app.HandleCOOLMessage = Module['_handle_cool_message'];
-	app.AllocateUTF8 = Module['allocateUTF8'];
+	createOnlineModule(globalThis.Module);
 } else {
 	map.loadDocument(global.socket);
 }

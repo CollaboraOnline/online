@@ -50,7 +50,7 @@ public:
 
         const std::string expected("renamefile filename=" + Uri::encode(FilenameUtf8));
 
-        LOG_TST("Got [" << message << "], expect: [" << expected << ']');
+        TST_LOG("Got [" << message << "], expect: [" << expected << ']');
         if (message.find(expected) == 0)
         {
             LOK_ASSERT_STATE(_phase, Phase::WaitRenameNotification);
@@ -67,7 +67,7 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::RenameFile);
 
         TRANSITION_STATE(_phase, Phase::WaitRenameNotification);

@@ -48,8 +48,8 @@ class Evented extends BaseClass {
 	// Parents of this Evented object.
 	private _eventParents: Map<number, Evented>;
 
-	// This points to the outer L.Evented object.
-	// This is needed till we completely get rid of L.Evented.
+	// This points to the outer window.L.Evented object.
+	// This is needed till we completely get rid of window.L.Evented.
 	private _outerObject: any;
 
 	constructor(outerObject?: any) {
@@ -155,7 +155,7 @@ class Evented extends BaseClass {
 		context: any,
 	): void {
 		let foreignCtxtId = 0;
-		// After killing L.Evented, the following check should change to
+		// After killing window.L.Evented, the following check should change to
 		// context !== this.
 		if (context && context !== this._outerObject) {
 			foreignCtxtId = Util.stamp(context);
@@ -234,7 +234,7 @@ class Evented extends BaseClass {
 		}
 
 		let foreignCtxtId = 0;
-		// After killing L.Evented, the following check should change to
+		// After killing window.L.Evented, the following check should change to
 		// context !== this.
 		if (context && context !== this._outerObject) {
 			foreignCtxtId = Util.stamp(context);

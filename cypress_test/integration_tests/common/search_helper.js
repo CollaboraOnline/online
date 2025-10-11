@@ -25,9 +25,11 @@ function typeIntoSearchField(text) {
 
 	cy.cGet('input#search-input').clear().type(text);
 	cy.cGet('input#search-input').should('have.prop', 'value', text);
-	cy.cGet('#searchprev').should('not.have.attr', 'disabled');
-	cy.cGet('#searchnext').should('not.have.attr', 'disabled');
-	cy.cGet('#cancelsearch').should('be.visible');
+
+	cy.cGet('#searchprev').should('not.be.disabled');
+	cy.cGet('#searchnext').should('not.be.disabled');
+	// FIXME: check visibility
+	cy.cGet('#cancelsearch').should('not.be.disabled');
 
 	cy.log('<< typeIntoSearchField - end');
 }
@@ -37,6 +39,7 @@ function searchNext() {
 	cy.log('>> searchNext - start');
 
 	cy.wait(1000);
+	cy.cGet('#searchnext').should('not.have.attr', 'disabled');
 	cy.cGet('#searchnext').click();
 	cy.wait(2500); // TODO: test search result arrived
 
@@ -48,6 +51,7 @@ function searchPrev() {
 	cy.log('>> searchPrev - start');
 
 	cy.wait(1000);
+	cy.cGet('#searchprev').should('not.have.attr', 'disabled');
 	cy.cGet('#searchprev').click();
 	cy.wait(2500); // TODO: test search result arrived
 

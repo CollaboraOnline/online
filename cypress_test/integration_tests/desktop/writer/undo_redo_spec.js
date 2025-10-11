@@ -2,13 +2,11 @@
 
 var helper = require('../../common/helper');
 var repairHelper = require('../../common/repair_document_helper');
-const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/undo_redo.odt');
-		desktopHelper.switchUIToCompact();
 	});
 
 	function undo() {
@@ -43,7 +41,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 
-		repairHelper.rollbackPastChange('Typing: “World”');
+		repairHelper.rollbackPastChange('Typing: “World”', false, true);
 
 		helper.selectAllText();
 

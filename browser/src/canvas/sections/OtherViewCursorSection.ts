@@ -15,9 +15,9 @@
 class OtherViewCursorSection extends HTMLObjectSection {
     documentObject: boolean = true;
     interactable: boolean = false; // We don't bother with events.
-    zIndex: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-    drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-    processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
+    zIndex: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+    drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+    processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
 
     static sectionNamePrefix = 'OtherViewCursor ';
     static sectionPointers: Array<OtherViewCursorSection> = [];
@@ -61,7 +61,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
         const color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
 
         if (rectangleData) {
-            rectangle = new app.definitions.simpleRectangle(rectangleData[0], rectangleData[1], rectangleData[2], rectangleData[3]);
+            rectangle = new cool.SimpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
         }
 
         rectangle.pWidth = 2 * app.dpiScale; // Width of the cursor.

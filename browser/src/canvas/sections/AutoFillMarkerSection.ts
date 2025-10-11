@@ -12,23 +12,23 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
-declare var L: any;
 
 app.definitions.AutoFillMarkerSection =
 class AutoFillMarkerSection extends CanvasSectionObject {
-	name: string = L.CSections.AutoFillMarker.name;
-	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
-	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
-	zIndex: number = L.CSections.AutoFillMarker.zIndex;
+	processingOrder: number = app.CSections.AutoFillMarker.processingOrder;
+	drawingOrder: number = app.CSections.AutoFillMarker.drawingOrder;
+	zIndex: number = app.CSections.AutoFillMarker.zIndex;
 
 	map: any;
 	cursorBorderWidth: number = 2;
 	selectionBorderWidth: number = 1;
 
+	_showSection: boolean = true; // Store the internal show/hide section through forced readonly hides...
+
 	constructor () {
-		super();
+		super(app.CSections.AutoFillMarker.name);
 		this.documentObject = true;
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.selectedAreaPoint = null;
 		this.sectionProperties.cellCursorPoint = null;
@@ -54,10 +54,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		else {
 			this.size = [Math.round(16 * app.dpiScale), Math.round(16 * app.dpiScale)];
 		}
-	}
 
-	public onResize () {
-		return;
+		app.events.on('updatepermission', this.showHideOnPermissionChange.bind(this));
 	}
 
 	private setMarkerPosition () {
@@ -128,8 +126,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 		if (!desktop) {
 			this.context.beginPath();
-			this.context.moveTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), -0.5);
-			this.context.lineTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), translation[1] - 0.5 - borderWidth);
+			this.context.moveTo(transformX(this.size[0] - 0.5), -0.5);
+			this.context.lineTo(transformX(this.size[0] - 0.5), translation[1] - 0.5 - borderWidth);
 			this.context.stroke();
 		}
 
@@ -140,11 +138,26 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.context.stroke();
 	}
 
+	showHideOnPermissionChange() {
+		this.setShowSection(null);
+	}
+
+	setShowSection(show: boolean) {
+		if (show !== null)
+			this._showSection = show;
+
+		if (app.map._permission === 'readonly') {
+			super.setShowSection(false);
+		} else {
+			super.setShowSection(this._showSection);
+		}
+	}
+
 	public onDraw () {
 		this.drawWhiteOuterBorders();
 	}
 
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	public onMouseMove (point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if ((<any>window).mode.isDesktop())
 			return;
 
@@ -156,29 +169,27 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		if (!this.sectionProperties.draggingStarted) { // Is it first move?
 			this.sectionProperties.draggingStarted = true;
 			this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-			pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
+			pos = new cool.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
 			pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
 			this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
 		}
 
-		point[0] = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
-		point[1] = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
-		pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
+		point.pX = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
+		point.pY = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
 
-		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
+		this.sectionProperties.docLayer._postMouseEvent('move', point.x, point.y, 1, 1, 0);
 
 		this.map.scrollingIsHandled = true;
 		this.stopPropagating(); // Stop propagating to sections.
 		e.stopPropagation(); // Stop native event.
 	}
 
-	public onMouseUp (point: Array<number>, e: MouseEvent) {
+	public onMouseUp (point: cool.SimplePoint, e: MouseEvent) {
 		if (this.sectionProperties.draggingStarted) {
 			this.sectionProperties.draggingStarted = false;
-			point[0] += this.myTopLeft[0] + this.size[0] * 0.5;
-			point[1] += this.myTopLeft[1] + this.size[1] * 0.5;
-			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
-			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
+			point.pX += this.myTopLeft[0] + this.size[0] * 0.5;
+			point.pY += this.myTopLeft[1] + this.size[1] * 0.5;
+			this.sectionProperties.docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
 		}
 
 		this.map.scrollingIsHandled = false;
@@ -187,7 +198,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		(<any>window).IgnorePanning = false;
 	}
 
-	public onMouseDown (point: Array<number>, e: MouseEvent) {
+	public onMouseDown (point: cool.SimplePoint, e: MouseEvent) {
 		if ((<any>window).mode.isDesktop()) {
 			if (this.sectionProperties.inMouseDown)
 				return;
@@ -197,12 +208,12 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			// revert coordinates to global and fire event again with position in the center
 			// inverse of convertPositionToCanvasLocale
 			var canvasClientRect = this.containerObject.getCanvasBoundingClientRect();
-			point[0] = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
-			point[1] = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
+			point.pX = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
+			point.pY = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
 
 			var newPoint = {
-				clientX: point[0],
-				clientY: point[1],
+				clientX: point.pX,
+				clientY: point.pY,
 			};
 
 			var newEvent = this.sectionProperties.docLayer._createNewMouseEvent('mousedown', newPoint);
@@ -218,29 +229,26 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	}
 
 	public onMouseEnter () {
-		this.sectionProperties.mapPane.style.cursor = 'crosshair';
+		const grid: any = document.querySelector('.leaflet-map-pane');
+		grid.classList.remove('spreadsheet-cursor');
+		grid.style.cursor = 'crosshair';
 	}
 
 	public onMouseLeave () {
-		this.sectionProperties.mapPane.style.cursor = 'default';
+		const grid: any = document.querySelector('.leaflet-map-pane');
+		grid.classList.add('spreadsheet-cursor');
 	}
 
 	public onNewDocumentTopLeft () {
 		this.setMarkerPosition();
 	}
 
-	public onMouseWheel () { return; }
-	public onClick () { return; }
-	public onDoubleClick (point: Array<number>, e: MouseEvent) {
+	public onDoubleClick (point: cool.SimplePoint, e: MouseEvent) {
 		this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-		var pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
+		var pos = new cool.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
 		pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
 		this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 2, 1, 0);
 		this.stopPropagating(); // Stop propagating to sections.
 		e.stopPropagation(); // Stop native event.
 	}
-	public onContextMenu () { return; }
-	public onMultiTouchStart () { return; }
-	public onMultiTouchMove () { return; }
-	public onMultiTouchEnd () { return; }
 };

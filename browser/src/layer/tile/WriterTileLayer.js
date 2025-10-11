@@ -13,10 +13,11 @@
  */
 
 /* global app GraphicSelection cool TileManager */
-L.WriterTileLayer = L.CanvasTileLayer.extend({
+window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 	newAnnotation: function (commentData) {
-		const comment = new cool.Comment(commentData, {}, app.sectionContainer.getSectionWithName(L.CSections.CommentList.name));
+		const name = cool.Comment.makeName(commentData);
+		const comment = new cool.Comment(name, commentData, {}, app.sectionContainer.getSectionWithName(app.CSections.CommentList.name));
 
 		if (app.file.textCursor.visible) {
 			comment.sectionProperties.data.anchorPos = [app.file.textCursor.rectangle.x2, app.file.textCursor.rectangle.y1];
@@ -25,8 +26,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			comment.sectionProperties.data.anchorPos = [GraphicSelection.rectangle.x1, GraphicSelection.rectangle.y2];
 		}
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(comment);
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).modify(comment);
 	},
 
 	beforeAdd: function (map) {
@@ -49,10 +50,10 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 				comment.id = comment.id.toString();
 				comment.parent = comment.parentId.toString();
 			});
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importComments(values.comments);
 		}
 		else if (values.redlines && values.redlines.length > 0) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importChanges(values.redlines);
 		}
 		else if (this._map.zotero && values.userDefinedProperties) {
 			this._map.zotero.handleCustomProperty(values.userDefinedProperties);
@@ -72,7 +73,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		} else if (this._map.zotero && values.sections) {
 			this._map.zotero.onFieldValue(values.sections);
 		} else {
-			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			window.L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
@@ -103,16 +104,15 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
 
-		var sizeChanged = statusJSON.width !== app.file.size.x || statusJSON.height !== app.file.size.y;
+		var sizeChanged = statusJSON.width !== app.activeDocument.fileSize.x || statusJSON.height !== app.activeDocument.fileSize.y;
 
 		if (statusJSON.viewid !== undefined) this._viewId = statusJSON.viewid;
 
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
 		if (sizeChanged) {
-			app.file.size.x = statusJSON.width;
-			app.file.size.y = statusJSON.height;
-			app.view.size = app.file.size.clone();
+			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
+			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
 		}

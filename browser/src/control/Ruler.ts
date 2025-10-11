@@ -11,7 +11,7 @@
  *
  * Ruler.ts - Base Class for Ruler Functionality
  *
- * This file defines the core logic for the Ruler feature, shared by both 
+ * This file defines the core logic for the Ruler feature, shared by both
  * horizontal (HRuler) and vertical (VRuler) implementations.
  *
  * ### Key Features:
@@ -117,7 +117,10 @@ abstract class Ruler {
 
 	_updatePaintTimer() {
 		clearTimeout(this.options.timer);
-		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
+		this.options.timer = setTimeout(
+			window.L.bind(this._updateBreakPoints, this),
+			300,
+		);
 	}
 
 	getWindowProperty<T>(propertyName: string): T | undefined {
@@ -126,7 +129,7 @@ abstract class Ruler {
 
 	// Static method to handle the initialization of rulers
 	static initializeRuler(
-		map: ReturnType<typeof L.map>,
+		map: ReturnType<typeof window.L.map>,
 		options: Partial<Options>,
 	) {
 		const isRTL = document.documentElement.dir === 'rtl';

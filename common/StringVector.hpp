@@ -30,6 +30,11 @@ struct StringToken
         _length(length)
     {
     }
+
+    bool operator==(const StringToken& rhs) const
+    {
+        return _index == rhs._index && _length == rhs._length;
+    }
 };
 
 /**

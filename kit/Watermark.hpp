@@ -21,6 +21,13 @@
 #include <string>
 #include <cmath>
 #include <unordered_map>
+#include <memory>
+
+struct BytesDeleter
+{
+    inline void operator()(unsigned char* bytes) { std::free(bytes); }
+};
+using ScopedBytes = std::unique_ptr<unsigned char, BytesDeleter>;
 
 class Watermark final
 {
@@ -124,7 +131,7 @@ private:
         // are always set to 0 (black) and the alpha level is 0 everywhere
         // except on the text area; the alpha level take into account of
         // performing anti-aliasing over the text edges.
-        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &width, &height, 0);
+        ScopedBytes textPixels(_loKitDoc->renderFont(_font.c_str(), _text.c_str(), &width, &height, 0));
 
         if (!textPixels)
         {
@@ -134,9 +141,7 @@ private:
 
         const unsigned int pixel_count = width * height * 4;
 
-        std::vector<unsigned char> text(textPixels, textPixels + pixel_count);
-        // No longer needed.
-        std::free(textPixels);
+        std::vector<unsigned char> text(textPixels.get(), textPixels.get() + pixel_count);
 
         _pixmaps.emplace(key, std::vector<unsigned char>(pixel_count));
         std::vector<unsigned char>& _pixmap = _pixmaps[key];

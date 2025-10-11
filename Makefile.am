@@ -1,3 +1,12 @@
+#
+# Copyright the Collabora Online contributors.
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 ETAGS=ctags -e
 
 if ENABLE_MOBILEAPP
@@ -26,11 +35,15 @@ endif
 
 export ENABLE_DEBUG
 
+QUIET_MKDIRP = $(QUIET_MKDIRP_$(V))
+QUIET_MKDIRP_ = $(QUIET_MKDIRP_$(AM_DEFAULT_VERBOSITY))
+QUIET_MKDIRP_0 = @echo "  MKDIRP  " $@;
+
 bin_PROGRAMS = \
 	coolforkit-caps \
 	coolforkit-ns \
 	coolmount \
-        coolstress \
+	coolstress \
 	coolconvert coolconfig
 
 if ENABLE_LIBFUZZER
@@ -337,7 +350,7 @@ coolconfig_SOURCES = tools/Config.cpp \
                     common/Log.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
-		     common/Util-unix.cpp \
+                    common/Util-unix.cpp \
                     common/Util.cpp
 
 coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
@@ -356,6 +369,9 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/HostUtil.hpp \
+              wsd/PlatformDesktop.hpp \
+              wsd/PlatformMobile.hpp \
+              wsd/PlatformUnix.hpp \
               wsd/PresetsInstall.hpp \
               wsd/Process.hpp \
               wsd/ProofKey.hpp \
@@ -369,6 +385,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/ServerAuditUtil.hpp \
               wsd/ServerURL.hpp \
               wsd/SpecialBrokers.hpp \
+              wsd/SslConfig.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
@@ -384,6 +401,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
                  common/Crypto.hpp \
+                 common/Globals.hpp \
                  common/HexUtil.hpp \
                  common/JsonUtil.hpp \
                  common/FileUtil.hpp \
@@ -393,6 +411,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/Protocol.hpp \
                  common/RegexUtil.hpp \
                  common/StateEnum.hpp \
+                 common/StaticLogHelper.hpp \
                  common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \
@@ -415,6 +434,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/Simd.hpp \
                  common/ThreadPool.hpp \
                  common/Watchdog.hpp \
+                 common/base64.hpp \
                  kit/KitQueue.hpp \
                  kit/LogUI.hpp \
                  net/AsyncDNS.hpp \
@@ -422,13 +442,14 @@ shared_headers = common/Anonymizer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
                  net/HttpRequest.hpp \
+                 net/HttpServer.hpp \
                  net/HttpHelper.hpp \
                  net/NetUtil.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
+                 net/Uri.hpp \
                  net/WebSocketHandler.hpp \
-                 tools/Replay.hpp \
-		 wasm/base64.hpp
+                 tools/Replay.hpp
 if ENABLE_SSL
 shared_headers += net/Ssl.hpp \
                   net/SslSocket.hpp
@@ -466,7 +487,7 @@ GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
 
 dist-hook:
 	git log -1 --format=%h --abbrev=10 > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
-	mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
+	$(QUIET_MKDIRP) mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
 	cp @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.h \
 	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.hxx \
 	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitEnums.h \
@@ -545,11 +566,11 @@ $(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 
 @JAILS_PATH@:
 	@$(CLEANUP_COMMAND)
-	mkdir -p $@
+	$(QUIET_MKDIRP) mkdir -p $@
 
 @CACHE_PATH@:
 	@$(CLEANUP_COMMAND)
-	mkdir -p $@
+	$(QUIET_MKDIRP) mkdir -p $@
 
 presets-dir:
 	@rm -rf $(abs_top_srcdir)/test/data/presets
@@ -592,7 +613,7 @@ QUIET_SBOM_0 = @echo "  SBOM    " $@;
 setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@mkdir -p $(abs_top_builddir)/test/samples
+	$(QUIET_MKDIRP) mkdir -p $(abs_top_builddir)/test/samples
 	$(QUIET_SAMPLES) $(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
 	@echo
 
@@ -769,15 +790,15 @@ $(abs_srcdir)/Doxyfile.cpp.cfg: config.d/Doxyfile.cpp.in
 
 doxygen: $(abs_srcdir)/Doxyfile.cpp.cfg
 	rm -rf doc/cpp
-	mkdir -p doc/cpp
+	$(QUIET_MKDIRP) mkdir -p doc/cpp
 	doxygen $(abs_srcdir)/Doxyfile.cpp.cfg
 
 $(abs_srcdir)/.vscode/settings.json: config.d/vscode/settings.json.am
-	mkdir -p $(abs_srcdir)/.vscode
+	$(QUIET_MKDIRP) mkdir -p $(abs_srcdir)/.vscode
 	sed -e 's|@COOL_DIR@|${abs_srcdir}|g' -e 's|@LOKIT_DIR@|${LOKIT_PATH}|g' $< > $@
 
 $(abs_srcdir)/.vscode/online.code-workspace: config.d/vscode/online.code-workspace.am
-	mkdir -p $(abs_srcdir)/.vscode
+	$(QUIET_MKDIRP) mkdir -p $(abs_srcdir)/.vscode
 	sed -e 's|@COOL_DIR@|${abs_srcdir}|g' -e 's|@LOKIT_DIR@|${LOKIT_PATH}|g' $< > $@
 
 gen-clangd: $(abs_srcdir)/compile_commands.json $(abs_srcdir)/.clangd
@@ -823,7 +844,7 @@ stress:
 		$(stress_file) $(trace_dir)/writer-quick.txt
 
 if ENABLE_CODE_COVERAGE
-GEN_COVERAGE_COMMAND=mkdir -p ${abs_top_srcdir}/gcov && \
+GEN_COVERAGE_COMMAND=$(QUIET_MKDIRP) mkdir -p ${abs_top_srcdir}/gcov && \
 lcov --no-external --capture --rc 'lcov_excl_line=' --rc 'lcov_excl_br_line=LOG_|TST_|LOK_|WSD_|TRANSITION|assert' \
 --compat libtool=on --directory ${abs_top_srcdir}/. --output-file ${abs_top_srcdir}/gcov/cool.coverage.test.info && \
 genhtml --prefix ${abs_top_srcdir}/. --ignore-errors source ${abs_top_srcdir}/gcov/cool.coverage.test.info \
@@ -868,8 +889,9 @@ check-struct-packing:
 	fi
 	@echo coolwsd struct packing is acceptably optimal
 
-czech: check
-	@echo "This should do something much cooler"
+czech: all-local
+	@echo "Running unit-tests only"
+	$(MAKE) check -C test
 
 collabora-online-sbom.spdx.json: coolforkit-ns
 	$(QUIET_SBOM) python3 $(abs_top_srcdir)/scripts/create-sbom.py $(abs_top_builddir)

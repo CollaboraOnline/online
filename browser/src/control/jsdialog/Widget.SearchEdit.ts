@@ -22,7 +22,6 @@
  * }
  */
 
-declare var L: any;
 declare var JSDialog: any;
 
 class SearchEditWidget extends EditWidget {
@@ -37,7 +36,7 @@ class SearchEditWidget extends EditWidget {
 
 	private onSearchInput() {
 		this.updateSearchButtons();
-		if (L.Map.THIS.getDocType() === 'text') {
+		if (window.L.Map.THIS.getDocType() === 'text') {
 			// perform the immediate search in Writer
 			app.searchService.search(
 				this.edit.input.value,
@@ -67,17 +66,17 @@ class SearchEditWidget extends EditWidget {
 			entry.select();
 			e.preventDefault();
 		} else if (e.keyCode === 27) {
-			L.Map.THIS.cancelSearch();
+			window.L.Map.THIS.cancelSearch();
 		}
 	}
 
 	private onSearchFocus() {
-		L.Map.THIS.fire('searchstart');
+		window.L.Map.THIS.fire('searchstart');
 		this.updateSearchButtons();
 	}
 
 	private onSearchBlur() {
-		L.Map.THIS._onGotFocus();
+		window.L.Map.THIS._onGotFocus();
 	}
 
 	private updateSearchButtons() {

@@ -15,17 +15,16 @@
 */
 
 class ShapeHandleScalingSubSection extends CanvasSectionObject {
-	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
 	documentObject: boolean = true;
 
 	constructor(parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any, cropModeEnabled: boolean) {
-		super();
+		super(sectionName);
 
 		this.size = size;
 		this.sectionProperties.position = documentPosition.clone();
-		this.name = sectionName;
 
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
@@ -59,13 +58,13 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number): void {
-		this.context.fillStyle = 'wheat';
+		this.context.fillStyle = 'white';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
 		if (this.sectionProperties.cropModeEnabled)
 			this.drawCropHandles();
 		else
-			this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+			this.context.rect(0, 0, this.size[0], this.size[1]);
 		this.context.closePath();
 		this.context.fill();
 		this.context.stroke();
@@ -172,7 +171,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.sectionProperties.mousePointerType = 'nwse-resize';
 	}
 
-	onMouseEnter(point: number[], e: MouseEvent) {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
 		app.map.dontHandleMouse = true;
 		e.stopPropagation();
 		this.stopPropagating();
@@ -184,7 +183,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseLeave(point: number[], e: MouseEvent) {
+	onMouseLeave(point: cool.SimplePoint, e: MouseEvent) {
 		app.map.dontHandleMouse = false;
 		e.stopPropagation();
 		this.stopPropagating();
@@ -217,17 +216,28 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		return [handle.id, handle.x, handle.y];
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	private doWeKeepRatio(e: MouseEvent) {
+		let keep = e.ctrlKey && e.shiftKey;
+
+		// For images, the keepRatio shortcut works the opposite way.
+		if (app.map.context.context === 'Graphic')
+			keep = !keep;
+
+		return keep;
+	}
+
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
 
-			const keepRatio = e.ctrlKey && e.shiftKey;
+			const keepRatio = this.doWeKeepRatio(e);
+
 			let handleId = this.sectionProperties.ownInfo.id;
 			const parentHandlerSection = this.sectionProperties.parentHandlerSection;
 
-			let x = parentHandlerSection.sectionProperties.closestX ?? point[0] + this.position[0];
-			let y = parentHandlerSection.sectionProperties.closestY ?? point[1] + this.position[1];
+			let x = parentHandlerSection.sectionProperties.closestX ?? point.pX + this.position[0];
+			let y = parentHandlerSection.sectionProperties.closestY ?? point.pY + this.position[1];
 
 			if (keepRatio) {
 				[handleId, x, y] = this.overrideHandle(this.sectionProperties.ownInfo.kind);
@@ -291,7 +301,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 
 	calculateNewShapeRectangleProperties(point: number[], e: MouseEvent) {
 		const shapeRecProps: any = JSON.parse(JSON.stringify(this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties));
-		const keepRatio = e.ctrlKey && e.shiftKey;
+		const keepRatio = this.doWeKeepRatio(e);
 
 		if (keepRatio) {
 			point = this.calculateRatioPoint(point, shapeRecProps);
@@ -351,10 +361,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	// While dragging a handle, we want to simulate handles to their final positions.
-	moveHandlesOnDrag(point: number[], e: MouseEvent) {
+	moveHandlesOnDrag(point: cool.SimplePoint, e: MouseEvent) {
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
-			point[0] + this.myTopLeft[0] + this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0],
-			point[1] + this.myTopLeft[1] + this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]
+			point.pX + this.myTopLeft[0] + app.activeDocument.activeView.viewedRectangle.pX1 - this.containerObject.getDocumentAnchor()[0],
+			point.pY + this.myTopLeft[1] + app.activeDocument.activeView.viewedRectangle.pY1 - this.containerObject.getDocumentAnchor()[1]
 		], e);
 
 		this.sectionProperties.parentHandlerSection.calculateInitialAnglesOfShapeHandlers(shapeRecProps);
@@ -379,7 +389,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.adjustSVGProperties(shapeRecProps);
 	}
 
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
 			(window as any).IgnorePanning = true;
 			this.stopPropagating();

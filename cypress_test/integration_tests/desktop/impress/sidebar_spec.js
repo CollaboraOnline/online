@@ -2,22 +2,11 @@
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
-const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/sidebar.odp');
-		desktopHelper.switchUIToCompact();
-	});
-
-	it.skip('Switch to slide transition Deck', function() {
-		cy.cGet('#slidechangewindow .w2ui-button').should('not.have.class', 'checked');
-		cy.cGet('#layoutvalueset').should('be.visible');
-		cy.cGet('#slidechangewindow .w2ui-button').click({force: true});
-		cy.cGet('#slidechangewindow .w2ui-button').should('have.class', 'checked');
-		cy.cGet('#layoutvalueset').should('not.exist');
-		cy.cGet('#transitions_iconswin').should('be.visible');
 	});
 
 	it('Set gradient background color', function() {
@@ -28,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('#fillattr3').should('be.visible');
 		cy.cGet('#fillattr2').click();
 		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
-		cy.cGet('#colorset').should('be.visible');
+		cy.cGet('#colorwindow_iv_colors.ui-iconview').should('be.visible');
 	});
 
 	it.skip('Set underline using popup', function() {
@@ -42,5 +31,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'text-decoration', 'underline');
+	});
+
+	it('Sidebar menubutton visual test', function() {
+		cy.cGet('#fillstyle select').select('Color');
+		cy.cGet('#fillattr').should('be.visible');
+		cy.cGet('#fillattr').compareSnapshot('sidebar_menubutton_color', 0.1);
 	});
 });

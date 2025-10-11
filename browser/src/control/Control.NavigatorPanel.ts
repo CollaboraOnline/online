@@ -19,16 +19,21 @@ class NavigatorPanel extends SidebarBase {
 	floatingNavIcon: HTMLElement;
 	presentationControlsWrapper: HTMLElement;
 	navigatorDockWrapper: HTMLElement;
+	quickFindWrapper: HTMLElement;
 	closeNavButton: HTMLElement;
 
-	constructor(map: any, options: SidebarOptions) {
-		super(map, options, SidebarType.Navigator);
+	highlightTerm: string;
+	focusQuickFind: boolean;
+
+	constructor(map: any) {
+		super(map, SidebarType.Navigator);
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: ReturnType<typeof window.L.map>) {
 		super.onAdd(map);
 		this.map.on('navigator', this.onNavigator, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
+		this.map.on('focussearch', this.focusSearch, this);
 		this.navigationPanel = document.getElementById(`navigation-sidebar`);
 		this.floatingNavIcon = document.getElementById(`navigator-floating-icon`);
 		this.presentationControlsWrapper = this.navigationPanel.querySelector(
@@ -36,6 +41,9 @@ class NavigatorPanel extends SidebarBase {
 		);
 		this.navigatorDockWrapper = this.navigationPanel.querySelector(
 			'#navigator-dock-wrapper',
+		);
+		this.quickFindWrapper = this.navigationPanel.querySelector(
+			'#quickfind-dock-wrapper',
 		);
 		this.map.on(
 			'zoomend',
@@ -64,8 +72,14 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	initializeNavigator(docType: string) {
+		app.layoutingService.appendLayoutingTask(() => {
+			this.initializeImpl(docType);
+		});
+	}
+
+	initializeImpl(docType: string) {
 		// Create navigation container
-		const navContainer = L.DomUtil.create(
+		const navContainer = window.L.DomUtil.create(
 			'div',
 			'navigation-options-container',
 		);
@@ -84,20 +98,34 @@ class NavigatorPanel extends SidebarBase {
 		}
 
 		// Create header section
-		var navHeader = L.DomUtil.create('div', 'navigation-header', navContainer);
+		var navHeader = window.L.DomUtil.create(
+			'div',
+			'navigation-header',
+			navContainer,
+		);
 
-		var navTitle = L.DomUtil.create('span', 'navigation-title', navHeader);
+		var navTitle = window.L.DomUtil.create(
+			'span',
+			'navigation-title',
+			navHeader,
+		);
 		navTitle.textContent = _('Navigation');
 
+		// Create wrapper for search
+		const navSearchWrapper = window.L.DomUtil.create(
+			'div',
+			'navigation-search-wrapper',
+		);
+
 		// Create a wrapper div
-		const closeNavWrapper = L.DomUtil.create(
+		const closeNavWrapper = window.L.DomUtil.create(
 			'div',
 			'close-navigation-wrapper',
 			navHeader,
 		);
 
 		// Create the close button inside the div
-		this.closeNavButton = L.DomUtil.create(
+		this.closeNavButton = window.L.DomUtil.create(
 			'span',
 			'close-navigation-button',
 			closeNavWrapper,
@@ -105,7 +133,7 @@ class NavigatorPanel extends SidebarBase {
 		const closeNavigationText = _('Close Navigation');
 		this.closeNavButton.setAttribute('aria-label', closeNavigationText);
 		this.closeNavButton.setAttribute('data-cooltip', closeNavigationText);
-		L.control.attachTooltipEventListener(this.closeNavButton, this.map);
+		window.L.control.attachTooltipEventListener(this.closeNavButton, this.map);
 		this.closeNavButton.setAttribute('tabindex', '0');
 
 		this.closeNavButton.addEventListener(
@@ -115,37 +143,123 @@ class NavigatorPanel extends SidebarBase {
 				if (app.showNavigator) {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
+				app.map.focus();
 			}.bind(this),
 		);
 
-		if (this.map.isPresentationOrDrawing()) {
-			var navOptions = L.DomUtil.create('div', 'navigation-tabs', navContainer);
-			navOptions.id = 'navigation-options';
+		const contentDivs = [];
 
-			// Create Slide Sorter tab
-			var slideSorterTab = L.DomUtil.create('div', 'tab selected', navOptions);
-			slideSorterTab.id = 'tab-slide-sorter';
-			slideSorterTab.textContent = _('Slides');
+		// build tabs if we are in an environment that supports them
+		// e.g. in writer we have navigator and quickfind tabs
+		// in impress/draw we have navigator and slide sorter tabs
+		if (this.map.isPresentationOrDrawing() || this.map.isText()) {
+			var navigationTabs = [];
+
+			var navOptions = window.L.DomUtil.create(
+				'div',
+				'navigation-tabs',
+				navContainer,
+			);
+			navOptions.id = 'navigation-options';
+			navOptions.setAttribute('role', 'tablist');
+
+			if (this.map.isPresentationOrDrawing()) {
+				// Create Slide Sorter tab
+				var slideSorterTab = window.L.DomUtil.create(
+					'button',
+					'tab',
+					navOptions,
+				);
+				slideSorterTab.id = 'tab-slide-sorter';
+				slideSorterTab.textContent = _('Slides');
+
+				if (this.presentationControlsWrapper) {
+					slideSorterTab.setAttribute(
+						'aria-controls',
+						'presentation-controls-wrapper',
+					);
+
+					this.presentationControlsWrapper.setAttribute('role', 'tabpanel');
+					this.presentationControlsWrapper.setAttribute(
+						'aria-labelledby',
+						'tab-slide-sorter',
+					);
+					contentDivs.push(this.presentationControlsWrapper);
+				}
+				navigationTabs.push(slideSorterTab);
+			}
 
 			// Create Navigator tab
-			var navigatorTab = L.DomUtil.create('div', 'tab', navOptions);
+			var navigatorTab = window.L.DomUtil.create('button', 'tab', navOptions);
 			navigatorTab.id = 'tab-navigator';
 			navigatorTab.textContent = _('Outline');
+			if (this.navigatorDockWrapper) {
+				navigatorTab.setAttribute('aria-controls', 'navigator-dock-wrapper');
 
-			// Tab Click Event Listener
-			[slideSorterTab, navigatorTab].forEach((tab) => {
-				tab.addEventListener(
-					'click',
-					function () {
-						this.switchNavigationTab(tab.id);
-					}.bind(this),
+				this.navigatorDockWrapper.setAttribute('role', 'tabpanel');
+				this.navigatorDockWrapper.setAttribute(
+					'aria-labelledby',
+					'tab-navigator',
 				);
-			});
+				contentDivs.push(this.navigatorDockWrapper);
+			}
+			navigationTabs.push(navigatorTab);
+
+			if (this.map.isText()) {
+				// Create Quick Find tab
+				var quickFindTab = window.L.DomUtil.create('button', 'tab', navOptions);
+				quickFindTab.id = 'tab-quick-find';
+				quickFindTab.textContent = _('Results');
+
+				if (this.quickFindWrapper) {
+					quickFindTab.setAttribute('aria-controls', 'quickfind-dock-wrapper');
+
+					this.quickFindWrapper.setAttribute('role', 'tabpanel');
+					this.quickFindWrapper.setAttribute(
+						'aria-labelledby',
+						'tab-quick-find',
+					);
+					contentDivs.push(this.quickFindWrapper);
+				}
+				navigationTabs.push(quickFindTab);
+			}
+
+			if (navigationTabs.length > 0) {
+				// Set up ARIA attributes for tabs
+				navigationTabs.forEach((tab, index) => {
+					tab.setAttribute('role', 'tab');
+					// Only first tab initially selected
+					if (index === 0) {
+						tab.setAttribute('aria-selected', 'true');
+						tab.classList.add('selected');
+					} else {
+						tab.setAttribute('aria-selected', 'false');
+						tab.setAttribute('tabindex', '-1');
+					}
+				});
+
+				// Tab Click Event Listener
+				navigationTabs.forEach((tab) => {
+					tab.addEventListener(
+						'click',
+						function () {
+							this.switchNavigationTab(tab.id);
+						}.bind(this),
+					);
+				});
+
+				// Initialize keyboard navigation
+				JSDialog.KeyboardTabNavigation(navigationTabs, contentDivs);
+			}
 		}
 
 		if (this.navigationPanel) {
 			// Insert navigation container as the first child & navHeader as next-child of navigator-panel
 			this.navigationPanel.prepend(navContainer);
+			if (this.map.isText()) {
+				this.navigationPanel.prepend(navSearchWrapper);
+				this.createSearchBar(navSearchWrapper);
+			}
 			this.navigationPanel.prepend(navHeader);
 		}
 	}
@@ -157,7 +271,7 @@ class NavigatorPanel extends SidebarBase {
 		this.floatingNavIcon.setAttribute('tabindex', '-1');
 		const navigatorText = _('Navigator');
 		this.floatingNavIcon.setAttribute('data-cooltip', navigatorText);
-		L.control.attachTooltipEventListener(this.floatingNavIcon, this.map);
+		window.L.control.attachTooltipEventListener(this.floatingNavIcon, this.map);
 
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');
@@ -190,6 +304,8 @@ class NavigatorPanel extends SidebarBase {
 				} else {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
+				// TODO: handle properly keyboard navigation in navigator: ESC to exit, close button
+				app.map.focus();
 			}.bind(this),
 		);
 	}
@@ -197,7 +313,7 @@ class NavigatorPanel extends SidebarBase {
 	onNavigator(data: FireEvent) {
 		var navigatorData = data.data;
 		this.builder.setWindowId(navigatorData.id);
-		$(this.container).empty();
+		this.container.innerHTML = '';
 
 		if (
 			navigatorData.action === 'close' ||
@@ -212,20 +328,36 @@ class NavigatorPanel extends SidebarBase {
 
 			this.markNavigatorTreeView(navigatorData);
 
-			this.builder.build(this.container, [navigatorData]);
+			this.builder.build(this.container, [navigatorData], false);
 			// There is case where user can directly click navigator from notebookbar view option
 			// in that case we first show the navigation panel and then switch to tab view
 			this.showNavigationPanel();
+			// TODO: remove jQuery animation
 			$('#navigator-dock-wrapper').show(200);
 			app.showNavigator = true;
-			// this will update the indentation marks for elements like ruler
-			app.map.fire('fixruleroffset');
-			if (app.map.isPresentationOrDrawing()) {
+			if (
+				app.map.isPresentationOrDrawing() &&
+				!this.isNavigationPanelVisible()
+			) {
+				this.switchNavigationTab('tab-slide-sorter');
+			} else {
 				this.switchNavigationTab('tab-navigator');
+			}
+			if (this.focusQuickFind) {
+				this.switchNavigationTab('tab-quick-find');
+				this.focusSearch();
+				this.focusQuickFind = false;
 			}
 		} else {
 			this.closeSidebar();
 		}
+	}
+
+	onJSUpdate(e: FireEvent) {
+		if (this.highlightTerm && this.highlightTerm.trim().length > 0) {
+			e.data.control.highlightTerm = this.highlightTerm;
+		}
+		return super.onJSUpdate(e);
 	}
 
 	closeSidebar() {
@@ -239,19 +371,37 @@ class NavigatorPanel extends SidebarBase {
 		// Remove 'selected' class from all tabs
 		this.navigationPanel
 			.querySelectorAll('.navigation-tabs .tab')
-			.forEach((t) => t.classList.remove('selected'));
+			.forEach((t) => {
+				t.classList.remove('selected');
+				t.setAttribute('aria-selected', 'false');
+				t.setAttribute('tabindex', '-1');
+			});
 
 		// Add 'selected' class to the clicked tab
-		this.navigationPanel.querySelector('#' + tabId).classList.add('selected');
+		// In Calc we don't have tabs so far
+		const tab = this.navigationPanel.querySelector('#' + tabId);
+		if (tab) {
+			tab.classList.add('selected');
+			tab.setAttribute('aria-selected', 'true');
+			tab.removeAttribute('tabindex');
+		}
 
 		// Toggle visibility based on tabId
 		if (tabId === 'tab-slide-sorter') {
+			// todo: must be a better way to handle this
 			this.presentationControlsWrapper.style.display = 'block';
 			this.navigatorDockWrapper.style.display = 'none';
-		} else {
+			this.quickFindWrapper.style.display = 'none';
+		} else if (tabId === 'tab-navigator') {
 			if (!app.showNavigator) app.map.sendUnoCommand('.uno:Navigator');
 			this.presentationControlsWrapper.style.display = 'none';
 			this.navigatorDockWrapper.style.display = 'block';
+			this.quickFindWrapper.style.display = 'none';
+		} else if (tabId === 'tab-quick-find') {
+			if (!app.showQuickFind) app.map.sendUnoCommand('.uno:QuickFind'); // todo add showQuickFind to other areas of app
+			this.presentationControlsWrapper.style.display = 'none';
+			this.navigatorDockWrapper.style.display = 'none';
+			this.quickFindWrapper.style.display = 'block';
 		}
 	}
 
@@ -268,17 +418,110 @@ class NavigatorPanel extends SidebarBase {
 	}
 
 	showNavigationPanel() {
-		this.navigationPanel.classList.add('visible');
-		this.floatingNavIcon.classList.remove('visible');
+		app.layoutingService.appendLayoutingTask(() => {
+			this.navigationPanel.classList.add('visible');
+			this.floatingNavIcon.classList.remove('visible');
+			// this will update the indentation marks for elements like ruler
+			app.map.fire('fixruleroffset');
+		});
+	}
+
+	isNavigationPanelVisible(): boolean {
+		return this.navigationPanel.classList.contains('visible');
 	}
 
 	closeNavigation() {
-		this.navigationPanel.classList.remove('visible');
-		this.floatingNavIcon.classList.add('visible');
-		this.handleFloatingButtonVisibilityOnZoomChange(); // on close panel we should check if we can display nav icon or not based on zoom level
+		app.layoutingService.appendLayoutingTask(() => {
+			this.navigationPanel.classList.remove('visible');
+			this.floatingNavIcon.classList.add('visible');
+			this.handleFloatingButtonVisibilityOnZoomChange(); // on close panel we should check if we can display nav icon or not based on zoom level
+		});
+	}
+
+	preFocusQuickFind() {
+		this.focusQuickFind = true;
+	}
+
+	focusSearch() {
+		const searchInput = document.getElementById(
+			'navigator-search-input',
+		) as HTMLInputElement;
+		if (!searchInput) return;
+
+		app.layoutingService.appendLayoutingTask(() => {
+			searchInput.focus();
+		});
+	}
+
+	createSearchBar(wrapper: HTMLElement) {
+		var data = {
+			id: '',
+			type: 'container',
+			children: [
+				{
+					id: 'navigator-search',
+					type: 'edit',
+					placeholder: _('Search...'),
+					text: '',
+				} as EditWidgetJSON,
+				{
+					id: '',
+					type: 'toolbox',
+					text: '',
+					children: [
+						{
+							id: 'navigator-search-button',
+							type: 'pushbutton',
+							text: '',
+							image: 'lc_recsearch.svg',
+						},
+					],
+				},
+			],
+		} as WidgetJSON;
+
+		this.builder.build(wrapper, [data], false);
+	}
+
+	override callback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	): void {
+		let searchTerm = '';
+		// Update results tab
+		if (object.id === 'navigator-search-button') {
+			searchTerm = (
+				document.getElementById('navigator-search-input') as HTMLInputElement
+			).value;
+			super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
+		} else if (object.id === 'navigator-search') {
+			searchTerm = data;
+			super.callback(
+				objectType,
+				eventType,
+				{ id: 'Find' },
+				searchTerm,
+				builder,
+			);
+		}
+		// Update outline highlighting
+		// Note: only update on 'activate' or button pressed events to be consistent with results tab
+		if (
+			(object.id == 'navigator-search' && eventType == 'activate') ||
+			object.id == 'navigator-search-button'
+		) {
+			var treeContainer = document.getElementById('contenttree') as any;
+			if (treeContainer) treeContainer.highlightEntries(searchTerm);
+			this.highlightTerm = searchTerm;
+			return;
+		}
+		super.callback(objectType, eventType, object, data, builder);
 	}
 }
 
-JSDialog.NavigatorPanel = function (map: any, options: SidebarOptions) {
-	return new NavigatorPanel(map, options);
+JSDialog.NavigatorPanel = function (map: any) {
+	return new NavigatorPanel(map);
 };

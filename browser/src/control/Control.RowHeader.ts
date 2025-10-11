@@ -20,14 +20,13 @@ declare var UNOModifier: any;
 namespace cool {
 
 export class RowHeader extends cool.Header {
-	name: string = L.CSections.RowHeader.name;
-	anchor:Array<Array<string>> = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+	anchor: Array<Array<string>> = [[app.CSections.CornerHeader.name, 'bottom', 'top'], [app.CSections.RowGroup.name, 'right', 'left']];
 	position: number[] = [0, 0]; // This section's myTopLeft is placed according to corner header and row group sections.
 	size: number[] = [48 * app.dpiScale, 0]; // No initial height is necessary.
 	expand: string[] = ['top', 'bottom']; // Expand vertically.
-	processingOrder: number = L.CSections.RowHeader.processingOrder;
-	drawingOrder: number = L.CSections.RowHeader.drawingOrder;
-	zIndex: number = L.CSections.RowHeader.zIndex;
+	processingOrder: number = app.CSections.RowHeader.processingOrder;
+	drawingOrder: number = app.CSections.RowHeader.drawingOrder;
+	zIndex: number = app.CSections.RowHeader.zIndex;
 	cursor: string = 'row-resize';
 
 	_current: number;
@@ -35,14 +34,14 @@ export class RowHeader extends cool.Header {
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
-		super();
+		super(app.CSections.RowHeader.name);
 
 		if (cursor)
 			this.cursor = cursor;
 	}
 
 	onInitialize(): void {
-		this._map = L.Map.THIS;
+		this._map = window.L.Map.THIS;
 		this._isColumn = false;
 		this._current = -1;
 		this._resizeHandleSize = 15 * app.dpiScale;
@@ -64,40 +63,48 @@ export class RowHeader extends cool.Header {
 
 		this._menuItem = {
 			'.uno:InsertRowsBefore': {
-				name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:InsertRowsBefore', 'spreadsheet', true), 'InsertRowsBefore'),
+				isHtmlName: true,
 				callback: (this._insertRowAbove).bind(this)
 			},
 			'.uno:InsertRowsAfter': {
-				name: _UNO('.uno:InsertRowsAfter', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:InsertRowsAfter', 'spreadsheet', true), 'InsertRowsAfter'),
+				isHtmlName: true,
 				callback: (this._insertRowBelow).bind(this)
 			},
 			'.uno:DeleteRows': {
-				name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:DeleteRows', 'spreadsheet', true), 'DeleteRows'),
+				isHtmlName: true,
 				callback: (this._deleteSelectedRow).bind(this)
 			},
 			'.uno:RowHeight': {
-				name: _UNO('.uno:RowHeight', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:RowHeight', 'spreadsheet', true), 'RowHeight'),
+				isHtmlName: true,
 				callback: (this._rowHeight).bind(this)
 			},
 			'.uno:SetOptimalRowHeight': {
-				name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true), 'SetOptimalRowHeight'),
+				isHtmlName: true,
 				callback: (this._optimalHeight).bind(this)
 			},
 			'.uno:HideRow': {
-				name: _UNO('.uno:HideRow', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:HideRow', 'spreadsheet', true), 'HideRow'),
+				isHtmlName: true,
 				callback: (this._hideRow).bind(this)
 			},
 			'.uno:ShowRow': {
-				name: _UNO('.uno:ShowRow', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:ShowRow', 'spreadsheet', true), 'ShowRow'),
+				isHtmlName: true,
 				callback: (this._showRow).bind(this)
 			},
 			'.uno:FreezePanes': {
-				name: _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:FreezePanes', 'spreadsheet', true), 'FreezePanes'),
+				isHtmlName: true,
 				callback: (this._freezePanes).bind(this)
 			}
 		};
 
-		this._menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
+		this._menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 		this._headerInfo = new cool.HeaderInfo(this._map, false /* isCol */);
 	}
 
@@ -178,8 +185,11 @@ export class RowHeader extends cool.Header {
 		return {left: left, right: right, top: top, bottom: bottom};
 	}
 
-	onClick (point: number[], e: MouseEvent): void {
+	onClick (point: cool.SimplePoint, e: MouseEvent): void {
 		if (!this._mouseOverEntry)
+			return;
+
+		if (this._hitResizeArea)
 			return;
 
 		const row = this._mouseOverEntry.index;
@@ -252,18 +262,6 @@ export class RowHeader extends cool.Header {
 
 	setOptimalHeightAuto(): void {
 		if (this._mouseOverEntry) {
-			const row = this._mouseOverEntry.index;
-			const command = {
-				Row: {
-					type: 'long',
-					value: row
-				},
-				Modifier: {
-					type: 'unsigned short',
-					value: 0
-				}
-			};
-
 			const extra = {
 				aExtraHeight: {
 					type: 'unsigned short',
@@ -271,7 +269,6 @@ export class RowHeader extends cool.Header {
 				}
 			};
 
-			this._map.sendUnoCommand('.uno:SelectRow', command);
 			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
 		}
 	}

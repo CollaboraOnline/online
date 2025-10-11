@@ -432,8 +432,8 @@ std::atomic<uint64_t> AdminSocketHandler::NextSessionId(1);
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
                                        const std::weak_ptr<StreamSocket>& socket,
                                        const Poco::Net::HTTPRequest& request,
-                                       const std::string& expectedOrigin)
-    : WebSocketHandler(socket.lock(), request, expectedOrigin)
+                                       bool allowedOrigin)
+    : WebSocketHandler(socket.lock(), request, allowedOrigin)
     , _admin(adminManager)
     , _isAuthenticated(false)
 {
@@ -451,7 +451,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
-    if (!Util::isFuzzing())
+    if constexpr (!Util::isFuzzing())
     {
         UnitWSD::get().onAdminQueryMessage(message);
     }
@@ -479,7 +479,7 @@ void AdminSocketHandler::subscribeAsync(const std::shared_ptr<AdminSocketHandler
 bool AdminSocketHandler::handleInitialRequest(
     const std::weak_ptr<StreamSocket> &socketWeak,
     const Poco::Net::HTTPRequest& request,
-    const std::string& expectedOrigin)
+    bool allowedOrigin)
 {
     if (!COOLWSD::AdminEnabled)
     {
@@ -501,7 +501,7 @@ bool AdminSocketHandler::handleInitialRequest(
     {
         Admin &admin = Admin::instance();
         auto handler = std::make_shared<AdminSocketHandler>(&admin, socketWeak,
-                                                            request, expectedOrigin);
+                                                            request, allowedOrigin);
         socket->setHandler(handler);
 
         AdminSocketHandler::subscribeAsync(handler);
@@ -592,7 +592,7 @@ Admin::Admin()
         << (_totalAvailMemKb ? (totalUsedMemKb * 100. / _totalAvailMemKb) : 100) << "% of limit)");
 
     if (_totalAvailMemKb < 1000 * 1024)
-        LOG_WRN("Low memory condition detected: only " << _totalAvailMemKb / 1024
+        LOG_ERR("Low memory condition detected: only " << _totalAvailMemKb / 1024
                                                        << " MB of RAM available");
 
     LOG_INF("Hardware threads: " << std::thread::hardware_concurrency());
@@ -1264,7 +1264,7 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
     std::ostringstream oss;
     getMetrics(oss);
 
-    response->header().setConnectionToken(http::Header::ConnectionToken::Close);
+    response->setConnectionToken(http::Header::ConnectionToken::Close);
     response->setBody(oss.str(), "text/plain");
 
     socket->send(*response);

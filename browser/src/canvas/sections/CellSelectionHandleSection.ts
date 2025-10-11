@@ -9,32 +9,29 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class CellSelectionHandle extends app.definitions.canvasSectionObject {
+class CellSelectionHandle extends CanvasSectionObject {
 	showSection: boolean = false;
-	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
 	documentObject: boolean = true;
 
 	constructor (name: string) {
-        super();
+        super(name);
 
 		this.sectionProperties.circleRadius = 10 * app.dpiScale;
 		this.size = [this.sectionProperties.circleRadius * 2, this.sectionProperties.circleRadius * 2];
-
-		this.name = name; // There will be multiple instances of this class. For the viewer's cursor, name will be owncellcursor. Others will have viewId-cellcursor.
 	}
 
-	private onDragEnd(point: number[]) {
+	private onDragEnd(point: cool.SimplePoint) {
 		app.map.focus();
 		app.map.fire('scrollvelocity', {vx: 0, vy: 0});
 
-		const newPoint = new cool.SimplePoint(0, 0);
-		newPoint.pX = this.position[0] + point[0];
-		newPoint.pY = this.position[1] + point[1];
+		point.pX += this.position[0];
+		point.pY += this.position[1];
 
-		this.sharedOnDragAndEnd(newPoint);
-		app.map._docLayer._onUpdateCellResizeMarkers();
+		this.sharedOnDragAndEnd(point);
+		CellSelectionMarkers.update();
 		app.map.scrollingIsHandled = false;
 	}
 
@@ -43,14 +40,13 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		app.map._docLayer._postSelectTextEvent(type, point.x, point.y);
 	}
 
-	private onDrag(point: number[]) {
-		const newPoint = new cool.SimplePoint(0, 0);
-		newPoint.pX = this.position[0] + point[0];
-		newPoint.pY = this.position[1] + point[1];
+	private onDrag(point: cool.SimplePoint) {
+		point.pX += this.position[0];
+		point.pY += this.position[1];
 
-		app.map.fire('handleautoscroll', { pos: { x: newPoint.cX, y: newPoint.cY }, map: app.map });
+		app.map.fire('handleautoscroll', { pos: { x: point.cX, y: point.cY }, map: app.map });
 
-		this.sharedOnDragAndEnd(newPoint);
+		this.sharedOnDragAndEnd(point);
 	}
 
 	public onDraw() {
@@ -62,7 +58,7 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		this.context.stroke();
 	}
 
-	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {
+	onMouseMove(point: cool.SimplePoint, dragDistance: number[], e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			app.map.scrollingIsHandled = true;
@@ -71,12 +67,12 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		}
 	}
 
-	onMouseDown(point: number[], e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
@@ -84,5 +80,3 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		}
 	}
 }
-
-app.definitions.cellSelectionHandle = CellSelectionHandle;

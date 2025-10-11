@@ -40,7 +40,7 @@ public:
 
     void setReadOnly(bool bValue = true) override;
 
-    void sendFileMode(bool readOnly, bool editComments);
+    void sendFileMode(bool readOnly, bool editComments, bool manageRedlines);
 
     void setLockFailed(const std::string& reason);
 
@@ -280,9 +280,9 @@ public:
         _sentBrowserSetting = sentBrowserSetting;
     }
 
-    void setBrowserSettingsJSON(Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
+    void setBrowserSettingsJSON(const Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
     {
-        _browserSettingsJSON = std::move(jsonObject);
+        _browserSettingsJSON = jsonObject;
     }
 
     Poco::SharedPtr<Poco::JSON::Object> getBrowserSettingJSON()

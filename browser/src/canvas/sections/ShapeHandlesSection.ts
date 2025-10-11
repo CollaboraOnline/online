@@ -57,15 +57,14 @@ class HelperLineStyles {
 }
 
 class ShapeHandlesSection extends CanvasSectionObject {
-	name: string = "shapeHandlesSection";
-	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
 	documentObject: boolean = true;
 	showSection: boolean = false;
 
 	constructor (info: any) {
-        super();
+        super("shapeHandlesSection");
 
 		this.sectionProperties.info = null;
 		this.sectionProperties.handles = [];
@@ -87,6 +86,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.lastDragDistance = [0, 0];
 		this.sectionProperties.pickedIndexX = 0; // Which corner of shape is closest to snap point when moving the shape.
 		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
+		this.sectionProperties.mathObjectBorderColor = 'red'; // Border color for Math objects.
 
 		// These are for snapping the objects to the same level with others' boundaries.
 		this.sectionProperties.closestX = null;
@@ -102,9 +102,19 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.convertToTileTwipsIfNeeded();
 		this.getHandles();
 		this.updateSize();
-		this.addSubSections();
-		this.sectionProperties.shapeRectangleProperties = this.getShapeRectangleProperties();
-		this.calculateInitialAnglesOfShapeHandlers();
+
+		if (GraphicSelection?.extraInfo?.isMathObject === true) {
+			// Math objects don't need handles. They are not resizable or rotateable.
+			// In this case, we want to draw a rectangle around it. So the user can be sure that they selected the object.
+
+			// For drawing the rectangle, use CanvasSectionContainer's awesome border drawing feature.
+			this.borderColor = this.sectionProperties.mathObjectBorderColor;
+		} else {
+			this.addSubSections();
+			this.sectionProperties.shapeRectangleProperties = this.getShapeRectangleProperties();
+			this.calculateInitialAnglesOfShapeHandlers();
+			this.borderColor = null;
+		}
 	}
 
 	private convertToTileTwipsIfNeeded() {
@@ -165,25 +175,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				}
 			}
 		}
-	}
-
-	public static moveHTMLObjectToMapElement(htmlObjectSection: HTMLObjectSection) {
-		htmlObjectSection.getHTMLObject().remove();
-		document.getElementById('map').appendChild(htmlObjectSection.getHTMLObject());
-	}
-
-	public static mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
-		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
 	}
 
 	getShapeWidth(twips = true) {
@@ -265,21 +256,21 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const bottomMiddle = this.sectionProperties.info.handles.kinds.rectangle['7'][0];
 			const bottomRight = this.sectionProperties.info.handles.kinds.rectangle['8'][0];
 
-			this.sectionProperties.handles.push({ info: topLeft, point: new app.definitions.simplePoint(topLeft.point.x - halfWidth, topLeft.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: topMiddle, point: new app.definitions.simplePoint(topMiddle.point.x - halfWidth, topMiddle.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: topRight, point: new app.definitions.simplePoint(topRight.point.x - halfWidth, topRight.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: middleLeft, point: new app.definitions.simplePoint(middleLeft.point.x - halfWidth, middleLeft.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: middleRight, point: new app.definitions.simplePoint(middleRight.point.x - halfWidth, middleRight.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: bottomLeft, point: new app.definitions.simplePoint(bottomLeft.point.x - halfWidth, bottomLeft.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: bottomMiddle, point: new app.definitions.simplePoint(bottomMiddle.point.x - halfWidth, bottomMiddle.point.y - halfHeight) });
-			this.sectionProperties.handles.push({ info: bottomRight, point: new app.definitions.simplePoint(bottomRight.point.x - halfWidth, bottomRight.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: topLeft, point: new cool.SimplePoint(topLeft.point.x - halfWidth, topLeft.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: topMiddle, point: new cool.SimplePoint(topMiddle.point.x - halfWidth, topMiddle.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: topRight, point: new cool.SimplePoint(topRight.point.x - halfWidth, topRight.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: middleLeft, point: new cool.SimplePoint(middleLeft.point.x - halfWidth, middleLeft.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: middleRight, point: new cool.SimplePoint(middleRight.point.x - halfWidth, middleRight.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: bottomLeft, point: new cool.SimplePoint(bottomLeft.point.x - halfWidth, bottomLeft.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: bottomMiddle, point: new cool.SimplePoint(bottomMiddle.point.x - halfWidth, bottomMiddle.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: bottomRight, point: new cool.SimplePoint(bottomRight.point.x - halfWidth, bottomRight.point.y - halfHeight) });
 		}
 	}
 
 	private getAnchorHandle(halfWidth: number, halfHeight: number) {
 		if (this.sectionProperties.info?.handles?.kinds?.anchor) {
 			const anchor = this.sectionProperties.info.handles.kinds.anchor['16'][0];
-			this.sectionProperties.handles.push({ info: anchor, point: new app.definitions.simplePoint(anchor.point.x - halfWidth, anchor.point.y - halfHeight) });
+			this.sectionProperties.handles.push({ info: anchor, point: new cool.SimplePoint(anchor.point.x - halfWidth, anchor.point.y - halfHeight) });
 		}
 	}
 
@@ -320,7 +311,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		x -= this.sectionProperties.rotationHandleWidth * 0.5;
 		y -= this.sectionProperties.rotationHandleHeight * 0.5;
 
-		return new app.definitions.simplePoint((this.position[0] + x) * app.pixelsToTwips, (this.position[1] + y) * app.pixelsToTwips);
+		return new cool.SimplePoint((this.position[0] + x) * app.pixelsToTwips, (this.position[1] + y) * app.pixelsToTwips);
 	}
 
 	private getRotationHandle() {
@@ -341,7 +332,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			if (customHandleList && customHandleList.length > 0) {
 				for (let i = 0; i < customHandleList.length; i++) {
 					const customHandler = customHandleList[i];
-					this.sectionProperties.handles.push({ info: customHandler, point: new app.definitions.simplePoint(customHandler.point.x - halfWidth, customHandler.point.y - halfHeight) });
+					this.sectionProperties.handles.push({ info: customHandler, point: new cool.SimplePoint(customHandler.point.x - halfWidth, customHandler.point.y - halfHeight) });
 				}
 			}
 		}
@@ -354,7 +345,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 				for (let i = 0; i < polyArray.length; i++) {
 					const poly = polyArray[i];
-					this.sectionProperties.handles.push({ info: poly, point: new app.definitions.simplePoint(poly.point.x - halfWidth, poly.point.y - halfHeight) });
+					this.sectionProperties.handles.push({ info: poly, point: new cool.SimplePoint(poly.point.x - halfWidth, poly.point.y - halfHeight) });
 				}
 			}
 		}
@@ -373,7 +364,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 					for (let j = 0; j < glueArray.length; j++) {
 						const info = Object.assign({}, shape);
 						info.id = String(i) + String(j);
-						this.sectionProperties.handles.push({ info: info, point: new app.definitions.simplePoint(glueArray[j].point.x, glueArray[j].point.y) });
+						this.sectionProperties.handles.push({ info: info, point: new cool.SimplePoint(glueArray[j].point.x, glueArray[j].point.y) });
 					}
 				}
 			}
@@ -446,7 +437,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	showUnsupportedMediaWarning() {
 		var videoWarning = _('Document contains unsupported media');
-		L.Map.THIS.uiManager.showSnackbar(videoWarning);
+		window.L.Map.THIS.uiManager.showSnackbar(videoWarning);
 	}
 
 	addEmbeddedVideo(svgString: any) {
@@ -707,7 +698,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		return x !== null ? x: y;
 	}
 
-	sendTransformCommand(point: number[]) {
+	sendTransformCommand(point: cool.SimplePoint) {
 		let x = this.sectionProperties.closestX;
 		if (!x) x = this.sectionProperties.lastDragDistance[0] + this.position[0];
 		else x = this.adjustSnapTransformCoordinate(x, null);
@@ -740,7 +731,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		docLayer.requestNewFiledBasedViewTiles();
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.sectionProperties.svg)
 			this.sectionProperties.svg.style.opacity = 1;
 
@@ -925,7 +916,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseMove(position: number[], dragDistance: number[]) {
+	onMouseMove(position: cool.SimplePoint, dragDistance: number[]) {
 		let canDrag = !app.file.textCursor.visible;
 
 		if (canDrag && app.map.getDocType() === 'presentation') {
@@ -992,17 +983,17 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const left = GraphicSelection.rectangle.pX1;
 			const top = GraphicSelection.rectangle.pY1;
 
-			this.sectionProperties.svg.style.left = Math.round((left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = Math.round((top - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeView.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svgPosition = [left, top];
 		}
 		this.hideSVG();
 	}
 
-	onNewDocumentTopLeft(size: number[]): void {
+	onNewDocumentTopLeft(): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (app.activeDocument.activeView.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 		}
 	}
 
@@ -1028,10 +1019,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.context.beginPath();
 
 		if (this.sectionProperties.closestX !== null)
-			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0]);
+			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeView.viewedRectangle.pX1);
 
 		if (this.sectionProperties.closestY !== null)
-			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1]);
+			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeView.viewedRectangle.pY1);
 
 		this.context.closePath();
 
@@ -1049,7 +1040,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
-			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
+			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeView.viewedRectangle.pX1;
 
 			this.drawXAxis(x);
 
@@ -1064,7 +1055,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
-			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
+			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeView.viewedRectangle.pY1;
 
 			this.drawYAxis(y);
 
@@ -1085,7 +1076,17 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				this.sectionProperties.closestY !== null;
 	}
 
+	private drawSelectionFrame() {
+		this.context.beginPath();
+		this.context.strokeStyle = 'black';
+		this.context.setLineDash([3, 3]);
+		this.context.strokeRect(0, 0, this.size[0], this.size[1]);
+		this.context.setLineDash([]);
+		this.context.closePath();
+	}
+
 	public onDraw() {
+		this.drawSelectionFrame();
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
 		else if (this.anythingToDraw()) {

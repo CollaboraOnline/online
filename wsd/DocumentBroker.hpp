@@ -67,6 +67,8 @@ public:
     UrpHandler(ChildProcess* process) : _childProcess(process)
     {
     }
+
+private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
@@ -79,6 +81,18 @@ public:
         return POLLIN;
     }
     void performWrites(std::size_t /*capacity*/) override {}
+
+    void onDisconnect() override
+    {
+        LOG_TRC("UrpHandler disconnected");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->asyncShutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->shutdownConnection(); // Immediately disconnect.
+        }
+    }
+
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
@@ -230,7 +244,7 @@ class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 
 public:
     /// How to prioritize this document.
-    enum class ChildType {
+    enum class ChildType : bool {
         Interactive, Batch
     };
 
@@ -276,6 +290,11 @@ public:
     void handleProxyRequest(const std::string& id, const Poco::URI& uriPublic, bool isReadOnly,
                             const RequestDetails& requestDetails,
                             const std::shared_ptr<StreamSocket>& socket);
+
+    void proxyOpenRequest(const std::shared_ptr<StreamSocket>& socket,
+                          std::shared_ptr<ClientSession>& clientSession, const std::string& id,
+                          const Poco::URI& uriPublic, const bool isReadOnly,
+                          const RequestDetails& requestDetails);
 
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
@@ -411,7 +430,7 @@ public:
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void sendTileCombine(const TileCombined& tileCombined);
 
-    enum ClipboardRequest {
+    enum ClipboardRequest : std::uint8_t {
         CLIP_REQUEST_SET,
         CLIP_REQUEST_GET,
         CLIP_REQUEST_GET_RICH_HTML_ONLY,
@@ -530,6 +549,16 @@ public:
     void onUrpMessage(const char* data, size_t len);
 
     void setMigrationMsgReceived() { _migrateMsgReceived = true; }
+
+
+    bool getIsFollowmeSlideShowOn() const {return _docState.getIsFollowmeSlideShowOn();}
+    void setIsFollowmeSlideShowOn(bool isSlideShowRunning)  { _docState.setIsFollowmeSlideShowOn(isSlideShowRunning);}
+
+    int getLeaderSlide() const {return _docState.getLeaderSlide();}
+    void setLeaderSlide(int leaderSlide)  { _docState.setLeaderSlide(leaderSlide);}
+
+    int getLeaderEffect() const {return _docState.getLeaderEffect();}
+    void setLeaderEffect(int leaderEffect)  { _docState.setLeaderEffect(leaderEffect);}
 
 #if !MOBILEAPP && !WASMAPP
     /// Get server audit util
@@ -765,6 +794,9 @@ private:
 
     /// Handles the completion of failed uploading to storage.
     void handleUploadToStorageFailed(const StorageBase::UploadResult& uploadResult);
+
+    /// Send the error message about failed upload
+    void reportUploadToStorageFailed();
 
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
@@ -1138,15 +1170,15 @@ private:
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(std::chrono::system_clock::time_point time)
+        void setLastModifiedLocalTime(std::chrono::system_clock::time_point time)
         {
-            _lastModifiedTime = time;
+            _lastModifiedLocalTime = time;
         }
 
         /// Returns the last modified time of the document.
-        std::chrono::system_clock::time_point getLastModifiedTime() const
+        std::chrono::system_clock::time_point getLastModifiedLocalTime() const
         {
-            return _lastModifiedTime;
+            return _lastModifiedLocalTime;
         }
 
         /// True iff a save is in progress (requested but not completed).
@@ -1226,7 +1258,7 @@ private:
             os << indent << "min time between saves: " << minTimeBetweenSaves();
 
             os << indent
-               << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
+               << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedLocalTime);
             os << indent << "saving-timeout: " << getSavingTimeout();
             os << indent << "last save timed-out: " << hasSavingTimedOut();
             os << indent << "last save successful: " << lastSaveSuccessful();
@@ -1238,7 +1270,7 @@ private:
         RequestManager _request;
 
         /// The document's last-modified time.
-        std::chrono::system_clock::time_point _lastModifiedTime;
+        std::chrono::system_clock::time_point _lastModifiedLocalTime;
 
         /// The number of milliseconds between idlesave checks for modification.
         const std::chrono::milliseconds _idleSaveInterval;
@@ -1264,29 +1296,26 @@ private:
     {
     public:
         UploadRequest(std::string uriAnonym,
-                      std::chrono::system_clock::time_point newFileModifiedTime,
+                      std::chrono::system_clock::time_point newFileModifiedLocalTime,
                       const std::shared_ptr<class ClientSession>& session, bool isSaveAs,
                       bool isExport, bool isRename)
             : _startTime(std::chrono::steady_clock::now())
             , _uriAnonym(std::move(uriAnonym))
-            , _newFileModifiedTime(newFileModifiedTime)
+            , _newFileModifiedLocalTime(newFileModifiedLocalTime)
             , _session(session)
             , _isSaveAs(isSaveAs)
             , _isExport(isExport)
             , _isRename(isRename)
+            , _completed(false)
         {
         }
 
-        const std::chrono::milliseconds timeSinceRequest() const
-        {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - _startTime);
-        }
+        std::chrono::steady_clock::time_point startTime() const { return _startTime; }
 
         const std::string& uriAnonym() const { return _uriAnonym; }
-        const std::chrono::system_clock::time_point& newFileModifiedTime() const
+        const std::chrono::system_clock::time_point& newFileModifiedLocalTime() const
         {
-            return _newFileModifiedTime;
+            return _newFileModifiedLocalTime;
         }
 
         std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
@@ -1294,14 +1323,19 @@ private:
         bool isExport() const { return _isExport; }
         bool isRename() const { return _isRename; }
 
+        /// When the callback fires, we set this request as completed, so we destroy it.
+        bool isComplete() const { return _completed; }
+        void setComplete() { _completed = true; }
+
     private:
         const std::chrono::steady_clock::time_point _startTime; ///< The time we made the request.
         const std::string _uriAnonym;
-        const std::chrono::system_clock::time_point _newFileModifiedTime;
+        const std::chrono::system_clock::time_point _newFileModifiedLocalTime;
         const std::weak_ptr<class ClientSession> _session;
         const bool _isSaveAs;
         const bool _isExport;
         const bool _isRename;
+        bool _completed;
     };
 
     /// Responsible for managing document uploading into storage.
@@ -1354,22 +1388,29 @@ private:
         std::size_t uploadFailureCount() const { return _request.lastRequestFailureCount(); }
 
         /// Get the modified-timestamp of the local file on disk we last uploaded.
-        std::chrono::system_clock::time_point getLastUploadedFileModifiedTime() const
+        std::chrono::system_clock::time_point getLastUploadedFileModifiedLocalTime() const
         {
-            return _lastUploadedFileModifiedTime;
+            return _lastUploadedFileModifiedLocalTime;
         }
 
         /// Set the modified-timestamp of the local file on disk we last uploaded.
-        void setLastUploadedFileModifiedTime(std::chrono::system_clock::time_point modifiedTime)
+        void
+        setLastUploadedFileModifiedLocalTime(std::chrono::system_clock::time_point modifiedTime)
         {
-            _lastUploadedFileModifiedTime = modifiedTime;
+            _lastUploadedFileModifiedLocalTime = modifiedTime;
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(const std::string& time) { _lastModifiedTime = time; }
+        void setLastModifiedServerTimeString(const std::string& time)
+        {
+            _lastModifiedServerTimeString = time;
+        }
 
         /// Returns the last modified time of the document.
-        const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
+        const std::string& getLastModifiedServerTimeString() const
+        {
+            return _lastModifiedServerTimeString;
+        }
 
         /// Set size of the document as we've downloaded it, or after a successful upload.
         void setSizeOnServer(std::size_t size) { _sizeOnServer = size; }
@@ -1416,9 +1457,9 @@ private:
                << Util::getTimeForLog(now, _request.lastResponseTime());
             os << indent << "last upload duration: " << lastUploadDuration();
             os << indent << "min time between uploads: " << minTimeBetweenUploads();
-            os << indent << "last modified time (on server): " << getLastModifiedTime();
-            os << indent
-               << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
+            os << indent << "last modified time (on server): " << getLastModifiedServerTimeString();
+            os << indent << "file last modified: "
+               << Util::getTimeForLog(now, _lastUploadedFileModifiedLocalTime);
             os << indent << "last upload was successful: " << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
             os << indent << "size on server: " << _sizeOnServer;
@@ -1430,10 +1471,10 @@ private:
         RequestManager _request;
 
         /// The modified-timestamp of the local file on disk we uploaded last.
-        std::chrono::system_clock::time_point _lastUploadedFileModifiedTime;
+        std::chrono::system_clock::time_point _lastUploadedFileModifiedLocalTime;
 
         /// The modified time of the document in storage, as reported by the server.
-        std::string _lastModifiedTime;
+        std::string _lastModifiedServerTimeString;
 
         /// The size of the document, as we downloaded from the server,
         /// and after successfully uploading.
@@ -1593,6 +1634,15 @@ private:
         DocumentState::KitDisconnected kitDisconnected() const { return _kitDisconnected; }
         bool isKitDisconnected() const { return kitDisconnected() != KitDisconnected::No; }
 
+        bool getIsFollowmeSlideShowOn() const {return _isFollowmeSlideShowOn;}
+        void setIsFollowmeSlideShowOn(bool isSlideShowRunning)  { _isFollowmeSlideShowOn = isSlideShowRunning;}
+
+        int getLeaderSlide() const {return _currentLeaderSlide;}
+        void setLeaderSlide(int leaderSlide)  { _currentLeaderSlide = leaderSlide;}
+
+        int getLeaderEffect() const {return _currentLeaderEffect;}
+        void setLeaderEffect(int leaderEffect)  { _currentLeaderEffect = leaderEffect;}
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "doc state: " << name(status());
@@ -1613,6 +1663,9 @@ private:
         std::atomic<KitDisconnected>
             _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
+        bool _isFollowmeSlideShowOn = false;
+        int _currentLeaderEffect = -1;
+        int _currentLeaderSlide = -1;
     };
 
     /// Transition to a given activity. Returns false if an activity exists.

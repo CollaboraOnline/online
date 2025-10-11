@@ -65,16 +65,15 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
     helpers::getDocumentPathAndURL(docName, filePath, dummy, "testPerf");
 
     const std::string tracePath = TDOC + traceStr;
-    StressSocketHandler::addPollFor(
-        *poll, helpers::getTestServerURI("ws"),
-        filePath, tracePath,
-        stats);
+    constexpr float latencyFactor = 0.1; // ~10x faster replay than recorded.
+    StressSocketHandler::addPollFor(*poll, helpers::getTestServerURI("ws"), filePath, tracePath,
+                                    stats, latencyFactor);
 
     do {
         poll->poll(TerminatingPoll::DefaultPollTimeoutMicroS);
     } while (poll->continuePolling() && poll->getSocketCount() > 0);
 
-    stats->dump();
+    TST_LOG("Stats: " << [&](std::ostream& os) { stats->dump(os); });
 }
 
 
@@ -90,7 +89,7 @@ UnitPerf::UnitPerf() : UnitWSD("UnitPerf")
 
 void UnitPerf::invokeWSDTest()
 {
-    std::cerr << "startup: " << _timer->elapsedTime().count() << "us\n";
+    TST_LOG("startup: " << _timer->elapsedTime().count() << "us\n");
     _timer->restart();
 
     testPerf("writer", "odt", "/../traces/perf-writer.txt");
@@ -103,7 +102,7 @@ void UnitPerf::invokeWSDTest()
 
     long cpuTime = _timer->elapsedTime().count();
 
-    std::cerr << "test: " << cpuTime << "us\n";
+    TST_LOG("test: " << cpuTime << "us\n");
 
     exitTest(TestResult::Ok);
 }

@@ -58,7 +58,7 @@ class EditWidget {
 	): EditWidgetControl {
 		const result: EditWidgetControl = { container: null, input: null };
 
-		var container = L.DomUtil.create(
+		var container = window.L.DomUtil.create(
 			'div',
 			'ui-edit-container ' + builder.options.cssClass,
 			parentContainer,
@@ -66,7 +66,7 @@ class EditWidget {
 		container.id = data.id;
 		result.container = container;
 
-		var edit = L.DomUtil.create(
+		var edit = window.L.DomUtil.create(
 			'input',
 			'ui-edit ' + builder.options.cssClass,
 			container,
@@ -104,14 +104,17 @@ class EditWidget {
 		if (this.callback) callbackToUse = this.callback;
 		if (typeof callbackToUse === 'function')
 			callbackToUse(this.edit.input.value);
-		else
+		else {
+			var eventType = 'change';
+			if (e.key === 'Enter') eventType = 'activate';
 			this.builder.callback(
 				'edit',
-				'change',
+				eventType,
 				this.edit.container,
 				this.edit.input.value,
 				this.builder,
 			);
+		}
 	}
 
 	protected onClick(e: MouseEvent) {

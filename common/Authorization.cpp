@@ -108,12 +108,15 @@ Authorization Authorization::create(const Poco::URI& uri)
             decoded = Uri::decode(param.second);
             type = Authorization::Type::Header;
         } else if (param.first == "no_auth_header") {
-            noHeader = true;
+            std::string value = Uri::decode(param.second);
+            if (value == "1" || value == "true") {
+                noHeader = true;
+            }
         }
     }
 
     if (!decoded.empty())
-        return Authorization(type, decoded, noHeader);
+        return Authorization(type, std::move(decoded), noHeader);
 
     return Authorization();
 }

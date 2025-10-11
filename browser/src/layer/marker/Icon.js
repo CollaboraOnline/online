@@ -1,9 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Icon is an image-based icon class that you can use with L.Marker for custom markers.
- */
+ * window.L.Icon is an image-based icon class that you can use with window.L.Marker for custom markers.
+*/
 
-L.Icon = L.Class.extend({
+/* global cool */
+
+window.L.Icon = window.L.Class.extend({
 	/*
 	options: {
 		iconUrl: (String) (required)
@@ -20,7 +22,7 @@ L.Icon = L.Class.extend({
 	*/
 
 	initialize: function (options) {
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 	},
 
 	createIcon: function (oldIcon) {
@@ -49,8 +51,8 @@ L.Icon = L.Class.extend({
 
 	_setIconStyles: function (img, name) {
 		var options = this.options;
-		var size = L.point(options[name + 'Size']);
-		var anchor = L.point(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
+		var size = cool.Point.toPoint(options[name + 'Size']);
+		var anchor = cool.Point.toPoint(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
 		            size && size.x !== undefined && size.y !== undefined && size.divideBy(2, true));
 
 		img.className = 'leaflet-marker-' + name + ' ' + (options.className || '');
@@ -76,10 +78,10 @@ L.Icon = L.Class.extend({
 	},
 
 	_getIconUrl: function (name) {
-		return L.Browser.retina && this.options[name + 'RetinaUrl'] || this.options[name + 'Url'];
+		return window.L.Browser.retina && this.options[name + 'RetinaUrl'] || this.options[name + 'Url'];
 	}
 });
 
-L.icon = function (options) {
-	return new L.Icon(options);
+window.L.icon = function (options) {
+	return new window.L.Icon(options);
 };

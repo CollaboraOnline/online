@@ -30,6 +30,9 @@
 #if !defined(ANDROID) && !defined(IOS) && !defined(__FreeBSD__)
 #  include <sys/prctl.h>
 #endif
+#if defined(__FreeBSD__)
+#  include <sys/procctl.h>
+#endif
 
 #include <atomic>
 #include <cassert>
@@ -81,7 +84,7 @@ namespace SigUtil
 {
 void triggerDumpState(const std::string &testname)
 {
-    LOG_TST("Dumping state");
+    TST_LOG("Dumping state");
     ::kill(getpid(), SIGUSR1);
 }
 
@@ -120,6 +123,10 @@ void requestShutdown()
     RunState oldState = RunState::Run;
     if (RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown))
         SocketPoll::wakeupWorld();
+}
+
+void resetTerminationFlags()
+{
 }
 
     void checkDumpGlobalState(GlobalDumpStateFn dumpState)
@@ -402,9 +409,21 @@ void requestShutdown()
         if (info)
         {
             signalLog(" code: ");
-            signalLogNumber(info->si_code);
-            signalLog(" for address: 0x");
-            signalLogNumber((size_t)info->si_addr, 16);
+            signalLogNumber(static_cast<std::size_t>(info->si_code), 16);
+            // Also print in decimal.
+            if (info->si_code < 0)
+            {
+                signalLog("(-");
+                signalLogNumber(static_cast<std::size_t>(-info->si_code), 10);
+            }
+            else
+            {
+                signalLog("(");
+                signalLogNumber(static_cast<std::size_t>(info->si_code), 10);
+            }
+
+            signalLog(") for address: 0x");
+            signalLogNumber(reinterpret_cast<std::size_t>(info->si_addr), 16);
         }
         signalLog("\n");
 
@@ -445,7 +464,7 @@ void requestShutdown()
     {
 #if !defined(__ANDROID__)
         signalLog("\nBacktrace ");
-        signalLogNumber(getpid());
+        signalLogNumber(static_cast<std::size_t>(getpid()));
         if (VersionInfo)
         {
             signalLog(" - ");
@@ -566,6 +585,10 @@ void requestShutdown()
     {
 #if !defined(ANDROID) && !defined(__FreeBSD__)
         prctl(PR_SET_PDEATHSIG, SIGKILL);
+#endif
+#if defined(__FreeBSD__)
+        // pid 0 is self
+        procctl(P_PID, 0, PROC_PDEATHSIG_CTL, SIGKILL)
 #endif
     }
 

@@ -1,9 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Polygon implements polygon vector layer (closed polyline with a fill inside).
+ * window.L.Polygon implements polygon vector layer (closed polyline with a fill inside).
  */
 
-L.Polygon = L.Polyline.extend({
+/* global cool */
+
+window.L.Polygon = window.L.Polyline.extend({
 
 	options: {
 		fill: true
@@ -31,11 +33,11 @@ L.Polygon = L.Polyline.extend({
 	},
 
 	_convertLatLngs: function (latlngs) {
-		var result = L.Polyline.prototype._convertLatLngs.call(this, latlngs),
+		var result = window.L.Polyline.prototype._convertLatLngs.call(this, latlngs),
 		    len = result.length;
 
 		// remove last point if it equals first one
-		if (len >= 2 && result[0] instanceof L.LatLng && result[0].equals(result[len - 1])) {
+		if (len >= 2 && result[0] instanceof window.L.LatLng && result[0].equals(result[len - 1])) {
 			result.pop();
 		}
 		return result;
@@ -53,15 +55,15 @@ L.Polygon = L.Polyline.extend({
 
 		var bounds = this._renderer._bounds,
 		    w = this.options.weight,
-		    p = new L.Point(w, w);
+		    p = new cool.Point(w, w);
 
 		// increase clip padding by stroke width to avoid stroke on clip edges
-		bounds = new L.Bounds(bounds.min.subtract(p), bounds.max.add(p));
+		bounds = new cool.Bounds(bounds.min.subtract(p), bounds.max.add(p));
 
 		this._parts = [];
 
 		for (var i = 0, len = this._rings.length, clipped; i < len; i++) {
-			clipped = L.PolyUtil.clipPolygon(this._rings[i], bounds, true);
+			clipped = window.L.PolyUtil.clipPolygon(this._rings[i], bounds, true);
 			if (clipped.length) {
 				this._parts.push(clipped);
 			}
@@ -73,6 +75,6 @@ L.Polygon = L.Polyline.extend({
 	}
 });
 
-L.polygon = function (latlngs, options) {
-	return new L.Polygon(latlngs, options);
+window.L.polygon = function (latlngs, options) {
+	return new window.L.Polygon(latlngs, options);
 };

@@ -10,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.UserList
+ * window.L.Control.UserList
  */
 /* global app */
 
@@ -35,7 +35,7 @@ interface UserEvent {
 	readonly: boolean;
 }
 
-class UserList extends L.Control {
+class UserList extends window.L.Control {
 	options: {
 		userLimitHeader: number;
 		userLimitHeaderWhenFollowing: number;
@@ -66,7 +66,7 @@ class UserList extends L.Control {
 
 	users: Map<number, User> = new Map();
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: any) {
 		this.map = map;
 
 		map.on('addview', this.onAddView, this);
@@ -162,7 +162,7 @@ class UserList extends L.Control {
 		let img = cachedElement;
 
 		if (img === undefined) {
-			img = L.DomUtil.create('img', 'avatar-img') as HTMLImageElement;
+			img = window.L.DomUtil.create('img', 'avatar-img') as HTMLImageElement;
 		}
 
 		app.LOUtil.setUserImage(img, this.map, viewId);
@@ -184,7 +184,7 @@ class UserList extends L.Control {
 		extraInfo: UserExtraInfo,
 		color: string,
 	) {
-		var content = L.DomUtil.create('tr', 'useritem');
+		var content = window.L.DomUtil.create('tr', 'useritem');
 		content.id = 'user-' + viewId;
 		$(document).on(
 			'click',
@@ -192,8 +192,8 @@ class UserList extends L.Control {
 			this.onUseritemClicked.bind(this),
 		);
 
-		var iconTd = L.DomUtil.create('td', 'usercolor', content);
-		var nameTd = L.DomUtil.create('td', 'username cool-font', content);
+		var iconTd = window.L.DomUtil.create('td', 'usercolor', content);
+		var nameTd = window.L.DomUtil.create('td', 'username cool-font', content);
 
 		const avatarElement = this.createAvatar(
 			undefined,
@@ -485,23 +485,23 @@ class UserList extends L.Control {
 		const following = this.getFollowedUser();
 
 		const userElements = users.map(([viewId, user]) => {
-			const userLabel = L.DomUtil.create('div', 'user-list-item--name');
+			const userLabel = window.L.DomUtil.create('div', 'user-list-item--name');
 			userLabel.innerText = user.username;
 
-			const userFollowingLabel = L.DomUtil.create(
+			const userFollowingLabel = window.L.DomUtil.create(
 				'div',
 				'user-list-item--following-label',
 			);
 			userFollowingLabel.innerText = _('Following');
 
-			const userLabelContainer = L.DomUtil.create(
+			const userLabelContainer = window.L.DomUtil.create(
 				'div',
 				'user-list-item--name-container',
 			);
 			userLabelContainer.appendChild(userLabel);
 			userLabelContainer.appendChild(userFollowingLabel);
 
-			const listItem = L.DomUtil.create('div', 'user-list-item');
+			const listItem = window.L.DomUtil.create('div', 'user-list-item');
 			listItem.setAttribute('data-view-id', viewId);
 			listItem.setAttribute('role', 'button');
 
@@ -528,9 +528,9 @@ class UserList extends L.Control {
 			return listItem;
 		});
 
-		const followEditorWrapper = L.DomUtil.create('div', '');
+		const followEditorWrapper = window.L.DomUtil.create('div', '');
 		followEditorWrapper.id = 'follow-editor';
-		const followEditorCheckbox = L.DomUtil.create(
+		const followEditorCheckbox = window.L.DomUtil.create(
 			'input',
 			'follow-editor-checkbox jsdialog ui-checkbox',
 			followEditorWrapper,
@@ -544,7 +544,7 @@ class UserList extends L.Control {
 		(followEditorCheckbox as HTMLInputElement).checked =
 			app.isFollowingEditor();
 
-		const followEditorCheckboxLabel = L.DomUtil.create(
+		const followEditorCheckboxLabel = window.L.DomUtil.create(
 			'label',
 			'follow-editor-label',
 			followEditorWrapper,
@@ -594,13 +594,13 @@ class UserList extends L.Control {
 	}
 }
 
-L.control.userList = function () {
+window.L.control.userList = function () {
 	return new UserList();
 };
 
-L.control.createUserListWidget = function () {
+window.L.control.createUserListWidget = function () {
 	// TODO: this is not interactive
-	const userlistElement = L.DomUtil.create('div');
+	const userlistElement = window.L.DomUtil.create('div');
 	app.map.userList.renderHeaderAvatarPopover(userlistElement);
 	return userlistElement;
 };

@@ -104,9 +104,29 @@ public:
 
     int getBottom() const { return _y2; }
 
-    int getWidth() const { return _x2 - _x1; }
+    int getWidth() const
+    {
+        if (static_cast<long>(_x2) - _x1 > std::numeric_limits<int>::min())
+        {
+            return _x2 - _x1;
+        }
+        else
+        {
+            return std::numeric_limits<int>::min();
+        }
+    }
 
-    int getHeight() const { return _y2 - _y1; }
+    int getHeight() const
+    {
+        if (static_cast<long>(_y2) - _y1 > std::numeric_limits<int>::min())
+        {
+            return _y2 - _y1;
+        }
+        else
+        {
+            return std::numeric_limits<int>::min();
+        }
+    }
 
     bool isValid() const { return _x1 <= _x2 && _y1 <= _y2; }
 

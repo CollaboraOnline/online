@@ -8,6 +8,7 @@ m4_include(COPYRIGHT)m4_dnl
 
 (function (window) {
 
-m4_foreachq([fileJS],[COOL_JS],[m4_syscmd([cat ]fileJS)])
+m4_foreachq([fileJS],[COOL_JS],[m4_syscmd([cat ]fileJS)
+])
 
 }(window));

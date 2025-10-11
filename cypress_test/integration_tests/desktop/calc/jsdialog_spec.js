@@ -7,6 +7,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/help_dialog.ods');
+		cy.viewport(1920,1080);
 	});
 
 	it('JSDialog popup dialog', function() {
@@ -97,14 +98,11 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	it('Open hybrid help dialog', function() {
 		cy.cGet('#Help-tab-label').click();
-		cy.cGet('#Help').click();
+		cy.cGet('#online-help').click();
 		cy.cGet('#online-help-content').should('exist');
 	});
 
 	it('JSDialog dropdown', function() {
-		// Open conditional format menu
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#toolbar-up #home-conditional-format-menu-button').click();
 
 		// Click on overlay to close
@@ -140,7 +138,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#data-input').should('not.be.disabled');
 	});
 
-	it.only('QuerySelector Syntax error', function(){
+	it('QuerySelector Syntax error', function(){
 
 		cy.getFrameWindow().then(function(win) {
 			cy.spy(win.console, 'error').as('consoleError');

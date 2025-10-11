@@ -38,6 +38,8 @@
 #import "MobileApp.hpp"
 #import "Protocol.hpp"
 
+#import "CoolURLSchemeHandler.h"
+
 static inline bool isMessageOfType(const char *message, const char *type, size_t lengthOfMessage) {
     // Note: message is not zero terminated but type is
     size_t typeLen = strlen(type);
@@ -103,74 +105,14 @@ static std::atomic<unsigned> appDocIdCounter(1);
 - (void)send2JS:(const char *)buffer length:(int)length {
     LOG_DBG("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
-    bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
-                          isMessageOfType(buffer, "tilecombine:", length) ||
-                          isMessageOfType(buffer, "delta:", length) ||
-                          isMessageOfType(buffer, "renderfont:", length) ||
-                          isMessageOfType(buffer, "rendersearchlist:", length) ||
-                          isMessageOfType(buffer, "windowpaint:", length) ||
-                          isMessageOfType(buffer, "slidelayer:", length));
-
-    const char *pretext = binaryMessage ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
-                                        : "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
-    const char *posttext = "')});";
-    const int pretextlen = strlen(pretext);
-    const int posttextlen = strlen(posttext);
-
-    std::vector<char> data;
-    // Reserve the maxiumum possible length after encoding
-    // This avoids an excessive number of reallocations. This is overkill
-    // for non-binary messages, but most non-binary messages appear to be
-    // under 1K bytes in length. In contrast, it appears that binary
-    // messags routinely use at least 75% of the maximum possible length.
-    data.reserve(pretextlen + (length * 4) + posttextlen + 1);
-
-    for (int i = 0; i < pretextlen; i++)
-        data.push_back(pretext[i]);
-
-    @autoreleasepool {
-        const NSData * payload = [NSData dataWithBytesNoCopy:const_cast<char*>(buffer) length:length freeWhenDone:NO];
-        const NSString * encodedPayload = [payload base64EncodedStringWithOptions: 0];
-        const std::string_view utf8EncodedPayload = [encodedPayload UTF8String];
-
-        for (const char& character : utf8EncodedPayload)
-            data.push_back(character);
-    }
-
-    for (int i = 0; i < posttextlen; i++)
-        data.push_back(posttext[i]);
-
-    data.push_back(0);
-
-    // Related to issue #5876: don't autorelease large NSStrings
-    // The +[NSString string...] selectors won't be released until
-    // an enclosing autorelease pool is released. But since we use
-    // ARC, we don't know where the compiler has inserted the
-    // autorelease pool so JS messages may not be released until
-    // after a very long time potentially causing an out of memory
-    // crash. So, use the -[[NSString alloc] init...] selectors
-    // instead.
-    NSString *js = [[NSString alloc] initWithUTF8String:data.data()];
-    if (!js) {
-        char outBuf[length + 1];
-        memcpy(outBuf, buffer, length);
-        outBuf[length] = '\0';
-        LOG_ERR("Couldn't create NSString with message: " << outBuf);
-        return;
-    }
-
-    NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
-    if (subjs.length < js.length)
-        subjs = [subjs stringByAppendingString:@"..."];
-
-    // LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-            [self.viewController.webView evaluateJavaScript:js
-                                          completionHandler:^(id _Nullable obj, NSError * _Nullable error)
+    std::string message = std::string(buffer, length);    
+    [(__bridge CoolURLSchemeHandler*)self.viewController.schemeHandler queueSend:message then:^() {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.viewController.webView evaluateJavaScript:@"window.socket.doSend()"
+                                         completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                  {
                      if (error) {
-                         LOG_ERR("Error after " << [subjs UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                         LOG_ERR("Error while notifying MobileSocket of waiting message");
                          NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
                          if (jsException != nil)
                              LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
@@ -178,6 +120,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
                  }
              ];
         });
+    }];
 }
 
 @end

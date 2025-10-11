@@ -24,7 +24,7 @@ export interface SelectionRange {
 	end: number,
 }
 
-export class Header extends app.definitions.canvasSectionObject {
+export class Header extends CanvasSectionObject {
 	_map: any;
 	_textColor: string;
 	_backgroundColor: string;
@@ -51,25 +51,25 @@ export class Header extends app.definitions.canvasSectionObject {
 
 	getFont: () => string;
 
-	constructor () {
-		super();
+	constructor (name: string) {
+		super(name);
 	}
 
 	_initHeaderEntryStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', className, baseElem);
-		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
-		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
+		const elem = window.L.DomUtil.create('div', className, baseElem);
+		this._textColor = window.L.DomUtil.getStyle(elem, 'color');
+		this._backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color');
+		const fontFamily = window.L.DomUtil.getStyle(elem, 'font-family');
 		this.getFont = function() {
 			const selectedSize = this._getFontSize();
 			return selectedSize + 'px ' + fontFamily;
 		}.bind(this);
-		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
-		const borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
+		this._borderColor = window.L.DomUtil.getStyle(elem, 'border-top-color');
+		const borderWidth = window.L.DomUtil.getStyle(elem, 'border-top-width');
 		this._borderWidth = Math.round(parseFloat(borderWidth));
-		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
-		L.DomUtil.remove(elem);
+		this._cursor = window.L.DomUtil.getStyle(elem, 'cursor');
+		window.L.DomUtil.remove(elem);
 	}
 
 	_getFontSize(): number {
@@ -85,18 +85,18 @@ export class Header extends app.definitions.canvasSectionObject {
 
 	_initHeaderEntryHoverStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', className, baseElem);
-		this._hoverColor = L.DomUtil.getStyle(elem, 'background-color');
-		L.DomUtil.remove(elem);
+		const elem = window.L.DomUtil.create('div', className, baseElem);
+		this._hoverColor = window.L.DomUtil.getStyle(elem, 'background-color');
+		window.L.DomUtil.remove(elem);
 	}
 
 	_initHeaderEntrySelectedStyles(className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', className, baseElem);
-		this._selectionTextColor = L.DomUtil.getStyle(elem, 'color');
+		const elem = window.L.DomUtil.create('div', className, baseElem);
+		this._selectionTextColor = window.L.DomUtil.getStyle(elem, 'color');
 
 		const selectionBackgroundGradient: string[] = [];
-		let gradientColors: string = L.DomUtil.getStyle(elem, 'background-image');
+		let gradientColors: string = window.L.DomUtil.getStyle(elem, 'background-image');
 		gradientColors = gradientColors.slice('linear-gradient('.length, -1);
 		while (gradientColors) {
 			const color = gradientColors.split(',', 3);
@@ -109,7 +109,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		if (selectionBackgroundGradient.length) {
 			this._selectionBackgroundGradient = selectionBackgroundGradient;
 		}
-		L.DomUtil.remove(elem);
+		window.L.DomUtil.remove(elem);
 	}
 
 	_initHeaderEntryResizeStyles (className: string): void {
@@ -118,9 +118,9 @@ export class Header extends app.definitions.canvasSectionObject {
 		}
 		else {
 			const baseElem = document.getElementsByTagName('body')[0];
-			const elem = L.DomUtil.create('div', className, baseElem);
-			this._resizeCursor = L.DomUtil.getStyle(elem, 'cursor');
-			L.DomUtil.remove(elem);
+			const elem = window.L.DomUtil.create('div', className, baseElem);
+			this._resizeCursor = window.L.DomUtil.getStyle(elem, 'cursor');
+			window.L.DomUtil.remove(elem);
 		}
 	}
 
@@ -435,12 +435,12 @@ export class Header extends app.definitions.canvasSectionObject {
 		this._map.sendUnoCommand('.uno:FreezePanes');
 	}
 
-	_entryAtPoint(point: number[]): PointEntryQueryResult {
+	_entryAtPoint(point: cool.SimplePoint): PointEntryQueryResult {
 		if (!this._headerInfo)
 			return undefined;
 
 		const isColumn = this._headerInfo._isColumn;
-		const position = isColumn ? point[0]: point[1];
+		const position = isColumn ? point.pX: point.pY;
 
 		let result:PointEntryQueryResult  = null;
 		const isRTL = isColumn && this.isCalcRTL();
@@ -483,7 +483,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		this._bindContextMenu();
 	}
 
-	onMouseLeave (point: number[]): void {
+	onMouseLeave (point: cool.SimplePoint): void {
 		if (point === null) { // This means that the mouse pointer is outside the canvas.
 			if (this.containerObject.isDraggingSomething() && this._dragEntry) { // Were we resizing a row / column before mouse left.
 				this.onDragEnd(this.containerObject.getDragDistance());
@@ -543,7 +543,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		this.context.stroke();
 	}
 
-	onMouseMove (point: number[], dragDistance?: number[]): void {
+	onMouseMove (point: cool.SimplePoint, dragDistance?: number[]): void {
 		const result = this._entryAtPoint(point); // Data related to current entry that the mouse is over now.
 		if (result) { // Is mouse over an entry.
 			this._prevMouseOverEntry = this._mouseOverEntry;
@@ -570,7 +570,7 @@ export class Header extends app.definitions.canvasSectionObject {
 			isMouseOverResizeArea = result.hit;
 
 			// cypress mobile emulation sometimes triggers resizing unintentionally.
-			if (L.Browser.cypressTest)
+			if (window.L.Browser.cypressTest)
 				return;
 
 			if (isMouseOverResizeArea !== this._hitResizeArea) { // Do we need to change cursor (to resize or pointer).
@@ -609,12 +609,12 @@ export class Header extends app.definitions.canvasSectionObject {
 		this._isColumn ? this.setOptimalWidthAuto(): this.setOptimalHeightAuto();
 	}
 
-	onMouseDown (point: number[]): void {
+	onMouseDown (point: cool.SimplePoint): void {
 		this.onMouseMove(point);
 
 		if (this._hitResizeArea) {
-			L.DomUtil.disableImageDrag();
-			L.DomUtil.disableTextSelection();
+			window.L.DomUtil.disableImageDrag();
+			window.L.DomUtil.disableTextSelection();
 
 			// When code is here, this._mouseOverEntry should never be null.
 
@@ -634,8 +634,8 @@ export class Header extends app.definitions.canvasSectionObject {
 	}
 
 	onMouseUp(): void {
-		L.DomUtil.enableImageDrag();
-		L.DomUtil.enableTextSelection();
+		window.L.DomUtil.enableImageDrag();
+		window.L.DomUtil.enableTextSelection();
 
 		this._map.fire('closepopups'); // close all popups if a row/column header is selected
 
@@ -643,10 +643,6 @@ export class Header extends app.definitions.canvasSectionObject {
 			this.onDragEnd(this.containerObject.getDragDistance());
 			this._dragEntry = null;
 		}
-	}
-
-	onNewDocumentTopLeft(): void {
-		return;
 	}
 }
 
@@ -739,7 +735,7 @@ export class HeaderInfo {
 		let scale: number;
 		if (tsManager._inZoomAnim) {
 			const viewBounds = ctx.viewBounds;
-			const freePaneBounds = new L.Bounds(viewBounds.min.add(ctx.splitPos), viewBounds.max);
+			const freePaneBounds = new cool.Bounds(viewBounds.min.add(ctx.splitPos), viewBounds.max);
 
 			scale = tsManager._zoomFrameScale;
 
@@ -758,8 +754,8 @@ export class HeaderInfo {
 				: zoomPos.topLeft.y;
 		} else {
 			startPx = this._isColumn ?
-				section.documentTopLeft[0] + splitPos
-				: section.documentTopLeft[1] + splitPos;
+				app.activeDocument.activeView.viewedRectangle.pX1 + splitPos
+				: app.activeDocument.activeView.viewedRectangle.pY1 + splitPos;
 			scale = 1;
 		}
 
@@ -937,6 +933,3 @@ export class HeaderInfo {
 }
 
 }
-
-L.Control.Header = cool.Header;
-L.Control.Header.HeaderInfo = cool.HeaderInfo;

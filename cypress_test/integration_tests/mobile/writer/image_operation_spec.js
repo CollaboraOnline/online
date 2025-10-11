@@ -40,6 +40,6 @@ describe(['tagmobile'],'Image Operation Tests', function() {
 		});
 
 		cy.wait(1000);
-		helper.assertImageSize(492, 130);
+		helper.assertImageSize(492, 115);
 	});
 });

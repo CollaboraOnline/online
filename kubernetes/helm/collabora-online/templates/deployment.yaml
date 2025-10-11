@@ -132,6 +132,16 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- if .Values.collabora.coolkitconfig_xcu_content }}
+            - name: coolwsd-config
+              mountPath: /etc/coolwsd/coolkitconfig.xcu
+              subPath: coolkitconfig.xcu
+            {{- end }}
+            {{- if .Values.collabora.coolwsd_xml_content }}
+            - name: coolwsd-config
+              mountPath: /etc/coolwsd/coolwsd.xml
+              subPath: coolwsd.xml
+            {{- end }}
             {{- if .Values.collabora.proofKeysSecretRef }}
             - name: wopi-proof
               mountPath: /etc/coolwsd/proof_key
@@ -146,7 +156,7 @@ spec:
               readOnly: true
             {{- end }}
             {{- if .Values.extraVolumeMounts }}
-            {{- .Values.extraVolumeMounts | nindent 12 }}
+            {{- .Values.extraVolumeMounts | toYaml | nindent 12 }}
             {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -163,6 +173,20 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- if or .Values.collabora.coolkitconfig_xcu_content .Values.collabora.coolwsd_xml_content }}
+        - name: coolwsd-config
+          configMap:
+            name: {{ include "collabora-online.fullname" . }}
+            items:
+              {{- if .Values.collabora.coolkitconfig_xcu_content }}
+              - key: coolkitconfig.xcu
+                path: coolkitconfig.xcu
+              {{- end }}
+              {{- if .Values.collabora.coolwsd_xml_content }}
+              - key: coolwsd.xml
+                path: coolwsd.xml
+              {{- end }}
+        {{- end }}
         {{- if .Values.collabora.proofKeysSecretRef }}
         - name: wopi-proof
           secret:
@@ -174,6 +198,6 @@ spec:
             claimName: {{ include "collabora-online.fullname" . }}-custom-fonts
         {{- end }}
         {{- if .Values.extraVolumes }}
-        {{- .Values.extraVolumes | nindent 8 }}
+        {{- .Values.extraVolumes | toYaml | nindent 8 }}
         {{- end }}
 {{- end }}

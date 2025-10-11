@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [25.04.2.2], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [25.04.7.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -153,9 +153,7 @@ AC_ARG_WITH([wasm-additional-files],
                               build of Collabora Office. The files will be available in the WASM in-memory file system as pathnames
                               stripping the initial prefix <path> where they are on the build system. For instance, if you give
                               --with-wasm-additional-files=$HOME/our-sample-docs, and there is a file $HOME/our-sample-docs/temp/test.docx,
-                              that will be available in the online.wasm as /temp/test.docx.
-                              NOTE: Temporarily for now, this option is mandatory and the additional files should contain a document
-                              in the root called "sample.docx"]))
+                              that will be available in the online.wasm as /temp/test.docx.]))
 
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
@@ -256,6 +254,11 @@ AC_ARG_WITH([lokit-path],
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
                            [Path to a working installation directory or instdir of LibreOffice]))
+
+AC_ARG_WITH([lo-sourcedir],
+            AS_HELP_STRING([--with-lo-sourcedir=<path>],
+                           [Mandatory, and relevant, only for a Wasm build.
+                            Path to a LibreOffice core source tree.]))
 
 AC_ARG_WITH([lo-builddir],
             AS_HELP_STRING([--with-lo-builddir=<path>],
@@ -399,6 +402,24 @@ AC_ARG_ENABLE([feature-lock],
 AC_ARG_ENABLE([feature-restriction],
               AS_HELP_STRING([--enable-feature-restriction],
                              [Enable control over which uno-commands/feature to disable completely.]))
+
+AC_ARG_ENABLE([wasm-embindtest],
+              AS_HELP_STRING([--enable-wasm-embindtest],
+                             [Run the LibreOffice embindtest as part of running the app. Requires
+                              LibreOffice to be built with --enable-dbgutil. Relevant only for a
+                              Wasm build.]))
+
+AC_ARG_WITH([wasm-zetajs],
+            AS_HELP_STRING([--with-wasm-zetajs=<path>],
+                           [Include zetajs scripting support in the app. (Together with
+                            --enable-wasm-embindtest, also run the zetajs smoketest as part of
+                            running the app.) Relevant only for a Wasm build. Path to a zetajs
+                            source tree.]))
+
+AC_ARG_ENABLE([wasm-zetajs-example],
+              AS_HELP_STRING([--enable-wasm-zetajs-example],
+                             [Inclue a zetajs scripting example in the app. Requires
+                              --with-wasm-zetajs. Relevant only for a Wasm build.]))
 
 AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
@@ -577,6 +598,7 @@ AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
 # But not when just configuring for building the JS on Linux, for copying over
 # to the Mac.
 # Android: We need these to setup the CMakeLists.txt properly.
+LOSOURCEDIR=
 LOBUILDDIR=
 ANDROID_ABI="armeabi-v7a"
 ANDROID_ABI_SPLIT="'armeabi-v7a'"
@@ -615,6 +637,14 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
       ANDROID_ABI_SPLIT=`echo $ANDROID_ABI | sed "s/^/'/g;s/ /','/g;s/$/'/g"`
       AC_MSG_RESULT([$ANDROID_ABI])
+   fi
+
+   if test "$host_os" = emscripten; then
+      AC_MSG_CHECKING([for LibreOffice source tree to build against])
+      if test -z "$with_lo_sourcedir"; then
+         AC_MSG_ERROR([You MUST use the --with-lo-sourcedir option when configuring a Wasm build.])
+      fi
+      LOSOURCEDIR=$(readlink -f "$with_lo_sourcedir")
    fi
 
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
@@ -805,6 +835,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
 fi
 
+AC_SUBST(LOSOURCEDIR)
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(ANDROID_ABI)
 AC_SUBST(ANDROID_ABI_SPLIT)
@@ -910,6 +941,7 @@ fi
 AC_SUBST(INFO_URL)
 
 ENABLE_IOSAPP=
+IOSAPP_BUNDLE_SHORT_VERSION="$COOLWSD_VERSION_MAJOR$COOLWSD_VERSION_MINOR.$COOLWSD_VERSION_MICRO.$COOLWSD_VERSION_NANO"
 IOSAPP_BUNDLE_VERSION=
 
 if test "$enable_iosapp" = "yes"; then
@@ -925,6 +957,7 @@ fi
 
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
+AC_SUBST(IOSAPP_BUNDLE_SHORT_VERSION)
 AC_SUBST(IOSAPP_BUNDLE_VERSION)
 
 AC_MSG_CHECKING([for custom icon theme])
@@ -950,15 +983,6 @@ dnl capability. Compare to ENABLE_WASM.
 AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
-
-dnl Temporary hack: We hardcode /sample.docx in a few places, so make sure that file is there
-AS_IF([test "$host_os" = "emscripten"],
-      [AC_MSG_CHECKING([that temporarily there is a sample document with a fixed name])
-      AS_IF([test -z "$with_wasm_additional_files"],
-            [AC_MSG_ERROR([You must use the --with-wasm-additional-files option for now])])
-      AS_IF([test ! -f "$with_wasm_additional_files/sample.docx"],
-            [AC_MSG_ERROR([There must be a file called sample.docx in $with_wasm_additional_files for now])])
-      AC_MSG_RESULT([yes])])
 
 AM_CONDITIONAL([ENABLE_WASM_ADDITIONAL_FILES], [test -n "$with_wasm_additional_files"])
 WASM_ADDITIONAL_FILES="$with_wasm_additional_files"
@@ -1043,15 +1067,6 @@ AS_IF([test "$ENABLE_GTKAPP" != true],
       [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Woverloaded-virtual -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
-
-AC_MSG_CHECKING([whether to turn warnings to errors])
-if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
-    AC_MSG_RESULT([yes])
-    CXXFLAGS="$CXXFLAGS -Werror"
-    CFLAGS="$CFLAGS -Werror"
-else
-    AC_MSG_RESULT([no])
-fi
 
 AC_MSG_CHECKING([whether to use extra compiler hardening flags])
 if test "$enable_hardening_flags" = no -o "$host_os" = "emscripten" -o "x$with_sanitizer" != "x"; then
@@ -1519,6 +1534,29 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
                          [AC_MSG_RESULT([OK])],
                          [AC_MSG_ERROR([The POCO version is too old])])
 
+       AC_MSG_CHECKING([POCO bugs])
+       AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+       #include <Poco/Version.h>
+       #if POCO_VERSION >= 0x010D0000 && POCO_VERSION < 0x010D0100
+       #error known buggy poco 1.13.0
+       #endif
+       ])],
+                         [AC_MSG_RESULT([OK])],
+                         [AC_MSG_RESULT([buggy])
+                          poco_known_buggy="yes"])
+
+       # Poco headers from distro packages may need -DPOCO_UNBUNDLED
+       # (the actual problem was in 1.13 Poco/XML/ParserEngine.h)
+       AC_CHECK_HEADERS([Poco/SAX/SAXParser.h])
+       if test "x$ac_cv_header_Poco_SAX_SAXParser_h" != xyes; then
+            unset ac_cv_header_Poco_SAX_SAXParser_h
+            CXXFLAGS="$CXXFLAGS -DPOCO_UNBUNDLED"
+            CPPFLAGS="$CPPFLAGS -DPOCO_UNBUNDLED"
+            AC_CHECK_HEADERS([Poco/SAX/SAXParser.h],
+                [AC_MSG_RESULT([... with POCO_UNBUNDLED])],
+                [AC_MSG_ERROR([header Poco/SAX/SAXParser.h not found, perhaps you want to use --with-poco-includes])])
+       fi
+
        # If poco is built with --unbundled, it uses the system pcre library
        AC_MSG_CHECKING([if we need to link with -lpcre])
        AC_LINK_IFELSE([AC_LANG_SOURCE([
@@ -1564,7 +1602,7 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
        fi
 
        if test "$enable_cypress" = "yes"; then
-           AC_PATH_PROGS(CHROME, chromium chromium-browser chrome google-chrome, no)
+           AC_PATH_PROGS(CHROME, chromium chromium-browser chrome google-chrome brave, no)
            if test "$CHROME" = "no"; then
                AC_MSG_ERROR([chrome or chromium is required to run the JS tests, but not installed])
            fi
@@ -1644,6 +1682,7 @@ fi
 AC_SUBST(APP_BRANDING_DIR)
 AC_SUBST(APP_IC_LAUNCHER)
 AC_SUBST(APP_HAS_BRANDING)
+AM_CONDITIONAL([APP_HAS_BRANDING], [test "$APP_HAS_BRANDING" = "true"])
 
 APP_GOOGLE_PLAY="false"
 if test "$enable_android_google_play" = "yes"; then
@@ -1722,6 +1761,17 @@ if test -n "$with_dictionaries" -a "$with_dictionaries" != "no"; then
     ALLOWED_LANGUAGES="$with_dictionaries"
 else
     ALLOWED_LANGUAGES="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru"
+fi
+AC_MSG_RESULT([$ALLOWED_LANGUAGES])
+AC_SUBST(ALLOWED_LANGUAGES)
+
+AC_MSG_CHECKING([whether to turn warnings to errors])
+if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
+    AC_MSG_RESULT([yes])
+    CXXFLAGS="$CXXFLAGS -Werror"
+    CFLAGS="$CFLAGS -Werror"
+else
+    AC_MSG_RESULT([no])
 fi
 
 AS_IF([test "$enable_feature_lock" = "yes"],
@@ -1851,8 +1901,62 @@ fi
 AC_SUBST(FEATURE_RESTRICTION_CONFIGURATION)
 AM_SUBST_NOTMAKE(FEATURE_RESTRICTION_CONFIGURATION)
 
-AC_MSG_RESULT([$ALLOWED_LANGUAGES])
-AC_SUBST(ALLOWED_LANGUAGES)
+ENABLE_WASM_EMBINDTEST=
+if test "$host_os" = emscripten; then
+    AC_MSG_CHECKING([whether to run the LibreOffice embindtest])
+    if test "$enable_wasm_embindtest" = yes; then
+        AC_MSG_RESULT([yes])
+        AC_MSG_CHECKING([whether the LibreOffice installation includes embindtest])
+        if test ! -f "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps; then
+            AC_MSG_ERROR([cannot find $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
+        elif ! LC_ALL=POSIX grep -E -q -e '(^|[[[:space:]]])-lembindtestlo($|[[[:space:]]])' \
+                "$LOBUILDDIR"/instdir/program/soffice.js.linkdeps
+        then
+            AC_MSG_ERROR(
+                [cannot find -lembindtestlo in $LOBUILDDIR/instdir/program/soffice.js.linkdeps])
+        else
+            AC_MSG_RESULT([yes])
+        fi
+        ENABLE_WASM_EMBINDTEST=true
+    else
+        AC_MSG_RESULT([no])
+    fi
+fi
+AC_SUBST([ENABLE_WASM_EMBINDTEST])
+AM_CONDITIONAL([ENABLE_WASM_EMBINDTEST], [test "$ENABLE_WASM_EMBINDTEST" = true])
+
+ENABLE_WASM_ZETAJS=
+WITH_WASM_ZETAJS=
+if test "$host_os" = emscripten; then
+    AC_MSG_CHECKING([whether to include zetajs scripting support])
+    if test -n "$with_wasm_zetajs"; then
+        AC_MSG_RESULT([yes])
+        ENABLE_WASM_ZETAJS=true
+        WITH_WASM_ZETAJS=$with_wasm_zetajs
+    else
+        AC_MSG_RESULT([no])
+    fi
+fi
+AC_SUBST([ENABLE_WASM_ZETAJS])
+AC_SUBST([WITH_WASM_ZETAJS])
+AM_CONDITIONAL([ENABLE_WASM_ZETAJS], [test "$ENABLE_WASM_ZETAJS" = true])
+
+ENABLE_WASM_ZETAJS_EXAMPLE=
+if test "$host_os" = emscripten; then
+    AC_MSG_CHECKING([whether to include a zetajs scripting example])
+    if test "$enable_wasm_zetajs_example" = yes; then
+        if test "$ENABLE_WASM_ZETAJS" != true; then
+            AC_MSG_ERROR([requires --with-wasm-zetajs])
+        else
+            AC_MSG_RESULT([yes])
+        fi
+        ENABLE_WASM_ZETAJS_EXAMPLE=true
+    else
+        AC_MSG_RESULT([no])
+    fi
+fi
+AC_SUBST([ENABLE_WASM_ZETAJS_EXAMPLE])
+AM_CONDITIONAL([ENABLE_WASM_ZETAJS_EXAMPLE], [test "$ENABLE_WASM_ZETAJS_EXAMPLE" = true])
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
@@ -1981,5 +2085,11 @@ echo "    \$ make run # to start coolwsd
     \$ make sync-writer|calc|impress # to start browsersync with specified app
 "
 fi
+if test -n "$poco_known_buggy"; then
+    AC_MSG_WARN([Your version of POCO has known bugs: see dev-notes/dependency-issues.md])
+fi
+
+# Remove emconfigure artifacts that Autoconf fails to remove by itself:
+rm -f a.wasm
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

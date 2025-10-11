@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.RowGroup
- */
 
 /* global app */
 
@@ -25,18 +22,17 @@
 namespace cool {
 
 export class RowGroup extends GroupBase {
-	name: string = L.CSections.RowGroup.name;
-	anchor: any = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
+	anchor: any = [[app.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
 	expand: string[] = ['top', 'bottom']; // Expand vertically.
-	processingOrder: number = L.CSections.RowGroup.processingOrder;
-	drawingOrder: number = L.CSections.RowGroup.drawingOrder;
-	zIndex: number = L.CSections.RowGroup.zIndex;
+	processingOrder: number = app.CSections.RowGroup.processingOrder;
+	drawingOrder: number = app.CSections.RowGroup.drawingOrder;
+	zIndex: number = app.CSections.RowGroup.zIndex;
 
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderHeight: number;
 	_splitPos: cool.Point;
 
-	constructor() { super(); }
+	constructor() { super(app.CSections.RowGroup.name); }
 
 	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
@@ -48,7 +44,7 @@ export class RowGroup extends GroupBase {
 		// Calculate width on the fly.
 		this.size[0] = this._computeSectionWidth();
 
-		this._cornerHeaderHeight = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[1];
+		this._cornerHeaderHeight = this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).size[1];
 
 		this._splitPos = (this._map._docLayer._splitPanesContext as cool.SplitPanesContext).getSplitPos();
 
@@ -73,7 +69,7 @@ export class RowGroup extends GroupBase {
 		if (endPos <= this._splitPos.y)
 			return endPos;
 		else {
-			return Math.max(endPos + this._cornerHeaderHeight - this.documentTopLeft[1], this._splitPos.y + this._cornerHeaderHeight);
+			return Math.max(endPos + this._cornerHeaderHeight - app.activeDocument.activeView.viewedRectangle.pY1, this._splitPos.y + this._cornerHeaderHeight);
 		}
 	}
 
@@ -81,14 +77,14 @@ export class RowGroup extends GroupBase {
 		if (docPos < this._splitPos.y)
 			return docPos + this._cornerHeaderHeight;
 		else
-			return Math.max(docPos - this.documentTopLeft[1], this._splitPos.y) + this._cornerHeaderHeight;
+			return Math.max(docPos - app.activeDocument.activeView.viewedRectangle.pY1, this._splitPos.y) + this._cornerHeaderHeight;
 	}
 
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		let startY = this.getRelativeY(group.startPos);
 		const endY = this.getEndPosition(group.endPos);
-		const strokeColor = GroupBase.getColors().strokeColor;
+		const strokeColor = this.getColors().strokeColor;
 
 		if (this.isGroupHeaderVisible(startY, group.startPos)) {
 			// draw head
@@ -148,7 +144,7 @@ export class RowGroup extends GroupBase {
 		const startX = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 		const startY = Math.round((this._cornerHeaderHeight - ctrlHeadSize) * 0.5);
 
-		ctx.strokeStyle = GroupBase.getColors().strokeColor;
+		ctx.strokeStyle = this.getColors().strokeColor;
 		ctx.lineWidth = 1.0;
 		ctx.strokeRect(this.transformRectX(startX + 0.5, ctrlHeadSize), startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
@@ -168,9 +164,9 @@ export class RowGroup extends GroupBase {
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
-	findClickedLevel (point: number[]): number {
-		if (point[1] < this._cornerHeaderHeight) {
-			let index = (this.transformX(point[0]) / this.size[0]) * 100; // Percentage.
+	findClickedLevel (point: cool.SimplePoint): number {
+		if (point.pY < this._cornerHeaderHeight) {
+			let index = (this.transformX(point.pX) / this.size[0]) * 100; // Percentage.
 			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
@@ -178,7 +174,7 @@ export class RowGroup extends GroupBase {
 		return -1;
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: cool.SimplePoint): GroupEntry {
 		const mirrorX = this.isCalcRTL();
 		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -205,21 +201,15 @@ export class RowGroup extends GroupBase {
 		const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		const startY = this.getRelativeY(group.startPos);
 		const endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
-		const endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
+		const endY = group.endPos + this._cornerHeaderHeight - app.activeDocument.activeView.viewedRectangle.pY1;
 		return [startX, endX, startY, endY];
 	}
 
 	onRemove(): void {
 		this.isRemoved = true;
-		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.RowHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).position[0] = 0;
 	}
 }
 
 }
-
-L.Control.RowGroup = cool.RowGroup;
-
-L.control.rowGroup = function () {
-	return new L.Control.RowGroup();
-};

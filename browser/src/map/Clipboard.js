@@ -9,17 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Clipboard is used to abstract our storage and management of
+ * window.L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool */
+/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool JSDialog */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
 // We keep track of the current selection content if it is simple
 // So we can do synchronous copy/paste in the callback if possible.
-L.Clipboard = L.Class.extend({
+window.L.Clipboard = window.L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this._selectionContent = '';
@@ -63,7 +63,7 @@ L.Clipboard = L.Class.extend({
 		var parent = document.getElementById('map');
 		parent.appendChild(div);
 
-		if (L.Browser.cypressTest) {
+		if (window.L.Browser.cypressTest) {
 			this._dummyPlainDiv = document.createElement('div');
 			this._dummyPlainDiv.id = 'copy-plain-container';
 			this._dummyPlainDiv.style = 'position: fixed; left: 0px; top: -400px; width: 15000px; height: 200px; ' +
@@ -621,7 +621,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_beforeSelectImpl: function() {
-		if (this._map.getDocType() === 'presentation' && this._map._docLayer._preview.partsFocused)
+		if (this._selectionType === 'slide')
 			return;
 
 		// We need some spaces in there ...
@@ -858,11 +858,11 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function(params) {
-		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
 			return false;
 		}
 
-		if (this._selectionType !== 'text') {
+		if (this._selectionType !== 'text' && this._selectionType !== 'slide') {
 			return false;
 		}
 
@@ -905,11 +905,11 @@ L.Clipboard = L.Class.extend({
 				'text/plain': this._parseClipboardFetchResult(text, 'text/plain', 'plain'),
 			});
 			// Again, despite fetch(url), this._parseClipboardFetchResult(...) and check_ all being promises, we need to let browser internals await them after we have safely succeeded in calling clipboard.write
-			// We throw an error if our checks fail before returning our text to cause these promises to reject - that way everything can be deffered for later, with failures causing the clipboard write to fail later
+			// We throw an error if our checks fail before returning our text to cause these promises to reject - that way everything can be deferred for later, with failures causing the clipboard write to fail later
 			// We define the text promise outside to allow us to reuse the fetch rather than fetching twice (as in Ic23f7f817cc855ff08f25a2afefcd73d6fc3472b)
 
 			let clipboard = navigator.clipboard;
-			if (L.Browser.cypressTest) {
+			if (window.L.Browser.cypressTest) {
 				clipboard = this._dummyClipboard;
 			}
 
@@ -928,13 +928,10 @@ L.Clipboard = L.Class.extend({
 					 window.app.console.warn('navigator.clipboard.write() failed due to a failing check');
 					 return;
 				}
-				
+
 				window.app.console.error('navigator.clipboard.write() failed: ' + error.message);
 				// Warn that the copy failed.
 				this._warnCopyPaste();
-				// Once broken, always broken.
-				L.Browser.clipboardApiAvailable = false;
-				window.prefs.set('clipboardApiAvailable', false);
 				// Prefetch selection, so next time copy will work with the keyboard.
 				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 			}
@@ -970,7 +967,7 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
 			return false;
 		}
 
@@ -1010,7 +1007,7 @@ L.Clipboard = L.Class.extend({
 
 	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
 		var clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
+		if (window.L.Browser.cypressTest) {
 			clipboard = this._dummyClipboard;
 		}
 		let clipboardContents;
@@ -1104,9 +1101,8 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_doCopyCut: function(ev, unoName) {
-		if (this._map.getDocType() === 'presentation' && this._map._docLayer._preview.partsFocused) {
+		if (this._selectionType === 'slide')
 			unoName = 'CopySlide';
-		}
 		window.app.console.log(unoName);
 
 		if (this._isAnyInputFieldSelected(unoName === 'Copy'))
@@ -1213,7 +1209,7 @@ L.Clipboard = L.Class.extend({
 		this._selectionType = 'text';
 		this._selectionContent = html;
 		this._selectionPlainTextContent = plainText;
-		if (L.Browser.cypressTest) {
+		if (window.L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
 			this._dummyPlainDiv.innerText = plainText;
 		}
@@ -1250,7 +1246,7 @@ L.Clipboard = L.Class.extend({
 
 	_startProgress: function(isLargeCopy) {
 		if (!this._downloadProgress) {
-			this._downloadProgress = L.control.downloadProgress();
+			this._downloadProgress = window.L.control.downloadProgress();
 			this._map.addControl(this._downloadProgress);
 		}
 		this._downloadProgress.show(isLargeCopy);
@@ -1289,7 +1285,18 @@ L.Clipboard = L.Class.extend({
 
 	_warnCopyPaste: function() {
 		var id = 'copy_paste_warning';
-		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
+		if (!JSDialog.shouldShowAgain(id))
+			return;
+
+		this._map.uiManager.showYesNoButton(
+				id + '-box',
+				/*title=*/'',
+				/*message=*/'',
+				/*yesButtonText=*/_('OK'),
+				/*noButtonText=*/_('Don’t show this again'),
+				/*yesFunction=*/null,
+				/*noFunction=*/function () {JSDialog.setShowAgain(id, false);},
+				/*cancellable=*/true);
 		this._warnCopyPasteImpl(id);
 	},
 
@@ -1302,7 +1309,7 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		var innerDiv = L.DomUtil.create('div', '', null);
+		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
 		if (window.mode.isMobile() || window.mode.isTablet()) {
@@ -1401,7 +1408,7 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		var innerDiv = L.DomUtil.create('div', '', null);
+		var innerDiv = window.L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
 		const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
@@ -1454,8 +1461,8 @@ L.Clipboard = L.Class.extend({
 	},
 });
 
-L.clipboard = function(map) {
+window.L.clipboard = function(map) {
 	if (window.ThisIsTheAndroidApp)
-		window.app.console.log('======> Assertion failed!? No L.Clipboard object should be needed in the Android app');
-	return new L.Clipboard(map);
+		window.app.console.log('======> Assertion failed!? No window.L.Clipboard object should be needed in the Android app');
+	return new window.L.Clipboard(map);
 };

@@ -85,8 +85,8 @@ class GraphicSelection {
 	}
 
 	static renderDarkOverlay() {
-		var topLeft = new L.Point(this.rectangle.pX1, this.rectangle.pY1);
-		var bottomRight = new L.Point(this.rectangle.pX2, this.rectangle.pY2);
+		var topLeft = new cool.Point(this.rectangle.pX1, this.rectangle.pY1);
+		var bottomRight = new cool.Point(this.rectangle.pX2, this.rectangle.pY2);
 
 		if (app.map._docLayer.isCalcRTL()) {
 			// Dark overlays (like any other overlay) need regular document coordinates.
@@ -96,7 +96,7 @@ class GraphicSelection {
 			bottomRight.x = Math.abs(bottomRight.x);
 		}
 
-		var bounds = new L.Bounds(topLeft, bottomRight);
+		var bounds = new cool.Bounds(topLeft, bottomRight);
 
 		app.map._docLayer._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
 	}
@@ -121,7 +121,7 @@ class GraphicSelection {
 		if (hasExtraInfo) {
 			extraInfo = messageJSON[5];
 			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
-				app.map._docLayer._shapeGridOffset = new app.definitions.simplePoint(
+				app.map._docLayer._shapeGridOffset = new cool.SimplePoint(
 					signX * extraInfo.gridOffsetX,
 					extraInfo.gridOffsetY,
 				);
@@ -131,7 +131,7 @@ class GraphicSelection {
 
 		// Calc RTL: Negate positive X coordinates from core if grid offset is available.
 		signX = hasGridOffset && app.map._docLayer.isCalcRTL() ? -1 : 1;
-		this.rectangle = new app.definitions.simpleRectangle(
+		this.rectangle = new cool.SimpleRectangle(
 			signX * messageJSON[0],
 			messageJSON[1],
 			signX * messageJSON[2],
@@ -208,7 +208,10 @@ class GraphicSelection {
 			}
 
 			this.handlesSection.setPosition(this.rectangle.pX1, this.rectangle.pY1);
-			extraInfo.hasTableSelection = app.map._docLayer.hasTableSelection(); // scaleSouthAndEastOnly
+
+			extraInfo.hasTableSelection =
+				app.activeDocument.tableMiddleware.hasTableSelection(); // scaleSouthAndEastOnly
+
 			this.handlesSection.refreshInfo(this.extraInfo);
 			this.handlesSection.setShowSection(true);
 			app.sectionContainer.requestReDraw();
@@ -238,7 +241,7 @@ class GraphicSelection {
 	}
 
 	public static onMessage(textMsg: string) {
-		app.definitions.urlPopUpSection.closeURLPopUp();
+		URLPopUpSection.closeURLPopUp();
 
 		if (textMsg.match('EMPTY')) {
 			this.resetSelectionRanges();
@@ -280,7 +283,7 @@ class GraphicSelection {
 					dragInfo.initialOffset /= 100.0;
 					var dragDir = dragInfo.dragDirection;
 					dragInfo.dragDirection = app.map._docLayer._twipsToPixels(
-						new L.Point(dragDir[0], dragDir[1]),
+						new cool.Point(dragDir[0], dragDir[1]),
 					);
 					dragDir = dragInfo.dragDirection;
 					dragInfo.range2 = dragDir.x * dragDir.x + dragDir.y * dragDir.y;
@@ -327,15 +330,12 @@ class GraphicSelection {
 							this.rectangle.x2,
 							this.rectangle.y2,
 						])) &&
-					!app.map._docLayer._selectionHandles.active &&
+					!TextSelections.getEndRectangle() &&
 					!(app.isFollowingEditor() || app.isFollowingUser()) &&
 					!app.map.calcInputBarHasFocus()
 				) {
 					app.map._docLayer.scrollToPos(
-						new app.definitions.simplePoint(
-							this.rectangle.x1,
-							this.rectangle.y1,
-						),
+						new cool.SimplePoint(this.rectangle.x1, this.rectangle.y1),
 					);
 				}
 			}

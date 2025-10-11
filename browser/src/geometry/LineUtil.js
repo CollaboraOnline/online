@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.LineUtil contains different utility functions for line segments
+ * window.L.LineUtil contains different utility functions for line segments
  * and polylines (clipping, simplification, distances, etc.)
  */
-/* global Uint8Array */
-L.LineUtil = {
+/* global Uint8Array cool */
+window.L.LineUtil = {
 
 	// Simplify polyline with vertex reduction and Douglas-Peucker simplification.
 	// Improves rendering performance dramatically by lessening the number of points to draw.
@@ -151,7 +151,7 @@ L.LineUtil = {
 			y = a.y + dy * (min.x - a.x) / dx;
 		}
 
-		return new L.Point(x, y, round);
+		return new cool.Point(x, y, round);
 	},
 
 	_getBitCode: function (/*Point*/ p, bounds) {
@@ -203,6 +203,6 @@ L.LineUtil = {
 		dx = p.x - x;
 		dy = p.y - y;
 
-		return sqDist ? dx * dx + dy * dy : new L.Point(x, y);
+		return sqDist ? dx * dx + dy * dy : new cool.Point(x, y);
 	}
 };

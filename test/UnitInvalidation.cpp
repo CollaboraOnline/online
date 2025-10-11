@@ -46,7 +46,7 @@ void UnitInvalidation::setupSession(const std::shared_ptr<http::WebSocketSession
     helpers::sendTextFrame(session, "commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2560&tileWidth=2560", testname);
 
     // Let the app get somewhat setup ...
-    LOG_TST("settling ...");
+    TST_LOG("settling ...");
     helpers::drain(session, testname, std::chrono::seconds(2));
 }
 
@@ -95,13 +95,13 @@ void UnitInvalidation::invokeWSDTest()
         std::shared_ptr<http::WebSocketSession> windowOne = helpers::loadDocAndGetSession(
             socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
-        LOG_TST("Rendering window one");
+        TST_LOG("Rendering window one");
 
         setupSession(windowOne);
         // ensure all tiles hit the cache and made it to us.
         renderArea(windowOne, 0);
 
-        LOG_TST("Rendering window two");
+        TST_LOG("Rendering window two");
 
         std::shared_ptr<http::WebSocketSession> windowTwo = helpers::loadDocAndGetSession(
             socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
@@ -109,7 +109,7 @@ void UnitInvalidation::invokeWSDTest()
         // ensure all the same tiles are served from the cache, and not the LOK view.
         renderArea(windowTwo, 0);
 
-        LOG_TST("Tab switch and edit: window one");
+        TST_LOG("Tab switch and edit: window one");
 
         // Switch to sheet two in window one
         helpers::sendTextFrame(windowOne, "setclientpart part=1", testname);
@@ -138,7 +138,7 @@ void UnitInvalidation::invokeWSDTest()
         helpers::sendTextFrame(windowOne, "key type=input char=13 key=1280", testname);
         helpers::sendTextFrame(windowOne, "key type=up char=0 key=1280", testname);
 
-        LOG_TST("Wait for window one invalidations");
+        TST_LOG("Wait for window one invalidations");
         std::vector<std::string> invalidates;
 
         invalidates = helpers::getAllResponsesTimed(windowOne, "invalidatetiles:", testname, std::chrono::seconds(2));
@@ -156,7 +156,7 @@ void UnitInvalidation::invokeWSDTest()
         LOK_ASSERT(invalidated);
         // We expect invalidates on both part 1 (current) and 0 (dependent)
 
-        LOG_TST("Wait for window two invalidations");
+        TST_LOG("Wait for window two invalidations");
 
         // Notice no invalidation on window two
         invalidates = helpers::getAllResponsesTimed(windowTwo, "invalidatetiles:", testname, std::chrono::seconds(2));

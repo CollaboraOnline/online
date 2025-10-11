@@ -87,6 +87,7 @@ public:
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
         bool getUserCanOnlyComment() const { return _userCanOnlyComment; }
+        bool getUserCanOnlyManageRedlines() const { return _userCanOnlyManageRedlines; }
 
         const std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
         const std::string& getIsAdminUserError() const { return _isAdminUserError; }
@@ -182,6 +183,8 @@ public:
         bool _userCanRename = false;
         /// If user is limited to only writing/modifiyng comments
         bool _userCanOnlyComment = false;
+        /// If user is limited to only managing redlines (accept/reject)
+        bool _userCanOnlyManageRedlines = false;
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
@@ -231,10 +234,9 @@ public:
 
     virtual AsyncUpload queryLocalFileToStorageAsyncUploadState() override
     {
-        if (_uploadHttpSession)
-            return AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK));
-        else
-            return AsyncUpload(AsyncUpload::State::None, UploadResult(UploadResult::Result::OK));
+        const AsyncUpload::State state =
+            _uploadHttpSession ? AsyncUpload::State::Running : AsyncUpload::State::None;
+        return AsyncUpload(state, UploadResult(UploadResult::Result::OK));
     }
 
 protected:

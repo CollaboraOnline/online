@@ -191,11 +191,17 @@ class Xcu {
 			const keys = path.split('/').filter((key) => key.trim() !== '');
 
 			let currentLevel = result;
+			let gridLevel;
 			keys.forEach((key) => {
 				if (!(key in currentLevel)) {
 					currentLevel[key] = {};
 				}
 				currentLevel = currentLevel[key];
+
+				if (key === 'Grid') {
+					gridLevel = currentLevel;
+					gridLevel['ShowGrid'] = false;
+				}
 			});
 
 			const props = item.getElementsByTagName('prop');
@@ -218,7 +224,11 @@ class Xcu {
 				}
 
 				if (typeof value === 'boolean') {
-					currentLevel[propName] = value;
+					if (propName === 'VisibleGrid') {
+						gridLevel['ShowGrid'] = value;
+					} else {
+						currentLevel[propName] = value;
+					}
 				}
 			});
 		});
@@ -247,11 +257,17 @@ class Xcu {
 				}
 			}
 
+			let visibleGrid;
+
 			if (Object.keys(leafProps).length > 0) {
 				const oorPath = '/org.openoffice.Office.' + path.join('/');
 				let propsXml = '';
 				for (const propName in leafProps) {
 					if (Object.prototype.hasOwnProperty.call(leafProps, propName)) {
+						if (propName === 'ShowGrid') {
+							visibleGrid = leafProps[propName];
+							continue;
+						}
 						const value = leafProps[propName];
 						let valueStr = '';
 						if (typeof value === 'boolean') {
@@ -269,6 +285,9 @@ class Xcu {
 
 			for (const key of nestedKeys) {
 				const child = node[key];
+				if (typeof visibleGrid === 'boolean') {
+					child['VisibleGrid'] = visibleGrid;
+				}
 				const newPath = path.concat(key);
 				items.push(...generateItemNodes(child, newPath));
 			}
@@ -286,112 +305,6 @@ class Xcu {
 			itemsXml.join('\n') +
 			`\n</oor:items>`;
 		return xcuXml;
-	}
-
-	private renderXcuTree(data: any, pathPrefix: string = ''): HTMLElement {
-		const container = document.createElement('div');
-		if (typeof data !== 'object' || data === null) {
-			container.textContent = String(data);
-			return container;
-		}
-		for (const key in data) {
-			if (Object.prototype.hasOwnProperty.call(data, key)) {
-				const value = data[key];
-				const uniqueId = pathPrefix ? `${pathPrefix}-${key}` : key;
-				if (
-					typeof value === 'object' &&
-					value !== null &&
-					!Array.isArray(value)
-				) {
-					const fieldset = document.createElement('fieldset');
-					fieldset.classList.add('xcu-settings-fieldset');
-					const legend = document.createElement('legend');
-					legend.textContent = key;
-					fieldset.appendChild(legend);
-					const childContent = this.renderXcuTree(value, uniqueId);
-					fieldset.appendChild(childContent);
-					container.appendChild(fieldset);
-				} else {
-					const isCheck: boolean = value;
-					const checkboxWrapper = document.createElement('span');
-					checkboxWrapper.className = `checkbox-radio-switch checkbox-radio-switch-checkbox ${isCheck ? '' : 'checkbox-radio-switch--checked'} checkbox-wrapper`;
-					checkboxWrapper.id = uniqueId + '-container';
-
-					const inputCheckbox = document.createElement('input');
-					inputCheckbox.type = 'checkbox';
-					inputCheckbox.className = 'checkbox-radio-switch-input';
-					inputCheckbox.id = uniqueId + '-input';
-					inputCheckbox.checked = isCheck;
-					checkboxWrapper.appendChild(inputCheckbox);
-
-					const checkboxContent = document.createElement('span');
-					checkboxContent.className =
-						'checkbox-content checkbox-content-checkbox checkbox-content--has-text checkbox-radio-switch__content';
-					checkboxContent.id = uniqueId + '-content';
-					checkboxWrapper.appendChild(checkboxContent);
-
-					const checkboxContentIcon = document.createElement('span');
-					checkboxContentIcon.className = `checkbox-content-icon checkbox-radio-switch__icon ${isCheck ? '' : 'checkbox-content-icon--checked'}`;
-					checkboxContentIcon.ariaHidden = 'true';
-					checkboxContent.appendChild(checkboxContentIcon);
-
-					const materialIcon = document.createElement('span');
-					materialIcon.className = `material-design-icon ${isCheck ? 'checkbox-marked-icon' : 'checkbox-blank-outline-icon'}`;
-					materialIcon.ariaHidden = 'true';
-
-					const iconSvg = `
-					<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-					${
-						isCheck
-							? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-							<!---->
-						  </path>`
-							: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-							<!---->
-						  </path>`
-					}
-					</svg>`;
-
-					checkboxContentIcon.appendChild(materialIcon);
-					materialIcon.innerHTML = iconSvg;
-
-					const textElement = document.createElement('span');
-					textElement.className =
-						'checkbox-content__text checkbox-radio-switch__text';
-					textElement.textContent = key;
-					checkboxContent.appendChild(textElement);
-
-					checkboxWrapper.addEventListener('click', () => {
-						const currentChecked = !(inputCheckbox as HTMLInputElement).checked;
-						inputCheckbox.checked = currentChecked;
-						if (currentChecked) {
-							checkboxWrapper.classList.remove(
-								'checkbox-radio-switch--checked',
-							);
-						} else {
-							checkboxWrapper.classList.add('checkbox-radio-switch--checked');
-						}
-						materialIcon.innerHTML = `
-							<svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24">
-							${
-								currentChecked
-									? `<path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z">
-									<!---->
-								</path>`
-									: `<path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z">
-									<!---->
-								</path>`
-							}
-							</svg>`;
-
-						data[key] = currentChecked;
-					});
-
-					container.appendChild(checkboxWrapper);
-				}
-			}
-		}
-		return container;
 	}
 
 	public createXcuEditorUI(container: HTMLElement): HTMLElement {
@@ -433,7 +346,9 @@ class Xcu {
 				) as HTMLElement;
 				contentsContainer.innerHTML = '';
 				if (this.xcuDataObj && this.xcuDataObj[tab.label]) {
-					const renderedTree = this.renderXcuTree(this.xcuDataObj[tab.label]);
+					const renderedTree = (
+						window as any
+					).settingIframe.renderSettingsOption(this.xcuDataObj[tab.label]);
 					renderedTree.classList.add('xcu-settings-grid');
 					contentsContainer.appendChild(renderedTree);
 				} else {
@@ -456,7 +371,7 @@ class Xcu {
 
 		const resetButton = document.createElement('button');
 		resetButton.type = 'button';
-		resetButton.id = 'xcu-reset-button';
+		resetButton.id = 'document-settings-reset-button';
 		resetButton.classList.add('button', 'button--vue-secondary');
 		resetButton.title = _('Reset to default Document settings');
 		resetButton.innerHTML = `
@@ -485,15 +400,18 @@ class Xcu {
 
 		const saveButton = document.createElement('button');
 		saveButton.type = 'button';
-		saveButton.id = 'xcu-save-button';
-		saveButton.classList.add('button', 'button-primary');
+		saveButton.id = 'document-settings-save-button';
+		saveButton.classList.add('button', 'button-primary', 'button--text-only');
 		saveButton.title = _('Save Document settings');
-		saveButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button--text-only">Save</span>
-			</span>
-			`;
 
+		const wrapperSpan = document.createElement('span');
+		wrapperSpan.classList.add('button__wrapper');
+		saveButton.appendChild(wrapperSpan);
+
+		const textSpan = document.createElement('span');
+		textSpan.classList.add('button__text');
+		textSpan.textContent = _('Save');
+		wrapperSpan.appendChild(textSpan);
 		saveButton.addEventListener('click', async () => {
 			saveButton.disabled = true;
 			await this.generateXcuAndUpload();

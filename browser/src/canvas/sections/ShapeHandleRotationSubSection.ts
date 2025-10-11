@@ -10,15 +10,14 @@
 */
 
 class ShapeHandleRotationSubSection extends CanvasSectionObject {
-	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
     documentObject: boolean = true;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
-        super();
+        super(sectionName);
 
-		this.name = sectionName;
 		this.size = size;
 
 		this.sectionProperties.position = documentPosition.clone();
@@ -64,13 +63,13 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
 	}
 
-	onMouseEnter(point: Array<number>, e: MouseEvent): void {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = true;
 		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.cursorStyle;
 	}
 
-	onMouseLeave(point: Array<number>, e: MouseEvent): void {
+	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = false;
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
 	}
@@ -88,12 +87,12 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	// This is called after dragging the rotation handler. It re-calculates initial angle with the handler's new position.
 	getAngleDifference(): number {
 		const dragDistanceInTwips = [this.sectionProperties.lastDraggingDistance[0] * app.pixelsToTwips, this.sectionProperties.lastDraggingDistance[1] * app.pixelsToTwips];
-		const draggedToPoint = new app.definitions.simplePoint(dragDistanceInTwips[0], dragDistanceInTwips[1]);
+		const draggedToPoint = new cool.SimplePoint(dragDistanceInTwips[0], dragDistanceInTwips[1]);
 
 		draggedToPoint.pX += this.position[0];
 		draggedToPoint.pY += this.position[1];
 
-		const selectionCenter = new app.definitions.simplePoint(GraphicSelection.rectangle.center[0], GraphicSelection.rectangle.center[1]);
+		const selectionCenter = new cool.SimplePoint(GraphicSelection.rectangle.center[0], GraphicSelection.rectangle.center[1]);
 
 		const initialPoint = this.sectionProperties.ownInfo.initialPosition;
 		const initialAngle = this.calculateAngle(selectionCenter, initialPoint);
@@ -102,11 +101,11 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		return initialAngle - newAngle;
 	}
 
-	onMouseDown(point: Array<number>, e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		(window as any).IgnorePanning = true;
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
 				const center = GraphicSelection.rectangle.center;
@@ -134,7 +133,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		(window as any).IgnorePanning = false;
 	}
 
-	onMouseMove(position: number[], distance: number[]) {
+	onMouseMove(position: cool.SimplePoint, distance: number[]) {
 		if (this.containerObject.isDraggingSomething()) {
 			this.sectionProperties.lastDraggingDistance = distance;
 

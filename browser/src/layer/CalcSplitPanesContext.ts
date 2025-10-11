@@ -11,7 +11,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var L: any;
 
 namespace cool {
 
@@ -67,5 +66,3 @@ export class CalcSplitPanesContext extends SplitPanesContext {
 }
 
 }
-
-L.CalcSplitPanesContext = cool.CalcSplitPanesContext;

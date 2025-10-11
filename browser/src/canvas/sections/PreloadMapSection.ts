@@ -9,18 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class PreloadMapSection extends app.definitions.canvasSectionObject {
-	name: string = L.CSections.Debug.PreloadMap.name;
+class PreloadMapSection extends CanvasSectionObject {
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
-	processingOrder: number = L.CSections.Debug.PreloadMap.processingOrder;
-	drawingOrder: number = L.CSections.Debug.PreloadMap.drawingOrder;
-	zIndex: number = L.CSections.Debug.PreloadMap.zIndex;
+	processingOrder: number = app.CSections.Debug.PreloadMap.processingOrder;
+	drawingOrder: number = app.CSections.Debug.PreloadMap.drawingOrder;
+	zIndex: number = app.CSections.Debug.PreloadMap.zIndex;
 	boundToSection: string = 'tiles';
 
 	constructor() {
-		super();
-		this._map = L.Map.THIS;
+		super(app.CSections.Debug.PreloadMap.name);
 	}
 
 	onDraw(
@@ -28,10 +26,10 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 		elapsedTime?: number,
 		subsetBounds?: Bounds,
 	): void {
-		var docLayer = this._map._docLayer;
+		var docLayer = app.map._docLayer;
 		var ctx = docLayer._painter._paintContext();
 
-		var zoom = Math.round(this._map.getZoom());
+		var zoom = Math.round(app.map.getZoom());
 		var part = docLayer._selectedPart;
 		var tileRanges = ctx.paneBoundsList.map(
 			TileManager.pxBoundsToTileRange,
@@ -43,15 +41,15 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 
 		var canvas = this.context;
 
-		var tileRange = new L.Bounds(viewRange.min, viewRange.max);
+		var tileRange = new cool.Bounds(viewRange.min, viewRange.max);
 
 		// stop annoying jitter as the view fits different numbers of tiles.
 		var viewWidth = Math.floor(
-			(this._map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
+			(app.map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 		var viewHeight = Math.floor(
-			(this._map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
+			(app.map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 
@@ -84,7 +82,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 		var preParts = (numParts - 1) / 2;
 		var partBounds = new Array(numParts);
 		for (var i = 0; i < partBounds.length; ++i) {
-			partBounds[i] = new L.Bounds(tileRange.min, tileRange.max);
+			partBounds[i] = new cool.Bounds(tileRange.min, tileRange.max);
 			partBounds[i].part = part + i - preParts;
 		}
 
@@ -107,8 +105,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 							range.part,
 							docLayer._selectedMode,
 						);
-						var key = coords.key();
-						const tile: Tile = TileManager.get(key);
+						const tile: Tile = TileManager.get(coords);
 
 						if (!tile)
 							canvas.fillStyle = 'rgba(128, 128, 128, 0.5)'; // grey

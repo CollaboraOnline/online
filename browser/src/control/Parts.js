@@ -15,7 +15,7 @@
 /* global app _ cool */
 /* global _ JSDialog app OtherViewCellCursorSection TileManager */
 
-L.Map.include({
+window.L.Map.include({
 	/*
 		@param {number} part - Target part
 		@param {boolean} external - Do we need to inform a core
@@ -228,8 +228,8 @@ L.Map.include({
 
 		if (docLayer._docType === 'text') return;
 
-		const tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: app.file.size.x;
-		const tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: app.file.size.y;
+		const tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: app.activeDocument.fileSize.x;
+		const tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: app.activeDocument.fileSize.y;
 
 		const docRatio = tileWidth / tileHeight;
 		const imgRatio = maxWidth / maxHeight;
@@ -302,7 +302,7 @@ L.Map.include({
 		if (!this.isEditMode() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
 			const posY = Math.round(app.file.writer.pageRectangleList[docLayer._currentPage][1] / app.dpiScale);
 
-			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			const section = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (section)
 				section.onScrollTo({x: 0, y: posY});
 
@@ -542,7 +542,7 @@ L.Map.include({
 		for (let i = 0; i < app.impress.partList.length; i++) {
 			if (app.impress.partList[i].selected) {
 				app.impress.partList[i].visible = 0;
-				L.DomUtil.addClass(this._docLayer._preview._previewTiles[i], 'hidden-slide');
+				window.L.DomUtil.addClass(this._docLayer._preview._previewTiles[i], 'hidden-slide');
 			}
 		}
 
@@ -554,7 +554,7 @@ L.Map.include({
 		for (let i = 0; i < app.impress.partList.length; i++) {
 			if (app.impress.partList[i].selected) {
 				app.impress.partList[i].visible = 1;
-				L.DomUtil.removeClass(this._docLayer._preview._previewTiles[i], 'hidden-slide');
+				window.L.DomUtil.removeClass(this._docLayer._preview._previewTiles[i], 'hidden-slide');
 			}
 		}
 
@@ -583,5 +583,9 @@ L.Map.include({
 
 	isPresentationOrDrawing: function () {
 		return this.getDocType() === 'presentation' || this.getDocType() === 'drawing';
-	}
+	},
+
+	isText: function () {
+		return this.getDocType() === 'text';
+	},
 });

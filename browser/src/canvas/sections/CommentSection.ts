@@ -12,14 +12,13 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
-declare var L: any;
 declare var Autolinker: any;
 declare var DOMPurify : any;
 
 // By default DOMPurify will strip all targets, so set everything
 // as target=_blank with rel=noopener
 DOMPurify.addHook('afterSanitizeAttributes', function (node: HTMLElement) {
-	if (node.tagName === 'A') {
+	if (node.tagName === 'A' && !node.classList.contains('context-menu-link')) {
 		node.setAttribute('target', '_blank');
 		node.setAttribute('rel', 'noopener');
 	}
@@ -42,10 +41,14 @@ export enum CommentLayoutStatus {
 }
 
 export class Comment extends CanvasSectionObject {
-	name: string = L.CSections.Comment.name;
-	processingOrder: number = L.CSections.Comment.processingOrder;
-	drawingOrder: number = L.CSections.Comment.drawingOrder;
-	zIndex: number = L.CSections.Comment.zIndex;
+	// Cache the expensive to localize frequently created strings
+	static readonly editCommentLabel = _('Edit comment');
+	static readonly replyCommentLabel = _('Reply comment');
+	static readonly openMenuLabel = _('Open menu');
+
+	processingOrder: number = app.CSections.Comment.processingOrder;
+	drawingOrder: number = app.CSections.Comment.drawingOrder;
+	zIndex: number = app.CSections.Comment.zIndex;
 
 	valid: boolean = true;
 	map: any;
@@ -56,12 +59,17 @@ export class Comment extends CanvasSectionObject {
 	hidden: boolean | null = null;
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	constructor (data: any, options: any, commentListSectionPointer: cool.CommentSection) {
-		super();
+	public static makeName(data: any): string {
+		return data.id === 'new' ? 'new comment' : 'comment ' + data.id;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	constructor (name: string, data: any, options: any, commentListSectionPointer: cool.CommentSection) {
+		super(name);
 
 		this.myTopLeft = [0, 0];
 		this.documentObject = true;
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 
 		if (!options)
 			options = {};
@@ -133,8 +141,6 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.isHighlighted = false;
 
-		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
-
 		this.sectionProperties.commentContainerRemoved = false;
 		this.sectionProperties.children = []; // This is used for Writer comments. There is parent / child relationship between comments in Writer files.
 		this.sectionProperties.childLinesNode = null;
@@ -154,20 +160,26 @@ export class Comment extends CanvasSectionObject {
 		if (!this.pendingInit)
 			return;
 
-		if (!force && !this.convertRectanglesToViewCoordinates())
-			return;
+		if (!force) {
+			if (!this.convertRectanglesToViewCoordinates())
+				return;
 
-		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
+			// skip comments on other tabs than the current
+			if (app.map._docLayer._docType === 'spreadsheet' && parseInt(this.sectionProperties.data.tab) !== app.map._docLayer._selectedPart)
+				return;
+		}
+
+		var button = window.L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
+		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
+		window.L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
 		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
-		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
+		button = window.L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
 		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.handleReplyCommentButton);
-		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
+		window.L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		// Since this is a late called function, if the width is enough, we shouldn't collapse the comments.
 		if (app.map._docLayer._docType !== 'text' || this.sectionProperties.commentListSection.isCollapsed === true)
@@ -177,25 +189,17 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
-		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
-		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
-
-		this.sectionProperties.container.onwheel = function(e: WheelEvent) {
-			// Don't scroll the document if mouse is over comment content. Scrolling the comment content is priority.
-			if (!this.sectionProperties.contentNode.matches(':hover')) {
-				e.preventDefault();
-				app.sectionContainer.onMouseWheel(e);
-			}
-		}.bind(this);
+		window.L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
+		window.L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
 
 		for (var it = 0; it < events.length; it++) {
-			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
+			window.L.DomEvent.on(this.sectionProperties.container, events[it], window.L.DomEvent.stopPropagation, this);
 		}
 
-		L.DomEvent.on(this.sectionProperties.container, 'touchstart',
+		window.L.DomEvent.on(this.sectionProperties.container, 'touchstart',
 			function (e: TouchEvent) {
 				if (e && e.touches.length > 1) {
-					L.DomEvent.preventDefault(e);
+					window.L.DomEvent.preventDefault(e);
 				}
 			},
 			this);
@@ -219,24 +223,26 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionNode = L.DomUtil.create('div', 'cool-annotation-caption', this.sectionProperties.wrapper);
-			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
+			this.sectionProperties.captionNode = window.L.DomUtil.create('div', 'cool-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionText = window.L.DomUtil.create('div', '', this.sectionProperties.captionNode);
 		}
 
-		this.sectionProperties.contentNode = L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.contentNode = window.L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
-		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
+		this.createReplyHint(this.sectionProperties.nodeModify);
 		this.sectionProperties.nodeModifyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeModifyText.setAttribute('role', 'textbox');
-		this.sectionProperties.nodeModifyText.setAttribute('aria-label', _('Edit comment'));
+		this.sectionProperties.nodeModifyText.setAttribute('aria-label', Comment.editCommentLabel);
 		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
-		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
-		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.contentText = window.L.DomUtil.create('div', '', this.sectionProperties.contentNode);
+		this.sectionProperties.nodeReply = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
+		this.createReplyHint(this.sectionProperties.nodeReply);
 		this.sectionProperties.nodeReplyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeReplyText.setAttribute('role', 'textbox');
-		this.sectionProperties.nodeReplyText.setAttribute('aria-label', _('Reply comment'));
+		this.sectionProperties.nodeReplyText.setAttribute('aria-label', Comment.replyCommentLabel);
 		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
 		this.createChildLinesNode();
 
@@ -246,26 +252,29 @@ export class Comment extends CanvasSectionObject {
 			this.createMarkerSubSection();
 
 		this.doPendingInitializationInView();
+
+		if (!(<any>window).mode.isMobile())
+			document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
 	private createContainerAndWrapper (): void {
 		var isRTL = document.documentElement.dir === 'rtl';
-		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
+		this.sectionProperties.container = window.L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
-		L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
+		window.L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
+			this.sectionProperties.wrapper = window.L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
 		} else {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
+			this.sectionProperties.wrapper = window.L.DomUtil.create('div', 'cool-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
 		this.sectionProperties.wrapper.style.marginLeft = this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
 
-		if (!(<any>window).mode.isMobile())
-			document.getElementById('document-container').appendChild(this.sectionProperties.container);
+		if (document.documentElement.dir === 'rtl')
+			this.sectionProperties.wrapper.dir = 'rtl';
 
 		// We make comment directly visible when its transitioned to its determined position
 		if (cool.CommentSection.autoSavedComment)
@@ -273,22 +282,22 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private createAuthorTable (): void {
-		this.sectionProperties.author = L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
+		this.sectionProperties.author = window.L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
 
-		var tbody = L.DomUtil.create('tbody', '', this.sectionProperties.author);
-		var rowResolved = L.DomUtil.create('tr', '', tbody);
-		var tdResolved = L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
-		var pResolved = L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
+		var tbody = window.L.DomUtil.create('tbody', '', this.sectionProperties.author);
+		var rowResolved = window.L.DomUtil.create('tr', '', tbody);
+		var tdResolved = window.L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
+		var pResolved = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
 		this.sectionProperties.resolvedTextElement = pResolved;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
 
-		var tr = L.DomUtil.create('tr', '', tbody);
+		var tr = window.L.DomUtil.create('tr', '', tbody);
 		this.sectionProperties.authorRow = tr;
 		tr.id = 'author table row ' + this.sectionProperties.data.id;
-		var tdImg = L.DomUtil.create('td', 'cool-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create('td', 'cool-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+		var tdImg = window.L.DomUtil.create('td', 'cool-annotation-img', tr);
+		var tdAuthor = window.L.DomUtil.create('td', 'cool-annotation-author', tr);
+		var imgAuthor = window.L.DomUtil.create('img', 'avatar-img', tdImg);
 		imgAuthor.setAttribute('alt', this.sectionProperties.data.author);
 		var viewId = this.map.getViewId(this.sectionProperties.data.author);
 		app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
@@ -296,32 +305,39 @@ export class Comment extends CanvasSectionObject {
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
 		if (app.map._docLayer._docType !== 'spreadsheet') {
-			this.sectionProperties.collapsedInfoNode = L.DomUtil.create('div', 'cool-annotation-info-collapsed', tdImg);
+			this.sectionProperties.collapsedInfoNode = window.L.DomUtil.create('div', 'cool-annotation-info-collapsed', tdImg);
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		}
 
 		this.sectionProperties.authorAvatarImg = imgAuthor;
 		this.sectionProperties.authorAvatartdImg = tdImg;
-		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
-		this.sectionProperties.contentDate = L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
-		this.sectionProperties.autoSave = L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
+		this.sectionProperties.contentAuthor = window.L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
+		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
+		this.sectionProperties.autoSave = window.L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
 	}
 
 	private createMenu (): void {
-		var tdMenu = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
-		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
+		var tdMenu = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		this.sectionProperties.menu = window.L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.tabIndex = 0;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
 		this.sectionProperties.menu.onkeypress = this.menuOnKeyPress.bind(this);
-		var divMenuTooltipText = _('Open menu');
-		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
-		this.sectionProperties.menu.setAttribute('aria-label', divMenuTooltipText);
+		this.sectionProperties.menu.dataset.title = Comment.openMenuLabel;
+		this.sectionProperties.menu.setAttribute('aria-label', Comment.openMenuLabel);
 		this.sectionProperties.menu.annotation = this;
 	}
 
+	private createReplyHint (commentType: HTMLElement): void {
+		this.sectionProperties.replyHint = window.L.DomUtil.create('p', '', commentType);
+		var small = document.createElement('small');
+		small.classList.add('cool-font');
+		small.innerText = _('Press Ctrl + Enter to post');
+		this.sectionProperties.replyHint.appendChild(small);
+	}
+
 	private createChildLinesNode (): void {
-		this.sectionProperties.childLinesNode = L.DomUtil.create('div', '', this.sectionProperties.container);
+		this.sectionProperties.childLinesNode = window.L.DomUtil.create('div', '', this.sectionProperties.container);
 		this.sectionProperties.childLinesNode.id = 'annotation-child-lines-' + this.sectionProperties.data.id;
 		this.sectionProperties.childLinesNode.style.width = this.sectionProperties.childCommentOffset*(this.getChildLevel() + 1) + 'px';
 	}
@@ -351,7 +367,7 @@ export class Comment extends CanvasSectionObject {
 		let i = 0;
 		for (; i < childPositions.length; i++) {
 			if (this.sectionProperties.childLines[i] === undefined) {
-				this.sectionProperties.childLines[i] = L.DomUtil.create('div', 'cool-annotation-child-line', this.sectionProperties.childLinesNode);
+				this.sectionProperties.childLines[i] = window.L.DomUtil.create('div', 'cool-annotation-child-line', this.sectionProperties.childLinesNode);
 				this.sectionProperties.childLines[i].id = 'annotation-child-line-' + this.sectionProperties.data.id + '-' + i;
 				this.sectionProperties.childLines[i].style.width = this.sectionProperties.childCommentOffset/2 + 'px';
 			}
@@ -374,35 +390,35 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private createTrackChangeButtons (): void {
-		var tdAccept = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
-		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'cool-redline-accept-button', tdAccept);
+		var tdAccept = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		var acceptButton = this.sectionProperties.acceptButton = window.L.DomUtil.create('button', 'cool-redline-accept-button', tdAccept);
 
-		var tdReject = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
-		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'cool-redline-reject-button', tdReject);
+		var tdReject = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		var rejectButton = this.sectionProperties.rejectButton = window.L.DomUtil.create('button', 'cool-redline-reject-button', tdReject);
 
 		acceptButton.dataset.title = _('Accept change');
 		acceptButton.setAttribute('aria-label', _('Accept change'));
 
-		L.DomEvent.on(acceptButton, 'click', function() {
+		window.L.DomEvent.on(acceptButton, 'click', function() {
 			this.map.fire('RedlineAccept', {id: this.sectionProperties.data.id});
 		}, this);
 
 		rejectButton.dataset.title = _('Reject change');
 		rejectButton.setAttribute('aria-label', _('Reject change'));
 
-		L.DomEvent.on(rejectButton, 'click', function() {
+		window.L.DomEvent.on(rejectButton, 'click', function() {
 			this.map.fire('RedlineReject', {id: this.sectionProperties.data.id});
 		}, this);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private createButton (container: any, id: any, cssClass: string, value: any, handler: any): void {
-		var button = L.DomUtil.create('input', cssClass, container);
+		var button = window.L.DomUtil.create('input', cssClass, container);
 		button.id = id;
 		button.type = 'button';
 		button.value = value;
-		L.DomEvent.on(button, 'mousedown', L.DomEvent.preventDefault);
-		L.DomEvent.on(button, 'click', handler, this);
+		window.L.DomEvent.on(button, 'mousedown', window.L.DomEvent.preventDefault);
+		window.L.DomEvent.on(button, 'click', handler, this);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -445,6 +461,10 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private textAreaKeyDown (ev: any): void {
+		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
+			return;
+		}
+
 		if (ev && ev.ctrlKey && ev.key === "Enter") {
 			this.map.mention?.closeMentionPopup(false);
 
@@ -459,27 +479,20 @@ export class Comment extends CanvasSectionObject {
 		this.handleKeyDownForPopup(ev, 'mentionPopup');
 	}
 
-	private sanitize (html: string): string {
-		if (DOMPurify.isSupported) {
-			return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
-		}
-		return '';
-	}
-
 	private updateContent (): void {
 		if(this.sectionProperties.data.html)
-			this.sectionProperties.contentText.innerHTML = this.sanitize(this.sectionProperties.data.html);
+			this.sectionProperties.contentText.innerHTML = app.LOUtil.sanitize(this.sectionProperties.data.html);
 		else
 			this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		// Get the escaped HTML out and find for possible, useful links
 		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
-		this.sectionProperties.contentText.innerHTML = this.sanitize(linkedText);
+		this.sectionProperties.contentText.innerHTML = app.LOUtil.sanitize(linkedText);
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.contentText.origHTML = this.sectionProperties.data.html ? this.sectionProperties.data.html: '';
 		this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		if (this.sectionProperties.data.html) {
-			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.data.html);
+			this.sectionProperties.nodeModifyText.innerHTML = app.LOUtil.sanitize(this.sectionProperties.data.html);
 		}
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
@@ -552,22 +565,6 @@ export class Comment extends CanvasSectionObject {
 			}
 			this.setShowSection(true);
 			var position: Array<number> = [Math.round(cellPos[0] * app.twipsToPixels), Math.round(cellPos[1] * app.twipsToPixels)];
-			var splitPosCore = {x: 0, y: 0};
-			if (app.map._docLayer.getSplitPanesContext())
-				splitPosCore = app.map._docLayer.getSplitPanesContext().getSplitPos();
-
-			splitPosCore.x *= app.dpiScale;
-			splitPosCore.y *= app.dpiScale;
-
-			if (position[0] < splitPosCore.x)
-				position[0] += this.documentTopLeft[0];
-			else if (position[0] - this.documentTopLeft[0] < splitPosCore.x)
-				this.setShowSection(false);
-
-			if (position[1] < splitPosCore.y)
-				position[1] += this.documentTopLeft[1];
-			else if (position[1] - this.documentTopLeft[1] < splitPosCore.y)
-				this.setShowSection(false);
 
 			this.setPosition(position[0], position[1]);
 		}
@@ -595,7 +592,7 @@ export class Comment extends CanvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(app.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
@@ -603,12 +600,12 @@ export class Comment extends CanvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(app.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(app.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 
 		this.containerObject.requestReDraw();
@@ -669,7 +666,7 @@ export class Comment extends CanvasSectionObject {
 
 		if (rectangles) {
 			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+			var diff = [documentAnchorSection.myTopLeft[0] - app.activeDocument.activeView.viewedRectangle.pX1, documentAnchorSection.myTopLeft[1] - app.activeDocument.activeView.viewedRectangle.pY1];
 
 			for (var i = 0; i < rectangles.length; i++) {
 				pos = [
@@ -801,7 +798,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.container.style.display = '';
 		}
 		if (this.sectionProperties.data.resolved !== 'true' || this.sectionProperties.commentListSection.sectionProperties.showResolved) {
-			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			window.L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 			this.sectionProperties.showSelectedCoordinate = true;
 		}
 		this.sectionProperties.contentNode.style.display = '';
@@ -855,7 +852,7 @@ export class Comment extends CanvasSectionObject {
 			else {
 				this.sectionProperties.container.style.visibility = 'hidden';
 			}
-			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			window.L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		}
 	}
 
@@ -903,7 +900,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.showSelectedCoordinate = false;
-		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.cachedIsEdit = false;
 		this.hidden = true;
 	}
@@ -932,7 +929,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeReply.style.display = 'none';
 			this.cachedIsEdit = false;
 		}
-		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 		this.hidden = true;
 	}
 
@@ -973,14 +970,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnMouseClick (e: any): void {
 		$(this.sectionProperties.menu).contextMenu();
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
 		if (e.code === 'Space' || e.code === 'Enter')
 			$(this.sectionProperties.menu).contextMenu();
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -990,7 +987,7 @@ export class Comment extends CanvasSectionObject {
 			&& !this.map.uiManager.mobileWizard.isOpen()) {
 			this.hide();
 		}
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 		this.sectionProperties.commentListSection.click(this);
 	}
 
@@ -1001,7 +998,7 @@ export class Comment extends CanvasSectionObject {
 				this.onCancelClick(e);
 			} else if (e.keyCode === 33 /*PageUp*/ || e.keyCode === 34 /*PageDown*/) {
 				// work around for a chrome issue https://issues.chromium.org/issues/41417806
-				L.DomEvent.preventDefault(e);
+				window.L.DomEvent.preventDefault(e);
 				var pos = e.keyCode === 33 ? 0 : e.target.textLength;
 				var currentPos = e.target.selectionStart;
 				if (e.shiftKey) {
@@ -1025,7 +1022,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onReplyClick (e: any): void {
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 		if ((<any>window).mode.isMobile()) {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
@@ -1045,7 +1042,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public handleCancelCommentButton (e: any): void {
 		if (cool.CommentSection.commentWasAutoAdded) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).remove(this.sectionProperties.data.id);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).remove(this.sectionProperties.data.id);
 		}
 
 		if (cool.CommentSection.autoSavedComment) {
@@ -1060,7 +1057,7 @@ export class Comment extends CanvasSectionObject {
 		// It is mandatory to change these values before handleSaveCommentButton is called
 		// calling handleSaveCommentButton in onCancelClick causes problem because that is also called from many other events/function (i.e: onPartChange)
 		if (this.sectionProperties.contentText.origHTML) {
-			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.contentText.origHTML);
+			this.sectionProperties.nodeModifyText.innerHTML = app.LOUtil.sanitize(this.sectionProperties.contentText.origHTML);
 		}
 		else {
 			this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.contentText.origText;
@@ -1080,9 +1077,9 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCancelClick (e: any): void {
 		if (e)
-			L.DomEvent.stopPropagation(e);
+			window.L.DomEvent.stopPropagation(e);
 		if (this.sectionProperties.contentText.origHTML) {
-			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.contentText.origHTML);
+			this.sectionProperties.nodeModifyText.innerHTML = app.LOUtil.sanitize(this.sectionProperties.contentText.origHTML);
 		}
 		else {
 			this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.contentText.origText;
@@ -1106,7 +1103,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
 		this.sectionProperties.commentContainerRemoved = true;
-		L.DomEvent.stopPropagation(e);
+		window.L.DomEvent.stopPropagation(e);
 		this.removeLastBRTag(this.sectionProperties.nodeModifyText);
 		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.innerText;
 		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
@@ -1119,11 +1116,19 @@ export class Comment extends CanvasSectionObject {
 	// for some reason firefox adds <br> at of the end of text in contenteditable div
 	// there have been similar reports: https://bugzilla.mozilla.org/show_bug.cgi?id=1615852
 	private removeLastBRTag(element: HTMLElement) {
-		if (!L.Browser.gecko)
+		if (!window.L.Browser.gecko)
 			return;
 		const brElements = element.querySelectorAll('br');
 		if (brElements.length > 0)
 			brElements[brElements.length-1].remove();
+	}
+
+	private isNodeEmpty(): boolean {
+		this.removeLastBRTag(this.sectionProperties.nodeModifyText);
+		if (this.sectionProperties.nodeModifyText.innerText == "" &&
+			this.sectionProperties.nodeModifyText.innerHTML == "")
+			return true;
+		return false;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -1162,6 +1167,8 @@ export class Comment extends CanvasSectionObject {
 					}
 				}
 			}
+			else if (app.map._docLayer._docType === 'text' && this.isNodeEmpty())
+				this.onCancelClick(e);
 		}
 	}
 
@@ -1235,7 +1242,7 @@ export class Comment extends CanvasSectionObject {
 
 	public static isAnyEdit (): Comment {
 		var section = app.sectionContainer && app.sectionContainer instanceof CanvasSectionContainer ?
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name) : null;
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name) : null;
 		if (!section) {
 			return null;
 		}
@@ -1338,7 +1345,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onClick (point: Array<number>, e: MouseEvent): void {
+	public onClick (point: cool.SimplePoint, e: MouseEvent): void {
 		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 			e.stopPropagation();
@@ -1398,25 +1405,17 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void {
-		return;
-	}
-
-	public onMouseUp (point: Array<number>, e: MouseEvent): void {
+	public onMouseUp (point: cool.SimplePoint, e: MouseEvent): void {
 		// Hammer.js doesn't fire onClick event after touchEnd event.
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
 		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
-			if (app.map._docLayer._docType === 'presentataion' || app.map._docLayer._docType === 'drawing')
+			if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing')
 				app.map._docLayer._openCommentWizard(this);
 			this.onMouseEnter();
 			this.onClick(point, e);
 		}
-	}
-
-	public onMouseDown (point: Array<number>, e: MouseEvent): void {
-		return;
 	}
 
 	private calcContinueWithMouseEvent (): boolean {
@@ -1463,7 +1462,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseLeave (point: Array<number>): void {
+	public onMouseLeave (point: cool.SimplePoint): void {
 		if (this.calcContinueWithMouseEvent()) {
 			if (parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
@@ -1579,7 +1578,7 @@ export class Comment extends CanvasSectionObject {
 		|| this.sectionProperties.commentListSection.sectionProperties.showResolved
 		|| app.map._docLayer._docType === 'presentation'
 		|| app.map._docLayer._docType === 'drawing')
-			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			window.L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
 
 	public updateThreadInfoIndicator(replycount:number | string = -1): void {
@@ -1607,13 +1606,61 @@ export class Comment extends CanvasSectionObject {
 		if (!this.isCollapsed)
 			return;
 		this.isCollapsed = false;
-		if (this.sectionProperties.data.resolved === 'false' || this.sectionProperties.commentListSection.sectionProperties.showResolved) {
+		if (app.map.getDocType() !== 'text' // Comments are resolved only in writer, always show in other apps
+		|| this.sectionProperties.data.resolved === 'false'
+		|| this.sectionProperties.commentListSection.sectionProperties.showResolved) {
 			this.sectionProperties.container.style.display = '';
 			this.sectionProperties.container.style.visibility = '';
 		}
 		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
-		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		window.L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+	}
+
+	public selectText(startParagraph: number, startIndex: number, endParagraph: number, endIndex: number): void {
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+
+		const paragraphElements = Array.from(this.sectionProperties.contentText.firstChild.children);
+		if (paragraphElements.length === 0) {
+			return;
+		}
+		if (startParagraph > paragraphElements.length - 1 || endParagraph > paragraphElements.length - 1) {
+			return;
+		}
+
+		// Find start position
+		const startElement = paragraphElements[startParagraph] as HTMLElement;
+		const startWalker = document.createTreeWalker(
+			startElement,
+			NodeFilter.SHOW_TEXT,
+			null
+		);
+		const startTextNode = startWalker.nextNode();
+		if (!startTextNode) {
+			return;
+		}
+
+		// Find end position
+		const endElement = paragraphElements[endParagraph] as HTMLElement;
+		const endWalker = document.createTreeWalker(
+			endElement,
+			NodeFilter.SHOW_TEXT,
+			null
+		);
+		const endTextNode = endWalker.nextNode();
+		if (!endTextNode)
+			return;
+
+		// Create and apply the selection range
+		const range = document.createRange();
+		range.setStart(startTextNode, startIndex);
+		range.setEnd(endTextNode, endIndex);
+
+		selection.addRange(range);
+
+		// Ensure the selection is visible
+		this.sectionProperties.contentText.focus();
 	}
 
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {

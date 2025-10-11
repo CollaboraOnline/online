@@ -9,10 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.ScrollAnnotation
+ * window.L.Control.ScrollAnnotation
  */
 /* global _ */
-L.Control.ScrollAnnotation = L.Control.extend({
+window.L.Control.ScrollAnnotation = window.L.Control.extend({
 	options: {
 		position: 'topright',
 		arrowUp: '0x25b2',
@@ -23,7 +23,7 @@ L.Control.ScrollAnnotation = L.Control.extend({
 
 	onAdd: function (map) {
 		var scrollName = 'leaflet-control-scroll',
-		    container = L.DomUtil.create('div', 'cool-bar');
+		    container = window.L.DomUtil.create('div', 'cool-bar');
 
 		this._map = map;
 
@@ -46,24 +46,24 @@ L.Control.ScrollAnnotation = L.Control.extend({
 	},
 
 	_createButton: function (html, title, className, container, fn, context) {
-		var link = L.DomUtil.create('a', className, container);
+		var link = window.L.DomUtil.create('a', className, container);
 		link.innerHTML = String.fromCharCode(html);
 		link.href = '#';
 		link.title = title;
 
-		var stop = L.DomEvent.stopPropagation;
+		var stop = window.L.DomEvent.stopPropagation;
 
-		L.DomEvent
+		window.L.DomEvent
 		    .on(link, 'click', stop)
 		    .on(link, 'mousedown', stop)
 		    .on(link, 'dblclick', stop)
-		    .on(link, 'click', L.DomEvent.preventDefault)
+		    .on(link, 'click', window.L.DomEvent.preventDefault)
 		    .on(link, 'click', fn, context);
 
 		return link;
 	}
 });
 
-L.control.scrollannotation = function (options) {
-	return new L.Control.ScrollAnnotation(options);
+window.L.control.scrollannotation = function (options) {
+	return new window.L.Control.ScrollAnnotation(options);
 };

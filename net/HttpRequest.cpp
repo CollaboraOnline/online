@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "HttpRequest.hpp"
 
@@ -25,6 +25,7 @@
 #include <netdb.h>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <sys/types.h>
 #include <utility>
 
@@ -74,6 +75,11 @@ static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
     }
 
     return len;
+}
+
+static inline int64_t findLineBreak(const std::string_view data, int64_t off)
+{
+    return findLineBreak(data.data(), off, data.size());
 }
 
 /// Finds the double CRLF that signifies the end
@@ -302,17 +308,201 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     return FieldParseState::Valid;
 }
 
-int64_t Request::readData(const char* p, const int64_t len)
+bool Request::writeData(Buffer& out, std::size_t capacity)
+{
+    const std::size_t buffered_size = out.size();
+    if (stage() == Stage::RequestLine)
+    {
+        LOG_TRC("performWrites (request header)");
+
+        out.append(getVerb());
+        out.append(" ");
+        out.append(getUrl());
+        out.append(" ");
+        out.append(getVersion());
+        out.append("\r\n");
+
+        header().writeData(out);
+        out.append("\r\n"); // End the header.
+
+        setStage(Stage::Body); // We've written both request-line and header.
+    }
+
+    if (stage() == Stage::Body)
+    {
+        LOG_TRC("performWrites (request body)");
+
+        // Get the data to write into the socket
+        // from the client's callback. This is
+        // used to upload files, or other data.
+        char buffer[64 * 1024];
+        std::size_t wrote = 0;
+        const bool chunked =
+            Util::toLower(get("transfer-encoding")).find("chunked") != std::string::npos;
+        do
+        {
+            const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
+            if (read < 0)
+            {
+                LOG_ERR("Error reading the data to send as the HTTP request body: " << read);
+                return false;
+            }
+
+            if (read == 0)
+            {
+                LOG_TRC("performWrites (request body): finished, total: " << out.size() -
+                                                                                 buffered_size);
+                setStage(Stage::Finished);
+                if (chunked)
+                {
+                    out.append("0\r\n\r\n"); // Ending chunck.
+                }
+
+                break;
+            }
+
+            const auto before = out.size();
+            if (chunked)
+            {
+                std::stringstream ss;
+                ss << std::hex << read;
+                out.append(ss.str());
+                out.append("\r\n");
+                out.append(buffer, read);
+                out.append("\r\n");
+            }
+            else
+            {
+                out.append(buffer, read);
+            }
+
+            wrote += (out.size() - before);
+            LOG_TRC("performWrites (request body): " << read << " bytes, total: "
+                                                     << out.size() - buffered_size);
+        } while (wrote < capacity);
+    }
+
+#ifdef DEBUG_HTTP
+    LOG_TRC("Request::writeData: " << buffered_size << " bytes buffered\n"
+                                   << HexUtil::dumpHex(out));
+#endif //DEBUG_HTTP
+
+    return true;
+}
+
+std::tuple<int64_t, int64_t, bool>
+MultipartDataParser::findBoundary(const std::string_view data, const std::string_view delimiter,
+                                  int64_t off)
+{
+    // Per RFC 2046, 5.1.1.  Common Syntax, we can have a preamble
+    // between the header and the first boundary marker. So we
+    // can and should skip anything until we hit a boundary.
+
+    //  multipart-body := [preamble CRLF]
+    //                    dash-boundary transport-padding CRLF
+    //                    body-part *encapsulation
+    //                    close-delimiter transport-padding
+    //                    [CRLF epilogue]
+
+    // Find the delimiter.
+    const std::size_t pos = data.find(delimiter, off);
+    if (pos == std::string::npos)
+    {
+        return { -1, -1, false }; // Not enough data.
+    }
+
+    // Expect at least 2 bytes after the delimiter, either CRLF
+    // or '--' to signal last part.
+    if (data.size() < pos + delimiter.size() + 2)
+    {
+        return { pos, 0, false }; // Incomplete.
+    }
+
+    //  close-delimiter := delimiter "--"
+    const bool last =
+        data[pos + delimiter.size()] == '-' && data[pos + delimiter.size() + 1] == '-';
+
+    // Find the CRLF ending the boundary.
+    off = findLineBreak(data, pos + delimiter.size());
+    if (static_cast<std::size_t>(off) == data.size())
+    {
+        // If it's too long, fail with -1. Otherwise, 0 for incomplete.
+        off = data.size() - pos - delimiter.size() > MaxLineLength ? -1 : 0;
+    }
+
+    return { pos, off, last };
+}
+
+int64_t MultipartDataParser::parsePart(std::string_view data, Header& header,
+                                       std::string_view& body)
+{
+    if (isLast())
+    {
+        return data.size(); // Consume everything, since it's epilogue.
+    }
+
+    // The very first boundary could be at the very start of the body.
+    // In that case, there will not be CRLF, because there is no preamble.
+    // However, if that's not the case, there must be CRLF, so we search for that.
+    const std::string_view delimiter =
+        (_state == State::FirstPart && data.starts_with(_dashBoundary)) ? _dashBoundary
+                                                                        : _delimiter;
+    auto [start, end, last] = findBoundary(data, delimiter, 0);
+    if (start < 0 || (!last && end == 0))
+    {
+        return 0; // Incomplete.
+    }
+
+    if (end < 0)
+    {
+        return -1; // Invalid.
+    }
+
+    ++end; // Skip the last char ('\n').
+
+    // Find the *next* boundary, or closing one.
+    auto [nextStart, nextEnd, nextLast] = findBoundary(data, _delimiter, end);
+    if (nextStart < 0 || (!last && nextEnd == 0))
+    {
+        return 0; // Incomplete.
+    }
+
+    if (nextEnd < 0)
+    {
+        return -1; // Invalid.
+    }
+
+    _state = nextLast ? State::LastPart : State::NextPart;
+    data = data.substr(end); // Skip the boundary.
+
+    int64_t off = header.parse(data.data(), data.size());
+    if (off <= 0)
+    {
+        return off; // Not enough or invalid data.
+    }
+
+    // The body is everything from the end of the header to
+    // the beginning of the next boundary.
+    body = std::string_view(data.data() + off, nextStart - end - off);
+    return nextStart;
+}
+
+int64_t MultipartDataParser::readPart(std::string_view data, Header& header, std::string_view& body)
+{
+    return parsePart(data, header, body);
+}
+
+int64_t RequestParser::readData(const char* p, const int64_t len)
 {
     uint64_t available = len;
-    if (_stage == Stage::Header)
+    if (stage() == Stage::RequestLine)
     {
         // First line is the status line.
         // Fix infinite loop on mobile by skipping the minimum request header
         // length check
         if (p == nullptr || (len < MinRequestHeaderLen && !Util::isMobileApp()))
         {
-            LOG_TRC("Request::readData: len < MinRequestHeaderLen");
+            LOG_TRC("RequestParser::readData: len < MinRequestHeaderLen");
             return 0;
         }
 
@@ -325,7 +515,7 @@ int64_t Request::readData(const char* p, const int64_t len)
             return 0;
         }
 
-        _verb = std::string(&p[off], end - off);
+        setVerb(std::string(&p[off], end - off));
 
         // URL.
         off = skipSpaceAndTab(p, end, available);
@@ -336,7 +526,7 @@ int64_t Request::readData(const char* p, const int64_t len)
             return 0;
         }
 
-        _url = std::string(&p[off], end - off);
+        setUrl(std::string(&p[off], end - off));
 
         // Version.
         off = skipSpaceAndTab(p, end, available);
@@ -360,12 +550,12 @@ int64_t Request::readData(const char* p, const int64_t len)
             (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.' ||
             (versionMin < 0 || versionMin > 9) || !isWhitespace(version[VersionBreakPos]))
         {
-            LOG_ERR("Request::dataRead: Invalid HTTP version [" << std::string(version, VersionLen)
-                                                                << "]");
+            LOG_ERR("RequestParser::dataRead: Invalid HTTP version ["
+                    << std::string(version, VersionLen) << "]");
             return -1;
         }
 
-        _version = std::string(version, VersionLen);
+        setVersion(std::string(version, VersionLen));
 
         off += VersionLen;
         end = findLineBreak(p, off, available);
@@ -378,14 +568,14 @@ int64_t Request::readData(const char* p, const int64_t len)
         ++end; // Skip the LF character.
 
         // LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
-        _stage = Stage::Body;
+        setStage(Stage::Header);
         p += end;
         available -= end;
     }
 
-    if (_stage == Stage::Body)
+    if (stage() == Stage::Header)
     {
-        const int64_t read = _header.parse(p, available);
+        const int64_t read = editHeader().parse(p, available);
         if (read < 0)
         {
             return read;
@@ -393,8 +583,9 @@ int64_t Request::readData(const char* p, const int64_t len)
 
         if (read > 0)
         {
-            available -= read;
+            setStage(Stage::Body);
             p += read;
+            available -= read;
 
 #ifdef DEBUG_HTTP
             LOG_TRC("After Header: "
@@ -402,15 +593,150 @@ int64_t Request::readData(const char* p, const int64_t len)
                     << HexUtil::dumpHex(std::string(p, std::min(available, 1 * 1024UL))));
 #endif //DEBUG_HTTP
         }
+    }
 
-        if (_verb == VERB_GET)
+    if (stage() == Stage::Body)
+    {
+        if (getVerb() == VERB_GET)
         {
             // A payload in a GET request "has no defined semantics".
+            setStage(Stage::Finished);
             return len - available;
         }
 
-        // TODO: Implement POST and HEAD support.
-        LOG_ERR("Unsupported HTTP Method [" << _verb << ']');
+        if (getVerb() == VERB_POST)
+        {
+            LOG_TRC("RequestParser::POST: " << available);
+
+            if (!header().hasContentLength() && !header().getChunkedTransferEncoding())
+            {
+                LOG_ERR("HTTP POST request must provide either content-length or chunked "
+                        "transfer-encoding");
+                return -1; // Fail.
+            }
+
+            if (header().getChunkedTransferEncoding())
+            {
+                // This is a chunked transfer.
+                // Find the start of the chunk, which is
+                // the length of the chunk in hex.
+                // each chunk is preceeded by its length in hex.
+                while (available)
+                {
+#ifdef DEBUG_HTTP
+                    LOG_TRC("New Chunk, "
+                            << available << " bytes available\n"
+                            << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
+#endif //DEBUG_HTTP
+
+                    // Read ahead to see if we have enough data
+                    // to consume the chunk length.
+                    int64_t off = findLineBreak(p, 0, available);
+                    if (off == static_cast<int64_t>(available))
+                    {
+                        LOG_TRC("Not enough data for chunk size");
+                        // Not enough data.
+                        return len - available; // Don't remove.
+                    }
+
+                    ++off; // Skip the LF itself.
+
+                    // Read the chunk length.
+                    int64_t chunkLen = 0;
+                    int chunkLenSize = 0;
+                    for (; chunkLenSize < static_cast<int64_t>(available); ++chunkLenSize)
+                    {
+                        const int digit = HexUtil::hexDigitFromChar(p[chunkLenSize]);
+                        if (digit < 0)
+                            break;
+
+                        // Can assume that digit is always less than 16.
+                        if (chunkLen >= std::numeric_limits<int64_t>::max() / 16)
+                        {
+                            // Would not fit into chunkLen.
+                            LOG_ERR("Unexpected chunk length: " << chunkLen);
+                            return -1;
+                        }
+                        chunkLen = chunkLen * 16 + digit;
+                    }
+
+                    LOG_TRC("ChunkLen: " << chunkLen);
+                    if (chunkLen > 0)
+                    {
+                        // Do we have enough data for this chunk?
+                        if (static_cast<int64_t>(available) - off < chunkLen + 2) // + CRLF.
+                        {
+                            // Not enough data.
+                            LOG_TRC("Not enough chunk data. Need "
+                                    << chunkLen + 2 << " but have only " << available - off);
+                            return len - available; // Don't remove.
+                        }
+
+                        // Skip the chunkLen bytes and any chunk extensions.
+                        available -= off;
+                        p += off;
+
+                        const int64_t wrote = _onBodyWriteCb(p, chunkLen);
+                        if (wrote != chunkLen)
+                        {
+                            LOG_ERR("Error writing http response payload. Write "
+                                    "handler returned "
+                                    << wrote << " instead of " << chunkLen);
+                            return -1;
+                        }
+
+                        available -= chunkLen;
+                        p += chunkLen;
+                        _recvBodySize += chunkLen;
+                        LOG_TRC("Wrote " << chunkLen << " bytes for a total of " << _recvBodySize);
+
+                        // Skip blank lines.
+                        off = skipCRLF(p, 0, available);
+                        p += off;
+                        available -= off;
+                    }
+                    else
+                    {
+                        // That was the last chunk!
+                        setStage(Stage::Finished);
+                        available = 0; // Consume all.
+                        LOG_TRC("Got LastChunk, finished.");
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // Non-chunked payload.
+                // Write the body into the output, returns the
+                // number of bytes read from the given buffer.
+                const int64_t wrote = _onBodyWriteCb(p, available);
+                if (wrote < 0)
+                {
+                    LOG_ERR("Error writing received http response payload into the body-callback. "
+                            "Write handler returned "
+                            << wrote << " instead of " << available);
+                    return wrote;
+                }
+
+                if (wrote > 0)
+                {
+                    available -= wrote;
+                    _recvBodySize += wrote;
+                    if (header().hasContentLength() && _recvBodySize >= header().getContentLength())
+                    {
+                        LOG_TRC("Wrote all received content ("
+                                << _recvBodySize << " bytes) into the body-callback, finished.");
+                        setStage(Stage::Finished);
+                    }
+                }
+            }
+
+            return len - available;
+        }
+
+        // TODO: Implement HEAD support.
+        LOG_ERR("Unsupported HTTP Method [" << getVerb() << ']');
         return -1;
     }
 
@@ -422,7 +748,7 @@ int64_t Request::readData(const char* p, const int64_t len)
 /// and/or to interrupt transmission.
 int64_t Response::readData(const char* p, int64_t len)
 {
-    LOG_TRC("readData: " << len << " bytes");
+    LOG_TRC("Response::readData: " << len << " bytes");
 
     // We got some data.
     _state = State::Incomplete;
@@ -579,12 +905,12 @@ int64_t Response::readData(const char* p, int64_t len)
                     available -= off;
                     p += off;
 
-                    const int64_t read = _onBodyWriteCb(p, chunkLen);
-                    if (read != chunkLen)
+                    const int64_t wrote = _onBodyWriteCb(p, chunkLen);
+                    if (wrote != chunkLen)
                     {
                         LOG_ERR("Error writing http response payload. Write "
                                 "handler returned "
-                                << read << " instead of " << chunkLen);
+                                << wrote << " instead of " << chunkLen);
                         return -1;
                     }
 

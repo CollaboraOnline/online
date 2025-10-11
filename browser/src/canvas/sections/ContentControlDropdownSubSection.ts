@@ -126,11 +126,11 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		return json;
 	}
 
-	onMouseEnter(point: Array<number>, e: MouseEvent): void {
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = true;
 	}
 
-	onMouseLeave(point: Array<number>, e: MouseEvent): void {
+	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.dontHandleMouse = false;
 	}
 
@@ -149,7 +149,7 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		return false;
 	}
 
-	onClick(point: number[], e: MouseEvent): void {
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();

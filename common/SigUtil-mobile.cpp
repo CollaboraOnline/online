@@ -10,12 +10,26 @@
  */
 
 #include <config.h>
-
+#include <Socket.hpp>
 #include "SigUtil.hpp"
 
 #include <string>
 
 #include "Log.hpp"
+
+namespace
+{
+/// The valid states of the process.
+enum class RunState : char
+{
+    Run = 0, ///< Normal up-and-running state.
+    ShutDown, ///< Request to shut down gracefully.
+    Terminate ///< Immediate termination.
+};
+
+/// Single flag to control the current run state.
+static std::atomic<RunState> RunStateFlag(RunState::Run);
+} // namespace
 
 namespace SigUtil
 {
@@ -25,21 +39,35 @@ namespace SigUtil
 
     bool getShutdownRequestFlag()
     {
-        return false;
+        return RunStateFlag >= RunState::ShutDown;
     }
 
     bool getTerminationFlag()
     {
-        return false;
+        return RunStateFlag >= RunState::Terminate;
     }
 
     void setTerminationFlag()
     {
+        // While fuzzing, we never want to terminate.
+        if constexpr (!Util::isFuzzing())
+        {
+            // Set the forced-termination flag.
+            RunStateFlag = RunState::Terminate;
+        }
+
+        SocketPoll::wakeupWorld();
     }
 
     void requestShutdown()
     {
+        RunState oldState = RunState::Run;
+        if (RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown)) {
+            SocketPoll::wakeupWorld();
+        }
     }
+
+    void resetTerminationFlags() { RunStateFlag = RunState::Run; }
 
     void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {
@@ -49,15 +77,15 @@ namespace SigUtil
     {
     }
 
-    void setActivityHeader(const std::string &message)
+    void setActivityHeader([[maybe_unused]] const std::string &message)
     {
     }
 
-    void addActivity(const std::string &message)
+    void addActivity([[maybe_unused]] const std::string &message)
     {
     }
 
-    void addActivity(const std::string &viewId, const std::string &message)
+    void addActivity([[maybe_unused]] const std::string &viewId, [[maybe_unused]] const std::string &message)
     {
     }
 
@@ -77,15 +105,15 @@ namespace SigUtil
     {
     }
 
-    void signalLog(const char *message)
+    void signalLog([[maybe_unused]] const char *message)
     {
     }
 
-    void signalLogNumber(std::size_t num, int base)
+    void signalLogNumber([[maybe_unused]] std::size_t num, [[maybe_unused]] int base)
     {
     }
 
-    const char *signalName(const int signo)
+    const char *signalName([[maybe_unused]] const int signo)
     {
         return "SIGWTF";
     }
@@ -94,15 +122,15 @@ namespace SigUtil
     {
     }
 
-    void setVersionInfo(const std::string &versionInfo)
+    void setVersionInfo([[maybe_unused]] const std::string &versionInfo)
     {
     }
 
-    void setFatalSignals(const std::string &versionInfo)
+    void setFatalSignals([[maybe_unused]] const std::string &versionInfo)
     {
     }
 
-    void setSigChildHandler(SigChildHandler fn)
+    void setSigChildHandler([[maybe_unused]] SigChildHandler fn)
     {
     }
 
@@ -118,7 +146,7 @@ namespace SigUtil
     {
     }
 
-    bool killChild(const int pid, const int signal)
+    bool killChild([[maybe_unused]] const int pid, [[maybe_unused]] const int signal)
     {
         return true;
     }

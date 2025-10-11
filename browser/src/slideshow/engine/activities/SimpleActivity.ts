@@ -71,7 +71,7 @@ class SimpleActivity extends ContinuousActivityBase {
 
 	public performEnd() {
 		if (this.aAnimation) {
-			console.debug('SimpleActivity.performEnd');
+			app.console.debug('SimpleActivity.performEnd');
 			this.aAnimation.perform(this.nDirection, /*last:*/ true);
 		}
 	}

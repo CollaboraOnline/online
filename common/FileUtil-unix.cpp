@@ -68,6 +68,11 @@ namespace FileUtil
 
     bool platformDependentCheckDiskSpace(const std::string& path, int64_t enoughSpace)
     {
+#if defined __EMSCRIPTEN__
+        //TODO:
+        (void) path;
+        (void) enoughSpace;
+#else
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
         {
@@ -85,6 +90,7 @@ namespace FileUtil
 
         if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
             return false;
+#endif
 
         return true;
     }

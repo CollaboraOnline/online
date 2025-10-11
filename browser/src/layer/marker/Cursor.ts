@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 /* eslint-disable */
 
-declare var L: any;
 
 /*
  * Cursor implements a blinking cursor.
@@ -63,9 +62,9 @@ class Cursor {
 		else
 			this.map.on('move', this.update, this);
 
-		window.addEventListener('blur', this.onFocusBlur.bind(this));
-		window.addEventListener('focus', this.onFocusBlur.bind(this));
-		window.addEventListener('resize', this.onResize.bind(this));
+		window.addEventListener('blur', this.onFocusBlur);
+		window.addEventListener('focus', this.onFocusBlur);
+		window.addEventListener('resize', this.onResize);
 	}
 
 	setMouseCursor() {
@@ -99,9 +98,9 @@ class Cursor {
 		this.visible = false;
 		this.domAttached = false;
 
-		window.removeEventListener('blur', this.onFocusBlur.bind(this));
-		window.removeEventListener('focus', this.onFocusBlur.bind(this));
-		window.removeEventListener('resize', this.onResize.bind(this));
+		window.removeEventListener('blur', this.onFocusBlur);
+		window.removeEventListener('focus', this.onFocusBlur);
+		window.removeEventListener('resize', this.onResize);
 	}
 
 	isDomAttached(): boolean {
@@ -110,20 +109,20 @@ class Cursor {
 
 	addCursorClass(visible: boolean) {
 		if (visible)
-			L.DomUtil.removeClass(this.cursor, 'blinking-cursor-hidden');
+			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor-hidden');
 		else
-			L.DomUtil.addClass(this.cursor, 'blinking-cursor-hidden');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor-hidden');
 	}
 
 	isVisible(): boolean {
 		return this.visible;
 	}
 
-	onFocusBlur(ev: FocusEvent) {
+	onFocusBlur = (ev: FocusEvent) => {
 		this.addCursorClass(ev.type !== 'blur');
 	}
 
-	onResize() {
+	onResize = () => {
 		if (window.devicePixelRatio !== 1 )
 			this.cursor.style.width = this.width / window.devicePixelRatio + 'px';
 		else
@@ -174,13 +173,7 @@ class Cursor {
 		var canvasOffset = this.position.subtract(origin);
 
 		if (inDocCursor) {
-			var cursorOffset = new cool.Point(
-				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
-				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
-			var paneBounds = new cool.Bounds(new cool.Point(0, 0), paneSize);
-			var cursorBounds = new cool.Bounds(cursorOffset, cursorOffset.add(this.size));
-
-			if (!paneBounds.contains(cursorBounds)) {
+			if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
 				this.container.style.visibility = 'hidden';
 				this.visible = false;
 				this.addCursorClass(this.visible);
@@ -204,9 +197,9 @@ class Cursor {
 
 	setOpacity(opacity: number) {
 		if (this.container)
-			L.DomUtil.setOpacity(this.cursor, opacity);
+			window.L.DomUtil.setOpacity(this.cursor, opacity);
 		if (this.cursorHeader)
-			L.DomUtil.setOpacity(this.cursorHeader, opacity);
+			window.L.DomUtil.setOpacity(this.cursorHeader, opacity);
 	}
 
 	// Shows cursor header if cursor is in visible area.
@@ -217,10 +210,10 @@ class Cursor {
 				return;
 			}
 
-			L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'visible');
+			window.L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'visible');
 
 			clearTimeout(this.blinkTimeout);
-			this.blinkTimeout = setTimeout(L.bind(function () {
+			this.blinkTimeout = setTimeout(window.L.bind(function () {
 				this.hideCursorHeader();
 			}, this), this.headerTimeout);
 		}
@@ -228,32 +221,32 @@ class Cursor {
 
 	hideCursorHeader() {
 		if (this.cursorHeader)
-			L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
+			window.L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
 	}
 
 	private initLayout() {
-		this.container = L.DomUtil.create('div', 'leaflet-cursor-container');
+		this.container = window.L.DomUtil.create('div', 'leaflet-cursor-container');
 		if (this.header) {
-			this.cursorHeader = L.DomUtil.create('div', 'leaflet-cursor-header', this.container);
+			this.cursorHeader = window.L.DomUtil.create('div', 'leaflet-cursor-header', this.container);
 
 			this.cursorHeader.textContent = this.headerName;
 
 			clearTimeout(this.blinkTimeout);
-			this.blinkTimeout = setTimeout(L.bind(function () {
-				L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
+			this.blinkTimeout = setTimeout(window.L.bind(function () {
+				window.L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
 			}, this), this.headerTimeout);
 		}
-		this.cursor = L.DomUtil.create('div', 'leaflet-cursor', this.container);
+		this.cursor = window.L.DomUtil.create('div', 'leaflet-cursor', this.container);
 		if (this.blink) {
-			L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
 		}
 
 		if (this.color) {
-			L.DomUtil.setStyle(this.cursorHeader, 'background', this.color);
-			L.DomUtil.setStyle(this.cursor, 'background', this.color);
+			window.L.DomUtil.setStyle(this.cursorHeader, 'background', this.color);
+			window.L.DomUtil.setStyle(this.cursor, 'background', this.color);
 		}
 
-		L.DomEvent
+		window.L.DomEvent
 			.disableClickPropagation(this.cursor)
 			.disableScrollPropagation(this.container);
 
@@ -275,9 +268,8 @@ class Cursor {
 		this.container.style.zIndex = this.zIndex + '';
 		// Restart blinking animation
 		if (this.blink) {
-			L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
-			void this.cursor.offsetWidth;
-			L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
 		}
 	}
 
@@ -303,7 +295,7 @@ class Cursor {
 
 		if (Cursor.isCustomCursor(cursorName)) {
 			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
-			customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
+			customCursor = window.L.Browser.ie ? // IE10 does not like item with left/top position in the url list
 				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 		}

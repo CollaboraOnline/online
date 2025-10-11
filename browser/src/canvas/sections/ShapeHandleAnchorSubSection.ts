@@ -18,14 +18,11 @@
 class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 	static tableAnchorIconSize = [20, 20]; // CSS pixels.
 
-	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
+	constructor (parentHandlerSection: ShapeHandlesSection | null, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
         super(sectionName, size[0], size[1], documentPosition, 'anchor-marker');
 
-		this.getHTMLObject().style.opacity = 1;
-		this.getHTMLObject().remove();
-		document.getElementById('map').appendChild(this.getHTMLObject());
-
-		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		this.moveHTMLObjectToMapElement();
+		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
         this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
@@ -42,22 +39,22 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		this.containerObject.requestReDraw();
 	}
 
-	tableMouseUp(point: number[], e: MouseEvent) {
+	tableMouseUp(point: cool.SimplePoint, e: MouseEvent) {
 		const parameters = {
 			'TransformPosX': {
 				'type': 'long',
-				'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
+				'value': Math.round((point.pX + this.position[0]) * app.pixelsToTwips)
 			},
 			'TransformPosY': {
 				'type': 'long',
-				'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
+				'value': Math.round((point.pY + this.position[1]) * app.pixelsToTwips)
 			}
 		};
 
 		app.map.sendUnoCommand('.uno:TransformDialog', parameters);
 	}
 
-	shapeMouseUp(point: number[], e: MouseEvent) {
+	shapeMouseUp(point: cool.SimplePoint, e: MouseEvent) {
 		const parameters = {
 			'HandleNum': {
 				'type': 'long',
@@ -65,18 +62,18 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 			},
 			'NewPosX': {
 				'type': 'long',
-				'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
+				'value': Math.round((point.pX + this.position[0]) * app.pixelsToTwips)
 			},
 			'NewPosY': {
 				'type': 'long',
-				'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
+				'value': Math.round((point.pY + this.position[1]) * app.pixelsToTwips)
 			}
 		};
 
 		app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			// Tables don't have parent sections. This is used for separating table anchors from other anchors.
 			if (this.sectionProperties.parentHandlerSection) {
@@ -88,7 +85,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		}
 	}
 
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
 			// Show preview in its final position.
 			let svg;

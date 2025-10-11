@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.switchUIToCompact();
 		// close the default slide-sorter navigation sidebar
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
 		cy.cGet('#modifypage').click({force: true});
 		desktopHelper.selectZoomLevel('200', false);
 	});
@@ -31,10 +31,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.cGet('.leaflet-layer').click('right');
 		cy.wait(1000);
 		clickOnTheCenter();
-		desktopHelper.pressKey(9,'uparrow');
+		desktopHelper.pressKey(15,'uparrow');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 1);
 		desktopHelper.pressKey(18,'downarrow');
-		desktopHelper.assertScrollbarPosition('vertical', 306, 355);
+		desktopHelper.assertScrollbarPosition('vertical', 280, 330);
 	});
 
 	it('Scrolling to left/right', function() {

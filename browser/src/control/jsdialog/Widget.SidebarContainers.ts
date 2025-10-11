@@ -21,7 +21,7 @@ JSDialog.deck = function (
 	data: WidgetJSON,
 	builder: JSBuilder,
 ) {
-	var deck = L.DomUtil.create(
+	var deck = window.L.DomUtil.create(
 		'div',
 		'deck ' + builder.options.cssClass,
 		parentContainer,
@@ -52,18 +52,18 @@ JSDialog.panel = function (
 		expanderData,
 		builder,
 		() => {
-			expanderData; /*do nothing*/
+			/*do nothing*/
 		},
 	);
 
 	var expander = $(parentContainer).children('#' + expanderData.id);
 
-	if (data.name) L.DomUtil.addClass(expander.get(0), data.name);
+	if (data.name) window.L.DomUtil.addClass(expander.get(0), data.name);
 	if (expanderData.hidden === true) expander.hide();
 
 	if (expanderData.command) {
 		var iconParent = expander.children('.ui-expander').get(0);
-		var icon = L.DomUtil.create(
+		var icon = window.L.DomUtil.create(
 			'div',
 			'ui-expander-icon-right ' + builder.options.cssClass,
 			iconParent,
@@ -79,7 +79,7 @@ JSDialog.panel = function (
 				aria: { label: moreOptionsText },
 				icon: app.LOUtil.getIconNameOfCommand('morebutton'),
 				tooltip: moreOptionsText,
-			},
+			} as any as WidgetJSON, // FIXME: use toolitem JSON type
 			builder,
 		);
 	}

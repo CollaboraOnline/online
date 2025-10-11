@@ -16,20 +16,19 @@
 class OtherViewCellCursorSection extends CanvasSectionObject {
     documentObject: boolean = true;
     interactable: boolean = false; // We don't bother with events.
-    zIndex: number = L.CSections.ColumnHeader.zIndex;
-    drawingOrder: number = L.CSections.OtherViewCellCursor.drawingOrder;
-    processingOrder: number = L.CSections.OtherViewCellCursor.processingOrder;
+    zIndex: number = app.CSections.ColumnHeader.zIndex;
+    drawingOrder: number = app.CSections.OtherViewCellCursor.drawingOrder;
+    processingOrder: number = app.CSections.OtherViewCellCursor.processingOrder;
 
     static sectionNamePrefix = 'OtherViewCellCursorSection ';
     static sectionPointers: Array<OtherViewCellCursorSection> = [];
 
     constructor(viewId: number, rectangle: cool.SimpleRectangle, part: number) {
-        super();
+        super(OtherViewCellCursorSection.sectionNamePrefix + viewId);
 
         this.size = [rectangle.pWidth, rectangle.pHeight];
         this.position = [rectangle.pX1, rectangle.pY1];
         this.sectionProperties.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
-        this.name = OtherViewCellCursorSection.sectionNamePrefix + viewId;
 
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;
@@ -47,9 +46,14 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 
         this.adjustPopUpPosition();
 
+        const tempSizePos = CellCursorSection.adjustSizePos([this.position[0], this.position[1], this.size[0], this.size[1]]);
+
+        const x: number = (tempSizePos[0] - this.position[0]);
+        const y: number = (tempSizePos[1] - this.position[1]);
+
         this.context.strokeStyle = this.sectionProperties.color;
         this.context.lineWidth = 2;
-        this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
+        this.context.strokeRect(x - 0.5, y - 0.5, tempSizePos[2], tempSizePos[3]);
     }
 
     checkMyVisibility() {
@@ -71,7 +75,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             this.hideUsernamePopUp();
     }
 
-    onNewDocumentTopLeft(size: Array<number>): void {
+    onNewDocumentTopLeft(): void {
         this.adjustPopUpPosition();
     }
 
@@ -147,7 +151,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     public static addOrUpdateOtherViewCellCursor(viewId: number, username: string, rectangleData: Array<string>, part: number) {
         let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
         if (rectangleData)
-            rectangle = new app.definitions.simpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
+            rectangle = new cool.SimpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
 
         const sectionName = OtherViewCellCursorSection.sectionNamePrefix + viewId;
         let section: OtherViewCellCursorSection;

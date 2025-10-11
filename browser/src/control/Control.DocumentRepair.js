@@ -9,10 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.DocumentRepair.
+ * window.L.Control.DocumentRepair.
  */
 /* global _ */
-L.Control.DocumentRepair = L.Control.extend({
+window.L.Control.DocumentRepair = window.L.Control.extend({
 	builder: null,
 	actions: null,
 	selected: null,
@@ -217,6 +217,6 @@ L.Control.DocumentRepair = L.Control.extend({
 	}
 });
 
-L.control.documentRepair = function (options) {
-	return new L.Control.DocumentRepair(options);
+window.L.control.documentRepair = function (options) {
+	return new window.L.Control.DocumentRepair(options);
 };

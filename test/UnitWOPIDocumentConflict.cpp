@@ -41,7 +41,7 @@ public:
     std::unique_ptr<http::Response>
     assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST("Testing " << name(_scenario));
+        TST_LOG("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         assertGetFileCount();
@@ -52,7 +52,7 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST("Testing " << name(_scenario));
+        TST_LOG("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         assertPutFileCount();
@@ -66,7 +66,7 @@ public:
                 LOK_ASSERT_FAIL("Unexpectedly overwritting the document in storage");
                 break;
             case Scenario::SaveOverwrite:
-                LOG_TST("Closing the document to verify its contents after reloading");
+                TST_LOG("Closing the document to verify its contents after reloading");
                 WSD_CMD("closedocument");
                 break;
         }
@@ -76,7 +76,7 @@ public:
 
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
+        TST_LOG("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         std::string expectedContents;
@@ -150,7 +150,7 @@ public:
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         ++_uploadAttemptCount;
-        LOG_TST("PutFile: " << _uploadAttemptCount << ", Phase: " << name(_phase));
+        TST_LOG("PutFile: " << _uploadAttemptCount << ", Phase: " << name(_phase));
 
         const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
         LOK_ASSERT_MESSAGE("Unexpected forced upload", !wopiTimestamp.empty());
@@ -158,7 +158,7 @@ public:
         if (_uploadAttemptCount == 1)
         {
             // First attempt, timeout.
-            LOG_TST("PutFile: sleeping");
+            TST_LOG("PutFile: sleeping");
             sleep(ConnectionTimeoutSeconds); // Connection timeout.
             usleep(300'000); // Go over, to be certain we timed-out the upload.
             // Don't sleep for 2 x ConnectionTimeoutSeconds, as the
@@ -166,14 +166,14 @@ public:
         }
 
         // Success.
-        LOG_TST("PutFile: returning success");
+        TST_LOG("PutFile: returning success");
         return nullptr;
     }
 
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -186,7 +186,7 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitUploaded);
@@ -197,7 +197,7 @@ public:
 
     void onDocumentUploaded(bool success) override
     {
-        LOG_TST("Uploaded: " << (success ? "success" : "failure"));
+        TST_LOG("Uploaded: " << (success ? "success" : "failure"));
         LOK_ASSERT_STATE(_phase, Phase::WaitUploaded);
         LOK_ASSERT_EQUAL_MESSAGE("Expected the first upload to fail", _uploadAttemptCount == 1,
                                  !success);
@@ -214,7 +214,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Destroyed dockey [" << docKey << ']');
+        TST_LOG("Destroyed dockey [" << docKey << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDestroy);
 
         passTest("Document uploaded on closing as expected.");
@@ -228,7 +228,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -286,13 +286,13 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("PutFile: " << _uploadAttemptCount << ", Phase: " << name(_phase));
+        TST_LOG("PutFile: " << _uploadAttemptCount << ", Phase: " << name(_phase));
 
         const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
         LOK_ASSERT_MESSAGE("Unexpected forced upload", !wopiTimestamp.empty());
 
         // First attempt, timeout.
-        LOG_TST("PutFile: sleeping");
+        TST_LOG("PutFile: sleeping");
         sleep(ConnectionTimeoutSeconds); // Connection timeout.
         usleep(300'000); // Go over, to be certain we timed-out the upload.
         // Don't sleep for 2 x ConnectionTimeoutSeconds, as the
@@ -303,18 +303,18 @@ public:
         // We do this after the first upload attempt (which will timeout)
         // because otherwise we would've not reached here and returned
         // 'conflict' sooner, in WopiTestServer::handleWopiUpload().
-        LOG_TST("Simulating conflict in storage");
+        TST_LOG("Simulating conflict in storage");
         setFileContent("Modified data in storage");
 
         // Fail.
-        LOG_TST("PutFile: returning a bogus failure");
+        TST_LOG("PutFile: returning a bogus failure");
         return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
     }
 
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -327,7 +327,7 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitUploaded);
@@ -338,7 +338,7 @@ public:
 
     void onDocumentUploaded(bool success) override
     {
-        LOG_TST("Uploaded #" << _uploadAttemptCount << ": " << (success ? "success" : "failure"));
+        TST_LOG("Uploaded #" << _uploadAttemptCount << ": " << (success ? "success" : "failure"));
         LOK_ASSERT_STATE(_phase, Phase::WaitUploaded);
         LOK_ASSERT_MESSAGE("Expected Phase::WaitUploaded or Phase::WaitDestroy",
                            _phase == Phase::WaitUploaded || _phase == Phase::WaitDestroy);
@@ -348,11 +348,11 @@ public:
 
     bool onDocumentError(const std::string& message) override
     {
-        LOG_TST("Testing " << name(_phase) << ": [" << message << ']');
+        TST_LOG("Testing " << name(_phase) << ": [" << message << ']');
         // LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         ++_uploadAttemptCount;
-        LOG_TST("uploadAttemptCount: " << _uploadAttemptCount);
+        TST_LOG("uploadAttemptCount: " << _uploadAttemptCount);
         if (_uploadAttemptCount == 1)
         {
             LOK_ASSERT_EQUAL_MESSAGE("Expect only documentconflict errors",
@@ -367,7 +367,7 @@ public:
             // We are done!
             TRANSITION_STATE(_phase, Phase::WaitDestroy);
 
-            LOG_TST("Discarding own changes via closedocument");
+            TST_LOG("Discarding own changes via closedocument");
             WSD_CMD("closedocument");
         }
 
@@ -377,7 +377,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Destroyed dockey [" << docKey << ']');
+        TST_LOG("Destroyed dockey [" << docKey << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDestroy);
 
         passTest("Document uploaded on closing as expected.");
@@ -391,7 +391,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -450,7 +450,7 @@ public:
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         ++_uploadAttemptCount;
-        LOG_TST("PutFile: " << _uploadAttemptCount << ", Phase: " << name(_phase));
+        TST_LOG("PutFile: " << _uploadAttemptCount << ", Phase: " << name(_phase));
 
         const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
 
@@ -459,12 +459,12 @@ public:
             LOK_ASSERT_MESSAGE("Unexpected forced upload", !wopiTimestamp.empty());
 
             // First attempt, timeout.
-            LOG_TST("PutFile: sleeping");
+            TST_LOG("PutFile: sleeping");
             // Don't sleep for 2 x ConnectionTimeoutSeconds, as the
             // CheckFileInfo request may timeout, since we're stuck here.
             sleep(ConnectionTimeoutSeconds); // Connection timeout.
             usleep(300'000); // Go over, to be certain we timed-out the upload.
-            LOG_TST("PutFile: woke up");
+            TST_LOG("PutFile: woke up");
         }
         else
         {
@@ -472,7 +472,7 @@ public:
         }
 
         // Success.
-        LOG_TST("PutFile: returning success");
+        TST_LOG("PutFile: returning success");
         return nullptr;
     }
 
@@ -486,10 +486,10 @@ public:
             TRANSITION_STATE(_phase, Phase::WaitDestroy);
             WSD_CMD("closedocument");
 
-            LOG_TST("CheckFileInfo: sleeping");
+            TST_LOG("CheckFileInfo: sleeping");
             sleep(ConnectionTimeoutSeconds); // Connection timeout.
             usleep(300'000); // Go over, to be certain we timed-out the upload.
-            LOG_TST("CheckFileInfo: woke up");
+            TST_LOG("CheckFileInfo: woke up");
         }
 
         return nullptr; // Success.
@@ -498,7 +498,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -511,7 +511,7 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitUploaded);
@@ -522,7 +522,7 @@ public:
 
     void onDocumentUploaded(bool success) override
     {
-        LOG_TST("Uploaded: " << (success ? "success" : "failure"));
+        TST_LOG("Uploaded: " << (success ? "success" : "failure"));
         LOK_ASSERT(_phase == Phase::WaitUploaded || _phase == Phase::WaitDestroy);
         LOK_ASSERT_EQUAL_MESSAGE("Expected the first upload to fail", _uploadAttemptCount == 1,
                                  !success);
@@ -531,7 +531,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Destroyed dockey [" << docKey << ']');
+        TST_LOG("Destroyed dockey [" << docKey << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDestroy);
 
         passTest("Document uploaded on closing as expected.");
@@ -545,7 +545,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());

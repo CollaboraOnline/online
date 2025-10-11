@@ -41,7 +41,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Push insert table button
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		// Two rows
@@ -62,7 +62,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Push insert table button
 		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		// Three rows
@@ -189,12 +189,12 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box-input').should('exist');
+		cy.cGet('#target-input').should('exist');
 		// Type text and link
-		cy.cGet('#hyperlink-text-box').type('some text');
-		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
+		cy.cGet('#indication-input').type('some text');
+		cy.cGet('#target-input').type('www.something.com');
 		// Insert
-		cy.cGet('#response-ok').click();
+		cy.cGet('#ok').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		helper.expectTextForClipboard('some text');
@@ -206,15 +206,15 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box-input').should('exist');
+		cy.cGet('#target-input').should('exist');
 		// Type text and link
-		cy.cGet('#hyperlink-text-box').type('some text');
-		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
+		cy.cGet('#indication-input').type('some text');
+		cy.cGet('#target-input').type('www.something.com');
 		// Insert
-		cy.cGet('#response-ok').click();
+		cy.cGet('#ok').click();
 		helper.typeIntoDocument('{leftArrow}');
 		cy.cGet('#hyperlink-pop-up').click();
-		cy.cGet('#info-modal-label2').should('have.text', 'http://www.something.com');
+		cy.cGet('#info-modal-label2').should('have.text', 'http://www.something.com/');
 	});
 
 	it('Insert shape.', function() {

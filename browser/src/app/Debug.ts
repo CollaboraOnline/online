@@ -83,6 +83,7 @@ class DebugManager {
 	private logIncomingMessages: boolean;
 	private logOutgoingMessages: boolean;
 	private logKeyboardEvents: boolean;
+	private logTrace: boolean;
 
 	private eventDelayWatchdog: boolean;
 	private _eventDelayTimeout: TimeoutHdl;
@@ -128,7 +129,7 @@ class DebugManager {
 
 		this._controls = {};
 		// Add header
-		this._controls['header'] = L.control
+		this._controls['header'] = window.L.control
 			.layers({}, {}, { collapsed: false })
 			.addTo(this._map);
 		const b = document.createElement('b');
@@ -178,7 +179,7 @@ class DebugManager {
 	private _addDebugTool(tool: DebugTool) {
 		// Create control if it doesn't exist
 		if (!(tool.category in this._controls)) {
-			this._controls[tool.category] = L.control
+			this._controls[tool.category] = window.L.control
 				.layers({}, {}, { collapsed: false })
 				.addTo(this._map);
 			// Add a title
@@ -188,7 +189,7 @@ class DebugManager {
 		}
 
 		// Create layer
-		const layer = new L.LayerGroup();
+		const layer = new window.L.LayerGroup();
 		this._toolLayers.push(layer);
 		this._controls[tool.category]._addLayer(layer, tool.name, true);
 		this._controls[tool.category]._update();
@@ -431,6 +432,18 @@ class DebugManager {
 			},
 			onRemove: function () {
 				self.logKeyboardEvents = false;
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Log Trace',
+			category: 'Logging',
+			startsOn: false,
+			onAdd: function () {
+				self.logTrace = true;
+			},
+			onRemove: function () {
+				self.logTrace = false;
 			},
 		});
 
@@ -717,12 +730,7 @@ class DebugManager {
 	private _randomizeSidebar(): void {
 		let sidebars = ['none', '.uno:SidebarDeck.PropertyDeck', '.uno:Navigator'];
 		if (this._docLayer.isImpress()) {
-			sidebars = sidebars.concat([
-				'.uno:SlideChangeWindow',
-				'.uno:CustomAnimation',
-				'.uno:MasterSlidesPanel',
-				'.uno:ModifyPage',
-			]);
+			sidebars = sidebars.concat(['.uno:CustomAnimation', '.uno:ModifyPage']);
 		}
 		const sidebar = sidebars[Math.floor(Math.random() * sidebars.length)];
 		window.app.console.log('Randomize Settings: Target sidebar: ' + sidebar);
@@ -1095,7 +1103,7 @@ class DebugManager {
 		for (let i = 0; i < text.length; i++) {
 			if (delayMs) {
 				setTimeout(
-					L.bind(this._typeChar, this, text.charCodeAt(i)),
+					window.L.bind(this._typeChar, this, text.charCodeAt(i)),
 					i * delayMs,
 				);
 			} else {
@@ -1225,7 +1233,7 @@ class DebugManager {
 			}
 		}
 		this._tileInvalidationTimeoutId = setTimeout(
-			L.bind(this._tileInvalidationTimeout, this),
+			window.L.bind(this._tileInvalidationTimeout, this),
 			50,
 		);
 	}
@@ -1269,11 +1277,11 @@ class DebugManager {
 
 		const signX = this._docLayer.isCalcRTL() ? -1 : 1;
 
-		const absTopLeftTwips = L.point(
+		const absTopLeftTwips = cool.Point.toPoint(
 			rectangleArray[0] * signX,
 			rectangleArray[1],
 		);
-		const absBottomRightTwips = L.point(
+		const absBottomRightTwips = cool.Point.toPoint(
 			(rectangleArray[0] + rectangleArray[2]) * signX,
 			rectangleArray[1] + rectangleArray[3],
 		);

@@ -11,16 +11,16 @@
 */
 
 class TextSelectionHandle extends HTMLObjectSection {
-	public rectangle: cool.SimpleRectangle = null; // This is the rectangle sent from the core side.
+	_showSection: boolean = true; // Store the internal show/hide section through forced non-touchscreen hides...
 
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", showSection: boolean = false) {
 		super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, showSection);
 	}
 
-	onDrag(point: number[]) {
+	onDrag(point: cool.SimplePoint) {
 		(<any>window).IgnorePanning = true;
-		const candidateX = Math.round((this.myTopLeft[0] + point[0]) / app.dpiScale);
-		const candidateY = Math.round((this.myTopLeft[1] + point[1]) / app.dpiScale);
+		const candidateX = Math.round((this.myTopLeft[0] + point.pX) / app.dpiScale);
+		const candidateY = Math.round((this.myTopLeft[1] + point.pY) / app.dpiScale);
 
 		this.sectionProperties.objectDiv.style.left = candidateX + 'px';
 		this.sectionProperties.objectDiv.style.top = candidateY + 'px';
@@ -28,15 +28,25 @@ class TextSelectionHandle extends HTMLObjectSection {
 		app.map.fire('handleautoscroll', {pos: { x: candidateX, y: candidateY }, map: app.map});
 	}
 
+	setShowSection(show: boolean) {
+		this._showSection = show;
+
+		if (!window.touch.currentlyUsingTouchscreen()) {
+			super.setShowSection(false);
+		} else {
+			super.setShowSection(this._showSection);
+		}
+	}
+
 	setOpacity(value: number) {
 		this.getHTMLObject().style.opacity = value;
 	}
 
-	onDragEnd(point: number[]) {
+	onDragEnd(point: cool.SimplePoint) {
 		(<any>window).IgnorePanning = undefined;
 
-		let x = this.position[0] + point[0];
-		const y = this.position[1] + point[1];
+		let x = this.position[0] + point.pX;
+		const y = this.position[1] + point.pY;
 		this.setPosition(x, y);
 
 		app.map.fire('scrollvelocity', {vx: 0, vy: 0});
@@ -49,12 +59,12 @@ class TextSelectionHandle extends HTMLObjectSection {
 			app.map._docLayer._postSelectTextEvent(type, Math.round(x * app.pixelsToTwips), Math.round(y * app.pixelsToTwips));
 		}
 		else {
-			const referenceX = app.file.viewedRectangle.pX1 + (app.file.viewedRectangle.pX2 - this.position[0]);
+			const referenceX = app.activeDocument.activeView.viewedRectangle.pX1 + (app.activeDocument.activeView.viewedRectangle.pX2 - this.position[0]);
 			app.map._docLayer._postSelectTextEvent(type, Math.round(referenceX * app.pixelsToTwips), Math.round(y * app.pixelsToTwips));
 		}
 	}
 
-	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {
+	onMouseMove(point: cool.SimplePoint, dragDistance: number[], e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
@@ -69,17 +79,17 @@ class TextSelectionHandle extends HTMLObjectSection {
 			this.sectionProperties.objectDiv.style.display = 'none';
 	}
 
-	onClick(point: number[], e: MouseEvent): void {
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseDown(point: number[], e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: number[], e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
@@ -87,5 +97,3 @@ class TextSelectionHandle extends HTMLObjectSection {
 		}
 	}
 }
-
-app.definitions.textSelectionHandleSection = TextSelectionHandle;

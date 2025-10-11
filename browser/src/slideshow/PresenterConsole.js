@@ -14,7 +14,7 @@
  * PresenterConsole
  */
 
-/* global app SlideShow _ */
+/* global app SlideShow _ LOUtil */
 
 class PresenterConsole {
 	constructor(map, presenter) {
@@ -56,8 +56,8 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
 								  <div id="toolbar">
-									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}">
-										<img src="images/presenterscreen-ArrowBack.svg">
+									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}" aria-label="${this.labels.goBack}">
+										<img src="${LOUtil.getImageURL('presenterscreen-ArrowBack.svg')}">
 									</button>
                                   </div>
                                   <div id="presentation-content">
@@ -65,11 +65,11 @@ class PresenterConsole {
 										<div id="timer-container">
 											<div id="timer"></div>
 											 <div id="timer-controls">
-												<button type="button" id="pause" data-cooltip="${this.labels.pause}">
-													<img src="images/presenterscreen-ButtonPauseTimerNormal.svg">
+												<button type="button" id="pause" data-cooltip="${this.labels.pause}" aria-label="${this.labels.pause}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonPauseTimerNormal.svg')}">
 												</button>
-												<button type="button" id="restart" data-cooltip="${this.labels.restart}">
-													<img src="images/presenterscreen-ButtonRestartTimerNormal.svg">
+												<button type="button" id="restart" data-cooltip="${this.labels.restart}" aria-label="${this.labels.restart}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonRestartTimerNormal.svg')}">
 												</button>
 											 </div>
 											<div id="today"></div>
@@ -78,20 +78,20 @@ class PresenterConsole {
                                             <canvas id="current-presentation"></canvas>
 											<div id="slideshow-control-container">
 											<div id="navigation-container">
-												<button type="button" id="prev" data-cooltip="${this.labels.previous}">
-													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
+												<button type="button" id="prev" data-cooltip="${this.labels.previous}" aria-label="${this.labels.previous}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSlidePreviousSelected.svg')}">
 												</button>
 												<div id="title-current">${this.labels.currentSlide}</div>
-												<button type="button" id="next" data-cooltip="${this.labels.next}">
-													<img src="images/presenterscreen-ButtonEffectNextSelected.svg">
+												<button type="button" id="next" data-cooltip="${this.labels.next}" aria-label="${this.labels.next}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonEffectNextSelected.svg')}">
 												</button>
 											</div>
 											<div id="action-buttons-container">
-												<button type="button" id="notes" data-cooltip="${this.labels.notes}">
-													<img src="images/presenterscreen-ButtonNotesNormal.svg">
+												<button type="button" id="notes" data-cooltip="${this.labels.notes}" aria-label=${this.labels.notes}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonNotesNormal.svg')}">
 												</button>
-												<button type="button" id="slides" data-cooltip="${this.labels.slides}">
-													<img src="images/presenterscreen-ButtonSlideSorterNormal.svg">
+												<button type="button" id="slides" data-cooltip="${this.labels.slides}" aria-label="${this.labels.slides}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSlideSorterNormal.svg')}">
 												</button>
 											</div>
 										</div>
@@ -142,7 +142,8 @@ class PresenterConsole {
 		this._map.on('transitionstart', this._onTransitionStart, this);
 		this._map.on('transitionend', this._onTransitionEnd, this);
 		this._map.on('tilepreview', this._onTilePreview, this);
-		this._map.on('presentinwindowclose', this._onWindowClose, this);
+		this._boundOnWindowClose = this._onWindowClose.bind(this);
+		this._map.on('presentinwindowclose', this._boundOnWindowClose, this);
 
 		// safe check for current-presentation element
 		const currentPresentationCanvas =
@@ -150,8 +151,12 @@ class PresenterConsole {
 		if (!currentPresentationCanvas) return;
 		this._computeCanvas(currentPresentationCanvas);
 
+		currentPresentationCanvas.addEventListener(
+			'click',
+			this._onPresenterCanvasClick.bind(this),
+		);
 		this._timer = this._proxyPresenter.setInterval(
-			L.bind(this._onTimer, this),
+			window.L.bind(this._onTimer, this),
 			1000,
 		);
 		this._ticks = 0;
@@ -181,9 +186,23 @@ class PresenterConsole {
 				img.width = 100;
 				img.height = 100;
 				img._index = index;
+				img.tabIndex = 0;
 				elem.append(img);
 			}
 		}
+	}
+
+	_onPresenterCanvasClick(event) {
+		const canvas = event.target;
+		const rect = canvas.getBoundingClientRect();
+		const relativeX = (event.clientX - rect.left) / canvas.clientWidth;
+		const relativeY = (event.clientY - rect.top) / canvas.clientHeight;
+
+		this._map.fire('presentercanvasclick', {
+			relativeX: relativeX,
+			relativeY: relativeY,
+			originalEvent: event,
+		});
 	}
 
 	_onImpressModeChanged(e) {
@@ -196,7 +215,7 @@ class PresenterConsole {
 
 	_onPresentInConsole() {
 		if (app.impress.notesMode) {
-			console.debug(
+			app.console.debug(
 				'PresenterConsole._onPresentInConsole: notes mode is enabled, exiting',
 			);
 			// exit notes view mode and wait for status update notification
@@ -237,29 +256,22 @@ class PresenterConsole {
 		this._currentSlideContext =
 			this._currentSlideCanvas.getContext('bitmaprenderer');
 
-		this._proxyPresenter.addEventListener(
-			'resize',
-			L.bind(this._onResize, this),
-		);
+		this._boundOnResize = this._onResize.bind(this);
+		this._proxyPresenter.addEventListener('resize', this._boundOnResize);
 
 		if (this._presenter._slideShowWindowProxy) {
 			this._presenter._slideShowWindowProxy.addEventListener(
 				'unload',
-				L.bind(this._onWindowClose, this),
+				this._boundOnWindowClose,
 			);
-			window.addEventListener(
-				'beforeunload',
-				L.bind(this._onWindowClose, this),
-			);
+			window.addEventListener('beforeunload', this._boundOnWindowClose);
 		}
 		this._proxyPresenter.addEventListener(
 			'unload',
-			L.bind(this._onConsoleClose, this),
+			window.L.bind(this._onConsoleClose, this),
 		);
-		this._proxyPresenter.addEventListener(
-			'keydown',
-			L.bind(this._onKeyDown, this),
-		);
+		this._boundOnKeyDown = this._onKeyDown.bind(this);
+		this._proxyPresenter.addEventListener('keydown', this._boundOnKeyDown);
 
 		// Declare some basic elements that we will use often in next function calls
 		this._prevButton = this._proxyPresenter.document.querySelector('#prev');
@@ -291,7 +303,7 @@ class PresenterConsole {
 			.getPropertyValue('--orange1-txt-primary-color');
 		this.PresenterConsoleBtnHoverColor = window
 			.getComputedStyle(document.documentElement)
-			.getPropertyValue('--color-main-text');
+			.getPropertyValue('--color-presenter-console-btn-hover');
 		this.PresenterConsoleBtnRadius = window
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--border-radius');
@@ -392,7 +404,10 @@ class PresenterConsole {
 		actionBtnContainer.style.display = 'flex';
 		actionBtnContainer.style.gap = '1vw';
 
-		this._first.addEventListener('click', L.bind(this._onToolbarClick, this));
+		this._first.addEventListener(
+			'click',
+			window.L.bind(this._onToolbarClick, this),
+		);
 
 		let notesSeparator =
 			this._proxyPresenter.document.querySelector('#notes-separator');
@@ -431,7 +446,7 @@ class PresenterConsole {
 		nextSlideContainer.style.gap = '2vw';
 
 		elem = this._proxyPresenter.document.querySelector('#next-presentation');
-		elem.addEventListener('click', L.bind(this._onClickPreview, this));
+		elem.addEventListener('click', window.L.bind(this._onClickPreview, this));
 
 		this._notes = this._proxyPresenter.document.createElement('div');
 		this._notes.style.height = '45vh';
@@ -470,7 +485,17 @@ class PresenterConsole {
 		elem.style.columnGap = '5vw';
 
 		this._slides.appendChild(elem);
-		this._slides.addEventListener('click', L.bind(this._onClickSlides, this));
+		this._slides.addEventListener(
+			'click',
+			window.L.bind(this._onClickSlides, this),
+		);
+		this._slides.addEventListener(
+			'keydown',
+			function (event) {
+				if (event.code !== 'Enter') return;
+				this._onClickSlides(event);
+			}.bind(this),
+		);
 
 		elem = this._proxyPresenter.document.querySelector('#toolbar');
 		elem.style.display = 'flex';
@@ -481,7 +506,7 @@ class PresenterConsole {
 		elem.style.gap = '1vw';
 		elem.style.margin = '1vh 0vw';
 		elem.style.height = '6vh';
-		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
+		elem.addEventListener('click', window.L.bind(this._onToolbarClick, this));
 
 		let list =
 			this._proxyPresenter.document.querySelectorAll('#toolbar button');
@@ -521,7 +546,7 @@ class PresenterConsole {
 
 		timeControlElem.addEventListener(
 			'click',
-			L.bind(this._onToolbarClick, this),
+			window.L.bind(this._onToolbarClick, this),
 		);
 
 		// Style buttons in slideshow control container
@@ -563,7 +588,7 @@ class PresenterConsole {
 
 		mainContentContainer.append(this.tooltip);
 
-		this._tooltip = L.control.tooltip({
+		this._tooltip = window.L.control.tooltip({
 			window: this._proxyPresenter,
 			container: this.tooltip,
 		});
@@ -576,6 +601,13 @@ class PresenterConsole {
 		this._onShowNotes();
 		// simulate resize to Firefox
 		this._onResize();
+
+		this._proxyPresenter.addEventListener('load', () => {
+			const pauseButton = this._proxyPresenter.document.querySelector('#pause');
+			if (pauseButton) {
+				pauseButton.focus();
+			}
+		});
 	}
 
 	// Show the tooltip
@@ -697,7 +729,7 @@ class PresenterConsole {
 
 		// Create the image for the plus button
 		let plusImage = this._proxyPresenter.document.createElement('img');
-		plusImage.src = 'images/presenterscreen-ButtonPlusNormal.svg';
+		plusImage.src = LOUtil.getImageURL('presenterscreen-ButtonPlusNormal.svg');
 		plusImage.alt = 'Increase Font'; // Optional: Add alt text for accessibility
 		// Add the image inside the plus button
 		plusButton.appendChild(plusImage);
@@ -708,7 +740,9 @@ class PresenterConsole {
 		minusButton.setAttribute('data-cooltip', this.labels.zoomOut); // Set the tooltip text
 		// Create the image for the minus button
 		let minusImage = this._proxyPresenter.document.createElement('img');
-		minusImage.src = 'images/presenterscreen-ButtonMinusNormal.svg';
+		minusImage.src = LOUtil.getImageURL(
+			'presenterscreen-ButtonMinusNormal.svg',
+		);
 		minusImage.alt = 'Decrease Font'; // Optional: Add alt text for accessibility
 
 		// Add the image inside the minus button
@@ -734,7 +768,7 @@ class PresenterConsole {
 		// font change button action listener
 		fontChangeContainer.addEventListener(
 			'click',
-			L.bind(this._onToolbarClick, this),
+			window.L.bind(this._onToolbarClick, this),
 		);
 
 		return fontChangeContainer;
@@ -809,13 +843,13 @@ class PresenterConsole {
 				this._pauseButton();
 				this._proxyPresenter.clearInterval(this._timer);
 				this._timer = this._proxyPresenter.setInterval(
-					L.bind(this._onTimer, this),
+					window.L.bind(this._onTimer, this),
 					1000,
 				);
 				break;
 			case 'help':
 				// TODO. add help.collaboraonline.com
-				window.open('https://collaboraonline.com', '_blank');
+				window.open('https://collaboraonline.com', '_blank', 'noopener');
 				break;
 			case 'notes':
 				if (this._proxyPresenter.document.contains(this._notes)) {
@@ -890,7 +924,7 @@ class PresenterConsole {
 		}
 
 		this._proxyPresenter.setTimeout(
-			L.bind(this._resizePreviews, this, rect.width, rect.height),
+			window.L.bind(this._resizePreviews, this, rect.width, rect.height),
 			0,
 		);
 	}
@@ -1006,7 +1040,7 @@ class PresenterConsole {
 	toggleButtonState(elem, toggleOn) {
 		if (toggleOn) {
 			// Apply the 'selected' styles on show notes to display toggle effect on button
-			elem.style.filter = 'invert(1)';
+			elem.style.filter = 'brightness(1.4)';
 			elem.style.backgroundColor = 'black';
 			elem.disable = true;
 		} else {
@@ -1070,7 +1104,7 @@ class PresenterConsole {
 		) {
 			const nextIndex = this._getNextVisibleSlide(this._lastIndex);
 			this._proxyPresenter.setTimeout(
-				L.bind(this._fetchPreview, this, nextIndex, next),
+				window.L.bind(this._fetchPreview, this, nextIndex, next),
 				0,
 			);
 		}
@@ -1107,10 +1141,7 @@ class PresenterConsole {
 		if (this._proxyPresenter && !this._proxyPresenter.closed)
 			this._proxyPresenter.close();
 
-		window.removeEventListener(
-			'beforeunload',
-			L.bind(this._onWindowClose, this),
-		);
+		window.removeEventListener('beforeunload', this._boundOnWindowClose);
 
 		this._presenter._stopFullScreen();
 	}
@@ -1122,14 +1153,8 @@ class PresenterConsole {
 		)
 			this._presenter.slideshowWindowCleanUp();
 
-		this._proxyPresenter.removeEventListener(
-			'resize',
-			L.bind(this._onResize, this),
-		);
-		this._proxyPresenter.removeEventListener(
-			'keydown',
-			L.bind(this._onKeyDown, this),
-		);
+		this._proxyPresenter.removeEventListener('resize', this._boundOnResize);
+		this._proxyPresenter.removeEventListener('keydown', this._boundOnKeyDown);
 		this._proxyPresenter.clearInterval(this._timer);
 		this._proxyPresenter.close();
 

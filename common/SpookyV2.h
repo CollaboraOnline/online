@@ -31,13 +31,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef  uint64_t  uint64;
-typedef  uint32_t  uint32;
-typedef  uint16_t  uint16;
-typedef  uint8_t   uint8;
-
 class SpookyHash
 {
+    typedef uint64_t uint64;
+    typedef uint32_t uint32;
+    typedef uint16_t uint16;
+    typedef uint8_t uint8;
+
 public:
     //
     // SpookyHash: hash a single message in one call, produce 128-bit output

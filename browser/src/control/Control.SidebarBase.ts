@@ -17,69 +17,71 @@
 declare var JSDialog: any;
 
 enum SidebarType {
-	Sidebar = 'sidebar',
-	Navigator = 'navigator',
+	Sidebar = 'sidebar', // core
+	Navigator = 'navigator', // core
+	QuickFind = 'quickfind', // core
+	Notebookbar = 'notebookbar', // online side panel, which sens messages to NB in core
 }
-interface SidebarOptions {
-	animSpeed: number;
-}
-abstract class SidebarBase {
-	options: SidebarOptions;
+
+abstract class SidebarBase extends JSDialogComponent {
 	type: SidebarType;
 
-	map: any;
-
-	container: HTMLDivElement;
 	documentContainer: HTMLDivElement;
 	wrapper: HTMLElement;
-	builder: any;
-	enableFocus: boolean;
 
-	constructor(
-		map: any,
-		options: SidebarOptions = {
-			animSpeed: 1000,
-		} /* Default speed: to be used on load */,
-		type: SidebarType,
-	) {
+	constructor(map: MapInterface, type: SidebarType) {
+		super(map, type, type);
 		this.type = type;
-		this.options = options;
 		this.onAdd(map);
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	protected createBuilder() {
+		this.builder = new window.L.control.jsDialogBuilder({
+			mobileWizard: this,
+			map: this.map,
+			windowId: WindowId.Sidebar,
+			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
+			useScrollAnimation: false, // icon views cause jump on sidebar open
+			suffix: 'sidebar',
+			callback: this.callback.bind(this),
+		} as JSBuilderOptions);
+	}
+
+	protected setupContainer(parentContainer?: HTMLElement) {
+		if (!this.container) {
+			this.container = window.L.DomUtil.createWithId(
+				'div',
+				`${this.type}-container`,
+				$(`#${this.type}-panel`).get(0),
+			);
+		}
+		this.wrapper = document.getElementById(`${this.type}-dock-wrapper`);
+		this.documentContainer = document.querySelector('#document-container');
+	}
+
+	onAdd(map: MapInterface) {
 		this.map = map;
+		this.createBuilder();
+		this.setupContainer(undefined);
 
 		app.events.on('resize', this.onResize.bind(this));
 
-		this.builder = new L.control.jsDialogBuilder({
-			mobileWizard: this,
-			map: map,
-			cssClass: `jsdialog sidebar`, // use sidebar css for now, maybe have seperate css for navigator later
-		});
-		this.container = L.DomUtil.create(
-			'div',
-			`${this.type}-container`,
-			$(`#${this.type}-panel`).get(0),
-		);
-		this.wrapper = document.getElementById(`${this.type}-dock-wrapper`);
-		this.documentContainer = document.querySelector('#document-container');
-
-		this.map.on('jsdialogupdate', this.onJSUpdate, this);
-		this.map.on('jsdialogaction', this.onJSAction, this);
+		this.registerMessageHandlers();
 	}
 
 	onRemove() {
-		this.map.off('jsdialogupdate', this.onJSUpdate, this);
-		this.map.off('jsdialogaction', this.onJSAction, this);
+		this.unregisterMessageHandlers();
 	}
 
+	/// this is used to determine if we need to send uno command - only for core decks
 	isVisible(): boolean {
-		return $(`#${this.type}-dock-wrapper`).hasClass('visible');
+		const node = $(`#${this.type}-dock-wrapper`);
+		return node.hasClass('visible') && node.hasClass('coreBased');
 	}
 
 	closeSidebar() {
 		$(`#${this.type}-dock-wrapper`).removeClass('visible');
+		$(`#${this.type}-dock-wrapper`).removeClass('coreBased');
 
 		if (!this.map.editorHasFocus()) {
 			this.map.fire('editorgotfocus');
@@ -90,57 +92,44 @@ abstract class SidebarBase {
 		this.map.uiManager.setDocTypePref('Show' + upperCaseType, false);
 	}
 
-	onJSUpdate(e: FireEvent) {
-		var data = e.data;
-
-		if (data.jsontype !== this.type) return;
-
-		if (!this.container) return;
-
-		if (!this.builder) return;
-
+	protected onJSUpdate(e: FireEvent) {
 		// reduce unwanted warnings in console
-		if (data.control.id === 'addonimage') {
-			window.app.console.log('Ignored update for control: ' + data.control.id);
-			return;
-		}
-
-		this.builder.updateWidget(this.container, data.control);
-	}
-
-	onJSAction(e: FireEvent) {
-		var data = e.data;
-
-		if (data.jsontype !== this.type) return;
-
-		if (!this.builder) return;
-
-		if (!this.container) return;
-
-		var innerData = data.data;
-		if (!innerData) return;
-
-		var controlId = innerData.control_id;
-
-		// Panels share the same name for main containers, do not execute actions for them
-		// if panel has to be shown or hidden, full update will appear
-		if (
-			controlId.indexOf('contents') === 0 ||
-			controlId.indexOf('titlebar') === 0 ||
-			controlId.indexOf('expander') === 0 ||
-			controlId.indexOf('addonimage') === 0
-		) {
+		if (e?.data?.control.id === 'addonimage') {
 			window.app.console.log(
-				'Ignored action: ' +
-					innerData.action_type +
-					' for control: ' +
-					controlId,
+				'Ignored update for control: ' + e.data.control.id,
 			);
-			return;
+			return false;
 		}
 
-		this.builder.executeAction(this.container, innerData);
+		return super.onJSUpdate(e);
 	}
+
+	protected onJSAction(e: FireEvent) {
+		const innerData = e?.data?.data;
+		const controlId = innerData?.control_id;
+
+		if (controlId) {
+			// Panels share the same name for main containers, do not execute actions for them
+			// if panel has to be shown or hidden, full update will appear
+			if (
+				controlId.indexOf('contents') === 0 ||
+				controlId.indexOf('titlebar') === 0 ||
+				controlId.indexOf('expander') === 0 ||
+				controlId.indexOf('addonimage') === 0
+			) {
+				window.app.console.log(
+					'Ignored action: ' +
+						innerData.action_type +
+						' for control: ' +
+						controlId,
+				);
+				return false;
+			}
+		}
+
+		return super.onJSAction(e);
+	}
+
 	markNavigatorTreeView(data: WidgetJSON): boolean {
 		if (!data) return false;
 
@@ -160,6 +149,26 @@ abstract class SidebarBase {
 	onResize() {
 		this.wrapper.style.maxHeight =
 			this.documentContainer.getBoundingClientRect().height + 'px';
+		if (this.container) {
+			this.container.style.height =
+				this.documentContainer.getBoundingClientRect().height + 'px';
+		}
+	}
+
+	callback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		builder._defaultCallbackHandler(
+			objectType,
+			eventType,
+			object,
+			data,
+			builder,
+		);
 	}
 }
 JSDialog.SidebarBase = SidebarBase;

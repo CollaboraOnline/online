@@ -10,7 +10,6 @@
  */
 #include <config.h>
 
-#include "FileUtil.hpp"
 #include "Log.hpp"
 #include "StringVector.hpp"
 #include "Util.hpp"
@@ -20,6 +19,8 @@
 #include <sys/resource.h>
 #elif defined __FreeBSD__
 #include <sys/resource.h>
+#include <unistd.h>
+extern char** environ;
 #endif
 
 #include <dirent.h>
@@ -29,6 +30,111 @@
 #include <iomanip>
 
 #include <Poco/Exception.h>
+
+namespace
+{
+const char* startsWith(const char* line, const char* tag, std::size_t tagLen)
+{
+    assert(strlen(tag) == tagLen);
+
+    std::size_t len = tagLen;
+    if (!strncmp(line, tag, len))
+    {
+        while (!isdigit(line[len]) && line[len] != '\0')
+            ++len;
+
+        return line + len;
+    }
+
+    return nullptr;
+}
+
+std::size_t getFromCGroup(const std::string& group, const std::string& key)
+{
+    std::size_t num = 0;
+
+    std::string groupPath;
+    FILE* cg = fopen("/proc/self/cgroup", "r");
+    if (cg != nullptr)
+    {
+        char line[4096] = { 0 };
+        while (fgets(line, sizeof(line), cg))
+        {
+            StringVector bits = StringVector::tokenize(line, strlen(line), ':');
+            if (bits.size() > 2 && bits[1] == group)
+            {
+                groupPath = "/sys/fs/cgroup/" + group + bits[2];
+                break;
+            }
+        }
+        LOG_TRC("control group path for " << group << " is " << groupPath);
+        fclose(cg);
+    }
+
+    if (groupPath.empty())
+        return 0;
+
+    std::string path = groupPath + "/" + key;
+    LOG_TRC("Read from " << path);
+    FILE* file = fopen(path.c_str(), "r");
+    if (file != nullptr)
+    {
+        char line[4096] = { 0 };
+        if (fgets(line, sizeof(line), file))
+            num = atoll(line);
+        fclose(file);
+    }
+
+    return num;
+}
+
+std::string getCurrentCGroupPath()
+{
+    std::ifstream file("/proc/self/cgroup");
+    if (file.is_open())
+    {
+        std::string line;
+        while (std::getline(file, line))
+        {
+            // cgroup v2 format: 0::/path/to/cgroup
+            if (line.substr(0, 3) == "0::")
+            {
+                return line.substr(3);
+            }
+        }
+    }
+    return "/";
+}
+
+bool isCGroupV2() { return std::ifstream("/sys/fs/cgroup/cgroup.controllers").good(); }
+
+std::size_t getFromCGroupV2(const std::string& key)
+{
+    std::string cgroupPath = getCurrentCGroupPath();
+    std::string fullPath = "/sys/fs/cgroup" + cgroupPath + "/" + key;
+    std::size_t num = 0;
+
+    LOG_TRC("Reading from: " << fullPath);
+
+    std::ifstream file(fullPath);
+    if (file.is_open())
+    {
+        std::string line;
+        if (std::getline(file, line))
+        {
+            if (line == "max")
+            {
+                return 0; // Unlimited
+            }
+            else
+            {
+                num = std::stoull(line);
+            }
+        }
+    }
+    return num;
+}
+} // namespace
 
 namespace Util
 {
@@ -83,22 +189,6 @@ int spawnProcess(const std::string& cmd, const StringVector& args)
     }
 
     return pid;
-}
-
-static const char* startsWith(const char* line, const char* tag, std::size_t tagLen)
-{
-    assert(strlen(tag) == tagLen);
-
-    std::size_t len = tagLen;
-    if (!strncmp(line, tag, len))
-    {
-        while (!isdigit(line[len]) && line[len] != '\0')
-            ++len;
-
-        return line + len;
-    }
-
-    return nullptr;
 }
 
 std::string getHumanizedBytes(unsigned long bytes)
@@ -162,49 +252,17 @@ std::size_t getTotalSystemMemoryKb()
     return totalMemKb;
 }
 
-std::size_t getFromCGroup(const std::string& group, const std::string& key)
-{
-    std::size_t num = 0;
-
-    std::string groupPath;
-    FILE* cg = fopen("/proc/self/cgroup", "r");
-    if (cg != nullptr)
-    {
-        char line[4096] = { 0 };
-        while (fgets(line, sizeof(line), cg))
-        {
-            StringVector bits = StringVector::tokenize(line, strlen(line), ':');
-            if (bits.size() > 2 && bits[1] == group)
-            {
-                groupPath = "/sys/fs/cgroup/" + group + bits[2];
-                break;
-            }
-        }
-        LOG_TRC("control group path for " << group << " is " << groupPath);
-        fclose(cg);
-    }
-
-    if (groupPath.empty())
-        return 0;
-
-    std::string path = groupPath + "/" + key;
-    LOG_TRC("Read from " << path);
-    FILE* file = fopen(path.c_str(), "r");
-    if (file != nullptr)
-    {
-        char line[4096] = { 0 };
-        if (fgets(line, sizeof(line), file))
-            num = atoll(line);
-        fclose(file);
-    }
-
-    return num;
-}
-
 std::size_t getCGroupMemLimit()
 {
 #ifdef __linux__
-    return getFromCGroup("memory", "memory.limit_in_bytes");
+    if (isCGroupV2())
+    {
+        return getFromCGroupV2("memory.max");
+    }
+    else
+    {
+        return getFromCGroup("memory", "memory.limit_in_bytes");
+    }
 #else
     return 0;
 #endif
@@ -213,7 +271,14 @@ std::size_t getCGroupMemLimit()
 std::size_t getCGroupMemSoftLimit()
 {
 #ifdef __linux__
-    return getFromCGroup("memory", "memory.soft_limit_in_bytes");
+    if (isCGroupV2())
+    {
+        return getFromCGroupV2("memory.high");
+    }
+    else
+    {
+        return getFromCGroup("memory", "memory.soft_limit_in_bytes");
+    }
 #else
     return 0;
 #endif

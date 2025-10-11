@@ -10,35 +10,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Used to initialize a new anonymous CanvasSectionObject from its properties.
-interface SectionInitProperties {
-	name: string;
-	backgroundColor?: string;
-	borderColor?: string;
-	anchor?: string | Array<any>;
-	position: Array<number>;
-	size: Array<number>;
-	expand: string;
-	processingOrder: number;
-	drawingOrder: number;
-	zIndex: number;
-	interactable: boolean;
-	showSection?: boolean;
-	sectionProperties?: any;
-}
-
 // This class will be used internally by CanvasSectionContainer.
 class CanvasSectionObject {
 	context: CanvasRenderingContext2D;
 	myTopLeft: Array<number> = [0, 0];
-	documentTopLeft: Array<number> = [0, 0]; // Document top left will be updated by container.
 	containerObject: CanvasSectionContainer = null;
-	name: string = null;
+	readonly name: string = null;
 	backgroundColor: string = null; // Default is null (container's background color will be used).
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null; // Default is null (no borders).
 	boundToSection: string = null;
-	anchor: Array<string> = [];
+	anchor: Array<string> | Array<Array<string>> = [];
 	documentObject: boolean; // If true, the section is a document object.
 	// When section is a document object, its position should be the real position inside the document, in core pixels.
 	isVisible: boolean = false; // Is section visible on the viewed area of the document? This property is valid for document objects. This is managed by the section container.
@@ -58,41 +40,192 @@ class CanvasSectionObject {
 	sectionProperties: any = {};
 	boundsList: Array<CanvasSectionObject> = []; // The sections those this section can propagate events to. Updated by container.
 
+	constructor(name: string) {
+		this.name= name;
+	}
+
 	onInitialize(): void { return; }
-	onCursorPositionChanged(newPosition: any): void { return; }
+	onCursorPositionChanged(newPosition: cool.SimpleRectangle): void { return; }
 	onCellAddressChanged(): void { return; }
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void { return; }
-	onMouseDown(point: Array<number>, e: MouseEvent): void { return; }
-	onMouseUp(point: Array<number>, e: MouseEvent): void { return; }
-	setShowSection(show: boolean): void { return; }
+	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void { return; }
+	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void { return; }
+	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void { return; }
+
+	setShowSection(show: boolean): void {
+		this.showSection = show;
+
+		if (this.onSectionShowStatusChange)
+			this.onSectionShowStatusChange();
+
+		if (this.containerObject) { // Is section added to container.
+			this.isVisible = this.containerObject.isDocumentObjectVisible(this);
+			this.onDocumentObjectVisibilityChange();
+		}
+
+		if (this.containerObject.testing) {
+			this.containerObject.createUpdateSingleDivElement(this);
+		}
+	}
+
 	onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
-	isSectionShown(): boolean { return; }
+
+	isSectionShown(): boolean {
+		return this.showSection;
+	}
+
 	onDocumentObjectVisibilityChange(): void { return; }
-	onMouseEnter(point: Array<number>, e: MouseEvent): void { return; }
-	onMouseLeave(point: Array<number>, e: MouseEvent): void { return; }
-	onClick(point: Array<number>, e: MouseEvent): void { return; }
-	onDoubleClick(point: Array<number>, e: MouseEvent): void { return; }
+	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void { return; }
+	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void { return; }
+	onClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
+	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
 	onContextMenu(e?: MouseEvent): void { return; }
-	onMouseWheel(point: Array<number>, delta: Array<number>, e: WheelEvent): void { return; }
+	onMouseWheel(point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void { return; }
 	onMultiTouchStart(e: TouchEvent): void { return; }
-	onMultiTouchMove(point: Array<number>, dragDistance: number, e: TouchEvent): void { return; }
+	onMultiTouchMove(point: cool.SimplePoint, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
 	onResize(): void { return; }
 	onDraw(frameCount?: number, elapsedTime?: number): void { return; }
-	onUpdateDOM(): void { return; } // Called before onDraw, to update the DOM if required.
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.
 	onAnimate(frameCount: number, elapsedTime: number): void { return; }
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
-	onNewDocumentTopLeft(size: Array<number>): void { return; }
+	onNewDocumentTopLeft(): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
-	setDrawingOrder(drawingOrder: number): void { return; }
-	setZIndex(zIndex: number): void { return; }
-	bindToSection(sectionName: string): void { return; }
-	stopPropagating(): void { return; }
-	startAnimating(options: any): boolean { return; }
-	resetAnimation(): void { return; }
-	getTestDiv(): HTMLDivElement { return; }
-	setPosition(x: number, y: number): void { return; } // Document objects only.
+	getHTMLObject(): HTMLElement { return; } // Implemented in HTMLObjectSection.
+
+	setDrawingOrder(drawingOrder: number): void {
+		this.drawingOrder = drawingOrder;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
+
+	setZIndex(zIndex: number): void {
+		this.zIndex = zIndex;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
+
+	bindToSection(sectionName: string): void {
+		this.boundToSection = sectionName;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
+
+	stopPropagating(e: MouseEvent = null): void {
+		this.containerObject.lowestPropagatedBoundSection = this.name;
+
+		// We shouldn't need e when we remove map element.
+		if (e) { // This addition doesn't effect current uses of this function, since they don't send e here.
+			if (e.preventDefault)
+				e.preventDefault();
+
+			if (e.stopImmediatePropagation)
+				e.stopImmediatePropagation();
+
+			(e as any).preventedDefault = true; // Tap events are first handled by touchGesture. We need to let it know if we handled the event.
+		}
+	}
+
+	// The z-index of map element is higher than the canvas element. When we want canvas to handle event before map, we need this, for now.
+	mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
+		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
+	}
+
+	// Move the HTML object of an HTMLObjectSection into map element. For avoiding z-index (event handling order) issues.
+	moveHTMLObjectToMapElement(): void {
+		const element: any = this.getHTMLObject() as any;
+
+		if (!element)
+			return;
+
+		// Linting sees opacity as a string property, but it is integer. Use any for now.
+		element.style.opacity = 1;
+		this.getHTMLObject().remove();
+		document.getElementById('map').appendChild(this.getHTMLObject());
+	}
+
+	startAnimating(options: any): boolean {
+		return this.containerObject.startAnimating(this.name, options);
+	}
+
+	resetAnimation(): void {
+		this.containerObject.resetAnimation(this.name);
+	}
+
+	getTestDiv(): HTMLDivElement {
+		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
+		if (element)
+			return element;
+
+		return null;
+	}
+
+	// Document objects only.
+	setPosition(x: number, y: number): void {
+		if (this.documentObject !== true || !this.containerObject)
+			return;
+
+		x = Math.round(x);
+		y = Math.round(y);
+		let sectionXcoord = x;
+		const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
+
+		if (this.isCalcRTL()) {
+			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
+			const docLayer = this.sectionProperties.docLayer;
+			const docSize = docLayer._map.getPixelBoundsCore().getSize();
+			sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+		}
+
+		if (app.isXOrdinateInFrozenPane(sectionXcoord))
+			positionAddition.pX1 = 0;
+
+		if (app.isYOrdinateInFrozenPane(y))
+			positionAddition.pY1 = 0;
+
+		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition.pX1;
+		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition.pY1;
+
+		this.position[0] = sectionXcoord;
+		this.position[1] = y;
+		const isVisible = this.containerObject.isDocumentObjectVisible(this);
+		if (isVisible !== this.isVisible) {
+			this.isVisible = isVisible;
+			this.onDocumentObjectVisibilityChange();
+		}
+
+		if (this.containerObject.testing)
+			this.containerObject.createUpdateSingleDivElement(this);
+	}
+
+	/*
+		This function is (for now) required because sometimes
+		we need to handle the event before leaflet. So we check if the mouse pointer
+		is inside the section.
+	*/
+	containsPoint(point: number[]) {
+		if (
+			this.position[0] <= point[0] &&
+			this.position[0] + this.size[0] >= point[0]
+		) {
+			if (
+				this.position[1] <= point[1] &&
+				this.position[1] + this.size[1] >= point[1]
+			)
+				return true;
+		}
+
+		return false;
+	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.
 	isCalcRTL(): boolean { return; }
@@ -132,5 +265,3 @@ class CanvasSectionObject {
 		}
 	}
 }
-
-app.definitions.canvasSectionObject = CanvasSectionObject;

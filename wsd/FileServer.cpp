@@ -32,6 +32,7 @@
 #include <wopi/StorageConnectionManager.hpp>
 #include <common/Authorization.hpp>
 #include <common/LangUtil.hpp>
+#include <common/base64.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -73,8 +74,6 @@
 #include <zlib.h>
 #include <security/pam_appl.h>
 
-#include <wasm/base64.hpp>
-
 #include <openssl/evp.h>
 
 using Poco::Net::HTMLForm;
@@ -85,6 +84,7 @@ using Poco::Util::Application;
 // We have files that are at least 2.5 MB already.
 // WASM files are in the order of 30 MB, however,
 constexpr auto MaxFileSizeToCacheInBytes = 50 * 1024 * 1024;
+constexpr std::string_view MetaViewPort = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">";
 
 namespace
 {
@@ -330,7 +330,7 @@ bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCrede
     // bundlify appears to add an extra /dist -> dist/dist/admin
     cookie.setPath(COOLWSD::ServiceRoot + "/browser/dist/");
     cookie.setSecure(ConfigUtil::isSslEnabled());
-    response.header().addCookie(cookie.toString());
+    response.addCookie(cookie.toString());
 
     return true;
 }
@@ -356,7 +356,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             // Last modified time of the file
             std::chrono::system_clock::time_point fileLastModifiedTime;
 
-            enum class COOLStatusCode
+            enum class COOLStatusCode : std::uint16_t
             {
                 DocChanged = 1010  // Document changed externally in storage
             };
@@ -568,14 +568,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 }
             }
 
-            std::streamsize size = request.getContentLength();
-            std::vector<char> buffer(size);
-            message.read(buffer.data(), size);
             localFile->fileLastModifiedTime = std::chrono::system_clock::now();
 
-            std::ofstream outfile;
-            outfile.open(localFile->localPath, std::ofstream::binary);
-            outfile.write(buffer.data(), size);
+            std::ofstream outfile(localFile->localPath, std::ofstream::binary);
+            std::copy_n(std::istreambuf_iterator<char>(message), request.getContentLength(),
+                        std::ostreambuf_iterator<char>(outfile));
             outfile.close();
 
             std::string body = "{\"LastModifiedTime\": \"" +
@@ -807,9 +804,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 const std::string& type = splitStr[1];
                 const std::string& fileName = splitStr[3];
 
-                std::vector<char> buffer(size);
-                message.read(buffer.data(), size);
-
                 std::string dirPath = "test/data/presets/";
                 if (type == "userconfig")
                     dirPath.append("user");
@@ -818,17 +812,19 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
                 Poco::File(dirPath).createDirectories();
 
-                LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << dirPath << ']');
-                std::ofstream outfile;
+                LOG_DBG("Saving uploaded file [" << fileName << "] to directory [" << dirPath
+                                                 << ']');
                 dirPath.push_back('/');
                 dirPath.append(fileName);
-                outfile.open(dirPath, std::ofstream::binary);
-                outfile.write(buffer.data(), size);
+
+                std::ofstream outfile(dirPath, std::ofstream::binary);
+                std::copy_n(std::istreambuf_iterator<char>(message), size,
+                            std::ostreambuf_iterator<char>(outfile));
                 outfile.close();
 
                 std::string timestamp =
                     Util::getIso8601FracformatTime(std::chrono::system_clock::now());
-                const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+                std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
                 httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
@@ -898,7 +894,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 #endif
         http::Response response(http::StatusCode::OK);
         if( requestDetails.closeConnection() )
-            response.header().setConnectionToken(http::Header::ConnectionToken::Close);
+            response.setConnectionToken(http::Header::ConnectionToken::Close);
         hstsHeaders(response);
 
         const auto& config = Application::instance().config();
@@ -1013,6 +1009,12 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "uno-localizations-override.json")
         {
             accessDetails = preprocessFile(request, response, requestDetails, message, socket);
+            return true;
+        }
+
+        if (endPoint == "TileWorker.js")
+        {
+            replaceServiceRoot(request, response, requestDetails, socket);
             return true;
         }
 
@@ -1139,7 +1141,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             else
                 content = getUncompressedFile(relPath);
 
-            response.add("Content-Length", std::to_string(content->size()));
+            response.setContentLength(content->size());
 
             if (!noCache)
             {
@@ -1170,7 +1172,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     }
     catch (const Poco::FileNotFoundException& exc)
     {
-        LOG_ERR("FileServerRequestHandler: " << exc.displayText());
+        LOG_WRN("FileServerRequestHandler: " << exc.displayText());
         sendError(http::StatusCode::NotFound, getRequestPath(request), socket, "404 - file not found!",
                   "There seems to be a problem locating");
     }
@@ -1422,13 +1424,14 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
         {
             isWasm = true;
         }
-        else if (endPoint == "online.wasm.debug.wasm" || endPoint == "soffice.data.js.metadata")
+        else if (endPoint == "online.wasm.debug.wasm" || endPoint == "online.wasm.debug.wasm.dwp" ||
+                 endPoint == "soffice.data.js.metadata")
         {
             isWasm = true;
         }
     }
 
-    if (isWasm)
+    if (isWasm && path.find("/browser/dist/wasm/") == std::string::npos)
     {
         Poco::replaceInPlace(path, std::string("/browser/dist/"),
                              std::string("/browser/dist/wasm/"));
@@ -1495,6 +1498,7 @@ static const std::string PERMISSION = "%PERMISSION%";
 static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
 static const std::string IFRAME_TYPE = "%IFRAME_TYPE%";
 static const std::string UI_THEME = "%UI_THEME%";
+static const std::string VERSION = "%VERSION%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1634,6 +1638,23 @@ std::string boolToString(const bool value)
 }
 }
 
+void FileServerRequestHandler::replaceServiceRoot(const HTTPRequest& request,
+                                                  http::Response& httpResponse,
+                                                  const RequestDetails& requestDetails,
+                                                  const std::shared_ptr<StreamSocket>& socket)
+{
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
+    const std::string relPath = getRequestPathname(request, requestDetails);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string preprocess = *getUncompressedFile(relPath);
+    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), Util::getCoolVersionHash());
+    httpResponse.setBody(preprocess, "text/javascript");
+    socket->send(httpResponse);
+    LOG_TRC("Sent file: " << relPath << ": " << preprocess);
+}
+
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
     const HTTPRequest& request, http::Response& httpResponse, const RequestDetails& requestDetails,
     std::istream& message, const std::shared_ptr<StreamSocket>& socket)
@@ -1663,6 +1684,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         buyProduct = form.get("buy_product", "");
     LOG_TRC("buy_product=" << buyProduct << " host_session_id=" << form.get("host_session_id", ""));
 
+    const std::string userAgent = request.get("User-Agent", "");
+    Poco::replaceInPlace(preprocess, std::string("%BROWSER_VIEWPORT%"),
+                         !userAgent.empty() && userAgent.find("Mobile") != std::string::npos ? std::string(MetaViewPort) : "");
+
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
         socketProxy = "true";
@@ -1689,6 +1714,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, POSTMESSAGE_ORIGIN, urv[POSTMESSAGE_ORIGIN]);
     Poco::replaceInPlace(preprocess, CHECK_FILE_INFO_OVERRIDE,
                          checkFileInfoToJSON(urv[CHECK_FILE_INFO_OVERRIDE]));
+    Poco::replaceInPlace(preprocess, WOPI_SETTING_BASE_URL, urv[WOPI_SETTING_BASE_URL]);
     Poco::replaceInPlace(preprocess, std::string("%WOPI_HOST_ID%"), form.get("host_session_id", ""));
 
     const auto& config = Application::instance().config();
@@ -1890,7 +1916,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         {
             if (!HttpHelper::verifyWOPISrc(request.getURI(), param.second, socket))
             {
-                httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
+                httpResponse.setConnectionToken(http::Header::ConnectionToken::Close);
                 return ResourceAccessDetails();
             }
 
@@ -2109,7 +2135,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
     httpRequest.setVerb(http::Request::VERB_GET);
-    httpRequest.header().set("Content-Type", "application/json");
+    httpRequest.set("Content-Type", "application/json");
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
 
@@ -2145,6 +2171,9 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
         clientResponse.set("Cache-Control", "no-cache");
 
         clientResponse.setBody(httpResponse->getBody());
+
+        LOG_DBG("WopiHost[" << uriAnonym << "] response body: "
+                            << clientResponse.getBody());
 
         destSocket->sendAndShutdown(clientResponse);
         LOG_DBG("Successfully fetched wopi settings config from wopiHost[" << uriAnonym << ']');
@@ -2184,7 +2213,7 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     Authorization auth(Authorization::Type::Token, accessToken, noAuthHeader);
     auto httpRequest = StorageConnectionManager::createHttpRequest(dicUrl, auth);
     httpRequest.setVerb(http::Request::VERB_GET);
-    httpRequest.header().set("Content-Type", "text/plain");
+    httpRequest.set("Content-Type", "text/plain");
 
     auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
     auto httpResponse = httpSession->syncRequest(httpRequest);
@@ -2238,7 +2267,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
     auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
 
     httpRequest.setVerb("DELETE");
-    httpRequest.header().set("Content-Type", "application/json");
+    httpRequest.set("Content-Type", "application/json");
 
     LOG_DBG("Sending DELETE request to WopiURI[" << uriAnonym << "] for presetfile with fileId["
                                                  << fileId << ']');
@@ -2334,7 +2363,7 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
     auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
     httpRequest.setVerb(http::Request::VERB_POST);
 
-    httpRequest.header().set("Content-Type", "application/octet-stream");
+    httpRequest.set("Content-Type", "application/octet-stream");
     httpRequest.setBody(fileContent);
 
     auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
@@ -2406,6 +2435,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
     Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
     Poco::replaceInPlace(adminFile, UI_THEME, urv[UI_THEME]);
+    Poco::replaceInPlace(adminFile, VERSION, Util::getCoolVersionHash());
 #if ENABLE_DEBUG
     const bool enableDebug = true;
 #else

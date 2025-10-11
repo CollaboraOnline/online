@@ -41,6 +41,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <thread>
 
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
@@ -68,6 +69,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidPoll);
     CPPUNIT_TEST(testOnFinished_Complete);
     CPPUNIT_TEST(testOnFinished_Timeout);
+    CPPUNIT_TEST(testPost);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -85,6 +87,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testInvalidPoll();
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
+    void testPost();
 
     static constexpr std::chrono::seconds DefTimeoutSeconds{ 5 };
 
@@ -236,12 +239,12 @@ void HttpRequestTests::testGoodResponse()
     // Inject the following response:
     // HTTP/1.1 200 OK
     // Date: Wed, 02 Jun 2021 02:30:52 GMT
-    // Content-Type: text/html; charset=utf-8
+    // Content-Type: text/html;charset=utf-8
     // Content-Length: 0
     constexpr auto URL =
         "/inject/"
         "485454502F312E3120323030204F4B0D0A446174653A205765642C203032204A756E20323032312030323A3330"
-        "3A353220474D540D0A436F6E74656E742D547970653A20746578742F68746D6C3B20636861727365743D757466"
+        "3A353220474D540D0A436F6E74656E742D547970653A20746578742F68746D6C3B636861727365743D757466"
         "2D380D0A436F6E74656E742D4C656E6774683A20300D0A0D0A";
 
     http::Request httpRequest(URL);
@@ -262,7 +265,7 @@ void HttpRequestTests::testGoodResponse()
                    http::StatusLine::StatusCodeClass::Successful);
         LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
         LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
-        LOK_ASSERT_EQUAL(std::string("text/html; charset=utf-8"),
+        LOK_ASSERT_EQUAL(std::string("text/html;charset=utf-8"),
                          httpResponse->header().getContentType());
         LOK_ASSERT_EQUAL(std::string("Wed, 02 Jun 2021 02:30:52 GMT"),
                          httpResponse->header().get("Date"));
@@ -516,6 +519,7 @@ void HttpRequestTests::test500GetStatuses()
     };
 
     int curStatusCodeClass = -1;
+    int retry = 0;
     for (unsigned statusCode = 100; statusCode < 512; ++statusCode)
     {
         auto httpSession = http::Session::create(_localUri);
@@ -546,9 +550,9 @@ void HttpRequestTests::test500GetStatuses()
         if (statusCode > 100)
         {
 #if ENABLE_SSL
-            pocoResponseExt = helpers::pocoGet(/*secure=*/true, "httpbin.org", 443, url);
+            pocoResponseExt = helpers::pocoGetRetry(Poco::URI("https://httpbin.org:443" + url));
 #else
-            pocoResponseExt = helpers::pocoGet(/*secure=*/false, "httpbin.org", 80, url);
+            pocoResponseExt = helpers::pocoGetRetry(Poco::URI("http://httpbin.org:80" + url));
 #endif // ENABLE_SSL
         }
 #endif
@@ -556,9 +560,33 @@ void HttpRequestTests::test500GetStatuses()
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         cv.wait_for(lock, DefTimeoutSeconds, [&]() { return httpResponse->done(); });
-        TST_LOG("Finished async GET: " << url);
+        TST_LOG("Finished async GET of [" << url << "]: " << httpResponse->state());
 
         httpSession->asyncShutdown(); // Request to shutdown.
+
+        if (httpResponse->state() != http::Response::State::Complete)
+        {
+            ++retry;
+            --statusCode;
+
+            if (httpResponse->statusLine().statusCode() == http::StatusCode::ServiceUnavailable ||
+                httpResponse->statusLine().statusCode() == http::StatusCode::BadGateway ||
+                retry < 5)
+            {
+                // Give up, eventually.
+                if (retry < 10)
+                {
+                    LOG_WRN("Retrying (#" << retry << ") of " << url << " due to status "
+                                          << httpResponse->statusLine().statusCode() << "...");
+                    // coverity[sleep : SUPPRESS] - don't report sleep with lock held
+                    std::this_thread::sleep_for(
+                        std::chrono::milliseconds(200 * retry)); // Cool off.
+                    continue;
+                }
+            }
+        }
+
+        retry = 0; // Reset, since we either succeed or fail, but never retry this one.
 
         LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
@@ -566,6 +594,7 @@ void HttpRequestTests::test500GetStatuses()
 
         if (statusCode % 100 == 0)
             ++curStatusCodeClass;
+        assert(curStatusCodeClass >= 0 && "statusCode starts as 100");
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == statusCodeClasses[curStatusCodeClass]);
 
@@ -754,6 +783,47 @@ void HttpRequestTests::testOnFinished_Timeout()
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
 }
+
+void HttpRequestTests::testPost()
+{
+    constexpr std::string_view testname = __func__;
+
+    constexpr auto URL = "/post";
+
+    http::Request httpRequest(URL, http::Request::VERB_POST);
+
+    // Write the test data to file.
+    const std::string data = Util::rng::getHexString(10 * 1024 * 1024);
+    const std::string path = FileUtil::getSysTempDirectoryPath() + "/test_http_post";
+    std::ofstream ofs(path, std::ios::binary);
+    ofs.write(data.data(), data.size());
+    ofs.close();
+
+    httpRequest.setBodyFile(path);
+
+    auto httpSession = http::Session::create(_localUri);
+    if (httpSession)
+    {
+        httpSession->setTimeout(std::chrono::seconds(5));
+        const std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(httpRequest);
+
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+        LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+        LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
+        LOK_ASSERT(httpResponse->statusLine().statusCategory() ==
+                   http::StatusLine::StatusCodeClass::Successful);
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL(std::string("text/html;charset=utf-8"),
+                         httpResponse->header().getContentType());
+
+        LOK_ASSERT_EQUAL_STR(data, httpResponse->getBody());
+    }
+}
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestTests);
 

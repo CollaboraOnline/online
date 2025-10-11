@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
+ * window.L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
  *
  * It handles keyboard interactions which are NOT text input, including those which
  * don't require edit permissions (e.g. page scroll). Text input is handled
@@ -9,13 +9,13 @@
 
 /* global app UNOKey UNOModifier TileManager */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	keyboard: true,
 	keyboardPanOffset: 20,
 	keyboardZoomOffset: 1
 });
 
-L.Map.Keyboard = L.Handler.extend({
+window.L.Map.Keyboard = window.L.Handler.extend({
 
 	keymap: {
 		8   : UNOKey.BACKSPACE,
@@ -311,13 +311,13 @@ L.Map.Keyboard = L.Handler.extend({
 			container.tabIndex = '0';
 		}
 
-		L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
-		L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
+		window.L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		window.L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	removeHooks: function () {
-		L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
-		L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
+		window.L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		window.L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	_ignoreKeyEvent: function(ev) {
@@ -456,20 +456,6 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._docLayer._preview.partsFocused = false;
 			}
 		}
-		else if (this._isCtrlKey(ev) && ev.keyCode === this.keyCodes.S) {
-			// Save only when not read-only and when HideSaveOption is false.
-			if (!this._map.isReadOnlyMode() && !this._map['wopi'].HideSaveOption) {
-				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
-				if (!this._map._disableDefaultAction['UI_Save']) {
-					this._map.save(
-						false /* An explicit save should terminate cell edit */,
-						false /* An explicit save should save it again */,
-					);
-				}
-			}
-			ev.preventDefault();
-		}
-
 	},
 
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
@@ -500,7 +486,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 		if (!keyEventFn && docLayer && docLayer.postKeyboardEvent) {
 			// default is to post keyboard events on the document
-			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
+			keyEventFn = window.L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
 
 		this.modifier = 0;
@@ -643,11 +629,11 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		L.DomEvent.stopPropagation(ev);
+		window.L.DomEvent.stopPropagation(ev);
 	},
 
 	_isCtrlKey: function (e) {
-		if (window.ThisIsTheiOSApp || L.Browser.mac)
+		if (window.ThisIsTheiOSApp || window.L.Browser.mac)
 			return e.metaKey;
 		else
 			return e.ctrlKey;
@@ -734,7 +720,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._isCtrlKey(e) && !e.shiftKey && e.keyCode === this.keyCodes.K) {
-			this._map.showHyperlinkDialog();
+			this._map.sendUnoCommand('.uno:HyperlinkDialog');
 			e.preventDefault();
 			return true;
 		}
@@ -847,18 +833,13 @@ L.Map.Keyboard = L.Handler.extend({
 		case this.keyCodes.RIGHTWINDOWKEY[MAC]: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
 			// slide operations are handled differently avoid changing focus
-			if (!this._map._docLayer._preview.partsFocused)
+			var slidePreviewFocused = this._map._docLayer._preview && this._map._docLayer._preview.partsFocused;
+			if (!slidePreviewFocused)
 				this._map.focus();
 			// Not sure if the commented code is still used, so I didn't remove it.
 			// Anyhow, by when editable area is populated with the focused paragraph
 			// we can't select its content or on next editing the content is overwritten.
 			// this._map._textInput.select();
-			return true;
-		case this.keyCodes.P: // p
-			this._map.print();
-			return true;
-		case this.keyCodes.S: // s
-			// Handle save event in globalEventHandler
 			return true;
 		case this.keyCodes.V[DEFAULT]: // v
 		case this.keyCodes.V[MAC]: // v (Safari) needs a separate mapping in keyCodes

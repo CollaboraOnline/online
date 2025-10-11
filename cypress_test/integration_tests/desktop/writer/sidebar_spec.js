@@ -6,13 +6,15 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/sidebar.odt');
+		cy.viewport(1920,1080);
 	});
 
 	it('Sidebar visual test', function() {
+		cy.viewport(1000,660);
 		cy.wait(500); // wait to make fully rendered
 		cy.cGet('#sidebar-dock-wrapper').scrollTo(0,0,{ ensureScrollable: false });
 		cy.wait(500); // wait for animations
-		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('sidebar_writer', 0.065);
+		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('sidebar_writer', 0.07);
 	});
 
 	it('Show table panel multiple times', function() {
@@ -36,8 +38,9 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 	});
 
 	function checkMathElementsVisibility() {
+		cy.viewport(2000, 1080);
+
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click().click().click().click();
 		cy.cGet('#Insert .unoInsertObjectStarMath').click();
 
 		cy.cGet('.MathElementsPanel').should('be.visible');
@@ -66,7 +69,7 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 	});
 
 	it('Focus on the first focusable child', function() {
-		cy.cGet('#sidebar-dock-wrapper').then(function(sidebar) {
+		cy.cGet('#sidebar-dock-wrapper.visible').then(function(sidebar) {
 			helper.containsFocusElement(sidebar[0], false);
 		});
 
@@ -79,7 +82,9 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.cGet('#sidebar-panel').should('be.visible');
 		cy.cGet('#sidebar-panel').should('not.be.empty');
 
-		cy.cGet('#sidebar-dock-wrapper').then(function(sidebar) {
+		cy.wait(1000);
+
+		cy.cGet('#sidebar-dock-wrapper.visible').then(function(sidebar) {
 			helper.containsFocusElement(sidebar[0], true)
 		});
 	});

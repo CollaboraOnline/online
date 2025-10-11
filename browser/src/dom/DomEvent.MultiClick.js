@@ -4,7 +4,7 @@
  * This is vaguely based on the DomEvent.DoubleTap implementation.
  */
 
-L.extend(L.DomEvent, {
+window.L.extend(window.L.DomEvent, {
 
 	addMultiClickListener: function (obj, handler, id, type) {
 		var last = [],

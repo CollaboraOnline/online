@@ -19,10 +19,13 @@ function _createDropdownId(id) {
 	return id + '-dropdown';
 }
 
+JSDialog.CreateDropdownEntriesId = function(id) {
+	return id + '-entries';
+}
+
 JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popupAnchor, isSubmenu) {
-	var dropdownWindowId = _createDropdownId(id);
 	var json = {
-		id: dropdownWindowId,
+		id: _createDropdownId(id),
 		type: 'dropdown',
 		isSubmenu: isSubmenu,
 		jsontype: 'dialog',
@@ -32,8 +35,9 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		cancellable: true,
 		children: [
 			{
-				id: id + '-entries',
+				id: JSDialog.CreateDropdownEntriesId(id),
 				type: 'grid',
+				allyRole: 'listbox',
 				cols: 1,
 				rows: entries.length,
 				children: []
@@ -41,15 +45,12 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		]
 	};
 
-	if (popupParent && !popupParent._onClose) {
-		popupParent._onClose = () => {
-			popupParent.setAttribute('aria-expanded', false);
-		};
+	if (popupParent && typeof popupParent._onDropDown === 'function') {
+		popupParent._onDropDown(true);
 	}
-	popupParent.setAttribute('aria-expanded', true);
 
 	var isChecked = function (unoCommand) {
-		var items = L.Map.THIS['stateChangeHandler'];
+		var items = window.L.Map.THIS['stateChangeHandler'];
 		var val = items.getItemValue(unoCommand);
 
 		if (val && (val === true || val === 'true'))
@@ -64,7 +65,15 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 		var entry;
 
+		if (entries[i].type === 'json') {
+			// replace old grid with new widget
+			json.children[0] = entries[i].content;
+			if (json.children[0].type === 'grid') json.gridKeyboardNavigation = true;
+			break;
+		}
+
 		switch (entries[i].type) {
+			// DEPRECACTED: legacy plain HTML adapter
 			case 'html':
 				entry = {
 					id: id + '-entry-' + i,
@@ -75,12 +84,29 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				json.gridKeyboardNavigation = true;
 			break;
 
+			// dropdown is a colorpicker
 			case 'colorpicker':
 				entry = entries[i];
 				// for color picker we have a "KeyboardGridNavigation" function defined separately to handle custom cases
 				json.gridKeyboardNavigation = true;
 			break;
 
+			// allows to put regular JSDialog JSON into popup
+			case 'json':
+				entry = entries[i].content;
+				json.gridKeyboardNavigation = true;
+			break;
+
+			// horizontal separator in menu
+			case 'separator':
+				entry = {
+					id: id + '-entry-' + i,
+					type: 'separator',
+					orientation: 'horizontal'
+				};
+			break;
+
+			// menu and submenu entry
 			case 'action':
 			case 'menu':
 			default:
@@ -99,14 +125,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					hasSubMenu: !!entries[i].items
 				};
 			break;
-
-			case 'separator':
-				entry = {
-					id: id + '-entry-' + i,
-					type: 'separator',
-					orientation: 'horizontal'
-				};
-			break;
 		}
 
 		json.children[0].children.push(entry);
@@ -119,7 +137,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
-				if (entry.items) {
+				if (entry && entry.items) {
 					if (lastSubMenuOpened) {
 						var submenu = JSDialog.GetDropdown(lastSubMenuOpened);
 						if (submenu) {
@@ -148,13 +166,15 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 						if (focusables && focusables.length)
 							focusables[0].focus();
 					});
-				} else if (eventType === 'selected' && entry.uno) {
+				} else if (eventType === 'selected' && entry && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
-					L.Map.THIS.sendUnoCommand(uno);
+					window.L.Map.THIS.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(id);
 					return;
 				}
-			} else if (!lastSubMenuOpened && eventType === 'hidedropdown') {
+			} else if (eventType === 'hidedropdown') {
+				if (lastSubMenuOpened)
+					JSDialog.CloseDropdown(lastSubMenuOpened);
 				JSDialog.CloseDropdown(id);
 			}
 
@@ -164,14 +184,16 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 			if (eventType === 'selected')
 				JSDialog.CloseDropdown(id);
+			else
+				console.debug('Dropdown: unhandled action: "' + eventType + '"');
 		};
 	};
-	L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
-	L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
+	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	window.L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
 };
 
 JSDialog.CloseDropdown = function (id) {
-	L.Map.THIS.fire('jsdialog', {data: {
+	window.L.Map.THIS.fire('jsdialog', {data: {
 		id: _createDropdownId(id),
 		jsontype: 'dialog',
 		action: 'close'
@@ -179,7 +201,7 @@ JSDialog.CloseDropdown = function (id) {
 };
 
 JSDialog.CloseAllDropdowns = function () {
-	L.Map.THIS.jsdialog.closeAllDropdowns();
+	window.L.Map.THIS.jsdialog.closeAllDropdowns();
 };
 
 JSDialog.GetDropdown = function (id) {

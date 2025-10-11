@@ -1,12 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Class powers the OOP facilities of the library.
+ * window.L.Class powers the OOP facilities of the library.
  * Thanks to John Resig and Dean Edwards for inspiration!
  */
 
-L.Class = function () {};
+window.L.Class = function () {};
 
-L.Class.extend = function (props) {
+window.L.Class.extend = function (props) {
 
 	// extended class with the new prototype
 	var NewClass = function () {
@@ -22,7 +22,7 @@ L.Class.extend = function (props) {
 
 	var parentProto = NewClass.__super__ = this.prototype;
 
-	var proto = L.Util.create(parentProto);
+	var proto = window.L.Util.create(parentProto);
 	proto.constructor = NewClass;
 
 	NewClass.prototype = proto;
@@ -36,23 +36,23 @@ L.Class.extend = function (props) {
 
 	// mix static properties into the class
 	if (props.statics) {
-		L.extend(NewClass, props.statics);
+		window.L.extend(NewClass, props.statics);
 		delete props.statics;
 	}
 
 	// mix includes into the prototype
 	if (props.includes) {
-		L.Util.extend.apply(null, [proto].concat(props.includes));
+		window.L.Util.extend.apply(null, [proto].concat(props.includes));
 		delete props.includes;
 	}
 
 	// merge options
 	if (proto.options) {
-		props.options = L.Util.extend(L.Util.create(proto.options), props.options);
+		props.options = window.L.Util.extend(window.L.Util.create(proto.options), props.options);
 	}
 
 	// mix given properties into the prototype
-	L.extend(proto, props);
+	window.L.extend(proto, props);
 
 	proto._initHooks = [];
 
@@ -77,17 +77,17 @@ L.Class.extend = function (props) {
 
 
 // method for adding properties to prototype
-L.Class.include = function (props) {
-	L.extend(this.prototype, props);
+window.L.Class.include = function (props) {
+	window.L.extend(this.prototype, props);
 };
 
 // merge new default options to the Class
-L.Class.mergeOptions = function (options) {
-	L.extend(this.prototype.options, options);
+window.L.Class.mergeOptions = function (options) {
+	window.L.extend(this.prototype.options, options);
 };
 
 // add a constructor hook
-L.Class.addInitHook = function (fn) { // (Function) || (String, args...)
+window.L.Class.addInitHook = function (fn) { // (Function) || (String, args...)
 	var args = Array.prototype.slice.call(arguments, 1);
 
 	var init = typeof fn === 'function' ? fn : function () {

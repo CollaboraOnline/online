@@ -53,13 +53,20 @@ JSDialog.grid = function (
 	const cols = builder._getGridColumns(data.children);
 
 	const processedChildren = [];
+	const isSingleChild = data.children && data.children.length === 1;
 
-	const table = L.DomUtil.create(
+	const table = window.L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' ui-grid',
+		builder.options.cssClass +
+			' ui-grid' +
+			(isSingleChild ? ' single-child-grid' : ''),
 		parentContainer,
 	);
 	table.id = data.id;
+
+	if (data.allyRole) {
+		table.role = data.allyRole;
+	}
 
 	const gridRowColStyle =
 		'grid-template-rows: repeat(' +
@@ -86,12 +93,12 @@ JSDialog.grid = function (
 					// required for postprocess...
 					child.id = table.id + '-cell-' + row + '-' + col;
 
-				const sandbox = L.DomUtil.create('div');
+				const sandbox = window.L.DomUtil.create('div');
 				builder.build(sandbox, [child], false);
 
 				const control = sandbox.firstChild;
 				if (control) {
-					L.DomUtil.addClass(control, 'ui-grid-cell');
+					window.L.DomUtil.addClass(control, 'ui-grid-cell');
 					table.appendChild(control);
 				}
 
@@ -99,7 +106,7 @@ JSDialog.grid = function (
 				prevChild = child;
 			} else if (!isMergedCell) {
 				// empty placeholder to keep correct order
-				L.DomUtil.create('div', 'ui-grid-cell', table);
+				window.L.DomUtil.create('div', 'ui-grid-cell', table);
 			}
 		}
 	}
@@ -107,11 +114,11 @@ JSDialog.grid = function (
 	for (let i = 0; i < (data.children || []).length; i++) {
 		const child = data.children[i];
 		if (processedChildren.indexOf(child) === -1) {
-			const sandbox = L.DomUtil.create('div');
+			const sandbox = window.L.DomUtil.create('div');
 			builder.build(sandbox, [child], false);
 			const control = sandbox.firstChild;
 			if (control) {
-				L.DomUtil.addClass(control, 'ui-grid-cell');
+				window.L.DomUtil.addClass(control, 'ui-grid-cell');
 				table.appendChild(control);
 			}
 			processedChildren.push(child);
@@ -130,7 +137,7 @@ JSDialog.toolbox = function (
 		builder._currentDepth !== undefined
 			? ' level-' + builder._currentDepth
 			: '';
-	const toolbox = L.DomUtil.create(
+	const toolbox = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' horizontal toolbox' + levelClass,
 		parentContainer,
@@ -182,7 +189,7 @@ JSDialog.spacer = function (
 	data: WidgetJSON,
 	builder: JSBuilder,
 ) {
-	const spacer = L.DomUtil.create(
+	const spacer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-spacer',
 		parentContainer,

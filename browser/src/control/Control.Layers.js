@@ -1,10 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /* global app */
 /*
- * L.Control.Layers is a control to allow users to switch between different layers on the map.
+ * window.L.Control.Layers is a control to allow users to switch between different layers on the map.
  */
 
-L.Control.Layers = L.Control.extend({
+window.L.Control.Layers = window.L.Control.extend({
 	options: {
 		collapsed: true,
 		position: 'topright',
@@ -13,7 +13,7 @@ L.Control.Layers = L.Control.extend({
 	},
 
 	initialize: function (baseLayers, overlays, options) {
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 
 		this._layers = {};
 		this._lastZIndex = 0;
@@ -44,38 +44,38 @@ L.Control.Layers = L.Control.extend({
 
 	_initLayout: function () {
 		var className = 'leaflet-control-layers',
-		    container = this._container = L.DomUtil.create('div', className);
+		    container = this._container = window.L.DomUtil.create('div', className);
 
 		// makes this work on IE touch devices by stopping it from firing a mouseout event when the touch is released
 		container.setAttribute('aria-haspopup', true);
 
-		L.DomEvent
+		window.L.DomEvent
 			.disableMouseClickPropagation(container)
 			.disableScrollPropagation(container);
-		L.DomEvent.on(container, 'click', window.touch.touchOnly(L.DomEvent.stopPropagation));
+		window.L.DomEvent.on(container, 'click', window.touch.touchOnly(window.L.DomEvent.stopPropagation));
 
-		var form = this._form = L.DomUtil.create('form', className + '-list');
+		var form = this._form = window.L.DomUtil.create('form', className + '-list');
 
 		if (this.options.collapsed) {
-			if (!L.Browser.android) {
-				L.DomEvent.on(container, {
+			if (!window.L.Browser.android) {
+				window.L.DomEvent.on(container, {
 					mouseenter: this._expand,
 					mouseleave: this._collapse
 				}, this);
 			}
 
-			var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
+			var link = this._layersLink = window.L.DomUtil.create('a', className + '-toggle', container);
 			link.href = '#';
 			link.title = 'Layers';
 
-			L.DomEvent
-				.on(link, 'click', window.touch.touchOnly(L.DomEvent.stop))
+			window.L.DomEvent
+				.on(link, 'click', window.touch.touchOnly(window.L.DomEvent.stop))
 				.on(link, 'click', window.touch.touchOnly(this._expand), this);
-			L.DomEvent.on(link, 'focus', window.touch.mouseOnly(this._expand), this);
+			window.L.DomEvent.on(link, 'focus', window.touch.mouseOnly(this._expand), this);
 
 			// work around for Firefox Android issue https://github.com/Leaflet/Leaflet/issues/2033
-			L.DomEvent.on(form, 'click', function () {
-				setTimeout(L.bind(this._onInputClick, this), 0);
+			window.L.DomEvent.on(form, 'click', function () {
+				setTimeout(window.L.bind(this._onInputClick, this), 0);
 			}, this);
 
 			this._map.on('click', this._collapse, this);
@@ -84,9 +84,9 @@ L.Control.Layers = L.Control.extend({
 			this._expand();
 		}
 
-		this._baseLayersList = L.DomUtil.create('div', className + '-base', form);
-		this._separator = L.DomUtil.create('div', className + '-separator', form);
-		this._overlaysList = L.DomUtil.create('div', className + '-overlays', form);
+		this._baseLayersList = window.L.DomUtil.create('div', className + '-base', form);
+		this._separator = window.L.DomUtil.create('div', className + '-separator', form);
+		this._overlaysList = window.L.DomUtil.create('div', className + '-overlays', form);
 
 		container.appendChild(form);
 	},
@@ -111,8 +111,8 @@ L.Control.Layers = L.Control.extend({
 	_update: function () {
 		if (!this._container) { return this; }
 
-		L.DomUtil.empty(this._baseLayersList);
-		L.DomUtil.empty(this._overlaysList);
+		window.L.DomUtil.empty(this._baseLayersList);
+		window.L.DomUtil.empty(this._overlaysList);
 
 		var baseLayersPresent, overlaysPresent, i, obj, baseLayersCount = 0;
 
@@ -179,7 +179,7 @@ L.Control.Layers = L.Control.extend({
 
 		input.layerId = app.util.stamp(obj.layer);
 
-		L.DomEvent.on(input, 'click', this._onInputClick, this);
+		window.L.DomEvent.on(input, 'click', this._onInputClick, this);
 
 		var name = document.createElement('span');
 		name.innerHTML = ' ' + obj.name;
@@ -228,14 +228,14 @@ L.Control.Layers = L.Control.extend({
 	},
 
 	_expand: function () {
-		L.DomUtil.addClass(this._container, 'leaflet-control-layers-expanded');
+		window.L.DomUtil.addClass(this._container, 'leaflet-control-layers-expanded');
 	},
 
 	_collapse: function () {
-		L.DomUtil.removeClass(this._container, 'leaflet-control-layers-expanded');
+		window.L.DomUtil.removeClass(this._container, 'leaflet-control-layers-expanded');
 	}
 });
 
-L.control.layers = function (baseLayers, overlays, options) {
-	return new L.Control.Layers(baseLayers, overlays, options);
+window.L.control.layers = function (baseLayers, overlays, options) {
+	return new window.L.Control.Layers(baseLayers, overlays, options);
 };

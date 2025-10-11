@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.CornerHeader
- */
 
 /*
 	Calc only.
@@ -21,23 +18,22 @@
 
 namespace cool {
 
-export class CornerHeader extends app.definitions.canvasSectionObject {
-	name: string = L.CSections.CornerHeader.name;
-	anchor: any = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+export class CornerHeader extends CanvasSectionObject {
+	anchor: any = [[app.CSections.ColumnGroup.name, 'bottom', 'top'], [app.CSections.RowGroup.name, 'right', 'left']];
 	size: number[] = [48 * app.dpiScale, 19 * app.dpiScale]; // These values are static.
-	processingOrder: number = L.CSections.CornerHeader.processingOrder;
-	drawingOrder: number = L.CSections.CornerHeader.drawingOrder;
-	zIndex: number = L.CSections.CornerHeader.zIndex;
+	processingOrder: number = app.CSections.CornerHeader.processingOrder;
+	drawingOrder: number = app.CSections.CornerHeader.drawingOrder;
+	zIndex: number = app.CSections.CornerHeader.zIndex;
 	sectionProperties: any = { cursor: 'pointer' }
 
 	_map: any;
 	_textColor: string;
 
-	constructor() { super(); }
+	constructor() { super(app.CSections.CornerHeader.name); }
 
 	onInitialize():void {
-		this._map = L.Map.THIS;
-		
+		this._map = window.L.Map.THIS;
+
 		this._map.on('darkmodechanged', this._initCornerHeaderStyle, this);
 		this._initCornerHeaderStyle();
 	}
@@ -66,18 +62,12 @@ export class CornerHeader extends app.definitions.canvasSectionObject {
 
 	_initCornerHeaderStyle(): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
-		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
-		this.borderColor = L.DomUtil.getStyle(elem, 'border-top-color'); // This is a section property.
-		L.DomUtil.remove(elem);
+		const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+		this._textColor = window.L.DomUtil.getStyle(elem, 'color');
+		this.backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
+		this.borderColor = window.L.DomUtil.getStyle(elem, 'border-top-color'); // This is a section property.
+		window.L.DomUtil.remove(elem);
 	}
 }
 
 }
-
-L.Control.CornerHeader = cool.CornerHeader;
-
-L.control.cornerHeader = function () {
-	return new L.Control.CornerHeader();
-};

@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.LatLngBounds represents a rectangular area on the map in geographical coordinates.
+ * window.L.LatLngBounds represents a rectangular area on the map in geographical coordinates.
  */
 
-L.LatLngBounds = function (southWest, northEast) { // (LatLng, LatLng) or (LatLng[])
+window.L.LatLngBounds = function (southWest, northEast) { // (LatLng, LatLng) or (LatLng[])
 	if (!southWest) { return; }
 
 	var latlngs = northEast ? [southWest, northEast] : southWest;
@@ -13,7 +13,7 @@ L.LatLngBounds = function (southWest, northEast) { // (LatLng, LatLng) or (LatLn
 	}
 };
 
-L.LatLngBounds.prototype = {
+window.L.LatLngBounds.prototype = {
 
 	// extend the bounds to contain the given point or bounds
 	extend: function (obj) { // (LatLng) or (LatLngBounds)
@@ -21,23 +21,23 @@ L.LatLngBounds.prototype = {
 		    ne = this._northEast,
 		    sw2, ne2;
 
-		if (obj instanceof L.LatLng) {
+		if (obj instanceof window.L.LatLng) {
 			sw2 = obj;
 			ne2 = obj;
 
-		} else if (obj instanceof L.LatLngBounds) {
+		} else if (obj instanceof window.L.LatLngBounds) {
 			sw2 = obj._southWest;
 			ne2 = obj._northEast;
 
 			if (!sw2 || !ne2) { return this; }
 
 		} else {
-			return obj ? this.extend(L.latLng(obj) || L.latLngBounds(obj)) : this;
+			return obj ? this.extend(window.L.latLng(obj) || window.L.latLngBounds(obj)) : this;
 		}
 
 		if (!sw && !ne) {
-			this._southWest = new L.LatLng(sw2.lat, sw2.lng);
-			this._northEast = new L.LatLng(ne2.lat, ne2.lng);
+			this._southWest = new window.L.LatLng(sw2.lat, sw2.lng);
+			this._northEast = new window.L.LatLng(ne2.lat, ne2.lng);
 		} else {
 			sw.lat = Math.min(sw2.lat, sw.lat);
 			sw.lng = Math.min(sw2.lng, sw.lng);
@@ -54,13 +54,13 @@ L.LatLngBounds.prototype = {
 		ne = this._northEast,
 		heightBuffer = Math.abs(sw.lat - ne.lat) * bufferRatio;
 
-		return new L.LatLngBounds(
-		        new L.LatLng(sw.lat - heightBuffer, sw.lng),
-		        new L.LatLng(ne.lat + heightBuffer, ne.lng));
+		return new window.L.LatLngBounds(
+		        new window.L.LatLng(sw.lat - heightBuffer, sw.lng),
+		        new window.L.LatLng(ne.lat + heightBuffer, ne.lng));
 	},
 
 	getCenter: function () { // -> LatLng
-		return new L.LatLng(
+		return new window.L.LatLng(
 		        (this._southWest.lat + this._northEast.lat) / 2,
 		        (this._southWest.lng + this._northEast.lng) / 2);
 	},
@@ -74,11 +74,11 @@ L.LatLngBounds.prototype = {
 	},
 
 	getNorthWest: function () {
-		return new L.LatLng(this.getNorth(), this.getWest());
+		return new window.L.LatLng(this.getNorth(), this.getWest());
 	},
 
 	getSouthEast: function () {
-		return new L.LatLng(this.getSouth(), this.getEast());
+		return new window.L.LatLng(this.getSouth(), this.getEast());
 	},
 
 	getWest: function () {
@@ -106,10 +106,10 @@ L.LatLngBounds.prototype = {
 	},
 
 	_getAsLatLngOrBounds (obj) {
-		if (typeof obj[0] === 'number' || obj instanceof L.LatLng) {
-			obj = L.latLng(obj);
+		if (typeof obj[0] === 'number' || obj instanceof window.L.LatLng) {
+			obj = window.L.latLng(obj);
 		} else {
-			obj = L.latLngBounds(obj);
+			obj = window.L.latLngBounds(obj);
 		}
 		return obj;
 	},
@@ -121,7 +121,7 @@ L.LatLngBounds.prototype = {
 		    ne = this._northEast,
 		    sw2, ne2;
 
-		if (obj instanceof L.LatLngBounds) {
+		if (obj instanceof window.L.LatLngBounds) {
 			sw2 = obj.getSouthWest();
 			ne2 = obj.getNorthEast();
 		} else {
@@ -145,7 +145,7 @@ L.LatLngBounds.prototype = {
 		    ne = this._northEast,
 		    sw2, ne2;
 
-		if (obj instanceof L.LatLngBounds) {
+		if (obj instanceof window.L.LatLngBounds) {
 			sw2 = obj.getSouthWest();
 			ne2 = obj.getNorthEast();
 		} else {
@@ -158,7 +158,7 @@ L.LatLngBounds.prototype = {
 	},
 
 	intersects: function (bounds) { // (LatLngBounds)
-		bounds = L.latLngBounds(bounds);
+		bounds = window.L.latLngBounds(bounds);
 
 		var sw = this._southWest,
 		    ne = this._northEast,
@@ -174,7 +174,7 @@ L.LatLngBounds.prototype = {
 	equals: function (bounds) { // (LatLngBounds)
 		if (!bounds) { return false; }
 
-		bounds = L.latLngBounds(bounds);
+		bounds = window.L.latLngBounds(bounds);
 
 		return this._southWest.equals(bounds.getSouthWest()) &&
 		       this._northEast.equals(bounds.getNorthEast());
@@ -203,15 +203,15 @@ L.LatLngBounds.prototype = {
 	},
 };
 
-L.LatLngBounds.createDefault = function() {
-	return new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+window.L.LatLngBounds.createDefault = function() {
+	return new window.L.LatLngBounds(new window.L.LatLng(0, 0), new window.L.LatLng(0, 0));
 };
 
 //TODO International date line?
 
-L.latLngBounds = function (a, b) { // (LatLngBounds) or (LatLng, LatLng)
-	if (!a || a instanceof L.LatLngBounds) {
+window.L.latLngBounds = function (a, b) { // (LatLngBounds) or (LatLng, LatLng)
+	if (!a || a instanceof window.L.LatLngBounds) {
 		return a;
 	}
-	return new L.LatLngBounds(a, b);
+	return new window.L.LatLngBounds(a, b);
 };

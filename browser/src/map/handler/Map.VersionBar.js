@@ -9,11 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Map.VersionBar.
+ * window.L.Map.VersionBar.
  */
 /* global app _ */
 
-L.Map.VersionBar = L.Handler.extend({
+window.L.Map.VersionBar = window.L.Handler.extend({
 	onAdd: function () {
 		this._map.on('adminuser', this.onUpdateInfo, this);
 		this._map.on('versionbar', this.onversionbar, this);
@@ -69,5 +69,5 @@ L.Map.VersionBar = L.Handler.extend({
 });
 
 if (window.prefs.canPersist) {
-	L.Map.versionBar = new L.Map.VersionBar();
+	window.L.Map.versionBar = new window.L.Map.VersionBar();
 }

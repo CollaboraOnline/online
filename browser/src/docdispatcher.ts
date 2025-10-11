@@ -22,12 +22,12 @@ class Dispatcher {
 	private actionsMap: any = {};
 
 	private addGeneralCommands() {
-		this.actionsMap['save'] = function () {
+		this.actionsMap['save'] = function (source?: string) {
 			// Save only when not read-only.
-			if (!app.map.isReadOnlyMode()) {
+			if (!app.map.isReadOnlyMode() && !app.map['wopi'].HideSaveOption) {
 				app.map.fire('postMessage', {
 					msgId: 'UI_Save',
-					args: { source: 'toolbar' },
+					args: { source: source || 'toolbar' },
 				});
 				if (!app.map._disableDefaultAction['UI_Save']) {
 					app.map.save(
@@ -50,6 +50,7 @@ class Dispatcher {
 					this.dispatch('acceptformula'); // save data from the edited cell on exit
 				}
 
+				window.prefs.sendPendingBrowserSettingsUpdate();
 				app.map.fire('postMessage', {
 					msgId: 'close',
 					args: { EverModified: app.map._everModified, Deprecated: true },
@@ -97,12 +98,10 @@ class Dispatcher {
 		};
 		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
-			app.map.showHyperlinkDialog();
+			app.map.sendUnoCommand('.uno:HyperlinkDialog');
 		};
 		this.actionsMap['inserthyperlink'] = () => {
-			if (app.map.getDocType() == 'spreadsheet')
-				app.map.sendUnoCommand('.uno:HyperlinkDialog');
-			else app.map.showHyperlinkDialog();
+			app.map.sendUnoCommand('.uno:HyperlinkDialog');
 		};
 		this.actionsMap['rev-history'] = function () {
 			app.map.openRevisionHistory();
@@ -121,7 +120,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['insertmultimedia'] = function () {
-			L.DomUtil.get('insertmultimedia').click();
+			window.L.DomUtil.get('insertmultimedia').click();
 		};
 		this.actionsMap['remotemultimedia'] = function () {
 			app.map.fire('postMessage', {
@@ -185,7 +184,7 @@ class Dispatcher {
 			app.map.fire('morelanguages', { applyto: 'all' });
 		};
 		this.actionsMap['localgraphic'] = function () {
-			L.DomUtil.get('insertgraphic').click();
+			window.L.DomUtil.get('insertgraphic').click();
 		};
 		this.actionsMap['remotegraphic'] = this.actionsMap['insertremotegraphic'] =
 			function () {
@@ -227,6 +226,19 @@ class Dispatcher {
 			app.map.insertComment();
 		};
 
+		this.actionsMap['showcommentsnavigator'] = function (data?: any) {
+			if (
+				!document
+					.getElementById('navigation-sidebar')
+					.classList.contains('visible')
+			)
+				app.map.sendUnoCommand('.uno:Navigator');
+			app.map.sendUnoCommand(
+				'.uno:NavigatorSelectComment?CommentId:short=' +
+					(data ? (data as number) : 0),
+			);
+		};
+
 		this.actionsMap['zoomin'] = () => {
 			app.map.zoomIn(1, null, true /* animate? */);
 		};
@@ -250,7 +262,7 @@ class Dispatcher {
 			$('#toolbar-down').hide();
 			$('#showsearchbar').removeClass('over');
 			$('#toolbar-search').show();
-			L.DomUtil.get('search-input').focus();
+			window.L.DomUtil.get('search-input').focus();
 		};
 		this.actionsMap['hidesearchbar'] = () => {
 			$('#toolbar-search').hide();
@@ -458,7 +470,7 @@ class Dispatcher {
 		this.actionsMap['lastrecord'] = function () {
 			// Set a very high value, so that scroll is set to the maximum possible value internally.
 			// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
-			L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
+			window.L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
 		};
 		this.actionsMap['columnrowhighlight'] = function () {
 			var newState = !app.map.uiManager.getHighlightMode();
@@ -468,6 +480,12 @@ class Dispatcher {
 			else FocusCellSection.hideFocusCellSection();
 
 			app.sectionContainer.requestReDraw();
+		};
+
+		this.actionsMap['defaultborderstyle'] = () => {
+			app.map.sendUnoCommand(
+				window.getBorderStyleUNOCommand(0, 0, 1, 0, 0, 0, 0),
+			);
 		};
 	}
 
@@ -498,6 +516,22 @@ class Dispatcher {
 					app.map.fire('newpresentinwindow');
 				else app.map.fire('presentinwindow');
 			};
+
+		this.actionsMap['followmepresentation'] = this.actionsMap[
+			'presentation-follow-me'
+		] = () => {
+			app.map.slideShowPresenter.setLeader(true);
+			app.map.fire('newpresentinwindow');
+		};
+
+		this.actionsMap['followpresentation'] = this.actionsMap[
+			'presentation-follow'
+		] = () => {
+			app.map.slideShowPresenter.setLeader(false);
+			app.map.slideShowPresenter.setFollower(true);
+			app.map.slideShowPresenter.setFollowing(true);
+			app.map.fire('newfollowmepresentation');
+		};
 
 		this.actionsMap['presenterconsole'] = () => {
 			if ((window as any).canvasSlideshowEnabled)
@@ -594,13 +628,21 @@ class Dispatcher {
 		};
 
 		this.actionsMap['selectbackground'] = function () {
-			L.DomUtil.get('selectbackground').click();
+			window.L.DomUtil.get('selectbackground').click();
 		};
 
 		this.actionsMap['notesmode'] = function () {
 			if (app.impress.notesMode)
 				app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
 			else app.map.sendUnoCommand('.uno:NotesMode');
+		};
+
+		this.actionsMap['animationdeck'] = () => {
+			app.map.sidebarFromNotebookbar.openAnimationsSidebar();
+		};
+
+		this.actionsMap['transitiondeck'] = () => {
+			app.map.sidebarFromNotebookbar.openTransitionsSidebar();
 		};
 	}
 
@@ -648,9 +690,20 @@ class Dispatcher {
 		this.actionsMap['.uno:RejectAllTrackedChanges'] = function () {
 			app.map.sendUnoCommand('.uno:RejectAllTrackedChanges');
 			const commentSection = app.sectionContainer.getSectionWithName(
-				L.CSections.CommentList.name,
+				app.CSections.CommentList.name,
 			);
 			commentSection.rejectAllTrackedCommentChanges();
+		};
+
+		this.actionsMap['toggletracking'] = () => {
+			const TrackChangesCurrentState =
+				app.map['stateChangeHandler'].getItemValue('.uno:TrackChanges');
+			if (
+				TrackChangesCurrentState === 'true' ||
+				TrackChangesCurrentState === true
+			)
+				app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false');
+			else app.map.sendUnoCommand('.uno:TrackChangesInAllViews');
 		};
 	}
 
@@ -660,7 +713,7 @@ class Dispatcher {
 			if (configuration.commentWizard) {
 				configuration.commentWizard = false;
 				app.sectionContainer
-					.getSectionWithName(L.CSections.CommentList.name)
+					.getSectionWithName(app.CSections.CommentList.name)
 					.removeHighlighters();
 				app.map.fire('closemobilewizard');
 				app.map.mobileTopBar.selectItem('comment_wizard', false);
@@ -752,7 +805,7 @@ class Dispatcher {
 		if (window.mode.isMobile()) this.addMobileCommands();
 	}
 
-	public dispatch(action: string) {
+	public dispatch(action: string, data?: any) {
 		// Don't allow to execute new actions while any dialog is visible.
 		// It prevents launching multiple instances of the same dialog.
 		if (
@@ -794,7 +847,7 @@ class Dispatcher {
 		}
 
 		if (this.actionsMap[action] !== undefined) {
-			this.actionsMap[action]();
+			this.actionsMap[action](data);
 			return;
 		}
 

@@ -341,7 +341,7 @@ void UnitKit::postFork()
 void UnitBase::initialize()
 {
     assert(DlHandle != nullptr && "Invalid handle to set");
-    LOG_TST("==================== Starting [" << getTestname() << "] ====================");
+    TST_LOG("==================== Starting [" << getTestname() << "] ====================");
     socketPoll()->startThread();
 }
 
@@ -349,12 +349,12 @@ void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 {
     assert(!TimeoutThread.joinable() && "setTimeout must be called before starting a test");
     _timeoutMilliSeconds = timeoutMilliSeconds;
-    LOG_TST(getTestname() << ": setTimeout: " << _timeoutMilliSeconds);
+    TST_LOG(getTestname() << ": setTimeout: " << _timeoutMilliSeconds);
 }
 
 UnitBase::~UnitBase()
 {
-    LOG_TST(getTestname() << ": ~UnitBase: " << (failed() ? "FAILED" : "SUCCESS"));
+    TST_LOG(getTestname() << ": ~UnitBase: " << (failed() ? "FAILED" : "SUCCESS"));
 
     std::shared_ptr<SocketPoll> socketPoll = getSocketPoll();
     if (socketPoll)
@@ -399,12 +399,12 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
             }
             catch (const std::exception& exception)
             {
-                LOG_TST("unocommandresult parsing failure: " << exception.what());
+                TST_LOG("unocommandresult parsing failure: " << exception.what());
             }
         }
         else
         {
-            LOG_TST("Expected json unocommandresult. Ignoring: " << message);
+            TST_LOG("Expected json unocommandresult. Ignoring: " << message);
         }
     }
     else if (message.starts_with("loaded:"))
@@ -460,7 +460,7 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     {
         if (result != _result)
         {
-            LOG_TST("exitTest got " << name(result) << " but is already finished with "
+            TST_LOG("exitTest got " << name(result) << " but is already finished with "
                                     << name(_result));
         }
 
@@ -469,11 +469,11 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
     if (result == TestResult::Ok)
     {
-        LOG_TST("SUCCESS: exitTest: " << name(result) << (reason.empty() ? "" : ": " + reason));
+        TST_LOG("SUCCESS: exitTest: " << name(result) << (reason.empty() ? "" : ": " + reason));
     }
     else
     {
-        LOG_TST("ERROR: FAILURE: exitTest: " << name(result)
+        TST_LOG("ERROR: FAILURE: exitTest: " << name(result)
                                              << (reason.empty() ? "" : ": " + reason));
 
         if (GlobalResult == TestResult::Ok)
@@ -527,7 +527,7 @@ void UnitBase::timeout()
     // Don't timeout if we had already finished.
     if (isUnitTesting() && !isFinished())
     {
-        LOG_TST("ERROR: Timed out waiting for unit test to complete within "
+        TST_LOG("ERROR: Timed out waiting for unit test to complete within "
                 << _timeoutMilliSeconds);
         exitTest(TestResult::TimedOut);
     }
@@ -541,7 +541,7 @@ void UnitBase::returnValue(int& retValue)
 
 void UnitBase::endTest([[maybe_unused]] const std::string& reason)
 {
-    LOG_TST("Ending test by stopping SocketPoll [" << getTestname() << "]: " << reason);
+    TST_LOG("Ending test by stopping SocketPoll [" << getTestname() << "]: " << reason);
     std::shared_ptr<SocketPoll> socketPoll = getSocketPoll();
     if (socketPoll)
         socketPoll->joinThread();
@@ -552,7 +552,7 @@ void UnitBase::endTest([[maybe_unused]] const std::string& reason)
     if (TimeoutThread.joinable())
         TimeoutThread.join();
 
-    LOG_TST("==================== Finished [" << getTestname() << "] ====================");
+    TST_LOG("==================== Finished [" << getTestname() << "] ====================");
 }
 
 UnitWSD::UnitWSD(const std::string& name)
@@ -621,7 +621,7 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
             {
                 rememberInstance(_type, GlobalArray[GlobalIndex]);
 
-                LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
+                TST_LOG("Starting test #" << GlobalIndex + 1 << ": "
                                           << GlobalArray[GlobalIndex]->getTestname());
                 UnitWSD *globalWSD = GlobalWSD;
                 if (globalWSD)
@@ -648,10 +648,10 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
     {
         if (result != TestResult::Ok && !GlobalTestOptions.getKeepgoing())
         {
-            LOG_TST("Failing fast per options, even though there are more tests");
+            TST_LOG("Failing fast per options, even though there are more tests");
             if constexpr (!Util::isMobileApp())
             {
-                LOG_TST("Setting TerminationFlag as the Test Suite failed");
+                TST_LOG("Setting TerminationFlag as the Test Suite failed");
                 SigUtil::setTerminationFlag(); // and wake-up world.
             }
             else
@@ -659,7 +659,7 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
             return;
         }
 
-        LOG_TST("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        TST_LOG("Have more tests. Waiting for the DocBroker to destroy before starting them");
         return;
     }
 
@@ -670,7 +670,7 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
 
     if constexpr (!Util::isMobileApp())
     {
-        LOG_TST("Setting TerminationFlag as there are no more tests");
+        TST_LOG("Setting TerminationFlag as there are no more tests");
         SigUtil::setTerminationFlag(); // and wake-up world.
     }
     else
@@ -706,7 +706,7 @@ void UnitKit::onExitTest(TestResult, const std::string&)
 
     if constexpr (!Util::isMobileApp())
     {
-        // LOG_TST("Setting TerminationFlag as there are no more tests");
+        // TST_LOG("Setting TerminationFlag as there are no more tests");
         SigUtil::setTerminationFlag(); // and wake-up world.
     }
     else

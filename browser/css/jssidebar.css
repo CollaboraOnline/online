@@ -65,7 +65,8 @@ img.sidebar.ui-image {
 	display: flex;
 }
 
-.ui-expander-icon-right .sidebar.unotoolbutton {
+.ui-expander-icon-right .sidebar.unotoolbutton,
+.ui-expander-icon-right .ui-overflow-group-more.unotoolbutton {
 	margin: 0px !important;
 }
 
@@ -79,6 +80,24 @@ img.sidebar.ui-image {
 	height: 10px;
 	padding: 0;
 	margin: 0;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton,
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button,
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button img {
+	width: 14px;
+	height: 14px;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button {
+	opacity: 0.75;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton button:hover {
+	opacity: 1;
 }
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
@@ -110,6 +129,7 @@ img.sidebar.ui-image {
 .sidebar.ui-grid.ui-grid-cell > div:not(.ui-treeview) {
 	justify-content: start;
 	display: flex;
+	align-items: center;
 }
 
 div.sidebar.ui-grid-cell.checkbutton,
@@ -134,9 +154,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.ui-grid.ui-grid-cell .menubutton {
 	justify-content: space-between;
-	padding: 0;
-	margin-right: 1px;
+	padding: 8px 10px;
+	margin: 5px 0 !important;
 }
+
 
 /* widget width */
 
@@ -166,9 +187,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 .sidebar.ui-grid-cell .sidebar.ui-pushbutton {
 	margin: 0;
 }
-.sidebar.unotoolbutton {
-	border: 1px solid transparent;
+.sidebar.unotoolbutton,
+.ui-overflow-group-more.unotoolbutton {
 	margin-right: 3px;
+	padding: 0 !important;
 }
 .sidebar.jsdialog.checkbutton {
 	font-size: var(--default-font-size);
@@ -350,6 +372,18 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-block-end: 8px;
 }
 
+#NavigatorPanel .ui-treeview-entry.highlighted > *:not(.ui-treeview-expander-column) {
+	background-color: var(--color-treeview-highlight);
+}
+
+#NavigatorPanel .ui-treeview-entry.highlighted > :not(.ui-treeview-expander-column) * {
+	color: var(--color-treeview-highlight-text);
+}
+
+.ui-treeview-expandable.highlighted .ui-treeview-cell-text {
+	color: rgb(var(--doc-type)) !important;
+}
+
 #NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
 	/* good to move this into css var*/
 	font-size: 17px;
@@ -465,6 +499,15 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	border-radius: var(--border-radius);
 }
 
+/* Navigation Search Wrapper */
+.navigation-search-wrapper {
+	padding: 8px 8px 8px 16px;
+}
+
+.navigation-search-wrapper > .sidebar.ui-grid-cell {
+	align-items: center;
+}
+
 /* Close Button Styling */
 .close-navigation-button {
 	width: var(--btn-img-size);
@@ -483,35 +526,173 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 /* Navigation Tabs */
 #navigation-options {
 	display: flex;
-	padding: 0;
+	padding: 0 8px;
 }
 
 /* Tab Style */
 #navigation-options .tab {
-	flex: 1;
-	padding: 10px;
+	flex: 0 1 auto;
+	border: 1px solid transparent;
+	background: transparent;
+	padding: 6px 8px;
+	margin-block: 0 4px;
 	cursor: pointer;
-	font-size: 0.875rem;
+	font-size: 0.83rem;
 	border-bottom: none;
 	color: var(--color-main-text);
 	transition: background-color 0.3s, border-color 0.3s;
 }
+#navigation-options .tab:after {
+	content: '';
+	display: block;
+	margin-top: 4px;
+	transition: border-color 0.3s;
+	border-bottom: 2px solid transparent;
+}
 
 /* Hover Effect */
 #navigation-options .tab:hover {
-	background: var(--color-background-darker);
+	background: var(--color-background-darker) !important;
 }
 
 /* Active/Selected Tab */
-#navigation-options .tab.selected {
-	color: rgba(var(--doc-type), 1);
-	border-bottom: 2px solid rgba(var(--doc-type), 1);
+[data-bg-theme='light'] #navigation-options .tab.selected {
+	color: rgba(var(--doc-type), 1) !important;
+}
+#navigation-options .tab.selected:after {
+	border-bottom-color: rgba(var(--doc-type), 1);
 }
 #navigation-sidebar {
 	width: 250px;
 	display: none;
 	border-inline-end: 1px solid var(--color-border);
 	/* bg set in #sidebar-dock-wrapper, #navigator-dock-wrapper */
+}
+
+/* Quick Find Panel */
+#quickfind-dock-wrapper #box {
+	display: grid;
+	grid-template-rows: 20px auto;
+	margin: 4px 0px;
+	grid-gap: 10px;
+}
+
+/* dynamic size is set in parent node in JS */
+#quickfind-container,
+#QuickFindPanel,
+#quickfind-dock-wrapper #box {
+	height: inherit;
+}
+
+#QuickFindPanel .ui-treeview-cell-text-content .highlighted {
+	background-color: var(--color-treeview-highlight);
+	color: var(--color-treeview-highlight-text);
+}
+
+#QuickFindPanel .ui-treeview-cell-text-content.page-divider {
+	/* TODO The treeview entry should have disabled listenners for these items */
+	color: var(--color-text-lighter);
+}
+
+/* search field box */
+#navigator-search-input {
+	height: 24px;
+}
+/* search button */
+#navigator-search-button button.ui-pushbutton {
+	background: transparent;
+	border: none;
+	width: var(--btn-size);
+	height: var(--btn-size);
+	padding: var(--btn-padding);
+}
+#navigator-search-button button.ui-pushbutton:hover {
+	background-color: var(--color-background-darker) !important;
+}
+#quickfind-dock-wrapper #box > div:nth-child(1) {
+	justify-content: space-evenly;
+	height: min-content;
+}
+
+/* matched count on top */
+#quickfind-dock-wrapper #box .ui-text,
+#quickfind-dock-wrapper #quickfind-placeholder.ui-text {
+	grid-row: 1;
+	height: min-content;
+	font-size: var(--default-font-size);
+	margin-inline: 16px;
+	margin-block-start: 8px;
+	color: var(--color-status-badge);
+	padding-inline-start: 0;
+}
+
+#quickfind-dock-wrapper #searchfinds {
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) transparent;
+	max-height: calc(100vh - 350px);
+}
+
+/* results */
+#quickfind-dock-wrapper .ui-treeview {
+	grid-row: 2;
+	border-width: 1px 0px 0px;
+	border-color: transparent;
+	border-radius: 0px;
+	margin-bottom: 100px; /* reduce size by size of controls above in the panel */
+	padding-inline: 16px;
+}
+
+#quickfind-dock-wrapper .ui-treeview-entry {
+	text-wrap: balance;
+	word-break: break-word;
+	border-bottom: 1px solid var(--color-quickfind-border);
+}
+#quickfind-dock-wrapper .ui-treeview-entry.selected {
+	background-color: transparent;
+	border-color: transparent;
+	border-radius: var(--border-radius);
+	outline: 2px solid rgba(var(--doc-type), 0.4);
+	outline-offset: -2px;
+}
+#quickfind-dock-wrapper .ui-treeview-entry:has(+ .selected) {
+	border-bottom-color: transparent;
+}
+
+#quickfind-dock-wrapper .ui-treeview-entry > div {
+	min-height: 24px;
+	padding-block-start: 8px;
+}
+
+#quickfind-dock-wrapper .ui-treeview.empty {
+	border: none;
+}
+
+#quickfind-dock-wrapper #quickfind-container > [id='0'] {
+	display: grid !important;
+	grid-auto-flow: row !important;
+	grid-template-columns: 1fr;
+}
+
+#quickfind-container #quickfindcontrols {
+	position: absolute;
+	top: 0;
+	right: 0;		
+}
+
+#quickfind-container #quickfindcontrols button img {
+	width: var(--btn-img-size-m);
+	height: var(--btn-img-size-m);
+}
+
+#quickfind-container #quickfindcontrols button {
+	width: var(--btn-size-m);
+	height: var(--btn-size-m);
+	background-color: var(--color-background-lighter) !important;
+}
+
+#quickfind-container #quickfindcontrols button:hover {
+	background-color: var(--color-background-dark) !important;
 }
 
 #navigation-sidebar.visible {
@@ -557,12 +738,36 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 [data-theme='dark'] .StyleListPanel #TemplatePanel [id='3'] button { background: transparent url('images/dark/lc_framestyle.svg') no-repeat center; }
 [data-theme='dark'] .StyleListPanel #TemplatePanel [id='6'] button { background: transparent url('images/dark/lc_tablestyle.svg') no-repeat center; }
 
+/* background is always white for previews, use black text */
+[data-theme='dark'] .StyleListPanel #treeview .ui-treeview-cell-text {
+	color: var(--color-main-background);
+}
+
+.StyleListPanel .ui-treeview-entry img.ui-treeview-custom-render {
+	max-height: 32px;
+}
+
 .StyleListPanel #left.toolbox button {
 	background-size: cover;
 }
 
 .StyleListPanel #left.toolbox img {
 	visibility: hidden;
+}
+
+/* styles are always in natural color - print preview */
+.StyleListPanel .ui-treeview div.ui-treeview-icon-column img {
+	max-width: inherit;
+}
+.StyleListPanel #treeview .ui-treeview-entry img.ui-treeview-image {
+	filter: none !important;
+}
+.StyleListPanel #treeview.ui-treeview,
+.StyleListPanel #treeview.ui-treeview div {
+	background-color: white !important;
+}
+.StyleListPanel .ui-treeview-image {
+	outline: inherit;
 }
 
 #TemplatePanel #filter select {
@@ -622,4 +827,19 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #TemplatePanel #highlightstyles input {
 	margin-left: 0px;
+}
+
+#ElementsDeck #elements {
+	display: inline-flex;
+	flex-wrap: wrap;
+}
+
+/* Sidebar - Style List */
+#StyleListDeck #left .sidebar.unotoolbutton {
+	margin: 0 5px;
+}
+
+/* Writer - Table - Sort */
+#SortDialog #box2 :is(#grid7, #grid5) {
+	align-items: center;
 }

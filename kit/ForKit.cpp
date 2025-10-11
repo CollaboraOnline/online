@@ -309,7 +309,7 @@ static void cleanupChildren(const std::string& childRoot)
     memset(&info, 0, sizeof(info)); // Make sure no stale fields remain
 
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
-    while (waitid(P_ALL, -1, &info, WEXITED | WUNTRACED | WNOHANG) == 0)
+    while (waitid(P_ALL, -1, &info, WEXITED | WNOHANG) == 0)
     {
         if (info.si_pid == 0)
         {
@@ -319,13 +319,12 @@ static void cleanupChildren(const std::string& childRoot)
 
         exitedChildPid = info.si_pid;
         status = info.si_status;
-
         if (const auto it = childJails.find(exitedChildPid); it != childJails.end())
         {
-            if (WIFSIGNALED(status))
+            if (info.si_code == CLD_KILLED || info.si_code == CLD_DUMPED)
             {
-                if (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS ||
-                    WTERMSIG(status) == SIGABRT)
+                if (status == SIGSEGV || status == SIGBUS ||
+                    status == SIGABRT)
                 {
                     ++segFaultCount;
 
@@ -338,7 +337,7 @@ static void cleanupChildren(const std::string& childRoot)
                     else
                         close(noteCrashFD);
                 }
-                else if (WTERMSIG(status) == SIGKILL)
+                else if (status == SIGKILL)
                 {
                     // TODO differentiate with docker
                     if (info.si_code == SI_KERNEL)
@@ -356,8 +355,12 @@ static void cleanupChildren(const std::string& childRoot)
                 }
                 else
                 {
-                    LOG_ERR("Child " << exitedChildPid << " has exited, with status " << status);
+                    LOG_ERR("Child " << exitedChildPid << " has terminated, with signal " << status);
                 }
+            }
+            else if (info.si_code == CLD_EXITED && status != 0)
+            {
+                LOG_ERR("Child " << exitedChildPid << " has exited, with status " << status);
             }
 
             LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");

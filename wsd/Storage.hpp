@@ -81,10 +81,13 @@ public:
         const std::string& getOwnerId() const { return _ownerId; }
 
         /// Set the last modified time as reported to the WOPI host.
-        void setLastModifiedTime(const std::string& modifiedTime) { _modifiedTime = modifiedTime; }
+        void setLastModifiedServerTimeString(const std::string& modifiedTime)
+        {
+            _modifiedTime = modifiedTime;
+        }
 
         /// Get the last modified time as reported by the WOPI host, empty if unsafe to rely on
-        const std::string& getLastModifiedTime() const { return _modifiedTime; }
+        const std::string& getLastModifiedServerTimeString() const { return _modifiedTime; }
 
         /// Sometimes an up-load fails, leaving our timestamp in an unknown state
         bool isLastModifiedTimeSafe() const { return !_modifiedTime.empty(); }
@@ -328,7 +331,7 @@ public:
     /// The state of an asynchronous lock request.
     using AsyncLockUpdate = AsyncRequest<LockUpdateResult>;
 
-    enum class COOLStatusCode
+    enum class COOLStatusCode : std::uint16_t
     {
         DOC_CHANGED = 1010 // Document changed externally in storage
     };
@@ -392,8 +395,14 @@ public:
     /// Returns the basic information about the file.
     const FileInfo& getFileInfo() const { return _fileInfo; }
 
-    const std::string& getLastModifiedTime() const { return _fileInfo.getLastModifiedTime(); }
-    void setLastModifiedTime(const std::string& modifiedTime) { _fileInfo.setLastModifiedTime(modifiedTime); }
+    const std::string& getLastModifiedTime() const
+    {
+        return _fileInfo.getLastModifiedServerTimeString();
+    }
+    void setLastModifiedTime(const std::string& modifiedTime)
+    {
+        _fileInfo.setLastModifiedServerTimeString(modifiedTime);
+    }
     bool isLastModifiedTimeSafe() const { return _fileInfo.isLastModifiedTimeSafe(); }
     void setLastModifiedTimeUnSafe() { _fileInfo.setLastModifiedTimeUnSafe(); }
 
@@ -634,7 +643,11 @@ public:
         , _supportsLocks(false)
         , _lockState(StorageBase::LockState::UNLOCK)
     {
+        LOG_DBG("Lock will refresh every " << _refreshSeconds);
     }
+
+    /// Returns the refresh period.
+    std::chrono::seconds refreshPeriod() const { return _refreshSeconds; }
 
     /// one-time setup for supporting locks & create token
     void initSupportsLocks();

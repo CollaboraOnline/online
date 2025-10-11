@@ -9,15 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Map.Welcome.
+ * window.L.Map.Welcome.
  */
 
 /* global app _ */
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	welcome: true
 });
 
-L.Map.Welcome = L.Handler.extend({
+window.L.Map.Welcome = window.L.Handler.extend({
 
 	_getLocalWelcomeUrl: function () {
 		var welcomeLocation = app.LOUtil.getURL('/welcome/welcome.html');
@@ -27,7 +27,7 @@ L.Map.Welcome = L.Handler.extend({
 	},
 
 	initialize: function (map) {
-		L.Handler.prototype.initialize.call(this, map);
+		window.L.Handler.prototype.initialize.call(this, map);
 		this._map.on('updateviewslist', this.onUpdateList, this);
 
 		// temporarily use only local welcome dialog
@@ -37,7 +37,7 @@ L.Map.Welcome = L.Handler.extend({
 	},
 
 	addHooks: function () {
-		L.DomEvent.on(window, 'message', this.onMessage, this);
+		window.L.DomEvent.on(window, 'message', this.onMessage, this);
 		this.remove();
 	},
 
@@ -88,12 +88,12 @@ L.Map.Welcome = L.Handler.extend({
 		var uiTheme = window.prefs.getBoolean('darkTheme') ? 'dark' : 'light';
 		var params = [{ 'ui_theme': uiTheme }];
 
-		this._iframeWelcome = L.iframeDialog(this._url, params, null, { prefix: 'iframe-welcome' });
+		this._iframeWelcome = window.L.iframeDialog(this._url, params, null, { prefix: 'iframe-welcome' });
 		this._iframeWelcome._iframe.title = _('Welcome Dialog');
 	},
 
 	removeHooks: function () {
-		L.DomEvent.off(window, 'message', this.onMessage, this);
+		window.L.DomEvent.off(window, 'message', this.onMessage, this);
 		this.remove();
 	},
 
@@ -128,7 +128,7 @@ L.Map.Welcome = L.Handler.extend({
 		} else if (data.MessageId == 'iframe-welcome-load' && !this._iframeWelcome.isVisible()) {
 			if (this._retries-- > 0) {
 				this.remove();
-				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
+				setTimeout(window.L.bind(this.showWelcomeDialog, this), 200);
 			} else if (this._fallback) {
 				var currentDate = new Date();
 				window.prefs.set('WSDWelcomeDisabled', true);
@@ -138,12 +138,12 @@ L.Map.Welcome = L.Handler.extend({
 				// fallback
 				this._url = this._getLocalWelcomeUrl();
 				this._fallback = true;
-				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
+				setTimeout(window.L.bind(this.showWelcomeDialog, this), 200);
 			}
 		}
 	}
 });
 
-if (!L.Browser.cypressTest && window.enableWelcomeMessage && window.prefs.canPersist) {
-	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
+if (!window.L.Browser.cypressTest && window.enableWelcomeMessage && window.prefs.canPersist) {
+	window.L.Map.addInitHook('addHandler', 'welcome', window.L.Map.Welcome);
 }

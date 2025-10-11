@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 /* -*- js-indent-level: 8 -*- */
 
-declare var L: any;
 
 /*
  * CPath is the base class for all vector paths like polygons and circles used to draw overlay

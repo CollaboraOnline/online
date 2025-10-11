@@ -15,27 +15,14 @@
  * This file is meant to be used for setting and getting the document states.
  */
 
-/* global app _ */
+/* global app _ cool */
 
 window.addEventListener('load', function () {
-	app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(
-		0,
-		0,
-		0,
-		0,
-	);
-	app.calc.cellAddress = new app.definitions.simplePoint(0, 0);
-	app.calc.splitCoordinate = new app.definitions.simplePoint(0, 0);
-	app.file.viewedRectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
-	app.file.textCursor.rectangle = new app.definitions.simpleRectangle(
-		0,
-		0,
-		0,
-		0,
-	);
-	app.view.size = new app.definitions.simplePoint(0, 0);
-	app.file.size = new app.definitions.simplePoint(0, 0);
-	app.tile.size = new app.definitions.simplePoint(0, 0);
+	app.calc.cellCursorRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+	app.calc.cellAddress = new cool.SimplePoint(0, 0);
+	app.calc.splitCoordinate = new cool.SimplePoint(0, 0);
+	app.file.textCursor.rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+	app.tile.size = new cool.SimplePoint(0, 0);
 	app.pixelsToTwips = 15;
 	app.twipsToPixels = 1 / app.pixelsToTwips;
 	app.tile.size.pX = app.tile.size.pY = 256;
@@ -44,7 +31,7 @@ window.addEventListener('load', function () {
 app.getViewRectangles = function () {
 	if (app.map._docLayer._splitPanesContext)
 		return app.map._docLayer._splitPanesContext.getViewRectangles();
-	else return [app.file.viewedRectangle.clone()];
+	else return [app.activeDocument.activeView.viewedRectangle.clone()];
 };
 
 // ToDo: _splitPanesContext should be an app variable.
@@ -56,7 +43,9 @@ app.isPointVisibleInTheDisplayedArea = function (twipsArray /* x, y */) {
 		}
 		return false;
 	} else {
-		return app.file.viewedRectangle.containsPoint(twipsArray);
+		return app.activeDocument.activeView.viewedRectangle.containsPoint(
+			twipsArray,
+		);
 	}
 };
 
@@ -68,7 +57,7 @@ app.isXVisibleInTheDisplayedArea = function (twipsX) {
 		}
 		return false;
 	} else {
-		return app.file.viewedRectangle.containsX(twipsX);
+		return app.activeDocument.activeView.viewedRectangle.containsX(twipsX);
 	}
 };
 
@@ -80,7 +69,7 @@ app.isYVisibleInTheDisplayedArea = function (twipsY) {
 		}
 		return false;
 	} else {
-		return app.file.viewedRectangle.containsY(twipsY);
+		return app.activeDocument.activeView.viewedRectangle.containsY(twipsY);
 	}
 };
 
@@ -94,7 +83,9 @@ app.isRectangleVisibleInTheDisplayedArea = function (
 		}
 		return false;
 	} else {
-		return app.file.viewedRectangle.intersectsRectangle(twipsArray);
+		return app.activeDocument.activeView.viewedRectangle.intersectsRectangle(
+			twipsArray,
+		);
 	}
 };
 
@@ -132,19 +123,29 @@ app.isCommentEditingAllowed = function () {
 	return app.file.editComment;
 };
 
+app.isRedlineManagementAllowed = function () {
+	return app.file.allowManageRedlines;
+};
+
 app.setPermission = function (permission) {
 	app.file.permission = permission;
 	if (permission === 'edit') {
 		app.file.readOnly = false;
 		app.file.editComment = true;
+		app.file.allowManageRedlines = true;
 	} else if (permission === 'readonly') {
 		app.file.readOnly = true;
 		app.file.editComment = false;
+		app.file.allowManageRedlines = false;
 	}
 };
 
 app.setCommentEditingPermission = function (isAllowed) {
 	app.file.editComment = isAllowed;
+};
+
+app.setRedlineManagementAllowed = function (isAllowed) {
+	app.file.allowManageRedlines = isAllowed;
 };
 
 app.getPermission = function () {
@@ -173,19 +174,19 @@ app.getFollowedViewId = function () {
 };
 
 app.setFollowingOff = function () {
-	console.debug('user following: OFF');
+	app.console.debug('user following: OFF');
 	app.following.mode = 'none';
 	app.following.viewId = -1;
 };
 
 app.setFollowingUser = function (viewId) {
-	console.debug('user following: USER - ' + viewId);
+	app.console.debug('user following: USER - ' + viewId);
 	app.following.mode = 'user';
 	app.following.viewId = viewId;
 };
 
 app.setFollowingEditor = function (viewId = -1) {
-	console.debug('user following: EDITOR - ' + viewId);
+	app.console.debug('user following: EDITOR - ' + viewId);
 	app.following.mode = 'editor';
 	app.following.viewId = viewId;
 };
@@ -203,7 +204,7 @@ app.isFollowingEditor = function () {
 };
 
 app.updateFollowingUsers = function () {
-	console.debug('user following: update');
+	app.console.debug('user following: update');
 	var isCellCursorVisible = app.calc.cellCursorVisible;
 	var isTextCursorVisible = app.file.textCursor.visible;
 
@@ -277,7 +278,7 @@ app.calc.isPartHidden = function (part) {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
 	if (part >= app.map._docLayer._lastStatusJSON.parts.length) return false;
 
-	return app.map._docLayer._lastStatusJSON.parts[part].visible === 0; // ToDo: Move _lastStatusJSON into docstate.js
+	return app.map._docLayer._lastStatusJSON.parts[part].visible === 0; // ToDo: Move _lastStatusJSON into docstate.ts
 };
 
 app.calc.isPartProtected = function (part) {
@@ -338,7 +339,7 @@ app.impress.isSlideHidden = function (index) {
 		if (app.impress.partList.length > index)
 			return !app.impress.partList[index].visible;
 		else {
-			console.warn(
+			app.console.warn(
 				'Index is bigger than the part count (isSlideHidden): ' + index,
 			);
 			return true;
@@ -373,7 +374,7 @@ app.impress.getIndexFromSlideHash = function (hash) {
 			if (app.impress.partList[i].hash === hash) return i;
 		}
 
-		console.warn('No part with hash (getIndexFromSlideHash): ' + hash);
+		app.console.warn('No part with hash (getIndexFromSlideHash): ' + hash);
 
 		return 0;
 	} else return 0;

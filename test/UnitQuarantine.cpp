@@ -32,10 +32,10 @@ std::vector<std::string> getQuarantineFiles(const std::string testname,
     std::vector<std::string> files;
     Poco::File(quarantinePath).list(files);
 
-    LOG_TST("Found " << files.size() << " quarantine file in [" << quarantinePath << ']');
+    TST_LOG("Found " << files.size() << " quarantine file in [" << quarantinePath << ']');
     for (std::size_t i = 0; i < files.size(); ++i)
     {
-        LOG_TST("Found quarantine file #" << (i + 1) << ": [" << files[i] << ']');
+        TST_LOG("Found quarantine file #" << (i + 1) << ": [" << files[i] << ']');
     }
 
     return files;
@@ -82,13 +82,13 @@ public:
             auto rootPath = Poco::Path(config.getString("child_root_path", ""));
             rootPath.popDirectory().pushDirectory("quarantine");
             _quarantinePath = FileUtil::createRandomTmpDir(rootPath.toString());
-            LOG_TST("Quarantine path set to [" << _quarantinePath << ']');
+            TST_LOG("Quarantine path set to [" << _quarantinePath << ']');
             config.setString("quarantine_files.path", _quarantinePath);
         }
         else
         {
             _quarantinePath = config.getString("quarantine_files.path", std::string());
-            LOG_TST("Quarantine path found at [" << _quarantinePath << ']');
+            TST_LOG("Quarantine path found at [" << _quarantinePath << ']');
         }
 
         // Make sure the quarantine directory is clean.
@@ -119,7 +119,7 @@ public:
     std::unique_ptr<http::Response>
     assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST("Testing " << name(_scenario));
+        TST_LOG("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         assertGetFileCount();
@@ -135,7 +135,7 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("Testing " << name(_scenario));
+        TST_LOG("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         assertPutFileCount();
@@ -154,7 +154,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
+        TST_LOG("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
@@ -163,18 +163,18 @@ public:
         {
             case Scenario::Disconnect:
                 // Just disconnect.
-                LOG_TST("Disconnecting");
+                TST_LOG("Disconnecting");
                 deleteSocketAt(0);
                 break;
             case Scenario::SaveDiscard:
             case Scenario::SaveOverwrite:
                 // Save the document.
-                LOG_TST("Saving the document");
+                TST_LOG("Saving the document");
                 WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
                 break;
             case Scenario::CloseDiscard:
                 // Close the document.
-                LOG_TST("Closing the document");
+                TST_LOG("Closing the document");
                 WSD_CMD("closedocument");
                 break;
             case Scenario::VerifyOverwrite:
@@ -187,7 +187,7 @@ public:
 
     bool onDocumentError(const std::string& message) override
     {
-        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
+        TST_LOG("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         if (getCountCheckFileInfo() == 1)
@@ -203,7 +203,7 @@ public:
                 std::string("error: cmd=storage kind=documentconflict"), message);
 
             // Close the document.
-            LOG_TST("Closing the document");
+            TST_LOG("Closing the document");
             WSD_CMD("closedocument");
         }
 
@@ -213,7 +213,7 @@ public:
     // Called when we have modified document data at exit.
     bool onDataLoss(const std::string& reason) override
     {
-        LOG_TST("Modified document being unloaded: " << reason);
+        TST_LOG("Modified document being unloaded: " << reason);
 
         // We expect this to happen only with the disonnection test,
         // because only in that case there is no user input.
@@ -228,7 +228,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
+        TST_LOG("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         // Uploading fails and we can't have anything but the original.
@@ -272,13 +272,13 @@ public:
             auto rootPath = Poco::Path(config.getString("child_root_path", ""));
             rootPath.popDirectory().pushDirectory("quarantine");
             _quarantinePath = FileUtil::createRandomTmpDir(rootPath.toString());
-            LOG_TST("Quarantine path set to [" << _quarantinePath << ']');
+            TST_LOG("Quarantine path set to [" << _quarantinePath << ']');
             config.setString("quarantine_files.path", _quarantinePath);
         }
         else
         {
             _quarantinePath = config.getString("quarantine_files.path", std::string());
-            LOG_TST("Quarantine path found at [" << _quarantinePath << ']');
+            TST_LOG("Quarantine path found at [" << _quarantinePath << ']');
         }
 
         // Make sure the quarantine directory is clean.
@@ -288,18 +288,18 @@ public:
     void newChild(const std::shared_ptr<ChildProcess>& child) override
     {
         _kitsPids.push_back(child->getPid());
-        LOG_TST("New Kit PID: " << _kitsPids.back());
+        TST_LOG("New Kit PID: " << _kitsPids.back());
     }
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifyStatus);
 
         // Modify the doc.
-        LOG_TST("Modifying");
+        TST_LOG("Modifying");
         WSD_CMD("key type=input char=97 key=0");
         WSD_CMD("key type=up char=0 key=512");
 
@@ -308,12 +308,12 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Got [" << message << ']');
+        TST_LOG("Got [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifyStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitUpload);
 
-        LOG_TST("Saving the document");
+        TST_LOG("Saving the document");
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
 
         return true;
@@ -322,7 +322,7 @@ public:
     /// Wait for ModifiedStatus=false before crashing the kit.
     bool onDocumentUnmodified(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitUpload);
 
         TRANSITION_STATE(_phase, Phase::Unload);
@@ -330,7 +330,7 @@ public:
         // Kill the kit.
         for (const auto& pid : _kitsPids)
         {
-            LOG_TST("Killing kit: " << pid);
+            TST_LOG("Killing kit: " << pid);
             ::kill(pid, SIGKILL);
         }
 
@@ -339,14 +339,14 @@ public:
 
     void kitKilled(int count) override
     {
-        LOG_TST("Kit killed");
+        TST_LOG("Kit killed");
         LOK_ASSERT(static_cast<std::size_t>(count) <= _kitsPids.size());
     }
 
     // Called when we have modified document data at exit.
     bool onDataLoss(const std::string& reason) override
     {
-        LOG_TST("Modified document being unloaded: " << reason);
+        TST_LOG("Modified document being unloaded: " << reason);
 
         // We expect this to happen only with the disonnection test,
         // because only in that case there is no user input.
@@ -360,7 +360,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Testing with dockey [" << docKey << "] closed.");
+        TST_LOG("Testing with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::Unload);
 
         const std::string documentUrl = Uri::encode(helpers::getTestServerURI() + "/wopi/files/0");
@@ -381,10 +381,10 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Creating first connection");
+                TST_LOG("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Loading view");
+                TST_LOG("Loading view");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
                 break;
             }

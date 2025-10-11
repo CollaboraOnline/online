@@ -13,10 +13,12 @@
 /// <reference path="../src/core/geometry.ts" />
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
+/// <reference path="../src/layer/tile/CanvasTileUtils.ts" />
 /// <reference path="../src/app/TilesMiddleware.ts" />
 /// <reference path="../src/app/Rectangle.ts" />
 /// <reference path="../src/app/LOUtil.ts" />
-/// <reference path="../src/app/MultiPageViewLayout.ts" />
+/// <reference path="../src/app/ViewLayout.ts" />
+/// <reference path="../src/app/ViewLayoutMultiPage.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
 /// <reference path="./helper/rectUtil.ts" />
 
@@ -40,33 +42,36 @@ const originY = 0;
 
 describe('Singleton section container', function() {
 
-    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+    beforeEach(function () {
+        setupCanvasContainer(canvasWidth, canvasHeight);
 
-    const docLayer = {};
-    const tsManager = {};
+        app.sectionContainer.enableDrawing();
 
-    let onlySection = new app.definitions.canvasSectionObject();
-    onlySection.name = 'OnlySection';
-    onlySection.anchor = ['top', 'left'];
-    onlySection.position = [originX, originY];
-    onlySection.size = [1, 1];
-    onlySection.expand = ['bottom', 'right'];
-    onlySection.processingOrder = onlySection.drawingOrder = onlySection.zIndex = 1;
-    onlySection.interactable = false;
-    onlySection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(onlySection);
+        const docLayer = {};
+        const tsManager = {};
 
-    sectionContainer.enableDrawing();
+        let onlySection = new CanvasSectionObject('OnlySection');
+        onlySection.anchor = ['top', 'left'];
+        onlySection.position = [originX, originY];
+        onlySection.size = [1, 1];
+        onlySection.expand = ['bottom', 'right'];
+        onlySection.processingOrder = onlySection.drawingOrder = onlySection.zIndex = 1;
+        onlySection.interactable = false;
+        onlySection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+
+        app.sectionContainer.addSection(onlySection);
+    });
+
     it('Container should have OnlySection', function() {
-        assert.ok(sectionContainer.doesSectionExist('OnlySection'));
+        assert.ok(app.sectionContainer.doesSectionExist('OnlySection'));
     });
 
     it('OnlySection PosSize checks', function () {
-        const only = sectionContainer.getSectionWithName('OnlySection');
+        const only = app.sectionContainer.getSectionWithName('OnlySection');
         const onlyRect = getSectionRectangle(only);
         assertPosSize(onlyRect,
             {
@@ -80,53 +85,54 @@ describe('Singleton section container', function() {
 
 describe('Horizontally packed two section container', function() {
 
-    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+    beforeEach(function () {
+        setupCanvasContainer(canvasWidth, canvasHeight);
 
-    const docLayer = {};
-    const tsManager = {};
+        const docLayer = {};
+        const tsManager = {};
 
-    let leftSection = new app.definitions.canvasSectionObject();
-    leftSection.name = 'LeftSection';
-    leftSection.anchor = ['top', 'left'];
-    leftSection.position = [originX, originY];
-    leftSection.size = [halfWidth, 1];
-    leftSection.expand = ['bottom'];
-    leftSection.processingOrder = leftSection.drawingOrder = leftSection.zIndex = 1;
-    leftSection.interactable = false;
-    leftSection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(leftSection);
+        let leftSection = new CanvasSectionObject('LeftSection');
+        leftSection.anchor = ['top', 'left'];
+        leftSection.position = [originX, originY];
+        leftSection.size = [halfWidth, 1];
+        leftSection.expand = ['bottom'];
+        leftSection.processingOrder = leftSection.drawingOrder = leftSection.zIndex = 1;
+        leftSection.interactable = false;
+        leftSection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+        app.sectionContainer.addSection(leftSection);
 
-    let rightSection = new app.definitions.canvasSectionObject();
-    rightSection.name = 'RightSection';
-    rightSection.anchor = ['top', ['LeftSection', 'right', 'left']];
-    rightSection.position = [originX, originY];
-    rightSection.size = [1, 1];
-    rightSection.expand = ['bottom', 'right'];
-    rightSection.processingOrder = rightSection.drawingOrder = 2;
-    rightSection.zIndex = 1;
-    rightSection.interactable = false;
-    rightSection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(rightSection);
+        let rightSection = new CanvasSectionObject('RightSection');
+        rightSection.anchor = ['top', ['LeftSection', 'right', 'left']] as (string[] | Array<Array<string>>);
+        rightSection.position = [originX, originY];
+        rightSection.size = [1, 1];
+        rightSection.expand = ['bottom', 'right'];
+        rightSection.processingOrder = rightSection.drawingOrder = 2;
+        rightSection.zIndex = 1;
+        rightSection.interactable = false;
+        rightSection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+        app.sectionContainer.addSection(rightSection);
 
-    sectionContainer.enableDrawing();
+        app.sectionContainer.enableDrawing();
+    });
+
     it('Container should have LeftSection', function() {
-        assert.ok(sectionContainer.doesSectionExist('LeftSection'));
+        assert.ok(app.sectionContainer.doesSectionExist('LeftSection'));
     });
 
     it('Container should have RightSection', function() {
-        assert.ok(sectionContainer.doesSectionExist('RightSection'));
+        assert.ok(app.sectionContainer.doesSectionExist('RightSection'));
     });
 
     it('LeftSection PosSize checks', function () {
-        const left = sectionContainer.getSectionWithName('LeftSection');
+        const left = app.sectionContainer.getSectionWithName('LeftSection');
         const leftRect = getSectionRectangle(left);
         assertPosSize(leftRect,
             {
@@ -138,7 +144,7 @@ describe('Horizontally packed two section container', function() {
     });
 
     it('RightSection PosSize checks', function () {
-        const right = sectionContainer.getSectionWithName('RightSection');
+        const right = app.sectionContainer.getSectionWithName('RightSection');
         const rightRect = getSectionRectangle(right);
         assertPosSize(rightRect,
             {
@@ -152,53 +158,54 @@ describe('Horizontally packed two section container', function() {
 
 describe('Vertically packed two section container', function() {
 
-    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+    beforeEach(function () {
+        setupCanvasContainer(canvasWidth, canvasHeight);
 
-    const docLayer = {};
-    const tsManager = {};
+        const docLayer = {};
+        const tsManager = {};
 
-    let topSection = new app.definitions.canvasSectionObject();
-    topSection.name = 'TopSection';
-    topSection.anchor = ['top', 'left'];
-    topSection.position = [originX, originY];
-    topSection.size = [1, halfHeight];
-    topSection.expand = ['right'];
-    topSection.processingOrder = topSection.drawingOrder = topSection.zIndex = 1;
-    topSection.interactable = false;
-    topSection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(topSection);
+        let topSection = new CanvasSectionObject('TopSection');
+        topSection.anchor = ['top', 'left'];
+        topSection.position = [originX, originY];
+        topSection.size = [1, halfHeight];
+        topSection.expand = ['right'];
+        topSection.processingOrder = topSection.drawingOrder = topSection.zIndex = 1;
+        topSection.interactable = false;
+        topSection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+        app.sectionContainer.addSection(topSection);
 
-    let bottomSection = new app.definitions.canvasSectionObject();
-    bottomSection.name = 'BottomSection';
-    bottomSection.anchor = [['TopSection', 'bottom', 'top'], 'left'];
-    bottomSection.position = [originX, originY];
-    bottomSection.size = [1, 1];
-    bottomSection.expand = ['bottom', 'right'];
-    bottomSection.processingOrder = bottomSection.drawingOrder = 2;
-    bottomSection.zIndex = 1;
-    bottomSection.interactable = false;
-    bottomSection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(bottomSection);
+        let bottomSection = new CanvasSectionObject('BottomSection');
+        bottomSection.anchor = [['TopSection', 'bottom', 'top'], 'left'] as (string[] | Array<Array<string>>);
+        bottomSection.position = [originX, originY];
+        bottomSection.size = [1, 1];
+        bottomSection.expand = ['bottom', 'right'];
+        bottomSection.processingOrder = bottomSection.drawingOrder = 2;
+        bottomSection.zIndex = 1;
+        bottomSection.interactable = false;
+        bottomSection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+        app.sectionContainer.addSection(bottomSection);
 
-    sectionContainer.enableDrawing();
+        app.sectionContainer.enableDrawing();
+    });
+
     it('Container should have TopSection', function() {
-        assert.ok(sectionContainer.doesSectionExist('TopSection'));
+        assert.ok(app.sectionContainer.doesSectionExist('TopSection'));
     });
 
     it('Container should have BottomSection', function() {
-        assert.ok(sectionContainer.doesSectionExist('BottomSection'));
+        assert.ok(app.sectionContainer.doesSectionExist('BottomSection'));
     });
 
     it('TopSection PosSize checks', function () {
-        const top = sectionContainer.getSectionWithName('TopSection');
+        const top = app.sectionContainer.getSectionWithName('TopSection');
         const topRect = getSectionRectangle(top);
         assertPosSize(topRect,
             {
@@ -210,7 +217,7 @@ describe('Vertically packed two section container', function() {
     });
 
     it('BottomSection PosSize checks', function () {
-        const bottom = sectionContainer.getSectionWithName('BottomSection');
+        const bottom = app.sectionContainer.getSectionWithName('BottomSection');
         const bottomRect = getSectionRectangle(bottom);
         assertPosSize(bottomRect,
             {
@@ -225,53 +232,55 @@ describe('Vertically packed two section container', function() {
 // '-left' layout is usually used for RTL where it is used to attach a section's right to the left of another section.
 describe('Horizontally packed two section container with -left layout', function() {
 
-    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+    beforeEach(function () {
+        setupCanvasContainer(canvasWidth, canvasHeight);
 
-    const docLayer = {};
-    const tsManager = {};
+        const docLayer = {};
+        const tsManager = {};
 
-    let rightSection = new app.definitions.canvasSectionObject();
-    rightSection.name = 'RightSection';
-    rightSection.anchor = ['top', 'right'];
-    rightSection.position = [originX, originY];
-    rightSection.size = [halfWidth, 1];
-    rightSection.expand = ['bottom'];
-    rightSection.processingOrder = rightSection.drawingOrder = rightSection.zIndex = 1;
-    rightSection.interactable = false;
-    rightSection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(rightSection);
+        let rightSection = new CanvasSectionObject('RightSection');
+        rightSection.anchor = ['top', 'right'];
+        rightSection.position = [originX, originY];
+        rightSection.size = [halfWidth, 1];
+        rightSection.expand = ['bottom'];
+        rightSection.processingOrder = rightSection.drawingOrder = rightSection.zIndex = 1;
+        rightSection.interactable = false;
+        rightSection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+        app.sectionContainer.addSection(rightSection);
 
-    let leftSection = new app.definitions.canvasSectionObject();
-    leftSection.name = 'LeftSection';
-    leftSection.anchor = ['top', ['RightSection', '-left', 'right']]; // Attach LeftSection's right to left of RightSection.
-    leftSection.position = [originX, originY];
-    leftSection.size = [1, 1];
-    leftSection.expand = ['bottom', 'left'];
-    leftSection.processingOrder = leftSection.drawingOrder = 2;
-    leftSection.zIndex = 1;
-    leftSection.interactable = false;
-    leftSection.sectionProperties = {
-        docLayer: docLayer,
-        tsManager: tsManager,
-        strokeStyle: '#c0c0c0'
-    };
-    sectionContainer.addSection(leftSection);
+        let leftSection = new CanvasSectionObject('LeftSection');
+        leftSection.anchor = ['top', ['RightSection', '-left', 'right']] as (string[] | Array<Array<string>>); // Attach LeftSection's right to left of RightSection.
+        leftSection.position = [originX, originY];
+        leftSection.size = [1, 1];
+        leftSection.expand = ['bottom', 'left'];
+        leftSection.processingOrder = leftSection.drawingOrder = 2;
+        leftSection.zIndex = 1;
+        leftSection.interactable = false;
+        leftSection.sectionProperties = {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        };
+        app.sectionContainer.addSection(leftSection);
 
-    sectionContainer.enableDrawing();
+        app.sectionContainer.enableDrawing();
+    });
+
+
     it('Container should have LeftSection', function() {
-        assert.ok(sectionContainer.doesSectionExist('LeftSection'));
+        assert.ok(app.sectionContainer.doesSectionExist('LeftSection'));
     });
 
     it('Container should have RightSection', function() {
-        assert.ok(sectionContainer.doesSectionExist('RightSection'));
+        assert.ok(app.sectionContainer.doesSectionExist('RightSection'));
     });
 
     it('LeftSection PosSize checks', function () {
-        const left = sectionContainer.getSectionWithName('LeftSection');
+        const left = app.sectionContainer.getSectionWithName('LeftSection');
         const leftRect = getSectionRectangle(left);
         assertPosSize(leftRect,
             {
@@ -283,7 +292,7 @@ describe('Horizontally packed two section container with -left layout', function
     });
 
     it('RightSection PosSize checks', function () {
-        const right = sectionContainer.getSectionWithName('RightSection');
+        const right = app.sectionContainer.getSectionWithName('RightSection');
         const rightRect = getSectionRectangle(right);
         assertPosSize(rightRect,
             {

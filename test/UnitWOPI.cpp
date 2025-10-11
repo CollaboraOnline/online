@@ -46,18 +46,18 @@ public:
 
     bool isAutosave() override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase));
+        TST_LOG("In SavingPhase " << name(_savingPhase));
 
         // we fake autosave when saving the modified document
         const bool res = _savingPhase == SavingPhase::Modified;
-        LOG_TST("isAutosave: " << std::boolalpha << res);
+        TST_LOG("isAutosave: " << std::boolalpha << res);
         return res;
     }
 
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase));
+        TST_LOG("In SavingPhase " << name(_savingPhase));
 
         if (_savingPhase == SavingPhase::Unmodified)
         {
@@ -103,7 +103,7 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
+        TST_LOG("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
         LOK_ASSERT_STATE(_savingPhase, SavingPhase::Unmodified);
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
@@ -114,7 +114,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
+        TST_LOG("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_savingPhase, SavingPhase::Modified);
@@ -134,7 +134,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
@@ -181,13 +181,13 @@ public:
     void newChild(const std::shared_ptr<ChildProcess>& child) override
     {
         _children.emplace_back(child->getPid());
-        LOG_TST(">>> Child #" << _children.size());
+        TST_LOG(">>> Child #" << _children.size());
     }
 
     virtual std::unique_ptr<http::Response>
     assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST(">>> CheckFileInfo #" << _count << ", total memory: " << getMemoryUsage() << " KB");
+        TST_LOG(">>> CheckFileInfo #" << _count << ", total memory: " << getMemoryUsage() << " KB");
 
         SocketPoll::wakeupWorld();
         return std::make_unique<http::Response>(http::StatusCode::NotFound);
@@ -201,7 +201,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::Done);
                 ++_count;
-                LOG_TST("Open #" << _count);
+                TST_LOG("Open #" << _count);
                 initWebsocket("/wopi/files/" + std::to_string(_count) + "?access_token=anything");
             }
             break;
@@ -215,7 +215,7 @@ public:
                         for (;;)
                         {
                             ++_count;
-                            LOG_TST(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
+                            TST_LOG(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
                                                  << " KB");
 
                             const std::string wopiPath = "/wopi/files/invalid_" +
@@ -228,7 +228,7 @@ public:
                             const std::string documentURL = "/cool/" + wopiSrc + "/ws";
 
                             // This is just a client connection that is used from the tests.
-                            LOG_TST("Connecting test client to COOL (#"
+                            TST_LOG("Connecting test client to COOL (#"
                                     << _count << " connection): " << documentURL);
 
                             Poco::URI uri(helpers::getTestServerURI());
@@ -242,12 +242,12 @@ public:
                             if (ws->asyncRequest(req, socketPoll()))
                             {
                                 _webSessions.emplace_back(ws);
-                                LOG_TST("Load #" << _count);
+                                TST_LOG("Load #" << _count);
                                 helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
                             }
                             else
                             {
-                                LOG_TST("Failed async request #" << _count << " to "
+                                TST_LOG("Failed async request #" << _count << " to "
                                                                  << documentURL);
                             }
                         }
@@ -266,10 +266,195 @@ public:
     }
 };
 
+/// This is to test that when the WOPI host is
+/// unavailable, we are still able to unload.
+class UnitWopiUnavailable : public WopiTestServer
+{
+    using Base = WopiTestServer;
+
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Done)
+    _phase;
+
+    std::string _lockState;
+    std::string _lockToken;
+
+    std::chrono::steady_clock::time_point _refreshTime;
+
+    std::atomic_bool _saved;
+    std::atomic_bool _uploaded;
+    int _cfiCount;
+    int _lockCount;
+
+    static constexpr int RefreshPeriodSeconds = 1;
+
+public:
+    UnitWopiUnavailable()
+        : WopiTestServer("UnitWopiUnavailable")
+        , _phase(Phase::Load)
+        , _lockState("UNLOCK")
+        , _saved(false)
+        , _uploaded(false)
+        , _cfiCount(0)
+        , _lockCount(0)
+    {
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        WopiTestServer::configure(config);
+
+        config.setUInt("storage.wopi.locking.refresh", RefreshPeriodSeconds);
+    }
+
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::JSON::Object::Ptr& fileInfo) override
+    {
+        fileInfo->set("SupportsLocks", "true");
+    }
+
+    bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& request,
+                                    const std::shared_ptr<StreamSocket>& socket) override
+    {
+        ++_cfiCount;
+
+        if (_cfiCount == 1)
+        {
+            // The first one must succeed to load the document.
+            TST_LOG("Succeeding the CheckFileInfo request (default handler)");
+            return WopiTestServer::handleCheckFileInfoRequest(request, socket);
+        }
+
+        if (_lockCount > 1)
+        {
+            TST_LOG("Failing the CheckFileInfo request (Unauthorized): lock count=" << _lockCount);
+            std::unique_ptr<http::Response> httpResponse =
+                std::make_unique<http::Response>(http::StatusCode::Unauthorized);
+            socket->sendAndShutdown(*httpResponse);
+        }
+
+        return true;
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+        LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsModifiedByUser"));
+
+        LOK_ASSERT_EQUAL(true, request.has("X-COOL-WOPI-IsAutosave"));
+        LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsAutosave"));
+
+        // Triggered while closing.
+        LOK_ASSERT_EQUAL(true, request.has("X-COOL-WOPI-IsExitSave"));
+        LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsExitSave"));
+
+        // Fail with error.
+        TST_LOG("Returning 500 to simulate PutFile failure");
+        return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
+    }
+
+    std::unique_ptr<http::Response>
+    assertLockRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        const std::string lockToken = request.get("X-WOPI-Lock", std::string());
+        const std::string newLockState = request.get("X-WOPI-Override", std::string());
+        TST_LOG("In " << name(_phase) << ", X-WOPI-Lock: " << lockToken << ", X-WOPI-Override: "
+                      << newLockState << ", for URI: " << request.getURI());
+
+        ++_lockCount;
+
+        if (_lockCount == 2)
+        {
+            TST_LOG("Disconnecting");
+            deleteSocketAt(0);
+        }
+
+        if (_lockCount > 1)
+        {
+            // Fail with error.
+            TST_LOG("Returning 503 to simulate Lock failure");
+            return std::make_unique<http::Response>(http::StatusCode::ServiceUnavailable);
+        }
+
+        if ("LOCK" == newLockState)
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
+                                     newLockState);
+            LOK_ASSERT_MESSAGE("Lock token cannot be empty", !lockToken.empty());
+            _lockState = newLockState;
+            _lockToken = lockToken;
+
+            _refreshTime = std::chrono::steady_clock::now();
+
+            return nullptr; // Succeed in locking.
+        }
+        else if ("UNLOCK" == newLockState)
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:UNLOCK", std::string("UNLOCK"),
+                                     newLockState);
+            LOK_ASSERT_EQUAL_MESSAGE("Document is not locked", std::string("LOCK"), _lockState);
+            LOK_ASSERT_EQUAL_MESSAGE("The lock token has changed", _lockToken, lockToken);
+        }
+        else
+        {
+            LOK_ASSERT_FAIL("Unexpected lock-state change while in " << name(_phase));
+        }
+
+        // Fail with error.
+        TST_LOG("Returning 503 to simulate Lock failure");
+        return std::make_unique<http::Response>(http::StatusCode::ServiceUnavailable);
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TST_LOG("Modifying the document");
+        TRANSITION_STATE(_phase, Phase::Done);
+
+        // Modify the currently opened document; type 'a'.
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDataLoss(const std::string& reason) override
+    {
+        passTest("Finished with the data-loss check: " + reason);
+        return failed();
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                TST_LOG("Load: initWebsocket.");
+                initWebsocket("/wopi/files/0?access_token=anything");
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
     // return new UnitBase* [3] { new UnitWOPI(), new UnitOverload(), nullptr };
-    return new UnitBase* [2] { new UnitWOPI(), nullptr };
+    return new UnitBase*[3]{ new UnitWOPI(), new UnitWopiUnavailable(), nullptr };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

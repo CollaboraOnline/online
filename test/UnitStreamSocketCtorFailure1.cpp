@@ -60,9 +60,8 @@ void UnitStreamSocketCtorFailure1::simulateExternalSocketCtorException(std::shar
 inline UnitBase::TestResult UnitStreamSocketCtorFailure1::testHttp()
 {
     setTestname(__func__);
-    TST_LOG("Starting Test: " << testname
-            << ": StreamSocketCtorFailureInterval "
-            << ExternalStreamSocketCtorFailureInterval);
+    TST_LOG("Starting Test: " << testname << ": StreamSocketCtorFailureInterval "
+                              << ExternalStreamSocketCtorFailureInterval);
 
     const std::string documentURL = "/favicon.ico";
 
@@ -96,7 +95,8 @@ inline UnitBase::TestResult UnitStreamSocketCtorFailure1::testHttp()
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Test[" << iteration << "] Connected: " << session->isConnected());
             TST_LOG("Test[" << iteration << "] Response1: " << response->header().toString());
-            TST_LOG("Test[" << iteration << "] Response1 size: " << testname << ": `" << documentURL << "`: " << response->header().getContentLength());
+            TST_LOG("Test[" << iteration << "] Response1 size: " << testname << ": `" << documentURL
+                            << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 connected00 = true;
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
@@ -110,7 +110,8 @@ inline UnitBase::TestResult UnitStreamSocketCtorFailure1::testHttp()
         }
         bool connected01 = false;
         {
-            TST_LOG("Test[" << iteration << "] SessionA " << ": connected " << session->isConnected());
+            TST_LOG("Test[" << iteration << "] SessionA " << ": connected "
+                            << session->isConnected());
             if( session->isConnected() )
             {
                 connected01 = true;

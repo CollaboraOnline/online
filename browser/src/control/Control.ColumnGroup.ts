@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.ColumnGroup
- */
 
 /* global app */
 
@@ -26,18 +23,17 @@
 namespace cool {
 
 export class ColumnGroup extends GroupBase {
-	name: string = L.CSections.ColumnGroup.name;
-	anchor: any = ['top', [L.CSections.CornerGroup.name, 'right', 'left']];
+	anchor: any = ['top', [app.CSections.CornerGroup.name, 'right', 'left']];
 	expand: string[] = ['left', 'right']; // Expand horizontally.
-	processingOrder: number = L.CSections.ColumnGroup.processingOrder;
-	drawingOrder: number = L.CSections.ColumnGroup.drawingOrder;
-	zIndex: number = L.CSections.ColumnGroup.zIndex;
+	processingOrder: number = app.CSections.ColumnGroup.processingOrder;
+	drawingOrder: number = app.CSections.ColumnGroup.drawingOrder;
+	zIndex: number = app.CSections.ColumnGroup.zIndex;
 
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderWidth: number;
 	_splitPos: cool.Point;
 
-	constructor() { super(); }
+	constructor() { super(app.CSections.ColumnGroup.name); }
 
 	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
@@ -49,7 +45,7 @@ export class ColumnGroup extends GroupBase {
 		// Calculate width on the fly.
 		this.size[1] = this._computeSectionHeight();
 
-		this._cornerHeaderWidth = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[0];
+		this._cornerHeaderWidth = this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).size[0];
 
 		this._splitPos = (this._map._docLayer._splitPanesContext as cool.SplitPanesContext).getSplitPos();
 
@@ -66,7 +62,7 @@ export class ColumnGroup extends GroupBase {
 			return startX > this._splitPos.x + this._cornerHeaderWidth;
 		}
 		else {
-			return startX >= this._cornerHeaderWidth && (startX > this.documentTopLeft[0] || startX < this._splitPos.x);
+			return startX >= this._cornerHeaderWidth && (startX > app.activeDocument.activeView.viewedRectangle.pX1 || startX < this._splitPos.x);
 		}
 	}
 
@@ -74,7 +70,7 @@ export class ColumnGroup extends GroupBase {
 		if (endPos <= this._splitPos.x)
 			return endPos;
 		else {
-			return Math.max(endPos + this._cornerHeaderWidth - this.documentTopLeft[0], this._splitPos.x + this._cornerHeaderWidth);
+			return Math.max(endPos + this._cornerHeaderWidth - app.activeDocument.activeView.viewedRectangle.pX1, this._splitPos.x + this._cornerHeaderWidth);
 		}
 	}
 
@@ -82,13 +78,13 @@ export class ColumnGroup extends GroupBase {
 		if (docPos < this._splitPos.x)
 			return docPos + this._cornerHeaderWidth;
 		else
-			return Math.max(docPos - this.documentTopLeft[0], this._splitPos.x) + this._cornerHeaderWidth;
+			return Math.max(docPos - app.activeDocument.activeView.viewedRectangle.pX1, this._splitPos.x) + this._cornerHeaderWidth;
 	}
 
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this.getRelativeX(group.startPos);
 		let startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		const strokeColor = GroupBase.getColors().strokeColor;
+		const strokeColor = this.getColors().strokeColor;
 		const endX = this.getEndPosition(group.endPos);
 
 		if (this.isGroupHeaderVisible(startX, group.startPos)) {
@@ -147,7 +143,7 @@ export class ColumnGroup extends GroupBase {
 		const startX = Math.round((this._cornerHeaderWidth - ctrlHeadSize) * 0.5);
 		const startY = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 
-		ctx.strokeStyle = GroupBase.getColors().strokeColor;
+		ctx.strokeStyle = this.getColors().strokeColor;
 		ctx.lineWidth = 1.0;
 		ctx.strokeRect(this.transformRectX(startX + 0.5, ctrlHeadSize), startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
@@ -167,11 +163,11 @@ export class ColumnGroup extends GroupBase {
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
-	findClickedLevel (point: number[]): number {
+	findClickedLevel (point: cool.SimplePoint): number {
 		const mirrorX = this.isCalcRTL();
-		if ((!mirrorX && point[0] < this._cornerHeaderWidth)
-			|| (mirrorX && point[0] > this.size[0] - this._cornerHeaderWidth)) {
-			let index = (point[1] / this.size[1]) * 100; // Percentage.
+		if ((!mirrorX && point.pX < this._cornerHeaderWidth)
+			|| (mirrorX && point.pX > this.size[0] - this._cornerHeaderWidth)) {
+			let index = (point.pY / this.size[1]) * 100; // Percentage.
 			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
@@ -179,7 +175,7 @@ export class ColumnGroup extends GroupBase {
 		return -1;
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: cool.SimplePoint): GroupEntry {
 		const mirrorX = this.isCalcRTL();
 		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -205,22 +201,16 @@ export class ColumnGroup extends GroupBase {
 	getTailsGroupRect (group: GroupEntry): number[] {
 		const startX = this.getRelativeX(group.startPos);
 		const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		const endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+		const endX = group.endPos + this._cornerHeaderWidth - app.activeDocument.activeView.viewedRectangle.pX1;
 		const endY = startY + this._groupHeadSize;
 		return [startX, endX, startY, endY];
 	}
 
 	onRemove(): void {
 		this.isRemoved = true;
-		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = 0;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = 0;
+		this.containerObject.getSectionWithName(app.CSections.ColumnHeader.name).position[1] = 0;
+		this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).position[1] = 0;
 	}
 }
 
 }
-
-L.Control.ColumnGroup = cool.ColumnGroup;
-
-L.control.columnGroup = function () {
-	return new L.Control.ColumnGroup();
-};

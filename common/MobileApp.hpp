@@ -67,10 +67,10 @@ public:
 class WopiStorage : public StorageBase
 {
 public:
-    class WOPIFileInfo : public FileInfo
+    class WOPIFileInfo final : public FileInfo
     {
     public:
-        enum class TriState
+        enum class TriState : std::uint8_t
         {
             False,
             True,

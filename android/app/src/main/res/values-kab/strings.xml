@@ -101,7 +101,7 @@
     <string name="app_vendor">Lqem-agi yettunefk-d s ɣuṛ $VENDOR.</string>
     <string name="app_description">$APP_NAME d atrar, yeshel i useqdec, d aɣbalu yeldin i usekker n weḍris, tiferkit n usiḍen, tihawt d ugar.</string>
     <string name="app_version">Lqem:%1$s, Build ID: %2$s</string>
-    <string name="app_name_settings">Iɣewwaṛen</string>
+    <string name="app_name_settings">Iɣewwaren</string>
     <string name="theme">Asentel</string>
     <string name="theme_system_default">Amezwer n unagraw</string>
     <string name="pref_user_name">Isem n useqdac</string>

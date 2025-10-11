@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
- * L.CanvasTileLayer is a layer with canvas based rendering.
+ * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout SplitSection */
+/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection */
 
 function clamp(num, min, max)
 {
@@ -12,7 +12,7 @@ function clamp(num, min, max)
 
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
-var CStyleData = L.Class.extend({
+var CStyleData = window.L.Class.extend({
 
 	initialize: function (styleDataDiv) {
 		this._div = styleDataDiv;
@@ -40,7 +40,7 @@ var CStyleData = L.Class.extend({
 
 // CSelections is used to add/modify/clear selections (text/cell-area(s)/ole)
 // on canvas using polygons (CPolygon).
-var CSelections = L.Class.extend({
+var CSelections = window.L.Class.extend({
 	initialize: function (pointSet, canvasOverlay, selectionsDataDiv, map, isView, viewId, selectionType) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
@@ -153,7 +153,7 @@ var CSelections = L.Class.extend({
 
 // CReferences is used to store and manage the CPath's of all
 // references in the current sheet.
-var CReferences = L.Class.extend({
+var CReferences = window.L.Class.extend({
 
 	initialize: function (canvasOverlay) {
 
@@ -185,7 +185,7 @@ var CReferences = L.Class.extend({
 
 });
 
-L.TileSectionManager = L.Class.extend({
+window.L.TileSectionManager = window.L.Class.extend({
 
 	initialize: function (layer) {
 		this._layer = layer;
@@ -194,14 +194,14 @@ L.TileSectionManager = L.Class.extend({
 		var mapSize = this._map.getPixelBoundsCore().getSize();
 		this._tilesSection = null; // Shortcut.
 
-		if (L.Browser.cypressTest) // If cypress is active, create test divs.
+		if (window.L.Browser.cypressTest) // If cypress is active, create test divs.
 			app.sectionContainer.testing = true;
 
 		app.sectionContainer.onResize(mapSize.x, mapSize.y);
 
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
-			splitPanesContext.getSplitPos() : new L.Point(0, 0);
+			splitPanesContext.getSplitPos() : new cool.Point(0, 0);
 		this._updatesRunning = false;
 		this._mirrorEventsFromSourceToCanvasSectionContainer(document.getElementById('map'));
 
@@ -235,7 +235,7 @@ L.TileSectionManager = L.Class.extend({
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		return splitPanesContext ?
 			splitPanesContext.getSplitPos().multiplyBy(app.dpiScale) :
-			new L.Point(0, 0);
+			new cool.Point(0, 0);
 	},
 
 	// Details of tile areas to render
@@ -263,10 +263,10 @@ L.TileSectionManager = L.Class.extend({
 	_removeSplitsSection: function () {
 		var section = app.sectionContainer.getSectionWithName('calc grid');
 		if (section) {
-			section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
+			section.setDrawingOrder(app.CSections.CalcGrid.drawingOrder);
 			section.sectionProperties.strokeStyle = '#c0c0c0';
 		}
-		app.sectionContainer.removeSection(L.CSections.Debug.Splits.name);
+		app.sectionContainer.removeSection(app.CSections.Debug.Splits.name);
 	},
 
 	// Debug tool
@@ -275,7 +275,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_removeTilePixelGridSection: function () {
-		app.sectionContainer.removeSection(L.CSections.Debug.TilePixelGrid.name);
+		app.sectionContainer.removeSection(app.CSections.Debug.TilePixelGrid.name);
 	},
 
 	_addDebugOverlaySection: function () {
@@ -283,7 +283,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_removeDebugOverlaySection: function () {
-		app.sectionContainer.removeSection(L.CSections.Debug.DebugOverlay.name);
+		app.sectionContainer.removeSection(app.CSections.Debug.DebugOverlay.name);
 	},
 
 	_addPreloadMap: function () {
@@ -291,7 +291,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_removePreloadMap: function () {
-		app.sectionContainer.removeSection(L.CSections.Debug.PreloadMap.name);
+		app.sectionContainer.removeSection(app.CSections.Debug.PreloadMap.name);
 	},
 
 	update: function () {
@@ -303,10 +303,10 @@ L.TileSectionManager = L.Class.extend({
 	 * have something to work on for this function. That said, given my observations, they seem incredibly likely to be correct
 	 *
 	 * @param pinchCenter {{x: number, y: number}} The current pinch center in doc core-pixels
-	 * Normally expressed as an L.Point instance
+	 * Normally expressed as an cool.Point instance
 	 *
 	 * @param pinchStartCenter {{x: number, y: number}} The pinch center at the start of the pinch in doc core-pixels
-	 * Normally expressed as an L.Point instance
+	 * Normally expressed as an cool.Point instance
 	 *
 	 * @param paneBounds {{min: {x: number, y: number}, max: {x: number, y: number}}} The edges of the current pane
 	 * Traditionally this is the map border at the start of the pinch
@@ -340,7 +340,7 @@ L.TileSectionManager = L.Class.extend({
 			yMin = splitPos.y;
 		}
 
-		const minTopLeft = new L.Point(xMin, yMin);
+		const minTopLeft = new cool.Point(xMin, yMin);
 
 		const paneSize = paneBounds.getSize();
 
@@ -357,13 +357,13 @@ L.TileSectionManager = L.Class.extend({
 			y: (pinchStartCenter.y - this._offset.y - paneBounds.min.y) / paneSize.y,
 		};
 
-		let docTopLeft = new L.Point(
+		let docTopLeft = new cool.Point(
 			pinchStartCenter.x + (centerOffset.x - paneSize.x * panePortion.x) / scale,
 			pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale
 		);
 
 		// Top left in document coordinates.
-		const clampedDocTopLeft = new L.Point(
+		const clampedDocTopLeft = new cool.Point(
 			Math.max(minTopLeft.x, docTopLeft.x),
 			Math.max(minTopLeft.y, docTopLeft.y)
 		);
@@ -388,7 +388,7 @@ L.TileSectionManager = L.Class.extend({
 			return { offset: this._offset, topLeft: docTopLeft };
 		}
 
-		const newPaneCenter = new L.Point(
+		const newPaneCenter = new cool.Point(
 			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
 			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
 
@@ -404,7 +404,7 @@ L.TileSectionManager = L.Class.extend({
 		var ctx = this._paintContext();
 		var splitPos = ctx.splitPos;
 		var viewBounds = ctx.viewBounds;
-		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
+		var freePaneBounds = new cool.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
 		return this._getZoomDocPos(
 			this._newCenter,
@@ -555,11 +555,11 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	getTileSectionPos : function () {
-		return new L.Point(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
+		return new cool.Point(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
 	}
 });
 
-L.CanvasTileLayer = L.Layer.extend({
+window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	options: {
 		tileSize: window.tileSize,
@@ -579,9 +579,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	initialize: function (options) {
 
-		L.Layer.prototype.initialize.call(this);
+		window.L.Layer.prototype.initialize.call(this);
 
-		options = L.setOptions(this, options);
+		options = window.L.setOptions(this, options);
 
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
@@ -595,7 +595,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		app.calc.cellCursorVisible = false;
 		this._prevCellCursorAddress = null;
-		this._shapeGridOffset = new app.definitions.simplePoint(0, 0);
+		this._shapeGridOffset = new cool.SimplePoint(0, 0);
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
@@ -605,8 +605,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
-
-		this._initializeTableOverlay();
 
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
@@ -633,14 +631,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this._container) { return; }
 
-		this._container = L.DomUtil.create('div', 'leaflet-layer');
+		this._container = window.L.DomUtil.create('div', 'leaflet-layer');
 		this._updateZIndex();
 
 		this.getPane().appendChild(this._container);
 
 		var mapContainer = document.getElementById('document-container');
 		var canvasContainerClass = 'leaflet-canvas-container';
-		this._canvasContainer = L.DomUtil.create('div', canvasContainerClass, mapContainer);
+		this._canvasContainer = window.L.DomUtil.create('div', canvasContainerClass, mapContainer);
 		this._canvasContainer.id = 'canvas-container';
 		this._setup();
 	},
@@ -651,34 +649,38 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.error('canvas container not found. _initContainer failed ?');
 		}
 
-		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
+		this._canvas = window.L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
+		this._canvas.style.visibility = 'hidden';
+
 		app.sectionContainer = new CanvasSectionContainer(this._canvas, this.isCalc() /* disableDrawing? */);
+		app.activeDocument = new DocumentBase();
+
 		this._container.style.position = 'absolute';
-		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
-		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
-		this._splittersDataDiv = L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
-		this._cursorOverlayDiv = L.DomUtil.create('div', 'cursor-overlay', this._canvasContainer);
-		if (L.Browser.cypressTest) {
-			this._emptyDeltaDiv = L.DomUtil.create('div', 'empty-deltas', this._canvasContainer);
+		this._cursorDataDiv = window.L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
+		this._selectionsDataDiv = window.L.DomUtil.create('div', 'selections-data', this._canvasContainer);
+		this._splittersDataDiv = window.L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
+		this._cursorOverlayDiv = window.L.DomUtil.create('div', 'cursor-overlay', this._canvasContainer);
+		if (window.L.Browser.cypressTest) {
+			this._emptyDeltaDiv = window.L.DomUtil.create('div', 'empty-deltas', this._canvasContainer);
 			this._emptyDeltaDiv.innerText = 0;
 		}
 		this._splittersStyleData = new CStyleData(this._splittersDataDiv);
 
-		this._painter = new L.TileSectionManager(this);
+		this._painter = new window.L.TileSectionManager(this);
 
-		app.sectionContainer.addSection(L.getNewTilesSection());
+		app.sectionContainer.addSection(new cool.TilesSection());
 		this._painter._tilesSection = app.sectionContainer.getSectionWithName('tiles');
-		app.sectionContainer.setDocumentAnchorSection(L.CSections.Tiles.name);
+		app.sectionContainer.setDocumentAnchorSection(app.CSections.Tiles.name);
 
 		app.sectionContainer.getSectionWithName('tiles').onResize();
 
 		this._canvasOverlay = new CanvasOverlay(this._map, app.sectionContainer.getContext());
 		app.sectionContainer.addSection(this._canvasOverlay);
 
-		app.sectionContainer.addSection(L.getNewScrollSection(() => this.isCalcRTL()));
+		app.sectionContainer.addSection(new cool.ScrollSection(() => this.isCalcRTL()));
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
-		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
+		// Using window.L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this._map.on('move', this._painter.update, this._painter);
 			this._map.on('moveend', function () {
@@ -706,7 +708,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		app.sectionContainer.addSection(new app.definitions.CommentSection());
 
 		this._syncTileContainerSize();
-		this._setupTableOverlay();
 	},
 
 	// Returns true if the document type is Writer.
@@ -754,7 +755,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				app.tile.size.pX = app.tile.size.pY = TileManager.tileSize;
 			}
 
-			if (!L.Browser.mobileWebkit)
+			if (!window.L.Browser.mobileWebkit)
 				TileManager.update(this._map.getCenter(), tileZoom);
 
 			if (tileZoomChanged)
@@ -770,7 +771,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// because the server needs new data even if the client is unmodified.
 	_resetClientVisArea: function ()  {
 		this._clientZoom = '';
-		this._clientVisibleArea = '';
+		app.activeDocument.activeView.resetClientVisibleArea();
 	},
 
 	_resetCanonicalIdStatus: function() {
@@ -810,8 +811,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// cells downwards and to the right, like we have on desktop
 		var viewSize = this._map.getSize();
 		var scale = this._map.getZoomScale(newZoom);
-		var width = app.file.size.x / app.tile.size.x * TileManager.tileSize * scale;
-		var height = app.file.size.y / app.tile.size.y * TileManager.tileSize * scale;
+		var width = app.activeDocument.fileSize.x / app.tile.size.x * TileManager.tileSize * scale;
+		var height = app.activeDocument.fileSize.y / app.tile.size.y * TileManager.tileSize * scale;
 		if (width < viewSize.x || height < viewSize.y) {
 			// if after zoomimg the document becomes smaller than the viewing area
 			width = Math.max(width, viewSize.x);
@@ -820,9 +821,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.options._origMaxBounds = this._map.options.maxBounds;
 			}
 			scale = this._map.options.crs.scale(1);
-			this._map.setMaxBounds(new L.LatLngBounds(
-				this._map.unproject(new L.Point(0, 0)),
-				this._map.unproject(new L.Point(width * scale, height * scale))));
+			this._map.setMaxBounds(new window.L.LatLngBounds(
+				this._map.unproject(new cool.Point(0, 0)),
+				this._map.unproject(new cool.Point(width * scale, height * scale))));
 		}
 		else if (this._map.options._origMaxBounds) {
 			// if after zoomimg the document becomes larger than the viewing area
@@ -882,7 +883,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		    'tiletwipwidth=' + app.tile.size.x + ' ' +
 		    'tiletwipheight=' + app.tile.size.y + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
-		    'zoom=' + this._map.getZoom()
+		    'zoompercent=' + this._map.getZoomPercent()
 
 		if (this._clientZoom !== newClientZoom || forceUpdate) {
 			// the zoom level has changed
@@ -900,10 +901,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!strTwips) {
 			return null;
 		}
-		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 		var bottomRightTwips = topLeftTwips.add(offset);
-		return new L.Bounds(
+		return new cool.Bounds(
 			this._twipsToPixels(topLeftTwips),
 			this._twipsToPixels(bottomRightTwips));
 	},
@@ -966,7 +967,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var strTwips = cellRange.match(/\d+/g);
 		var startCellAddress = [parseInt(strTwips[0]), parseInt(strTwips[1])];
 		var endCellAddress = [parseInt(strTwips[2]), parseInt(strTwips[3])];
-		return new L.Bounds(startCellAddress, endCellAddress);
+		return new cool.Bounds(startCellAddress, endCellAddress);
 	},
 
 	_cellRangeToTwipRect: function(cellRange) {
@@ -976,7 +977,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var endCell = cellRange.getBottomRight();
 		var endCellRectPixel = this.sheetGeometry.getCellRect(endCell.x, endCell.y);
 		var bottomRightTwips = this._corePixelsToTwips(endCellRectPixel.max);
-		return new L.Bounds(topLeftTwips, bottomRightTwips);
+		return new cool.Bounds(topLeftTwips, bottomRightTwips);
 	},
 
 	_onMessage: function (textMsg, img) {
@@ -1074,18 +1075,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				// Single format: as-is.
 				textMsgHtml = textMsgContent;
 			}
-			const hyperlinkTextBox = document.getElementById('hyperlink-text-box');
-			if (hyperlinkTextBox) {
-				// Hyperlink dialog is open, the text selection is for the link text
-				// widget.
-				const extracted = this._map.extractContent(textMsgHtml);
-				hyperlinkTextBox.value = extracted.trim();
 
-				const hyperlinkLinkBoxInput = document.getElementById('hyperlink-link-box-input');
-				if (extracted !== '' && hyperlinkLinkBoxInput) {
-					hyperlinkLinkBoxInput.focus();
-				}
-			} else if (this._map._clip) {
+			if (this._map._clip) {
 				this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
 			} else
 				// hack for ios and android to get selected text into hyperlink insertion dialog
@@ -1099,7 +1090,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map._clip.setTextSelectionHTML(jMessage.content);
 
 				// If _navigatorClipboardWrite is available, use it.
-				if (L.Browser.clipboardApiAvailable || window.ThisIsTheiOSApp)
+				if (window.L.Browser.clipboardApiAvailable || window.ThisIsTheiOSApp)
 					this._map.fire('clipboardchanged', { commandName: '.uno:CopyHyperlinkLocation' });
 				else // Or use previous method.
 					this._map._clip._execCopyCutPaste('copy');
@@ -1158,7 +1149,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('tableselected:')) {
-			this._onTableSelectedMsg(textMsg);
+			app.activeDocument.tableMiddleware.onTableSelectedMsg(textMsg);
 		}
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);
@@ -1242,15 +1233,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).onACKComment(obj);
 		}
 		else if (textMsg.startsWith('redlinetablemodified:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).onACKComment(obj);
 		}
 		else if (textMsg.startsWith('redlinetablechanged:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).onACKComment(obj);
 		}
 		else if (textMsg.startsWith('applicationbackgroundcolor:')) {
 			app.sectionContainer.setClearColor('#' + textMsg.substring('applicationbackgroundcolor:'.length + 1).trim());
@@ -1261,10 +1252,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('contentcontrol:')) {
 			textMsg = textMsg.substring('contentcontrol:'.length + 1);
-			if (!app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
+			if (!app.sectionContainer.doesSectionExist(app.CSections.ContentControl.name)) {
 				app.sectionContainer.addSection(new cool.ContentControlSection());
 			}
-			var section = app.sectionContainer.getSectionWithName(L.CSections.ContentControl.name);
+			var section = app.sectionContainer.getSectionWithName(app.CSections.ContentControl.name);
 			section.drawContentControl(JSON.parse(textMsg));
 		}
 		else if (textMsg.startsWith('versionbar:')) {
@@ -1282,13 +1273,20 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (textMsg.startsWith('a11yfocuschanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
 				var listPrefixLength = obj.listPrefixLength !== undefined ? parseInt(obj.listPrefixLength) : 0;
-				this._map._textInput.onAccessibilityFocusChanged(
-					obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end),
-					listPrefixLength, parseInt(obj.force) > 0);
+				if (typeof this._map._textInput.onAccessibilityFocusChanged === 'function') {
+					this._map._textInput.onAccessibilityFocusChanged(
+						obj.content,
+						parseInt(obj.position),
+						parseInt(obj.start),
+						parseInt(obj.end),
+						listPrefixLength,
+						parseInt(obj.force) > 0);
+				}
 			}
 			else if (textMsg.startsWith('a11ycaretchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
-				this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
+				if (typeof this._map._textInput.onAccessibilityCaretChanged === 'function')
+					this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
 			}
 			else if (textMsg.startsWith('a11ytextselectionchanged:')) {
 				obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
@@ -1350,8 +1348,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			var serverAudit = textMsg.substr(12).trim();
 			if (serverAudit !== 'disabled') {
 				// if isAdminUser property is not set by integration - enable audit dialog for all users
-				if (app.isAdminUser !== false)
+				if (app.isAdminUser !== false) {
 					this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
+
+					if (this._map.uiManager.notebookbar) {
+						this._map.uiManager.notebookbar.showItem('server-audit');
+						this._map.uiManager.notebookbar.showItem('help-serveraudit-break');
+					}
+				}
 
 				var json = JSON.parse(serverAudit);
 				app.setServerAuditFromCore(json.serverAudit);
@@ -1369,17 +1373,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		} else if (textMsg.startsWith('presentationinfo:')) {
 			var content = JSON.parse(textMsg.substring('presentationinfo:'.length + 1));
 			this._map.fire('presentationinfo', content);
-		} else if (textMsg.startsWith('slidelayer:')) {
-			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
-			this._map.fire('slidelayer', {
-				message: content,
-				image: img
-			});
-		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
-			const status = textMsg.substring('sliderenderingcomplete:'.length + 1);
-			this._map.fire('sliderenderingcomplete', {
-				success: status === 'success'
-			});
+		} else if (textMsg.startsWith('slideshowfollow')) {
+			const eventInfo = textMsg.substr('slideshowfollow '.length);
+			const parameterStartIndex = eventInfo.indexOf('{');
+			if (parameterStartIndex === -1) {
+				this._map.fire(eventInfo);
+			} else {
+				const event = eventInfo.substring(0, parameterStartIndex).trim();
+				const parameter = JSON.parse(eventInfo.substring(parameterStartIndex));
+				this._map.fire(event, parameter);
+			}
 		}
 	},
 
@@ -1397,7 +1400,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (isNaN(command.mode))
 			command.mode = this._selectedMode;
 
-		const invalidArea = new app.definitions.simpleRectangle(command.x, command.y, command.width, command.height);
+		const invalidArea = new cool.SimpleRectangle(command.x, command.y, command.width, command.height);
 		TileManager.overlapInvalidatedRectangleWithView(command.part, command.mode, command.wireId, invalidArea, textMsg);
 
 		if (this._docType === 'presentation' || this._docType === 'drawing') {
@@ -1412,13 +1415,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			const preview = this._map._docPreviews ? this._map._docPreviews[command.part] : null;
 			if (preview) { preview.invalid = true; }
 
-			const topLeftTwips = new L.Point(command.x, command.y);
-			const offset = new L.Point(command.width, command.height);
+			const topLeftTwips = new cool.Point(command.x, command.y);
+			const offset = new cool.Point(command.width, command.height);
 			const bottomRightTwips = topLeftTwips.add(offset);
-			this._previewInvalidations.push(new L.Bounds(topLeftTwips, bottomRightTwips));
+			this._previewInvalidations.push(new cool.Bounds(topLeftTwips, bottomRightTwips));
 			// 1s after the last invalidation, update the preview
 			clearTimeout(this._previewInvalidator);
-			this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
+			this._previewInvalidator = setTimeout(window.L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
 		}
 	},
 
@@ -1467,8 +1470,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					+ ' ';
 			}
 			msg += 'x=0 y=0 ';
-			msg += 'width=' + app.file.size.x + ' ';
-			msg += 'height=' + app.file.size.y;
+			msg += 'width=' + Number.MAX_SAFE_INTEGER + ' ';
+			msg += 'height=' + Number.MAX_SAFE_INTEGER;
 			if (wireIdToken !== undefined)
 				msg += ' ' + wireIdToken;
 			this._onInvalidateTilesMsg(msg);
@@ -1660,7 +1663,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
 		app.setCursorVisibility(command ? true : false);
-		this._removeSelection();
 		this._onUpdateCursor();
 		app.events.fire('TextCursorVisibility', { visible: app.file.textCursor.visible });
 	},
@@ -1678,7 +1680,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url}});
 		}
 		else if (command.id === 'print') {
-			if (this._map.options.print === false || L.Browser.cypressTest) {
+			if (this._map.options.print === false || window.L.Browser.cypressTest) {
 				// open the pdf in a new tab, it can be printed directly in the browser's pdf viewer
 				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
 					this._map.options.doc, '/download/' + command.downloadid,
@@ -1707,7 +1709,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			// Don't do a real download during testing
-			if (!L.Browser.cypressTest)
+			if (!window.L.Browser.cypressTest)
 				this._map._fileDownloader.src = url;
 			else
 				this._map._fileDownloader.setAttribute('data-src', url);
@@ -1766,7 +1768,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCellCursorMsg: function (textMsg) {
-		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
+		var autofillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.AutoFillMarker.name);
 
 		var oldCursorAddress = app.calc.cellAddress.clone();
 
@@ -1779,14 +1781,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			let _cellCursorTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
+			let _cellCursorTwips = this._convertToTileTwipsSheetArea(new cool.Bounds(topLeftTwips, bottomRightTwips));
 
-			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
+			app.calc.cellAddress = new cool.SimplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
 			let tempRectangle = _cellCursorTwips.toRectangle();
-			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
+			app.calc.cellCursorRectangle = new cool.SimpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
 			this._cellCursorSection.size[0] = app.calc.cellCursorRectangle.pWidth;
 			this._cellCursorSection.size[1] = app.calc.cellCursorRectangle.pHeight;
 			this._cellCursorSection.setPosition(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1);
@@ -1811,7 +1813,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onDocumentRepair: function (textMsg) {
 		if (!this._docRepair) {
-			this._docRepair = L.control.documentRepair();
+			this._docRepair = window.L.control.documentRepair();
 		}
 
 		if (!this._docRepair.isVisible()) {
@@ -1858,6 +1860,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
+		var grid = document.querySelector('.leaflet-map-pane');
+		if (this.isCalc() && grid.style.cursor != 'text' && this._cellCursorSection.sectionProperties.mouseInside) {
+			grid.classList.remove('spreadsheet-cursor');
+			grid.style.cursor = 'text';
+		}
+
 		// tells who trigerred cursor invalidation, but recCursors is still "ours"
 		var modifierViewId = parseInt(obj.viewId);
 		var weAreModifier = (modifierViewId === this._viewId);
@@ -1866,19 +1874,24 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 
+		if (obj.controlEvent === true)
+			this._formID = obj.windowId;
+		else
+			this._formID = null;
+
 		// Remember the last position of the caret (in core pixels).
 		this._cursorPreviousPositionCorePixels = app.file.textCursor.rectangle.clone();
 
-		app.file.textCursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
+		app.file.textCursor.rectangle = new cool.SimpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
 
 		if (this._docType === 'text') {
 			app.sectionContainer.onCursorPositionChanged();
 		}
 
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
-		app.definitions.urlPopUpSection.closeURLPopUp();
+		URLPopUpSection.closeURLPopUp();
 		if (obj.hyperlink && obj.hyperlink.link)
-			app.definitions.urlPopUpSection.showURLPopUP(obj.hyperlink.link, new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
+			URLPopUpSection.showURLPopUP(obj.hyperlink.link, new cool.SimplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 
 		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
@@ -1938,7 +1951,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		let rectangle;
 		if (obj.refpoint) {
 			let refPoint = obj.refpoint.split(',');
-			refPoint = new app.definitions.simplePoint(parseInt(refPoint[0]), parseInt(refPoint[1]));
+			refPoint = new cool.SimplePoint(parseInt(refPoint[0]), parseInt(refPoint[1]));
 
 			if (this.sheetGeometry) {
 				this.sheetGeometry.convertToTileTwips(refPoint);
@@ -1973,10 +1986,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!strTwips)
 			return null;
 
-		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 		var bottomRightTwips = topLeftTwips.add(offset);
-		strTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips)).toRectangle();
+		strTwips = this._convertToTileTwipsSheetArea(new cool.Bounds(topLeftTwips, bottomRightTwips)).toRectangle();
 		return strTwips;
 	},
 
@@ -2014,7 +2027,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!viewCursorSection.isVisible) {
 				const scrollX = viewCursorSection.position[0];
 				const scrollY = viewCursorSection.position[1];
-				this.scrollToPos(new app.definitions.simplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
+				this.scrollToPos(new cool.SimplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
 			}
 
 			OtherViewCellCursorSection.showPopUpForView(viewId);
@@ -2260,12 +2273,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('locontextmenu', obj);
 	},
 
-	_onTextSelectionMsg: function (textMsg) {
+	_convertToPointSet(rectangleArray) {
+		const result = CPolyUtil.rectanglesToPointSet(rectangleArray,
+			function (twipsPoint) {
+				var corePxPt = app.map._docLayer._twipsToCorePixels(twipsPoint);
+				corePxPt.round();
+				return corePxPt;
+			});
 
+		return result;
+	},
+
+	_onTextSelectionMsg: function (textMsg) {
 		var rectArray = this._getTextSelectionRectangles(textMsg);
-		var inTextSearch = $('input#search-input').is(':focus');
-		var isTextSelection = app.file.textCursor.visible || inTextSearch;
+
 		if (rectArray.length) {
+			TextSelections.activate();
 
 			var rectangles = rectArray.map(function (rect) {
 				return rect.getPointArray();
@@ -2284,21 +2307,12 @@ L.CanvasTileLayer = L.Layer.extend({
 				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
 			}
 
-			var docLayer = this;
-			var pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
-				function (twipsPoint) {
-					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
-					corePxPt.round();
-					return corePxPt;
-				});
+			var pointSet = this._convertToPointSet(rectangles);
 
-			if (isTextSelection)
-				this._textCSelections.setPointSet(pointSet);
-			else
-				this._cellCSelections.setPointSet(pointSet);
+			this._textCSelections.setPointSet(pointSet);
 
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
-			if (L.Browser.clipboardApiAvailable) {
+			if (window.L.Browser.clipboardApiAvailable) {
 				// Just set the selection type, no fetch of the content.
 				this._map._clip.setTextSelectionType('text');
 			} else {
@@ -2307,22 +2321,22 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._selectionContentRequest) {
 					clearTimeout(this._selectionContentRequest);
 				}
-				this._selectionContentRequest = setTimeout(L.bind(function () {
+				this._selectionContentRequest = setTimeout(window.L.bind(function () {
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');}, this), 100);
 			}
+
+			if (this._map.contextToolbar)
+				this._map.contextToolbar.showContextToolbar();
 		}
 		else {
-			this._selectionHandles.start.setShowSection(false);
-			this._selectionHandles.end.setShowSection(false);
-			this._selectionHandles.active = false;
-
+			TextSelections.deactivate();
 			this._textCSelections.clear();
-			this._cellCSelections.clear();
+			this._selectedTextContent = '';
+			if (this._map.contextToolbar)
+				this._map.contextToolbar.hideContextToolbar();
 			if (this._map._clip && this._map._clip._selectionType === 'complex')
 				this._map._clip.clearSelection();
 		}
-
-		this._onUpdateTextSelection();
 	},
 
 	_onTextViewSelectionMsg: function (textMsg) {
@@ -2393,10 +2407,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (strTwips != null) {
 				var rectangles = [];
 				for (var i = 0; i < strTwips.length; i += 4) {
-					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
-					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
+					var topLeftTwips = new cool.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					var offset = new cool.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
 					var boundsTwips = this._convertToTileTwipsSheetArea(
-						new L.Bounds(topLeftTwips, topLeftTwips.add(offset)));
+						new cool.Bounds(topLeftTwips, topLeftTwips.add(offset)));
 					rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
 						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
 				}
@@ -2488,30 +2502,54 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
-		if (this.isCalc() && oldSelection) {
-			if (!app.file.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
-				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
-				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
+		if (!oldSelection)
+			return;
 
-				var scrollX = 0, scrollY = 0;
-				if (newSelection.pX2 > app.file.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
-					scrollX = newSelection.pX2 - app.file.viewedRectangle.pX2 + spacingX;
-				else if (newSelection.pX1 < app.file.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
-					scrollX = newSelection.pX1 - app.file.viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY2 > app.file.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
-					scrollY = newSelection.pY2 - app.file.viewedRectangle.pY2 + spacingY;
-				else if (newSelection.pY1 < app.file.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
-					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 - spacingY;
-				if (scrollX !== 0 || scrollY !== 0) {
-					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
-						var address = document.querySelector('#addressInput input').value;
-						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
-							let scroll = new app.definitions.simplePoint(0,0);
-							scroll.pX = scrollX;
-							scroll.pY = scrollY;
-							this.scrollByPoint(scroll);
-						}
-					}
+		if (newSelection.equals(oldSelection.toArray()))
+			return;
+
+		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const directionDownOrRight = (newSelection.pX2 !== oldSelection.pX2) || (newSelection.pY2 !== oldSelection.pY2);
+
+		let needsScroll = false;
+		let xVisible;
+		let yVisible;
+
+		if (directionDownOrRight) {
+			xVisible = app.isXVisibleInTheDisplayedArea(newSelection.x2);
+			yVisible = app.isYVisibleInTheDisplayedArea(newSelection.y2);
+			needsScroll = !xVisible || !yVisible;
+		}
+		else {
+			xVisible = app.isXVisibleInTheDisplayedArea(newSelection.x1);
+			yVisible = app.isYVisibleInTheDisplayedArea(newSelection.y1);
+			needsScroll = !xVisible || !yVisible;
+		}
+
+		if (needsScroll) {
+			const spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
+			const spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
+			let scrollX = 0, scrollY = 0;
+
+			if (directionDownOrRight) {
+				if (!xVisible)
+					scrollX = newSelection.pX2 - viewedRectangle.pX2 + spacingX;
+
+				if (!yVisible)
+					scrollY = newSelection.pY2 - viewedRectangle.pY2 + spacingY;
+			}
+			else {
+				if (!xVisible)
+					scrollX = newSelection.pX1 - viewedRectangle.pX1 - spacingX;
+
+				if (!yVisible)
+					scrollY = newSelection.pY1 - viewedRectangle.pY1 - spacingY;
+			}
+
+			if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
+				const address = document.querySelector('#addressInput input').value;
+				if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
+					app.activeDocument.activeView.scroll(scrollX, scrollY);
 				}
 			}
 		}
@@ -2523,17 +2561,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			var oldSelection = this._selectionHandles.end.rectangle ? this._selectionHandles.end.rectangle.clone(): null;
-
-			this._selectionHandles.end.rectangle = new app.definitions.simpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y));
-
-			this._updateScrollOnCellSelection(oldSelection, this._selectionHandles.end.rectangle);
-			this._selectionHandles.end.setShowSection(true);
-			this._updateMarkers();
+			TextSelections.setEndRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
 		}
-		else {
-			this._selectionHandles.end.rectangle = null;
-		}
+		else
+			TextSelections.setEndRectangle(null);
 	},
 
 	_onTextSelectionStartMsg: function (textMsg) {
@@ -2542,47 +2573,39 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			let oldSelection = this._selectionHandles.start.rectangle ? this._selectionHandles.start.rectangle.clone(): null;
-			//FIXME: The selection is really not two points, as they can be
-			//FIXME: on top of each other, but on separate lines. We should
-			//FIXME: capture the whole area in _onTextSelectionMsg.
-			this._selectionHandles.start.rectangle = new app.definitions.simpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y));
-
-			this._updateScrollOnCellSelection(oldSelection, this._selectionHandles.start.rectangle);
-
-			this._selectionHandles.start.setShowSection(true);
-			this._selectionHandles.active = true;
+			TextSelections.setStartRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
 		}
-		else {
-			this._selectionHandles.start.rectangle = null;
-		}
+		else
+			TextSelections.setStartRectangle(null);
 	},
 
 	_refreshRowColumnHeaders: function () {
-		if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name))
-			app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-		if (app.sectionContainer.doesSectionExist(L.CSections.ColumnHeader.name))
-			app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+		if (app.sectionContainer.doesSectionExist(app.CSections.RowHeader.name))
+			app.sectionContainer.getSectionWithName(app.CSections.RowHeader.name)._updateCanvas();
+		if (app.sectionContainer.doesSectionExist(app.CSections.ColumnHeader.name))
+			app.sectionContainer.getSectionWithName(app.CSections.ColumnHeader.name)._updateCanvas();
 	},
 
 	_onCellSelectionAreaMsg: function (textMsg) {
-		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
+		var autofillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.AutoFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null) {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			var boundsTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
+			var boundsTwips = this._convertToTileTwipsSheetArea(new cool.Bounds(topLeftTwips, bottomRightTwips));
 
 			var oldSelection = this._cellSelectionArea ? this._cellSelectionArea.clone(): null;
 			const adjustedTwipsWidth = boundsTwips.max.x - boundsTwips.min.x;
 			const adjustedTwipsHeight = boundsTwips.max.y - boundsTwips.min.y;
-			this._cellSelectionArea = new app.definitions.simpleRectangle(boundsTwips.min.x, boundsTwips.min.y, adjustedTwipsWidth, adjustedTwipsHeight);
+			this._cellSelectionArea = new cool.SimpleRectangle(boundsTwips.min.x, boundsTwips.min.y, adjustedTwipsWidth, adjustedTwipsHeight);
 
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection([this._cellSelectionArea.pX2, this._cellSelectionArea.pY2]);
 
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
+
+			CellSelectionMarkers.update();
 		} else {
 			this._cellSelectionArea = null;
 			if (autofillMarkerSection)
@@ -2598,8 +2621,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCellAutoFillAreaMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null && this._map.isEditMode()) {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
@@ -2629,7 +2652,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!found) {
 				var message = 'windowpaint: message assumed PNG for hash ' + command.hash
 				    + ' is cached here in the client but not found';
-				if (L.Browser.cypressTest)
+				if (window.L.Browser.cypressTest)
 					throw new Error(message);
 				app.socket.sendMessage('ERROR ' + message);
 				// Not sure what to do. Ask the server to re-send the windowpaint: message but this time including the PNG?
@@ -2640,7 +2663,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._pngCache[i].hash == command.hash) {
 					message = 'windowpaint: message included PNG for hash ' + command.hash
 					    + ' even if it was already cached here in the client';
-					if (L.Browser.cypressTest)
+					if (window.L.Browser.cypressTest)
 						throw new Error(message);
 					app.socket.sendMessage('ERROR ' + message);
 					// Remove the extra copy, code below will add it at the start of the array
@@ -2690,12 +2713,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
 		this._textCSelections.clear();
-		// hide the cell selection
-		this._cellCSelections.clear();
 		// hide the ole selection
 		this._oleCSelections.clear();
-		// hide the selection handles
-		this._onUpdateTextSelection();
 
 		this._onUpdateCellCursor();
 		if (this._map._clip)
@@ -2706,9 +2725,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	containsSelection: function (latlng) {
 		var corepxPoint = this._map.project(latlng);
-		return this._textCSelections.empty() ?
-			this._cellCSelections.contains(corepxPoint) :
-			this._textCSelections.contains(corepxPoint);
+		return this._textCSelections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -2744,10 +2761,24 @@ L.CanvasTileLayer = L.Layer.extend({
 			y -= verticalOffset;
 		}
 
+		if (this._map.contextToolbar)
+			this._map.contextToolbar.setLastInputEventType({input: "mouse", type: type});
+
 		app.socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
 
+
+		const tempPageLinks = this._map['stateChangeHandler'].getItemValue('PageLinks');
+		const thereArePageLinks =  tempPageLinks && tempPageLinks.length > 0;
+		if (type === 'buttonup' && thereArePageLinks) {
+			URLPopUpSection.closeURLPopUp();
+			for (const link of this._map['stateChangeHandler'].getItemValue('PageLinks')) {
+				if (link.rectangle.containsPoint([x, y])) {
+					URLPopUpSection.showURLPopUP(link.uri, new cool.SimplePoint(x, y + this.getFiledBasedViewVerticalOffset()), undefined, /*linkIsClientSide:*/true);
+				}
+			}
+		}
 
 		if (type === 'buttondown')
 			this._clearSearchResults();
@@ -2793,7 +2824,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
-		if (L.Browser.mac) {
+		if (window.L.Browser.mac) {
 			// Map Mac standard shortcuts to the LO shortcuts for the corresponding
 			// functions when possible. Note that the Cmd modifier comes here as CTRL.
 
@@ -2820,6 +2851,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.TileSectionManager.postKeyboardEvent', { type: type, charCode: charCode });
 
+		if (this._map.contextToolbar)
+			this._map.contextToolbar.setLastInputEventType({input: "key", type: type});
 		var winId = this._map.getWinId();
 		if (
 			this.isCalc() &&
@@ -2865,7 +2898,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!bounds) {
 			return true;
 		}
-		return bounds.getSouthWest().equals(new L.LatLng(0, 0)) && bounds.getNorthEast().equals(new L.LatLng(0, 0));
+		return bounds.getSouthWest().equals(new window.L.LatLng(0, 0)) && bounds.getNorthEast().equals(new window.L.LatLng(0, 0));
 	},
 
 	_onZoomStart: function () {
@@ -2882,8 +2915,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateCursorPos: function () {
-		var cursorPos = new L.Point(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY1);
-		var cursorSize = new L.Point(app.file.textCursor.rectangle.pWidth, app.file.textCursor.rectangle.pHeight);
+		var cursorPos = new cool.Point(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY1);
+		var cursorSize = new cool.Point(app.file.textCursor.rectangle.pWidth, app.file.textCursor.rectangle.pHeight);
 
 		if (!this._cursorMarker) {
 			this._cursorMarker = new Cursor(cursorPos, cursorSize, this._map, { blink: true });
@@ -2913,7 +2946,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Scrolls the view to selected position
 	scrollToPos: function(pos) {
-		if (pos instanceof app.definitions.simplePoint) // Turn into lat/lng if required (pos may also be a simplePoint.).
+		if (pos instanceof cool.SimplePoint) // Turn into lat/lng if required (pos may also be a simplePoint.).
 			pos = this._twipsToLatLng({ x: pos.x, y: pos.y });
 
 		var center = this._map.project(pos);
@@ -2924,7 +2957,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// If x coordinate is already within visible area, we won't scroll to that direction.
 		if (app.isXVisibleInTheDisplayedArea(Math.round(center.x * CSSPixelsToTwips)))
-			center.x = app.file.viewedRectangle.cX1;
+			center.x = app.activeDocument.activeView.viewedRectangle.cX1;
 		else {
 			center.x -= this._map.getSize().divideBy(2).x;
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
@@ -2939,7 +2972,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
 
 		if (app.isYVisibleInTheDisplayedArea(Math.round(controlYDown * CSSPixelsToTwips)) && app.isYVisibleInTheDisplayedArea(Math.round(controlYUp * CSSPixelsToTwips)))
-			center.y = app.file.viewedRectangle.cY1;
+			center.y = app.activeDocument.activeView.viewedRectangle.cY1;
 		else {
 			center.y -= this._map.getSize().divideBy(2).y;
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
@@ -2947,9 +2980,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (needsXScroll || needsYScroll) {
-			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			const section = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (section) {
-				section.onScrollTo({x: center.x, y: center.y});
+				section.onScrollTo({x: center.x * app.dpiScale, y: center.y * app.dpiScale});
 			}
 		}
 	},
@@ -2982,20 +3015,20 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// Cursor invalidation should take most precedence among all the scrolling to follow the cursor
 			// so here we disregard all the pending scrolling
-			app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).pendingScrollEvent = null;
+			app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).pendingScrollEvent = null;
 			var correctedCursor = app.file.textCursor.rectangle.clone();
 
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.view.size.x);
-				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.view.size.x);
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.activeDocument.activeView.viewSize.x);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.activeDocument.activeView.viewSize.x);
 			}
 
-			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
-				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
+			if (!app.isPointVisibleInTheDisplayedArea(new cool.SimplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
+				!app.isPointVisibleInTheDisplayedArea(new cool.SimplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
 				if (app.isFollowingUser() && app.getFollowedViewId() === this._viewId && !this._map.calcInputBarHasFocus()) {
-					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
+					this.scrollToPos(new cool.SimplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
 			}
 		}
@@ -3015,7 +3048,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				setTimeout(function () {
 					var y = app.file.textCursor.rectangle.pY1 - that._cursorPreviousPositionCorePixels.pY1;
 					if (y) {
-						app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
+						app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).scrollVerticalWithOffset(y);
 					}
 				}, 0);
 			}
@@ -3037,10 +3070,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			&& this._map.editorHasFocus()   // not when document is not focused
 			&& !this._map.isSearching()  	// not when searching within the doc
 			&& !this._isZooming             // not when zooming
+			&& this._map._permission !== 'readonly' // not when we don't have permission to edit
 		) {
 			this._updateCursorPos();
 
-			var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			var scrollSection = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
 			if (!scrollSection.sectionProperties.mouseIsOnVerticalScrollBar && !scrollSection.sectionProperties.mouseIsOnHorizontalScrollBar) {
 				this._map._textInput.showCursor();
 			}
@@ -3056,7 +3090,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 				// We will focus map if no comment is being edited (writer only for now).
 				if (this._docType === 'text') {
-					var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+					var section = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
 					if (!section || !section.sectionProperties.selectedComment || !section.sectionProperties.selectedComment.isEdit())
 						this._map.focus(true);
 				}
@@ -3067,7 +3101,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map._textInput.hideCursor();
 			// Maintain input if a dialog or search-box has the focus.
 			if (this._map.editorHasFocus() && !this._map.uiManager.isAnyDialogOpen() && !this._map.isSearching()
-				&& !JSDialog.IsAnyInputFocused())
+				&& !JSDialog.IsAnyInputFocused() && (this._map._docLayer._preview && !this._map._docLayer._preview.partsFocused))
 				this._map.focus(false);
 		}
 
@@ -3092,7 +3126,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		const section = app.definitions.otherViewCursorSection.getViewCursorSection(viewId);
 
 		if (section && section.showSection) {
-			const point = new app.definitions.simplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
+			const point = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
 			var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
 			if (!isNewCursorVisible)
 				this.scrollToPos(point);
@@ -3136,17 +3170,18 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// TODO: used only in calc: move to CalcTileLayer
 	_onUpdateCellCursor: function (scrollToCursor, sameAddress) {
-		this._onUpdateCellResizeMarkers();
+		CellSelectionMarkers.update();
+
 		if (app.calc.cellCursorVisible) {
 			if (scrollToCursor &&
 			    !this._map.calcInputBarHasFocus()) {
 				const scroll = this._calculateScrollForNewCellCursor();
 				if (scroll.x !== 0 || scroll.y !== 0) {
-					const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
-					if (section) {
-						section.moveMapBy(scroll.cX, scroll.cY, true);
-					}
+					scroll.x += app.activeDocument.activeView.viewedRectangle.x1;
+					scroll.y += app.activeDocument.activeView.viewedRectangle.y1;
+					app.activeDocument.activeView.scrollTo(scroll.pX, scroll.pY);
 				}
+
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
 			}
 
@@ -3165,12 +3200,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._removeCellDropDownArrow();
-		app.definitions.urlPopUpSection.closeURLPopUp();
+		URLPopUpSection.closeURLPopUp();
 	},
 
 	_onValidityListButtonMsg: function(textMsg) {
 		var strXY = textMsg.match(/\d+/g);
-		var validatedCellAddress = new app.definitions.simplePoint(parseInt(strXY[0]), parseInt(strXY[1])); // Cell address of the validity list.
+		var validatedCellAddress = new cool.SimplePoint(parseInt(strXY[0]), parseInt(strXY[1])); // Cell address of the validity list.
 		var show = parseInt(strXY[2]) === 1;
 		if (show) {
 			if (this._validatedCellAddress && !validatedCellAddress.equals(this._validatedCellAddress.toArray())) {
@@ -3188,130 +3223,37 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onValidityInputHelpMsg: function(textMsg) {
 		app.definitions.validityInputHelpSection.removeValidityInputHelp();
-		app.definitions.validityInputHelpSection.showValidityInputHelp(textMsg, new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1));
+		app.definitions.validityInputHelpSection.showValidityInputHelp(textMsg, new cool.SimplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1));
 	},
 
 	_addCellDropDownArrow: function () {
 		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
 			let position;
 			if (this.sheetGeometry) {
-				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y, this._map.getZoomScale(this._map.getZoom(), this._map.options.defaultZoom));
-				const height = position.max.y - position.min.y;
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1 + (height - 16) * app.pixelsToTwips);
+				position = this.sheetGeometry.getCellRect(this._validatedCellAddress.x, this._validatedCellAddress.y);
+				position = new cool.SimplePoint(app.calc.cellCursorRectangle.x2, (position.max.y - CalcValidityDropDown.dropDownArrowSize * app.dpiScale) * app.pixelsToTwips);
 			}
 			else
-				position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - 16 * app.pixelsToTwips);
+				position = new cool.SimplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y2 - CalcValidityDropDown.dropDownArrowSize * app.dpiScale * app.pixelsToTwips);
 
-			if (!app.sectionContainer.getSectionWithName('DropDownArrow')) {
-				let dropDownSection = new app.definitions.calcValidityDropDown('DropDownArrow', position);
+			if (!app.sectionContainer.getSectionWithName(app.CSections.CalcValidityDropDown.name)) {
+				let dropDownSection = new CalcValidityDropDown(position);
 				app.sectionContainer.addSection(dropDownSection);
 			}
 			else {
-				app.sectionContainer.getSectionWithName('DropDownArrow').setPosition(position.pX, position.pY);
+				app.sectionContainer.getSectionWithName(app.CSections.CalcValidityDropDown.name).setPosition(position.pX, position.pY);
 			}
 		}
 	},
 
 	_removeCellDropDownArrow: function () {
 		if (!this._validatedCellAddress)
-			app.sectionContainer.removeSection('DropDownArrow');
-	},
-
-	_onUpdateCellResizeMarkers: function () {
-		var selectionOnDesktop = window.mode.isDesktop() && (this._cellSelectionArea || app.calc.cellCursorVisible);
-
-		if (!selectionOnDesktop && (!this._cellCSelections.empty() || app.calc.cellCursorVisible)) {
-
-			if (!this._cellSelectionArea && !app.calc.cellCursorVisible)
-				return;
-
-			this._cellSelectionHandleStart.setShowSection(true);
-			this._cellSelectionHandleEnd.setShowSection(true);
-
-			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea.clone() : app.calc.cellCursorRectangle.clone();
-
-			const posStart = new app.definitions.simplePoint(cellRectangle.x1, cellRectangle.y1);
-			const posEnd = new app.definitions.simplePoint(cellRectangle.x2, cellRectangle.y2);
-
-			const offset = this._cellSelectionHandleStart.sectionProperties.circleRadius;
-			this._cellSelectionHandleStart.setPosition(posStart.pX - offset, posStart.pY - offset);
-			this._cellSelectionHandleEnd.setPosition(posEnd.pX - offset, posEnd.pY - offset);
-		}
-		else {
-			this._cellSelectionHandleStart.setShowSection(false);
-			this._cellSelectionHandleEnd.setShowSection(false);
-		}
-	},
-
-	// Update text selection handlers.
-	_onUpdateTextSelection: function () {
-		this._onUpdateCellResizeMarkers();
-
-		if (this._map.editorHasFocus() && (!this._textCSelections.empty() || this._selectionHandles.active)) {
-			this._updateMarkers();
-		}
-		else {
-			this._updateMarkers();
-			this._removeSelection();
-		}
+			app.sectionContainer.removeSection(app.CSections.CalcValidityDropDown.name);
 	},
 
 	_removeSelection: function() {
-		this._selectionHandles.start.rectangle = null;
-		this._selectionHandles.end.rectangle = null;
 		this._selectedTextContent = '';
-
-		this._selectionHandles.start.setShowSection(false);
-		this._selectionHandles.end.setShowSection(false);
-		this._selectionHandles.active = false;
-
 		this._textCSelections.clear();
-	},
-
-	_updateMarkers: function() {
-		if (!app.file.textCursor.visible || !this._selectionHandles.start.rectangle)
-			return;
-
-		if (!this._selectionHandles.start.isSectionShown() || !this._selectionHandles.end.isSectionShown())
-			return;
-
-		var startPos = { x: this._selectionHandles.start.rectangle.pX1, y: this._selectionHandles.start.rectangle.pY2 };
-		var endPos = { x: this._selectionHandles.end.rectangle.pX1, y: this._selectionHandles.end.rectangle.pY2 };
-
-		if (app.map._docLayer.isCalcRTL()) {
-			// Mirror position from right to left.
-			startPos.x = app.file.viewedRectangle.pX2 - (startPos.x - app.file.viewedRectangle.pX1);
-			endPos.x = app.file.viewedRectangle.pX2 - (endPos.x - app.file.viewedRectangle.pX1);
-		}
-
-		const oldStart = this._selectionHandles.start.getPosition();
-		const oldEnd = this._selectionHandles.end.getPosition();
-
-		startPos.x -= 30 * app.dpiScale;
-		this._selectionHandles.start.setPosition(startPos.x, startPos.y);
-		let newStart = this._selectionHandles.start.getPosition();
-
-
-		this._selectionHandles.end.setPosition(endPos.x, endPos.y);
-		const newEnd = this._selectionHandles.end.getPosition();
-
-		if (app.map._docLayer.isCalcRTL() && (newStart.y < newEnd.y || (newStart.y <= newEnd.y && newStart.x < newEnd.x))) {
-			// If the start handle is actually closer to the end of the selection, reverse positions (Right To Left case).
-			this._selectionHandles.start.setPosition(newEnd.pX, newEnd.pY);
-			this._selectionHandles.end.setPosition(newStart.pX, newStart.pY);
-		}
-		else if (
-			!app.map._docLayer.isCalcRTL() &&
-			(oldEnd.distanceTo(newStart.toArray()) < 20 || oldStart.distanceTo(newEnd.toArray()) < 20)
-		) {
-			/*
-				If the start handle is actually closer to the end of the selection, reverse positions.
-				This seems to be a core side issue to me. I think the start and end positions are switched but the handlers aren't on the core side.
-			*/
-			const temp = this._selectionHandles.start;
-			this._selectionHandles.start = this._selectionHandles.end;
-			this._selectionHandles.end = temp;
-		}
 	},
 
 	_onDragOver: function (e) {
@@ -3346,7 +3288,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isCalc())
 			return;
 
-		if (app.file.size.x === 0) { return; }
+		if (app.activeDocument.fileSize.x === 0) { return; }
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
 
@@ -3358,7 +3300,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
 
 		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
-		var ratio = widthTwips / app.file.size.x;
+		var ratio = widthTwips / app.activeDocument.fileSize.x;
 
 		maxZoom = maxZoom ? maxZoom : 10;
 		var zoom = this._map.getScaleZoom(ratio, 10);
@@ -3399,7 +3341,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var key in this._map._docPreviews) {
 			var preview = this._map._docPreviews[key];
 			preview.invalid = true;
-			this._previewInvalidations.push(new L.Bounds(new L.Point(0, 0), new L.Point(preview.maxWidth, preview.maxHeight)));
+			this._previewInvalidations.push(new cool.Bounds(new cool.Point(0, 0), new cool.Point(preview.maxWidth, preview.maxHeight)));
 		}
 		this._invalidatePreviews();
 	},
@@ -3426,9 +3368,9 @@ L.CanvasTileLayer = L.Layer.extend({
 					}
 					else {
 						// we have a custom preview
-						var bounds = new L.Bounds(
-							new L.Point(preview.tilePosX, preview.tilePosY),
-							new L.Point(preview.tilePosX + preview.tileWidth, preview.tilePosY + preview.tileHeight));
+						var bounds = new cool.Bounds(
+							new cool.Point(preview.tilePosX, preview.tilePosY),
+							new cool.Point(preview.tilePosX + preview.tileWidth, preview.tilePosY + preview.tileHeight));
 						if (preview.invalid || (preview.part === this._selectedPart ||
 								(preview.part === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) &&
 								invalidBounds.intersects(bounds)) {
@@ -3466,7 +3408,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		textMsg = textMsg.substring('formfieldbutton:'.length + 1);
 		var json = JSON.parse(textMsg);
 		if (json.action === 'show') {
-			this._formFieldButton = new L.FormFieldButton(json);
+			this._formFieldButton = new window.L.FormFieldButton(json);
 			this._map.addLayer(this._formFieldButton);
 		} else if (this._formFieldButton) {
 			this._map.removeLayer(this._formFieldButton);
@@ -3475,7 +3417,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// converts rectangle in print-twips to tile-twips rectangle of the smallest cell-range that encloses it.
 	_convertToTileTwipsSheetArea: function (rectangle) {
-		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
+		if (!(rectangle instanceof cool.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return rectangle;
 		}
 
@@ -3485,8 +3427,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_convertCalcTileTwips: function (point, offset) {
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry)
 			return point;
-		var newPoint = new L.Point(parseInt(point.x), parseInt(point.y));
-		var _offset = offset ? new L.Point(parseInt(offset.x), parseInt(offset.y)) : new L.Point(this._shapeGridOffset.x, this._shapeGridOffset.y);
+		var newPoint = new cool.Point(parseInt(point.x), parseInt(point.y));
+		var _offset = offset ? new cool.Point(parseInt(offset.x), parseInt(offset.y)) : new cool.Point(this._shapeGridOffset.x, this._shapeGridOffset.y);
 		return newPoint.add(_offset);
 	},
 
@@ -3497,7 +3439,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return undefined;
 		}
 
-		return L.Bounds.parse(msgObj.rectangle);
+		return cool.Bounds.parse(msgObj.rectangle);
 	},
 
 	_getTextSelectionRectangles: function (textMsg) {
@@ -3507,24 +3449,24 @@ L.CanvasTileLayer = L.Layer.extend({
 			return [];
 		}
 
-		return L.Bounds.parseArray(textMsg);
+		return cool.Bounds.parseArray(textMsg);
 	},
 
 	// Needed for the split-panes feature to determine the active split-pane.
 	// Needs to be implemented by the app specific TileLayer.
 	getCursorPos: function () {
 		window.app.console.error('No implementations available for getCursorPos!');
-		return new L.Point(0, 0);
+		return new cool.Point(0, 0);
 	},
 
 	/// onlyThread - takes annotation indicating which thread will be generated
 	getCommentWizardStructure: function(menuStructure, onlyThread) {
-		var customTitleBar = L.DomUtil.create('div');
-		L.DomUtil.addClass(customTitleBar, 'mobile-wizard-titlebar-btn-container');
-		var title = L.DomUtil.create('span', '', customTitleBar);
+		var customTitleBar = window.L.DomUtil.create('div');
+		window.L.DomUtil.addClass(customTitleBar, 'mobile-wizard-titlebar-btn-container');
+		var title = window.L.DomUtil.create('span', '', customTitleBar);
 		title.innerText = _('Comment');
-		var button = L.DomUtil.createWithId('button', 'insert_comment', customTitleBar);
-		L.DomUtil.addClass(button, 'mobile-wizard-titlebar-btn');
+		var button = window.L.DomUtil.createWithId('button', 'insert_comment', customTitleBar);
+		window.L.DomUtil.addClass(button, 'mobile-wizard-titlebar-btn');
 		button.innerText = '+';
 		button.onclick = this._map.insertComment.bind(this._map);
 
@@ -3543,7 +3485,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure, onlyThread);
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).createCommentStructure(menuStructure, onlyThread);
 
 		if (menuStructure.children.length === 0) {
 			var noComments = {
@@ -3605,7 +3547,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				'invalidateviewcursor'
 			];
 
-			this._printTwipsMessagesForReplay = new L.MessageStore(ownViewTypes, otherViewTypes);
+			this._printTwipsMessagesForReplay = new window.L.MessageStore(ownViewTypes, otherViewTypes);
 		}
 
 		var colonIndex = textMsg.indexOf(':');
@@ -3654,14 +3596,17 @@ L.CanvasTileLayer = L.Layer.extend({
 	_syncTilePanePos: function () {
 		if (this._container) {
 			var mapPanePos = this._map._getMapPanePos();
-			L.DomUtil.setPosition(this._container, new L.Point(-mapPanePos.x , -mapPanePos.y));
+			window.L.DomUtil.setPosition(this._container, new cool.Point(-mapPanePos.x , -mapPanePos.y));
 		}
 		var documentBounds = this._map.getPixelBoundsCore();
 		var documentPos = documentBounds.min;
 		var documentEndPos = documentBounds.max;
-		app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
-		if (app.file.writer.multiPageView)
-			MultiPageViewLayout.reset();
+
+		const size = [documentEndPos.x - documentPos.x, documentEndPos.y - documentPos.y];
+
+		app.activeDocument.activeView.viewedRectangle = new cool.SimpleRectangle(
+			documentPos.x * app.pixelsToTwips, documentPos.y * app.pixelsToTwips, size[0] * app.pixelsToTwips, size[1] * app.pixelsToTwips
+		);
 	},
 
 	pauseDrawing: function () {
@@ -3683,7 +3628,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getUIWidth: function () {
-		var section = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+		var section = app.sectionContainer.getSectionWithName(app.CSections.RowHeader.name);
 		if (section) {
 			return Math.round(section.size[0] / app.dpiScale);
 		}
@@ -3693,7 +3638,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getUIHeight: function () {
-		var section = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+		var section = app.sectionContainer.getSectionWithName(app.CSections.ColumnHeader.name);
 		if (section) {
 			return Math.round(section.size[1] / app.dpiScale);
 		}
@@ -3703,7 +3648,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGroupWidth: function () {
-		var section = app.sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
+		var section = app.sectionContainer.getSectionWithName(app.CSections.RowGroup.name);
 		if (section) {
 			return Math.round(section.size[0] / app.dpiScale);
 		}
@@ -3713,7 +3658,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGroupHeight: function () {
-		var section = app.sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
+		var section = app.sectionContainer.getSectionWithName(app.CSections.ColumnGroup.name);
 		if (section) {
 			return Math.round(section.size[1] / app.dpiScale);
 		}
@@ -3723,7 +3668,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getTilesSectionRectangle: function () {
-		var section = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
+		var section = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
 		if (section) {
 			return app.LOUtil.createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
 		}
@@ -3841,47 +3786,43 @@ L.CanvasTileLayer = L.Layer.extend({
 	onAdd: function (map) {
 		this._initContainer();
 
-		// Initiate selection handles.
-		this._selectionHandles = {};
-		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-start', false);
-		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-end', false);
-		this._selectionHandles.active = false;
-		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
-		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
+		/*
+			Because of special handling of delete and backspace chars, we need to know which Writer form is focused.
+			When sending removeTextContext event to core side, we send the formID instead of the map id.
+		*/
+		this._formID = null;
 
-		// Cell selection handles (mobile & tablet).
-		this._cellSelectionHandleStart = new app.definitions.cellSelectionHandle('cell_selection_handle_start');
-		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
-		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
-		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
+		// Initiate selection handles.
+		TextSelections.initiate();
+
+		// Initiate cell selection handles.
+		CellSelectionMarkers.initiate();
 
 		if (this.isCalc()) {
 			var cursorStyle = new CStyleData(this._cursorDataDiv);
 			var weight = cursorStyle.getFloatPropWithoutUnit('border-top-width') * app.dpiScale;
 			var color = cursorStyle.getPropValue('border-top-color');
-			this._cellCursorSection = new app.definitions.cellCursorSection(color, weight);
+			this._cellCursorSection = new CellCursorSection(color, weight);
 			app.sectionContainer.addSection(this._cellCursorSection);
 		}
 
 		this._getToolbarCommandsValues();
 		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'text');
-		this._cellCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'cell');
 		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'ole');
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 
 		// This layergroup contains all the layers corresponding to other's view
-		this._viewLayerGroup = new L.LayerGroup();
+		this._viewLayerGroup = new window.L.LayerGroup();
 		if (!app.isReadOnly()) {
 			map.addLayer(this._viewLayerGroup);
 		}
 
 		this._debug = map._debug;
 
-		this._searchResultsLayer = new L.LayerGroup();
+		this._searchResultsLayer = new window.L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
 
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
@@ -3942,16 +3883,12 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	onRemove: function (map) {
-		L.DomUtil.remove(this._container);
+		window.L.DomUtil.remove(this._container);
 		map._removeZoomLimit(this);
 		this._container = null;
 		this._tileZoom = null;
 		TileManager.clearPreFetch();
 		clearTimeout(this._previewInvalidator);
-
-		if (!this._cellCSelections.empty()) {
-			this._cellCSelections.clear();
-		}
 
 		if (!this._textCSelections.empty()) {
 			this._textCSelections.clear();
@@ -3965,11 +3902,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cursorMarker.remove();
 		}
 
-		app.sectionContainer.removeSection(this._selectionHandles.start);
-		app.sectionContainer.removeSection(this._selectionHandles.end);
+		TextSelections.dispose();
 
 		this._removeSplitters();
-		L.DomUtil.remove(this._canvasContainer);
+		window.L.DomUtil.remove(this._canvasContainer);
 	},
 
 	getEvents: function () {
@@ -3996,7 +3932,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	preZoomAnimation: function (pinchStartCenter) {
 		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
-		this._painter._offset = new L.Point(0, 0);
+		this._painter._offset = new cool.Point(0, 0);
 
 		if (this._cursorMarker && app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(0);
@@ -4009,10 +3945,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursorSection.setShowSection(false);
 		}
 
-		if (this._selectionHandles.start.isSectionShown())
-			this._selectionHandles.start.setOpacity(0);
-		if (this._selectionHandles.end.isSectionShown())
-			this._selectionHandles.end.setOpacity(0);
+		TextSelections.hideHandles();
 
 		app.definitions.otherViewCursorSection.updateVisibilities(true);
 	},
@@ -4029,10 +3962,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursorSection.setShowSection(true);
 		}
 
-		if (this._selectionHandles.start.isSectionShown())
-			this._selectionHandles.start.setOpacity(1);
-		if (this._selectionHandles.end.isSectionShown())
-			this._selectionHandles.end.setOpacity(1);
+		TextSelections.showHandles();
 
 		if (this._annotations) {
 			var annotations = this._annotations;
@@ -4085,32 +4015,32 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_twipsToCorePixels: function (twips) {
-		return new L.Point(
+		return new cool.Point(
 			twips.x * app.twipsToPixels,
 			twips.y * app.twipsToPixels);
 	},
 
 	_twipsToCorePixelsBounds: function (twips) {
-		return new L.Bounds(
+		return new cool.Bounds(
 			this._twipsToCorePixels(twips.min),
 			this._twipsToCorePixels(twips.max)
 		);
 	},
 
 	_corePixelsToTwips: function (corePixels) {
-		return new L.Point(
+		return new cool.Point(
 			corePixels.x * app.pixelsToTwips,
 			corePixels.y * app.pixelsToTwips);
 	},
 
 	_twipsToCssPixels: function (twips) {
-		return new L.Point(
+		return new cool.Point(
 			(twips.x / app.tile.size.x) * (TileManager.tileSize / app.dpiScale),
 			(twips.y / app.tile.size.y) * (TileManager.tileSize / app.dpiScale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
-		return new L.Point(
+		return new cool.Point(
 			(pixels.x * app.dpiScale) * app.pixelsToTwips,
 			(pixels.y * app.dpiScale) * app.pixelsToTwips);
 	},
@@ -4134,18 +4064,18 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateMaxBounds: function (sizeChanged) {
-		if (app.file.size.x === 0 || app.file.size.y === 0) {
+		if (app.activeDocument.fileSize.x === 0 || app.activeDocument.fileSize.y === 0) {
 			return;
 		}
 
-		var docPixelLimits = new L.Point(app.file.size.pX / app.dpiScale, app.file.size.pY / app.dpiScale);
-		var scrollPixelLimits = new L.Point(app.view.size.pX / app.dpiScale, app.view.size.pY / app.dpiScale);
-		var topLeft = this._map.unproject(new L.Point(0, 0));
+		var docPixelLimits = new cool.Point(app.activeDocument.fileSize.pX / app.dpiScale, app.activeDocument.fileSize.pY / app.dpiScale);
+		var scrollPixelLimits = new cool.Point(app.activeDocument.activeView.viewSize.pX / app.dpiScale, app.activeDocument.activeView.viewSize.pY / app.dpiScale);
+		var topLeft = this._map.unproject(new cool.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setDocBounds(new L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
-			this._map.setMaxBounds(new L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
+			this._map.setDocBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
+			this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
@@ -4176,7 +4106,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var rectangle;
 		var maxArea = -1;
 		var mostVisiblePart = 0;
-		const viewedRectangle = app.file.viewedRectangle.pToArray();
+		const viewedRectangle = app.activeDocument.activeView.viewedRectangle.pToArray();
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
 			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, viewedRectangle);
@@ -4195,10 +4125,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var i = 0; i < previews.length; i++) {
 			const img = previews[i].querySelector('img');
 			if (parseInt(previews[i].id.replace('preview-frame-part-', '')) === part) {
-				L.DomUtil.addClass(img, 'preview-img-currentpart');
+				window.L.DomUtil.addClass(img, 'preview-img-currentpart');
 			}
 			else {
-				L.DomUtil.removeClass(img, 'preview-img-currentpart');
+				window.L.DomUtil.removeClass(img, 'preview-img-currentpart');
 			}
 		}
 	},
@@ -4217,45 +4147,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_sendClientVisibleArea: function (forceUpdate) {
-		if (!this._map._docLoaded)
-			return;
-
-		if (app.file.writer.multiPageView)
-			return; // This view mode sends the client visible area after modifying the document position.
-
-		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
-
-		var visibleArea = this._map.getPixelBounds();
-		visibleArea = new L.Bounds(
-			this._pixelsToTwips(visibleArea.min),
-			this._pixelsToTwips(visibleArea.max)
-		);
-		splitPos = this._corePixelsToTwips(splitPos);
-		var size = visibleArea.getSize();
-		var visibleTopLeft = visibleArea.min;
-		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x)
-					+ ' y=' + Math.round(visibleTopLeft.y)
-					+ ' width=' + Math.round(size.x)
-					+ ' height=' + Math.round(size.y)
-					+ ' splitx=' + Math.round(splitPos.x)
-					+ ' splity=' + Math.round(splitPos.y);
-
-		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
-			// Only update on some change
-			if (this._ySplitter) {
-				this._ySplitter.onPositionChange();
-			}
-			if (this._xSplitter) {
-				this._xSplitter.onPositionChange();
-			}
-			// Visible area is dirty, update it on the server
-			app.socket.sendMessage(newClientVisibleArea);
-			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
-				this._clientVisibleArea = newClientVisibleArea;
-		}
-	},
-
 	// Update debug overlay for a tile
 	_showDebugForTile: function(key) {
 		if (!this._debug.debugOn)
@@ -4267,9 +4158,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_coordsToPixBounds: function (coords) {
 		// coords.x and coords.y are the pixel coordinates of the top-left corner of the tile.
-		var topLeft = new L.Point(coords.x, coords.y);
-		var bottomRight = topLeft.add(new L.Point(TileManager.tileSize, TileManager.tileSize));
-		return new L.Bounds(topLeft, bottomRight);
+		var topLeft = new cool.Point(coords.x, coords.y);
+		var bottomRight = topLeft.add(new cool.Point(TileManager.tileSize, TileManager.tileSize));
+		return new cool.Bounds(topLeft, bottomRight);
 	},
 
 	hasXSplitter: function () {
@@ -4294,7 +4185,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 });
 
-L.MessageStore = L.Class.extend({
+window.L.MessageStore = window.L.Class.extend({
 
 	// ownViewTypes : The types of messages related to own view.
 	// otherViewTypes: The types of messages related to other views.

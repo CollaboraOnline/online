@@ -17,14 +17,13 @@
 namespace cool {
 
 export class ColumnHeader extends Header {
-	name: string = L.CSections.ColumnHeader.name;
-	anchor: Array<Array<string>> = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
+	anchor: Array<Array<string>> = [[app.CSections.ColumnGroup.name, 'bottom', 'top'], [app.CSections.CornerHeader.name, 'right', 'left']];
 	position: number[] = [0, 0]; // This section's myTopLeft is placed according to corner header and column group sections.
 	size: number[] = [0, 19 * app.dpiScale]; // No initial width is necessary.
 	expand: Array<string> = ['right']; // Expand horizontally.
-	processingOrder: number = L.CSections.ColumnHeader.processingOrder;
-	drawingOrder: number = L.CSections.ColumnHeader.drawingOrder;
-	zIndex: number = L.CSections.ColumnHeader.zIndex;
+	processingOrder: number = app.CSections.ColumnHeader.processingOrder;
+	drawingOrder: number = app.CSections.ColumnHeader.drawingOrder;
+	zIndex: number = app.CSections.ColumnHeader.zIndex;
 	cursor: string = 'col-resize';
 
 	_current: number;
@@ -32,14 +31,14 @@ export class ColumnHeader extends Header {
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
-		super();
+		super(app.CSections.ColumnHeader.name);
 
 		if (cursor)
 			this.cursor = cursor;
 	}
 
 	onInitialize(): void {
-		this._map = L.Map.THIS;
+		this._map = window.L.Map.THIS;
 		this._isColumn = true;
 		this._current = -1;
 		this._resizeHandleSize = 15 * app.dpiScale;
@@ -61,40 +60,48 @@ export class ColumnHeader extends Header {
 
 		this._menuItem = {
 			'.uno:InsertColumnsBefore': {
-				name: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:InsertColumnsBefore', 'spreadsheet', true), 'InsertColumnsBefore'),
+				isHtmlName: true,
 				callback: (this._insertColBefore).bind(this)
 			},
 			'.uno:InsertColumnsAfter': {
-				name: _UNO('.uno:InsertColumnsAfter', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:InsertColumnsAfter', 'spreadsheet', true), 'InsertColumnsAfter'),
+				isHtmlName: true,
 				callback: (this._insertColAfter).bind(this)
 			},
 			'.uno:DeleteColumns': {
-				name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:DeleteColumns', 'spreadsheet', true), 'DeleteColumns'),
+				isHtmlName: true,
 				callback: (this._deleteSelectedCol).bind(this)
 			},
 			'.uno:ColumnWidth': {
-				name: _UNO('.uno:ColumnWidth', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:ColumnWidth', 'spreadsheet', true), 'ColumnWidth'),
+				isHtmlName: true,
 				callback: (this._columnWidth).bind(this)
 			},
 			'.uno:SetOptimalColumnWidth': {
-				name: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true), 'SetOptimalColumnWidth'),
+				isHtmlName: true,
 				callback: (this._optimalWidth).bind(this)
 			},
 			'.uno:HideColumn': {
-				name: _UNO('.uno:HideColumn', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:HideColumn', 'spreadsheet', true), 'HideColumn'),
+				isHtmlName: true,
 				callback: (this._hideColumn).bind(this)
 			},
 			'.uno:ShowColumn': {
-				name: _UNO('.uno:ShowColumn', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:ShowColumn', 'spreadsheet', true), 'ShowColumn'),
+				isHtmlName: true,
 				callback: (this._showColumn).bind(this)
 			},
 			'.uno:FreezePanes': {
-				name: _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				name: app.IconUtil.createMenuItemLink(_UNO('.uno:FreezePanes', 'spreadsheet', true), 'FreezePanes'),
+				isHtmlName: true,
 				callback: (this._freezePanes).bind(this)
 			}
 		};
 
-		this._menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
+		this._menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 		this._headerInfo = new cool.HeaderInfo(this._map, true /* isCol */);
 	}
 
@@ -183,7 +190,7 @@ export class ColumnHeader extends Header {
 		return {left: left, right: right, top: top, bottom: bottom};
 	}
 
-	onClick(point: number[], e: MouseEvent): void {
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		if (!this._mouseOverEntry)
 			return;
 
@@ -268,21 +275,6 @@ export class ColumnHeader extends Header {
 
 	setOptimalWidthAuto(): void {
 		if (this._mouseOverEntry) {
-			const column = this._mouseOverEntry.index;
-			if (!this._hitResizeArea) {
-				const command = {
-					Column: {
-						type: 'long',
-						value: column
-					},
-					Modifier: {
-						type: 'unsigned short',
-						value: 0
-					}
-				};
-				this._map.sendUnoCommand('.uno:SelectColumn', command);
-			}
-
 			const extra = {
 				aExtraHeight: {
 					type: 'unsigned short',

@@ -46,13 +46,13 @@ class TileCoordData {
 		this.y = top;
 		this.z = zoom !== null ? zoom : app.map.getZoom();
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
-		this.mode = mode !== undefined ? mode : 0;
+		this.mode = mode !== null ? mode : 0;
 
 		this.scale = Math.pow(1.2, this.z - 10);
 	}
 
 	getPos() {
-		return new L.Point(this.x, this.y);
+		return new cool.Point(this.x, this.y);
 	}
 
 	key(): string {
@@ -135,40 +135,11 @@ class PaneBorder {
 	}
 }
 
-class RawDelta {
-	private _delta: Uint8Array;
-	private _id: number;
-	private _isKeyframe: boolean;
-
-	constructor(delta: Uint8Array, id: number, isKeyframe: boolean) {
-		this._delta = delta;
-		this._id = id;
-		this._isKeyframe = isKeyframe;
-	}
-
-	public get length() {
-		return this.delta.length;
-	}
-
-	public get delta() {
-		return this._delta;
-	}
-
-	public get id() {
-		return this._id;
-	}
-
-	public get isKeyframe() {
-		return this._isKeyframe;
-	}
-}
-
 class Tile {
 	coords: TileCoordData;
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	image: ImageBitmap | null = null; // ImageBitmap ready to render
-	imgDataCache: any = null; // flat byte array of image data
-	rawDeltas: RawDelta[] = []; // deltas ready to decompress
+	rawDeltas: cool.RawDelta[] = []; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
 	loadCount: number = 0; // how many times did we get a new keyframe
@@ -189,7 +160,7 @@ class Tile {
 	}
 
 	hasContent(): boolean {
-		return this.imgDataCache || this.hasKeyframe();
+		return !!this.image || this.hasKeyframe();
 	}
 
 	needsFetch() {
@@ -239,6 +210,8 @@ class Tile {
 	}
 }
 
+type AfterFirstTileTask = () => void;
+
 class TileManager {
 	private static _docLayer: any;
 	private static _zoom: number;
@@ -254,9 +227,10 @@ class TileManager {
 	private static _partTilePreFetcher: any;
 	private static _adjacentTilePreFetcher: any;
 	private static inTransaction: number = 0;
-	private static pendingTransactions: any = [[]];
 	private static pendingDeltas: any = [];
-	private static worker: any;
+	private static workers: Worker[] = [];
+	private static transactionCallbacks: any[] = [];
+	private static nPendingWorkerTasks: number = 0;
 	private static nullDeltaUpdate = 0;
 	private static queuedProcessed: any = [];
 	private static fetchKeyframeQueue: any = []; // Queue of tiles which were GC'd earlier than coolwsd expected
@@ -265,6 +239,7 @@ class TileManager {
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: Map<string, Tile> = new Map(); // stores all tiles, keyed by coordinates, and cached, compressed deltas
 	private static tileBitmapList: Tile[] = []; // stores all tiles with bitmaps, sorted by distance from view(s)
+	private static tileImageCache: Map<string, Uint8Array | null> = new Map();
 	public static tileSize: number = 256;
 
 	// The tile distance around the visible tile area that will be requested when updating
@@ -272,22 +247,40 @@ class TileManager {
 	// The tile expansion ratio that the visible tile area will be expanded towards when
 	// updating during scrolling
 	private static directionalTileExpansion: number = 2;
-	private static pausedForDehydration: boolean = false;
+	private static pausedForCoherency: boolean = false;
 	private static shrinkCurrentId: any = null;
 
 	//private static _debugTime: any = {}; Reserved for future.
 
+	// Did we ever get a reply for a tilecombine request?
+	private static receivedFirstTile: boolean = false;
+
+	// Tasks to be executed after we got our first tile.
+	private static afterFirstTileTasks: Array<AfterFirstTileTask> = [];
+
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
-			window.app.console.info('Creating CanvasTileWorker');
-			this.worker = new Worker(
-				app.LOUtil.getURL('/src/layer/tile/TileWorker.js'),
-			);
-			this.worker.addEventListener('message', (e: any) =>
-				this.onWorkerMessage(e),
-			);
-			this.worker.addEventListener('error', (e: any) => this.disableWorker(e));
+			window.app.console.info('Creating CanvasTileWorkers');
+			for (let i = 0; i < 4; ++i) {
+				this.workers.push(
+					new Worker(app.LOUtil.getURL('/src/layer/tile/TileWorker.js')),
+				);
+				this.workers[i].addEventListener('message', (e: any) =>
+					this.onWorkerMessage(e),
+				);
+				this.workers[i].addEventListener('error', (e: any) =>
+					this.disableWorker(e),
+				);
+			}
 		}
+	}
+
+	public static isReceivedFirstTile(): boolean {
+		return this.receivedFirstTile;
+	}
+
+	public static appendAfterFirstTileTask(task: AfterFirstTileTask): void {
+		this.afterFirstTileTasks.push(task);
 	}
 
 	/// Called before frame rendering to update details
@@ -324,7 +317,7 @@ class TileManager {
 		);
 	}
 
-	private static sortTileKeysByDistance() {
+	private static sortTileKeysByDistance(): string[] {
 		return Array.from(this.tiles.keys()).sort((a: any, b: any) => {
 			return (
 				this.tiles.get(b).distanceFromView - this.tiles.get(a).distanceFromView
@@ -396,7 +389,7 @@ class TileManager {
 
 		// Trim the number of tiles down too ...
 		if (tileCount > highTileCount) {
-			var keys = sortedKeys;
+			let keys = sortedKeys;
 			if (!keys.length) keys = this.sortTileKeysByDistance();
 
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
@@ -464,6 +457,14 @@ class TileManager {
 		);
 	}
 
+	private static visibleTilesReady(): boolean {
+		for (const tile of this.tiles.values()) {
+			if (tile.distanceFromView === 0 && tile.lastPendingId && !tile.isReady())
+				return false;
+		}
+		return true;
+	}
+
 	private static endTransactionHandleBitmaps(
 		deltas: any[],
 		bitmaps: ImageBitmap[],
@@ -481,27 +482,15 @@ class TileManager {
 			if (tile.isReady()) this.tileReady(tile.coords, visibleRanges);
 		}
 
-		if (this.pendingTransactions.length === 0)
-			window.app.console.warn('Unexpectedly received decompressed deltas');
-		else {
-			const callbacks = this.pendingTransactions.shift();
-			while (callbacks.length) callbacks.pop()();
+		// Check if all current visible tiles are accounted for and resume drawing if so.
+		if (this.pausedForCoherency && this.visibleTilesReady()) {
+			app.sectionContainer.resumeDrawing();
+			this.pausedForCoherency = false;
 		}
 
-		if (this.pausedForDehydration) {
-			// Check if all current tiles are accounted for and resume drawing if so.
-			let shouldUnpause = true;
-			for (const tile of this.tiles.values()) {
-				if (tile.distanceFromView === 0 && !tile.isReady()) {
-					shouldUnpause = false;
-					break;
-				}
-			}
-			if (shouldUnpause) {
-				app.sectionContainer.resumeDrawing();
-				this.pausedForDehydration = false;
-			}
-		}
+		if (this.nPendingWorkerTasks === 0)
+			while (this.transactionCallbacks.length)
+				this.transactionCallbacks.pop()();
 
 		this.garbageCollect();
 	}
@@ -512,9 +501,16 @@ class TileManager {
 		deltas: any[],
 		bitmaps: Promise<ImageBitmap>[],
 	) {
-		if (tile.imgDataCache) {
+		const imageData = this.tileImageCache.get(tile.coords.toString());
+		if (imageData) {
+			const clampedData = new Uint8ClampedArray(
+				imageData.buffer,
+				imageData.byteOffset,
+				imageData.byteLength,
+			);
+			const image = new ImageData(clampedData, this.tileSize, this.tileSize);
 			bitmaps.push(
-				createImageBitmap(tile.imgDataCache, {
+				createImageBitmap(image, {
 					premultiplyAlpha: 'none',
 				}),
 			);
@@ -527,20 +523,52 @@ class TileManager {
 	}
 
 	private static decompressPendingDeltas(message: string) {
-		if (this.worker) {
-			this.worker.postMessage(
-				{
-					message: message,
-					deltas: this.pendingDeltas,
-					tileSize: this.tileSize,
-					current: Array.from(this.tiles.keys()).filter(
-						(key) => this.tiles.get(key).distanceFromView === 0,
-					),
-				},
-				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
-			);
+		if (this.workers.length) {
+			// The same tiles need to go to the same workers each time so that the image cache
+			// is valid. Split work up based on the tile coords.
+			const deltaBuckets = [];
+			for (let i = 0; i < this.workers.length; ++i) {
+				deltaBuckets.push([]);
+			}
+			while (this.pendingDeltas.length) {
+				const delta = this.pendingDeltas.shift();
+				const bucket =
+					Math.round(
+						delta.key.x / this.tileSize + delta.key.y / this.tileSize,
+					) % this.workers.length;
+
+				// Replace TileCoordData with string representation
+				delta.key = delta.key.key();
+
+				deltaBuckets[bucket].push(delta);
+			}
+			for (let i = 0; i < this.workers.length; ++i) {
+				const deltas: any[] = deltaBuckets[i];
+				const worker = this.workers[i];
+				if (this.debugDeltas)
+					window.app.console.debug(
+						'XXX delta bucket (' + i + ') length: ' + deltas.length,
+					);
+				if (deltas.length) {
+					++this.nPendingWorkerTasks;
+					worker.postMessage(
+						{
+							message: message,
+							deltas: deltas,
+							cachedTiles: this.tileImageCache,
+							tileSize: this.tileSize,
+						},
+						deltas.map((x: any) => x.rawDelta.buffer),
+					);
+				}
+			}
 		} else {
 			// Synchronous path
+			++this.nPendingWorkerTasks;
+
+			// Replace TileCoords with string representation
+			for (const delta of this.pendingDeltas) delta.key = delta.key.key();
+
 			this.onWorkerMessage({
 				data: {
 					message: 'endTransaction',
@@ -554,7 +582,7 @@ class TileManager {
 
 	private static applyCompressedDelta(
 		tile: Tile,
-		rawDeltas: RawDelta[],
+		rawDeltas: cool.RawDelta[],
 		isKeyframe: any,
 		wireMessage: any,
 		ids: number[],
@@ -575,7 +603,7 @@ class TileManager {
 		}, 0);
 
 		var e = {
-			key: tile.coords.key(),
+			key: tile.coords,
 			rawDelta: rawDelta,
 			isKeyframe: isKeyframe,
 			wireMessage: wireMessage,
@@ -584,101 +612,6 @@ class TileManager {
 		tile.lastPendingId = ids[1];
 
 		this.pendingDeltas.push(e);
-	}
-
-	private static applyDeltaChunk(
-		imgData: any,
-		delta: any,
-		oldData: any,
-		width: any,
-		height: any,
-	) {
-		var pixSize = width * height * 4;
-		if (this.debugDeltas)
-			window.app.console.log(
-				'Applying a delta of length ' +
-					delta.length +
-					' image size: ' +
-					pixSize,
-			);
-		// + ' hex: ' + hex2string(delta, delta.length));
-
-		var offset = 0;
-
-		// Green-tinge the old-Data ...
-		if (0) {
-			for (var i = 0; i < pixSize; ++i) oldData[i * 4 + 1] = 128;
-		}
-
-		// wipe to grey.
-		if (0) {
-			for (var i = 0; i < pixSize * 4; ++i) imgData.data[i] = 128;
-		}
-
-		// Apply delta.
-		var stop = false;
-		for (var i = 0; i < delta.length && !stop; ) {
-			switch (delta[i]) {
-				case 99: // 'c': // copy row
-					var count = delta[i + 1];
-					var srcRow = delta[i + 2];
-					var destRow = delta[i + 3];
-					if (this.debugDeltasDetail)
-						window.app.console.log(
-							'[' +
-								i +
-								']: copy ' +
-								count +
-								' row(s) ' +
-								srcRow +
-								' to ' +
-								destRow,
-						);
-					i += 4;
-					for (var cnt = 0; cnt < count; ++cnt) {
-						var src = (srcRow + cnt) * width * 4;
-						var dest = (destRow + cnt) * width * 4;
-						for (var j = 0; j < width * 4; ++j) {
-							imgData.data[dest + j] = oldData[src + j];
-						}
-					}
-					break;
-				case 100: // 'd': // new run
-					destRow = delta[i + 1];
-					var destCol = delta[i + 2];
-					var span = delta[i + 3];
-					offset = destRow * width * 4 + destCol * 4;
-					if (this.debugDeltasDetail)
-						window.app.console.log(
-							'[' +
-								i +
-								']: apply new span of size ' +
-								span +
-								' at pos ' +
-								destCol +
-								', ' +
-								destRow +
-								' into delta at byte: ' +
-								offset,
-						);
-					i += 4;
-					span *= 4;
-					for (var j = 0; j < span; ++j) imgData.data[offset++] = delta[i + j];
-					i += span;
-					// imgData.data[offset - 2] = 256; // debug - blue terminator
-					break;
-				case 116: // 't': // terminate delta new one next
-					stop = true;
-					i++;
-					break;
-				default:
-					console.log('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
-					i = delta.length;
-					break;
-			}
-		}
-
-		return i;
 	}
 
 	private static checkTileMsgObject(msgObj: any) {
@@ -758,7 +691,7 @@ class TileManager {
 		const splitPanesContext = this._docLayer.getSplitPanesContext();
 		const splitPos = splitPanesContext
 			? splitPanesContext.getSplitPos()
-			: new L.Point(0, 0);
+			: new cool.Point(0, 0);
 		if (!this._splitPos || !splitPos.equals(this._splitPos)) {
 			this._splitPos = splitPos;
 			updated = true;
@@ -788,9 +721,9 @@ class TileManager {
 			}
 
 			const tileRange = tileRanges[paneIdx];
-			const paneBorder = new L.Bounds(
-				tileRange.min.add(new L.Point(-1, -1)),
-				tileRange.max.add(new L.Point(1, 1)),
+			const paneBorder = new cool.Bounds(
+				tileRange.min.add(new cool.Point(-1, -1)),
+				tileRange.max.add(new cool.Point(1, 1)),
 			);
 
 			this._borders.push(
@@ -863,10 +796,6 @@ class TileManager {
 		else return false;
 	}
 
-	private static hasPendingTransactions() {
-		return this.inTransaction > 0 || this.pendingTransactions.length;
-	}
-
 	private static beginTransaction() {
 		++this.inTransaction;
 	}
@@ -912,7 +841,7 @@ class TileManager {
 		}
 
 		// Request a redraw if the tile is visible
-		const tileBounds = new L.Bounds(
+		const tileBounds = new cool.Bounds(
 			[tile.coords.x, tile.coords.y],
 			[tile.coords.x + this.tileSize, tile.coords.y + this.tileSize],
 		);
@@ -920,7 +849,8 @@ class TileManager {
 			app.sectionContainer.requestReDraw();
 	}
 
-	private static createTile(coords: TileCoordData, key: string) {
+	private static createTile(coords: TileCoordData) {
+		const key = coords.key();
 		if (this.tiles.has(key)) {
 			if (this.debugDeltas)
 				window.app.console.debug('Already created tile ' + key);
@@ -945,6 +875,14 @@ class TileManager {
 
 	private static rehydrateTile(tile: Tile, wireMessage: boolean) {
 		if (tile.needsRehydration()) {
+			// If we dehydrate a visible tile, wait for it to be ready before drawing.
+			// We may want to consider this being a threshold rather than definitely-visible as
+			// dehydration is asynchronous and our scroll position may move.
+			if (tile.distanceFromView === 0 && !this.pausedForCoherency) {
+				app.sectionContainer.pauseDrawing();
+				this.pausedForCoherency = true;
+			}
+
 			// Re-hydrate tile from cached raw deltas.
 			if (this.debugDeltas)
 				window.app.console.log(
@@ -988,23 +926,20 @@ class TileManager {
 		}
 
 		--this.inTransaction;
-		if (callback)
-			this.pendingTransactions[this.pendingTransactions.length - 1].push(
-				callback,
-			);
+		if (callback) this.transactionCallbacks.push(callback);
 
 		if (this.inTransaction !== 0) return;
 
 		// Short-circuit if there's nothing to decompress
 		if (!this.pendingDeltas.length) {
-			const callbacks =
-				this.pendingTransactions[this.pendingTransactions.length - 1];
-			while (callbacks.length) callbacks.pop()();
+			if (callback) {
+				this.transactionCallbacks.pop();
+				callback();
+			}
 			return;
 		}
 
 		try {
-			this.pendingTransactions.push([]);
 			this.decompressPendingDeltas('endTransaction');
 		} catch (e) {
 			window.app.console.error('Failed to decompress pending deltas');
@@ -1017,22 +952,21 @@ class TileManager {
 
 	private static disableWorker(e: any = null) {
 		if (e) window.app.console.error('Worker-related error encountered', e);
-		if (!this.worker) return;
+		if (!this.workers.length) return;
 
-		window.app.console.warn('Disabling worker thread');
-		try {
-			this.worker.terminate();
-		} catch (e) {
-			window.app.console.error('Error terminating worker thread', e);
+		window.app.console.warn('Disabling worker threads');
+		while (this.workers.length) {
+			const worker = this.workers.shift();
+			try {
+				worker.terminate();
+			} catch (e) {
+				window.app.console.error('Error terminating worker thread', e);
+			}
 		}
 
 		this.pendingDeltas.length = 0;
-		this.worker = null;
-		while (this.pendingTransactions.length) {
-			const callbacks = this.pendingTransactions.shift();
-			while (callbacks.length) callbacks.pop()();
-		}
-		this.pendingTransactions.push([]);
+		this.nPendingWorkerTasks = 0;
+		while (this.transactionCallbacks.length) this.transactionCallbacks.pop()();
 		this.redraw();
 	}
 
@@ -1041,10 +975,9 @@ class TileManager {
 		rawDeltas: any[],
 		deltas: any,
 		keyframeDeltaSize: any,
-		keyframeImage: any,
-		wireMessage: any,
+		keyframeImage: Uint8Array,
 	) {
-		const rawDeltaSize = tile.rawDeltas.reduce((a, c) => a + c.length, 0);
+		const rawDeltaSize = rawDeltas.reduce((a, c) => a + c.length, 0);
 
 		if (this.debugDeltas) {
 			const hexStrings = [];
@@ -1061,101 +994,32 @@ class TileManager {
 			);
 		}
 
-		// if re-creating ImageData from rawDeltas, don't update counts
-		if (wireMessage) {
-			if (keyframeDeltaSize) {
-				tile.loadCount++;
-				tile.deltaCount = 0;
-				tile.updateCount = 0;
-				if (app.map._debug.tileDataOn) {
-					app.map._debug.tileDataAddLoad();
-				}
-			} else if (rawDeltas.length === 0) {
-				tile.updateCount++;
-				this.nullDeltaUpdate++;
-				if (app.map._docLayer._emptyDeltaDiv) {
-					app.map._docLayer._emptyDeltaDiv.innerText = this.nullDeltaUpdate;
-				}
-				if (app.map._debug.tileDataOn) {
-					app.map._debug.tileDataAddUpdate();
-				}
-				return; // that was easy
-			} else {
-				tile.deltaCount++;
-				if (app.map._debug.tileDataOn) {
-					app.map._debug.tileDataAddDelta();
-				}
-			}
-		}
-		// else - re-constituting from tile.rawData
-
 		var traceEvent = app.socket.createCompleteTraceEvent(
 			'L.CanvasTileLayer.applyDelta',
 			{ keyFrame: !!keyframeDeltaSize, length: rawDeltaSize },
 		);
 
-		// apply potentially several deltas in turn.
-		var i = 0;
-
-		// If it's a new keyframe, use the given image and offset
-		var imgData = keyframeImage;
-		var offset = keyframeDeltaSize;
-
-		while (offset < deltas.length) {
-			if (this.debugDeltas)
-				window.app.console.log(
-					'Next delta at ' + offset + ' length ' + (deltas.length - offset),
-				);
-
-			var delta = !offset ? deltas : deltas.subarray(offset);
-
-			// Debugging paranoia: if we get this wrong bad things happen.
-			if (delta.length >= this.tileSize * this.tileSize * 4) {
-				window.app.console.warn(
-					'Unusual delta possibly mis-tagged, suspicious size vs. type ' +
-						delta.length +
-						' vs. ' +
-						this.tileSize * this.tileSize * 4,
-				);
-			}
-
-			if (!imgData)
-				// no keyframe
-				imgData = tile.imgDataCache;
-			if (!imgData) {
-				window.app.console.error(
-					'Trying to apply delta with no ImageData cache',
-				);
-				return;
-			}
-
-			// copy old data to work from:
-			var oldData = new Uint8ClampedArray(imgData.data);
-
-			var len = this.applyDeltaChunk(
-				imgData,
-				delta,
-				oldData,
-				this.tileSize,
-				this.tileSize,
+		const key = tile.coords.toString();
+		const imgData = keyframeImage
+			? keyframeImage
+			: this.tileImageCache.get(key);
+		if (!imgData) {
+			window.app.console.error(
+				'Trying to apply delta with no image data cache',
 			);
-			if (this.debugDeltas)
-				window.app.console.log(
-					'Applied chunk ' +
-						i++ +
-						' of total size ' +
-						delta.length +
-						' at stream offset ' +
-						offset +
-						' size ' +
-						len,
-				);
-
-			offset += len;
+			return;
 		}
 
+		cool.CanvasTileUtils.updateImageFromDeltas(
+			imgData,
+			deltas,
+			keyframeDeltaSize,
+			this.tileSize,
+			this.debugDeltas,
+		);
+
 		// hold onto the original imgData for reuse in the no keyframe case
-		tile.imgDataCache = imgData;
+		this.tileImageCache.set(key, imgData);
 
 		if (traceEvent) traceEvent.finish();
 	}
@@ -1173,7 +1037,7 @@ class TileManager {
 
 	private static removeAllTiles() {
 		this.tileBitmapList = [];
-		for (const key in Array.from(this.tiles.keys())) {
+		for (const key of Array.from(this.tiles.keys())) {
 			this.removeTile(key);
 		}
 	}
@@ -1210,7 +1074,7 @@ class TileManager {
 		if (tile.image) {
 			tile.image.close();
 			tile.image = null;
-			tile.imgDataCache = null;
+			this.tileImageCache.delete(tile.coords.toString());
 
 			tile.decompressedId = 0;
 			tile.lastPendingId = 0;
@@ -1252,7 +1116,7 @@ class TileManager {
 				// request separately from the current viewPort to get
 				// those tiles first.
 
-				const direction = app.sectionContainer.getLastPanDirection();
+				const direction = app.activeDocument.activeView.getLastPanDirection();
 
 				// Conservatively enlarge the area to round to more tiles:
 				const pixelTopLeft = this._pixelBounds.getTopLeft();
@@ -1265,7 +1129,7 @@ class TileManager {
 					Math.ceil(pixelBottomRight.y / this.tileSize) * this.tileSize;
 				pixelBottomRight.y += 1;
 
-				this._pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+				this._pixelBounds = new cool.Bounds(pixelTopLeft, pixelBottomRight);
 
 				// Translate the area in the direction we're going.
 				this._pixelBounds.translate(
@@ -1319,25 +1183,23 @@ class TileManager {
 			var tilePositionsY = [];
 			var tileWids = [];
 
-			var added: any = {}; // uniqify
-			var hasTiles = false;
+			const added: Set<string> = new Set(); // uniqify
 			for (var i = 0; i < partTileQueue.length; ++i) {
-				var coords = partTileQueue[i];
-				var key = coords.key();
+				const coords = partTileQueue[i];
+				const key = coords.key();
 				const tile = this.tiles.get(key);
 
 				// don't send lots of duplicate, fast tilecombines
 				if (tile && tile.requestingTooFast(now)) continue;
 
 				// request each tile just once in these tilecombines
-				if (added[key]) continue;
-				added[key] = true;
-				hasTiles = true;
+				if (added.has(key)) continue;
+				added.add(key);
 
 				// build parameters
 				tileWids.push(tile && tile.wireId !== undefined ? tile.wireId : 0);
 
-				const twips = new L.Point(
+				const twips = new cool.Point(
 					Math.floor(coords.x / this.tileSize) * app.tile.size.x,
 					Math.floor(coords.y / this.tileSize) * app.tile.size.y,
 				);
@@ -1375,7 +1237,7 @@ class TileManager {
 				' ' +
 				'tileheight=' +
 				app.tile.size.y;
-			if (hasTiles) app.socket.sendMessage(msg, '');
+			if (added.size) app.socket.sendMessage(msg, '');
 			else window.app.console.log('Skipped empty (too fast) tilecombine');
 		}
 	}
@@ -1410,7 +1272,7 @@ class TileManager {
 			return;
 		}
 		if (!visibleRanges) visibleRanges = this.getVisibleRanges();
-		const tileBounds = new L.Bounds(
+		const tileBounds = new cool.Bounds(
 			[tile.coords.x, tile.coords.y],
 			[tile.coords.x + this.tileSize, tile.coords.y + this.tileSize],
 		);
@@ -1443,7 +1305,6 @@ class TileManager {
 		// create a queue of coordinates to load tiles from. Rehydrate tiles if we're dealing
 		// with the currently visible area.
 		this.beginTransaction();
-		let dehydratedVisible = false;
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			// Expand the 'current' area to add a small buffer around the visible area that
 			// helps us avoid visible tile updates.
@@ -1464,26 +1325,13 @@ class TileManager {
 
 					if (!this.isValidTile(coords)) continue;
 
-					var key = coords.key();
+					const key = coords.key();
 					const tile = this.tiles.get(key);
 
 					if (!tile || tile.needsFetch()) queue.push(coords);
-					else if (isCurrent && this.makeTileCurrent(tile)) {
-						const tileIsVisible =
-							j >= tileRanges[rangeIdx].min.y &&
-							j <= tileRanges[rangeIdx].max.y &&
-							i >= tileRanges[rangeIdx].min.x &&
-							i <= tileRanges[rangeIdx].max.x;
-						if (tileIsVisible) dehydratedVisible = true;
-					}
+					else if (isCurrent) this.makeTileCurrent(tile);
 				}
 			}
-		}
-
-		// If we dehydrated a visible tile, wait for it to be ready before drawing
-		if (dehydratedVisible && !this.pausedForDehydration) {
-			app.sectionContainer.pauseDrawing();
-			this.pausedForDehydration = true;
 		}
 		this.endTransaction(null);
 
@@ -1532,7 +1380,7 @@ class TileManager {
 			let tile: Tile = this.tiles.get(key);
 
 			if (!tile) {
-				tile = this.createTile(coordsQueue[i], key);
+				tile = this.createTile(coordsQueue[i]);
 
 				// Newly created tiles have a distance of zero, which means they're current.
 				if (!isCurrent) this.updateTileDistance(tile, zoom, visibleRanges);
@@ -1551,7 +1399,7 @@ class TileManager {
 			const coords: TileCoordData = coordsQueue[0];
 
 			const rectQueue: Array<TileCoordData> = [coords];
-			const bound = coords.getPos(); // L.Point
+			const bound = coords.getPos(); // cool.Point
 
 			// remove it
 			coordsQueue.splice(0, 1);
@@ -1617,8 +1465,8 @@ class TileManager {
 		this.debugDeltasDetail = state;
 	}
 
-	public static get(key: string): Tile {
-		return this.tiles.get(key);
+	public static get(coords: TileCoordData): Tile {
+		return this.tiles.get(coords.key());
 	}
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
@@ -1642,7 +1490,7 @@ class TileManager {
 		let needsNewTiles = false;
 		const calc = app.map._docLayer.isCalc();
 
-		this.tiles.forEach((tile, key) => {
+		for (const [key, tile] of Array.from(this.tiles.entries())) {
 			const coords: TileCoordData = tile.coords;
 			const tileRectangle = this.pixelCoordsToTwipTileBounds(coords);
 
@@ -1656,7 +1504,7 @@ class TileManager {
 
 				this.invalidateTile(key, wireId);
 			}
-		});
+		}
 
 		if (
 			app.map._docLayer._debug.tileInvalidationsOn &&
@@ -1684,9 +1532,9 @@ class TileManager {
 		this._preFetchPart = this._docLayer._selectedPart;
 		this._preFetchMode = this._docLayer._selectedMode;
 		this._preFetchIdle = setTimeout(
-			L.bind(function () {
+			window.L.bind(function () {
 				this._tilesPreFetcher = setInterval(
-					L.bind(this.preFetchTiles, this),
+					window.L.bind(this.preFetchTiles, this),
 					interval,
 				);
 				this._preFetchIdle = undefined;
@@ -1740,11 +1588,11 @@ class TileManager {
 		var finalQueue = [];
 		const visitedTiles: any = {};
 
-		var validTileRange = new L.Bounds(
-			new L.Point(0, 0),
-			new L.Point(
-				Math.floor((app.file.size.x - 1) / app.tile.size.x),
-				Math.floor((app.file.size.y - 1) / app.tile.size.y),
+		var validTileRange = new cool.Bounds(
+			new cool.Point(0, 0),
+			new cool.Point(
+				Math.floor((app.activeDocument.fileSize.x - 1) / app.tile.size.x),
+				Math.floor((app.activeDocument.fileSize.y - 1) / app.tile.size.y),
 			),
 		);
 
@@ -1759,7 +1607,7 @@ class TileManager {
 			const paneYFixed = paneBorder.isYFixed();
 
 			while (tilesToFetch > 0 && paneBorder.getBorderIndex() < maxBorderWidth) {
-				const clampedBorder = validTileRange.clamp(borderBounds);
+				const clampedBorder = validTileRange.clamp(borderBounds) as cool.Bounds;
 				const fetchTopBorder =
 					!paneYFixed && borderBounds.min.y === clampedBorder.min.y;
 				const fetchBottomBorder =
@@ -1928,7 +1776,7 @@ class TileManager {
 	}
 
 	public static onTileMsg(textMsg: string, img: any) {
-		var tileMsgObj: any = app.socket.parseServerCmd(textMsg);
+		const tileMsgObj: any = app.socket.parseServerCmd(textMsg);
 		this.checkTileMsgObject(tileMsgObj);
 
 		if (app.map._debug.tileDataOn) {
@@ -1950,12 +1798,11 @@ class TileManager {
 			return;
 		}
 
-		var coords = this.tileMsgToCoords(tileMsgObj);
-		var key = coords.key();
-		let tile = this.tiles.get(key);
+		const coords = this.tileMsgToCoords(tileMsgObj);
+		let tile = this.get(coords);
 
 		if (!tile) {
-			tile = this.createTile(coords, key);
+			tile = this.createTile(coords);
 			this.updateTileDistance(tile, Math.round(app.map.getZoom()));
 		}
 
@@ -1973,7 +1820,7 @@ class TileManager {
 		// it to; if so, mark it bad to re-fetch.
 		if (img && !img.isKeyframe && !tile.hasKeyframe()) {
 			window.app.console.debug(
-				'Unusual: Delta sent - but we have no keyframe for ' + key,
+				'Unusual: Delta sent - but we have no keyframe for ' + coords.key(),
 			);
 			// force keyframe
 			tile.forceKeyframe();
@@ -1991,7 +1838,7 @@ class TileManager {
 			// Store the compressed tile data for later decompression and
 			// display. This lets us store many more tiles than if we were
 			// to only store the decompressed tile data.
-			const rawDelta = new RawDelta(
+			const rawDelta = new cool.RawDelta(
 				img.rawData,
 				++tile.deltaId,
 				img.isKeyframe,
@@ -2003,13 +1850,22 @@ class TileManager {
 					'Unusual: attempt to append a delta when we have no keyframe.',
 				);
 			}
-
-			// Only decompress deltas for tiles that are current. This stops
-			// prefetching from blowing past GC limits.
-			if (tile.distanceFromView === 0) this.rehydrateTile(tile, true);
 		}
 
+		// Only decompress deltas for tiles that are current. This stops
+		// prefetching from blowing past GC limits.
+		if (tile.distanceFromView === 0) this.rehydrateTile(tile, true);
+
 		this.queueAcknowledgement(tileMsgObj);
+
+		if (!this.receivedFirstTile) {
+			// This was the first tile, exec the queued tasks.
+			this.receivedFirstTile = true;
+			while (this.afterFirstTileTasks.length > 0) {
+				const task = this.afterFirstTileTasks.shift();
+				task();
+			}
+		}
 	}
 
 	// Returns a guess of how many tiles are yet to arrive
@@ -2046,8 +1902,8 @@ class TileManager {
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
 		} else if (
-			coords.x * app.pixelsToTwips > app.file.size.x ||
-			coords.y * app.pixelsToTwips > app.file.size.y
+			coords.x * app.pixelsToTwips > app.activeDocument.fileSize.x ||
+			coords.y * app.pixelsToTwips > app.activeDocument.fileSize.y
 		) {
 			return false;
 		} else return true;
@@ -2062,8 +1918,6 @@ class TileManager {
 	}
 
 	public static update(center: any = null, zoom: number = null) {
-		if (app.file.writer.multiPageView) return;
-
 		const map: any = app.map;
 
 		if (
@@ -2090,10 +1944,10 @@ class TileManager {
 			return;
 		}
 
-		// If an update occurs while we're paused for dehydration, we haven't been able to
+		// If an update occurs while we're paused for visible tiles, we haven't been able to
 		// keep up with scrolling. In this case, we should stop expanding the current area
 		// so that it takes less time to dehydrate it.
-		if (this.pausedForDehydration) {
+		if (this.pausedForCoherency) {
 			if (this.shrinkCurrentId) clearTimeout(this.shrinkCurrentId);
 			this.shrinkCurrentId = setTimeout(() => {
 				this.shrinkCurrentId = null;
@@ -2116,7 +1970,7 @@ class TileManager {
 		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		app.map._docLayer._sendClientZoom();
-		app.map._docLayer._sendClientVisibleArea();
+		app.activeDocument.activeView.sendClientVisibleArea();
 
 		if (queue.length !== 0) this.addTiles(queue, true);
 
@@ -2125,10 +1979,14 @@ class TileManager {
 	}
 
 	public static onWorkerMessage(e: any) {
-		const bitmaps: Promise<ImageBitmap>[] = [];
+		const bitmaps: ImageBitmap[] = [];
+		const bitmapPromises: Promise<ImageBitmap>[] = [];
 		const pendingDeltas: any[] = [];
 		switch (e.data.message) {
 			case 'endTransaction':
+				if (this.nPendingWorkerTasks) --this.nPendingWorkerTasks;
+				else window.app.console.warn('Unexpected worker message');
+
 				for (const x of e.data.deltas) {
 					const tile = this.tiles.get(x.key);
 
@@ -2138,23 +1996,6 @@ class TileManager {
 								'Tile deleted during rawDelta decompression.',
 							);
 						continue;
-					}
-
-					if (!x.deltas) {
-						// This path is taken when this is called on the DOM thread (i.e. the worker
-						// hasn't decompressed the raw delta)
-						x.deltas = (window as any).fzstd.decompress(x.rawDelta);
-						if (x.isKeyframe) {
-							x.keyframeBuffer = new Uint8ClampedArray(
-								e.data.tileSize * e.data.tileSize * 4,
-							);
-							x.keyframeDeltaSize = L.CanvasTileUtils.unrle(
-								x.deltas,
-								e.data.tileSize,
-								e.data.tileSize,
-								x.keyframeBuffer,
-							);
-						} else x.keyframeDeltaSize = 0;
 					}
 
 					let rawDeltas: any[] = [];
@@ -2167,43 +2008,95 @@ class TileManager {
 							'Unusual: Received unknown decompressed keyframe delta(s)',
 						);
 
-					let keyframeImage = null;
-					if (x.isKeyframe) {
-						keyframeImage = new ImageData(
-							x.keyframeBuffer,
-							e.data.tileSize,
-							e.data.tileSize,
-						);
-					} else if (tile.decompressedId !== 0) {
-						if (x.ids[0] !== tile.decompressedId + 1) {
-							window.app.console.warn(
-								'Unusual: Received discontiguous decompressed delta',
-							);
+					const lastDecompressedId = tile.decompressedId;
+					tile.decompressedId = x.ids[1];
+
+					// if rehydrating from rawDeltas, don't update counts
+					if (x.wireMessage) {
+						if (x.isKeyframe) {
+							tile.loadCount++;
+							tile.deltaCount = 0;
+							tile.updateCount = 0;
+							if (app.map._debug.tileDataOn) {
+								app.map._debug.tileDataAddLoad();
+							}
+						} else if (rawDeltas.length === 0) {
+							tile.updateCount++;
+							this.nullDeltaUpdate++;
+							if (app.map._docLayer._emptyDeltaDiv) {
+								app.map._docLayer._emptyDeltaDiv.innerText =
+									this.nullDeltaUpdate;
+							}
+							if (app.map._debug.tileDataOn) {
+								app.map._debug.tileDataAddUpdate();
+							}
+							continue; // that was easy
+						} else {
+							tile.deltaCount++;
+							if (app.map._debug.tileDataOn) {
+								app.map._debug.tileDataAddDelta();
+							}
 						}
-					} else {
-						if (this.debugDeltas)
-							window.app.console.warn(
-								"Decompressed delta received on GC'd tile",
-							);
-						continue;
 					}
 
-					this.applyDelta(
-						tile,
-						rawDeltas,
-						x.deltas,
-						x.keyframeDeltaSize,
-						keyframeImage,
-						x.wireMessage,
-					);
+					if (!x.isKeyframe) {
+						if (lastDecompressedId !== 0) {
+							if (x.ids[0] !== lastDecompressedId + 1) {
+								window.app.console.warn(
+									'Unusual: Received discontiguous decompressed delta',
+								);
+							}
+						} else {
+							if (this.debugDeltas)
+								window.app.console.warn(
+									"Decompressed delta received on GC'd tile",
+								);
+							continue;
+						}
+					}
 
-					this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
-					tile.decompressedId = x.ids[1];
+					if (!x.bitmap) {
+						// This path is taken when this is called on the DOM thread (i.e. the worker
+						// hasn't decompressed the raw delta)
+						x.deltas = (window as any).fzstd.decompress(x.rawDelta);
+						if (x.isKeyframe) {
+							x.keyframeBuffer = new Uint8Array(
+								e.data.tileSize * e.data.tileSize * 4,
+							);
+							x.keyframeDeltaSize = cool.CanvasTileUtils.unrle(
+								x.deltas,
+								e.data.tileSize,
+								e.data.tileSize,
+								x.keyframeBuffer,
+							);
+						} else x.keyframeDeltaSize = 0;
+
+						this.applyDelta(
+							tile,
+							rawDeltas,
+							x.deltas,
+							x.keyframeDeltaSize,
+							x.keyframeBuffer,
+						);
+
+						this.createTileBitmap(tile, x, pendingDeltas, bitmapPromises);
+					} else {
+						this.tileImageCache.set(x.key, null);
+						bitmaps.push(x.bitmap);
+						pendingDeltas.push(x);
+					}
 				}
 
-				Promise.all(bitmaps).then((bitmaps) => {
+				if (bitmapPromises.length && bitmaps.length)
+					window.app.console.warn(
+						'Unusual: Sync and async tile decompression happening simultaneously',
+					);
+				if (bitmaps.length)
 					this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
-				});
+				if (bitmapPromises.length)
+					Promise.all(bitmapPromises).then((bitmaps) => {
+						this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
+					});
 				break;
 
 			default:
@@ -2216,7 +2109,6 @@ class TileManager {
 		if (!this.checkPointers() || app.map._docLayer._documentInfo === '') {
 			return;
 		}
-		var key, coords;
 		var center = app.map.getCenter();
 		var zoom = Math.round(app.map.getZoom());
 
@@ -2227,9 +2119,9 @@ class TileManager {
 
 		if (queue.length !== 0) {
 			for (let i = 0; i < queue.length; i++) {
-				coords = queue[i];
-				key = coords.key();
-				if (!this.tiles.has(key)) this.createTile(coords, key);
+				const coords = queue[i];
+				const key = coords.key();
+				if (!this.tiles.has(key)) this.createTile(coords);
 			}
 
 			this.sendTileCombineRequest(queue);
@@ -2243,23 +2135,23 @@ class TileManager {
 
 	public static expandTileRange(range: cool.Bounds): cool.Bounds {
 		const grow = this.visibleTileExpansion;
-		const direction = app.sectionContainer.getLastPanDirection();
-		const minOffset = new L.Point(
+		const direction = app.activeDocument.activeView.getLastPanDirection();
+		const minOffset = new cool.Point(
 			grow - grow * this.directionalTileExpansion * Math.min(0, direction[0]),
 			grow - grow * this.directionalTileExpansion * Math.min(0, direction[1]),
 		);
-		const maxOffset = new L.Point(
+		const maxOffset = new cool.Point(
 			grow + grow * this.directionalTileExpansion * Math.max(0, direction[0]),
 			grow + grow * this.directionalTileExpansion * Math.max(0, direction[1]),
 		);
-		return new L.Bounds(
+		return new cool.Bounds(
 			range.min.subtract(minOffset),
 			range.max.add(maxOffset),
 		);
 	}
 
 	public static pxBoundsToTileRange(bounds: any) {
-		return new L.Bounds(
+		return new cool.Bounds(
 			bounds.min.divideBy(this.tileSize)._floor(),
 			bounds.max.divideBy(this.tileSize)._floor(),
 		);
@@ -2280,7 +2172,8 @@ class TileManager {
 	}
 
 	public static getVisibleCoordList(
-		rectangle: cool.SimpleRectangle = app.file.viewedRectangle,
+		rectangle: cool.SimpleRectangle = app.activeDocument.activeView
+			.viewedRectangle,
 	) {
 		const coordList = Array<TileCoordData>();
 		const zoom = app.map.getZoom();
@@ -2306,7 +2199,7 @@ class TileManager {
 		checkOnly: boolean = false,
 		zoomFrameBounds: any = null,
 		forZoom: any = null,
-	) {
+	): TileCoordData[] {
 		if (app.map._docLayer._partHeightTwips === 0)
 			// This is true before status message is handled.
 			return [];
@@ -2345,7 +2238,7 @@ class TileManager {
 		var mode = 0; // mode is different only in Impress MasterPage mode so far
 
 		var intersectionAreaRectangle = app.LOUtil._getIntersectionRectangle(
-			app.file.viewedRectangle.pToArray(),
+			app.activeDocument.activeView.viewedRectangle.pToArray(),
 			[0, 0, partWidthPixels, partHeightPixels * app.map._docLayer._parts],
 		);
 
@@ -2364,7 +2257,9 @@ class TileManager {
 			var startPart = Math.floor(
 				intersectionAreaRectangle[1] / partHeightPixels,
 			);
-			var startY = app.file.viewedRectangle.pY1 - startPart * partHeightPixels;
+			var startY =
+				app.activeDocument.activeView.viewedRectangle.pY1 -
+				startPart * partHeightPixels;
 			startY = Math.floor(startY / app.tile.size.pY) * app.tile.size.pY;
 
 			var endPart = Math.ceil(
@@ -2372,8 +2267,8 @@ class TileManager {
 					partHeightPixels,
 			);
 			var endY =
-				app.file.viewedRectangle.pY1 +
-				app.file.viewedRectangle.pY2 -
+				app.activeDocument.activeView.viewedRectangle.pY1 +
+				app.activeDocument.activeView.viewedRectangle.pY2 -
 				endPart * partHeightPixels;
 			endY = Math.floor(endY / app.tile.size.pY) * app.tile.size.pY;
 
@@ -2413,14 +2308,13 @@ class TileManager {
 		if (checkOnly) {
 			return queue;
 		} else {
-			app.map._docLayer._sendClientVisibleArea();
+			app.activeDocument.activeView.sendClientVisibleArea();
 			app.map._docLayer._sendClientZoom();
 
 			var tileCombineQueue = [];
 			for (var i = 0; i < queue.length; i++) {
-				var key = queue[i].key();
-				let tile = this.tiles.get(key);
-				if (!tile) tile = this.createTile(queue[i], key);
+				let tile = this.get(queue[i]);
+				if (!tile) tile = this.createTile(queue[i]);
 				if (tile.needsFetch()) tileCombineQueue.push(queue[i]);
 			}
 			this.sendTileCombineRequest(tileCombineQueue);
@@ -2432,9 +2326,12 @@ class TileManager {
 	// know what monotonic time the invalidate came from
 	// so we match this to a new incoming tile to unset
 	// the invalid state later.
-	public static invalidateTile(key: any, wireId: number) {
+	public static invalidateTile(key: string, wireId: number) {
 		const tile: Tile = this.tiles.get(key);
-		if (!tile) return;
+		if (!tile) {
+			window.app.console.warn('invalidateTile called with invalid key', key);
+			return;
+		}
 
 		tile.invalidateCount++;
 

@@ -5,7 +5,7 @@
 	background: var(--color-background-lighter);
 }
 
-.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container) {
+.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container):not(.ui-pushbutton-wrapper) {
 	border: 1px solid var(--color-border-lighter);
 }
 
@@ -26,6 +26,7 @@
 .hasnotebookbar .ui-content.unotoolbutton.inline,
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
 .sidebar.unotoolbutton,
+.ui-overflow-group-more.unotoolbutton,
 .jsdialog.unotoolbutton,
 .notebookbar.unotoolbutton,
 #closebutton {
@@ -33,19 +34,19 @@
 	border: 1px solid transparent;
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
+	height: max-content;
 }
 
 /* toolbuttons non selected hover */
 .hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
 .hasnotebookbar .ui-content.unotoolbutton.inline:hover,
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline):hover,
-.sidebar.unotoolbutton:hover,
-.jsdialog.unotoolbutton:hover,
-.notebookbar.unotoolbutton:hover,
+.unotoolbutton:hover,
 .close-navigation-wrapper:hover {
 	border: 1px solid var(--color-btn-border);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
+	background-color: var(--color-background-tabs-group);
 }
 
 /* toolbuttons selected */
@@ -55,8 +56,8 @@
 .sidebar.unotoolbutton.selected,
 .notebookbar.unotoolbutton.selected,
 .jsdialog.unotoolbutton.selected {
-	background-color: var(--color-background-dark);
-	border: 1px solid var(--color-border-dark);
+	background-color: rgba(var(--doc-type), 0.1);
+	border: 1px solid rgb(var(--doc-type));
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
 }
@@ -64,23 +65,24 @@
 [data-theme='dark'] #toggledarktheme,
 [data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
 [data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
-[data-theme='dark'] .sidebar.unotoolbutton.selected {
+[data-theme='dark'] .sidebar.unotoolbutton.selected,
+[data-theme='dark'] #context-toolbar .unotoolbutton.selected {
 	background-color: var(--color-background-darker);
 	border-color: var(--color-border-darker);
 }
 
 /* toolbuttons selected hover */
+/* toolbuttons have .unobuttons as children */
 .hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
-.unotoolbutton.notebookbar:hover,
-.unotoolbutton.jsdialog:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
 .sidebar.unotoolbutton.selected:hover,
+.ui-overflow-group-more.unotoolbutton:hover,
 .notebookbar.unotoolbutton.selected:hover,
 .jsdialog.unotoolbutton.selected:hover {
-	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
+	background-color: var(--color-background-tabs-group);
 }
 
 /*limit icon to button height*/
@@ -97,7 +99,7 @@ button.jsdialog img {
 
 :not(.main-nav) .button-secondary,
 :not(.main-nav) .button-secondary:not(.arrowbackground),
-:not(.main-nav) > div > button:not(.ui-tab):not(.ui-expander):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground) {
+:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button) {
 	box-sizing: border-box;
 	height: 32px;
 	line-height: normal;
@@ -179,6 +181,15 @@ button.has-img {
 	min-width: auto !important;
 }
 
+#container .ui-grid-cell button.jsdialog.has-img:not(.sidebar) {
+	display: grid;
+	grid-template-columns: 24px 1fr;
+	text-align: start;
+	gap: 5px;
+	width: 100% !important;
+	margin: 2px !important;
+}
+
 /* Thesaurus <- button */
 button#left.has-img > img {
 	width: 16px;
@@ -191,4 +202,11 @@ button#left.has-img > img {
 
 [data-theme='dark'] button#unselect_current.has-img > img {
 	filter: invert(.9)
+}
+
+/* Writer - Format - Page Style - Columns */
+/* Writer - Format - Columns */
+div[id^='TemplateDialog'] #Columns :is(#back, #next) button.has-img,
+#ColumnDialog :is(#back, #next) button.has-img {
+	width: 100%;
 }

@@ -10,18 +10,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class CalcGridSection extends app.definitions.canvasSectionObject {
+class CalcGridSection extends CanvasSectionObject {
 	constructor () {
-        super();
+        super(app.CSections.CalcGrid.name);
 
         // Even if this one is drawn on top, won't be able to catch events.
         // Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
         this.interactable = false;
-        this.name = L.CSections.CalcGrid.name,
         this.anchor = ['top', 'left'];
-        this.processingOrder = L.CSections.CalcGrid.processingOrder, // Size and position will be copied (boundSection), this value is not important.
-        this.drawingOrder = L.CSections.CalcGrid.drawingOrder,
-        this.zIndex = L.CSections.CalcGrid.zIndex,
+        this.processingOrder = app.CSections.CalcGrid.processingOrder, // Size and position will be copied (boundSection), this value is not important.
+        this.drawingOrder = app.CSections.CalcGrid.drawingOrder,
+        this.zIndex = app.CSections.CalcGrid.zIndex,
         this.boundToSection = 'tiles';
         this.sectionProperties = {
             docLayer: app.map._docLayer,

@@ -13,22 +13,20 @@
 const sectionName = 'TileInvalidationRectangle';
 
 class InvalidationRectangleSection extends CanvasSectionObject {
-	name: string = sectionName;
-
 	/*
 		We don't want visibility issues.
 		Since there will be more than one rectangles in this section, position property (thus document section) is not useful anymore.
 	*/
 	windowSection: boolean = true;
 	showSection: boolean = true;
-	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
-	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
 	processingOrder: number =
-		L.CSections.DefaultForDocumentObjects.processingOrder;
+		app.CSections.DefaultForDocumentObjects.processingOrder;
 	interactable: boolean = false;
 
 	constructor() {
-		super();
+		super(sectionName);
 		this.sectionProperties.rectangleList = [];
 	}
 
@@ -51,8 +49,8 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 		this.context.strokeStyle = 'red';
 
 		const anchor: number[] = this.containerObject.getDocumentAnchor();
-		const xDiff = anchor[0] - this.documentTopLeft[0];
-		const yDiff = anchor[1] - this.documentTopLeft[1];
+		const xDiff = anchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
+		const yDiff = anchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;
 
 		for (let i = 0; i < rectangleList.length; i++) {
 			this.context.globalAlpha = 1 - 0.15 * i;

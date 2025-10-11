@@ -1,15 +1,15 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.FileInserter is handling the fileInserter action
+ * window.L.Map.FileInserter is handling the fileInserter action
  */
 
 /* global app _ Uint8Array errorMessages */
 
-L.Map.mergeOptions({
+window.L.Map.mergeOptions({
 	fileInserter: true
 });
 
-L.Map.FileInserter = L.Handler.extend({
+window.L.Map.FileInserter = window.L.Handler.extend({
 
 	initialize: function (map) {
 		this._map = map;
@@ -148,8 +148,8 @@ L.Map.FileInserter = L.Handler.extend({
 				};
 
 				const maxSize = {
-					width: app.file.size.cX * map.getZoomScale(10),
-					height: app.file.size.cY * map.getZoomScale(10),
+					width: app.activeDocument.fileSize.cX * map.getZoomScale(10),
+					height: app.activeDocument.fileSize.cY * map.getZoomScale(10),
 				};
 
 				const shrinkToFitFactor = Math.min(
@@ -216,7 +216,7 @@ L.Map.FileInserter = L.Handler.extend({
 				if (xmlHttp.readyState === 4) {
 					map.hideBusy();
 					if (xmlHttp.status === 200) {
-						var sectionName = L.CSections.ContentControl.name;
+						var sectionName = app.CSections.ContentControl.name;
 						var section;
 						if (sectionContainer.doesSectionExist(sectionName)) {
 							section = sectionContainer.getSectionWithName(sectionName);
@@ -263,7 +263,7 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_sendURL: function (name, e) {
-		var sectionName = L.CSections.ContentControl.name;
+		var sectionName = app.CSections.ContentControl.name;
 		var section;
 		if (app.sectionContainer.doesSectionExist(sectionName)) {
 			section = app.sectionContainer.getSectionWithName(sectionName);
@@ -278,4 +278,4 @@ L.Map.FileInserter = L.Handler.extend({
 	}
 });
 
-L.Map.addInitHook('addHandler', 'fileInserter', L.Map.FileInserter);
+window.L.Map.addInitHook('addHandler', 'fileInserter', window.L.Map.FileInserter);

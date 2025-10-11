@@ -10,11 +10,12 @@
  */
 
 /*
- * L.Control.NotebookbarBuilder - builder of native HTML widgets for tabbed menu
+ * window.L.Control.NotebookbarBuilder - builder of native HTML widgets for tabbed menu
  */
 
-/* global $ _ JSDialog app GraphicSelection */
-L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
+/* global $ _ JSDialog app GraphicSelection Menubar */
+
+window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
 		this.options.noLabelsForUnoButtons = true;
@@ -28,11 +29,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
-
-		this._controlHandlers['pushbutton'] = function() { return false; };
-		this._controlHandlers['spinfield'] = function() { return false; };
-		this._controlHandlers['formattedfield'] = function() { return false; };
-		this._controlHandlers['metricfield'] = function() { return false; };
 
 		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
 		this._toolitemHandlers['.uno:FontColor'] = JSDialog.colorPickerButton;
@@ -49,6 +45,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 		this._toolitemHandlers['.uno:SaveAs'] = this._saveAsControl;
 		this._toolitemHandlers['.uno:Print'] = this._printControl;
+		this._toolitemHandlers['.uno:Settings'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:InsertPageHeader'] = this._headerFooterControl;
 		this._toolitemHandlers['.uno:InsertPageFooter'] = this._headerFooterControl;
 		this._toolitemHandlers['.uno:Text'] = this._insertTextBoxControl;
@@ -90,7 +87,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:HideAllNotes'] = function() {};
 		this._toolitemHandlers['.uno:ShareDocument'] = function() {};
 		this._toolitemHandlers['.uno:EditDoc'] = function() {};
-		this._toolitemHandlers['.uno:AssignLayout'] = function() {};
 		this._toolitemHandlers['.uno:PresentationCurrentSlide'] = function() {};
 		this._toolitemHandlers['.uno:PresentationLayout'] = function() {};
 		this._toolitemHandlers['.uno:CapturePoint'] = function() {};
@@ -164,10 +160,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			if (saveEle) {
 				if (state === 'true' &&  this.map.saveState) {
 					this.map.saveState.showModifiedStatus();
-					document.getElementById('file-save').classList.add('savemodified');
+					const button = document.getElementById('file-save');
+					if (button) button.classList.add('savemodified');
 				} else {
-					document.getElementById('save').classList.remove('savemodified');
-					document.getElementById('file-save').classList.remove('savemodified');
+					const button = document.getElementById('save');
+					if (button) button.classList.remove('savemodified');
+					const fileButton = document.getElementById('file-save');
+					if (fileButton) fileButton.classList.remove('savemodified');
 				}
 			}
 		}
@@ -184,9 +183,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		// function inline.
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
 			// Fix issue #5838 Use unique IDs for font name combobox elements
-			var table = L.DomUtil.createWithId('div', data.id, parentContainer);
-			var row = L.DomUtil.create('div', 'notebookbar row', table);
-			var button = L.DomUtil.createWithId('button', data.id + 'ios', row);
+			var table = window.L.DomUtil.createWithId('div', data.id, parentContainer);
+			var row = window.L.DomUtil.create('div', 'notebookbar row', table);
+			var button = window.L.DomUtil.createWithId('button', data.id + 'ios', row);
 
 			$(table).addClass('select2 select2-container select2-container--default');
 			// Fix issue #5838 Don't add the "select2-selection--single" class
@@ -223,7 +222,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	{
 		var tooltipCollapsed = _('Tap to expand');
 		var tooltipExpanded = _('Tap to collapse');
-		$(tabs[t]).prop('title', tooltipExpanded);
+		tabs[t].setAttribute('data-cooltip', tooltipExpanded);
+		window.L.control.attachTooltipEventListener(tabs[t], builder.map);
 		return function(event) {
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
@@ -232,10 +232,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			if (tabIsSelected && !notebookbarIsCollapsed && !accessibilityInputElementHasFocus) {
 				builder.wizard.collapse();
-				$(tabs[t]).prop('title', tooltipCollapsed);
+				tabs[t].setAttribute('data-cooltip', tooltipCollapsed);
 			} else if (notebookbarIsCollapsed) {
 				builder.wizard.extend();
-				$(tabs[t]).prop('title', tooltipExpanded);
+				tabs[t].setAttribute('data-cooltip', tooltipExpanded);
 			}
 
 			$(tabs[t]).addClass('selected');
@@ -246,12 +246,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					$(tabs[i]).removeClass('selected');
 					tabs[i].setAttribute('aria-selected', 'false');
 					tabs[i].tabIndex = -1;
-					$(tabs[i]).prop('title', '');
+					tabs[i].setAttribute('data-cooltip', '');
 					$(contentDivs[i]).addClass('hidden');
 				}
 			}
 			$(contentDivs[t]).removeClass('hidden');
 			$(window).resize();
+			builder.map.fire('refreshoverflows',{force: true});
 			builder.wizard.selectedTab(tabIds[t]);
 
 			// Keep focus if user is navigating via keyboard.
@@ -271,6 +272,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overriddenTabPageHandler: function(parentContainer, data, builder) {
+		data.isNotebookbar = true;
 		var result = builder._tabPageHandler(parentContainer, data, builder);
 
 		var tabPage = parentContainer.lastChild;
@@ -696,7 +698,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.button).unbind('click');
 		$(control.label).unbind('click');
 		$(control.container).click(function () {
-			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: originalDataId});
+			(new Menubar())._executeAction.bind({_map: builder.options.map})(undefined, {id: originalDataId});
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
@@ -708,7 +710,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.button).unbind('click');
 		$(control.label).unbind('click');
 		$(control.container).click(function () {
-			L.DomUtil.get('selectbackground').click();
+			window.L.DomUtil.get('selectbackground').click();
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
@@ -716,7 +718,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 		$(control.button).unbind('click');
-$(control.label).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function (e) {
 			e.preventDefault();
 			var docLayer = builder.map._docLayer;
@@ -804,8 +806,8 @@ $(control.label).unbind('click');
 
 	build: function(parent, data, hasVerticalParent) {
 		if (hasVerticalParent === undefined) {
-			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
-			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
+			parent = window.L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
+			parent = window.L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
 		}
 
 		for (var childIndex in data) {
@@ -816,7 +818,6 @@ $(control.label).unbind('click');
 			var childType = childData.type;
 			var isVertical = (childData.vertical === 'true' || childData.vertical === true) ? true : false;
 
-			this._parentize(childData);
 			var processChildren = true;
 
 			if ((childData.id === undefined || childData.id === '' || childData.id === null)
@@ -829,12 +830,12 @@ $(control.label).unbind('click');
 				if (childData.id && childData.id.indexOf(' ') >= 0)
 					console.error('notebookbar: space in the id: "' + childData.id + '"');
 				var tableId = childData.id ? childData.id.replace(' ', '') : '';
-				var table = L.DomUtil.createWithId('div', tableId, parent);
-				L.DomUtil.addClass(table, this.options.cssClass);
+				var table = window.L.DomUtil.createWithId('div', tableId, parent);
+				window.L.DomUtil.addClass(table, this.options.cssClass);
 				if (isVertical)
-					L.DomUtil.addClass(table, 'vertical');
+					window.L.DomUtil.addClass(table, 'vertical');
 				else
-					L.DomUtil.addClass(table, 'horizontal');
+					window.L.DomUtil.addClass(table, 'horizontal');
 				var childObject = table;
 			} else {
 				childObject = parent;
@@ -850,29 +851,33 @@ $(control.label).unbind('click');
 			    && childData.children[0] && childData.children[0].type == 'panel'
 			    && childData.children[1] && childData.children[1].type == 'panel';
 
-			if (twoPanelsAsChildren) {
-				handler = this._controlHandlers['paneltabs'];
-				processChildren = handler(childObject, childData.children, this);
-			} else {
-				if (handler) {
-					processChildren = handler(childObject, childData, this);
-					this.postProcess(childObject, childData);
-				} else
-					window.app.console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
+			try {
+				if (twoPanelsAsChildren) {
+					handler = this._controlHandlers['paneltabs'];
+					handler(childObject, childData.children, this);
+				} else {
+					if (handler) {
+						processChildren = handler(childObject, childData, this);
+						this.postProcess(childObject, childData);
+					} else
+						window.app.console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
 
-				if (processChildren && childData.children != undefined)
-					this.build(childObject, childData.children, isVertical);
-				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
-					$('#' + childData.id).addClass('hidden-from-event');
+					if (processChildren && childData.children != undefined)
+						this.build(childObject, childData.children, isVertical);
+					else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
+						$('#' + childData.id).addClass('hidden-from-event');
+					}
 				}
+			} catch (ex) {
+				window.app.console.error('NotebookbarBuilder: exception while building "' + childData.id + '" : ' + ex);
 			}
 		}
 	}
 
 });
 
-L.control.notebookbarBuilder = function (options) {
-	var builder = new L.Control.NotebookbarBuilder(options);
+window.L.control.notebookbarBuilder = function (options) {
+	var builder = new window.L.Control.NotebookbarBuilder(options);
 	builder._setup(options);
 	builder._overrideHandlers();
 	builder._customizeOptions();

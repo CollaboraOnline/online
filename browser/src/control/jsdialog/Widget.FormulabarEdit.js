@@ -25,11 +25,13 @@
  * 'enabled' editable field can be temporarily disabled
  */
 
-/* global JSDialog */
+/* global JSDialog FormulaBarSelectionHandle cool */
 
 var scrollToCursorTimeout = null;
+var startHandle;
+var endHandle;
 
-function _sendSelection(edit, builder, id, event) {
+function _sendSelection(edit, builder, id) {
 	if (document.activeElement != edit)
 		return;
 
@@ -43,14 +45,6 @@ function _sendSelection(edit, builder, id, event) {
 
 	var startElement = selection.anchorNode;
 	var endElement = selection.focusNode;
-
-	if (!window.mode.isDesktop()) {
-		var element = document.elementFromPoint(event.clientX, event.clientY);
-		startElement = element;
-		endElement = element;
-		anchorOffset = 0;
-		focusOffset = 0;
-	}
 
 	if (selection.anchorNode == edit) {
 		startPos = endPos = 0;
@@ -95,22 +89,154 @@ function _sendSelection(edit, builder, id, event) {
 }
 
 function _appendText(cursorLayer, text, style) {
-	var span = L.DomUtil.create('span', style);
+	var span = window.L.DomUtil.create('span', style);
 	span.innerText = text;
 	cursorLayer.appendChild(span);
+	return span;
 }
 
 function _appendNewLine(cursorLayer) {
-	cursorLayer.appendChild(L.DomUtil.create('br', ''));
+	cursorLayer.appendChild(window.L.DomUtil.create('br', ''));
 }
 
 function _appendCursor(cursorLayer) {
-	var cursor = L.DomUtil.create('span', 'cursor');
+	var cursor = window.L.DomUtil.create('span', 'cursor');
 	cursorLayer.appendChild(cursor);
 	return cursor;
 }
 
-function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
+function _onSelectionHandleDragEnd(
+	start,
+	builder,
+	container,
+	wrapper,
+	cursorLayer,
+	handleLayer,
+	textLayer,
+	text,
+	startX,
+	endX,
+	startY,
+	endY
+) {
+	const resetSelection = () => {
+		_setSelection(
+			builder,
+			container,
+			wrapper,
+			cursorLayer,
+			handleLayer,
+			textLayer,
+			text,
+			startX,
+			endX,
+			startY,
+			endY
+		);
+		// Reset the selection to jump the handle back to a valid place
+		// No need to send this to core - since as we're not actually moving the selection
+	};
+
+	return (point) => {
+		const cursorLayerPosition = cursorLayer.getBoundingClientRect();
+		const newY = cursorLayerPosition.top + point.y - 1 /* or we just hit the selection handle... */;
+		let newX;
+
+		if (start) {
+			newX = cursorLayerPosition.left + point.x + startHandle.width;
+		} else {
+			newX = cursorLayerPosition.left + point.x;
+		}
+
+		let node;
+		if (document.caretPositionFromPoint) {
+			const position = document.caretPositionFromPoint(newX, newY);
+
+			if (!position) {
+				resetSelection();
+				return;
+			}
+
+			node = position.offsetNode;
+		} else {
+			const range = document.caretRangeFromPoint(newX, newY);
+
+			if (!range) {
+				resetSelection();
+				return;
+			}
+
+			node = range.startContainer;
+		}
+
+		if (!textLayer.contains(node) || textLayer === node) {
+			resetSelection();
+			return;
+		}
+
+		if (node instanceof Text) {
+			node = node.parentElement;
+		}
+
+		let newCharX = 0;
+		let newCharY = 0;
+		for (const child of textLayer.children) {
+			if (child === node && start) {
+				// The start selection should include the character you're highlighting by being *before* it
+				break;
+			}
+
+			if (child.tagName === "BR") {
+				newCharX = 0;
+				newCharY++;
+			} else {
+				newCharX++;
+			}
+
+			if (child === node) {
+				// The end selection should include the character you're highlighting by being *after* it
+				break;
+			}
+		}
+
+		let selection;
+		if (start) {
+			_setSelection(
+				builder,
+				container,
+				wrapper,
+				cursorLayer,
+				handleLayer,
+				textLayer,
+				text,
+				newCharX,
+				endX,
+				newCharY,
+				endY
+			);
+			selection = `${newCharX};${endX};${newCharY};${endY}`;
+		} else {
+			_setSelection(
+				builder,
+				container,
+				wrapper,
+				cursorLayer,
+				handleLayer,
+				textLayer,
+				text,
+				startX,
+				newCharX,
+				startY,
+				newCharY
+			);
+			selection = `${startX};${newCharX};${startY};${newCharY}`;
+		}
+
+		builder.callback('edit', 'textselection', {id: container.id}, selection, builder);
+	};
+}
+
+function _setSelection(builder, container, wrapper, cursorLayer, handleLayer, textLayer, text, startX, endX, startY, endY) {
 	var newCursorLayer = document.createDocumentFragment();
 
 	var reversedSelection = false;
@@ -134,6 +260,8 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 		endX = tmp;
 	}
 
+	let selectionTexts = [];
+
 	for (var i in text) {
 		var line = text[i];
 
@@ -146,9 +274,9 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 			if (reversedSelection)
 				var cursor = _appendCursor(newCursorLayer);
 
-			_appendText(newCursorLayer,
+			selectionTexts.push(_appendText(newCursorLayer,
 				line.substr(startX, startY == endY ? endX - startX : undefined),
-				((startX != endX || startY != endY) ? 'selection' : ''));
+				((startX != endX || startY != endY) ? 'selection' : '')));
 
 			if (startY == endY) {
 				if (!reversedSelection)
@@ -159,10 +287,10 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 			} else
 				_appendNewLine(newCursorLayer);
 		} else if (i > startY && i < endY) {
-			_appendText(newCursorLayer, line, 'selection');
+			selectionTexts.push(_appendText(newCursorLayer, line, 'selection'));
 			_appendNewLine(newCursorLayer);
 		} else if (i == endY && endY != startY) {
-			_appendText(newCursorLayer, line.substr(0, endX), 'selection');
+			selectionTexts.push(_appendText(newCursorLayer, line.substr(0, endX), 'selection'));
 			if (!reversedSelection)
 				cursor = _appendCursor(newCursorLayer);
 			_appendText(newCursorLayer, line.substr(endX), '');
@@ -185,23 +313,87 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 		// during one session of processing events where multiple setSelection actions
 		// can be found, profiling shows it is heavy operation
 		scrollToCursorTimeout = setTimeout(function () {
-			var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+			var blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
 			cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 			scrollToCursorTimeout = null;
 		}, 0);
 	}
+
+	if (!handleLayer) {
+		return;
+	}
+
+	if (startX === endX && startY === endY) {
+		if (startHandle) startHandle.requestVisible(false);
+		if (endHandle) endHandle.requestVisible(false);
+		return;
+	}
+
+	if (!startHandle) {
+		startHandle = new FormulaBarSelectionHandle(wrapper, handleLayer, 'start');
+	}
+
+	const selectionPositions = selectionTexts.flatMap(selectionText => Array.from(selectionText.getClientRects()));
+	const selectionStartPosition = selectionPositions[0];
+	const selectionEndPosition = selectionPositions[selectionPositions.length - 1];
+	const cursorLayerPosition = cursorLayer.getBoundingClientRect();
+
+	startHandle.setPosition(new cool.SimplePoint(selectionStartPosition.left - cursorLayerPosition.left, selectionStartPosition.bottom - cursorLayerPosition.top));
+	startHandle.requestVisible(true);
+	startHandle.onDragEnd = _onSelectionHandleDragEnd(
+		true,
+		builder,
+		container,
+		wrapper,
+		cursorLayer,
+		handleLayer,
+		textLayer,
+		text,
+		startX,
+		endX,
+		startY,
+		endY
+	);
+
+	if (!endHandle) {
+		endHandle = new FormulaBarSelectionHandle(wrapper, handleLayer, 'end');
+	}
+	endHandle.setPosition(new cool.SimplePoint(selectionEndPosition.right - cursorLayerPosition.left, selectionEndPosition.bottom - cursorLayerPosition.top));
+	endHandle.requestVisible(true);
+	endHandle.onDragEnd = _onSelectionHandleDragEnd(
+		false,
+		builder,
+		container,
+		wrapper,
+		cursorLayer,
+		handleLayer,
+		textLayer,
+		text,
+		startX,
+		endX,
+		startY,
+		endY
+	);
 }
 
 function _formulabarEditControl(parentContainer, data, builder) {
-	var container = L.DomUtil.create('div', 'ui-custom-textarea ' + builder.options.cssClass, parentContainer);
+	var container = window.L.DomUtil.create('div', 'ui-custom-textarea ' + builder.options.cssClass, parentContainer);
+	var wrapper = window.L.DomUtil.create('div', 'ui-custom-textarea-overflow-wrapper ' + builder.options.cssClass, container);
 	container.id = data.id;
 
-	var textLayer = L.DomUtil.create('div', 'ui-custom-textarea-text-layer ' + builder.options.cssClass, container);
+	var textLayer = window.L.DomUtil.create('div', 'ui-custom-textarea-text-layer ' + builder.options.cssClass, wrapper);
 
 	if (data.enabled !== false)
 		textLayer.setAttribute('contenteditable', 'true');
 
-	var cursorLayer = L.DomUtil.create('div', 'ui-custom-textarea-cursor-layer ' + builder.options.cssClass, container);
+	var cursorLayer = window.L.DomUtil.create('div', 'ui-custom-textarea-cursor-layer ' + builder.options.cssClass, wrapper);
+	var handleLayer = window.L.DomUtil.create('div', 'ui-custom-textarea-handle-layer ' + builder.options.cssClass, wrapper);
+
+	wrapper.addEventListener('scroll', () => {
+		requestAnimationFrame(() => {
+			handleLayer.style.top = `${-wrapper.scrollTop}px`;
+		});
+	});
 
 	container.setText = function(text, selection) {
 		var newTextLayer = document.createDocumentFragment();
@@ -222,26 +414,26 @@ function _formulabarEditControl(parentContainer, data, builder) {
 
 		text = text.split('\n');
 
-		_setSelection(cursorLayer, text, startX, endX, startY, endY);
+		_setSelection(builder, container, wrapper, cursorLayer, handleLayer, textLayer, text, startX, endX, startY, endY);
 	};
 
 	container.enable = function() {
-		L.DomUtil.removeClass(container, 'disabled');
+		window.L.DomUtil.removeClass(container, 'disabled');
 		textLayer.setAttribute('contenteditable', 'true');
 	};
 	container.disable = function() {
-		L.DomUtil.addClass(container, 'disabled');
+		window.L.DomUtil.addClass(container, 'disabled');
 		textLayer.setAttribute('contenteditable', 'false');
 	};
 
 	var textSelectionHandler = function(event) {
-		if (L.DomUtil.hasClass(container, 'disabled')) {
+		if (window.L.DomUtil.hasClass(container, 'disabled')) {
 			event.preventDefault();
 			return;
 		}
 
 		builder.callback('edit', 'grab_focus', container, null, builder);
-		_sendSelection(textLayer, builder, container.id, event);
+		_sendSelection(textLayer, builder, container.id);
 
 		builder.map.setWinId(0);
 		builder.map._textInput._emptyArea();
@@ -250,32 +442,32 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		event.preventDefault();
 	};
 
-	['click', 'dblclick'].forEach(function (ev) {
+	['click', 'dblclick', 'contextmenu'].forEach(function (ev) {
 		textLayer.addEventListener(ev, textSelectionHandler);
 	});
 
 	// hide old selection when user starts to select something else
 	textLayer.addEventListener('mousedown', function() {
-		textLayer.addEventListener('mouseleave', textSelectionHandler, {once: true});
+		textLayer.addEventListener('mouseup', textSelectionHandler, {once: true});
 		builder.callback('edit', 'grab_focus', container, null, builder);
 
 		cursorLayer.querySelectorAll('.selection').forEach(function (element) {
-			L.DomUtil.addClass(element, 'hidden');
+			window.L.DomUtil.addClass(element, 'hidden');
 		});
 
 		var cursor = cursorLayer.querySelector('.cursor');
 		if (cursor)
-			L.DomUtil.addClass(cursor, 'hidden');
+			window.L.DomUtil.addClass(cursor, 'hidden');
 	});
 
 	var text = builder._cleanText(data.text);
 	container.setText(text, [0, 0, 0, 0]);
 
 	if (data.enabled === false)
-		L.DomUtil.addClass(container, 'disabled');
+		window.L.DomUtil.addClass(container, 'disabled');
 
 	if (data.hidden)
-		L.DomUtil.addClass(container, 'hidden');
+		window.L.DomUtil.addClass(container, 'hidden');
 
 	return false;
 }

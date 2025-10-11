@@ -25,22 +25,32 @@ var NotebookbarAccessibilityDefinitions = function() {
 					var combination = language && rawList[i].accessibility[language] ? rawList[i].accessibility[language]: rawList[i].accessibility.combination;
 					var id = this.cleanMenuName(rawList[i].id);
 
-					// menu button
+					var overflow = document.querySelector('#' + id + '.ui-overflow-group');
 					var arrow = document.querySelector('#' + id + ' .arrowbackground');
-					if (arrow) {
-						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
-						continue;
-					}
-
-					// regular uno button
 					var element = document.getElementById(id + '-button');
-					if (element) {
-						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
-						continue;
-					}
 
-					// other
-					list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					if (overflow) {
+						// overflow button
+						if (typeof overflow.isCollapsed === 'function' && overflow.isCollapsed()) {
+							list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
+						} else if (rawList[i].children) {
+							this.getContentListRecursive(rawList[i].children, list, language);
+							if(rawList[i].more && rawList[i].more.accessibility) {
+								const moreAccessibility = rawList[i].more.accessibility;
+								combination = language && moreAccessibility[language] ? moreAccessibility[language]: moreAccessibility.combination;
+								list.push({ id: id + '-more-button', focusBack: moreAccessibility.focusBack, combination: combination });
+							}
+						}
+					} else if (arrow) {
+						// menu button
+						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else if (element) {
+						// regular uno button
+						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else {
+						// other
+						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					}
 				}
 				else if (rawList[i].children && Array.isArray(rawList[i].children) && rawList[i].children.length > 0) {
 					this.getContentListRecursive(rawList[i].children, list, language);

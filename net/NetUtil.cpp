@@ -15,6 +15,7 @@
 #include "AsyncDNS.hpp"
 #include <common/Util.hpp>
 #include <common/Unit.hpp>
+#include <net/Uri.hpp>
 
 #include "Socket.hpp"
 #if ENABLE_SSL && !MOBILEAPP
@@ -209,7 +210,7 @@ HostEntry syncResolveDNS(const std::string& addressToCheck)
 
     std::unique_lock<std::mutex> lock(mutex);
 
-    AsyncDNS::lookup(addressToCheck, callback, dumpState);
+    AsyncDNS::lookup(addressToCheck, std::move(callback), dumpState);
 
     cv.wait(lock, [&result]{ return static_cast<bool>(result); });
 
@@ -540,7 +541,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
         return state;
     };
 
-    AsyncDNS::lookup(host, callback, dumpState);
+    AsyncDNS::lookup(host, std::move(callback), dumpState);
 }
 
 std::shared_ptr<StreamSocket>
@@ -649,46 +650,36 @@ bool HostEntry::isLocalhost() const
 
 #endif //!MOBILEAPP
 
-bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
-              std::string& pathAndQuery)
+bool sameOrigin(const std::string& expectedOrigin, const std::string& actualOrigin)
 {
-    const auto itScheme = uri.find("://");
-    if (itScheme != uri.npos)
+    // common case, and allow empty string to be equivalent
+    if (expectedOrigin == actualOrigin)
+        return true;
+
+    std::string expectedScheme, expectedHostname, expectedPortString;
+    if (!net::parseUri(expectedOrigin, expectedScheme, expectedHostname, expectedPortString))
     {
-        scheme = uri.substr(0, itScheme + 3); // Include the last slash.
-        uri = uri.substr(scheme.size()); // Remove the scheme.
-    }
-    else
-    {
-        // No scheme.
-        scheme.clear();
+        LOG_ERR("Invalid expected origin URI [" << expectedOrigin << "] to sameOrigin");
+        return false;
     }
 
-    const auto itUrl = uri.find('/');
-    if (itUrl != uri.npos)
+    std::string actualScheme, actualHostname, actualPortString;
+    if (!net::parseUri(actualOrigin, actualScheme, actualHostname, actualPortString))
     {
-        pathAndQuery = uri.substr(itUrl); // Including the first slash.
-        uri = uri.substr(0, itUrl);
-    }
-    else
-    {
-        pathAndQuery.clear();
+        LOG_ERR("Invalid actual origin URI [" << actualOrigin << "] to sameOrigin");
+        return false;
     }
 
-    const auto itPort = uri.find(':');
-    if (itPort != uri.npos)
-    {
-        host = uri.substr(0, itPort);
-        port = uri.substr(itPort + 1); // Skip the colon.
-    }
-    else
-    {
-        // No port, just hostname.
-        host = std::move(uri);
-        port.clear();
-    }
+    if (expectedScheme != actualScheme || expectedHostname != actualHostname)
+        return false;
 
-    return !host.empty();
+    if (expectedPortString.empty())
+        expectedPortString = getDefaultPortForScheme(expectedScheme);
+
+    if (actualPortString.empty())
+        actualPortString = getDefaultPortForScheme(actualScheme);
+
+    return expectedPortString == actualPortString;
 }
 
 } // namespace net

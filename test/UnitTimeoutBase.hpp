@@ -197,7 +197,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
             }
         }
     }
-    TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit " << connectionLimit);
+    TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit "
+                                    << connectionLimit);
     // LOK_ASSERT_EQUAL(MaxConnections, connected);
     LOK_ASSERT(MaxConnections-1 <= connected && connected <= MaxConnections+1);
 
@@ -206,7 +207,9 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
     // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: " << testname << ", " << StreamSocket::getExternalConnectionCount() << " / " << net::Defaults.maxExtConnections);
+    TST_LOG("TCP Connection Count: " << testname << ", "
+                                     << StreamSocket::getExternalConnectionCount() << " / "
+                                     << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
     return TestResult::Ok;
 }
@@ -279,7 +282,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
             LOK_ASSERT_EQUAL(false, session->isConnected());
         }
     }
-    TST_LOG("Test: X01 Connected: " << connected0 << " / " << connectionsCount << ", limit " << connectionLimit);
+    TST_LOG("Test: X01 Connected: " << connected0 << " / " << connectionsCount << ", limit "
+                                    << connectionLimit);
 
     size_t connected = 0;
     for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
@@ -302,7 +306,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
         }
     }
     // 5 x Limiter hits occurred!
-    TST_LOG("Test: X02 Connected: " << connected << " / " << connectionsCount << ", limit " << connectionLimit);
+    TST_LOG("Test: X02 Connected: " << connected << " / " << connectionsCount << ", limit "
+                                    << connectionLimit);
     LOK_ASSERT(maxConnections-1 <= connected && connected <= maxConnections+1);
 
     TST_LOG("Clearing Sessions: " << testname);
@@ -310,7 +315,9 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
     // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: " << testname << ", " << StreamSocket::getExternalConnectionCount() << " / " << net::Defaults.maxExtConnections);
+    TST_LOG("TCP Connection Count: " << testname << ", "
+                                     << StreamSocket::getExternalConnectionCount() << " / "
+                                     << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
     return TestResult::Ok;
 }
@@ -405,7 +412,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
         }
     }
     // 5 x Limiter hits occurred!
-    TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit " << connectionLimit);
+    TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit "
+                                    << connectionLimit);
     LOK_ASSERT(maxConnections-1 <= connected && connected <= maxConnections+1);
 
     TST_LOG("Clearing Sessions: " << testname);
@@ -413,7 +421,9 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
     // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: " << testname << ", " << StreamSocket::getExternalConnectionCount() << " / " << net::Defaults.maxExtConnections);
+    TST_LOG("TCP Connection Count: " << testname << ", "
+                                     << StreamSocket::getExternalConnectionCount() << " / "
+                                     << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
     return TestResult::Ok;
 }

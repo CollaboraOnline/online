@@ -12,10 +12,10 @@
  * JSDialog.StatusBar - statusbar component
  */
 
-/* global $ app JSDialog _ _UNO  getPermissionModeElements */
+/* global $ app JSDialog _ _UNO  getPermissionModeElements URLPopUpSection */
 class StatusBar extends JSDialog.Toolbar {
 	constructor(map) {
-		super(map, 'toolbar-down');
+		super(map, 'Statusbar', 'toolbar-down');
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('languagesupdated', this.onLanguagesUpdated, this);
@@ -109,49 +109,24 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	onSearch(e) {
-		var searchInput = L.DomUtil.get('search-input');
+		var searchInput = window.L.DomUtil.get('search-input');
 		if (e.count === 0) {
 			this.enableItem('searchprev', false);
 			this.enableItem('searchnext', false);
 			this.showItem('cancelsearch', false);
-			L.DomUtil.addClass(searchInput, 'search-not-found');
+			window.L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
 			app.searchService.resetSelection();
 			setTimeout(function () {
 				$('#findthis').removeClass('search-not-found');
-				L.DomUtil.removeClass(searchInput, 'search-not-found');
+				window.L.DomUtil.removeClass(searchInput, 'search-not-found');
 			}, 800);
 		}
 	}
 
 	onZoomEnd() {
-		var zoomPercent = 100;
-		var zoomSelected = null;
-		switch (this.map.getZoom()) {
-			case 1:  zoomPercent =  20; zoomSelected = 'zoom20'; break;  // 0.2102
-			case 2:  zoomPercent =  25; zoomSelected = 'zoom25'; break;  // 0.2500
-			case 3:  zoomPercent =  30; zoomSelected = 'zoom30'; break;  // 0.2973
-			case 4:  zoomPercent =  35; zoomSelected = 'zoom35'; break;  // 0.3535
-			case 5:  zoomPercent =  40; zoomSelected = 'zoom40'; break;  // 0.4204
-			case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;  // 0.5
-			case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;  // 0.5946
-			case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;  // 0.7071
-			case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;  // 0.8409
-			case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break; // 1
-			case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break; // 1.1892
-			// Why do we call this 150% even if it is actually closer to 140%
-			case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break; // 1.4142
-			case 13: zoomPercent = 170; zoomSelected = 'zoom170'; break; // 1.6818
-			case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break; // 2
-			case 15: zoomPercent = 235; zoomSelected = 'zoom235'; break; // 2.3784
-			case 16: zoomPercent = 280; zoomSelected = 'zoom280'; break; // 2.8284
-			case 17: zoomPercent = 335; zoomSelected = 'zoom335'; break; // 3.3636
-			case 18: zoomPercent = 400; zoomSelected = 'zoom400'; break; // 4
-			default:
-				var zoomRatio = this.map.getZoomScale(this.map.getZoom(), this.map.options.zoom);
-				zoomPercent = Math.round(zoomRatio * 100);
-			break;
-		}
+		var zoomPercent = this.map.getZoomPercent();
+		var zoomSelected = 'zoom' + zoomPercent;
 
 		this.builder.updateWidget(this.parentContainer,
 			{
@@ -250,11 +225,6 @@ class StatusBar extends JSDialog.Toolbar {
 
 	getToolItems() {
 		return [
-			{type: 'searchedit',  id: 'search', placeholder: _('Search'), text: ''},
-			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false, pressAndHold: true},
-			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false, pressAndHold: true},
-			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},
-			{type: 'separator', id: 'searchbreak', orientation: 'vertical'},
 			this._generateHtmlItem('statusdocpos'), 					// spreadsheet
 			this._generateHtmlItem('rowcolselcount', 1), 					// spreadsheet
 			this._generateHtmlItem('statepagenumber'), 					// text
@@ -469,21 +439,21 @@ class StatusBar extends JSDialog.Toolbar {
 			this.updateHtmlItem('RowColSelCount', state ? state : _('Select multiple cells'), !state);
 		}
 		else if (commandName === '.uno:InsertMode') {
-			this.updateHtmlItem('InsertMode', state ? L.Styles.insertMode[state].toLocaleString() : ' ', !state);
+			this.updateHtmlItem('InsertMode', state ? window.L.Styles.insertMode[state].toLocaleString() : ' ', !state);
 
 			$('#InsertMode').removeClass();
 			$('#InsertMode').addClass('jsdialog ui-badge insert-mode-' + state);
 			var isDefaultState = state === 'true' || state === '';
 			$('#insertmode-container').attr('default-state', isDefaultState || null);
 
-			if ((state === 'false' || !state) && app.definitions.urlPopUpSection.isOpen()) {
+			if ((state === 'false' || !state) && URLPopUpSection.isOpen()) {
 				this.map.hyperlinkUnderCursor = null;
-				app.definitions.urlPopUpSection.closeURLPopUp();
+				URLPopUpSection.closeURLPopUp();
 			}
 		}
 		else if (commandName === '.uno:StatusSelectionMode' || commandName === '.uno:SelectionMode') {
 			$('#statusselectionmode-container').attr('default-state', state === '0' || null);
-			this.updateHtmlItem('StatusSelectionMode', state ? L.Styles.selectionMode[state].toLocaleString() : _('Selection mode: inactive'), !state);
+			this.updateHtmlItem('StatusSelectionMode', state ? window.L.Styles.selectionMode[state].toLocaleString() : _('Selection mode: inactive'), !state);
 		}
 		else if (commandName == '.uno:StateTableCell') {
 			this.updateHtmlItem('StateTableCell', state ? this.localizeStateTableCell(state) : ' ');

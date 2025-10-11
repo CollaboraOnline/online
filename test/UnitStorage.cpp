@@ -36,13 +36,13 @@ public:
     {
         // Fail the disk-space check in Filter phase.
         newResult = _phase != Phase::Filter;
-        LOG_TST("Result: " << (newResult ? "success" : "out-of-disk-space"));
+        TST_LOG("Result: " << (newResult ? "success" : "out-of-disk-space"));
         return true;
     }
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Loaded: [" << message << ']');
+        TST_LOG("Loaded: [" << message << ']');
 
         LOK_ASSERT_STATE(_phase, Phase::Done);
         passTest("Loaded successfully");
@@ -83,7 +83,7 @@ public:
             case Phase::Filter:
                 break;
             case Phase::Reload:
-                LOG_TST("Reloading the document");
+                TST_LOG("Reloading the document");
                 TRANSITION_STATE(_phase, Phase::Done);
                 initWebsocket("/wopi/files/0?access_token=anything");
                 WSD_CMD("load url=" + getWopiSrc());

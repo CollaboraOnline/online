@@ -72,17 +72,17 @@ declare namespace L {
     }
 
     class Control {
-        protected _map: L.Map; // Expose _map as a protected property
+        protected _map: window.L.Map; // Expose _map as a protected property
 
         constructor(options?: any);
-        addTo(map: L.Map): this;
+        addTo(map: window.L.Map): this;
         remove(): this;
         // Add other methods and properties as needed
         getPosition(): string;
         setPosition(position: string): this;
         getContainer(): HTMLElement | undefined;
-        onAdd(map: L.Map): HTMLElement;
-        onRemove(map: L.Map): void;
+        onAdd(map: window.L.Map): HTMLElement;
+        onRemove(map: window.L.Map): void;
 
             // Properties
             options: any; // Replace 'any' with the appropriate type if known
@@ -90,21 +90,21 @@ declare namespace L {
             _position: string;
 
             // Methods
-            addControl(control: L.Control): this;
-            removeControl(control: L.Control): this;
+            addControl(control: window.L.Control): this;
+            removeControl(control: window.L.Control): this;
             getContainer(): HTMLElement | undefined;
             setContainer(container: HTMLElement): void;
             getOptions(): any;
             setOptions(options: any): void;
-            getMap(): L.Map | undefined;
-            setMap(map: L.Map): void;
+            getMap(): window.L.Map | undefined;
+            setMap(map: window.L.Map): void;
             menubar(): void; // Add menubar functionality if applicable
 
         static extend(props: any): any;
     }
 
     const control: Control;
-    const map: L.Map;
+    const map: window.L.Map;
 }
 */
 // Add the app declaration
@@ -125,20 +125,142 @@ interface StringConstructor {
 	locale: string; // from cool-src.js
 }
 
+// Common interface of all types of sockets created by createWebSocket().
+interface SockInterface {
+	onclose: (event: CloseEvent) => void;
+	onerror: (event: Event) => void;
+	onmessage: (event: MessageEvent) => void;
+	onopen: (event: Event) => void;
+	close: (code?: number, reason?: string) => void;
+	send: (data: MessageInterface) => void;
+	setUnloading?: () => void;
+
+	readyState: 0 | 1 | 2 | 3;
+	binaryType: 'blob' | 'arraybuffer';
+}
+
+interface ErrorMessages {
+	diskfull: string;
+	emptyhosturl: string;
+	limitreached: string;
+	infoandsupport: string;
+	limitreachedprod: string;
+	serviceunavailable: string;
+	unauthorized: string;
+	verificationerror: string;
+	wrongwopisrc: string;
+	sessionexpiry: string;
+	sessionexpired: string;
+	faileddocloading: string;
+	invalidLink: string;
+	leavind: string;
+	docloadtimeout: string;
+	docunloadingretry: string;
+	docunloadinggiveup: string;
+	clusterconfiguration: string;
+	websocketproxyfailure: string;
+	websocketgenericfailure: string;
+
+	storage: {
+		loadfailed: string;
+		savediskfull: string;
+		savetoolarge: string;
+		saveunauthorized: string;
+		savefailed: string;
+		renamefailed: string;
+		saveasfailed?: string;
+	};
+
+	uploadfile: {
+		notfound: string;
+		toolarge: string;
+	};
+}
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
 	// app defined in: js/bundle.js
 	app: {
+		CSections: any;
+		activeDocument: null | DocumentBase;
+		definitions: any;
+		dpiScale: number;
+		canvasSize: null | cool.SimplePoint;
+		viewId: null | number;
+		isAdminUser: null | boolean;
+		calc: {
+			cellAddress: null | cool.SimplePoint;
+			cellCursorVisible: boolean;
+			cellCursorRectangle: null | cool.SimpleRectangle;
+			decimalSeparator: null | string; // Current cell's decimal separator.
+			otherCellCursors: any;
+			splitCoordinate: null | cool.SimplePoint;
+			partHashes: null | Array<any>; // hashes used to distinguish parts (we use sheet name)
+			autoFilterCell: any; // The cell of the current autofilter popup.
+			pivotTableFilterCell: any; // The cell of the current pivot table filter popup.
+		};
+		impress: {
+			partList: any; // Info for parts.
+			notesMode: boolean;
+			twipsCorrection: number;
+		};
+		util: any;
+		LOUtil: any;
+		IconUtil: any;
+		Evented: any;
+		Log: any;
+		DebugManager: any;
+		dispatcher: any;
+		layoutingService: any;
+		serverConnectionService: any;
+		twipsToPixels: number;
+		pixelsToTwips: number;
+		accessibilityState: boolean;
+		UI: {
+			language: {
+				fromURL: string;
+				fromBrowser: string;
+				notebookbarAccessibility: any;
+			};
+		};
 		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 		colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 		console: Console;
-		map: any; // TODO should be L.Map
-		// file defined in: src/docstate.js
+		map: any; // TODO should be window.L.Map
+		// file defined in: src/docstate.ts
 		file: {
+			editComment: boolean;
+			allowManageRedlines: boolean;
+			readOnly: boolean;
+			permission: string;
 			disableSidebar: boolean;
+			textCursor: {
+				visible: boolean;
+				rectangle: null | cool.SimpleRectangle;
+			};
+			fileBasedView: boolean;
+			writer: {
+				pageRectangleList: Array<any>;
+				multiPageView: boolean;
+			};
+			exportFormats: Array<any>;
 		};
 		roundedDpiScale: number;
+		following: {
+			mode: string;
+			viewId: number;
+		};
+		tile: {
+			size: null | cool.SimplePoint;
+		};
+		socket: any;
+		languages: Array<string>;
+		favouriteLanguages: Array<string>;
+		colorLastSelection: any;
+		serverAudit: any;
+		events: any;
+		showNavigator: boolean;
 	};
 	// coolParams defined in: js/global.js
 	coolParams: {
@@ -153,30 +275,78 @@ interface Window {
 		getDeviceFormFactor(): string;
 	};
 	prefs: {
+		useBrowserSetting: boolean;
 		getBoolean(key: string, defaultValue?: boolean): boolean;
 		get(key: string, defaultValue?: any): any;
+		_initializeBrowserSetting(msg: string): void;
 		set(key: string, value: any): void;
 		setMultiple(prefs: Record<string, string>): void;
+		sendPendingBrowserSettingsUpdate(): void;
+		canPersist: boolean;
 	};
+	KeyboardShortcuts: KeyboardShortcuts;
 
 	allowUpdateNotification: boolean;
+	autoShowWelcome: boolean;
+	bundlejsLoaded: boolean;
 	deeplEnabled: boolean;
 	documentSigningEnabled: boolean;
+	deviceFormFactor?: string;
 	enableAccessibility: boolean;
+	enableDebug: boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
+	expectedServerId: string;
 	extraExportFormats: string[];
+	fullyLoadedAndReady: boolean;
+	imgDatas: string[];
+	indirectSocket: boolean;
+	migrating: boolean;
 	mobileMenuWizard: boolean;
 	pageMobileWizard: boolean;
+	protocolDebug: boolean;
+	routeToken: string;
 	sidebarId: number;
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
+	ThisIsTheGtkApp: boolean;
+	wopiSrc: string;
 	zoteroEnabled: boolean;
+	accessToken: string;
+	accessTokenTTL: string;
+	wopiSettingBaseUrl: string;
+	socketProxy: boolean;
+	langParam: string;
 
+	socket: SockInterface;
+	errorMessages: ErrorMessages;
+	queueMsg: MessageInterface[];
+
+	makeWsUrlWopiSrc(
+		path: string,
+		docUrlParams: string,
+		suffix?: string,
+		wopiSrcParam?: string,
+	): string;
 	createShapesPanel(shapeType: string): HTMLDivElement;
 	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
 	setupToolbar(map: any): void; // TODO should be L.Map
+	makeWsUrl: (url: string) => string;
+	getBorderStyleUNOCommand: (
+		a: number,
+		b: number,
+		c: number,
+		d: number,
+		e: number,
+		f: number,
+		g: number,
+	) => string;
+	L: any;
+	createWebSocket(url: string): SockInterface;
+	getAccessibilityState(): boolean;
+	makeClientVisibleArea(): string;
+	postMobileDebug(msg: string): void;
 }
 
 // For localization

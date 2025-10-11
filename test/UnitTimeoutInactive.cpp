@@ -84,7 +84,8 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response1: " << response->header().toString());
-            TST_LOG("Response1 size: " << testname << ": `" << documentURL << "`: " << response->header().getContentLength());
+            TST_LOG("Response1 size: " << testname << ": `" << documentURL
+                                       << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
                 LOK_ASSERT(http::Header::ConnectionToken::None ==
@@ -104,7 +105,8 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response2: " << response->header().toString());
-            TST_LOG("Response2 size: " << testname << ": `" << documentURL << "`: " << response->header().getContentLength());
+            TST_LOG("Response2 size: " << testname << ": `" << documentURL
+                                       << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
                 LOK_ASSERT(http::Header::ConnectionToken::None ==

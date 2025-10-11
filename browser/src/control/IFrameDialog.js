@@ -9,10 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.IFrameDialog
+ * window.L.IFrameDialog
  */
 
-L.IFrameDialog = L.Class.extend({
+/* global _ */
+
+window.L.IFrameDialog = window.L.Class.extend({
 
 	options: {
 		prefix: 'iframe-none',
@@ -23,24 +25,59 @@ L.IFrameDialog = L.Class.extend({
 		var content, form;
 
 		this._loading = false;
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 
-		this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
-		content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
+		const containerCss = this.options.dialogCssClass;
+		this._container = window.L.DomUtil.create('div', this.options.prefix + '-wrap ' + containerCss);
+		if (this.options.titlebar) {
+			const titlebar = window.L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', this._container);
+			const title = window.L.DomUtil.create('h2', 'ui-dialog-title', titlebar);
+			title.innerText = _('Options');
+			const closeButton = window.L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
+			window.L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', closeButton);
+			window.L.DomEvent.on(closeButton, 'click', () => this.remove(this._container));
+		}
+		content = window.L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 
 		this._container.style.display = 'none';
 		// this should be set for making it focusable
 		this._container.tabIndex = -1;
 
-		form = L.DomUtil.create('form', '', content);
+		form = window.L.DomUtil.create('form', '', content);
 
 		this.fillParams(url, params, form);
 
-		this._iframe = L.DomUtil.create('iframe', this.options.prefix + '-modal', content);
+		this._iframe = window.L.DomUtil.create('iframe', this.options.prefix + '-modal', content);
 		this._iframe.name = form.target;
 
 		if (this.options.id) {
 			this._iframe.id = this.options.id;
+		}
+
+		const modalButtons = this.options.modalButtons;
+		if (modalButtons) {
+			const buttonBox = window.L.DomUtil.create(
+				'div',
+				'jsdialog ui-button-box end',
+				content
+			);
+			const buttonBoxLeft = window.L.DomUtil.create(
+				'div',
+				'jsdialog ui-button-box-left',
+				buttonBox
+			);
+			const buttonBoxRight = window.L.DomUtil.create(
+				'div',
+				'jsdialog ui-button-box-right',
+				buttonBox
+			);
+
+			for (const i in modalButtons) {
+				const wrapper = window.L.DomUtil.create('div','ui-pushbutton-wrapper', modalButtons[i].align === 'left' ? buttonBoxLeft : buttonBoxRight);
+				const button = window.L.DomUtil.create('button', 'ui-pushbutton', wrapper);
+				button.id = modalButtons[i].id;
+				button.innerText = modalButtons[i].text;
+			}
 		}
 
 		if (element) {
@@ -50,7 +87,7 @@ L.IFrameDialog = L.Class.extend({
 		}
 
 		form.submit();
-		this._iframe.addEventListener('load', L.bind(this.onLoad, this));
+		this._iframe.addEventListener('load', window.L.bind(this.onLoad, this));
 	},
 
 	fillParams: function (url, params, form) {
@@ -62,7 +99,7 @@ L.IFrameDialog = L.Class.extend({
 		for (var item in params) {
 			keys = Object.keys(params[item]);
 			if (keys.length > 0) {
-				input = L.DomUtil.create('input', '', form);
+				input = window.L.DomUtil.create('input', '', form);
 				input.type = 'hidden';
 				input.name = String(keys[0]);
 				input.value = String(params[item][keys[0]]);
@@ -79,6 +116,32 @@ L.IFrameDialog = L.Class.extend({
 				window.postMessage('{"MessageId":"' + msg + '"}');
 			}
 		}, 1000);
+
+		if (this.options.stylesheets) {
+			this.addStyleSheets(this.options.stylesheets);
+		}
+	},
+
+	addStyleSheet: function (href) {
+		if (!this._iframe || !this._iframe.contentDocument) {
+			console.error('Cannot access iframe element');
+			return false;
+		}
+
+		const head = this._iframe.contentDocument.head;
+		const link = this._iframe.contentDocument.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = href;
+		head.appendChild(link);
+
+		return true;
+	},
+
+	addStyleSheets: function (stylesheets) {
+		for (const i in stylesheets) {
+			this.addStyleSheet(stylesheets[i]);
+		}
 	},
 
 	clearTimeout: function ()
@@ -93,8 +156,8 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	remove: function () {
-		L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
-		L.DomUtil.remove(this._container);
+		window.L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
+		window.L.DomUtil.remove(this._container);
 		this._container = this._iframe = null;
 	},
 
@@ -125,9 +188,10 @@ L.IFrameDialog = L.Class.extend({
 window.addEventListener('keyup', function iframeKeyupListener (e) {
 	if (e.keyCode === 27 || e.key === 'Escape') {
 		window.postMessage('{"MessageId":"welcome-close"}', '*');
+		window.postMessage('{"MessageId":"settings-cancel"}', '*');
 	}
 });
 
-L.iframeDialog = function (url, params, element, options) {
-	return new L.IFrameDialog(url, params, element, options);
+window.L.iframeDialog = function (url, params, element, options) {
+	return new window.L.IFrameDialog(url, params, element, options);
 };

@@ -119,6 +119,26 @@ private:
 
     void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
+    enum MessageResult { ServedAsync, ServedSync, Ignore };
+
+    MessageResult handleMessage(Poco::Net::HTTPRequest& request,
+                                std::istream& message,
+                                SocketDisposition& disposition,
+                                const std::shared_ptr<StreamSocket>& socket,
+                                ssize_t headerSize);
+
+    void finishedMessage(const Poco::Net::HTTPRequest& request,
+                         const std::shared_ptr<StreamSocket>& socket,
+                         bool servedSync, size_t preInBufferSz);
+
+    void handleFullMessage(Poco::Net::HTTPRequest& request,
+                           std::istream& message,
+                           SocketDisposition& disposition,
+                           const std::shared_ptr<StreamSocket>& socket,
+                           ssize_t headerSize,
+                           ssize_t contentSize,
+                           bool eraseMessageFromSocket,
+                           std::chrono::steady_clock::time_point now);
 #endif // !MOBILEAPP
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
@@ -136,6 +156,17 @@ private:
     /// Keeps RVS instances in check.
     void CleanupRequestVettingStations();
 
+    void onDisconnect() override
+    {
+        LOG_TRC("ClientRequestDispatcher " << _id << " disconnected");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->asyncShutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->shutdownConnection(); // Immediately disconnect.
+        }
+    }
+
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
@@ -152,6 +183,13 @@ private:
     /// The private RequestVettingStation. Held privately after the
     /// WS is created and as long as it is connected.
     std::shared_ptr<RequestVettingStation> _rvs;
+
+    /// scratch dir that POSTs are streamed to
+    std::unique_ptr<FileUtil::OwnedFile> _postFileDir;
+    std::fstream _postStream;
+#if !MOBILEAPP
+    std::streamsize _postContentPending = 0;
+#endif // !MOBILEAPP
 
     /// The minimum number of RVS instances in flight to trigger cleanup.
     static constexpr std::size_t RvsLowWatermark = 1 * 1024;

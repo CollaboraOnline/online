@@ -72,6 +72,31 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 	});
 
+	it('Global opreations without doc focused', function () {
+		cy.getFrameWindow().then(function (win) {
+			cy.spy(win.app.socket, 'sendMessage').as('sendMessage');
+		});
+		cy.getFrameWindow().then(function (win) {
+			cy.stub(win, 'open').as('windowOpen');
+		});
+
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').click();
+
+		cy.cGet('body').type('{ctrl}p');
+
+
+		const downloadAsMessage = 'downloadas ' +
+			'name=print.pdf ' +
+			'id=print ' +
+			'format=pdf ' +
+			'options={\"ExportFormFields\":{\"type\":\"boolean\",\"value\":\"false\"},' +
+			'\"ExportNotes\":{\"type\":\"boolean\",\"value\":\"false\"}}';
+		cy.get('@sendMessage').should('have.been.calledWith', downloadAsMessage);
+		cy.get('@windowOpen').should('be.called');
+	});
+
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
@@ -80,9 +105,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	beforeEach(function() {
 		newFilePath = helper.setupAndLoadDocument('writer/annotation.odt');
 		desktopHelper.switchUIToNotebookbar();
-
-		// TODO: skip sidebar detection on reload
-		// cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
 	it('Insert', function() {

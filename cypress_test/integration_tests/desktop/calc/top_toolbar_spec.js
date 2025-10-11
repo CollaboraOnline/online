@@ -90,7 +90,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
-		cy.cGet('#toolbar-up .unoWrapText').click();
+		cy.cGet('.ui-toolbar .unoWrapText').click();
 
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
@@ -210,7 +210,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Add/Delete decimal places', function() {
 		helper.setDummyClipboardForCopy();
 		// Add decimal place
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#numberformatincdecimals').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -223,6 +223,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Delete Decimal place
 		calcHelper.clickOnFirstCell();
 
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#numberformatdecdecimals').click();
 
 		calcHelper.selectEntireSheet();
@@ -235,7 +236,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as currency.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#numberformatcurrency').click();
 
 		calcHelper.selectEntireSheet();
@@ -249,7 +250,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as Percent.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		cy.cGet('#numberformatpercent').click();
 
 		calcHelper.selectEntireSheet();
@@ -263,7 +264,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		// Set right alignment first
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
@@ -275,7 +275,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		cy.cGet('#textalign .arrowbackground').click();
-		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click({force: true}); // tooltip
+		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click();
+
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'align', 'left');

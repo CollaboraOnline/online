@@ -1,3 +1,12 @@
+#
+# Copyright the Collabora Online contributors.
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 # Cap threadpools to 4 threads.
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
@@ -27,20 +36,28 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
-	unit-invalidation.la \
-	unit-httpws.la \
-	unit-perf.la \
 	unit-wopi-async-slow.la \
+	unit-wopi-fail-upload.la \
 	unit-wopi-lock.la \
 	unit-tiletest.la \
 	unit-wopi-documentconflict.la \
 	unit-wopi-stuck-save.la \
+	unit-wopi-transient-connect-fault.la \
+	unit-perf.la \
 	unit-close.la \
+	unit-user-presets.la \
 	unit-wopi-watermark.la \
 	unit-crash.la \
-	unit-proxy.la \
+	unit-invalidation.la \
+	unit-httpws.la \
 	unit-synthetic-lok.la \
-	unit-wopi-fail-upload.la \
+	unit-any-input.la \
+	unit-convert.la \
+	unit-copy-paste.la \
+	unit-wopi-save-on-exit.la \
+	unit-uno-command.la \
+	unit-proxy.la \
+	unit-proxy-protocol.la \
 	unit-each-view.la \
 	unit-load.la \
 	unit-integration.la \
@@ -48,14 +65,11 @@ all_la_unit_tests = \
 	unit-multi-tenant.la \
 	unit-load-torture.la \
 	unit-save-torture.la \
-	unit-copy-paste.la \
 	unit-copy-paste-writer.la \
 	unit-wopi-fileurl.la \
-	unit-wopi-save-on-exit.la \
 	unit-wopi-languages.la \
 	unit-insert-delete.la \
 	unit-password-protected.la \
-	unit-uno-command.la \
 	unit-wopi-httpredirect.la \
 	unit-calc.la \
 	unit-http.la \
@@ -68,7 +82,6 @@ all_la_unit_tests = \
 	unit-wopi-crash-modified.la \
 	unit-oauth.la \
 	unit-wopi-versionrestore.la \
-	unit-convert.la \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
@@ -77,7 +90,6 @@ all_la_unit_tests = \
 	unit-render-search-result.la \
 	unit-tiff-load.la \
 	unit-save.la \
-	unit-any-input.la \
 	unit-wopi-saveas-with-encoded-file-name.la \
 	unit-storage.la \
 	unit-wopi-async-upload-modifyclose.la \
@@ -95,7 +107,6 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
-	unit-user-presets.la \
 	unit-base.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -275,6 +286,8 @@ unit_wopi_save_on_exit_la_SOURCES = UnitWOPISaveOnExit.cpp
 unit_wopi_save_on_exit_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_stuck_save_la_SOURCES = UnitWOPIStuckSave.cpp
 unit_wopi_stuck_save_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_transient_connect_fault_la_SOURCES = UnitWOPITransientConnectFault.cpp
+unit_wopi_transient_connect_fault_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fail_upload_la_SOURCES = UnitWOPIFailUpload.cpp
 unit_wopi_fail_upload_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
@@ -351,6 +364,8 @@ unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
+unit_proxy_protocol_la_SOURCES = UnitProxyProtocol.cpp
+unit_proxy_protocol_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp

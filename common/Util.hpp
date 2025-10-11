@@ -40,6 +40,8 @@
 
 #include <StringVector.hpp>
 
+#include <config.h>
+
 #define STRINGIFY(X) #X
 
 #if CODE_COVERAGE
@@ -58,6 +60,13 @@ extern "C"
 #define THREAD_UNSAFE_DUMP_BEGIN
 #define THREAD_UNSAFE_DUMP_END
 #endif
+
+/// Format minutes with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::minutes& s)
+{
+    os << s.count() << "m";
+    return os;
+}
 
 /// Format seconds with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
@@ -96,6 +105,7 @@ namespace Util
 
         uint_fast64_t getSeed();
         void reseed();
+        void seedForTesting(uint_fast64_t seed);
         unsigned getNext();
 
         /// Generate an array of random characters.
@@ -202,7 +212,7 @@ namespace Util
     {
         // Skip leading (high-order) zeros, if any.
         int highNibble = (2 * sizeof(number) - 1) * 4;
-        while ((number & (0xfUL << highNibble)) == 0)
+        while ((number & (std::uint64_t(0xf) << highNibble)) == 0)
         {
             highNibble -= 4;
             if (highNibble <= 0)
@@ -1088,13 +1098,29 @@ int main(int argc, char**argv)
     template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
     {
         const auto elapsed = now - convertChronoClock<U>(time);
-        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed);
+        const auto elapsedM = std::chrono::duration_cast<std::chrono::minutes>(elapsed);
+        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed) - elapsedM;
         const auto elapsedMS =
             std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) - elapsedS;
 
         std::stringstream ss;
-        ss << getClockAsString(time) << " (" << elapsedS << ' ' << elapsedMS << " ago)";
+        ss << getClockAsString(time) << " (" << elapsedM << ' ' << elapsedS << ' ' << elapsedMS
+           << " ago)";
         return ss.str();
+    }
+
+    /// Converts a unix-epoch time to steady_clock.
+    /// Without timezone, this can be unreliable.
+    inline std::chrono::steady_clock::time_point getSteadyClockFromEpoch(uint64_t epoch)
+    {
+        // Sun Sep 09 2001 01:46:40 GMT+0000 x 1000 (i.e. in milliseconds).
+        if (epoch > 1'000'000'000'000)
+        {
+            epoch /= 1000; // Convert to seconds.
+        }
+
+        const auto sys = std::chrono::system_clock::from_time_t(epoch);
+        return Util::convertChronoClock<std::chrono::steady_clock::time_point>(sys);
     }
 
     /**
@@ -1221,6 +1247,25 @@ int main(int argc, char**argv)
     inline bool iequal(const std::string_view lhs, const std::string_view rhs)
     {
         return iequal(lhs.data(), lhs.size(), rhs.data(), rhs.size());
+    }
+
+    /// Compare two containers (of the same type) for equality.
+    template <typename Container> inline bool equal(const Container& c1, const Container& c2)
+    {
+        if (c1.size() == c2.size())
+        {
+            auto it1 = c1.begin();
+            auto it2 = c2.begin();
+            for (; it1 != c1.end() && it2 != c2.end(); ++it1, ++it2)
+            {
+                if (*it1 != *it2)
+                    return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /// Convert a vector to a string. Useful for conversion in templates.

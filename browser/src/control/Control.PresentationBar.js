@@ -18,12 +18,13 @@ class PresentationBar {
 
 	constructor(map) {
 		this.map = map;
-		this.parentContainer = L.DomUtil.get('presentation-toolbar');
-		this.builder = new L.control.jsDialogBuilder(
+		this.parentContainer = window.L.DomUtil.get('presentation-toolbar');
+		this.builder = new window.L.control.jsDialogBuilder(
 			{
 				mobileWizard: this,
 				map: this.map,
-				cssClass: 'jsdialog'
+				cssClass: 'jsdialog',
+				suffix: 'presentation-toolbar',
 			});
 
 		this.create();

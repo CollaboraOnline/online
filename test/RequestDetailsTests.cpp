@@ -68,6 +68,11 @@ void RequestDetailsTests::testDownloadURI()
         LOK_ASSERT_EQUAL(std::string("src"), details[2]);
         LOK_ASSERT_EQUAL(std::string("map"), details[3]);
         LOK_ASSERT_EQUAL(std::string("Clipboard.js"), details[4]);
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -88,6 +93,11 @@ void RequestDetailsTests::testDownloadURI()
         LOK_ASSERT(details.equals(0, "browser"));
         LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
         LOK_ASSERT_EQUAL(std::string("select2.css"), details[2]);
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 }
 
@@ -125,6 +135,11 @@ void RequestDetailsTests::testCoolURI()
                                  "2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&"
                                  "title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1"),
                      details[3]);
+
+    http::Request request2(URI);
+    request2.set("Host", Root);
+    http::RequestParser reqParser(request2);
+    LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
 }
 
 void RequestDetailsTests::testLocal()
@@ -157,7 +172,6 @@ void RequestDetailsTests::testLocal()
 
         const std::string docUri = "file:///home/ash/prj/lo/online/test/data/hello-world.odt";
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
@@ -180,6 +194,13 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
         LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -225,6 +246,13 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -270,6 +298,13 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 }
 
@@ -289,7 +324,7 @@ void RequestDetailsTests::testLocalHexified()
     const std::string fileUrlHex = "0x" + HexUtil::dataToHexString(fileUrl, 0, fileUrl.size());
 
     {
-        const std::string URI = "/cool/" + fileUrlHex + "/ws/open/open/0";
+        static const std::string URI = "/cool/" + fileUrlHex + "/ws/open/open/0";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -305,7 +340,6 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT_EQUAL(false, details.isWebSocket());
         LOK_ASSERT_EQUAL(true, details.isGet());
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
@@ -325,6 +359,13 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
         LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -363,6 +404,13 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -401,6 +449,13 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 }
 
@@ -449,21 +504,6 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string("b26112ab1b6f2ed98ce1329f0f344791"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT_EQUAL(std::string("close"), details.getField(RequestDetails::Field::Command));
         LOK_ASSERT_EQUAL(std::string("31"), details.getField(RequestDetails::Field::Serial));
-
-        const std::string docUri_WopiSrc
-            = "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
-              "593_ocqiesh0cngs?access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&access_token_ttl=0&"
-              "reuse_"
-              "cookies=oc_sessionPassphrase%"
-              "3D8nFRqycbs7bP97yxCuJviBbVKdCXmuiXp6ZYH0DfUoy5UZDCTQgLwluvbgRbKrdKodJteG3uNE19KNUAoE"
-              "5typ"
-              "f4oBGwJdFY%252F5W9RNST8wEHWkUVIjZy7vmY0ZX38PlS%3Anc_sameSiteCookielax%3Dtrue%3Anc_"
-              "sameSiteCookiestrict%3Dtrue%3Aocqiesh0cngs%3Dr5ujg4tpvgu9paaf5bguiokgjl%"
-              "3AXCookieName%"
-              "3DXCookieValue%3ASuperCookieName%3DBAZINGA/ws?WOPISrc=http://localhost/nextcloud/"
-              "index.php/apps/richdocuments/wopi/files/593_ocqiesh0cngs&compat=";
-
-        LOK_ASSERT_EQUAL(docUri_WopiSrc, details.getLegacyDocumentURI());
 
         const std::string docUri
             = "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
@@ -518,6 +558,13 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "close"));
         LOK_ASSERT_EQUAL(std::string("31"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "31"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -544,15 +591,6 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
         LOK_ASSERT_EQUAL(false, details.isWebSocket());
         LOK_ASSERT_EQUAL(true, details.isGet());
-
-        const std::string docUri_WopiSrc
-            = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-              "165_ocgdpzbkm39u?access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0&"
-              "reuse_cookies=XCookieName%3DXCookieValue%3ASuperCookieName%3DBAZINGA/"
-              "ws?WOPISrc=http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-              "165_ocgdpzbkm39u&compat=";
-
-        LOK_ASSERT_EQUAL(docUri_WopiSrc, details.getLegacyDocumentURI());
 
         const std::string docUri
             = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
@@ -594,6 +632,13 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "write"));
         LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "2"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -618,7 +663,6 @@ void RequestDetailsTests::testRequestDetails()
         const std::string docUri
             = "/tmp/slideshow_b8c3225b_setclientpart.odp";
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(std::string(), details.getField(RequestDetails::Field::WOPISrc));
@@ -639,6 +683,13 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -662,7 +713,6 @@ void RequestDetailsTests::testRequestDetails()
 
         const std::string docUri = "clipboard";
 
-        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
@@ -678,6 +728,13 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 
     {
@@ -717,7 +774,6 @@ void RequestDetailsTests::testRequestDetails()
               "W90fmgVb3C-00-eSkJBDqDNSYA%3APublicToken%3Dabc%3AZNPCQ003-32383700%3De9c71c3b%"
               "3AJSESSIONID%3Dnode0.node0&permission=edit";
 
-        // LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI()); // Broken.
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         const std::map<std::string, std::string>& params = details.getDocumentURIParams();
@@ -759,6 +815,13 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
     }
 }
 

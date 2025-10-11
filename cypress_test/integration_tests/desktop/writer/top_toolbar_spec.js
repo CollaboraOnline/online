@@ -10,9 +10,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	beforeEach(function() {
 		newFilePath = helper.setupAndLoadDocument('writer/top_toolbar.odt');
 		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.showSidebarIfHidden();
+			desktopHelper.showSidebar();
 		}
 
 		writerHelper.selectAllTextOfDoc();
@@ -56,7 +57,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply style.', function() {
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#stylesview').scrollTo('bottom') ;
 		cy.cGet('.notebookbar.ui-iconview-entry img[title=Title]').click();
@@ -207,7 +207,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Toggle bulleted list.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoDefaultBullet').click();
+		cy.cGet('#Home-container .unoDefaultBullet').filter(':visible').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container ul').should('exist');
@@ -234,14 +234,14 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoInsertTable button').click({force: true});
+		cy.cGet('#Home-container .unoInsertTable #home-insert-table-button').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		cy.cGet('#copy-paste-container table').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.typeIntoDocument('{shift}{del}');
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
+		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
 	it('Insert image.', function() {
@@ -250,24 +250,71 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
 
-	it.skip('Insert hyperlink.', function() {
+	it('Insert text hyperlink.', function() {
 		helper.setDummyClipboardForCopy();
-		helper.copy();
-		cy.wait(1000);
-		helper.expectTextForClipboard('text text1');
 
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .hyperlinkdialog button').click();
-		cy.cGet('#hyperlink-link-box-input').should('exist');
-		cy.cGet('#hyperlink-text-box').type('link');
-		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
-		cy.cGet('#response-ok').click();
+
+		// All 3 fields should be visible
+		cy.cGet('#target').should('exist').should('be.visible');
+		cy.cGet('#indication').should('exist').should('be.visible');
+		cy.cGet('#name').should('exist').should('be.visible');
+
+		cy.cGet('#indication-input').type('link');
+		cy.cGet('#target-input').type('www.something.com');
+		cy.cGet('#ok').click();
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.wait(1000);
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
+	});
+
+	it('Insert mail hyperlink.', function() {
+		helper.setDummyClipboardForCopy();
+
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+		cy.cGet('#mail').click();
+
+		// Both mail fields should be visible
+		cy.cGet('#receiver').should('exist').should('be.visible');
+		cy.cGet('#subject').should('exist').should('be.visible');
+
+		cy.cGet('#receiver-input').type('john.doe@test.abc');
+		cy.cGet('#subject-input').type('planning-meeting');
+		cy.cGet('#ok').click();
+
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.wait(1000);
+		helper.expectTextForClipboard('text text1');
+		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'mailto:john.doe@test.abc?subject=planning-meeting');
+	});
+
+	it('Insert image hyperlink.', function () {
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert-container .unoBasicShapes button').click();
+		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
+		cy.cGet('#document-container svg g').should('exist');
+		cy.wait(1000);
+
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+
+		// Only URL field should be visible
+		cy.cGet('#target').should('exist').should('be.visible');
+		cy.cGet('#indication').should('exist').should('not.be.visible');
+		cy.cGet('#name').should('exist').should('not.be.visible');
+
+		cy.cGet('#target-input').type('www.something.com');
+		cy.cGet('#ok').click();
+
+		//Can't ctrl click shape, so re-enter dialog to check value persists
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+		cy.cGet('#target-input').should('have.value', 'http://www.something.com/');
 	});
 
 	it('Insert/delete shape.', function() {
@@ -386,7 +433,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert Special Character.', function() {
-		cy.cGet('#Home-container .unospan-CharmapControl').click({force: true});
+		cy.cGet('#Home-container .unoCharmapControl').click();
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
 
@@ -500,7 +547,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
-	it('Scroll', function() {
+	it.skip('Scroll', function() {
 		// Start all the way on the left side of the toolbar
 		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
 		// TODO: Cypress thinks buttons are visible even though they are not

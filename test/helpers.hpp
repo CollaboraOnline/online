@@ -36,6 +36,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <stdexcept>
 #include <string>
 #include <thread>
 
@@ -74,7 +75,37 @@ std::string genRandomString(const size_t size)
     for (size_t i = 0; i < size; ++i)
     {
         // Sensible characters only, avoiding 0x7f DEL
-        text += static_cast<char>('!' + Util::rng::getNext() % 94);
+        char c = static_cast<char>('!' + Util::rng::getNext() % 94);
+
+        // remove markdown-indicators for now
+        switch (c)
+        {
+            // headings
+            case '#':
+            // ordered list
+            case '.':
+            // unordered list
+            case '-':
+            case '*':
+            // links
+            case '[':
+            case ']':
+            // code
+            case '`':
+            // italic
+            // bold
+            case '_':
+            // strikethrough
+            case '~':
+            // block quote
+            case '>':
+            // table
+            case '|':
+                i--;
+                break;
+            default:
+                text += c;
+        }
     }
 
     return text;
@@ -176,7 +207,6 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
 {
     const std::string testname = prefix;
 
-
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
     documentPath = getTempFileCopyPath(TDOC, docFilename, prefix);
     std::string encodedUri;
@@ -189,7 +219,8 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
 inline
 void sendTextFrame(COOLWebSocket& socket, const std::string& string, const std::string& testname)
 {
-    TST_LOG("Sending " << string.size() << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
+    TST_LOG("Sending " << string.size()
+                       << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
     socket.sendFrame(string.data(), string.size());
 }
 
@@ -267,7 +298,13 @@ pocoGetRetry(const Poco::URI& uri, int retry = 3,
         try
         {
             LOG_INF("pocoGet #" << attempt << ": " << uri.toString());
-            return pocoGet(uri);
+            auto res = pocoGet(uri);
+            if (!res.first)
+            {
+                throw std::runtime_error("Server unavilable");
+            }
+
+            return res;
         }
         catch (const std::exception& ex)
         {
@@ -400,8 +437,9 @@ getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::stri
                 {
                     if (COOLProtocol::matchPrefix(prefix, message))
                     {
-                        TST_LOG('[' << prefix <<  "] Matched " <<
-                                COOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes, flags));
+                        TST_LOG('[' << prefix << "] Matched "
+                                    << COOLWebSocket::getAbbreviatedFrameDump(response.data(),
+                                                                              bytes, flags));
                         return response;
                     }
                 }
@@ -424,8 +462,9 @@ getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::stri
                         throw std::runtime_error(message);
                     }
 
-                    TST_LOG('[' << prefix <<  "] Ignored " <<
-                            COOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes, flags));
+                    TST_LOG('[' << prefix << "] Ignored "
+                                << COOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes,
+                                                                          flags));
                 }
             }
         }
@@ -433,7 +472,7 @@ getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::stri
     }
     catch (const Poco::Net::WebSocketException& exc)
     {
-        TST_LOG('[' << prefix <<  "] ERROR in helpers::getResponseMessage: " << exc.message());
+        TST_LOG('[' << prefix << "] ERROR in helpers::getResponseMessage: " << exc.message());
     }
 
     return std::vector<char>();
@@ -610,7 +649,8 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
             http::Request req(url);
             ws->asyncRequest(req, socketPoll);
 
-            TST_LOG("Connected to " << uri.toString() << ", waiting for progress: id:find response");
+            TST_LOG("Requested " << url << " from " << uri.toString()
+                                 << ", waiting for progress: id:find response");
             std::string msg;
             if (!(msg = getResponseString(ws, "progress:", testname)).empty() &&
                 COOLProtocol::matchPrefix("progress:", msg) &&
@@ -747,7 +787,7 @@ inline std::vector<char> getTileMessage(const std::shared_ptr<http::WebSocketSes
     return getResponseMessage(ws, "tile", testname);
 }
 
-enum SpecialKey { skNone=0, skShift=0x1000, skCtrl=0x2000, skAlt=0x4000 };
+enum SpecialKey : std::uint16_t { skNone=0, skShift=0x1000, skCtrl=0x2000, skAlt=0x4000 };
 
 inline int getCharChar(char ch, SpecialKey specialKeys)
 {
@@ -878,17 +918,18 @@ inline bool svgMatch(const std::string& testname, const std::vector<char>& respo
     const std::vector<char> expectedSVG = helpers::readDataFromFile(templateFile);
     if (expectedSVG != response)
     {
-        TST_LOG_BEGIN("Svg mismatch: response is\n");
+        std::ostringstream oss;
+        oss << "Svg mismatch: response is\n";
         if(response.empty())
-            TST_LOG_APPEND("<empty>");
+            oss << "<empty>";
         else
-            TST_LOG_APPEND(std::string(response.data(), response.size()));
-        TST_LOG_APPEND("\nvs. expected (from '" << templateFile << "' :\n");
-        TST_LOG_APPEND(std::string(expectedSVG.data(), expectedSVG.size()));
+            oss << std::string(response.data(), response.size());
+        oss << "\nvs. expected (from '" << templateFile << "' :\n";
+        oss << std::string(expectedSVG.data(), expectedSVG.size());
         std::string newName = templateFile;
         newName += ".new";
-        TST_LOG_APPEND("Updated template writing to: " << newName << '\n');
-        TST_LOG_END;
+        oss << "Updated template writing to: " << newName << '\n';
+        TST_LOG(oss.str());
 
         FILE *of = fopen(Poco::Path(TDOC, newName).toString().c_str(), "w");
         LOK_ASSERT(of != nullptr);
@@ -998,8 +1039,13 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
         std::string text = getResponseString(socket, prefix, testname);
         if (!text.empty())
         {
-            if (expected.empty() || (prefix + expected) == text)
+            if (expected.empty())
                 return text;
+            else if ((prefix + expected) == text)
+                return text;
+            else
+                LOG_DBG("text selection mismatch text received: '" + text +
+                        "' is not what is expected: '" + prefix + expected + "'");
         }
     }
 

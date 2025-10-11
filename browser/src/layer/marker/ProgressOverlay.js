@@ -4,7 +4,7 @@
  */
 
 /* global app brandProductName $ */
-L.ProgressOverlay = L.Layer.extend({
+L.ProgressOverlay = window.L.Layer.extend({
 
 	options: {
 		spinnerSpeed: 30
@@ -12,7 +12,7 @@ L.ProgressOverlay = L.Layer.extend({
 
 	initialize: function (size) {
 
-		L.Layer.prototype.initialize.call(this);
+		window.L.Layer.prototype.initialize.call(this);
 
 		this._size = size;
 		this._percent = 0;
@@ -22,9 +22,9 @@ L.ProgressOverlay = L.Layer.extend({
 
 	// create layout but don't add to the DOM yet
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'leaflet-progress-layer');
-		this._spinner = L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
-		this._spinnerCanvas = L.DomUtil.create('canvas', 'leaflet-progress-spinner-canvas', this._spinner);
+		this._container = window.L.DomUtil.create('div', 'leaflet-progress-layer');
+		this._spinner = window.L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
+		this._spinnerCanvas = window.L.DomUtil.create('canvas', 'leaflet-progress-spinner-canvas', this._spinner);
 
 		var productName;
 		if (window.ThisIsAMobileApp) {
@@ -32,20 +32,20 @@ L.ProgressOverlay = L.Layer.extend({
 		} else {
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
-		this._brandLabel = L.DomUtil.create('div', 'leaflet-progress-label brand-label', this._container);
+		this._brandLabel = window.L.DomUtil.create('div', 'leaflet-progress-label brand-label', this._container);
 		this._brandLabel.innerHTML = productName;
 
 
-		this._label = L.DomUtil.create('div', 'leaflet-progress-label', this._container);
-		this._progress = L.DomUtil.create('div', 'leaflet-progress', this._container);
-		this._bar = L.DomUtil.create('span', '', this._progress);
-		this._value = L.DomUtil.create('span', '', this._bar);
+		this._label = window.L.DomUtil.create('div', 'leaflet-progress-label', this._container);
+		this._progress = window.L.DomUtil.create('div', 'leaflet-progress', this._container);
+		this._bar = window.L.DomUtil.create('span', '', this._progress);
+		this._value = window.L.DomUtil.create('span', '', this._bar);
 
-		L.DomUtil.setStyle(this._value, 'line-height', this._size.y + 'px');
+		window.L.DomUtil.setStyle(this._value, 'line-height', this._size.y + 'px');
 
 		this._container.style.width  = this._size.x + 'px';
 
-		L.DomEvent
+		window.L.DomEvent
 			.disableClickPropagation(this._progress)
 			.disableScrollPropagation(this._container);
 	},
@@ -61,7 +61,7 @@ L.ProgressOverlay = L.Layer.extend({
 	},
 
 	showSpinner: function() {
-		L.DomUtil.get('document-container').appendChild(this._container);
+		window.L.DomUtil.get('document-container').appendChild(this._container);
 		this._spinnerInterval = app.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
 	},
 
@@ -133,6 +133,6 @@ L.ProgressOverlay = L.Layer.extend({
 	}
 });
 
-L.progressOverlay = function (size) {
-	return new L.ProgressOverlay(size);
+window.L.progressOverlay = function (size) {
+	return new window.L.ProgressOverlay(size);
 };

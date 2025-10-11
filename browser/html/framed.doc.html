@@ -254,6 +254,12 @@
             });
       }
 
+      function ShowInsertContextualButton() {
+        post({'MessageId': 'Insert_ContextualButton',
+              'Values': { 'id': 'context-cut', 'imgurl': 'lc_cut.svg', 'hint': 'Cut (added via postmessage)', 'unoCommand': '.uno:Cut'}
+            });
+      }
+
       function ShowNotebookbar(notebookbar) {
         var value = notebookbar ? 'notebookbar' : 'classic';
         post({'MessageId': 'Action_ChangeUIMode',
@@ -628,6 +634,7 @@
           </div>
           <div class="vbox">
             <button onclick="ShowInsertButton(); return false;" title="via Insert_Button">Insert custom button</button>
+            <button onclick="ShowInsertContextualButton(); return false;" title="via Insert_ContextualButton">Insert custom button to contextual toolbar</button>
             <button onclick="insertGraphic(); return false;">Sent InsertGraphic post message</button>
           </div>
           <div class="vbox">

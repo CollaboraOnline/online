@@ -151,12 +151,10 @@ int getCurrentThreadCount()
 
 _LibreOfficeKit* loKitPtr = nullptr;
 
-/// Used for test code to accelerating waiting until idle and to
-/// flush sockets with a 'processtoidle' -> 'idle' reply.
-static std::chrono::steady_clock::time_point ProcessToIdleDeadline;
-
 static bool EnableWebsocketURP = false;
+#if !MOBILEAPP
 static int URPStartCount = 0;
+#endif
 
 bool isURPEnabled() { return EnableWebsocketURP; }
 
@@ -175,8 +173,10 @@ bool isURPEnabled() { return EnableWebsocketURP; }
 /// system root, not the jail.
 static std::string JailRoot;
 
+#if !MOBILEAPP
 static int URPtoLoFDs[2] { -1, -1 };
 static int URPfromLoFDs[2] { -1, -1 };
+#endif
 
 // Abnormally we get LOK events from another thread, which must be
 // push safely into our main poll loop to process to keep all
@@ -292,7 +292,7 @@ namespace
     }
 
 #if !defined(BUILDING_TESTS) && !MOBILEAPP
-    enum class LinkOrCopyType
+    enum class LinkOrCopyType: std::uint8_t
     {
         All,
         LO
@@ -2187,6 +2187,10 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         {
             _loKitDocument->setAllowChangeComments(viewId, true);
         }
+        if (session->isAllowManageRedlines())
+        {
+            _loKitDocument->setAllowManageRedlines(viewId, true);
+        }
     }
 
     // viewId's monotonically increase, and CallbackDescriptors are never freed.
@@ -2292,9 +2296,12 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
         {
             abbrMessage = getAbbreviatedMessage(data, size);
         }
-        LOG_ERR("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
+
+        if constexpr (!Util::isFuzzing())
+            LOG_ERR("Child session [" << sessionId
+                                      << "] not found to forward message: " << abbrMessage);
     }
-    else
+    else if constexpr (!Util::isFuzzing())
     {
         LOG_ERR("Failed to parse prefix of forward-to-child message: " << prefix);
     }
@@ -2430,23 +2437,6 @@ std::vector<TilePrioritizer::ViewIdInactivity> Document::getViewIdsByInactivity(
     return viewIds;
 }
 
-// poll is idle, are we ?
-void Document::checkIdle()
-{
-    // FIXME: can have Idle CallbackFlushHandler work in the core.
-
-    if (!processInputEnabled() || hasQueueItems())
-    {
-        LOG_TRC("Nearly idle - but have more queued items to process");
-        return; // more to do
-    }
-
-    sendTextFrame("idle");
-
-    // get rid of idle check for now.
-    ProcessToIdleDeadline = std::chrono::steady_clock::now() - std::chrono::milliseconds(10);
-}
-
 bool Document::processInputEnabled() const
 {
     bool enabled = !_websocketHandler || _websocketHandler->processInputEnabled();
@@ -2561,13 +2551,6 @@ void Document::drainQueue()
             else if (tokens.startsWith(0, "child-"))
             {
                 forwardToChild(tokens[0], input);
-            }
-            else if (tokens.equals(0, "processtoidle"))
-            {
-                ProcessToIdleDeadline = std::chrono::steady_clock::now();
-                uint32_t timeoutUs = 0;
-                if (tokens.getUInt32(1, "timeout", timeoutUs))
-                    ProcessToIdleDeadline += std::chrono::microseconds(timeoutUs);
             }
             else if (tokens.equals(0, "callback"))
             {
@@ -3028,9 +3011,6 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
 
     auto startTime = std::chrono::steady_clock::now();
 
-    // handle processtoidle waiting optimization
-    bool checkForIdle = ProcessToIdleDeadline >= startTime;
-
     if (timeoutMicroS < 0)
     {
         // Flush at most 1 + maxExtraEvents, or return when nothing left.
@@ -3039,9 +3019,6 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     }
     else
     {
-        if (checkForIdle)
-            timeoutMicroS = 0;
-
         // Flush at most maxEvents+1, or return when nothing left.
         _pollEnd = startTime + std::chrono::microseconds(timeoutMicroS);
         do
@@ -3060,21 +3037,6 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
                 std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
             ++eventsSignalled;
         } while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
-    }
-
-    if (_document && checkForIdle && eventsSignalled == 0 && timeoutMicroS > 0 &&
-        !hasCallbacks() && !hasBuffered())
-    {
-        auto remainingTime = ProcessToIdleDeadline - startTime;
-        LOG_TRC(
-            "Poll of "
-            << timeoutMicroS << " vs. remaining time of: "
-            << std::chrono::duration_cast<std::chrono::microseconds>(remainingTime).count());
-        // would we poll until then if we could ?
-        if (remainingTime < std::chrono::microseconds(timeoutMicroS))
-            _document->checkIdle();
-        else
-            LOG_TRC("Poll of would not close gap - continuing");
     }
 
     drainQueue();
@@ -3152,25 +3114,36 @@ int pollCallback(void* data, int timeoutUs)
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     std::vector<std::shared_ptr<KitSocketPoll>> v;
+    v.reserve(KitSocketPoll::KSPolls.size());
     for (const auto &i : KitSocketPoll::KSPolls)
     {
-        auto p = i.lock();
-        if (p)
-            v.push_back(p);
+        if (auto p = i.lock())
+            v.push_back(std::move(p));
     }
+
     if (v.empty())
     {
         // Remove any stale elements from KitSocketPoll::KSPolls and
         // block until an element is added to KitSocketPoll::KSPolls
         KitSocketPoll::KSPolls.clear();
         KitSocketPoll::KSPollsCV.wait(lock, []{ return KitSocketPoll::KSPolls.size(); });
+        return 0;
     }
-    else
-    {
-        lock.unlock();
-        for (const auto &p : v)
-            p->kitPoll(timeoutUs);
+
+    lock.unlock();
+
+    // Non-blocking poll on all kits
+    bool anyPollHadEvents = false;
+    for (const auto &p : v) {
+        // deliberately kitPoll(0) - returns right away
+        if (p->kitPoll(0) > 0)
+            anyPollHadEvents = true;
     }
+
+    // If no poll had events, block until any fake-socket activity,
+    // or until the global condition variable (theCV) timeout expires
+    if (!anyPollHadEvents)
+        fakeSocketWaitAny(timeoutUs);
 
     // We never want to exit the main loop
     return 0;
@@ -3412,6 +3385,9 @@ void lokit_main(
         // initialize while we have access to /proc/self/fd
         fdCounter.reset(new Util::FDCounter());
 
+        bool usingMountNamespace = false;
+        std::chrono::milliseconds jailSetupTime(0);
+
         if (!ChildSession::NoCapsForKit)
         {
             std::chrono::time_point<std::chrono::steady_clock> jailSetupStartTime
@@ -3500,6 +3476,17 @@ void lokit_main(
                     return false;
                 }
 
+                if (FileUtil::Stat("/nix/store").exists()) {
+                    // Bind-mount /nix/store to the jail as otherwise we will likely get missing fonts/etc.
+                    // We won't quit if we fail (e.g. the non-nixos case could work) but unless we're doing something special COOLWSD is unlikely to work without this on nixos
+                    const std::string jailNixDir = Poco::Path(jailPath, "nix/store").toString();
+                    if (!JailUtil::bind("/nix/store", jailNixDir)
+                        || !JailUtil::remountReadonly("/nix/store", jailNixDir))
+                    {
+                        LOG_WRN("Failed to mount [/nix/store] -> [" << jailNixDir
+                                                    << "], ignoring. If you have used nix for dependencies COOLWSD is likely to fail");
+                    }
+                }
 
                 if (!configId.empty())
                 {
@@ -3549,8 +3536,6 @@ void lokit_main(
                 return true;
             };
 
-            bool usingMountNamespace = false;
-
 #ifndef __FreeBSD__
             const uid_t origuid = geteuid();
             const gid_t origgid = getegid();
@@ -3587,16 +3572,34 @@ void lokit_main(
             }
 
 #ifndef __FreeBSD__
+#if HAVE_LIBCAP
             if (usingMountNamespace)
             {
-                // create another namespace, map back to original uid/gid after chroot
+                // create another namespace, map back to original uid/gid after mount
+                cap_t caps = cap_get_proc();
+                if (caps != nullptr)
+                {
+                    char* capText = cap_to_text(caps, nullptr);
+                    LOG_TRC("Caps[" << capText << "] before entering nested usernamespace");
+                    cap_free(capText);
+                    cap_free(caps);
+                }
                 LOG_DBG("Move into user namespace as uid " << origuid);
                 if (!JailUtil::enterUserNS(origuid, origgid))
                     LOG_ERR("Linux user namespace for kit failed: " << strerror(errno));
+                caps = cap_get_proc();
+                if (caps != nullptr)
+                {
+                    char* capText = cap_to_text(caps, nullptr);
+                    LOG_TRC("Caps[" << capText << "] after entering nested usernamespace");
+                    cap_free(capText);
+                    cap_free(caps);
+                }
             }
 
             assert(origuid == geteuid());
             assert(origgid == getegid());
+#endif
 #endif
 
             if (!bindMount)
@@ -3616,8 +3619,9 @@ void lokit_main(
 
                 linkOrCopy(loTemplate, loJailDestPath, linkablePath, LinkOrCopyType::LO);
 
-                linkOrCopy(sharedTemplate, loJailDestImpressTemplatePath + "/", linkablePath,
-                           LinkOrCopyType::All);
+                if (!configId.empty())
+                    linkOrCopy(sharedTemplate, loJailDestImpressTemplatePath + "/", linkablePath,
+                               LinkOrCopyType::All);
 
 #if CODE_COVERAGE
                 // Link the .gcda files.
@@ -3657,9 +3661,9 @@ void lokit_main(
             Poco::File(Poco::Path(jailPath, HomePathInJail)).createDirectories();
             ::setenv("HOME", HomePathInJail, 1);
 
-            const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+            jailSetupTime = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - jailSetupStartTime);
-            LOG_DBG("Initialized jail files in " << ms);
+            LOG_DBG("Initialized jail files in " << jailSetupTime);
 
             // The bug is that rewinding and rereading /proc/self/smaps_rollup doubles the previous
             // values, so it only affects the case where we reuse the fd from opening smaps_rollup
@@ -3764,6 +3768,7 @@ void lokit_main(
             }
         }
 
+        bool hasSeccomp = false;
         // Lock down the syscalls that can be used
         if (!Seccomp::lockdown(Seccomp::Type::KIT))
         {
@@ -3776,6 +3781,8 @@ void lokit_main(
             LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
                     "You are running in a significantly less secure mode.");
         }
+        else
+            hasSeccomp = true;
 
         rlimit rlim = { 0, 0 };
         if (getrlimit(RLIMIT_AS, &rlim) == 0)
@@ -3850,6 +3857,24 @@ void lokit_main(
             pathAndQuery.append(encodedVersion);
             free(versionInfo);
         }
+
+        // Admin settings bits:
+        // Are we using seccomp ?
+        pathAndQuery.append(std::string("&adms_seccomp=") +
+                            (hasSeccomp ? "ok" : "none"));
+        // Are we bind mounting ?
+        pathAndQuery.append(std::string("&adms_bindmounted=") +
+                            (JailUtil::isBindMountingEnabled() ? "ok" : "slow"));
+        // Are we using a container ?
+        pathAndQuery.append(std::string("&adms_contained=") +
+                            ((ChildSession::NoCapsForKit || !usingMountNamespace) ?
+                             "uncontained" : "ok"));
+        // How slow was the jail setup ?
+        pathAndQuery.append(std::string("&adms_info_setup_ms=") +
+                            std::to_string(jailSetupTime.count()));
+        // Are we using namespaces (or CAP_SYS_CHROOT etc.)
+        pathAndQuery.append(std::string("&adms_info_namespaces=") +
+                            (useMountNamespaces ? "true" : "false"));
 
 #else // MOBILEAPP
 

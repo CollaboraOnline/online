@@ -9,9 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/*
- * L.Control.GroupBase
- */
 
 namespace cool {
 
@@ -37,7 +34,7 @@ export interface GroupEntryStrings {
 	This class is an extended version of "CanvasSectionObject".
 */
 
-export abstract class GroupBase extends app.definitions.canvasSectionObject {
+export abstract class GroupBase extends CanvasSectionObject {
 	_map: any;
 	_textColor: string;
 	_getFont: () => string;
@@ -46,11 +43,11 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	_groups: Array<Array<GroupEntry>>;
 	isRemoved: boolean = false;
 
-	constructor () { super(); }
+	constructor (name: string) { super(name); }
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize(): void {
-		this._map = L.Map.THIS;
+		this._map = window.L.Map.THIS;
 		this.sectionProperties.docLayer = this._map._docLayer;
 		this._groups = null;
 
@@ -73,26 +70,26 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	// Create font for the group headers. Group headers are on the left side of corner header.
 	_createFont(): void {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+		const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 
-		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
-		const fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
+		const fontFamily = window.L.DomUtil.getStyle(elem, 'font-family');
+		const fontSize = parseInt(window.L.DomUtil.getStyle(elem, 'font-size'));
 		this._getFont = function() {
 			return Math.round(fontSize * app.dpiScale) + 'px ' + fontFamily;
 		};
-		L.DomUtil.remove(elem);
+		window.L.DomUtil.remove(elem);
 	}
 
-	public static getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {	
+	public getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {
 		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+		const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 		const isDark = window.prefs.getBoolean('darkTheme');
 
-		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
+		this.backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color');
 		this.borderColor = this.backgroundColor;
 
-		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		L.DomUtil.remove(elem);
+		this._textColor = window.L.DomUtil.getStyle(elem, 'color');
+		window.L.DomUtil.remove(elem);
 		return {
 			backgroundColor: this.backgroundColor,
 			borderColor: this.borderColor,
@@ -102,7 +99,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	}
 
 	private _groupBaseColors(): void {
-		const colors = GroupBase.getColors();
+		const colors = this.getColors();
 		this.backgroundColor = colors.backgroundColor;
 		this.borderColor = colors.borderColor;
 		this._textColor = colors.textColor;
@@ -301,9 +298,9 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	 * startX, startY, endX, endY. If mirrorX is true then point is horizontally
 	 * mirrored before checking.
 	 */
-	isPointInRect (point: number[], startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
-		const x = mirrorX ? this.size[0] - point[0] : point[0];
-		const y = point[1];
+	isPointInRect (point: cool.SimplePoint, startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
+		const x = mirrorX ? this.size[0] - point.pX : point.pX;
+		const y = point.pY;
 
 		return (x > startX && x < endX && y > startY && y < endY);
 	}
@@ -313,15 +310,15 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		this.drawLevelHeaders();
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: cool.SimplePoint): GroupEntry {
 		return null;
 	}
 
-	findClickedLevel (point: number[]): number {
+	findClickedLevel (point: cool.SimplePoint): number {
 		return -1;
 	}
 
-	onMouseMove (point: number[]): void {
+	onMouseMove (point: cool.SimplePoint): void {
 		// If mouse is above a group header or a group control, we change the cursor.
 		if (this.findClickedGroup(point) !== null || this.findClickedLevel(point) !== -1)
 			this.context.canvas.style.cursor = 'pointer';
@@ -337,7 +334,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		return;
 	}
 
-	onClick (point: number[]): void {
+	onClick (point: cool.SimplePoint): void {
 		// User may have clicked on one of the level headers.
 		const level = this.findClickedLevel(point);
 		if (level !== -1) {
@@ -358,7 +355,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		return [0, 0, 0, 0];
 	}
 
-	findTailsGroup (point: number[]): GroupEntry {
+	findTailsGroup (point: cool.SimplePoint): GroupEntry {
 		const mirrorX = this.isCalcRTL();
 		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -381,7 +378,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	}
 
 	/* Double clicking on a group's tail closes it. */
-	onDoubleClick (point: number[]): void {
+	onDoubleClick (point: cool.SimplePoint): void {
 		const group = this.findTailsGroup(point);
 		if (group)
 			this._updateOutlineState(group);
@@ -393,10 +390,8 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 
 	onRemove(): void {
 		this.isRemoved = true;
-		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.RowHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(app.CSections.CornerHeader.name).position[0] = 0;
 	}
 }
 }
-
-L.Control.GroupBase = cool.GroupBase;

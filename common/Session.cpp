@@ -244,6 +244,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _isAllowChangeComments = value == "true";
             ++offset;
         }
+        else if (name == "isAllowManageRedlines")
+        {
+            _isAllowManageRedlines = value == "true";
+            ++offset;
+        }
         else if (name == "verifyHost")
         {
             _disableVerifyHost = value == "false";
@@ -355,6 +360,7 @@ void Session::dumpState(std::ostream& os)
        << "\n\t\tisWritable: " << _isWritable
        << "\n\t\tisReadOnly: " << _isReadOnly
        << "\n\t\tisAllowChangeComments: " << _isAllowChangeComments
+       << "\n\t\tisAllowManageRedlines: " << _isAllowManageRedlines
        << "\n\t\tisEditable: " << isEditable()
        << "\n\t\tdocURL: " << _docURL
        << "\n\t\tjailedFilePath: " << Anonymizer::anonymizeUrl(_jailedFilePath)

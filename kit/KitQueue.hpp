@@ -27,7 +27,7 @@ class TilePrioritizer
 public:
     virtual ~TilePrioritizer() {}
 
-    enum class Priority {
+    enum class Priority : std::int8_t {
         NONE = -1,  // an error
         LOWEST,
         LOW,

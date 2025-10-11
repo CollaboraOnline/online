@@ -90,7 +90,7 @@ std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
 
-enum class AsyncConnectResult{
+enum class AsyncConnectResult : std::uint8_t {
     Ok = 0,
     SocketError,
     ConnectionError,
@@ -110,40 +110,19 @@ void asyncConnect(const std::string& host, const std::string& port, bool isSSL,
 std::shared_ptr<StreamSocket>
 connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
 
-/// Decomposes a URI into its components.
-/// Returns true if parsing was successful.
-bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
-              std::string& pathAndQuery);
-
-/// Decomposes a URI into its components.
-/// Returns true if parsing was successful.
-inline bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port)
+inline std::string getDefaultPortForScheme(const std::string& scheme)
 {
-    std::string pathAndQuery;
-    return parseUri(std::move(uri), scheme, host, port, pathAndQuery);
-}
-
-/// Return the locator given a URI.
-inline std::string parseUrl(const std::string& uri)
-{
-    auto itScheme = uri.find("://");
-    if (itScheme != uri.npos)
-    {
-        itScheme += 3; // Skip it.
-    }
-    else
-    {
-        itScheme = 0;
-    }
-
-    const auto itUrl = uri.find('/', itScheme);
-    if (itUrl != uri.npos)
-    {
-        return uri.substr(itUrl); // Including the first slash.
-    }
-
+    if (scheme == "https://" || scheme == "wss://")
+        return "443";
+    if (scheme == "http://" || scheme == "ws://")
+        return "80";
     return std::string();
 }
+
+// Returns true if both URIs are equivalent for an origin check. Implicit
+// default port numbers are considered equivalent if explicitly included in the
+// compared against peer.
+bool sameOrigin(const std::string& expectedOrigin, const std::string& actualOrigin);
 
 } // namespace net
 

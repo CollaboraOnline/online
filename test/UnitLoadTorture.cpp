@@ -96,9 +96,8 @@ void UnitLoadTorture::loadTorture(const std::string& name, const std::string& do
                 ++num_of_views;
                 --num_to_load;
 
-                TST_LOG(": #" << id << ", new viewId: " << viewid <<
-                        ", loaded views: " << num_of_views <<
-                        ", to load: " << num_to_load);
+                TST_LOG(": #" << id << ", new viewId: " << viewid << ", loaded views: "
+                              << num_of_views << ", to load: " << num_to_load);
 
                 // Get all the views loaded - lean on test timeout to interrupt.
                 while (num_to_load > 0)

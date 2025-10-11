@@ -83,6 +83,32 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     processURI();
 }
 
+RequestDetails::RequestDetails(http::RequestParser& request, const std::string& serviceRoot)
+{
+    // Check and remove the ServiceRoot from the request.getURI()
+    if (!request.getUrl().starts_with(serviceRoot))
+        throw BadRequestException("The request does not start with prefix: " + serviceRoot);
+
+    // re-writes ServiceRoot out of request
+    _uriString = request.getUrl().substr(serviceRoot.length());
+    dehexify();
+    request.setUrl(_uriString);
+    const std::string& method = request.getVerb();
+    _isGet = method == "GET";
+    _isHead = method == "HEAD";
+    _isProxy = request.has("ProxyPrefix");
+    if (_isProxy)
+        _proxyPrefix = request.get("ProxyPrefix");
+    _isWebSocket = Util::iequal(request.get("Upgrade"), "websocket");
+    _closeConnection =
+        !request.isKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
+    // request.getHost fires an exception on mobile.
+    if constexpr (!Util::isMobileApp())
+        _hostUntrusted = request.get("Host");
+
+    processURI();
+}
+
 RequestDetails::RequestDetails(const std::string &mobileURI)
     : _isGet(true)
     , _isHead(false)
@@ -200,35 +226,12 @@ void RequestDetails::processURI()
     // DocumentURI is the second segment in cool URIs.
     if (_pathSegs.equals(0, "cool") || _pathSegs.equals(0, "wasm"))
     {
-        //FIXME: For historic reasons the DocumentURI includes the WOPISrc.
-        // This is problematic because decoding a URI that embeds not one, but
-        // *two* encoded URIs within it is bound to produce an invalid URI.
-        // Potentially three '?' might exist in the result (after decoding).
-        std::size_t end = uriRes.rfind("/ws?");
-        if (end != std::string::npos)
-        {
-            // Until the end of the WOPISrc.
-            // e.g. <encoded-document-URI+options>/ws?WOPISrc=<encoded-document-URI>&compat=
-            end = uriRes.find_first_of("/?", end + 4, 2); // Start searching after '/ws?'.
-        }
-        else
-        {
-            end = (posLastWS != std::string::npos ? posLastWS : uriRes.find('/'));
-            if (end == std::string::npos)
-                end = uriRes.find('?'); // e.g. /cool/clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_empty.ods...
-        }
-
-        const std::string docUri = uriRes.substr(0, end);
-
-        _fields[Field::LegacyDocumentURI] = Uri::decode(docUri);
-
         // Find the DocumentURI proper.
-        end = uriRes.find_first_of("/?", 0, 2);
+        std::size_t end = uriRes.find_first_of("/?", 0, 2);
         _fields[Field::DocumentURI] = Uri::decode(uriRes.substr(0, end));
     }
     else // Otherwise, it's the full URI.
     {
-        _fields[Field::LegacyDocumentURI] = _uriString;
         _fields[Field::DocumentURI] = _uriString;
     }
 

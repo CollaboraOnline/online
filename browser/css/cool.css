@@ -30,6 +30,8 @@
 
 	--tooltip-font-size: 0.875rem;
 	--default-font-size: 0.75rem;
+	--overflow-group-font-size: 8.5pt; /* do not scale labels of groups */
+	--medium-font-size: 0.875rem;
 	--header-font-size: 1rem;
 	/* tab min font-size */
 	--tb-min-fs: 0.6875rem;
@@ -43,7 +45,7 @@
 	--tb-fs-s: 1vw;
 
 	--default-height: 24px;
-	--header-height: 38px;
+	--header-height: 34px;
 
 	/* Annotations */
 	--annotation-input-size: 100px;
@@ -52,6 +54,9 @@
 
 	/* Ruler */
 	--ruler-height: 20px;
+
+	/* Notebookbar */
+	--notebookbar-element-height: 64px;
 }
 
 html {
@@ -299,6 +304,10 @@ body {
 	background: url('images/table-row-or-column-select-marker-selected.svg') no-repeat center center /12px;
 }
 
+.table-select-marker.hovered {
+	background: url('images/table-row-or-column-select-marker-selected.svg') no-repeat center center /12px;
+}
+
 .table-select-marker:hover::before {
 	border-color: var(--color-primary);
 }
@@ -323,6 +332,14 @@ body {
 	height: 100%;
 }
 
+#quickfind-dock-wrapper {
+	display: none;
+	position: relative;
+	z-index: 990;
+	max-width: 350px;
+	height: 100%;
+}
+
 #sidebar-dock-wrapper, #navigator-dock-wrapper {
 	display: none;
 	background: var(--color-background-lighter);
@@ -338,6 +355,7 @@ body {
 
 #sidebar-dock-wrapper.visible {
 	display: block;
+	/* synchronize time with Sidebar.ts setting focus */
 	animation: 200ms ease-out appear-from-right;
 	border-inline-start: 1px solid var(--color-border);
 }
@@ -381,7 +399,7 @@ body {
 	flex-direction: column;
 }
 #toolbar-wrapper:not(.mobile) {
-	padding: 3px 0;
+	padding: 2px 0;
 }
 /* Remove bottom padding in calc as it affects formulabar*/
 #toolbar-wrapper.spreadsheet:not(.mobile) {
@@ -556,7 +574,7 @@ body {
 }
 
 .cool-annotation {
-	position: absolute;
+	position: fixed;
 	text-align: center;
 	user-select: text;
 	-moz-user-select: text;
@@ -1073,14 +1091,6 @@ body {
 	border-radius: 50%;
 }
 
-#hyperlink-text-box:not(.mobile-wizard) {
-	width: 100% !important;
-	margin-bottom: 10px;
-	resize: none;
-	height: 32px;
-	box-sizing: border-box;
-}
-
 .functiontooltip {
 	white-space: nowrap;
 	max-width: fit-content !important;
@@ -1090,7 +1100,7 @@ body {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	border-top-color: var(--cell-cursor-selection-border-color); /* color */
+	border-top-color: rgba(var(--doc-type), 1); /* color */
 	border-top-width: 2px; /* weight */
 }
 
@@ -1098,7 +1108,7 @@ body {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	background-color: var(--cell-cursor-selection-border-color); /* fill color */
+	background-color: rgba(var(--doc-type), 1); /* fill color */
 	opacity: 0.25; /* opacity */
 	border-top-width: 1px; /* weight */
 }
@@ -1280,6 +1290,7 @@ body {
 }
 
 #hyperlink-pop-up-preview p {
+	color: var(--color-main-text);
 	text-overflow: ellipsis;
 	overflow: hidden;
 	font-size: 14px;
@@ -1330,4 +1341,17 @@ body {
 	height: 100%;
 	z-index: 1000000;
 	background-color: black;
+}
+
+.table-add-col-row-marker {
+	border-radius: 4px;
+	background-color: var(--color-insert-marker-background) !important;
+	box-shadow: 1px var(--color-box-shadow);
+	background: url('images/insert-plus-marker.svg') no-repeat center center /20px;
+}
+
+.table-add-col-row-marker.hovered {
+	cursor: pointer;
+	background-color: var(--color-insert-marker-background-dark) !important;
+	background: url('images/insert-plus-marker-hover.svg') no-repeat center center /20px;
 }

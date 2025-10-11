@@ -15,20 +15,19 @@
 class OtherViewGraphicSelectionSection extends CanvasSectionObject {
     documentObject: boolean = true;
     interactable: boolean = false; // We don't bother with events.
-    zIndex: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-    drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-    processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
+    zIndex: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+    drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+    processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
 
     static sectionNamePrefix = 'OtherViewGraphicSelection ';
     static sectionPointers: Array<OtherViewGraphicSelectionSection> = [];
 
     constructor(viewId: number, rectangle: cool.SimpleRectangle, part: number, mode: number) {
-        super();
+        super(OtherViewGraphicSelectionSection.sectionNamePrefix + viewId);
 
         this.size = [rectangle.pWidth, rectangle.pHeight];
         this.position = [rectangle.pX1, rectangle.pY1];
         this.sectionProperties.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
-        this.name = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
 
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;
@@ -56,7 +55,7 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
     public static addOrUpdateGraphicSelectionIndicator(viewId: number, rectangleData: Array<string>, part: number, mode: number) {
         let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
         if (rectangleData)
-            rectangle = new app.definitions.simpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
+            rectangle = new cool.SimpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
 
         const sectionName = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
         let section: OtherViewGraphicSelectionSection;

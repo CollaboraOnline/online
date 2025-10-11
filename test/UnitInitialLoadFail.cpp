@@ -59,7 +59,7 @@ public:
                              const std::shared_ptr<StreamSocket>& /*socket*/) override
     {
         std::string uri = Uri::decode(request.getURI());
-        LOG_TST("parallelizeCheckInfo requested: " << uri);
+        TST_LOG("parallelizeCheckInfo requested: " << uri);
         return std::map<std::string, std::string>{
             {"wopiSrc", "/wopi/files/0"},
             {"accessToken", "anything"},
@@ -74,7 +74,7 @@ public:
     {
         if (_getFileCount++ == 0)
         {
-            LOG_TST("handleGetFileRequest: force timeout for 1st load\n");
+            TST_LOG("handleGetFileRequest: force timeout for 1st load\n");
             std::this_thread::sleep_for(std::chrono::milliseconds(5000));
             return true;
         }
@@ -93,17 +93,17 @@ public:
     {
         const std::string message(data, len);
 
-        LOG_TST("onFilterSendWebSocketMessage:" << message);
+        TST_LOG("onFilterSendWebSocketMessage:" << message);
 
         if (message.starts_with("session "))
         {
-            LOG_TST("PASS, session seen: " << message);
+            TST_LOG("PASS, session seen: " << message);
             TRANSITION_STATE(_phase, Phase::LoadSuccess);
         }
 
         if (message.starts_with("error: cmd=storage"))
         {
-            LOG_TST("Load failed, explicit retry: " << message);
+            TST_LOG("Load failed, explicit retry: " << message);
             TRANSITION_STATE(_phase, Phase::LoadAttempt);
         }
 
@@ -119,7 +119,7 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::WaitLoad);
 
-                LOG_TST("Attempt first load which should timeout once");
+                TST_LOG("Attempt first load which should timeout once");
 
                 initWebsocket("/wopi/files/0?access_token=anything");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
@@ -166,7 +166,7 @@ public:
         _ensureNotLeaked = socket;
 
         std::string uri = Uri::decode(request.getURI());
-        LOG_TST("parallelizeCheckInfo requested: " << uri);
+        TST_LOG("parallelizeCheckInfo requested: " << uri);
         return std::map<std::string, std::string>{
             {"wopiSrc", "/wopi/files/0"},
             {"accessToken", "anything"},
@@ -192,11 +192,11 @@ public:
     {
         const std::string message(data, len);
 
-        LOG_TST("onFilterSendWebSocketMessage:" << message);
+        TST_LOG("onFilterSendWebSocketMessage:" << message);
 
         if (message.starts_with("error: cmd=internal kind=unauthorized"))
         {
-            LOG_TST("Expected Unauthorized load failed: " << message);
+            TST_LOG("Expected Unauthorized load failed: " << message);
             TRANSITION_STATE(_phase, Phase::WaitSocketDtor);
         }
 
@@ -212,7 +212,7 @@ public:
                 // Always transition before issuing commands.
                 TRANSITION_STATE(_phase, Phase::WaitUnauthorized);
 
-                LOG_TST("Attempt load which should fail with Unauthorized");
+                TST_LOG("Attempt load which should fail with Unauthorized");
 
                 initWebsocket("/wopi/files/0?access_token=anything");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());

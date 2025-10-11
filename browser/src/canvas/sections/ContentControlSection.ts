@@ -10,24 +10,22 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-declare var L: any;
 
 namespace cool {
 
 export class ContentControlSection extends CanvasSectionObject {
-	name: string = L.CSections.ContentControl.name;
-	processingOrder: number = L.CSections.ContentControl.processingOrder;
-	drawingOrder: number = L.CSections.ContentControl.drawingOrder;
-	zIndex: number = L.CSections.ContentControl.zIndex;
+	processingOrder: number = app.CSections.ContentControl.processingOrder;
+	drawingOrder: number = app.CSections.ContentControl.drawingOrder;
+	zIndex: number = app.CSections.ContentControl.zIndex;
 	interactable: boolean = false;
 	documentObject: boolean = true;
 
 	map: any;
 
 	constructor() {
-		super();
+		super(app.CSections.ContentControl.name);
 
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 		this.sectionProperties.json = null;
 		this.sectionProperties.datePicker = false;
 		this.sectionProperties.picturePicker = null;
@@ -40,7 +38,7 @@ export class ContentControlSection extends CanvasSectionObject {
 	public onInitialize(): void {
 		this.map.on('darkmodechanged', this.changeBorderStyle, this);
 
-		var container = L.DomUtil.createWithId('div', 'datepicker');
+		var container = window.L.DomUtil.createWithId('div', 'datepicker');
 		container.style.zIndex = '12';
 		container.style.position = 'absolute';
 		document.getElementById('document-container').appendChild(container);
@@ -82,7 +80,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		else if (json.action === 'change-picture') {
 			this.sectionProperties.picturePicker = true;
 			if (!this.map.wopi.EnableInsertRemoteImage)
-				L.DomUtil.get('insertgraphic').click();
+				window.L.DomUtil.get('insertgraphic').click();
 			else
 				this.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		}

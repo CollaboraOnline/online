@@ -1,6 +1,6 @@
 FROM ubuntu:24.04 AS builder
 
-ENV CORE_ASSETS https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz
+ENV CORE_ASSETS https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-25.04-assets.tar.gz
 ENV BUILDDIR /build
 ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental
 

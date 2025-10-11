@@ -8,16 +8,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class PixelGridSection extends app.definitions.canvasSectionObject {
-	name: string = L.CSections.Debug.TilePixelGrid.name;
+class PixelGridSection extends CanvasSectionObject {
     interactable: boolean = false;
     anchor: string[] = ['top', 'left'];
-    processingOrder: number = L.CSections.Debug.TilePixelGrid.processingOrder;
-    drawingOrder: number = L.CSections.Debug.TilePixelGrid.drawingOrder;
-    zIndex: number = L.CSections.Debug.TilePixelGrid.zIndex;
+    processingOrder: number = app.CSections.Debug.TilePixelGrid.processingOrder;
+    drawingOrder: number = app.CSections.Debug.TilePixelGrid.drawingOrder;
+    zIndex: number = app.CSections.Debug.TilePixelGrid.zIndex;
     boundToSection: string = 'tiles';
 
-    constructor () { super(); }
+    constructor () { super(app.CSections.Debug.TilePixelGrid.name); }
 
     onDraw(frameCount?: number, elapsedTime?: number): void {
 		var offset = 8;

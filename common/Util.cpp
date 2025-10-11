@@ -21,7 +21,6 @@
 
 #if !MOBILEAPP
 #include "SigHandlerTrap.hpp"
-#include <dlfcn.h>
 #endif
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
@@ -50,6 +49,13 @@
 
 #if defined __GLIBC__
 #include <malloc.h>
+#if defined(M_TRIM_THRESHOLD)
+#include <dlfcn.h>
+#endif
+#endif
+
+#if defined __EMSCRIPTEN__
+#include <emscripten/console.h>
 #endif
 
 #include <atomic>
@@ -118,6 +124,12 @@ namespace Util
         {
             std::unique_lock<std::mutex> lock(_rngMutex);
             _rng.seed(rng::getSeed());
+        }
+
+        void seedForTesting(uint_fast64_t seed)
+        {
+            std::unique_lock<std::mutex> lock(_rngMutex);
+            _rng.seed(seed);
         }
 
         // Returns a new random number.
@@ -261,7 +273,7 @@ namespace Util
 #endif
     }
 
-    void killThreadById(int tid, int signal)
+    void killThreadById(int tid, [[maybe_unused]] int signal)
     {
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
@@ -300,6 +312,8 @@ namespace Util
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
         LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
+#elif defined __EMSCRIPTEN__
+        emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
@@ -900,7 +914,7 @@ namespace Util
         return false;
     }
 
-    Backtrace::Backtrace(const int maxFrames, const int skip)
+    Backtrace::Backtrace([[maybe_unused]] const int maxFrames, const int skip)
         : skipFrames(skip)
     {
 #if defined(__linux) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)

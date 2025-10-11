@@ -50,7 +50,7 @@ class UnitSaveTorture : public UnitWSD
     // Force background autosave when saving the modified document
     bool isAutosave() override
     {
-        LOG_TST("isAutosave returns " << forceAutosave);
+        TST_LOG("isAutosave returns " << forceAutosave);
         return forceAutosave;
     }
 
@@ -320,13 +320,13 @@ void UnitSaveTorture::saveTortureOne(
 
     for (size_t i = 0; i < std::size(options); ++i)
     {
-        LOG_TST("saveTorture test stage " << i << " " << options[i].description);
+        TST_LOG("saveTorture test stage " << i << " " << options[i].description);
 
         if (options[i].modifyFirst)
         {
             modifyDocument(wsSession);
 
-            LOG_TST("wait for first modified status");
+            TST_LOG("wait for first modified status");
             LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), true);
         }
 
@@ -338,13 +338,13 @@ void UnitSaveTorture::saveTortureOne(
 
         if (options[i].modifyAfterSaveStarts)
         {
-            LOG_TST("Modify after saving starts");
+            TST_LOG("Modify after saving starts");
             modifyDocument(wsSession);
 
             LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(10)), true);
         }
 
-        LOG_TST("Allow saving to continue");
+        TST_LOG("Allow saving to continue");
         removeStamp("holdsave");
 
         std::vector<char> message;
@@ -366,7 +366,7 @@ void UnitSaveTorture::saveTortureOne(
 
         if (!options[i].modifyAfterSaveStarts)
         {
-            LOG_TST("wait for modified status");
+            TST_LOG("wait for modified status");
 
             // Autosaves and synthetically notifies us of clean modification state
             LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
@@ -375,7 +375,7 @@ void UnitSaveTorture::saveTortureOne(
         {
             // Restore the document un-modified state
             wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
-            LOG_TST("wait for cleanup of modified state before end of test");
+            TST_LOG("wait for cleanup of modified state before end of test");
             LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
         }
     }
@@ -461,7 +461,7 @@ public:
 
     virtual void preSaveHook() override
     {
-        LOG_TST("Synchronous non-background save!");
+        TST_LOG("Synchronous non-background save!");
         if (stampExists("abortonsyncsave"))
         {
             std::cerr << "Abort - unexpected non background save !\n\n";

@@ -8,8 +8,7 @@ without using the Allotropia container.
 Before building Collabora Online as WASM you need to build three
 dependencies: LibreOffice core, Poco, and zstd.
 
-The toolchain used is Emscripten. Versions 2.0.31 and 3.1.30 are known
-to work. The examples below assume 3.1.30.
+The toolchain used is Emscripten. Versions >= 3.1.58 should generally work.
 
 Below we assume that the Emscripten environment is already set up,
 that you have sourced the emsdk_env.sh file in your shell.
@@ -32,7 +31,7 @@ Build libzstd  with assembly code disable, and using the Makefile (didn't try it
 
     tar -xzvf ~/Downloads/zstd-1.5.2.tar.gz
     cd zstd-1.5.2/
-    emmake make CC='emcc -pthread -fexceptions -s DISABLE_EXCEPTION_CATCHING=0' CXX='em++ -pthread -fexceptions -s DISABLE_EXCEPTION_CATCHING=0' lib-mt V=1 ZSTD_NO_ASM=1 PREFIX=/opt/zstd.emsc.3.1.30
+    emmake make CC='emcc -pthread' CXX='em++ -pthread' lib-mt V=1 ZSTD_NO_ASM=1 PREFIX=/opt/zstd.emsc.3.1.30
     (cd lib && emmake make install-static install-includes ZSTD_NO_ASM=1 PREFIX=/opt/zstd.emsc.3.1.30)
 
 This will install the zstd headers and libraries in `/opt/zstd.emsc.3.1.30`.
@@ -54,32 +53,53 @@ adapt as necessary.
     mv XML/src/xmlparse.cpp XML/src/xmlparse.c
     patch -p0 < $HOME/lo/online/wasm/poco-no-special-expat-sauce.diff
     emconfigure ./configure --static --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,JWT,Data,Data/SQLite,Data/ODBC,Data/MySQL,Data/PostgreSQL,Zip,PageCompiler,PageCompiler/File2Page,MongoDB,Redis,ActiveRecord,ActiveRecord/Compiler,Prometheus
-	emmake make CC=emcc CXX=em++  CXXFLAGS="-DPOCO_NO_LINUX_IF_PACKET_H -DPOCO_NO_INOTIFY -pthread -s USE_PTHREADS=1 -fexceptions -s DISABLE_EXCEPTION_CATCHING=0"
+	emmake make CC=emcc CXX=em++  CXXFLAGS="-DPOCO_NO_LINUX_IF_PACKET_H -DPOCO_NO_INOTIFY -pthread -s USE_PTHREADS=1 -fwasm-exceptions"
     make install INSTALLDIR=/opt/poco.emsc.3.1.30
 
 This will install into `/opt/poco.emsc.3.1.30`.
 
 ## Build Online itself
 
-    # 1. Update the directories in the command below to match your system.
-    # 2. Make sure that a document called sample.docx exists in the root of
-    #    the directory set as --with-wasm-additional-files.
+    # Update the directories in the command below to match your system.
 
     ./autogen.sh
-	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten --with-wasm-additional-files=/home/tml/lo/online-hacking/my-sample-docs
+	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten
     emmake make CC=emcc CXX=em++
 
 ## Running WASM Online
 
+There are two modes in which you can use the Wasm binary, either served from a COOL instance or
+served stand-alone from a plain web server.
+
+The below steps should get one up and running.
+
+### Served from a COOL instance
+
 Once the build is done, copy the browser/dist to a safe locataion.
 E.g. cp -a browser/dist dist_wasm
 Next, re-configure Online and rebuild with normal config/settings (i.e. without WASM).
-Alternatively, you may have opted to build WASM in a separate directory.
+
+You will need to set "Enable WASM support" to true in coolwsd.xml.in, and you may need to increase
+MaxFileSizeToCacheInBytes in wsd/FileServer.cpp to avoid
+```
+[ coolwsd ] ERR  Failed to read file [.../browser/dist/wasm/online.wasm] or is too large to cache and serve| wsd/FileServer.cpp:1285
+```
+failures.
+
+Alternatively to re-configuring the existing Online build directory, you may have opted to build
+WASM in a separate directory.
 Either way, in the normal Online build directory, copy the wasm dist directory
 into the browser/dist, like this:
 cp -a dist_wasm browser/dist/wasm
 
-Now point your browser to https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/unused/path
+Now point your browser to some https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/existing/document
+(where /some/existing/document denotes some exisiting document made available by that server).
 
-Notice that as of now, only the default sample.docx will be loaded.
-But the above steps should get one up and running.
+### Served stand-alone from a plain web server
+
+Once the build is done, you can serve the browser/dist tree from a web server (e.g., via `emrun
+browser/dist/cool.html`) and point your browser at that served cool.html page with a
+file_path=/some/exisiting/document query paramter, where /some/exisiting/document is the absolute
+path of an exisiting document in the Emscripten file system (cf. online's
+--with-wasm-additional-files configure option; e.g., some
+<http://localhost:6931/cool.html?file_path=/test.odt> for the emrun example).

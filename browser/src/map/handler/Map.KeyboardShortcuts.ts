@@ -10,17 +10,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var L: any;
 
 function isCtrlKey (e: KeyboardEvent) {
-    if ((window as any).ThisIsTheiOSApp || L.Browser.mac)
+    if ((window as any).ThisIsTheiOSApp || window.L.Browser.mac)
         return e.metaKey;
     else
         return e.ctrlKey;
 }
 
 function isMacCtrlKey (e: KeyboardEvent) {
-    if ((window as any).ThisIsTheiOSApp || L.Browser.mac)
+    if ((window as any).ThisIsTheiOSApp || window.L.Browser.mac)
         return e.ctrlKey;
     else
         return false;
@@ -58,6 +57,7 @@ class ShortcutDescriptor {
     key: string | null;
     unoAction: string;
     dispatchAction: string;
+    dispatchData: any;
     viewType: ViewType;
     preventDefault: boolean;
     platform: Platform;
@@ -70,6 +70,7 @@ class ShortcutDescriptor {
         key = null,
         unoAction = null,
         dispatchAction = null,
+        dispatchData = null,
         viewType = null,
         preventDefault = true,
         platform = null,
@@ -112,6 +113,8 @@ class ShortcutDescriptor {
 
         If ommitted, no action will be dispatched when this keybind is pressed */
         dispatchAction?: string,
+        /** The optional data to pass to the sipatcher if dispatchAction is used*/
+        dispatchData?: any,
         /** The view type (Edit or ReadOnly) to restrict this keybind to
 
         If ommitted, the keybind will be active in both Edit and ReadOnly view types */
@@ -146,6 +149,7 @@ class ShortcutDescriptor {
         this.key = key;
         this.unoAction = unoAction;
         this.dispatchAction = dispatchAction;
+        this.dispatchData = dispatchData;
         this.viewType = viewType;
         this.preventDefault = preventDefault;
         this.platform = platform;
@@ -209,8 +213,8 @@ class KeyboardShortcuts {
         const platform = window.mode.isChromebook() ? Platform.CHROMEOSAPP :
                          window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : // Cannot come before window.mode.isChromebook() as all Chromebook app users are necessarily also Android app users
                          window.ThisIsTheiOSApp ? Platform.IOSAPP :
-                         L.Browser.mac ? Platform.MAC :
-                         L.Browser.win ? Platform.WINDOWS :
+                         window.L.Browser.mac ? Platform.MAC :
+                         window.L.Browser.win ? Platform.WINDOWS :
                          Platform.LINUX;
 
         const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
@@ -222,7 +226,7 @@ class KeyboardShortcuts {
                 this.map.sendUnoCommand(action);
             } else if (shortcut.dispatchAction) {
                 action = shortcut.dispatchAction;
-                app.dispatcher.dispatch(action);
+                app.dispatcher.dispatch(action, shortcut.dispatchData);
             }
 
             if (shortcut.preventDefault) {
@@ -241,7 +245,7 @@ class KeyboardShortcuts {
         this.map = map;
 
         // in cypress it can fail on load to not allow for duplicated shortcuts
-        if (L.Browser.cypressTest) {
+        if (window.L.Browser.cypressTest) {
             this.map.on('docloaded', () => { keyboardShortcuts.verifyShortcuts(); });
         }
     }
@@ -301,23 +305,28 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', key: 'F1', dispatchAction: 'showhelp' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT, key: 'F1', dispatchAction: 'focustonotebookbar' }),
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'f', dispatchAction: 'home-search' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'p', dispatchAction: 'print' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 's', dispatchAction: 'save', dispatchData: 'keyboard' }),
 
+    // Calc.
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageUp' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageDown' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F5' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL, key: ',', unoAction: '.uno:InsertCurrentDate' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL, key: ';', unoAction: '.uno:InsertCurrentDate' }),
 
-
+    // Writer.
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F2' }),
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F3', unoAction: '.uno:ExpandGlossary' }),
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', modifier: Mod.CTRL, key: 'F3' }),
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F5' }),
 
-
+    // Impress.
     new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', key: 'F5', dispatchAction: 'presentation' }),
     new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', key: 'PageUp', dispatchAction: 'previouspart', viewType: ViewType.ReadOnly }),
     new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', key: 'PageDown', dispatchAction: 'nextpart', viewType: ViewType.ReadOnly }),
 
-
+    // Draw.
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'F5' }),
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'PageUp', dispatchAction: 'previouspart', viewType: ViewType.ReadOnly }),
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'PageDown', dispatchAction: 'nextpart', viewType: ViewType.ReadOnly }),
@@ -332,11 +341,13 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.ALT, keyCode: 73 /* keyCode('I') === 73 */, preventDefault: false, platform: Platform.MAC }), // Open browser developer tools on MacOS - registered with keyCode as alt+i triggers a dead key on MacOS
     new ShortcutDescriptor({ eventType: ['keydown', 'keypress'], modifier: Mod.CTRL | Mod.MACCTRL, key: ' ', preventDefault: false, platform: Platform.MAC | Platform.IOSAPP }), // On MacOS, open system emoji picker - bound to keypress as well as keydown since as that is needed on webkit browsers (such as Safari or Orion)
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'r', preventDefault: false, platform: Platform.MAC }), // Refresh browser tab
+	new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'R', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Refresh browser tab & clear cache
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'm', preventDefault: false, platform: Platform.MAC }), // On MacOS, minimize window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'q', preventDefault: false, platform: Platform.MAC }), // On MacOS, quit browser
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', preventDefault: false }), // Close current tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'n', preventDefault: false }), // Open new browser window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 't', preventDefault: false }), // Open new browser tab
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
 ));
 
 // German shortcuts.
@@ -346,9 +357,9 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F9', unoAction: '.uno:GridVisible' }),
     new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F3', unoAction: '.uno:ChangeCaseRotateCase' }),
     new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F5', dispatchAction: 'presentation' }), // Already available without this shortcut.
-    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT | Mod.CTRL, key: 'F', unoAction: '.uno:Bold' }),
-    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT | Mod.CTRL, key: 'K', unoAction: '.uno:Italic' }),
-    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT | Mod.CTRL, key: 'U', unoAction: '.uno:Underline' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.SHIFT | Mod.CTRL, key: 'F', unoAction: '.uno:Bold' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.SHIFT | Mod.CTRL, key: 'K', unoAction: '.uno:Italic' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.SHIFT | Mod.CTRL, key: 'U', unoAction: '.uno:Underline' }),
 
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F3', unoAction: '.uno:ChangeCaseRotateCase' }),
     new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F5', unoAction: '.uno:GoToPage' }),
@@ -359,7 +370,10 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F4', dispatchAction: 'togglerelative' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F9', unoAction: '.uno:Calculate' }),
     new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F5', dispatchAction: 'focusonaddressinput' }),
-    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.ALT, key: '0', unoAction: '.uno:FormatCellDialog' })
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.ALT, key: '0', unoAction: '.uno:FormatCellDialog' }),
+
+    // Passthrough some system shortcuts
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
 ));
 
-(window as any).KeyboardShortcuts = keyboardShortcuts;
+window.KeyboardShortcuts = keyboardShortcuts;

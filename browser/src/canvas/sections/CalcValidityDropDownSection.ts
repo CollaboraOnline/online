@@ -10,10 +10,34 @@
 */
 
 class CalcValidityDropDown extends HTMLObjectSection {
+	public static dropDownArrowSize = 16; // Size of the validity drop-down arrow in CSS pixels.
 
-	constructor (sectionName: string, documentPosition: cool.SimplePoint, visible: boolean = true) {
-		super(sectionName, 16, 16, documentPosition, 'spreadsheet-drop-down-marker', visible);
+	zIndex: number = app.CSections.CalcValidityDropDown.zIndex;
+
+	constructor (documentPosition: cool.SimplePoint, visible: boolean = true) {
+		super(app.CSections.CalcValidityDropDown.name, CalcValidityDropDown.dropDownArrowSize, CalcValidityDropDown.dropDownArrowSize, documentPosition, 'spreadsheet-drop-down-marker', visible);
+
+		this.sectionProperties.mouseEntered = false;
+	}
+
+	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+		this.sectionProperties.mouseEntered = true;
+	}
+
+	public onMouseLeave() {
+		this.sectionProperties.mouseEntered = false;
+	}
+
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+		e.stopPropagation();
+		e.preventDefault();
+		this.stopPropagating();
+
+		// Calculate the center position of the section. We will send this to core side.
+		point.pX = this.position[0] + this.size[0] / 2;
+		point.pY = this.position[1] + this.size[1] / 2;
+
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
 	}
 }
-
-app.definitions.calcValidityDropDown = CalcValidityDropDown;

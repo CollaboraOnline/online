@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="failed_to_insert_image">Nu s-a putut insera imaginea</string>
+    <string name="ask_for_copy">Acest document este doar pentru citire. Doriți să faceți o copie pentru editare?</string>
+    <string name="file_chromeos_read_only">Acest fișier nu poate fi salvat în această locație, se deschide doar în citire. Mutați-l în Redare fișiere pentru acces complet la citire/scriere.</string>
+    <string name="convert_odf_message">Acest document poate conține formatare sau conținut care nu poate fi salvat în formatul de fișier selectat în prezent, „Text”.</string>
+    <string name="storage_permission_required">Este necesară permisiunea de stocare</string>
+    <string name="failed_to_load_file">Nu s-a putut determina fișierul de încărcat</string>
+    <string name="preparing_for_the_first_start_after_an_update">Pregătire pentru prima pornire după o actualizare.</string>
+    <string name="rate_now">Evaluează acum</string>
+    <string name="later">Mai târziu</string>
+    <string name="rate_our_app_title">Vă mulțumim că ați folosit %1$s!</string>
+    <string name="rate_our_app_text">Dacă vă place, vă rugăm să ne acordați 5 stele pe Google Play. Recenziile dumneavoastră pozitive sunt cea mai bună motivație pentru noi.</string>
+    <string name="loading">Încărcare...</string>
+    <string name="exiting">Ieșire...</string>
+    <string name="restarting">Restartare...</string>
+    <string name="cant_open_the_document">Nu s-a putut deschide documentul</string>
+    <string name="view_only">Numai vizualizare</string>
+    <string name="edit_copy">Editați o copie</string>
+    <string name="use_text">Utilizare format Text</string>
+    <string name="use_odf">Utilizare format ODF</string>
+    <string name="ask_for_convert_odf">Confirmați formatul fișierului</string>
+    <string name="temp_file_saving_disabled">Acest fișier este doar pentru citire, salvarea este dezactivată.</string>
+    <string name="cannot_open_file_chooser">Nu se poate deschide selectorul de fișiere</string>
+</resources>

@@ -9,19 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class DebugOverlaySection extends app.definitions.canvasSectionObject {
-	name: string = L.CSections.Debug.DebugOverlay.name;
+class DebugOverlaySection extends CanvasSectionObject {
 	interactable: boolean = false;
 	anchor: string[] = ['top', 'left'];
-	processingOrder: number = L.CSections.Debug.DebugOverlay.processingOrder;
-	drawingOrder: number = L.CSections.Debug.DebugOverlay.drawingOrder;
-	zIndex: number = L.CSections.Debug.DebugOverlay.zIndex;
+	processingOrder: number = app.CSections.Debug.DebugOverlay.processingOrder;
+	drawingOrder: number = app.CSections.Debug.DebugOverlay.drawingOrder;
+	zIndex: number = app.CSections.Debug.DebugOverlay.zIndex;
 	boundToSection: string = 'tiles';
 
 	_debug: any;
 
 	constructor(debug: any) {
-		super();
+		super(app.CSections.Debug.DebugOverlay.name);
 		this._debug = debug;
 	}
 

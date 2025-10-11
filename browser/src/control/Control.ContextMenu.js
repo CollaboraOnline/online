@@ -13,7 +13,7 @@
  */
 
 /* global $ _ _UNO app GraphicSelection */
-L.Control.ContextMenu = L.Control.extend({
+window.L.Control.ContextMenu = window.L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
 		/*
@@ -32,7 +32,7 @@ L.Control.ContextMenu = L.Control.extend({
 			general: ['Cut', 'Copy', 'Paste', 'PasteSpecial', 'Delete',
 					  'FormatPaintbrush', 'ResetAttributes',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
-					  'OpenHyperlinkOnCursor', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
+					  'OpenHyperlinkOnCursor', 'InsertHyperlink', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
 					  'SetAnchorToChar', 'SetAnchorToFrame', 'Crop',
 					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
@@ -103,7 +103,8 @@ L.Control.ContextMenu = L.Control.extend({
 			// spreadsheet
 			'FormatCellDialog', 'DataDataPilotRun',
 			'GroupSparklines', 'UngroupSparklines', 'AutoFill'
-		]
+		],
+
 	},
 
 
@@ -182,10 +183,10 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 		if (window.mode.isMobile()) {
 			window.contextMenuWizard = true;
-			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(contextMenu, true, '');
+			var menuData = window.L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(contextMenu, true, '');
 			map.fire('mobilewizard', {data: menuData});
 		} else {
-			L.installContextMenu({
+			window.L.installContextMenu({
 				selector: '.leaflet-layer',
 				className: 'cool-font on-the-fly-context-menu',
 				trigger: 'none',
@@ -334,13 +335,9 @@ L.Control.ContextMenu = L.Control.extend({
 					itemName = _UNO(item.command, docType, true);
 				}
 
-				var toSnakeCase = function (text) {
-					return text.replace(/[ _]/gi, '-').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-				};
-
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: (window.mode.isMobile() ? _(itemName) : '<a href="#" class="context-menu-link ' + toSnakeCase(commandName) + '">' + _(itemName) + '</a'),
+					name: (window.mode.isMobile() ? _(itemName) : app.IconUtil.createMenuItemLink(itemName, commandName)),
 					isHtmlName: true,
 				};
 
@@ -394,12 +391,12 @@ L.Control.ContextMenu = L.Control.extend({
     }
 });
 
-L.control.contextMenu = function (options) {
-	return new L.Control.ContextMenu(options);
+window.L.control.contextMenu = function (options) {
+	return new window.L.Control.ContextMenu(options);
 };
 
 // Using 'click' and <a href='#' is vital for copy/paste security context.
-L.installContextMenu = function(options) {
+window.L.installContextMenu = function(options) {
 	var rewrite = function(items) {
 		if (items === undefined)
 			return;

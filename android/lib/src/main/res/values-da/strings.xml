@@ -9,12 +9,12 @@
     <string name="preparing_for_the_first_start_after_an_update">Forbereder den første åbning efter en opdatering.</string>
     <string name="cannot_open_file_chooser">Kan ikke åbne filvælgeren</string>
     <string name="failed_to_insert_image">Kunne ikke indsætte billede</string>
-    <string name="failed_to_load_file">Kunne ikke bestemme, hvilken fil der skal indlæses</string>
+    <string name="failed_to_load_file">Kunne ikke afgøre, hvilken fil der skal indlæses</string>
     <string name="storage_permission_required">Lagringstilladelse er nødvendig</string>
-    <string name="file_chromeos_read_only">Denne fil kan ikke gemmes her og er skrivebeskyttet. Flyt den til afspil filerne og få fuld læse-/skrive-adgang.</string>
+    <string name="file_chromeos_read_only">Denne fil kan ikke gemmes her og åbner skrivebeskyttet. Flyt den til afspilningsfilerne for at få fuld læse-/skrive-adgang.</string>
     <string name="temp_file_saving_disabled">Denne fil er skrivebeskyttet. Lagring er deaktiveret.</string>
     <string name="restarting">Genstarter...</string>
-    <string name="edit_copy">Rediger en kopi</string>
+    <string name="edit_copy">Redigér en kopi</string>
     <string name="use_text">Brug Text-format</string>
     <string name="use_odf">Brug ODF-format</string>
     <string name="ask_for_convert_odf">Bekræft filformat</string>

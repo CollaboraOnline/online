@@ -1,3 +1,11 @@
+.spreadsheet-cursor {
+	cursor: cell !important;
+}
+
+.bucket-cursor.spreadsheet-cursor {
+	cursor: url('images/cursors/fill.png') 4 18, auto !important;
+}
+
 .spreadsheet-tabs-container {
 	margin: 0;
 	padding: 0;
@@ -43,7 +51,7 @@
 }
 
 .spreadsheet-tab.spreadsheet-tab-selected {
-	background-color: var(--color-primary) !important;
+	background-color: rgba(var(--doc-type)) !important;
 	color: var(--color-primary-text) !important;
 	border: 1px solid var(--color-border-dark);
 }
@@ -56,7 +64,7 @@
 }
 
 #spreadsheet-tab-scroll button.spreadsheet-tab-selected:hover {
-	background-color: var(--color-primary-dark) !important;
+	background-color: rgba(var(--doc-type)) !important;
 	color: var(--color-primary-text) !important;
 }
 
@@ -77,7 +85,7 @@
 
 #spreadsheet-header-corner-container {
 	border: 1px solid var(--color-border-dark);
-	background-color: var(--colo-background-dark);
+	background-color: var(--color-background-dark);
 	cursor: pointer;
 
 	position: absolute;
@@ -102,7 +110,7 @@
 
 .spreadsheet-header-corner-styles {
 	border: 1px solid var(--color-border-dark);
-	background-color: var(--colo-background-dark);
+	background-color: var(--color-background-dark);
 	font: var(--default-font-size)/1.5 var(--cool-font);
 	color: var(--color-text-dark);
 	cursor: pointer;
@@ -110,7 +118,7 @@
 
 #spreadsheet-header-columns-container {
 	border: 1px solid var(--color-border-dark);
-	background-color: var(--colo-background-dark);
+	background-color: var(--color-background-dark);
 
 	position: absolute;
 	display: inline-block;
@@ -124,7 +132,7 @@
 
 #spreadsheet-header-rows-container {
 	border: 1px solid var(--color-border-dark);
-	background-color: var(--colo-background-dark);
+	background-color: var(--color-background-dark);
 
 	position: absolute;
 	left: 0;
@@ -152,7 +160,14 @@
 	background-color: var(--color-calc-header);
 	font: var(--default-font-size)/1.5 var(--cool-font);
 	color: var(--color-text-dark);
-	cursor: pointer;
+}
+
+.spreadsheet-header-row {
+	cursor: e-resize;
+}
+
+.spreadsheet-header-column {
+	cursor: s-resize;
 }
 
 .spreadsheet-header-row-hover,

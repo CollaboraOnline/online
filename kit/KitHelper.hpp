@@ -11,19 +11,26 @@
 
 #pragma once
 
-#include <sstream>
 #include <string>
 #include <unordered_map>
+#include <cstdlib>
 
 #include <JsonUtil.hpp>
 #include <Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 namespace LOKitHelper
 {
     constexpr auto tunnelledDialogImageCacheSize = 100;
+
+    struct StringDeleter
+    {
+        inline void operator()(char* string) { std::free(string); }
+    };
+    using ScopedString = std::unique_ptr<char, StringDeleter>;
 
     inline std::string documentTypeToString(LibreOfficeKitDocumentType type)
     {
@@ -44,9 +51,8 @@ namespace LOKitHelper
 
     inline std::string getPartData(LibreOfficeKitDocument *loKitDocument, int part)
     {
-        char* ptrToData = loKitDocument->pClass->getPartInfo(loKitDocument, part);
-        std::string result(ptrToData);
-        std::free(ptrToData);
+        ScopedString ptrToData(loKitDocument->pClass->getPartInfo(loKitDocument, part));
+        std::string result(ptrToData.get());
         return result;
     }
 
@@ -113,14 +119,19 @@ namespace LOKitHelper
         resultInfo["lastcolumn"] = std::to_string(lastColumn);
         resultInfo["lastrow"] = std::to_string(lastRow);
 
-        char* value = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly");
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
         if (value)
         {
-            const std::string isReadOnly = std::string(value);
-            std::free(value);
+            const std::string isReadOnly = std::string(value.get());
 
             bool readOnly = (isReadOnly.find("true") != std::string::npos);
             resultInfo["readonly"] = readOnly ? "true": "false";
+        }
+
+        value.reset(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
+        if (value)
+        {
+            resultInfo["printranges"] = std::string(value.get());
         }
     }
 

@@ -14,7 +14,7 @@
  * Class for idle handling of the view.
  */
 
-/* global app L */
+/* global app L TileManager */
 
 declare var mode: any;
 declare var ThisIsTheAndroidApp: any;
@@ -125,7 +125,7 @@ class IdleHandler {
 
 		this._inactivityTimer = setTimeout(() => {
 			this._dimIfInactive();
-		}, (L.Browser.cypressTest ? 1000 : 1 * 60 * 1000)); // Check once a minute
+		}, (window.L.Browser.cypressTest ? 1000 : 1 * 60 * 1000)); // Check once a minute
 	}
 
 	_startOutOfFocusTimer() {
@@ -206,6 +206,8 @@ class IdleHandler {
 		});
 
 		this._sendInactiveMessage();
+
+		TileManager.clearPreFetch();
 	}
 
 	notifyActive() {

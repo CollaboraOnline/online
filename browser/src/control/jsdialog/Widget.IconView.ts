@@ -31,7 +31,7 @@ function _createEntryImage(
 	entryData: IconViewEntry,
 	image: string,
 ) {
-	const img = L.DomUtil.create('img', builder.options.cssClass, parent);
+	const img = window.L.DomUtil.create('img', builder.options.cssClass, parent);
 	if (image) img.src = image;
 
 	if (entryData.text) {
@@ -43,18 +43,19 @@ function _createEntryImage(
 	}
 
 	if (entryData.tooltip) img.title = entryData.tooltip;
-	else img.title = entryData.text;
+	else if (entryData.text) img.title = entryData.text;
+	else img.title = '';
 }
 
 function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
 	// Add text below Icon
-	L.DomUtil.addClass(parent, 'icon-view-item-container');
-	const placeholder = L.DomUtil.create(
+	window.L.DomUtil.addClass(parent, 'icon-view-item-container');
+	const placeholder = window.L.DomUtil.create(
 		'span',
 		'ui-iconview-entry-title',
 		parent,
 	);
-	placeholder.innerText = entryData.text;
+	placeholder.innerText = entryData.text ? entryData.text : '';
 }
 
 function _iconViewEntry(
@@ -67,7 +68,7 @@ function _iconViewEntry(
 	const hasText = entry.text && parentData.textWithIconEnabled;
 
 	if (entry.separator && entry.separator === true) {
-		L.DomUtil.create(
+		window.L.DomUtil.create(
 			'hr',
 			builder.options.cssClass + ' ui-iconview-separator',
 			parentContainer,
@@ -75,11 +76,14 @@ function _iconViewEntry(
 		return;
 	}
 
-	const entryContainer = L.DomUtil.create(
+	const entryContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-entry',
 		parentContainer,
 	);
+
+	//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
+	entryContainer.id = parentData.id + '_' + entry.row;
 
 	// By default `aria-presed` should be false
 	entryContainer.setAttribute('aria-pressed', 'false');
@@ -89,21 +93,16 @@ function _iconViewEntry(
 		entryContainer.setAttribute('aria-pressed', 'true');
 	}
 
-	const icon = L.DomUtil.create(
-		'div',
-		builder.options.cssClass + ' ui-iconview-icon',
-		entryContainer,
-	);
-
 	if (entry.ondemand) {
-		const placeholder = L.DomUtil.create(
+		const placeholder = window.L.DomUtil.create(
 			'span',
 			builder.options.cssClass,
-			icon,
+			entryContainer,
 		);
-		placeholder.innerText = entry.text;
+		placeholder.innerText = entry.text ? entry.text : '';
 		if (entry.tooltip) placeholder.title = entry.tooltip;
-		else placeholder.title = entry.text;
+		else if (entry.text) placeholder.title = entry.text;
+		else placeholder.title = '';
 
 		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
 		entryContainer.setAttribute('tabindex', '0');
@@ -113,17 +112,20 @@ function _iconViewEntry(
 			'iconview',
 			entry.row,
 			placeholder,
-			icon,
+			entryContainer,
 			entry.text,
 		);
 	} else {
-		_createEntryImage(icon, builder, entry, entry.image);
-		if (hasText) _createEntryText(icon, entry);
+		_createEntryImage(entryContainer, builder, entry, entry.image);
 	}
+
+	if (hasText) _createEntryText(entryContainer, entry);
 
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
+			entryContainer.setAttribute('tabindex', '0');
+			entryContainer.focus();
 			//avoid re-selecting already selected entry
 			if ($(entryContainer).hasClass('selected')) return;
 
@@ -174,28 +176,52 @@ JSDialog.iconView = function (
 	data: IconViewJSON,
 	builder: JSBuilder,
 ) {
-	const container = L.DomUtil.create(
+	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview',
 		parentContainer,
 	);
 	container.id = data.id;
+	if (data.labelledBy)
+		container.setAttribute('aria-labelledby', data.labelledBy);
 
 	const disabled = data.enabled === false;
-	if (disabled) L.DomUtil.addClass(container, 'disabled');
+	if (disabled) window.L.DomUtil.addClass(container, 'disabled');
 
 	for (const i in data.entries) {
 		_iconViewEntry(container, data, data.entries[i], builder);
 	}
 
+	const updateAllIndexes = () => {
+		// Example: if gridTemplateColumns = "96px 96px 96px"
+		// Step 1: Split the string by spaces:           ["96px", "96px", "96px"]
+		// Step 2: Remove any empty entries (if any):    ["96px", "96px", "96px"]
+		// Step 3: The length of this array is the number of columns in the grid.
+		const gridTemplateColumns = getComputedStyle(container).gridTemplateColumns;
+		const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
+
+		if (columns > 0) {
+			const entries = container.querySelectorAll('.ui-iconview-entry');
+			entries.forEach((entry: HTMLElement, flatIndex: number) => {
+				const row = Math.floor(flatIndex / columns);
+				const column = flatIndex % columns;
+				entry.setAttribute('index', row + ':' + column);
+			});
+		}
+	};
+
+	// update indexes on resize
+	const resizeObserver = new ResizeObserver(() => {
+		updateAllIndexes();
+	});
+	resizeObserver.observe(container);
+
+	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
 	const firstSelected = $(container).children('.selected').get(0);
-	const blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-	if (firstSelected)
-		firstSelected.scrollIntoView({
-			behavior: 'smooth',
-			block: blockOption,
-			inline: 'nearest',
-		});
+	if (firstSelected) {
+		const offsetTop = firstSelected.offsetTop;
+		container.scrollTop = offsetTop;
+	}
 
 	container.onSelect = (position: number) => {
 		$(container).children('.selected').removeClass('selected');
@@ -206,15 +232,20 @@ JSDialog.iconView = function (
 				: null;
 
 		if (entry) {
-			L.DomUtil.addClass(entry, 'selected');
-			const blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-			entry.scrollIntoView({
-				behavior: 'smooth',
-				block: blockOption,
-				inline: 'nearest',
-			});
+			window.L.DomUtil.addClass(entry, 'selected');
+			if (builder.options.useScrollAnimation !== false) {
+				const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
+				entry.scrollIntoView({
+					behavior: 'smooth',
+					block: blockOption,
+					inline: 'nearest',
+				});
+			} else {
+				const offsetTop = entry.offsetTop;
+				container.scrollTop = offsetTop;
+			}
 		} else if (position != -1)
-			console.warn(
+			app.console.warn(
 				'not found entry: "' + position + '" in: "' + container.id + '"',
 			);
 	};
@@ -231,7 +262,7 @@ JSDialog.iconView = function (
 
 			container.replaceChildren();
 			if (hasText) {
-				container = L.DomUtil.create(
+				container = window.L.DomUtil.create(
 					'div',
 					builder.options.cssClass,
 					dropdown[pos],

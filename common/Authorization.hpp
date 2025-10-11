@@ -30,7 +30,7 @@ class URI;
 class Authorization
 {
 public:
-    enum class Type
+    enum class Type : char
     {
         None, ///< Unlike Expired, this implies no Authorization needed.
         Token,
@@ -43,15 +43,15 @@ private:
     Type _type;
     bool _noHeader;
 
-public:
     Authorization()
         : _type(Type::None)
         , _noHeader(false)
     {
     }
 
-    Authorization(Type type, const std::string& data, bool noHeader)
-        : _data(data)
+public:
+    Authorization(Type type, std::string data, bool noHeader)
+        : _data(std::move(data))
         , _type(type)
         , _noHeader(noHeader)
     {

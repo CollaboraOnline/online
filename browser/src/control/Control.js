@@ -1,16 +1,16 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control is a base class for implementing map controls. Handles positioning.
+ * window.L.Control is a base class for implementing map controls. Handles positioning.
  * All other controls extend from this class.
  */
 
-L.Control = L.Class.extend({
+window.L.Control = window.L.Class.extend({
 	options: {
 		position: 'topright'
 	},
 
 	initialize: function (options) {
-		L.setOptions(this, options);
+		window.L.setOptions(this, options);
 	},
 
 	getPosition: function () {
@@ -45,7 +45,7 @@ L.Control = L.Class.extend({
 		    pos = this.getPosition(),
 		    corner = map._controlCorners[pos];
 
-		L.DomUtil.addClass(container, 'leaflet-control');
+		window.L.DomUtil.addClass(container, 'leaflet-control');
 
 		if (pos.indexOf('bottom') !== -1) {
 			corner.insertBefore(container, corner.firstChild);
@@ -65,7 +65,7 @@ L.Control = L.Class.extend({
 			return this;
 		}
 
-		L.DomUtil.remove(this._container);
+		window.L.DomUtil.remove(this._container);
 
 		if (this.onRemove) {
 			this.onRemove(this._map);
@@ -85,14 +85,14 @@ L.Control = L.Class.extend({
 	}
 });
 
-L.control = function (options) {
-	return new L.Control(options);
+window.L.control = function (options) {
+	return new window.L.Control(options);
 };
 
 
-// adds control-related methods to L.Map
+// adds control-related methods to window.L.Map
 
-L.Map.include({
+window.L.Map.include({
 	addControl: function (control) {
 		control._map = this;
 		control.onAdd(this);
@@ -109,12 +109,12 @@ L.Map.include({
 		var corners = this._controlCorners = {},
 		    l = 'leaflet-',
 		    container = this._controlContainer =
-		            L.DomUtil.create('div', l + 'control-container', this._container);
+		            window.L.DomUtil.create('div', l + 'control-container', this._container);
 
 		function createCorner(vSide, hSide) {
 			var className = l + vSide + ' ' + l + hSide;
 
-			corners[vSide + hSide] = L.DomUtil.create('div', className, container);
+			corners[vSide + hSide] = window.L.DomUtil.create('div', className, container);
 		}
 
 		createCorner('top', 'left');
@@ -124,6 +124,6 @@ L.Map.include({
 	},
 
 	_clearControlPos: function () {
-		L.DomUtil.remove(this._controlContainer);
+		window.L.DomUtil.remove(this._controlContainer);
 	}
 });

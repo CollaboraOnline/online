@@ -24,11 +24,11 @@
 /* global JSDialog $ */
 
 JSDialog.progressbar = function (parentContainer, data, builder) {
-	var div = L.DomUtil.createWithId('div', data.id, parentContainer);
-	L.DomUtil.addClass(div, 'ui-progressbar');
-	L.DomUtil.addClass(div, builder.options.cssClass);
+	const div = window.L.DomUtil.createWithId('div', data.id, parentContainer);
+	window.L.DomUtil.addClass(div, 'ui-progressbar');
+	window.L.DomUtil.addClass(div, builder.options.cssClass);
 
-	var progressbar = L.DomUtil.create('progress', builder.options.cssClass, div);
+	const progressbar = window.L.DomUtil.create('progress', builder.options.cssClass, div);
 	progressbar.id = data.id + '-progress';
 	progressbar.tabIndex = '0';
 
@@ -41,6 +41,16 @@ JSDialog.progressbar = function (parentContainer, data, builder) {
 		progressbar.max = data.maxValue;
 	else
 		progressbar.max = 100;
+
+	const isComplete = progressbar.value === progressbar.max;
+
+	if (data.infinite === true && !isComplete) {
+		window.L.DomUtil.addClass(div, 'infinite');
+		div.setAttribute('data-progress-type', 'infinite');
+	} else {
+		div.removeAttribute('data-progress-type');
+		div.classList.remove('infinite');
+	}
 
 	if (data.enabled === 'false' || data.enabled === false) {
 		$(progressbar).prop('disabled', true);

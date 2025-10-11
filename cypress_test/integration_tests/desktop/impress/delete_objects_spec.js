@@ -24,10 +24,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Shapes', function() {
-		cy.cGet('#toolbar-up > .ui-scroll-right').click();
-		cy.wait(1000);
 		//insert
-		cy.cGet('#insertshapes').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		cy.cGet('.ui-toolbar #insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
@@ -37,10 +36,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
-		cy.cGet('#toolbar-up > .ui-scroll-right').click();
-		cy.cGet('#toolbar-up > .ui-scroll-right').click();
+		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
 		//insert
-		cy.cGet('#insertobjectchart').click();
+		cy.cGet('.ui-toolbar #insertobjectchart').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		//delete
 		helper.typeIntoDocument('{del}');
@@ -57,7 +55,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		helper.typeIntoDocument('{shift}{enter}');
 
 		// Table is inserted with the markers shown
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
+		cy.cGet('.table-column-resize-marker').should('exist');
 		cy.cGet('#test-div-shapeHandlesSection').then(function(element) {
 			const x = element[0].getBoundingClientRect().left;
 			const y = element[0].getBoundingClientRect().top;
@@ -66,7 +64,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		});
 
 		cy.cGet('body').contains('.context-menu-item', 'Delete').click();
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
+		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
 	it('Delete Fontwork', function() {

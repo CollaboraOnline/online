@@ -11,14 +11,14 @@
  */
 
 class SearchService {
-	// TODO: avoid L.DomUtil.get(...)
+	// TODO: avoid window.L.DomUtil.get(...)
 
 	public searchNext() {
-		this.search(L.DomUtil.get('search-input').value, false);
+		this.search(window.L.DomUtil.get('search-input').value, false);
 	}
 
 	public searchPrevious() {
-		this.search(L.DomUtil.get('search-input').value, true);
+		this.search(window.L.DomUtil.get('search-input').value, true);
 	}
 
 	public search(
@@ -38,10 +38,10 @@ class SearchService {
 			replaceString = '';
 		}
 		if (
-			L.Map.THIS._docLayer._searchResults &&
-			text !== L.Map.THIS._docLayer._searchTerm
+			window.L.Map.THIS._docLayer._searchResults &&
+			text !== window.L.Map.THIS._docLayer._searchTerm
 		) {
-			L.Map.THIS._docLayer._clearSearchResults();
+			window.L.Map.THIS._docLayer._clearSearchResults();
 		}
 
 		var searchCmd = {
@@ -71,17 +71,19 @@ class SearchService {
 			},
 		};
 
-		L.Map.THIS.fire('clearselection');
+		window.L.Map.THIS.fire('clearselection');
 
-		var searchStartPointX = app.file.viewedRectangle.x1;
-		var searchStartPointY = app.file.viewedRectangle.y1;
+		var searchStartPointX = app.activeDocument.activeView.viewedRectangle.x1;
+		var searchStartPointY = app.activeDocument.activeView.viewedRectangle.y1;
 		if (
-			L.Map.THIS._docLayer &&
-			L.Map.THIS._docLayer._lastSearchResult &&
+			window.L.Map.THIS._docLayer &&
+			window.L.Map.THIS._docLayer._lastSearchResult &&
 			expand
 		) {
 			var strTwips =
-				L.Map.THIS._docLayer._lastSearchResult.twipsRectangles.match(/\d+/g);
+				window.L.Map.THIS._docLayer._lastSearchResult.twipsRectangles.match(
+					/\d+/g,
+				);
 			if (strTwips != null) {
 				searchStartPointX = strTwips[0];
 				searchStartPointY = strTwips[1];
@@ -102,8 +104,8 @@ class SearchService {
 
 	public highlightAll(text: string) {
 		if (
-			L.Map.THIS._docLayer._searchResults &&
-			text === L.Map.THIS._docLayer._searchTerm
+			window.L.Map.THIS._docLayer._searchResults &&
+			text === window.L.Map.THIS._docLayer._searchTerm
 		) {
 			return;
 		}
@@ -111,7 +113,7 @@ class SearchService {
 	}
 
 	public resetSelection() {
-		L.Map.THIS._docLayer._clearSearchResults();
+		window.L.Map.THIS._docLayer._clearSearchResults();
 		app.socket.sendMessage('resetselection');
 	}
 }

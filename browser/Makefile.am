@@ -133,9 +133,9 @@ endef
 
 COOL_ADMIN_TS = \
 	admin/src/ModalDialogCreator.ts \
+	admin/src/integrator/AdminIntegratorSettings.ts \
 	admin/src/integrator/WordBook.ts \
-	admin/src/integrator/Xcu.ts \
-	admin/src/integrator/AdminIntegratorSettings.ts
+	admin/src/integrator/Xcu.ts
 
 COOL_ADMIN_TS_JS = $(patsubst %.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(COOL_ADMIN_TS))
 
@@ -191,7 +191,9 @@ COOL_CSS_LST =\
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
-	$(srcdir)/css/tooltip.css
+	$(srcdir)/css/tooltip.css \
+	$(srcdir)/css/progressbar.css \
+	$(srcdir)/css/settings.css
 
 COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
@@ -249,25 +251,35 @@ COOL_JS_LST =\
 	src/app/DocUtil.ts \
 	src/app/LocaleService.ts \
 	src/app/LayoutingService.ts \
-	src/docstate.js \
+	src/app/ServerConnectionService.ts \
+	src/docstate.ts \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
 	src/app/DocEvents.ts \
 	src/core/geometry.ts \
 	src/app/GraphicSelectionMiddleware.ts \
-	src/app/MultiPageViewLayout.ts \
+	src/app/TextSelectionMiddleware.ts \
+	src/app/CellSelectionMarkerMiddleware.ts \
+	src/app/TableMiddleware.ts \
+	src/app/ViewLayout.ts \
+	src/app/ViewLayoutMultiPage.ts \
+	src/app/DocumentBase.ts \
 	src/app/TilesMiddleware.ts \
+	src/app/SlideshowMiddleware.ts \
 	src/app/SearchService.ts \
 	src/app/BaseClass.ts \
 	src/app/Events.ts \
 	src/app/Rectangle.ts \
 	src/app/Util.ts \
 	src/app/LOUtil.ts \
+	src/app/IconUtil.ts \
 	src/app/iface/DocLayer.Interface.ts \
 	src/app/iface/Map.Interface.ts \
 	src/app/iface/Control.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
+	src/app/SocketBase.ts \
+	src/app/TracingEvents.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -306,6 +318,8 @@ COOL_JS_LST =\
 	src/canvas/sections/PreloadMapSection.ts \
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
+	src/canvas/sections/TableResizeMarkerSection.ts \
+	src/canvas/sections/TableSelectMarkerSection.ts \
 	src/canvas/sections/FocusCellSection.ts \
 	src/canvas/sections/URLPopUpSection.ts \
 	src/canvas/sections/InvalidationRectangleSection.ts \
@@ -339,11 +353,11 @@ COOL_JS_LST =\
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
 	src/layer/CalcSplitPanesContext.ts \
-	src/layer/tile/TileLayer.TableOverlay.js \
 	src/layer/tile/WriterTileLayer.js \
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
 	src/canvas/sections/CursorHeaderSection.ts \
+	src/canvas/sections/TableInsertMarkerSection.ts \
 	src/canvas/sections/ContentControlDropdownSubSection.ts \
 	src/canvas/sections/ContentControlSection.ts \
 	src/layer/marker/ProgressOverlay.js \
@@ -380,6 +394,7 @@ COOL_JS_LST =\
 	src/map/handler/Map.KeyboardShortcuts.ts \
 	src/map/handler/Map.Welcome.js \
 	src/map/handler/Map.Feedback.js \
+	src/map/handler/Map.Settings.ts \
 	src/map/handler/Map.VersionBar.js \
 	src/dom/DomEvent.MultiClick.js \
 	src/map/handler/Map.Mouse.js \
@@ -416,23 +431,32 @@ COOL_JS_LST =\
 	src/control/Control.ESignature.ts \
 	src/control/Control.ESignatureDialog.ts \
 	src/control/ColorPicker.ts \
+	src/control/jsdialog/Util.Shortcuts.ts \
+	src/control/jsdialog/Util.ModelState.ts \
+	src/control/jsdialog/Component.Base.ts \
 	src/control/jsdialog/Component.Toolbar.ts \
 	src/control/jsdialog/Definitions.Menu.ts \
+	src/control/jsdialog/Definitions.WindowId.ts \
 	src/control/jsdialog/Util.Dropdown.js \
 	src/control/jsdialog/Util.Events.ts \
+	src/control/jsdialog/Util.KeyboardTabNavigation.ts \
 	src/control/jsdialog/Util.KeyboardGridNavigation.ts \
 	src/control/jsdialog/Util.KeyboardListNavigation.ts \
 	src/control/jsdialog/Util.FocusCycle.js \
+	src/control/jsdialog/Util.FormulaBarSelectionHandle.ts \
 	src/control/jsdialog/Util.MessageRouter.ts \
 	src/control/jsdialog/Util.ModalHelper.js \
 	src/control/jsdialog/Util.OnDemandRenderer.ts \
 	src/control/jsdialog/Util.ScrollableBar.ts \
+	src/control/jsdialog/Util.ScrollIntoView.ts \
 	src/control/jsdialog/Util.SnackbarController.ts \
 	src/control/jsdialog/Util.StateChange.ts \
 	src/control/jsdialog/Widget.ButtonBox.ts \
 	src/control/jsdialog/Widget.Calendar.js \
 	src/control/jsdialog/Widget.ColorPickerButton.js \
 	src/control/jsdialog/Widget.ColorPicker.ts \
+	src/control/jsdialog/Widget.PageMarginEntry.ts \
+	src/control/jsdialog/Widget.PageSizeEntry.ts \
 	src/control/jsdialog/Widget.Combobox.js \
 	src/control/jsdialog/Widget.Containers.ts \
 	src/control/jsdialog/Widget.DropDown.ts \
@@ -446,10 +470,14 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
+	src/control/jsdialog/Widget.OverflowGroup.ts \
+	src/control/jsdialog/Widget.OverflowManager.ts \
 	src/control/jsdialog/Widget.Progressbar.js \
+	src/control/jsdialog/Widget.RadioButton.ts \
 	src/control/jsdialog/Widget.ScrolledWindow.js \
 	src/control/jsdialog/Widget.SearchEdit.ts \
 	src/control/jsdialog/Widget.SidebarContainers.ts \
+	src/control/jsdialog/Widget.Text.ts \
 	src/control/jsdialog/Widget.Timefield.js \
 	src/control/jsdialog/Widget.TreeView.ts \
 	src/control/Control.JSDialog.js \
@@ -469,18 +497,25 @@ COOL_JS_LST =\
 	src/control/Control.PresentationBar.js \
 	src/control/Control.TopToolbar.js \
 	src/control/Control.SaveState.ts \
+	src/control/Control.NotebookbarBase.ts \
 	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
+	src/control/Notebookbar.WriterReferencesTab.ts \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
 	src/control/Control.NotebookbarCalc.js \
 	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
+	src/control/Control.ContextToolbar.ts \
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
+	src/control/Notebookbar.ImpressAnimationTab.ts \
+	src/control/Notebookbar.ImpressTransitionTab.ts \
+	src/control/Sidebar.FromNotebookbarPanel.ts \
 	src/control/Control.NavigatorPanel.ts \
+	src/control/Control.QuickFindPanel.ts \
 	src/control/AutoCompletePopup.ts \
 	src/control/Control.Mention.ts \
 	src/control/Control.FormulaUsagePopup.ts \
@@ -716,6 +751,10 @@ ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 if ENABLE_WASM
+$(DIST_FOLDER)/emscripten-%.js: $(abs_top_srcdir)/wasm/emscripten-%.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
 $(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
 	@mkdir -p $(dir $@)
 	@cp $< $@
@@ -725,15 +764,39 @@ $(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
 	@cp $< $@
 
 WASM_FILES= \
+	$(DIST_FOLDER)/emscripten-module.js \
+	$(DIST_FOLDER)/online.data \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
-	$(DIST_FOLDER)/online.worker.js \
 	$(DIST_FOLDER)/soffice.data \
 	$(DIST_FOLDER)/soffice.data.js.metadata
 
 if ENABLE_DEBUG
 WASM_FILES += \
-	$(DIST_FOLDER)/online.wasm.debug.wasm
+	$(DIST_FOLDER)/online.wasm.debug.wasm \
+	$(DIST_FOLDER)/online.wasm.debug.wasm.dwp
+endif
+
+if ENABLE_WASM_ZETAJS
+
+$(DIST_FOLDER)/smoketest.js: $(WITH_WASM_ZETAJS)/test/smoketest.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(DIST_FOLDER)/zeta.js: $(WITH_WASM_ZETAJS)/source/zeta.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+WASM_FILES += $(DIST_FOLDER)/zeta.js
+
+if ENABLE_WASM_EMBINDTEST
+WASM_FILES += $(DIST_FOLDER)/smoketest.js
+endif
+
+endif
+
+if ENABLE_WASM_ZETAJS_EXAMPLE
+WASM_FILES += $(DIST_FOLDER)/emscripten-zetajs-example.js
 endif
 
 endif
@@ -759,12 +822,12 @@ build-cool: \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES)
 	@echo "build cool completed"
-if ENABLE_ANDROIDAPP
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(DIST_FOLDER)/ ; else touch $(DIST_FOLDER)/branding.css ; fi
+if APP_HAS_BRANDING
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(DIST_FOLDER)/images/toolbar-bg.svg ; fi
 	@echo
-	@echo "JS, HTML and CSS has been updated (android/lib/src/main/assets/dist)."
+	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
 endif
 
 if ENABLE_CYPRESS
@@ -782,7 +845,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(COOL_ADMIN_TS_JS) $(COOL_ADMIN_JS)
 	$(call run_prettier_check,--debug-check $(srcdir)/admin/src)
 	@awk 'FNR == 1 {print ""} 1' $(COOL_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(COOL_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DST) $(abs_top_srcdir)/scripts/unocommands.py
+$(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DST) $(abs_top_srcdir)/scripts/unocommands.py $(srcdir)/cool-src.js.m4
 	@mkdir -p $(dir $@)
 	$(QUIET_UNOCOMMANDS) $(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@printf "Checking for obsolete JS build intermediates in this makefile... "
@@ -811,7 +874,7 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
 	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
-	@truncate -s -1 $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
+	@truncate $(if $(filter Darwin,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
 $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
@@ -983,10 +1046,12 @@ pot:
 		admin/src/Util.js \
 		js/global.js \
 		src/app/Debug.ts \
+		src/app/IconUtil.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
+		src/canvas/sections/TableInsertMarkerSection.ts \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AddressInputField.ts \
@@ -1010,12 +1075,18 @@ pot:
 		src/control/Control.MobileTopBar.ts \
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.NavigatorPanel.ts \
+		src/control/Control.QuickFindPanel.ts \
+		src/control/Notebookbar.ImpressAnimationTab.ts \
+		src/control/Notebookbar.ImpressTransitionTab.ts \
+		src/control/Notebookbar.WriterReferencesTab.ts \
+		src/control/Sidebar.FromNotebookbarPanel.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
 		src/control/Control.NotebookbarDraw.js \
 		src/control/Control.NotebookbarImpress.js \
 		src/control/Control.NotebookbarWriter.js \
+		src/control/Control.ContextToolbar.ts \
 		src/control/Control.PartsPreview.js \
 		src/control/Control.PresentationBar.js \
 		src/control/Control.SaveState.ts \
@@ -1038,13 +1109,18 @@ pot:
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
+		src/control/jsdialog/Widget.PageMarginEntry.ts \
+		src/control/jsdialog/Widget.PageSizeEntry.ts \
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
+		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
+		src/app/SocketBase.ts \
+		src/app/TracingEvents.ts \
 		src/core/Socket.js \
 		src/docdispatcher.ts \
-		src/docstate.js \
+		src/docstate.ts \
 		src/docstatefunctions.js \
 		src/dom/NotebookbarAccessibility.js \
 		src/errormessages.js \
@@ -1061,6 +1137,7 @@ pot:
 		src/map/handler/Map.VersionBar.js \
 		src/map/handler/Map.WOPI.js \
 		src/map/handler/Map.Welcome.js \
+		src/map/handler/Map.Settings.ts \
 		src/slideshow/PauseTimer.ts \
 		src/slideshow/PresenterConsole.js \
 		src/slideshow/SlideShowPresenter.ts

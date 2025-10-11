@@ -12,6 +12,7 @@
 /**
  * Type for the toolbar button configuration.
  */
+
 interface ToolbarButton {
 	type: string;
 	uno: string;
@@ -24,10 +25,17 @@ interface ToolbarButton {
 	text?: string; // Optional because it's added later
 }
 
+type UIMode = 'classic' | 'notebookbar';
+
+interface UIModeCommand {
+	force?: boolean;
+	mode: UIMode;
+}
+
 /**
  * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
  */
-class UIManager extends L.Control {
+class UIManager extends window.L.Control {
 	mobileWizard: any = null;
 	documentNameInput: any = null;
 	blockedUI: any = false;
@@ -44,7 +52,7 @@ class UIManager extends L.Control {
 	 * @param map - The Leaflet map instance.
 	 * @returns A dummy container HTMLElement.
 	 */
-	onAdd(map: ReturnType<typeof L.Map>) {
+	onAdd(map: any) {
 		this.map = map;
 		this.notebookbar = null;
 		// Every time the UI mode changes from 'classic' to 'notebookbar'
@@ -91,10 +99,10 @@ class UIManager extends L.Control {
 
 			// Allow default scroll for Shift + scroll or if not horizontally scrollable
 			if (e.shiftKey || el.scrollWidth <= el.clientWidth) return;
-	  
+
 			// Scroll horizontally
 			this.scrollLeft += e.deltaY;
-	  
+
 			// Prevent vertical scroll only within this element
 			e.preventDefault();
 		  }, { passive: false });
@@ -110,7 +118,7 @@ class UIManager extends L.Control {
 	/**
 	 * Returns the current UI mode ("notebookbar" or "classic").
 	 */
-	getCurrentMode(): string {
+	getCurrentMode(): UIMode {
 		// no notebookbar on mobile
 		if (window.mode.isMobile())
 			return 'classic';
@@ -275,7 +283,7 @@ class UIManager extends L.Control {
 			this.refreshAfterThemeChange();
 
 		if (app.map._docLayer._docType === 'spreadsheet') {
-			const calcGridSection = app.sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
+			const calcGridSection = app.sectionContainer.getSectionWithName(app.CSections.CalcGrid.name);
 			if (calcGridSection)
 				calcGridSection.resetStrokeStyle();
 		}
@@ -341,7 +349,7 @@ class UIManager extends L.Control {
 		const enableNotebookbar = this.shouldUseNotebookbarMode();
 		const isMobile = window.mode.isMobile();
 		if (isMobile || !enableNotebookbar) {
-			var menubar = L.control.menubar();
+			var menubar = new Menubar();
 			this.map.menubar = menubar;
 			this.map.addControl(menubar);
 		}
@@ -365,37 +373,37 @@ class UIManager extends L.Control {
 		if (!window.mode.isMobile()) {
 			this.map.statusBar = JSDialog.StatusBar(this.map);
 
-			this.map.sidebar = JSDialog.Sidebar(this.map, {animSpeed: 200});
+			this.map.sidebar = JSDialog.Sidebar(this.map);
 
-			this.map.navigator = JSDialog.NavigatorPanel(this.map, { animSpeed: 200 });
+			this.map.navigator = JSDialog.NavigatorPanel(this.map);
 
-			this.map.formulaautocomplete = L.control.formulaautocomplete(this.map);
-			this.map.formulausage = L.control.formulausage(this.map);
-			this.map.autofillpreviewtooltip = L.control.autofillpreviewtooltip(this.map);
+			this.map.formulaautocomplete = new FormulaAutoCompletePopup(this.map);
+			this.map.formulausage = new FormulaUsagePopup(this.map);
+			this.map.autofillpreviewtooltip = new AutoFillPreviewTooltip(this.map);
 		}
 
-		this.map.jsdialog = L.control.jsDialog();
+		this.map.jsdialog = window.L.control.jsDialog();
 		this.map.addControl(this.map.jsdialog);
 
 		window.setupToolbar(this.map);
 
-		this.documentNameInput = L.control.documentNameInput();
+		this.documentNameInput = window.L.control.documentNameInput();
 		this.map.addControl(this.documentNameInput);
-		this.map.addControl(L.control.alertDialog());
+		this.map.addControl(window.L.control.alertDialog());
 		if (window.mode.isMobile()) {
-			this.mobileWizard = L.control.mobileWizard();
+			this.mobileWizard = window.L.control.mobileWizard();
 			this.map.addControl(this.mobileWizard);
 		}
-		this.map.addControl(L.control.languageDialog());
-		this.map.dialog = L.control.lokDialog();
+		this.map.addControl(window.L.control.languageDialog());
+		this.map.dialog = window.L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
-		this.map.addControl(L.control.contextMenu());
-		this.map.userList = L.control.userList();
+		this.map.addControl(window.L.control.contextMenu());
+		this.map.userList = window.L.control.userList();
 		this.map.addControl(this.map.userList);
 		this.map.aboutDialog = JSDialog.aboutDialog(this.map);
 
-		if (L.Map.versionBar && window.allowUpdateNotification)
-			this.map.addControl(L.Map.versionBar);
+		if (window.L.Map.versionBar && window.allowUpdateNotification)
+			this.map.addControl(window.L.Map.versionBar);
 
 		var openBusyPopup = (label: string) => {
 			this.busyPopupTimer = window.setTimeout(() => {
@@ -466,8 +474,8 @@ class UIManager extends L.Control {
 			this.map.mobileBottomBar = JSDialog.MobileBottomBar(this.map);
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
 			this.map.mobileSearchBar = JSDialog.MobileSearchBar(this.map);
-		} else if (enableNotebookbar) {
-			this.createNotebookbarControl(docType);
+		} else {
+			this.createNotebookbarControl(docType, enableNotebookbar);
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
@@ -489,7 +497,7 @@ class UIManager extends L.Control {
 			$('#toolbar-wrapper').addClass('spreadsheet');
 
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
+			window.L.DomUtil.remove(window.L.DomUtil.get('presentation-controls-wrapper'));
 			const selectBackground = document.getElementById('selectbackground');
 			if (selectBackground != null)
 				selectBackground.parentNode?.removeChild(selectBackground);
@@ -501,17 +509,17 @@ class UIManager extends L.Control {
 
 		if (this.map.isPresentationOrDrawing()) {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
+			window.L.DomUtil.remove(window.L.DomUtil.get('spreadsheet-toolbar'));
 			$('#presentation-controls-wrapper').show();
 			this.initializeRuler();
-			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map);
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
 			this.map.presenterConsole = new SlideShow.PresenterConsole(this.map, this.map.slideShowPresenter);
 		}
 
 		if (docType === 'text') {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
-			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
+			window.L.DomUtil.remove(window.L.DomUtil.get('spreadsheet-toolbar'));
+			window.L.DomUtil.remove(window.L.DomUtil.get('presentation-controls-wrapper'));
 			const selectBackground = document.getElementById('selectbackground');
 			if (selectBackground != null)
 				selectBackground.parentNode?.removeChild(selectBackground);
@@ -524,11 +532,18 @@ class UIManager extends L.Control {
 			// Notify the initial status of comments
 			var initialCommentState = this.map['stateChangeHandler'].getItemValue('showannotations');
 			this._map.fire('commandstatechanged', {commandName : 'showannotations', state : initialCommentState});
-			this.map.mention = L.control.mention(this.map);
+			this.map.mention = new Mention(this.map);
+
+			if (!window.mode.isMobile()) {
+				// setup quickfind panel
+				this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
+				this.map.addControl(this.map.quickFindPanel);
+			}
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
+			this.map.sidebarFromNotebookbar = JSDialog.SidebarFromNotebookbarPanel(this.map);
 		}
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
 			this.map.navigator.initializeNavigator(docType);
@@ -545,6 +560,19 @@ class UIManager extends L.Control {
 				app.dispatcher.dispatch('presentation');
 			}
 		});
+		this.map.contextToolbar = new ContextToolbar(this.map);
+	}
+
+	/**
+	 * Initializes the heavy components which require core side to work.
+	 * Scheduled to be executed after we do first tiles requests to not
+	 * block the document content rendering on a load.
+	 */
+	initializeLateComponents(): void {
+		app.console.debug('UIManager: late components init');
+		this.initializeNotebookbarInCore();
+		this.initializeSidebar();
+		this.initializeQuickFindInCore();
 	}
 
 	/**
@@ -555,11 +583,12 @@ class UIManager extends L.Control {
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 			var showSidebar = this.getBooleanDocTypePref('ShowSidebar', true);
 
-			if (this.getBooleanDocTypePref('PropertyDeck', true)) {
+			if (showSidebar && this.getBooleanDocTypePref('PropertyDeck', true)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
+				this.map.sidebar.setAsInitialized();
 			}
 
-			if (this.map.getDocType() === 'presentation') {
+			if (showSidebar && this.map.getDocType() === 'presentation') {
 				if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:SlideChangeWindow');
@@ -568,18 +597,16 @@ class UIManager extends L.Control {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:CustomAnimation');
 					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
-				} else if (this.getBooleanDocTypePref('SdMasterPagesDeck', false)) {
-					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
-					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
 				}
-			} else if (this.getBooleanDocTypePref('StyleListDeck', false)) {
+			} else if (showSidebar && this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:SidebarDeck.StyleListDeck');
 				this.map.sidebar.setupTargetDeck('.uno:SidebarDeck.StyleListDeck');
 			}
 
-			if (!showSidebar)
+			if (showSidebar)
+				this.map.sidebar.setAsInitialized();
+			else
 				app.socket.sendMessage('uno .uno:SidebarHide');
 		}
 		else if (window.mode.isChromebook()) {
@@ -629,7 +656,7 @@ class UIManager extends L.Control {
 	 * Adds classic UI components.
 	 */
 	addClassicUI(): void {
-		this.map.menubar = L.control.menubar();
+		this.map.menubar = new Menubar();
 		this.map.addControl(this.map.menubar);
 		this.map.topToolbar = JSDialog.TopToolbar(this.map);
 
@@ -652,19 +679,24 @@ class UIManager extends L.Control {
 	 * Creates and adds a notebookbar control based on document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', etc.)
 	 */
-	createNotebookbarControl(docType: string): void {
+	createNotebookbarControl(docType: string, showUI: boolean): void {
 		if (docType === 'spreadsheet') {
-			var notebookbar = L.control.notebookbarCalc();
+			var notebookbar = window.L.control.notebookbarCalc();
 		} else if (docType === 'presentation') {
-			notebookbar = L.control.notebookbarImpress();
+			notebookbar = window.L.control.notebookbarImpress();
 		} else if (docType === 'drawing') {
-			notebookbar = L.control.notebookbarDraw();
+			notebookbar = window.L.control.notebookbarDraw();
 		} else {
-			notebookbar = L.control.notebookbarWriter();
+			notebookbar = window.L.control.notebookbarWriter();
 		}
 
-		this.notebookbar = notebookbar;
-		this.map.addControl(notebookbar);
+		this.notebookbar = JSDialog.NotebookbarBase(this.map, notebookbar);
+		if (showUI)
+			this.showNotebookbarControl();
+	}
+
+	showNotebookbarControl(): void {
+		this.notebookbar.onAdd();
 		this.map.fire('a11ystatechanged');
 		app.UI.notebookbarAccessibility.initialize();
 	}
@@ -682,12 +714,12 @@ class UIManager extends L.Control {
 	}
 
 	/**
-	 * Refreshes the notebookbar.
+	 * Refreshes the notebookbar. WARNING: if we got core updates for JSDialog widgets, they will be lost.
 	 */
 	refreshNotebookbar(): void {
 			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
 			this.removeNotebookbarUI();
-			this.createNotebookbarControl(this.map.getDocType());
+			this.showNotebookbarControl();
 			if (this._map._permission === 'edit') {
 				$('.main-nav').removeClass('readonly');
 			}
@@ -697,7 +729,7 @@ class UIManager extends L.Control {
 			this.notebookbar.showTabs();
 			$('#map').addClass('notebookbar-opened');
 			this.insertCustomButtons();
-			this.map.sendInitUNOCommands();
+			this.map.sendInitNotebookbarCommands();
 			if (this.map.getDocType() === 'presentation')
 				this.map.fire('toggleslidehide');
 	}
@@ -747,10 +779,7 @@ class UIManager extends L.Control {
 	 * Removes notebookbar UI components.
 	 */
 	removeNotebookbarUI(): void {
-		if (this.notebookbar) {
-			this.map.removeControl(this.notebookbar);
-			this.notebookbar = null;
-		}
+		this.notebookbar.onRemove();
 		$('#map').removeClass('notebookbar-opened');
 	}
 
@@ -758,7 +787,7 @@ class UIManager extends L.Control {
 	 * Handles UI mode changes.
 	 * @param uiMode - Object containing the new UI mode and additional flags.
 	 */
-	onChangeUIMode(uiMode: any): void {
+	onChangeUIMode(uiMode: UIModeCommand): void {
 		if (window.mode.isMobile())
 			return;
 
@@ -797,7 +826,7 @@ class UIManager extends L.Control {
 		}
 
 		window.prefs.set('compactMode', uiMode.mode === 'classic');
-		this.initializeSidebar();
+		this.initializeLateComponents();
 		this.insertCustomButtons();
 
 		// this code ensures that elements in the notebookbar have their "selected" status
@@ -811,6 +840,9 @@ class UIManager extends L.Control {
 		this.map.fire('rulerchanged');
 		this.map.fire('statusbarchanged');
 		this.map.fire('a11ystatechanged');
+
+		// be sure we hide old scrollable markers
+		JSDialog.RefreshScrollables();
 	}
 
 	// UI modification
@@ -895,13 +927,15 @@ class UIManager extends L.Control {
 	 * @param button - Button configuration object.
 	 */
 	insertCustomButton(button: any): void {
-		if (button.tablet === false && window.mode.isTablet()) {
+		if (button.tablet === false && window.mode.isTablet())
 			return;
-		}
-		if (!this.notebookbar)
+
+		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
-		else
+		else if (this.notebookbar)
 			this.notebookbar.insertButtonToShortcuts(button);
+		else
+			app.console.debug('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
 	}
 
 	/**
@@ -928,7 +962,8 @@ class UIManager extends L.Control {
 				toolbar.showItem(buttonId, show);
 			}
 		});
-
+		if (!window.app.map.topToolbar)
+			return found;
 		const topToolbarHas = window.app.map.topToolbar.hasItem(buttonId);
 		found = found || topToolbarHas;
 		if (topToolbarHas)
@@ -944,7 +979,7 @@ class UIManager extends L.Control {
 	 */
 	showButton(buttonId: string, show: boolean): void {
 		var found = false;
-		if (!this.notebookbar) {
+		if (this.getCurrentMode() === 'classic') {
 			found = this.showButtonInClassicToolbar(buttonId, show);
 		} else {
 			if (show) {
@@ -1027,7 +1062,7 @@ class UIManager extends L.Control {
 			this.hiddenCommands[command] = true;
 		}
 		var found = false;
-		if (!this.notebookbar) {
+		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
 		} else {
@@ -1058,7 +1093,7 @@ class UIManager extends L.Control {
 		if (!this.isMenubarHidden())
 			return;
 		$('.main-nav').show();
-		if (L.Params.closeButtonEnabled && !window.mode.isTablet()) {
+		if (window.L.Params.closeButtonEnabled && !window.mode.isTablet()) {
 			$('#closebuttonwrapper').show();
 			$('#closebuttonwrapperseparator').show();
 		}
@@ -1085,7 +1120,7 @@ class UIManager extends L.Control {
 		this._notebookbarShouldBeCollapsed = notebookbarWasCollapsed;
 
 		$('.main-nav').hide();
-		if (L.Params.closeButtonEnabled) {
+		if (window.L.Params.closeButtonEnabled) {
 			$('#closebuttonwrapper').hide();
 			$('#closebuttonwrapperseparator').hide();
 		}
@@ -1167,6 +1202,25 @@ class UIManager extends L.Control {
 	}
 
 	// Notebookbar helpers
+
+	initializeNotebookbarInCore(): void {
+		// do it always apart of mobile as we need it for contextual toolbar
+		if (window.mode.isMobile()) return;
+
+		if (!this.notebookbar.impl.initialized) {
+			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
+			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+		}
+	}
+
+	// QuickFindPanel
+
+	initializeQuickFindInCore(): void {
+		if (!this.map.quickFindPanel) return;
+
+		// Initialize QuickFindPanel in core
+		app.socket.sendMessage('uno .uno:QuickFind');
+	}
 
 	/**
 	 * Returns whether the notebookbar is currently shown.
@@ -1252,6 +1306,10 @@ class UIManager extends L.Control {
 		this.map.fire('statusbarchanged');
 	}
 
+	showNavigator(): void {
+		app.socket.sendMessage('uno .uno:Navigator');
+	}
+
 	/**
 	 * Hides the status bar.
 	 * @param firstStart - Optional flag indicating if this is the initial call.
@@ -1282,7 +1340,14 @@ class UIManager extends L.Control {
 	 * Focuses the search functionality.
 	 */
 	focusSearch(): void {
-		this.showStatusBar();
+		const isTextDoc = this.map.isText();
+		if (isTextDoc && !app.showNavigator) {
+			this.map.navigator.preFocusQuickFind();
+			this.showNavigator();
+		}
+		else if(!isTextDoc){
+			app.socket.sendMessage('uno .uno:SearchDialog');
+		}
 		this.map.fire('focussearch');
 	}
 
@@ -1321,31 +1386,18 @@ class UIManager extends L.Control {
 				this.makeSpaceForNotebookbar();
 			} else if (e.detail.perm === 'readonly') {
 				if (!this.map.menubar) {
-					var menubar = L.control.menubar();
+					var menubar = new Menubar();
 					this.map.menubar = menubar;
 					this.map.addControl(menubar);
 				}
 
 				if (this.notebookbar && $('#mobile-edit-button').is(':hidden')) {
-					this.map.removeControl(this.notebookbar);
-					this.notebookbar = null;
+					this.notebookbar.onRemove();
 				}
 			} else {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
-	}
-
-	/**
-	 * Refreshes the UI.
-	 */
-	refreshUI(): void {
-		if (this.notebookbar && !this.map._shouldStartReadOnly())
-			this.refreshNotebookbar();
-		else
-			this.refreshMenubar();
-
-		this.refreshTheme();
 	}
 
 	refreshTheme(): void {
@@ -1369,17 +1421,8 @@ class UIManager extends L.Control {
 		}
 
 		var userPrivateInfo = myViewData.userprivateinfo;
-		if (userPrivateInfo && window.zoteroEnabled) {
-			var apiKey = userPrivateInfo.ZoteroAPIKey;
-			if (apiKey !== undefined && !this.map.zotero) {
-				this.map.zotero = L.control.zotero(this.map);
-				this.map.zotero.apiKey = apiKey;
-				this.map.addControl(this.map.zotero);
-				this.map.zotero.updateUserID();
-			}
-		}
 		if (window.documentSigningEnabled) {
-			if (userPrivateInfo && this.notebookbar) {
+			if (userPrivateInfo && this.getCurrentMode() === 'notebookbar') {
 				const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
 				// Show or hide the signature button on the notebookbar depending on if we
 				// have a signing cert/key specified.
@@ -1390,7 +1433,7 @@ class UIManager extends L.Control {
 				const baseUrl = serverPrivateInfo.ESignatureBaseUrl;
 				const clientId = serverPrivateInfo.ESignatureClientId;
 				if (baseUrl !== undefined && !this.map.eSignature) {
-					this.map.eSignature = L.control.eSignature(baseUrl, clientId);
+					this.map.eSignature = new cool.ESignature(baseUrl, clientId);
 				}
 			}
 		}
@@ -1466,7 +1509,7 @@ class UIManager extends L.Control {
 	 * @param text - Tooltip text.
 	 */
 	private _setTooltipText(element: any, text: string): void {
-		var dummyNode = L.DomUtil.create('div');
+		var dummyNode = window.L.DomUtil.create('div');
 		dummyNode.innerText = text;
 		element.tooltip('option', 'content', dummyNode.innerHTML);
 	}
@@ -1477,7 +1520,7 @@ class UIManager extends L.Control {
 	 */
 	showDocumentTooltip(tooltipInfo: any): void {
 		var split = tooltipInfo.rectangle.split(',');
-		var latlng = this.map._docLayer._twipsToLatLng(new L.Point(+split[0], +split[1]));
+		var latlng = this.map._docLayer._twipsToLatLng(new cool.Point(+split[0], +split[1]));
 		var pt = this.map.latLngToContainerPoint(latlng);
 		var elem = $('.leaflet-layer');
 
@@ -1510,6 +1553,7 @@ class UIManager extends L.Control {
 	 * @param timeout - Duration before auto-dismiss.
 	 * @param hasProgress - Whether to show a progress bar.
 	 * @param withDismiss - Whether a dismiss button is included.
+	 * @param infinite - If true, shows an indeterminate progress bar.
 	 */
 	showSnackbar(
 		label: string,
@@ -1531,16 +1575,18 @@ class UIManager extends L.Control {
 		callback: any,
 		timeout?: number,
 		withDismiss?: boolean,
+		infinite?: boolean,
 	): void {
-		JSDialog.SnackbarController.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss);
+		JSDialog.SnackbarController.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss, infinite);
 	}
 
 	/**
 	 * Updates the progress value on the snackbar.
 	 * @param value - Progress value (0–100).
+	 * @param infinite - If true, shows an indeterminate progress bar.
 	 */
-	setSnackbarProgress(value: number): void {
-		JSDialog.SnackbarController.setSnackbarProgress(value);
+	setSnackbarProgress(value: number, infinite?: boolean): void {
+		JSDialog.SnackbarController.setSnackbarProgress(value, infinite);
 	}
 
 	// Modals
@@ -1661,8 +1707,8 @@ class UIManager extends L.Control {
 		message1: string,
 		message2: string,
 		buttonText: string,
-		callback: any,
-		withCancel: boolean,
+		callback: any = null,
+		withCancel: boolean = false,
 		focusId?: string,
 	): void {
 		var dialogId = this.generateModalId(id);
@@ -1744,6 +1790,7 @@ class UIManager extends L.Control {
 		callback: any,
 		value?: number,
 		cancelCallback?: any,
+		infinite: boolean = false,
 	): void {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';
@@ -1765,7 +1812,8 @@ class UIManager extends L.Control {
 				id: dialogId + '-progressbar',
 				type: 'progressbar',
 				value: (value !== undefined && value !== null ? value: 0),
-				maxValue: 100
+				maxValue: 100,
+				infinite: infinite
 			},
 			{
 				id: '',
@@ -1809,8 +1857,9 @@ class UIManager extends L.Control {
 	/**
 	 * Updates the progress value in a progress dialog.
 	 * @param value - Progress value (0–100).
+	 * @param infinite - If true, shows an indeterminate progress bar.
 	 */
-	setDialogProgress(id: string, value: number): void {
+	setDialogProgress(id: string, value: number, infinite: boolean): void {
 		if (!app.socket)
 			return;
 
@@ -1825,7 +1874,8 @@ class UIManager extends L.Control {
 				id: dialogId + '-progressbar',
 				type: 'progressbar',
 				value: value,
-				maxValue: 100
+				maxValue: 100,
+				infinite: infinite
 			}
 		};
 
@@ -2184,8 +2234,3 @@ class UIManager extends L.Control {
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
 	}
 }
-
-// Export a factory function for the UIManager control.
-L.control.uiManager = function (): UIManager {
-	return new UIManager();
-};

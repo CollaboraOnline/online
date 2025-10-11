@@ -12,28 +12,27 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
-declare var L: any;
+/* global L */
 
 namespace cool {
 
 export class TilesSection extends CanvasSectionObject {
-	name: string = L.CSections.Tiles.name;
 
 	// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-	anchor: any = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
+	anchor: any = [[app.CSections.ColumnHeader.name, 'bottom', 'top'], [app.CSections.RowHeader.name, 'right', 'left']];
 	expand: any = ['top', 'left', 'bottom', 'right'];
-	processingOrder: number = L.CSections.Tiles.processingOrder;
-	drawingOrder: number = L.CSections.Tiles.drawingOrder;
-	zIndex: number = L.CSections.Tiles.zIndex;
+	processingOrder: number = app.CSections.Tiles.processingOrder;
+	drawingOrder: number = app.CSections.Tiles.drawingOrder;
+	zIndex: number = app.CSections.Tiles.zIndex;
 
 	map: any;
 	isJSDOM: boolean = false; // testing
 	checkpattern: any;
 
 	constructor () {
-		super();
+		super(app.CSections.Tiles.name);
 
-		this.map = L.Map.THIS;
+		this.map = window.L.Map.THIS;
 
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
@@ -70,7 +69,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintWithPanes (tile: any, ctx: any, async: boolean): void {
 		var tileTopLeft = tile.coords.getPos();
-		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(new L.Point(TileManager.tileSize, TileManager.tileSize)));
+		var tileBounds = new cool.Bounds(tileTopLeft, tileTopLeft.add(new cool.Point(TileManager.tileSize, TileManager.tileSize)));
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
@@ -120,8 +119,8 @@ export class TilesSection extends CanvasSectionObject {
 
 		var bounds: cool.Bounds;
 		for (const coords of Array.from(tileSubset)) {
-			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
-			var rightBottom = new L.Point(topLeft.x + TileManager.tileSize, topLeft.y + TileManager.tileSize);
+			var topLeft = new cool.Point(coords.getPos().x, coords.getPos().y);
+			var rightBottom = new cool.Point(topLeft.x + TileManager.tileSize, topLeft.y + TileManager.tileSize);
 
 			if (bounds === undefined)
 				bounds = new cool.Bounds(topLeft, rightBottom);
@@ -151,7 +150,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean): void {
 		// intersect - to avoid state thrash through clipping
-		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+		var crop = new cool.Bounds(tileBounds.min, tileBounds.max);
 		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
 		crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
 		crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
@@ -170,7 +169,7 @@ export class TilesSection extends CanvasSectionObject {
 					crop.min.y - paneOffset.y,
 					cropWidth, cropHeight);
 				this.afterDraw(canvasCtx);
-				var gridSection = this.containerObject.getSectionWithName(L.CSections.CalcGrid.name);
+				var gridSection = this.containerObject.getSectionWithName(app.CSections.CalcGrid.name);
 				gridSection.onDrawArea(crop, paneOffset, canvasCtx);
 			}
 
@@ -198,7 +197,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintSimple (tile: any, ctx: any, async: boolean): void {
 		ctx.viewBounds.round();
-		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
+		var offset = new cool.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 
 		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
@@ -212,7 +211,7 @@ export class TilesSection extends CanvasSectionObject {
 		if (app.file.fileBasedView) {
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * app.twipsToPixels);
 
-			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
+			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - app.activeDocument.activeView.viewedRectangle.pY1;
 		}
 
 		this.drawTileToCanvas(tile, this.context, offset.x, offset.y, TileManager.tileSize, TileManager.tileSize);
@@ -239,11 +238,10 @@ export class TilesSection extends CanvasSectionObject {
 		var tileRanges = ctx.paneBoundsList.map(TileManager.pxBoundsToTileRange, TileManager);
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = TileManager.updateFileBasedView(true);
+			const coordList = TileManager.updateFileBasedView(true);
 
 			for (var k: number = 0; k < coordList.length; k++) {
-				var key = coordList[k].key();
-				const tile: Tile = TileManager.get(key);
+				const tile: Tile = TileManager.get(coordList[k]);
 				if (!callback(tile, coordList[k]))
 					return;
 			}
@@ -260,8 +258,7 @@ export class TilesSection extends CanvasSectionObject {
 							part,
 							mode);
 
-						const key = coords.key();
-						const tile: Tile = TileManager.get(key);
+						const tile: Tile = TileManager.get(coords);
 
 						if (!callback(tile, coords))
 							return;
@@ -291,7 +288,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawPageBackgroundWriter (ctx: any) {
-		let viewRectangleTwips = [this.documentTopLeft[0], this.documentTopLeft[1], this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
+		let viewRectangleTwips = [app.activeDocument.activeView.viewedRectangle.pX1, app.activeDocument.activeView.viewedRectangle.pY1, this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
 		viewRectangleTwips = viewRectangleTwips.map(function(element: number) {
 			return Math.round(element * app.pixelsToTwips);
 		});
@@ -316,7 +313,7 @@ export class TilesSection extends CanvasSectionObject {
 	private drawPageBackgroundFileBasedView (ctx: any) {
 		// PDF view supports only same-sized pages for now. So we can use simple math instead of a loop.
 		var partHeightPixels: number = Math.round((this.map._docLayer._partHeightTwips + this.map._docLayer._spaceBetweenParts) * app.twipsToPixels);
-		var visibleBounds: Array<number> = app.file.viewedRectangle.pToArray();
+		var visibleBounds: Array<number> = app.activeDocument.activeView.viewedRectangle.pToArray();
 		var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
 		var bottomVisible: number = Math.ceil((visibleBounds[1] + visibleBounds[3]) / partHeightPixels);
 
@@ -351,14 +348,12 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawPageBackgroundsMultiPageView() {
-		if (MultiPageViewLayout === undefined) return;
-
 		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
 		this.context.strokeStyle = "red";
 
-		for (let i = 0; i < MultiPageViewLayout.layoutRectangles.length; i++) {
-			const rectangle = MultiPageViewLayout.layoutRectangles[i];
-			const coords = [rectangle.layoutX - app.file.viewedRectangle.pX1, rectangle.layoutY - app.file.viewedRectangle.pY1, rectangle.pWidth, rectangle.pHeight];
+		for (let i = 0; i < app.activeDocument.activeView.layoutRectangles.length; i++) {
+			const rectangle = app.activeDocument.activeView.layoutRectangles[i];
+			const coords = [rectangle.layoutX - app.activeDocument.activeView.viewedRectangle.pX1, rectangle.layoutY - app.activeDocument.activeView.viewedRectangle.pY1, rectangle.pWidth, rectangle.pHeight];
 			this.context.strokeRect(coords[0], coords[1], coords[2], coords[3]);
 			this.context.fillRect(coords[0], coords[1], coords[2], coords[3]);
 		}
@@ -386,27 +381,27 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawForMultiPageView() {
-		const visibleCoordList: Array<TileCoordData> = TileManager.getVisibleCoordList(MultiPageViewLayout.getVisibleAreaRectangle());
+		const visibleCoordList: Array<TileCoordData> = TileManager.getVisibleCoordList(app.activeDocument.activeView.getVisibleAreaRectangle());
 
 		for (let i = 0; i < visibleCoordList.length; i++) {
 			const coords = visibleCoordList[i];
 
 			let firstIntersection = -1;
-			for (let j = 0; j < MultiPageViewLayout.layoutRectangles.length; j++) {
-				const layoutRectangle = MultiPageViewLayout.layoutRectangles[j];
+			for (let j = 0; j < app.activeDocument.activeView.layoutRectangles.length; j++) {
+				const layoutRectangle = app.activeDocument.activeView.layoutRectangles[j];
 				const coordsRectangle = [coords.x, coords.y, TileManager.tileSize, TileManager.tileSize];
 				const intersection = LOUtil._getIntersectionRectangle(layoutRectangle.pToArray(), coordsRectangle);
 
 				if (intersection) {
 					firstIntersection = j;
 
-					const viewX = Math.round(layoutRectangle.layoutX + (intersection[0] - layoutRectangle.pX1) - app.file.viewedRectangle.pX1);
-					const viewY = Math.round(layoutRectangle.layoutY + (intersection[1] - layoutRectangle.pY1) - app.file.viewedRectangle.pY1);
+					const viewX = Math.round(layoutRectangle.layoutX + (intersection[0] - layoutRectangle.pX1) - app.activeDocument.activeView.viewedRectangle.pX1);
+					const viewY = Math.round(layoutRectangle.layoutY + (intersection[1] - layoutRectangle.pY1) - app.activeDocument.activeView.viewedRectangle.pY1);
 					const sX = Math.round(intersection[0] - coords.x);
 					const sY = Math.round(intersection[1] - coords.y);
 
 					this.drawTileToCanvasCrop(
-						TileManager.get(coords.key()),
+						TileManager.get(coords),
 						this.context,
 						sX, sY,
 						intersection[2],
@@ -472,7 +467,7 @@ export class TilesSection extends CanvasSectionObject {
 		}.bind(this));
 	}
 
-	public onClick(point: Array<number>, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		// Slides pane is not focusable, we are using a variable to follow its focused state.
 		// Until the pane is focusable, we will need to keep below check here.
 		if (this.map._docLayer._docType === 'presentation' || this.map._docLayer._docType === 'drawing')
@@ -487,11 +482,11 @@ export class TilesSection extends CanvasSectionObject {
 		if (size.x <= 0 || size.y <= 0)
 			return 0;
 
-		var intersection = new L.Bounds(
-			new L.Point(
+		var intersection = new cool.Bounds(
+			new cool.Point(
 				Math.max(tileBounds.min.x, viewBounds.min.x),
 				Math.max(tileBounds.min.y, viewBounds.min.y)),
-			new L.Point(
+			new cool.Point(
 				Math.min(tileBounds.max.x, viewBounds.max.x),
 				Math.min(tileBounds.max.y, viewBounds.max.y))
 		);
@@ -501,15 +496,14 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private forEachTileInArea(area: any, zoom: number, part: number, mode: number, ctx: any,
-		callback: (tile: any, coords: any, section: TilesSection) => boolean) {
+		callback: (tile: any, coords: TileCoordData, section: TilesSection) => boolean) {
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = TileManager.updateFileBasedView(true, area, zoom);
+			const coordList = TileManager.updateFileBasedView(true, area, zoom);
 
 			for (var k: number = 0; k < coordList.length; k++) {
-				var coords = coordList[k];
-				var key = coords.key();
-				const tile: Tile = TileManager.get(key);
+				const coords = coordList[k];
+				const tile: Tile = TileManager.get(coords);
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -528,8 +522,7 @@ export class TilesSection extends CanvasSectionObject {
 					part,
 					mode);
 
-				const key = coords.key();
-				const tile: Tile = TileManager.get(key);
+				const tile: Tile = TileManager.get(coords);
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -584,7 +577,7 @@ export class TilesSection extends CanvasSectionObject {
 						tilePos.y = coords.part * partHeightPixels + tilePos.y;
 					}
 
-					var tileBounds = new L.Bounds(tilePos, tilePos.add(new L.Point(TileManager.tileSize, TileManager.tileSize)));
+					var tileBounds = new cool.Bounds(tilePos, tilePos.add(new cool.Point(TileManager.tileSize, TileManager.tileSize)));
 					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
 
 					// Add to score how much of tile area is available.
@@ -700,7 +693,7 @@ export class TilesSection extends CanvasSectionObject {
 				canvas.fillStyle = 'rgba(255, 0, 0, 0.8)';   // red
 			else if (tile.needsFetch())
 				canvas.fillStyle = 'rgba(255, 255, 0, 0.8)'; // yellow
-			else if (tile.hasPendingUpdate())
+			else if (!tile.isReady())
 				canvas.fillStyle = 'rgba(0, 160, 0, 0.8)'; // dark green
 			else // present
 				canvas.fillStyle = 'rgba(0, 255, 0, 0.5)';   // green
@@ -787,7 +780,7 @@ export class TilesSection extends CanvasSectionObject {
 			var paneBounds = paneBoundsList[k];
 			var paneSize = paneBounds.getSize();
 
-			var destPos = new L.Point(0, 0);
+			var destPos = new cool.Point(0, 0);
 			var docAreaSize = paneSize.divideBy(scale);
 
 			let freezeX: boolean;
@@ -834,7 +827,7 @@ export class TilesSection extends CanvasSectionObject {
 				tsManager._zoomAtDocEdgeY = docPos.topLeft.y == splitPos.y;
 			}
 
-			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			var docRange = new cool.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
 			if (tsManager._calcGridSection) {
 				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);
 			}
@@ -863,9 +856,9 @@ export class TilesSection extends CanvasSectionObject {
 					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
 				}
-				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(new L.Point(TileManager.tileSize, TileManager.tileSize)));
+				var tileBounds = new cool.Bounds(tileCoords, tileCoords.add(new cool.Point(TileManager.tileSize, TileManager.tileSize)));
 
-				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+				var crop = new cool.Bounds(tileBounds.min, tileBounds.max);
 				crop.min.x = Math.max(docRangeScaled.min.x, tileBounds.min.x);
 				crop.min.y = Math.max(docRangeScaled.min.y, tileBounds.min.y);
 				crop.max.x = Math.min(docRangeScaled.max.x, tileBounds.max.x);
@@ -918,13 +911,13 @@ export class TilesSection extends CanvasSectionObject {
 
 			var topLeft = this.scalePosForZoom(corePxBounds.min, toZoom, fromZoom);
 			var size = corePxBounds.getSize().multiplyBy(convScale);
-			return new L.Bounds(
+			return new cool.Bounds(
 				topLeft,
 				topLeft.add(size)
 			);
 		}
 
-		return new L.Bounds(
+		return new cool.Bounds(
 			corePxBounds.min.multiplyBy(convScale),
 			corePxBounds.max.multiplyBy(convScale)
 		);
@@ -932,7 +925,3 @@ export class TilesSection extends CanvasSectionObject {
 }
 
 }
-
-L.getNewTilesSection = function () {
-	return new cool.TilesSection();
-};

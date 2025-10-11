@@ -24,12 +24,16 @@
 #include <android/log.h>
 #endif
 
+#if defined __EMSCRIPTEN__
+#include <emscripten/console.h>
+#endif
+
 #include "Util.hpp"
 #include "StateEnum.hpp"
 
 namespace Log
 {
-    enum Level
+    enum Level : std::uint8_t
     {
         FTL = 1, // Fatal
         CTL,     // Critical
@@ -124,7 +128,7 @@ namespace Log
     /// Getting the logging level
     Level getLevel();
 
-    std::string getLogLevelName(const std::string &channel);
+    const std::string& getLogLevelName(const std::string& channel);
     void setLogLevelByName(const std::string &channel,
                            const std::string &level);
 
@@ -194,6 +198,16 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_LOG(LVL, STR) \
     ((void)__android_log_print(ANDROID_LOG_DEBUG, \
                                "coolwsd", "%s %s", #LVL, STR.c_str()))
+#elif defined __EMSCRIPTEN__
+
+// emscripten/console.h does not have emscripten_console_info (corresponding to JS console.info) nor
+// emsripten_console_debug (corresponding to JS console.debug), so use emscripten_console_log
+// (corresponding to JS console.log) instead:
+#define LOG_LOG(LVL, STR) ( \
+    Log::LVL <= Log::ERR ? emscripten_console_error((STR).c_str()) : \
+    Log::LVL <= Log::WRN ? emscripten_console_warn((STR).c_str()) : \
+                           emscripten_console_log((STR).c_str()))
+
 #else
 
 #define LOG_LOG(LVL, STR)  Log::log(Log::LVL, STR)
@@ -223,15 +237,22 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     END(oss_);                                  \
     LOG_LOG(LVL, oss_.str())
 
-#define LOG_ANY(X)                              \
-    char b_[1024];                              \
-    std::ostringstream oss_(                    \
-        Log::prefix<sizeof(b_) - 1>(b_, "INF"), \
-        std::ostringstream::ate);               \
-    logPrefix(oss_);                            \
-    oss_ << std::boolalpha << X;                \
-    LOG_END(oss_);                              \
-    Log::log(Log::Level::INF, oss_.str());
+/// Unconditionally log. LVL can be anything converted to string.
+#define LOG_UNCONDITIONAL(LVL, X)                                                                  \
+    do                                                                                             \
+    {                                                                                              \
+        char b_[1024];                                                                             \
+        std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, #LVL), std::ostringstream::ate);   \
+        logPrefix(oss_);                                                                           \
+        oss_ << std::boolalpha << X;                                                               \
+        LOG_END(oss_);                                                                             \
+        Log::log(Log::Level::FTL, oss_.str());                                                     \
+    } while (false)
+
+/// Unconditionally log at ANY level.
+#define LOG_ANY(X) LOG_UNCONDITIONAL(ANY, X)
+/// Unconditionally log at TST level. Used for tests only.
+#define LOG_TST(X) LOG_UNCONDITIONAL(TST, X)
 
 #if defined __GNUC__ || defined __clang__
 #  define LOG_CONDITIONAL(type, area)  \

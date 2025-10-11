@@ -38,7 +38,7 @@
 #include <androidapp.hpp>
 #endif
 
-#include <wasm/base64.hpp>
+#include <common/base64.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -63,6 +63,8 @@
 #include <string>
 #include <string_view>
 #include <utility>
+#include <zlib.h>
+#include <zstd.h>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -1250,7 +1252,7 @@ bool ChildSession::clientZoom(const StringVector& tokens)
 
     if (tokens.size() == 7 &&
         getTokenString(tokens[5], "dpiscale", dpiScale) &&
-        getTokenString(tokens[6], "zoom", zoom))
+        getTokenString(tokens[6], "zoompercent", zoom))
     {
         getLOKitDocument()->setViewOption("dpiscale", dpiScale.c_str());
         getLOKitDocument()->setViewOption("zoom", zoom.c_str());
@@ -2436,7 +2438,7 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 
 bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
                                         const unsigned width, const unsigned height,
-                                        double devicePixelRatio, bool& done)
+                                        double devicePixelRatio, bool& done, bool isCompressed = false)
 {
     // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
@@ -2454,9 +2456,21 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
         [=, this, pixmap = std::move(pixmap),
          jsonMsg = std::move(jsonMsg)](std::vector<char>& output)
         {
+            std::string json = jsonMsg;
+            Poco::JSON::Parser parser;
+            Poco::JSON::Object::Ptr root;
+            if (EnableExperimental){
+                root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+                root->set("isCompressed", isCompressed);
+
+                std::stringstream ss;
+                root->stringify(ss);
+                json = ss.str();
+            }
+
             if (!isBitmapLayer)
             {
-                std::string response = "slidelayer: " + jsonMsg;
+                std::string response = "slidelayer: " + json;
                 Util::vectorAppend(output, response);
                 return;
             }
@@ -2482,24 +2496,76 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
             }
 
             uint64_t pixmapHash = hashSubBuffer(pixmap->data(), 0, 0, width, height, width, height) + getViewId();
-            std::string json = jsonMsg;
-            if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
-                json.replace(start, 11, "png");
             if (size_t start = json.find("%IMAGECHECKSUM%"); start != std::string::npos)
                 json.replace(start, 15, std::to_string(pixmapHash));
 
-            std::string response = "slidelayer: " + json;
-
-            response += "\n";
-
-            output.reserve(response.size() + pixmap->size());
-            output.resize(response.size());
-            std::memcpy(output.data(), response.data(), response.size());
-
-            if (!Png::encodeSubBufferToPNG(pixmap->data(), 0, 0, width, height, width, height, output, tileMode))
+            if (EnableExperimental) // ZSTD
             {
-                LOG_ERR("Failed to encode into PNG.");
-                output.resize(0);
+                if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
+                    json.replace(start, 11, "zstd");
+
+                {
+                    root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+                    root->set("width", width);
+                    root->set("height", height);
+
+                    std::stringstream updatedSs;
+                    root->stringify(updatedSs);
+                    json = updatedSs.str();
+                }
+
+                std::string response = "slidelayer: " + json;
+
+                response += "\n";
+
+                size_t compressed_max_size = ZSTD_COMPRESSBOUND(pixmap->size());
+                size_t max_required_size = response.size() + compressed_max_size;
+                output.resize(max_required_size);
+                std::memcpy(output.data(), response.data(), response.size());
+                std::vector<char> compressedOutPut;
+                compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
+
+                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
+                {
+                    png_row_info rowInfo;
+                    rowInfo.rowbytes = pixmap->size();
+                    // Following function just needs row size to transform from BGRA to RGBA
+                    // We have a flat array so its safe to pass pixmap size as row size
+                    Png::unpremultiply_bgra_data(nullptr, &rowInfo, pixmap->data());
+                }
+                size_t compSize = ZSTD_compress(&output[response.size()], compressed_max_size,
+                                                pixmap->data(), pixmap->size(), -3);
+
+                if (ZSTD_isError(compSize))
+                {
+                    output.resize(0);
+                    LOG_ERR("Failed to compress slidelayer of size " << pixmap->size() << " with "
+                                                                    << ZSTD_getErrorName(compSize));
+                    return;
+                }
+                output.resize(response.size() + compSize);
+
+                LOG_TRC("Compressed slidelayer of size " << pixmap->size() << " to size " << compSize);
+            }
+            else // PNG
+            {
+                if (size_t start = json.find("%IMAGETYPE%"); start != std::string::npos)
+                    json.replace(start, 11, "png");
+
+                std::string response = "slidelayer: " + json;
+
+                response += "\n";
+
+                output.reserve(response.size() + pixmap->size());
+                output.resize(response.size());
+
+                std::memcpy(output.data(), response.data(), response.size());
+
+                if (!Png::encodeSubBufferToPNG(pixmap->data(), 0, 0, width, height, width, height, output, tileMode))
+                {
+                    LOG_ERR("Failed to encode into PNG.");
+                    output.resize(0);
+                }
             }
         });
     return true;
@@ -2552,6 +2618,11 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     if (tokens.size() > 7 && getTokenString(tokens[7], "devicePixelRatio", devicePixelRatioString))
         devicePixelRatio = std::stod(devicePixelRatioString);
 
+    bool compressedLayers = false;
+    std::string compressedLayersString;
+    if (tokens.size() > 8 && getTokenString(tokens[8], "compressedLayers", compressedLayersString))
+        compressedLayers = std::stoi(compressedLayersString) > 0;
+
     unsigned bufferWidth = suggestedWidth;
     unsigned bufferHeight = suggestedHeight;
     bool success = getLOKitDocument()->createSlideRenderer(hash.c_str(), part,
@@ -2569,7 +2640,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     SlideCompressor scomp(_docManager->getSyncPool());
     while (!done)
     {
-        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done);
+        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done, compressedLayers);
         if (!success)
             break;
     }
@@ -2584,7 +2655,11 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     getLOKitDocument()->postSlideshowCleanup();
 
     std::string msg = "sliderenderingcomplete: ";
-    msg += (success ? "success" : "fail");
+    if (EnableExperimental) {
+        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") + "\", \"slidehash\": \"" + hash + "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") + "}";
+    } else {
+        msg += (success ? "success" : "fail");
+    }
     sendTextFrame(msg);
 
     return success;

@@ -172,6 +172,13 @@ void RemoteConfigPoll::handleJSON(const Poco::JSON::Object::Ptr& remoteJson)
 
     HostUtil::parseAliases(_conf);
 
+    HostUtil::parseAllowedWSOrigins(_conf);
+
+    COOLWSD::IndirectionServerEnabled =
+        !ConfigUtil::getConfigValue<std::string>(_conf, "indirection_endpoint.url", "").empty();
+    COOLWSD::GeolocationSetup =
+        ConfigUtil::getConfigValue("indirection_endpoint.geolocation_setup.enable", false);
+
     handleOptions(remoteJson);
 }
 
@@ -476,26 +483,72 @@ void RemoteConfigPoll::fetchUnlockImageUrl(std::map<std::string, std::string>& n
 void RemoteConfigPoll::fetchIndirectionEndpoint(std::map<std::string, std::string>& newAppConfig,
                                                 const Poco::JSON::Object::Ptr& remoteJson)
 {
-    try
+    const std::string indrectionEndpointKey = "indirection_endpoint";
+    if (!remoteJson || !remoteJson->isObject(indrectionEndpointKey))
     {
-        Poco::JSON::Object::Ptr indirectionEndpoint = remoteJson->getObject("indirection_endpoint");
+        LOG_DBG(indrectionEndpointKey << " doesn't exist, ignoring");
+        return;
+    }
 
-        std::string url;
-        if (JsonUtil::findJSONValue(indirectionEndpoint, "url", url))
-        {
-            newAppConfig.insert(std::make_pair("indirection_endpoint.url", url));
-        }
-    }
-    catch (const Poco::NullPointerException&)
+    Poco::JSON::Object::Ptr indirectionEndpoint = remoteJson->getObject(indrectionEndpointKey);
+
+    std::string url;
+    if (JsonUtil::findJSONValue(indirectionEndpoint, "url", url))
+        newAppConfig.insert(std::make_pair(indrectionEndpointKey + ".url", url));
+
+    std::string serverName;
+    if (JsonUtil::findJSONValue(indirectionEndpoint, indrectionEndpointKey + ".server_name",
+                                serverName))
+        newAppConfig.insert(std::make_pair(indrectionEndpointKey + ".server_name", serverName));
+
+    const std::string geolocationKey = indrectionEndpointKey + ".geolocation_setup";
+    if (!indirectionEndpoint->isObject("geolocation_setup"))
     {
-        LOG_INF("Overriding indirection_endpoint.url failed because the indirection_endpoint.url "
-                "entry does not "
-                "exist");
+        LOG_DBG(geolocationKey << " doesn't exist, ignoring");
+        return;
     }
-    catch (const std::exception& exc)
+
+    Poco::JSON::Object::Ptr geolocationSetupObj =
+        indirectionEndpoint->getObject("geolocation_setup");
+
+    bool geolocationEnabled;
+    if (JsonUtil::findJSONValue(geolocationSetupObj, "enable", geolocationEnabled))
+        newAppConfig.insert(
+            std::make_pair(geolocationKey + ".enable", std::to_string(geolocationEnabled)));
+
+    std::string geolocationTimezone;
+    if (JsonUtil::findJSONValue(geolocationSetupObj, "timezone", geolocationTimezone))
+        newAppConfig.insert(std::make_pair(geolocationKey + ".timezone", geolocationTimezone));
+
+    Poco::JSON::Array::Ptr allowedOrigins =
+        geolocationSetupObj->getArray("allowed_websocket_origins");
+
+    const std::string allowedWebsocketKey = geolocationKey + ".allowed_websocket_origins.origin";
+    if (allowedOrigins.isNull() || allowedOrigins->size() == 0)
     {
-        LOG_ERR("Failed to fetch indirection_endpoint, please check JSON format: " << exc.what());
+        LOG_INF("Overriding " << allowedWebsocketKey << " failed because array is empty or null");
+        return;
     }
+
+    size_t i;
+    for (i = 0; i < allowedOrigins->size(); i++)
+    {
+        newAppConfig.insert(std::make_pair(allowedWebsocketKey + '[' + std::to_string(i) + ']',
+                                           allowedOrigins->get(i).toString()));
+    }
+
+    //if number of allowed_websocket_origins defined in configuration are greater than number of allowed_websocket_origins
+    //fetched from json or if the number of monitors shrinks with new json,
+    //overwrite the remaining allowed_websocket_origins from config file to empty strings
+    bool bHaveMorePaths = true;
+    do
+    {
+        const std::string path = allowedWebsocketKey + '[' + std::to_string(i) + ']';
+        bHaveMorePaths = _conf.has(path);
+        if (bHaveMorePaths)
+            newAppConfig.insert(std::make_pair(path, ""));
+        i++;
+    } while (bHaveMorePaths);
 }
 
 void RemoteConfigPoll::fetchMonitors(std::map<std::string, std::string>& newAppConfig,

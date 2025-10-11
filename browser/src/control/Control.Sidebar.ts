@@ -16,20 +16,16 @@
 // /* global app */
 class Sidebar extends SidebarBase {
 	targetDeckCommand: string;
+	isUserRequest: boolean; /// automatic or user request to show the sidebar
 
-	constructor(
-		map: any,
-		options: SidebarOptions = {
-			animSpeed: 1000,
-		} /* Default speed: to be used on load */,
-	) {
-		super(map, options, SidebarType.Sidebar);
+	constructor(map: MapInterface) {
+		super(map, SidebarType.Sidebar);
+		this.isUserRequest = true;
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
+	onAdd(map: MapInterface) {
 		super.onAdd(map);
 		this.map.on('sidebar', this.onSidebar, this);
-		this.map.on('jsdialogclick', this.onJSDialogClick, this);
 	}
 
 	onRemove() {
@@ -37,12 +33,18 @@ class Sidebar extends SidebarBase {
 		this.map.off('sidebar');
 	}
 
+	setAsInitialized() {
+		this.isUserRequest = false;
+	}
+
 	updateSidebarPrefs(currentDeck: string) {
+		// No longer used:
+		// 'SdSlideTransitionDeck'
+		// 'SdMasterPagesDeck',
+
 		const decks = [
 			'PropertyDeck',
-			'SdSlideTransitionDeck',
 			'SdCustomAnimationDeck',
-			'SdMasterPagesDeck',
 			'NavigatorDeck',
 			'StyleListDeck',
 			'A11yCheckDeck',
@@ -56,11 +58,12 @@ class Sidebar extends SidebarBase {
 	}
 
 	commandForDeck(deckId: string): string {
+		// No longer used:
+		// if (deckId === 'SdSlideTransitionDeck') return '.uno:SlideChangeWindow';
+		// else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
+
 		if (deckId === 'PropertyDeck') return '.uno:SidebarDeck.PropertyDeck';
-		else if (deckId === 'SdSlideTransitionDeck')
-			return '.uno:SlideChangeWindow';
 		else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
-		else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
 		else if (deckId === 'NavigatorDeck') return '.uno:Navigator';
 		else if (deckId === 'StyleListDeck')
 			return '.uno:SidebarDeck.StyleListDeck';
@@ -69,7 +72,7 @@ class Sidebar extends SidebarBase {
 		return '';
 	}
 
-	setupTargetDeck(unoCommand: string) {
+	setupTargetDeck(unoCommand: string | null) {
 		this.targetDeckCommand = unoCommand;
 	}
 
@@ -83,15 +86,8 @@ class Sidebar extends SidebarBase {
 		this.setupTargetDeck(unoCommand);
 	}
 
-	onJSDialogClick(e: any) {
-		if (e.uno === '.uno:SidebarDeck.PropertyDeck') {
-			this.enableFocus = true;
-		}
-	}
-
 	onSidebar(data: FireEvent) {
 		var sidebarData = data.data;
-		this.builder.setWindowId(sidebarData.id);
 		$(this.container).empty();
 
 		if (
@@ -141,25 +137,39 @@ class Sidebar extends SidebarBase {
 					}
 				}
 
-				this.builder.build(this.container, [sidebarData]);
-				if (!this.isVisible()) $('#sidebar-dock-wrapper').addClass('visible');
+				this.model.fullUpdate(sidebarData as JSDialogJSON);
+				this.builder.build(this.container, [this.model.getSnapshot()], false);
 
-				if (this.enableFocus === true) {
-					const focusables = JSDialog.GetFocusableElements(this.container);
-					if (focusables && focusables.length) {
-						focusables[0].focus();
+				if (!this.isVisible()) {
+					if ((this.builder as any).windowId === WindowId.Sidebar)
+						$('#sidebar-dock-wrapper').addClass('coreBased');
+					$('#sidebar-dock-wrapper').addClass('visible');
+
+					// schedule focus after animation so it will not shift the browser page
+					if (this.isUserRequest) {
+						setTimeout(() => {
+							app.layoutingService.appendLayoutingTask(() => {
+								const focusables = JSDialog.GetFocusableElements(
+									this.container,
+								);
+								if (focusables && focusables.length) {
+									focusables[0].focus();
+								}
+							});
+						}, 250); // see animation time in #sidebar-dock-wrapper.visible
 					}
-					this.enableFocus = false;
 				}
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
 			} else {
 				this.closeSidebar();
 			}
+
+			this.isUserRequest = true;
 		}
 	}
 }
 
-JSDialog.Sidebar = function (map: any, options: SidebarOptions) {
-	return new Sidebar(map, options);
+JSDialog.Sidebar = function (map: MapInterface) {
+	return new Sidebar(map);
 };

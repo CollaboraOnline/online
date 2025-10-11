@@ -940,6 +940,7 @@ int filterNumberName(const struct dirent *dir)
     return !fnmatch("[0-9]*", dir->d_name, 0);
 }
 
+// coverity[ -taint_source : arg-1 ] 2024.6.1
 int AdminModel::getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids)
 {
     struct dirent **namelist = NULL;
@@ -991,12 +992,10 @@ int AdminModel::getUnassignedKitPids(std::vector<int> *pids)
     return getPidsFromProcName(std::regex("kit_spare_.*"), pids);
 }
 
-int AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
+void AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
 {
-    int count = getAssignedKitPids(pids);
-    count += getUnassignedKitPids(pids);
-
-    return count;
+    getAssignedKitPids(pids);
+    getUnassignedKitPids(pids);
 }
 
 class AggregateStats final
@@ -1175,7 +1174,7 @@ void CalcKitStats(KitProcStats& stats)
     std::vector<int> childProcs;
     stats.unassignedCount = AdminModel::getUnassignedKitPids(&childProcs);
     stats.assignedCount = AdminModel::getAssignedKitPids(&childProcs);
-    for (int& pid : childProcs)
+    for (int pid : childProcs)
     {
         stats.UpdateAggregateStats(pid);
     }

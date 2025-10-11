@@ -24,7 +24,7 @@ function isAnyInputFocused() {
 
 	var hasTunneledDialogOpened = app.map.dialog ? app.map.dialog.hasOpenedDialog() : false;
 	var hasJSDialogOpened = app.map.jsdialog ? app.map.jsdialog.hasDialogOpened() : false;
-	var hasJSDialogFocused = L.DomUtil.hasClass(document.activeElement, 'jsdialog');
+	var hasJSDialogFocused = window.L.DomUtil.hasClass(document.activeElement, 'jsdialog');
 	var commentHasFocus = cool.Comment.isAnyFocus();
 	var inputHasFocus = $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
 
@@ -59,6 +59,7 @@ function isFocusable(element) {
 		'button:not([disabled]):not(.hidden)',
 		'textarea:not([disabled]):not(.hidden)',
 		'input[type="text"]:not([disabled]):not(.hidden)',
+		'input:not([type]):not([disabled]):not(.hidden)', // no explicit type defaults to text but the above doesn't catch it
 		'input[type="radio"]:not([disabled]):not(.hidden)',
 		'input[type="checkbox"]:not([disabled]):not(.hidden)',
 		'select:not([disabled]):not(.hidden)',
@@ -70,8 +71,8 @@ function isFocusable(element) {
 
 /// close tab focus switching in cycle inside container
 function makeFocusCycle(container, failedToFindFocusFunc) {
-	var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
-	var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
+	var beginMarker = window.L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
+	var endMarker = window.L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
 
 	beginMarker.tabIndex = 0;
 	endMarker.tabIndex = 0;
@@ -81,16 +82,15 @@ function makeFocusCycle(container, failedToFindFocusFunc) {
 
 	container.addEventListener('focusin', function(event) {
 		if (event.target == endMarker) {
-			var firstFocusElement = getFocusableElements(container);
-			if (firstFocusElement && firstFocusElement.length) {
-				firstFocusElement[0].focus();
+			var focusables = getFocusableElements(container);
+			if (focusables && focusables.length) {
+				focusables[0].focus();
 				return;
 			}
 		} else if (event.target == beginMarker) {
 			var focusables = getFocusableElements(container);
-			var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
-			if (lastFocusElement) {
-				lastFocusElement.focus();
+			if (focusables && focusables.length) {
+				focusables[focusables.length - 1].focus();
 				return;
 			}
 		}
@@ -142,6 +142,7 @@ JSDialog.IsAnyInputFocused = isAnyInputFocused;
 JSDialog.GetFocusableElements = getFocusableElements;
 JSDialog.MakeFocusCycle = makeFocusCycle;
 JSDialog.FindFocusableElement = findFocusableElement;
+JSDialog.FindFocusableWithin = findFocusableWithin;
 JSDialog.FindNextFocusableSiblingElement = findNextFocusableSiblingElement;
 JSDialog.IsFocusable = isFocusable;
 JSDialog.IsTextInputField = isTextInputField;

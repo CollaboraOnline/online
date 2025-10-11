@@ -34,6 +34,7 @@
 	--color-border: #121212;
 	--color-border-dark: #1E1E1E; /* select */
 	--color-border-darker: #000;  /* hover */
+	--color-border-dark-63: #5e5e5e;
 	--color-border-lighter: #303030; /* disabled */
 
 	--color-btn-border: #b6b6b6;
@@ -61,6 +62,8 @@
 	--color-grid-helper-line-solid: #e6e6e6;
 	--color-grid-helper-line-dashed: #191919;
 	--color-smart-guides-helper-line: #f36d4f;
+
+	--color-quickfind-border: #444;
 }
 
 [data-bg-theme='dark'] {

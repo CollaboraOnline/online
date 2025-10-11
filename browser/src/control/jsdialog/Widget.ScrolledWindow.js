@@ -49,15 +49,15 @@ function _hasDrawingAreaInside(children) {
 }
 
 function _scrolledWindowControl(parentContainer, data, builder) {
-	var scrollwindow = L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow', parentContainer);
+	var scrollwindow = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow', parentContainer);
 	if (data.id)
 		scrollwindow.id = data.id;
 
 	// drawing areas inside scrollwindows should be not cropped so we add special class
 	if (_hasDrawingAreaInside(data.children))
-		L.DomUtil.addClass(scrollwindow, 'has-ui-drawing-area');
+		window.L.DomUtil.addClass(scrollwindow, 'has-ui-drawing-area');
 
-	var content = L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow-content', scrollwindow);
+	var content = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow-content', scrollwindow);
 
 	builder.build(content, data.children, false);
 

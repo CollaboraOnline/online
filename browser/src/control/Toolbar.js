@@ -15,7 +15,7 @@
 
 /* global app $ window brandProductName DocUtil GraphicSelection _ */
 
-L.Map.include({
+window.L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
 	unoToolbarCommands: [
@@ -61,7 +61,7 @@ L.Map.include({
 			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
 
 			var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-			// Old browsers like IE11 et al don't like Object.keys with
+			// Old browsers don't like Object.keys with
 			// empty arguments
 			if (typeof commandValues === 'object') {
 				data = data.concat(Object.keys(commandValues));
@@ -104,6 +104,7 @@ L.Map.include({
 			}
 
 			fontcombobox.val(state).trigger('change');
+			this['stateChangeHandler'].setItemValue('.uno:CharFontName', state);
 		};
 
 		var onFontListChanged = function(e) {
@@ -183,6 +184,7 @@ L.Map.include({
 			}
 
 			fontsizecombobox.val(state).trigger('change');
+			this['stateChangeHandler'].setItemValue('.uno:FontHeight', state);
 		};
 
 		this.off('commandstatechanged', onCommandStateChanged);
@@ -344,8 +346,7 @@ L.Map.include({
 
 	messageNeedsToBeRedirected: function(command) {
 		if (command === '.uno:EditHyperlink') {
-			var that = this;
-			setTimeout(function () { that.showHyperlinkDialog(); }, 500);
+			this.sendUnoCommand('.uno:HyperlinkDialog');
 			return true;
 		}
 		else {
@@ -358,8 +359,7 @@ L.Map.include({
 			console.error('Trying to send uno command without prefix: "' + command + '"');
 
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
-			command.startsWith('.uno:SlideChangeWindow') || command.startsWith('.uno:CustomAnimation') ||
-			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:ModifyPage') ||
+			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:ModifyPage') ||
 			command.startsWith('.uno:SidebarDeck') || command.startsWith('.uno:EditStyle')) {
 
 			// sidebar control is present only in desktop/tablet case
@@ -395,6 +395,11 @@ L.Map.include({
 				// moving/resizing it.
 				allowedCommands.push('.uno:TransformDialog', '.uno:MoveShapeHandle');
 			}
+		}
+		if (app.isRedlineManagementAllowed()) {
+			allowedCommands.push('.uno:ShowTrackedChanges', '.uno:AcceptTrackedChanges', '.uno:AcceptTrackedChange', '.uno:RejectTrackedChange',
+				'.uno:AcceptAllTrackedChanges', '.uno:RejectAllTrackedChanges', '.uno:AcceptTrackedChangeToNext', '.uno:RejectTrackedChangeToNext',
+				'.uno:CommentChangeTracking', '.uno:PreviousTrackedChange', '.uno:NextTrackedChange');
 		}
 
 		for (var i in allowedCommands) {
@@ -741,7 +746,7 @@ L.Map.include({
 		map.uiManager.showYesNoButton(id + '-box', productName, '', _('OK'), null, null, null, true);
 		app.layoutingService.appendLayoutingTask(() => {
 			const box = document.getElementById(id + '-box');
-			const innerDiv = L.DomUtil.create('div', '', null);
+			const innerDiv = window.L.DomUtil.create('div', '', null);
 			box.insertBefore(innerDiv, box.firstChild);
 			innerDiv.innerHTML = data;
 
@@ -789,90 +794,6 @@ L.Map.include({
 		return str;
 	},
 
-	_createAndRunHyperlinkDialog: function(defaultText, defaultLink) {
-		var map = this;
-		var id = 'hyperlink';
-		var title = _('Insert hyperlink');
-
-		let focusId = 'hyperlink-link-box-input';
-		if (defaultText === '') {
-			focusId = 'hyperlink-text-box';
-		}
-
-		var dialogId = 'modal-dialog-' + id;
-		var json = map.uiManager._modalDialogJSON(id, title, true, [
-			{
-				id: 'hyperlink-text-box-label',
-				type: 'fixedtext',
-				text: _('Text'),
-				labelFor: 'hyperlink-text-box'
-			},
-			{
-				id: 'hyperlink-text-box',
-				type: 'multilineedit',
-				text: defaultText,
-				labelledBy: 'hyperlink-text-box-label'
-			},
-			{
-				id: 'hyperlink-link-box-label',
-				type: 'fixedtext',
-				text: _('Link'),
-				labelFor: 'hyperlink-link-box'
-			},
-			{
-				id: 'hyperlink-link-box',
-				type: 'edit',
-				text: defaultLink,
-				labelledBy: 'hyperlink-link-box-label'
-			},
-			{
-				type: 'buttonbox',
-				enabled: true,
-				children: [
-					{
-						id: 'response-cancel',
-						type: 'pushbutton',
-						text: _('Cancel'),
-					},
-					{
-						id: 'response-ok',
-						type: 'pushbutton',
-						text: _('OK'),
-						'has_default': true,
-					}
-				],
-				vertical: false,
-				layoutstyle: 'end'
-			},
-		], focusId);
-
-		map.uiManager.showModal(json, [
-			{id: 'response-ok', func: function() {
-				var text = document.getElementById('hyperlink-text-box');
-				var link = document.getElementById('hyperlink-link-box-input');
-
-				if (link.value != '') {
-					if (!text.value || text.value === '')
-						text.value = link.value;
-
-					var command = {
-						'Hyperlink.Text': {
-							type: 'string',
-							value: text.value
-						},
-						'Hyperlink.URL': {
-							type: 'string',
-							value: map.makeURLFromStr(link.value)
-						}
-					};
-					map.sendUnoCommand('.uno:SetHyperlink', command, true);
-				}
-
-				map.uiManager.closeModal(dialogId);
-			}}
-		]);
-	},
-
 	getTextForLink: function() {
 		var map = this;
 		var text = '';
@@ -880,7 +801,7 @@ L.Map.include({
 			text = this.hyperlinkUnderCursor.text;
 		} else if (this._clip && this._clip._selectionType == 'text') {
 			if (map['stateChangeHandler'].getItemValue('.uno:Copy') === 'enabled') {
-				if (L.Browser.clipboardApiAvailable) {
+				if (window.L.Browser.clipboardApiAvailable) {
 					// Async copy, trigger fetching the text selection.
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 				} else {
@@ -893,25 +814,9 @@ L.Map.include({
 		return text;
 	},
 
-	showHyperlinkDialog: function() {
-		if (this.getDocType() === 'spreadsheet') {
-			// show native core dialog
-			// in case we try to edit email EditHyperlink doesn't work
-			this.sendUnoCommand('.uno:HyperlinkDialog');
-			return;
-		}
-
-		var text = this.getTextForLink();
-		var link = '';
-		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.link)
-			link = this.hyperlinkUnderCursor.link;
-
-		this._createAndRunHyperlinkDialog(text ? text.replace(/^[\n\r]+|[\n\r]+$/g, '') : '', link);
-	},
-
 	cancelSearch: function() {
 		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
-		var searchInput = L.DomUtil.get('search-input');
+		var searchInput = window.L.DomUtil.get('search-input');
 		app.searchService.resetSelection();
 		if (toolbar) {
 			toolbar.showItem('cancelsearch', false);

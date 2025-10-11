@@ -46,19 +46,19 @@ public:
 
     void onDocBrokerAttachKitProcess(const std::string& docBroker, int pid) override
     {
-        LOG_TST("DocBroker [" << docBroker << "] attached to pid: " << pid);
+        TST_LOG("DocBroker [" << docBroker << "] attached to pid: " << pid);
         _pid = pid;
     }
 
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
 
-        LOG_TST("Modifying");
+        TST_LOG("Modifying");
         WSD_CMD("key type=input char=97 key=0");
         WSD_CMD("key type=up char=0 key=512");
 
@@ -67,16 +67,16 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Got: [" << message << ']');
+        TST_LOG("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
 
-        LOG_TST("Killing Kit with PID " << _pid);
+        TST_LOG("Killing Kit with PID " << _pid);
         if (kill(_pid, SIGKILL) == -1)
         {
             const int onrre = errno;
-            LOG_TST("kill(" << _pid << ", SIGKILL) failed: " << Util::symbolicErrno(onrre) << ": "
+            TST_LOG("kill(" << _pid << ", SIGKILL) failed: " << Util::symbolicErrno(onrre) << ": "
                             << std::strerror(onrre));
         }
 
@@ -98,7 +98,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket.");
+                TST_LOG("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
                 WSD_CMD("load url=" + getWopiSrc());
                 break;

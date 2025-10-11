@@ -14,7 +14,6 @@
  */
 
 declare var JSDialog: any;
-declare var L: any;
 
 class AddressInputField {
 	map: any;
@@ -23,18 +22,19 @@ class AddressInputField {
 
 	public constructor(map: any) {
 		this.map = map;
-		this.parentContainer = L.DomUtil.get('addressInput');
+		this.parentContainer = window.L.DomUtil.get('addressInput');
 
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
 		this.map.on('celladdress', this.onCellAddress, this);
 
-		this.builder = new L.control.jsDialogBuilder({
+		this.builder = new window.L.control.jsDialogBuilder({
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'addressInput jsdialog',
-			windowId: -4,
+			windowId: WindowId.AddressInput,
+			suffix: 'address',
 		});
 
 		this.createAddressInputField();
@@ -105,7 +105,7 @@ class AddressInputField {
 	}
 
 	private onJSUpdate(e: any) {
-		const data = e?.data;
+		const data = e.data;
 		if (data.jsontype !== 'addressinputfield') return;
 
 		// we don't want to send change event on every keypress,
@@ -127,7 +127,7 @@ class AddressInputField {
 		const data = e.data;
 		if (data.jsontype !== 'addressinputfield') return;
 
-		const innerData = data?.data;
+		const innerData = data.data;
 		this.builder.executeAction(this.parentContainer, innerData);
 	}
 }

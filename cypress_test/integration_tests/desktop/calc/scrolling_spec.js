@@ -8,8 +8,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/scrolling.ods');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#sidebar').click({force: true});
 	});
 
 	it('Scrolling to bottom/top', function() {
@@ -28,7 +26,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.assertScrollbarPosition('horizontal', 48, 60);
 		helper.typeIntoDocument('{end}');
 		cy.wait(500);
-		desktopHelper.assertScrollbarPosition('horizontal', 230, 320);
+		desktopHelper.assertScrollbarPosition('horizontal', 180, 300);
 	});
 
 	it('Scroll while selecting vertically', function() {
@@ -50,7 +48,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		}
 
 		// Document should scroll
-		desktopHelper.assertScrollbarPosition('vertical', 230, 300);
+		desktopHelper.assertScrollbarPosition('vertical', 180, 300);
 		// Document should not scroll horizontally
 		desktopHelper.assertScrollbarPosition('horizontal', 48, 50);
 	});
@@ -73,7 +71,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		}
 
 		// Document should scroll
-		desktopHelper.assertScrollbarPosition('horizontal', 80, 145);
+		desktopHelper.assertScrollbarPosition('horizontal', 80, 155);
 	});
 
 	it('Scroll while selecting with mouse', function () {

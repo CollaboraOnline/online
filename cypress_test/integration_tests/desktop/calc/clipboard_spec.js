@@ -12,6 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();
 		}
+		cy.viewport(1920,1080);
 		desktopHelper.shouldHaveZoomLevel('100');
 
 		// make it more complex and prevent form initial being A1
@@ -170,9 +171,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// Then make sure a warning popup is shown:
 		cy.cGet('#copy_paste_warning-box').should('exist');
+
+		// Close the dialog by clicking the OK button. Then try again to make sure the dialog appears again.
+		cy.cGet('#modal-dialog-copy_paste_warning-box #modal-dialog-copy_paste_warning-box-yesbutton').click();
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#copy_paste_warning-box').should('exist');
+
+		// Now when clicking the "Don't show again" button, the dialog should not appear again.
+		cy.cGet('#modal-dialog-copy_paste_warning-box #modal-dialog-copy_paste_warning-box-nobutton').click();
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#copy_paste_warning-box').should('not.exist');
 	});
 
 	it('Copy Hyperlink from pop-up', function () {
+		desktopHelper.selectZoomLevel('100', false);
 		helper.setDummyClipboardForCopy();
 
 		calcHelper.dblClickOnFirstCell();

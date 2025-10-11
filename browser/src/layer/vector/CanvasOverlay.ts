@@ -93,11 +93,10 @@ class TransformationsList {
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
-class CanvasOverlay extends app.definitions.canvasSectionObject {
-	name: string = L.CSections.Overlays.name;
-	processingOrder: number = L.CSections.Overlays.processingOrder;
-	drawingOrder: number = L.CSections.Overlays.drawingOrder;
-	zIndex: number = L.CSections.Overlays.zIndex;
+class CanvasOverlay extends CanvasSectionObject {
+	processingOrder: number = app.CSections.Overlays.processingOrder;
+	drawingOrder: number = app.CSections.Overlays.drawingOrder;
+	zIndex: number = app.CSections.Overlays.zIndex;
 	anchor: string[] = ['top', 'left'];
 	boundToSection: string = 'tiles';
 
@@ -109,7 +108,7 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 	private transformList: TransformationsList;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
-		super();
+		super(app.CSections.Overlays.name);
 		this.map = mapObject;
 		this.ctx = canvasContext;
 		this.tsManager = this.map.getTileSectionMgr();
@@ -118,10 +117,6 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		this.paths = new Map<number, CPath>();
 		this.transformList = new TransformationsList();
 		this.updateCanvasBounds();
-	}
-
-	onInitialize(): void {
-		return;
 	}
 
 	onResize(): void {
@@ -136,8 +131,8 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		this.draw();
 	}
 
-	onMouseMove(position: Array<number>): void {
-		var mousePos = new cool.Point(position[0], position[1]);
+	onMouseMove(position: cool.SimplePoint): void {
+		var mousePos = new cool.Point(position.pX, position.pY);
 		var overlaySectionBounds = this.bounds.clone();
 		var splitPos = this.tsManager.getSplitPos();
 		if (this.isCalcRTL()) {

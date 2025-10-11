@@ -207,7 +207,7 @@ function createTransition(
 		}
 	}
 
-	console.log(
+	app.console.log(
 		'Unknown transition type',
 		transitionParameters.transitionFilterInfo.transitionType,
 	);

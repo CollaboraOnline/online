@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 
-/* global app ArrayBuffer Uint8Array _ */
+/* global Module ArrayBuffer Uint8Array _ */
 
 /*
-	For extending window.app object, please see "docstate.js" file.
+	For extending window.app object, please see "docstate.ts" file.
 	Below definition is only for the properties that this (global.js) file needs at initialization.
 */
 window.app = {
@@ -13,7 +13,7 @@ window.app = {
 
 // For typings (including the global object), please see browser/src/global.d.ts
 
-// This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
+// This function may look unused, but it's needed in Android to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
 var Base64ToArrayBuffer = function(base64Str) {
@@ -28,7 +28,7 @@ var Base64ToArrayBuffer = function(base64Str) {
 
 // Written and named as a sort of analog to plain atob ... except this one supports non-ascii
 // Nothing is perfect so this also mangles binary - don't decode tiles with it
-// This function may look unused, but it's needed in WASM and mobile to send data through the fake websocket. Please
+// This function may look unused, but it's needed in mobile to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
 var b64d = function(base64Str) {
@@ -267,6 +267,7 @@ class InitializerBase {
 		window.indirectionUrl = "";
 		window.geolocationSetup = false;
 		window.canvasSlideshowEnabled = false;
+		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 
 		window.tileSize = 256;
 
@@ -371,7 +372,8 @@ class BrowserInitializer extends InitializerBase {
 		window.WOPIpostMessageReady = false;
 
 		// Start listening for Host_PostmessageReady message and save the result for future
-		window.addEventListener('message', this.postMessageHandler.bind(this), false);
+		this._boundPostMessageHandler = this.postMessageHandler.bind(this);
+		window.addEventListener('message', this._boundPostMessageHandler, false);
 
 		const element = document.getElementById("initial-variables");
 
@@ -410,6 +412,7 @@ class BrowserInitializer extends InitializerBase {
 		window.indirectionUrl = element.dataset.indirectionUrl;
 		window.geolocationSetup = element.dataset.geolocationSetup.toLowerCase().trim() === "true";
 		window.canvasSlideshowEnabled = element.dataset.canvasSlideshowEnabled.toLowerCase().trim() === "true";
+		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 	}
 
 	postMessageHandler(e) {
@@ -424,7 +427,7 @@ class BrowserInitializer extends InitializerBase {
 
 		if (msg.MessageId === 'Host_PostmessageReady') {
 			window.WOPIPostmessageReady = true;
-			window.removeEventListener('message', this.postMessageHandler, false);
+			window.removeEventListener('message', this._boundPostMessageHandler, false);
 			console.log('Received Host_PostmessageReady.');
 		}
 	}
@@ -502,7 +505,7 @@ class EMSCRIPTENAppInitializer extends MobileAppInitializer {
 		super();
 
 		window.ThisIsTheEmscriptenApp = true;
-		window.postMobileMessage = function(msg) { app.HandleCOOLMessage(app.AllocateUTF8(msg)); };
+		window.postMobileMessage = function(msg) { Module._handle_cool_message(Module.stringToNewUTF8(msg)); };
 		window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
 		window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };
 
@@ -541,7 +544,7 @@ function getInitializerClass() {
 	global.logServer = function (log) {
 		if (global.ThisIsAMobileApp) {
 			global.postMobileError(log);
-		} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+		} else if (global.socket && (global.socket instanceof WebSocket || global.socket instanceof global.IndirectSocket) && global.socket.readyState === 1) {
 			global.socket.send(log);
 		} else if (global.socket && global.L && global.app.definitions.Socket &&
 			   (global.socket instanceof global.app.definitions.Socket) && global.socket.connected()) {
@@ -580,6 +583,14 @@ function getInitializerClass() {
 									log += arguments[arg] + '\n';
 							}
 							global.logServer(log);
+						}
+
+						// Can use optional chaining if we increase the ecma version
+						if (global.L && global.L.Map && global.L.Map.THIS &&
+								global.L.Map.THIS._debug && global.L.Map.THIS._debug.logTrace === true) {
+							console.groupCollapsed("Trace");
+							console.trace();
+							console.groupEnd();
 						}
 
 						return global.console[method].apply(console, args);
@@ -641,6 +652,8 @@ function getInitializerClass() {
 	global.prefs = {
 		_localStorageCache: {}, // TODO: change this to new Map() when JS version allows
 		_userBrowserSetting: new Map(),
+		_settingUpdateJSON: {},
+		_pendingSettingUpdate: undefined,
 		useBrowserSetting: false,
 		canPersist: (function() {
 			var str = 'localstorage_test';
@@ -767,17 +780,26 @@ function getInitializerClass() {
 			return defaultValue;
 		},
 
+		sendPendingBrowserSettingsUpdate: function() {
+			const isEmpty = (obj) => Object.keys(obj).length === 0;
+			if (!isEmpty(global.prefs._settingUpdateJSON)) {
+				global.socket.send('browsersetting action=update json=' + JSON.stringify(global.prefs._settingUpdateJSON));
+				global.prefs._settingUpdateJSON = {};
+			}
+			clearTimeout(global.prefs._pendingSettingUpdate);
+			global.prefs._pendingSettingUpdate = undefined;
+		},
+
 		// set multiple preference together and when browsersetting is enabled send
 		// update only once
 		setMultiple: function (prefsObject) {
-			const settingUpdateJSON = {};
 			const browserSettingEnabled = global.prefs.useBrowserSetting;
 			for (const [key, value] of Object.entries(prefsObject)) {
 				if (browserSettingEnabled) {
 					const oldValue = global.prefs._userBrowserSetting[key];
 					global.prefs._userBrowserSetting[key] = value;
 					if (oldValue !== value)
-						settingUpdateJSON[key] = value;
+						global.prefs._settingUpdateJSON[key] = value;
 				}
 				if (global.prefs.canPersist) {
 					global.localStorage.setItem(key, value);
@@ -786,8 +808,10 @@ function getInitializerClass() {
 			}
 
 			const isEmpty = (obj) => Object.keys(obj).length === 0;
-			if (browserSettingEnabled && !isEmpty(settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1)
-				global.socket.send('browsersetting action=update json=' + JSON.stringify(settingUpdateJSON));
+			if (browserSettingEnabled && !isEmpty(global.prefs._settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket || global.socket instanceof global.IndirectSocket) && global.socket.readyState === 1) {
+				clearTimeout(global.prefs._pendingSettingUpdate);
+				global.prefs._pendingSettingUpdate = setTimeout(L.bind(this.sendPendingBrowserSettingsUpdate, this), 5000);
+			}
 		},
 
 		set: function(key, value) {
@@ -795,10 +819,10 @@ function getInitializerClass() {
 			if (global.prefs.useBrowserSetting) {
 				const oldValue = global.prefs._userBrowserSetting[key];
 				global.prefs._userBrowserSetting[key] = value;
-				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1 && oldValue !== value) {
-					const tmpObject = {};
-					tmpObject[key] = value;
-					global.socket.send('browsersetting action=update json=' + JSON.stringify(tmpObject));
+				if (global.socket && (global.socket instanceof WebSocket || global.socket instanceof global.IndirectSocket) && global.socket.readyState === 1 && oldValue !== value) {
+					global.prefs._settingUpdateJSON[key] = value;
+					clearTimeout(global.prefs._pendingSettingUpdate);
+					global.prefs._pendingSettingUpdate = setTimeout(L.bind(this.sendPendingBrowserSettingsUpdate, this), 5000);
 				}
 			}
 			if (global.prefs.canPersist) {
@@ -1054,6 +1078,7 @@ function getInitializerClass() {
 	};
 
 	const registerTapOrClick = (e) => {
+		registerGuessEmulatedFromTouch(e);
 		global.touch.lastEventWasTouch = global.touch.isTouchEvent(e);
 		global.touch.lastEventTime = Date.now();
 	};
@@ -1073,11 +1098,6 @@ function getInitializerClass() {
 	document.addEventListener('mouseleave', registerGuessEmulatedFromTouch, { capture: true });
 	document.addEventListener('mouseover', registerGuessEmulatedFromTouch, { capture: true });
 	document.addEventListener('mouseout', registerGuessEmulatedFromTouch, { capture: true });
-
-	if (!global.prefs.getBoolean('clipboardApiAvailable', true)) {
-		// navigator.clipboard.write failed on us once, don't even try it.
-		global.L.Browser.clipboardApiAvailable = false;
-	}
 
 	global.deviceFormFactor = global.mode.getDeviceFormFactor();
 
@@ -1144,14 +1164,15 @@ function getInitializerClass() {
 		this.id = global.proxySocketCounter++;
 		this.msgInflight = 0;
 		this.openInflight = 0;
-		this.inSerial = 0;
-		this.outSerial = 0;
+		this.inSerial = 1; // monotonic serial of the last processed received message
+		this.outSerial = 1; // monotonic serial of the next message to send.
 		this.minPollMs = 25; // Anything less than ~25 ms can overwhelm the HTTP server.
 		this.maxPollMs = 500; // We can probably go as much as 1-2 seconds without ill-effect.
 		this.curPollMs = this.minPollMs; // The current poll period.
 		this.minIdlePollsToThrottle = 3; // This many 'no data' responses and we throttle.
 		this.throttleFactor = 1.15; // How rapidly to throttle. 15% takes 4s to go from 25 to 500ms.
 		this.lastDataTimestamp = performance.now(); // The last time we got any data.
+		this.serialQueue = new Map();
 		this.onclose = function() {
 		};
 		this.onerror = function() {
@@ -1165,8 +1186,25 @@ function getInitializerClass() {
 		this.decode = function(bytes,start,end) {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
+		this.processBufferedMessages = function (expectedSerial) {
+			while (this.serialQueue.has(expectedSerial)) {
+				let bufferedMessage = this.serialQueue.get(expectedSerial);
+				this.inSerial = bufferedMessage.serial;
+
+				try {
+					this.onmessage({ data: bufferedMessage.data });
+				} catch (e) {
+					global.app.console.error(e);
+					global.app.console.warn(`Failed processing a ProxySocket message (due to ${e}), ignoring`);
+					// It's better to ignore any failures rather than to lose the rest of the messages in this packet
+				}
+
+				this.serialQueue.delete(expectedSerial);
+				expectedSerial++;
+			}
+		},
 		this.parseIncomingArray = function(arr) {
-			//global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
+			// global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
 				var left = arr.length - i;
@@ -1220,11 +1258,11 @@ function getInitializerClass() {
 				else
 					data = this.doSlice(arr, i, i + size);
 
-				if (serial !== that.inSerial + 1) {
-					global.app.console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
-				}
-				that.inSerial = serial;
-				this.onmessage({ data: data });
+				this.serialQueue.set(serial, {
+					'data': data,
+					'serial': serial
+				});
+				this.processBufferedMessages(serial);
 
 				i += size; // skip trailing '\n' in loop-increment
 			}
@@ -1337,9 +1375,11 @@ function getInitializerClass() {
 			req.addEventListener('loadend', function() {
 				that.msgInflight--;
 			});
-			req.send(that.sendQueue);
+			const toSend = that.sendQueue;
 			that.sendQueue = '';
 			that.msgInflight++;
+			// terminate all messages with an end-marker
+			req.send(toSend.concat('.'));
 		};
 		this.getSessionId = function() {
 			if (this.openInflight > 0)
@@ -1452,6 +1492,24 @@ function getInitializerClass() {
 		this.getSessionId();
 	};
 
+	class MobileSocket extends global.ProxySocket {
+		constructor(url) {
+			super("cool:/cool/mobilesocket" + url);
+
+			delete this.send;
+			delete this._setPollInterval;
+			delete this.close;
+			// HACK: We need this to complete the override because ProxySocket messed up the protoype chain... evenually I want to convert it to a Real Class which will fix it
+		}
+
+		send(data) {
+			global.postMobileMessage(data);
+		}
+
+		close() {} // We don't support re-opening the mobile socket, so let's make sure we don't close it...
+		_setPollInterval() {} // This is a no-op on mobile since as we will be calling from the native part to notify when we get a message
+	}
+
 	global.iterateCSSImages = function(visitor) {
 		var visitUrls = function(rules, visitor, base) {
 			if (!rules)
@@ -1545,9 +1603,9 @@ function getInitializerClass() {
 		this.sendPostMsg = function(errorCode) {
 			var errorMsg;
 			if (errorCode === 0) {
-				errorMsg = _('Cluster is scaling, retrying...');
+				errorMsg = _('The system is currently adjusting resources. Please wait a moment while we retry your request...');
 			} else if (errorCode === 1) {
-				errorMsg = _('Document is migrating to new server, retrying...');
+				errorMsg = _('The document is being migrated to a new server. Retrying shortly...');
 			} else {
 				errorMsg = _('Failed to get RouteToken from controller');
 			}
@@ -1627,7 +1685,9 @@ function getInitializerClass() {
 			uri = global.processCoolUrl({ url: uri, type: 'ws' });
 		}
 
-		if (global.socketProxy) {
+		if (global.ThisIsAMobileApp) {
+			return new MobileSocket(uri);
+		} else if (global.socketProxy) {
 			return new global.ProxySocket(uri);
 		} else if (global.indirectionUrl != '' && !global.migrating) {
 			global.indirectSocket = true;
@@ -1685,16 +1745,15 @@ function getInitializerClass() {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
 			}).join('&');
 		}
-	} else if (global.ThisIsTheEmscriptenApp) {
-		// This is of course just a horrible temporary hack
-		global.docURL = 'file:///sample.docx';
 	} else {
 		global.docURL = filePath;
 	}
 
 	// Form a valid WS URL to the host with the given path.
 	global.makeWsUrl = function (path) {
-		global.app.console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
+		if (!global.ThisIsAMobileApp) {
+			global.app.console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
+		}
 		return global.host + global.serviceRoot + path;
 	};
 
@@ -1771,7 +1830,7 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (global.ThisIsAMobileApp) {
+	if (global.ThisIsTheGtkApp || global.ThisIsTheEmscriptenApp) {
 		global.socket = new global.FakeWebSocket();
 		global.TheFakeWebSocket = global.socket;
 	} else {

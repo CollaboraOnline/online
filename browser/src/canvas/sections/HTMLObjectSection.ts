@@ -11,16 +11,14 @@
 */
 
 class HTMLObjectSection extends CanvasSectionObject {
-	name: string = "will-be-set-at-initialization"; // There may be multiple instances of this class.
-	processingOrder: number = L.CSections.HTMLObject.processingOrder;
-	drawingOrder: number = L.CSections.HTMLObject.drawingOrder;
-	zIndex: number = L.CSections.HTMLObject.zIndex;
+	processingOrder: number = app.CSections.HTMLObject.processingOrder;
+	drawingOrder: number = app.CSections.HTMLObject.drawingOrder;
+	zIndex: number = app.CSections.HTMLObject.zIndex;
 	documentObject: boolean = true;
 
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
-        super();
+        super(sectionName);
 
-		this.name = sectionName;
 		this.size = [objectWidth * app.dpiScale, objectHeight * app.dpiScale];
 		this.position = [documentPosition.pX, documentPosition.pY];
 		this.sectionProperties.objectWidth = objectWidth;
@@ -35,7 +33,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 		else this.sectionProperties.objectDiv.style.height = objectHeight + 'px';
 
 		if (extraClass)
-			this.sectionProperties.objectDiv.classList.add(extraClass);
+			this.sectionProperties.objectDiv.className += ' ' + extraClass;
 
 		// canvas-container and canvas overlap entirely. We can append the html object to canvas-container.
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.objectDiv);
@@ -108,5 +106,3 @@ class HTMLObjectSection extends CanvasSectionObject {
 		this.sectionProperties.objectDiv.remove();
 	}
 }
-
-app.definitions.htmlObjectSection = HTMLObjectSection;

@@ -3,16 +3,18 @@
  * Simple equirectangular (Plate Carree) projection, used by CRS like EPSG:4326 and Simple.
  */
 
-L.Projection = {};
+/* global cool */
 
-L.Projection.LonLat = {
+window.L.Projection = {};
+
+window.L.Projection.LonLat = {
 	project: function (latlng) {
-		return new L.Point(latlng.lng, latlng.lat);
+		return new cool.Point(latlng.lng, latlng.lat);
 	},
 
 	unproject: function (point) {
-		return new L.LatLng(point.y, point.x);
+		return new window.L.LatLng(point.y, point.x);
 	},
 
-	bounds: L.bounds([-180, -90], [180, 90])
+	bounds: cool.Bounds.toBounds([-180, -90], [180, 90])
 };

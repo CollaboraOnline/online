@@ -62,7 +62,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        TST_LOG("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -76,12 +76,12 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
+        TST_LOG("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitClose);
 
-        LOG_TST("Closing the document, expecting saving, which will get 'stuck'");
+        TST_LOG("Closing the document, expecting saving, which will get 'stuck'");
         WSD_CMD("closedocument");
 
         return true;
@@ -89,13 +89,13 @@ public:
 
     bool onFilterLOKitMessage(const std::shared_ptr<Message>& message) override
     {
-        LOG_TST("Filtering: [" << message->firstLine() << ']');
+        TST_LOG("Filtering: [" << message->firstLine() << ']');
 
         constexpr std::string_view unoSave = ".uno:Save";
         constexpr std::string_view unoModifiedStatus = ".uno:ModifiedStatus";
         if (message->contains(unoSave))
         {
-            LOG_TST("Dropping .uno:Save to simulate stuck save");
+            TST_LOG("Dropping .uno:Save to simulate stuck save");
             return true; // Do not process the message further.
         }
         else if (message->contains(unoModifiedStatus))
@@ -130,7 +130,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                LOG_TST("Load: initWebsocket");
+                TST_LOG("Load: initWebsocket");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());

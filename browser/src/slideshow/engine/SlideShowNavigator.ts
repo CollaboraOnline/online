@@ -22,6 +22,10 @@ class SlideShowNavigator {
 	private prevSlide: number;
 	private isEnabled: boolean;
 	private isRewindingToPrevSlide: boolean;
+	private lastClickTime: number = 0;
+	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
+	private currentLeaderSlide: number = -1;
+	private currentLeaderEffect: number = -1;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -77,9 +81,26 @@ class SlideShowNavigator {
 	}
 
 	dispatchEffect() {
+		this.presenter.sendSlideShowFollowMessage('dispatcheffect');
+		const currentTime = Date.now();
+		const timeDiff = currentTime - this.lastClickTime;
 		NAVDBG.print(
-			'SlideShowNavigator.dispatchEffect: current index: ' + this.currentSlide,
+			'SlideShowNavigator.dispatchEffect: current index: ' +
+				this.currentSlide +
+				', time diff: ' +
+				timeDiff +
+				'ms',
 		);
+		this.lastClickTime = currentTime;
+
+		if (timeDiff < this.RAPID_CLICK_THRESHOLD && timeDiff > 0) {
+			const bRet = this.slideShowHandler.skipPlayingOrNextEffect();
+			if (!bRet) {
+				this.switchSlide(1, true);
+			}
+			return;
+		}
+
 		const bRet = this.slideShowHandler.nextEffect();
 		if (!bRet) {
 			this.switchSlide(1, false);
@@ -107,6 +128,7 @@ class SlideShowNavigator {
 	}
 
 	rewindEffect() {
+		this.presenter.sendSlideShowFollowMessage('rewindeffect');
 		NAVDBG.print(
 			'SlideShowNavigator.rewindEffect: current index: ' + this.currentSlide,
 		);
@@ -167,10 +189,17 @@ class SlideShowNavigator {
 		NAVDBG.print(
 			'SlideShowNavigator.quit: current index: ' + this.currentSlide,
 		);
-		this.endPresentation(true);
-		this.currentSlide = undefined;
-		this.prevSlide = undefined;
-		this.removeHandlers();
+
+		this.slideShowHandler.exitSlideShow();
+		setTimeout(
+			function () {
+				this.endPresentation(true);
+				this.currentSlide = undefined;
+				this.prevSlide = undefined;
+				this.removeHandlers();
+			}.bind(this),
+			500,
+		);
 	}
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
@@ -194,9 +223,51 @@ class SlideShowNavigator {
 		this.isRewindingToPrevSlide = true;
 		this.displaySlide(prevSlide, true);
 		this.isRewindingToPrevSlide = false;
+		this.presenter.sendSlideShowFollowMessage('skipalleffect');
 	}
 
-	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
+	setLeaderSlide(info: any) {
+		this.currentLeaderSlide = info.currentSlide;
+	}
+
+	getLeaderSlide(): number {
+		return this.currentLeaderSlide;
+	}
+
+	resetLeaderSlide() {
+		this.currentLeaderSlide = -1;
+	}
+
+	setLeaderEffect(info: any) {
+		this.currentLeaderEffect = info.currentEffect;
+	}
+
+	getLeaderEffect(): number {
+		return this.currentLeaderEffect;
+	}
+
+	resetLeaderEffect() {
+		this.currentLeaderEffect = -1;
+	}
+
+	followLeaderSlide() {
+		this.presenter.setFollowing(true);
+		// const currentEffect = this.currentLeaderEffect;
+		if (this.currentLeaderSlide === this.currentSlide)
+			this.slideShowHandler.rewindAllEffects();
+		else this.displaySlide(this.currentLeaderSlide, true);
+		this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
+	}
+
+	displaySlide(
+		nNewSlide: number,
+		bSkipTransition: boolean,
+		nStartEffect: number = undefined,
+	) {
+		this.presenter.sendSlideShowFollowMessage(
+			'displayslide ' + JSON.stringify({ currentSlide: nNewSlide }),
+		);
+
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -272,6 +343,7 @@ class SlideShowNavigator {
 				this.currentSlide,
 				this.prevSlide,
 				bSkipTransition,
+				nStartEffect,
 			);
 			if (this.isRewindingToPrevSlide) {
 				this.slideShowHandler.skipAllEffects();
@@ -280,7 +352,11 @@ class SlideShowNavigator {
 		});
 	}
 
-	startPresentation(nStartSlide: number, bSkipTransition: boolean) {
+	startPresentation(
+		nStartSlide: number,
+		bSkipTransition: boolean,
+		nStartEffect: number = undefined,
+	) {
 		NAVDBG.print(
 			'SlideShowNavigator.startPresentation: current index: ' +
 				this.currentSlide +
@@ -291,7 +367,7 @@ class SlideShowNavigator {
 		this.isRewindingToPrevSlide = false;
 		this.currentSlide = undefined;
 		this.prevSlide = undefined;
-		this.displaySlide(nStartSlide, bSkipTransition);
+		this.displaySlide(nStartSlide, bSkipTransition, nStartEffect);
 	}
 
 	endPresentation(force: boolean = false) {
@@ -324,6 +400,7 @@ class SlideShowNavigator {
 	}
 
 	private clickHandler(aEvent: MouseEvent) {
+		if (this.presenter.isFollower()) this.presenter.setFollowing(false);
 		if (aEvent.button === 0) {
 			const slideInfo = this.theMetaPres.getSlideInfoByIndex(this.currentSlide);
 			const slideHasInteractions =
@@ -354,6 +431,14 @@ class SlideShowNavigator {
 			if (shape) {
 				this._onExecuteInteraction(shape.clickAction);
 			} else if (videoInfo) {
+				this.presenter.sendSlideShowFollowMessage(
+					'followvideo ' +
+						JSON.stringify({
+							currentSlide: this.currentSlide,
+							videoInfoId: videoInfo.id,
+						}),
+				);
+
 				const video = this.presenter.getVideoRenderer(
 					slideInfo.hash,
 					videoInfo,
@@ -365,6 +450,15 @@ class SlideShowNavigator {
 		} else if (aEvent.button === 2) {
 			this.switchSlide(-1, false);
 		}
+	}
+
+	followVideo(info: any) {
+		const slideInfo = this.theMetaPres.getSlideInfoByIndex(info.currentSlide);
+		const videoInfo = slideInfo.videos.find(
+			(videoInfo) => info.videoInfoId === videoInfo.id,
+		);
+		const video = this.presenter.getVideoRenderer(slideInfo.hash, videoInfo);
+		video.handleClick();
 	}
 
 	onMouseMove(aEvent: MouseEvent) {
@@ -423,11 +517,13 @@ class SlideShowNavigator {
 	}
 
 	onKeyDown(aEvent: KeyboardEvent) {
-		aEvent.preventDefault();
-		aEvent.stopPropagation();
 		if (!this.isEnabled && aEvent.code !== 'Escape') return;
 		const handler = this.keyHandlerMap[aEvent.code];
-		if (handler) handler();
+		if (handler) {
+			aEvent.preventDefault();
+			aEvent.stopPropagation();
+			handler();
+		}
 	}
 
 	onSwipe(event: HammerInput) {

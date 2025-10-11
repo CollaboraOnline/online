@@ -12,22 +12,22 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L cool TileManager */
+/* global app $ cool TileManager */
 
-L.ImpressTileLayer = L.CanvasTileLayer.extend({
+window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 
 	initialize: function (options) {
-		L.CanvasTileLayer.prototype.initialize.call(this, options);
+		window.L.CanvasTileLayer.prototype.initialize.call(this, options);
 		// If this is mobile view, we we'll change the layout position of 'presentation-controls-wrapper'.
 		if (window.mode.isMobile()) {
 			this._putPCWOutsideFlex();
 		}
 
-		this._preview = L.control.partsPreview();
+		this._preview = window.L.control.partsPreview();
 
 		if (window.mode.isMobile()) {
-			this._addButton = L.control.mobileSlide();
-			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
+			this._addButton = window.L.control.mobileSlide();
+			window.L.DomUtil.addClass(window.L.DomUtil.get('mobile-edit-button'), 'impress');
 		}
 		this._spaceBetweenParts = 300; // In twips. This is used when all parts of an Impress or Draw document is shown in one view (like a Writer file). This mode is used when document is read only.
 
@@ -44,7 +44,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			app.file.partBasedView = true; // For Writer and Calc, this one should always be "true".
 
 		this._partHeightTwips = 0; // Single part's height.
-		this._partWidthTwips = 0; // Single part's width. These values are equal to app.file.size.x & app.file.size.y when app.file.partBasedView is true.
+		this._partWidthTwips = 0; // Single part's width. These values are equal to app.activeDocument.fileSize.x & app.activeDocument.fileSize.y when app.file.partBasedView is true.
 
 		app.events.on('contextchange', this._onContextChange.bind(this));
 	},
@@ -57,25 +57,32 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			For a better solution, we need to send the page kinds along with status messages. Then we will check the page kind and set the notes view toggle accordingly.
 		*/
 
-		const isDrawOrNotesPage = ['DrawPage', 'NotesPage'].includes(e.detail.context);
+		const newContext = e.detail.context;
+		const oldContext = e.detail.oldContext;
+		const isDrawOrNotesPage = ['DrawPage', 'NotesPage'].includes(newContext);
 
 		if (isDrawOrNotesPage)
-			app.impress.notesMode = e.detail.context === 'NotesPage';
+			app.impress.notesMode = newContext === 'NotesPage';
 
 		if (app.map.uiManager.getCurrentMode() === 'notebookbar' && isDrawOrNotesPage) {
 			const targetElement = document.getElementById('notesmode');
 			if (!targetElement) return;
 
-			if (e.detail.context === 'NotesPage')
+			if (newContext === 'NotesPage')
 				targetElement.classList.add('selected');
 			else
 				targetElement.classList.remove('selected');
 		}
 
 		if (isDrawOrNotesPage) {
-			this._selectedMode = e.detail.context === 'NotesPage' ? 2 : 0;
+			this._selectedMode = newContext === 'NotesPage' ? 2 : 0;
 			TileManager.refreshTilesInBackground();
 			TileManager.update();
+		}
+
+		if (newContext === 'MasterPage' || oldContext === 'MasterPage') {
+			app.socket.sendMessage('status');
+			this.invalidatePreviewsUponContextChange = true;
 		}
 	},
 
@@ -108,17 +115,16 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (commentData) {
-		let docTopLeft = app.sectionContainer.getDocumentTopLeft();
-		docTopLeft = [docTopLeft[0] * app.pixelsToTwips, docTopLeft[1] * app.pixelsToTwips];
-		commentData.anchorPos = [docTopLeft[0], docTopLeft[1]];
-		commentData.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
+		commentData.anchorPos = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1];
+		commentData.rectangle = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1, 566, 566];
 
 		commentData.parthash = app.impress.partList[this._selectedPart].hash;
 
-		const comment = new cool.Comment(commentData, {}, app.sectionContainer.getSectionWithName(L.CSections.CommentList.name));
+		const name = cool.Comment.makeName(commentData);
+		const comment = new cool.Comment(name, commentData, {}, app.sectionContainer.getSectionWithName(app.CSections.CommentList.name));
 
-		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
+		var annotation = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).modify(annotation);
 	},
 
 	beforeAdd: function (map) {
@@ -134,12 +140,12 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onResizeImpress: function () {
-		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter']);
+		window.L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter']);
 
 		var mobileEditButton = document.getElementById('mobile-edit-button');
 
 		if (window.mode.isMobile()) {
-			if (L.DomUtil.isPortrait()) {
+			if (window.L.DomUtil.isPortrait()) {
 				this._putPCWOutsideFlex();
 				if (mobileEditButton)
 					mobileEditButton.classList.add('portrait');
@@ -151,9 +157,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 		}
 		else {
-			var container = L.DomUtil.get('main-document-content');// consider height of document area to calculate estimated height for slide-sorter
-			var slideSorter = L.DomUtil.get('slide-sorter');
-			var navigationOptions = L.DomUtil.get('navigation-options-wrapper');
+			var container = window.L.DomUtil.get('main-document-content');// consider height of document area to calculate estimated height for slide-sorter
+			var slideSorter = window.L.DomUtil.get('slide-sorter');
+			var navigationOptions = window.L.DomUtil.get('navigation-options-wrapper');
 			if (container && slideSorter && toolbar) {
 				$(slideSorter).height($(container).height() - $(navigationOptions).height());
 			}
@@ -165,14 +171,14 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_openMobileWizard: function(data) {
-		L.CanvasTileLayer.prototype._openMobileWizard.call(this, data);
+		window.L.CanvasTileLayer.prototype._openMobileWizard.call(this, data);
 	},
 
 	onUpdateParts: function () {
 		if (this._map.uiManager.isAnyDialogOpen()) // Need this check else dialog loses focus
 			return;
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onPartChange();
+		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).onPartChange();
 	},
 
 	onUpdatePermission: function (e) {
@@ -198,9 +204,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (values.comments) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
+			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importComments(values.comments);
 		} else {
-			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			window.L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
@@ -220,23 +226,23 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		textMsg = textMsg.replace('status: ', '');
 		textMsg = textMsg.replace('statusupdate: ', '');
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
-			app.file.size.x = statusJSON.width;
-			app.file.size.y = statusJSON.height;
+			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
+
 			this._docType = statusJSON.type;
 			if (this._docType === 'drawing') {
-				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
+				window.L.DomUtil.addClass(window.L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
 			this._parts = statusJSON.partscount;
-			this._partHeightTwips = app.file.size.y;
-			this._partWidthTwips = app.file.size.x;
+			this._partHeightTwips = app.activeDocument.fileSize.y;
+			this._partWidthTwips = app.activeDocument.fileSize.x;
 
 			if (app.file.fileBasedView) {
-				var totalHeight = this._parts * app.file.size.y; // Total height in twips.
+				var totalHeight = this._parts * app.activeDocument.fileSize.y; // Total height in twips.
 				totalHeight += (this._parts) * this._spaceBetweenParts; // Space between parts.
-				app.file.size.y = totalHeight;
+				app.activeDocument.fileSize.y = totalHeight;
 			}
 
-			app.view.size = app.file.size.clone();
+			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
 			app.impress.partList = Object.assign([], statusJSON.parts);
 
@@ -277,10 +283,15 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		if (app.file.fileBasedView)
 			TileManager.updateFileBasedView();
+
+		if (this.invalidatePreviewsUponContextChange === true) {
+			this._invalidateAllPreviews();
+			this.invalidatePreviewsUponContextChange = false;
+		}
 	},
 
 	_invalidateAllPreviews: function () {
-		L.CanvasTileLayer.prototype._invalidateAllPreviews.call(this);
+		window.L.CanvasTileLayer.prototype._invalidateAllPreviews.call(this);
 		this._map.fire('invalidateparts');
 	}
 });
