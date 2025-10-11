@@ -198,9 +198,8 @@ bool ClientSession::disconnectFromKit()
 // Allow 20secs for the clipboard and disconnection to come.
 bool ClientSession::staleWaitDisconnect(const std::chrono::steady_clock::time_point now)
 {
-    if (_state != SessionState::WAIT_DISCONNECT)
-        return false;
-    return std::chrono::duration_cast<std::chrono::seconds>(now - _lastStateTime).count() >= 20;
+    return _state == SessionState::WAIT_DISCONNECT &&
+           (now - _lastStateTime) >= std::chrono::seconds(20);
 }
 
 void ClientSession::rotateClipboardKey(bool notifyClient)
