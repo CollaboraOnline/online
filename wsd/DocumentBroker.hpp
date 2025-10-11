@@ -377,7 +377,7 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Add a new session. Returns the new number of sessions.
+    /// Loads and adds a new session. Returns the new number of sessions.
     std::size_t addSession(const std::shared_ptr<ClientSession>& session,
                            std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo = nullptr);
 
@@ -872,10 +872,6 @@ private:
     /// Returns the number of active sessions.
     /// This includes only those that are loaded and not waiting disconnection.
     std::size_t countActiveSessions() const;
-
-    /// Loads a new session and adds to the sessions container.
-    std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session,
-                                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);

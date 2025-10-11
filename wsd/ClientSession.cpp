@@ -2727,7 +2727,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "loaded:"))
         {
             // We expect to be in the Loading state, as set in
-            // DocumentBroker::addSessionInternal().
+            // DocumentBroker::addSession().
             if (_state == ClientSession::SessionState::LOADING)
             {
                 setState(ClientSession::SessionState::LIVE);
