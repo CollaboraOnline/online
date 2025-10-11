@@ -274,7 +274,7 @@
 	width: 100%;
 	z-index: 1000;
 	display: grid;
-	grid-template-columns: 170px auto;
+	grid-template-columns: 180px auto;
 	text-align: center;
 	vertical-align: middle;
 	padding: 0;
