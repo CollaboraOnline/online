@@ -31,9 +31,13 @@
 
 #include <chrono>
 #include <cstddef>
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <sstream>
 #include <unistd.h>
+
+using namespace std::literals;
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
@@ -56,6 +60,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testIso8601Time);
+    CPPUNIT_TEST(testGetTimeForLog);
     CPPUNIT_TEST(testClockAsString);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
@@ -83,6 +88,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testJson();
     void testAnonymization();
     void testIso8601Time();
+    void testGetTimeForLog();
     void testClockAsString();
     void testStat();
     void testStringCompare();
@@ -788,6 +794,52 @@ void WhiteBoxTests::testAnonymization()
     Anonymizer::mapAnonymized("secret", "736_ocgdpzbkm39u");
     const std::string urlAnonymized3 = Util::replace(fileUrl, "secret", "736_ocgdpzbkm39u");
     LOK_ASSERT_EQUAL(urlAnonymized3, Anonymizer::anonymizeUrl(fileUrl));
+}
+
+void WhiteBoxTests::testGetTimeForLog()
+{
+    constexpr std::string_view testname = __func__;
+
+    // getTimeForLog returns the time in local timezone.
+    // To get reliable tests across different timezones, we use GMT.
+    const char* tz = ::getenv("TZ");
+    const std::string timezoneName = (tz ? tz : "");
+    ::setenv("TZ", "GMT", 1);
+    tzset();
+
+    const time_t t = 1760000000;
+    const auto sys = std::chrono::system_clock::from_time_t(t);
+    const auto now = Util::convertChronoClock<std::chrono::system_clock::time_point>(sys);
+
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:20.000 2025 (0ms ago)", Util::getTimeForLog(now, now));
+
+    // Past dates.
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:19.631 2025 (369ms ago)",
+                         Util::getTimeForLog(now, now - 369ms));
+
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:14.631 2025 (5s 369ms ago)",
+                         Util::getTimeForLog(now, now - 5s - 369ms));
+
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:46:14.631 2025 (7m 5s 369ms ago)",
+                         Util::getTimeForLog(now, now - 7min - 5s - 369ms));
+
+    LOK_ASSERT_EQUAL_STR("Wed Oct 08 20:46:14.631 2025 (12h 7m 5s 369ms ago)",
+                         Util::getTimeForLog(now, now - 12h - 7min - 5s - 369ms));
+
+    // Future dates.
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:20.369 2025 (369ms later)",
+                         Util::getTimeForLog(now, now + 369ms));
+
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 08:53:25.369 2025 (5s 369ms later)",
+                         Util::getTimeForLog(now, now + 5s + 369ms));
+
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 09:00:25.369 2025 (7m 5s 369ms later)",
+                         Util::getTimeForLog(now, now + 7min + 5s + 369ms));
+
+    LOK_ASSERT_EQUAL_STR("Thu Oct 09 21:00:25.369 2025 (12h 7m 5s 369ms later)",
+                         Util::getTimeForLog(now, now + 12h + 7min + 5s + 369ms));
+
+    ::setenv("TZ", timezoneName.data(), 1); // Restore the timeezone.
 }
 
 void WhiteBoxTests::testIso8601Time()
