@@ -1075,7 +1075,8 @@ int main(int argc, char**argv)
 
     /// Converter between two different clocks,
     /// such as system_clock and stead_clock.
-    /// Note: by nature this has limited accuracy.
+    /// Note: by nature this has limited accuracy due to the latency
+    /// between reading the Src and Dst clocks (typically a few nanos).
     template <typename Dst, typename Src, typename Enable = void>
     Dst convertChronoClock(const Src time)
     {
