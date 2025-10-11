@@ -1059,6 +1059,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			app.definitions.otherViewCursorSection.updateVisibilities();
 			this.updateAllTextViewSelection();
 		}
+		else if (textMsg.startsWith('partstatus:')) {
+			this._onStatusMsg(textMsg);
+		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
 		}
@@ -4063,7 +4066,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		return this._cssPixelsToTwips(pixels);
 	},
 
-	_updateMaxBounds: function (sizeChanged) {
+	_updateMaxBounds: function (sizeChanged, allPages = true) {
 		if (app.activeDocument.fileSize.x === 0 || app.activeDocument.fileSize.y === 0) {
 			return;
 		}
@@ -4079,7 +4082,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
-		this._map.fire('scrolllimits', {});
+		if (allPages) this._map.fire('scrolllimits', {});
+		else this._map.fire('scrolllimit', {})
 	},
 
 	// Used with filebasedview.

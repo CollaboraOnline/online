@@ -70,6 +70,10 @@ static int doc_getTileMode(LibreOfficeKitDocument* pThis);
 static void doc_getDocumentSize(LibreOfficeKitDocument* pThis,
                                 long* pWidth,
                                 long* pHeight);
+static void doc_getPartSize(LibreOfficeKitDocument* pThis,
+                                int nPart,
+                                long* pWidth,
+                                long* pHeight);
 static void doc_getDataArea(LibreOfficeKitDocument* pThis,
                             long nPart,
                             long* pCol,
@@ -162,6 +166,7 @@ LibLODocument_Impl::LibLODocument_Impl()
         m_pDocumentClass->paintPartTile = doc_paintPartTile;
         m_pDocumentClass->getTileMode = doc_getTileMode;
         m_pDocumentClass->getDocumentSize = doc_getDocumentSize;
+        m_pDocumentClass->getPartSize = doc_getPartSize;
         m_pDocumentClass->getDataArea = doc_getDataArea;
         m_pDocumentClass->initializeForRendering = doc_initializeForRendering;
         m_pDocumentClass->registerCallback = doc_registerCallback;
@@ -365,6 +370,17 @@ static int doc_getTileMode(LibreOfficeKitDocument* /*pThis*/)
 }
 
 static void doc_getDocumentSize(LibreOfficeKitDocument* pThis,
+                                long* pWidth,
+                                long* pHeight)
+{
+    (void) pThis;
+    // TODO better values here maybe?
+    *pWidth = 10000;
+    *pHeight = 10000;
+}
+
+static void doc_getPartSize(LibreOfficeKitDocument* pThis,
+                                int nPart,
                                 long* pWidth,
                                 long* pHeight)
 {
