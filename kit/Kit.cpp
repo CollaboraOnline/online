@@ -4262,6 +4262,8 @@ void dump_kit_state()
     std::ostringstream oss(Util::makeDumpStateStream());
     oss << "Start Kit " << getpid() << " Dump State:\n";
 
+    SigUtil::signalLogActivity();
+
     KitSocketPoll::dumpGlobalState(oss);
 
     oss << "\nMalloc info [" << getpid() << "]: \n\t"
