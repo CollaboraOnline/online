@@ -31,8 +31,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
 }
 
 template <typename T, typename U>
-inline std::string lokFormatAssertEq(const char* expectedName, const T& expected,
-                                     const char* actualName, const U& actual)
+inline std::string lokFormatAssertEq(const std::string& expectedName, const T& expected,
+                                     const std::string& actualName, const U& actual)
 {
     std::ostringstream oss;
     oss << "Expected " << actualName << " [" << std::boolalpha << (actual)
@@ -41,18 +41,26 @@ inline std::string lokFormatAssertEq(const char* expectedName, const T& expected
 }
 
 template <>
-std::string inline lokFormatAssertEq(const char* expected_name, const std::string& expected,
-                                     const char* actual_name, const std::string& actual)
+std::string inline lokFormatAssertEq(const std::string& expected_name, const std::string& expected,
+                                     const std::string& actual_name, const std::string& actual)
 {
+    std::string expected_prefix = "Expected (" + expected_name + "): ";
+    std::string actual_prefix = "Actual   (" + actual_name + "): ";
+    if (expected_prefix.size() > actual_prefix.size())
+    {
+        while (expected_prefix.size() > actual_prefix.size())
+            actual_prefix.append(" ");
+    }
+    else if (expected_prefix.size() < actual_prefix.size())
+    {
+        while (expected_prefix.size() < actual_prefix.size())
+            expected_prefix.append(" ");
+    }
+
+    expected_prefix.append("[");
+    actual_prefix.append("[");
+
     std::ostringstream oss;
-    oss << "Expected (" << expected_name << "): [";
-    const std::string expected_prefix = oss.str();
-    oss.str("");
-
-    oss << "Actual (" << actual_name << "):   [";
-    const std::string actual_prefix = oss.str();
-    oss.str("");
-
     oss << '\n';
     oss << expected_prefix << expected << "]\n";
     oss << actual_prefix << actual << "]\n";
