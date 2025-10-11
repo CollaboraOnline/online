@@ -94,31 +94,21 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 						this.sectionProperties.index + 1
 					];
 
-		if (!previous && !next) {
+		if (!previous) {
 			// First row marker.
 			this.sectionProperties.topMost =
 				app.activeDocument.tableMiddleware.getTableTopY() +
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-			this.sectionProperties.bottomMost = this.position[1] + 1000;
-		} else if (!previous) {
-			// First row marker.
-			this.sectionProperties.topMost =
-				app.activeDocument.tableMiddleware.getTableTopY() +
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-			this.sectionProperties.bottomMost =
-				next.position[1] -
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-		} else if (!next) {
-			// Last row marker.
+		} else {
 			this.sectionProperties.topMost =
 				previous.position[1] +
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
+		}
+
+		if (!next) {
+			// Last row marker.
 			this.sectionProperties.bottomMost = this.position[1] + 1000;
 		} else {
-			// Middle row markers.
-			this.sectionProperties.topMost =
-				previous.position[1] +
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
 			this.sectionProperties.bottomMost =
 				next.position[1] -
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
