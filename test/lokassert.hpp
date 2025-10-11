@@ -119,7 +119,8 @@ inline constexpr bool failed() { return false; }
 #endif
 
 /// Assert the truth of a condition, with a custom message.
-#define LOK_ASSERT_MESSAGE_IMPL(message, condition, silent)                                        \
+/// Will break on failure if stop==true.
+#define LOK_ASSERT_MESSAGE_IMPL(message, condition, silent, stop)                                  \
     do                                                                                             \
     {                                                                                              \
         using namespace test::detail;                                                              \
@@ -130,11 +131,14 @@ inline constexpr bool failed() { return false; }
                 std::ostringstream oss##__LINE__;                                                  \
                 oss##__LINE__ << message;                                                          \
                 const auto msg##__LINE__ = oss##__LINE__.str();                                    \
-                TST_LOG("ERROR: Assertion failure: "                                               \
-                        << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                     \
-                        << "Condition: " << (#condition));                                         \
-                LOK_ASSERT_IMPL(!#condition); /* NOLINT(misc-static-assert) */                     \
-                CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                                \
+                TST_LOG("ERROR: " << (stop ? "Assertion" : "Check") << " failure: "                \
+                                  << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")           \
+                                  << "Condition: " << (#condition));                               \
+                if (stop)                                                                          \
+                {                                                                                  \
+                    LOK_ASSERT_IMPL(!#condition); /* NOLINT(misc-static-assert) */                 \
+                    CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                            \
+                }                                                                                  \
             }                                                                                      \
             else if (!silent)                                                                      \
             {                                                                                      \
@@ -143,27 +147,49 @@ inline constexpr bool failed() { return false; }
         }                                                                                          \
     } while (false)
 
+/// Check the truth of a condition, with a custom message, logging on success.
+#define LOK_CHECK_MESSAGE(message, condition)                                                      \
+    LOK_ASSERT_MESSAGE_IMPL(message, condition, false, false)
+
 /// Assert the truth of a condition, with a custom message, logging on success.
-#define LOK_ASSERT_MESSAGE(message, condition) LOK_ASSERT_MESSAGE_IMPL(message, condition, false)
+#define LOK_ASSERT_MESSAGE(message, condition)                                                     \
+    LOK_ASSERT_MESSAGE_IMPL(message, condition, false, true)
+
+/// Check the truth of a condition, with a custom message, without logging on success.
+#define LOK_CHECK_MESSAGE_SILENT(message, condition)                                               \
+    LOK_ASSERT_MESSAGE_IMPL(message, condition, true, false)
 
 /// Assert the truth of a condition, with a custom message, without logging on success.
 #define LOK_ASSERT_MESSAGE_SILENT(message, condition)                                              \
-    LOK_ASSERT_MESSAGE_IMPL(message, condition, true)
+    LOK_ASSERT_MESSAGE_IMPL(message, condition, true, true)
+
+/// Check the truth of a condition, logging on success.
+#define LOK_CHECK(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false, false)
 
 /// Assert the truth of a condition, logging on success.
-#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false)
+#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false, true)
+
+/// Check the truth of a condition without logging on success.
+#define LOK_CHECK_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true, false)
 
 /// Assert the truth of a condition without logging on success.
-#define LOK_ASSERT_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true)
+#define LOK_ASSERT_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true, true)
+
+/// Check the equality of two expressions. WARNING: Multiple evaluations!
+/// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
+#define LOK_CHECK_EQUAL_UNSAFE(expected, actual)                                                   \
+    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual, false)
 
 /// Assert the equality of two expressions. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
 #define LOK_ASSERT_EQUAL_UNSAFE(expected, actual)                                                  \
-    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual)
+    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual, true)
 
 /// Assert the equality of two expressions with a custom message. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
-#define LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(message, expected_name, expected, actual_name, actual)     \
+/// Will break on failure if stop==true.
+#define LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(message, expected_name, expected, actual_name, actual,     \
+                                        stop)                                                      \
     do                                                                                             \
     {                                                                                              \
         using namespace test::detail;                                                              \
@@ -172,23 +198,27 @@ inline constexpr bool failed() { return false; }
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG("ERROR: Assertion failure: "                                                   \
-                    << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')                          \
-                    << lokFormatAssertEq(expected_name, expected, actual_name, actual));           \
-            LOK_ASSERT_IMPL((expected) == (actual));                                               \
-            CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
+            TST_LOG("ERROR: " << (stop ? "Assertion" : "Check") << " failure: "                    \
+                              << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')                \
+                              << lokFormatAssertEq(expected_name, expected, actual_name, actual)); \
+            if (stop)                                                                              \
+            {                                                                                      \
+                LOK_ASSERT_IMPL((expected) == (actual));                                           \
+                CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                 \
+            }                                                                                      \
         }                                                                                          \
     } while (false)
 
 /// Assert the equality of two expressions, and a custom message, with guaranteed single evaluation.
-#define LOK_ASSERT_EQUAL_MESSAGE(MSG, EXP, ACT)                                                    \
+/// Will break on failure if STOP==true.
+#define LOK_ASSERT_EQUAL_MESSAGE_IML(MSG, EXP, ACT, STOP)                                          \
     do                                                                                             \
     {                                                                                              \
         auto&& exp##__LINE__ = EXP;                                                                \
         auto&& act##__LINE__ = ACT;                                                                \
         if (!(exp##__LINE__ == act##__LINE__))                                                     \
         {                                                                                          \
-            LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(MSG, #EXP, exp##__LINE__, #ACT, act##__LINE__);        \
+            LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(MSG, #EXP, exp##__LINE__, #ACT, act##__LINE__, STOP);  \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
@@ -196,8 +226,23 @@ inline constexpr bool failed() { return false; }
         }                                                                                          \
     } while (false)
 
+/// Check the equality of two expressions, and a custom message, with guaranteed single evaluation.
+/// Will *not* break on failure.
+#define LOK_CHECK_EQUAL_MESSAGE(MSG, EXP, ACT) LOK_ASSERT_EQUAL_MESSAGE_IML(MSG, EXP, ACT, false)
+
+/// Assert the equality of two expressions, and a custom message, with guaranteed single evaluation.
+/// Will break on failure.
+#define LOK_ASSERT_EQUAL_MESSAGE(MSG, EXP, ACT) LOK_ASSERT_EQUAL_MESSAGE_IML(MSG, EXP, ACT, true)
+
+/// Check the equality of two expressions with guarantees of single evaluation.
+#define LOK_CHECK_EQUAL(EXP, ACT) LOK_CHECK_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
+
 /// Assert the equality of two expressions with guarantees of single evaluation.
 #define LOK_ASSERT_EQUAL(EXP, ACT) LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
+
+/// Check the equality of two expressions with guarantees of single evaluation.
+#define LOK_CHECK_EQUAL_STR(EXP, ACT)                                                              \
+    LOK_CHECK_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), Util::toString(EXP), Util::toString(ACT))
 
 /// Assert the equality of two expressions with guarantees of single evaluation.
 #define LOK_ASSERT_EQUAL_STR(EXP, ACT)                                                             \
