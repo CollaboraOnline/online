@@ -3779,27 +3779,6 @@ std::string DocumentBroker::getJailRoot() const
 std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session,
                                        std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
-    try
-    {
-        return addSessionInternal(session, std::move(wopiFileInfo));
-    }
-    catch (const std::exception& exc)
-    {
-        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << COOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
-        if (_sessions.empty())
-        {
-            LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
-            _docState.markToDestroy();
-        }
-
-        throw;
-    }
-}
-
-std::size_t
-DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session,
-                                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-{
     ASSERT_CORRECT_THREAD();
 
     try
@@ -3812,6 +3791,36 @@ DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session
             LOG_ERR(msg);
             throw std::runtime_error(msg);
         }
+
+        const std::string id = session->getId();
+
+        // Request a new session from the child kit.
+        const std::string message = "session " + id + ' ' + _docKey + ' ' + _docId;
+        _childProcess->sendTextFrame(message);
+
+#if !MOBILEAPP
+        // Tell the admin console about this new doc
+        const Poco::URI& uri = _storage->getUri();
+        // Create uri without query parameters
+        const std::string wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
+        _admin.addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
+                      session->getUserId(), _childProcess->getSMapsFp(), wopiSrc, session->isReadOnly());
+        _admin.setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
+#endif
+
+        // Add and attach the session.
+        _sessions.emplace(session->getId(), session);
+        session->setState(ClientSession::SessionState::LOADING);
+
+        const std::size_t count = _sessions.size();
+        LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
+                " session [" << id << "] to docKey [" <<
+                _docKey << "] to have " << count << " sessions.");
+
+        if (_unitWsd)
+            _unitWsd->onDocBrokerAddSession(_docKey, session);
+
+        return count;
     }
     catch (const StorageSpaceLowException&)
     {
@@ -3826,41 +3835,14 @@ DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("loading document exception: " << exc.what());
+        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << COOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
+        if (_sessions.empty())
+        {
+            LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
+            _docState.markToDestroy();
+        }
         throw;
     }
-
-    const std::string id = session->getId();
-
-    // Request a new session from the child kit.
-    const std::string message = "session " + id + ' ' + _docKey + ' ' + _docId;
-    _childProcess->sendTextFrame(message);
-
-#if !MOBILEAPP
-    // Tell the admin console about this new doc
-    const Poco::URI& uri = _storage->getUri();
-    // Create uri without query parameters
-    const std::string wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
-    _admin.addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
-                  session->getUserId(), _childProcess->getSMapsFp(), wopiSrc, session->isReadOnly());
-    _admin.setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
-#endif
-
-    // Add and attach the session.
-    _sessions.emplace(session->getId(), session);
-    session->setState(ClientSession::SessionState::LOADING);
-
-    const std::size_t count = _sessions.size();
-    LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
-            " session [" << id << "] to docKey [" <<
-            _docKey << "] to have " << count << " sessions.");
-
-    if (_unitWsd)
-    {
-        _unitWsd->onDocBrokerAddSession(_docKey, session);
-    }
-
-    return count;
 }
 
 std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& session)
