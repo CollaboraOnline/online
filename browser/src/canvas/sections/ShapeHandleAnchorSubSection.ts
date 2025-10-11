@@ -21,7 +21,6 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 	constructor (parentHandlerSection: ShapeHandlesSection | null, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
         super(sectionName, size[0], size[1], documentPosition, 'anchor-marker');
 
-		this.moveHTMLObjectToMapElement();
 		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
         this.sectionProperties.parentHandlerSection = parentHandlerSection;

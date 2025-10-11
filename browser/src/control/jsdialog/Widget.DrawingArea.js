@@ -23,7 +23,7 @@
  * }
  */
 
-/* global JSDialog $ UNOKey UNOModifier */
+/* global JSDialog $ UNOKey app */
 
 function _drawingAreaControl (parentContainer, data, builder) {
 	var container = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
@@ -192,22 +192,22 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		} else if (event.key === 'Tab') {
 			builder.callback('drawingarea', 'keypress', container, UNOKey.TAB | modifier, builder);
 		} else if (event.key === 'Shift') {
-			modifier = modifier | UNOModifier.SHIFT;
+			modifier = modifier | app.UNOModifier.SHIFT;
 			event.preventDefault();
 		} else if (event.key === 'Control') {
-			modifier = modifier | UNOModifier.CTRL;
+			modifier = modifier | app.UNOModifier.CTRL;
 			event.preventDefault();
 		} else if (event.key === 'a' && event.ctrlKey) {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.A | UNOModifier.CTRL, builder);
+			builder.callback('drawingarea', 'keypress', container, UNOKey.A | app.UNOModifier.CTRL, builder);
 		}
 	});
 
 	image.addEventListener('keyup', function(event) {
 		if (event.key === 'Shift') {
-			modifier = modifier & (~UNOModifier.SHIFT);
+			modifier = modifier & (~app.UNOModifier.SHIFT);
 			event.preventDefault();
 		} else if (event.key === 'Control') {
-			modifier = modifier & (~UNOModifier.CTRL);
+			modifier = modifier & (~app.UNOModifier.CTRL);
 			event.preventDefault();
 		}
 	});
@@ -240,7 +240,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 			if (event.ctrlKey) {
 				keyCode = event.key.toUpperCase().charCodeAt(0);
 				keyCode = builder.map.keyboard._toUNOKeyCode(keyCode);
-				keyCode |= UNOModifier.CTRL;
+				keyCode |= app.UNOModifier.CTRL;
 			}
 
 			builder.callback('drawingarea', 'keypress', container, keyCode, builder);
