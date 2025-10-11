@@ -64,6 +64,7 @@
 #include <sys/types.h>
 #include <sysexits.h>
 
+using namespace std::literals;
 using namespace COOLProtocol;
 
 using Poco::JSON::Object;
@@ -295,10 +296,7 @@ void DocumentBroker::pollThread()
     {
         static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
         _childProcess = getNewChild_Blocks(_poll, _configId, _mobileAppDocId);
-        if (_childProcess
-            || std::chrono::duration_cast<std::chrono::milliseconds>(
-                   std::chrono::steady_clock::now() - threadStart)
-                   > timeoutMs)
+        if (_childProcess || (std::chrono::steady_clock::now() - threadStart) > timeoutMs)
             break;
 
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
@@ -435,9 +433,8 @@ void DocumentBroker::pollThread()
         }
 
         // Check if we had a sunset time and expired.
-        if (_limitLifeSeconds > std::chrono::seconds::zero()
-            && std::chrono::duration_cast<std::chrono::seconds>(now - threadStart)
-                   > _limitLifeSeconds)
+        if (_limitLifeSeconds > std::chrono::seconds::zero() &&
+            (now - threadStart) > _limitLifeSeconds)
         {
             LOG_WRN("Doc [" << _docKey << "] is taking too long to convert. Will kill process ["
                             << _childProcess->getPid()
@@ -453,8 +450,7 @@ void DocumentBroker::pollThread()
             continue;
         }
 
-        if (std::chrono::duration_cast<std::chrono::milliseconds>
-                    (now - lastBWUpdateTime).count() >= COMMAND_TIMEOUT_MS)
+        if ((now - lastBWUpdateTime) >= std::chrono::milliseconds(COMMAND_TIMEOUT_MS))
         {
             lastBWUpdateTime = now;
             uint64_t sent = 0, recv = 0;
@@ -672,7 +668,7 @@ void DocumentBroker::pollThread()
         }
 
 #if !MOBILEAPP
-        if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 2)
+        if ((now - lastClipboardHashUpdateTime) >= 2min)
         {
             for (const auto& it : _sessions)
             {
@@ -686,7 +682,7 @@ void DocumentBroker::pollThread()
             }
         }
 
-        if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 5)
+        if ((now - lastClipboardHashUpdateTime) >= 5min)
         {
             LOG_TRC("Rotating clipboard keys");
             for (const auto& it : _sessions)
@@ -5237,11 +5233,7 @@ void DocumentBroker::broadcastMessageToOthers(const std::string& message,
 void DocumentBroker::processBatchUpdates()
 {
 #if !MOBILEAPP
-    const auto timeSinceLastNotifyMs =
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            _lastActivityTime - _lastNotifiedActivityTime).count();
-
-    if (timeSinceLastNotifyMs > 250)
+    if ((_lastActivityTime - _lastNotifiedActivityTime) > 250ms)
     {
         _admin.updateLastActivityTime(_docKey);
         _lastNotifiedActivityTime = _lastActivityTime;
