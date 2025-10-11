@@ -59,20 +59,16 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		if (!previous) {
 			// First column marker.
 			this.sectionProperties.leftMost = this.position[0] - 1000;
-			this.sectionProperties.rightMost =
-				next.position[0] -
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-		} else if (!next) {
-			// Last column marker.
+		} else {
 			this.sectionProperties.leftMost =
 				previous.position[0] +
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
+		}
+
+		if (!next) {
+			// Last column marker.
 			this.sectionProperties.rightMost = this.position[0] + 1000;
 		} else {
-			// Middle column markers.
-			this.sectionProperties.leftMost =
-				previous.position[0] +
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
 			this.sectionProperties.rightMost =
 				next.position[0] -
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
