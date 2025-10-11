@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <cstring>
 #include <algorithm>
+#include <iomanip>
 #include <limits>
 #include <mutex>
 #include <sstream>
@@ -1114,7 +1115,13 @@ int main(int argc, char**argv)
     /// a human-friendly format. E.g. Thu Oct 09 02:15:25.682 2025 (4h 43m 32s 211ms ago)
     template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
     {
-        const auto elapsed = now - convertChronoClock<U>(time);
+        const auto timeU = convertChronoClock<U>(time);
+        // The above conversion will cause minor delays, so there will be
+        // a difference even when now == time. For that, we ignore anything sub-micorsecond.
+        const bool past = std::chrono::round<std::chrono::milliseconds>(now - timeU) >=
+                          std::chrono::milliseconds::zero();
+        const auto elapsed =
+            std::chrono::round<std::chrono::milliseconds>(past ? now - timeU : timeU - now);
 
         const auto elapsedH = std::chrono::duration_cast<std::chrono::hours>(elapsed);
         const auto elapsedMin =
@@ -1129,17 +1136,20 @@ int main(int argc, char**argv)
                "Time-difference mismatch, likely a rounding error");
 
         std::stringstream ss;
-        ss << getClockAsString(time) << " (";
-        if (elapsedH > std::chrono::hours::zero())
+        ss << getClockAsString(timeU) << " (";
+
+        // Don't stringify 0 units, except for ms.
+        if (elapsedH != std::chrono::hours::zero())
             ss << elapsedH << ' ';
 
-        if (elapsedMin > std::chrono::minutes::zero())
+        if (elapsedMin != std::chrono::minutes::zero())
             ss << elapsedMin << ' ';
 
-        if (elapsedSec > std::chrono::seconds::zero())
+        if (elapsedSec != std::chrono::seconds::zero())
             ss << elapsedSec << ' ';
 
-        ss << elapsedMs << " ago)";
+        ss << std::setprecision(3) << elapsedMs;
+        ss << (past ? " ago)" : " later)");
         return ss.str();
     }
 
