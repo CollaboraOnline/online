@@ -16,7 +16,7 @@
 	touch-action: none;
 }
 
-.leaflet-cursor-handler {
+.cursor-handler {
 	margin-left: -14px;
 	width: 30px;
 	height: 44px;
