@@ -52,6 +52,24 @@ public:
         fileInfo->set("UserCanWrite", "true");
     }
 
+    bool onDocumentError(const std::string& message) override
+    {
+        TST_LOG("Testing " << name(_phase) << ": [" << message << ']');
+
+        // The 'closedocument' command could race with the second load
+        // such that the second load is rejected after we've transition to Done.
+        if (_phase != Phase::Done)
+            LOK_ASSERT_STATE(_phase, Phase::WaitUser2Loaded);
+
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
+                                 std::string("error: cmd=load kind=docunloading"), message);
+
+        TRANSITION_STATE(_phase, Phase::Done);
+        passTest("Loading failed, which is acceptable");
+
+        return true;
+    }
+
     bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
                                       const WSOpCode /* code */, const bool /* flush */,
                                       int& /*unitReturn*/) override
@@ -65,7 +83,6 @@ public:
             Poco::JSON::Array::Ptr array = parser0.parse(message.substr(9)).extract<Poco::JSON::Array::Ptr>();
             auto const viewsActive = array->size();
             if (_phase == Phase::ModifyDoc && viewsActive == 1)
-
             {
                 TRANSITION_STATE(_phase, Phase::Done);
                 WSD_CMD("closedocument");
@@ -202,12 +219,153 @@ public:
     }
 };
 
+/// This is to test that when a second view join while the first
+/// is quitting, we do load the document successfully.
+class SecondJoinWhileFirstQuit : public WopiTestServer
+{
+    STATE_ENUM(Phase, LoadUser1, WaitUser1Loaded, User1Loaded, WaitUser2Loaded, User2Loaded, Done)
+    _phase;
+
+    std::size_t _checkFileInfoCount;
+    std::size_t _viewCount;
+    std::size_t _viewsActive;
+    std::size_t _sessionCount;
+
+public:
+    SecondJoinWhileFirstQuit()
+        : WopiTestServer("SecondJoinWhileFirstQuit")
+        , _phase(Phase::LoadUser1)
+        , _checkFileInfoCount(0)
+        , _viewCount(0)
+        , _viewsActive(0)
+        , _sessionCount(0)
+    {
+    }
+
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::JSON::Object::Ptr& fileInfo) override
+    {
+        const bool firstView = _checkFileInfoCount++ == 0;
+
+        TST_LOG("CheckFileInfo: " << (firstView ? "User#1" : "User#2"));
+
+        fileInfo->set("UserCanWrite", "true");
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        TST_LOG("Testing " << name(_phase) << ": [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitUser2Loaded);
+
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
+                                 std::string("error: cmd=load kind=docunloading"), message);
+
+        TRANSITION_STATE(_phase, Phase::Done);
+        passTest("Loading failed, which is acceptable");
+
+        return true;
+    }
+
+    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
+                                      const WSOpCode /* code */, const bool /* flush */,
+                                      int& /*unitReturn*/) override
+    {
+        const std::string message(data, len);
+        TST_LOG("WS Message: [" << message << "] in phase: " << name(_phase));
+
+        if (message.starts_with("viewinfo:"))
+        {
+            Poco::JSON::Parser parser0;
+            Poco::JSON::Array::Ptr array =
+                parser0.parse(message.substr(9)).extract<Poco::JSON::Array::Ptr>();
+            _viewsActive = array->size();
+            TST_LOG("Views active: " << _viewsActive);
+        }
+
+        return false;
+    }
+
+    void onDocBrokerViewLoaded(const std::string&,
+                               const std::shared_ptr<ClientSession>& session) override
+    {
+        TST_LOG("View #" << _viewCount + 1 << " [" << session->getName() << "] loaded");
+
+        ++_viewCount;
+
+        if (_viewCount == 1 && _phase == Phase::WaitUser1Loaded)
+        {
+            TRANSITION_STATE(_phase, Phase::User1Loaded);
+        }
+        else if (_viewCount == 2 && _phase == Phase::WaitUser2Loaded)
+        {
+            TRANSITION_STATE(_phase, Phase::Done);
+            passTest("Second view loaded");
+        }
+    }
+
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        TST_LOG("Destroyed dockey [" << docKey << "], phase: " << name(_phase));
+        LOK_ASSERT_STATE(_phase, Phase::Done);
+    }
+
+    /// Called when a new client session is added to a DocumentBroker.
+    void onDocBrokerAddSession(const std::string&,
+                               const std::shared_ptr<ClientSession>& session) override
+    {
+        ++_sessionCount;
+        TST_LOG("New Session [" << session->getName() << "] added. Have " << _sessionCount
+                                << " sessions");
+        if (_sessionCount == 2)
+        {
+            TST_LOG("Disconnecting the first session");
+            deleteSocketAt(0);
+        }
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::LoadUser1:
+            {
+                // Always transition before issuing commands.
+                TRANSITION_STATE(_phase, Phase::WaitUser1Loaded);
+
+                TST_LOG("Creating first connection");
+                initWebsocket("/wopi/files/0?access_token=anything");
+
+                TST_LOG("Loading first view");
+                WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::User1Loaded:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitUser2Loaded);
+
+                TST_LOG("Creating second connection");
+                addWebSocket();
+
+                TST_LOG("Loading second view");
+                WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::User2Loaded:
+            {
+                break;
+            }
+            case Phase::WaitUser1Loaded:
+            case Phase::WaitUser2Loaded:
+            case Phase::Done:
+                break;
+        }
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [3]
-    {
-        new SecondJoinQuitNormal(), new SecondJoinQuitEarly(), nullptr
-    };
+    return new UnitBase*[4]{ new SecondJoinQuitNormal(), new SecondJoinQuitEarly(),
+                             new SecondJoinWhileFirstQuit(), nullptr };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
