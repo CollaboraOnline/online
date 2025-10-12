@@ -66,8 +66,10 @@ class ServerConnectionService {
 
 	public onSpecializedUI(docType: string) {
 		app.console.debug('ServerConnectionService: onSpecializedUI - ' + docType);
+		app.map.fire('initializedui');
 	}
 
+	/// see _appLoadedConditions in Map.Wopi.js
 	public onDocumentLoaded() {
 		app.console.debug('ServerConnectionService: onDocumentLoaded');
 	}
