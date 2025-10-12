@@ -148,6 +148,7 @@ window.L.Map = window.L.Evented.extend({
 			if (this.options.debug && !this._debug.debugOn) {
 				this._debug.toggle();
 			}
+			app.serverConnectionService.onDocumentLoaded();
 		});
 
 		this.on('modificationindicatorinitialized', function() {
