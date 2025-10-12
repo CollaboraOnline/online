@@ -21,6 +21,8 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
+using namespace std::literals;
+
 /// Rendering options testcase.
 class UnitInvalidation : public UnitWSD
 {
@@ -47,7 +49,7 @@ void UnitInvalidation::setupSession(const std::shared_ptr<http::WebSocketSession
 
     // Let the app get somewhat setup ...
     TST_LOG("settling ...");
-    helpers::drain(session, testname, std::chrono::seconds(2));
+    helpers::drain(session, testname, 2s);
 }
 
 void UnitInvalidation::renderArea(const std::shared_ptr<http::WebSocketSession> &session, int part)
@@ -141,7 +143,7 @@ void UnitInvalidation::invokeWSDTest()
         TST_LOG("Wait for window one invalidations");
         std::vector<std::string> invalidates;
 
-        invalidates = helpers::getAllResponsesTimed(windowOne, "invalidatetiles:", testname, std::chrono::seconds(2));
+        invalidates = helpers::getAllResponsesTimed(windowOne, "invalidatetiles:", testname, 2s);
         LOK_ASSERT(invalidates.size() > 0);
 
         bool invalidated = false;
@@ -159,7 +161,7 @@ void UnitInvalidation::invokeWSDTest()
         TST_LOG("Wait for window two invalidations");
 
         // Notice no invalidation on window two
-        invalidates = helpers::getAllResponsesTimed(windowTwo, "invalidatetiles:", testname, std::chrono::seconds(2));
+        invalidates = helpers::getAllResponsesTimed(windowTwo, "invalidatetiles:", testname, 2s);
 
         // We expect to get an invalidate for our current view, due to the dependency updating.
         LOK_ASSERT(invalidates.size() > 0);

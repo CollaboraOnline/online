@@ -21,6 +21,8 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
+using namespace std::literals;
+
 namespace
 {
 /**
@@ -108,7 +110,7 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
         }
 
         helpers::selectAll(socket, testname);
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        std::this_thread::sleep_for(250ms);
         helpers::sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG
             = helpers::getResponseMessage(socket, "shapeselectioncontent:", testname);
@@ -144,7 +146,7 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
 
         // Select the shape with SHIFT + F4
         helpers::sendKeyPress(socket, 0, 771 | helpers::SpecialKey::skShift, testname);
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        std::this_thread::sleep_for(250ms);
         helpers::sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG
             = helpers::getResponseMessage(socket, "shapeselectioncontent:", testname);

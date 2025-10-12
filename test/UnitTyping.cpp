@@ -27,6 +27,7 @@
 #include <random>
 #include <iostream>
 
+using namespace std::literals;
 using namespace ::helpers;
 
 // Inside the WSD process
@@ -115,8 +116,7 @@ public:
         LOG_TRC("Waiting for test selection:");
         const char response[] = "textselectioncontent:";
         const int responseLen = sizeof(response) - 1;
-        const std::string result
-            = getResponseString(socket, response, testname, std::chrono::seconds(5));
+        const std::string result = getResponseString(socket, response, testname, 5s);
 
         // The result string should contain "textselectioncontent:\n" followed by the UTF-8 bytes
         LOG_TRC("length " << result.length() << " vs. " << (responseLen + 1 + sizeof(correct)));
@@ -319,10 +319,10 @@ public:
                             << " tilewidth=7680 tileheight=7680";
                         sendTextFrame(sock, oss.str(), testname);
 
-                        const std::vector<char> tile = getResponseMessage(
-                            sock, "tile:", testname, std::chrono::milliseconds(5));
+                        const std::vector<char> tile =
+                            getResponseMessage(sock, "tile:", testname, 5ms);
 
-                        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+                        std::this_thread::sleep_for(25ms);
                     }
                 });
 
@@ -379,8 +379,8 @@ public:
             sendTextFrame(sockets[i], "gettextselection mimetype=text/plain;charset=utf-8", testname);
 
             LOG_TRC("Waiting for test selection:");
-            const std::string result = getResponseString(sockets[i], "textselectioncontent:", testname,
-                                                   std::chrono::seconds(20));
+            const std::string result =
+                getResponseString(sockets[i], "textselectioncontent:", testname, 20s);
             results[i] = result;
 
             char target = 'a'+i;

@@ -23,6 +23,8 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
+using namespace std::literals;
+
 namespace
 {
 void getCursor(const std::string& message, int& cursorX, int& cursorY, int& cursorWidth,
@@ -265,7 +267,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
     // Close and reopen the same document and test again.
     socket->shutdownWS();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
-                       socket->waitForDisconnection(std::chrono::seconds(5)));
+                       socket->waitForDisconnection(5s));
 
     TST_LOG("Reloading ");
     socket = helpers::loadDocAndGetSession(socketPoll, uri, documentURL, testname);
@@ -340,7 +342,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
     TST_LOG("Closing connection after pasting.");
     socket->shutdownWS();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
-                       socket->waitForDisconnection(std::chrono::seconds(5)));
+                       socket->waitForDisconnection(5s));
 
     TST_LOG("Reloading ");
     socket = helpers::loadDocAndGetSession(socketPoll, uri, documentURL, testname);

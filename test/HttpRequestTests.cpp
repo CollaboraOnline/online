@@ -43,6 +43,8 @@
 #include <string>
 #include <thread>
 
+using namespace std::literals;
+
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
 /// to check for regressions.
@@ -223,7 +225,7 @@ void HttpRequestTests::testBadResponse()
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
     {
-        httpSession->setTimeout(std::chrono::seconds(1));
+        httpSession->setTimeout(1s);
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
 
@@ -252,7 +254,7 @@ void HttpRequestTests::testGoodResponse()
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
     {
-        httpSession->setTimeout(std::chrono::seconds(1));
+        httpSession->setTimeout(1s);
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
 
@@ -353,7 +355,7 @@ void HttpRequestTests::testSimpleGetSync()
     http::Request httpRequest(std::move(URL));
 
     auto httpSession = http::Session::create(_localUri);
-    httpSession->setTimeout(std::chrono::seconds(1));
+    httpSession->setTimeout(1s);
 
     for (int i = 0; i < 5; ++i)
     {
@@ -696,7 +698,7 @@ void HttpRequestTests::testTimeout()
 
     auto httpSession = http::Session::create(_localUri);
 
-    httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
+    httpSession->setTimeout(1ms); // Very short interval.
 
     const std::shared_ptr<const http::Response> httpResponse
         = httpSession->syncRequest(httpRequest);
@@ -767,7 +769,7 @@ void HttpRequestTests::testOnFinished_Timeout()
 
     auto httpSession = http::Session::create(_localUri);
 
-    httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
+    httpSession->setTimeout(1ms); // Very short interval.
 
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
@@ -804,7 +806,7 @@ void HttpRequestTests::testPost()
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
     {
-        httpSession->setTimeout(std::chrono::seconds(5));
+        httpSession->setTimeout(5s);
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
 

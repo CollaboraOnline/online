@@ -26,6 +26,8 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
+using namespace std::literals;
+
 /// Test slow saving/uploading.
 /// We modify the document, save, and immediately
 /// modify again followed by closing the connection.
@@ -56,7 +58,7 @@ public:
         , _inputCount(0)
     {
         // We need more time than the default.
-        setTimeout(std::chrono::minutes(10));
+        setTimeout(10min);
     }
 
     std::unique_ptr<http::Response>
@@ -166,7 +168,7 @@ public:
         , _uploadCount(0)
     {
         // We need more time than the default.
-        setTimeout(std::chrono::minutes(2));
+        setTimeout(2min);
     }
 
     std::unique_ptr<http::Response>
@@ -250,7 +252,7 @@ public:
             break;
             case Phase::Done:
             {
-                if (_stopwatch.elapsed(std::chrono::minutes(1)))
+                if (_stopwatch.elapsed(1min))
                 {
                     passTest("No unexpected conditions met");
                 }

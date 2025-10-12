@@ -24,6 +24,8 @@
 #include <string>
 #include <thread>
 
+using namespace std::literals;
+
 namespace {
     void *memdup(const void *ptr, size_t size)
     {
@@ -48,7 +50,7 @@ public:
 void UnitSyntheticLok::loadAndSynthesize(
     const std::string& name, const std::string& docName)
 {
-    auto timeout = std::chrono::seconds(10);
+    auto timeout = 10s;
 
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
@@ -142,7 +144,7 @@ public:
         , _docCallbackData(nullptr)
     {
         TST_LOG("SyntheticLOK kit bootstrap\n");
-        setTimeout(std::chrono::hours(1));
+        setTimeout(1h);
         GlobalUnitKit = this;
     }
 

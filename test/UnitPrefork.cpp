@@ -21,6 +21,8 @@ constexpr int NumToPrefork = 1;
 constexpr int NumToPrefork = 20;
 #endif // CODE_COVERAGE
 
+using namespace std::literals;
+
 // Inside the WSD process
 class UnitPrefork : public UnitWSD
 {
@@ -32,7 +34,7 @@ public:
         : UnitWSD("UnitPrefork")
         , _childSockets(0)
     {
-        setTimeout(std::chrono::seconds(60));
+        setTimeout(60s);
     }
 
     virtual void configure(Poco::Util::LayeredConfiguration& config) override

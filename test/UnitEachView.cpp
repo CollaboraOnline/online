@@ -22,6 +22,8 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
+using namespace std::literals;
+
 namespace
 {
 void testEachView(const std::string& doc, const std::string& type, const std::string& protocol,
@@ -186,7 +188,7 @@ UnitEachView::UnitEachView()
     : UnitWSD("UnitEachView")
 {
     // 8 times larger then the default.
-    setTimeout(std::chrono::seconds(240));
+    setTimeout(240s);
 }
 
 void UnitEachView::invokeWSDTest()
