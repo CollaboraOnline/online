@@ -2364,7 +2364,6 @@ button.menubutton.sidebar > span {
 
 #FormulaDialog .ui-tabs-content.jsdialog {
 	grid-auto-columns: 250px;
-	margin-right: 0.2em;
 	margin-top: 0px;
 }
 
@@ -2375,6 +2374,34 @@ button.menubutton.sidebar > span {
 #FormulaDialog #ALTBOX #headline {
 	font-weight: bold;
 }
+
+/* text-area overflow on function wizard window */
+
+#FormulaDialog #ed_formula.ui-textarea {
+	max-width: 392px;
+}
+
+#FormulaDialog #tabcontrol {
+	margin-inline-end: 10px;
+}
+
+#FormulaDialog .ui-tabpage > div > .ui-grid-cell > :not(.ui-pushbutton-wrapper) {
+	margin: auto 4px;
+}
+
+#FormulaDialog .ui-pushbutton-wrapper {
+	background: initial;
+}
+
+#FormulaDialog {
+	/* don't leave white area below the functions if right panel is short */
+	height: 100%;
+}
+
+#FormulaDialog .ui-textarea {
+	margin-top: 10px;
+}
+
 
 div [id^='TemplateDialog'] {
 	min-width: 590px;
@@ -2634,13 +2661,6 @@ kbd,
 
 #findreplacetabbox {
 	justify-content: start;
-}
-
-
-/* text-area overflow on function wizard window */
-
-#FormulaDialog #ed_formula.ui-textarea {
-	max-width: 392px;
 }
 
 #showcomments-container[default-state='true'],
