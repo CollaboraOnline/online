@@ -227,6 +227,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	},
 
 	_postLoaded: function(e) {
+		app.console.debug('PostMessage: _postLoaded');
+
 		if (this._appLoaded) {
 			return;
 		}
