@@ -37,6 +37,13 @@ namespace
 {
 /// Tracks the number of thread-local buffers (for debugging purposes).
 std::atomic_int32_t ThreadLocalBufferCount(0);
+
+#ifndef NDEBUG
+// In debug builds, we track the thread-ids to list the ones still running at exist.
+thread_local std::int32_t OwnThreadIdIndex = 0;
+std::int32_t ThreadIdArray[256];
+std::atomic_int32_t NextThreadIdIndex(0);
+#endif // !NDEBUG
 } // namespace
 
 /// Which log areas should be disabled
@@ -198,6 +205,10 @@ namespace Log
         /// after forking we can end up with threads that
         /// logged in the parent confusing our counting.
         ThreadLocalBufferCount = 0;
+#ifndef NDEBUG
+        NextThreadIdIndex = 0;
+        memset(ThreadIdArray, 0, sizeof(ThreadIdArray));
+#endif // !NDEBUG
     }
 
     class BufferedConsoleChannel : public ConsoleChannel
@@ -215,12 +226,19 @@ namespace Log
                 , _oldest_time_us(0)
             {
                 ++ThreadLocalBufferCount;
+#ifndef NDEBUG
+                OwnThreadIdIndex = NextThreadIdIndex++;
+                ThreadIdArray[OwnThreadIdIndex] = Util::getThreadId();
+#endif // !NDEBUG
             }
 
             ~ThreadLocalBuffer()
             {
                 flush();
                 --ThreadLocalBufferCount;
+#ifndef NDEBUG
+                ThreadIdArray[OwnThreadIdIndex] = 0;
+#endif // !NDEBUG
             }
 
             std::size_t size() const { return _size; }
@@ -726,8 +744,28 @@ namespace Log
         if constexpr (Util::isMobileApp())
             return;
         if (!Util::isKitInProcess())
+        {
+#ifndef NDEBUG
+            OwnThreadIdIndex = NextThreadIdIndex++;
+            ThreadIdArray[OwnThreadIdIndex] = Util::getThreadId();
+            const auto currentThreadId = Util::getThreadId();
+            for (int i = 0; i < NextThreadIdIndex; ++i)
+            {
+                if (ThreadIdArray[i] && ThreadIdArray[i] != currentThreadId)
+                {
+                    LOG_ERR(">>> Thread " << ThreadIdArray[i]
+                                          << " is still running while shutting down logging");
+                }
+            }
+
+            // Flush before we assert (no assertion in non-debug builds).
+            flush();
+            ::fflush(nullptr); // Flush all open output streams.
+#endif // !NDEBUG
+
             assert(ThreadLocalBufferCount <= 1 &&
                    "Unstopped threads may have unflushed buffered log entries");
+        }
 
         // continue logging shutdown on mobile
         IsShutdown = !Util::isMobileApp();
