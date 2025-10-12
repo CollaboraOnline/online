@@ -19,6 +19,8 @@
 #include <helpers.hpp>
 #include <net/HttpRequest.hpp>
 
+using namespace std::literals;
+
 // Inside the WSD process
 class UnitProxyProtocol : public UnitWSD
 {
@@ -30,7 +32,7 @@ public:
         : UnitWSD("UnitProxyProtocol"),
           _sentRequest(false)
     {
-        setTimeout(std::chrono::seconds(10));
+        setTimeout(10s);
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -47,7 +49,7 @@ public:
         httpSession->setConnectFailHandler([this](const std::shared_ptr<http::Session>&) {
             LOK_ASSERT_FAIL("Unexpected connection failure");
         });
-        httpSession->setTimeout(std::chrono::seconds(9));
+        httpSession->setTimeout(9s);
         return httpSession;
     }
 

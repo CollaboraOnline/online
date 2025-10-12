@@ -1100,7 +1100,7 @@ size_t WhiteBoxTests::waitForThreads(size_t count)
                 " instead we have " << Util::getCurrentThreadCount() << "\n";
             break;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(10ms);
     }
     return Util::getCurrentThreadCount();
 }

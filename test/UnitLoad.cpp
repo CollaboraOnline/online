@@ -26,6 +26,8 @@
 #include <ostream>
 #include <string>
 
+using namespace std::literals;
+
 namespace
 {
 void loadDoc(const std::string& documentURL, const std::string& testname)
@@ -74,7 +76,7 @@ public:
     UnitLoad()
         : UnitWSD("UnitLoad")
     {
-        setTimeout(std::chrono::seconds(60));
+        setTimeout(60s);
     }
 
     void invokeWSDTest() override;
@@ -226,13 +228,13 @@ UnitBase::TestResult UnitLoad::testLoad()
     TST_LOG("Loading " << documentURL);
     wsSession->sendMessage("load url=" + documentURL);
 
-    std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(10));
+    std::vector<char> message = wsSession->waitForMessage("status:", 10s);
     LOK_ASSERT_MESSAGE("Failed to load the document", !message.empty());
 
     wsSession->asyncShutdown();
 
     LOK_ASSERT_MESSAGE("Expected success disconnection of the WebSocket",
-                       wsSession->waitForDisconnection(std::chrono::seconds(10)));
+                       wsSession->waitForDisconnection(10s));
 
     return TestResult::Ok;
 }

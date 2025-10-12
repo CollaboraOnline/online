@@ -19,13 +19,15 @@
 #include <Util.hpp>
 #include <Unit.hpp>
 
+using namespace std::literals;
+
 class UnitTimeout : public UnitWSD
 {
 public:
     UnitTimeout()
         : UnitWSD("UnitTimeout")
     {
-        setTimeout(std::chrono::seconds(1));
+        setTimeout(1s);
     }
 
     virtual void timeout() override { passTest("Timed out as expected"); }
