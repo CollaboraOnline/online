@@ -162,6 +162,17 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		if (wopiInfo['HideUserList'])
 			this.HideUserList = wopiInfo['HideUserList'].split(',');
 
+		this.sendFrameReady();
+
+		if ('TemplateSaveAs' in wopiInfo) {
+			this._map.showBusy(_('Creating new file from template...'), false);
+			this._map.saveAs(wopiInfo['TemplateSaveAs']);
+		}
+
+		this.setupImageInsertionMenu();
+	},
+
+	sendFrameReady: function() {
 		this._map.fire('postMessage', {
 			msgId: 'App_LoadingStatus',
 			args: {
@@ -171,13 +182,16 @@ window.L.Map.WOPI = window.L.Handler.extend({
 				}
 			}
 		});
+	},
 
-		if ('TemplateSaveAs' in wopiInfo) {
-			this._map.showBusy(_('Creating new file from template...'), false);
-			this._map.saveAs(wopiInfo['TemplateSaveAs']);
-		}
-
-		this.setupImageInsertionMenu();
+	sendDocumentLoaded: function() {
+		this._map.fire('postMessage', {
+			msgId: 'App_LoadingStatus',
+			args: {
+				Status: 'Document_Loaded',
+				DocumentLoadedTime: this.DocumentLoadedTime
+			}
+		});
 	},
 
 	setupImageInsertionMenu: function() {
@@ -234,7 +248,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		}
 
 		this._appLoaded = true;
-		this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {Status: 'Document_Loaded', DocumentLoadedTime: this.DocumentLoadedTime}});
+		this.sendDocumentLodaded();
 	},
 
 	// Naturally we set a CSP to catch badness, but check here as well.
