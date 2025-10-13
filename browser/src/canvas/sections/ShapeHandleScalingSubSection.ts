@@ -175,11 +175,11 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		app.map.dontHandleMouse = true;
 		e.stopPropagation();
 		this.stopPropagating();
-		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
+		this.sectionProperties.previousCursorStyle = this.context.canvas.style.cursor;
 		if (this.sectionProperties.cropModeEnabled)
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.cropCursor;
+			this.context.canvas.style.cursor = this.sectionProperties.cropCursor;
 		else
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
+			this.context.canvas.style.cursor = this.sectionProperties.mousePointerType;
 		this.containerObject.requestReDraw();
 	}
 
@@ -187,7 +187,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		app.map.dontHandleMouse = false;
 		e.stopPropagation();
 		this.stopPropagating();
-		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
+		this.context.canvas.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.containerObject.requestReDraw();
 	}
 
