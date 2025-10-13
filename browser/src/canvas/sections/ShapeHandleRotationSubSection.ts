@@ -101,10 +101,6 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		return initialAngle - newAngle;
 	}
 
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		(window as any).IgnorePanning = true;
-	}
-
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
@@ -129,8 +125,6 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 			}
 			this.sectionProperties.parentHandlerSection.hideSVG();
 		}
-
-		(window as any).IgnorePanning = false;
 	}
 
 	onMouseMove(position: cool.SimplePoint, distance: number[]) {

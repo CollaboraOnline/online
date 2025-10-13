@@ -193,9 +193,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		}
 
 		this.map.scrollingIsHandled = false;
-		this.stopPropagating();
-		e.stopPropagation();
-		(<any>window).IgnorePanning = false;
 	}
 
 	public onMouseDown (point: cool.SimplePoint, e: MouseEvent) {
@@ -219,11 +216,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			var newEvent = this.sectionProperties.docLayer._createNewMouseEvent('mousedown', newPoint);
 			this.sectionProperties.mapPane.dispatchEvent(newEvent);
 		}
-
-		// Just to be safe. We don't need this, but it makes no harm.
-		this.stopPropagating();
-		e.stopPropagation();
-		(<any>window).IgnorePanning = true; // We'll keep this until we have consistent sections and remove map element.
 
 		this.sectionProperties.inMouseDown = false;
 	}

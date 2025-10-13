@@ -71,8 +71,6 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 		if (this.sectionProperties.parentSection === null) return;
 
 		if (app.sectionContainer.isDraggingSomething()) {
-			(<any>window).IgnorePanning = true;
-
 			if (this.sectionProperties.parent === null) return;
 
 			if (this.sectionProperties.dragStartPosition === null)
@@ -86,8 +84,6 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 	}
 
 	onDragEnd(): void {
-		(<any>window).IgnorePanning = undefined;
-
 		this.sectionProperties.dragStartPosition = null;
 
 		const twips = [
