@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-05-18 13:22+0000\n"
+"PO-Revision-Date: 2025-10-09 08:07+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
-"n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.12-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : "
+"((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -366,7 +366,7 @@ msgstr "לכבות את השרת?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:143
 msgid "Accessibility"
-msgstr ""
+msgstr "נגישות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:147
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -382,7 +382,7 @@ msgstr "מצב כהה"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:148
 msgid "Compact layout"
-msgstr ""
+msgstr "פריסה מצומצמת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 #, fuzzy
@@ -396,7 +396,7 @@ msgstr "הצגת סרגל"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:151
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "בודק נגישות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 #: src/control/Control.NavigatorPanel.ts:216
@@ -405,19 +405,19 @@ msgstr "נווטן"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Show Sidebar"
-msgstr ""
+msgstr "הצגת סרגל צד"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Custom Animation"
-msgstr ""
+msgstr "הנפשה מותאמת אישית"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Master Pages"
-msgstr ""
+msgstr "עמודים ראשיים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Slide Transition"
-msgstr ""
+msgstr "מעברון שקופית"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
 #, fuzzy
@@ -429,15 +429,15 @@ msgstr "רשימת סגנונות"
 #: src/control/Control.NotebookbarDraw.js:525
 #: src/control/Control.NotebookbarImpress.js:645
 msgid "Grid"
-msgstr ""
+msgstr "רשת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "הדפסה"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
-msgstr ""
+msgstr "אחר"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -452,23 +452,23 @@ msgstr "הצמדה לרשת"
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Size to grid"
-msgstr ""
+msgstr "גודל לרשת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "סנכרון צירים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
-msgstr ""
+msgstr "הצמדה לרשת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "עמודים ריקים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "אילוץ מעברים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -478,22 +478,22 @@ msgstr "כל הגיליונות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "תוכן"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "ציור"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
 #: src/control/Control.NotebookbarDraw.js:1424
 #: src/control/Control.NotebookbarWriter.js:1223
 msgid "Page"
-msgstr ""
+msgstr "עמוד"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "התאמה לעמוד"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
@@ -3186,15 +3186,15 @@ msgstr "המשלב לא מוכן לקריאות PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "שימוש במרחבי שם."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "אין שימוש במרחבי שם"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "המסמך שבו התחילה המכולה"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
@@ -3926,9 +3926,8 @@ msgid "Line color"
 msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1951
-#, fuzzy
 msgid "Line style"
-msgstr "סגנון קו:"
+msgstr "סגנון קו"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1954
 msgid "Hairline (0.05 pt)"
