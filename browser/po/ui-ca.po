@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-10-02 01:02+0000\n"
-"Last-Translator: Ecron <ecron_89@hotmail.com>\n"
+"PO-Revision-Date: 2025-10-04 09:02+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
 "Language: ca\n"
@@ -2406,7 +2406,7 @@ msgstr "Després"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Sumari"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
@@ -3402,7 +3402,7 @@ msgstr ""
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr ""
+msgstr "Deixa de seguir"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
@@ -4810,7 +4810,7 @@ msgstr "Diàleg Imprimeix"
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1004
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Presentació de diapositives buida"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1032
@@ -4960,7 +4960,7 @@ msgstr "Activa les animacions"
 
 #: src/slideshow/SlideShowPresenter.ts:698
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Segueix la presentació"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
