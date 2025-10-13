@@ -66,9 +66,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     _uriString = request.getURI().substr(serviceRoot.length());
     dehexify();
     request.setURI(_uriString);
-    const std::string &method = request.getMethod();
-    _isGet = method == "GET";
-    _isHead = method == "HEAD";
+    _method = stringToMethod(request.getMethod());
     auto it = request.find("ProxyPrefix");
     _isProxy = it != request.end();
     if (_isProxy)
@@ -93,9 +91,7 @@ RequestDetails::RequestDetails(http::RequestParser& request, const std::string& 
     _uriString = request.getUrl().substr(serviceRoot.length());
     dehexify();
     request.setUrl(_uriString);
-    const std::string& method = request.getVerb();
-    _isGet = method == "GET";
-    _isHead = method == "HEAD";
+    _method = stringToMethod(request.getVerb());
     _isProxy = request.has("ProxyPrefix");
     if (_isProxy)
         _proxyPrefix = request.get("ProxyPrefix");
@@ -110,8 +106,7 @@ RequestDetails::RequestDetails(http::RequestParser& request, const std::string& 
 }
 
 RequestDetails::RequestDetails(const std::string &mobileURI)
-    : _isGet(true)
-    , _isHead(false)
+    : _method(Method::GET)
     , _isProxy(false)
     , _isWebSocket(false)
     , _closeConnection(false)
@@ -123,8 +118,7 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
 
 RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std::string>& options,
                                const std::string& compat)
-    : _isGet(true)
-    , _isHead(false)
+    : _method(Method::GET)
     , _isProxy(false)
     , _isWebSocket(false)
     , _closeConnection(false)
@@ -155,6 +149,16 @@ RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std
     _uriString = oss.str();
 
     processURI();
+}
+
+RequestDetails::Method RequestDetails::stringToMethod(std::string const & method) {
+    if (method == "GET") {
+        return Method::GET;
+    } else if (method == "HEAD") {
+        return Method::HEAD;
+    } else {
+        return Method::unknown;
+    }
 }
 
 void RequestDetails::dehexify()
