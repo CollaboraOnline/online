@@ -510,16 +510,20 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 /* Close Button Styling */
 .close-navigation-button {
-	width: var(--btn-img-size);
-	height: var(--btn-img-size);
+	min-width: auto !important;
+	width: var(--btn-img-size) !important;
+	height: var(--btn-img-size) !important;
+	border: none !important;
 	background-image: url('images/closedoc.svg');
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
-	background-color: transparent;
+	background-color: transparent !important;
 	cursor: pointer;
+	padding: 0 !important;
+	margin: 0 !important;
 }
-[data-theme='dark']  .close-navigation-button {
+[data-theme='dark'] .close-navigation-button {
 	background-image: url('images/dark/closedoc.svg');
 }
 
@@ -677,7 +681,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #quickfind-container #quickfindcontrols {
 	position: absolute;
 	top: 0;
-	right: 0;		
+	right: 0;
 }
 
 #quickfind-container #quickfindcontrols button img {

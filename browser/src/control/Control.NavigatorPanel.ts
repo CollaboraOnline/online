@@ -126,7 +126,7 @@ class NavigatorPanel extends SidebarBase {
 
 		// Create the close button inside the div
 		this.closeNavButton = window.L.DomUtil.create(
-			'span',
+			'button',
 			'close-navigation-button',
 			closeNavWrapper,
 		);
@@ -314,7 +314,6 @@ class NavigatorPanel extends SidebarBase {
 				} else {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
-				// TODO: handle properly keyboard navigation in navigator: ESC to exit, close button
 				this.focusSearch();
 			}.bind(this),
 		);
