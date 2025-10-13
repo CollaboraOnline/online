@@ -1996,7 +1996,8 @@ class UIManager extends window.L.Control {
 				type: 'edit',
 				password: !!passwordInput,
 				text: defaultValue,
-				labelledBy: 'info-modal-label1'
+				labelledBy: 'info-modal-label1',
+				activateDefault: true
 			},
 			{
 				id: '',

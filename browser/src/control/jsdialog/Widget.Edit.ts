@@ -106,7 +106,8 @@ class EditWidget {
 			callbackToUse(this.edit.input.value);
 		else {
 			var eventType = 'change';
-			if (e.key === 'Enter') eventType = 'activate';
+			if (e.key === 'Enter')
+				eventType = 'activate';
 			this.builder.callback(
 				'edit',
 				eventType,
@@ -114,6 +115,8 @@ class EditWidget {
 				this.edit.input.value,
 				this.builder,
 			);
+			if (e.key == 'Enter' && this.data.activateDefault)
+				this.builder.executeDefault();
 		}
 	}
 

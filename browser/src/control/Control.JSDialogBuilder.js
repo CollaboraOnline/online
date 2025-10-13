@@ -2463,6 +2463,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		builder._explorableMenu(parentContainer, title, data.children, builder, content, data.id);
 	},
 
+	// Finds and executes the default action on the built dialog
+	executeDefault: function() {
+		const button = this._container.querySelector('button.button-primary')
+		if (button)
+			button.click();
+	},
+
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
 		app.layoutingService.appendLayoutingTask(() => { this.executeActionImpl(container, data); });

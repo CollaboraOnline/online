@@ -58,6 +58,7 @@ interface JSBuilder {
 		hasVerticalParent: boolean,
 	) => boolean;
 	updateWidget: (parentContainer: Element, updateJSON: any) => void;
+	executeDefault: () => void;
 	executeAction: (parentContainer: Element, actionJSON: any) => void;
 	callback: JSDialogCallback;
 	_defaultCallbackHandler: JSDialogCallback;
@@ -352,6 +353,7 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+	activateDefault: boolean; // activate default action on 'Enter' ?
 }
 
 interface SeparatorWidgetJSON extends WidgetJSON {
