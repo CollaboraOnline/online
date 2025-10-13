@@ -64,10 +64,6 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		(window as any).IgnorePanning = true;
-	}
-
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			const parameters = {
@@ -81,8 +77,6 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 			this.stopPropagating();
 			e.stopPropagation();
 		}
-
-		(window as any).IgnorePanning = false;
 	}
 
 	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {

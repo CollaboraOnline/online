@@ -18,7 +18,6 @@ class TextSelectionHandle extends HTMLObjectSection {
 	}
 
 	onDrag(point: cool.SimplePoint) {
-		(<any>window).IgnorePanning = true;
 		const candidateX = Math.round((this.myTopLeft[0] + point.pX) / app.dpiScale);
 		const candidateY = Math.round((this.myTopLeft[1] + point.pY) / app.dpiScale);
 
@@ -43,8 +42,6 @@ class TextSelectionHandle extends HTMLObjectSection {
 	}
 
 	onDragEnd(point: cool.SimplePoint) {
-		(<any>window).IgnorePanning = undefined;
-
 		let x = this.position[0] + point.pX;
 		const y = this.position[1] + point.pY;
 		this.setPosition(x, y);

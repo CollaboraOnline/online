@@ -252,8 +252,6 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
 			parentHandlerSection.hideSVG();
 		}
-
-		(window as any).IgnorePanning = false;
 	}
 
 	adjustSVGProperties(shapeRecProps: any) {
@@ -391,7 +389,6 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 
 	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
-			(window as any).IgnorePanning = true;
 			this.stopPropagating();
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
@@ -403,8 +400,6 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.containerObject.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
-		else
-			(window as any).IgnorePanning = false;
 	}
 }
 
