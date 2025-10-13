@@ -1787,9 +1787,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 #endif
         if (docBroker->getIsFollowmeSlideShowOn())
         {
-            sendTextFrame("slideshowfollow slideshowfollowon");
             sendTextFrame("slideshowfollow displayslide {\"currentSlide\": " + std::to_string(docBroker->getLeaderSlide()) +"}");
             sendTextFrame("slideshowfollow effect {\"currentEffect\": " + std::to_string(docBroker->getLeaderEffect()) +"}");
+            sendTextFrame("slideshowfollow slideshowfollowon");
         }
 
         return forwardToChild(oss.str(), docBroker);;
