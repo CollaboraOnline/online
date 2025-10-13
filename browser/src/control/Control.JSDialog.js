@@ -768,8 +768,11 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		var instance = e.data;
 
 		// Save last focused element, we will set the focus back to this element after this popup is closed.
-		if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) // Avoid to reset while updates.
+		if (this.dialogs[instance.id] && this.dialogs[instance.id].lastFocusedElement) {
+			instance.lastFocusedElement = this.dialogs[instance.id].lastFocusedElement;
+		} else if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) { // Avoid to reset while updates.
 			instance.lastFocusedElement = document.activeElement;
+		}
 
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
