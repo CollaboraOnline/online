@@ -156,6 +156,8 @@ RequestDetails::Method RequestDetails::stringToMethod(std::string const & method
         return Method::GET;
     } else if (method == "HEAD") {
         return Method::HEAD;
+    } else if (method == "POST") {
+        return Method::POST;
     } else {
         return Method::unknown;
     }

@@ -111,7 +111,7 @@ public:
     };
 
 private:
-    STATE_ENUM(Method, unknown, GET, HEAD);
+    STATE_ENUM(Method, unknown, GET, HEAD, POST);
 
     StringVector _pathSegs;
     std::map<std::string, std::string> _params;
@@ -255,6 +255,10 @@ public:
     bool isGetOrHead(const char *path) const
     {
         return (_method == Method::GET || _method == Method::HEAD) && _uriString == path;
+    }
+    bool isPost() const
+    {
+        return _method == Method::POST;
     }
 
     bool equals(std::size_t index, const std::string_view string) const
