@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-30 12:02+0000\n"
+"PO-Revision-Date: 2025-10-04 09:02+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
@@ -5002,7 +5002,7 @@ msgstr "Activar animaciones"
 
 #: src/slideshow/SlideShowPresenter.ts:698
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Seguir presentación"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
