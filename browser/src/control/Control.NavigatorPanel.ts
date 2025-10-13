@@ -458,6 +458,7 @@ class NavigatorPanel extends SidebarBase {
 		if (!searchInput) return;
 
 		app.layoutingService.appendLayoutingTask(() => {
+			searchInput.select();
 			searchInput.focus();
 		});
 	}
