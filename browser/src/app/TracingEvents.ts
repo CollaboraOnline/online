@@ -103,4 +103,32 @@ class TraceEvents {
 		};
 		return result;
 	}
+
+	public send(
+		name: any,
+		ph: string,
+		timeRange: undefined | string,
+		args?: any,
+		id?: number | string,
+		tid?: number | string,
+	): void {
+		if (timeRange === undefined)
+			timeRange = 'ts=' + Math.round(performance.now() * 1000);
+		if (!id) id = 1;
+		if (!tid) tid = 1;
+
+		this.socket.sendMessage(
+			'TRACEEVENT name=' +
+				JSON.stringify(name) +
+				' ph=' +
+				ph +
+				' ' +
+				timeRange +
+				' id=' +
+				id +
+				' tid=' +
+				tid +
+				this.socket._stringifyArgs(args),
+		);
+	}
 }
