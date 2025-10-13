@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-24 19:15+0000\n"
+"PO-Revision-Date: 2025-10-06 19:02+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -433,11 +433,11 @@ msgstr "Rutnät"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Skriv ut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
-msgstr ""
+msgstr "Övrigt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -445,30 +445,29 @@ msgid "Show Grid"
 msgstr "Visa rutnät"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Fäst till rutnät"
+msgstr "Fäst vid rutnät"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Size to grid"
-msgstr ""
+msgstr "Anpassa rutnätets storlek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Synkronisera axlar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
-msgstr ""
+msgstr "Fäst i rutnätet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Tomma sidor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "Tvinga avbrott"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -478,11 +477,11 @@ msgstr "Alla blad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Innehåll"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Ritning"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -493,27 +492,27 @@ msgstr "Sida"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "Anpassa till sida"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
-msgstr ""
+msgstr "Kaklade sidor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Booklet"
-msgstr ""
+msgstr "Häfte"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet front"
-msgstr ""
+msgstr "Häftesframsida"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booket back"
-msgstr ""
+msgstr "Häftesbaksida"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Sidnamn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -529,11 +528,11 @@ msgstr "Tid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Dolda sidor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
-msgstr ""
+msgstr "Från utskriftsinställningar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Presentation"
@@ -546,7 +545,7 @@ msgstr "Anteckningar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Handouts"
-msgstr ""
+msgstr "Stödpapper"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NavigatorPanel.ts:178
@@ -555,56 +554,55 @@ msgstr "Översikt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Stödpapper horisontellt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Bilder"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Tabell"
+msgstr "Tabeller"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Kontroller"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Bakgrund"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Svarttryck"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Hidden text"
-msgstr ""
+msgstr "Dold text"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
-msgstr ""
+msgstr "Platshållare"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Vänstersidor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Högersidor"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
-msgstr ""
+msgstr "Broschyr"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Broschyr från höger till vänster"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Bilder och objekt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -2382,9 +2380,8 @@ msgid "Transition"
 msgstr "Övergång"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Övergång"
+msgstr "Övergångar"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -3124,21 +3121,23 @@ msgstr "Inga problem med SSL-verifiering upptäcktes"
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
-msgstr ""
+msgstr "Dokumenten är inte inneslutna: saknade funktioner eller namnrymder."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Varje dokument är säkert inneslutet"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"BPF-filtrering av potentiellt riskfyllda systemanrop (seccomp) är inte "
+"aktiverad; det är en säkerhetsrisk."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
-msgstr ""
+msgstr "säkerhetsfiltrering av systemanrop är aktiv"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3154,19 +3153,19 @@ msgstr "Hårdvaruresurserna är tillräckliga för god prestanda"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Långsam kit-jail-inställning med kopiering, kan inte bind-montera."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Snabb kit-jail-bindmontering är aktiverad"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Dålig proxyprestanda för alla nätverksförfrågningar."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "direkt nätverksanslutning"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3194,15 +3193,15 @@ msgstr "Integrator är inte redo för PostMessage-anrop"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "Använder namnrymder."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Använder inte namnrymder"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "Dokumentbehållaren startade i"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
