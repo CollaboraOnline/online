@@ -32,6 +32,7 @@ interface MapInterface extends Evented {
 
 	_docLoadedOnce: boolean;
 
+	toolbarUpTemplate: any;
 	sidebar: Sidebar;
 
 	_debug: DebugManager;
