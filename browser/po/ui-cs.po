@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
 "PO-Revision-Date: 2025-09-27 14:02+0000\n"
-"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -463,15 +463,15 @@ msgstr "Synchronizovat osy"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
-msgstr ""
+msgstr "Přichytit mřížku"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Prázdné stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "Vynutit zalomení"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -481,11 +481,11 @@ msgstr "Všechny listy"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Obsah"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Kreslení"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -496,27 +496,27 @@ msgstr "Stránka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "Přizpůsobit stránce"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
-msgstr ""
+msgstr "Stránky dlaždicově"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Booklet"
-msgstr ""
+msgstr "Knížečka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet front"
-msgstr ""
+msgstr "Přední strana brožury"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booket back"
-msgstr ""
+msgstr "Zadní strana brožury"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Název stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -532,11 +532,11 @@ msgstr "Čas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Skryté stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
-msgstr ""
+msgstr "Z nastavení tiskárny"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Presentation"
@@ -549,7 +549,7 @@ msgstr "Poznámky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Handouts"
-msgstr ""
+msgstr "Letáky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NavigatorPanel.ts:178
@@ -558,56 +558,55 @@ msgstr "Obrys"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Leták vodorovně"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Tabulka"
+msgstr "Tabulky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Ovládací prvky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Pozadí"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Vytisknout černé"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Hidden text"
-msgstr ""
+msgstr "Skrytý text"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
-msgstr ""
+msgstr "Zástupné výplně"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Levé stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Pravé stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
-msgstr ""
+msgstr "Brožura"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Brožura zprava doleva"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Obrázky a objekty"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -2387,9 +2386,8 @@ msgid "Transition"
 msgstr "Přechod"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Přechod"
+msgstr "Přechody"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -3130,20 +3128,23 @@ msgstr "Nezaznamenány žádné problémy s ověřením SSL"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Dokumenty nejsou obsaženy efektivně: chybí schopnosti nebo jmenné prostory."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Každý dokument je bezpečně obsažen"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"BFP filtrování potenciálně riskantních systémových volání (seccomp) není "
+"zapnuté – to je hazard se zabezpečením."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
-msgstr ""
+msgstr "bezpečnostní filtrování systémových volání zapnuto"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3159,19 +3160,19 @@ msgstr "Hardwarové zdroje nejsou dostatečné pro optimální běh"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Slow Kit jail nastavení s kopírováním – není možné provést bind-mount."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Fast kit jail bind připojování (mount) zapnuto"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Bídně prováděné obsluhování všech síťových požadavků přes proxy."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "přímé síťové připojení"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3199,15 +3200,15 @@ msgstr "Integrátor není připraven na volání PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "S použitím jmenných prostorů."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Bez použití jmenných prostorů"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "Kontejner dokumentu spuštěn v"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
@@ -4736,27 +4737,30 @@ msgstr "Kopírování z dokumentu zakázáno"
 
 #: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
-msgstr "Upozornění: vypršel časový limit pro kopírování/vkládání"
+msgstr ""
+"upozornění: požadavek na zkopírování/vložení se nepodařilo dokončit do "
+"časového limitu"
 
 #: src/map/Clipboard.js:329
 msgid "Failed to download clipboard, please re-copy"
-msgstr "Nepodařilo se stáhnout schránku, zkuste zkopírovat znovu"
+msgstr "Nepodařilo se stáhnout si obsah schránky – zkuste zkopírovat znovu"
 
 #: src/map/Clipboard.js:1317
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
-"Váš prohlížeč má velmi omezený přístup ke schránce, proto místo toho "
-"používejte tlačítka pro vkládání na klávesnici na obrazovce."
+"Vámi využívaný prohlížeč má velmi omezený přístup ke schránce, proto namísto "
+"toho používejte tlačítka pro vkládání, nacházející se na „klávesnici na "
+"obrazovce“."
 
 #: src/map/Clipboard.js:1373
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte na "
-"jeho dokončení, nebo ho před zahájením nového nejprve zrušte."
+"Stahování za účelem rozsáhlého kopírování/vkládání už začalo. Počkejte na "
+"jeho dokončení, nebo ho před zahájením nového ho nejprve zrušte."
 
 #: src/map/Clipboard.js:1395
 msgid "Paste from this document"
@@ -4776,7 +4780,7 @@ msgstr "Následující kombinací zobrazíte další možnosti:"
 
 #: src/map/Clipboard.js:1440
 msgid "Close popup to ignore paste special"
-msgstr "Zavřením okna vložení jinak ignorujete"
+msgstr "Zavřením okna operaci „vložení jinak“ ignorujete"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -4869,12 +4873,12 @@ msgstr "Ukončit prezentaci"
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1019
 msgid "Already presenting"
-msgstr "Již se prezentuje"
+msgstr "Už je prezentováno"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:1020
 msgid "You are already presenting this document"
-msgstr "Tento dokument se již prezentuje"
+msgstr "Tento dokument už prezentujete"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1057
@@ -4888,9 +4892,7 @@ msgstr "Režim prezentace byl pro tento dokument zakázán"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
-msgstr ""
-"Server Collabora Online server vyžaduje aktualizaci. K dispozici je verze "
-"{0}."
+msgstr "Server Collabora Online vyžaduje aktualizaci. K dispozici je verze {0}."
 
 #: src/map/handler/Map.WOPI.js:176
 msgid "Creating new file from template..."
@@ -4910,11 +4912,11 @@ msgstr "Dialogové okno Vítejte"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr "Pozastaveno... (%SECONDS%)"
+msgstr "Pozastaveno… (%SECONDS%)"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr "Aktuální snímek"
+msgstr "Stávající snímek"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
@@ -4946,7 +4948,7 @@ msgstr "Oddálit"
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr "Náhled Slide {1}"
+msgstr "Náhled snímku {1}"
 
 #: src/slideshow/PresenterConsole.js:1241
 msgid "Slide {0} of {1}"
@@ -4963,7 +4965,7 @@ msgstr "Opakovat za {0} sekund"
 #: src/slideshow/PresenterConsole.js:1358
 #: src/slideshow/SlideShowPresenter.ts:535
 msgid "Click to exit presentation..."
-msgstr "Prezentaci ukončíte kliknutím..."
+msgstr "Prezentaci ukončíte kliknutím…"
 
 #: src/slideshow/SlideShowPresenter.ts:647
 msgid "End Show"
