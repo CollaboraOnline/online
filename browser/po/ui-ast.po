@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-08-01 10:02+0000\n"
+"PO-Revision-Date: 2025-09-30 12:02+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -432,7 +432,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Imprentar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
@@ -462,7 +462,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Páxines baleres"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
@@ -476,18 +476,18 @@ msgstr "Toles fueyes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Conteníu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Dibuxu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
 #: src/control/Control.NotebookbarDraw.js:1424
 #: src/control/Control.NotebookbarWriter.js:1223
 msgid "Page"
-msgstr ""
+msgstr "Páxina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
@@ -511,7 +511,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Nome de la páxina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -527,7 +527,7 @@ msgstr "Hora"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Páxines anubríes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
@@ -557,20 +557,19 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Imáxenes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Tabla"
+msgstr "Tables"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Controles"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Fondu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
@@ -602,7 +601,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Imáxenes y oxetos"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -1794,9 +1793,8 @@ msgstr "Ficheru HTML (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:74
-#, fuzzy
 msgid "Options"
-msgstr "Opción"
+msgstr "Opciones"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:771
@@ -1840,7 +1838,7 @@ msgstr "Amosar la barra d'estáu"
 #: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:658 src/control/Control.Menubar.ts:799
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Anubrir la barra de menús"
 
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
 #: src/control/Control.Menubar.ts:654 src/control/Control.Menubar.ts:801
@@ -2364,7 +2362,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 msgid "Transitions"
-msgstr ""
+msgstr "Transiciones"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -4083,7 +4081,7 @@ msgstr "Recién"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:98
 msgid "Top: {top}"
-msgstr ""
+msgstr "Cimeru: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:103
 msgid "Left: {left}"

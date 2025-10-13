@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-04 15:01+0000\n"
+"PO-Revision-Date: 2025-09-30 12:02+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13.1-rc\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -351,7 +351,7 @@ msgstr "Connexions"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr "El servidor ha caigut. Torneu a carregar la pàgina."
+msgstr "El servidor s'ha aturat. Torneu a carregar la pàgina."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
@@ -363,11 +363,11 @@ msgstr "Confirmació"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
-msgstr "Esteu segur que voleu finalitzar aquesta sessió?"
+msgstr "Segur que voleu finalitzar aquesta sessió?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
-msgstr "Esteu segur que voleu aturar el servidor?"
+msgstr "Segur que voleu aturar el servidor?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:143
 msgid "Accessibility"
@@ -390,7 +390,6 @@ msgid "Compact layout"
 msgstr "Disposició compacta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
-#, fuzzy
 msgid "Show status bar"
 msgstr "Mostra la barra d'estat"
 
@@ -437,11 +436,11 @@ msgstr "Graella"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Imprimeix"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
-msgstr ""
+msgstr "Altres"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -460,7 +459,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Sincronitza els eixos"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
@@ -468,7 +467,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Pàgines buides"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
@@ -482,11 +481,11 @@ msgstr "Tots els fulls"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Contingut"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Dibuix"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -517,7 +516,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Nom de la pàgina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -533,7 +532,7 @@ msgstr "Hora"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Pàgines amagades"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
@@ -563,28 +562,27 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Imatges"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Taula"
+msgstr "Taules"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Controls"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Fons"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Imprimeix en negre"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Hidden text"
-msgstr ""
+msgstr "Text amagat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
@@ -592,11 +590,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Pàgines esquerres"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Pàgines dretes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
@@ -608,7 +606,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Imatges i objectes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -711,15 +709,13 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:715
 #: admin/src/integrator/Xcu.ts:390
-#, fuzzy
 msgid "Are you sure you want to reset Document settings?"
-msgstr "Segur que voleu reinicialitzar els paràmetres de la visualització?"
+msgstr "Segur que voleu reinicialitzar els paràmetres del document?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:732
 #: admin/src/integrator/Xcu.ts:405
-#, fuzzy
 msgid "Save Document settings"
-msgstr "Paràmetres dels documents"
+msgstr "Desa els paràmetres del document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1073
 msgid "Notebookbar view"
@@ -1824,9 +1820,8 @@ msgstr "Fitxer HTML (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:74
-#, fuzzy
 msgid "Options"
-msgstr "Opció"
+msgstr "Opcions"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:771
@@ -2321,7 +2316,7 @@ msgstr "Insereix una forma"
 
 #: src/control/Control.Menubar.ts:2203
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "La línia de signatura ara es pot moure o redimensionar segons calgui."
 
 #: src/control/Control.Menubar.ts:2205
 msgid "Finish electronic signing"
@@ -2393,9 +2388,8 @@ msgid "Transition"
 msgstr "Transició"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Transició"
+msgstr "Transicions"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -2611,7 +2605,7 @@ msgstr "Alineació"
 
 #: src/control/Control.NotebookbarCalc.js:746
 msgid "Merge & Center"
-msgstr ""
+msgstr "Fusiona i centra"
 
 #: src/control/Control.NotebookbarCalc.js:756
 #: src/control/Control.NotebookbarCalc.js:772
@@ -3016,7 +3010,7 @@ msgstr "Imatge de fons"
 
 #: src/control/Control.NotebookbarImpress.js:2054
 msgid "Merge & Split"
-msgstr ""
+msgstr "Fusiona i divideix"
 
 #: src/control/Control.NotebookbarImpress.js:2093
 #: src/control/Control.NotebookbarWriter.js:2636
@@ -3058,7 +3052,7 @@ msgstr "Llistes/pics"
 
 #: src/control/Control.NotebookbarWriter.js:1387
 msgid "Header & Footer"
-msgstr ""
+msgstr "Capçalera i peu"
 
 #: src/control/Control.NotebookbarWriter.js:1456
 msgid "Section"
@@ -3147,6 +3141,8 @@ msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"El filtratge BPF de les crides al sistema potencialment arriscades (seccomp) "
+"no està activat; això és un risc de seguretat."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
@@ -3176,7 +3172,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "connexió de xarxa directa"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3342,7 +3338,7 @@ msgstr "Copia el full..."
 
 #: src/control/Control.Tabs.js:395
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "Esteu segur que voleu suprimir el full «{sheet}»?"
+msgstr "Segur que voleu suprimir el full «{sheet}»?"
 
 #: src/control/Control.Tabs.js:406
 msgid "Rename sheet"
@@ -3933,7 +3929,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Totes les línies horitzontals"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Outer Border And Horizontal Lines"
@@ -3949,12 +3945,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1940
 msgid "Line color"
-msgstr ""
+msgstr "Color de la línia"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1951
-#, fuzzy
 msgid "Line style"
-msgstr "Estil de línia:"
+msgstr "Estil de la línia"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1954
 msgid "Hairline (0.05 pt)"
@@ -4119,7 +4114,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:103
 msgid "Left: {left}"
-msgstr ""
+msgstr "Esquerre: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:113
 msgid "Bottom: {bottom}"
@@ -4127,7 +4122,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:118
 msgid "Right: {right}"
-msgstr ""
+msgstr "Dret: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:142
 msgid "Custom Margins…"
@@ -4135,7 +4130,7 @@ msgstr "Marges personalitzats…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Més mides de paper..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4153,6 +4148,7 @@ msgstr "Mode d'edició"
 #: src/control/jsdialog/Widget.HTMLContent.ts:81
 msgid "Number of Pages. Click to open the Go to Page dialog box."
 msgstr ""
+"Nombre de pàgines. Feu clic per a obrir el quadre de diàleg Ves a la pàgina."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:92
 msgid "Word Counter"
@@ -4189,7 +4185,7 @@ msgstr "Nombre de pàgines"
 #: src/control/jsdialog/Widget.HTMLContent.ts:170
 #: src/control/jsdialog/Widget.HTMLContent.ts:182
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "S'han desat els vostres canvis"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:194
 msgid "Show Comments"
@@ -4201,7 +4197,7 @@ msgstr "Vores de les cel·les"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {1}"
-msgstr ""
+msgstr "Més opcions per a {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1511
 msgid "Headings and objects that you add to the document will appear here"
@@ -4229,7 +4225,7 @@ msgstr ""
 
 #: src/core/Socket.js:724
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "El servidor és incorrecte; s'està tornant a connectar..."
 
 #: src/core/Socket.js:733
 msgid "COOLWSD version:"
@@ -4335,7 +4331,7 @@ msgstr "S'està connectant…"
 
 #: src/core/Socket.js:1393
 msgid "Server is shutting down"
-msgstr ""
+msgstr "El servidor s'està aturant"
 
 #: src/core/Socket.js:1433
 msgid "Exported to storage"
@@ -4383,11 +4379,11 @@ msgstr "S'ha desconnectat el servidor."
 
 #: src/docdispatcher.ts:533
 msgid "Are you sure you want to delete this slide?"
-msgstr "Esteu segur que voleu suprimir aquesta diapositiva?"
+msgstr "Segur que voleu suprimir aquesta diapositiva?"
 
 #: src/docdispatcher.ts:536
 msgid "Are you sure you want to delete this page?"
-msgstr "Esteu segur que voleu suprimir aquesta pàgina?"
+msgstr "Segur que voleu suprimir aquesta pàgina?"
 
 #: src/docstate.ts:115
 msgid "Standard"
