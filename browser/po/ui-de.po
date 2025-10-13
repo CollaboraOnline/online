@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-22 10:54+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-10-03 08:02+0000\n"
+"Last-Translator: Andreas Schödl <social@andreasschoedl.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -440,11 +440,12 @@ msgstr "Gitter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Drucken"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
+#, fuzzy
 msgid "Other"
-msgstr ""
+msgstr "Andere"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -471,11 +472,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Seiten leeren"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "Umbrüche erzwingen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -485,11 +486,11 @@ msgstr "Alle Seiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Inhalt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Zeichnung"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -500,7 +501,7 @@ msgstr "Seite"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "In Seite einpassen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
@@ -536,11 +537,11 @@ msgstr "Uhrzeit"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Versteckte Seiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
-msgstr ""
+msgstr "Aus Drucker-Einstellungen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Presentation"
@@ -566,7 +567,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Bilder"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 #, fuzzy
@@ -579,27 +580,28 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Hintergrund"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
+#, fuzzy
 msgid "Hidden text"
-msgstr ""
+msgstr "Versteckter Text"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
-msgstr ""
+msgstr "Platzhalter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Linke Seiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Rechte Seiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
@@ -611,7 +613,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Bilder und Objekte"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
