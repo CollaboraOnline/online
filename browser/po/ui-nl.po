@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-27 14:02+0000\n"
-"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
+"PO-Revision-Date: 2025-10-09 08:07+0000\n"
+"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
 "Language: nl\n"
@@ -552,7 +552,7 @@ msgstr "Handouts"
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NavigatorPanel.ts:178
 msgid "Outline"
-msgstr "Schets"
+msgstr "Structuur"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Handout horizontal"
@@ -917,11 +917,11 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:165
 msgid "A comment is being edited"
-msgstr "Een opmerking wordt bewerkt"
+msgstr "Een notitie wordt bewerkt"
 
 #: src/canvas/sections/CommentListSection.ts:166
 msgid "Please save or discard the comment currently being edited."
-msgstr "Sla de opmerking die momenteel wordt bewerkt op of gooi deze weg."
+msgstr "Sla de notitie die momenteel wordt bewerkt op of verwijder deze."
 
 #: src/canvas/sections/CommentListSection.ts:1175
 msgid "Modify"
@@ -958,7 +958,7 @@ msgstr "Draadje oplossen"
 
 #: src/canvas/sections/CommentListSection.ts:1211
 msgid "Promote to top comment"
-msgstr "Promoveren tot belangrijkste opmerking"
+msgstr "Promoveren tot belangrijkste notitie"
 
 #: src/canvas/sections/CommentListSection.ts:1217
 msgid "Show on the side"
@@ -977,23 +977,23 @@ msgstr "Weergeven in navigator"
 #: src/layer/tile/CanvasTileLayer.js:3479
 #: src/layer/tile/CanvasTileLayer.js:3490
 msgid "Comment"
-msgstr "Opmerking"
+msgstr "Notitie"
 
 #: src/canvas/sections/CommentListSection.ts:1472
 #: src/canvas/sections/CommentListSection.ts:1485
 msgid "Comments Updated"
-msgstr "Opmerkingen bijgewerkt"
+msgstr "Notities bijgewerkt"
 
 #: src/canvas/sections/CommentListSection.ts:1473
 msgid "Another user has removed this comment."
-msgstr "Een andere gebruiker heeft deze opmerking verwijderd."
+msgstr "Een andere gebruiker heeft deze notitie verwijderd."
 
 #: src/canvas/sections/CommentListSection.ts:1486
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
-"Een andere gebruiker heeft de opmerking bijgewerkt. Wil je deze wijzigingen "
+"Een andere gebruiker heeft de notitie bijgewerkt. Wil je deze wijzigingen "
 "overschrijven?"
 
 #: src/canvas/sections/CommentListSection.ts:1487 src/core/Socket.js:1462
@@ -1011,11 +1011,11 @@ msgstr "Automatisch opgeslagen"
 
 #: src/canvas/sections/CommentSection.ts:45
 msgid "Edit comment"
-msgstr "Opmerking bewerken"
+msgstr "Notitie bewerken"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
-msgstr "Opmerking beantwoorden"
+msgstr "Reageer op notitie"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Open menu"
@@ -1676,7 +1676,7 @@ msgstr "antwoorden"
 
 #: src/control/Control.JSDialogBuilder.js:1984
 msgid "Insert Comment"
-msgstr "Opmerking invoegen"
+msgstr "Notitie toevoegen"
 
 #: src/control/Control.JSDialogBuilder.js:2278
 msgid "Open {name}"
@@ -2071,7 +2071,7 @@ msgstr "PowerPoint presentatie (.pptx)"
 
 #: src/control/Control.Menubar.ts:437 src/control/Control.Menubar.ts:610
 msgid "Save Comments"
-msgstr "Opmerkingen opslaan"
+msgstr "Notities opslaan"
 
 #: src/control/Control.Menubar.ts:446
 #: src/control/Control.NotebookbarBuilder.js:423
@@ -2889,7 +2889,7 @@ msgstr "Filteren"
 #: src/control/Control.NotebookbarImpress.js:1950
 #: src/control/Control.NotebookbarWriter.js:2237
 msgid "Comments"
-msgstr "Opmerkingen"
+msgstr "Notities"
 
 #: src/control/Control.NotebookbarCalc.js:2606
 msgid "Format Cells"
@@ -2947,7 +2947,7 @@ msgstr "Ontwerp"
 
 #: src/control/Control.NotebookbarImpress.js:103
 msgid "Slide Show"
-msgstr "Diavoorstelling"
+msgstr "Presentatie"
 
 #: src/control/Control.NotebookbarImpress.js:142
 msgid "Master"
@@ -2967,7 +2967,7 @@ msgstr "Presenteer in venster"
 
 #: src/control/Control.NotebookbarImpress.js:496
 msgid "Follow me Presentation"
-msgstr "Mijn presentatie volgen"
+msgstr "Volg mij Presentatie"
 
 #: src/control/Control.NotebookbarImpress.js:622
 msgid "Slide Views"
@@ -2975,7 +2975,7 @@ msgstr "Diaweergaven"
 
 #: src/control/Control.NotebookbarImpress.js:661
 msgid "Snap to Grid"
-msgstr "Op raster plaatsen"
+msgstr "Uitlijnen op raster"
 
 #: src/control/Control.NotebookbarImpress.js:785
 #: src/control/Control.NotebookbarImpress.js:1801
@@ -3120,11 +3120,11 @@ msgstr "Opgeslagen"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr "Scroll de opmerkingen naar boven"
+msgstr "Annotaties omhoog scrollen"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr "Scroll de opmerkingen naar beneden"
+msgstr "Annotaties omlaag scrollen"
 
 #: src/control/Control.ServerAuditDialog.ts:58
 msgid "Your WOPI server is not secure: SSL verification failed"
@@ -4095,11 +4095,11 @@ msgstr "Watermerk"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2277
 msgid "Insert comment"
-msgstr "Opmerking invoegen"
+msgstr "Notitie toevoegen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2281
 msgid "Comments list"
-msgstr "Opmerkinglijst"
+msgstr "Notitie overzicht"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4202,7 +4202,7 @@ msgstr "Uw aanpassingen zijn opgeslagen"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:194
 msgid "Show Comments"
-msgstr "Opmerkingen tonen"
+msgstr "Notities weergeven"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -4744,7 +4744,7 @@ msgstr "Benoemd bereik"
 
 #: src/layer/tile/CanvasTileLayer.js:3507
 msgid "No Comments"
-msgstr "Geen opmerkingen"
+msgstr "Geen notities"
 
 #: src/main.js:130
 msgid "Warning! The browser you are using is not supported."
@@ -4851,7 +4851,7 @@ msgstr "Afdrukdialoog"
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1004
 msgid "Empty Slide Show"
-msgstr "Lege diavoorstelling"
+msgstr "Lege diapresentatie"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1032
@@ -4866,7 +4866,7 @@ msgid ""
 "sharing."
 msgstr ""
 "Presentatie is geblokkeerd. Sta pop-ups toe in uw browser. Hiermee kunnen "
-"diavoorstellingen in afzonderlijke vensters worden weergegeven, zodat het "
+"diapresentaties in afzonderlijke vensters worden weergegeven, zodat het "
 "scherm gemakkelijk kan worden gedeeld."
 
 #: src/map/handler/Map.SlideShow.js:172
@@ -4992,7 +4992,7 @@ msgstr "Klik om presentatie te verlaten..."
 
 #: src/slideshow/SlideShowPresenter.ts:647
 msgid "End Show"
-msgstr "Voorstelling beëindigen"
+msgstr "Presentatie beëindigen"
 
 #: src/slideshow/SlideShowPresenter.ts:675
 #: src/slideshow/SlideShowPresenter.ts:687
