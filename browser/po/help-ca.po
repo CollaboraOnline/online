@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-06-28 13:06+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2025-10-02 01:02+0000\n"
+"Last-Translator: Ecron <ecron_89@hotmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
 "Language: ca\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -28,7 +28,7 @@ msgstr "Desfés"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Z</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
@@ -1200,7 +1200,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↓</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Ves al full següent."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
 msgid ""
@@ -1212,7 +1212,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Ves al full anterior."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
 msgid ""
@@ -1431,18 +1431,17 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
-msgstr ""
+msgstr "Insereix"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-38
 msgid "Insert date"
-msgstr ""
+msgstr "Insereix una data"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> or <kbd>,</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Fletxa amunt</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> o <kbd>,</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:276-38
@@ -1712,6 +1711,12 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">La barra de menú:</span> El menú principal s'ubica a la "
+"part superior i inclou moltes opcions, ordres per a imprimir, editar, "
+"visualitzar i altres ordres avançades. Podeu amagar la barra de menú fent "
+"clic a la icona <span class=\"w2ui-icon fold icon-size\"></span> de l'extrem "
+"dret. Feu clic a la icona <span class=\"w2ui-icon unfold icon-size\"></span> "
+"per a mostrar el menú."
 
 #: html/cool-help.html%2Bdiv.div.div.p:380-5
 msgid ""
@@ -1947,9 +1952,8 @@ msgstr ""
 "<span class=\"ui\">Salta a l'estat</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:430-29
-#, fuzzy
 msgid "document repair"
-msgstr "Reparació del document"
+msgstr "reparació del document"
 
 #: html/cool-help.html%2Bdiv.div.div.p:431-5
 msgid ""
@@ -2180,6 +2184,8 @@ msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
+"Feu clic a la icona de submenú (<span class=\"cool-annotation-menu icon-"
+"size\"></span>) per a respondre, moure o eliminar els comentaris."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:481-5
 msgid "Spellchecking"
@@ -2960,7 +2966,6 @@ msgstr ""
 "mostra un diàleg."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:715-31
-#, fuzzy
 msgid "Special Characters"
 msgstr "Caràcters especials"
 
@@ -2985,9 +2990,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:721-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
-"Per què no puc suprimir text? Tot el que obtinc és una ratlla per sobre les "
-"paraules."
+msgstr "Per què no puc suprimir el text? Per què es marca com a ratllat?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:722-5
 msgid ""
@@ -3099,7 +3102,7 @@ msgstr "Ajusteu els marges en el diàleg."
 #: html/cool-help.html%2Bdiv.div.div.div.h4:747-5
 msgid "How do I change the page orientation to landscape inside my document"
 msgstr ""
-"Com puc canviar en el document l'orientació de la pàgina i posar-lo apaïsat?"
+"Com puc canviar en el document l'orientació de la pàgina i posar-lo apaïsat"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:749-11
 msgid ""
@@ -3254,9 +3257,8 @@ msgstr ""
 "text</span>, on podeu indica el format precís de les dades CSV."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:795-31
-#, fuzzy
 msgid "import"
-msgstr "import"
+msgstr "importa"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:796-11
 msgid ""
@@ -3350,6 +3352,9 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
+"Trieu <span class=\"ui\">Presentació</span> → <span class=\"ui\">Presentació "
+"a pantalla completa</span> o feu clic a la icona de l'extrem esquerre a la "
+"part inferior del panell:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:831-5
 msgid "How can I change the line, area and position of a shape in my slides?"
