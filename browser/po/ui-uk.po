@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-23 18:37+0000\n"
+"PO-Revision-Date: 2025-09-27 14:02+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
@@ -434,11 +434,11 @@ msgstr "Сітка"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Друк"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
-msgstr ""
+msgstr "Інше"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -446,30 +446,29 @@ msgid "Show Grid"
 msgstr "Показати сітку"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Прив’язка до сітки"
+msgstr "Прив’язати до сітки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Size to grid"
-msgstr ""
+msgstr "Розмір до сітки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Синхронізувати осі"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
-msgstr ""
+msgstr "Сітка прив'язки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Порожні сторінки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "Примусові перерви"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -479,11 +478,11 @@ msgstr "Усі аркуші"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Зміст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Малювання"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -494,27 +493,27 @@ msgstr "Сторінка"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "Підігнати до розміру сторінки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
-msgstr ""
+msgstr "Сторінки плитки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Booklet"
-msgstr ""
+msgstr "Буклет"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet front"
-msgstr ""
+msgstr "Лицьова сторона брошури"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booket back"
-msgstr ""
+msgstr "Заброньовано назад"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Назва сторінки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -530,11 +529,11 @@ msgstr "Час"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Приховані сторінки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
-msgstr ""
+msgstr "З налаштувань принтера"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Presentation"
@@ -547,7 +546,7 @@ msgstr "Примітки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Handouts"
-msgstr ""
+msgstr "Роздаткові матеріали"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NavigatorPanel.ts:178
@@ -556,56 +555,55 @@ msgstr "Контур"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Роздатковий матеріал горизонтальний"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Зображення"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Таблиця"
+msgstr "Таблицю"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Елементи керування"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Фон"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Друкувати чорним"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Hidden text"
-msgstr ""
+msgstr "Прихований текст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
-msgstr ""
+msgstr "Заповнювачі"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Ліві сторінки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Праві сторінки"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
-msgstr ""
+msgstr "Брошура"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Брошура справа наліво"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Зображення та об'єкти"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -2380,9 +2378,8 @@ msgid "Transition"
 msgstr "Перехід"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Перехід"
+msgstr "Переходи"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -3123,20 +3120,23 @@ msgstr "Проблем із перевіркою SSL не виявлено"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Документи не містяться ефективно: відсутні можливості або простори імен."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Кожен документ надійно зберігається"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Фільтрація BPF потенційно ризикованих системних викликів (seccomp) не "
+"ввімкнена; це загроза безпеці."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
-msgstr ""
+msgstr "увімкнено фільтрацію безпеки системних викликів"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3153,18 +3153,20 @@ msgstr "Апаратних ресурсів достатньо для оптим
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
 msgstr ""
+"Повільне налаштування джейл-системи Kit з копіюванням, неможливо прив'язати "
+"та змонтувати."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Увімкнено швидке монтування прив'язки комплекту до джейла"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Погано виконується проксіювання всіх мережевих запитів."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "пряме мережеве підключення"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3192,15 +3194,15 @@ msgstr "Інтегратор не готовий до викликів PostMessa
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "Використання просторів імен."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Не використання просторів імен"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "Контейнер документів запущено в"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
