@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-23 07:30+0000\n"
+"PO-Revision-Date: 2025-09-27 14:02+0000\n"
 "Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -435,11 +435,11 @@ msgstr "Raster"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Afdrukken"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
-msgstr ""
+msgstr "Overig"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -447,30 +447,29 @@ msgid "Show Grid"
 msgstr "Raster weergeven"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
-#, fuzzy
 msgid "Snap to grid"
 msgstr "Op raster plaatsen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Size to grid"
-msgstr ""
+msgstr "Grootte op raster"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Assen synchroniseren"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
-msgstr ""
+msgstr "Op raster"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Lege pagina's"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "Einden forceren"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -480,11 +479,11 @@ msgstr "Alle bladen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Inhoud"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Tekening"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -495,27 +494,27 @@ msgstr "Pagina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "Passend op pagina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
-msgstr ""
+msgstr "Titelpagina's"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Booklet"
-msgstr ""
+msgstr "Boekje"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet front"
-msgstr ""
+msgstr "Boekje voorzijde"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booket back"
-msgstr ""
+msgstr "Boekje achterzijde"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Paginanaam"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -531,11 +530,11 @@ msgstr "Tijd"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Verborgen pagina's"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
-msgstr ""
+msgstr "Van printerinstellingen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Presentation"
@@ -548,7 +547,7 @@ msgstr "Notities"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Handouts"
-msgstr ""
+msgstr "Handouts"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NavigatorPanel.ts:178
@@ -557,56 +556,55 @@ msgstr "Schets"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Handout horizontaal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Afbeeldingen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Tabel"
+msgstr "Tabellen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Controlepunten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Achtergrond"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Zwart afdrukken"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Hidden text"
-msgstr ""
+msgstr "Verborgen tekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
-msgstr ""
+msgstr "Plaatshouders"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Linkerpagina's"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Rechterpagina's"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
-msgstr ""
+msgstr "Brochure"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Brochure rechts naar links"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Afbeeldingen en objecten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -2398,9 +2396,8 @@ msgid "Transition"
 msgstr "Overgang"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Overgang"
+msgstr "Overgangen"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -3141,20 +3138,24 @@ msgstr "Geen problemen ontdekt met SSL-verificatie"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Documenten worden niet effectief ingeperkt: ontbrekende mogelijkheden of "
+"naamruimten."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Elk document is veilig opgenomen"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"BPF-filtering van potentieel risicovolle systeemaanroepen (seccomp) is niet "
+"ingeschakeld; een veiligheidsrisico."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
-msgstr ""
+msgstr "systeemaanroepbeveiliging filteren ingeschakeld"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3170,19 +3171,19 @@ msgstr "Hardwarebronnen zijn voldoende voor optimale prestaties"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Slow kit jail instelling met kopiëren, kan niet binden-hechten."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Fast kit jail binden-hechten ingeschakeld"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Slecht presterende proxy van alle netwerkverzoeken."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "directe netwerkverbinding"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3210,15 +3211,15 @@ msgstr "Integrator is niet klaar voor PostMessage-oproepen"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "Naamruimten gebruikend."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Geen naamruimten gebruikend"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "Documentcontainer gestart in"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
