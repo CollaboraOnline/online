@@ -737,18 +737,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		this.hideSVG();
 
-		(window as any).IgnorePanning = false;
-
 		if (this.containerObject.isDraggingSomething()) {
-			if ((window as any).mode.isTablet() || (window as any).mode.isMobile())
-				this.sendTransformCommand(point);
-			else if ((window as any).mode.isDesktop() && (this.sectionProperties.closestX || this.sectionProperties.closestY)) {
-				// We need to snap to the guide-lines. So we send a positioning command after the mouse up event (desktop case).
-				// We don't need to do this on mobile because we always send the positioning commands there. No mouse events for mobile.
-				setTimeout(() => {
-					this.sendTransformCommand(point); // Send to back of the process queue so it performs after buttonup event is sent.
-				}, 1);
-			}
+			this.sendTransformCommand(point);
 		}
 	}
 
@@ -927,8 +917,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 
 		if (this.containerObject.isDraggingSomething() && canDrag) {
-			(window as any).IgnorePanning = true;
-
 			if (this.sectionProperties.svg) {
 				this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
 				this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
@@ -939,8 +927,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 			this.showSVG();
 		}
-		else
-			(window as any).IgnorePanning = false;
 	}
 
 	getViewBox(svg: any): number[] {

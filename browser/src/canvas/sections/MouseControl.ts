@@ -155,11 +155,11 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		console.error('onmouseenter');
+		console.log('onmouseenter');
 	}
 
 	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		console.error('onmouseleave');
+		console.log('onmouseleave');
 	}
 
 	onMouseWheel(
@@ -167,7 +167,7 @@ class MouseControl extends CanvasSectionObject {
 		delta: Array<number>,
 		e: WheelEvent,
 	): void {
-		console.error('onmousewheel');
+		console.log('onmousewheel');
 	}
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
