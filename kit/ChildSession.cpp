@@ -56,6 +56,10 @@
 #include "DocumentViewController.h"
 #endif
 
+#if WASMAPP
+#include "wasmapp.hpp"
+#endif
+
 #include <climits>
 #include <fstream>
 #include <memory>
@@ -727,6 +731,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 bool result = unoCommand(unoSave);
                 if (result)
                 {
+#if WASMAPP
+                    saveToServer();
+#endif
                     LogUiCommands uiLog(*this);
                     uiLog.logSaveLoad("save", Poco::URI(getJailedFilePath()).getPath(), timeStart);
                 }
