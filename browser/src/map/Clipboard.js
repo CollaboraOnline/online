@@ -93,7 +93,10 @@ window.L.Clipboard = window.L.Class.extend({
 			document.onpaste = function(ev) {
 				if (ev.srcElement['id'] === 'pre-space' || ev.srcElement['id'] === 'clipboard-area') {
 					ev.preventDefault();
-					window.postMobileMessage('PASTE');
+					if (ev.clipboardData.types.length == 1 && ev.clipboardData.types[0] === 'text/plain')
+						window.postMobileMessage('PASTEUNFORMATTED');
+					else
+						window.postMobileMessage('PASTE');
 				}
 			};
 		} else {
