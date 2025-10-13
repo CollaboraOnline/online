@@ -83,9 +83,8 @@ class TraceEvents {
 		);
 
 		const sockObj = this.socket;
-		result.finish = function () {
+		result.finish = function (this: CompleteTraceEvent) {
 			sockObj.traceEvents.decrementAsyncPseudoThread();
-			// 'this' is of type CompleteTraceEvent at call-time.
 			if (this.active) {
 				sockObj.sendTraceEvent(
 					name,
@@ -98,7 +97,7 @@ class TraceEvents {
 				this.active = false;
 			}
 		};
-		result.abort = function () {
+		result.abort = function (this: CompleteTraceEvent) {
 			sockObj.traceEvents.decrementAsyncPseudoThread();
 			this.active = false;
 		};
