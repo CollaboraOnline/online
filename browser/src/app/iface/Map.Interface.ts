@@ -109,6 +109,7 @@ interface MapInterface extends Evented {
 
 	addControl(control: any): void;
 
+	toolbarUpTemplate: any;
 	menubar: Menubar;
 	userList: UserList;
 	sidebar: Sidebar;
