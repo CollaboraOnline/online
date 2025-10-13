@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
+#include <regex>
 #include <thread>
 
 #include <Windows.h>
@@ -48,6 +49,7 @@ enum class ClipboardOp
     CUT,
     COPY,
     PASTE,
+    PASTEUNFORMATTED,
     READ
 };
 
@@ -538,6 +540,29 @@ static std::wstring get_clipboard_format_name(UINT format)
     return L"";
 }
 
+static std::string get_html_clipboard_fragment(const char* data)
+{
+    std::string htmlData(data);
+
+    std::regex startRegex("(\r|\n)StartFragment:(\\d+)(\r|\n)");
+    std::regex endRegex("(\r|\n)EndFragment:(\\d+)(\r|\n)");
+
+    std::smatch match;
+    size_t startPos = std::string::npos;
+    size_t endPos = std::string::npos;
+
+    if (std::regex_search(htmlData, match, startRegex))
+        startPos = std::stoul(match[2]);
+
+    if (std::regex_search(htmlData, match, endRegex))
+        endPos = std::stoul(match[2]);
+
+    if (startPos == std::string::npos || endPos == std::string::npos || startPos >= endPos || endPos > htmlData.size())
+        return "";
+
+    return htmlData.substr(startPos, endPos - startPos);
+}
+
 static void do_paste_or_read(ClipboardOp op, WindowData& data)
 {
     if (data.lastAnyonesClipboardModification > data.lastOwnClipboardModification)
@@ -593,7 +618,8 @@ static void do_paste_or_read(ClipboardOp op, WindowData& data)
                          // but why not be future-safe.
                          name == L"image/svg+xml")
                     mimeType = Util::wide_string_to_string(name);
-                else if (name == L"HTML (HyperText Markup Language)")
+                else if (name == L"HTML (HyperText Markup Language)" ||
+                         name == L"HTML Format")
                     mimeType = "text/html";
 
                 if (mimeType != "" && doneMimeTypes.count(mimeType) == 0)
@@ -607,6 +633,14 @@ static void do_paste_or_read(ClipboardOp op, WindowData& data)
                     {
                         GlobalUnlock(data);
                         continue;
+                    }
+
+                    std::string fragment;
+                    if (name == L"HTML Format")
+                    {
+                        fragment = get_html_clipboard_fragment(source).c_str();
+                        source = fragment.c_str();
+                        size = strlen(source);
                     }
 
                     doneMimeTypes.insert(mimeType);
@@ -638,8 +672,11 @@ static void do_paste_or_read(ClipboardOp op, WindowData& data)
 
     if (op == ClipboardOp::PASTE)
     {
-        // Tell core to paste from its internal clipboard into the document
         DocumentData::get(data.appDocId).loKitDocument->postUnoCommand(".uno:Paste");
+    }
+    else if (op == ClipboardOp::PASTEUNFORMATTED)
+    {
+        DocumentData::get(data.appDocId).loKitDocument->postUnoCommand(".uno:PasteUnformatted");
     }
 }
 
@@ -1057,6 +1094,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s == L"PASTE")
         {
             do_paste_or_read(ClipboardOp::PASTE, data);
+        }
+        else if (s == L"PASTEUNFORMATTED")
+        {
+            do_paste_or_read(ClipboardOp::PASTEUNFORMATTED, data);
         }
         else if (s == L"CLIPBOARDREAD")
         {
