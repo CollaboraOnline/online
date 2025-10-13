@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-10-03 08:02+0000\n"
-"Last-Translator: Andreas Schödl <social@andreasschoedl.de>\n"
+"PO-Revision-Date: 2025-10-04 09:02+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -453,18 +453,17 @@ msgid "Show Grid"
 msgstr "Raster anzeigen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
-#, fuzzy
 msgid "Snap to grid"
 msgstr "Am Raster einrasten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Size to grid"
-msgstr ""
+msgstr "Größe an Raster anpassen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Achsen synchronisieren"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
@@ -505,7 +504,7 @@ msgstr "In Seite einpassen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
-msgstr ""
+msgstr "Kachelseiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Booklet"
@@ -521,7 +520,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Seitenname"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -570,13 +569,12 @@ msgid "Images"
 msgstr "Bilder"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Tabelle"
+msgstr "Tabellen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Steuerelemente"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
@@ -584,10 +582,9 @@ msgstr "Hintergrund"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Schwarz drucken"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
-#, fuzzy
 msgid "Hidden text"
 msgstr "Versteckter Text"
 
@@ -605,11 +602,11 @@ msgstr "Rechte Seiten"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
-msgstr ""
+msgstr "Broschüre"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Broschüre von rechts nach links"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
@@ -2416,9 +2413,8 @@ msgid "Transition"
 msgstr "Übergang"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Übergang"
+msgstr "Übergänge"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -3159,20 +3155,24 @@ msgstr "Keine Probleme bei der SSL Verifizierung festgestellt"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Dokumente sind nicht wirklich enthalten: fehlende Funktionen oder "
+"Namensräume."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Jedes Dokument ist sicher enthalten"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Die BPF-Filterung potenziell riskanter Systemaufrufe (seccomp) ist nicht "
+"aktiviert; dies stellt ein Sicherheitsrisiko dar."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
-msgstr ""
+msgstr "Sicherheitsfilterung für Systemaufrufe aktiviert"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3196,11 +3196,11 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Schlechte Proxy-Leistung bei allen Netzwerkanfragen."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "direkte Netzwerkverbindung"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3216,27 +3216,28 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:140
 msgid "The IsAdminUser user property is set by integration"
-msgstr "Die IsAdminUser Benutzer Eigenschaft ist durch die Integration gesetzt"
+msgstr ""
+"Die IsAdminUser-Benutzereigenschaft ist durch die Integration festgelegt"
 
 #: src/control/Control.ServerAuditDialog.ts:148
 msgid "PostMessage API is initialized"
-msgstr "PostMessage API ist initialisiert"
+msgstr "PostMessage-API ist initialisiert"
 
 #: src/control/Control.ServerAuditDialog.ts:153
 msgid "Integrator is not ready for PostMessage calls"
-msgstr "Integrator ist nicht bereit für PostMessage Aufrufe"
+msgstr "Integrator ist nicht bereit für PostMessage-Aufrufe"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "Namensräume werden verwendet."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Namensräume werden nicht verwendet"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "Dokumentencontainer gestartet in"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
