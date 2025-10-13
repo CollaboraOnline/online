@@ -305,7 +305,7 @@ class NavigatorPanel extends SidebarBase {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
 				// TODO: handle properly keyboard navigation in navigator: ESC to exit, close button
-				app.map.focus();
+				this.focusSearch();
 			}.bind(this),
 		);
 	}
