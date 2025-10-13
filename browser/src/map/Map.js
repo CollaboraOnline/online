@@ -865,6 +865,9 @@ window.L.Map = window.L.Evented.extend({
 
 		this._handlers.push(handler);
 
+		if (name === 'scrollHandler')
+			this.scrollHandler = handler; // Reference for external use.
+
 		if (this.options[name]) {
 			handler.enable();
 		}
