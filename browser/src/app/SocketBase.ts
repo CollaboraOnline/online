@@ -77,7 +77,6 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
-	// we need typing of this function in TraceEvents.ts
 	public sendTraceEvent(
 		name: any,
 		ph: string,
@@ -86,7 +85,7 @@ class SocketBase {
 		id?: number | string,
 		tid?: number | string,
 	): void {
-		console.assert(false, 'This should not be called!');
+		this.traceEvents.send(name, ph, timeRange, args, id, tid);
 	}
 
 	get traceEventRecordingToggle(): boolean {
@@ -102,5 +101,9 @@ class SocketBase {
 		args?: any,
 	): CompleteTraceEvent | null {
 		return this.traceEvents.createAsyncTraceEvent(name, args);
+	}
+
+	public _stringifyArgs(args: any): string {
+		return args == null ? '' : ' args=' + JSON.stringify(args);
 	}
 }

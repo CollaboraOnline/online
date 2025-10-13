@@ -152,18 +152,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		}
 	}
 
-	sendTraceEvent(name, ph, timeRange, args, id, tid) {
-		if (timeRange === undefined)
-			timeRange = 'ts=' + Math.round(performance.now() * 1000);
-		if (!id)
-			id = 1;
-		if (!tid)
-			tid = 1;
-		this.sendMessage('TRACEEVENT name=' + JSON.stringify(name) + ' ph=' + ph +
-				 ' ' + timeRange + ' id=' + id + ' tid=' + tid +
-				 this._stringifyArgs(args));
-	}
-
 	_doSend(msg) {
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string')
@@ -1924,10 +1912,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 			command.zoom = Math.round(defaultZoom - Math.log(scale) / Math.log(1.2));
 		}
 		return command;
-	}
-
-	_stringifyArgs(args) {
-		return (args == null ? '' : (' args=' + JSON.stringify(args)));
 	}
 
 	createCompleteTraceEvent(name, args) {
