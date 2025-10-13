@@ -274,7 +274,7 @@ namespace FileUtil
         /// nanosecond precision, if/when the filesystem supports it.
         timespec modifiedTime() const
         {
-#if defined(IOS) || defined(MACOS)
+#if defined(__APPLE__)
             return _sb.st_mtimespec;
 #elif defined(_WIN32)
             timespec result{ _sb.st_mtime, 0 };
