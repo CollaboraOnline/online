@@ -115,6 +115,8 @@ class EditWidget {
 				this.builder,
 			);
 		}
+		if (e.key == 'Enter' && this.data.activateDefault)
+			this.builder.executeDefault();
 	}
 
 	protected onClick(e: MouseEvent) {
