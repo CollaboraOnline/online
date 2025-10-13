@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-26 14:55+0200\n"
-"PO-Revision-Date: 2025-09-22 12:42+0000\n"
+"PO-Revision-Date: 2025-09-27 14:02+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
@@ -439,11 +439,11 @@ msgstr "Siatka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Print"
-msgstr ""
+msgstr "Drukuj"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Other"
-msgstr ""
+msgstr "Inne"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.NotebookbarImpress.js:654
@@ -451,30 +451,29 @@ msgid "Show Grid"
 msgstr "Pokaż siatkę"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
-#, fuzzy
 msgid "Snap to grid"
 msgstr "Przyciągaj do siatki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Size to grid"
-msgstr ""
+msgstr "Rozmiar do siatki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Synchronizuj osie"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Snap grid"
-msgstr ""
+msgstr "Siatka przyciągania"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Empty Pages"
-msgstr ""
+msgstr "Puste strony"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Force Breaks"
-msgstr ""
+msgstr "Wymuś podział"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #: src/control/Control.Menubar.ts:769 src/control/Control.TopToolbar.js:110
@@ -484,11 +483,11 @@ msgstr "Wszystkie arkusze"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:172
 msgid "Content"
-msgstr ""
+msgstr "Treść"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Drawing"
-msgstr ""
+msgstr "Rysunek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -499,27 +498,27 @@ msgstr "Strona"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Fit to page"
-msgstr ""
+msgstr "Dopasuj do strony"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Tile pages"
-msgstr ""
+msgstr "Strony sąsiadująco"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Booklet"
-msgstr ""
+msgstr "Broszurka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet front"
-msgstr ""
+msgstr "Przód broszurki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booket back"
-msgstr ""
+msgstr "Tył broszurki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Page name"
-msgstr ""
+msgstr "Nazwa strony"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 #: src/control/Control.NotebookbarCalc.js:775
@@ -535,11 +534,11 @@ msgstr "Godzina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Hidden pages"
-msgstr ""
+msgstr "Strony ukryte"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "From printer setup"
-msgstr ""
+msgstr "Z konfiguracji drukarki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Presentation"
@@ -552,7 +551,7 @@ msgstr "Notatki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Handouts"
-msgstr ""
+msgstr "Ulotki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NavigatorPanel.ts:178
@@ -561,56 +560,55 @@ msgstr "Konspekt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Ulotka pozioma"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Images"
-msgstr ""
+msgstr "Obrazy"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
-#, fuzzy
 msgid "Tables"
-msgstr "Tabela"
+msgstr "Tabele"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Controls"
-msgstr ""
+msgstr "Formanty"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Background"
-msgstr ""
+msgstr "Tło"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Print Black"
-msgstr ""
+msgstr "Drukuj na czarno"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Hidden text"
-msgstr ""
+msgstr "Tekst ukryty"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Placeholders"
-msgstr ""
+msgstr "Symbole zastępcze"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Left pages"
-msgstr ""
+msgstr "Strony lewe"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Right pages"
-msgstr ""
+msgstr "Strony prawe"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Brochure"
-msgstr ""
+msgstr "Broszura"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Broszura od prawej do lewej"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Images and Objects"
-msgstr ""
+msgstr "Obrazy i obiekty"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:296
 msgid "Invalid JSON file"
@@ -2384,9 +2382,8 @@ msgid "Transition"
 msgstr "Przejście"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
-#, fuzzy
 msgid "Transitions"
-msgstr "Przejście"
+msgstr "Przejścia"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:63
 msgid "Variant"
@@ -3127,20 +3124,24 @@ msgstr "Nie wykryto żadnych problemów z weryfikacją SSL"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Dokumenty nie są skutecznie chronione: brakuje możliwości lub przestrzeni "
+"nazw."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Każdy dokument jest bezpiecznie przechowywany"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Filtrowanie BPF potencjalnie ryzykownych wywołań systemowych (secomp) nie "
+"jest włączone. Stanowi to zagrożenie bezpieczeństwa."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "system call security filtering enabled"
-msgstr ""
+msgstr "włączone filtrowanie zabezpieczeń wywołań systemowych"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3157,18 +3158,20 @@ msgstr "Zasoby sprzętowe są wystarczające do zapewnienia optymalnej wydajnoś
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
 msgstr ""
+"Powolna konfiguracja izolacji zestawu z kopiowaniem, nie można wykonać bind-"
+"mount."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Włączono szybkie montowanie izolacji zestawu"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Słabo działające proxy dla wszystkich żądań sieciowych."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "direct network connection"
-msgstr ""
+msgstr "bezpośrednie połączenie sieciowe"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3196,15 +3199,15 @@ msgstr "Integrator nie jest gotowy do wywołań PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces."
-msgstr ""
+msgstr "Korzystanie z przestrzeni nazw."
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Nieużywanie przestrzeni nazw"
 
 #: src/control/Control.ServerAuditDialog.ts:227
 msgid "Document container started in"
-msgstr ""
+msgstr "Kontener dokumentów został uruchomiony w"
 
 #: src/control/Control.ServerAuditDialog.ts:293
 msgid "Status"
