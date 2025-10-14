@@ -70,33 +70,20 @@ class TraceEvents {
 		result.active = true;
 		result.args = args;
 
-		this.socket.sendTraceEvent(
-			name,
-			'S',
-			undefined,
-			args,
-			result.id,
-			result.tid,
-		);
+		this.send(name, 'S', undefined, args, result.id, result.tid);
 
-		const sockObj = this.socket;
-		result.finish = function (this: CompleteTraceEvent) {
-			sockObj.traceEvents.decrementAsyncPseudoThread();
-			if (this.active) {
-				sockObj.sendTraceEvent(
-					name,
-					'F',
-					undefined,
-					this.args,
-					this.id,
-					this.tid,
-				);
-				this.active = false;
+		result.finish = () => {
+			// this refers to the current TraceEvents object.
+			this.decrementAsyncPseudoThread();
+			if (result.active) {
+				this.send(name, 'F', undefined, result.args, result.id, result.tid);
+				result.active = false;
 			}
 		};
-		result.abort = function (this: CompleteTraceEvent) {
-			sockObj.traceEvents.decrementAsyncPseudoThread();
-			this.active = false;
+		result.abort = () => {
+			// this refers to the current TraceEvents object.
+			this.decrementAsyncPseudoThread();
+			result.active = false;
 		};
 		return result;
 	}
