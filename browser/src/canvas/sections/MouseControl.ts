@@ -20,7 +20,6 @@ class MouseControl extends CanvasSectionObject {
 	zIndex: number = app.CSections.MouseControl.zIndex;
 	drawingOrder: number = app.CSections.MouseControl.drawingOrder;
 	processingOrder: number = app.CSections.MouseControl.processingOrder;
-	borderColor: string = 'green';
 	boundToSection: string = app.CSections.Tiles.name;
 
 	mouseMoveTimer: any | null = null;
@@ -171,6 +170,8 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
+		app.map.fire('closepopups');
+		
 		this.refreshPosition(point);
 		this.clickCount++;
 

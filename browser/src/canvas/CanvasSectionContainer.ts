@@ -1803,6 +1803,10 @@ class CanvasSectionContainer {
 		//this.drawSectionBorders();
 	}
 
+	public isMouseInside(): boolean {
+		return this.mouseIsInside;
+	}
+
 	public doesSectionExist (name: string): boolean {
 		if (name && typeof name === 'string') {
 			return this.sectionsByName.has(name);
