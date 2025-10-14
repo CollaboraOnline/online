@@ -301,6 +301,9 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	reloadShortcutsBar: function() {
+		if (!document.querySelector('.notebookbar-shortcuts-bar'))
+			return;
+
 		app.layoutingService.appendLayoutingTask(() => {
 			$('.notebookbar-shortcuts-bar').remove();
 			this.createShortcutsBar();
