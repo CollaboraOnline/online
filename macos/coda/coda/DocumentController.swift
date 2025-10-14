@@ -22,9 +22,13 @@ final class DocumentController: NSDocumentController {
     private weak var liveOpenPanel: NSOpenPanel?
 
     /**
-     * Check if the open panel is presented.
+     * One place to decide if we should quit the app on losing focus.
      */
-    var isPresentingOpenPanel: Bool { liveOpenPanel != nil }
+    func hasDocsOrWindows() -> Bool {
+        let hasDocs = !documents.isEmpty
+        let hasVisibleWindows = NSApp.windows.contains { $0.isVisible }
+        return hasDocs || hasVisibleWindows
+    }
 
     /**
      * Remember the live/current Open panel instance.
@@ -37,18 +41,8 @@ final class DocumentController: NSDocumentController {
 
         super.beginOpenPanel(openPanel, forTypes: inTypes) { [weak self] result in
             guard let self = self else { return }
-
-            // If user cancels and there are no docs, terminate the app
-            if result != NSApplication.ModalResponse.OK.rawValue {
-                self.liveOpenPanel = nil
-                let noDocs = self.documents.isEmpty
-                let noWindows = !NSApp.windows.contains { $0.isVisible }
-                if noDocs && noWindows {
-                    NSApp.terminate(nil)
-                    return
-                }
-            }
-
+            // Panel is going away regardless of result.
+            self.liveOpenPanel = nil
             completionHandler(result)
         }
     }
@@ -61,16 +55,29 @@ final class DocumentController: NSDocumentController {
     }
 
     /**
+     * If the Open panel is live, close it.
+     */
+    private func closeLiveOpenPanel() {
+        liveOpenPanel?.cancel(nil)
+        liveOpenPanel = nil
+    }
+
+    /**
+     * Intercept File -> New (and also the Open panel's New Document button)
+     */
+    override func newDocument(_ sender: Any?) {
+        closeLiveOpenPanel()
+
+        // TODO open the dialog for the new document here
+    }
+
+    /**
      * Make sure to cancel the Open panel when a document has been open by different means, eg. via File -> Recent files.
      */
     override func openDocument(withContentsOf url: URL,
                                display displayDocument: Bool,
                                completionHandler: @escaping (NSDocument?, Bool, Error?) -> Void) {
-        // If a panel is up, dismiss it
-        if let panel = liveOpenPanel {
-            panel.cancel(nil)
-            liveOpenPanel = nil
-        }
+        closeLiveOpenPanel()
 
         super.openDocument(withContentsOf: url, display: displayDocument, completionHandler: completionHandler)
     }
