@@ -4132,6 +4132,13 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         LOG_ERR("Exception while preparing session [" << id << "]: " << exc.what());
     }
 
+    if (ws)
+    {
+        const std::string msg("error: cmd=internal kind=load");
+        ws->sendTextMessage(msg);
+        ws->shutdown(true, msg);
+    }
+
     return nullptr;
 }
 
