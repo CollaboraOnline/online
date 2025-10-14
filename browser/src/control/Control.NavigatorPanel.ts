@@ -324,11 +324,7 @@ class NavigatorPanel extends SidebarBase {
 		this.builder.setWindowId(navigatorData.id);
 		this.container.innerHTML = '';
 
-		if (
-			navigatorData.action === 'close' ||
-			window.app.file.disableSidebar ||
-			this.map.isReadOnlyMode()
-		) {
+		if (navigatorData.action === 'close') {
 			this.closeSidebar();
 		} else if (navigatorData.children) {
 			if (navigatorData.children.length) {
