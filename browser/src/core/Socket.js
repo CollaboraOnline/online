@@ -229,7 +229,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			};
 			msg += ' options=' + JSON.stringify(options);
 		}
-		var spellOnline = window.prefs.get('SpellOnline');
+		var spellOnline = window.prefs.get('spellOnline');
 		if (spellOnline) {
 			msg += ' spellOnline=' + spellOnline;
 		}
