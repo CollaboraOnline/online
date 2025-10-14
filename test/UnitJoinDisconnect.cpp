@@ -200,6 +200,7 @@ public:
     SecondJoinQuitEarly()
         : SecondJoinQuit("SecondJoinQuitEarly", true)
     {
+        setTimeout(std::chrono::seconds(60));
     }
 };
 
