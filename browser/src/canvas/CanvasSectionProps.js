@@ -48,9 +48,9 @@ app.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 
 app.CSections.Comment =				{ name: 'comment'			, zIndex: 7	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
-app.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 5 };
 app.CSections.CellCursor = 			{ name: 'OwnCellCursor'     , zIndex: 5 };
 app.CSections.FocusCell =             { name: 'focus cell'		, zIndex: 5 };
+app.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 6 };
 app.CSections.DefaultForDocumentObjects = {                         zIndex: 9 };
 app.CSections.HTMLObject     =        {                             zIndex: 9 };
 app.CSections.TableResizeMarker =     { name: 'table resize marker' };
