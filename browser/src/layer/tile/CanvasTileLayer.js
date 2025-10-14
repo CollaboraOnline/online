@@ -1847,7 +1847,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		var grid = document.querySelector('.leaflet-map-pane');
+		var grid = document.getElementById('document-canvas');
 		if (this.isCalc() && grid.style.cursor != 'text' && this._cellCursorSection.sectionProperties.mouseInside) {
 			grid.classList.remove('spreadsheet-cursor');
 			grid.style.cursor = 'text';

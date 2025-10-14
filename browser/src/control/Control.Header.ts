@@ -479,7 +479,7 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onMouseEnter(): void {
-		this.containerObject.getCanvasStyle().cursor = this._cursor;
+		this.context.canvas.style.cursor = this._cursor;
 		this._bindContextMenu();
 	}
 
@@ -497,7 +497,6 @@ export class Header extends CanvasSectionObject {
 			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
-		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
 
 	_bindContextMenu(): void {
@@ -575,7 +574,7 @@ export class Header extends CanvasSectionObject {
 
 			if (isMouseOverResizeArea !== this._hitResizeArea) { // Do we need to change cursor (to resize or pointer).
 				const cursor = isMouseOverResizeArea ? this._resizeCursor : this._cursor;
-				this.containerObject.getCanvasStyle().cursor = cursor;
+				this.context.canvas.style.cursor = cursor;
 				this._hitResizeArea = isMouseOverResizeArea;
 			}
 		}

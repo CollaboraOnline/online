@@ -154,11 +154,19 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		console.log('onmouseenter');
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			this.context.canvas.classList.add('spreadsheet-cursor');
+		}
+		this.context.canvas.style.cursor = '';
 	}
 
 	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		console.log('onmouseleave');
+		// Normally, we don't change the cursor style on mouse leave.
+		// That is responsibility of the new target section.
+		// But this is a class name and we need to remove it.
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			this.context.canvas.classList.remove('spreadsheet-cursor');
+		}
 	}
 
 	onMouseWheel(

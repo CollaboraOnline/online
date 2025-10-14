@@ -53,9 +53,6 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onInitialize (): void {
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
-		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
-
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
@@ -551,9 +548,7 @@ export class ScrollSection extends CanvasSectionObject {
 		else this.hideVerticalScrollBar();
 
 		if (this.sectionProperties.mouseIsOnHorizontalScrollBar || this.sectionProperties.mouseIsOnVerticalScrollBar)
-			this.sectionProperties.mapPane.style.cursor = 'pointer';
-		else
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.context.canvas.style.cursor = 'pointer';
 	}
 
 	public onMouseLeave (): void {

@@ -79,7 +79,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.rotationHandleHeight = 15 * app.dpiScale;
 		this.sectionProperties.gluePointRadius = 10 * app.dpiScale;
 		this.sectionProperties.subSectionPrefix = 'shape-handle-';
-		this.sectionProperties.previousCursorStyle = null;
 		this.sectionProperties.svg = null; // This is for preview of modifications.
 		this.sectionProperties.hasVideo = false; // Don't hide svg when there is video content.
 		this.sectionProperties.shapeRectangleProperties = null; // Not null when there are scaling handles.
@@ -678,13 +677,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onMouseEnter() {
-		this.sectionProperties.previousCursorStyle = this.context.canvas.style.cursor;
 		this.context.canvas.style.cursor = 'move';
 		this.sectionProperties.mouseIsInside = true;
 	}
 
 	onMouseLeave() {
-		this.context.canvas.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.sectionProperties.mouseIsInside = false;
 	}
 
