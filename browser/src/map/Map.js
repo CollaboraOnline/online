@@ -94,7 +94,7 @@ window.L.Map = window.L.Evented.extend({
 			const beginSystemMove = (e) => {
 				if (e.button !== 0) return;
 				const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-				if (tag === 'input' || tag === 'button' || tag === 'select' || tag === 'textarea') return;
+				if (tag === 'input' || tag === 'button' || tag === 'select' || tag === 'textarea' || tag === 'a') return;
 				window.postMobileMessage('WINDOW_START_MOVE');
 				e.preventDefault();
 			};
