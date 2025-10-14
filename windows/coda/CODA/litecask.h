@@ -1522,8 +1522,23 @@ class TlsfAllocator
     }
 
 #if defined(_MSC_VER)
-    static uint32_t countTrailingZeros(uint32_t v) { return _tzcnt_u32(v); }
-    static uint32_t countLeadingZeros(uint64_t v) { return (uint32_t)_lzcnt_u64(v); }
+    static uint32_t countTrailingZeros(uint32_t v)
+    {
+        if (v == 0)
+            return 32;
+        unsigned long index;
+        _BitScanForward(&index, v);
+        return index;
+    }
+
+    static uint32_t countLeadingZeros(uint64_t v)
+    {
+        if (v == 0)
+            return 64;
+        unsigned long index;
+        _BitScanReverse64(&index, v);
+        return 63 - index;
+    }
 #else
     static uint32_t countTrailingZeros(uint32_t v) { return __builtin_ctz(v); }
     static uint32_t countLeadingZeros(uint64_t v) { return __builtin_clzll(v); }
