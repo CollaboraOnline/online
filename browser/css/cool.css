@@ -57,6 +57,9 @@
 
 	/* Notebookbar */
 	--notebookbar-element-height: 64px;
+
+	/* iframe */
+	--iframe-dialog-height: 470px;
 }
 
 html {
