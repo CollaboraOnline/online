@@ -883,9 +883,9 @@ class TreeViewControl {
 	) {
 		if (entry.enabled === false) return;
 
-		let preventDef = false;
-
 		tr.addEventListener('keydown', (event) => {
+			let preventDef = false;
+
 			if (event.key === ' ' && expander) {
 				expander.click();
 				tr.focus();
