@@ -112,6 +112,7 @@ else
 	echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
 	echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
 	echo "         --o:storage.ssl.enable=false \\"
+	echo "         --o:experimental_features=true \\"
 	echo "         --unattended \\"
 	echo "         --unitlib=\"${abs_top_builddir}/test/.libs/$tst.so\""
 	echo ""
