@@ -14,6 +14,7 @@
 #include <filesystem>
 #include <regex>
 #include <thread>
+#include <vector>
 
 #include <Windows.h>
 #include <shlobj.h>
@@ -27,6 +28,8 @@
 #include <wil/com.h>
 
 #include <Poco/MemoryStream.h>
+
+#include "litecask.h"
 
 #include <common/Clipboard.hpp>
 #include <common/Protocol.hpp>
@@ -117,6 +120,9 @@ static HMONITOR monitor_of_dialog;
 
 // Map from IFileDialogCustomize pointer to the corresponding IFileDialog, so that we can close it prematurely
 static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
+
+static litecask::Datastore persistentWindowSizeStore;
+static bool persistentWindowSizeStoreOK;
 
 // ================ Sample code (MIT licensed). With app-specific modifications in the dialog event handler.
 // https://github.com/microsoft/Windows-classic-samples/blob/2b94df5730177ec27e726b60017c01c97ef1a8fb/Samples/Win7Samples/winui/shell/appplatform/commonfiledialog/CommonFileDialogApp.cpp
@@ -882,6 +888,15 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 RECT bounds;
                 GetClientRect(hWnd, &bounds);
                 windowData[hWnd].webViewController->put_Bounds(bounds);
+
+                if (persistentWindowSizeStoreOK && (wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED))
+                {
+                    std::vector<uint8_t> value(sizeof(POINT));
+                    POINT* p = reinterpret_cast<POINT*>(value.data());
+                    p->x = LOWORD(lParam);
+                    p->y = HIWORD(lParam);
+                    persistentWindowSizeStore.put(windowData[hWnd].filenameAndUri.uri.c_str(), value);
+                }
             };
             break;
 
@@ -919,6 +934,8 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 // FIXME: We probably should not just do a blunt TerminateProcess(). On the other
                 // hand, it works.
                 LOG_INF("DocumentData::count() is ZERO, bluntly exiting");
+                if (persistentWindowSizeStoreOK)
+                    persistentWindowSizeStore.close();
                 TerminateProcess(GetCurrentProcess(), 0);
             }
             break;
@@ -950,27 +967,45 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
 {
-    // Set size of document window to be 90% of monitor width and height.
-
-    // FIXME: Should we actually, at least for text documents, ideally peek into the document and
-    // check what its page size is, and in the common case of a portrait orientation text document,
-    // make the document window also (if the monitor is large enough) higher than wider? On small
-    // monitors (1280x768 or less?) we should probably default to making the document window
-    // full-screen?
+    bool havePersistedSize = false;
 
     int width, height;
-    MONITORINFO monitorInfo;
 
-    monitorInfo.cbSize = sizeof(monitorInfo);
-    if (monitor_of_dialog != NULL && GetMonitorInfoW(monitor_of_dialog, &monitorInfo))
+    if (persistentWindowSizeStoreOK)
     {
-        width = 0.9 * monitorInfo.rcWork.right - monitorInfo.rcWork.left;
-        height = 0.9 * monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+        std::vector<uint8_t> value(sizeof(POINT));
+        if (persistentWindowSizeStore.get(filenameAndUri.uri.c_str(), value) == litecask::Status::Ok)
+        {
+            const POINT* p = reinterpret_cast<POINT*>(value.data());
+            width = p->x;
+            height = p->y;
+            havePersistedSize = true;
+        }
     }
-    else
+
+    if (!havePersistedSize)
     {
-        width = 1200;
-        height = 900;
+        // Set size of document window to be 90% of monitor width and height.
+
+        // FIXME: Should we actually, at least for text documents, ideally peek into the document and
+        // check what its page size is, and in the common case of a portrait orientation text document,
+        // make the document window also (if the monitor is large enough) higher than wider? On small
+        // monitors (1280x768 or less?) we should probably default to making the document window
+        // full-screen?
+
+        MONITORINFO monitorInfo;
+
+        monitorInfo.cbSize = sizeof(monitorInfo);
+        if (monitor_of_dialog != NULL && GetMonitorInfoW(monitor_of_dialog, &monitorInfo))
+        {
+            width = 0.9 * monitorInfo.rcWork.right - monitorInfo.rcWork.left;
+            height = 0.9 * monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+        }
+        else
+        {
+            width = 1200;
+            height = 900;
+        }
     }
 
     HWND hWnd = CreateWindowW(
@@ -1190,6 +1225,11 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
         std::abort();
+
+    persistentWindowSizeStoreOK =
+        (persistentWindowSizeStore.open
+         (Util::string_to_wide_string(app_installation_path +
+                                      "persistentWindowSizes")) == litecask::Status::Ok);
 
     FilenameAndUri filenameAndUri;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
