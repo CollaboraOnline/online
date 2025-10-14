@@ -122,9 +122,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /**
-     * Quit when last doc window closes, but prevent closing in case we have presented the Open panel.
+     * Don't use the built-in mechanism to close without windows, it is unreliable in many scenarios.
+     *
+     * Instead, we'll check for any open document or window when the app loses focus.
      */
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return !documentController.isPresentingOpenPanel
+        return false
+    }
+
+    /**
+     * Quit when the app loses focus AND there are no docs and no visible windows/panels.
+     */
+    func applicationDidResignActive(_ notification: Notification) {
+        if !documentController.hasDocsOrWindows() {
+            NSApp.terminate(nil)
+        }
     }
 }
