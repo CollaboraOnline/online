@@ -1567,6 +1567,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'N', de: null }
 			},
 			{ type: 'separator', id: 'layout-sheetview-break', orientation: 'vertical' },
+			app.isExperimentalMode() ?
 			{
 				'type': 'overflowgroup',
 				'id': 'view-sheetview',
@@ -1616,7 +1617,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'ES', de: null }
 					},
 				]
-			},
+			} : {},
 			
 		];
 
