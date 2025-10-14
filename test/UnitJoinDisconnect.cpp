@@ -198,7 +198,7 @@ class SecondJoinQuitEarly : public SecondJoinQuit
 {
 public:
     SecondJoinQuitEarly()
-        : SecondJoinQuit("SecondJoinQuitNormal", true)
+        : SecondJoinQuit("SecondJoinQuitEarly", true)
     {
     }
 };
