@@ -35,8 +35,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 		this.sectionProperties.dragStartPosition = null;
 
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
-
 		var cursorStyle = getComputedStyle(this.sectionProperties.docLayer._cursorDataDiv);
 		var selectionStyle = getComputedStyle(this.sectionProperties.docLayer._selectionsDataDiv);
 		var cursorColor = cursorStyle.getPropertyValue('border-top-color');
@@ -206,12 +204,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	}
 
 	public onMouseEnter () {
-		this.context.canvas.classList.remove('spreadsheet-cursor');
 		this.context.canvas.style.cursor = 'crosshair';
-	}
-
-	public onMouseLeave () {
-		this.context.canvas.classList.add('spreadsheet-cursor');
 	}
 
 	public onNewDocumentTopLeft () {
