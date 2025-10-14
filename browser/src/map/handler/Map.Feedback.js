@@ -137,10 +137,12 @@ window.L.Map.Feedback = window.L.Handler.extend({
 		if (e.data.startsWith('updatecheck-show'))
 			return;
 
-		var data = e.data;
-		data = JSON.parse(data).MessageId;
+		var message = JSON.parse(e.data);
+		var data = message.MessageId;
 
 		if (data == 'feedback-show') {
+			var root = document.querySelector(':root');
+			root.style.setProperty('--iframe-dialog-height', message.height ? message.height : '');
 			this._iframeDialog.show();
 		}
 		else if (data == 'feedback-never') {
