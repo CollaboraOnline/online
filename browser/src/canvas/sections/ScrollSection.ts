@@ -139,12 +139,16 @@ export class ScrollSection extends CanvasSectionObject {
 		app.activeDocument.activeView.scroll(e.x, e.y);
 	}
 
+	public cancelAutoScroll(): void {
+		clearInterval(this.autoScrollTimer);
+		this.autoScrollTimer = null;
+		this.map.isAutoScrolling = false;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onScrollVelocity (e: any): void {
 		if (e.vx === 0 && e.vy === 0) {
-			clearInterval(this.autoScrollTimer);
-			this.autoScrollTimer = null;
-			this.map.isAutoScrolling = false;
+			this.cancelAutoScroll();
 		} else {
 			clearInterval(this.autoScrollTimer);
 			this.map.isAutoScrolling = true;
