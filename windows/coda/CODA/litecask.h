@@ -69,7 +69,10 @@ int main(int argc, char** argv)
 
 #if defined(_MSC_VER)
 // Windows
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
+#define getpid() _getpid()
 #include <intrin.h>
 #include <windows.h>
 #pragma intrinsic(_umul128)  // For Wyhash
@@ -470,34 +473,6 @@ utf8ToUtf16(const lcString& s)
     }
 
     return outUtf16;
-}
-
-// UTF-16 -> UTF-8 conversion for interacting with Windows API
-lcString
-utf16ToUtf8(const std::wstring& s)
-{
-    constexpr uint8_t firstBytes[4] = {0x00, 0x00, 0xC0, 0xE0};
-    lcString          outUtf8;
-    outUtf8.reserve(s.size());
-
-    for (wchar_t codepoint : s) {
-        if ((codepoint >= 0xD800 && codepoint <= 0xDBFF)) break;  // Failure, corrupted input
-        int outSize = (codepoint < 0x80) ? 1 : ((codepoint < 0x800) ? 2 : 3);
-
-        size_t curSize = outUtf8.size();
-        outUtf8.resize(curSize + outSize);
-        switch (outSize) {
-            case 3:
-                outUtf8[curSize + 2] = (uint8_t)((codepoint | 0x80) & 0xBF);
-                codepoint >>= 6;  // fall through
-            case 2:
-                outUtf8[curSize + 1] = (uint8_t)((codepoint | 0x80) & 0xBF);
-                codepoint >>= 6;  // fall through
-            case 1:
-                outUtf8[curSize + 0] = (uint8_t)(codepoint | firstBytes[outSize]);
-        }
-    }
-    return outUtf8;
 }
 
 // For "standard" file usage, with userland cache
