@@ -13,13 +13,18 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    /**
+     * Create our document controller early so it becomes the shared instance.
+     */
+    private let documentController = DocumentController()
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Initialize the COOLWSD
         COWrapper.startServer()
 
         // Finish window restoration, and try to open the Open panel if no document is open
         DispatchQueue.main.async { [weak self] in
-            self?.presentOpenPanelIfNeeded()
+            self?.documentController.focusOrPresentOpenPanel()
         }
     }
 
@@ -30,25 +35,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
-    func applicationShouldHandleReopen(_ app: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        if !flag { presentOpenPanelIfNeeded() }
-        return false
-    }
-
     /**
-     * Opens the Open panel when no other documents or windows are presented.
+     * We close the app when there is no document or Open panel, but handle clicking the Dock's icon anyway, just for case.
      */
-    private func presentOpenPanelIfNeeded() {
-        let documentController = NSDocumentController.shared
-        let hasDocs = !documentController.documents.isEmpty
-        let hasVisibleWindows = NSApp.windows.contains { $0.isVisible }
-
-        if hasDocs || hasVisibleWindows {
-            return
-        }
-
-        // Show the system Open panel (iCloud variant when available)
-        documentController.openDocument(nil)
+    func applicationShouldHandleReopen(_ app: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag { documentController.focusOrPresentOpenPanel() }
+        return false
     }
 
     /// Holds App Kit’s continuation block while we close documents.
@@ -131,13 +123,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /**
      * Quit when last doc window closes, but prevent closing in case we have presented the Open panel.
-     *
-     * The scenario was: The user was presented with the Open panel, but immediately when they've
-     * chosen a file, the entire app has Quit, because there was a fraction of a second without any window.
      */
-    var allowQuitOnLastClose = false
-
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return allowQuitOnLastClose
+        return !documentController.isPresentingOpenPanel
     }
 }
