@@ -389,8 +389,12 @@ class StatusBar extends JSDialog.Toolbar {
 		var NotEditDocMode = false;
 		if (app.map['stateChangeHandler'].getItemValue('EditDoc') !== undefined) {
 			NotEditDocMode = app.map['stateChangeHandler'].getItemValue('EditDoc') === "false"; // can be true, false or disabled
-			if (NotEditDocMode)
-				app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
+			if (NotEditDocMode) {
+				if (window.ThisIsTheWindowsApp)
+					app.map.uiManager.showSnackbar(_('The document is probably locked and has been opened as view-only'));
+				else
+					app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
+			}
 		}
 
 		canUserWrite = canUserWrite && !NotEditDocMode;
