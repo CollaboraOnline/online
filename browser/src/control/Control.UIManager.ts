@@ -550,7 +550,7 @@ class UIManager extends window.L.Control {
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
 		}
-		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
+		if (window.mode.isTablet() || window.mode.isDesktop()) {
 			this.map.navigator.initializeNavigator(docType);
 		}
 
