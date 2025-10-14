@@ -50,10 +50,7 @@ class TraceEvents {
 		// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
 	}
 
-	public createAsyncTraceEvent(
-		name: string,
-		args?: any,
-	): CompleteTraceEvent | null {
+	public createAsync(name: string, args?: any): CompleteTraceEvent | null {
 		if (!this.recordingToggle) return null;
 
 		const result: CompleteTraceEvent = {

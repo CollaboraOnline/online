@@ -100,7 +100,7 @@ class SocketBase {
 		name: string,
 		args?: any,
 	): CompleteTraceEvent | null {
-		return this.traceEvents.createAsyncTraceEvent(name, args);
+		return this.traceEvents.createAsync(name, args);
 	}
 
 	public _stringifyArgs(args: any): string {
