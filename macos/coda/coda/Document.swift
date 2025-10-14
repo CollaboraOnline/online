@@ -139,16 +139,6 @@ class Document: NSDocument {
     }
 
     /**
-     * When we show a Document, make sure the app closes once all the Document windows are closed again.
-     */
-    override func showWindows() {
-        super.showWindows()
-
-        // We now have a real document window; enable "quit on last close".
-        (NSApp.delegate as? AppDelegate)?.allowQuitOnLastClose = true
-    }
-
-    /**
      * Called by the system when it wants to save or autosave the document.
      */
     override func data(ofType typeName: String) throws -> Data {
