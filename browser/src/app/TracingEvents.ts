@@ -149,4 +149,19 @@ class TraceEvents {
 
 		return result;
 	}
+
+	// something we can grok quickly in the trace viewer
+	public createCompleteFromEvent(textMsg?: string): CompleteTraceEvent | null {
+		if (!this.recordingToggle) return null;
+
+		let pretty: string;
+		if (!textMsg) pretty = 'blob';
+		else {
+			const idx = textMsg.indexOf(':');
+			if (idx > 0) pretty = textMsg.substring(0, idx);
+			else if (textMsg.length < 25) pretty = textMsg;
+			else pretty = textMsg.substring(0, 25);
+		}
+		return this.createComplete(pretty, { message: textMsg });
+	}
 }
