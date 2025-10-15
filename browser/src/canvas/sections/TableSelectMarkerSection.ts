@@ -28,7 +28,6 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		);
 
 		this.sectionProperties.markerType = markerType;
-		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 		this.sectionProperties.contextMenuActivated = false;
 	}
 

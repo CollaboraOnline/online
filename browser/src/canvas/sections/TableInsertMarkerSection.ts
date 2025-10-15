@@ -26,7 +26,6 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 
 		const div = this.getHTMLObject();
 		div.classList.add('table-add-col-row-marker');
-		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 	}
 
 	public onMouseEnter() {
