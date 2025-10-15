@@ -179,7 +179,7 @@ class MouseControl extends CanvasSectionObject {
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.fire('closepopups');
-		
+
 		this.refreshPosition(point);
 		this.clickCount++;
 
