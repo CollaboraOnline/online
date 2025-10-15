@@ -1966,8 +1966,10 @@ class UIManager extends window.L.Control {
 		callback: (input: string) => void,
 		passwordInput?: boolean,
 	): void {
-		var dialogId = this.generateModalId(id);
-		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
+		const inputId = 'input-modal';
+		const responseOkId = 'response-ok';
+		const dialogId = this.generateModalId(id);
+		const json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
 				id: 'info-modal-label1',
 				type: 'fixedtext',
@@ -1975,7 +1977,7 @@ class UIManager extends window.L.Control {
 				labelFor: 'input-modal',
 			},
 			{
-				id: 'input-modal',
+				id: inputId,
 				type: 'edit',
 				password: !!passwordInput,
 				text: defaultValue,
@@ -1993,7 +1995,7 @@ class UIManager extends window.L.Control {
 						text: _('Cancel'),
 					},
 					{
-						id: 'response-ok',
+						id: responseOkId,
 						type: 'pushbutton',
 						text: buttonText,
 						'has_default': true,
@@ -2004,13 +2006,21 @@ class UIManager extends window.L.Control {
 			},
 		], 'input-modal-input');
 
+		const defaultCallback = () => {
+			if (typeof callback === 'function') {
+				var input = document.getElementById('input-modal-input') as HTMLInputElement;
+				callback(input.value);
+			}
+			this.closeModal(dialogId);
+		};
+
 		this.showModal(json, [
-			{id: 'response-ok', func: () => {
-				if (typeof callback === 'function') {
-					var input = document.getElementById('input-modal-input') as HTMLInputElement;
-					callback(input.value);
+			{id: responseOkId, func: defaultCallback },
+			{id: inputId, func: (objectType: string, eventType: string, object: any, data: any, builder: JSBuilder) => {
+				if (objectType === 'edit' && eventType === 'activate') {
+					// pressed 'enter' on input field
+					defaultCallback();
 				}
-				this.closeModal(dialogId);
 			}}
 		]);
 	}
