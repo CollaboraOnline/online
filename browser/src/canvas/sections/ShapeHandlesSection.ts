@@ -443,7 +443,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.hasVideo = true;
 		this.setSVG(svgString);
 		this.sectionProperties.svg.remove();
-		document.getElementById('map').appendChild(this.sectionProperties.svg);
+		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
 
 		if (!this.sectionProperties.svg.innerHTML.includes('foreignobject')) {
@@ -533,7 +533,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + handle.info.id);
 
 		if (!newSubSection) {
-			newSubSection = new app.definitions.shapeHandleAnchorSubSection(
+			newSubSection = new ShapeHandleAnchorSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + handle.info.id,
 				[this.sectionProperties.anchorWidth / app.dpiScale, this.sectionProperties.anchorHeight / app.dpiScale],
