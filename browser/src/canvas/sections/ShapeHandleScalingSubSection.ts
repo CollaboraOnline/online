@@ -170,17 +170,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
-		app.map.dontHandleMouse = true;
 		if (this.sectionProperties.cropModeEnabled)
 			this.context.canvas.style.cursor = this.sectionProperties.cropCursor;
 		else
 			this.context.canvas.style.cursor = this.sectionProperties.mousePointerType;
-		this.containerObject.requestReDraw();
-	}
-
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent) {
-		app.map.dontHandleMouse = false;
-		this.containerObject.requestReDraw();
 	}
 
 	private overrideHandle(kind: string): [string, number, number] {

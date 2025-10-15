@@ -61,12 +61,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		app.map.dontHandleMouse = true;
 		this.context.canvas.style.cursor = this.sectionProperties.cursorStyle;
-	}
-
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		app.map.dontHandleMouse = false;
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number): void {

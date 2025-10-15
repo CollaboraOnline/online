@@ -109,8 +109,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
-
 		// Calculate on mouse enter so we don't need to recaulculate on every mouse move.
 		if (this.sectionProperties.markerType === 'column')
 			this.calculateLeftMostAndRightMostAvailableX();
@@ -118,12 +116,10 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = point;
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			this.calculateLeftMostAndRightMostAvailableX();
@@ -207,7 +203,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
 
 		if (
@@ -260,8 +255,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		e: MouseEvent,
 	): void {
 		if (this.containerObject.isDraggingSomething()) {
-			this.stopPropagating(e);
-
 			// We only allow horizontal movement for column markers and vertical for row markers.
 
 			if (this.sectionProperties.markerType === 'column')

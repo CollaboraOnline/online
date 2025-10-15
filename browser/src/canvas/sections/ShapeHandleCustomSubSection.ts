@@ -46,14 +46,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
-		app.map.dontHandleMouse = true;
 		this.context.canvas.style.cursor = this.sectionProperties.mousePointerType;
-		this.containerObject.requestReDraw();
-	}
-
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent) {
-		app.map.dontHandleMouse = false;
-		this.containerObject.requestReDraw();
 	}
 
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
