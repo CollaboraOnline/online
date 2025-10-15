@@ -1119,11 +1119,10 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
     const auto start = std::chrono::steady_clock::now();
     // renderFont use a default font size (25) when width and height are 0
     int width = 0, height = 0;
-    unsigned char* ptrFont = nullptr;
 
     getLOKitDocument()->setView(_viewId);
 
-    ptrFont = getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height);
+    ScopedBytes ptrFont(getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height));
 
     const auto duration = std::chrono::steady_clock::now() - start;
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -1136,7 +1135,7 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
 
     const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
-    if (Png::encodeBufferToPNG(ptrFont, width, height, output, mode))
+    if (Png::encodeBufferToPNG(ptrFont.get(), width, height, output, mode))
     {
         bSuccess = sendTextFrame(output.data(), output.size());
     }
@@ -1145,7 +1144,6 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
         bSuccess = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
     }
 
-    std::free(ptrFont);
     return bSuccess;
 }
 
