@@ -1847,12 +1847,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		var grid = document.getElementById('document-canvas');
-		if (this.isCalc() && grid.style.cursor != 'text' && this._cellCursorSection.sectionProperties.mouseInside) {
-			grid.classList.remove('spreadsheet-cursor');
-			grid.style.cursor = 'text';
-		}
-
 		// tells who trigerred cursor invalidation, but recCursors is still "ours"
 		var modifierViewId = parseInt(obj.viewId);
 		var weAreModifier = (modifierViewId === this._viewId);
