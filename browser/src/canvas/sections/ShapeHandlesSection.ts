@@ -1086,6 +1086,20 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.containerObject.removeSection(this.sectionProperties.subSections[i].name);
 		}
 	}
+
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {	
+		point.pX += this.position[0];
+		point.pY += this.position[1];
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+	}
+	
+	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		point.pX = this.position[0] + this.size[0] * 0.5;
+		point.pY = this.position[1] + this.size[1] * 0.5;
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 2, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 2, 1, 0);
+	}
 }
 
 app.definitions.shapeHandlesSection = ShapeHandlesSection;
