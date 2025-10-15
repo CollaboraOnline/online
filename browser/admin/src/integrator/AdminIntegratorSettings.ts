@@ -1626,6 +1626,9 @@ class SettingIframe {
 	}
 
 	private getFilename(uri: string, removeExtension = true): string {
+		// Remove query parameters from url
+		uri = uri.split('?')[0];
+
 		let filename = uri.substring(uri.lastIndexOf('/') + 1);
 		if (removeExtension) {
 			filename = filename.replace(/\.[^.]+$/, '');
