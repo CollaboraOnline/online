@@ -33,6 +33,7 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.add('hovered');
+		this.context.canvas.style.cursor = 'pointer';
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
