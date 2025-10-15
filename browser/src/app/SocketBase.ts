@@ -119,4 +119,8 @@ class SocketBase {
 	): CompleteTraceEvent | null {
 		return this.traceEvents.createCompleteFromEvent(textMsg);
 	}
+
+	public parseServerCmd(msg: string): ServerCommand {
+		return new ServerCommand(msg, this._map);
+	}
 }
