@@ -72,7 +72,9 @@ class Cursor {
 			if (this.map._docLayer._docType === 'presentation') {
 				$('.leaflet-interactive').css('cursor', 'text');
 			} else {
-				$('#document-canvas').css('cursor', 'text');
+				const canvas = document.getElementById('document-canvas');
+				if (canvas.style.cursor !== 'text')
+					canvas.style.cursor = 'text';
 			}
 		}
 	}
