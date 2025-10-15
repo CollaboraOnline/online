@@ -688,7 +688,7 @@ class Dispatcher {
 				app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false');
 			else app.map.sendUnoCommand('.uno:TrackChangesInAllViews');
 		};
-		
+
 		this.actionsMap['acceptTrackedChangeToNext'] = function () {
 			app.map.sendUnoCommand('.uno:AcceptTrackedChangeToNext');
 		};

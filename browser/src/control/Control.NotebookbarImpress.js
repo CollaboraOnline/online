@@ -487,7 +487,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'command': 'presenterconsole',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				}: {},
-			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
+			!window.ThisIsAMobileApp && false ?
 				{
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
