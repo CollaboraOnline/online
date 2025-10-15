@@ -95,11 +95,34 @@ class MouseControl extends CanvasSectionObject {
 		);
 	}
 
+	private setCursorType() {
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			const textCursor = app.file.textCursor.visible && app.file.textCursor.visible && app.calc.cellCursorRectangle.pContainsPoint(this.currentPosition.pToArray());
+
+			if (textCursor) {
+				const change = this.context.canvas.style.cursor !== 'text' || this.context.canvas.classList.contains('spreadsheet-cursor');
+				if (change) {
+					this.context.canvas.classList.remove('spreadsheet-cursor');
+					this.context.canvas.style.cursor = 'text';
+				}
+			}
+			else {
+				const change = this.context.canvas.style.cursor !== '' || !this.context.canvas.classList.contains('spreadsheet-cursor');
+				if (change) {
+					this.context.canvas.style.cursor = '';
+					this.context.canvas.classList.add('spreadsheet-cursor');
+				}
+			}
+		}
+	}
+
 	public onMouseMove(
 		point: cool.SimplePoint,
 		dragDistance: Array<number>,
 		e: MouseEvent,
 	): void {
+		this.setCursorType();
+
 		this.refreshPosition(point);
 
 		if (this.clickTimer) return;
