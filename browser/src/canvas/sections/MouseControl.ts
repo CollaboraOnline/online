@@ -96,7 +96,11 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private setCursorType() {
-		if (app.map._docLayer._docType === 'spreadsheet') {
+		// If we have blinking cursor visible
+		// we need to change cursor from default style
+		if (app.map._docLayer._cursorMarker)
+			app.map._docLayer._cursorMarker.setMouseCursor();
+		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const textCursor = app.file.textCursor.visible && app.file.textCursor.visible && app.calc.cellCursorRectangle.pContainsPoint(this.currentPosition.pToArray());
 
 			if (textCursor) {

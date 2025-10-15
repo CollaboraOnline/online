@@ -463,11 +463,6 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		this.decreaseScrollBarThickness();
-
-		// just in case if we have blinking cursor visible
-		// we need to change cursor from default style
-		if (this.map._docLayer._cursorMarker)
-			this.map._docLayer._cursorMarker.setMouseCursor();
 	}
 
 	private hideVerticalScrollBar (): void {
@@ -480,11 +475,6 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop() || app.map._docLayer._docType !== 'spreadsheet') { // On desktop, we don't want to hide the vertical scroll bar.
 			this.sectionProperties.drawVerticalScrollBar = false;
 		}
-
-		// just in case if we have blinking cursor visible
-		// we need to change cursor from default style
-		if (this.map._docLayer._cursorMarker)
-			this.map._docLayer._cursorMarker.setMouseCursor();
 	}
 
 	private showHorizontalScrollBar (): void {
