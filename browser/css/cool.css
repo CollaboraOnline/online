@@ -241,7 +241,7 @@ body {
 	cursor: col-resize;
 }
 
-.table-column-resize-marker:hover {
+.table-column-resize-marker.hovered {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -249,7 +249,6 @@ body {
 	background-image: url('images/table-column-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: col-resize;
 }
 
 .table-row-resize-marker {
@@ -260,10 +259,9 @@ body {
 	background-image: url('images/table-row-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: row-resize;
 }
 
-.table-row-resize-marker:hover {
+.table-row-resize-marker.hovered {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -271,7 +269,6 @@ body {
 	background-image: url('images/table-row-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: row-resize;
 }
 
 .table-select-marker {
