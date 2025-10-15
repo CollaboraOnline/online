@@ -1626,10 +1626,14 @@ class SettingIframe {
 	}
 
 	private getFilename(uri: string, removeExtension = true): string {
-		// Remove query parameters from url
-		uri = uri.split('?')[0];
+		const url = new URL(uri, window.location.origin);
+		let filename = url.searchParams.get('file_name');
+		if (!filename) {
+			// Remove query parameters from url
+			uri = uri.split('?')[0];
+			filename = uri.substring(uri.lastIndexOf('/') + 1);
+		}
 
-		let filename = uri.substring(uri.lastIndexOf('/') + 1);
 		if (removeExtension) {
 			filename = filename.replace(/\.[^.]+$/, '');
 		}
