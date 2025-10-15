@@ -115,4 +115,38 @@ class TraceEvents {
 				this.socket._stringifyArgs(args),
 		);
 	}
+
+	public createComplete(name: string, args?: any): CompleteTraceEvent | null {
+		if (!this.recordingToggle) return null;
+
+		const result: CompleteTraceEvent = {
+			id: -1,
+			tid: -1,
+			active: true,
+			args: args,
+			begin: performance.now(),
+
+			finish: () => {
+				if (result.active) {
+					const now = performance.now();
+					this.send(
+						name,
+						'X',
+						'ts=' +
+							Math.round(result.begin * 1000) +
+							' dur=' +
+							Math.round((now - result.begin) * 1000),
+						args,
+					);
+					result.active = false;
+				}
+			},
+
+			abort: () => {
+				result.active = false;
+			},
+		};
+
+		return result;
+	}
 }

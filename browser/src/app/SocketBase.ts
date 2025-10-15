@@ -106,4 +106,11 @@ class SocketBase {
 	public _stringifyArgs(args: any): string {
 		return args == null ? '' : ' args=' + JSON.stringify(args);
 	}
+
+	public createCompleteTraceEvent(
+		name: string,
+		args?: any,
+	): CompleteTraceEvent | null {
+		return this.traceEvents.createComplete(name, args);
+	}
 }

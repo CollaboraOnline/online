@@ -1914,30 +1914,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		return command;
 	}
 
-	createCompleteTraceEvent(name, args) {
-		if (!this.traceEventRecordingToggle)
-			return null;
-
-		var result = {};
-		result.active = true;
-		result.begin = performance.now();
-		result.args = args;
-		var that = this;
-		result.finish = function () {
-			if (this.active) {
-				var now = performance.now();
-				that.sendTraceEvent(name, 'X', 'ts=' + Math.round(this.begin * 1000) +
-						    ' dur=' + Math.round((now - this.begin) * 1000),
-						    args);
-				this.active = false;
-			}
-		};
-		result.abort = function () {
-			this.active = false;
-		};
-		return result;
-	}
-
 	// something we can grok quickly in the trace viewer
 	createCompleteTraceEventFromEvent(textMsg) {
 		if (!this.traceEventRecordingToggle)
