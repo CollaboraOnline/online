@@ -20,16 +20,6 @@ interface DelayedMessageInterface {
 	msg: string;
 }
 
-interface CompleteTraceEvent {
-	id: number;
-	tid: number;
-	active: boolean;
-	args: any;
-	begin: DOMHighResTimeStamp;
-	finish(): void;
-	abort(): void;
-}
-
 interface CoolHTMLImageElement extends HTMLImageElement {
 	completeTraceEvent?: CompleteTraceEvent;
 
