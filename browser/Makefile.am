@@ -279,6 +279,7 @@ COOL_JS_LST =\
 	src/app/Debug.ts \
 	src/app/SocketBase.ts \
 	src/app/TracingEvents.ts \
+	src/app/ServerCommand.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -1136,6 +1137,7 @@ pot:
 		src/control/jsdialog/Widget.TreeView.ts \
 		src/app/SocketBase.ts \
 		src/app/TracingEvents.ts \
+		src/app/ServerCommand.ts \
 		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.ts \
