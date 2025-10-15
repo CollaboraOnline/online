@@ -37,7 +37,7 @@ window.L.Map.Mouse = window.L.Handler.extend({
 	},
 
 	_onMouseEvent: window.touch.mouseOnly(function (e) {
-		if (this._map.uiManager.isUIBlocked() || app.map.dontHandleMouse)
+		if (this._map.uiManager.isUIBlocked())
 			return;
 
 		if (this._isMouseOnValidityDropdown())
