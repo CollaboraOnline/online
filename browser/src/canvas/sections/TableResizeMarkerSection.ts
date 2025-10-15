@@ -36,6 +36,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.bottomMost = 0;
 		this.sectionProperties.dragStartPosition = null;
 		this.sectionProperties.initialPosition = this.position.slice();
+		this.sectionProperties.hoverCursor = markerType === 'column' ? 'col-resize' : 'row-resize';
 	}
 
 	private calculateLeftMostAndRightMostAvailableX() {
@@ -113,10 +114,15 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		if (this.sectionProperties.markerType === 'column')
 			this.calculateLeftMostAndRightMostAvailableX();
 		else this.calculateTopMostAndBottomMostAvailableY();
+
+		this.getHTMLObject().classList.add('hovered');
+
+		this.context.canvas.style.cursor = this.sectionProperties.hoverCursor;
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
 		this.sectionProperties.dragStartPosition = null;
+		this.getHTMLObject().classList.remove('hovered');
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
