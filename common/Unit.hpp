@@ -410,6 +410,8 @@ public:
 
     static UnitWSD& get();
 
+    static UnitWSD* getMaybeNull();
+
     /// Applies the default config.
     /// This is needed to initialize the logging subsystem early.
     static void defaultConfigure(Poco::Util::LayeredConfiguration& /* config */);
