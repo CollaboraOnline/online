@@ -206,11 +206,15 @@ class MouseControl extends CanvasSectionObject {
 		this.refreshPosition(point);
 		this.clickCount++;
 
-		if (this.clickTimer) clearTimeout(this.clickTimer);
-
 		const buttons = this.readButtons(e);
 		const modifier = this.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
+
+		if (this.clickTimer) clearTimeout(this.clickTimer);
+		else { // Old code always sends the first click, so do we.
+			app.map._docLayer._postMouseEvent('buttondown', sendingPosition.x, sendingPosition.y, 1, buttons, modifier);
+			app.map._docLayer._postMouseEvent('buttonup', sendingPosition.x, sendingPosition.y, 1, buttons, modifier);
+		}
 
 		this.clickTimer = setTimeout(() => {
 			app.map._docLayer._postMouseEvent(
