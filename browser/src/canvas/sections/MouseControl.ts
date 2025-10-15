@@ -101,7 +101,7 @@ class MouseControl extends CanvasSectionObject {
 		if (app.map._docLayer._cursorMarker)
 			app.map._docLayer._cursorMarker.setMouseCursor();
 		else if (app.map._docLayer._docType === 'spreadsheet') {
-			const textCursor = app.file.textCursor.visible && app.file.textCursor.visible && app.calc.cellCursorRectangle.pContainsPoint(this.currentPosition.pToArray());
+			const textCursor = app.file.textCursor.visible && app.calc.cellCursorRectangle.pContainsPoint(this.currentPosition.pToArray());
 
 			if (textCursor) {
 				const change = this.context.canvas.style.cursor !== 'text' || this.context.canvas.classList.contains('spreadsheet-cursor');
