@@ -113,4 +113,10 @@ class SocketBase {
 	): CompleteTraceEvent | null {
 		return this.traceEvents.createComplete(name, args);
 	}
+
+	public createCompleteTraceEventFromEvent(
+		textMsg?: string,
+	): CompleteTraceEvent | null {
+		return this.traceEvents.createCompleteFromEvent(textMsg);
+	}
 }
