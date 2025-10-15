@@ -503,7 +503,7 @@ msgid "Booklet front"
 msgstr "Faqe ballore libërthi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Faqe e pasme libërthi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181

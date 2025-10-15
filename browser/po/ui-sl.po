@@ -501,7 +501,7 @@ msgid "Booklet front"
 msgstr "Prednja stran knjižice"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Hrbtna stran knjižice"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181

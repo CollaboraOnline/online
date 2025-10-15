@@ -177,7 +177,7 @@ class SettingIframe {
 		PageTile: _('Tile pages'),
 		Booklet: _('Booklet'),
 		BookletFront: _('Booklet front'),
-		BookletBack: _('Booket back'),
+		BookletBack: _('Booklet back'),
 		PageName: _('Page name'),
 		Date: _('Date'),
 		Time: _('Time'),

@@ -499,7 +499,7 @@ msgid "Booklet front"
 msgstr "Tosaigh an leabhráin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Ar ais an leabhair"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181

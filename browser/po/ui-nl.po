@@ -501,7 +501,7 @@ msgid "Booklet front"
 msgstr "Boekje voorzijde"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Boekje achterzijde"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
