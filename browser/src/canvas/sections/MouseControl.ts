@@ -178,6 +178,9 @@ class MouseControl extends CanvasSectionObject {
 
 		this.positionOnMouseDown = null;
 		this.mouseDownSent = false;
+
+		if (this.containerObject.isDraggingSomething())
+			app.map.focus();
 	}
 
 	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
@@ -218,6 +221,7 @@ class MouseControl extends CanvasSectionObject {
 		else { // Old code always sends the first click, so do we.
 			app.map._docLayer._postMouseEvent('buttondown', sendingPosition.x, sendingPosition.y, 1, buttons, modifier);
 			app.map._docLayer._postMouseEvent('buttonup', sendingPosition.x, sendingPosition.y, 1, buttons, modifier);
+			app.map.focus();
 		}
 
 		this.clickTimer = setTimeout(() => {
