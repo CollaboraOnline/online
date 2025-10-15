@@ -27,6 +27,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 
 	onMouseEnter() {
 		this.backgroundColor = 'grey';
+		this.context.canvas.style.cursor = 'grab';
 		this.containerObject.requestReDraw();
 	}
 

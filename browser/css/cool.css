@@ -276,7 +276,6 @@ body {
 	width: var(--btn-size);
 	height: var(--btn-size);
 	background: url('images/table-row-or-column-select-marker.svg') no-repeat center center /12px;
-	cursor: pointer;
 }
 
 .table-select-marker::before {
@@ -1366,7 +1365,6 @@ body {
 }
 
 .table-add-col-row-marker.hovered {
-	cursor: pointer;
 	background-color: var(--color-insert-marker-background-dark) !important;
 	background: url('images/insert-plus-marker-hover.svg') no-repeat center center /20px;
 }

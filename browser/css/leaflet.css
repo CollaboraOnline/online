@@ -210,7 +210,6 @@
 
 .anchor-marker:hover {
 	background-color: rgba(255,255,255,.95);
-	cursor: grab;
 	border: 1px solid var(--color-primary);
 }
 

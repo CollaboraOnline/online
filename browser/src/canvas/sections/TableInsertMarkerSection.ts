@@ -31,6 +31,7 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 	public onMouseEnter() {
 		this.sectionProperties.mouseEntered = true;
 		this.getHTMLObject()?.classList.add('hovered');
+		this.context.canvas.style.cursor = 'pointer';
 	}
 
 	public onMouseLeave() {
