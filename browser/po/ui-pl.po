@@ -505,7 +505,7 @@ msgid "Booklet front"
 msgstr "Przód broszurki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Tył broszurki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181

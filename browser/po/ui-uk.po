@@ -500,7 +500,7 @@ msgid "Booklet front"
 msgstr "Лицьова сторона брошури"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Заброньовано назад"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181

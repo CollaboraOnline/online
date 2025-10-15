@@ -503,7 +503,7 @@ msgid "Booklet front"
 msgstr "Přední strana brožury"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
+msgid "Booklet back"
 msgstr "Zadní strana brožury"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181

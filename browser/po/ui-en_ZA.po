@@ -496,8 +496,8 @@ msgid "Booklet front"
 msgstr "Booklet front"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-msgid "Booket back"
-msgstr "Booket back"
+msgid "Booklet back"
+msgstr "Booklet back"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Page name"
