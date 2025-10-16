@@ -54,7 +54,9 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
 					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 					  'AnimationEffects', 'ExecuteAnimationEffect',
-					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange', 'InsertAnnotation'],
+					  'InsertAnnotation'],
+
+			tracking: ['NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange'],
 
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
@@ -312,6 +314,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 
 				if (commandName !== 'None' &&
 					this.options.whitelist.general.indexOf(commandName) === -1 &&
+					(this._map['wopi'].HideChangeTrackingControls || this.options.whitelist.tracking.indexOf(commandName) === -1) &&
 					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
 					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
 					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
