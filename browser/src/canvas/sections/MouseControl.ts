@@ -149,7 +149,18 @@ class MouseControl extends CanvasSectionObject {
 			this.mouseMoveTimer = setTimeout(() => {
 				this.sendMouseMove(count, buttons, modifier);
 			}, 100);
-		} else {
+		}
+		else if (e.type === 'touchmove' && this.positionOnMouseDown) {
+			// For non-touch events, we can select text etc, so we send the mouse button events to core while dragging.
+			// Users can scroll the view using keyboard or mouse wheel, or the scroll bars in those devices.
+			// On touch devices, dragging (touchmove) is used to scroll the view.
+			// We don't send the mouse button down and up events to core while dragging (touchmove). Instead, we scroll the view.
+			const diff = this.currentPosition.clone();
+			diff.x -= this.positionOnMouseDown.x;
+			diff.y -= this.positionOnMouseDown.y;
+			app.activeDocument.activeView.scroll(-diff.pX, -diff.pY);
+		}
+		else {
 			if (!this.mouseDownSent && this.positionOnMouseDown) {
 				app.map._docLayer._postMouseEvent(
 					'buttondown',
