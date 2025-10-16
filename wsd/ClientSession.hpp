@@ -344,6 +344,8 @@ private:
 
     bool sendFontRendering(const char* buffer, int length, const StringVector& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
+    bool handleGetSlideRequest(const StringVector& tokens,
+                               const std::shared_ptr<DocumentBroker>& docBroker);
 
     bool forwardToChild(const std::string& message,
                         const std::shared_ptr<DocumentBroker>& docBroker);

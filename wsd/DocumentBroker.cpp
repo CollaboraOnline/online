@@ -4399,7 +4399,13 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 
     if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
     {
-        forwardToClient(message);
+        if (message->firstTokenMatches("slidelayer:") ||
+            message->firstTokenMatches("sliderenderingcomplete:"))
+        {
+            handleSlideLayerResponse(message);
+        }
+        else
+            forwardToClient(message);
     }
     else
     {
@@ -4655,6 +4661,43 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     }
 
     sendRequestedTiles(session);
+}
+
+void DocumentBroker::handleGetSlideRequest(const StringVector& tokens,
+                                           std::shared_ptr<ClientSession> session)
+{
+    // cacheKey example:
+    // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
+    std::string cacheKey = tokens.substrFromToken(1);
+    if (auto itr = _slideLayerCache.find(cacheKey); itr != _slideLayerCache.end())
+    {
+        LOG_INF("Slideshow: Cached slide layer reused by canonical view ID "
+                << session->getCanonicalViewId());
+        for (auto message : itr->second)
+        {
+            session->sendBinaryFrame(message->data().data(), message->size());
+        }
+        return;
+    }
+    LOG_INF("Slideshow: Cached slide layer not found, slides layer is freshely rendered by "
+            "canonical view ID "
+            << session->getCanonicalViewId());
+    forwardToChild(session, tokens.substrFromToken(0));
+}
+
+void DocumentBroker::handleSlideLayerResponse(const std::shared_ptr<Message>& message)
+{
+    size_t pos = Util::findInVector(message->data(), "\n");
+    std::string msg(message->data().data(), pos == std::string::npos ? message->size() : pos);
+    Poco::JSON::Object::Ptr jsonPtr;
+    JsonUtil::parseJSON(msg, jsonPtr);
+    const std::string key = JsonUtil::getJSONValue<std::string>(jsonPtr, "cacheKey");
+
+    // This message has forwardToken which can cause issue if reused for forwardToClient when using cache.
+    // But we ignore it because when reusing cache we only send data from the message and not entire message
+    _slideLayerCache.insert(key, message);
+    LOG_INF("Slideshow: Cached a slide layer with cache key: " << key);
+    forwardToClient(message);
 }
 
 /// lookup in global clipboard cache and send response, send error if missing if @sendError

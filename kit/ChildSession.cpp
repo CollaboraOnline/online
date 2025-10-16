@@ -2454,9 +2454,9 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
-                                        const unsigned width, const unsigned height,
-                                        double devicePixelRatio, bool& done, bool isCompressed = false)
+bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned width,
+                                        const unsigned height, double devicePixelRatio, bool& done,
+                                        const std::string& cacheKey, bool isCompressed = false)
 {
     // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
@@ -2476,15 +2476,12 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
         {
             std::string json = jsonMsg;
             Poco::JSON::Parser parser;
-            Poco::JSON::Object::Ptr root;
-            if (EnableExperimental){
-                root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            root->set("cacheKey", cacheKey);
+            if (EnableExperimental)
                 root->set("isCompressed", isCompressed);
 
-                std::stringstream ss;
-                root->stringify(ss);
-                json = ss.str();
-            }
+            json = JsonUtil::jsonToString(root);
 
             if (!isBitmapLayer)
             {
@@ -2526,10 +2523,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
                     root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
                     root->set("width", width);
                     root->set("height", height);
-
-                    std::stringstream updatedSs;
-                    root->stringify(updatedSs);
-                    json = updatedSs.str();
+                    json = JsonUtil::jsonToString(root);
                 }
 
                 std::string response = "slidelayer: " + json;
@@ -2658,7 +2652,8 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     SlideCompressor scomp(_docManager->getSyncPool());
     while (!done)
     {
-        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done, compressedLayers);
+        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done,
+                                       tokens.substrFromToken(1), compressedLayers);
         if (!success)
             break;
     }
@@ -2674,7 +2669,10 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     std::string msg = "sliderenderingcomplete: ";
     if (EnableExperimental) {
-        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") + "\", \"slidehash\": \"" + hash + "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") + "}";
+        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") +
+               "\", \"slidehash\": \"" + hash +
+               "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") +
+               ", \"cacheKey\": \"" + tokens.substrFromToken(1) + "\"}";
     } else {
         msg += (success ? "success" : "fail");
     }
