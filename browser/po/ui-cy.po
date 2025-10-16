@@ -1868,7 +1868,7 @@ msgstr "Cuddio Bar Dewislen"
 #: src/control/Control.NotebookbarDraw.js:561
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1768
-msgid "Invert Background"
+msgid "Switch Background"
 msgstr "Gwrthdroi Cefndir"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:806

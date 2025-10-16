@@ -169,7 +169,7 @@ class Menubar extends window.L.Control {
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 					{name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-					{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+					{name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 					{uno: '.uno:SidebarDeck.PropertyDeck', id: 'view-sidebar-property-deck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:SidebarDeck.StyleListDeck', name: _('Style list')},
 					{uno: '.uno:Navigator', id: 'navigator'},
@@ -494,7 +494,7 @@ class Menubar extends window.L.Control {
 				   {name: _('Notes View'), id: 'notesmode', type: 'action'},
 				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				   {name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				   {name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 				   {name: _('Master View'), uno: '.uno:SlideMasterPage'},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 				   {uno: '.uno:Navigator', id: 'navigator'},
@@ -653,7 +653,7 @@ class Menubar extends window.L.Control {
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-					{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+					{name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
@@ -800,7 +800,7 @@ class Menubar extends window.L.Control {
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				   {name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				   {name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {uno: '.uno:SidebarDeck.StyleListDeck', name: _('Style list')},
@@ -1082,7 +1082,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', uno: '.uno:ShowResolvedAnnotations'},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 			]
 			},
 			window.enableAccessibility ?
@@ -1135,7 +1135,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 			]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
@@ -1196,7 +1196,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 			]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
@@ -1256,7 +1256,7 @@ class Menubar extends window.L.Control {
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{name: _('Switch Background'), id: 'invertbackground', type: 'action'},
 			]
 			},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), id: 'sheetmenu', type: 'menu', menu: [

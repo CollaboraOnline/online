@@ -693,7 +693,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id':'invertbackground',
 				'class': 'unoinvertbackground',
 				'type': 'bigcustomtoolitem',
-				'text': _('Invert Background'),
+				'text': _('Switch Background'),
 				'accessibility': { focusBack: true, combination: 'BG', de: null }
 			},
 			{ type: 'separator', id: 'view-invertbackground-break', orientation: 'vertical' },
