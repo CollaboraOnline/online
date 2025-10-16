@@ -1385,6 +1385,44 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
 	getViewTab: function() {
 		var content = [
+			app.isExperimentalMode() ?
+			{
+				'type': 'overflowgroup',
+				'id': 'view-sheetview',
+				'name':_('Sheet View'),
+				'accessibility': { focusBack: true,	combination: 'SV', de: null },
+				'children' : [
+					{
+						'id': 'selectsheetview',
+						'type': 'toolitem',
+						'text': _UNO('.uno:SelectSheetView'),
+						'command': '.uno:SelectSheetView',
+						'accessibility': { focusBack: true,	combination: 'SS', de: null }
+					},
+					{
+						'id': 'newsheetview',
+						'type': 'toolitem',
+						'text': _UNO('.uno:NewSheetView'),
+						'command': '.uno:NewSheetView',
+						'accessibility': { focusBack: true,	combination: 'NS', de: null }
+					},
+					{
+						'id': 'removesheetview',
+						'type': 'toolitem',
+						'text': _UNO('.uno:RemoveSheetView'),
+						'command': '.uno:RemoveSheetView',
+						'accessibility': { focusBack: true,	combination: 'RS', de: null }
+					},
+					{
+						'id': 'exitsheetview',
+						'type': 'toolitem',
+						'text': _UNO('.uno:ExitSheetView'),
+						'command': '.uno:ExitSheetView',
+						'accessibility': { focusBack: true,	combination: 'ES', de: null }
+					},
+				]
+			} : {},
+			app.isExperimentalMode() ? { type: 'separator', id: 'layout-sheetview-break', orientation: 'vertical' } : {},
 			{
 				'type': 'overflowgroup',
 				'id': 'view-freeze',
@@ -1566,58 +1604,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true,	combination: 'N', de: null }
 			},
-			{ type: 'separator', id: 'layout-sheetview-break', orientation: 'vertical' },
-			app.isExperimentalMode() ?
-			{
-				'type': 'overflowgroup',
-				'id': 'view-sheetview',
-				'name':_('Sheet View'),
-				'accessibility': { focusBack: true,	combination: 'SV', de: null },
-				'children' : [
-					{
-						'id': 'newsheetview',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:NewSheetView'),
-						'command': '.uno:NewSheetView',
-						'accessibility': { focusBack: true,	combination: 'NS', de: null }
-					},
-					{
-						'id': 'removesheetview',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:RemoveSheetView'),
-						'command': '.uno:RemoveSheetView',
-						'accessibility': { focusBack: true,	combination: 'RS', de: null }
-					},
-					{
-						'id': 'switchtonextsheetview',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:SwitchToNextSheetView'),
-						'command': '.uno:SwitchToNextSheetView',
-						'accessibility': { focusBack: true,	combination: 'SN', de: null }
-					},
-					{
-						'id': 'switchtoprevioussheetview',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:SwitchToPreviousSheetView'),
-						'command': '.uno:SwitchToPreviousSheetView',
-						'accessibility': { focusBack: true,	combination: 'SP', de: null }
-					},
-					{
-						'id': 'selectsheetview',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:SelectSheetView'),
-						'command': '.uno:SelectSheetView',
-						'accessibility': { focusBack: true,	combination: 'SS', de: null }
-					},
-					{
-						'id': 'exitsheetview',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:ExitSheetView'),
-						'command': '.uno:ExitSheetView',
-						'accessibility': { focusBack: true,	combination: 'ES', de: null }
-					},
-				]
-			} : {},
 			
 		];
 
