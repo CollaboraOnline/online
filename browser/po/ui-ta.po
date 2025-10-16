@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
 "PO-Revision-Date: 2025-05-31 14:22+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/collabora-online/"
@@ -327,8 +327,8 @@ msgstr "சரி"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -3267,7 +3267,8 @@ msgid "Alerts:"
 msgstr "விழிப்பூட்டல்கள்:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "உங்கள் சேவையகத்தின் பாதுகாப்பு எச்சரிக்கைகளை சரிபார்க்கவும்"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3426,7 +3427,7 @@ msgstr "வடிவங்களை செருகவும்"
 msgid "Insert connectors"
 msgstr "இணைப்பிகளைச் செருகவும்"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "மெனுவை மறைக்கவும்"
 
@@ -3434,7 +3435,7 @@ msgstr "மெனுவை மறைக்கவும்"
 msgid "Enter new name"
 msgstr "புதிய பெயரை உள்ளிடவும்"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "மெனுவைக் காட்டு"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
 "PO-Revision-Date: 2025-09-09 10:54+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
@@ -330,8 +330,8 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -3263,7 +3263,8 @@ msgid "Alerts:"
 msgstr "Waspada:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "Periksa peringatan keamanan dari server Anda"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3422,7 +3423,7 @@ msgstr "Sisipkan bentuk"
 msgid "Insert connectors"
 msgstr "Sisip konektor"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "Sembunyikan Menu"
 
@@ -3430,7 +3431,7 @@ msgstr "Sembunyikan Menu"
 msgid "Enter new name"
 msgstr "Masukkan nama baru"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "Tampilkan Menu"
 
