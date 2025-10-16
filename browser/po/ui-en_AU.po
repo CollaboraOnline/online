@@ -3167,8 +3167,8 @@ msgstr ""
 "security hazard."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
-msgstr "system call security filtering enabled"
+msgid "System call security filtering enabled"
+msgstr "System call security filtering enabled"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3195,8 +3195,8 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Poorly performing proxying of all network requests."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
-msgstr "direct network connection"
+msgid "Direct network connection"
+msgstr "Direct network connection"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
