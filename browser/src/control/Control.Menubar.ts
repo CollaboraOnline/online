@@ -2048,7 +2048,7 @@ class Menubar extends window.L.Control {
 				if (type === 'unocommand') { // disable all uno commands
 					// Except the ones listed in allowedViewModeCommands:
 					var allowed = this.options.allowedViewModeCommands.includes(uno);
-					if (!allowed && app.isRedlineManagementAllowed()) {
+					if (!allowed && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls) {
 						allowed = this.options.allowedRedlineManagementModeCommands.includes(uno);
 					}
 					if (!allowed) {
@@ -2077,7 +2077,7 @@ class Menubar extends window.L.Control {
 							break;
 						}
 					}
-					if (!allowed && app.isRedlineManagementAllowed())
+					if (!allowed && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls)
 						allowed = this.options.allowedRedlineManagementModeActions.includes(id);
 					if (id === 'insertcomment' && (this._map.getDocType() !== 'drawing' && !app.isCommentEditingAllowed()))
 						allowed = false;
@@ -2435,7 +2435,7 @@ class Menubar extends window.L.Control {
 		}
 		if (this._map.isReadOnlyMode() && menuItem.type === 'menu') {
 			var found = this.options.allowedReadonlyMenus.includes(menuItem.id);
-			if (!found && app.isRedlineManagementAllowed())
+			if (!found && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls)
 				found = this.options.allowedRedlineManagementMenus.includes(menuItem.id);
 			if (!found)
 				return false;

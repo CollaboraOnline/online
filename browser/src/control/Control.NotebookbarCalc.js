@@ -2435,6 +2435,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 	},
 
 	getReviewTab: function() {
+		// Note: when adding track changes elements, consider this._map['wopi'].HideChangeTrackingControls
 		var content = [
 			{
 				'id': 'review-spell-dialog',
