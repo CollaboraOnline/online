@@ -71,9 +71,12 @@ class MouseControl extends CanvasSectionObject {
 	// Gets the mouse position on browser page in CSS pixels.
 	public getMousePagePosition() {
 		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
+		const pagePosition = this.currentPosition.clone();
+		pagePosition.pX -= app.activeDocument.activeView.viewedRectangle.pX1;
+		pagePosition.pY -= app.activeDocument.activeView.viewedRectangle.pY1;
 		return {
-			x: this.currentPosition.cX + boundingClientRectangle.left,
-			y: this.currentPosition.cY + boundingClientRectangle.top,
+			x: pagePosition.cX + boundingClientRectangle.left,
+			y: pagePosition.cY + boundingClientRectangle.top,
 		};
 	}
 
