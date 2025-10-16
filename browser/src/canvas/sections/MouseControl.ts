@@ -158,7 +158,11 @@ class MouseControl extends CanvasSectionObject {
 			const diff = this.currentPosition.clone();
 			diff.x -= this.positionOnMouseDown.x;
 			diff.y -= this.positionOnMouseDown.y;
-			app.activeDocument.activeView.scroll(-diff.pX, -diff.pY);
+
+			const viewedRectangle = app.activeDocument.activeView.viewedRectangle.clone();
+
+			// Use scrollTo, or repeating events break the scrolling.
+			app.activeDocument.activeView.scrollTo(viewedRectangle.pX1 - diff.pX, viewedRectangle.pY1 - diff.pY);
 		}
 		else {
 			if (!this.mouseDownSent && this.positionOnMouseDown) {
