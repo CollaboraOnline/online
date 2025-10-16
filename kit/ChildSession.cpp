@@ -2454,43 +2454,17 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned width,
-                                        const unsigned height, double devicePixelRatio, bool& done,
-                                        const std::string& cacheKey, std::size_t layerNumber,
-                                        bool isCompressed = false)
+bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
+                                        const unsigned width, const unsigned height,
+                                        double devicePixelRatio, bool& done, bool isCompressed = false)
 {
+    // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
     bool isBitmapLayer = false;
-    std::string jsonMsg;
-    bool cacheUsed = false;
-    SlideLayerCacheMap& slideLayerCache = _docManager->getSlideLayerCache();
-
-    // cacheKey example:
-    // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
-    // This is all the information browser sends based on which slides are created
-    if (auto itr = slideLayerCache.find(cacheKey);
-        itr != slideLayerCache.end() && layerNumber < itr->second.size())
-    {
-        pixmap = itr->second[layerNumber]._pixmap;
-        isBitmapLayer = itr->second[layerNumber]._isBitmapLayer;
-        jsonMsg = itr->second[layerNumber]._msg;
-        done = itr->second[layerNumber]._done;
-        cacheUsed = true;
-        LOG_INF("Slideshow: Cached slide layer reused by view ID " << getViewId());
-    }
-    else
-    {
-        char* msg = nullptr;
-        done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer,
-                                                        &devicePixelRatio, &msg);
-        jsonMsg = std::string(msg);
-        free(msg);
-        SlideLayerCache cache(pixmap, isBitmapLayer, jsonMsg, done);
-        slideLayerCache.insert(cacheKey, cache);
-        LOG_INF(
-            "Slideshow: Cached slide layer not found, slides layer is freshely rendered by view ID "
-            << getViewId());
-    }
+    char* msg = nullptr;
+    done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer, &devicePixelRatio, &msg);
+    std::string jsonMsg(msg);
+    free(msg);
 
     if (jsonMsg.empty())
         return true;
@@ -2569,7 +2543,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
                 std::vector<char> compressedOutPut;
                 compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
 
-                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA && !cacheUsed)
+                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
                 {
                     png_row_info rowInfo;
                     rowInfo.rowbytes = pixmap->size();
@@ -2682,11 +2656,9 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     bool done = false;
     SlideCompressor scomp(_docManager->getSyncPool());
-    std::size_t layerNumber = 0;
     while (!done)
     {
-        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done,
-                                       tokens.substrFromToken(1), layerNumber++, compressedLayers);
+        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done, compressedLayers);
         if (!success)
             break;
     }
@@ -3678,10 +3650,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
             else
                 LOG_TRC("Ignoring " << payload << " after tracking modified state");
-
-            if (payload == ".uno:ModifiedStatus=true") {
-                _docManager->getSlideLayerCache().erase_all();
-            }
         }
         else if (payload.find(".uno:CurrentPageResize") != std::string::npos)
         {

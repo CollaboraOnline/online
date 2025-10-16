@@ -190,80 +190,6 @@ public:
 
 class ChildSession;
 
-class SlideLayerCache
-{
-public:
-    std::shared_ptr<std::vector<unsigned char>> _pixmap;
-    bool _isBitmapLayer;
-    std::string _msg;
-    bool _done;
-
-    SlideLayerCache(std::shared_ptr<std::vector<unsigned char>> pixmap, bool isBitmapLayer,
-                    const std::string& msg, bool done)
-        : _pixmap(pixmap)
-        , _isBitmapLayer(isBitmapLayer)
-        , _msg(msg)
-        , _done(done)
-    {
-    }
-};
-
-/**
- Used for caching rendered slide layers for slideshow
- example entry may look like following
- key: hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0
- value vector:[SlideLayerCache1, SlideLayerCache2...]
- key consists of all the parameters browser sends us for particular slide rendering
- value vector will be in order layers should be rendered and displayed
-*/
-class SlideLayerCacheMap
-{
-    std::unordered_map<std::string, std::vector<SlideLayerCache>> cache_map;
-    // Helps if we want to clean older cache
-    std::queue<std::string> insertion_order;
-
-public:
-    void insert(const std::string& key, const SlideLayerCache& cachedData)
-    {
-        insertion_order.push(key);
-        cache_map[key].push_back(cachedData);
-    }
-
-    std::size_t reduceSizeTo(std::size_t desiredSize)
-    {
-        if (cache_map.size() <= desiredSize)
-            return 0;
-
-        std::size_t total_deleted_entries = 0;
-        while (cache_map.size() > desiredSize)
-        {
-            cache_map.erase(insertion_order.front());
-            insertion_order.pop();
-            total_deleted_entries++;
-        }
-
-        return total_deleted_entries;
-    }
-
-    void erase_all()
-    {
-        cache_map.clear();
-        std::queue<std::string> empty;
-        std::swap(insertion_order, empty);
-    }
-
-    std::unordered_map<std::string, std::vector<SlideLayerCache>>::const_iterator
-    find(const std::string& key) const
-    {
-        return cache_map.find(key);
-    }
-
-    std::unordered_map<std::string, std::vector<SlideLayerCache>>::iterator end()
-    {
-        return cache_map.end();
-    }
-};
-
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -525,8 +451,6 @@ public:
 
     int getViewsCount() const;
 
-    SlideLayerCacheMap& getSlideLayerCache() { return _slideLayerCache; }
-
 private:
     void postForceModifiedCommand(bool modified);
 
@@ -598,9 +522,6 @@ private:
     int _bgSavesOngoing;
 
     LogUiCmd logUiCmd;
-
-    /// Cached slide layer for slideshow
-    SlideLayerCacheMap _slideLayerCache;
 };
 
 /// main function of the forkit process or thread
