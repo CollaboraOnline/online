@@ -170,7 +170,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	public onHandleAutoScroll (e :any): void {
+	public onHandleAutoScroll (e: any): void {
 		var vx = 0;
 		var vy = 0;
 
