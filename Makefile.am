@@ -180,6 +180,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/RequestDetails.cpp \
                   wsd/RequestVettingStation.cpp \
                   wsd/ServerAuditUtil.cpp \
+                  wsd/SlideCache.cpp \
                   wsd/SpecialBrokers.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
@@ -385,6 +386,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/SenderQueue.hpp \
               wsd/ServerAuditUtil.hpp \
               wsd/ServerURL.hpp \
+              wsd/SlideCache.hpp \
               wsd/SpecialBrokers.hpp \
               wsd/SslConfig.hpp \
               wsd/Storage.hpp \
