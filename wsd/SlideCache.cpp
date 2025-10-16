@@ -15,6 +15,7 @@ void SlideLayerCacheMap::insert(const std::string& key, const std::shared_ptr<Me
 {
     insertion_order.push(key);
     cache_map[key].push_back(cachedData);
+    reduceSizeTo(max_size);
 }
 
 std::size_t SlideLayerCacheMap::reduceSizeTo(std::size_t desiredSize)
