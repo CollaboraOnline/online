@@ -476,6 +476,8 @@ class LOUtil {
 			graphicfiltersharpen: 'graphicfiltersharpen',
 			graphicfiltersobel: 'graphicfiltersobel',
 			effects: 'pictureeffectsmenu',
+			selectsheetview: 'selecttable',
+			exitsheetview: 'delete',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
