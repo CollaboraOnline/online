@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
 "PO-Revision-Date: 2025-10-16 09:44+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: he\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : "
-"((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
@@ -325,8 +325,8 @@ msgstr "אישור"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -1791,8 +1791,9 @@ msgstr "קובץ HTML ‏(‎.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
+#, fuzzy
 msgid "Options"
-msgstr ""
+msgstr "אפשרות"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:625 src/control/Control.Menubar.ts:773
@@ -3032,8 +3033,9 @@ msgid "Select"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:2717
+#, fuzzy
 msgid "Effects"
-msgstr ""
+msgstr "אפקט"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
@@ -3234,7 +3236,8 @@ msgid "Alerts:"
 msgstr "התראות:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "נא לבדוק אזהרות אבטחת מידע בשרת שלך"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3391,7 +3394,7 @@ msgstr "הוספת צורות"
 msgid "Insert connectors"
 msgstr "הוספת מחברים"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "הסתרת תפריט"
 
@@ -3399,7 +3402,7 @@ msgstr "הסתרת תפריט"
 msgid "Enter new name"
 msgstr "נא למלא שם חדש"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "הצגת תפריט"
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
 "PO-Revision-Date: 2025-09-29 10:02+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
@@ -329,8 +329,8 @@ msgstr "V redu"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -3255,7 +3255,8 @@ msgid "Alerts:"
 msgstr "Alarmi:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "Preverite varnostna opozorila svojega strežnika"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3414,7 +3415,7 @@ msgstr "Vstavi like"
 msgid "Insert connectors"
 msgstr "Vstavi konektorje"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "Skrij meni"
 
@@ -3422,7 +3423,7 @@ msgstr "Skrij meni"
 msgid "Enter new name"
 msgstr "Vnesite novo ime"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "Pokaži meni"
 
