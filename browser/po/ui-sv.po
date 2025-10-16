@@ -3170,7 +3170,7 @@ msgstr ""
 "aktiverad; det är en säkerhetsrisk."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr "säkerhetsfiltrering av systemanrop är aktiv"
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3198,7 +3198,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Dålig proxyprestanda för alla nätverksförfrågningar."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr "direkt nätverksanslutning"
 
 #: src/control/Control.ServerAuditDialog.ts:128

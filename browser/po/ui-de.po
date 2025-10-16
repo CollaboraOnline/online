@@ -3206,7 +3206,7 @@ msgstr ""
 "aktiviert; dies stellt ein Sicherheitsrisiko dar."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr "Sicherheitsfilterung für Systemaufrufe aktiviert"
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3234,7 +3234,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Schlechte Proxy-Leistung bei allen Netzwerkanfragen."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr "direkte Netzwerkverbindung"
 
 #: src/control/Control.ServerAuditDialog.ts:128

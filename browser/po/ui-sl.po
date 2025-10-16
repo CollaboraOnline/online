@@ -3175,7 +3175,7 @@ msgstr ""
 "omogočeno; to predstavlja varnostno tveganje."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr "varnostno filtriranje sistemskih klicev omogočeno"
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3203,7 +3203,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Slabo delovanje posredovanja za vse omrežne zahteve."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr "neposredna omrežna povezava"
 
 #: src/control/Control.ServerAuditDialog.ts:128

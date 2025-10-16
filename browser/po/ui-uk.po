@@ -3168,7 +3168,7 @@ msgstr ""
 "ввімкнена; це загроза безпеці."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr "увімкнено фільтрацію безпеки системних викликів"
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3198,7 +3198,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Погано виконується проксіювання всіх мережевих запитів."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr "пряме мережеве підключення"
 
 #: src/control/Control.ServerAuditDialog.ts:128
