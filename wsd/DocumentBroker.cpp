@@ -197,6 +197,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _configId(configId)
     , _poll(
           std::make_shared<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+    , _slideLayerCache(25)
     , _lockCtx(std::make_unique<LockContext>())
 #if !MOBILEAPP
     , _admin(Admin::instance())
