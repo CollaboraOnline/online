@@ -1481,7 +1481,7 @@ class CanvasSectionContainer {
 		var bcr: ClientRect = this.canvas.getBoundingClientRect();
 		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + section.name);
 
-		if ((!section.documentObject || section.isVisible) && section.isSectionShown()) {
+		if ((!section.documentObject || section.isVisible) && section.isSectionShown() && section.myTopLeft) {
 			if (!element) {
 				element = document.createElement('div');
 				element.id = 'test-div-' + section.name;
