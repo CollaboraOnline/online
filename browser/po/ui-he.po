@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-15 15:01+0200\n"
-"PO-Revision-Date: 2025-10-09 08:07+0000\n"
+"PO-Revision-Date: 2025-10-16 09:44+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
-"n % 10 == 0) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : "
+"((n > 10 && n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
@@ -385,7 +385,6 @@ msgid "Compact layout"
 msgstr "פריסה מצומצמת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:150
-#, fuzzy
 msgid "Show status bar"
 msgstr "הצגת שורת מצב"
 
@@ -412,7 +411,6 @@ msgid "Custom Animation"
 msgstr "הנפשה מותאמת אישית"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
-#, fuzzy
 msgid "Style List"
 msgstr "רשימת סגנונות"
 
@@ -437,7 +435,6 @@ msgid "Show Grid"
 msgstr "הצגת רשת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
-#, fuzzy
 msgid "Snap to grid"
 msgstr "הצמדה לרשת"
 
@@ -489,23 +486,23 @@ msgstr "התאמה לעמוד"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Tile pages"
-msgstr ""
+msgstr "פריסת עמודים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet"
-msgstr ""
+msgstr "ספרון"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booklet front"
-msgstr ""
+msgstr "חזית ספרון"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Booklet back"
-msgstr ""
+msgstr "גב ספרון"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Page name"
-msgstr ""
+msgstr "שם עמוד"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 #: src/control/Control.NotebookbarCalc.js:771
@@ -521,11 +518,11 @@ msgstr "שעה"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "Hidden pages"
-msgstr ""
+msgstr "עמודים נסתרים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "From printer setup"
-msgstr ""
+msgstr "מהגדרות המדפסת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Presentation"
@@ -551,20 +548,19 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Images"
-msgstr ""
+msgstr "תמונות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
-#, fuzzy
 msgid "Tables"
-msgstr "טבלה"
+msgstr "טבלאות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Controls"
-msgstr ""
+msgstr "פקדים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Background"
-msgstr ""
+msgstr "רקע"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Print Black"
@@ -572,39 +568,39 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden text"
-msgstr ""
+msgstr "טקסט מוסתר"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Placeholders"
-msgstr ""
+msgstr "ממלאי מקום"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Left pages"
-msgstr ""
+msgstr "עמודים שמאליים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Right pages"
-msgstr ""
+msgstr "עמודים ימניים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure"
-msgstr ""
+msgstr "עלון"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "עלון מימין לשמאל"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Images and Objects"
-msgstr ""
+msgstr "תמונות ועצמים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:298
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "קובץ JSON שגוי"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:302
 msgid "Error reading file"
-msgstr ""
+msgstr "שגיאה בקריאת הקובץ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid "Autotext"
@@ -677,7 +673,7 @@ msgstr "משהו השתבש במהלך משיכת המונחון. נא לנסו�
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:590
 msgid "Interface Settings"
-msgstr ""
+msgstr "הגדרות מנשק"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:592
 msgid "Set default interface preferences."
@@ -705,7 +701,7 @@ msgstr "שמירת הגדרות מסמך"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1075
 msgid "Notebookbar view"
-msgstr ""
+msgstr "תצוגת סרגל מחברת"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1082
 #: src/control/Control.NotebookbarCalc.js:1506
@@ -736,33 +732,31 @@ msgstr "עריכה"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1310
 msgid "View Settings"
-msgstr ""
+msgstr "הצגת הגדרות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1311
 msgid "Adjust view settings."
-msgstr ""
+msgstr "כיוון הגדרות תצוגה."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1321
 msgid "Option"
-msgstr ""
+msgstr "אפשרות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1367
 msgid "(Warning: Server accessibility must be enabled to toggle)"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1401
-#, fuzzy
 msgid "Reset to default View settings"
-msgstr "איפוס להגדרות המסמך כברירת מחדל"
+msgstr "איפוס להגדרות התצוגה כברירת מחדל"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1405
-#, fuzzy
 msgid "Are you sure you want to reset View Settings?"
-msgstr "לאפס את הגדרות המסמך?"
+msgstr "לאפס את הגדרות התצוגה?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1428
 msgid "Save View Settings"
-msgstr ""
+msgstr "שמירת הגדרות תצוגה"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1572
 msgid "Enter Zotero API Key"
@@ -2362,75 +2356,74 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "הנפשה"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "הנפשות חלות"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "העלאה למעלה"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "הורדה למטה"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "קטגוריה"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "התחלה"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
-msgstr ""
+msgstr "אפקט"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "מעברון"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:43
 msgid "Transitions"
-msgstr ""
+msgstr "מעברונים"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "הגוון"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "משך"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "בלחיצת עכבר"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "אחרי"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "תוכן עניינים"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "הערת שוליים/סוף"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1576
 #: src/control/Control.NotebookbarImpress.js:1634
-#, fuzzy
 msgid "Field"
-msgstr "שדות"
+msgstr "שדה"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "הנפשות"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
