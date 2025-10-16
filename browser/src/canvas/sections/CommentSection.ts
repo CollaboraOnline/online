@@ -1408,8 +1408,12 @@ export class Comment extends CanvasSectionObject {
 	public onClick (point: cool.SimplePoint, e: MouseEvent): void {
 		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
-			e.stopPropagation();
-			this.stopPropagating();
+		}
+		else if (app.map._docLayer._docType === 'text') {
+			const mousePoint = point.clone();
+			mousePoint.pX += this.myTopLeft[0];
+			mousePoint.pY += this.myTopLeft[1];
+			app.activeDocument.mouseControl.onClick(mousePoint, e);
 		}
 	}
 

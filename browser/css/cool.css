@@ -576,7 +576,7 @@ body {
 	-moz-user-select: text;
 	-webkit-user-select: text;
 	-ms-user-select: text;
-	z-index: 10;
+	z-index: 12;
 	width: 250px;
 	transition: left .25s;
 }
