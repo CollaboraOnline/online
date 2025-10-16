@@ -53,7 +53,7 @@ class MouseControl extends CanvasSectionObject {
 		return buttons;
 	}
 
-	public onContextMenu(e: MouseEvent): void {
+	public onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
 		const buttons = app.LOButtons.right;
 		const modifier = this.readModifier(e);
 		if (modifier === 0) {
@@ -75,6 +75,11 @@ class MouseControl extends CanvasSectionObject {
 			x: this.currentPosition.cX + boundingClientRectangle.left,
 			y: this.currentPosition.cY + boundingClientRectangle.top,
 		};
+	}
+
+	// This useful when a section handles the event but wants to set the document mouse position.
+	public setMousePosition(point: cool.SimplePoint) {
+		this.currentPosition = point.clone();
 	}
 
 	private refreshPosition(point: cool.SimplePoint) {

@@ -1087,13 +1087,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
-	onContextMenu(e: MouseEvent): void {
-		const point = new cool.SimplePoint(0, 0);
-		point.pX = this.position[0] + this.size[0] * 0.5;
-		point.pY = this.position[1] + this.size[1] * 0.5;
-
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, app.LOButtons.right, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, app.LOButtons.right, 0);
+	onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
+		point.pX += this.position[0];
+		point.pY += this.position[1];
+		app.activeDocument.mouseControl.setMousePosition(point);
+		app.activeDocument.mouseControl.onContextMenu(point, e);
 	}
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {

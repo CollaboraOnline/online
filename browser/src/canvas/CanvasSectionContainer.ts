@@ -842,14 +842,15 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnContextMenu(section: CanvasSectionObject, e: MouseEvent) {
+	private propagateOnContextMenu(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
+		const windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
-				windowSection.onContextMenu(e);
+				windowSection.onContextMenu(windowPosition, e);
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -858,7 +859,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
-					section.boundsList[i].onContextMenu(e);
+					section.boundsList[i].onContextMenu(cool.SimplePoint.fromCorePixels([position[0], position[1]]), e);
 
 				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 					break; // Stop propagation.
@@ -1121,7 +1122,7 @@ class CanvasSectionContainer {
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.mousePosition);
 			if (section) {
 				this.stopLongPress();
-				this.propagateOnContextMenu(section, e);
+				this.propagateOnContextMenu(section, this.convertPositionToSectionLocale(section, this.mousePosition), e);
 			}
 		}
 	}
@@ -1169,7 +1170,7 @@ class CanvasSectionContainer {
 		var mousePosition = this.convertPositionToCanvasLocale(e);
 		var section: CanvasSectionObject = this.findSectionContainingPoint(mousePosition);
 		if (section) {
-			this.propagateOnContextMenu(section, e);
+			this.propagateOnContextMenu(section, this.convertPositionToSectionLocale(section, mousePosition), e);
 		}
 		if (this.isLongPressActive()) {
 			// LongPress triggers context menu.
