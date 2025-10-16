@@ -32,7 +32,15 @@ class SlideLayerCacheMap
     // Helps if we want to clean older cache
     std::queue<std::string> insertion_order;
 
+    // Number of slides to cache layers for
+    std::size_t max_size;
+
 public:
+    SlideLayerCacheMap(std::size_t maxSize)
+        : max_size(maxSize)
+    {
+    }
+
     void insert(const std::string& key, const std::shared_ptr<Message> cachedData);
 
     std::size_t reduceSizeTo(std::size_t desiredSize);
