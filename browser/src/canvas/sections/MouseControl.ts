@@ -27,7 +27,14 @@ class MouseControl extends CanvasSectionObject {
 	currentPosition: cool.SimplePoint = new cool.SimplePoint(0, 0);
 	clickCount: number = 0;
 	positionOnMouseDown: cool.SimplePoint | null = null;
+	localPositionOnMouseDown: cool.SimplePoint | null = null;
 	mouseDownSent: boolean = false;
+
+	inSwipeAction: boolean = false;
+	swipeVelocity: number[] = [0, 0];
+	swipeTimeStamp: number = 0;
+	amplitude: number[] = [0, 0];
+	touchstart: number = 0;
 
 	constructor(name: string) {
 		super(name);
@@ -128,6 +135,52 @@ class MouseControl extends CanvasSectionObject {
 		}
 	}
 
+	private cancelSwipe() {
+		this.inSwipeAction = false;
+		this.containerObject.stopAnimating();
+	}
+
+	onDraw(frameCount?: number, elapsedTime?: number): void {
+		if (this.inSwipeAction && this.containerObject.getAnimatingSectionName() === this.name) {
+			const elapsed = Date.now() - this.swipeTimeStamp;
+			const delta = [this.amplitude[0] * Math.exp(-elapsed / 650), this.amplitude[1] * Math.exp(-elapsed / 650)];
+
+			if (Math.abs(delta[0]) > 0.2 || Math.abs(delta[1]) > 0.2) {
+				app.activeDocument.activeView.scrollTo(app.activeDocument.activeView.viewedRectangle.pX1 + delta[0], app.activeDocument.activeView.viewedRectangle.pY1 + delta[1]);
+				app.sectionContainer.requestReDraw();
+			}
+			else
+				this.cancelSwipe();
+		}
+	}
+
+	// Comment from original author:
+	/*
+		Code and maths for the ergonomic scrolling is inspired by formulas at
+		https://ariya.io/2013/11/javascript-kinetic-scrolling-part-2
+		Some constants are changed based on the testing/experimenting/trial-error
+	*/
+	private swipe(e: any): void {
+		const velocityX = app.map._docLayer.isCalcRTL() ? -e.velocityX : e.velocityX;
+		const pointVelocity = [velocityX, e.velocityY];
+
+		if (this.inSwipeAction) {
+			this.swipeVelocity[0] += pointVelocity[0];
+			this.swipeVelocity[1] += pointVelocity[1];
+		}
+		else {
+			this.swipeVelocity = pointVelocity;
+			this.inSwipeAction = true;
+		}
+
+		this.amplitude = [this.swipeVelocity[0] * 0.1, this.swipeVelocity[1] * 0.1];
+		this.swipeTimeStamp = Date.now();
+
+		this.startAnimating({ defer: true });
+
+		app.idleHandler.notifyActive();
+	}
+
 	public onMouseMove(
 		point: cool.SimplePoint,
 		dragDistance: Array<number>,
@@ -184,12 +237,17 @@ class MouseControl extends CanvasSectionObject {
 	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		this.refreshPosition(point);
 		this.positionOnMouseDown = this.currentPosition.clone();
+
+		if (e.type === 'touchstart') { // For swipe action.
+			this.localPositionOnMouseDown = point.clone();
+			this.touchstart = Date.now();
+		}
 	}
 
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		this.refreshPosition(point);
 
-		if (this.mouseDownSent)
+		if (this.mouseDownSent) {
 			app.map._docLayer._postMouseEvent(
 				'buttonup',
 				this.currentPosition.x,
@@ -198,6 +256,18 @@ class MouseControl extends CanvasSectionObject {
 				this.readButtons(e),
 				this.readModifier(e),
 			);
+		}
+		else if (e.type === 'touchend' && this.localPositionOnMouseDown) { // For swipe action.
+			const diff = new cool.SimplePoint(this.localPositionOnMouseDown.x - point.x, this.localPositionOnMouseDown.y - point.y);
+			const timeDiff = Date.now() - this.touchstart;
+
+			if (timeDiff < 200 && (Math.abs(diff.cX) > 5 || Math.abs(diff.cY) > 5))
+				this.swipe({ velocityX: diff.pX, velocityY: diff.pY });
+			else if (this.containerObject.getAnimatingSectionName() === this.name)
+				this.cancelSwipe();
+
+			this.localPositionOnMouseDown = null;
+		}
 
 		this.positionOnMouseDown = null;
 		this.mouseDownSent = false;
