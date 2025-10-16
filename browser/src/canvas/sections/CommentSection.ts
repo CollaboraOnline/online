@@ -214,7 +214,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.createAuthorTable();
 
-		if (this.sectionProperties.data.trackchange && !this.map.isReadOnlyMode()) {
+		if (this.sectionProperties.data.trackchange && !this.map.isReadOnlyMode() && !app.map['wopi'].HideChangeTrackingControls) {
 			this.createTrackChangeButtons();
 		}
 

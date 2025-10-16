@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
-"PO-Revision-Date: 2025-09-27 14:02+0000\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
+"PO-Revision-Date: 2025-10-15 14:53+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
@@ -328,8 +328,8 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -2369,32 +2369,31 @@ msgstr "Введіть запит у поле пошуку, щоб знайти 
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Анімація"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Застосовані анімації"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Перемістити вгору"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Перемістити вниз"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Категорія"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Початок"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Ефекти"
+msgstr "Ефект"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2437,7 +2436,7 @@ msgstr "Поли"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "Анімації"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2976,9 +2975,8 @@ msgid "Present in Window"
 msgstr "Показати у вікні"
 
 #: src/control/Control.NotebookbarImpress.js:501
-#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Презентація «Слідуй за мною»"
+msgstr "Розпочати презентацію \"Підпишіться на мене\""
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:729
@@ -3169,7 +3167,7 @@ msgstr ""
 "ввімкнена; це загроза безпеці."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr "увімкнено фільтрацію безпеки системних викликів"
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3199,7 +3197,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Погано виконується проксіювання всіх мережевих запитів."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr "пряме мережеве підключення"
 
 #: src/control/Control.ServerAuditDialog.ts:128
@@ -3251,7 +3249,8 @@ msgid "Alerts:"
 msgstr "Оповіщення:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "Перевірте попередження безпеки вашого сервера"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3280,7 +3279,7 @@ msgstr "Вставити аркуш"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Показати список аркушів"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
@@ -3410,7 +3409,7 @@ msgstr "Вставити фігури"
 msgid "Insert connectors"
 msgstr "Вставити роз'єм"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "Сховати меню"
 
@@ -3418,7 +3417,7 @@ msgstr "Сховати меню"
 msgid "Enter new name"
 msgstr "Введіть нове ім'я"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "Показати меню"
 
@@ -4142,7 +4141,7 @@ msgstr "Недавні"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Параметри полів сторінки"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:104
 msgid "Top: {top}"

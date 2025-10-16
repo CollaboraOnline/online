@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
 "PO-Revision-Date: 2025-08-25 11:46+0000\n"
 "Last-Translator: Ion Silvestru <ion.silvestru@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
@@ -330,8 +330,8 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -3186,7 +3186,7 @@ msgid ""
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3214,7 +3214,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:128
@@ -3266,7 +3266,8 @@ msgid "Alerts:"
 msgstr "Alerte:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "Verificați avertismentele de securitate ale serverului dvs"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3425,7 +3426,7 @@ msgstr "Inserează figuri"
 msgid "Insert connectors"
 msgstr "Inserare conectori"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "Ascunde meniu"
 
@@ -3433,7 +3434,7 @@ msgstr "Ascunde meniu"
 msgid "Enter new name"
 msgstr "Introduceţi numele nou"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "Afişează meniu"
 

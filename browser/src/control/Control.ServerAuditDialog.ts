@@ -85,7 +85,7 @@ class ServerAuditDialog {
 					'SDK: seccomp',
 					'',
 				],
-				ok: [_('system call security filtering enabled'), 'SDK: seccomp', ''],
+				ok: [_('System call security filtering enabled'), 'SDK: seccomp', ''],
 			},
 
 			hardwarewarning: {
@@ -119,7 +119,7 @@ class ServerAuditDialog {
 					'',
 					'',
 				],
-				ok: [_('direct network connection'), '', ''],
+				ok: [_('Direct network connection'), '', ''],
 			},
 
 			is_admin: {
@@ -357,7 +357,7 @@ class ServerAuditDialog {
 			// and if the current view isadminuser
 			if (hasErrors && app.isAdminUser) {
 				this.map.uiManager.showSnackbar(
-					_('Check security warnings of your server'),
+					_('Check warnings of your server'),
 					_('OPEN'),
 					this.open.bind(this),
 				);

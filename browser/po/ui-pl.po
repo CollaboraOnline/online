@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 15:01+0200\n"
-"PO-Revision-Date: 2025-09-27 14:02+0000\n"
+"POT-Creation-Date: 2025-10-16 11:54+0200\n"
+"PO-Revision-Date: 2025-10-15 14:53+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
@@ -333,8 +333,8 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:83
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1758 src/control/Control.UIManager.ts:1839
-#: src/control/Control.UIManager.ts:1993 src/control/Control.UIManager.ts:2171
+#: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
+#: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
@@ -2373,32 +2373,31 @@ msgstr "Wpisz w polu wyszukiwania, aby znaleźć cokolwiek w dokumencie"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animacja"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Zastosowane animacje"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Przesuń w górę"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Przesuń w dół"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Rozpocznij"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Efekty"
+msgstr "Efekt"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2441,7 +2440,7 @@ msgstr "Pole"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "Animacje"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2980,9 +2979,8 @@ msgid "Present in Window"
 msgstr "Wyświetl w oknie"
 
 #: src/control/Control.NotebookbarImpress.js:501
-#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Prezentacja „Śledź mnie”"
+msgstr "Rozpocznij prezentację „Śledź mnie”"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:729
@@ -3174,7 +3172,7 @@ msgstr ""
 "jest włączone. Stanowi to zagrożenie bezpieczeństwa."
 
 #: src/control/Control.ServerAuditDialog.ts:88
-msgid "system call security filtering enabled"
+msgid "System call security filtering enabled"
 msgstr "włączone filtrowanie zabezpieczeń wywołań systemowych"
 
 #: src/control/Control.ServerAuditDialog.ts:95
@@ -3204,7 +3202,7 @@ msgid "Poorly performing proxying of all network requests."
 msgstr "Słabo działające proxy dla wszystkich żądań sieciowych."
 
 #: src/control/Control.ServerAuditDialog.ts:122
-msgid "direct network connection"
+msgid "Direct network connection"
 msgstr "bezpośrednie połączenie sieciowe"
 
 #: src/control/Control.ServerAuditDialog.ts:128
@@ -3256,7 +3254,8 @@ msgid "Alerts:"
 msgstr "Alerty:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-msgid "Check security warnings of your server"
+#, fuzzy
+msgid "Check warnings of your server"
 msgstr "Sprawdź ostrzeżenia o bezpieczeństwie serwera"
 
 #: src/control/Control.ServerAuditDialog.ts:361
@@ -3285,7 +3284,7 @@ msgstr "Wstaw arkusz"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Pokaż listę arkuszy"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
@@ -3415,7 +3414,7 @@ msgstr "Wstaw kształty"
 msgid "Insert connectors"
 msgstr "Wstaw łączniki"
 
-#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1116
+#: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
 msgstr "Ukryj menu"
 
@@ -3423,7 +3422,7 @@ msgstr "Ukryj menu"
 msgid "Enter new name"
 msgstr "Wpisz nową nazwę"
 
-#: src/control/Control.UIManager.ts:1143
+#: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
 msgstr "Pokaż menu"
 
@@ -4150,7 +4149,7 @@ msgstr "Ostatnie"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Opcje marginesów strony"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:104
 msgid "Top: {top}"
