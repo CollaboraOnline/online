@@ -357,7 +357,7 @@ class ServerAuditDialog {
 			// and if the current view isadminuser
 			if (hasErrors && app.isAdminUser) {
 				this.map.uiManager.showSnackbar(
-					_('Check security warnings of your server'),
+					_('Check warnings of your server'),
 					_('OPEN'),
 					this.open.bind(this),
 				);
