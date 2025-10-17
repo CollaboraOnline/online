@@ -2314,7 +2314,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 			this._textCSelections.setPointSet(pointSet);
 
-			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
+			if (this._map._textInput._cursorHandler)
+				this._map._textInput._cursorHandler.setShowSection(false); // User selected text, we remove the carret marker.
+
 			if (window.L.Browser.clipboardApiAvailable) {
 				// Just set the selection type, no fetch of the content.
 				this._map._clip.setTextSelectionType('text');
@@ -3940,9 +3942,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this._cursorMarker && app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(0);
 		}
-		if (this._map._textInput._cursorHandler) {
+		if (this._map._textInput._cursorHandler)
 			this._map._textInput._cursorHandler.setOpacity(0);
-		}
 
 		if (this.isCalc()) {
 			this._cellCursorSection.setShowSection(false);
@@ -3957,9 +3958,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(1);
 		}
-		if (this._map._textInput._cursorHandler) {
+
+		if (this._map._textInput._cursorHandler)
 			this._map._textInput._cursorHandler.setOpacity(1);
-		}
 
 		if (this.isCalc()) {
 			this._cellCursorSection.setShowSection(true);
