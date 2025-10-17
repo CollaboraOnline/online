@@ -142,11 +142,13 @@ class MouseControl extends CanvasSectionObject {
 
 	private cancelSwipe() {
 		this.inSwipeAction = false;
-		this.containerObject.stopAnimating();
+
+		if (this.containerObject.getAnimatingSectionName() === this.name)
+			this.containerObject.stopAnimating();
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number): void {
-		if (this.inSwipeAction && this.containerObject.getAnimatingSectionName() === this.name) {
+		if (this.inSwipeAction) {
 			const elapsed = Date.now() - this.swipeTimeStamp;
 			const delta = [this.amplitude[0] * Math.exp(-elapsed / 650), this.amplitude[1] * Math.exp(-elapsed / 650)];
 
@@ -270,7 +272,7 @@ class MouseControl extends CanvasSectionObject {
 
 			if (timeDiff < 200 && (Math.abs(diff.cX) > 5 || Math.abs(diff.cY) > 5))
 				this.swipe({ velocityX: diff.pX, velocityY: diff.pY });
-			else if (this.containerObject.getAnimatingSectionName() === this.name)
+			else if (this.inSwipeAction)
 				this.cancelSwipe();
 
 			this.localPositionOnMouseDown = null;
@@ -309,9 +311,13 @@ class MouseControl extends CanvasSectionObject {
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.fire('closepopups');
+		app.map.fire('editorgotfocus');
 
 		this.refreshPosition(point);
 		this.clickCount++;
+
+		if (!(<any>window).mode.isDesktop())
+			app.map.fire('closemobilewizard');
 
 		let buttons = this.readButtons(e);
 		let modifier = this.readModifier(e);
