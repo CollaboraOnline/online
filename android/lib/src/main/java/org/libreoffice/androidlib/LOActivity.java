@@ -25,6 +25,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Insets;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -42,6 +43,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.MimeTypeMap;
@@ -77,13 +79,14 @@ import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.core.view.WindowCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -253,6 +256,28 @@ public class LOActivity extends AppCompatActivity {
         else
             this.rateAppController = null;
         this.mActivity = this;
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!documentLoaded) {
+                    finishAndRemoveTask();
+                    return;
+                }
+
+                if (mMobileWizardVisible) {
+                    // just return one level up in the mobile-wizard (or close it)
+                    callFakeWebsocketOnMessage("mobile: mobilewizardback");
+                    return;
+                } else if (mIsEditModeActive) {
+                    callFakeWebsocketOnMessage("mobile: readonlymode");
+                    return;
+                }
+
+                finishWithProgress();
+            }
+        });
+
         init();
     }
 
@@ -355,6 +380,26 @@ public class LOActivity extends AppCompatActivity {
         if (mTempFile != null)
         {
             mWebView = (COWebView) findViewById(R.id.browser);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                mWebView.setOnApplyWindowInsetsListener((v, windowInsets) -> {
+                    Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.ime() | (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE ? WindowInsets.Type.systemOverlays() : 0));
+
+                    ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                    mlp.leftMargin = insets.left;
+                    mlp.topMargin = insets.top;
+                    mlp.rightMargin = insets.right;
+                    mlp.bottomMargin = insets.bottom;
+                    v.setLayoutParams(mlp);
+
+                    return WindowInsets.CONSUMED;
+                });
+
+                boolean lightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_YES) == 0;
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(lightMode);
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightNavigationBars(lightMode);
+            }
+
             mMobileSocket = mWebView.getWebViewClient().getMobileSocket();
 
             WebSettings webSettings = mWebView.getSettings();
@@ -811,25 +856,6 @@ public class LOActivity extends AppCompatActivity {
                 finishAndRemoveTask();
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (!documentLoaded) {
-            finishAndRemoveTask();
-            return;
-        }
-
-        if (mMobileWizardVisible) {
-            // just return one level up in the mobile-wizard (or close it)
-            callFakeWebsocketOnMessage("mobile: mobilewizardback");
-            return;
-        } else if (mIsEditModeActive) {
-            callFakeWebsocketOnMessage("mobile: readonlymode");
-            return;
-        }
-
-        finishWithProgress();
     }
 
     private void loadDocument() {
@@ -1339,7 +1365,6 @@ public class LOActivity extends AppCompatActivity {
         Intent intent = new Intent(LO_ACTIVITY_BROADCAST);
         intent.putExtra(LO_ACTION_EVENT, event);
         intent.putExtra(LO_ACTION_DATA, data);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public native void saveAs(String fileUri, String format, String options);

@@ -1,5 +1,7 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildDir = "@abs_top_builddir@/android/build"
+// buildhost settings - paths and the like
+apply from: 'variables.gradle'
+
+layout.buildDirectory.set(file("${absTopBuilddir}/android/build"))
 
 buildscript {
     repositories {
@@ -22,7 +24,7 @@ allprojects {
 }
 
 tasks.register('clean', Delete) {
-    delete rootProject.buildDir
+    delete layout.buildDirectory
 }
 
 afterEvaluate {

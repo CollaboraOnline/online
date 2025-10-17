@@ -2,7 +2,6 @@
 .idea
 /build
 /android.iml
-/build.gradle
 /local.properties
 /lib/src/main/assets/etc/
 /lib/src/main/assets/example.odt
@@ -16,3 +15,4 @@
 /lib/src/debug/assets
 /lib/src/release/assets
 /lib/src/main/cpp/lib
+/variables.gradle

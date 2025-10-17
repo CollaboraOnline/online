@@ -8,12 +8,17 @@
 package org.libreoffice.androidapp;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Insets;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowInsets;
 import android.widget.RadioGroup;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.WindowCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import org.libreoffice.androidapp.ui.LibreOfficeUIActivity;
@@ -32,6 +37,21 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            findViewById(android.R.id.content).setOnApplyWindowInsetsListener((v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+
+                v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+
+                return WindowInsets.CONSUMED;
+            });
+
+            boolean lightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_YES) == 0;
+            WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(lightMode);
+            WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightNavigationBars(lightMode);
+        }
+
         prefs = getSharedPreferences(LibreOfficeUIActivity.EXPLORER_PREFS_KEY, MODE_PRIVATE);
     }
 
