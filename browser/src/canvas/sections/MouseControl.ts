@@ -36,6 +36,11 @@ class MouseControl extends CanvasSectionObject {
 	amplitude: number[] = [0, 0];
 	touchstart: number = 0;
 
+	pinchStartCenter: any;
+	zoom: any;
+	origCenter: any;
+	pinchLength: number = 0;
+
 	constructor(name: string) {
 		super(name);
 	}
@@ -337,5 +342,68 @@ class MouseControl extends CanvasSectionObject {
 			this.clickTimer = null;
 			this.clickCount = 0;
 		}, 250);
+	}
+
+	onMultiTouchStart(e: TouchEvent): void {
+		if (this.inSwipeAction)
+			this.containerObject.stopAnimating();
+
+		if (e.touches.length !== 2)
+			return;
+
+		const centerX = Math.round((e.touches[0].clientX + e.touches[1].clientX) * 0.5);
+		const centerY = Math.round((e.touches[0].clientY + e.touches[1].clientY) * 0.5);
+
+		if (isNaN(centerX) || isNaN(centerY))
+			return;
+
+		this.pinchLength = Math.sqrt(Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) + Math.pow(e.touches[0].clientY - e.touches[1].clientY , 2));
+
+		this.pinchStartCenter = { x: centerX, y: centerY };
+		const _pinchStartLatLng = app.map.mouseEventToLatLng({ clientX: centerX, clientY: centerY });
+		app.map._docLayer.preZoomAnimation(_pinchStartLatLng);
+	}
+
+	onMultiTouchMove(point: cool.SimplePoint, dragDistance: number, e: TouchEvent): void {
+		const centerX = Math.round((e.touches[0].clientX + e.touches[1].clientX) * 0.5);
+		const centerY = Math.round((e.touches[0].clientY + e.touches[1].clientY) * 0.5);
+
+		if (!this.pinchStartCenter || isNaN(centerX) || isNaN(centerY))
+			return;
+
+		// we need to invert the offset or the map is moved in the opposite direction
+		var offset = { x: centerX - this.pinchStartCenter.x, y: centerY - this.pinchStartCenter.y };
+		var center = { x: this.pinchStartCenter.x - offset.x, y: this.pinchStartCenter.y - offset.y };
+
+		const newPinchLength = Math.sqrt(Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) + Math.pow(e.touches[0].clientY - e.touches[1].clientY , 2));
+		const diff = newPinchLength - this.pinchLength;
+		this.zoom = app.map.getZoom() + diff * 0.01;
+		this.zoom = app.map._limitZoom(this.zoom);
+
+		this.origCenter = app.map.mouseEventToLatLng({ clientX: center.x, clientY: center.y });
+
+		if (app.map._docLayer.zoomStep)
+			app.map._docLayer.zoomStep(this.zoom, this.origCenter);
+
+		app.idleHandler.notifyActive();
+	}
+
+	onMultiTouchEnd(e: TouchEvent): void {
+		var oldZoom = app.map.getZoom();
+		var zoomDelta = this.zoom - oldZoom;
+		var finalZoom = app.map._limitZoom(zoomDelta > 0 ? Math.ceil(this.zoom) : Math.floor(this.zoom));
+
+		this.pinchStartCenter = undefined;
+
+		if (app.map._docLayer.zoomStepEnd) {
+			app.map._docLayer.zoomStepEnd(finalZoom, this.origCenter,
+				function (newMapCenter: any) { // mapUpdater
+					app.map.setView(newMapCenter, finalZoom);
+				},
+				// showMarkers
+				function () {
+					app.map._docLayer.postZoomAnimation();
+				});
+		}
 	}
 }
