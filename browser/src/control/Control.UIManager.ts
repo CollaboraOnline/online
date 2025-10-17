@@ -551,7 +551,7 @@ class UIManager extends window.L.Control {
 			JSDialog.PresentationBar(this.map);
 			this.map.sidebarFromNotebookbar = JSDialog.SidebarFromNotebookbarPanel(this.map);
 		}
-		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
+		if (window.mode.isTablet() || window.mode.isDesktop()) {
 			this.map.navigator.initializeNavigator(docType);
 		}
 
