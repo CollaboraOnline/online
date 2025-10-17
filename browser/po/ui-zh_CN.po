@@ -1852,7 +1852,7 @@ msgstr "隐藏菜单栏"
 #: src/control/Control.NotebookbarDraw.js:561
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1768
-msgid "Invert Background"
+msgid "Switch Background"
 msgstr "反转背景"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:806

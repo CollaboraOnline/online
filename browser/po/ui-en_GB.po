@@ -1857,8 +1857,8 @@ msgstr "Hide Menu Bar"
 #: src/control/Control.NotebookbarDraw.js:561
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1768
-msgid "Invert Background"
-msgstr "Invert Background"
+msgid "Switch Background"
+msgstr "Switch Background"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:806
 #: src/control/Control.NotebookbarCalc.js:2585
