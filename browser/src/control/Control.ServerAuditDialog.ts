@@ -169,7 +169,14 @@ class ServerAuditDialog {
 		app.clientAudit = ClientAuditor.performClientAudit();
 		const clientEntries = this.getEntries(app.clientAudit);
 		const allEntries = serverEntries.concat(clientEntries);
-		// FIXME: sort allEntries to have errors at the top ...
+
+		// Sort errors to the top
+		allEntries.sort((a, b) => {
+			const aIsError = a.columns[0].collapsed === 'serverauditerror.svg';
+			const bIsError = b.columns[0].collapsed === 'serverauditerror.svg';
+			if (aIsError !== bIsError) return aIsError ? -1 : 1;
+			return 0; // keep internal order, already sorted by priority
+		});
 
 		const dialogBuildEvent = {
 			data: this.getJSON(allEntries),
