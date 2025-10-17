@@ -2491,9 +2491,10 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'IA', de: null },
 				'children' : [
 					{
-						'id': 'review-insert-annotation',
-						'type': 'bigtoolitem',
+						'id': 'review-insert-annotation:AnnotationMenu',
+						'type': 'menubutton',
 						'text': _UNO('.uno:InsertAnnotation'),
+						'applyCallback': 'insertcomment',
 						'command': '.uno:InsertAnnotation',
 						'accessibility': { focusBack: true,	combination: 'IA', de: null }
 					},
