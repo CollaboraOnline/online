@@ -237,6 +237,8 @@ class MouseControl extends CanvasSectionObject {
 
 			this.sendMouseMove(count, buttons, modifier);
 		}
+
+		app.idleHandler.notifyActive();
 	}
 
 	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
@@ -311,9 +313,17 @@ class MouseControl extends CanvasSectionObject {
 		this.refreshPosition(point);
 		this.clickCount++;
 
-		const buttons = this.readButtons(e);
-		const modifier = this.readModifier(e);
+		let buttons = this.readButtons(e);
+		let modifier = this.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
+
+		// Turn ctrl-left-click into right-click for browsers on macOS
+		if (window.L.Browser.mac) {
+			if (modifier == app.UNOModifier.CTRL && buttons == app.LOButtons.left) {
+				modifier = 0;
+				buttons = app.LOButtons.right;
+			}
+		}
 
 		if (this.clickTimer) clearTimeout(this.clickTimer);
 		else { // Old code always sends the first click, so do we.
