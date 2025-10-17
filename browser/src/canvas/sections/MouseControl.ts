@@ -35,6 +35,7 @@ class MouseControl extends CanvasSectionObject {
 	swipeTimeStamp: number = 0;
 	amplitude: number[] = [0, 0];
 	touchstart: number = 0;
+	previousViewedRectangle: cool.SimpleRectangle | null = null; // To check if we hit the borders of document.
 
 	pinchStartCenter: any;
 	zoom: any;
@@ -155,6 +156,13 @@ class MouseControl extends CanvasSectionObject {
 			if (Math.abs(delta[0]) > 0.2 || Math.abs(delta[1]) > 0.2) {
 				app.activeDocument.activeView.scrollTo(app.activeDocument.activeView.viewedRectangle.pX1 + delta[0], app.activeDocument.activeView.viewedRectangle.pY1 + delta[1]);
 				app.sectionContainer.requestReDraw();
+
+				if (this.previousViewedRectangle) {
+					if (app.activeDocument.activeView.viewedRectangle.equals(this.previousViewedRectangle.toArray()))
+						this.cancelSwipe();
+				}
+
+				this.previousViewedRectangle = app.activeDocument.activeView.viewedRectangle.clone();
 			}
 			else
 				this.cancelSwipe();
@@ -168,6 +176,8 @@ class MouseControl extends CanvasSectionObject {
 		Some constants are changed based on the testing/experimenting/trial-error
 	*/
 	private swipe(e: any): void {
+		this.previousViewedRectangle = null;
+
 		const velocityX = app.map._docLayer.isCalcRTL() ? -e.velocityX : e.velocityX;
 		const pointVelocity = [velocityX, e.velocityY];
 
@@ -183,7 +193,10 @@ class MouseControl extends CanvasSectionObject {
 		this.amplitude = [this.swipeVelocity[0] * 0.1, this.swipeVelocity[1] * 0.1];
 		this.swipeTimeStamp = Date.now();
 
-		this.startAnimating({ defer: true });
+		const animatingSection = this.containerObject.getAnimatingSectionName();
+
+		if (!animatingSection)
+			this.startAnimating({ defer: true });
 
 		app.idleHandler.notifyActive();
 	}
