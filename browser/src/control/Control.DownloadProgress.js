@@ -155,11 +155,7 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 	},
 
 	setupKeyboardShortcutForSnackbar: function () {
-		this._setupKeyboardShortcutForElement('snackbar-container', 'button');
-
-		// Snackbars cannot get focus, but we are using it with a button and it requires to be focused. No need to change snackbar imp for now.
-		if (document.getElementById('button'))
-			document.getElementById('button').focus(); // TODO: This "button" id is too generic. It could be something like "snackbar-button" etc.
+		this._setupKeyboardShortcutForElement('snackbar', 'button');
 	},
 
 	// isLargeCopy specifies if we are copying and have to explain user the process
