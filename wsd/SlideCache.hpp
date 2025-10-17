@@ -29,8 +29,9 @@
 class SlideLayerCacheMap
 {
     std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>> cache_map;
+
     // Helps if we want to clean older cache
-    std::queue<std::string> insertion_order;
+    std::vector<std::string> insertion_order;
 
     // Number of slides to cache layers for
     std::size_t max_size;
@@ -51,4 +52,6 @@ public:
     find(const std::string& key) const;
 
     std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>>::const_iterator end();
+
+    std::size_t size();
 };

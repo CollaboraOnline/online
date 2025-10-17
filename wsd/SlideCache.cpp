@@ -13,7 +13,17 @@
 
 void SlideLayerCacheMap::insert(const std::string& key, const std::shared_ptr<Message> cachedData)
 {
-    insertion_order.push(key);
+    if (cache_map.contains(key))
+    {
+        if (insertion_order.back() != key)
+        {
+            auto pos = std::find(insertion_order.begin(), insertion_order.end(), key);
+            std::rotate(pos, pos + 1, insertion_order.end());
+        }
+    }
+    else
+        insertion_order.push_back(key);
+
     cache_map[key].push_back(cachedData);
     reduceSizeTo(max_size);
 }
@@ -27,7 +37,7 @@ std::size_t SlideLayerCacheMap::reduceSizeTo(std::size_t desiredSize)
     while (cache_map.size() > desiredSize)
     {
         cache_map.erase(insertion_order.front());
-        insertion_order.pop();
+        insertion_order.erase(insertion_order.begin());
         total_deleted_entries++;
     }
 
@@ -37,8 +47,7 @@ std::size_t SlideLayerCacheMap::reduceSizeTo(std::size_t desiredSize)
 void SlideLayerCacheMap::erase_all()
 {
     cache_map.clear();
-    std::queue<std::string> empty;
-    std::swap(insertion_order, empty);
+    insertion_order.clear();
 }
 
 std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>>::const_iterator
@@ -52,3 +61,5 @@ SlideLayerCacheMap::end()
 {
     return cache_map.end();
 }
+
+std::size_t SlideLayerCacheMap::size() { return cache_map.size(); }
