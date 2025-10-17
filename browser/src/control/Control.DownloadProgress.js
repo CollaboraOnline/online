@@ -69,9 +69,7 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
 				buttonText, this._onStartDownload.bind(this), true, modalId + '-response');
 
-			app.layoutingService.appendLayoutingTask(() => {
-				this.setupKeyboardShortcutForDialog(modalId);
-			});
+			this.setupKeyboardShortcutForDialog(modalId);
 		}
 	},
 
@@ -119,9 +117,7 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 			this._map.uiManager.showSnackbar(
 				snackbarMsg, buttonText, this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
 
-			setTimeout(() => {
-				this.setupKeyboardShortcutForSnackbar();
-			}, 100);
+			this.setupKeyboardShortcutForSnackbar();
 		} else {
 			JSDialog.setMessageInModal(modalId, dialogMsg, '');
 			JSDialog.enableButtonInModal(modalId, modalId + '-response', true);
@@ -130,7 +126,7 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 	},
 
 	_setupKeyboardShortcutForElement: function (eventTargetId, buttonId) {
-		var keyDownCallback = function(e) {
+		var keyDownCallback = (e) => {
 			var modifierKeys = !e.altKey && !e.shiftKey;
 			if (window.L.Browser.mac) {
 				modifierKeys = modifierKeys && e.metaKey && !e.ctrlKey;
@@ -144,24 +140,31 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 			}
 		};
 		if (document.getElementById(eventTargetId))
-			document.getElementById(eventTargetId).onkeydown = keyDownCallback.bind(this);
+			document.getElementById(eventTargetId).onkeydown = keyDownCallback.bind(this); // FIXME
 	},
 
 	setupKeyboardShortcutForDialog: function (modalId) {
-		var dialogId = this._map.uiManager.generateModalId(modalId);
-		var buttonId = modalId + '-response';
-		this._setupKeyboardShortcutForElement(dialogId, buttonId);
-		document.getElementById(buttonId).focus();
+		app.layoutingService.appendLayoutingTask(() => {
+			var dialogId = this._map.uiManager.generateModalId(modalId);
+			var buttonId = modalId + '-response';
+			this._setupKeyboardShortcutForElement(dialogId, buttonId);
+			app.layoutingService.appendLayoutingTask(() => {
+				const button = document.getElementById(buttonId);
+				if (button) button.focus();
+			}); // FIXME
+		});
 	},
 
 	setupKeyboardShortcutForSnackbar: function () {
-		this._setupKeyboardShortcutForElement('snackbar', 'button');
+		app.layoutingService.appendLayoutingTask(() => {
+			this._setupKeyboardShortcutForElement('snackbar', 'button');
+		});
 	},
 
 	// isLargeCopy specifies if we are copying and have to explain user the process
 	// if it is false we do paste so only show download progress
 	show: function (isLargeCopy) {
-		window.app.console.log('DownloadProgress.show');
+		window.app.console.log('DownloadProgress.show ' + (isLargeCopy ? 'large' : 'regular'));
 		// better to init the following state variables here,
 		// since the widget could be re-used without having been destroyed
 		this._started = false;
