@@ -125,7 +125,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
-		return function(objectType, eventType, object, data) {
+		return function(objectType, eventType, object, data, builder) {
 			if (typeof data == 'number') var pos = data;
 			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
 			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
@@ -173,7 +173,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			}
 
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
-			if (innerCallback && innerCallback(objectType, eventType, object, data, entry))
+			// usually last param is builder see: JSDialogCallback
+			if (innerCallback && innerCallback(objectType, eventType, object, data, entry || builder))
 				return;
 
 			if (eventType === 'selected')
