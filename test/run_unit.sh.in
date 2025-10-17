@@ -43,9 +43,9 @@ while test $# -gt 0; do
       --test-name) tst=$2; shift;;
       --log-file)  tst_log=$2; shift;;
       --trs-file)  test_output=$2; shift;;
-      --gdb)       trace='gdb --args'; shift;;
-      --valgrind)  trace=$valgrind_cmd; shift;;
-      --fail-fast) fail_fast='true'; shift;;
+      --gdb)       trace='gdb --args';;
+      --valgrind)  trace=$valgrind_cmd;;
+      --fail-fast) fail_fast='true';;
       --verbose)   verbose="--verbose";;
       --help)      print_help ;;
   -*) ;; # ignore
