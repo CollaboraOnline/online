@@ -166,7 +166,8 @@ class ServerAuditDialog {
 
 	public open() {
 		const serverEntries = this.getEntries(app.serverAudit);
-		const clientEntries = this.getEntries(ClientAuditor.performClientAudit());
+		app.clientAudit = ClientAuditor.performClientAudit();
+		const clientEntries = this.getEntries(app.clientAudit);
 		const allEntries = serverEntries.concat(clientEntries);
 		// FIXME: sort allEntries to have errors at the top ...
 
