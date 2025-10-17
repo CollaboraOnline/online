@@ -507,10 +507,9 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
                     ws, id, uriPublic, isReadOnly, requestDetails);
                 if (!clientSession)
                 {
+                    // createNewClientSession() has sent the error to the client WebSocket.
                     LOG_ERR_S(logPrefix << "Failed to create Client Session [" << id
                                         << "] on docKey [" << docKey << ']');
-                    sendErrorAndShutdownWS(ws, "error: cmd=internal kind=load",
-                                           WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
                     return;
                 }
 

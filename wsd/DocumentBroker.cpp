@@ -4009,6 +4009,15 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
         }
         else
         {
+            const std::size_t loadingSessions = countLoadingSessions();
+            if (_sessions.size() == loadingSessions + 1)
+            {
+                // This session is the last loaded one.
+                // If we remove it, the loading one(s) will never load.
+                // Instead, fail to the loading ones and remove them.
+                failLoadingSessions();
+            }
+
             LOG_DBG("Disconnecting session [" << id << "] from Kit");
             hardDisconnect = session->disconnectFromKit();
 
@@ -4130,6 +4139,13 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
     catch (const std::exception& exc)
     {
         LOG_ERR("Exception while preparing session [" << id << "]: " << exc.what());
+    }
+
+    if (ws)
+    {
+        const std::string msg("error: cmd=internal kind=load");
+        ws->sendTextMessage(msg);
+        ws->shutdown(true, msg);
     }
 
     return nullptr;
@@ -4907,6 +4923,20 @@ std::size_t DocumentBroker::countActiveSessions() const
     return count;
 }
 
+std::size_t DocumentBroker::countLoadingSessions() const
+{
+    std::size_t count = 0;
+    for (const auto& session : _sessions)
+    {
+        if (!session.second->isLive() && !session.second->inWaitDisconnected())
+        {
+            ++count;
+        }
+    }
+
+    return count;
+}
+
 void DocumentBroker::setModified(const bool value)
 {
 #if !MOBILEAPP
@@ -5199,6 +5229,29 @@ void DocumentBroker::disconnectedFromKit(bool unexpected)
     {
         LOG_INF("DocBroker [" << _docKey << "] Disconnected from Kit while closing with reason ["
                               << _closeReason << ']');
+    }
+
+    failLoadingSessions();
+}
+
+void DocumentBroker::failLoadingSessions()
+{
+    // All the sessions waiting to load need to be notified and removed.
+    for (auto it = _sessions.rbegin(); it != _sessions.rend();)
+    {
+        const auto& pair = *it;
+        if (!pair.second->isLive() && !pair.second->inWaitDisconnected() &&
+            !pair.second->isCloseFrame())
+        {
+            const std::string msg("error: cmd=load kind=docunloading");
+            LOG_INF("Rejecting loading session [" << pair.first << "] with " << msg);
+            pair.second->sendTextFrame(msg);
+            it = decltype(it)(_sessions.erase(std::next(it).base()));
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 

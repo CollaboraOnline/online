@@ -451,7 +451,7 @@ public:
     /// True if any flag to close or terminate is set.
     bool isUnloadingUnrecoverably() const
     {
-        return isMarkedToDestroy() || _docState.isCloseRequested() ||
+        return isMarkedToDestroy() || _docState.isCloseRequested() || _stop ||
                SigUtil::getShutdownRequestFlag();
     }
 
@@ -872,6 +872,12 @@ private:
     /// Returns the number of active sessions.
     /// This includes only those that are loaded and not waiting disconnection.
     std::size_t countActiveSessions() const;
+
+    /// Returns the number of sessions still loading.
+    std::size_t countLoadingSessions() const;
+
+    /// Notify and remove the loading sessions that we're unloading.
+    void failLoadingSessions();
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);

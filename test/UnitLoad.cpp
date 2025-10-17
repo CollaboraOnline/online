@@ -64,6 +64,7 @@ class UnitLoad : public UnitWSD
     TestResult testReload();
     TestResult testLoad();
     TestResult testLoadUserPrivateInfo();
+    TestResult testLoadSessionRace();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
@@ -262,9 +263,71 @@ UnitBase::TestResult UnitLoad::testLoadUserPrivateInfo()
     return TestResult::Ok;
 }
 
+UnitBase::TestResult UnitLoad::testLoadSessionRace()
+{
+    testname = __func__;
+    std::string documentPath, documentURL;
+    helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+
+    try
+    {
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname + "Poll");
+        socketPoll->startThread();
+
+        Poco::URI uri(helpers::getTestServerURI());
+
+        // Load a document and wait for the status.
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::connectLOKit(socketPoll, uri, documentURL, testname);
+        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
+        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
+                           helpers::isDocumentLoaded(socket, testname, false));
+
+        std::shared_ptr<http::WebSocketSession> socket2 =
+            helpers::connectLOKit(socketPoll, uri, documentURL, testname);
+        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
+        LOK_ASSERT_MESSAGE("cannot get a 2nd active view " + documentURL,
+                           helpers::isDocumentLoaded(socket, testname, true));
+
+        // Now we should have two active views ...
+        TST_LOG("We now have two fully-loaded views");
+
+        std::shared_ptr<http::WebSocketSession> socketslowload =
+            helpers::connectLOKit(socketPoll, uri, documentURL, testname);
+
+        // FIXME: do we get this ? ...
+//        helpers::assertResponseString(socket, "status:", testname);
+
+        // This is the race - notice we don't send the 'load url' at all from this view.
+        // We should have a 'session' command already sent to the Kit, but no LOK view yet.
+
+        TST_LOG("Shutting down after second session partially setup");
+        socket2->asyncShutdown();
+        socket->asyncShutdown();
+
+        // Somehow - we want both these messages to get there fast [!] ...
+
+        // We should have sent a "disconnect" to the kit for session 1
+        TST_LOG("Send load after initial view shutdown");
+        helpers::sendTextFrame(socketslowload, "load url=" + documentURL, testname);
+
+        auto response = helpers::getResponseString(socketslowload, "error:", testname);
+        LOK_ASSERT_EQUAL_STR("error: cmd=load kind=docunloading", response);
+        //    FIXME: somewhere we should be failing / asserting on something here ...
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
+
+    return TestResult::Ok;
+}
+
 void UnitLoad::invokeWSDTest()
 {
-    UnitBase::TestResult result = testLoad();
+    UnitBase::TestResult result;
+
+    result = testLoad();
     if (result != TestResult::Ok)
         exitTest(result);
 
@@ -281,6 +344,10 @@ void UnitLoad::invokeWSDTest()
         exitTest(result);
 
     result = testLoadUserPrivateInfo();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testLoadSessionRace();
     if (result != TestResult::Ok)
         exitTest(result);
 
