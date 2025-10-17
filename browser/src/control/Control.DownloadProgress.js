@@ -157,7 +157,7 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 
 	setupKeyboardShortcutForSnackbar: function () {
 		app.layoutingService.appendLayoutingTask(() => {
-			this._setupKeyboardShortcutForElement('snackbar', 'button');
+			this._setupKeyboardShortcutForElement('snackbar', 'button-button');
 		});
 	},
 
