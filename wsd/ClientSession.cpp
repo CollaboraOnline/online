@@ -1363,7 +1363,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens.equals(0, "urp") ||
              tokens.equals(0, "useractive") ||
              tokens.equals(0, "userinactive") ||
-             tokens.equals(0, "getslide") ||
              tokens.equals(0, "paintwindow") ||
              tokens.equals(0, "windowcommand") ||
              tokens.equals(0, "asksignaturestatus") ||
@@ -1446,6 +1445,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "toggletiledumping"))
     {
         return forwardToChild(std::string(buffer, length), docBroker);
+    }
+    else if (tokens.equals(0, "getslide"))
+    {
+        return handleGetSlideRequest(tokens, docBroker);
     }
 #if !MOBILEAPP
     else if (tokens.equals(0, "routetokensanitycheck"))
@@ -1932,6 +1935,13 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
         // return sendTextFrameAndLogError("error: cmd=tile kind=invalid");
     }
 
+    return true;
+}
+
+bool ClientSession::handleGetSlideRequest(const StringVector& tokens,
+                                          const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    docBroker->handleGetSlideRequest(tokens, client_from_this());
     return true;
 }
 

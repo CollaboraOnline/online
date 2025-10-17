@@ -2460,41 +2460,15 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 
 bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned width,
                                         const unsigned height, double devicePixelRatio, bool& done,
-                                        const std::string& cacheKey, std::size_t layerNumber,
-                                        bool isCompressed = false)
+                                        const std::string& cacheKey, bool isCompressed = false)
 {
+    // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
     bool isBitmapLayer = false;
-    std::string jsonMsg;
-    bool cacheUsed = false;
-    SlideLayerCacheMap& slideLayerCache = _docManager->getSlideLayerCache();
-
-    // cacheKey example:
-    // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
-    // This is all the information browser sends based on which slides are created
-    if (auto itr = slideLayerCache.find(cacheKey);
-        itr != slideLayerCache.end() && layerNumber < itr->second.size())
-    {
-        pixmap = itr->second[layerNumber]._pixmap;
-        isBitmapLayer = itr->second[layerNumber]._isBitmapLayer;
-        jsonMsg = itr->second[layerNumber]._msg;
-        done = itr->second[layerNumber]._done;
-        cacheUsed = true;
-        LOG_INF("Slideshow: Cached slide layer reused by view ID " << getViewId());
-    }
-    else
-    {
-        char* msg = nullptr;
-        done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer,
-                                                        &devicePixelRatio, &msg);
-        jsonMsg = std::string(msg);
-        free(msg);
-        SlideLayerCache cache(pixmap, isBitmapLayer, jsonMsg, done);
-        slideLayerCache.insert(cacheKey, cache);
-        LOG_INF(
-            "Slideshow: Cached slide layer not found, slides layer is freshely rendered by view ID "
-            << getViewId());
-    }
+    char* msg = nullptr;
+    done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer, &devicePixelRatio, &msg);
+    std::string jsonMsg(msg);
+    free(msg);
 
     if (jsonMsg.empty())
         return true;
@@ -2506,15 +2480,12 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
         {
             std::string json = jsonMsg;
             Poco::JSON::Parser parser;
-            Poco::JSON::Object::Ptr root;
-            if (EnableExperimental){
-                root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            root->set("cacheKey", cacheKey);
+            if (EnableExperimental)
                 root->set("isCompressed", isCompressed);
 
-                std::stringstream ss;
-                root->stringify(ss);
-                json = ss.str();
-            }
+            json = JsonUtil::jsonToString(root);
 
             if (!isBitmapLayer)
             {
@@ -2556,10 +2527,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
                     root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
                     root->set("width", width);
                     root->set("height", height);
-
-                    std::stringstream updatedSs;
-                    root->stringify(updatedSs);
-                    json = updatedSs.str();
+                    json = JsonUtil::jsonToString(root);
                 }
 
                 std::string response = "slidelayer: " + json;
@@ -2573,7 +2541,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
                 std::vector<char> compressedOutPut;
                 compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
 
-                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA && !cacheUsed)
+                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
                 {
                     png_row_info rowInfo;
                     rowInfo.rowbytes = pixmap->size();
@@ -2686,11 +2654,10 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     bool done = false;
     SlideCompressor scomp(_docManager->getSyncPool());
-    std::size_t layerNumber = 0;
     while (!done)
     {
         success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done,
-                                       tokens.substrFromToken(1), layerNumber++, compressedLayers);
+                                       tokens.substrFromToken(1), compressedLayers);
         if (!success)
             break;
     }
@@ -2706,7 +2673,10 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     std::string msg = "sliderenderingcomplete: ";
     if (EnableExperimental) {
-        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") + "\", \"slidehash\": \"" + hash + "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") + "}";
+        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") +
+               "\", \"slidehash\": \"" + hash +
+               "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") +
+               ", \"cacheKey\": \"" + tokens.substrFromToken(1) + "\"}";
     } else {
         msg += (success ? "success" : "fail");
     }
@@ -3678,9 +3648,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         {
             if (!_docManager->trackDocModifiedState(payload))
                 sendTextFrame("statechanged: " + payload);
-            if (payload == ".uno:ModifiedStatus=true") {
-                _docManager->getSlideLayerCache().erase_all();
-            }
         }
         else if (payload.find(".uno:CurrentPageResize") != std::string::npos)
         {
