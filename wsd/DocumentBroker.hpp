@@ -272,7 +272,7 @@ public:
 
     /// setup the transfer of a socket into this DocumentBroker poll.
     void setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
-                       const SocketDisposition::MoveFunction& transferFn);
+                       SocketDisposition::MoveFunction transferFn);
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
