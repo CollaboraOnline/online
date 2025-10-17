@@ -102,6 +102,8 @@ interface SlideInfo {
 	prev: string;
 	indexInSlideShow?: number;
 	uniqueID: number;
+	slideWidth: number;
+	slideHeight: number;
 }
 
 interface PresentationInfo {
@@ -293,8 +295,8 @@ class SlideShowPresenter {
 		}
 
 		if (event.relativeX !== undefined && event.relativeY !== undefined) {
-			const x = event.relativeX * this._metaPresentation.slideWidth;
-			const y = event.relativeY * this._metaPresentation.slideHeight;
+			const x = event.relativeX * this._metaPresentation.getDocWidth;
+			const y = event.relativeY * this._metaPresentation.getDocHeight;
 
 			const clickedVideo = slideInfo.videos.find((videoInfo) =>
 				this.isPointInVideoArea(videoInfo, x, y),

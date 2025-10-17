@@ -151,6 +151,22 @@ class LayerDrawing {
 		return this.helper.getSlideInfo(slideHash);
 	}
 
+	private getDocWidth(): number {
+		return this.helper.getDocWidth();
+	}
+
+	private getDocHeight(): number {
+		return this.helper.getDocHeight();
+	}
+
+	private setDocWidth(slideWidth: number): void {
+		this.helper.setDocWidth(slideWidth);
+	}
+
+	private setDocHeight(slideHeight: number): void {
+		this.helper.setDocHeight(slideHeight);
+	}
+
 	public getSlide(slideNumber: number): ImageBitmap {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
 		return this.slideCache.get(startSlideHash);
@@ -451,6 +467,14 @@ class LayerDrawing {
 		prefetch: boolean = false,
 		compressedLayers: boolean = false,
 	) {
+		if (
+			slideInfo.slideWidth > this.getDocWidth() ||
+			slideInfo.slideHeight > this.getDocHeight()
+		) {
+			this.setDocWidth(slideInfo.slideWidth);
+			this.setDocHeight(slideInfo.slideHeight);
+			this.onUpdatePresentationInfo();
+		}
 		const slideHash = slideInfo.hash;
 		const backgroundRendered = this.drawBackground(slideHash);
 		const masterPageRendered = this.drawMasterPage(slideHash);

@@ -51,6 +51,22 @@ class LayersCompositor extends SlideCompositor {
 		return this.metaPresentation.getSlideInfo(slideHash);
 	}
 
+	public getDocWidth(): number {
+		return this.metaPresentation.getDocWidth;
+	}
+
+	public getDocHeight(): number {
+		return this.metaPresentation.getDocHeight;
+	}
+
+	public setDocWidth(slideWidth: number): void {
+		this.metaPresentation.setDocWidth = slideWidth;
+	}
+
+	public setDocHeight(slideHeight: number): void {
+		this.metaPresentation.setDocHeight = slideHeight;
+	}
+
 	public onUpdatePresentationInfo() {
 		this.layerDrawing.onUpdatePresentationInfo();
 		// TODO: optimize
@@ -81,8 +97,8 @@ class LayersCompositor extends SlideCompositor {
 
 	public getSlideSizePixel() {
 		return [
-			app.twipsToPixels * this.metaPresentation.slideWidth,
-			app.twipsToPixels * this.metaPresentation.slideHeight,
+			app.twipsToPixels * this.metaPresentation.getDocWidth,
+			app.twipsToPixels * this.metaPresentation.getDocHeight,
 		];
 	}
 
@@ -110,8 +126,8 @@ class LayersCompositor extends SlideCompositor {
 
 	public computeLayerSize(width: number, height: number) {
 		// compute the slide size in pixel with respect to the current resolution
-		const slideWidth = this.metaPresentation.slideWidth;
-		const slideHeight = this.metaPresentation.slideHeight;
+		const slideWidth = this.metaPresentation.getDocWidth;
+		const slideHeight = this.metaPresentation.getDocHeight;
 		const slideRatio = slideWidth / slideHeight;
 		const resolutionRatio = width / height;
 		if (slideRatio > resolutionRatio) {
