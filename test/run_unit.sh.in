@@ -37,7 +37,7 @@ print_help ()
 
 tst=
 tst_log=/dev/stderr
-tst_output=/dev/stderr
+test_output=/dev/stderr
 while test $# -gt 0; do
   case $1 in
       --test-name) tst=$2; shift;;
