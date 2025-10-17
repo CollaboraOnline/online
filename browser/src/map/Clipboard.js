@@ -816,7 +816,8 @@ window.L.Clipboard = window.L.Class.extend({
 	// Gets status of a copy/paste command from the remote Kit
     _onCommandResult: function(e) {
         if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut' || e.commandName === '.uno:CopyHyperlinkLocation' || e.commandName === '.uno:CopySlide') {
-			window.app.console.log('Resolve clipboard command promise ' + e.commandName);
+			window.app.console.log('Resolve clipboard command promise ' + e.commandName
+				+ ' with queue length: ' + this._commandCompletion.length);
 			while (this._commandCompletion.length > 0)
 			{
 				let a = this._commandCompletion.shift();
