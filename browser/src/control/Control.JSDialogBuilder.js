@@ -273,6 +273,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var windowId = builder && builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
 			(window.mobileDialogId !== undefined ? window.mobileDialogId :
 				(window.sidebarId !== undefined ? window.sidebarId : -1));
+
+		if (typeof windowId !== 'number') {
+			window.app.console.error('JSDialog: windowId "' + windowId + '" is not valid. Use a number.');
+			return; // core will fail parsing the command, it is a mistake most probably
+		}
+
 		var message = 'dialogevent ' + windowId
 				+ ' {\"id\":\"' + object.id
 			+ '\", \"cmd\": \"' + eventType
