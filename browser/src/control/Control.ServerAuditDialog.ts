@@ -224,8 +224,13 @@ class ServerAuditDialog {
 						row: 0,
 						columns: [
 							good ? okIcon : errorIcon,
-							{ text: _('Document container started in') },
-							{ text: entry.status + ' ms' },
+							{
+								text: _('Document container started in {1} ms').replace(
+									'{1}',
+									entry.status,
+								),
+							},
+							{ text: '' },
 						],
 					} as TreeEntryJSON);
 				} else console.warn('Unknown server audit info: ' + entry.code);
