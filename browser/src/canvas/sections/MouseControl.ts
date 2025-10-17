@@ -344,22 +344,25 @@ class MouseControl extends CanvasSectionObject {
 		}
 
 		this.clickTimer = setTimeout(() => {
-			app.map._docLayer._postMouseEvent(
-				'buttondown',
-				sendingPosition.x,
-				sendingPosition.y,
-				this.clickCount,
-				buttons,
-				modifier,
-			);
-			app.map._docLayer._postMouseEvent(
-				'buttonup',
-				sendingPosition.x,
-				sendingPosition.y,
-				this.clickCount,
-				buttons,
-				modifier,
-			);
+			if (this.clickCount > 1) {
+				app.map._docLayer._postMouseEvent(
+					'buttondown',
+					sendingPosition.x,
+					sendingPosition.y,
+					this.clickCount,
+					buttons,
+					modifier,
+				);
+				app.map._docLayer._postMouseEvent(
+					'buttonup',
+					sendingPosition.x,
+					sendingPosition.y,
+					this.clickCount,
+					buttons,
+					modifier,
+				);
+			}
+
 			this.clickTimer = null;
 			this.clickCount = 0;
 		}, 250);
