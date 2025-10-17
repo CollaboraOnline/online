@@ -226,6 +226,8 @@ class CanvasSectionContainer {
 		this.canvas.ontouchmove = this.onTouchMove.bind(this);
 		this.canvas.ontouchend = this.onTouchEnd.bind(this);
 		this.canvas.ontouchcancel = this.onTouchCancel.bind(this);
+		this.canvas.ondrop = this.onDrop.bind(this);
+		this.canvas.ondragover = this.onDragOver.bind(this);
 
 		// Some explanation first.
 		// When the user uses the mouse wheel for scrolling, different browsers use different technics for calculating the deltaY and deltaX values.
@@ -965,6 +967,31 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private propagateOnDrop(section: CanvasSectionObject, position: number[], e: DragEvent) {
+		this.targetSection = section.name;
+
+		var propagate: boolean = true;
+		const windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onDrop(windowPosition, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onDrop((position ? cool.SimplePoint.fromCorePixels([position[0], position[1]]): null), e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
+		}
+	}
+
 	/*
 		Cursor position is sent from the core side.
 		The event is handled in CanvasTileLayer file.
@@ -1325,6 +1352,23 @@ class CanvasSectionContainer {
 	public onTouchCancel (e: TouchEvent) {
 		this.clearMousePositions();
 		this.stopLongPress();
+	}
+
+	private onDragOver(e: DragEvent) {
+		// This is necessary to prevent window from taking the dropped object.
+		e.preventDefault();
+	}
+
+	private onDrop(e: DragEvent) {
+		e.preventDefault();
+
+		const point = this.convertPositionToCanvasLocale(e);
+		const target = this.findSectionContainingPoint(point);
+
+		if (target)
+			this.propagateOnDrop(target, this.convertPositionToSectionLocale(target, point), e);
+
+		this.clearMousePositions();
 	}
 
 	public onResize (newWidth: number, newHeight: number) {
