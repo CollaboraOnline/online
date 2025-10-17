@@ -79,7 +79,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.rotationHandleHeight = 15 * app.dpiScale;
 		this.sectionProperties.gluePointRadius = 10 * app.dpiScale;
 		this.sectionProperties.subSectionPrefix = 'shape-handle-';
-		this.sectionProperties.previousCursorStyle = null;
 		this.sectionProperties.svg = null; // This is for preview of modifications.
 		this.sectionProperties.hasVideo = false; // Don't hide svg when there is video content.
 		this.sectionProperties.shapeRectangleProperties = null; // Not null when there are scaling handles.
@@ -444,7 +443,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.hasVideo = true;
 		this.setSVG(svgString);
 		this.sectionProperties.svg.remove();
-		document.getElementById('map').appendChild(this.sectionProperties.svg);
+		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
 
 		if (!this.sectionProperties.svg.innerHTML.includes('foreignobject')) {
@@ -534,7 +533,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + handle.info.id);
 
 		if (!newSubSection) {
-			newSubSection = new app.definitions.shapeHandleAnchorSubSection(
+			newSubSection = new ShapeHandleAnchorSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + handle.info.id,
 				[this.sectionProperties.anchorWidth / app.dpiScale, this.sectionProperties.anchorHeight / app.dpiScale],
@@ -678,13 +677,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onMouseEnter() {
-		this.sectionProperties.previousCursorStyle = this.context.canvas.style.cursor;
 		this.context.canvas.style.cursor = 'move';
 		this.sectionProperties.mouseIsInside = true;
 	}
 
 	onMouseLeave() {
-		this.context.canvas.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.sectionProperties.mouseIsInside = false;
 	}
 
@@ -737,18 +734,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		this.hideSVG();
 
-		(window as any).IgnorePanning = false;
-
 		if (this.containerObject.isDraggingSomething()) {
-			if ((window as any).mode.isTablet() || (window as any).mode.isMobile())
-				this.sendTransformCommand(point);
-			else if ((window as any).mode.isDesktop() && (this.sectionProperties.closestX || this.sectionProperties.closestY)) {
-				// We need to snap to the guide-lines. So we send a positioning command after the mouse up event (desktop case).
-				// We don't need to do this on mobile because we always send the positioning commands there. No mouse events for mobile.
-				setTimeout(() => {
-					this.sendTransformCommand(point); // Send to back of the process queue so it performs after buttonup event is sent.
-				}, 1);
-			}
+			this.sendTransformCommand(point);
 		}
 	}
 
@@ -927,8 +914,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 
 		if (this.containerObject.isDraggingSomething() && canDrag) {
-			(window as any).IgnorePanning = true;
-
 			if (this.sectionProperties.svg) {
 				this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
 				this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
@@ -939,8 +924,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 			this.showSVG();
 		}
-		else
-			(window as any).IgnorePanning = false;
 	}
 
 	getViewBox(svg: any): number[] {
@@ -1102,6 +1085,27 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		for (let i = 0; i < this.sectionProperties.subSections.length; i++) {
 			this.containerObject.removeSection(this.sectionProperties.subSections[i].name);
 		}
+	}
+
+	onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
+		point.pX += this.position[0];
+		point.pY += this.position[1];
+		app.activeDocument.mouseControl.setMousePosition(point);
+		app.activeDocument.mouseControl.onContextMenu(point, e);
+	}
+
+	onClick(point: cool.SimplePoint, e: MouseEvent): void {
+		point.pX += this.position[0];
+		point.pY += this.position[1];
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+	}
+
+	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		point.pX = this.position[0] + this.size[0] * 0.5;
+		point.pY = this.position[1] + this.size[1] * 0.5;
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 2, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 2, 1, 0);
 	}
 }
 
