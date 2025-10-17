@@ -141,10 +141,7 @@ class ViewLayoutBase {
 		const result: number = documentAnchor.size[0];
 		this.scrollProperties.xOffset = documentAnchor.myTopLeft[0];
 
-		if (app.map._docLayer._docType !== 'spreadsheet') {
-			this.scrollProperties.horizontalScrollLength =
-				result - this.scrollProperties.horizontalScrollRightOffset;
-		} else {
+		if (app.map._docLayer._docType === 'spreadsheet') {
 			var splitPanesContext: any = app.map.getSplitPanesContext();
 			var splitPos = { x: 0, y: 0 };
 			if (splitPanesContext) {
@@ -155,6 +152,9 @@ class ViewLayoutBase {
 			this.scrollProperties.xOffset += splitPos.x;
 			this.scrollProperties.horizontalScrollLength =
 				result - splitPos.x - this.scrollProperties.horizontalScrollRightOffset;
+		} else {
+			this.scrollProperties.horizontalScrollLength =
+				result - this.scrollProperties.horizontalScrollRightOffset;
 		}
 	}
 
@@ -236,41 +236,47 @@ class ViewLayoutBase {
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
 	}
 
-	private scrollHorizontal(pX: number): void {
+	/*
+		`ignoreScrollbarLength` constraints while scrolling the document to make some space for the comments. 
+		see `ViewLayoutWriter.adjustDocumentMarginsForComments`
+	*/
+	protected scrollHorizontal(
+		pX: number,
+		ignoreScrollbarLength: boolean = false,
+	): void {
 		const scrollProps: ScrollProperties = this.scrollProperties;
-
-		let control = scrollProps.moveBy ? scrollProps.moveBy[0] : 0; // Add pending offset.
-		control /= scrollProps.horizontalScrollRatio; // Convert to scroll bar position diff.
-
 		const psX = pX / scrollProps.horizontalScrollRatio;
-
 		if (document.documentElement.dir === 'rtl') pX = -pX;
 
-		const endPosition =
-			scrollProps.startX - scrollProps.xOffset + control + psX;
+		if (!ignoreScrollbarLength) {
+			let control = scrollProps.moveBy ? scrollProps.moveBy[0] : 0; // Add pending offset.
+			control /= scrollProps.horizontalScrollRatio; // Convert to scroll bar position diff.
 
-		if (pX > 0) {
-			if (
-				endPosition + scrollProps.horizontalScrollSize >
-				scrollProps.horizontalScrollLength
-			)
-				pX =
-					(scrollProps.horizontalScrollLength -
-						scrollProps.horizontalScrollSize -
-						scrollProps.startX +
-						scrollProps.xOffset -
-						control) *
-					scrollProps.horizontalScrollRatio;
+			const endPosition =
+				scrollProps.startX - scrollProps.xOffset + control + psX;
+			if (pX > 0) {
+				if (
+					endPosition + scrollProps.horizontalScrollSize >
+					scrollProps.horizontalScrollLength
+				)
+					pX =
+						(scrollProps.horizontalScrollLength -
+							scrollProps.horizontalScrollSize -
+							scrollProps.startX +
+							scrollProps.xOffset -
+							control) *
+						scrollProps.horizontalScrollRatio;
 
-			if (pX < 0) pX = 0;
-		} else {
-			if (endPosition < 0)
-				pX =
-					(scrollProps.startX - scrollProps.xOffset + control) *
-					-1 *
-					scrollProps.horizontalScrollRatio;
+				if (pX < 0) pX = 0;
+			} else {
+				if (endPosition < 0)
+					pX =
+						(scrollProps.startX - scrollProps.xOffset + control) *
+						-1 *
+						scrollProps.horizontalScrollRatio;
 
-			if (pX > 0) pX = 0;
+				if (pX > 0) pX = 0;
+			}
 		}
 
 		if (scrollProps.moveBy !== null)

@@ -82,6 +82,17 @@ export class CommentSection extends CanvasSectionObject {
 		canvasContainerLeft: number;
 	};
 	disableLayoutAnimation: boolean = false;
+
+	/*
+		when the comments are about to be folded and there's some space on 
+		the left of the document, we move the document to make some space
+		on the right for comments. we then need to take the offset in 
+		account in any further calculations, that's why we store the values.
+		see `calculateAvailableSpace()`;
+	*/
+	movedDocumentToLeft: boolean = false;
+	movedDocumentByOffset: number = 0;
+
 	mobileCommentId: string = 'new-annotation-dialog';
 	mobileCommentModalId: string;
 
@@ -262,6 +273,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 
 		this.isCollapsed = true;
+		this.setMovedDocumentByOffset(0);
 		this.unselect();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
@@ -280,9 +292,18 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private calculateAvailableSpace() {
+	public calculateAvailableSpace() {
 		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
 		availableSpace = Math.round(availableSpace / app.dpiScale);
+		/* 
+			if the available space, i.e. half the total document margin is 
+			more than the comment section width, it means we can clear the 
+			extra added space. this would prevent the next statement 
+			from execution.
+		*/
+		if (this.sectionProperties.commentWidth <= availableSpace) this.setMovedDocumentByOffset(0);
+		if (this.movedDocumentToLeft) availableSpace += Math.round(this.movedDocumentByOffset / app.dpiScale);
+
 		return availableSpace;
 	}
 
@@ -290,8 +311,28 @@ export class CommentSection extends CanvasSectionObject {
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
+		/*
+			in case the comment section is half hidden and there
+			is some space on the left side of the document (since
+			the document is centered), we don't collapse the comments.
 
+			the comments section doesn't end up in such layout normally,
+			either the user resized the window, or zoomed in. both of
+			those events are being listened to in ViewLayoutWriter and
+			when that happens, `ViewLayoutWriter` moves the document to
+			the left in function `adjustDocumentMarginsForComments`.
+		*/
+		if (app.activeDocument.activeView instanceof ViewLayoutWriter
+			&& (app.activeDocument.activeView as ViewLayoutWriter).documentCanMoveLeft()) {
+			return false;
+		}
 		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
+	}
+
+	public setMovedDocumentByOffset(offset: number) {
+		this.movedDocumentByOffset = offset;
+		if (offset !== 0) this.movedDocumentToLeft = true;
+		if (offset === 0) this.movedDocumentToLeft = false;
 	}
 
 	public hideAllComments (): void {
