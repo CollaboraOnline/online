@@ -31,7 +31,6 @@ class SecondJoinQuit : public WopiTestServer
 
     std::size_t _checkFileInfoCount;
     std::size_t _viewCount;
-    std::size_t _viewsActive;
 
 public:
     SecondJoinQuit(const std::string& name, bool earlyQuit)
@@ -40,7 +39,6 @@ public:
         , _earlyQuit(earlyQuit)
         , _checkFileInfoCount(0)
         , _viewCount(0)
-        , _viewsActive(0)
     {
     }
 
@@ -65,8 +63,8 @@ public:
         {
             Poco::JSON::Parser parser0;
             Poco::JSON::Array::Ptr array = parser0.parse(message.substr(9)).extract<Poco::JSON::Array::Ptr>();
-            _viewsActive = array->size();
-            if (_phase == Phase::ModifyDoc && _viewsActive == 1)
+            auto const viewsActive = array->size();
+            if (_phase == Phase::ModifyDoc && viewsActive == 1)
 
             {
                 TRANSITION_STATE(_phase, Phase::Done);
