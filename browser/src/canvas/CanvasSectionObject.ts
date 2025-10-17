@@ -83,6 +83,7 @@ class CanvasSectionObject {
 	onMultiTouchStart(e: TouchEvent): void { return; }
 	onMultiTouchMove(point: cool.SimplePoint, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
+	onDrop(point: cool.SimplePoint, e: DragEvent): void { return; }
 	onResize(): void { return; }
 	onDraw(frameCount?: number, elapsedTime?: number): void { return; }
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.

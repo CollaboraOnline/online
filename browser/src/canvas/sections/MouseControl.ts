@@ -427,4 +427,22 @@ class MouseControl extends CanvasSectionObject {
 				});
 		}
 	}
+
+	onDrop(position: cool.SimplePoint, e: DragEvent): void {
+		this.refreshPosition(position);
+
+		const buttons = this.readButtons(e);
+		const modifier = this.readModifier(e);
+
+		// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
+		app.map._docLayer._postMouseEvent('buttondown', this.currentPosition.x, this.currentPosition.y, 1, buttons, modifier);
+		app.map._docLayer._postMouseEvent('buttonup', this.currentPosition.x, this.currentPosition.y, 1, buttons, modifier);
+
+		if (app.map._clip && e.dataTransfer) {
+			// Always capture the html content separate as we may lose it when we
+			// pass the clipboard data to a different context (async calls, f.e.).
+			const htmlText = e.dataTransfer.getData('text/html');
+			app.map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false, htmlText);
+		}
+	}
 }
