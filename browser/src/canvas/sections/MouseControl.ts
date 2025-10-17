@@ -301,14 +301,6 @@ class MouseControl extends CanvasSectionObject {
 		}
 	}
 
-	onMouseWheel(
-		point: cool.SimplePoint,
-		delta: Array<number>,
-		e: WheelEvent,
-	): void {
-		console.log('onmousewheel');
-	}
-
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.fire('closepopups');
 		app.map.fire('editorgotfocus');
