@@ -1940,10 +1940,18 @@ export class CommentSection extends CanvasSectionObject {
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment) {
-				// FIXME: getBoundingClientRect is expensive and this is a hot path (called continuously during animations and scrolling)
-				const posX = (this.sectionProperties.showSelectedBigger ?
-								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) :
+				const commentWidth = this.sectionProperties.commentWidth;
+				const documentCanvasWidth = (document.getElementById('document-canvas') as any).width;
+				let posX = (this.sectionProperties.showSelectedBigger ?
+								Math.round((documentCanvasWidth - commentWidth)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
+				// if on selection full comment is not visible bring it fully inside view, helps in narrow windows and tablets
+				if (isRTL && posX < 0)
+					posX = 0;
+				else if (posX + commentWidth > documentCanvasWidth)
+				{
+					posX = documentCanvasWidth - commentWidth;
+				}
 
 				subList[i].sectionProperties.container.style.left = String(posX + this.sectionProperties.canvasContainerLeft) + 'px';
 				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
