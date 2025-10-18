@@ -469,6 +469,15 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     assert(docBroker && "Must have DocBroker");
     assert(_ws && "Must have WebSocket");
 
+    if (docBroker->isUnloadingUnrecoverably())
+    {
+        LOG_INF("Cannot create client session to DocBroker ["
+                << docKey << "] while it's unloading unrecoverably");
+        sendErrorAndShutdown("error: cmd=load kind=docunloading",
+                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+        return;
+    }
+
     std::unique_ptr<WopiStorage::WOPIFileInfo> realWopiFileInfo;
 #if !MOBILEAPP
     assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
