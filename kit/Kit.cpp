@@ -2646,7 +2646,8 @@ void Document::notifySyntheticUnmodifiedState()
     // no need to change core state that happened earlier
     if (_modified == ModifiedState::UnModifiedButSaving)
     {
-        LOG_TRC("document was not modified while background saving");
+        LOG_TRC("document was not modified while background saving; sending synthetic "
+                ".uno:ModifiedStatus=false");
         _modified = ModifiedState::UnModified;
         notifyAll("statechanged: .uno:ModifiedStatus=false");
     }
@@ -2656,8 +2657,8 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
 {
     bool filter = false;
 
-    StringVector tokens(StringVector::tokenize(stateChanged, '='));
-    bool modified = tokens.size() > 1 && tokens.equals(1, "true");
+    const StringVector tokens(StringVector::tokenize(stateChanged, '='));
+    const bool modified = tokens.size() > 1 && tokens.equals(1, "true");
     ModifiedState newState = _modified;
     // NB. since 'modified' state is (oddly) notified per view we get
     // several duplicate transitions from state A -> A again.
@@ -2686,9 +2687,14 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
         // else duplicate
         break;
     }
+
     if (_modified != newState)
+    {
         LOG_TRC("Transition modified state from " << name(_modified) << " to " << name(newState));
-    _modified = newState;
+        _modified = newState;
+    }
+    else
+        LOG_TRC("Modified state remains " << name(_modified) << " after " << stateChanged);
 
     return filter;
 }
