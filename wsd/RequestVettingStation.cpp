@@ -492,6 +492,12 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     std::weak_ptr<StreamSocket> socket = _socket;
     _socket.reset();
 
+    const auto docBrokerPoll = docBroker->getPoll().lock();
+    assert(docBrokerPoll && "Must have DocBroker SocketPoll");
+
+    LOG_TRC("Transfering DocBroker [" << docKey << "] from vetting station to own thread ["
+                                      << docBrokerPoll->name() << ']');
+
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     std::shared_ptr<WebSocketHandler> ws = _ws;
     docBroker->setupTransfer(*_poll, socket,
