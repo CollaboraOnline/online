@@ -14,7 +14,7 @@
  * window.L.Control.JSDialog - class which creates and updates dialogs, popups, snackbar
  */
 
-/* global JSDialog Hammer app _ cool */
+/* global JSDialog Hammer app _ cool AutoCompleteDialogId */
 window.L.Control.JSDialog = window.L.Control.extend({
 	options: {},
 	dialogs: {},
@@ -47,8 +47,10 @@ window.L.Control.JSDialog = window.L.Control.extend({
 	hasDialogOpened: function() {
 		var dialogs = this.dialogs;
 		return Object.keys(dialogs)
-			.filter(function (key) {
-				return key != 'snackbar' && dialogs[key].isDropdown !== true;
+			.filter((key) => {
+				return key != 'snackbar'
+					&& dialogs[key].isDropdown !== true
+					&& !this.isAutoCompleteId(key);
 			})
 			.length > 0;
 	},
@@ -63,6 +65,10 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		return Object.keys(this.dialogs)
 			.filter(function (key) { return key == 'snackbar'; })
 			.length > 0;
+	},
+
+	isAutoCompleteId: function(dialogId) {
+		return Object.values(AutoCompleteDialogId).includes(dialogId);
 	},
 
 	clearDialog: function(id) {
