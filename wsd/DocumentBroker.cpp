@@ -325,13 +325,13 @@ void DocumentBroker::pollThread()
         // Async cleanup.
         COOLWSD::doHousekeeping();
 
-        LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
+        LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << ']');
         return;
     }
 
     // We have a child process.
     _childProcess->setDocumentBroker(shared_from_this());
-    LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
+    LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << ']');
 
     setupPriorities();
 
@@ -530,7 +530,7 @@ void DocumentBroker::pollThread()
                     {
                         LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for "
                                 "docKey ["
-                                << getDocKey() << "].");
+                                << getDocKey() << ']');
                         continue;
                     }
 
@@ -964,7 +964,7 @@ bool DocumentBroker::download(
     if (_docState.isMarkedToDestroy())
     {
         // Tearing down.
-        LOG_WRN("Will not load document marked to destroy. DocKey: [" << _docKey << "].");
+        LOG_WRN("Will not load document marked to destroy. DocKey: [" << _docKey << ']');
         return false;
     }
 
@@ -1201,7 +1201,7 @@ bool DocumentBroker::download(
             const auto downloadSecs = _wopiDownloadDuration.count() / 1000.;
             const std::string msg =
                 "stats: wopiloadduration " + std::to_string(downloadSecs); // In seconds.
-            LOG_TRC("Sending to Client [" << msg << "].");
+            LOG_TRC("Sending to Client [" << msg << ']');
             session->sendTextFrame(msg);
         }
     }
@@ -2773,7 +2773,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                 << ']');
     }
 
-    LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
+    LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << ']');
 
     _uploadRequest = std::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
                                                      isSaveAs, isExport, isRename);
@@ -3473,7 +3473,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified,
     bool sent = false;
     if (force)
     {
-        LOG_TRC("Sending forced save command for [" << _docKey << "].");
+        LOG_TRC("Sending forced save command for [" << _docKey << ']');
         // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
         // Flag isAutosave=false so the WOPI host wouldn't think this is a regular checkpoint and
         // potentially optimize it away. This is as good as user-issued save, since this is
@@ -3820,7 +3820,8 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
     }
     catch (const StorageSpaceLowException&)
     {
-        LOG_ERR("Out of storage while loading document with URI [" << session->getPublicUri().toString() << "].");
+        LOG_ERR("Out of storage while loading document with URI ["
+                << session->getPublicUri().toString() << ']');
 
         // We use the same message as is sent when some of cool's own locations are full,
         // even if in this case it might be a totally different location (file system, or
@@ -4065,7 +4066,7 @@ void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& se
 
         LOG_TRC("Removed " << (readonly ? "" : "non-") << "readonly session [" << sessionId
                            << "] from docKey [" << _docKey << "] to have " << _sessions.size()
-                           << " sessions:" <<
+                           << " session(s): " <<
                 [&](auto& log)
                 {
                     for (const auto& pair : _sessions)
@@ -4108,7 +4109,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         if (ws)
         {
             static constexpr const char* const statusReady = "progress: { \"id\":\"ready\" }";
-            LOG_TRC("Sending to Client [" << statusReady << "].");
+            LOG_TRC("Sending to Client [" << statusReady << ']');
             ws->sendTextMessage(statusReady);
         }
 
@@ -4360,7 +4361,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
             ifs.close();
 
             if (svg.empty())
-                LOG_WRN("Empty download: [id: " << downloadid << ", url: " << url << "].");
+                LOG_WRN("Empty download: [id: " << downloadid << ", url: " << url << ']');
 
             const auto it = _sessions.find(clientId);
             if (it != _sessions.end())
@@ -4401,7 +4402,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 #endif
         else
         {
-            LOG_ERR("Unexpected message: [" << message->abbr() << "].");
+            LOG_ERR("Unexpected message: [" << message->abbr() << ']');
             return false;
         }
     }
