@@ -95,7 +95,6 @@ all_la_unit_tests = \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-saveas.la \
 	unit_wopi_renamefile.la \
-	unit-wopi-loadencoded.la \
 	unit-prefork.la \
 	unit-bad-doc-load.la \
 	unit-hosting.la \
@@ -298,8 +297,6 @@ unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
 unit_wopi_lock_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
 unit_wopi_watermark_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
-unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fileurl_la_SOURCES = UnitWOPIFileUrl.cpp
