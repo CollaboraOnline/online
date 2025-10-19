@@ -1211,8 +1211,10 @@ body {
 	background-position: 0;
 }
 
-#mentionPopup {
+#mentionPopup,
+#mentionPopupList {
 	min-width: 100px;
+	min-height: 100px;
 }
 
 #mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {
