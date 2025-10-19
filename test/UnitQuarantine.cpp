@@ -323,15 +323,26 @@ public:
     bool onDocumentUnmodified(const std::string& message) override
     {
         TST_LOG("Got: [" << message << ']');
-        LOK_ASSERT_STATE(_phase, Phase::WaitUpload);
 
-        TRANSITION_STATE(_phase, Phase::Unload);
-
-        // Kill the kit.
-        for (const auto& pid : _kitsPids)
+        // We sometimes get two ModifiedStatus=false;
+        // The first is from Document::notifySyntheticUnmodifiedState(),
+        // the second is from the loKit, after we've
+        // already transitioned from WaitUpload to Unload.
+        // Tolerate ModifiedStatus=false after WaitUpload, but not before.
+        if (_phase < Phase::WaitUpload)
         {
-            TST_LOG("Killing kit: " << pid);
-            ::kill(pid, SIGKILL);
+            LOK_ASSERT_STATE(_phase, Phase::WaitUpload);
+        }
+        else
+        {
+            TRANSITION_STATE(_phase, Phase::Unload);
+
+            // Kill the kit.
+            for (const auto& pid : _kitsPids)
+            {
+                TST_LOG("Killing kit: " << pid);
+                ::kill(pid, SIGKILL);
+            }
         }
 
         return true;
