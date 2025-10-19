@@ -5016,31 +5016,28 @@ std::string DocumentBroker::applySignViewSettings(const std::string& message,
                                                   const std::shared_ptr<ClientSession>& session)
 {
     std::string finalMsg = message;
-    if (_isViewSettingsUpdated)
+    if (!_isViewSettingsUpdated)
     {
-        Poco::JSON::Object::Ptr signatureJson = new Poco::JSON::Object();
-
-        std::string signatureCert = session->getSignatureCertificate();
-        std::string signatureKey = session->getSignatureKey();
-        std::string signatureCa = session->getSignatureCa();
-
-        signatureJson->set("SignatureCert", signatureCert);
-        signatureJson->set("SignatureKey", signatureKey);
-        signatureJson->set("SignatureCa", signatureCa);
-
-        std::string jsonString = JsonUtil::jsonToString(signatureJson);
-
-        std::string encodedJson;
-        Poco::URI::encode(jsonString, "", encodedJson);
-        finalMsg += " signatureconfig=" + encodedJson;
-
-        LOG_INF("Sent signatureconfig with values");
-    }
-    else
-    {
-        finalMsg += " signatureconfig={}";
+        return finalMsg;
     }
 
+    Poco::JSON::Object::Ptr signatureJson = new Poco::JSON::Object();
+
+    std::string signatureCert = session->getSignatureCertificate();
+    std::string signatureKey = session->getSignatureKey();
+    std::string signatureCa = session->getSignatureCa();
+
+    signatureJson->set("SignatureCert", signatureCert);
+    signatureJson->set("SignatureKey", signatureKey);
+    signatureJson->set("SignatureCa", signatureCa);
+
+    std::string jsonString = JsonUtil::jsonToString(signatureJson);
+
+    std::string encodedJson;
+    Poco::URI::encode(jsonString, "", encodedJson);
+    finalMsg += " signatureconfig=" + encodedJson;
+
+    LOG_INF("Sent signatureconfig with values");
     return finalMsg;
 }
 
