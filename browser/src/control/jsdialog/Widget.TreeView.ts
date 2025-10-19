@@ -888,7 +888,6 @@ class TreeViewControl {
 
 			if (event.key === ' ' && expander) {
 				expander.click();
-				tr.focus();
 				preventDef = true;
 			} else if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction(event);
@@ -896,20 +895,17 @@ class TreeViewControl {
 				if (expander) {
 					expander.click();
 				}
-				tr.focus();
 				preventDef = true;
 			} else if (event.key === 'ArrowLeft') {
 				// Always collapse if expanded
 				if (expander && !window.L.DomUtil.hasClass(tr, 'collapsed')) {
 					expander.click();
-					tr.focus();
 					preventDef = true;
 				}
 			} else if (event.key === 'ArrowRight') {
 				// Always expand if collapsed
 				if (expander && window.L.DomUtil.hasClass(tr, 'collapsed')) {
 					expander.click();
-					tr.focus();
 					preventDef = true;
 				}
 			} else if (event.key === 'Tab') {
