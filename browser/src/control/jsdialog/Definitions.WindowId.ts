@@ -26,3 +26,7 @@ enum WindowId {
 	AddressInput = -4,
 	QuickFind = -5,
 }
+
+enum AutoCompleteDialogId {
+	Mention = 'mentionPopup',
+}
