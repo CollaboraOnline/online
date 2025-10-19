@@ -152,6 +152,65 @@ public:
     }
 };
 
+/// Tests that filenames with '%' character are handled correctly.
+/// The special file '3' is named "he%llo.txt" in CheckFileInfo.
+class UnitWOPILoadEncoded : public WopiTestServer
+{
+    STATE_ENUM(Phase, LoadEncoded, WaitLoadStatus, CloseDoc)
+    _phase;
+
+public:
+    UnitWOPILoadEncoded()
+        : WopiTestServer("UnitWOPILoadEncoded")
+        , _phase(Phase::LoadEncoded)
+    {
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        TST_LOG("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::CloseDoc);
+
+        WSD_CMD("closedocument");
+
+        return true;
+    }
+
+    /// Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        TST_LOG("Testing with dockey [" << docKey << "] closed");
+        LOK_ASSERT_STATE(_phase, Phase::CloseDoc);
+
+        exitTest(TestResult::Ok);
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::LoadEncoded:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                // File '3' is named "he%llo.txt".
+                initWebsocket("/wopi/files/3?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::CloseDoc:
+            {
+                break;
+            }
+        }
+    }
+};
+
 class UnitOverload : public WopiTestServer
 {
     STATE_ENUM(Phase, HalfOpen, Load, WaitLoadStatus, WaitModifiedStatus, Done) _phase;
@@ -453,8 +512,8 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    // return new UnitBase* [3] { new UnitWOPI(), new UnitOverload(), nullptr };
-    return new UnitBase*[3]{ new UnitWOPI(), new UnitWopiUnavailable(), nullptr };
+    return new UnitBase*[4]{ new UnitWOPI(), new UnitWOPILoadEncoded(),
+                             /*new UnitOverload(),*/ new UnitWopiUnavailable(), nullptr };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
