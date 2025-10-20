@@ -236,6 +236,11 @@ public:
     {
     }
 
+    ~BackgroundSaveWatchdog()
+    {
+        complete(); // Clean up.
+    }
+
     void complete()
     {
         _saveCompleted = true;
