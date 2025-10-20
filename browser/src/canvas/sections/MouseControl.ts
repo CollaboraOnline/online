@@ -85,8 +85,8 @@ class MouseControl extends CanvasSectionObject {
 	public getMousePagePosition() {
 		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
 		const pagePosition = this.currentPosition.clone();
-		pagePosition.pX -= app.activeDocument.activeView.viewedRectangle.pX1;
-		pagePosition.pY -= app.activeDocument.activeView.viewedRectangle.pY1;
+		pagePosition.pX -= app.activeDocument.activeView.viewedRectangle.pX1 - this.containerObject.getDocumentAnchor()[0];
+		pagePosition.pY -= app.activeDocument.activeView.viewedRectangle.pY1 - this.containerObject.getDocumentAnchor()[1];
 		return {
 			x: pagePosition.cX + boundingClientRectangle.left,
 			y: pagePosition.cY + boundingClientRectangle.top,
