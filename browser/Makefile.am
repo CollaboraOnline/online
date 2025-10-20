@@ -67,11 +67,9 @@ QUIET_UNOCOMMANDS_0 = @echo "  UNOCOMMANDS " $@;
 
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
-MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
-MOCHA_TS_JS_FILES = $(patsubst $(MOCHA_DIR)/%.ts,$(MOCHA_JS_DIR)/%.js,$(MOCHA_TS_FILES))
 # tsc can report a failure, but still create a .js and a second make attempt will succeed,
 # so if this returns an error then delete the target
-$(MOCHA_JS_DIR)/%.js: $(MOCHA_DIR)/%.ts
+$(MOCHA_JS_DIR)/main.js: $(MOCHA_DIR)/main.ts
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5 --downlevelIteration || (rm -f $@ && false)
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
@@ -1196,7 +1194,7 @@ $(abs_srcdir)/admin/jsconfig.json:
 
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 
-build-tests: $(MOCHA_TS_JS_FILES)
+build-tests: $(MOCHA_JS_DIR)/main.js
 	@echo "Build of mocha test finished."
 
 eslint: $(COOL_ADMIN_TS_JS)
@@ -1220,7 +1218,7 @@ prettier-write:
 
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
 DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
-check-local: $(MOCHA_TS_JS_FILES)
+check-local: $(MOCHA_JS_DIR)/main.js
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
 	@if npm test 2> ${MOCHA_TEST_LOG} 1>&2; then \

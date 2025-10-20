@@ -9,9 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="../../src/app/BaseClass.ts"/>
-/// <reference path="../../src/app/Events.ts" />
-
 class HandlerData {
 
 	public numCalls: number;

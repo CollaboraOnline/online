@@ -9,10 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="../src/app/Util.ts"/>
-/// <reference path="helper/Events.ts"/>
-
 var assert = require('assert').strict;
 
 describe('Evented: Register handler with event names as a string', function () {
