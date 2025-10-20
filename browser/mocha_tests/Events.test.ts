@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+describe('Events', function() {
+
 var assert = require('assert').strict;
 
 describe('Evented: Register handler with event names as a string', function () {
@@ -498,3 +500,4 @@ function runTestsForContextType(contextType: string, callType: string) {
 		});
 	});
 }
+});

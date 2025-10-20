@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+describe('SheetGeometry', function() {
+
 var assert = require('assert').strict;
 
 describe('SheetGeometry public methods tests', function () {
@@ -203,3 +205,5 @@ function testsForPart(partTestData: PartTestData, part: number, zoom: number, sg
         assert.deepEqual(cellY, cellRectData.cpixBoundsAtSelfZoom.min.y, 'Incorrect cellY at self zoom returned');
     });
 }
+
+}); // root describe
