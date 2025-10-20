@@ -72,6 +72,7 @@ int main(int argc, char** argv)
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
+#include <bit>
 #define getpid() _getpid()
 #include <intrin.h>
 #include <windows.h>
@@ -1524,20 +1525,11 @@ class TlsfAllocator
 #if defined(_MSC_VER)
     static uint32_t countTrailingZeros(uint32_t v)
     {
-        if (v == 0)
-            return 32;
-        unsigned long index;
-        _BitScanForward(&index, v);
-        return index;
+        return std::countr_zero(v);
     }
-
     static uint32_t countLeadingZeros(uint64_t v)
     {
-        if (v == 0)
-            return 64;
-        unsigned long index;
-        _BitScanReverse64(&index, v);
-        return 63 - index;
+        return (uint32_t)std::countl_zero(v);
     }
 #else
     static uint32_t countTrailingZeros(uint32_t v) { return __builtin_ctz(v); }
