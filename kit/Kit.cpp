@@ -236,6 +236,16 @@ public:
     {
     }
 
+    ~BackgroundSaveWatchdog()
+    {
+        if (!_saveCompleted)
+        {
+            LOG_WRN("BgSave watchdog for " << getpid()
+                                           << " is destroyed while save hadn't yet completed");
+            complete(); // Clean up.
+        }
+    }
+
     void complete()
     {
         _saveCompleted = true;
