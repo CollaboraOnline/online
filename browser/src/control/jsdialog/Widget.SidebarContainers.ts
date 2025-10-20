@@ -52,7 +52,7 @@ JSDialog.panel = function (
 		expanderData,
 		builder,
 		() => {
-			expanderData; /*do nothing*/
+			/*do nothing*/
 		},
 	);
 

@@ -34,6 +34,7 @@
 	border: 1px solid transparent;
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
+	height: max-content;
 }
 
 /* toolbuttons non selected hover */
@@ -180,6 +181,15 @@ button.has-img {
 	min-width: auto !important;
 }
 
+#container .ui-grid-cell button.jsdialog.has-img:not(.sidebar) {
+	display: grid;
+	grid-template-columns: 24px 1fr;
+	text-align: start;
+	gap: 5px;
+	width: 100% !important;
+	margin: 2px !important;
+}
+
 /* Thesaurus <- button */
 button#left.has-img > img {
 	width: 16px;
@@ -192,4 +202,11 @@ button#left.has-img > img {
 
 [data-theme='dark'] button#unselect_current.has-img > img {
 	filter: invert(.9)
+}
+
+/* Writer - Format - Page Style - Columns */
+/* Writer - Format - Columns */
+div[id^='TemplateDialog'] #Columns :is(#back, #next) button.has-img,
+#ColumnDialog :is(#back, #next) button.has-img {
+	width: 100%;
 }

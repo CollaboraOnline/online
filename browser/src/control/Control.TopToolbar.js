@@ -15,7 +15,7 @@
 /* global $ JSDialog _ _UNO app */
 class TopToolbar extends JSDialog.Toolbar {
 	constructor(map) {
-		super(map, 'toolbar-up');
+		super(map, 'TopToolbar', 'toolbar-up');
 		this.stylesSelectValue = null;
 
 		map.on('doclayerinit', this.onDocLayerInit, this);

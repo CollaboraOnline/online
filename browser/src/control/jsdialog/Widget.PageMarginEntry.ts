@@ -36,6 +36,8 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	const map = builder.map;
 	const isCalc = map._docLayer.isCalc();
 	container.className = 'margins-popup-container';
+	container.setAttribute('role', 'listbox');
+	container.setAttribute('aria-label', _('Page margin options'));
 
 	const onMarginClick = (evt: MouseEvent) => {
 		const elm = evt.currentTarget as HTMLElement;
@@ -75,10 +77,14 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		const item = document.createElement('div');
 		item.className = 'margin-item';
 		item.id = key;
+		item.setAttribute('role', 'option');
+		item.setAttribute('tabindex', '0');
+		item.setAttribute('aria-selected', 'false');
 		item.addEventListener('click', onMarginClick);
 
 		const img = document.createElement('img');
 		img.className = 'margin-icon';
+		img.setAttribute('alt', '');
 		const iconName = app.LOUtil.getIconNameOfCommand(opt.icon, true);
 		app.LOUtil.setImage(img, iconName, app.map);
 
@@ -140,6 +146,9 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	custom.className = 'margin-item custom-margins-link';
 	custom.id = 'customMarginsLink';
 	custom.textContent = _('Custom Margins…');
+	custom.setAttribute('role', 'button');
+	custom.setAttribute('tabindex', '0');
+
 	custom.addEventListener('click', (evt: MouseEvent) => {
 		map.sendUnoCommand(isCalc ? '.uno:PageFormatDialog' : '.uno:PageDialog');
 		builder.callback('dialog', 'close', { id: data.id }, null);

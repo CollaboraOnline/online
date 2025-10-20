@@ -272,7 +272,7 @@ public:
 
     /// setup the transfer of a socket into this DocumentBroker poll.
     void setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
-                       const SocketDisposition::MoveFunction& transferFn);
+                       SocketDisposition::MoveFunction transferFn);
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
@@ -377,7 +377,7 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Add a new session. Returns the new number of sessions.
+    /// Loads and adds a new session. Returns the new number of sessions.
     std::size_t addSession(const std::shared_ptr<ClientSession>& session,
                            std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo = nullptr);
 
@@ -549,6 +549,16 @@ public:
     void onUrpMessage(const char* data, size_t len);
 
     void setMigrationMsgReceived() { _migrateMsgReceived = true; }
+
+
+    bool getIsFollowmeSlideShowOn() const {return _docState.getIsFollowmeSlideShowOn();}
+    void setIsFollowmeSlideShowOn(bool isSlideShowRunning)  { _docState.setIsFollowmeSlideShowOn(isSlideShowRunning);}
+
+    int getLeaderSlide() const {return _docState.getLeaderSlide();}
+    void setLeaderSlide(int leaderSlide)  { _docState.setLeaderSlide(leaderSlide);}
+
+    int getLeaderEffect() const {return _docState.getLeaderEffect();}
+    void setLeaderEffect(int leaderEffect)  { _docState.setLeaderEffect(leaderEffect);}
 
 #if !MOBILEAPP && !WASMAPP
     /// Get server audit util
@@ -785,6 +795,9 @@ private:
     /// Handles the completion of failed uploading to storage.
     void handleUploadToStorageFailed(const StorageBase::UploadResult& uploadResult);
 
+    /// Send the error message about failed upload
+    void reportUploadToStorageFailed();
+
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
                      bool dontSaveIfUnmodified = true, bool isAutosave = false, bool finalWrite = false,
@@ -859,10 +872,6 @@ private:
     /// Returns the number of active sessions.
     /// This includes only those that are loaded and not waiting disconnection.
     std::size_t countActiveSessions() const;
-
-    /// Loads a new session and adds to the sessions container.
-    std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session,
-                                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);
@@ -1621,6 +1630,15 @@ private:
         DocumentState::KitDisconnected kitDisconnected() const { return _kitDisconnected; }
         bool isKitDisconnected() const { return kitDisconnected() != KitDisconnected::No; }
 
+        bool getIsFollowmeSlideShowOn() const {return _isFollowmeSlideShowOn;}
+        void setIsFollowmeSlideShowOn(bool isSlideShowRunning)  { _isFollowmeSlideShowOn = isSlideShowRunning;}
+
+        int getLeaderSlide() const {return _currentLeaderSlide;}
+        void setLeaderSlide(int leaderSlide)  { _currentLeaderSlide = leaderSlide;}
+
+        int getLeaderEffect() const {return _currentLeaderEffect;}
+        void setLeaderEffect(int leaderEffect)  { _currentLeaderEffect = leaderEffect;}
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "doc state: " << name(status());
@@ -1641,6 +1659,9 @@ private:
         std::atomic<KitDisconnected>
             _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
+        bool _isFollowmeSlideShowOn = false;
+        int _currentLeaderEffect = -1;
+        int _currentLeaderSlide = -1;
     };
 
     /// Transition to a given activity. Returns false if an activity exists.

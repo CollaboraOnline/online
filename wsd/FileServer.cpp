@@ -1012,6 +1012,12 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return true;
         }
 
+        if (endPoint == "TileWorker.js")
+        {
+            replaceServiceRoot(request, response, requestDetails, socket);
+            return true;
+        }
+
         if (endPoint == "adminIntegratorSettings.html")
         {
             preprocessIntegratorAdminFile(request, response, requestDetails, message, socket);
@@ -1492,6 +1498,7 @@ static const std::string PERMISSION = "%PERMISSION%";
 static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
 static const std::string IFRAME_TYPE = "%IFRAME_TYPE%";
 static const std::string UI_THEME = "%UI_THEME%";
+static const std::string VERSION = "%VERSION%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1629,6 +1636,23 @@ std::string boolToString(const bool value)
 {
     return value ? std::string("true"): std::string("false");
 }
+}
+
+void FileServerRequestHandler::replaceServiceRoot(const HTTPRequest& request,
+                                                  http::Response& httpResponse,
+                                                  const RequestDetails& requestDetails,
+                                                  const std::shared_ptr<StreamSocket>& socket)
+{
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
+    const std::string relPath = getRequestPathname(request, requestDetails);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string preprocess = *getUncompressedFile(relPath);
+    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), Util::getCoolVersionHash());
+    httpResponse.setBody(preprocess, "text/javascript");
+    socket->send(httpResponse);
+    LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 }
 
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
@@ -2411,6 +2435,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
     Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
     Poco::replaceInPlace(adminFile, UI_THEME, urv[UI_THEME]);
+    Poco::replaceInPlace(adminFile, VERSION, Util::getCoolVersionHash());
 #if ENABLE_DEBUG
     const bool enableDebug = true;
 #else

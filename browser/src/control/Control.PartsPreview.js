@@ -58,6 +58,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		map.on('tilepreview', this._updatePreview, this);
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
+		map.on('scrolllimit', this._invalidateCurrentPart, this);
 		map.on('scrolllimits', this._invalidateParts, this);
 		map.on('scrolltopart', this._scrollToPart, this);
 		map.on('beforerequestpreview', this._beforeRequestPreview, this);
@@ -216,7 +217,6 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				}
 			} else {
 				this._setPart(e);
-				this.partsFocused = true;
 				if (!window.mode.isDesktop()) {
 					// needed so on-screen keyboard doesn't pop up when switching slides,
 					// but would cause PgUp/Down to not work on desktop in slide sorter
@@ -230,10 +230,13 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 		var that = this;
 		img.onfocus = function () {
+			that._map._clip.clearSelection();
+			that._map._clip.setTextSelectionType('slide');
 			that.partsFocused = true;
 		};
 
 		img.onblur = function () {
+			that._map._clip.clearSelection();
 			that.partsFocused = false;
 		};
 
@@ -254,7 +257,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				nPos = that._findClickedPart(frame);
 
 			$trigger.contextMenu(true);
-			that._setPart(e);
+			if (!that._isSelected(e))
+				that._setPart(e);
 			$.contextMenu({
 				selector: '#'+frame.id,
 				className: 'cool-font',
@@ -290,7 +294,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				return;
 			}
 			$trigger.contextMenu(true);
-			that._setPart(e);
+			if (!that._isSelected(e))
+				that._setPart(e);
 
 			$.contextMenu({
 				selector: '#' + img.id,
@@ -301,7 +306,9 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						isHtmlName: true,
 						callback: function() {
 							that.copiedSlide = e;
-							that._map._clip._execCopyCutPaste('CopySlide');
+							that._map._clip.clearSelection();
+							that._map._clip.setTextSelectionType('slide');
+							that._map._clip._execCopyCutPaste('copy', '.uno:CopySlide');
 						},
 						visible: function() {
 							return true;
@@ -311,7 +318,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
 						isHtmlName: true,
 						callback: function() {
-							that._map._clip._execCopyCutPaste('Paste')
+							that._map._clip._execCopyCutPaste('paste', ".uno:Paste")
 						},
 					},
 					newslide: {
@@ -465,6 +472,15 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			}
 		}
 		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
+	},
+
+	_isSelected: function (e) {
+		var part = this._findClickedPart(e.target.parentNode);
+		var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
+		if (partId < 0)
+			return false;
+		else
+			return app.impress.isSlideSelected(partId);
 	},
 
 	_setPart: function (e) {
@@ -851,6 +867,26 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 					      fetchThumbnail: this.options.fetchThumbnail});
 		}
 
+	},
+
+	_invalidateCurrentPart: function () {
+		if (!this._container ||
+		    !this._partsPreviewCont ||
+		    !this._previewInitialized ||
+		    !this._previewTiles)
+			return;
+
+		// When a new slide is inserted
+		if (this._previewTiles[this._map._docLayer._selectedPart] === undefined) {
+			this._invalidateParts();
+			return;
+		}
+		this._previewTiles[this._map._docLayer._selectedPart].fetched = false;
+		this._map.getPreview(this._map._docLayer._selectedPart, this._map._docLayer._selectedPart,
+				     this.options.maxWidth,
+				     this.options.maxHeight,
+				     {autoUpdate: this.options.autoUpdate,
+				      fetchThumbnail: this.options.fetchThumbnail});
 	},
 
 	focusCurrentSlide: function () {

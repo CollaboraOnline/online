@@ -32,11 +32,7 @@ else if (wopiSrc !== '' && accessHeader !== '') {
 	wopiParams = { 'access_header': accessHeader };
 }
 
-if (window.ThisIsTheEmscriptenApp)
-	// Temporary hack
-	var filePath = 'file:///sample.docx';
-else
-	var filePath = global.coolParams.get('file_path');
+var filePath = global.coolParams.get('file_path');
 
 app.localeService = new LocaleService();
 app.setPermission(global.coolParams.get('permission') || 'edit');
@@ -105,7 +101,8 @@ if (window.ThisIsTheEmscriptenApp) {
 	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
 
-	globalThis.Module = createEmscriptenModule(docURL, encodedWOPI, isWopi);
+	globalThis.Module = createEmscriptenModule(
+		isWopi ? 'server' : 'local', isWopi ? encodedWOPI : docURL);
 	globalThis.Module.onRuntimeInitialized = function() {
 		map.loadDocument(global.socket);
 	};

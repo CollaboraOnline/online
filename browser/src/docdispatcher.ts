@@ -22,12 +22,12 @@ class Dispatcher {
 	private actionsMap: any = {};
 
 	private addGeneralCommands() {
-		this.actionsMap['save'] = function () {
+		this.actionsMap['save'] = function (source?: string) {
 			// Save only when not read-only.
-			if (!app.map.isReadOnlyMode()) {
+			if (!app.map.isReadOnlyMode() && !app.map['wopi'].HideSaveOption) {
 				app.map.fire('postMessage', {
 					msgId: 'UI_Save',
-					args: { source: 'toolbar' },
+					args: { source: source || 'toolbar' },
 				});
 				if (!app.map._disableDefaultAction['UI_Save']) {
 					app.map.save(
@@ -481,6 +481,12 @@ class Dispatcher {
 
 			app.sectionContainer.requestReDraw();
 		};
+
+		this.actionsMap['defaultborderstyle'] = () => {
+			app.map.sendUnoCommand(
+				window.getBorderStyleUNOCommand(0, 0, 1, 0, 0, 0, 0),
+			);
+		};
 	}
 
 	private addImpressAndDrawCommands() {
@@ -516,6 +522,15 @@ class Dispatcher {
 		] = () => {
 			app.map.slideShowPresenter.setLeader(true);
 			app.map.fire('newpresentinwindow');
+		};
+
+		this.actionsMap['followpresentation'] = this.actionsMap[
+			'presentation-follow'
+		] = () => {
+			app.map.slideShowPresenter.setLeader(false);
+			app.map.slideShowPresenter.setFollower(true);
+			app.map.slideShowPresenter.setFollowing(true);
+			app.map.fire('newfollowmepresentation');
 		};
 
 		this.actionsMap['presenterconsole'] = () => {
@@ -621,6 +636,14 @@ class Dispatcher {
 				app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
 			else app.map.sendUnoCommand('.uno:NotesMode');
 		};
+
+		this.actionsMap['animationdeck'] = () => {
+			app.map.sidebarFromNotebookbar.openAnimationsSidebar();
+		};
+
+		this.actionsMap['transitiondeck'] = () => {
+			app.map.sidebarFromNotebookbar.openTransitionsSidebar();
+		};
 	}
 
 	private addZoteroCommands() {
@@ -670,6 +693,25 @@ class Dispatcher {
 				app.CSections.CommentList.name,
 			);
 			commentSection.rejectAllTrackedCommentChanges();
+		};
+
+		this.actionsMap['toggletracking'] = () => {
+			const TrackChangesCurrentState =
+				app.map['stateChangeHandler'].getItemValue('.uno:TrackChanges');
+			if (
+				TrackChangesCurrentState === 'true' ||
+				TrackChangesCurrentState === true
+			)
+				app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false');
+			else app.map.sendUnoCommand('.uno:TrackChangesInAllViews');
+		};
+
+		this.actionsMap['acceptTrackedChangeToNext'] = function () {
+			app.map.sendUnoCommand('.uno:AcceptTrackedChangeToNext');
+		};
+
+		this.actionsMap['rejectTrackedChangeToNext'] = function () {
+			app.map.sendUnoCommand('.uno:RejectTrackedChangeToNext');
 		};
 	}
 

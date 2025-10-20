@@ -16,20 +16,29 @@
 class UnitPasswordProtectedDocWithoutPassword : public UnitWSDClient
 {
     STATE_ENUM(Phase, Load, WaitError) _phase;
+    bool _gotPasswordRequired;
 
 public:
     UnitPasswordProtectedDocWithoutPassword()
         : UnitWSDClient("UnitPasswordProtectedDocWithoutPassword")
         , _phase(Phase::Load)
+        , _gotPasswordRequired(false)
     {
     }
 
     bool onDocumentError(const std::string& message) override
     {
         TST_LOG("onDocumentError: [" << message << ']');
-        LOK_ASSERT_EQUAL_MESSAGE("Expect only passwordrequired errors",
-                                 std::string("error: cmd=load kind=passwordrequired:to-view"),
-                                 message);
+
+        if (!_gotPasswordRequired)
+        {
+            LOK_ASSERT_EQUAL_STR("error: cmd=load kind=passwordrequired:to-view", message);
+            _gotPasswordRequired = true;
+        }
+        else
+        {
+            LOK_ASSERT_EQUAL_STR("error: cmd=load kind=docunloading", message);
+        }
 
         passTest("Password is required for viewing");
         return true;
@@ -54,19 +63,28 @@ public:
 class UnitPasswordProtectedDocWrongPassword : public UnitWSDClient
 {
     STATE_ENUM(Phase, Load, WaitError) _phase;
+    bool _gotWrongPassword;
 
 public:
     UnitPasswordProtectedDocWrongPassword()
         : UnitWSDClient("UnitPasswordProtectedDocWrongPassword")
         , _phase(Phase::Load)
+        , _gotWrongPassword(false)
     {
     }
 
     bool onDocumentError(const std::string& message) override
     {
         TST_LOG("onDocumentError: [" << message << ']');
-        LOK_ASSERT_EQUAL_MESSAGE("Expect only wrongpassword errors",
-                                 std::string("error: cmd=load kind=wrongpassword"), message);
+        if (!_gotWrongPassword)
+        {
+            LOK_ASSERT_EQUAL_STR("error: cmd=load kind=wrongpassword", message);
+            _gotWrongPassword = true;
+        }
+        else
+        {
+            LOK_ASSERT_EQUAL_STR("error: cmd=load kind=docunloading", message);
+        }
 
         passTest("Password is required for viewing");
         return true;

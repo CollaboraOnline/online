@@ -134,7 +134,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
 		if (hasSave) {
 			content.push({
-				'type': 'toolbox',
+				'type': 'container',
 				'children': [
 					{
 						'id': 'file-save',
@@ -267,9 +267,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'type': 'menubutton',
 				'text': _UNO('.uno:Print', 'spreadsheet'),
 				'command': '.uno:Print',
-				'applyCallback':function () {
-					app.map.print();
-				},
+				'applyCallback': 'print',
 				'accessibility': { focusBack: true,	combination: 'PT', de: null }
 			});
 		}
@@ -581,9 +579,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									'noLabel': true,
 									'text': _UNO('.uno:SetBorderStyle'),
 									'command': '.uno:SetBorderStyle',
-									'applyCallback':function () {
-										app.map.sendUnoCommand(window.getBorderStyleUNOCommand(0, 0, 1, 0, 0, 0, 0)) // this will make this as split button
-									},
+									'applyCallback': 'defaultborderstyle',
 									'accessibility': { focusBack: true,	combination: 'B', de: null }
 								},
 								{
@@ -1038,7 +1034,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 										'id': 'home-search-dialog',
 										'type': 'toolitem',
 										'text': _('Replace'),
-										'command': '.uno:SearchDialog',
+										'command': '.uno:SearchDialog?InitialFocusReplace:bool=true',
 										'accessibility': { focusBack: false, 	combination: 'FD',	de: null }
 									}
 								]
@@ -1684,13 +1680,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'IS', de: null }
 					},
 					{
-						'id': 'insert-function-dialog',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:FunctionDialog', 'spreadsheet'),
-						'command': '.uno:FunctionDialog',
-						'accessibility': { focusBack: true,	combination: 'FD', de: null }
-					},
-					{
 						'id': 'Insert-Section-PivotTable-Ext',
 						'type': 'container',
 						'children': [
@@ -1887,7 +1876,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'children': [
 									{
 										'id': 'insert-vertical-text',
-										'type': 'toolitem',
+										'type': app.LOUtil.isFileODF(this.map) ? 'toolitem' : 'bigtoolitem',
 										'text': _UNO('.uno:VerticalText', 'spreadsheet'),
 										'command': '.uno:VerticalText',
 										'accessibility': { focusBack: true,	combination: 'IV', de: null }
@@ -2446,6 +2435,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 	},
 
 	getReviewTab: function() {
+		// Note: when adding track changes elements, consider this._map['wopi'].HideChangeTrackingControls
 		var content = [
 			{
 				'id': 'review-spell-dialog',

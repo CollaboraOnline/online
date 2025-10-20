@@ -22,10 +22,15 @@
     </iframe>
     <script>
         function constructWopiUrl() {
-            var localServer = window.location.protocol + "//" + window.location.host;
-            var localUrl = localServer + window.location.pathname + "?";
-            localUrl = localUrl.replace("debug.html", "cool.html");
-            var params = new URLSearchParams(window.location.search);
+            let localServer = window.location.protocol + "//" + window.location.host;
+            let localUrl = localServer + window.location.pathname + "?";
+            let params = new URLSearchParams(window.location.search);
+            let req = params.get('req');
+            params.delete('req');
+            if (req)
+              req = req.replace('debug.html', 'cool.html')
+            else
+              localUrl = localUrl.replace('debug.html', 'cool.html');
             var wopiSrc = params.get('WOPISrc');
             if (wopiSrc)
             {
@@ -34,11 +39,23 @@
             }
             else
             {
-                var filePath = params.get('file_path').substr(1);
+                let filePath = params.get('file_path').substr(1);
                 params.delete('file_path');
-                var wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
+                const wopiPort = params.get('wopiPort');
+                wopiSrc = localServer;
+                params.delete('wopiPort');
+                if (wopiPort)
+                  wopiSrc += ':' + wopiPort;
+                wopiSrc += "/wopi/files/" + encodeURIComponent(filePath);
             }
-            return localUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
+            if (req)
+              localUrl += 'req=' + req + '&';
+
+            localUrl += "WOPISrc=" + wopiSrc;
+            let remainingParams = params.toString()
+            if (remainingParams)
+              localUrl = localUrl + '&' + params.toString();
+            return localUrl
           }
         var form = document.getElementById("form");
         form.action = constructWopiUrl();

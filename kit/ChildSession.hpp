@@ -85,6 +85,7 @@ public:
     virtual ~ChildSession();
 
     bool getStatus();
+    bool getPartStatus();
     int getViewId() const { return _viewId; }
     void setViewId(const int viewId) { _viewId = viewId; }
     const std::string& getViewUserId() const { return getUserId(); }
@@ -196,9 +197,9 @@ private:
     bool unoSignatureCommand(const std::string_view commandName);
     bool selectText(const StringVector& tokens, LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
-    bool renderNextSlideLayer(SlideCompressor &scomp,
-                              unsigned width, unsigned height,
-                              double dDevicePixelRatio, bool& done, bool isCompressed);
+    bool renderNextSlideLayer(SlideCompressor& scomp, unsigned width, unsigned height,
+                              double dDevicePixelRatio, bool& done, const std::string& cacheKey,
+                              std::size_t layerNumber, bool isCompressed);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);

@@ -30,7 +30,7 @@
 
 	--tooltip-font-size: 0.875rem;
 	--default-font-size: 0.75rem;
-	--overflow-group-font-size: 0.7rem;
+	--overflow-group-font-size: 8.5pt; /* do not scale labels of groups */
 	--medium-font-size: 0.875rem;
 	--header-font-size: 1rem;
 	/* tab min font-size */
@@ -54,6 +54,9 @@
 
 	/* Ruler */
 	--ruler-height: 20px;
+
+	/* Notebookbar */
+	--notebookbar-element-height: 64px;
 }
 
 html {
@@ -301,6 +304,10 @@ body {
 	background: url('images/table-row-or-column-select-marker-selected.svg') no-repeat center center /12px;
 }
 
+.table-select-marker.hovered {
+	background: url('images/table-row-or-column-select-marker-selected.svg') no-repeat center center /12px;
+}
+
 .table-select-marker:hover::before {
 	border-color: var(--color-primary);
 }
@@ -327,7 +334,6 @@ body {
 
 #quickfind-dock-wrapper {
 	display: none;
-	background: var(--color-background-lighter);
 	position: relative;
 	z-index: 990;
 	max-width: 350px;
@@ -819,9 +825,13 @@ body {
 	font-size: var(--default-font-size);
 }
 
-.cool-annotation-autosavelabel {
-	font-size: var(--default-font-size);
-	opacity: 75%;
+.annotation-button-autosaved {
+	color: var(--color-primary-dark) !important;
+	background-color: #e1e8f9 !important;
+}
+
+.annotation-button-delete {
+	color: var(--color-error) !important;
 }
 
 .cool-annotation-menubar {
@@ -1209,8 +1219,10 @@ body {
 	background-position: 0;
 }
 
-#mentionPopup {
+#mentionPopup,
+#mentionPopupList {
 	min-width: 100px;
+	min-height: 100px;
 }
 
 #mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {

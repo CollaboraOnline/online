@@ -54,8 +54,6 @@
 #include "androidapp.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
-#elif WASMAPP
-#include "wasmapp.hpp"
 #endif // IOS
 
 #if ENABLE_LOCAL_FILESYSTEM
@@ -180,10 +178,12 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
                                       << "] as FileSystem");
             return StorageBase::StorageType::FileSystem;
         }
-#endif // ENABLE_LOCAL_FILESYSTEM
 
         LOG_DBG("Local Storage is disabled by default. Enable in the config file or on the "
                 "command-line to enable.");
+#else
+        LOG_DBG("Local Storage is disabled in this build. Enable in the config file.");
+#endif // ENABLE_LOCAL_FILESYSTEM
     }
 #if !MOBILEAPP
     else if (HostUtil::isWopiEnabled())
@@ -293,7 +293,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     const std::string userId = std::to_string(LastLocalStorageId++);
     std::string userNameString;
 
-#if MOBILEAPP
+#if MOBILEAPP && !WASMAPP
     if (user_name != nullptr)
         userNameString = std::string(user_name);
 #endif

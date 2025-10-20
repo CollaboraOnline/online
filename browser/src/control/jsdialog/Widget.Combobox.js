@@ -29,6 +29,7 @@
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = window.L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
+	entry.setAttribute('role', 'option');
 
 	if (data.hasSubMenu)
 		window.L.DomUtil.addClass(entry, 'ui-has-menu');
@@ -40,6 +41,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	if (data.icon) {
 		var icon = window.L.DomUtil.create('img', 'ui-combobox-icon', entry);
+		icon.alt = '';
 		builder._isStringCloseToURL(data.icon) ? icon.src = data.icon : app.LOUtil.setImage(icon,  app.LOUtil.getIconNameOfCommand(data.icon), builder.map);
 	}
 
@@ -50,8 +52,10 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var content = window.L.DomUtil.create('span', '', entry);
 	content.innerText = data.text;
 
-	if (data.selected)
+    if (data.selected) {
+        entry.setAttribute('aria-selected', 'true');
 		window.L.DomUtil.addClass(entry, 'selected');
+    }
 
 	if (data.checked)
 		window.L.DomUtil.addClass(entry, 'checked');
@@ -69,13 +73,19 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	entry.addEventListener('click', clickFunction);
 	entry.addEventListener('keypress', function (event) {
-		if (event.key === 'Enter') {
+        if (event.key === 'Enter' || event.key === ' ') {
 			clickFunction();
 			event.preventDefault();
 		}
 	});
 
 	if (data.hasSubMenu) {
+		entry.setAttribute('aria-haspopup', true);
+		entry.setAttribute('aria-expanded', false);
+		entry._onDropDown = function(open) {
+			entry.setAttribute('aria-expanded', open);
+		};
+
 		entry.addEventListener('mouseover', function () {
 			builder.callback('combobox', 'showsubmenu', {id: data.comboboxId}, entryData, builder);
 		});
@@ -188,27 +198,32 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.value = data.text;
 	content.role = 'combobox';
 	content.setAttribute('autocomplete', 'off');
+	content.setAttribute('aria-autocomplete', 'list');
 
-	if (data.aria) {
-		content.setAttribute('aria-label',data.aria.label);
+	if (data.aria && data.aria.label) {
+		content.setAttribute('aria-label', data.aria.label);
+	} else if (data.labelledBy) {
+		content.setAttribute('aria-labelledby', data.labelledBy);
 	}
 
 	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
-	content.setAttribute('aria-haspopup', true);
 	content.setAttribute('aria-expanded', false);
 	content.setAttribute('aria-controls', dropDownId);
 
 	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
-	button.setAttribute('aria-haspopup', true);
 	button.setAttribute('aria-expanded', false);
 	button.setAttribute('aria-controls', dropDownId);
-	if (data.aria)
+
+	if (data.aria && data.aria.label) {
 		button.setAttribute('aria-label', _('Open ') + data.aria.label + _(' list'));
+	} else if (data.labelledBy) {
+		button.setAttribute('aria-labelledby', data.labelledBy);
+	}
 
 	var arrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
 
-	container._onDropDown = function(open) {
+	container._onDropDown = function (open) {
 		content.setAttribute('aria-expanded', open);
 		button.setAttribute('aria-expanded', open);
 	};
@@ -261,7 +276,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		// check for drop down is in open state or not.
 		// If open then we should make focus in entries field for Arrow key navigation
 		if (event.key === 'ArrowDown' && builder.map.jsdialog.hasDropdownOpened()) {
-			const comboboxEntries =  JSDialog.GetDropdown(data.id);
+			const comboboxEntries = JSDialog.GetDropdown(data.id);
 			const selectedElement = comboboxEntries.querySelector(".selected");
 			if (selectedElement) {
 				selectedElement.focus();

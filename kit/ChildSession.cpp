@@ -56,6 +56,10 @@
 #include "DocumentViewController.h"
 #endif
 
+#if WASMAPP
+#include "wasmapp.hpp"
+#endif
+
 #include <climits>
 #include <fstream>
 #include <memory>
@@ -727,6 +731,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 bool result = unoCommand(unoSave);
                 if (result)
                 {
+#if WASMAPP
+                    saveToServer();
+#endif
                     LogUiCommands uiLog(*this);
                     uiLog.logSaveLoad("save", Poco::URI(getJailedFilePath()).getPath(), timeStart);
                 }
@@ -1112,11 +1119,10 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
     const auto start = std::chrono::steady_clock::now();
     // renderFont use a default font size (25) when width and height are 0
     int width = 0, height = 0;
-    unsigned char* ptrFont = nullptr;
 
     getLOKitDocument()->setView(_viewId);
 
-    ptrFont = getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height);
+    ScopedBytes ptrFont(getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height));
 
     const auto duration = std::chrono::steady_clock::now() - start;
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -1129,7 +1135,7 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
 
     const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
-    if (Png::encodeBufferToPNG(ptrFont, width, height, output, mode))
+    if (Png::encodeBufferToPNG(ptrFont.get(), width, height, output, mode))
     {
         bSuccess = sendTextFrame(output.data(), output.size());
     }
@@ -1138,7 +1144,6 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
         bSuccess = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
     }
 
-    std::free(ptrFont);
     return bSuccess;
 }
 
@@ -1157,6 +1162,23 @@ bool ChildSession::getStatus()
     }
 
     return sendTextFrame("status: " + status);
+}
+
+bool ChildSession::getPartStatus()
+{
+    std::string status;
+
+    getLOKitDocument()->setView(_viewId);
+
+    status = LOKitHelper::documentStatus(getLOKitDocument()->get(), true);
+
+    if (status.empty())
+    {
+        LOG_ERR("Failed to get part status.");
+        return false;
+    }
+
+    return sendTextFrame("partstatus:" + status);
 }
 
 namespace
@@ -2436,17 +2458,43 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
-                                        const unsigned width, const unsigned height,
-                                        double devicePixelRatio, bool& done, bool isCompressed = false)
+bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned width,
+                                        const unsigned height, double devicePixelRatio, bool& done,
+                                        const std::string& cacheKey, std::size_t layerNumber,
+                                        bool isCompressed = false)
 {
-    // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
     bool isBitmapLayer = false;
-    char* msg = nullptr;
-    done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer, &devicePixelRatio, &msg);
-    std::string jsonMsg(msg);
-    free(msg);
+    std::string jsonMsg;
+    bool cacheUsed = false;
+    SlideLayerCacheMap& slideLayerCache = _docManager->getSlideLayerCache();
+
+    // cacheKey example:
+    // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
+    // This is all the information browser sends based on which slides are created
+    if (auto itr = slideLayerCache.find(cacheKey);
+        itr != slideLayerCache.end() && layerNumber < itr->second.size())
+    {
+        pixmap = itr->second[layerNumber]._pixmap;
+        isBitmapLayer = itr->second[layerNumber]._isBitmapLayer;
+        jsonMsg = itr->second[layerNumber]._msg;
+        done = itr->second[layerNumber]._done;
+        cacheUsed = true;
+        LOG_INF("Slideshow: Cached slide layer reused by view ID " << getViewId());
+    }
+    else
+    {
+        char* msg = nullptr;
+        done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer,
+                                                        &devicePixelRatio, &msg);
+        jsonMsg = std::string(msg);
+        free(msg);
+        SlideLayerCache cache(pixmap, isBitmapLayer, jsonMsg, done);
+        slideLayerCache.insert(cacheKey, cache);
+        LOG_INF(
+            "Slideshow: Cached slide layer not found, slides layer is freshely rendered by view ID "
+            << getViewId());
+    }
 
     if (jsonMsg.empty())
         return true;
@@ -2525,7 +2573,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
                 std::vector<char> compressedOutPut;
                 compressedOutPut.resize(ZSTD_COMPRESSBOUND(pixmap->size()));
 
-                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA)
+                if (tileMode == LibreOfficeKitTileMode::LOK_TILEMODE_BGRA && !cacheUsed)
                 {
                     png_row_info rowInfo;
                     rowInfo.rowbytes = pixmap->size();
@@ -2638,9 +2686,11 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     bool done = false;
     SlideCompressor scomp(_docManager->getSyncPool());
+    std::size_t layerNumber = 0;
     while (!done)
     {
-        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done, compressedLayers);
+        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done,
+                                       tokens.substrFromToken(1), layerNumber++, compressedLayers);
         if (!success)
             break;
     }
@@ -3488,8 +3538,7 @@ bool ChildSession::sendProgressFrame(const char* id, const std::string& jsonProp
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
     const char* const typeName = lokCallbackTypeToString(type);
-    LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " << typeName << " [" << payload
-                                            << ']');
+    LOG_TRC("ChildSession::loKitCallback: " << typeName << " [" << payload << ']');
 
     if (!Util::isMobileApp() && UnitKit::get().filterLoKitCallback(type, payload))
         return;
@@ -3627,7 +3676,20 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         else if (payload.find(".uno:ModifiedStatus") != std::string::npos)
         {
             if (!_docManager->trackDocModifiedState(payload))
+            {
+                LOG_TRC("Forwarding " << payload << " after tracking modified state");
                 sendTextFrame("statechanged: " + payload);
+            }
+            else
+                LOG_TRC("Ignoring " << payload << " after tracking modified state");
+
+            if (payload == ".uno:ModifiedStatus=true") {
+                _docManager->getSlideLayerCache().erase_all();
+            }
+        }
+        else if (payload.find(".uno:CurrentPageResize") != std::string::npos)
+        {
+            getPartStatus();
         }
         else
             sendTextFrame("statechanged: " + payload);

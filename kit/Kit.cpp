@@ -240,6 +240,8 @@ public:
     {
         _saveCompleted = true;
         _watchdogCV.notify_all();
+        if (_watchdogThread.joinable())
+            _watchdogThread.join();
     }
 
 private:
@@ -257,7 +259,7 @@ void Document::shutdownBackgroundWatchdog()
         BgSaveWatchdog->complete();
 }
 
-#endif
+#endif // !MOBILEAPP
 
 namespace
 {
@@ -2646,7 +2648,8 @@ void Document::notifySyntheticUnmodifiedState()
     // no need to change core state that happened earlier
     if (_modified == ModifiedState::UnModifiedButSaving)
     {
-        LOG_TRC("document was not modified while background saving");
+        LOG_TRC("document was not modified while background saving; sending synthetic "
+                ".uno:ModifiedStatus=false");
         _modified = ModifiedState::UnModified;
         notifyAll("statechanged: .uno:ModifiedStatus=false");
     }
@@ -2656,8 +2659,8 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
 {
     bool filter = false;
 
-    StringVector tokens(StringVector::tokenize(stateChanged, '='));
-    bool modified = tokens.size() > 1 && tokens.equals(1, "true");
+    const StringVector tokens(StringVector::tokenize(stateChanged, '='));
+    const bool modified = tokens.size() > 1 && tokens.equals(1, "true");
     ModifiedState newState = _modified;
     // NB. since 'modified' state is (oddly) notified per view we get
     // several duplicate transitions from state A -> A again.
@@ -2686,9 +2689,14 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
         // else duplicate
         break;
     }
+
     if (_modified != newState)
+    {
         LOG_TRC("Transition modified state from " << name(_modified) << " to " << name(newState));
-    _modified = newState;
+        _modified = newState;
+    }
+    else
+        LOG_TRC("Modified state remains " << name(_modified) << " after " << stateChanged);
 
     return filter;
 }
@@ -3114,25 +3122,36 @@ int pollCallback(void* data, int timeoutUs)
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     std::vector<std::shared_ptr<KitSocketPoll>> v;
+    v.reserve(KitSocketPoll::KSPolls.size());
     for (const auto &i : KitSocketPoll::KSPolls)
     {
-        auto p = i.lock();
-        if (p)
-            v.push_back(p);
+        if (auto p = i.lock())
+            v.push_back(std::move(p));
     }
+
     if (v.empty())
     {
         // Remove any stale elements from KitSocketPoll::KSPolls and
         // block until an element is added to KitSocketPoll::KSPolls
         KitSocketPoll::KSPolls.clear();
         KitSocketPoll::KSPollsCV.wait(lock, []{ return KitSocketPoll::KSPolls.size(); });
+        return 0;
     }
-    else
-    {
-        lock.unlock();
-        for (const auto &p : v)
-            p->kitPoll(timeoutUs);
+
+    lock.unlock();
+
+    // Non-blocking poll on all kits
+    bool anyPollHadEvents = false;
+    for (const auto &p : v) {
+        // deliberately kitPoll(0) - returns right away
+        if (p->kitPoll(0) > 0)
+            anyPollHadEvents = true;
     }
+
+    // If no poll had events, block until any fake-socket activity,
+    // or until the global condition variable (theCV) timeout expires
+    if (!anyPollHadEvents)
+        fakeSocketWaitAny(timeoutUs);
 
     // We never want to exit the main loop
     return 0;
@@ -3371,8 +3390,13 @@ void lokit_main(
 
         // initialize while we have access to /proc/self/task
         threadCounter.reset(new Util::ThreadCounter());
+#ifdef FDCOUNTER_USABLE
         // initialize while we have access to /proc/self/fd
         fdCounter.reset(new Util::FDCounter());
+#endif
+
+        bool usingMountNamespace = false;
+        std::chrono::milliseconds jailSetupTime(0);
 
         if (!ChildSession::NoCapsForKit)
         {
@@ -3522,8 +3546,6 @@ void lokit_main(
                 return true;
             };
 
-            bool usingMountNamespace = false;
-
 #ifndef __FreeBSD__
             const uid_t origuid = geteuid();
             const gid_t origgid = getegid();
@@ -3560,6 +3582,7 @@ void lokit_main(
             }
 
 #ifndef __FreeBSD__
+#if HAVE_LIBCAP
             if (usingMountNamespace)
             {
                 // create another namespace, map back to original uid/gid after mount
@@ -3586,6 +3609,7 @@ void lokit_main(
 
             assert(origuid == geteuid());
             assert(origgid == getegid());
+#endif
 #endif
 
             if (!bindMount)
@@ -3647,9 +3671,9 @@ void lokit_main(
             Poco::File(Poco::Path(jailPath, HomePathInJail)).createDirectories();
             ::setenv("HOME", HomePathInJail, 1);
 
-            const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+            jailSetupTime = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - jailSetupStartTime);
-            LOG_DBG("Initialized jail files in " << ms);
+            LOG_DBG("Initialized jail files in " << jailSetupTime);
 
             // The bug is that rewinding and rereading /proc/self/smaps_rollup doubles the previous
             // values, so it only affects the case where we reuse the fd from opening smaps_rollup
@@ -3754,6 +3778,7 @@ void lokit_main(
             }
         }
 
+        bool hasSeccomp = false;
         // Lock down the syscalls that can be used
         if (!Seccomp::lockdown(Seccomp::Type::KIT))
         {
@@ -3765,6 +3790,14 @@ void lokit_main(
 
             LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
                     "You are running in a significantly less secure mode.");
+        }
+        else
+        {
+#if DISABLE_SECCOMP == 0
+            hasSeccomp = true;
+#else
+            hasSeccomp = false;
+#endif
         }
 
         rlimit rlim = { 0, 0 };
@@ -3840,6 +3873,24 @@ void lokit_main(
             pathAndQuery.append(encodedVersion);
             free(versionInfo);
         }
+
+        // Admin settings bits:
+        // Are we using seccomp ?
+        pathAndQuery.append(std::string("&adms_seccomp=") +
+                            (hasSeccomp ? "ok" : "none"));
+        // Are we bind mounting ?
+        pathAndQuery.append(std::string("&adms_bindmounted=") +
+                            (JailUtil::isBindMountingEnabled() ? "ok" : "slow"));
+        // Are we using a container ?
+        pathAndQuery.append(std::string("&adms_contained=") +
+                            ((ChildSession::NoCapsForKit || !usingMountNamespace) ?
+                             "uncontained" : "ok"));
+        // How slow was the jail setup ?
+        pathAndQuery.append(std::string("&adms_info_setup_ms=") +
+                            std::to_string(jailSetupTime.count()));
+        // Are we using namespaces (or CAP_SYS_CHROOT etc.)
+        pathAndQuery.append(std::string("&adms_info_namespaces=") +
+                            (useMountNamespaces ? "true" : "false"));
 
 #else // MOBILEAPP
 
@@ -4224,6 +4275,8 @@ void dump_kit_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
     oss << "Start Kit " << getpid() << " Dump State:\n";
+
+    SigUtil::signalLogActivity();
 
     KitSocketPoll::dumpGlobalState(oss);
 

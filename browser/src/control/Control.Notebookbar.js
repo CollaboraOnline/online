@@ -22,49 +22,46 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	_lastSelectedTabName: null,
 
 	container: null,
-	builder: null,
+	builder: null, // see NotebookbarBase
+	model: null, // see NotebookbarBase
 
 	HOME_TAB_ID: 'Home-tab-label',
 	FORMULAS_TAB_ID: 'Formula-tab-label',
 
 	additionalShortcutButtons: [],
 
+	setBuilder: function(builder, model) {
+		this.builder = builder;
+		this.model = model;
+	},
+
+	// happens only once
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
 		this.additionalShortcutButtons = [];
+
+		// initialize the model only once, remember updates from core
+		if (this.model.getSnapshot() === null)
+			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
+
+		this.map.on('notebookbar', this.onNotebookbar, this);
+	},
+
+	// on show
+	create: function(container) {
 		var docType = this._map.getDocType();
 
 		if (document.documentElement.dir === 'rtl')
 			this._RTL = true;
 
-		this.builder = new window.L.control.notebookbarBuilder({
-			windowId: -2,
-			mobileWizard: this,
-			map: map,
-			cssClass: 'notebookbar',
-			useSetTabs: true,
-			suffix: 'notebookbar',
-		});
-		this.map.on('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
+		this.container = container;
 
-		// remove old toolbar
-		var toolbar = window.L.DomUtil.get('toolbar-up');
-		if (toolbar)
-			toolbar.outerHTML = '';
-
-		// create toolbar from template
-		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
-		this.parentContainer = window.L.DomUtil.get('toolbar-up');
-
-		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
+		this.loadTab();
 
 		this.onContextChange = this.onContextChange.bind(this);
 		app.events.on('contextchange', this.onContextChange);
-		this.map.on('notebookbar', this.onNotebookbar, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
-		this.map.on('jsdialogupdate', this.onJSUpdate, this);
-		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
@@ -109,19 +106,14 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
-	},
 
-	resetInCore: function() {
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
-		this.setInitialized(false);
+		if (!this.map.serverAuditDialog) {
+			this.hideItem('server-audit');
+			this.hideItem('help-serveraudit-break');
+		}
 	},
 
 	onRemove: function() {
-		clearTimeout(this.retry);
-		this.map.off('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
-		this.map.off('notebookbar');
-		this.map.off('jsdialogupdate', this.onJSUpdate, this);
-		this.map.off('jsdialogaction', this.onJSAction, this);
 		app.events.off('contextchange', this.onContextChange);
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
@@ -130,41 +122,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.floatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
-		this.resetInCore();
-	},
-
-	onJSUpdate: function (e) {
-		var data = e.data;
-
-		if (data.jsontype !== 'notebookbar')
-			return;
-
-		if (!this.container)
-			return;
-
-		if (!this.builder)
-			return;
-
-		this.setInitialized(true);
-
-		this.builder.updateWidget(this.container, data.control);
-	},
-
-	onJSAction: function (e) {
-		var data = e.data;
-
-		if (data.jsontype !== 'notebookbar')
-			return;
-
-		if (!this.builder)
-			return;
-
-		if (!this.container)
-			return;
-
-		this.setInitialized(true);
-
-		this.builder.executeAction(this.container, data.data);
+		$(this.container).remove();
 	},
 
 	onUpdatePermission: function(e) {
@@ -232,18 +190,14 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$('.root-container.notebookbar').remove();
 		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-shortcuts-bar').remove();
-		$(this.container).remove();
-		this.setInitialized(false);
 	},
 
-	loadTab: function(tabJSON) {
+	loadTab: function() {
 		app.console.debug('Notebookbar: loadTab');
 
 		this.clearNotebookbar();
 
-		this.container = window.L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
-
-		this.builder.build(this.container, [tabJSON]);
+		this.builder.build(this.container, [this.model.getSnapshot()]);
 
 		if (this._showNotebookbar === false)
 			this.hideTabs();
@@ -346,8 +300,13 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	reloadShortcutsBar: function() {
-		$('.notebookbar-shortcuts-bar').remove();
-		this.createShortcutsBar();
+		if (!document.querySelector('.notebookbar-shortcuts-bar'))
+			return;
+
+		app.layoutingService.appendLayoutingTask(() => {
+			$('.notebookbar-shortcuts-bar').remove();
+			this.createShortcutsBar();
+		});
 	},
 
 	insertButtonToShortcuts: function(button) {
@@ -377,20 +336,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.reloadShortcutsBar();
 	},
 
-	showNotebookbarButton: function(buttonId, show) {
-		var button = $(this.container).find('#' + buttonId);
-		if (button) {
-			if (show) {
-				button.show();
-			} else {
-				button.hide();
-			}
-			return true;
-		} else {
-			return false;
-		}
-	},
-
 	showNotebookbarCommand: function(commandId, show) {
 		var cssClass;
 		if (commandId.indexOf('.uno:') == 0) {
@@ -400,6 +345,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		}
 		var button = $(this.container).find('div.' + cssClass);
 		if (button) {
+			// TODO: remember state like this.showItem
 			if (show) {
 				button.show();
 			} else {
@@ -412,13 +358,15 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	shouldIgnoreContextChange(contexts, appId) {
 		// New -> old context name pairs.
-		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
+		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage'],
+			['Graphic', 'DrawPage', 'Animation'], ['DrawPage', 'Graphic', 'Animation']];
 		if (appId === 'com.sun.star.text.TextDocument') {
 			ignored.push(['Text', '']);
 		}
 
 		for (let i = 0; i < ignored.length; i++) {
-			if (contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
+			if ((ignored[i].length < 3 || this._lastSelectedTabName === ignored[i][2])
+				&& contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
 				return true;
 		}
 
@@ -472,10 +420,14 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	showButton: function (id, show) {
 		if (!id) return;
 
-		this.builder.executeAction(this.parentContainer, {
-			control_id: id,
-			control: { id: id },
-			action_type: show ? 'show' : 'hide',
+		this.builder.executeAction(this.container, {
+			id: this.builder.windowId,
+			action: 'action',
+			jsontype: 'notebookbar',
+			data: {
+				control_id: id,
+				action_type: show ? 'show' : 'hide',
+			}
 		});
 
 		JSDialog.RefreshScrollables();
@@ -710,4 +662,42 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			childrenArray = this.getOptionsSectionData();
 		builder.build(optionsSection, childrenArray);
 	},
+
+	// dynamically show/hide items
+
+	// use getter to hide usage of UIManager's hiddenItems for centralization
+	getHiddenItems() {
+		if (!this._map || !this._map.uiManager)
+			return null;
+
+		return this._map.uiManager.hiddenItems;
+	},
+
+	hideItem: function(itemId) {
+		app.console.debug('Notebookbar: hide item: ' + itemId);
+
+		this.showItemImpl(itemId, false);
+
+		return true;
+	},
+
+	showItem: function(itemId) {
+		app.console.debug('Notebookbar: show item: ' + itemId);
+
+		this.showItemImpl(itemId, true);
+
+		return true;
+	},
+
+	showItemImpl: function(itemId, show) {
+		app.map.fire('jsdialogaction', { data: {
+				jsontype: 'notebookbar',
+				action: 'action',
+				data: {
+					control_id: itemId,
+					action_type: show ? 'show' : 'hide'
+				}
+			}
+		});
+	}
 });

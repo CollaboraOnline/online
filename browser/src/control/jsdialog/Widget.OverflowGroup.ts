@@ -198,16 +198,81 @@ function setupOverflowMenu(
 						);
 						return;
 					}
+
+					// only proceed if hiddenItems has content
+					const hiddenItemsChildren =
+						hiddenItems.querySelectorAll(':scope > *');
+					if (hiddenItemsChildren.length === 0) {
+						app.console.debug(
+							'overflow manager: no items to migrate for "' + dropdownId + '"',
+						);
+						return;
+					}
+
 					// move overflow to the NB structure to be targeted by onJSUpdate and onJSAction
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
-					overflowGroupContainer.appendChild(menu.parentNode);
+					overflowGroupContainer.appendChild(overflowNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
 					menu?.classList.add('ui-overflow-group-popup');
 
 					migrateItems(hiddenItems, menu);
+					menu.addEventListener('keydown', function (e: KeyboardEvent) {
+						let key;
+						if (e.key === 'Tab') {
+							key = e.shiftKey ? 'ArrowLeft' : 'ArrowRight';
+						} else {
+							key = e.key;
+						}
+
+						if (
+							['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)
+						) {
+							var currentElement = e.target as HTMLElement;
+							const isElementOfTypeInput =
+								currentElement.tagName === 'INPUT' ||
+								currentElement.tagName === 'TEXTAREA';
+
+							if (
+								!isElementOfTypeInput ||
+								(isElementOfTypeInput && e.key === 'Tab')
+							) {
+								const elementToFocus = JSDialog.FindNextElementInContainer(
+									menu,
+									currentElement,
+									key,
+								);
+								if (elementToFocus) {
+									elementToFocus.focus();
+								} else {
+									// When ray-casting reaches container boundaries
+									const focusables = Array.from(
+										menu.querySelectorAll('[tabindex="-1"]:not([disabled])'),
+									);
+									if (focusables.length) {
+										let targetIndex;
+										if (key === 'ArrowRight' || key === 'ArrowDown') {
+											// Moving forward but hit boundary - cycle to first
+											targetIndex = 0;
+										} else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+											// Moving backward but hit boundary - cycle to last
+											targetIndex = focusables.length - 1;
+										}
+
+										if (targetIndex !== undefined) {
+											(focusables[targetIndex] as HTMLElement).focus();
+										}
+									}
+								}
+								// If we handled the event here, stop propagation and prevent default
+								// to avoid reaching to global notebookbar keyboard handling
+								e.stopPropagation();
+								e.preventDefault();
+							}
+						}
+					});
 				});
 			});
 		} else {
@@ -225,7 +290,8 @@ function findFirstToolitem(
 	for (const item of items) {
 		if (
 			item.type.indexOf('toolitem') >= 0 ||
-			item.type.indexOf('colorlistbox') >= 0
+			item.type.indexOf('colorlistbox') >= 0 ||
+			item.type.indexOf('menubutton') >= 0
 		)
 			return item;
 		else if (item.children && item.children.length) {
@@ -251,7 +317,9 @@ JSDialog.OverflowGroup = function (
 ) {
 	const overflowGroupContainer = window.L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' ui-overflow-group',
+		builder.options.cssClass +
+			' ui-overflow-group' +
+			(data.nofold ? ' nofold' : ''),
 		parentContainer,
 	);
 	overflowGroupContainer.id = data.id;
@@ -291,7 +359,11 @@ JSDialog.OverflowGroup = function (
 
 	// first toolitem in the group
 	const firstItem = findFirstToolitem(data.children);
-	console.assert(firstItem, 'First toolitem inside overflow group not found');
+	if (!firstItem) {
+		app.console.warn(
+			'OverflowGroup: First toolitem inside overflow group not found',
+		);
+	}
 
 	// placeholder menu for a dropdown
 	const builtMenu = [
@@ -312,6 +384,8 @@ JSDialog.OverflowGroup = function (
 		{ type: 'separator' },
 	] as Array<MenuDefinition>;
 	builder._menus.set(data.id, builtMenu);
+
+	if (data.nofold === true) return false;
 
 	// button
 	const id = 'overflow-button-' + data.id;

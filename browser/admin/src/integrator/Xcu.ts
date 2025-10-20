@@ -164,18 +164,6 @@ class Xcu {
 	}
 
 	private parse(content: string): XcuObject {
-		function format(propName: string): string {
-			let result = propName[0];
-			for (let i = 1; i < propName.length; i++) {
-				const char = propName[i];
-				if (char >= 'A' && char <= 'Z') {
-					result += ' ' + char.toLowerCase();
-				} else {
-					result += char;
-				}
-			}
-			return result;
-		}
 		const parser = new DOMParser();
 		const xmlDoc = parser.parseFromString(content, 'application/xml');
 
@@ -212,17 +200,16 @@ class Xcu {
 
 				if (key === 'Grid') {
 					gridLevel = currentLevel;
-					gridLevel['Show Grid'] = false;
+					gridLevel['ShowGrid'] = false;
 				}
 			});
 
 			const props = item.getElementsByTagName('prop');
 			Array.from(props).forEach((prop) => {
-				let propName = prop.getAttribute('oor:name');
+				const propName = prop.getAttribute('oor:name');
 				if (!propName) {
 					return;
 				}
-				propName = format(propName);
 
 				const valueElement = prop.getElementsByTagName('value')[0];
 				let value: string | boolean = valueElement
@@ -237,8 +224,8 @@ class Xcu {
 				}
 
 				if (typeof value === 'boolean') {
-					if (propName === 'Visible grid') {
-						gridLevel['Show Grid'] = value;
+					if (propName === 'VisibleGrid') {
+						gridLevel['ShowGrid'] = value;
 					} else {
 						currentLevel[propName] = value;
 					}
@@ -250,24 +237,12 @@ class Xcu {
 	}
 
 	private generate(xcu: XcuObject): string {
-		function format(key: string): string {
-			let result = key[0];
-			for (let i = 1; i < key.length; i++) {
-				if (key[i] === ' ' && i < key.length - 1) {
-					result += key[i + 1].toUpperCase();
-					i++;
-				} else {
-					result += key[i];
-				}
-			}
-			return result;
-		}
 		function generateItemNodes(node: any, path: string[]): string[] {
 			const items: string[] = [];
 			const leafProps: { [key: string]: string | boolean } = {};
 			const nestedKeys: string[] = [];
 
-			for (let key in node) {
+			for (const key in node) {
 				if (Object.prototype.hasOwnProperty.call(node, key)) {
 					const value = node[key];
 					if (
@@ -277,7 +252,6 @@ class Xcu {
 					) {
 						nestedKeys.push(key);
 					} else {
-						key = format(key);
 						leafProps[key] = value;
 					}
 				}
@@ -427,14 +401,17 @@ class Xcu {
 		const saveButton = document.createElement('button');
 		saveButton.type = 'button';
 		saveButton.id = 'document-settings-save-button';
-		saveButton.classList.add('button', 'button-primary');
+		saveButton.classList.add('button', 'button-primary', 'button--text-only');
 		saveButton.title = _('Save Document settings');
-		saveButton.innerHTML = `
-			<span class="button__wrapper">
-				<span class="button--text-only">Save</span>
-			</span>
-			`;
 
+		const wrapperSpan = document.createElement('span');
+		wrapperSpan.classList.add('button__wrapper');
+		saveButton.appendChild(wrapperSpan);
+
+		const textSpan = document.createElement('span');
+		textSpan.classList.add('button__text');
+		textSpan.textContent = _('Save');
+		wrapperSpan.appendChild(textSpan);
 		saveButton.addEventListener('click', async () => {
 			saveButton.disabled = true;
 			await this.generateXcuAndUpload();

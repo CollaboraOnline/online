@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <cstring>
 #include <algorithm>
+#include <iomanip>
 #include <limits>
 #include <mutex>
 #include <sstream>
@@ -26,9 +27,7 @@
 #include <string_view>
 #include <utility>
 #include <cctype>
-
 #include <memory.h>
-
 #include <thread>
 
 #include <Poco/File.h>
@@ -59,6 +58,10 @@ extern "C"
 #else
 #define THREAD_UNSAFE_DUMP_BEGIN
 #define THREAD_UNSAFE_DUMP_END
+#endif
+
+#ifdef __linux__
+#define FDCOUNTER_USABLE 1
 #endif
 
 /// Format minutes with the units suffix until we migrate to C++20.
@@ -105,6 +108,7 @@ namespace Util
 
         uint_fast64_t getSeed();
         void reseed();
+        void seedForTesting(uint_fast64_t seed);
         unsigned getNext();
 
         /// Generate an array of random characters.
@@ -180,12 +184,25 @@ namespace Util
         int count();
     };
 
+    #ifdef __FreeBSD__
+    /// Needs to open dirent before forking in Kit process
+    class ThreadCounter
+    {
+        pid_t pid;
+    public:
+        ThreadCounter();
+        ~ThreadCounter();
+        /// Get number of items in this directory or -1 on error
+        int count();
+    };
+    #else
     /// Needs to open dirent before forking in Kit process
     class ThreadCounter : public DirectoryCounter
     {
     public:
         ThreadCounter() : DirectoryCounter("/proc/self/task") {}
     };
+    #endif
 
     /// Needs to open dirent before forking in Kit process
     class FDCounter : public DirectoryCounter
@@ -1058,7 +1075,8 @@ int main(int argc, char**argv)
 
     /// Converter between two different clocks,
     /// such as system_clock and stead_clock.
-    /// Note: by nature this has limited accuracy.
+    /// Note: by nature this has limited accuracy due to the latency
+    /// between reading the Src and Dst clocks (typically a few nanos).
     template <typename Dst, typename Src, typename Enable = void>
     Dst convertChronoClock(const Src time)
     {
@@ -1094,18 +1112,60 @@ int main(int argc, char**argv)
         return getSteadyClockAsString(time);
     }
 
+    /// Stringify the given time and print the difference from 'now' in
+    /// a human-friendly format. E.g. Thu Oct 09 02:15:25.682 2025 (4h 43m 32s 211ms ago)
     template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
     {
-        const auto elapsed = now - convertChronoClock<U>(time);
-        const auto elapsedM = std::chrono::duration_cast<std::chrono::minutes>(elapsed);
-        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed) - elapsedM;
-        const auto elapsedMS =
-            std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) - elapsedS;
+        const auto timeU = convertChronoClock<U>(time);
+        // The above conversion will cause minor delays, so there will be
+        // a difference even when now == time. For that, we ignore anything sub-micorsecond.
+        const bool past = std::chrono::round<std::chrono::milliseconds>(now - timeU) >=
+                          std::chrono::milliseconds::zero();
+        const auto elapsed =
+            std::chrono::round<std::chrono::milliseconds>(past ? now - timeU : timeU - now);
+
+        const auto elapsedH = std::chrono::duration_cast<std::chrono::hours>(elapsed);
+        const auto elapsedMin =
+            std::chrono::duration_cast<std::chrono::minutes>(elapsed - elapsedH);
+        const auto elapsedSec =
+            std::chrono::duration_cast<std::chrono::seconds>(elapsed - elapsedH - elapsedMin);
+        const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            elapsed - elapsedH - elapsedMin - elapsedSec);
+
+        assert(elapsedH + elapsedMin + elapsedSec + elapsedMs ==
+                   std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) &&
+               "Time-difference mismatch, likely a rounding error");
 
         std::stringstream ss;
-        ss << getClockAsString(time) << " (" << elapsedM << ' ' << elapsedS << ' ' << elapsedMS
-           << " ago)";
+        ss << getClockAsString(timeU) << " (";
+
+        // Don't stringify 0 units, except for ms.
+        if (elapsedH != std::chrono::hours::zero())
+            ss << elapsedH << ' ';
+
+        if (elapsedMin != std::chrono::minutes::zero())
+            ss << elapsedMin << ' ';
+
+        if (elapsedSec != std::chrono::seconds::zero())
+            ss << elapsedSec << ' ';
+
+        ss << std::setprecision(3) << elapsedMs;
+        ss << (past ? " ago)" : " later)");
         return ss.str();
+    }
+
+    /// Converts a unix-epoch time to steady_clock.
+    /// Without timezone, this can be unreliable.
+    inline std::chrono::steady_clock::time_point getSteadyClockFromEpoch(uint64_t epoch)
+    {
+        // Sun Sep 09 2001 01:46:40 GMT+0000 x 1000 (i.e. in milliseconds).
+        if (epoch > 1'000'000'000'000)
+        {
+            epoch /= 1000; // Convert to seconds.
+        }
+
+        const auto sys = std::chrono::system_clock::from_time_t(epoch);
+        return Util::convertChronoClock<std::chrono::steady_clock::time_point>(sys);
     }
 
     /**

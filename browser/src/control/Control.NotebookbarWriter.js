@@ -157,7 +157,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 
 		if (hasSave) {
 			content.push({
-				'type': 'toolbox',
+				'type': 'container',
 				'children': [
 					{
 						'id': 'file-save',
@@ -424,7 +424,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';
 		var hasAbout = window.L.DomUtil.get('about-dialog') !== null;
-		var hasServerAudit = !!this.map.serverAuditDialog;
+		var hasServerAudit = this.getHiddenItems() ? !this.getHiddenItems().includes('server-audit') : true;
 
 		var content = [
 				{
@@ -917,10 +917,18 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'stylesview',
-				'type': 'iconview',
-				'entries': [],
-				'vertical': 'false'
+			   'type': 'overflowgroup',
+			   'id': 'home-stylesview-group',
+			   'nofold': true,
+			   'name':_('Styles'),
+			   'children' : [
+					{
+						   'id': 'stylesview',
+						   'type': 'iconview',
+						   'entries': [],
+						   'vertical': 'false'
+					},
+			   ]
 			},
 			{
 				'id': 'stylesview-btn',
@@ -953,8 +961,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'overflowgroup',
-				'id': 'home-illustrations',
-				'name':_('Illustrations'),
+				'id': 'home-insert',
+				'name':_('Insert'),
 				'accessibility': { focusBack: false,	combination: 'IT',	de:	null },
 				'children': [
 					{
@@ -1030,7 +1038,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 										'id': 'home-search-dialog',
 										'type': 'toolitem',
 										'text': _('Replace'),
-										'command': '.uno:SearchDialog',
+										'command': '.uno:SearchDialog?InitialFocusReplace:bool=true',
 										'accessibility': { focusBack: false, 	combination: 'FD',	de: 'US' }
 									}
 								]
@@ -1095,9 +1103,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'menubutton',
 						'text': _UNO('.uno:FormatBulletsMenu', 'text'),
 						'command': '.uno:FormatBulletsMenu',
-						'applyCallback':function () {
-							app.map.sendUnoCommand('.uno:DefaultNumbering') // this will make this as split button
-						},
+						'applyCallback': '.uno:DefaultNumbering',
 						'accessibility': { focusBack: false, combination: 'FB', de: null }
 					},
 					{
@@ -1495,22 +1501,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true,	combination: 'X',	de:	null }
 					},
 					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'insert-insert-vertical-text',
-										'type': 'toolitem',
-										'text': _UNO('.uno:VerticalText', 'text'),
-										'command': '.uno:VerticalText',
-										'accessibility': { focusBack: false,	combination: 'VT',	de:	null }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
+						'id': 'insert-insert-vertical-text',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:VerticalText', 'text'),
+						'command': '.uno:VerticalText',
+						'accessibility': { focusBack: false,	combination: 'VT',	de:	null },
 					},
 				]
 			},
@@ -1576,22 +1571,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'vertical': 'true'
 					},
 					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'insert-QrCode',
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertQrCode', 'text'),
-										'command': '.uno:InsertQrCode',
-										'accessibility': { focusBack: false,	combination: 'IQ',	de: null }
-									},
-								]
-							}
-						],
-						'vertical': 'true'
+						'id': 'insert-QrCode',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertQrCode', 'text'),
+						'command': '.uno:InsertQrCode',
+						'accessibility': { focusBack: false,	combination: 'IQ',	de: null },
 					},
 				]
 			},
@@ -2185,6 +2169,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	},
 
 	getReviewTab: function() {
+		var hideChangeTrackingControls = this._map['wopi'].HideChangeTrackingControls;
 		var content = [
 			{
 				'id': 'review-spelling-and-grammar-dialog',
@@ -2255,7 +2240,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'id': 'review-insert-annotation:AnnotationMenu',
 						'type': 'menubutton',
 						'text': _UNO('.uno:InsertAnnotation'),
-						'applyCallback': () => { app.map.insertComment() },
+						'applyCallback': 'insertcomment',
 						'command': '.uno:InsertAnnotation',
 						'accessibility': { focusBack: false, combination: 'C', de: 'N' }
 					},
@@ -2319,8 +2304,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					},
 				]
 			},
-			{ type: 'separator', id: 'review-deletecomment-break', orientation: 'vertical' },
-			{
+			hideChangeTrackingControls ? {} : { type: 'separator', id: 'review-deletecomment-break', orientation: 'vertical' },
+			hideChangeTrackingControls ? {} : {
 				'type': 'overflowgroup',
 				'id': 'review-tracking',
 				'name':_('Tracking'),
@@ -2330,13 +2315,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'id': 'review-track-changes:RecordTrackedChangesMenu',
 						'type': 'menubutton',
 						'text': _UNO('.uno:TrackChanges', 'text'),
-						'applyCallback':function () { // this will make this as split button
-							const TrackChangesCurrentState = app.map['stateChangeHandler'].getItemValue('.uno:TrackChanges');
-							if (TrackChangesCurrentState  === 'true' || TrackChangesCurrentState === true)
-								app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false')
-							else
-								app.map.sendUnoCommand('.uno:TrackChangesInAllViews')
-						},
+						'applyCallback': 'toggletracking',
 						'command': '.uno:TrackChanges',
 						'accessibility': { focusBack: true, combination: 'TC', de: null }
 					},
@@ -2378,94 +2357,20 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'vertical': 'true'
 					},
 					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-accept-tracked-change',
-										'type': 'toolitem',
-										'text': _UNO('.uno:AcceptTrackedChange', 'text'),
-										'command': '.uno:AcceptTrackedChange',
-										'accessibility': { focusBack: true, combination: 'AC', de: 'AC' }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-reject-tracked-change',
-										'type': 'toolitem',
-										'text': _UNO('.uno:RejectTrackedChange', 'text'),
-										'command': '.uno:RejectTrackedChange',
-										'accessibility': { focusBack: true, combination: 'JR', de: 'JR' }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
+						'id': 'review-accept-tracked-change:AcceptTrackedChangesMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:AcceptTrackedChange', 'text'),
+						'applyCallback': 'acceptTrackedChangeToNext',
+						'command': '.uno:AcceptTrackedChangeToNext',
+						'accessibility': { focusBack: true, combination: 'AC', de: 'AC' }
 					},
 					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-accept-tracked-change-to-next',
-										'type': 'toolitem',
-										'text': _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
-										'command': '.uno:AcceptTrackedChangeToNext',
-										'accessibility': { focusBack: true, combination: 'AM', de: 'AM' }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-reject-tracked-change-to-next',
-										'type': 'toolitem',
-										'text': _UNO('.uno:RejectTrackedChangeToNext', 'text'),
-										'command': '.uno:RejectTrackedChangeToNext',
-										'accessibility': { focusBack: true, combination: 'JM', de: 'JM' }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'acceptalltrackedchanges',
-										'type': 'customtoolitem',
-										'text': _UNO('.uno:AcceptAllTrackedChanges', 'text'),
-										'command': '.uno:AcceptAllTrackedChanges',
-										'accessibility': { focusBack: true, combination: 'AL', de: 'AL' }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'rejectalltrackedchanges',
-										'type': 'customtoolitem',
-										'text': _UNO('.uno:RejectAllTrackedChanges', 'text'),
-										'command': '.uno:RejectAllTrackedChanges',
-										'accessibility': { focusBack: true, combination: 'JL', de: 'JL' }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
+						'id': 'review-reject-tracked-change:RejectTrackedChangesMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:RejectTrackedChange', 'text'),
+						'applyCallback': 'rejectTrackedChangeToNext',
+						'command': '.uno:RejectTrackedChangeToNext',
+						'accessibility': { focusBack: true, combination: 'JR', de: 'JR' }
 					},
 					{
 						'type': 'container',

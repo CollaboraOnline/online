@@ -2,13 +2,11 @@
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
-const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/sidebar.odp');
-		desktopHelper.switchUIToCompact();
 	});
 
 	it('Set gradient background color', function() {

@@ -13,6 +13,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <cstdlib>
 
 #include <JsonUtil.hpp>
 #include <Util.hpp>
@@ -24,6 +25,12 @@
 namespace LOKitHelper
 {
     constexpr auto tunnelledDialogImageCacheSize = 100;
+
+    struct StringDeleter
+    {
+        inline void operator()(char* string) { std::free(string); }
+    };
+    using ScopedString = std::unique_ptr<char, StringDeleter>;
 
     inline std::string documentTypeToString(LibreOfficeKitDocumentType type)
     {
@@ -44,9 +51,8 @@ namespace LOKitHelper
 
     inline std::string getPartData(LibreOfficeKitDocument *loKitDocument, int part)
     {
-        char* ptrToData = loKitDocument->pClass->getPartInfo(loKitDocument, part);
-        std::string result(ptrToData);
-        std::free(ptrToData);
+        ScopedString ptrToData(loKitDocument->pClass->getPartInfo(loKitDocument, part));
+        std::string result(ptrToData.get());
         return result;
     }
 
@@ -113,21 +119,19 @@ namespace LOKitHelper
         resultInfo["lastcolumn"] = std::to_string(lastColumn);
         resultInfo["lastrow"] = std::to_string(lastRow);
 
-        char* value = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly");
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
         if (value)
         {
-            const std::string isReadOnly = std::string(value);
-            std::free(value);
+            const std::string isReadOnly = std::string(value.get());
 
             bool readOnly = (isReadOnly.find("true") != std::string::npos);
             resultInfo["readonly"] = readOnly ? "true": "false";
         }
 
-        value = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea");
+        value.reset(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
         if (value)
         {
-            resultInfo["printranges"] = std::string(value);
-            std::free(value);
+            resultInfo["printranges"] = std::string(value.get());
         }
     }
 
@@ -138,7 +142,7 @@ namespace LOKitHelper
         return documentTypeToString(type);
     }
 
-    inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
+    inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument, bool diffSizePages = false)
     {
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
@@ -158,6 +162,25 @@ namespace LOKitHelper
         resultInfo["width"] = std::to_string(width);
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
+
+        if (diffSizePages)
+        {
+            ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
+            if (values)
+            {
+                Poco::JSON::Parser parser;
+                const auto var = parser.parse(values.get());
+                const auto obj = var.extract<Poco::JSON::Object::Ptr>();
+                if (obj && obj->has("parts"))
+                {
+                    const auto parts = obj->getArray("parts");
+                    std::ostringstream os;
+                    parts->stringify(os);
+                    resultInfo["partdimensions"] = os.str();
+                }
+            }
+            return MapToJSONString(resultInfo);
+        }
 
         int mode = 0;
 

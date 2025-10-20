@@ -11,7 +11,7 @@ Module.zetajs.then((zetajs) => {
 	const desktop = css.frame.Desktop.create(context);
 	let awaitedFrame;
 	const awaitingFrame = new Promise((resolve) => (awaitedFrame = resolve));
-	// We need to wait until the sample.docx has been loaded and desktop.getCurrentFrame() will
+	// We need to wait until the document has been loaded and desktop.getCurrentFrame() will
 	// retrun a non-null value.  But there appears to be no direct way to listen for that.  And
 	// listening for online's docloaded event would not work reliably, as that gets fired (on
 	// the browser main thread; via _emitSlurpedEvents -> _onMessage -> _onStatusMsg in

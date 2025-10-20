@@ -96,12 +96,21 @@ function moveFocus(
 		}
 	}
 
+	const updateAriaSelected = (elem: HTMLElement, value: string) => {
+		if (elem.hasAttribute('aria-selected')) {
+			elem.setAttribute('aria-selected', value);
+		}
+	};
+
 	const targetElement = focusableElements.find(
 		(el) =>
 			getRowColumn(el)[0] === targetRow && getRowColumn(el)[1] === targetColumn,
 	);
 
+	updateAriaSelected(currentElement, 'false');
+
 	if (targetElement) {
+		updateAriaSelected(targetElement, 'true');
 		targetElement.focus();
 	} else {
 		// Handle edge cases by moving to adjacent sibling elements if no exact match is found
@@ -119,6 +128,7 @@ function moveFocus(
 						'previous',
 					);
 		if (nextElement) {
+			updateAriaSelected(nextElement, 'true');
 			nextElement.focus();
 		}
 	}

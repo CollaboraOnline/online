@@ -1,3 +1,12 @@
+#
+# Copyright the Collabora Online contributors.
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 export NODE_PATH=$(abs_builddir)/node_modules
 
 V = $(if $(verbose),,@)
@@ -595,6 +604,28 @@ define run_mobile_interference_test
 		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
+
+#########################
+# proxy.php desktop tests
+#########################
+
+check-php-proxy:
+	@mkdir -p workdir
+	@rm -rf workdir/proxy.php
+	curl -L -o workdir/proxy.php https://raw.githubusercontent.com/CollaboraOnline/richdocumentscode/master/proxy.php
+	@# necessary for comunication of proxy.php in docker with locally running coolwsd
+	sed -i 's/localhost/172.17.0.1/g' workdir/proxy.php
+	-docker stop php-proxy 2>/dev/null || true
+	-docker rm php-proxy 2>/dev/null || true
+	docker run -d --name php-proxy -p 80:80 -v $(PWD)/workdir/proxy.php:/var/www/html/proxy.php php:8.2-apache
+	@echo "PHP proxy server starting on http://localhost"
+	sleep 3
+	-$(MAKE) CYPRESS_INTEGRATION="php-proxy" check-desktop
+	$(MAKE) cleanup-php-proxy
+
+cleanup-php-proxy:
+	-docker stop php-proxy
+	-docker rm php-proxy
 
 #############################
 # Desktop interference tests.

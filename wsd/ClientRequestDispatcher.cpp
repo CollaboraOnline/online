@@ -1006,11 +1006,21 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         if (requestDetails.isProxy())
         {
             if (!COOLWSD::IsProxyPrefixEnabled)
+            {
+                LOG_ERR("ProxyPrefix but not enabled");
                 throw BadRequestException(
                     "ProxyPrefix present but net.proxy_prefix is not enabled");
-
-            if (!socket->isLocal())
+            }
+#if ENABLE_DEBUG
+            bool isLocal = true;
+#else
+            bool isLocal = socket->isLocal();
+#endif
+            if (!isLocal)
+            {
+                LOG_ERR("ProxyPrefix request from non-local socket");
                 throw BadRequestException("ProxyPrefix request from non-local socket");
+            }
         }
 
         CleanupRequestVettingStations();
@@ -1228,7 +1238,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
             // Tunnel to WASM.
             _wopiProxy = std::make_unique<WopiProxy>(_id, requestDetails, socket);
-            _wopiProxy->handleRequest(COOLWSD::getWebServerPoll(), disposition);
+            _wopiProxy->handleRequest(message, COOLWSD::getWebServerPoll(), disposition);
         }
         else
         {
@@ -2151,7 +2161,11 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 if (strcasecmp(pdfVer.c_str(), "PDF/A-1b") &&
                     strcasecmp(pdfVer.c_str(), "PDF/A-2b") &&
                     strcasecmp(pdfVer.c_str(), "PDF/A-3b") &&
-                    strcasecmp(pdfVer.c_str(), "PDF-1.5") && strcasecmp(pdfVer.c_str(), "PDF-1.6"))
+                    strcasecmp(pdfVer.c_str(), "PDF/A-4") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-1.5") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-1.6") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-1.7") &&
+                    strcasecmp(pdfVer.c_str(), "PDF-2.0"))
                 {
                     LOG_ERR("Wrong PDF type: " << pdfVer << ". Conversion aborted.");
                     http::Response httpResponse(http::StatusCode::BadRequest);
@@ -2410,8 +2424,8 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
                                                        std::istream& message,
                                                        SocketDisposition& disposition)
 {
-    //FIXME: The DocumentURI includes the WOPISrc, which makes it potentially invalid URI.
-    const std::string url = requestDetails.getLegacyDocumentURI();
+    // cf. RequestVettingStation::handleRequest ...
+    const std::string url = requestDetails.getDocumentURI();
 
     LOG_INF("URL [" << url << "] for Proxy request.");
     auto uriPublic = RequestDetails::sanitizeURI(url);

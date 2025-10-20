@@ -125,6 +125,58 @@ interface StringConstructor {
 	locale: string; // from cool-src.js
 }
 
+// Common interface of all types of sockets created by createWebSocket().
+interface SockInterface {
+	onclose: (event: CloseEvent) => void;
+	onerror: (event: Event) => void;
+	onmessage: (event: MessageEvent) => void;
+	onopen: (event: Event) => void;
+	close: (code?: number, reason?: string) => void;
+	send: (data: MessageInterface) => void;
+	setUnloading?: () => void;
+
+	readyState: 0 | 1 | 2 | 3;
+	binaryType: 'blob' | 'arraybuffer';
+}
+
+interface ErrorMessages {
+	diskfull: string;
+	emptyhosturl: string;
+	limitreached: string;
+	infoandsupport: string;
+	limitreachedprod: string;
+	serviceunavailable: string;
+	unauthorized: string;
+	verificationerror: string;
+	wrongwopisrc: string;
+	sessionexpiry: string;
+	sessionexpired: string;
+	faileddocloading: string;
+	invalidLink: string;
+	leavind: string;
+	docloadtimeout: string;
+	docunloadingretry: string;
+	docunloadinggiveup: string;
+	clusterconfiguration: string;
+	websocketproxyfailure: string;
+	websocketgenericfailure: string;
+
+	storage: {
+		loadfailed: string;
+		savediskfull: string;
+		savetoolarge: string;
+		saveunauthorized: string;
+		savefailed: string;
+		renamefailed: string;
+		saveasfailed?: string;
+	};
+
+	uploadfile: {
+		notfound: string;
+		toolarge: string;
+	};
+}
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
@@ -223,27 +275,43 @@ interface Window {
 		getDeviceFormFactor(): string;
 	};
 	prefs: {
+		useBrowserSetting: boolean;
 		getBoolean(key: string, defaultValue?: boolean): boolean;
 		get(key: string, defaultValue?: any): any;
+		_initializeBrowserSetting(msg: string): void;
 		set(key: string, value: any): void;
 		setMultiple(prefs: Record<string, string>): void;
 		sendPendingBrowserSettingsUpdate(): void;
 		canPersist: boolean;
 	};
+	KeyboardShortcuts: KeyboardShortcuts;
 
 	allowUpdateNotification: boolean;
+	autoShowWelcome: boolean;
+	bundlejsLoaded: boolean;
 	deeplEnabled: boolean;
 	documentSigningEnabled: boolean;
+	deviceFormFactor?: string;
 	enableAccessibility: boolean;
+	enableDebug: boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
+	expectedServerId: string;
 	extraExportFormats: string[];
+	fullyLoadedAndReady: boolean;
+	imgDatas: string[];
+	indirectSocket: boolean;
+	migrating: boolean;
 	mobileMenuWizard: boolean;
 	pageMobileWizard: boolean;
+	protocolDebug: boolean;
+	routeToken: string;
 	sidebarId: number;
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
+	ThisIsTheGtkApp: boolean;
+	wopiSrc: string;
 	zoteroEnabled: boolean;
 	accessToken: string;
 	accessTokenTTL: string;
@@ -251,11 +319,34 @@ interface Window {
 	socketProxy: boolean;
 	langParam: string;
 
+	socket: SockInterface;
+	errorMessages: ErrorMessages;
+	queueMsg: MessageInterface[];
+
+	makeWsUrlWopiSrc(
+		path: string,
+		docUrlParams: string,
+		suffix?: string,
+		wopiSrcParam?: string,
+	): string;
 	createShapesPanel(shapeType: string): HTMLDivElement;
 	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
 	setupToolbar(map: any): void; // TODO should be L.Map
 	makeWsUrl: (url: string) => string;
+	getBorderStyleUNOCommand: (
+		a: number,
+		b: number,
+		c: number,
+		d: number,
+		e: number,
+		f: number,
+		g: number,
+	) => string;
 	L: any;
+	createWebSocket(url: string): SockInterface;
+	getAccessibilityState(): boolean;
+	makeClientVisibleArea(): string;
+	postMobileDebug(msg: string): void;
 }
 
 // For localization

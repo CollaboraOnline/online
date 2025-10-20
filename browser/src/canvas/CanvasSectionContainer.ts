@@ -577,10 +577,31 @@ class CanvasSectionContainer {
 		while (layoutingService.runTheTopTask());
 	}
 
-	private resizeCanvas() {
-		if (!this.needsResize) {
-			return;
+	private isCanvasSizeValidAfterDisplayChange(): boolean {
+		/*
+			In some situations, we receive resize events that cause the canvas to size to 0x0 and we don't receive a subsequent
+			resize event when the size is restored. As a work-around, if we have a zero-sized canvas,
+			double-check the document container size to see if we've missed a resize event
+		*/
+		if (this.width === 0 || this.height === 0) {
+			app.console.warn('Canvas width or height is zero.');
+			const documentContainer = document.getElementById('document-container');
+			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
+				if (app.map._docLayer) {
+					app.map._docLayer._syncTileContainerSize(true);
+					app.activeDocument.activeView.sendClientVisibleArea();
+					this.requestReDraw();
+					return false;
+				}
+			}
 		}
+
+		return true;
+	}
+
+	private resizeCanvas() {
+		if (!this.needsResize)
+			return;
 
 		this.needsResize = false;
 		this.canvas.width = this.width;
@@ -599,8 +620,10 @@ class CanvasSectionContainer {
 	private redrawCallback(timestamp: number) {
 		this.drawRequest = null;
 
-		this.resizeCanvas();
+		if (!this.isCanvasSizeValidAfterDisplayChange())
+			return;
 
+		this.resizeCanvas();
 		this.drawSections();
 		this.flushLayoutingTasks();
 		this.canvas.style.visibility = 'unset';
@@ -1049,7 +1072,8 @@ class CanvasSectionContainer {
 
 	private onMouseMove (e: MouseEvent) {
 		// Early exit. If mouse is outside and "draggingSomething = false", then there is no reason to check further.
-		if (!this.mouseIsInside && !this.draggingSomething)
+		// Add an exception for leaflet, check after removing it.
+		if (!this.mouseIsInside && !this.draggingSomething && !this.isLongPressActive())
 			return;
 
 		if (!this.isLongPressActive()) {
@@ -1124,18 +1148,15 @@ class CanvasSectionContainer {
 
 		if (e.button === 0 && !this.touchEventInProgress) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
-
+			var section: CanvasSectionObject;
 			if (!this.draggingSomething) {
-				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
-				if (section) {
-					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
-				}
+				section = this.findSectionContainingPoint(this.positionOnMouseUp);
 			}
 			else {
-				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
-				if (section) {
-					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
-				}
+				section = this.getSectionWithName(this.sectionOnMouseDown);
+			}
+			if (section) {
+				this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 			}
 		}
 
@@ -1279,15 +1300,15 @@ class CanvasSectionContainer {
 		this.stopLongPress();
 		if (!this.multiTouch) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
+			var section: CanvasSectionObject;
 			if (!this.draggingSomething) {
-				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
-				if (section)
-					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), <MouseEvent><any>e);
+				section = this.findSectionContainingPoint(this.positionOnMouseUp);
 			}
 			else {
-				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
-				if (section)
-					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), <MouseEvent><any>e);
+				section = this.getSectionWithName(this.sectionOnMouseDown);
+			}
+			if (section) {
+				this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), <MouseEvent><any>e);
 			}
 		}
 		else if (e.touches.length === 0) {

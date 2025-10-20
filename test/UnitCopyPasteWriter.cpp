@@ -22,6 +22,7 @@
 #include <wsd/COOLWSD.hpp>
 #include <wsd/ClientSession.hpp>
 
+using namespace std::literals;
 using namespace Poco::Net;
 
 std::shared_ptr<ClientSession> getChildSession(size_t session)
@@ -110,7 +111,7 @@ public:
 
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
         socket->asyncShutdown();
-        LOK_ASSERT(socket->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT(socket->waitForDisconnection(5s));
     }
 
     void invokeWSDTest() override

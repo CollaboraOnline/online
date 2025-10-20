@@ -22,6 +22,8 @@
 #include "Log.hpp"
 #include "lokassert.hpp"
 
+using namespace std::literals;
+
 /// This test simulates a permanently-failing upload.
 class UnitWOPIFailUpload : public WOPIUploadConflictCommon
 {
@@ -469,7 +471,7 @@ public:
                 const auto now = std::chrono::steady_clock::now();
                 const auto elapsed =
                     std::chrono::duration_cast<std::chrono::milliseconds>(now - _eventTime);
-                if (elapsed >= std::chrono::seconds(2))
+                if (elapsed >= 2s)
                 {
                     TST_LOG("No modified status on read-only document after waiting for "
                             << elapsed);
@@ -496,7 +498,7 @@ public:
                 const auto now = std::chrono::steady_clock::now();
                 const auto elapsed =
                     std::chrono::duration_cast<std::chrono::milliseconds>(now - _eventTime);
-                if (elapsed >= std::chrono::seconds(2))
+                if (elapsed >= 2s)
                 {
                     TST_LOG("No upload on read-only document after waiting for " << elapsed);
                     TRANSITION_STATE(_phase, Phase::Done);

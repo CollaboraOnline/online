@@ -355,25 +355,33 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
  buttons inside of grid are still center aligned but the sub container would be
 algned to the bottom */
 .ui-overflow-manager .horizontal.notebookbar {
-	align-items: end;
+	align-items: center;
 }
 .notebookbar.ui-overflow-group:not(.ui-overflow-group-container-with-label) {
 	align-content: center;
-	height: 49px !important;
+	height: var(--notebookbar-element-height) !important;
 	margin-bottom: 14px;
 }
 
-.ui-overflow-manager > .notebookbar.ui-iconview {
-	align-content: initial; /* fixes scrolling range, for example in #stylesview */
+.ui-overflow-manager > .notebookbar.ui-iconview,
+.ui-overflow-manager > .notebookbar.ui-treeview {
+	/* fixes scrolling range, for example in #stylesview or Animations tab */
+	align-content: initial;
 }
 
 .ui-overflow-manager > .notebookbar:not(.ui-separator):not(.ui-overflow-group):not(:has(.ui-overflow-group-container-with-label)) {
-	height: 49px;
+	height: var(--notebookbar-element-height);
 	/* 14px extra margin for containers without label */
 	margin-bottom: 14px;
 }
+
+.ui-overflow-manager > .notebookbar.vertical:not(.ui-separator) {
+	height: var(--notebookbar-element-height) !important;
+	margin-bottom: 14px !important;
+}
+
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
-	justify-content: end;
+	justify-content: center;
 }
 
 .ui-toggle button,
@@ -1061,6 +1069,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 	box-sizing: border-box;
 	height: 24px;
+	min-width: 70px;
 }
 
 .ui-listbox-container {
@@ -1212,7 +1221,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-dark);
 }
 
-.ui-combobox-entry.selected:not(:hover) span {
+.ui-combobox-entry.selected:not(:hover) span,
+.margin-item.selected {
 	border: 1px solid var(--color-primary);
 	background-color: var(--color-primary);
 	color: var(--color-primary-text);
@@ -1341,7 +1351,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .notebookbar .ui-overflow-group-inner {
-	height: 4rem;
+	height: var(--notebookbar-element-height);
 	align-content: center;
 }
 
@@ -1368,10 +1378,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 40vh;
 	gap: 2px;
 	padding: 2px;
-}
-
-#masterpageall_icons.ui-iconview {
-	display: flex;
 }
 
 .ui-iconview.mobile-wizard {
@@ -1413,6 +1419,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-iconview-separator {
 	flex: 0 0 99%;
+}
+
+.ui-iconview-entry-title {
+	font-size: var(--default-font-size);
 }
 
 .icon-view-item-container {
@@ -2354,7 +2364,6 @@ button.menubutton.sidebar > span {
 
 #FormulaDialog .ui-tabs-content.jsdialog {
 	grid-auto-columns: 250px;
-	margin-right: 0.2em;
 	margin-top: 0px;
 }
 
@@ -2362,18 +2371,37 @@ button.menubutton.sidebar > span {
 	align-items: center;
 }
 
-#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
-#FormulaDialog #ALTBOX #funcdesc {
-	margin: auto 0px;
-	color: var(--color-main-text);
-	font-size: var(--default-font-size);
-	line-height: var(--default-height);
-	padding-left: inherit;
-}
-
 #FormulaDialog #ALTBOX #headline {
 	font-weight: bold;
 }
+
+/* text-area overflow on function wizard window */
+
+#FormulaDialog #ed_formula.ui-textarea {
+	max-width: 392px;
+}
+
+#FormulaDialog #tabcontrol {
+	margin-inline-end: 10px;
+}
+
+#FormulaDialog .ui-tabpage > div > .ui-grid-cell > :not(.ui-pushbutton-wrapper) {
+	margin: auto 4px;
+}
+
+#FormulaDialog .ui-pushbutton-wrapper {
+	background: initial;
+}
+
+#FormulaDialog {
+	/* don't leave white area below the functions if right panel is short */
+	height: 100%;
+}
+
+#FormulaDialog .ui-textarea {
+	margin-top: 10px;
+}
+
 
 div [id^='TemplateDialog'] {
 	min-width: 590px;
@@ -2416,6 +2444,12 @@ kbd,
 
 /* Insert hyperlink dialog */
 
+#HyperlinkDocPage,
+#HyperlinkInternetPage,
+#HyperlinkMailPage {
+	width: 100%;
+}
+
 #HyperlinkInternetPage #grid2,
 #HyperlinkInternetPage #label2,
 #HyperlinkInternetPage #lbProtocol,
@@ -2449,6 +2483,7 @@ kbd,
 	grid-template-columns: 87px 1fr 38px !important;
 }
 
+#HyperlinkDocPage #frame1,
 [id^='Hyperlink'] .ui-grid-cell:empty,
 [id^='Hyperlink'] .hidden {
 	display: none;
@@ -2626,13 +2661,6 @@ kbd,
 
 #findreplacetabbox {
 	justify-content: start;
-}
-
-
-/* text-area overflow on function wizard window */
-
-#FormulaDialog #ed_formula.ui-textarea {
-	max-width: 392px;
 }
 
 #showcomments-container[default-state='true'],
@@ -2838,6 +2866,16 @@ kbd,
 	align-items: center;
 }
 
+/* Calc - Insert - Chart - Chart Wizard */
+#subtype_iconview.jsdialog.ui-iconview {
+	grid-template-columns: repeat(4, 1fr);
+	overflow: visible;
+}
+
+#CHART2_HID_SCH_WIZARD_ROADMAP.vertical.jsdialog label {
+	width: max-content;
+}
+
 /* Listbox UI grid */
 .jsdialog.ui-grid[role='listbox'] {
 	max-height: 470px;
@@ -2848,4 +2886,46 @@ kbd,
 /* Writer - Form - Properties(Dropdown) */
 #ContentControlDialog #tabindexlabel {
 	width: max-content;
+}
+
+/* Prevents adding empty space on top of tabpages */
+/* i.e Writer - Format - Page Style */
+.single-child-grid {
+	align-self: start;
+}
+
+/* Apply label styling to static text for consistent appearance */
+#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
+#FormulaDialog #ALTBOX #funcdesc,
+#GotoPageDialog #grid1 #page_count {
+	margin: auto 0px;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
+	padding-left: inherit;
+}
+
+#sheets-buttons-toolbox #sheetlist.menubutton:hover {
+	border: 1px solid var(--color-btn-border);
+	background-color: var(--color-background-tabs-group);
+}
+
+#sheetlist-entries .ui-combobox-entry.selected span {
+	background-color: rgba(var(--doc-type)) !important;
+	color: var(--color-primary-text) !important;
+	border: 1px solid rgba(var(--doc-type)) !important;
+}
+
+#sheets-buttons-toolbox #sheetlist.menubutton {
+	padding: 0;
+	margin: 0;
+	box-sizing: inherit;
+}
+
+#sheetlist .arrowbackground {
+	display: none;
+}
+
+#sheets-buttons-toolbox #sheetlist-button img {
+	margin-inline-end: 0;
 }

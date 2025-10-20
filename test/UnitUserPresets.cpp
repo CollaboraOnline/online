@@ -23,6 +23,8 @@
 #include <csignal>
 #include <ctime>
 
+using namespace std::literals;
+
 /// This test ensures that a document which has presets, but whose load is
 /// canceled before the presets are installed, gracefully handles the case that
 /// the document broker poll no longer exists when the response from async dns
@@ -76,7 +78,8 @@ public:
                 TST_LOG(
                     "delaying dns resolution of preset host until document broker is destroyed");
                 std::unique_lock<std::mutex> lock(_dns_mutex);
-                bool ok = _dns_cv.wait_for(lock, std::chrono::seconds(10), [this]() { return _phase == Phase::ResumeDNS; });
+                bool ok =
+                    _dns_cv.wait_for(lock, 10s, [this]() { return _phase == Phase::ResumeDNS; });
                 TST_LOG("dns resumed: " << ok);
                 TRANSITION_STATE(_phase, Phase::Finish);
             }

@@ -1573,6 +1573,12 @@ menuDefinitions.set('Print', [
 	{ text: _('All Sheets'), action: 'print-all-sheets' },
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('SheetListMenu', [
+	{ type: 'separator' },
+	{ type: 'separator' },
+	// dynamically updated in Control.SheetsBar
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('MenuRowHeight', [
 	{ text: _UNO('.uno:RowHeight', 'spreadsheet'), uno: '.uno:RowHeight' },
 	{
@@ -1770,6 +1776,42 @@ menuDefinitions.set('RecordTrackedChangesMenu', [
 		id: 'review-track-changes-this-view',
 		text: _('This user'),
 		uno: '.uno:TrackChangesInThisView',
+	},
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('AcceptTrackedChangesMenu', [
+	{
+		id: 'review-accept-tracked-change',
+		text: _UNO('.uno:AcceptTrackedChange', 'text'),
+		uno: '.uno:AcceptTrackedChange',
+	},
+	{
+		id: 'review-accept-tracked-change-to-next',
+		text: _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
+		uno: '.uno:AcceptTrackedChangeToNext',
+	},
+	{
+		id: 'acceptalltrackedchanges',
+		text: _UNO('.uno:AcceptAllTrackedChanges', 'text'),
+		uno: '.uno:AcceptAllTrackedChanges',
+	},
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('RejectTrackedChangesMenu', [
+	{
+		id: 'review-reject-tracked-change',
+		text: _UNO('.uno:RejectTrackedChange', 'text'),
+		uno: '.uno:RejectTrackedChange',
+	},
+	{
+		id: 'review-reject-tracked-change-to-next',
+		text: _UNO('.uno:RejectTrackedChangeToNext', 'text'),
+		uno: '.uno:RejectTrackedChangeToNext',
+	},
+	{
+		id: 'rejectalltrackedchanges',
+		text: _UNO('.uno:RejectAllTrackedChanges', 'text'),
+		uno: '.uno:RejectAllTrackedChanges',
 	},
 ] as Array<MenuDefinition>);
 
@@ -2153,6 +2195,8 @@ function generateLayoutPopupGrid(unoCommand: string): GridWidgetJSON {
 				noLabel: true,
 				left: j % 4,
 				top: (i / 4) % 4,
+				tabIndex: 0,
+				index: Math.floor(i / 4) + ':' + (j % 4),
 			} as any as WidgetJSON);
 		}
 	}

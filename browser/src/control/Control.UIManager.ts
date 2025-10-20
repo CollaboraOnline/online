@@ -362,6 +362,8 @@ class UIManager extends window.L.Control {
 	 * Initializes basic UI components.
 	 */
 	initializeBasicUI(): void {
+		app.console.debug('UIManager: initialize basic UI');
+
 		this.initializeMenubarAndTopToolbar();
 
 		if (window.mode.isMobile()) {
@@ -451,6 +453,8 @@ class UIManager extends window.L.Control {
 		this.map.on('hidebusy', (e: any) => {
 			fadeoutBusyPopup();
 		});
+
+		app.serverConnectionService.onBasicUI();
 	}
 
 	/**
@@ -458,6 +462,8 @@ class UIManager extends window.L.Control {
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').
 	 */
 	initializeSpecializedUI(docType: string): void {
+		app.console.debug('UIManager: initialize specialized UI for: ' + docType);
+
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
 		var enableNotebookbar = currentMode === 'notebookbar' && !app.isReadOnly();
@@ -474,8 +480,8 @@ class UIManager extends window.L.Control {
 			this.map.mobileBottomBar = JSDialog.MobileBottomBar(this.map);
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
 			this.map.mobileSearchBar = JSDialog.MobileSearchBar(this.map);
-		} else if (enableNotebookbar) {
-			this.createNotebookbarControl(docType);
+		} else {
+			this.createNotebookbarControl(docType, enableNotebookbar);
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
@@ -543,8 +549,9 @@ class UIManager extends window.L.Control {
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
+			this.map.sidebarFromNotebookbar = JSDialog.SidebarFromNotebookbarPanel(this.map);
 		}
-		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
+		if (window.mode.isTablet() || window.mode.isDesktop()) {
 			this.map.navigator.initializeNavigator(docType);
 		}
 
@@ -552,14 +559,33 @@ class UIManager extends window.L.Control {
 
 		this.refreshTheme();
 
+		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
 		// check for "presentation" dispatch event only after document gets fully loaded
-		this.map.on('docloaded', function() {
-			if (startPresentationGet === 'true' || startPresentationGet === '1') {
+		const startPresentation = () => {
+			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
+				const dispatchFollowPresentation = () => {
+					app.dispatcher.dispatch('followpresentation');
+					this.map.off('slideshowfollowon', dispatchFollowPresentation);
+				}
+				// have to wait until we get all the leader slide details
+				// if we start the follow me presentation directly then
+				// it will start from beginning and not where the leader is
+				// This also help with if the follow me presentation is not running
+				this.map.on('slideshowfollowon', dispatchFollowPresentation);
+			}
+			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
 				app.dispatcher.dispatch('presentation');
 			}
-		});
+
+			// docloaded event is fired multiple times, unfortunately
+            // but presentation should start only once
+			this.map.off('docloaded', startPresentation);
+		};
+		this.map.on('docloaded', startPresentation);
 		this.map.contextToolbar = new ContextToolbar(this.map);
+
+		app.serverConnectionService.onSpecializedUI(docType);
 	}
 
 	/**
@@ -569,8 +595,7 @@ class UIManager extends window.L.Control {
 	 */
 	initializeLateComponents(): void {
 		app.console.debug('UIManager: late components init');
-		if (this.getCurrentMode() === 'notebookbar')
-			this.initializeNotebookbarInCore();
+		this.initializeNotebookbarInCore();
 		this.initializeSidebar();
 		this.initializeQuickFindInCore();
 	}
@@ -679,7 +704,7 @@ class UIManager extends window.L.Control {
 	 * Creates and adds a notebookbar control based on document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', etc.)
 	 */
-	createNotebookbarControl(docType: string): void {
+	createNotebookbarControl(docType: string, showUI: boolean): void {
 		if (docType === 'spreadsheet') {
 			var notebookbar = window.L.control.notebookbarCalc();
 		} else if (docType === 'presentation') {
@@ -690,8 +715,13 @@ class UIManager extends window.L.Control {
 			notebookbar = window.L.control.notebookbarWriter();
 		}
 
-		this.notebookbar = notebookbar;
-		this.map.addControl(notebookbar);
+		this.notebookbar = JSDialog.NotebookbarBase(this.map, notebookbar);
+		if (showUI)
+			this.showNotebookbarControl();
+	}
+
+	showNotebookbarControl(): void {
+		this.notebookbar.onAdd();
 		this.map.fire('a11ystatechanged');
 		app.UI.notebookbarAccessibility.initialize();
 	}
@@ -709,12 +739,12 @@ class UIManager extends window.L.Control {
 	}
 
 	/**
-	 * Refreshes the notebookbar.
+	 * Refreshes the notebookbar. WARNING: if we got core updates for JSDialog widgets, they will be lost.
 	 */
 	refreshNotebookbar(): void {
 			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
 			this.removeNotebookbarUI();
-			this.createNotebookbarControl(this.map.getDocType());
+			this.showNotebookbarControl();
 			if (this._map._permission === 'edit') {
 				$('.main-nav').removeClass('readonly');
 			}
@@ -774,10 +804,7 @@ class UIManager extends window.L.Control {
 	 * Removes notebookbar UI components.
 	 */
 	removeNotebookbarUI(): void {
-		if (this.notebookbar) {
-			this.map.removeControl(this.notebookbar);
-			this.notebookbar = null;
-		}
+		this.notebookbar.onRemove();
 		$('#map').removeClass('notebookbar-opened');
 	}
 
@@ -925,13 +952,18 @@ class UIManager extends window.L.Control {
 	 * @param button - Button configuration object.
 	 */
 	insertCustomButton(button: any): void {
-		if (button.tablet === false && window.mode.isTablet()) {
+		if (button.tablet === false && window.mode.isTablet())
 			return;
-		}
-		if (!this.notebookbar)
+
+		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
-		else
+
+		// we always  create notebookbar component, it should get the button in advance
+		// in case of mode switch done by user later
+		if (this.notebookbar)
 			this.notebookbar.insertButtonToShortcuts(button);
+		else
+			app.console.error('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
 	}
 
 	/**
@@ -958,7 +990,8 @@ class UIManager extends window.L.Control {
 				toolbar.showItem(buttonId, show);
 			}
 		});
-
+		if (!window.app.map.topToolbar)
+			return found;
 		const topToolbarHas = window.app.map.topToolbar.hasItem(buttonId);
 		found = found || topToolbarHas;
 		if (topToolbarHas)
@@ -974,22 +1007,22 @@ class UIManager extends window.L.Control {
 	 */
 	showButton(buttonId: string, show: boolean): void {
 		var found = false;
-		if (!this.notebookbar) {
+
+		if (show)
+			delete this.hiddenButtons[buttonId];
+		else
+			this.hiddenButtons[buttonId] = true;
+
+		if (this.getCurrentMode() === 'classic')
 			found = this.showButtonInClassicToolbar(buttonId, show);
-		} else {
-			if (show) {
-				delete this.hiddenButtons[buttonId];
-			} else {
-				this.hiddenButtons[buttonId] = true;
-			}
-			this.notebookbar.reloadShortcutsBar();
-			found = this.notebookbar.showNotebookbarButton(buttonId, show);
+
+		if (this.notebookbar) {
+			if (this.getCurrentMode() === 'notebookbar') this.notebookbar.reloadShortcutsBar();
+			found = show ? this.notebookbar.showItem(buttonId) : this.notebookbar.hideItem(buttonId);
 		}
 
-		if (!found) {
-			window.app.console.error('Button with id "' + buttonId + '" not found.');
-			return;
-		}
+		if (!found)
+			window.app.console.error('UIManager: Button with id "' + buttonId + '" not found.');
 	}
 
 	/**
@@ -1051,23 +1084,24 @@ class UIManager extends window.L.Control {
 	 * @param show - Flag to show (true) or hide (false).
 	 */
 	showCommand(command: string, show: boolean): void {
-		if (show) {
+		if (show)
 			delete this.hiddenCommands[command];
-		} else {
+		else
 			this.hiddenCommands[command] = true;
-		}
+
 		var found = false;
-		if (!this.notebookbar) {
+		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
-		} else {
-			this.notebookbar.reloadShortcutsBar();
+		}
+
+		if (this.notebookbar) {
+			if (this.getCurrentMode() === 'notebookbar') this.notebookbar.reloadShortcutsBar();
 			found ||= this.notebookbar.showNotebookbarCommand(command, show);
 		}
 
-		if (!found) {
-			window.app.console.error('Item with command "' + command + '" not found.');
-		}
+		if (!found)
+			window.app.console.error('UIManager: Item with command "' + command + '" not found.');
 	}
 
 	/**
@@ -1202,7 +1236,10 @@ class UIManager extends window.L.Control {
 		// do it always apart of mobile as we need it for contextual toolbar
 		if (window.mode.isMobile()) return;
 
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+		if (!this.notebookbar.impl.initialized) {
+			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
+			this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+		}
 	}
 
 	// QuickFindPanel
@@ -1384,25 +1421,12 @@ class UIManager extends window.L.Control {
 				}
 
 				if (this.notebookbar && $('#mobile-edit-button').is(':hidden')) {
-					this.map.removeControl(this.notebookbar);
-					this.notebookbar = null;
+					this.notebookbar.onRemove();
 				}
 			} else {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
-	}
-
-	/**
-	 * Refreshes the UI.
-	 */
-	refreshUI(): void {
-		if (this.notebookbar && !this.map._shouldStartReadOnly())
-			this.refreshNotebookbar();
-		else
-			this.refreshMenubar();
-
-		this.refreshTheme();
 	}
 
 	refreshTheme(): void {
@@ -1427,7 +1451,7 @@ class UIManager extends window.L.Control {
 
 		var userPrivateInfo = myViewData.userprivateinfo;
 		if (window.documentSigningEnabled) {
-			if (userPrivateInfo && this.notebookbar) {
+			if (userPrivateInfo && this.getCurrentMode() === 'notebookbar') {
 				const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
 				// Show or hide the signature button on the notebookbar depending on if we
 				// have a signing cert/key specified.
@@ -1712,8 +1736,8 @@ class UIManager extends window.L.Control {
 		message1: string,
 		message2: string,
 		buttonText: string,
-		callback: any,
-		withCancel: boolean,
+		callback: any = null,
+		withCancel: boolean = false,
 		focusId?: string,
 	): void {
 		var dialogId = this.generateModalId(id);

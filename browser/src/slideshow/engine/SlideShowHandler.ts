@@ -98,6 +98,19 @@ class SlideShowHandler {
 		TransitionSubType.HEART,
 	]);
 
+	private _labelMap: Record<string, string> = {
+		rewind: _('Previous'),
+		dispatch: _('Next'),
+		skip: _('Skip'),
+		rewindAll: _('First'),
+		skipAll: _('Skip All'),
+		firstPage: _('First Slide'),
+		nextPage: _('Next Slide'),
+		prevPage: _('Previous Slide'),
+		lastPage: _('Last Slide'),
+		quit: _('End Show'),
+	};
+
 	constructor(presenter: SlideShowPresenter) {
 		this.presenter = presenter;
 
@@ -228,6 +241,7 @@ class SlideShowHandler {
 			const canvas = this.getContext()._canvas;
 			if (canvas) {
 				const a11yContainer = window.L.DomUtil.create('div', '');
+				a11yContainer.tabIndex = -1;
 				canvas.innerHTML = '';
 				a11yContainer.innerHTML = app.LOUtil.sanitize(a11yString);
 				canvas.appendChild(a11yContainer);
@@ -485,6 +499,8 @@ class SlideShowHandler {
 	nextEffect(): boolean {
 		if (!this.isEnabled()) return false;
 
+		this.addA11yString(this._labelMap['dispatch']);
+
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
 			return true;
@@ -540,6 +556,8 @@ class SlideShowHandler {
 	 *
 	 */
 	skipAllPlayingEffects() {
+		this.addA11yString(this._labelMap['skipAll']);
+
 		if (this.bIsSkipping || this.bIsRewinding) return true;
 
 		this.bIsSkipping = true;
@@ -591,6 +609,10 @@ class SlideShowHandler {
 		return true;
 	}
 
+	skipNEffects(nEffectNumber: number) {
+		for (let i = 0; i <= nEffectNumber; i++) if (!this.skipNextEffect()) break;
+	}
+
 	/** skipPlayingOrNextEffect
 	 *  Skip the next effect to be played that belongs to the main animation
 	 *  sequence  or all playing effects.
@@ -599,6 +621,8 @@ class SlideShowHandler {
 	 *      False if there is no more effect to skip, true otherwise.
 	 */
 	skipPlayingOrNextEffect() {
+		this.addA11yString(this._labelMap['skip']);
+
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
 			return true;
@@ -685,6 +709,8 @@ class SlideShowHandler {
 			clearTimeout(this.automaticAdvanceTimeout as number);
 			this.automaticAdvanceTimeout = { rewindedEffect: this.nCurrentEffect };
 		}
+
+		this.addA11yString(this._labelMap['rewind']);
 
 		if (!this.hasAnyEffectStarted()) {
 			this.rewindToPreviousSlide();
@@ -789,6 +815,8 @@ class SlideShowHandler {
 	 *
 	 */
 	rewindAllEffects() {
+		this.addA11yString(this._labelMap['rewindAll']);
+
 		if (!this.hasAnyEffectStarted()) {
 			this.rewindToPreviousSlide();
 			return;
@@ -831,6 +859,7 @@ class SlideShowHandler {
 		nNewSlide: number,
 		nOldSlide: number | undefined,
 		bSkipSlideTransition: boolean,
+		nSlideEffect: number = undefined,
 	) {
 		NAVDBG.print(
 			'SlideShowHandler.displaySlide: nNewSlide: ' +
@@ -841,6 +870,16 @@ class SlideShowHandler {
 		const aMetaDoc = this.theMetaPres;
 		if (nNewSlide >= aMetaDoc.numberOfSlides) {
 			this.exitSlideShow();
+		}
+
+		if (this.theMetaPres.numberOfSlides - 1 == nNewSlide) {
+			this.addA11yString(this._labelMap['lastPage']);
+		} else if (nNewSlide == 0) {
+			this.addA11yString(this._labelMap['firstPage']);
+		} else if (nNewSlide == nOldSlide + 1) {
+			this.addA11yString(this._labelMap['nextPage']);
+		} else if (nNewSlide == nOldSlide - 1) {
+			this.addA11yString(this._labelMap['prevPage']);
 		}
 
 		if (this.isTransitionPlaying()) {
@@ -896,10 +935,13 @@ class SlideShowHandler {
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
+		// can jump to specific animation only after everything is loaded
+		if (nSlideEffect !== undefined) this.skipNEffects(nSlideEffect);
 	}
 
 	exitSlideShow() {
 		// TODO: implement it;
+		this.addA11yString(this._labelMap['quit']);
 		this.automaticAdvanceTimeout = null;
 	}
 

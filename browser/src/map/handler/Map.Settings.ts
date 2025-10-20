@@ -31,7 +31,6 @@ window.L.Map.Settings = window.L.Handler.extend({
 		const settingsLocation: string = app.LOUtil.getURL(
 			'/admin/adminIntegratorSettings.html',
 		);
-		if (window.socketProxy) return window.makeWsUrl(settingsLocation);
 		return settingsLocation;
 	},
 
@@ -70,7 +69,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 
 		const options = {
 			prefix: 'iframe-settings',
-			stylesheets: ['../settings.css'],
+			stylesheets: [app.LOUtil.getURL('settings.css')],
 			titlebar: _('Options'),
 			modalButtons: [
 				{
@@ -86,6 +85,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 			],
 			dialogCssClass:
 				'jsdialog-container ui-dialog lokdialog_container ui-widget-content',
+			method: window.socketProxy ? 'post' : 'get',
 		};
 
 		this._iframeDialog = window.L.iframeDialog(

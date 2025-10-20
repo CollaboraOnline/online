@@ -1927,9 +1927,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         HardwareResourceWarning = "lowresources";
     }
 
-#elif defined(__EMSCRIPTEN__)
-    // disable threaded image scaling for wasm for now
-    setenv("VCL_NO_THREAD_SCALE", "1", 1);
 #endif
 
     const auto redlining =
@@ -2265,60 +2262,6 @@ void COOLWSD::initializeSSL()
 #else
     LOG_INF("SSL is unavailable in this build.");
 #endif
-}
-
-void COOLWSD::dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path)
-{
-    if (TraceDumper)
-    {
-        try
-        {
-            TraceDumper->newSession(id, sessionId, uri, path);
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Exception in tracer newSession: " << exc.what());
-        }
-    }
-}
-
-void COOLWSD::dumpEndSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri)
-{
-    if (TraceDumper)
-    {
-        try
-        {
-            TraceDumper->endSession(id, sessionId, uri);
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Exception in tracer newSession: " << exc.what());
-        }
-    }
-}
-
-void COOLWSD::dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-    if (TraceDumper)
-    {
-        TraceDumper->writeEvent(id, sessionId, data);
-    }
-}
-
-void COOLWSD::dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-    if (TraceDumper)
-    {
-        TraceDumper->writeIncoming(id, sessionId, data);
-    }
-}
-
-void COOLWSD::dumpOutgoingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-    if (TraceDumper)
-    {
-        TraceDumper->writeOutgoing(id, sessionId, data);
-    }
 }
 
 void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
@@ -3048,6 +2991,7 @@ private:
         {
             std::string jailId;
             std::string configId;
+            std::map<std::string, std::string> admsProps;
 #if !MOBILEAPP
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
@@ -3112,6 +3056,9 @@ private:
                     configId = param.second;
                 else if (param.first == "version")
                     COOLWSD::LOKitVersion = param.second;
+                else if (param.first.size() > 6 &&
+                         param.first.compare(0, 5, "adms_") == 0)
+                    admsProps[param.first.substr(5)] = param.second;
             }
 
             if (pid <= 0)
@@ -3139,7 +3086,7 @@ private:
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
-            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request, admsProps);
 
             if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);
@@ -3909,7 +3856,9 @@ int COOLWSD::innerMain()
         // Unit test timeout
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {
-            UnitWSD::get().checkTimeout(timeSinceStartMs);
+            if (auto const unit = UnitWSD::getMaybeNull()) {
+                unit->checkTimeout(timeSinceStartMs);
+            }
         }
 
 #if !MOBILEAPP

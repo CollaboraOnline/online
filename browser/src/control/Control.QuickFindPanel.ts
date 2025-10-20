@@ -12,8 +12,6 @@
  * JSDialog.QuickFindPanel
  */
 
-/* global app */
-const QUICKFIND_WINDOW_ID = -5;
 class QuickFindPanel extends SidebarBase {
 	constructor(map: any) {
 		super(map, SidebarType.QuickFind);
@@ -21,7 +19,8 @@ class QuickFindPanel extends SidebarBase {
 
 	onAdd(map: any) {
 		super.onAdd(map);
-		this.builder.setWindowId(QUICKFIND_WINDOW_ID);
+
+		this.builder?.setWindowId(WindowId.QuickFind);
 
 		this.map = map;
 		this.map.on('quickfind', this.onQuickFind, this);
@@ -31,10 +30,16 @@ class QuickFindPanel extends SidebarBase {
 		this.map.off('quickfind', this.onQuickFind, this);
 	}
 
-	onJSUpdate(e: FireEvent): void {
+	onJSUpdate(e: FireEvent) {
 		var data = e.data;
 
-		super.onJSUpdate(e);
+		if (
+			data.control.id === 'searchfinds' &&
+			data.control.type === 'treelistbox'
+		)
+			e.data.control.ignoreFocus = true;
+
+		if (!super.onJSUpdate(e)) return false;
 
 		// handle placeholder text and quickfind controls visibility
 		app.layoutingService.appendLayoutingTask(() => {
@@ -47,6 +52,8 @@ class QuickFindPanel extends SidebarBase {
 				this.handleSearchFindsTreelistbox(data.control);
 			}
 		});
+
+		return true;
 	}
 
 	handleNumberOfSearchFinds(control: any): void {
@@ -86,6 +93,7 @@ class QuickFindPanel extends SidebarBase {
 			modifiedData.children.unshift({
 				id: 'quickfind-placeholder',
 				type: 'fixedtext',
+				renderAsStatic: true,
 				text: _('Type in the search box to find anything in your document'),
 				visible: true,
 			});
@@ -99,12 +107,16 @@ class QuickFindPanel extends SidebarBase {
 	onQuickFind(data: any) {
 		const quickFindData = data.data;
 
-		if (this.container) this.container.innerHTML = '';
-		else console.error('QuickFind: no container');
+		if (!this.container) {
+			app.console.error('QuickFind: no container');
+			return;
+		}
+
+		this.container.innerHTML = '';
 
 		const modifiedData = this.addPlaceholderIfEmpty(quickFindData);
 
-		this.builder.build(this.container, [modifiedData], false);
+		this.builder?.build(this.container, [modifiedData], false);
 
 		app.showQuickFind = true;
 		// this will update the indentation marks for elements like ruler

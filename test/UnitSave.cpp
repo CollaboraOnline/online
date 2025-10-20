@@ -22,6 +22,8 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
+using namespace std::literals;
+
 /// Save testcase.
 class UnitSave : public UnitWSD
 {
@@ -59,7 +61,7 @@ void UnitSave::testKeepOrigFile()
     wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
     while (!SigUtil::getShutdownRequestFlag())
     {
-        std::chrono::seconds timeout = std::chrono::seconds(10);
+        std::chrono::seconds timeout = 10s;
         auto message = wsSession->waitForMessage("unocommandresult:", timeout, name);
         LOK_ASSERT(message.size() > 0);
         Poco::JSON::Object::Ptr object;

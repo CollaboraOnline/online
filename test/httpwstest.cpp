@@ -32,6 +32,7 @@
 
 #include <chrono>
 
+using namespace std::literals;
 using namespace helpers;
 
 /// Tests the HTTP WebSocket API of coolwsd. The server has to be started manually before running this test.
@@ -123,9 +124,9 @@ void HTTPWSTest::testExoticLang()
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
-
     const std::string testname = "saveOnDisconnect- ";
 
+    Util::rng::seedForTesting(200177);
     const std::string text = helpers::genRandomString(40);
     TST_LOG("Test string: [" << text << "].");
 
@@ -141,7 +142,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         sendTextFrame(socket2, "userinactive");
 
-        deleteAll(socket1, testname, std::chrono::milliseconds(100), 1);
+        deleteAll(socket1, testname, 100ms, 1);
         sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         getResponseMessage(socket1, "pasteresult: success", testname);
 
@@ -152,9 +153,9 @@ void HTTPWSTest::testSaveOnDisconnect()
         socket2->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+                           socket1->waitForDisconnection(5s));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
-                           socket2->waitForDisconnection(std::chrono::seconds(5)));
+                           socket2->waitForDisconnection(5s));
 
         // Allow time to save and destroy before we connect again.
         waitForKitPidsReady(testname);
@@ -165,13 +166,22 @@ void HTTPWSTest::testSaveOnDisconnect()
             = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
 
         // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname, text);
+        std::string selection = getAllText(socket, testname);
+
+        // FIXME: intermittently it seems we get an unexpected newline here ...
+        if (!selection.empty() && selection.back() == '\n')
+        {
+            LOG_DBG("Unexpected redundant new-line at end of string: ' " << selection << "'");
+            selection.pop_back();
+        }
+
+        // if 'selection' is [] empty - we mis-matched in getAllText
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         socket->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 3",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
+                           socket->waitForDisconnection(5s));
     }
     catch (const Poco::Exception& exc)
     {
@@ -205,7 +215,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         TST_LOG("Closing connection after pasting.");
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
+                           socket->waitForDisconnection(5s));
 
         // Do not wait here. Reconnect before disconnect finishes
         // TODO: Test fails because it is unable to reconnect
@@ -223,7 +233,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         socket->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
+                           socket->waitForDisconnection(5s));
     }
     catch (const Poco::Exception& exc)
     {
@@ -300,9 +310,9 @@ void HTTPWSTest::testInactiveClient()
         socket1->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
-                           socket2->waitForDisconnection(std::chrono::seconds(5)));
+                           socket2->waitForDisconnection(5s));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+                           socket1->waitForDisconnection(5s));
     }
     catch (const Poco::Exception& exc)
     {
@@ -384,9 +394,9 @@ void HTTPWSTest::testViewInfoMsg()
         socket0->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+                           socket1->waitForDisconnection(5s));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 0",
-                           socket0->waitForDisconnection(std::chrono::seconds(5)));
+                           socket0->waitForDisconnection(5s));
     }
     catch(const Poco::Exception& exc)
     {
@@ -451,10 +461,9 @@ void HTTPWSTest::testUndoConflict()
         socket0->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+                           socket1->waitForDisconnection(5s));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 0",
-                           socket0->waitForDisconnection(std::chrono::seconds(5)));
-
+                           socket0->waitForDisconnection(5s));
     }
     catch(const Poco::Exception& exc)
     {

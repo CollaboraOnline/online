@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [25.04.6.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [25.04.7.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -153,9 +153,7 @@ AC_ARG_WITH([wasm-additional-files],
                               build of Collabora Office. The files will be available in the WASM in-memory file system as pathnames
                               stripping the initial prefix <path> where they are on the build system. For instance, if you give
                               --with-wasm-additional-files=$HOME/our-sample-docs, and there is a file $HOME/our-sample-docs/temp/test.docx,
-                              that will be available in the online.wasm as /temp/test.docx.
-                              NOTE: Temporarily for now, this option is mandatory and the additional files should contain a document
-                              in the root called "sample.docx"]))
+                              that will be available in the online.wasm as /temp/test.docx.]))
 
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
@@ -985,15 +983,10 @@ dnl capability. Compare to ENABLE_WASM.
 AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
-
-dnl Temporary hack: We hardcode /sample.docx in a few places, so make sure that file is there
-AS_IF([test "$host_os" = "emscripten"],
-      [AC_MSG_CHECKING([that temporarily there is a sample document with a fixed name])
-      AS_IF([test -z "$with_wasm_additional_files"],
-            [AC_MSG_ERROR([You must use the --with-wasm-additional-files option for now])])
-      AS_IF([test ! -f "$with_wasm_additional_files/sample.docx"],
-            [AC_MSG_ERROR([There must be a file called sample.docx in $with_wasm_additional_files for now])])
-      AC_MSG_RESULT([yes])])
+AS_IF([test -n "$with_wasm_fallback"],
+      [WASM_SUPPORT_ENABLE=true],
+      [WASM_SUPPORT_ENABLE=false])
+AC_SUBST(WASM_SUPPORT_ENABLE)
 
 AM_CONDITIONAL([ENABLE_WASM_ADDITIONAL_FILES], [test -n "$with_wasm_additional_files"])
 WASM_ADDITIONAL_FILES="$with_wasm_additional_files"
@@ -1693,6 +1686,7 @@ fi
 AC_SUBST(APP_BRANDING_DIR)
 AC_SUBST(APP_IC_LAUNCHER)
 AC_SUBST(APP_HAS_BRANDING)
+AM_CONDITIONAL([APP_HAS_BRANDING], [test "$APP_HAS_BRANDING" = "true"])
 
 APP_GOOGLE_PLAY="false"
 if test "$enable_android_google_play" = "yes"; then
@@ -2098,5 +2092,8 @@ fi
 if test -n "$poco_known_buggy"; then
     AC_MSG_WARN([Your version of POCO has known bugs: see dev-notes/dependency-issues.md])
 fi
+
+# Remove emconfigure artifacts that Autoconf fails to remove by itself:
+rm -f a.wasm
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

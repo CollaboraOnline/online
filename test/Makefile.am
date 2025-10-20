@@ -1,3 +1,12 @@
+#
+# Copyright the Collabora Online contributors.
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 # Cap threadpools to 4 threads.
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
@@ -33,6 +42,7 @@ all_la_unit_tests = \
 	unit-tiletest.la \
 	unit-wopi-documentconflict.la \
 	unit-wopi-stuck-save.la \
+	unit-wopi-transient-connect-fault.la \
 	unit-perf.la \
 	unit-close.la \
 	unit-user-presets.la \
@@ -47,6 +57,7 @@ all_la_unit_tests = \
 	unit-wopi-save-on-exit.la \
 	unit-uno-command.la \
 	unit-proxy.la \
+	unit-proxy-protocol.la \
 	unit-each-view.la \
 	unit-load.la \
 	unit-integration.la \
@@ -84,7 +95,6 @@ all_la_unit_tests = \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-saveas.la \
 	unit_wopi_renamefile.la \
-	unit-wopi-loadencoded.la \
 	unit-prefork.la \
 	unit-bad-doc-load.la \
 	unit-hosting.la \
@@ -275,6 +285,8 @@ unit_wopi_save_on_exit_la_SOURCES = UnitWOPISaveOnExit.cpp
 unit_wopi_save_on_exit_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_stuck_save_la_SOURCES = UnitWOPIStuckSave.cpp
 unit_wopi_stuck_save_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_transient_connect_fault_la_SOURCES = UnitWOPITransientConnectFault.cpp
+unit_wopi_transient_connect_fault_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fail_upload_la_SOURCES = UnitWOPIFailUpload.cpp
 unit_wopi_fail_upload_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
@@ -285,8 +297,6 @@ unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
 unit_wopi_lock_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
 unit_wopi_watermark_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
-unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fileurl_la_SOURCES = UnitWOPIFileUrl.cpp
@@ -351,6 +361,8 @@ unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
+unit_proxy_protocol_la_SOURCES = UnitProxyProtocol.cpp
+unit_proxy_protocol_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp

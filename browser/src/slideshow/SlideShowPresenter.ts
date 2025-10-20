@@ -101,6 +101,7 @@ interface SlideInfo {
 	next: string;
 	prev: string;
 	indexInSlideShow?: number;
+	uniqueID: number;
 }
 
 interface PresentationInfo {
@@ -131,6 +132,7 @@ class SlideShowPresenter {
 	private _slideShowNavigator: SlideShowNavigator;
 	private _metaPresentation: MetaPresentation;
 	private _startSlide: number;
+	private _startEffect: number;
 	private _presentationInfoChanged: boolean = false;
 	private _navigateSkipTransition: boolean = false;
 	_skipNextSlideShowInfoChangedMsg: boolean = false;
@@ -146,6 +148,13 @@ class SlideShowPresenter {
 	private _isFollower: boolean = false;
 	private _isFollowing: boolean = false;
 
+	private showFollow(me: boolean) {
+		if (app.isExperimentalMode()) {
+			this._map.uiManager.showButton('slide-presentation-follow', !me);
+			this._map.uiManager.showButton('slide-presentation-follow-me', me);
+		}
+	}
+
 	constructor(map: any, enableA11y: boolean) {
 		this._cypressSVGPresentationTest =
 			window.L.Browser.cypressTest || 'Cypress' in window;
@@ -153,6 +162,7 @@ class SlideShowPresenter {
 		this._enableA11y = enableA11y;
 		this._init();
 		this.addHooks();
+		this.showFollow(true);
 	}
 
 	addHooks() {
@@ -179,7 +189,7 @@ class SlideShowPresenter {
 
 		// Follow me slide hooks
 		this._map.on(
-			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect',
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect slideshowfollowon',
 			this.handleFollowMeEvents,
 			this,
 		);
@@ -209,7 +219,7 @@ class SlideShowPresenter {
 
 		// Follow me slide hooks
 		this._map.off(
-			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect',
+			'newfollowmepresentation dispatcheffect rewindeffect followvideo endpresentation displayslide effect skipalleffect slideshowfollowon',
 			this.handleFollowMeEvents,
 			this,
 		);
@@ -220,7 +230,17 @@ class SlideShowPresenter {
 		switch (info.type) {
 			case 'newfollowmepresentation':
 				this.setFollowing(true);
-				this._onStartInWindow(0);
+				this.showFollow(false);
+				this._onStartInWindow({
+					startSlideNumber:
+						this._slideShowNavigator.getLeaderSlide() === -1
+							? 0
+							: this._slideShowNavigator.getLeaderSlide(),
+					startEffectNumber:
+						this._slideShowNavigator.getLeaderEffect() === -1
+							? undefined
+							: this._slideShowNavigator.getLeaderEffect(),
+				});
 				break;
 			case 'dispatcheffect':
 				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
@@ -233,16 +253,28 @@ class SlideShowPresenter {
 				break;
 			case 'displayslide':
 				this._slideShowNavigator.setLeaderSlide(info);
+				this._slideShowNavigator.resetLeaderEffect();
 				break;
 			case 'effect':
 				this._slideShowNavigator.setLeaderEffect(info);
 				break;
+			case 'skipalleffect':
+				info.currentEffect = Number.POSITIVE_INFINITY;
+				this._slideShowNavigator.setLeaderEffect(info);
+				break;
 			case 'endpresentation':
-				if (!this.isFollowing()) return;
 				this.setLeader(false);
-				this.setFollowing(false);
 				this.setFollower(false);
+				this._slideShowNavigator.resetLeaderEffect();
+				this._slideShowNavigator.resetLeaderSlide();
+				this.showFollow(true);
+				if (!this.isFollowing()) return;
+				this.setFollowing(false);
 				this.endPresentation(true);
+
+				break;
+			case 'slideshowfollowon':
+				this.showFollow(false);
 				break;
 		}
 	}
@@ -576,32 +608,44 @@ class SlideShowPresenter {
 			'slideshow-nav-container',
 			parent,
 		);
+		slideNavContainer.tabIndex = -1;
 		this._configureSlideNavStyles(slideNavContainer);
 		this._initializeSlideNavWidget(slideNavContainer);
 		return slideNavContainer;
 	}
 
 	private _configureSlideNavStyles(container: HTMLDivElement): void {
+		container.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
 		container.style.position = 'absolute';
-		container.style.bottom = '0';
-		container.style.left = '0';
-		container.style.width = '200px';
-		container.style.height = '50px';
+		container.style.bottom = '8px';
+		container.style.left = '8px';
 		container.style.zIndex = '1000000000000';
 		container.style.display = 'flex';
-		container.style.paddingLeft = '5px';
+		container.style.padding = '2px';
+		container.style.borderRadius = '25px';
+	}
+
+	private _onA11yString(target: any) {
+		if (!target) {
+			return;
+		}
+
+		this._slideShowHandler.addA11yString(target.getAttribute('aria-label'));
 	}
 
 	private _onPrevSlide = (e: Event) => {
+		e.stopPropagation();
 		this._slideShowNavigator.rewindEffect();
 	};
 
 	private _onNextSlide = (e: Event) => {
+		e.stopPropagation();
 		if (this._navigateSkipTransition) this._slideShowNavigator.skipEffect();
 		else this._slideShowNavigator.dispatchEffect();
 	};
 
 	private _onQuit = (e: Event) => {
+		e.stopPropagation();
 		this.endPresentation(true);
 	};
 
@@ -626,6 +670,7 @@ class SlideShowPresenter {
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
+		closeImg.id = 'endshow';
 		const slideshowCloseText = _('End Show');
 		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
 		closeImg.setAttribute('aria-label', slideshowCloseText);
@@ -634,6 +679,7 @@ class SlideShowPresenter {
 		closeImg.addEventListener('click', this._onQuit);
 
 		const leftImg = window.L.DomUtil.create('img', 'left-img', container);
+		leftImg.id = 'previous';
 		const slideshowPrevText = _('Previous');
 		leftImg.setAttribute('aria-label', slideshowPrevText);
 		leftImg.setAttribute('data-cooltip', slideshowPrevText);
@@ -642,6 +688,7 @@ class SlideShowPresenter {
 		leftImg.addEventListener('click', this._onPrevSlide);
 
 		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
+		rightImg.id = 'next';
 		const slideshowNextText = _('Next');
 		window.L.control.attachTooltipEventListener(rightImg, this._map);
 		rightImg.setAttribute('aria-label', slideshowNextText);
@@ -654,6 +701,7 @@ class SlideShowPresenter {
 			'animations-img skipTransition-false',
 			container,
 		);
+		animationsImage.id = 'disableanimation';
 		const slideshowAnimIniText = _('Disable Animations');
 		animationsImage.setAttribute('aria-label', slideshowAnimIniText);
 		animationsImage.setAttribute('data-cooltip', slideshowAnimIniText);
@@ -661,7 +709,8 @@ class SlideShowPresenter {
 		app.LOUtil.setImage(animationsImage, 'slideshow-transition.svg', this._map);
 		animationsImage.addEventListener(
 			'click',
-			function (this: SlideShowPresenter) {
+			function (this: SlideShowPresenter, e: Event) {
+				this._onA11yString(e.target);
 				this._navigateSkipTransition = !this._navigateSkipTransition;
 				const slideshowAnimToggleText = this._navigateSkipTransition
 					? _('Enable Animations')
@@ -676,6 +725,7 @@ class SlideShowPresenter {
 
 		if (this.isFollower()) {
 			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
+			FollowImg.id = 'follow';
 			const followText = _('Follow Presentation');
 			window.L.control.attachTooltipEventListener(FollowImg, this._map);
 			FollowImg.setAttribute('aria-label', followText);
@@ -683,6 +733,7 @@ class SlideShowPresenter {
 			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
 			FollowImg.addEventListener('click', (e: Event) => {
 				e.stopPropagation();
+				this._onA11yString(e.target);
 				this._slideShowNavigator.followLeaderSlide();
 			});
 		}
@@ -719,6 +770,8 @@ class SlideShowPresenter {
 	endPresentation(force: boolean) {
 		this.sendSlideShowFollowMessage('endpresentation');
 		this.checkDarkMode(false);
+		this.setLeader(false);
+		this.setFollowing(false);
 
 		app.console.debug('SlideShowPresenter.endPresentation');
 		if (this._pauseTimer) this._pauseTimer.stopTimer();
@@ -986,7 +1039,7 @@ class SlideShowPresenter {
 			'',
 			_('OK'),
 			() => {
-				0;
+				/*do nothing*/
 			},
 			false,
 			'allslidehidden-modal-response',
@@ -1076,6 +1129,7 @@ class SlideShowPresenter {
 	_onStartInWindow(that: any) {
 		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
+		this._startEffect = that?.startEffectNumber;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
 			return;
@@ -1169,6 +1223,7 @@ class SlideShowPresenter {
 		this._slideShowNavigator.startPresentation(
 			this._startSlide,
 			skipTransition,
+			this._startEffect,
 		);
 	}
 

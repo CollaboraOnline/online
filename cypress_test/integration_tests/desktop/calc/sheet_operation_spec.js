@@ -93,4 +93,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		calcHelper.selectOptionFromContextMenu('Move Sheet Right');
 		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 	});
+
+	it('Open sheet list and select a sheet', function () {
+		calcHelper.assertNumberofSheets(1);
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
+		calcHelper.assertNumberofSheets(2);
+		// Open sheet list popup
+		cy.cGet('#spreadsheet-toolbar #sheetlist').click();
+		cy.cGet('#sheetlist-dropdown').should('be.visible');
+		cy.cGet('#sheetlist-dropdown #sheetlist-entries .ui-combobox-entry ').should('have.length', 2);
+		cy.cGet('#sheetlist-dropdown #sheetlist-entries .ui-combobox-entry ').eq(1).should('have.class', 'selected');
+		// Select first sheet
+		cy.cGet('#sheetlist-dropdown #sheetlist-entries .ui-combobox-entry ').eq(0).click();
+		cy.cGet('#sheetlist-dropdown').should('not.exist');
+		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
+	});
 });

@@ -67,11 +67,9 @@ QUIET_UNOCOMMANDS_0 = @echo "  UNOCOMMANDS " $@;
 
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
-MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
-MOCHA_TS_JS_FILES = $(patsubst $(MOCHA_DIR)/%.ts,$(MOCHA_JS_DIR)/%.js,$(MOCHA_TS_FILES))
 # tsc can report a failure, but still create a .js and a second make attempt will succeed,
 # so if this returns an error then delete the target
-$(MOCHA_JS_DIR)/%.js: $(MOCHA_DIR)/%.ts
+$(MOCHA_JS_DIR)/main.js: $(MOCHA_DIR)/main.ts
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5 --downlevelIteration || (rm -f $@ && false)
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
@@ -260,6 +258,7 @@ COOL_JS_LST =\
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/TextSelectionMiddleware.ts \
 	src/app/CellSelectionMarkerMiddleware.ts \
+	src/app/TableMiddleware.ts \
 	src/app/ViewLayout.ts \
 	src/app/ViewLayoutMultiPage.ts \
 	src/app/DocumentBase.ts \
@@ -277,6 +276,8 @@ COOL_JS_LST =\
 	src/app/iface/Control.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
+	src/app/SocketBase.ts \
+	src/app/TracingEvents.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -315,6 +316,8 @@ COOL_JS_LST =\
 	src/canvas/sections/PreloadMapSection.ts \
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
+	src/canvas/sections/TableResizeMarkerSection.ts \
+	src/canvas/sections/TableSelectMarkerSection.ts \
 	src/canvas/sections/FocusCellSection.ts \
 	src/canvas/sections/URLPopUpSection.ts \
 	src/canvas/sections/InvalidationRectangleSection.ts \
@@ -348,7 +351,6 @@ COOL_JS_LST =\
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
 	src/layer/CalcSplitPanesContext.ts \
-	src/layer/tile/TileLayer.TableOverlay.js \
 	src/layer/tile/WriterTileLayer.js \
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
@@ -428,10 +430,15 @@ COOL_JS_LST =\
 	src/control/Control.ESignatureDialog.ts \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Util.Shortcuts.ts \
+	src/control/jsdialog/Util.ModelState.ts \
+	src/control/jsdialog/Component.Base.ts \
 	src/control/jsdialog/Component.Toolbar.ts \
 	src/control/jsdialog/Definitions.Menu.ts \
+	src/control/jsdialog/Definitions.DialogModification.ts \
+	src/control/jsdialog/Definitions.WindowId.ts \
 	src/control/jsdialog/Util.Dropdown.js \
 	src/control/jsdialog/Util.Events.ts \
+	src/control/jsdialog/Util.KeyboardTabNavigation.ts \
 	src/control/jsdialog/Util.KeyboardGridNavigation.ts \
 	src/control/jsdialog/Util.KeyboardListNavigation.ts \
 	src/control/jsdialog/Util.FocusCycle.js \
@@ -489,9 +496,9 @@ COOL_JS_LST =\
 	src/control/Control.PresentationBar.js \
 	src/control/Control.TopToolbar.js \
 	src/control/Control.SaveState.ts \
+	src/control/Control.NotebookbarBase.ts \
 	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
-	src/control/Notebookbar.ImpressTransitionTab.ts \
 	src/control/Notebookbar.WriterReferencesTab.ts \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
@@ -503,6 +510,9 @@ COOL_JS_LST =\
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
+	src/control/Notebookbar.ImpressAnimationTab.ts \
+	src/control/Notebookbar.ImpressTransitionTab.ts \
+	src/control/Sidebar.FromNotebookbarPanel.ts \
 	src/control/Control.NavigatorPanel.ts \
 	src/control/Control.QuickFindPanel.ts \
 	src/control/AutoCompletePopup.ts \
@@ -740,25 +750,33 @@ ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 if ENABLE_WASM
-$(DIST_FOLDER)/emscripten-%.js: $(abs_top_srcdir)/wasm/emscripten-%.js
+$(DIST_FOLDER)/emscripten-module.js: ../wasm/emscripten-module.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
+$(DIST_FOLDER)/emscripten-zetajs-example.js: $(abs_top_srcdir)/wasm/emscripten-zetajs-example.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
+$(DIST_FOLDER)/online%: ../wasm/online%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(DIST_FOLDER)/soffice%: ../wasm/soffice%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
 WASM_FILES= \
 	$(DIST_FOLDER)/emscripten-module.js \
-	$(DIST_FOLDER)/online.data \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
 	$(DIST_FOLDER)/soffice.data \
 	$(DIST_FOLDER)/soffice.data.js.metadata
+
+if ENABLE_WASM_ADDITIONAL_FILES
+WASM_FILES += \
+	$(DIST_FOLDER)/online.data
+endif
 
 if ENABLE_DEBUG
 WASM_FILES += \
@@ -790,6 +808,11 @@ endif
 
 endif
 
+WASM_FALLBACK_FILES =
+if ENABLE_WASM_FALLBACK
+WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
+endif
+
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
@@ -809,14 +832,15 @@ build-cool: \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
-	$(WASM_FILES)
+	$(WASM_FILES) \
+	$(WASM_FALLBACK_FILES)
 	@echo "build cool completed"
-if ENABLE_ANDROIDAPP
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(DIST_FOLDER)/ ; else touch $(DIST_FOLDER)/branding.css ; fi
+if APP_HAS_BRANDING
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(DIST_FOLDER)/images/toolbar-bg.svg ; fi
 	@echo
-	@echo "JS, HTML and CSS has been updated (android/lib/src/main/assets/dist)."
+	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
 endif
 
 if ENABLE_CYPRESS
@@ -863,7 +887,7 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
 	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
-	@truncate -s -1 $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
+	@truncate $(if $(filter Darwin FreeBSD,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
 $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
@@ -993,6 +1017,10 @@ $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
+$(DIST_FOLDER)/wasm:
+	@mkdir -p $(dir $@)
+	ln -s @WASM_BUILDDIR@/browser/dist $@
+
 if ENABLE_DEBUG
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
@@ -1065,8 +1093,10 @@ pot:
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.QuickFindPanel.ts \
+		src/control/Notebookbar.ImpressAnimationTab.ts \
 		src/control/Notebookbar.ImpressTransitionTab.ts \
 		src/control/Notebookbar.WriterReferencesTab.ts \
+		src/control/Sidebar.FromNotebookbarPanel.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
@@ -1103,6 +1133,8 @@ pot:
 		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
+		src/app/SocketBase.ts \
+		src/app/TracingEvents.ts \
 		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.ts \
@@ -1162,7 +1194,7 @@ $(abs_srcdir)/admin/jsconfig.json:
 
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 
-build-tests: $(MOCHA_TS_JS_FILES)
+build-tests: $(MOCHA_JS_DIR)/main.js
 	@echo "Build of mocha test finished."
 
 eslint: $(COOL_ADMIN_TS_JS)
@@ -1186,7 +1218,7 @@ prettier-write:
 
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
 DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
-check-local: $(MOCHA_TS_JS_FILES)
+check-local: $(MOCHA_JS_DIR)/main.js
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
 	@if npm test 2> ${MOCHA_TEST_LOG} 1>&2; then \

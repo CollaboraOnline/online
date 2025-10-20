@@ -531,10 +531,13 @@ protected:
                                              [](const std::pair<std::string, std::string>& pair)
                                              { return pair.first == "testname"; });
 
-        LOK_ASSERT_MESSAGE_SILENT("Request belongs to an unknown test", testnameIt != params.end());
-
-        const std::string target = StringVector::tokenize(testnameIt->second, '/')[0];
-        LOK_ASSERT_EQUAL_MESSAGE("Request belongs to a different test", getTestname(), target);
+        // Some URLs might not have the testname parameter.
+        LOK_CHECK_MESSAGE_SILENT("Request belongs to an unknown test", testnameIt != params.end());
+        if (testnameIt != params.end())
+        {
+            const std::string target = StringVector::tokenize(testnameIt->second, '/')[0];
+            LOK_ASSERT_EQUAL_MESSAGE("Request belongs to a different test", getTestname(), target);
+        }
     }
 
     /// Here we act as a WOPI server, so that we have a server that responds to

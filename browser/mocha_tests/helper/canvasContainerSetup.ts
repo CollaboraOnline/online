@@ -9,11 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="../../src/canvas/CanvasSectionContainer.ts" />
-/// <reference path="../../src/canvas/CanvasSectionObject.ts" />
-/// <reference path="../../src/canvas/sections/TilesSection.ts" />
-/// <reference path="../../src/app/LayoutingService.ts" />
-
 function canvasDomString() {
     return `
     <!DOCTYPE html>

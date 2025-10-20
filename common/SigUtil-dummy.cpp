@@ -65,6 +65,10 @@ namespace SigUtil
     {
     }
 
+    void signalLogActivity()
+    {
+    }
+
     void setUnattended()
     {
     }

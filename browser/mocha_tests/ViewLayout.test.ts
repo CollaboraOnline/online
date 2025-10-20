@@ -9,19 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="../src/core/geometry.ts" />
-/// <reference path="../src/app/LayoutingService.ts" />
-/// <reference path="../src/geometry/Point.ts" />
-/// <reference path="../src/geometry/Bounds.ts" />
-/// <reference path="../src/layer/tile/CanvasTileUtils.ts" />
-/// <reference path="../src/app/TilesMiddleware.ts" />
-/// <reference path="../src/app/Rectangle.ts" />
-/// <reference path="../src/app/LOUtil.ts" />
-/// <reference path="../src/app/ViewLayout.ts" />
-/// <reference path="../src/app/ViewLayoutMultiPage.ts" />
-/// <reference path="./helper/canvasContainerSetup.ts" />
-/// <reference path="./helper/rectUtil.ts" />
+describe('ViewLayout', function() {
 
 var jsdom = require('jsdom');
 var assert = require('assert').strict;
@@ -58,4 +46,6 @@ describe('View Layout Tests', function () {
         panDirection = viewLayout.getLastPanDirection();
         assert.ok(panDirection[0] === -1 && panDirection[1] === -1);
 	});
+});
+
 });

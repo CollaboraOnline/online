@@ -9,9 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="../src/app/Util.ts"/>
-/// <reference path="helper/Events.ts"/>
+describe('Events', function() {
 
 var assert = require('assert').strict;
 
@@ -502,3 +500,4 @@ function runTestsForContextType(contextType: string, callType: string) {
 		});
 	});
 }
+});

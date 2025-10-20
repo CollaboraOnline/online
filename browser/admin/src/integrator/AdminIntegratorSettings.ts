@@ -27,6 +27,7 @@ interface Window {
 	iframeType?: string;
 	cssVars?: string;
 	serviceRoot?: string;
+	versionHash?: string;
 }
 
 interface ConfigItem {
@@ -123,8 +124,8 @@ const defaultBrowserSetting: Record<string, any> = {
 		NavigatorDeck: false,
 		PropertyDeck: true,
 		SdCustomAnimationDeck: false,
-		SdMasterPagesDeck: false,
-		SdSlideTransitionDeck: false,
+		// SdMasterPagesDeck: false,
+		// SdSlideTransitionDeck: false,
 	},
 	drawing: {
 		ShowRuler: false,
@@ -152,9 +153,53 @@ class SettingIframe {
 		NavigatorDeck: _('Navigator'),
 		PropertyDeck: _('Show Sidebar'),
 		SdCustomAnimationDeck: _('Custom Animation'),
-		SdMasterPagesDeck: _('Master Pages'),
-		SdSlideTransitionDeck: _('Slide Transition'),
+		// SdMasterPagesDeck: _('Master Pages'),
+		// SdSlideTransitionDeck: _('Slide Transition'),
 		StyleListDeck: _('Style List'),
+
+		//Document Settings labels
+		Grid: _('Grid'),
+		Print: _('Print'),
+		Other: _('Other'),
+		ShowGrid: _('Show Grid'),
+		SnapToGrid: _('Snap to grid'),
+		SizeToGrid: _('Size to grid'),
+		Synchronize: _('Synchronize axes'),
+		SnapGrid: _('Snap grid'),
+		EmptyPages: _('Empty Pages'),
+		ForceBreaks: _('Force Breaks'),
+		AllSheets: _('All Sheets'),
+		Size: _('Size to grid'),
+		Content: _('Content'),
+		Drawing: _('Drawing'),
+		Page: _('Page'),
+		PageSize: _('Fit to page'),
+		PageTile: _('Tile pages'),
+		Booklet: _('Booklet'),
+		BookletFront: _('Booklet front'),
+		BookletBack: _('Booklet back'),
+		PageName: _('Page name'),
+		Date: _('Date'),
+		Time: _('Time'),
+		HiddenPage: _('Hidden pages'),
+		FromPrinterSetup: _('From printer setup'),
+		Presentation: _('Presentation'),
+		Note: _('Notes'),
+		Handout: _('Handouts'),
+		Outline: _('Outline'),
+		HandoutHorizontal: _('Handout horizontal'),
+		Graphic: _('Images'),
+		Table: _('Tables'),
+		Control: _('Controls'),
+		Background: _('Background'),
+		PrintBlack: _('Print Black'),
+		PrintHiddenText: _('Hidden text'),
+		PrintPlaceholders: _('Placeholders'),
+		LeftPage: _('Left pages'),
+		RightPage: _('Right pages'),
+		Brochure: _('Brochure'),
+		BrochureRightToLeft: _('Brochure Right to Left'),
+		GraphicObject: _('Images and Objects'),
 		// Add more as needed
 	};
 
@@ -238,6 +283,7 @@ class SettingIframe {
 			}
 		}
 		window.serviceRoot = element.dataset.serviceRoot;
+		window.versionHash = element.dataset.versionHash;
 	}
 
 	private validateJsonFile(file: File): Promise<any> {
@@ -1063,7 +1109,7 @@ class SettingIframe {
 		optionDiv.className = 'toggle-option';
 
 		const image = document.createElement('img');
-		image.src = `images/${imageSrc}`;
+		image.src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
 		image.alt = imageAlt;
 		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
 		optionDiv.appendChild(image);
@@ -1580,7 +1626,14 @@ class SettingIframe {
 	}
 
 	private getFilename(uri: string, removeExtension = true): string {
-		let filename = uri.substring(uri.lastIndexOf('/') + 1);
+		const url = new URL(uri, window.location.origin);
+		let filename = url.searchParams.get('file_name');
+		if (!filename) {
+			// Remove query parameters from url
+			uri = uri.split('?')[0];
+			filename = uri.substring(uri.lastIndexOf('/') + 1);
+		}
+
 		if (removeExtension) {
 			filename = filename.replace(/\.[^.]+$/, '');
 		}

@@ -32,14 +32,14 @@ interface WidgetJSON {
 interface JSBuilderOptions {
 	cssClass: string; // class added to every widget root
 	windowId: number; // window id to be sent with dialogevent
-	map: any; // reference to map
-	mobileWizard: any; // reference to the parent container	FIXME: rename
-	useSetTabs: boolean; // custom tabs placement handled by the parent container
-	useScrollAnimation: boolean; // do we use animation for scrollIntoView
+	map: MapInterface; // reference to map
+	mobileWizard: JSDialogComponent; // reference to the parent component FIXME: rename
+	useSetTabs?: boolean; // custom tabs placement handled by the parent container
+	useScrollAnimation?: boolean; // do we use animation for scrollIntoView
 
 	// modifiers
-	noLabelsForUnoButtons: boolean; // create only icon without label
-	useInLineLabelsForUnoButtons: boolean; // create labels next to the icon
+	noLabelsForUnoButtons?: boolean; // create only icon without label
+	useInLineLabelsForUnoButtons?: boolean; // create labels next to the icon
 	suffix: string; // add a suffix to the element ID to make it unique among different builder instances.
 }
 
@@ -49,7 +49,7 @@ interface JSBuilder {
 	_menus: Map<string, Array<MenuDefinition>>;
 
 	options: JSBuilderOptions; // current state
-	map: any; // reference to map
+	map: MapInterface; // reference to map
 	rendersCache: any; // on demand content cache
 
 	build: (
@@ -62,7 +62,8 @@ interface JSBuilder {
 	callback: JSDialogCallback;
 	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
-	setWindowId: (id: number) => void;
+	setWindowId: (id: WindowId | number) => void;
+	onCommandStateChanged: (event: any) => void;
 
 	// helpers FIXME: put as local in Control.Containers.ts
 	_getGridColumns: (data: WidgetJSON[]) => number;
@@ -99,12 +100,19 @@ interface DialogJSON extends WidgetJSON {
 	responses?: Array<DialogResponse>;
 }
 
+interface ActionData {
+	control_id: string;
+	action_type: string;
+	data: any;
+}
+
 // JSDialog message (full, update or action)
 interface JSDialogJSON extends DialogJSON {
 	id: string; // unique windowId
 	jsontype: string; // specifies target component, on root level only
 	action?: string; // optional name of an action
 	control?: WidgetJSON;
+	data?: ActionData;
 }
 
 // JSDialog message for popup
@@ -179,6 +187,7 @@ interface OverflowGroupWidgetJSON extends ContainerWidgetJSON {
 	name: string; // visible name of a group
 	icon?: string; // Optional icon name. Otherwise it will be guessed.
 	more?: MoreOptions;
+	nofold?: boolean; // for widgets which use overflowgroup just for the label
 }
 interface MoreOptions {
 	command: string;
@@ -201,10 +210,23 @@ interface ToolboxWidgetJSON extends WidgetJSON {
 interface ToolItemWidgetJSON extends WidgetJSON {
 	class?: string; // css class
 	noLabel?: boolean;
-	command: string; // command to trigger options for a panel
-	text: string; // title to show or for tooltip
+	command?: string; // command to trigger options for a panel
+	text?: string; // title to show or for tooltip
 	icon?: string; // url to an svg
 	postmessage?: boolean; // postmessage to WOPI in case the toolitem is added via postmessage
+	beforeId?: string; // for added via postmessage, before which to put
+	context?: string; // in which context we show the item
+	desktop?: boolean; // do we show on desktop
+	tablet?: boolean; // do we show on tablet
+	mobile?: boolean; // do we show on mobile
+	mobilebrowser?: boolean; // do we show on mobile in the browser
+	iosapptablet?: boolean; // do we show in app on ios
+	hidden?: boolean; // is hidden
+	visible?: boolean; // is visible
+	pressAndHold?: boolean; // for mobile
+	w2icon?: string; // DEPRECATED: w2 icon name
+	placeholder?: string; // DEPRECATED: w2 placeholder text
+	items?: Array<ToolItemWidgetJSON>; // DEPRECATED: w2 menus
 }
 
 interface PanelWidgetJSON extends WidgetJSON {
@@ -230,6 +252,7 @@ interface TextWidget extends WidgetJSON {
 interface PushButtonWidget extends WidgetJSON {
 	symbol?: string;
 	text?: string;
+	image?: string;
 }
 
 // type: 'menubutton'
@@ -304,6 +327,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	entries: Array<TreeEntryJSON>;
 	headers: Array<TreeHeaderJSON>; // header columns
 	highlightTerm?: string; // what, if any, entries are we highlighting?
+	ignoreFocus?: boolean; // When true, does't focus to selected item automatically.
 }
 
 interface IconViewEntry {

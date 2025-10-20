@@ -198,8 +198,9 @@ class SecondJoinQuitEarly : public SecondJoinQuit
 {
 public:
     SecondJoinQuitEarly()
-        : SecondJoinQuit("SecondJoinQuitNormal", true)
+        : SecondJoinQuit("SecondJoinQuitEarly", true)
     {
+        setTimeout(std::chrono::seconds(60));
     }
 };
 

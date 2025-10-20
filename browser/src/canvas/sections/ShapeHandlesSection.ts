@@ -177,25 +177,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
-	public static moveHTMLObjectToMapElement(htmlObjectSection: HTMLObjectSection) {
-		htmlObjectSection.getHTMLObject().remove();
-		document.getElementById('map').appendChild(htmlObjectSection.getHTMLObject());
-	}
-
-	public static mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
-		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
-	}
-
 	getShapeWidth(twips = true) {
 		let middleLeft = this.sectionProperties.info.handles.kinds.rectangle['4'][0];
 		middleLeft = new cool.SimplePoint(parseInt(middleLeft.point.x), parseInt(middleLeft.point.y));
@@ -1095,7 +1076,17 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				this.sectionProperties.closestY !== null;
 	}
 
+	private drawSelectionFrame() {
+		this.context.beginPath();
+		this.context.strokeStyle = 'black';
+		this.context.setLineDash([3, 3]);
+		this.context.strokeRect(0, 0, this.size[0], this.size[1]);
+		this.context.setLineDash([]);
+		this.context.closePath();
+	}
+
 	public onDraw() {
+		this.drawSelectionFrame();
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
 		else if (this.anythingToDraw()) {

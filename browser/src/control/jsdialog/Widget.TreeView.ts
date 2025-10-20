@@ -78,6 +78,10 @@ class TreeViewControl {
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
 	_rows: Map<string, HTMLElement>;
+	readonly PAGE_ENTRY_PREFIX = '-$#~';
+	readonly PAGE_ENTRY_SUFFIX = '~#$-';
+	readonly PAGE_DIVIDER_ROW_CLASS = 'page-divider-row';
+	_ignoreFocus: boolean = false;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container = window.L.DomUtil.create(
@@ -86,6 +90,9 @@ class TreeViewControl {
 		);
 		this._container.id = data.id;
 		this._rows = new Map<string, HTMLElement>();
+		if (data.labelledBy)
+			this._container.setAttribute('aria-labelledby', data.labelledBy);
+		if (data.ignoreFocus !== undefined) this._ignoreFocus = data.ignoreFocus;
 	}
 
 	get Container() {
@@ -358,7 +365,13 @@ class TreeViewControl {
 		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
 		tr.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
-		tr.setAttribute('tabindex', '0');
+		if (
+			this.isPageDivider(entry, this.PAGE_ENTRY_PREFIX, this.PAGE_ENTRY_SUFFIX)
+		) {
+			window.L.DomUtil.addClass(tr, this.PAGE_DIVIDER_ROW_CLASS);
+		} else {
+			tr.setAttribute('tabindex', '0');
+		}
 
 		let selectionElement;
 		if (this._hasState) {
@@ -479,9 +492,6 @@ class TreeViewControl {
 		index: any,
 		builder: JSBuilder,
 	) {
-		const PAGE_ENTRY_PREFIX = '-$#~';
-		const PAGE_ENTRY_SUFFIX = '~#$-';
-
 		const text =
 			builder._cleanText(entry.columns[index].text) ||
 			builder._cleanText(entry.text);
@@ -508,7 +518,13 @@ class TreeViewControl {
 			img.alt = text;
 		} else {
 			let cell;
-			if (this.isPageDivider(entry, PAGE_ENTRY_PREFIX, PAGE_ENTRY_SUFFIX)) {
+			if (
+				this.isPageDivider(
+					entry,
+					this.PAGE_ENTRY_PREFIX,
+					this.PAGE_ENTRY_SUFFIX,
+				)
+			) {
 				cell = window.L.DomUtil.create(
 					'span',
 					builder.options.cssClass +
@@ -517,8 +533,8 @@ class TreeViewControl {
 				);
 				cell.innerText = this.getPageEntryText(
 					entry.text,
-					PAGE_ENTRY_PREFIX,
-					PAGE_ENTRY_SUFFIX,
+					this.PAGE_ENTRY_PREFIX,
+					this.PAGE_ENTRY_SUFFIX,
 				);
 			} else if (treeViewData.highlightTerm !== undefined) {
 				cell = this.createHighlightedCell(
@@ -663,7 +679,7 @@ class TreeViewControl {
 		level: number,
 		selectionElement: HTMLInputElement,
 	) {
-		let td, expander, span, text, img, icon, iconId, iconName, link, innerText;
+		let td, expander, span, text, img;
 
 		const rowElements = [];
 
@@ -736,46 +752,50 @@ class TreeViewControl {
 			}
 		}
 
-		// setup callbacks
-		var clickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			true,
-			this._singleClickActivate,
-			builder,
-			treeViewData,
-			entry,
-		);
-		var doubleClickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			false,
-			true,
-			builder,
-			treeViewData,
-			entry,
-		);
+		if (
+			!this.isPageDivider(entry, this.PAGE_ENTRY_PREFIX, this.PAGE_ENTRY_SUFFIX)
+		) {
+			// setup callbacks
+			var clickFunction = this.createClickFunction(
+				tr,
+				selectionElement,
+				true,
+				this._singleClickActivate,
+				builder,
+				treeViewData,
+				entry,
+			);
+			var doubleClickFunction = this.createClickFunction(
+				tr,
+				selectionElement,
+				false,
+				true,
+				builder,
+				treeViewData,
+				entry,
+			);
 
-		this.setupEntryMouseEvents(
-			tr,
-			entry,
-			treeViewData,
-			builder,
-			selectionElement,
-			expander,
-			clickFunction,
-			doubleClickFunction,
-		);
+			this.setupEntryMouseEvents(
+				tr,
+				entry,
+				treeViewData,
+				builder,
+				selectionElement,
+				expander,
+				clickFunction,
+				doubleClickFunction,
+			);
 
-		this.setupEntryKeyEvent(
-			tr,
-			entry,
-			selectionElement,
-			expander,
-			clickFunction,
-		);
+			this.setupEntryKeyboardEvents(
+				tr,
+				entry,
+				selectionElement,
+				expander,
+				clickFunction,
+			);
 
-		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
+			this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
+		}
 	}
 
 	setupEntryContextMenuEvent(
@@ -854,7 +874,7 @@ class TreeViewControl {
 		}
 	}
 
-	setupEntryKeyEvent(
+	setupEntryKeyboardEvents(
 		tr: HTMLElement,
 		entry: TreeEntryJSON,
 		selectionElement: HTMLInputElement,
@@ -864,22 +884,37 @@ class TreeViewControl {
 		if (entry.enabled === false) return;
 
 		tr.addEventListener('keydown', (event) => {
+			let preventDef = false;
+
 			if (event.key === ' ' && expander) {
 				expander.click();
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
 			} else if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction(event);
 				if (selectionElement) selectionElement.click();
 				if (expander) {
 					expander.click();
 				}
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
+			} else if (event.key === 'ArrowLeft') {
+				// Always collapse if expanded
+				if (expander && !window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					expander.click();
+					preventDef = true;
+				}
+			} else if (event.key === 'ArrowRight') {
+				// Always expand if collapsed
+				if (expander && window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					expander.click();
+					preventDef = true;
+				}
 			} else if (event.key === 'Tab') {
 				if (!window.L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr); // remove tabIndex
+			}
+
+			if (preventDef) {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		});
 	}
@@ -922,7 +957,8 @@ class TreeViewControl {
 		window.L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
-		span.focus();
+		if (!this._ignoreFocus) span.focus();
+
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 
@@ -1242,9 +1278,35 @@ class TreeViewControl {
 
 	setupKeyEvents(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container.addEventListener('keydown', (event) => {
-			const listElements =
-				this._container.querySelectorAll('.ui-treeview-entry');
+			const listElements = this._container.querySelectorAll(
+				`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+			);
 			this.handleKeyEvent(event, listElements, builder, data);
+		});
+	}
+
+	setupFocusOutHandler() {
+		this._container.addEventListener('focusout', (event) => {
+			app.layoutingService.appendLayoutingTask(() => {
+				const activeElement = document.activeElement as HTMLElement;
+				const isFocusInTreeView =
+					activeElement && this._container.contains(activeElement);
+
+				if (!isFocusInTreeView) {
+					const listElements = this._container.querySelectorAll(
+						`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+					);
+					this.restoreInitialTabIndexes(
+						Array.from(listElements) as Array<HTMLElement>,
+					);
+				}
+			});
+		});
+	}
+
+	restoreInitialTabIndexes(listElements: Array<HTMLElement>) {
+		listElements.forEach((entry: HTMLElement) => {
+			entry.tabIndex = 0;
 		});
 	}
 
@@ -1519,7 +1581,9 @@ class TreeViewControl {
 
 	// when no entry is selected - allow first one to be focusable
 	makeTreeViewFocusable(enable: boolean) {
-		const firstElement = this._container.querySelector('.ui-treeview-entry');
+		const firstElement = this._container.querySelector(
+			`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+		);
 		if (firstElement) {
 			if (enable) (firstElement as HTMLElement).tabIndex = 0;
 			else firstElement.removeAttribute('tabindex');
@@ -1664,8 +1728,14 @@ class TreeViewControl {
 		(this._container as any).highlightEntries =
 			this.highlightEntries.bind(this);
 
+		// Prevent grab_focus(in executeActionImpl) from focusing the container
+		(this._container as any).onFocus = () => {
+			// no-op: focus is already on the correct row
+		};
+
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);
+		this.setupFocusOutHandler();
 
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');

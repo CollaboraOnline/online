@@ -144,11 +144,6 @@ window.L.Map = window.L.Evented.extend({
 		this._progressBar = window.L.progressOverlay(new cool.Point.toPoint(150, 25));
 
 		this._debug = new app.DebugManager(this);
-		this.on('docloaded', function() {
-			if (this.options.debug && !this._debug.debugOn) {
-				this._debug.toggle();
-			}
-		});
 
 		this.on('modificationindicatorinitialized', function() {
 			this._modIndicatorInitialized = true;
@@ -280,6 +275,9 @@ window.L.Map = window.L.Evented.extend({
 		});
 
 		this.on('docloaded', function(e) {
+			if (this.options.debug && !this._debug.debugOn)
+				this._debug.toggle();
+
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
 				app.idleHandler.notifyActive();
@@ -294,6 +292,7 @@ window.L.Map = window.L.Evented.extend({
 				}
 
 				app.activeDocument.activeView.sendClientVisibleArea(true);
+				app.serverConnectionService.onDocumentLoaded();
 			} else if (this._docLayer && app.sectionContainer) {
 				// remove the comments and changes
 				var commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);

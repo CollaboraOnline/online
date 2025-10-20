@@ -500,7 +500,9 @@ class Menubar extends window.L.Control {
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
 				   {uno: '.uno:ModifyPage'},
-				   {uno: '.uno:CustomAnimation'},
+					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), id: 'transitiondeck', type: 'action'},
+					 {uno: '.uno:CustomAnimation'}, // core version
+				   //{name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'}, // online version
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -805,10 +807,10 @@ class Menubar extends window.L.Control {
 				   {type: 'separator'},
 				   {name: _UNO('.uno:ToggleSheetGrid', 'spreadsheet', true), uno: '.uno:ToggleSheetGrid', id: 'sheetgrid'},
 				   {name: _('Focus Cell'), type:'action', id: 'columnrowhighlight'},
-				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
+				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', uno: '.uno:FreezePanes'},
 				   {name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
-					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
-					   {name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', type: 'action', uno: '.uno:FreezePanesRow'}
+					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', uno: '.uno:FreezePanesColumn'},
+					   {name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', uno: '.uno:FreezePanesRow'}
 				   ]},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
@@ -1078,7 +1080,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{uno: '.uno:ControlCodes', id: 'formattingmarks'},
 				{uno: '.uno:SpellOnline'},
-				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
+				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', uno: '.uno:ShowResolvedAnnotations'},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
 			]
@@ -2046,7 +2048,7 @@ class Menubar extends window.L.Control {
 				if (type === 'unocommand') { // disable all uno commands
 					// Except the ones listed in allowedViewModeCommands:
 					var allowed = this.options.allowedViewModeCommands.includes(uno);
-					if (!allowed && app.isRedlineManagementAllowed()) {
+					if (!allowed && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls) {
 						allowed = this.options.allowedRedlineManagementModeCommands.includes(uno);
 					}
 					if (!allowed) {
@@ -2075,7 +2077,7 @@ class Menubar extends window.L.Control {
 							break;
 						}
 					}
-					if (!allowed && app.isRedlineManagementAllowed())
+					if (!allowed && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls)
 						allowed = this.options.allowedRedlineManagementModeActions.includes(id);
 					if (id === 'insertcomment' && (this._map.getDocType() !== 'drawing' && !app.isCommentEditingAllowed()))
 						allowed = false;
@@ -2185,7 +2187,9 @@ class Menubar extends window.L.Control {
 			|| id === 'home-search'
 			|| id === 'print-active-sheet'
 			|| id === 'print-all-sheets'
-			|| id === 'serveraudit') {
+			|| id === 'serveraudit'
+			|| id === 'animationdeck'
+			|| id === 'transitiondeck') {
 			app.dispatcher.dispatch(id);
 		} else if (id === ('settings-dialog')) {
 			this._map.settings.showSettingsDialog();
@@ -2327,7 +2331,11 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch(command);
 		} else if (id === 'columnrowhighlight') {
 			app.dispatcher.dispatch('columnrowhighlight');
+		} else {
+			// not found
+			app.console.warn('Menubar: unknown action for id: ' + id);
 		}
+
 		// Inform the host if asked
 		if (postmessage)
 			this._map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });
@@ -2427,7 +2435,7 @@ class Menubar extends window.L.Control {
 		}
 		if (this._map.isReadOnlyMode() && menuItem.type === 'menu') {
 			var found = this.options.allowedReadonlyMenus.includes(menuItem.id);
-			if (!found && app.isRedlineManagementAllowed())
+			if (!found && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls)
 				found = this.options.allowedRedlineManagementMenus.includes(menuItem.id);
 			if (!found)
 				return false;

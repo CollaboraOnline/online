@@ -75,7 +75,37 @@ std::string genRandomString(const size_t size)
     for (size_t i = 0; i < size; ++i)
     {
         // Sensible characters only, avoiding 0x7f DEL
-        text += static_cast<char>('!' + Util::rng::getNext() % 94);
+        char c = static_cast<char>('!' + Util::rng::getNext() % 94);
+
+        // remove markdown-indicators for now
+        switch (c)
+        {
+            // headings
+            case '#':
+            // ordered list
+            case '.':
+            // unordered list
+            case '-':
+            case '*':
+            // links
+            case '[':
+            case ']':
+            // code
+            case '`':
+            // italic
+            // bold
+            case '_':
+            // strikethrough
+            case '~':
+            // block quote
+            case '>':
+            // table
+            case '|':
+                i--;
+                break;
+            default:
+                text += c;
+        }
     }
 
     return text;
@@ -176,7 +206,6 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
                                   std::string& documentURL, std::string prefix)
 {
     const std::string testname = prefix;
-
 
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
     documentPath = getTempFileCopyPath(TDOC, docFilename, prefix);
@@ -1010,8 +1039,13 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
         std::string text = getResponseString(socket, prefix, testname);
         if (!text.empty())
         {
-            if (expected.empty() || (prefix + expected) == text)
+            if (expected.empty())
                 return text;
+            else if ((prefix + expected) == text)
+                return text;
+            else
+                LOG_DBG("text selection mismatch text received: '" + text +
+                        "' is not what is expected: '" + prefix + expected + "'");
         }
     }
 

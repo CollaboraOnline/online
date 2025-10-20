@@ -11,10 +11,6 @@
 
 #include <config.h>
 
-#include <memory>
-#include <string>
-#include <regex>
-
 #include <HttpRequest.hpp>
 #include <Socket.hpp>
 
@@ -31,7 +27,13 @@
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <helpers.hpp>
+
+#include <memory>
+#include <regex>
+#include <string>
 #include <vector>
+
+using namespace std::literals;
 
 namespace
 {
@@ -149,7 +151,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
                 return true;
             },
-            std::chrono::seconds(10), testname);
+            10s, testname);
     };
 
     assertMessage("find");

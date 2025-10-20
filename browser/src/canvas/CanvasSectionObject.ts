@@ -90,6 +90,7 @@ class CanvasSectionObject {
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft(): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
+	getHTMLObject(): HTMLElement { return; } // Implemented in HTMLObjectSection.
 
 	setDrawingOrder(drawingOrder: number): void {
 		this.drawingOrder = drawingOrder;
@@ -109,8 +110,47 @@ class CanvasSectionObject {
 		this.containerObject.reNewAllSections();
 	}
 
-	stopPropagating(): void {
+	stopPropagating(e: MouseEvent = null): void {
 		this.containerObject.lowestPropagatedBoundSection = this.name;
+
+		// We shouldn't need e when we remove map element.
+		if (e) { // This addition doesn't effect current uses of this function, since they don't send e here.
+			if (e.preventDefault)
+				e.preventDefault();
+
+			if (e.stopImmediatePropagation)
+				e.stopImmediatePropagation();
+
+			(e as any).preventedDefault = true; // Tap events are first handled by touchGesture. We need to let it know if we handled the event.
+		}
+	}
+
+	// The z-index of map element is higher than the canvas element. When we want canvas to handle event before map, we need this, for now.
+	mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
+		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
+		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
+	}
+
+	// Move the HTML object of an HTMLObjectSection into map element. For avoiding z-index (event handling order) issues.
+	moveHTMLObjectToMapElement(): void {
+		const element: any = this.getHTMLObject() as any;
+
+		if (!element)
+			return;
+
+		// Linting sees opacity as a string property, but it is integer. Use any for now.
+		element.style.opacity = 1;
+		this.getHTMLObject().remove();
+		document.getElementById('map').appendChild(this.getHTMLObject());
 	}
 
 	startAnimating(options: any): boolean {
@@ -165,6 +205,26 @@ class CanvasSectionObject {
 
 		if (this.containerObject.testing)
 			this.containerObject.createUpdateSingleDivElement(this);
+	}
+
+	/*
+		This function is (for now) required because sometimes
+		we need to handle the event before leaflet. So we check if the mouse pointer
+		is inside the section.
+	*/
+	containsPoint(point: number[]) {
+		if (
+			this.position[0] <= point[0] &&
+			this.position[0] + this.size[0] >= point[0]
+		) {
+			if (
+				this.position[1] <= point[1] &&
+				this.position[1] + this.size[1] >= point[1]
+			)
+				return true;
+		}
+
+		return false;
 	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.

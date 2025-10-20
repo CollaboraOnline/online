@@ -85,11 +85,11 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         Anonymizer::mapAnonymized(fileId,
                                   fileId); // Identity mapping, since fileId is already obfuscated
 
-#ifndef IOS
-        Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
-#endif
         if (!_document)
         {
+#ifndef IOS
+            Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
+#endif
             _document = std::make_shared<Document>(
                 _loKit, _jailId, _docKey, docId, url,
                 std::static_pointer_cast<WebSocketHandler>(shared_from_this()), _mobileAppDocId);

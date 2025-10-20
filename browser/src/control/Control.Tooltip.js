@@ -58,7 +58,7 @@ class Tooltip {
 		if (this._current)
 			this._hideTimeout = win.setTimeout(
 				window.L.bind(this.hide, this, elem),
-				this._options.timeout,
+				this._options.timeout / 8,
 			);
 	}
 

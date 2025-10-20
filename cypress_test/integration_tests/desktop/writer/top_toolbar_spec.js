@@ -234,14 +234,14 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoInsertTable button').click({force: true});
+		cy.cGet('#Home-container .unoInsertTable #home-insert-table-button').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
 		cy.cGet('#copy-paste-container table').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.typeIntoDocument('{shift}{del}');
-		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
+		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
 	it('Insert image.', function() {
@@ -433,7 +433,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert Special Character.', function() {
-		cy.cGet('#Home-container .unospan-CharmapControl').click({force: true});
+		cy.cGet('#Home-container .unoCharmapControl').click();
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
 

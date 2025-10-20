@@ -606,8 +606,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// Cursor marker
 		this._cursorMarker = null;
 
-		this._initializeTableOverlay();
-
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
 		this._previewInvalidations = [];
@@ -710,7 +708,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		app.sectionContainer.addSection(new app.definitions.CommentSection());
 
 		this._syncTileContainerSize();
-		this._setupTableOverlay();
 	},
 
 	// Returns true if the document type is Writer.
@@ -1062,6 +1059,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			app.definitions.otherViewCursorSection.updateVisibilities();
 			this.updateAllTextViewSelection();
 		}
+		else if (textMsg.startsWith('partstatus:')) {
+			this._onStatusMsg(textMsg);
+		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
 		}
@@ -1152,7 +1152,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('tableselected:')) {
-			this._onTableSelectedMsg(textMsg);
+			app.activeDocument.tableMiddleware.onTableSelectedMsg(textMsg);
 		}
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);
@@ -1351,8 +1351,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			var serverAudit = textMsg.substr(12).trim();
 			if (serverAudit !== 'disabled') {
 				// if isAdminUser property is not set by integration - enable audit dialog for all users
-				if (app.isAdminUser !== false)
+				if (app.isAdminUser !== false) {
 					this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
+
+					if (this._map.uiManager.notebookbar) {
+						this._map.uiManager.notebookbar.showItem('server-audit');
+						this._map.uiManager.notebookbar.showItem('help-serveraudit-break');
+					}
+				}
 
 				var json = JSON.parse(serverAudit);
 				app.setServerAuditFromCore(json.serverAudit);
@@ -2499,30 +2505,54 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
-		if (this.isCalc() && oldSelection) {
-			if (!app.activeDocument.activeView.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
-				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
-				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
+		if (!oldSelection)
+			return;
 
-				var scrollX = 0, scrollY = 0;
-				if (newSelection.pX2 > app.activeDocument.activeView.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
-					scrollX = newSelection.pX2 - app.activeDocument.activeView.viewedRectangle.pX2 + spacingX;
-				else if (newSelection.pX1 < app.activeDocument.activeView.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
-					scrollX = newSelection.pX1 - app.activeDocument.activeView.viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY2 > app.activeDocument.activeView.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
-					scrollY = newSelection.pY2 - app.activeDocument.activeView.viewedRectangle.pY2 + spacingY;
-				else if (newSelection.pY1 < app.activeDocument.activeView.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
-					scrollY = newSelection.pY1 - app.activeDocument.activeView.viewedRectangle.pY1 - spacingY;
-				if (scrollX !== 0 || scrollY !== 0) {
-					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
-						var address = document.querySelector('#addressInput input').value;
-						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
-							let scroll = new cool.SimplePoint(0,0);
-							scroll.pX = scrollX;
-							scroll.pY = scrollY;
-							this.scrollByPoint(scroll);
-						}
-					}
+		if (newSelection.equals(oldSelection.toArray()))
+			return;
+
+		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const directionDownOrRight = (newSelection.pX2 !== oldSelection.pX2) || (newSelection.pY2 !== oldSelection.pY2);
+
+		let needsScroll = false;
+		let xVisible;
+		let yVisible;
+
+		if (directionDownOrRight) {
+			xVisible = app.isXVisibleInTheDisplayedArea(newSelection.x2);
+			yVisible = app.isYVisibleInTheDisplayedArea(newSelection.y2);
+			needsScroll = !xVisible || !yVisible;
+		}
+		else {
+			xVisible = app.isXVisibleInTheDisplayedArea(newSelection.x1);
+			yVisible = app.isYVisibleInTheDisplayedArea(newSelection.y1);
+			needsScroll = !xVisible || !yVisible;
+		}
+
+		if (needsScroll) {
+			const spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
+			const spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
+			let scrollX = 0, scrollY = 0;
+
+			if (directionDownOrRight) {
+				if (!xVisible)
+					scrollX = newSelection.pX2 - viewedRectangle.pX2 + spacingX;
+
+				if (!yVisible)
+					scrollY = newSelection.pY2 - viewedRectangle.pY2 + spacingY;
+			}
+			else {
+				if (!xVisible)
+					scrollX = newSelection.pX1 - viewedRectangle.pX1 - spacingX;
+
+				if (!yVisible)
+					scrollY = newSelection.pY1 - viewedRectangle.pY1 - spacingY;
+			}
+
+			if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
+				const address = document.querySelector('#addressInput input').value;
+				if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
+					app.activeDocument.activeView.scroll(scrollX, scrollY);
 				}
 			}
 		}
@@ -2534,9 +2564,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			var oldSelection = TextSelections.getEndRectangle();
 			TextSelections.setEndRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
-			this._updateScrollOnCellSelection(oldSelection, TextSelections.getEndRectangle());
 		}
 		else
 			TextSelections.setEndRectangle(null);
@@ -2548,9 +2576,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			let oldSelection = TextSelections.getStartRectangle();
 			TextSelections.setStartRectangle(new cool.SimpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y)));
-			this._updateScrollOnCellSelection(oldSelection, TextSelections.getStartRectangle());
 		}
 		else
 			TextSelections.setStartRectangle(null);
@@ -2582,17 +2608,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 
-			const rectArray = this._getTextSelectionRectangles(textMsg);
-			const rectangles = rectArray.map(function (rect) { return rect.getPointArray(); });
-			const pointSet =  this._convertToPointSet(rectangles);
-			this._cellCSelections.setPointSet(pointSet);
 			CellSelectionMarkers.update();
 		} else {
 			this._cellSelectionArea = null;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection(null);
 			this._cellSelections = Array(0);
-			this._cellCSelections.clear();
 			this._map.wholeColumnSelected = false; // Message related to whole column/row selection should be on the way, we should update the variables now.
 			this._map.wholeRowSelected = false;
 			if (this._refreshRowColumnHeaders)
@@ -2695,8 +2716,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
 		this._textCSelections.clear();
-		// hide the cell selection
-		this._cellCSelections.clear();
 		// hide the ole selection
 		this._oleCSelections.clear();
 
@@ -2709,9 +2728,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	containsSelection: function (latlng) {
 		var corepxPoint = this._map.project(latlng);
-		return this._textCSelections.empty() ?
-			this._cellCSelections.contains(corepxPoint) :
-			this._textCSelections.contains(corepxPoint);
+		return this._textCSelections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -3795,8 +3812,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._getToolbarCommandsValues();
 		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'text');
-		this._cellCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'cell');
 		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'ole');
 		this._references = new CReferences(this._canvasOverlay);
@@ -3877,10 +3892,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._tileZoom = null;
 		TileManager.clearPreFetch();
 		clearTimeout(this._previewInvalidator);
-
-		if (!this._cellCSelections.empty()) {
-			this._cellCSelections.clear();
-		}
 
 		if (!this._textCSelections.empty()) {
 			this._textCSelections.clear();
@@ -4055,7 +4066,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		return this._cssPixelsToTwips(pixels);
 	},
 
-	_updateMaxBounds: function (sizeChanged) {
+	_updateMaxBounds: function (sizeChanged, allPages = true) {
 		if (app.activeDocument.fileSize.x === 0 || app.activeDocument.fileSize.y === 0) {
 			return;
 		}
@@ -4071,7 +4082,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
-		this._map.fire('scrolllimits', {});
+		if (allPages) this._map.fire('scrolllimits', {});
+		else this._map.fire('scrolllimit', {})
 	},
 
 	// Used with filebasedview.

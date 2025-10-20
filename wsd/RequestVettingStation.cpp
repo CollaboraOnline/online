@@ -469,6 +469,15 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     assert(docBroker && "Must have DocBroker");
     assert(_ws && "Must have WebSocket");
 
+    if (docBroker->isUnloadingUnrecoverably())
+    {
+        LOG_INF("Cannot create client session to DocBroker ["
+                << docKey << "] while it's unloading unrecoverably");
+        sendErrorAndShutdown("error: cmd=load kind=docunloading",
+                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+        return;
+    }
+
     std::unique_ptr<WopiStorage::WOPIFileInfo> realWopiFileInfo;
 #if !MOBILEAPP
     assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
@@ -482,6 +491,12 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
 
     std::weak_ptr<StreamSocket> socket = _socket;
     _socket.reset();
+
+    const auto docBrokerPoll = docBroker->getPoll().lock();
+    assert(docBrokerPoll && "Must have DocBroker SocketPoll");
+
+    LOG_TRC("Transfering DocBroker [" << docKey << "] from vetting station to own thread ["
+                                      << docBrokerPoll->name() << ']');
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     std::shared_ptr<WebSocketHandler> ws = _ws;
@@ -507,10 +522,9 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
                     ws, id, uriPublic, isReadOnly, requestDetails);
                 if (!clientSession)
                 {
+                    // createNewClientSession() has sent the error to the client WebSocket.
                     LOG_ERR_S(logPrefix << "Failed to create Client Session [" << id
                                         << "] on docKey [" << docKey << ']');
-                    sendErrorAndShutdownWS(ws, "error: cmd=internal kind=load",
-                                           WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
                     return;
                 }
 

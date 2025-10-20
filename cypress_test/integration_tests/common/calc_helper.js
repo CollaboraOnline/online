@@ -61,6 +61,33 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.log('<< clickOnFirstCell - end');
 }
 
+/*
+	This function assumes:
+	* The cell to be clicked is visible.
+	* Row and column width / height values are the same.
+	* Indexes are 1-based.
+*/
+function clickOnACell(currentColumnIndex, currentRowIndex, clickColumnIndex, clickRowIndex) {
+	cy.log('>> clickOnACell - start');
+	cy.log('Param - clickColumnIndex: ' + clickColumnIndex);
+	cy.log('Param - clickRowIndex: ' + clickRowIndex);
+
+	// Use the tile's edge to find the first cell's position
+	cy.cGet('#test-div-OwnCellCursor').should('exist');
+	cy.cGet('#test-div-OwnCellCursor')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			const clientRect = items[0].getBoundingClientRect();
+			const currentX = clientRect.left + parseInt(clientRect.width * 0.5);
+			const currentY = clientRect.top + parseInt(clientRect.height * 0.5);
+			const clickX = currentX + clientRect.width * (clickColumnIndex - currentColumnIndex);
+			const clickY = currentY + clientRect.height * (clickRowIndex - currentRowIndex);
+			cy.cGet('body').click(clickX, clickY);
+		});
+
+	cy.log('>> clickOnACell - end');
+}
+
 // Double click on the A1 cell.
 function dblClickOnFirstCell() {
 	cy.log('>> dblClickOnFirstCell - start');
@@ -301,6 +328,7 @@ function selectOptionMobileWizard(menu) {
 }
 
 module.exports.clickOnFirstCell = clickOnFirstCell;
+module.exports.clickOnACell = clickOnACell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
 module.exports.typeIntoFormulabar = typeIntoFormulabar;

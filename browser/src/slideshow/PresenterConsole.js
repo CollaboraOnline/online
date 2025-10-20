@@ -14,7 +14,7 @@
  * PresenterConsole
  */
 
-/* global app SlideShow _ */
+/* global app SlideShow _ LOUtil */
 
 class PresenterConsole {
 	constructor(map, presenter) {
@@ -57,7 +57,7 @@ class PresenterConsole {
                                 <main id="main-content">
 								  <div id="toolbar">
 									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}" aria-label="${this.labels.goBack}">
-										<img src="images/presenterscreen-ArrowBack.svg">
+										<img src="${LOUtil.getImageURL('presenterscreen-ArrowBack.svg')}">
 									</button>
                                   </div>
                                   <div id="presentation-content">
@@ -66,10 +66,10 @@ class PresenterConsole {
 											<div id="timer"></div>
 											 <div id="timer-controls">
 												<button type="button" id="pause" data-cooltip="${this.labels.pause}" aria-label="${this.labels.pause}">
-													<img src="images/presenterscreen-ButtonPauseTimerNormal.svg">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonPauseTimerNormal.svg')}">
 												</button>
 												<button type="button" id="restart" data-cooltip="${this.labels.restart}" aria-label="${this.labels.restart}">
-													<img src="images/presenterscreen-ButtonRestartTimerNormal.svg">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonRestartTimerNormal.svg')}">
 												</button>
 											 </div>
 											<div id="today"></div>
@@ -79,19 +79,19 @@ class PresenterConsole {
 											<div id="slideshow-control-container">
 											<div id="navigation-container">
 												<button type="button" id="prev" data-cooltip="${this.labels.previous}" aria-label="${this.labels.previous}">
-													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSlidePreviousSelected.svg')}">
 												</button>
 												<div id="title-current">${this.labels.currentSlide}</div>
 												<button type="button" id="next" data-cooltip="${this.labels.next}" aria-label="${this.labels.next}">
-													<img src="images/presenterscreen-ButtonEffectNextSelected.svg">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonEffectNextSelected.svg')}">
 												</button>
 											</div>
 											<div id="action-buttons-container">
 												<button type="button" id="notes" data-cooltip="${this.labels.notes}" aria-label=${this.labels.notes}">
-													<img src="images/presenterscreen-ButtonNotesNormal.svg">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonNotesNormal.svg')}">
 												</button>
 												<button type="button" id="slides" data-cooltip="${this.labels.slides}" aria-label="${this.labels.slides}">
-													<img src="images/presenterscreen-ButtonSlideSorterNormal.svg">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSlideSorterNormal.svg')}">
 												</button>
 											</div>
 										</div>
@@ -729,7 +729,7 @@ class PresenterConsole {
 
 		// Create the image for the plus button
 		let plusImage = this._proxyPresenter.document.createElement('img');
-		plusImage.src = 'images/presenterscreen-ButtonPlusNormal.svg';
+		plusImage.src = LOUtil.getImageURL('presenterscreen-ButtonPlusNormal.svg');
 		plusImage.alt = 'Increase Font'; // Optional: Add alt text for accessibility
 		// Add the image inside the plus button
 		plusButton.appendChild(plusImage);
@@ -740,7 +740,9 @@ class PresenterConsole {
 		minusButton.setAttribute('data-cooltip', this.labels.zoomOut); // Set the tooltip text
 		// Create the image for the minus button
 		let minusImage = this._proxyPresenter.document.createElement('img');
-		minusImage.src = 'images/presenterscreen-ButtonMinusNormal.svg';
+		minusImage.src = LOUtil.getImageURL(
+			'presenterscreen-ButtonMinusNormal.svg',
+		);
 		minusImage.alt = 'Decrease Font'; // Optional: Add alt text for accessibility
 
 		// Add the image inside the minus button

@@ -226,6 +226,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	z-index: 11;
 }
 
+.notebookbar.horizontal.ui-overflow-manager {
+	padding-inline-start: 5px;
+}
+
 .hasnotebookbar > #toolbar-row {
 	height: 82px;
 }
@@ -240,7 +244,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .notebookbar.ui-separator.vertical {
 	width: 1px;
 	background-color: var(--color-toolbar-border);
-	height: 4rem;
+	height: var(--notebookbar-element-height);
 	margin: 0 2px;
 	box-sizing: border-box;
 }
@@ -253,6 +257,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	justify-items: center;
 	width: max-content;
 	color: var(--color-main-text);
+}
+
+.horizontal.notebookbar:has(.unoBezier_Unfilled) {
+	height: 100%;
+	align-items: start;
 }
 
 /* unobuttons */
@@ -401,6 +410,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	margin: auto !important;
 	display: block;
 }
+
+.ui-pushbutton.notebookbar img {
+	height: 24px;
+}
+
 .has-label.has-dropdown:not(.inline) .unolabel {
 	display: inline-block;
 	clear: both;
@@ -436,15 +450,15 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Styles preview */
 
-#stylesview {
-	height: 64px;
-	width: 35vw;
+#stylesview,
+#masterpageall_icons,
+#transitions_icons,
+#custom_animation_list,
+#effect_list {
+	height: var(--notebookbar-element-height);
 	overflow: auto;
 	display: grid;
-	/* Preview base64's width = 100px + container border's etc */
-	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
-	/* Preview base64's height = 30px  + container border's etc */
-	grid-template-rows: repeat(auto-fit, minmax(33px, 1fr));
+	row-gap: 0;
 	padding: 0px;
 	border: 1px solid var(--color-stylesview-border);
 	border-radius: var(--border-radius);
@@ -453,16 +467,44 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
 	box-sizing: border-box;
+}
+
+#stylesview {
+	width: 35vw;
+	/* Preview base64's width = 100px + container border's etc */
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	/* Preview base64's height = 30px  + container border's etc */
+	grid-template-rows: repeat(auto-fit, minmax(33px, 1fr));
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	row-gap: 0;
+}
+
+#masterpageall_icons {
+	width: 15vw !important;
+	max-width: 265px;
+	min-width: 90px;
+	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
+	margin-left: 5px;
+}
+
+#transitions_icons:not(.sidebar) {
+	width: 35vw;
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
+	margin-left: 10px;
+}
+
+#transitions_icons.sidebar {
+	height: inherit;
+	width: 100%;
 }
 
 #stylesview-btn {
 	border: 1px solid var(--color-stylesview-border);
 	border-top-right-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
-	height: 64px;
+	height: var(--notebookbar-element-height);
 	margin-inline-start: -5px;
 	box-sizing: border-box;
 }
@@ -584,6 +626,50 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
+	scroll-snap-type: y mandatory;
+	scroll-behavior: smooth;
+}
+
+#transitions_icons.ui-iconview.notebookbar > * {
+	scroll-snap-align: start;
+}
+
+/* Animation Tab */
+#Animation.notebookbar .ui-grid,
+#Animation.notebookbar #effect_list,
+#Animation.notebookbar #custom_animation_list {
+	min-height: initial;
+	height: var(--notebookbar-element-height);
+	margin: 0px 5px;
+	justify-content: stretch;
+}
+
+#Animation.notebookbar #custom_animation_list {
+	display: block;      /* force to allow full scroll range */
+	min-width: 308px;    /* to avoid flicker and too much changes */
+	overflow-y: scroll;  /* to avoid flicker always show scroll */
+	width: max-content;  /* adjust to the generated size */
+	scrollbar-width: initial;
+}
+
+#Animation.notebookbar #custom_animation_list div {
+	padding: 0px;
+	margin: 0px;
+}
+
+#Animation.notebookbar #custom_animation_list .ui-treeview-cell-text-content {
+	display: grid;
+}
+
+#Animation.notebookbar .ui-grid button {
+	width: 100%;
+	justify-content: start;
+	margin: 0px;
+	height: 30px;
+}
+
+#Animation.notebookbar .ui-listbox-container {
+	min-width: 100px;
 }
 
 /* Table Tab */
@@ -770,10 +856,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 #masterpageall_icons .notebookbar.ui-iconview-entry {
-	height: 2.75rem;
+	align-self: start;
+	margin-top: 6px;
 }
 
 #masterpageall_icons .notebookbar.ui-iconview-entry img {
-	height: 100%;
-	width: 100%;
+	height: 45px;
+	width: 80px;
 }

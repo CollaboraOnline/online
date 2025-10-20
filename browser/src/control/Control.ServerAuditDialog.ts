@@ -28,9 +28,15 @@ class ClientAuditor {
 		else entries.push({ code: 'postmessage', status: 'hostnotready' });
 	}
 
+	private static checkProxyProtocol(entries: Array<AuditEntry>) {
+		if (window.socketProxy) entries.push({ code: 'proxy', status: 'slow' });
+		else entries.push({ code: 'proxy', status: 'ok' });
+	}
+
 	public static performClientAudit(): Array<AuditEntry> {
 		const entries = new Array<AuditEntry>();
 		ClientAuditor.checkPostMessages(entries);
+		ClientAuditor.checkProxyProtocol(entries);
 		return entries;
 	}
 }
@@ -44,8 +50,80 @@ class ServerAuditDialog {
 		this.map = map;
 		this.map.on('receivedserveraudit', this.onServerAudit.bind(this), this);
 
+		// Priorities: 1 - security, 10 - config, 20 - integration, 30 - general info ...
 		this.errorCodes = {
+			certwarning: {
+				priority: 1,
+				sslverifyfail: [
+					_('Your WOPI server is not secure: SSL verification failed'),
+					'SDK: ssl-configuration',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
+				],
+				ok: [
+					_('No problems with SSL verification detected'),
+					'SDK: ssl-configuration',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
+				],
+			},
+			contained: {
+				priority: 2,
+				uncontained: [
+					_(
+						'Documents are not effectively contained: missing capabilities or namespaces.',
+					),
+					'SDK: nocaps',
+					'',
+				],
+				ok: [_('Each document is securely contained'), 'SDK: nocaps', ''],
+			},
+			seccomp: {
+				priority: 3,
+				none: [
+					_(
+						'BPF filtering of potentially risky system calls (seccomp) is not enabled; a security hazard.',
+					),
+					'SDK: seccomp',
+					'',
+				],
+				ok: [_('System call security filtering enabled'), 'SDK: seccomp', ''],
+			},
+
+			hardwarewarning: {
+				priority: 10,
+				lowresources: [
+					_(
+						'Your server is configured with insufficient hardware resources, which may lead to poor performance.',
+					),
+					'SDK: hardware-requirements',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
+				ok: [
+					_('Hardware resources are sufficient for optimal performance'),
+					'SDK: hardware-requirements',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
+			},
+			bindmounted: {
+				priority: 11,
+				slow: [
+					_('Slow Kit jail setup with copying, cannot bind-mount.'),
+					'SDK: bindmount',
+					'',
+				],
+				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
+			},
+			proxy: {
+				priority: 12,
+				slow: [
+					_('Poorly performing proxying of all network requests.'),
+					'',
+					'',
+				],
+				ok: [_('Direct network connection'), '', ''],
+			},
+
 			is_admin: {
+				priority: 20,
 				missing: [
 					_('The IsAdminUser property is not set by integration'),
 					'SDK: IsAdminUser',
@@ -64,19 +142,8 @@ class ServerAuditDialog {
 					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=IsAdminUser#isadminuser',
 				],
 			},
-			certwarning: {
-				sslverifyfail: [
-					_('Your WOPI server is not secure: SSL verification failed'),
-					'SDK: ssl-configuration',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
-				],
-				ok: [
-					_('No problems with SSL verification detected'),
-					'SDK: ssl-configuration',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=ssl#ssl-configuration',
-				],
-			},
 			postmessage: {
+				priority: 21,
 				ok: [
 					_('PostMessage API is initialized'),
 					'SDK: post-message-initialization',
@@ -88,29 +155,31 @@ class ServerAuditDialog {
 					'https://sdk.collaboraonline.com/docs/postmessage_api.html#initialization',
 				],
 			},
-			hardwarewarning: {
-				lowresources: [
-					_(
-						'Your server is configured with insufficient hardware resources, which may lead to poor performance.',
-					),
-					'SDK: hardware-requirements',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
-				],
-				ok: [
-					_('Hardware resources are sufficient for optimal performance'),
-					'SDK: hardware-requirements',
-					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
-				],
+
+			info_namespaces: {
+				priority: 30,
+				true: [_('Using namespaces'), 'SDK: nocaps', ''],
+				false: [_('Not using namespaces'), 'SDK: nocaps', ''],
 			},
 		};
 	}
 
 	public open() {
 		const serverEntries = this.getEntries(app.serverAudit);
-		const clientEntries = this.getEntries(ClientAuditor.performClientAudit());
+		app.clientAudit = ClientAuditor.performClientAudit();
+		const clientEntries = this.getEntries(app.clientAudit);
+		const allEntries = serverEntries.concat(clientEntries);
+
+		// Sort errors to the top
+		allEntries.sort((a, b) => {
+			const aIsError = a.columns[0].collapsed === 'serverauditerror.svg';
+			const bIsError = b.columns[0].collapsed === 'serverauditerror.svg';
+			if (aIsError !== bIsError) return aIsError ? -1 : 1;
+			return 0; // keep internal order, already sorted by priority
+		});
 
 		const dialogBuildEvent = {
-			data: this.getJSON(serverEntries.concat(clientEntries)),
+			data: this.getJSON(allEntries),
 			callback: this.callback.bind(this) as JSDialogCallback,
 		};
 
@@ -120,13 +189,19 @@ class ServerAuditDialog {
 		);
 	}
 
-	private getEntries(source: any): Array<TreeEntryJSON> {
+	private getEntries(sourceUnsorted: any): Array<TreeEntryJSON> {
 		const entries = new Array<TreeEntryJSON>();
 
-		if (!source) return entries;
+		if (!sourceUnsorted) return entries;
 
 		const errorIcon = { collapsed: 'serverauditerror.svg' };
 		const okIcon = { collapsed: 'serverauditok.svg' };
+
+		const source = sourceUnsorted.sort(
+			(x: AuditEntry, y: AuditEntry) =>
+				(this.errorCodes[x.code] ? this.errorCodes[x.code].priority : 100) -
+				(this.errorCodes[y.code] ? this.errorCodes[y.code].priority : 100),
+		);
 
 		source.forEach((entry: AuditEntry) => {
 			const found = this.errorCodes[entry.code];
@@ -136,7 +211,9 @@ class ServerAuditDialog {
 					entries.push({
 						row: 0,
 						columns: [
-							entry.status === 'ok' ? okIcon : errorIcon,
+							entry.status === 'ok' || this.isInfoEntry(entry)
+								? okIcon
+								: errorIcon,
 							{ text: status[0] },
 							status[1] && status[2]
 								? {
@@ -147,6 +224,24 @@ class ServerAuditDialog {
 						],
 					} as TreeEntryJSON);
 				}
+			} else if (this.isInfoEntry(entry)) {
+				if (entry.code === 'info_setup_ms') {
+					const ms = Number.parseInt(entry.status);
+					const good = ms < 3000;
+					entries.push({
+						row: 0,
+						columns: [
+							good ? okIcon : errorIcon,
+							{
+								text: _('Document container started in {1} ms').replace(
+									'{1}',
+									entry.status,
+								),
+							},
+							{ text: '' },
+						],
+					} as TreeEntryJSON);
+				} else console.warn('Unknown server audit info: ' + entry.code);
 			} else {
 				console.warn('Unknown server audit entry: ' + entry.code);
 			}
@@ -159,17 +254,13 @@ class ServerAuditDialog {
 		let hasErrors = false;
 		if (app.serverAudit) {
 			app.serverAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok') {
-					hasErrors = true;
-				}
+				if (this.isErrorEntry(entry)) hasErrors = true;
 			});
 		}
 
 		if (app.clientAudit) {
 			app.clientAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok') {
-					hasErrors = true;
-				}
+				if (entry.status !== 'ok') hasErrors = true;
 			});
 		}
 
@@ -178,7 +269,7 @@ class ServerAuditDialog {
 
 	private countErrors(): number {
 		return (
-			(app.serverAudit?.filter((entry: AuditEntry) => entry.status !== 'ok')
+			(app.serverAudit?.filter((entry: AuditEntry) => this.isErrorEntry(entry))
 				.length ?? 0) +
 			(app.clientAudit?.filter((entry: AuditEntry) => entry.status !== 'ok')
 				.length ?? 0)
@@ -260,27 +351,30 @@ class ServerAuditDialog {
 		);
 	}
 
+	private isInfoEntry(entry: AuditEntry): boolean {
+		return entry.code.startsWith('info_');
+	}
+
+	private isErrorEntry(entry: AuditEntry): boolean {
+		return !this.isInfoEntry(entry) && entry.status !== 'ok';
+	}
+
 	private onServerAudit() {
 		if (app.serverAudit.length) {
 			let hasErrors = false;
 			app.serverAudit.forEach((entry: any) => {
-				if (entry.status !== 'ok') {
-					hasErrors = true;
-				}
+				if (this.isErrorEntry(entry)) hasErrors = true;
 			});
 
 			// only show the snackbar if there are specific warnings
 			// and if the current view isadminuser
 			if (hasErrors && app.isAdminUser) {
 				this.map.uiManager.showSnackbar(
-					_('Check security warnings of your server'),
+					_('Check warnings of your server'),
 					_('OPEN'),
 					this.open.bind(this),
 				);
 			}
-
-			// but if we any results, enable the toolbar entry for the server audit
-			this.map.uiManager.refreshUI();
 		}
 	}
 

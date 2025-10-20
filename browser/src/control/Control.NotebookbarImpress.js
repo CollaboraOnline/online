@@ -98,6 +98,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: false, combination: 'P', de: null }
 			},
 			JSDialog.ImpressTransitionTab.getEntry(),
+			// JSDialog.ImpressAnimationTab.getEntry(), requires core change
 			{
 				'id': 'Slideshow-tab-label',
 				'text': _('Slide Show'),
@@ -125,14 +126,14 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			},
 			{
 				'id': 'Shape-tab-label',
-				'text': 'Shape',
+				'text': _('Shape'),
 				'name': 'Shape',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|DrawFontwork',
 				'accessibility': { focusBack: false, combination: 'D', de: null }
 			},
 			{
 				'id': 'Picture-tab-label',
-				'text': 'Picture',
+				'text': _('Picture'),
 				'name': 'Picture',
 				'context': 'Graphic',
 				'accessibility': { focusBack: false, combination: 'I', de: null }
@@ -166,6 +167,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			this.getInsertTab(),
 			this.getDesignTab(),
 			this.getTransitionTab(),
+			// this.getAnimationTab(), requires core change
 			this.getSlideshowTab(),
 			this.getReviewTab(),
 			this.getFormatTab(),
@@ -192,7 +194,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 		if (hasSave) {
 			content.push(
 			{
-				'type': 'toolbox',
+				'type': 'container',
 				'children': [
 					{
 						'id': 'file-save',
@@ -329,9 +331,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'type': 'exportmenubutton',
 				'text': _UNO('.uno:Print', 'presentation'),
 				'command': '.uno:Print',
-				'applyCallback':function () {
-					app.map.print();
-				},
+				'applyCallback': 'print',
 				'accessibility': { focusBack: true, combination: 'PF', de: null }
 			});
 		}
@@ -449,6 +449,11 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 		return this.getTabPage(tab.getName(), tab.getContent());
 	},
 
+	getAnimationTab: function() {
+		const tab = JSDialog.ImpressAnimationTab;
+		return this.getTabPage(tab.getName(), tab.getContent());
+	},
+
 	getSlideshowTab: function() {
 		var content = [
 			window.mode.isTablet() ?
@@ -487,15 +492,25 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'type': 'bigcustomtoolitem',
 					'text': _('Presenter Console'),
 					'command': 'presenterconsole',
-					'accessibility': { focusBack: true, combination: 'PW', de: null }
+					'accessibility': { focusBack: true, combination: 'PC', de: null }
 				}: {},
-			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
+			!window.ThisIsAMobileApp ?
 				{
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
-					'text': _('Follow me Presentation'),
+					'text': _('Start Follow-me Presentation'),
 					'command': 'followmepresentation',
-					'accessibility': { focusBack: true, combination: 'PW', de: null }
+					'visible': app.isExperimentalMode(),
+					'accessibility': { focusBack: true, combination: 'PL', de: null }
+				} : {},
+			!window.ThisIsAMobileApp ?
+				{
+					'id': 'slide-presentation-follow',
+					'type': 'bigcustomtoolitem',
+					'text': _('Follow Presentation'),
+					'command': 'followpresentation',
+					'visible': app.isExperimentalMode(),
+					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
 			{ type: 'separator', id: 'slide-zoomin-break', orientation: 'vertical' },
 			{
@@ -650,20 +665,19 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 						'children': [
 							{
 								'id': 'home-grid-visible',
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _('Show Grid'),
 								'command': '.uno:GridVisible',
 								'accessibility': { focusBack: true, combination: 'GV', de: null }
 							},
 							{
 								'id': 'home-grid-use',
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _('Snap to Grid'),
 								'command': '.uno:GridUse',
 								'accessibility': { focusBack: true, combination: 'GU', de: null }
 							}
 						],
-						'vertical': 'true'
 					},
 				]
 			},
@@ -793,7 +807,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					{
 						'id': 'home-create-slide:NewSlideLayoutMenu',
 						'type': 'menubutton',
-						'applyCallback': () => { app.map.sendUnoCommand('.uno:InsertPage') },
+						'applyCallback': '.uno:InsertPage',
 						'text': _('New'),
 						'command': '.uno:InsertPage',
 						'accessibility': { focusBack: true, combination: 'CS', de: null }
@@ -1272,7 +1286,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 										'id': 'home-search-dialog',
 										'type': 'toolitem',
 										'text': _('Replace'),
-										'command': '.uno:SearchDialog',
+										'command': '.uno:SearchDialog?InitialFocusReplace:bool=true',
 										'accessibility': { focusBack: false, 	combination: 'FD',	de: null }
 									}
 								]
@@ -1723,7 +1737,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'children': [
 									{
 										'id': 'insert-vertical-text',
-										'type': 'toolitem',
+										'type': app.LOUtil.isFileODF(this.map) ? 'toolitem' : 'bigtoolitem',
 										'text': _UNO('.uno:VerticalText', 'presentation'),
 										'command': '.uno:VerticalText',
 										'accessibility': { focusBack: true, combination: 'VT', de: null }
@@ -1778,6 +1792,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'design-master-page-group',
 				'type': 'overflowgroup',
 				'name': _('Master Slide Templates'),
+				'nofold': true,
 				'icon': 'lc_masterslide.svg',
 				'children': [
 					{
@@ -1895,6 +1910,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 	},
 
 	getReviewTab: function() {
+		// Note: when adding track changes elements, consider this._map['wopi'].HideChangeTrackingControls
 		var content = [
 			{
 				'id': 'review-spell-dialog',

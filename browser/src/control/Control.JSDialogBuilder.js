@@ -272,7 +272,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			typeof object.id === 'number' || (typeof object.id === 'string' && object.id.length > 0),
 			'Trying to send command without valid id');
 
-		window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+		if (JSDialog.verbose) {
+			window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+		}
 
 		// if user does action - enter following own cursor mode
 		var viewId = builder.map && builder.map._docLayer ? builder.map._docLayer._getViewId() : -1;
@@ -587,11 +589,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {
 		var mainContainer = window.L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
-		if (data && data.id)
-			mainContainer.id = data.id;
-
-		if (data && data.name)
-			mainContainer.id = data.name; // use legacy panel id FIXME: convert all CSS and cypress to vcl id
+		if (data) {
+			if (data.name)
+				mainContainer.id = data.name; // use legacy panel id FIXME: convert all CSS and cypress to vcl id
+			else if (data.id)
+				mainContainer.id = data.id;
+		}
 
 		var sectionTitle = window.L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
@@ -911,91 +914,22 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		};
 	},
 
-	_rayCastingSensitivity: 10, // Pixels
-
-	_findFocusableParent: function(container, currentElement, element, arrowUp) {
-		if (!element)
-			return null;
-		else if (element.tagName === 'NAV' && arrowUp) {
-			return element;
-		}
-		else if (element.tabIndex === -1 || element.tagName == 'A') {
-			return this._findFocusableParent(container, currentElement, element.parentNode, arrowUp);
-		}
-		else if (container.contains(element) && currentElement !== element && !currentElement.contains(element) && !element.disabled) {
-			return element;
-		}
-		else
-			return null;
-	},
-
-	_rayCastToNextElement: function(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, arrowUp) {
-		let count = 0;
-		let foundElement;
-		while (count <= 60) {
-			count++;
-			startX += diffX;
-			startY += diffY;
-
-			foundElement = document.elementFromPoint(startX, startY);
-			foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-			if (foundElement) break;
-
-			// If we are here, we'll try secondary and tertiary rays.
-			if (diffX === 0) {
-				foundElement = document.elementFromPoint(boundingRectangle.left, startY);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-
-				foundElement = document.elementFromPoint(boundingRectangle.right, startY);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-			}
-			else if (diffY === 0) {
-				foundElement = document.elementFromPoint(startX, boundingRectangle.top);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-
-				foundElement = document.elementFromPoint(startX, boundingRectangle.bottom);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-			}
-		}
-
-		if (count === 60)
-			return null;
-		else
-			return foundElement;
-	},
-
-	_findNextElementInContainer: function(container, currentElement, direction) {
-		let boundingRectangle = currentElement.getBoundingClientRect();
-		let startX = boundingRectangle.left + (boundingRectangle.right - boundingRectangle.left) / 2;
-		let startY = boundingRectangle.top + (boundingRectangle.bottom - boundingRectangle.top) / 2;
-
-		let diffX = 0;
-		let diffY = 0;
-
-		if (direction === 'ArrowLeft' || direction === 'ArrowRight')
-			diffX = direction === 'ArrowRight' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
-
-		if (direction === 'ArrowUp' || direction === 'ArrowDown')
-			diffY = direction === 'ArrowDown' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
-
-		return this._rayCastToNextElement(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, direction === 'ArrowUp');
-	},
-
 	_tabsControlHandler: function(parentContainer, data, builder, tabTooltip) {
 		if (tabTooltip === undefined) {
 			tabTooltip = '';
 		}
+
+		var contentDivs = [];
+		var isMultiTabJSON = false;
+		var singleTabId = null;
+
 		if (data.tabs) {
 			var tabs = 0;
 			for (var tabIdx = 0; data.children && tabIdx < data.children.length; tabIdx++) {
 				if (data.children[tabIdx].type === 'tabpage' || data.vertical)
 					tabs++;
 			}
-			var isMultiTabJSON = tabs > 1;
+			isMultiTabJSON = tabs > 1;
 
 			var tabWidgetRootContainer = window.L.DomUtil.create('div', 'ui-tabs-root ' + builder.options.cssClass, parentContainer);
 			tabWidgetRootContainer.id = data.id;
@@ -1006,19 +940,25 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			var contentsContainer = window.L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass, tabWidgetRootContainer);
 
 			var tabs = [];
-			var contentDivs = [];
 			var tabIds = [];
-			var singleTabId = null;
 			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
 				var item = data.tabs[tabIdx];
+
+				var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
+				contentDiv.id = item.name;
+				contentDiv.setAttribute('role', 'tabpanel');
 
 				var title = builder._cleanText(item.text);
 
 				var tab = window.L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				// avoid duplicated ids: we receive plain number from core, append prefix
 				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
+
+				contentDiv.setAttribute('aria-labelledby', tab.id);
+
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
+				tab.setAttribute('aria-controls', contentDiv.id);
 				builder._addAriaLabel(tab, item, builder);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
@@ -1049,10 +989,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tabs[tabIdx] = tab;
 				tabIds[tabIdx] = item.name;
 
-				var contentDiv = window.L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
-				contentDiv.id = item.name;
-				contentDiv.setAttribute('role', 'tabpanel');
-
 				if (!isSelectedTab)
 					$(contentDiv).addClass('hidden');
 				contentDivs[tabIdx] = contentDiv;
@@ -1072,144 +1008,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					});
 				});
 
-				var isTabVisible = function (tab) {
-					return !$(tab).hasClass('hidden');
-				};
-
-				var findNextVisibleTab = function(tab, backwards) {
-					const currentIndex = tabs.indexOf(tab);
-					const diff = backwards ? -1 : 1;
-					const total = tabs.length;
-
-					for (let i = 1; i <= total; i++) {
-						const nextIndex = (currentIndex + diff * i + total) % total;
-						const nextTab = tabs[nextIndex];
-						if (isTabVisible(nextTab)) {
-							return nextTab;
-						}
-					}
-
-					// Fallback to current tab if no visible one is found (shouldn't happen)
-					return tab;
-				};
-
-				var moveFocusToPreviousTab = function(tab) {
-					const nextTab = findNextVisibleTab(tab, true);
-					nextTab.click();
-					nextTab.focus(); // Prevent document from taking focus
-				};
-
-				var moveFocusToNextTab = function(tab) {
-					const nextTab = findNextVisibleTab(tab, false);
-					nextTab.click();
-					nextTab.focus(); // Prevent document from taking focus
-				};
-
-				var moveFocusIntoTabPage = function(tab) {
-					var tabIdx = tabs.indexOf(tab);
-					var currentElement = contentDivs[tabIdx];
-
-					function findFirstFocusableElement(currentNode)
-					{
-						var currentChildNodes = currentNode.childNodes;
-
-						if (currentChildNodes.length <= 0) {
-							return null;
-						}
-
-						for (var childIndex = 0; childIndex < currentChildNodes.length; childIndex++) {
-							var currentChildNode = currentChildNodes[childIndex];
-
-							if (currentChildNode.tabIndex === undefined) {
-								return null;
-							}
-							if (currentChildNode.tabIndex === -1) {
-								var firstFocusableElement = findFirstFocusableElement(currentChildNode);
-
-								if (firstFocusableElement !== null) {
-									return firstFocusableElement;
-								}
-							}
-							else
-							{
-								var classListContainsInvalidClass = false;
-								if (currentChildNode.classList !== undefined) {
-									classListContainsInvalidClass = currentChildNode.classList.contains('hidden') ||
-																	currentChildNode.classList.contains('jsdialog-begin-marker') ||
-																	currentChildNode.classList.contains('jsdialog-end-marker');
-								}
-
-								if (!currentChildNode.disabled && !currentChildNode.hidden && !classListContainsInvalidClass) {
-									var firstFocusableChild = findFirstFocusableElement(currentChildNode);
-									if (firstFocusableChild === null) {
-										return currentChildNode;
-									}
-									else {
-										return firstFocusableChild;
-									}
-								}
-							}
-						}
-
-						return null;
-					}
-
-					var firstFocusableElement = findFirstFocusableElement(currentElement);
-
-					if (firstFocusableElement !== null) {
-						firstFocusableElement.focus();
-					}
-				};
-
-				// We are adding this to distinguish "enter" key from real click events.
-				tabs.forEach(function (tab)
-					{
-						tab.addEventListener('keydown', function(e) {
-							var currentTab = e.currentTarget;
-
-							switch (e.key) {
-							case 'ArrowLeft':
-								moveFocusToPreviousTab(currentTab);
-								break;
-
-							case 'ArrowRight':
-								moveFocusToNextTab(currentTab);
-								break;
-
-							case 'ArrowDown':
-								moveFocusIntoTabPage(currentTab);
-								break;
-
-							case 'Home':
-							{
-								var firstTab = tabs[0];
-								if (!isTabVisible(firstTab))
-									firstTab = findNextVisibleTab(firstTab, false);
-								firstTab.focus();
-								break;
-							}
-
-							case 'End':
-							{
-								var lastTab = tabs[tabs.length - 1];
-								if (!isTabVisible(lastTab))
-									lastTab = findNextVisibleTab(lastTab, true);
-								lastTab.focus();
-								break;
-							}
-
-							case 'Enter':
-							case ' ':
-								tab.enterPressed = true;
-								break;
-
-							case 'Escape':
-								builder.map.focus();
-								break;
-							}
-						});
-					}
-				);
+				// Initialize keyboard navigation for tabs
+				JSDialog.KeyboardTabNavigation(tabs, contentDivs);
 			} else {
 				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
@@ -1226,7 +1026,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				builder.build(contentDivs[tabId], [tab], false, false);
 				tabId++;
 			}
-		} else {
+		} else if (singleTabId != null) {
 			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
 				var tab = data.children[tabIdx];
 
@@ -1238,7 +1038,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 		}
 
-		if (data.tabs && data.parent.id === 'NotebookBar') {
+		if (data.tabs && data.isNotebookbar) {
 			let that = this;
 			contentDivs.forEach(function(tabPage)
 			{
@@ -1256,7 +1056,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							if (e.key === 'Tab')
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
-							let elementToFocus = this._findNextElementInContainer(container[0], currentElement, key);
+							let elementToFocus = JSDialog.FindNextElementInContainer(container[0], currentElement, key);
 							if (elementToFocus && elementToFocus.tagName !== 'NAV')
 								elementToFocus.focus();
 							else if (elementToFocus)
@@ -1526,6 +1326,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var wrapper = window.L.DomUtil.create('div', wrapperClass + ' ui-pushbutton-wrapper ' + builder.options.cssClass, parentContainer); // need for locking overlay
 		wrapper.id = data.id;
 		var pushbutton = window.L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
+		pushbutton.id = wrapper.id + '-button';
 		pushbutton.setAttribute('tabindex', '0');
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
@@ -1773,7 +1574,25 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
 
+		const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'METER', 'OUTPUT', 'PROGRESS'];
+
+		const updateLabelForAttribute = function(label, labelledControl) {
+			if (labelledControl.hasAttribute('aria-labelledby')) {
+				label.removeAttribute('for');
+			} else if (!labelableElements.includes(labelledControl.nodeName)
+				|| (labelledControl.nodeName === 'INPUT' && labelledControl.type === 'hidden')) {
+				// Use 'aria-labelledby' instead of 'for' for non-labelable elements
+				labelledControl.setAttribute('aria-labelledby', label.id);
+				label.removeAttribute('for');
+			} else {
+				label.htmlFor = labelledControl.id;
+			}
+		};
+
 		app.layoutingService.appendLayoutingTask(function () {
+			if (!data.labelFor)
+				return;
+
 			var labelledControl = document.getElementById(data.labelFor);
 			if (labelledControl) {
 				var target = labelledControl;
@@ -1786,6 +1605,18 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 				builder._setAccessKey(target, accKey);
 			}
+
+			// we need to schedule it again as some elements are not yet available
+			// i.e. pop-ups: Double click on Chart->Sidebar->Colors
+			app.layoutingService.appendLayoutingTask(function () {
+				var targetElement = document.getElementById(data.labelFor + '-input-' + builder.options.suffix)
+					|| document.getElementById(data.labelFor + '-input')
+					|| document.getElementById(data.labelFor);
+
+				// Reference label to target element correctly
+				if (targetElement)
+					updateLabelForAttribute(fixedtext, targetElement);
+			});
 		});
 
 		fixedtext.id = data.id;
@@ -1986,16 +1817,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		}
 	},
 
-	// make a class identifier from parent's id by walking up the tree
-	_getParentId : function(it) {
-		while (it.parent && !it.id)
-			it = it.parent;
-		if (it && it.id)
-			return '-' + it.id;
-		else
-			return '';
-	},
-
 	_addAriaLabel(element, data, builder) {
 		if (data.aria)
 			element.setAttribute('aria-label', data.aria.label);
@@ -2038,10 +1859,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var controls = {};
 
-		let div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+		let div = window.L.DomUtil.create('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		controls['container'] = div;
-		div.tabIndex = -1;
+		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
+
+		if(data.index)
+			div.setAttribute('index', data.index);
+
 		if (data.class)
 			div.classList.add(data.class);
 
@@ -2067,6 +1892,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			hasImage = false;
 		}
 
+		const itemsToSyncWithContainer = [];
+
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command.replace('.uno:', '') : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
@@ -2090,9 +1917,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			var buttonId = id + '-button';
 
 			button = window.L.DomUtil.create('button', 'ui-content unobutton', div);
+			if(div.tabIndex == 0)
+				button.tabIndex = -1; // prevent button from taking focus since container div itself is focusable element
 			button.id = buttonId;
 
-			JSDialog.SynchronizeDisabledState(div, [button]);
+			itemsToSyncWithContainer.push(button);
 
 			builder._addAriaLabel(button, data, builder);
 
@@ -2267,6 +2096,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 				};
 			}
+			itemsToSyncWithContainer.push(arrowbackground);
 		}
 
 		if (arrowbackground) {
@@ -2285,6 +2115,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 		}
 
+		JSDialog.SynchronizeDisabledState(div, itemsToSyncWithContainer);
 		div._onDropDown = function(open) {
 			// Only set aria-expanded on the button if the arrow is not interactive
 			if (!isArrowInteractive)
@@ -2632,18 +2463,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		builder._explorableMenu(parentContainer, title, data.children, builder, content, data.id);
 	},
 
-	// link each node to its parent, should do one recursive descent
-	_parentize: function(data, parent) {
-		if (data.parent)
-			return;
-		if (data.children !== undefined) {
-			for (var idx in data.children) {
-				this._parentize(data.children[idx], data);
-			}
-		}
-		data.parent = parent;
-	},
-
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
 		app.layoutingService.appendLayoutingTask(() => { this.executeActionImpl(container, data); });
@@ -2787,7 +2606,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_removeMenuId: function (rawId) {
 		var elementId = rawId;
-		var separatorPos = elementId.indexOf(':'); // delete menuId
+		var separatorPos = elementId ? elementId.indexOf(':') : 0; // delete menuId
 		if (separatorPos > 0)
 			elementId = elementId.substr(0, separatorPos);
 		return elementId;
@@ -2947,7 +2766,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
-			this._parentize(childData);
 			var processChildren = true;
 
 			if ((childData.id === undefined || childData.id === '' || childData.id === null)

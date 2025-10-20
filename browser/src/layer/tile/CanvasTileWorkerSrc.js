@@ -15,7 +15,10 @@
 
 if ('undefined' === typeof window) {
 	self.L = {};
-	importScripts('CanvasTileUtils.js');
+
+	importScripts(
+		'%SERVICE_ROOT%/browser/%VERSION%/src/layer/tile/CanvasTileUtils.js',
+	);
 
 	let tileImageCache = new Map(); // Map<string, Uint8Array>
 

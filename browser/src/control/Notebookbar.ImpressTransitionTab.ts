@@ -35,9 +35,20 @@ class ImpressTransitionTab implements NotebookbarTab {
 	public getContent(): NotebookbarTabContent {
 		const content = [
 			{
-				id: 'transitions_icons',
-				type: 'iconview',
-			} as IconViewJSON,
+				id: 'transitions-group',
+				type: 'overflowgroup',
+				nofold: true,
+				name: _('Transitions'),
+				children: [
+					{
+						id: 'transitions_icons',
+						type: 'iconview',
+						entries: [...Array(29).keys()].map((n: number) => {
+							return { ondemand: true, selected: false, row: n };
+						}),
+					} as IconViewJSON,
+				],
+			} as OverflowGroupWidgetJSON,
 			{
 				id: 'transitions-icons-separator',
 				type: 'separator',

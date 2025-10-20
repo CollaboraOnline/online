@@ -20,13 +20,16 @@
 
 #include <emscripten/fetch.h>
 
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <memory>
+
 int coolwsd_server_socket_fd = -1;
 
-const char* user_name;
-
-#define FILE_PATH "/sample.docx"
-static std::string fileURL = "file://" FILE_PATH;
-static COOLWSD *coolwsd = nullptr;
+static char const * tempFile; // null when operating on a local file in the Emscripten file system
+static std::string remoteUrl;
+static std::string fileURL;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
 
@@ -147,65 +150,60 @@ void handle_cool_message(const char *string_value)
     }
 }
 
-void readWASMFile(emscripten::val& contentArray, size_t nRead, const std::vector<char>& filebuf)
-{
-    emscripten::val fileContentView = emscripten::val(emscripten::typed_memory_view(
-        nRead,
-        filebuf.data()));
-    emscripten::val fileContentCopy = emscripten::val::global("ArrayBuffer").new_(nRead);
-    emscripten::val fileContentCopyView = emscripten::val::global("Uint8Array").new_(fileContentCopy);
-    fileContentCopyView.call<void>("set", fileContentView);
-    contentArray.call<void>("push", fileContentCopyView);
+namespace {
+struct FileClose {
+    void operator ()(FILE * f) { std::fclose(f); }
+};
 }
 
-void writeWASMFile(emscripten::val& contentArray, const std::string& rFileName)
-{
-    emscripten::val document = emscripten::val::global("document");
-    emscripten::val window = emscripten::val::global("window");
-    emscripten::val type = emscripten::val::object();
-    type.set("type","application/octet-stream");
-    emscripten::val contentBlob = emscripten::val::global("Blob").new_(contentArray, type);
-    emscripten::val contentUrl = window["URL"].call<emscripten::val>("createObjectURL", contentBlob);
-    emscripten::val contentLink = document.call<emscripten::val>("createElement", std::string("a"));
-    contentLink.set("href", contentUrl);
-    contentLink.set("download", rFileName);
-    contentLink.set("style", "display:none");
-    emscripten::val body = document["body"];
-    body.call<void>("appendChild", contentLink);
-    contentLink.call<void>("click");
-    body.call<void>("removeChild", contentLink);
-    window["URL"].call<emscripten::val>("revokeObjectURL", contentUrl);
-}
-
-// Copy file from online to WASM memory
-void copyFileBufferToWasmMemory(const std::string& fileName, const std::vector<char>& filebuf)
-{
-    EM_ASM(
-        {
-            FS.writeFile(UTF8ToString($0), new Uint8Array(Module.HEAPU8.buffer, $1, $2));
-        }, fileName.c_str(), filebuf.data(), filebuf.size());
-}
-
-/// Close the document.
-void closeDocument()
-{
-    // Close one end of the socket pair, that will wake up the forwarding thread that was constructed in HULLO
-    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
-
-    LOG_DBG("Waiting for COOLWSD to finish...");
-    std::unique_lock<std::mutex> lock(COOLWSD::lokit_main_mutex);
-    LOG_DBG("COOLWSD has finished.");
+void saveToServer() {
+    if (tempFile == nullptr) {
+        return;
+    }
+    long n;
+    std::unique_ptr<char[]> buf;
+    {
+        auto const f = std::unique_ptr<FILE, FileClose>(std::fopen(tempFile, "r"));
+        if (f.get() == nullptr) {
+            LOG_WRN("Failed to open " << tempFile << " for reading"); //TODO
+            return;
+        }
+        int e = std::fseek(f.get(), 0, SEEK_END);
+        if (e != 0) {
+            LOG_WRN("Failed to seek in " << tempFile); //TODO
+            return;
+        }
+        n = std::ftell(f.get());
+        if (n == -1) {
+            LOG_WRN("Failed to get size of " << tempFile); //TODO
+            return;
+        }
+        buf = std::make_unique<char[]>(n);
+        std::rewind(f.get());
+        std::size_t n2 = std::fread(buf.get(), 1, n, f.get());
+        assert(n >= 0);
+        if (n2 != static_cast<unsigned long>(n)) {
+            LOG_WRN("Failed to get read " << tempFile); //TODO
+            return;
+        }
+    }
+    emscripten_fetch_attr_t attr;
+    emscripten_fetch_attr_init(&attr);
+    strcpy(attr.requestMethod, "POST");
+    attr.attributes = EMSCRIPTEN_FETCH_SYNCHRONOUS; //TODO: make this asynchronous
+    attr.requestData = buf.get();
+    attr.requestDataSize = n;
+    emscripten_fetch_t * fetch = emscripten_fetch(&attr, remoteUrl.c_str());
+    emscripten_fetch_close(fetch);
+    LOG_TRC("Saved " << tempFile << " back to <" << remoteUrl << ">: " << fetch->status);
+    //TODO: handle fetch->status != 200
 }
 
 int main(int argc, char* argv_main[])
 {
     std::cout << "================ Here is main()" << std::endl;
 
-    if (argc < 2)
-    {
-        std::cout << "Error: expected argument with document URL not found" << std::endl;
-        return 1;
-    }
+    assert(argc == 3);
 
     Log::initialize("WASM", "error", false, false, {}, false, {});
     Util::setThreadName("main");
@@ -227,44 +225,50 @@ int main(int argc, char* argv_main[])
         {
             Util::setThreadName("COOLWSD::run");
 
-            if ((false)) { //TODO: clarify which configuration wants to use this
-                const std::string docURL = std::string(argv_main[1]);
-                const std::string encodedWOPI = std::string(argv_main[2]);
-                const std::string isWOPI = std::string(argv_main[3]);
+            const std::string docKind = std::string(argv_main[1]);
+            const std::string docDesc = std::string(argv_main[2]);
 
-                std::string url;
-                if (isWOPI == "true")
-                    url = "/wasm/" + encodedWOPI;
-                else
-                    url = docURL + "/contents";
+            if (docKind == "server")
+            {
+                remoteUrl = "/wasm/" + docDesc;
 
-                printf("isWOPI is %s: Fetching from url %s\n", isWOPI.c_str(), url.c_str());
+                printf("Fetching from url %s\n", remoteUrl.c_str());
 
                 emscripten_fetch_attr_t attr;
                 emscripten_fetch_attr_init(&attr);
                 strcpy(attr.requestMethod, "GET");
                 attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
                 emscripten_fetch_t* fetch = emscripten_fetch(
-                    &attr, url.data()); // Blocks here until the operation is complete.
+                    &attr, remoteUrl.data()); // Blocks here until the operation is complete.
                 if (fetch->status == 200)
                 {
                     printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
                            fetch->url);
-                    // For now, we have a hard-coded filename that we open. Clobber it.
-                    FILE* f = fopen(FILE_PATH, "w");
+                    tempFile = "/tempdoc";
+                    FILE* f = fopen(tempFile, "w");
                     const int wrote = fwrite(fetch->data, 1, fetch->numBytes, f);
                     fclose(f);
-                    printf("Wrote %d bytes into " FILE_PATH "\n", wrote);
+                    printf("Wrote %d bytes into %s\n", wrote, tempFile);
+                    fileURL = std::string("file://") + tempFile;
                 }
                 else
                 {
                     printf("Downloading %s failed, HTTP failure status code: %d.\n", fetch->url,
                            fetch->status);
+                    std::exit(EXIT_FAILURE); //TODO: error handling
                 }
                 emscripten_fetch_close(fetch);
             }
+            else if (docKind == "local")
+            {
+                fileURL = docDesc;
+            }
+            else
+            {
+                assert(false);
+            }
 
-            coolwsd = new COOLWSD();
+            COOLWSD *coolwsd = new COOLWSD();
             coolwsd->run(1, argv);
             delete coolwsd;
         })

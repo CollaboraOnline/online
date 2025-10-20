@@ -62,12 +62,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.realPress('Space');
 		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.class', 'selected');
 
-		// check that now the whole widget is no more focusable and
-		// that the next focusable element is the selected entry
+		// check that now the whole widget is no more focusable and tab-indexes are restored and
+		// that the next focusable element is the first entry
 		cy.cGet('#link_btn_2').click();
 		helper.assertFocus('id','link_btn_2');
 		cy.realPress('Tab');
-		cy.cGet('#contenttree .ui-treeview-entry:nth-child(3)').should('have.focus');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(1)').should('have.focus');
 		cy.cGet('#contenttree').should('not.have.attr', 'tabindex');
 	});
 

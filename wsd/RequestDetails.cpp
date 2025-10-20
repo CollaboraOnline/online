@@ -66,9 +66,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     _uriString = request.getURI().substr(serviceRoot.length());
     dehexify();
     request.setURI(_uriString);
-    const std::string &method = request.getMethod();
-    _isGet = method == "GET";
-    _isHead = method == "HEAD";
+    _method = stringToMethod(request.getMethod());
     auto it = request.find("ProxyPrefix");
     _isProxy = it != request.end();
     if (_isProxy)
@@ -93,9 +91,7 @@ RequestDetails::RequestDetails(http::RequestParser& request, const std::string& 
     _uriString = request.getUrl().substr(serviceRoot.length());
     dehexify();
     request.setUrl(_uriString);
-    const std::string& method = request.getVerb();
-    _isGet = method == "GET";
-    _isHead = method == "HEAD";
+    _method = stringToMethod(request.getVerb());
     _isProxy = request.has("ProxyPrefix");
     if (_isProxy)
         _proxyPrefix = request.get("ProxyPrefix");
@@ -110,8 +106,7 @@ RequestDetails::RequestDetails(http::RequestParser& request, const std::string& 
 }
 
 RequestDetails::RequestDetails(const std::string &mobileURI)
-    : _isGet(true)
-    , _isHead(false)
+    : _method(Method::GET)
     , _isProxy(false)
     , _isWebSocket(false)
     , _closeConnection(false)
@@ -123,8 +118,7 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
 
 RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std::string>& options,
                                const std::string& compat)
-    : _isGet(true)
-    , _isHead(false)
+    : _method(Method::GET)
     , _isProxy(false)
     , _isWebSocket(false)
     , _closeConnection(false)
@@ -155,6 +149,18 @@ RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std
     _uriString = oss.str();
 
     processURI();
+}
+
+RequestDetails::Method RequestDetails::stringToMethod(std::string const & method) {
+    if (method == "GET") {
+        return Method::GET;
+    } else if (method == "HEAD") {
+        return Method::HEAD;
+    } else if (method == "POST") {
+        return Method::POST;
+    } else {
+        return Method::unknown;
+    }
 }
 
 void RequestDetails::dehexify()
@@ -226,35 +232,12 @@ void RequestDetails::processURI()
     // DocumentURI is the second segment in cool URIs.
     if (_pathSegs.equals(0, "cool") || _pathSegs.equals(0, "wasm"))
     {
-        //FIXME: For historic reasons the DocumentURI includes the WOPISrc.
-        // This is problematic because decoding a URI that embeds not one, but
-        // *two* encoded URIs within it is bound to produce an invalid URI.
-        // Potentially three '?' might exist in the result (after decoding).
-        std::size_t end = uriRes.rfind("/ws?");
-        if (end != std::string::npos)
-        {
-            // Until the end of the WOPISrc.
-            // e.g. <encoded-document-URI+options>/ws?WOPISrc=<encoded-document-URI>&compat=
-            end = uriRes.find_first_of("/?", end + 4, 2); // Start searching after '/ws?'.
-        }
-        else
-        {
-            end = (posLastWS != std::string::npos ? posLastWS : uriRes.find('/'));
-            if (end == std::string::npos)
-                end = uriRes.find('?'); // e.g. /cool/clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_empty.ods...
-        }
-
-        const std::string docUri = uriRes.substr(0, end);
-
-        _fields[Field::LegacyDocumentURI] = Uri::decode(docUri);
-
         // Find the DocumentURI proper.
-        end = uriRes.find_first_of("/?", 0, 2);
+        std::size_t end = uriRes.find_first_of("/?", 0, 2);
         _fields[Field::DocumentURI] = Uri::decode(uriRes.substr(0, end));
     }
     else // Otherwise, it's the full URI.
     {
-        _fields[Field::LegacyDocumentURI] = _uriString;
         _fields[Field::DocumentURI] = _uriString;
     }
 

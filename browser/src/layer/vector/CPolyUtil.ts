@@ -1,5 +1,14 @@
-// @ts-strict-ignore
 /* -*- js-indent-level: 8 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+// @ts-strict-ignore
 
 /*
  * CPolyUtil contains utility functions for polygons.
@@ -12,41 +21,40 @@ namespace CPolyUtil {
 		   Machine Intelligence and Pattern Recognition. Vol. 6. North-Holland, 1988. 97-104.
 		   http://www.science.smith.edu/~jorourke/Papers/OrthoConnect.pdf
 		*/
-		var eps = 20;
-		// Glue rectangles if the space between them is less then eps
-		for (var i = 0; i < rectangles.length - 1; i++) {
-			for (var j = i + 1; j < rectangles.length; j++) {
-				for (var k = 0; k < rectangles[i].length; k++) {
-					for (var l = 0; l < rectangles[j].length; l++) {
-						if (Math.abs(rectangles[i][k].x - rectangles[j][l].x) < eps) {
-							rectangles[j][l].x = rectangles[i][k].x;
-						}
-						if (Math.abs(rectangles[i][k].y - rectangles[j][l].y) < eps) {
-							rectangles[j][l].y = rectangles[i][k].y;
-						}
-					}
-				}
+		// Helper function for sorted array insert.
+		function sortedIndex(array: Array<cool.Point>, value: cool.Point, compare: (a: cool.Point, b: cool.Point) => number) : number {
+			let low = 0;
+			let high = array.length;
+			while (low < high) {
+				const mid = (low + high) >>> 1;
+				if (compare(value, array[mid]) > 0) low = mid + 1;
+				else high = mid;
+			}
+			return low;
+		}
+
+		// Glue rectangles if the space between them is less than eps
+		const eps = 20;
+		const pointsX = new Array<cool.Point>();
+		const pointsY = new Array<cool.Point>();
+		for (let i = 0; i < rectangles.length; i++) {
+			for (let j = 0; j < rectangles[i].length; j++) {
+				pointsX.splice(sortedIndex(pointsX, rectangles[i][j], (a, b) => a.x - b.x), 0, rectangles[i][j]);
+				pointsY.splice(sortedIndex(pointsY, rectangles[i][j], (a, b) => a.y - b.y), 0, rectangles[i][j]);
 			}
 		}
 
-		var points = new Map<cool.Point, cool.Point>();
-		for (i = 0; i < rectangles.length; i++) {
-			for (j = 0; j < rectangles[i].length; j++) {
-				if (points.has(rectangles[i][j])) {
-					points.delete(rectangles[i][j]);
-				}
-				else {
-					points.set(rectangles[i][j], rectangles[i][j]);
-				}
-			}
-		}
-
-		function getKeys(points: Map<cool.Point, cool.Point>): Array<cool.Point> {
-			var keys: Array<cool.Point> = [];
-			points.forEach((_: cool.Point, key: cool.Point) => {
-				keys.push(key);
-			});
-			return keys;
+		let lastPointX = 0;
+		let lastPointY = 0;
+		for (let i = 1; i < pointsX.length; ++i) {
+			if (Math.abs(pointsX[lastPointX].x - pointsX[i].x) < eps)
+				pointsX[i].x = pointsX[lastPointX].x;
+			else
+				lastPointX = i;
+			if (Math.abs(pointsY[lastPointY].y - pointsY[i].y) < eps)
+				pointsY[i].y = pointsY[lastPointY].y;
+			else
+				lastPointY = i;
 		}
 
 		// cool.Point comparison function for sorting a list of CPoints w.r.t x-coordinate.
@@ -78,17 +86,23 @@ namespace CPolyUtil {
 			}
 		}
 
-		var sortX = getKeys(points).sort(xThenY);
-		var sortY = getKeys(points).sort(yThenX);
+		// Collect points and horizontal and vertical edges.
+		const points = new Set<cool.Point>();
+		for (const point of pointsX)
+			if (!points.delete(point))
+				points.add(point);
+
+		var sortX = Array.from(points.values()).sort(xThenY);
+		var sortY = Array.from(points.values()).sort(yThenX);
 
 		var edgesH = new Map<cool.Point, cool.Point>();
 		var edgesV = new Map<cool.Point, cool.Point>();
 
-		var len = getKeys(points).length;
-		i = 0;
+		var len = points.size;
+		let i = 0;
 		while (i < len) {
-			var currY = points.get(sortY[i]).y;
-			while (i < len && points.get(sortY[i]).y === currY) {
+			var currY = sortY[i].y;
+			while (i < len && sortY[i].y === currY) {
 				edgesH.set(sortY[i], sortY[i + 1]);
 				edgesH.set(sortY[i + 1], sortY[i]);
 				i += 2;
@@ -97,8 +111,8 @@ namespace CPolyUtil {
 
 		i = 0;
 		while (i < len) {
-			var currX = points.get(sortX[i]).x;
-			while (i < len && points.get(sortX[i]).x === currX) {
+			var currX = sortX[i].x;
+			while (i < len && sortX[i].x === currX) {
 				edgesV.set(sortX[i], sortX[i + 1]);
 				edgesV.set(sortX[i + 1], sortX[i]);
 				i += 2;
@@ -106,10 +120,9 @@ namespace CPolyUtil {
 		}
 
 		var polygons = new Array<CPointSet>();
-		var edgesHKeys = getKeys(edgesH);
 
-		while (edgesHKeys.length > 0) {
-			var p: Array<[cool.Point, number]> = [[edgesHKeys[0], 0]];
+		while (edgesH.size > 0) {
+			var p: Array<[cool.Point, number]> = [[edgesH.keys().next().value, 0]];
 			while (true) {
 				var curr = p[p.length - 1][0];
 				var e = p[p.length - 1][1];
@@ -130,12 +143,11 @@ namespace CPolyUtil {
 			}
 			var polygon = new Array<cool.Point>();
 			for (i = 0; i < p.length; i++) {
-				polygon.push(unitConverter(points.get(p[i][0])));
+				polygon.push(unitConverter(p[i][0]));
 				edgesH.delete(p[i][0]);
 				edgesV.delete(p[i][0]);
 			}
-			polygon.push(unitConverter(points.get(p[0][0])));
-			edgesHKeys = getKeys(edgesH);
+			polygon.push(unitConverter(p[0][0]));
 			polygons.push(CPointSet.fromPointArray(polygon));
 		}
 		return CPointSet.fromSetArray(polygons);
