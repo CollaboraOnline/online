@@ -1,0 +1,30 @@
+How to add a new test suite?
+
+Lets take the example of ViewLayout test suite.
++ Create ViewLayout.test.ts
++ Add license header
++ Add the root level describe:
+
+    describe('ViewLayout', function() {
+
+        // Write all tests inside this block.
+
+    });
+
++ Write all test code inside the root level describe function block.
+
++ Pull in all the necessary typescript source code in ** sources.ts ** for which the tests are written.
+
+    /// <reference path="../src/app/ViewLayout.ts" />
+    /// <reference path="../src/app/ViewLayoutMultiPage.ts" />
+    /// <reference path="../src/app/LayoutingService.ts" />
+
++ Finally add reference the test file ViewLayout.test.ts in ** main.ts **
+
+    /// <reference path="./ViewLayout.test.ts" />
+
+
+Now to run this newly created test suite, run from browser/ dir:
+
+$ touch mocha_tests/main.ts && make build-tests && npm run test-single ViewLayout
+
