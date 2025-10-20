@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+describe('ViewLayout', function() {
+
 var jsdom = require('jsdom');
 var assert = require('assert').strict;
 var _ = function(text: string) { return text; };
@@ -44,4 +46,6 @@ describe('View Layout Tests', function () {
         panDirection = viewLayout.getLastPanDirection();
         assert.ok(panDirection[0] === -1 && panDirection[1] === -1);
 	});
+});
+
 });

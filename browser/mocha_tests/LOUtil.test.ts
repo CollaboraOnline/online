@@ -11,7 +11,7 @@
 
 var assert = require('assert').strict;
 
-describe('LOUtil static class members', function () {
+describe('LOUtil', function () {
 
 	describe('stringToBounds()', function () {
 		it('parse from string with separaters and whitespaces', function () {

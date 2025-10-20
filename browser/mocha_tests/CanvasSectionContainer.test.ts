@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+describe('CanvasSectionContainer', function() {
+
 var jsdom = require('jsdom');
 var assert = require('assert').strict;
 
@@ -289,4 +291,5 @@ describe('Horizontally packed two section container with -left layout', function
                 height: canvasHeight - originY
             });
     });
+});
 });
