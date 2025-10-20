@@ -67,6 +67,7 @@
 		BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */; };
 		BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF5CE8E2D633CE60006FD77 /* discovery.xml */; };
 		BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF6F02C2DD1EC0200EA06BF /* RegexUtil.cpp */; };
+		BEF881392EA62DBF0080A631 /* dumpWsdState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF881382EA62DBF0080A631 /* dumpWsdState.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		BEF5CE8E2D633CE60006FD77 /* discovery.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
 		BEF6F02B2DD1EC0200EA06BF /* RegexUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RegexUtil.hpp; path = ../../../../common/RegexUtil.hpp; sourceTree = "<group>"; };
 		BEF6F02C2DD1EC0200EA06BF /* RegexUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RegexUtil.cpp; path = ../../../../common/RegexUtil.cpp; sourceTree = "<group>"; };
+		BEF881382EA62DBF0080A631 /* dumpWsdState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dumpWsdState.cpp; path = /Users/kendy/Projects/collabora/online/wsd/dumpWsdState.cpp; sourceTree = "<absolute>"; };
 		BEFC03182D64986E009FF7B8 /* Kit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Kit.hpp; path = ../../../../kit/Kit.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +361,7 @@
 				BEA264A62CBE99340007435A /* COOLWSD.cpp */,
 				BE4C62272D59EBAC00047DF2 /* DocumentBroker.hpp */,
 				BEA264A72CBE99340007435A /* DocumentBroker.cpp */,
+				BEF881382EA62DBF0080A631 /* dumpWsdState.cpp */,
 				BEA264A82CBE99340007435A /* RequestDetails.hpp */,
 				BEA264A92CBE99340007435A /* RequestDetails.cpp */,
 				BE44ACD82D7F089200BFA3B2 /* RequestVettingStation.hpp */,
@@ -601,6 +604,7 @@
 				BE5FDE372DAD3DCF00C48DB2 /* LogUI.cpp in Sources */,
 				BEA263742CBE38E20007435A /* TraceEvent.cpp in Sources */,
 				BE44ACD12D7F073000BFA3B2 /* Unit-mobile.cpp in Sources */,
+				BEF881392EA62DBF0080A631 /* dumpWsdState.cpp in Sources */,
 				BEA264A12CBE98CD0007435A /* Socket.cpp in Sources */,
 				BE9115B02CECBECF00C597B2 /* Util-unix.cpp in Sources */,
 				BE4C620E2D59E85500047DF2 /* MobileApp.cpp in Sources */,
