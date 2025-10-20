@@ -235,11 +235,13 @@ class GraphicSelection {
 		}
 
 		// video is handled in _onEmbeddedVideoContent
-		if (this.handlesSection && this.handlesSection.sectionProperties.hasVideo)
-			app.map._cacheSVG[extraInfo.id] = undefined;
-		else if (this.handlesSection) this.handlesSection.setSVG(textMsg);
+		if (this.handlesSection) {
+			if (this.handlesSection.sectionProperties.hasVideo)
+				app.map._cacheSVG[extraInfo.id] = undefined;
+			else this.handlesSection.setSVG(textMsg);
 
-		this.handlesSection.interactable = true;
+			this.handlesSection.interactable = true;
+		}
 	}
 
 	public static onMessage(textMsg: string) {
