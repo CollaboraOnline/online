@@ -12,8 +12,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 
 	it('Delete Text', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.leaflet-layer').dblclick('center');
+		cy.cGet('#document-container').dblclick('center');
 		cy.cGet('#document-container svg g').should('exist');
+		cy.wait(500);
 		helper.typeIntoDocument('text');
 		helper.selectAllText();
 		helper.copy();

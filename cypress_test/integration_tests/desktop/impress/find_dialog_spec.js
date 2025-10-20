@@ -27,7 +27,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 	});
 
 	it('Search not existing word.', function() {
-		cy.cGet('.leaflet-layer').dblclick('center');
+		cy.cGet('#document-container').dblclick('center');
 		helper.selectAllText();
 		helper.textSelectionShouldExist();
 
