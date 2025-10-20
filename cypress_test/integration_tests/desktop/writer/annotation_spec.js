@@ -158,6 +158,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Autosave Collapse', function() {
+		selectZoomLevel('100', false);
 		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
