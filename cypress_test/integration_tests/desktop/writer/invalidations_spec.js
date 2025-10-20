@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 			// Click in header area (there is no actual header, We are testing that nothing
 			// happens if there is no header in the document)
-			cy.cGet('.leaflet-layer').click(200, 50);
+			cy.cGet('#document-container').click(200, 50);
 
 			// Wait until we have round trip of selection of 'X' and tile updates will have arrived.
 			writerHelper.selectAllTextOfDoc();
@@ -59,7 +59,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			const beforeCount = $before.text();
 
 			// click in header area
-			cy.cGet('.leaflet-layer').click(200, 50);
+			cy.cGet('#document-container').click(200, 50);
 
 			// verify the content is 'YY'
 			writerHelper.selectAllTextOfDoc();
@@ -75,7 +75,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			const beforeCount = $before.text();
 
 			// click in main document
-			cy.cGet('.leaflet-layer').click(200, 400);
+			cy.cGet('#document-container').click(200, 400);
 
 			// verify the content is 'X'
 			writerHelper.selectAllTextOfDoc();

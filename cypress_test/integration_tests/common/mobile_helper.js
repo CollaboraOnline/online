@@ -342,16 +342,12 @@ function insertImage() {
 function deleteImage() {
 	cy.log('>> deleteImage - start');
 
-	var eventOptions = {
-		force: true,
-		button: 0,
-		pointerType: 'mouse'
-	};
-
-	cy.cGet('.leaflet-layer')
-		.trigger('pointerdown', eventOptions)
-		.wait(500) // Wait for long press
-		.trigger('pointerup', eventOptions);
+	cy.cGet('#document-container').then(function(items) {
+		const boundingRect = items[0].getBoundingClientRect();
+		const x = boundingRect.left + boundingRect.width / 2;
+		const y = boundingRect.top + boundingRect.height / 2;
+		cy.cGet('#document-container').rightclick(x, y);
+	});
 
 	cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 		.should('be.visible').click();

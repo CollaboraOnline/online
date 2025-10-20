@@ -28,7 +28,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	}
 	it('Scrolling to bottom/top', function() {
 		//show vertical scrollbar
-		cy.cGet('.leaflet-layer').click('right');
+		cy.cGet('#document-container').click('right');
 		cy.wait(1000);
 		clickOnTheCenter();
 		desktopHelper.pressKey(15,'uparrow');
@@ -39,7 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	it('Scrolling to left/right', function() {
 		//show horizontal scrollbar
-		cy.cGet('.leaflet-layer').click('bottom');
+		cy.cGet('#document-container').click('bottom');
 		cy.wait(500);
 		clickOnTheCenter();
 		cy.wait(500);
