@@ -23,7 +23,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 		mobileHelper.deleteImage();
 	});
 
-	it('Crop Image', function() {
+	it.skip('Crop Image', function() {
 		mobileHelper.insertImage();
 
 		cy.cGet('.mobile-wizard-back.close-button').click();

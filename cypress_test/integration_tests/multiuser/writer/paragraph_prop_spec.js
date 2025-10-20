@@ -11,7 +11,7 @@ describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
 	it('Change paragraph alignment.', function() {
 		cy.cSetActiveFrame('#iframe1');
 		//user 1 change the paragraph alignment
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		cy.cGet('#rightpara').click();
 
 		helper.selectAllText();
@@ -21,14 +21,14 @@ describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
 
 		//assert for user-2
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 
 		helper.selectAllText();
 
 		cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'right');
 
 		//user-2 changes alignment to left
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		cy.cGet('#leftpara').click();
 
 		helper.selectAllText();

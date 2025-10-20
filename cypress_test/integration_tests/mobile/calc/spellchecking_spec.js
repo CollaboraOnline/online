@@ -15,13 +15,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.',
 
 	function openContextMenu() {
 		// Click and then long press on first cell
-		cy.cGet('#map')
+		cy.cGet('#document-canvas')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(1);
-				var XPos = items[0].getBoundingClientRect().left + 10;
-				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.cGet('body').click(XPos, YPos);
-				mobileHelper.longPressOnDocument(XPos, YPos);
+				var XPos = items[0].getBoundingClientRect().left + 60;
+				var YPos = items[0].getBoundingClientRect().top + 30;
+				cy.cGet('body').rightclick(XPos, YPos);
 			});
 
 		cy.cGet('#mobile-wizard-content').should('be.visible');
