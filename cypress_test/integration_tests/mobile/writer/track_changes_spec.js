@@ -62,7 +62,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 		//if we don't wait , the test will fail in CLI
 		cy.wait(400);
 		confirmChange('Reject All');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		helper.selectAllText();
 		helper.copy();
 		helper.expectTextForClipboard('Hello World');

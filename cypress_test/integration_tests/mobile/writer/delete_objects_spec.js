@@ -5,12 +5,6 @@ var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
 
-	var eventOptions = {
-		force: true,
-		button: 0,
-		pointerType: 'mouse'
-	};
-
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/delete_objects.odt');
 
@@ -40,10 +34,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			});
 
 		//deletion
-		cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+		cy.cGet('#document-container').then(function(item) {
+			const boundingRectangle = item[0].getBoundingClientRect();
+			const x = boundingRectangle.left + boundingRectangle.width / 2;
+			const y = boundingRectangle.top + boundingRectangle.height / 2;
+			cy.cGet('#document-canvas').rightclick(x, y);
+		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
 		cy.cGet('#document-container svg g').should('not.exist');
@@ -65,8 +61,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#copy-paste-container tr').should('have.length', 2);
 		// Four cells
 		cy.cGet('#copy-paste-container td').should('have.length', 4);
+
 		//delete
-		cy.cGet('.table-select-marker').eq(0).trigger('contextmenu', eventOptions).wait(1000);
+		cy.cGet('.table-select-marker').then(function(item) {
+			const boundingRectangle = item[0].getBoundingClientRect();
+			const x = boundingRectangle.left + boundingRectangle.width / 2;
+			const y = boundingRectangle.top + boundingRectangle.height / 2;
+			cy.cGet('#document-canvas').rightclick(x, y);
+		});
 
 		cy.cGet('.menu-entry-icon.tabledeletemenu').parent()
 			.click()
@@ -87,16 +89,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
-		cy.cGet('#canvas-container')
-			.then(function(container) {
-				var x = parseInt(container[0].style.left.replace('px', '')) + parseInt(container[0].style.width.replace('px', '')) / 2;
-				var y = parseInt(container[0].style.top.replace('px', '')) + parseInt(container[0].style.height.replace('px', '')) / 2;
-
-				cy.cGet('.leaflet-layer')
-				.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
-				.wait(2000)
-				.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });
-			});
+		cy.cGet('#document-container').then(function(item) {
+			const boundingRectangle = item[0].getBoundingClientRect();
+			const x = boundingRectangle.left + boundingRectangle.width / 2;
+			const y = boundingRectangle.top + boundingRectangle.height / 2;
+			cy.cGet('#document-canvas').rightclick(x, y);
+		});
 
 		cy.wait(1000);
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
@@ -108,15 +106,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Chart...').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
-		cy.cGet('#canvas-container')
-		.then(function(container) {
-			var x = parseInt(container[0].style.left.replace('px', '')) + parseInt(container[0].style.width.replace('px', '')) / 2;
-			var y = parseInt(container[0].style.top.replace('px', '')) + parseInt(container[0].style.height.replace('px', '')) / 2;
-
-			cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
-			.wait(2000)
-			.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });
+		cy.cGet('#document-container').then(function(item) {
+			const boundingRectangle = item[0].getBoundingClientRect();
+			const x = boundingRectangle.left + boundingRectangle.width / 2;
+			const y = boundingRectangle.top + boundingRectangle.height / 2;
+			cy.cGet('#document-canvas').rightclick(x, y);
 		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();

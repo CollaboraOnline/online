@@ -133,6 +133,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Liberation Sans, sans-serif');
 		//cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
+
+		// Close the mobile wizard before opening it again.
+		cy.cGet('#mobile_wizard').click();
+
 		// Clear formatting
 		mobileHelper.openMobileWizard();
 		cy.cGet('#applystyle').click();

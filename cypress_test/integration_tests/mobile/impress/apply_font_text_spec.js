@@ -16,7 +16,18 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		// clicking in the center of the shape,
 		// which is in the center of the slide,
 		// which is in the center of the document
-		cy.cGet('#document-container').dblclick('center');
+
+		// There is no double click in mobile (touch devices).
+		// Click on the center to focus the shape first.
+		// Then click again to place the cursor.
+		cy.cGet('#document-canvas').click('center');
+		cy.cGet('#test-div-shape-handle-2').then(function(element) {
+			const rect = element[0].getBoundingClientRect();
+			const x = rect.right + 15;
+			const y = rect.bottom + 15;
+			cy.cGet('#document-canvas').dblclick(x, y);
+		});
+		cy.wait(1000); // We need to get the cursor visibility callback from core side.
 		helper.typeIntoDocument('{ctrl}a');
 		helper.textSelectionShouldExist();
 	}

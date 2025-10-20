@@ -6,12 +6,6 @@ var calcHelper = require('../../common/calc_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() {
 
-	var eventOptions = {
-		force: true,
-		button: 0,
-		pointerType: 'mouse'
-	};
-
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/delete_objects.ods');
 
@@ -43,15 +37,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() 
 
 		//deletion
 		cy.cGet('#test-div-shape-handle-rotation').should('exist');
-		cy.cGet('#document-container').then(function(element) {
+		cy.cGet('#document-canvas').then(function(element) {
 			const clientRect = element[0].getBoundingClientRect();
-			const x = (clientRect.top + clientRect.bottom) / 2;
-			const y = (clientRect.left + clientRect.right) / 2;
+			const x = (clientRect.left + clientRect.right) / 2;
+			const y = (clientRect.top + clientRect.bottom) / 2;
 
-			cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', x, y, eventOptions)
-			.wait(2000)
-			.trigger('pointerup', x, y, eventOptions);
+			// Right click on canvas is safe for canvas sections while testing mobile view. Also, this helps cypress.
+			cy.cGet('#document-canvas').rightclick(x, y)
 		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible');
@@ -65,10 +57,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() 
 		cy.cGet('#document-container svg g').should('exist');
 
 		//deletion
-		cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+		cy.cGet('#document-canvas').then(function(element) {
+			const clientRect = element[0].getBoundingClientRect();
+			const x = (clientRect.left + clientRect.right) / 2;
+			const y = (clientRect.top + clientRect.bottom) / 2;
+
+			cy.cGet('#document-canvas').rightclick(x, y)
+		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();

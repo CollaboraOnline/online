@@ -20,7 +20,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// Only the svg (shape selection) is needed for the verifications,
 		// but the text needs to be selected for the subsequent button clicks
 
-		cy.cGet('#document-container').dblclick('center');
+		cy.cGet('#document-canvas');
+		cy.wait(500); // Wait for document callbacks.
+		cy.cGet('#document-canvas').dblclick('center');
+		cy.wait(500);
 		helper.typeIntoDocument('{ctrl}a');
 		helper.textSelectionShouldExist();
 	}

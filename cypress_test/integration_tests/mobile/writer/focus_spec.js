@@ -13,7 +13,7 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Click in the document
-		cy.cGet('#document-container').click();
+		cy.cGet('#document-canvas').click();
 		helper.assertFocus('className', 'clipboard');
 	});
 
@@ -74,7 +74,7 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 				expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
 				var posX = parseInt(svg[0].style.width.replace('px', '')) + parseInt(svg[0].style.left.replace('px', '')) / 2;
 				var posY = parseInt(svg[0].style.height.replace('px', '')) + parseInt(svg[0].style.top.replace('px', '')) / 2;
-				cy.cGet('.leaflet-layer').click(posX, posY);
+				cy.cGet('#document-container').click(posX, posY);
 			});
 
 		// No focus on the document

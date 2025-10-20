@@ -29,15 +29,14 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.log('Param - dblClick: ' + dblClick);
 
 	// Use the tile's edge to find the first cell's position
-	cy.cGet('#map').should('exist');
-	cy.cGet('#map').should('be.visible');
-	cy.cGet('#map')
+	cy.cGet('#canvas-container').should('exist');
+	cy.cGet('#canvas-container')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
-			var XPos = items[0].getBoundingClientRect().left + 2;
-			var YPos = items[0].getBoundingClientRect().top + 10;
+			const XPos = items[0].getBoundingClientRect().left + 60;
+			const YPos = items[0].getBoundingClientRect().top + 30;
 			if (dblClick)
-				cy.cGet('body').click(XPos, YPos).dblclick(XPos, YPos);
+				cy.cGet('body').dblclick(XPos, YPos);
 			else
 				cy.cGet('body').click(XPos, YPos);
 		});
@@ -289,15 +288,16 @@ function selectCellsInRange(range) {
 function openAutoFilterMenu(secondColumn) {
 	cy.log('>> openAutoFilterMenu - start');
 
-	let XPos = 90;
-	let YPos = 10;
+	// Get canvas contiainer first.
+	// Then get its coordinatates relative to window.
+	// Then calculate the position of the autofilter easier.
+	cy.cGet('#canvas-container').then(function(items) {
+		const clientRect = items[0].getBoundingClientRect();
+		let XPos = clientRect.left;
+		let YPos = clientRect.top;
 
-	if (secondColumn) {
-		XPos += 105;
-	}
-
-	cy.cGet('#map').then(function(items) { expect(items).to.have.lengthOf(1); });
-	cy.cGet('#map').click(XPos, YPos);
+		cy.cGet('body').click(XPos + 147 + (secondColumn ? 103 : 0), YPos + 25);
+	});
 
 	cy.log('<< openAutoFilterMenu - end');
 }
