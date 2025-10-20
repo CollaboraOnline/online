@@ -9,10 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="./helper/util.ts"/>
-/// <reference path="../src/app/Rectangle.ts"/>
-
 var assert = require('assert').strict;
 
 interface ExpectedRectangle {

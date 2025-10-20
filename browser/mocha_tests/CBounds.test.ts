@@ -9,11 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="../src/geometry/Point.ts" />
-/// <reference path="../src/geometry/Bounds.ts" />
-/// <reference path="../src/core/geometry.ts" />
-
 var assert = require('assert').strict;
 
 describe('Bounds parse() tests', function () {
