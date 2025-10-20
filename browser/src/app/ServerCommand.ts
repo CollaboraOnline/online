@@ -57,7 +57,7 @@ class ServerCommand {
 	public parts?: number;
 	public selectedPart?: number;
 
-	constructor(msg: string, map: MapInterface) {
+	constructor(msg: string, map: MapZoomInterface) {
 		this.parse(msg, map);
 	}
 
@@ -67,7 +67,7 @@ class ServerCommand {
 		return s.substring(i + 1);
 	}
 
-	private parse(msg: string, map: MapInterface): void {
+	private parse(msg: string, map: MapZoomInterface): void {
 		const tokens = msg.split(/[ \n]+/);
 		for (let i = 0; i < tokens.length; i++) {
 			if (tokens[i].substring(0, 9) === 'tileposx=') {

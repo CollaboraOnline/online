@@ -27,4 +27,5 @@
 /// <reference path="./SheetGeometry.test.ts" />
 /// <reference path="./Util.test.ts" />
 /// <reference path="./ViewLayout.test.ts" />
+/// <reference path="./ServerCommand.test.ts" />
 // NOTE: reference new tests here ...

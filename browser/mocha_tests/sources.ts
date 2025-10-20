@@ -27,4 +27,6 @@
 /// <reference path="../src/canvas/CanvasSectionContainer.ts" />
 /// <reference path="../src/canvas/CanvasSectionObject.ts" />
 /// <reference path="../src/canvas/sections/TilesSection.ts" />
+/// <reference path="../src/app/iface/MapZoom.Interface.ts" />
+/// <reference path="../src/app/ServerCommand.ts" />
 
