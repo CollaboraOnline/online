@@ -14,6 +14,7 @@ export default defineConfig({
 	screenshotOnRunFailure: true,
 	screenshotsFolder: './integration_tests/snapshots/actual',
 	logServerResponse: false,
+	logClientSend: false,
 	env: {
 		USER_INTERFACE: process.env.USER_INTERFACE,
 		visualRegressionType: 'regression',
