@@ -35,6 +35,7 @@ cmake_list= \
             ../common/FileUtil-unix.cpp \
             ../common/Log-common.cpp \
             ../common/Log-poco.cpp \
+            ../common/MobileApp.cpp \
             ../common/TraceEvent.cpp \
             ../common/Protocol.cpp \
             ../common/RegexUtil.cpp \
