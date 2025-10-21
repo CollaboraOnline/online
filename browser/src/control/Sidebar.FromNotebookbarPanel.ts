@@ -15,9 +15,21 @@
  *                               notebookbar widgets in the core.
  */
 
+const ANIMATIONS_ID = 'animations';
+const TRANSITIONS_ID = 'transitions';
+
 class SidebarFromNotebookbarPanel extends Sidebar {
+	models: Map<string, JSDialogModelState>;
+
 	constructor(map: any) {
 		super(map);
+
+		// we need to store all the variants and just copy them to the parent class model if needed
+		this.models = new Map<string, JSDialogModelState>();
+		this.models.set(ANIMATIONS_ID, new JSDialogModelState('AnimationsSidebar'));
+		this.models.get(ANIMATIONS_ID)?.fullUpdate(JSDialog.ImpressAnimationTab.getContent());
+		this.models.set(TRANSITIONS_ID, new JSDialogModelState('TransitionsSidebar'));
+		this.models.get(TRANSITIONS_ID)?.fullUpdate(JSDialog.ImpressTransitionTab.getContent());
 
 		// transitions panel is now in the notebookbar in the core
 		this.type = this.allowedJsonType = SidebarType.Notebookbar;
@@ -39,9 +51,9 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		// TODO: change state of old sidebar uno commands
 
 		this.openSidebar(
-			'transitions',
+			TRANSITIONS_ID,
 			_('Transitions'),
-			JSDialog.ImpressTransitionTab.getContent(),
+			this.models.get(TRANSITIONS_ID)?.getSnapshot(),
 		);
 	}
 
@@ -52,9 +64,9 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		// TODO: change state of old sidebar uno commands
 
 		this.openSidebar(
-			'animations',
+			ANIMATIONS_ID,
 			_('Animations'),
-			JSDialog.ImpressAnimationTab.getContent(),
+			this.models.get(ANIMATIONS_ID)?.getSnapshot(),
 		);
 	}
 
