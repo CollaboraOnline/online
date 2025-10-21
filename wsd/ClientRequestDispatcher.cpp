@@ -1727,14 +1727,16 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         {
             type = DocumentBroker::CLIP_REQUEST_SET;
 
-            std::string clipDir = JAILED_DOCUMENT_ROOT + std::string("clipboards");
             std::string clipName = "setclipboard." + tag;
 
             std::string jailId = docBroker->getJailId();
-            const Poco::Path filePath(FileUtil::buildLocalPathToJail(
-                COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId, clipDir));
-            clipFile = filePath.toString() + '/' + clipName;
-            jailClipFile = clipDir + '/' + clipName;
+
+            auto [clipDir, jailDir] = FileUtil::buildPathsToJail(COOLWSD::EnableMountNamespaces, COOLWSD::NoCapsForKit,
+                                                                 COOLWSD::ChildRoot + jailId,
+                                                                 JAILED_DOCUMENT_ROOT + std::string("clipboards"));
+
+            clipFile = clipDir + '/' + clipName;
+            jailClipFile = jailDir + '/' + clipName;
 
             ClipboardPartHandler handler(clipFile);
             Poco::Net::HTMLForm form(request, message, handler);
