@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-16 11:54+0200\n"
-"PO-Revision-Date: 2025-10-16 09:44+0000\n"
+"PO-Revision-Date: 2025-10-17 11:07+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3266,9 +3266,8 @@ msgid "Alerts:"
 msgstr "Waarschuwingen:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Controleer beveiligingswaarschuwingen van je server"
+msgstr "Controleer de meldingen van uw server"
 
 #: src/control/Control.ServerAuditDialog.ts:361
 msgid "OPEN"
