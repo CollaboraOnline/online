@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-16 11:54+0200\n"
-"PO-Revision-Date: 2025-09-29 10:02+0000\n"
+"PO-Revision-Date: 2025-10-20 04:50+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.14-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -2374,32 +2374,31 @@ msgstr "V iskalno polje vnesite iskani niz v dokumentu"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animacija"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Uveljavljene animacije"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Premakni navzgor"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Premakni navzdol"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
 msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Učinki"
+msgstr "Učinek"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2442,7 +2441,7 @@ msgstr "Polje"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "Animacije"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2983,7 +2982,7 @@ msgstr "Predstavi v oknu"
 #: src/control/Control.NotebookbarImpress.js:501
 #, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Predstavitev Sledi mi"
+msgstr "Začni predstavitev Sledi mi"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:729
@@ -3255,7 +3254,6 @@ msgid "Alerts:"
 msgstr "Alarmi:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-#, fuzzy
 msgid "Check warnings of your server"
 msgstr "Preverite varnostna opozorila svojega strežnika"
 
@@ -3285,7 +3283,7 @@ msgstr "Vstavi delovni list"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Pokaži seznam delovnih listov"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
@@ -4148,7 +4146,7 @@ msgstr "Nedavno"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Možnosti robov strani"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:104
 msgid "Top: {top}"
