@@ -184,7 +184,7 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 		if (window.ThisIsAMobileApp) {
 			// Pass the file contents as a base64-encoded parameter in an insertfile message
 			var reader = new FileReader();
-			reader.onload = (function(aFile) {
+			reader.onload = (function() {
 				return function(e) {
 					var byteBuffer = new Uint8Array(e.target.result);
 					var strBytes = '';
@@ -193,15 +193,15 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 					}
 
 					if (type === 'multimedia') {
-						window.postMobileMessage('insertfile name=' + aFile.name + ' type=' + type +
+						window.postMobileMessage('insertfile name=' + name + ' type=' + type +
 											       ' data=' + window.btoa(strBytes) +
 											       ' width=' + size.width + ' height=' + size.height);
 					} else {
-						window.postMobileMessage('insertfile name=' + aFile.name + ' type=' + type +
+						window.postMobileMessage('insertfile name=' + name + ' type=' + type +
 											       ' data=' + window.btoa(strBytes));
 					}
 				};
-			})(file);
+			})();
 			reader.onerror = function(e) {
 				window.postMobileError('Error when reading file: ' + e);
 			};
