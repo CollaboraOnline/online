@@ -56,7 +56,9 @@ cmake_list= \
             ../wsd/RequestVettingStation.cpp \
             ../wsd/Storage.cpp \
             ../wsd/TileCache.cpp \
-            ../wsd/coolwsd-fork.cpp
+            ../wsd/coolwsd-fork.cpp \
+            ../wsd/dumpWsdState.cpp
+
 
 # Sources that will be created by Qt's MOC
 BUILT_SOURCES = bridge.moc.cpp
