@@ -19,7 +19,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 	it('Delete Text', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.leaflet-layer').dblclick('center');
+		cy.cGet('#document-container').dblclick('center');
 
 		cy.wait(100);
 
@@ -57,7 +57,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 		//deletion
 
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -88,7 +88,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			.should('exist');
 
 		//delete
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -116,7 +116,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -137,7 +137,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);

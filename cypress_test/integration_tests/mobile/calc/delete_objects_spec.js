@@ -48,7 +48,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() 
 			const x = (clientRect.top + clientRect.bottom) / 2;
 			const y = (clientRect.left + clientRect.right) / 2;
 
-			cy.cGet('.leaflet-layer')
+			cy.cGet('#document-container')
 			.trigger('pointerdown', x, y, eventOptions)
 			.wait(2000)
 			.trigger('pointerup', x, y, eventOptions);
@@ -65,7 +65,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() 
 		cy.cGet('#document-container svg g').should('exist');
 
 		//deletion
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);

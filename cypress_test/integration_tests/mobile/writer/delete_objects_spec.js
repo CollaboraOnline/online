@@ -40,7 +40,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			});
 
 		//deletion
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -92,7 +92,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 				var x = parseInt(container[0].style.left.replace('px', '')) + parseInt(container[0].style.width.replace('px', '')) / 2;
 				var y = parseInt(container[0].style.top.replace('px', '')) + parseInt(container[0].style.height.replace('px', '')) / 2;
 
-				cy.cGet('.leaflet-layer')
+				cy.cGet('#document-container')
 				.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
 				.wait(2000)
 				.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });
@@ -113,7 +113,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			var x = parseInt(container[0].style.left.replace('px', '')) + parseInt(container[0].style.width.replace('px', '')) / 2;
 			var y = parseInt(container[0].style.top.replace('px', '')) + parseInt(container[0].style.height.replace('px', '')) / 2;
 
-			cy.cGet('.leaflet-layer')
+			cy.cGet('#document-container')
 			.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
 			.wait(2000)
 			.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });

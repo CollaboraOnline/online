@@ -192,7 +192,7 @@ function dblclickOnSelectedShape() {
 			expect(element).to.have.length(1);
 			const x = parseInt(element[0].style.left.replace('px', '')) + parseInt(element[0].style.width.replace('px', '')) / 2;
 			const y = parseInt(element[0].style.top.replace('px', '')) + parseInt(element[0].style.height.replace('px', '')) / 2;
-			cy.cGet('.leaflet-layer').dblclick(x, y, { force: true });
+			cy.cGet('#document-canvas').dblclick(x, y, { force: true });
 		});
 
 	// check if any of text input markers exist

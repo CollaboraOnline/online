@@ -34,7 +34,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 				var x = parseInt(shape[0].style.left.replace('px', '')) + parseInt(shape[0].style.width.replace('px', '')) / 2;
 				var y = parseInt(shape[0].style.top.replace('px', '')) + parseInt(shape[0].style.height.replace('px', '')) / 2;
 
-				cy.cGet('.leaflet-layer')
+				cy.cGet('#document-container')
 				.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
 				.wait(2000)
 				.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });

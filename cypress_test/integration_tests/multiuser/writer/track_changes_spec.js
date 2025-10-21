@@ -42,7 +42,7 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 
 	function acceptAll(frameId1, frameId2) {
 		cy.cSetActiveFrame(frameId1);
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		helper.typeIntoDocument('Hello World');
 		enableRecord();
 		cy.wait(1000);
@@ -67,7 +67,7 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 
 	function rejectAll(frameId1, frameId2) {
 		cy.cSetActiveFrame(frameId1);
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		helper.typeIntoDocument('Hello World');
 		enableRecord();
 		cy.wait(1000);
@@ -78,14 +78,14 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 		confirmChange('Reject All');
 
 		cy.cSetActiveFrame(frameId1);
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		helper.selectAllText();
 		//assert for user-1/2 depending on parameters
 		helper.expectTextForClipboard('Hello World');
 
 		//assert for user-2/1 depending on parameters
 		cy.cSetActiveFrame(frameId2);
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		helper.selectAllText();
 		helper.expectTextForClipboard('Hello World');
 	}

@@ -48,7 +48,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 		// reset initial position and show horizontal scrollbar
 		helper.typeIntoDocument('{home}');
-		cy.cGet('.leaflet-layer').click('bottom');
+		cy.cGet('#document-container').click('bottom');
 		desktopHelper.assertScrollbarPosition('horizontal', 0, 270);
 
 		helper.typeIntoDocument('{home}{end}');

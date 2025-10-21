@@ -348,7 +348,7 @@ function deleteImage() {
 		pointerType: 'mouse'
 	};
 
-	cy.cGet('.leaflet-layer')
+	cy.cGet('#document-container')
 		.trigger('pointerdown', eventOptions)
 		.wait(500) // Wait for long press
 		.trigger('pointerup', eventOptions);
