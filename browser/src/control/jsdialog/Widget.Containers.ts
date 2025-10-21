@@ -34,7 +34,7 @@ function _getGridChild(
 JSDialog.container = function (
 	parentContainer: Element,
 	data: ContainerWidgetJSON | GridWidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	if ((data as GridWidgetJSON).cols && (data as GridWidgetJSON).rows)
 		return JSDialog.grid(parentContainer, data, builder);

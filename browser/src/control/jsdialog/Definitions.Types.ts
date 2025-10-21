@@ -71,6 +71,7 @@ interface JSBuilder {
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
 	_expanderHandler: any; // FIXME: use handlers getter instead
+	_makeIdUnique: (id: string) => string;
 }
 
 // widget handler, returns true if child nodes should be still processed by the builder
