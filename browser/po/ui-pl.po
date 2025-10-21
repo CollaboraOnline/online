@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-16 11:54+0200\n"
-"PO-Revision-Date: 2025-10-15 14:53+0000\n"
+"PO-Revision-Date: 2025-10-17 11:07+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || "
+"(n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.14-dev\n"
 
 #: admin/admin.strings.js:15
@@ -3203,7 +3203,7 @@ msgstr "Słabo działające proxy dla wszystkich żądań sieciowych."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr "bezpośrednie połączenie sieciowe"
+msgstr "Bezpośrednie połączenie sieciowe"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3254,9 +3254,8 @@ msgid "Alerts:"
 msgstr "Alerty:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Sprawdź ostrzeżenia o bezpieczeństwie serwera"
+msgstr "Sprawdź ostrzeżenia swojego serwera"
 
 #: src/control/Control.ServerAuditDialog.ts:361
 msgid "OPEN"
