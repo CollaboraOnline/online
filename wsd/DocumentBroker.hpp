@@ -436,6 +436,9 @@ public:
         CLIP_REQUEST_GET_RICH_HTML_ONLY,
         CLIP_REQUEST_GET_HTML_PLAIN_ONLY,
     };
+
+    std::shared_ptr<ClientSession> getSessionFromClipboardTag(const std::string &viewId, const std::string &tag);
+
     void handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                 const std::string &viewId, const std::string &tag,
                                 const std::string &clipFile);

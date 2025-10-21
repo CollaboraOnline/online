@@ -4655,18 +4655,28 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
 
 #if !MOBILEAPP
 
-void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
-                                            const std::string &viewId, const std::string &tag,
-                                            const std::string &clipFile)
+std::shared_ptr<ClientSession> DocumentBroker::getSessionFromClipboardTag(const std::string &viewId, const std::string &tag)
 {
     for (const auto& it : _sessions)
     {
         if (it.second->matchesClipboardKeys(viewId, tag))
         {
-            it.second->handleClipboardRequest(type, socket, tag, clipFile);
-            return;
+            return it.second;
         }
     }
+    return nullptr;
+}
+
+void DocumentBroker::handleClipboardRequest(ClipboardRequest type, const std::shared_ptr<StreamSocket> &socket,
+                                            const std::string &viewId, const std::string &tag,
+                                            const std::string &clipFile)
+{
+    if (std::shared_ptr<ClientSession> session = getSessionFromClipboardTag(viewId, tag))
+    {
+        session->handleClipboardRequest(type, socket, tag, clipFile);
+        return;
+    }
+
     if (!lookupSendClipboardTag(socket, tag, true))
         LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
 }
