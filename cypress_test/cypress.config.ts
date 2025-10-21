@@ -13,8 +13,8 @@ export default defineConfig({
 	chromeWebSecurity: false,
 	screenshotOnRunFailure: true,
 	screenshotsFolder: './integration_tests/snapshots/actual',
-	logServerResponse: false,
-	logClientSend: false,
+	logServerResponse: true,
+	logClientSend: true,
 	env: {
 		USER_INTERFACE: process.env.USER_INTERFACE,
 		visualRegressionType: 'regression',
