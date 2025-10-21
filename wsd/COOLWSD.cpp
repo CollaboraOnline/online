@@ -786,7 +786,7 @@ std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::TmpFontDir;
 std::string COOLWSD::LOKitVersion;
 std::string COOLWSD::ConfigFile =
-#if defined(MACOS) && ENABLE_CODA
+#if defined(MACOS) && MOBILEAPP
     getResourcePath("coolwsd", "xml");
 #else
     COOLWSD_CONFIGDIR "/coolwsd.xml";
@@ -4363,7 +4363,7 @@ void forwardSignal(const int signum)
 #endif
 
 // Avoid this in the Util::isFuzzing() case because libfuzzer defines its own main().
-#if !MOBILEAPP && !LIBFUZZER && !ENABLE_CODA
+#if !MOBILEAPP && !LIBFUZZER
 
 int main(int argc, char** argv)
 {
