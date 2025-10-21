@@ -606,7 +606,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 /* Transition Tab */
 
 #Transition-container.notebookbar {
-	width: 100%;
 	justify-items: stretch;
 }
 
