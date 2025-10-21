@@ -988,7 +988,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public showInNavigator(comment: Comment) {
-		if (app.map.getDocType() === 'text') {
+		if (app.map.getDocType() === 'text' || app.map.getDocType() === 'spreadsheet') {
 			app.dispatcher.dispatch('showcommentsnavigator', comment.sectionProperties.data.id);
 		}
 	}
@@ -1219,7 +1219,7 @@ export class CommentSection extends CanvasSectionObject {
 								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						showInNavigator: docLayer._docType !== 'text' || (<any>window).mode.isMobile() ? undefined : {
+						showInNavigator: (docLayer._docType !== 'text' && docLayer._docType !== 'spreadsheet') || (<any>window).mode.isMobile() ? undefined : {
 							name: _('Show in navigator'),
 							callback: function (key: any, options: any) {
 								this.showInNavigator.call(this, options.$trigger[0].annotation);
