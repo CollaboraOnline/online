@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-16 11:54+0200\n"
+"POT-Creation-Date: 2025-10-21 09:53+0200\n"
 "PO-Revision-Date: 2025-09-22 10:54+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
@@ -145,8 +145,10 @@ msgstr "Graff Rhwydwaith"
 #: admin/src/integrator/AdminIntegratorSettings.ts:733
 #: admin/src/integrator/AdminIntegratorSettings.ts:1427
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:514
-#: src/canvas/sections/CommentSection.ts:178
+#: src/canvas/sections/CommentListSection.ts:529
+#: src/canvas/sections/CommentSection.ts:184
+#: src/canvas/sections/CommentSection.ts:487
+#: src/canvas/sections/CommentSection.ts:1241
 #: src/control/Control.Notebookbar.js:255
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
@@ -229,11 +231,11 @@ msgstr "Gosod Lefelau'r Cofnod"
 msgid "Log Levels"
 msgstr "Lefelau'r Cofnod"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:166
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:167
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:418 src/core/Socket.js:1199 src/core/Socket.js:1204
+#: src/core/Socket.js:406 src/core/Socket.js:1187 src/core/Socket.js:1192
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Cau"
@@ -291,21 +293,21 @@ msgstr "Rhybudd"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1611 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1474
+#: src/canvas/sections/CommentListSection.ts:1489
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:317
+#: src/control/Control.ServerAuditDialog.ts:330
 #: src/control/Control.Tabs.js:397 src/control/Control.Tabs.js:406
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:746 src/core/Socket.js:703 src/core/Socket.js:1169
-#: src/core/Socket.js:1239 src/core/Socket.js:1415 src/core/Socket.js:1419
+#: src/control/Toolbar.js:747 src/core/Socket.js:691 src/core/Socket.js:1157
+#: src/core/Socket.js:1227 src/core/Socket.js:1403 src/core/Socket.js:1407
 #: src/docdispatcher.ts:558 src/main.js:88 src/main.js:91 src/main.js:132
-#: src/map/Clipboard.js:1295 src/map/handler/Map.Feedback.js:96
+#: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
 #: src/map/handler/Map.SlideShow.js:297 src/map/handler/Map.SlideShow.js:308
 #: src/map/handler/Map.WOPI.js:713 src/slideshow/SlideShowPresenter.ts:1040
@@ -318,16 +320,18 @@ msgstr "Iawn"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:509
-#: src/canvas/sections/CommentSection.ts:177
-#: src/canvas/sections/CommentSection.ts:180
+#: src/canvas/sections/CommentListSection.ts:524
+#: src/canvas/sections/CommentSection.ts:183
+#: src/canvas/sections/CommentSection.ts:186
+#: src/canvas/sections/CommentSection.ts:1242
+#: src/canvas/sections/CommentSection.ts:1247
 #: src/control/Control.DocumentRepair.js:71
-#: src/control/Control.DownloadProgress.js:83
+#: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
 #: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1428
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "Diddymu"
@@ -724,7 +728,9 @@ msgstr ""
 "Aeth rhywbeth o'i le wrth lwytho'r ffeil i fyny. Rhowch gynnig arall arni."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1231
-#: src/control/Control.ContextMenu.js:250 src/docdispatcher.ts:555
+#: src/canvas/sections/CommentSection.ts:1159
+#: src/canvas/sections/CommentSection.ts:1164
+#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:555
 msgid "Delete"
 msgstr "Dileu"
 
@@ -903,81 +909,83 @@ msgstr "Ctrl+Shift+Alt+D i adael"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "Bu oedi wrth drin y digwyddiad am gyfnod annisgwyl o hir: {0}ms"
 
-#: src/canvas/sections/CommentListSection.ts:165
+#: src/canvas/sections/CommentListSection.ts:166
 msgid "A comment is being edited"
 msgstr "Mae sylw yn cael ei olygu"
 
-#: src/canvas/sections/CommentListSection.ts:166
+#: src/canvas/sections/CommentListSection.ts:167
 msgid "Please save or discard the comment currently being edited."
 msgstr "Cadwch neu ddileu'r sylw sy'n cael ei olygu ar hyn o bryd."
 
-#: src/canvas/sections/CommentListSection.ts:1175
+#: src/canvas/sections/CommentListSection.ts:1190
 msgid "Modify"
 msgstr "Newid"
 
-#: src/canvas/sections/CommentListSection.ts:1181
-#: src/canvas/sections/CommentSection.ts:181
+#: src/canvas/sections/CommentListSection.ts:1196
+#: src/canvas/sections/CommentSection.ts:187
+#: src/canvas/sections/CommentSection.ts:491
+#: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "Ateb"
 
-#: src/canvas/sections/CommentListSection.ts:1187
+#: src/canvas/sections/CommentListSection.ts:1202
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Tynnu"
 
-#: src/canvas/sections/CommentListSection.ts:1193
+#: src/canvas/sections/CommentListSection.ts:1208
 msgid "Remove Thread"
 msgstr "Dileu Trywydd"
 
-#: src/canvas/sections/CommentListSection.ts:1199
+#: src/canvas/sections/CommentListSection.ts:1214
 msgid "Resolve"
 msgstr "Datrys"
 
-#: src/canvas/sections/CommentListSection.ts:1199
+#: src/canvas/sections/CommentListSection.ts:1214
 msgid "Unresolve"
 msgstr "Anatrysiadwy"
 
-#: src/canvas/sections/CommentListSection.ts:1205
+#: src/canvas/sections/CommentListSection.ts:1220
 msgid "Unresolve Thread"
 msgstr "Trywydd heb ei ddatrys"
 
-#: src/canvas/sections/CommentListSection.ts:1205
+#: src/canvas/sections/CommentListSection.ts:1220
 msgid "Resolve Thread"
 msgstr "Datrys Trywydd"
 
-#: src/canvas/sections/CommentListSection.ts:1211
+#: src/canvas/sections/CommentListSection.ts:1226
 msgid "Promote to top comment"
 msgstr "Symud i'r prif sylw"
 
-#: src/canvas/sections/CommentListSection.ts:1217
+#: src/canvas/sections/CommentListSection.ts:1232
 msgid "Show on the side"
 msgstr "Dangos ar yr ochr"
 
-#: src/canvas/sections/CommentListSection.ts:1217
+#: src/canvas/sections/CommentListSection.ts:1232
 msgid "Open in full view"
 msgstr "Agor yn yr olwg lawn"
 
-#: src/canvas/sections/CommentListSection.ts:1223
+#: src/canvas/sections/CommentListSection.ts:1238
 msgid "Show in navigator"
 msgstr "Dangos yn y llywiwr"
 
-#: src/canvas/sections/CommentListSection.ts:1251
-#: src/control/Control.JSDialogBuilder.js:1750
+#: src/canvas/sections/CommentListSection.ts:1266
+#: src/control/Control.JSDialogBuilder.js:1751
 #: src/layer/tile/CanvasTileLayer.js:3470
 #: src/layer/tile/CanvasTileLayer.js:3481
 msgid "Comment"
 msgstr "Sylw"
 
-#: src/canvas/sections/CommentListSection.ts:1472
-#: src/canvas/sections/CommentListSection.ts:1485
+#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1500
 msgid "Comments Updated"
 msgstr "Sylwadau wedi'u Diweddaru"
 
-#: src/canvas/sections/CommentListSection.ts:1473
+#: src/canvas/sections/CommentListSection.ts:1488
 msgid "Another user has removed this comment."
 msgstr "Mae defnyddiwr arall wedi dileu'r sylw hwn."
 
-#: src/canvas/sections/CommentListSection.ts:1486
+#: src/canvas/sections/CommentListSection.ts:1501
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -985,18 +993,13 @@ msgstr ""
 "Mae defnyddiwr arall wedi diweddaru'r sylw. Hoffech chi drosysgrifo'r "
 "newidiadau hynny?"
 
-#: src/canvas/sections/CommentListSection.ts:1487 src/core/Socket.js:1444
+#: src/canvas/sections/CommentListSection.ts:1502 src/core/Socket.js:1432
 msgid "Overwrite"
 msgstr "Trosysgrifo"
 
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1503
 msgid "Update"
 msgstr "Diweddariad"
-
-#: src/canvas/sections/CommentListSection.ts:1589
-#: src/canvas/sections/CommentListSection.ts:1663
-msgid "Autosaved"
-msgstr "Wedi'i gadw'n awtomatig"
 
 #: src/canvas/sections/CommentSection.ts:45
 msgid "Edit comment"
@@ -1010,23 +1013,29 @@ msgstr "Ateb sylw"
 msgid "Open menu"
 msgstr "Agor dewislen"
 
-#: src/canvas/sections/CommentSection.ts:335
+#: src/canvas/sections/CommentSection.ts:340
 msgid "Press Ctrl + Enter to post"
 msgstr "Pwyswch Ctrl + Enter i bostio"
 
-#: src/canvas/sections/CommentSection.ts:399
-#: src/canvas/sections/CommentSection.ts:400
+#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:405
 msgid "Accept change"
 msgstr "Derbyn newid"
 
-#: src/canvas/sections/CommentSection.ts:406
-#: src/canvas/sections/CommentSection.ts:407
+#: src/canvas/sections/CommentSection.ts:411
+#: src/canvas/sections/CommentSection.ts:412
 msgid "Reject change"
 msgstr "Gwrthod newid"
 
-#: src/canvas/sections/CommentSection.ts:430
+#: src/canvas/sections/CommentSection.ts:436
 msgid "Resolved"
 msgstr "Datryswyd"
+
+#: src/canvas/sections/CommentSection.ts:1158
+#: src/canvas/sections/CommentSection.ts:1163
+#: src/control/Control.SaveState.ts:53
+msgid "Saved"
+msgstr "Cadwyd"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:439
 msgid "Document contains unsupported media"
@@ -1115,7 +1124,7 @@ msgstr ""
 "Mae'r ffynhonnell ddata allanol hwn wedi ei wahardd. Cysylltwch â gweinyddwr "
 "y system."
 
-#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1296
+#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1303
 msgid "Don’t show this again"
 msgstr "Peidio dangos eto"
 
@@ -1127,15 +1136,15 @@ msgstr "Profodd y gweinydd wall {0} wrth ddidoli'r gorchymyn {1}."
 msgid "Unlock"
 msgstr "Datgloi"
 
-#: src/control/Control.ContextMenu.js:275
+#: src/control/Control.ContextMenu.js:277
 msgid "Paste Special"
 msgstr "Gludo Arbennig"
 
-#: src/control/Control.ContextMenu.js:282
+#: src/control/Control.ContextMenu.js:284
 msgid "Copy Cells"
 msgstr "Copïo Celloedd"
 
-#: src/control/Control.ContextMenu.js:287
+#: src/control/Control.ContextMenu.js:289
 msgid "Fill Series"
 msgstr "Llanw Cyfres"
 
@@ -1201,32 +1210,32 @@ msgstr ""
 msgid "Download"
 msgstr "Llwytho i lawr"
 
-#: src/control/Control.DownloadProgress.js:82
+#: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
 msgstr "Wrthi'n llwytho i lawr cynnwys y clipfwrdd"
 
-#: src/control/Control.DownloadProgress.js:89
-#: src/control/Control.DownloadProgress.js:114
+#: src/control/Control.DownloadProgress.js:87
+#: src/control/Control.DownloadProgress.js:112
 #: src/control/Control.PartsPreview.js:305
 msgid "Copy"
 msgstr "Copïo"
 
-#: src/control/Control.DownloadProgress.js:112
+#: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
 "Mae'r llwytho i lawr wedi'i gwblhau ac yn barod i'w gopïo i'r clipfwrdd."
 
-#: src/control/Control.DownloadProgress.js:113
+#: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
 "O hyn ymlaen bydd hysbysiadau clipfwrdd yn ymddangos yn gynnil ar y gwaelod."
 
-#: src/control/Control.DownloadProgress.js:273
+#: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
 msgstr "Cynnwys wedi'i gopïo i'r clipfwrdd"
 
-#: src/control/Control.DownloadProgress.js:303
+#: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
 msgstr "Methwyd llwytho i lawr"
 
@@ -1582,7 +1591,7 @@ msgstr "Dogfen anweithredol - cliciwch i ail-lwytho ac ailgychwyn golygu"
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Dogfen anweithredol - tapiwch i ail-lwytho ac ailgychwyn golygu"
 
-#: src/control/Control.JSDialog.js:331
+#: src/control/Control.JSDialog.js:337
 msgid "Close dialog"
 msgstr "Cau'r deialog"
 
@@ -1634,18 +1643,18 @@ msgstr "Lliw"
 msgid "Select range"
 msgstr "Dewis ystod"
 
-#: src/control/Control.JSDialogBuilder.js:1444
+#: src/control/Control.JSDialogBuilder.js:1445
 #: src/control/Control.NotebookbarBuilder.js:150
 msgid "Font Name"
 msgstr "Enw Ffont"
 
-#: src/control/Control.JSDialogBuilder.js:1446 src/control/Toolbar.js:135
+#: src/control/Control.JSDialogBuilder.js:1447 src/control/Toolbar.js:135
 msgid "Font Size"
 msgstr "Maint Ffont"
 
-#: src/control/Control.JSDialogBuilder.js:1448
+#: src/control/Control.JSDialogBuilder.js:1449
 #: src/control/Control.NotebookbarCalc.js:935
-#: src/control/Control.NotebookbarCalc.js:2558
+#: src/control/Control.NotebookbarCalc.js:2559
 #: src/control/Control.NotebookbarDraw.js:1752
 #: src/control/Control.NotebookbarImpress.js:1309
 #: src/control/Control.NotebookbarWriter.js:1061
@@ -1653,33 +1662,33 @@ msgstr "Maint Ffont"
 msgid "Style"
 msgstr "Arddull"
 
-#: src/control/Control.JSDialogBuilder.js:1736
+#: src/control/Control.JSDialogBuilder.js:1737
 msgid "reply"
 msgstr "ateb"
 
-#: src/control/Control.JSDialogBuilder.js:1739
+#: src/control/Control.JSDialogBuilder.js:1740
 msgid "replies"
 msgstr "ymatebion"
 
-#: src/control/Control.JSDialogBuilder.js:1814
+#: src/control/Control.JSDialogBuilder.js:1815
 msgid "Insert Comment"
 msgstr "Mewnosod Sylw"
 
-#: src/control/Control.JSDialogBuilder.js:2107
+#: src/control/Control.JSDialogBuilder.js:2108
 msgid "Open {name}"
 msgstr "Agor {name}"
 
-#: src/control/Control.JSDialogBuilder.js:2433
+#: src/control/Control.JSDialogBuilder.js:2434
 #: src/control/Control.Menubar.ts:931
 msgid "Rows"
 msgstr "Rhesi"
 
-#: src/control/Control.JSDialogBuilder.js:2434
+#: src/control/Control.JSDialogBuilder.js:2435
 #: src/control/Control.Menubar.ts:934
 msgid "Columns"
 msgstr "Colofnau"
 
-#: src/control/Control.JSDialogBuilder.js:2454
+#: src/control/Control.JSDialogBuilder.js:2455
 msgid "Insert Table"
 msgstr "Mewnosod Tabl"
 
@@ -1872,7 +1881,7 @@ msgid "Invert Background"
 msgstr "Gwrthdroi Cefndir"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:806
-#: src/control/Control.NotebookbarCalc.js:2585
+#: src/control/Control.NotebookbarCalc.js:2586
 #: src/control/Control.NotebookbarWriter.js:954
 #: src/control/Control.NotebookbarWriter.js:1088
 msgid "Style list"
@@ -2025,8 +2034,8 @@ msgstr "Anfon Adborth"
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:599
 #: src/control/Control.Menubar.ts:738 src/control/Control.Menubar.ts:1031
 #: src/control/Control.NotebookbarWriter.js:494
-#: src/control/Control.ServerAuditDialog.ts:274
-#: src/control/Control.ServerAuditDialog.ts:275
+#: src/control/Control.ServerAuditDialog.ts:287
+#: src/control/Control.ServerAuditDialog.ts:288
 msgid "Server audit"
 msgstr "Archwiliad gweinydd"
 
@@ -2266,8 +2275,8 @@ msgstr "Islaw'r Cyfartaledd..."
 #: src/control/Control.NotebookbarImpress.js:1277
 #: src/control/Control.NotebookbarWriter.js:1016
 #: src/control/Control.NotebookbarWriter.js:1029
-#: src/control/Control.Zotero.js:220 src/control/Toolbar.js:580
-#: src/control/Toolbar.js:581
+#: src/control/Control.Zotero.js:220 src/control/Toolbar.js:581
+#: src/control/Toolbar.js:582
 msgid "Search"
 msgstr "Chwilio"
 
@@ -2369,7 +2378,7 @@ msgstr "Sleidiau"
 msgid "Results"
 msgstr "Canlyniadau"
 
-#: src/control/Control.NavigatorPanel.ts:474
+#: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
 msgstr "Chwilio..."
 
@@ -2504,10 +2513,10 @@ msgstr "Cartref"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarDraw.js:1132
 #: src/control/Control.NotebookbarImpress.js:90
-#: src/control/Control.NotebookbarImpress.js:2002
+#: src/control/Control.NotebookbarImpress.js:2003
 #: src/control/Control.NotebookbarWriter.js:50
 #: src/control/Control.NotebookbarWriter.js:965
-#: src/control/Control.NotebookbarWriter.js:2431
+#: src/control/Control.NotebookbarWriter.js:2432
 msgid "Insert"
 msgstr "Mewnosod"
 
@@ -2562,7 +2571,7 @@ msgstr "Golwg"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1678
-#: src/control/Control.NotebookbarCalc.js:2646
+#: src/control/Control.NotebookbarCalc.js:2647
 msgid "Sparkline"
 msgstr "Sparkline"
 
@@ -2570,7 +2579,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarDraw.js:121
 #: src/control/Control.NotebookbarImpress.js:156
 #: src/control/Control.NotebookbarWriter.js:108
-#: src/control/Control.ServerAuditDialog.ts:294
+#: src/control/Control.ServerAuditDialog.ts:307
 msgid "Help"
 msgstr "Cymorth"
 
@@ -2757,28 +2766,28 @@ msgid "Delete Columns"
 msgstr "Dileu Colofnau"
 
 #: src/control/Control.NotebookbarCalc.js:1259
-#: src/control/Control.NotebookbarCalc.js:2808
-#: src/control/Control.NotebookbarCalc.js:3165
+#: src/control/Control.NotebookbarCalc.js:2809
+#: src/control/Control.NotebookbarCalc.js:3166
 #: src/control/Control.NotebookbarDraw.js:1298
-#: src/control/Control.NotebookbarImpress.js:2297
-#: src/control/Control.NotebookbarImpress.js:2504
-#: src/control/Control.NotebookbarImpress.js:2808
+#: src/control/Control.NotebookbarImpress.js:2298
+#: src/control/Control.NotebookbarImpress.js:2505
+#: src/control/Control.NotebookbarImpress.js:2809
 #: src/control/Control.NotebookbarWriter.js:2037
-#: src/control/Control.NotebookbarWriter.js:2893
-#: src/control/Control.NotebookbarWriter.js:3216
+#: src/control/Control.NotebookbarWriter.js:2894
+#: src/control/Control.NotebookbarWriter.js:3217
 msgid "Align"
 msgstr "Alinio"
 
 #: src/control/Control.NotebookbarCalc.js:1329
-#: src/control/Control.NotebookbarCalc.js:2875
-#: src/control/Control.NotebookbarCalc.js:3232
+#: src/control/Control.NotebookbarCalc.js:2876
+#: src/control/Control.NotebookbarCalc.js:3233
 #: src/control/Control.NotebookbarDraw.js:1365
-#: src/control/Control.NotebookbarImpress.js:2364
-#: src/control/Control.NotebookbarImpress.js:2571
-#: src/control/Control.NotebookbarImpress.js:2875
+#: src/control/Control.NotebookbarImpress.js:2365
+#: src/control/Control.NotebookbarImpress.js:2572
+#: src/control/Control.NotebookbarImpress.js:2876
 #: src/control/Control.NotebookbarWriter.js:2108
-#: src/control/Control.NotebookbarWriter.js:2952
-#: src/control/Control.NotebookbarWriter.js:3275
+#: src/control/Control.NotebookbarWriter.js:2953
+#: src/control/Control.NotebookbarWriter.js:3276
 msgid "Arrange"
 msgstr "Trefnu"
 
@@ -2816,12 +2825,12 @@ msgstr "Bar Statws"
 
 #: src/control/Control.NotebookbarCalc.js:1587
 #: src/control/Control.NotebookbarCalc.js:2319
-#: src/control/Control.NotebookbarCalc.js:2928
-#: src/control/Control.NotebookbarCalc.js:3285
-#: src/control/Control.NotebookbarImpress.js:2624
-#: src/control/Control.NotebookbarImpress.js:2928
-#: src/control/Control.NotebookbarWriter.js:3001
-#: src/control/Control.NotebookbarWriter.js:3324
+#: src/control/Control.NotebookbarCalc.js:2929
+#: src/control/Control.NotebookbarCalc.js:3286
+#: src/control/Control.NotebookbarImpress.js:2625
+#: src/control/Control.NotebookbarImpress.js:2929
+#: src/control/Control.NotebookbarWriter.js:3002
+#: src/control/Control.NotebookbarWriter.js:3325
 msgid "Group"
 msgstr "Grŵp"
 
@@ -2906,27 +2915,27 @@ msgstr "Trefnu"
 msgid "Filter"
 msgstr "Hidl"
 
-#: src/control/Control.NotebookbarCalc.js:2490
-#: src/control/Control.NotebookbarImpress.js:1965
-#: src/control/Control.NotebookbarWriter.js:2235
+#: src/control/Control.NotebookbarCalc.js:2491
+#: src/control/Control.NotebookbarImpress.js:1966
+#: src/control/Control.NotebookbarWriter.js:2236
 msgid "Comments"
 msgstr "Sylwadau"
 
-#: src/control/Control.NotebookbarCalc.js:2595
+#: src/control/Control.NotebookbarCalc.js:2596
 msgid "Format Cells"
 msgstr "Fformatio Celloedd"
 
-#: src/control/Control.NotebookbarCalc.js:2741
-#: src/control/Control.NotebookbarCalc.js:3098
+#: src/control/Control.NotebookbarCalc.js:2742
+#: src/control/Control.NotebookbarCalc.js:3099
 #: src/control/Control.NotebookbarWriter.js:1939
-#: src/control/Control.NotebookbarWriter.js:2838
-#: src/control/Control.NotebookbarWriter.js:3161
+#: src/control/Control.NotebookbarWriter.js:2839
+#: src/control/Control.NotebookbarWriter.js:3162
 msgid "Wrap"
 msgstr "Amlapio"
 
-#: src/control/Control.NotebookbarCalc.js:2980
-#: src/control/Control.NotebookbarImpress.js:2684
-#: src/control/Control.NotebookbarWriter.js:3047
+#: src/control/Control.NotebookbarCalc.js:2981
+#: src/control/Control.NotebookbarImpress.js:2685
+#: src/control/Control.NotebookbarWriter.js:3048
 msgid "Image Controls"
 msgstr "Rheolyddion Delwedd"
 
@@ -2956,9 +2965,9 @@ msgstr "Mesurydd"
 
 #: src/control/Control.NotebookbarDraw.js:899
 #: src/control/Control.NotebookbarImpress.js:989
-#: src/control/Control.NotebookbarImpress.js:2177
+#: src/control/Control.NotebookbarImpress.js:2178
 #: src/control/Control.NotebookbarWriter.js:793
-#: src/control/Control.NotebookbarWriter.js:2604
+#: src/control/Control.NotebookbarWriter.js:2605
 msgid "Paragraph"
 msgstr "Paragraff"
 
@@ -3043,16 +3052,16 @@ msgstr "Maint Sleid"
 msgid "Background Image"
 msgstr "Delwedd Gefndir"
 
-#: src/control/Control.NotebookbarImpress.js:2069
+#: src/control/Control.NotebookbarImpress.js:2070
 msgid "Merge & Split"
 msgstr "Cyfuno a Rhannu"
 
-#: src/control/Control.NotebookbarImpress.js:2108
-#: src/control/Control.NotebookbarWriter.js:2554
+#: src/control/Control.NotebookbarImpress.js:2109
+#: src/control/Control.NotebookbarWriter.js:2555
 msgid "Select"
 msgstr "Dewis"
 
-#: src/control/Control.NotebookbarImpress.js:2717
+#: src/control/Control.NotebookbarImpress.js:2718
 msgid "Effects"
 msgstr "Effeithiau"
 
@@ -3109,15 +3118,15 @@ msgstr "Blwch ticio"
 msgid "Dropdown"
 msgstr "Cwymplen"
 
-#: src/control/Control.NotebookbarWriter.js:2310
+#: src/control/Control.NotebookbarWriter.js:2311
 msgid "Tracking"
 msgstr "Tracio"
 
-#: src/control/Control.NotebookbarWriter.js:2492
+#: src/control/Control.NotebookbarWriter.js:2493
 msgid "Split"
 msgstr "Hollti"
 
-#: src/control/Control.NotebookbarWriter.js:2676
+#: src/control/Control.NotebookbarWriter.js:2677
 msgid "Number Format"
 msgstr "Fformat Rhifau"
 
@@ -3140,10 +3149,6 @@ msgstr "Gludo"
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
 msgstr "Wrthi'n cadw"
-
-#: src/control/Control.SaveState.ts:53
-msgid "Saved"
-msgstr "Cadwyd"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -3233,35 +3238,35 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Nid yw'r Integreiddiwr yn barod ar gyfer galwadau PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-msgid "Using namespaces."
+msgid "Using namespaces"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:227
-msgid "Document container started in"
+#: src/control/Control.ServerAuditDialog.ts:236
+msgid "Document container started in {1} ms"
 msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:293
+#: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
 msgstr "Statws"
 
-#: src/control/Control.ServerAuditDialog.ts:303
+#: src/control/Control.ServerAuditDialog.ts:316
 msgid "No issues found"
 msgstr "Heb ddarganfod unrhyw faterion"
 
-#: src/control/Control.ServerAuditDialog.ts:308
+#: src/control/Control.ServerAuditDialog.ts:321
 msgid "Alerts:"
 msgstr "Rhybuddion:"
 
-#: src/control/Control.ServerAuditDialog.ts:360
+#: src/control/Control.ServerAuditDialog.ts:373
 #, fuzzy
 msgid "Check warnings of your server"
 msgstr "Gwiriwch rybuddion diogelwch eich gweinydd"
 
-#: src/control/Control.ServerAuditDialog.ts:361
+#: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
 msgstr "AGOR"
 
@@ -3497,7 +3502,7 @@ msgstr ""
 "Mae'r ddogfen yn cynnwys rhai dyfyniadau a all fod yn anghyraeddadwy trwy "
 "API gwe. Gall achosi rhai problemau wrth olygu dyfyniadau neu lyfryddiaeth."
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1360
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
@@ -4243,7 +4248,7 @@ msgstr "Borderi celloedd"
 msgid "More options for {1}"
 msgstr "Mwy o ddewisiadau ar gyfer {1}"
 
-#: src/control/jsdialog/Widget.TreeView.ts:1577
+#: src/control/jsdialog/Widget.TreeView.ts:1573
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
 "Bydd penawdau a gwrthrychau y byddwch yn eu hychwanegu at y ddogfen yn "
@@ -4253,65 +4258,65 @@ msgstr ""
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Wps, mae problem cysylltu â {productname}: "
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:672
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr ""
 "Mae'r gweinydd bellach yn gyraeddadwy. Mae'n rhaid i ni adnewyddu'r dudalen "
 "nawr."
 
-#: src/core/Socket.js:686
+#: src/core/Socket.js:674
 msgid "Server is now reachable..."
 msgstr "Mae'r gweinydd bellach yn gyraeddadwy..."
 
-#: src/core/Socket.js:690
+#: src/core/Socket.js:678
 msgid "RELOAD"
 msgstr "AIL-LWYTHO"
 
-#: src/core/Socket.js:703
+#: src/core/Socket.js:691
 msgid "Cluster configuration warning"
 msgstr "Rhybudd ffurfweddiad clwstwr"
 
-#: src/core/Socket.js:706
+#: src/core/Socket.js:694
 msgid "Wrong server, reconnecting..."
 msgstr "Gweinydd anghywir, yn ailgysylltu..."
 
-#: src/core/Socket.js:715
+#: src/core/Socket.js:703
 msgid "COOLWSD version:"
 msgstr "Fersiwn COOLWSD:"
 
-#: src/core/Socket.js:740
+#: src/core/Socket.js:728
 msgid "Served by:"
 msgstr "Gweinyddwyd gan:"
 
-#: src/core/Socket.js:746
+#: src/core/Socket.js:734
 msgid "Unsupported server version."
 msgstr "Fersiwn gweinydd heb gymorth."
 
-#: src/core/Socket.js:750
+#: src/core/Socket.js:738
 msgid "LOKit version:"
 msgstr "Fersiwn LOKit:"
 
-#: src/core/Socket.js:875
+#: src/core/Socket.js:863
 msgid "Document is getting migrated"
 msgstr "Dogfen yn cael ei mudo"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:890
 msgid "Session terminated by document owner"
 msgstr "Terfynodd perchennog y ddogfen y sesiwn"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:901
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Mae'r gweinydd yn cau ar gyfer cynnal a chadw (awto gadw)"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:907
 msgid "Oops, there is a problem connecting the document"
 msgstr "Wps, mae yna anhawster cysylltu a'r ddogfen"
 
-#: src/core/Socket.js:923
+#: src/core/Socket.js:911
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Gweinydd i lawr, ailgychwyn yn awtomatig. Arhoswch, os gwelwch yn dda."
 
-#: src/core/Socket.js:950
+#: src/core/Socket.js:938
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -4319,7 +4324,7 @@ msgstr ""
 "Mae'r ddogfen wedi newid yn y storfa. Llwytho dogfen newydd. Mae eich "
 "fersiwn ar gael fel adolygiad."
 
-#: src/core/Socket.js:956
+#: src/core/Socket.js:944
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -4327,80 +4332,80 @@ msgstr ""
 "Yn adfer yr hen fersiwn. Bydd unrhyw newidiadau wedi eu cadw ar gael yn "
 "hanes y fersiynau"
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:950
 msgid "Reloading the document after rename"
 msgstr "Yn ail-lwytho'r ddogfen ar ôl ei hailenwi"
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1109
 msgid "Document requires password to view."
 msgstr "Mae angen cyfrinair i weld y ddogfen."
 
-#: src/core/Socket.js:1124
+#: src/core/Socket.js:1112
 msgid "Document requires password to modify."
 msgstr "Mae angen cyfrinair i newid y ddogfen."
 
-#: src/core/Socket.js:1126
+#: src/core/Socket.js:1114
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Cliciwch Diddymu i agor yn y modd gweld yn unig."
 
-#: src/core/Socket.js:1130
+#: src/core/Socket.js:1118
 msgid "Wrong password provided. Please try again."
 msgstr "Wedi darparu cyfrinair anghywir. Ceisiwch eto."
 
-#: src/core/Socket.js:1168
+#: src/core/Socket.js:1156
 msgid "Only the document owner can change the password."
 msgstr "Dim ond perchennog y ddogfen all newid y cyfrinair."
 
-#: src/core/Socket.js:1199 src/core/Socket.js:1204
+#: src/core/Socket.js:1187 src/core/Socket.js:1192
 msgid "Missing Fonts"
 msgstr "Ffontiau Coll"
 
-#: src/core/Socket.js:1236
+#: src/core/Socket.js:1224
 msgid "Someone"
 msgstr "Rhywun"
 
-#: src/core/Socket.js:1237
+#: src/core/Socket.js:1225
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "Cadwodd {username} y ddogfen hon fel {filename}. Ydych chi eisiau ymuno?"
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1242
 msgid "The document is being renamed and will reload shortly"
 msgstr "Mae'r ddogfen yn cael ei hailenwi a bydd yn cael ei hail-lwytho'n fuan"
 
-#: src/core/Socket.js:1257
+#: src/core/Socket.js:1245
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Mae'r ddogfen yn newid i'r modd All-lein a bydd yn ail-lwytho'n fuan"
 
-#: src/core/Socket.js:1360
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Cysylltu..."
 
-#: src/core/Socket.js:1375
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Mae'r gweinydd yn cau"
 
-#: src/core/Socket.js:1415
+#: src/core/Socket.js:1403
 msgid "Exported to storage"
 msgstr "Wedi'i allforio i storfa"
 
-#: src/core/Socket.js:1415
+#: src/core/Socket.js:1403
 msgid "Successfully exported: "
 msgstr "Wedi'i allforio'n llwyddiannus: "
 
-#: src/core/Socket.js:1443
+#: src/core/Socket.js:1431
 msgid "Discard"
 msgstr "Gwaredu"
 
-#: src/core/Socket.js:1455
+#: src/core/Socket.js:1443
 msgid "Save to new file"
 msgstr "Cadw i ffeil newydd"
 
-#: src/core/Socket.js:1465
+#: src/core/Socket.js:1453
 msgid "Document has been changed"
 msgstr "Dogfen wedi'i newid"
 
-#: src/core/Socket.js:1466
+#: src/core/Socket.js:1454
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -4408,18 +4413,18 @@ msgstr ""
 "Mae dogfen wedi ei newid yn y storfa. Beth hoffech chi ei wneud gyda'r "
 "newidiadau sydd heb eu cadw?"
 
-#: src/core/Socket.js:1731
+#: src/core/Socket.js:1719
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Mae'n ddrwg gennym, nid ydym yn gallu cysylltu â'ch dogfen. Ceisiwch eto."
 
-#: src/core/Socket.js:1748
+#: src/core/Socket.js:1736
 msgid "Reconnecting..."
 msgstr "Yn ailgysylltu..."
 
-#: src/core/Socket.js:1758
+#: src/core/Socket.js:1746
 msgid "The server has been disconnected."
 msgstr "Mae'r gweinydd wedi'i ddatgysylltu."
 
@@ -4789,11 +4794,11 @@ msgstr "Analluogwyd copïo o'r ddogfen"
 msgid "warning: copy/paste request timed out"
 msgstr "rhybudd: copi/gludo cais wedi dod i ben"
 
-#: src/map/Clipboard.js:329
+#: src/map/Clipboard.js:316
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Methu llwytho'r clipfwrdd i lawr, ail gopïwch"
 
-#: src/map/Clipboard.js:1317
+#: src/map/Clipboard.js:1324
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
@@ -4801,7 +4806,7 @@ msgstr ""
 "Mae gan eich porwr fynediad cyfyngedig iawn i'r clipfwrdd, felly defnyddiwch "
 "y botymau gludo ar eich bysellfwrdd ar y sgrin yn lle hynny."
 
-#: src/map/Clipboard.js:1373
+#: src/map/Clipboard.js:1380
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -4810,23 +4815,23 @@ msgstr ""
 "Arhoswch i'r llwytho i lawr cyfredol orffen neu ei ddiddymu cyn cychwyn un "
 "newydd"
 
-#: src/map/Clipboard.js:1395
+#: src/map/Clipboard.js:1402
 msgid "Paste from this document"
 msgstr "Gludo o'r ddogfen hon"
 
-#: src/map/Clipboard.js:1395
+#: src/map/Clipboard.js:1402
 msgid "Cancel paste special"
 msgstr "Dileu gludo arbennig"
 
-#: src/map/Clipboard.js:1417
+#: src/map/Clipboard.js:1424
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Mae gan eich porwr fynediad cyfyngedig iawn i'r clipfwrdd"
 
-#: src/map/Clipboard.js:1422
+#: src/map/Clipboard.js:1429
 msgid "Please use following combination to see more options:"
 msgstr "Defnyddiwch y cyfuniad canlynol i weld rhagor o ddewisiadau:"
 
-#: src/map/Clipboard.js:1440
+#: src/map/Clipboard.js:1447
 msgid "Close popup to ignore paste special"
 msgstr "Caewch y llamlen er mwyn anwybyddu'r gludo arbennig"
 
@@ -5110,6 +5115,9 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Autosaved"
+#~ msgstr "Wedi'i gadw'n awtomatig"
 
 #~ msgid "Master Pages"
 #~ msgstr "Prif Dudalennau"

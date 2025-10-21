@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-16 11:54+0200\n"
+"POT-Creation-Date: 2025-10-21 09:53+0200\n"
 "PO-Revision-Date: 2025-08-26 00:40+0000\n"
 "Last-Translator: Pavol Hodas <teachquiz1@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
@@ -144,8 +144,10 @@ msgstr "Graf siete"
 #: admin/src/integrator/AdminIntegratorSettings.ts:733
 #: admin/src/integrator/AdminIntegratorSettings.ts:1427
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:514
-#: src/canvas/sections/CommentSection.ts:178
+#: src/canvas/sections/CommentListSection.ts:529
+#: src/canvas/sections/CommentSection.ts:184
+#: src/canvas/sections/CommentSection.ts:487
+#: src/canvas/sections/CommentSection.ts:1241
 #: src/control/Control.Notebookbar.js:255
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
@@ -230,11 +232,11 @@ msgstr "Nastaviť úroveň protokolu"
 msgid "Log Levels"
 msgstr "Úrovne podrobností protokolu"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:166
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:167
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:418 src/core/Socket.js:1199 src/core/Socket.js:1204
+#: src/core/Socket.js:406 src/core/Socket.js:1187 src/core/Socket.js:1192
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Zatvoriť"
@@ -293,21 +295,21 @@ msgstr "Varovanie"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1611 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1474
+#: src/canvas/sections/CommentListSection.ts:1489
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:317
+#: src/control/Control.ServerAuditDialog.ts:330
 #: src/control/Control.Tabs.js:397 src/control/Control.Tabs.js:406
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:746 src/core/Socket.js:703 src/core/Socket.js:1169
-#: src/core/Socket.js:1239 src/core/Socket.js:1415 src/core/Socket.js:1419
+#: src/control/Toolbar.js:747 src/core/Socket.js:691 src/core/Socket.js:1157
+#: src/core/Socket.js:1227 src/core/Socket.js:1403 src/core/Socket.js:1407
 #: src/docdispatcher.ts:558 src/main.js:88 src/main.js:91 src/main.js:132
-#: src/map/Clipboard.js:1295 src/map/handler/Map.Feedback.js:96
+#: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
 #: src/map/handler/Map.SlideShow.js:297 src/map/handler/Map.SlideShow.js:308
 #: src/map/handler/Map.WOPI.js:713 src/slideshow/SlideShowPresenter.ts:1040
@@ -320,16 +322,18 @@ msgstr "OK"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:509
-#: src/canvas/sections/CommentSection.ts:177
-#: src/canvas/sections/CommentSection.ts:180
+#: src/canvas/sections/CommentListSection.ts:524
+#: src/canvas/sections/CommentSection.ts:183
+#: src/canvas/sections/CommentSection.ts:186
+#: src/canvas/sections/CommentSection.ts:1242
+#: src/canvas/sections/CommentSection.ts:1247
 #: src/control/Control.DocumentRepair.js:71
-#: src/control/Control.DownloadProgress.js:83
+#: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.ts:1775 src/control/Control.UIManager.ts:1856
 #: src/control/Control.UIManager.ts:2010 src/control/Control.UIManager.ts:2188
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1440
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1428
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "Zrušiť"
@@ -722,7 +726,9 @@ msgid "Something went wrong while uploading the file. Please try again."
 msgstr "Pri nahrávaní súboru sa vyskytla chyba. Skúste to znova."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1231
-#: src/control/Control.ContextMenu.js:250 src/docdispatcher.ts:555
+#: src/canvas/sections/CommentSection.ts:1159
+#: src/canvas/sections/CommentSection.ts:1164
+#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:555
 msgid "Delete"
 msgstr "Zmazať"
 
@@ -898,99 +904,96 @@ msgstr "Ctrl+Shift+Alt+D na ukončenie"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "Spracovanie udalosti bolo neočakávane dlho oneskorené: {0} ms"
 
-#: src/canvas/sections/CommentListSection.ts:165
+#: src/canvas/sections/CommentListSection.ts:166
 msgid "A comment is being edited"
 msgstr "Komentár je práve upravovaný"
 
-#: src/canvas/sections/CommentListSection.ts:166
+#: src/canvas/sections/CommentListSection.ts:167
 msgid "Please save or discard the comment currently being edited."
 msgstr "Uložte alebo zrušte aktuálne upravovaný komentár."
 
-#: src/canvas/sections/CommentListSection.ts:1175
+#: src/canvas/sections/CommentListSection.ts:1190
 msgid "Modify"
 msgstr "Zmeniť"
 
-#: src/canvas/sections/CommentListSection.ts:1181
-#: src/canvas/sections/CommentSection.ts:181
+#: src/canvas/sections/CommentListSection.ts:1196
+#: src/canvas/sections/CommentSection.ts:187
+#: src/canvas/sections/CommentSection.ts:491
+#: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "Odpovedať"
 
-#: src/canvas/sections/CommentListSection.ts:1187
+#: src/canvas/sections/CommentListSection.ts:1202
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: src/canvas/sections/CommentListSection.ts:1193
+#: src/canvas/sections/CommentListSection.ts:1208
 msgid "Remove Thread"
 msgstr "Odstrániť vlákno"
 
-#: src/canvas/sections/CommentListSection.ts:1199
+#: src/canvas/sections/CommentListSection.ts:1214
 msgid "Resolve"
 msgstr "Vyriešiť"
 
-#: src/canvas/sections/CommentListSection.ts:1199
+#: src/canvas/sections/CommentListSection.ts:1214
 msgid "Unresolve"
 msgstr "Zrušiť vyriešenie"
 
-#: src/canvas/sections/CommentListSection.ts:1205
+#: src/canvas/sections/CommentListSection.ts:1220
 msgid "Unresolve Thread"
 msgstr "Zrušiť vyriešenie vlákna"
 
-#: src/canvas/sections/CommentListSection.ts:1205
+#: src/canvas/sections/CommentListSection.ts:1220
 msgid "Resolve Thread"
 msgstr "Vyriešiť vlákno"
 
-#: src/canvas/sections/CommentListSection.ts:1211
+#: src/canvas/sections/CommentListSection.ts:1226
 msgid "Promote to top comment"
 msgstr "Komentár na základnú úroveň"
 
-#: src/canvas/sections/CommentListSection.ts:1217
+#: src/canvas/sections/CommentListSection.ts:1232
 msgid "Show on the side"
 msgstr "Zobraziť na strane"
 
-#: src/canvas/sections/CommentListSection.ts:1217
+#: src/canvas/sections/CommentListSection.ts:1232
 msgid "Open in full view"
 msgstr "Otvoriť v plnom zobrazení"
 
-#: src/canvas/sections/CommentListSection.ts:1223
+#: src/canvas/sections/CommentListSection.ts:1238
 msgid "Show in navigator"
 msgstr "Zobraziť v navigátore"
 
-#: src/canvas/sections/CommentListSection.ts:1251
-#: src/control/Control.JSDialogBuilder.js:1750
+#: src/canvas/sections/CommentListSection.ts:1266
+#: src/control/Control.JSDialogBuilder.js:1751
 #: src/layer/tile/CanvasTileLayer.js:3470
 #: src/layer/tile/CanvasTileLayer.js:3481
 msgid "Comment"
 msgstr "Poznámka"
 
-#: src/canvas/sections/CommentListSection.ts:1472
-#: src/canvas/sections/CommentListSection.ts:1485
+#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1500
 msgid "Comments Updated"
 msgstr "Komentáre aktualizované"
 
-#: src/canvas/sections/CommentListSection.ts:1473
+#: src/canvas/sections/CommentListSection.ts:1488
 msgid "Another user has removed this comment."
 msgstr "Tento komentár bol odstránený iným používateľom."
 
-#: src/canvas/sections/CommentListSection.ts:1486
+#: src/canvas/sections/CommentListSection.ts:1501
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 "Komentár bol aktualizovaný iným používateľom. Chcete prepísať jeho zmeny?"
 
-#: src/canvas/sections/CommentListSection.ts:1487 src/core/Socket.js:1444
+#: src/canvas/sections/CommentListSection.ts:1502 src/core/Socket.js:1432
 msgid "Overwrite"
 msgstr "Prepísať"
 
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1503
 msgid "Update"
 msgstr "Aktualizovať"
-
-#: src/canvas/sections/CommentListSection.ts:1589
-#: src/canvas/sections/CommentListSection.ts:1663
-msgid "Autosaved"
-msgstr "Automaticky uložené"
 
 #: src/canvas/sections/CommentSection.ts:45
 msgid "Edit comment"
@@ -1004,23 +1007,29 @@ msgstr "Odpovedať na komentár"
 msgid "Open menu"
 msgstr "Otvoriť menu"
 
-#: src/canvas/sections/CommentSection.ts:335
+#: src/canvas/sections/CommentSection.ts:340
 msgid "Press Ctrl + Enter to post"
 msgstr "Stlačte Ctrl + Enter na odoslanie"
 
-#: src/canvas/sections/CommentSection.ts:399
-#: src/canvas/sections/CommentSection.ts:400
+#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:405
 msgid "Accept change"
 msgstr "Akceptovať zmenu"
 
-#: src/canvas/sections/CommentSection.ts:406
-#: src/canvas/sections/CommentSection.ts:407
+#: src/canvas/sections/CommentSection.ts:411
+#: src/canvas/sections/CommentSection.ts:412
 msgid "Reject change"
 msgstr "Odmietnuť zmenu"
 
-#: src/canvas/sections/CommentSection.ts:430
+#: src/canvas/sections/CommentSection.ts:436
 msgid "Resolved"
 msgstr "Vyriešené"
+
+#: src/canvas/sections/CommentSection.ts:1158
+#: src/canvas/sections/CommentSection.ts:1163
+#: src/control/Control.SaveState.ts:53
+msgid "Saved"
+msgstr "Uložené"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:439
 msgid "Document contains unsupported media"
@@ -1106,7 +1115,7 @@ msgid ""
 "administrator."
 msgstr "Vybraný externý zdroj dát je zakázaný. Kontaktujte správcu systému."
 
-#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1296
+#: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1303
 msgid "Don’t show this again"
 msgstr "Toto už znovu nezobrazovať"
 
@@ -1118,15 +1127,15 @@ msgstr "Server zaznamenal chybu {0} počas spracovania príkazu {1}."
 msgid "Unlock"
 msgstr "Odomknúť"
 
-#: src/control/Control.ContextMenu.js:275
+#: src/control/Control.ContextMenu.js:277
 msgid "Paste Special"
 msgstr "Vložiť inak"
 
-#: src/control/Control.ContextMenu.js:282
+#: src/control/Control.ContextMenu.js:284
 msgid "Copy Cells"
 msgstr "Kopírovať bunky"
 
-#: src/control/Control.ContextMenu.js:287
+#: src/control/Control.ContextMenu.js:289
 msgid "Fill Series"
 msgstr "Vyplniť rad"
 
@@ -1191,32 +1200,32 @@ msgstr ""
 msgid "Download"
 msgstr "Stiahnuť"
 
-#: src/control/Control.DownloadProgress.js:82
+#: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
 msgstr "Sťahovanie obsahu schránky"
 
-#: src/control/Control.DownloadProgress.js:89
-#: src/control/Control.DownloadProgress.js:114
+#: src/control/Control.DownloadProgress.js:87
+#: src/control/Control.DownloadProgress.js:112
 #: src/control/Control.PartsPreview.js:305
 msgid "Copy"
 msgstr "Kopírovať"
 
-#: src/control/Control.DownloadProgress.js:112
+#: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
 msgstr "Sťahovanie bolo dokončené a je pripravené na skopírovanie do schránky."
 
-#: src/control/Control.DownloadProgress.js:113
+#: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
 "Od tejto chvíle sa budú oznámenia schránky zobrazovať nenápadnejšie v dolnej "
 "časti."
 
-#: src/control/Control.DownloadProgress.js:273
+#: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
 msgstr "Obsah bol skopírovaný do schránky"
 
-#: src/control/Control.DownloadProgress.js:303
+#: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
 msgstr "Preberanie zlyhalo"
 
@@ -1576,7 +1585,7 @@ msgstr ""
 "Neaktívny dokument - kliknutím dokument opätovne načítať a pokračovať v "
 "úprave"
 
-#: src/control/Control.JSDialog.js:331
+#: src/control/Control.JSDialog.js:337
 msgid "Close dialog"
 msgstr "Zavrieť dialógové okno"
 
@@ -1628,18 +1637,18 @@ msgstr "Farba"
 msgid "Select range"
 msgstr "Zvoliť rozsah"
 
-#: src/control/Control.JSDialogBuilder.js:1444
+#: src/control/Control.JSDialogBuilder.js:1445
 #: src/control/Control.NotebookbarBuilder.js:150
 msgid "Font Name"
 msgstr "Názov písma"
 
-#: src/control/Control.JSDialogBuilder.js:1446 src/control/Toolbar.js:135
+#: src/control/Control.JSDialogBuilder.js:1447 src/control/Toolbar.js:135
 msgid "Font Size"
 msgstr "Veľkosť písma"
 
-#: src/control/Control.JSDialogBuilder.js:1448
+#: src/control/Control.JSDialogBuilder.js:1449
 #: src/control/Control.NotebookbarCalc.js:935
-#: src/control/Control.NotebookbarCalc.js:2558
+#: src/control/Control.NotebookbarCalc.js:2559
 #: src/control/Control.NotebookbarDraw.js:1752
 #: src/control/Control.NotebookbarImpress.js:1309
 #: src/control/Control.NotebookbarWriter.js:1061
@@ -1647,33 +1656,33 @@ msgstr "Veľkosť písma"
 msgid "Style"
 msgstr "Štýl"
 
-#: src/control/Control.JSDialogBuilder.js:1736
+#: src/control/Control.JSDialogBuilder.js:1737
 msgid "reply"
 msgstr "odpovedať"
 
-#: src/control/Control.JSDialogBuilder.js:1739
+#: src/control/Control.JSDialogBuilder.js:1740
 msgid "replies"
 msgstr "odpovedá"
 
-#: src/control/Control.JSDialogBuilder.js:1814
+#: src/control/Control.JSDialogBuilder.js:1815
 msgid "Insert Comment"
 msgstr "Vložiť komentár"
 
-#: src/control/Control.JSDialogBuilder.js:2107
+#: src/control/Control.JSDialogBuilder.js:2108
 msgid "Open {name}"
 msgstr "Otvoriť {name}"
 
-#: src/control/Control.JSDialogBuilder.js:2433
+#: src/control/Control.JSDialogBuilder.js:2434
 #: src/control/Control.Menubar.ts:931
 msgid "Rows"
 msgstr "Riadky"
 
-#: src/control/Control.JSDialogBuilder.js:2434
+#: src/control/Control.JSDialogBuilder.js:2435
 #: src/control/Control.Menubar.ts:934
 msgid "Columns"
 msgstr "Stĺpce"
 
-#: src/control/Control.JSDialogBuilder.js:2454
+#: src/control/Control.JSDialogBuilder.js:2455
 msgid "Insert Table"
 msgstr "Vložiť tabuľku"
 
@@ -1867,7 +1876,7 @@ msgid "Invert Background"
 msgstr "Invertovať pozadie"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:806
-#: src/control/Control.NotebookbarCalc.js:2585
+#: src/control/Control.NotebookbarCalc.js:2586
 #: src/control/Control.NotebookbarWriter.js:954
 #: src/control/Control.NotebookbarWriter.js:1088
 msgid "Style list"
@@ -2020,8 +2029,8 @@ msgstr "Odoslať spätnú väzbu"
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:599
 #: src/control/Control.Menubar.ts:738 src/control/Control.Menubar.ts:1031
 #: src/control/Control.NotebookbarWriter.js:494
-#: src/control/Control.ServerAuditDialog.ts:274
-#: src/control/Control.ServerAuditDialog.ts:275
+#: src/control/Control.ServerAuditDialog.ts:287
+#: src/control/Control.ServerAuditDialog.ts:288
 msgid "Server audit"
 msgstr "Audit serveru"
 
@@ -2261,8 +2270,8 @@ msgstr "Podpriemerné..."
 #: src/control/Control.NotebookbarImpress.js:1277
 #: src/control/Control.NotebookbarWriter.js:1016
 #: src/control/Control.NotebookbarWriter.js:1029
-#: src/control/Control.Zotero.js:220 src/control/Toolbar.js:580
-#: src/control/Toolbar.js:581
+#: src/control/Control.Zotero.js:220 src/control/Toolbar.js:581
+#: src/control/Toolbar.js:582
 msgid "Search"
 msgstr "Hľadať"
 
@@ -2365,7 +2374,7 @@ msgstr "Snímky"
 msgid "Results"
 msgstr "Výsledky"
 
-#: src/control/Control.NavigatorPanel.ts:474
+#: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
 msgstr "Vyhľadať..."
 
@@ -2500,10 +2509,10 @@ msgstr "Domov"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarDraw.js:1132
 #: src/control/Control.NotebookbarImpress.js:90
-#: src/control/Control.NotebookbarImpress.js:2002
+#: src/control/Control.NotebookbarImpress.js:2003
 #: src/control/Control.NotebookbarWriter.js:50
 #: src/control/Control.NotebookbarWriter.js:965
-#: src/control/Control.NotebookbarWriter.js:2431
+#: src/control/Control.NotebookbarWriter.js:2432
 msgid "Insert"
 msgstr "Vložiť"
 
@@ -2558,7 +2567,7 @@ msgstr "Náhľad"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1678
-#: src/control/Control.NotebookbarCalc.js:2646
+#: src/control/Control.NotebookbarCalc.js:2647
 msgid "Sparkline"
 msgstr "Minigraf"
 
@@ -2566,7 +2575,7 @@ msgstr "Minigraf"
 #: src/control/Control.NotebookbarDraw.js:121
 #: src/control/Control.NotebookbarImpress.js:156
 #: src/control/Control.NotebookbarWriter.js:108
-#: src/control/Control.ServerAuditDialog.ts:294
+#: src/control/Control.ServerAuditDialog.ts:307
 msgid "Help"
 msgstr "Pomocník"
 
@@ -2753,28 +2762,28 @@ msgid "Delete Columns"
 msgstr "Odstrániť stĺpce"
 
 #: src/control/Control.NotebookbarCalc.js:1259
-#: src/control/Control.NotebookbarCalc.js:2808
-#: src/control/Control.NotebookbarCalc.js:3165
+#: src/control/Control.NotebookbarCalc.js:2809
+#: src/control/Control.NotebookbarCalc.js:3166
 #: src/control/Control.NotebookbarDraw.js:1298
-#: src/control/Control.NotebookbarImpress.js:2297
-#: src/control/Control.NotebookbarImpress.js:2504
-#: src/control/Control.NotebookbarImpress.js:2808
+#: src/control/Control.NotebookbarImpress.js:2298
+#: src/control/Control.NotebookbarImpress.js:2505
+#: src/control/Control.NotebookbarImpress.js:2809
 #: src/control/Control.NotebookbarWriter.js:2037
-#: src/control/Control.NotebookbarWriter.js:2893
-#: src/control/Control.NotebookbarWriter.js:3216
+#: src/control/Control.NotebookbarWriter.js:2894
+#: src/control/Control.NotebookbarWriter.js:3217
 msgid "Align"
 msgstr "Zarovnať"
 
 #: src/control/Control.NotebookbarCalc.js:1329
-#: src/control/Control.NotebookbarCalc.js:2875
-#: src/control/Control.NotebookbarCalc.js:3232
+#: src/control/Control.NotebookbarCalc.js:2876
+#: src/control/Control.NotebookbarCalc.js:3233
 #: src/control/Control.NotebookbarDraw.js:1365
-#: src/control/Control.NotebookbarImpress.js:2364
-#: src/control/Control.NotebookbarImpress.js:2571
-#: src/control/Control.NotebookbarImpress.js:2875
+#: src/control/Control.NotebookbarImpress.js:2365
+#: src/control/Control.NotebookbarImpress.js:2572
+#: src/control/Control.NotebookbarImpress.js:2876
 #: src/control/Control.NotebookbarWriter.js:2108
-#: src/control/Control.NotebookbarWriter.js:2952
-#: src/control/Control.NotebookbarWriter.js:3275
+#: src/control/Control.NotebookbarWriter.js:2953
+#: src/control/Control.NotebookbarWriter.js:3276
 msgid "Arrange"
 msgstr "Usporiadať"
 
@@ -2812,12 +2821,12 @@ msgstr "Stavový riadok"
 
 #: src/control/Control.NotebookbarCalc.js:1587
 #: src/control/Control.NotebookbarCalc.js:2319
-#: src/control/Control.NotebookbarCalc.js:2928
-#: src/control/Control.NotebookbarCalc.js:3285
-#: src/control/Control.NotebookbarImpress.js:2624
-#: src/control/Control.NotebookbarImpress.js:2928
-#: src/control/Control.NotebookbarWriter.js:3001
-#: src/control/Control.NotebookbarWriter.js:3324
+#: src/control/Control.NotebookbarCalc.js:2929
+#: src/control/Control.NotebookbarCalc.js:3286
+#: src/control/Control.NotebookbarImpress.js:2625
+#: src/control/Control.NotebookbarImpress.js:2929
+#: src/control/Control.NotebookbarWriter.js:3002
+#: src/control/Control.NotebookbarWriter.js:3325
 msgid "Group"
 msgstr "Zoskupiť"
 
@@ -2902,27 +2911,27 @@ msgstr "Zoradiť"
 msgid "Filter"
 msgstr "Filter"
 
-#: src/control/Control.NotebookbarCalc.js:2490
-#: src/control/Control.NotebookbarImpress.js:1965
-#: src/control/Control.NotebookbarWriter.js:2235
+#: src/control/Control.NotebookbarCalc.js:2491
+#: src/control/Control.NotebookbarImpress.js:1966
+#: src/control/Control.NotebookbarWriter.js:2236
 msgid "Comments"
 msgstr "Komentáre"
 
-#: src/control/Control.NotebookbarCalc.js:2595
+#: src/control/Control.NotebookbarCalc.js:2596
 msgid "Format Cells"
 msgstr "Formátovať bunky"
 
-#: src/control/Control.NotebookbarCalc.js:2741
-#: src/control/Control.NotebookbarCalc.js:3098
+#: src/control/Control.NotebookbarCalc.js:2742
+#: src/control/Control.NotebookbarCalc.js:3099
 #: src/control/Control.NotebookbarWriter.js:1939
-#: src/control/Control.NotebookbarWriter.js:2838
-#: src/control/Control.NotebookbarWriter.js:3161
+#: src/control/Control.NotebookbarWriter.js:2839
+#: src/control/Control.NotebookbarWriter.js:3162
 msgid "Wrap"
 msgstr "Obtekanie textu"
 
-#: src/control/Control.NotebookbarCalc.js:2980
-#: src/control/Control.NotebookbarImpress.js:2684
-#: src/control/Control.NotebookbarWriter.js:3047
+#: src/control/Control.NotebookbarCalc.js:2981
+#: src/control/Control.NotebookbarImpress.js:2685
+#: src/control/Control.NotebookbarWriter.js:3048
 msgid "Image Controls"
 msgstr "Ovládacie pole obrázkov"
 
@@ -2952,9 +2961,9 @@ msgstr "Pravítko"
 
 #: src/control/Control.NotebookbarDraw.js:899
 #: src/control/Control.NotebookbarImpress.js:989
-#: src/control/Control.NotebookbarImpress.js:2177
+#: src/control/Control.NotebookbarImpress.js:2178
 #: src/control/Control.NotebookbarWriter.js:793
-#: src/control/Control.NotebookbarWriter.js:2604
+#: src/control/Control.NotebookbarWriter.js:2605
 msgid "Paragraph"
 msgstr "Odstavec"
 
@@ -3038,16 +3047,16 @@ msgstr "Veľkosť snímky"
 msgid "Background Image"
 msgstr "Obrázok na pozadí"
 
-#: src/control/Control.NotebookbarImpress.js:2069
+#: src/control/Control.NotebookbarImpress.js:2070
 msgid "Merge & Split"
 msgstr "Zlúčiť a rozdeliť"
 
-#: src/control/Control.NotebookbarImpress.js:2108
-#: src/control/Control.NotebookbarWriter.js:2554
+#: src/control/Control.NotebookbarImpress.js:2109
+#: src/control/Control.NotebookbarWriter.js:2555
 msgid "Select"
 msgstr "Vybrať"
 
-#: src/control/Control.NotebookbarImpress.js:2717
+#: src/control/Control.NotebookbarImpress.js:2718
 msgid "Effects"
 msgstr "Efekty"
 
@@ -3104,15 +3113,15 @@ msgstr "Zaškrtávacie políčko"
 msgid "Dropdown"
 msgstr "Rozbaľovací zoznam"
 
-#: src/control/Control.NotebookbarWriter.js:2310
+#: src/control/Control.NotebookbarWriter.js:2311
 msgid "Tracking"
 msgstr "Sledovanie"
 
-#: src/control/Control.NotebookbarWriter.js:2492
+#: src/control/Control.NotebookbarWriter.js:2493
 msgid "Split"
 msgstr "Rozdeliť"
 
-#: src/control/Control.NotebookbarWriter.js:2676
+#: src/control/Control.NotebookbarWriter.js:2677
 msgid "Number Format"
 msgstr "Číselný formát"
 
@@ -3135,10 +3144,6 @@ msgstr "Prilepiť"
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
 msgstr "Ukladanie"
-
-#: src/control/Control.SaveState.ts:53
-msgid "Saved"
-msgstr "Uložené"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -3228,35 +3233,35 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Integrátor nie je pripravený na volania PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-msgid "Using namespaces."
+msgid "Using namespaces"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:227
-msgid "Document container started in"
+#: src/control/Control.ServerAuditDialog.ts:236
+msgid "Document container started in {1} ms"
 msgstr ""
 
-#: src/control/Control.ServerAuditDialog.ts:293
+#: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
 msgstr "Stav"
 
-#: src/control/Control.ServerAuditDialog.ts:303
+#: src/control/Control.ServerAuditDialog.ts:316
 msgid "No issues found"
 msgstr "Neboli nájdené žiadne problémy"
 
-#: src/control/Control.ServerAuditDialog.ts:308
+#: src/control/Control.ServerAuditDialog.ts:321
 msgid "Alerts:"
 msgstr "Upozornenia:"
 
-#: src/control/Control.ServerAuditDialog.ts:360
+#: src/control/Control.ServerAuditDialog.ts:373
 #, fuzzy
 msgid "Check warnings of your server"
 msgstr "Skontrolujte bezpečnostné upozornenia vášho servera"
 
-#: src/control/Control.ServerAuditDialog.ts:361
+#: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
 msgstr "OTVORIŤ"
 
@@ -3492,7 +3497,7 @@ msgstr ""
 "Dokument obsahuje niektoré citácie, ktoré nemusia byť dostupné cez webové "
 "API. Pri úprave citácií alebo bibliografie to môže spôsobovať problémy."
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1360
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Načítava sa…"
 
@@ -4236,7 +4241,7 @@ msgstr "Orámovanie buniek"
 msgid "More options for {1}"
 msgstr "Ďalšie možnosti pre {1}"
 
-#: src/control/jsdialog/Widget.TreeView.ts:1577
+#: src/control/jsdialog/Widget.TreeView.ts:1573
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Nadpisy a objekty, ktoré pridáte do dokumentu, sa zobrazia tu"
 
@@ -4244,64 +4249,64 @@ msgstr "Nadpisy a objekty, ktoré pridáte do dokumentu, sa zobrazia tu"
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Nastal problém pri spájaní sa s {productname}: "
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:672
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server je opäť dostupný. Stránku je nutné obnoviť."
 
-#: src/core/Socket.js:686
+#: src/core/Socket.js:674
 msgid "Server is now reachable..."
 msgstr "Server je opäť dostupný..."
 
-#: src/core/Socket.js:690
+#: src/core/Socket.js:678
 msgid "RELOAD"
 msgstr "Znovu načítať"
 
-#: src/core/Socket.js:703
+#: src/core/Socket.js:691
 msgid "Cluster configuration warning"
 msgstr "Upozornenie na konfiguráciu klastru"
 
-#: src/core/Socket.js:706
+#: src/core/Socket.js:694
 msgid "Wrong server, reconnecting..."
 msgstr "Nesprávny server, pripájam sa znova..."
 
-#: src/core/Socket.js:715
+#: src/core/Socket.js:703
 msgid "COOLWSD version:"
 msgstr "Verzia COOLWSD:"
 
-#: src/core/Socket.js:740
+#: src/core/Socket.js:728
 msgid "Served by:"
 msgstr "Zo serveru:"
 
-#: src/core/Socket.js:746
+#: src/core/Socket.js:734
 msgid "Unsupported server version."
 msgstr "Nepodporovaná verzia servera."
 
-#: src/core/Socket.js:750
+#: src/core/Socket.js:738
 msgid "LOKit version:"
 msgstr "Verzia LOKit:"
 
-#: src/core/Socket.js:875
+#: src/core/Socket.js:863
 msgid "Document is getting migrated"
 msgstr "Dokument sa migruje"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:890
 msgid "Session terminated by document owner"
 msgstr "Relácia ukončená vlastníkom dokumentu"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:901
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server sa vypína kvôli údržbe (zmeny budú automaticky uložené)"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:907
 msgid "Oops, there is a problem connecting the document"
 msgstr "Nastal problém pri spájaní sa s dokumentom"
 
-#: src/core/Socket.js:923
+#: src/core/Socket.js:911
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Server je momentálne nedostupný, automaticky sa reštartuje. Počkajte prosím."
 
-#: src/core/Socket.js:950
+#: src/core/Socket.js:938
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -4309,7 +4314,7 @@ msgstr ""
 "Dokument v úložisku bol zmenený. Dokument sa načítava, vaša verzia bude "
 "uložená ako revízia."
 
-#: src/core/Socket.js:956
+#: src/core/Socket.js:944
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -4317,79 +4322,79 @@ msgstr ""
 "Obnovuje sa staršia revízia. Všetky neuložené zmeny budú dostupné v histórii "
 "verzií"
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:950
 msgid "Reloading the document after rename"
 msgstr "Dokument sa po premenovaní znovu načíta"
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1109
 msgid "Document requires password to view."
 msgstr "Na zobrazenie dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:1124
+#: src/core/Socket.js:1112
 msgid "Document requires password to modify."
 msgstr "Na úpravu dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:1126
+#: src/core/Socket.js:1114
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stlačte Zrušiť aby otvoriť dokument v režime zobrazenia."
 
-#: src/core/Socket.js:1130
+#: src/core/Socket.js:1118
 msgid "Wrong password provided. Please try again."
 msgstr "Zadané nesprávne heslo. Prosím, skúste znova."
 
-#: src/core/Socket.js:1168
+#: src/core/Socket.js:1156
 msgid "Only the document owner can change the password."
 msgstr "Iba vlastník dokumentu môže zmeniť heslo."
 
-#: src/core/Socket.js:1199 src/core/Socket.js:1204
+#: src/core/Socket.js:1187 src/core/Socket.js:1192
 msgid "Missing Fonts"
 msgstr "Chýbajúce písma"
 
-#: src/core/Socket.js:1236
+#: src/core/Socket.js:1224
 msgid "Someone"
 msgstr "Niekto"
 
-#: src/core/Socket.js:1237
+#: src/core/Socket.js:1225
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} uložil tento dokument ako {filename}. Chcete sa pripojiť?"
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1242
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument sa práve premenováva a čoskoro sa znovu načíta"
 
-#: src/core/Socket.js:1257
+#: src/core/Socket.js:1245
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Dokument sa prepína do režimu offline a čoskoro sa znova načíta"
 
-#: src/core/Socket.js:1360
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Prebieha pripájanie…"
 
-#: src/core/Socket.js:1375
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Server sa vypína"
 
-#: src/core/Socket.js:1415
+#: src/core/Socket.js:1403
 msgid "Exported to storage"
 msgstr "Exportované do úložiska"
 
-#: src/core/Socket.js:1415
+#: src/core/Socket.js:1403
 msgid "Successfully exported: "
 msgstr "Úspešne exportované: "
 
-#: src/core/Socket.js:1443
+#: src/core/Socket.js:1431
 msgid "Discard"
 msgstr "Zahodiť"
 
-#: src/core/Socket.js:1455
+#: src/core/Socket.js:1443
 msgid "Save to new file"
 msgstr "Uložiť do nového súboru"
 
-#: src/core/Socket.js:1465
+#: src/core/Socket.js:1453
 msgid "Document has been changed"
 msgstr "Dokument bol zmenený"
 
-#: src/core/Socket.js:1466
+#: src/core/Socket.js:1454
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -4397,7 +4402,7 @@ msgstr ""
 "Dokument bol zmenený v úložisku. Čo si prajete urobiť so svojimi neuloženými "
 "zmenami?"
 
-#: src/core/Socket.js:1731
+#: src/core/Socket.js:1719
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -4405,11 +4410,11 @@ msgstr ""
 "Toto je nepríjemné, nepodarilo sa pripojiť k dokumentu. Skúste to znova, "
 "prosím."
 
-#: src/core/Socket.js:1748
+#: src/core/Socket.js:1736
 msgid "Reconnecting..."
 msgstr "Opätovné pripájanie..."
 
-#: src/core/Socket.js:1758
+#: src/core/Socket.js:1746
 msgid "The server has been disconnected."
 msgstr "Server bol odpojený."
 
@@ -4778,11 +4783,11 @@ msgstr "Kopírovanie z dokumentu je zakázané"
 msgid "warning: copy/paste request timed out"
 msgstr "Upozornenie: požiadavka na kopírovanie/vloženie vypršala"
 
-#: src/map/Clipboard.js:329
+#: src/map/Clipboard.js:316
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Nepodarilo sa stiahnuť schránku, skúste skopírovať znova"
 
-#: src/map/Clipboard.js:1317
+#: src/map/Clipboard.js:1324
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
@@ -4790,7 +4795,7 @@ msgstr ""
 "Váš prehliadač má veľmi obmedzený prístup k schránke, preto používajte "
 "tlačidlá na vloženie na vašej obrazovkovej klávesnici."
 
-#: src/map/Clipboard.js:1373
+#: src/map/Clipboard.js:1380
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -4798,23 +4803,23 @@ msgstr ""
 "Sťahovanie za účelom rozsiahleho kopírovania / vkladania už začalo. Prosím, "
 "počkajte na jeho dokončenie alebo ho pred začatím nového najprv zrušte"
 
-#: src/map/Clipboard.js:1395
+#: src/map/Clipboard.js:1402
 msgid "Paste from this document"
 msgstr "Prilepiť z tohto dokumentu"
 
-#: src/map/Clipboard.js:1395
+#: src/map/Clipboard.js:1402
 msgid "Cancel paste special"
 msgstr "Zrušiť špeciálne prilepenie"
 
-#: src/map/Clipboard.js:1417
+#: src/map/Clipboard.js:1424
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Váš prehliadač má veľmi obmedzený prístup k schránke"
 
-#: src/map/Clipboard.js:1422
+#: src/map/Clipboard.js:1429
 msgid "Please use following combination to see more options:"
 msgstr "Na zobrazenie ďalších možností použite nasledujúcu kombináciu:"
 
-#: src/map/Clipboard.js:1440
+#: src/map/Clipboard.js:1447
 msgid "Close popup to ignore paste special"
 msgstr "Zatvorte vyskakovacie okno, ak chcete ignorovať špeciálne prilepenie"
 
@@ -5093,6 +5098,9 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Autosaved"
+#~ msgstr "Automaticky uložené"
 
 #~ msgid "Master Pages"
 #~ msgstr "Predlohy strán"
