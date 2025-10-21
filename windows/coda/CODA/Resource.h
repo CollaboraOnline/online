@@ -2,14 +2,9 @@
 // Microsoft Visual C++ generated include file.
 // Used by CODA.rc
 
-#define IDD_CODA_DIALOG                 102
 #define IDS_APP_TITLE                   103
-#define IDD_ABOUTBOX                    103
-#define IDM_ABOUT                       104
-#define IDM_EXIT                        105
 #define IDI_CODA                        107
 #define IDC_CODA                        109
-#define IDC_STATIC                       -1
 
 // Next default values for new objects
 //
