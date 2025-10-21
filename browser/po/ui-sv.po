@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-16 11:54+0200\n"
-"PO-Revision-Date: 2025-10-06 19:02+0000\n"
+"PO-Revision-Date: 2025-10-17 11:07+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2371,32 +2371,31 @@ msgstr "Skriv ett sökuttryck i sökrutan för att söka efter det i ditt dokume
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animering"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Tillämpade animeringar"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Flytta upp"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Flytta ner"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Starta"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Effekter"
+msgstr "Effekt"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2439,7 +2438,7 @@ msgstr "Fält"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "Animeringar"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2978,9 +2977,8 @@ msgid "Present in Window"
 msgstr "Presentera i fönster"
 
 #: src/control/Control.NotebookbarImpress.js:501
-#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Följ mig-presentation"
+msgstr "Starta Följ mig-presentation"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:729
@@ -3250,9 +3248,8 @@ msgid "Alerts:"
 msgstr "Varningar:"
 
 #: src/control/Control.ServerAuditDialog.ts:360
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Kontrollera säkerhetsvarningarna för din server"
+msgstr "Kontrollera varningarna för din server"
 
 #: src/control/Control.ServerAuditDialog.ts:361
 msgid "OPEN"
@@ -3280,7 +3277,7 @@ msgstr "Infoga blad"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Visa bladlista"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
@@ -4142,7 +4139,7 @@ msgstr "Nyligen"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Inställningar för marginaler på sida"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:104
 msgid "Top: {top}"
