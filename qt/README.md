@@ -18,9 +18,9 @@ Run autogen.sh, then configure:
 
 Obviously, adjust the path to your LibreOffice build tree as necessary.
 
-Then cd to this directory and run make.
+Then in the top directory run make.
 
-You will get the mobile executable. Run it for example like this:
+You will get the CODA executable. Run it for example like this:
 
 ./coda-qt ../test/data/hello.odt
 
