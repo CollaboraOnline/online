@@ -19,7 +19,7 @@ describe(['tagdesktop'], 'Signature operations.', function() {
 		// Make sure the signature line has handles, so it can be moved/resized:
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		// Finish signing:
-		cy.cGet('#menu-file').click();
+		cy.cGet('#menu-file').should('be.visible').click();
 		cy.cGet('#menu-signature').click();
 
 		// Then make sure the resulting signature is valid:
