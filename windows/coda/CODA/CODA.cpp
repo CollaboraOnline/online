@@ -1276,12 +1276,12 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
+    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CODA));
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = NULL;
     wcex.lpszClassName = windowClass;
-    wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
+    wcex.hIconSm = NULL;
 
     if (!RegisterClassExW(&wcex))
     {
