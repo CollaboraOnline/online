@@ -264,6 +264,23 @@ namespace FileUtil
         return rootPath.toString();
     }
 
+    std::pair<std::string, std::string> buildPathsToJail(bool usingMountNamespaces, bool noCapsForKit,
+                                                         std::string localJailRoot, std::string jailDir)
+    {
+        std::string localDir = FileUtil::buildLocalPathToJail(
+            usingMountNamespaces, localJailRoot, jailDir);
+
+        // This is the location of the file as seen by the kit, the location as
+        // seen inside the jail. Ideally (and typically) noCaps is false, and
+        // the path inside the jail is simply 'jailDir'. But if noCaps is true,
+        // then chroot isn't possible and the jail is forced to work with the
+        // same paths as used outside the jail.
+        if (noCapsForKit)
+            jailDir = localDir;
+
+        return std::make_pair(localDir, jailDir);
+    }
+
     ssize_t read(int fd, void* buf, size_t nbytes)
     {
         char* p = static_cast<char*>(buf);
