@@ -1721,6 +1721,14 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         }
         else
         {
+            if (!docBroker->getSessionFromClipboardTag(viewId, tag))
+            {
+                LOG_ERR_S("Unknown tag [" << tag << "] for view [" << viewId << "] on request to URL: " << request.getURI());
+                // we got the wrong tag.
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket, "wrong tag");
+                return true;
+            }
+
             type = DocumentBroker::CLIP_REQUEST_SET;
 
             std::string clipName = "setclipboard." + tag;
