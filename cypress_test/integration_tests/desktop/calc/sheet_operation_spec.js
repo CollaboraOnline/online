@@ -66,6 +66,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
 	});
 
+	it('Rename sheet using keyboard only', function () {
+		calcHelper.assertNumberofSheets(1);
+		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'Sheet1');
+		calcHelper.selectOptionFromContextMenu('Rename Sheet...');
+		cy.cGet('#modal-dialog-rename-calc-sheet').should('exist');
+		cy.cGet('#input-modal-input').should('have.focus').clear().type('renameSheet{Enter}');
+		cy.cGet('#modal-dialog-rename-calc-sheet').should('not.exist');
+		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
+	});
+
+
 	it('Hide/Show sheet', function () {
 		calcHelper.assertNumberofSheets(1);
 		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
