@@ -772,6 +772,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// We will pass this here and there, so we can split the code into smaller functions.
 		// Then we will save this into this.dialogs[].
 		var instance = e.data;
+		if (JSDialog.verbose) app.console.debug(instance);
 
 		// Save last focused element, we will set the focus back to this element after this popup is closed.
 		if (this.dialogs[instance.id] && this.dialogs[instance.id].lastFocusedElement) {
