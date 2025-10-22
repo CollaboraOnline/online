@@ -78,6 +78,7 @@ export class CommentSection extends CanvasSectionObject {
 		showSelectedBigger: boolean;
 		commentsAreListed: boolean;
 		show: boolean;
+		showResolved: boolean;
 		[key: string]: any;
 		canvasContainerTop: number; // The top pixel of the document container. Added to positions of comments.
 		canvasContainerLeft: number;
@@ -110,7 +111,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.show = null;
-		this.sectionProperties.showResolved = null;
+		this.sectionProperties.showResolved = false;
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
@@ -2217,13 +2218,19 @@ export class CommentSection extends CanvasSectionObject {
 		this.update();
 	}
 
-	public setView (state: boolean): void {
+	/*
+		also consider whether the comment to be shown is a resolved
+		comment and if so then check if the `showResolved` toggle
+		is on or off.
+	*/
+	public setView(state: boolean): void {
 		this.sectionProperties.show = state;
-		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
-			if (state == false)
+		for (var idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
+			if (state == false) {
 				this.sectionProperties.commentList[idx].hide();
-			else
+			} else if (this.sectionProperties.commentList[idx].sectionProperties.data.resolved != 'true' || this.sectionProperties.showResolved == true) {
 				this.sectionProperties.commentList[idx].show();
+			}
 		}
 	}
 
