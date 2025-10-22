@@ -457,8 +457,9 @@ public:
     void handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                 const std::string &viewId, const std::string &tag,
                                 const std::string &clipFile);
-    static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
-                                       const std::string &tag, bool sendError = false);
+    static bool handlePersistentClipboardRequest(ClipboardRequest type,
+                                                 const std::shared_ptr<StreamSocket> &socket,
+                                                 const std::string &tag, bool sendError = false);
 
     void handleMediaRequest(std::string_view range, const std::shared_ptr<Socket>& socket,
                             const std::string& tag);
