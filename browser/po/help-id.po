@@ -3361,10 +3361,10 @@ msgstr "Atur properti dari elemen objek."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Klik pada ikon sub menu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
-#~ "src=\"images/submenu.svg\">) untuk membalas, memindahkan, dan menghapus "
+#~ "src=\"images/lc_more.svg\">) untuk membalas, memindahkan, dan menghapus "
 #~ "komentar."
 
 #~ msgid ""

@@ -3366,10 +3366,10 @@ msgstr "Indstil objektelementets egenskaber."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Klik på undermenuens ikon (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
-#~ "src=\"images/submenu.svg\">) for at besvare, flytte og slette kommentarer."
+#~ "src=\"images/lc_more.svg\">) for at besvare, flytte og slette kommentarer."
 
 #~ msgid ""
 #~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "

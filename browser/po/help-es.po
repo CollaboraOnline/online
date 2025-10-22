@@ -3406,10 +3406,10 @@ msgstr "Ajuste las propiedades del elemento del objeto."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Pulse en el icono de menú (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
-#~ "src=\"images/submenu.svg\">) para responder a, mover o eliminar comentarios."
+#~ "src=\"images/lc_more.svg\">) para responder a, mover o eliminar comentarios."
 
 #~ msgid ""
 #~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "
