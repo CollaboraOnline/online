@@ -236,6 +236,11 @@ class ViewLayoutBase {
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
 	}
 
+	// virtual function implemented by the children
+	public documentCanMoveLeft() {
+		return false;
+	}
+
 	/*
 		`ignoreScrollbarLength` constraints while scrolling the document to make some space for the comments. 
 		see `ViewLayoutWriter.adjustDocumentMarginsForComments`

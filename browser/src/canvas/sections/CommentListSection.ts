@@ -295,17 +295,14 @@ export class CommentSection extends CanvasSectionObject {
 			in case the comment section is half hidden and there
 			is some space on the left side of the document (since
 			the document is centered), we don't collapse the comments.
-
 			the comments section doesn't end up in such layout normally,
 			either the user resized the window, or zoomed in. both of
 			those events are being listened to in ViewLayoutWriter and
 			when that happens, `ViewLayoutWriter` moves the document to
 			the left in function `adjustDocumentMarginsForComments`.
 		*/
-		if (app.activeDocument.activeView instanceof ViewLayoutWriter
-			&& (app.activeDocument.activeView as ViewLayoutWriter).documentCanMoveLeft()) {
+		if (app.activeDocument.activeView.documentCanMoveLeft())
 			return false;
-		}
 		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
 	}
 
