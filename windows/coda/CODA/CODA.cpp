@@ -1009,7 +1009,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
     }
 
     HWND hWnd = CreateWindowW(
-        windowClass, Util::string_to_wide_string(filenameAndUri.filename + " - CODA").c_str(),
+        windowClass, Util::string_to_wide_string(filenameAndUri.filename + " - " APP_NAME).c_str(),
         WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, appInstance,
         NULL);
 
@@ -1285,7 +1285,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     if (!RegisterClassExW(&wcex))
     {
-        MessageBoxW(NULL, L"Call to RegisterClassEWx failed", L"CODA", NULL);
+        MessageBoxW(NULL, L"Call to RegisterClassEWx failed", Util::string_to_wide_string(APP_NAME).c_str(), NULL);
 
         return 1;
     }
