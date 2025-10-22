@@ -998,8 +998,8 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
         monitorInfo.cbSize = sizeof(monitorInfo);
         if (monitor_of_dialog != NULL && GetMonitorInfoW(monitor_of_dialog, &monitorInfo))
         {
-            width = 0.9 * monitorInfo.rcWork.right - monitorInfo.rcWork.left;
-            height = 0.9 * monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+            width = 0.9 * (monitorInfo.rcWork.right - monitorInfo.rcWork.left);
+            height = 0.9 * (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
         }
         else
         {
