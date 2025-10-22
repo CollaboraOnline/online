@@ -29,4 +29,5 @@ enum WindowId {
 
 enum AutoCompleteDialogId {
 	Mention = 'mentionPopup',
+	FormulaUsagePopup = 'formulausagePopup',
 }
