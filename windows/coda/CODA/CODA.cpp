@@ -748,7 +748,7 @@ static FilenameAndUri fileOpenDialog()
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
         std::abort();
 
-    if (!SUCCEEDED(dialog->SetTitle(L"Select document to edit")))
+    if (!SUCCEEDED(dialog->SetTitle(L"Select document to edit in " APP_NAME)))
         std::abort();
 
     IFileDialogEvents* dialogEvents = NULL;
