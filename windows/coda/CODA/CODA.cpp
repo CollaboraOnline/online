@@ -97,6 +97,11 @@ static COOLWSD* coolwsd = nullptr;
 // The main window class name.
 static const wchar_t windowClass[] = L"CODA";
 
+// The file open dialog dummy owner window class name.
+static const wchar_t dummyWindowClass[] = L"CODADummyFileDialogOwnerWindow";
+// The handle of that dummy window.
+static HWND hiddenOwnerWindow;
+
 static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
 
 constexpr int CODA_GROUP_OPEN = 1000;
@@ -790,7 +795,7 @@ static FilenameAndUri fileOpenDialog()
 
     dialogCustomisation->Release();
 
-    HRESULT dialogResult = dialog->Show(NULL);
+    HRESULT dialogResult = dialog->Show(hiddenOwnerWindow);
 
     if (!SUCCEEDED(dialogResult))
         return {};
@@ -857,7 +862,7 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
     if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
         std::abort();
 
-    if (!SUCCEEDED(dialog->Show(NULL)))
+    if (!SUCCEEDED(dialog->Show(hiddenOwnerWindow)))
         return {};
 
     std::free(extensionCopy);
@@ -1231,6 +1236,38 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
          (Util::string_to_wide_string(app_installation_path +
                                       "persistentWindowSizes")) == litecask::Status::Ok);
 
+    // Create a dummy hidden owner window so that the file open dialog can inherit its icon for the
+    // task switcher (Alt-Tab) from it.
+
+    {
+        WNDCLASSEXW wcex;
+
+        wcex.cbSize = sizeof(WNDCLASSEXW);
+        wcex.style = 0;
+        wcex.lpfnWndProc = DefWindowProc;
+        wcex.cbClsExtra = 0;
+        wcex.cbWndExtra = 0;
+        wcex.hInstance = hInstance;
+        wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CODA));
+        wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        wcex.lpszMenuName = NULL;
+        wcex.lpszClassName = dummyWindowClass;
+        wcex.hIconSm = NULL;
+
+        if (!RegisterClassExW(&wcex))
+        {
+            MessageBoxW(NULL, L"Call to RegisterClassExW failed", Util::string_to_wide_string(APP_NAME).c_str(), NULL);
+            return 1;
+        }
+
+        hiddenOwnerWindow = CreateWindowW(dummyWindowClass, L"CODAHiddenOwnerWindow",
+                                          WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
+                                          100, 100, NULL, NULL,
+                                          hInstance, NULL);
+        ShowWindow(hiddenOwnerWindow, SW_HIDE);
+    }
+
     FilenameAndUri filenameAndUri;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
     {
@@ -1268,27 +1305,28 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         })
         .detach();
 
-    WNDCLASSEXW wcex;
-
-    wcex.cbSize = sizeof(WNDCLASSEXW);
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;
-    wcex.cbClsExtra = 0;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CODA));
-    wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = windowClass;
-    wcex.hIconSm = NULL;
-
-    if (!RegisterClassExW(&wcex))
     {
-        MessageBoxW(NULL, L"Call to RegisterClassEWx failed", Util::string_to_wide_string(APP_NAME).c_str(), NULL);
+        WNDCLASSEXW wcex;
 
-        return 1;
-    }
+        wcex.cbSize = sizeof(WNDCLASSEXW);
+        wcex.style = CS_HREDRAW | CS_VREDRAW;
+        wcex.lpfnWndProc = WndProc;
+        wcex.cbClsExtra = 0;
+        wcex.cbWndExtra = 0;
+        wcex.hInstance = hInstance;
+        wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CODA));
+        wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        wcex.lpszMenuName = NULL;
+        wcex.lpszClassName = windowClass;
+        wcex.hIconSm = NULL;
+
+        if (!RegisterClassExW(&wcex))
+        {
+            MessageBoxW(NULL, L"Call to RegisterClassExW failed", Util::string_to_wide_string(APP_NAME).c_str(), NULL);
+            return 1;
+        }
+   }
 
     openCOOLWindow(filenameAndUri);
 
