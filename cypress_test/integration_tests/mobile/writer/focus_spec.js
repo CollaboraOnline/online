@@ -13,7 +13,7 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Click in the document
-		cy.cGet('#document-container').click();
+		cy.cGet('#document-canvas').click();
 		helper.assertFocus('className', 'clipboard');
 	});
 

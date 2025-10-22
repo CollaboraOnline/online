@@ -33,7 +33,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.cGet('#canvas-container')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
-			const XPos = items[0].getBoundingClientRect().left + 52;
+			const XPos = items[0].getBoundingClientRect().left + 60;
 			const YPos = items[0].getBoundingClientRect().top + 30;
 			if (dblClick)
 				cy.cGet('body').dblclick(XPos, YPos);

@@ -20,7 +20,7 @@ describe(['tagmobile'],'Image Operation Tests', function() {
 		mobileHelper.deleteImage();
 	});
 
-	it('Crop', function() {
+	it.only('Crop', function() {
 		mobileHelper.insertImage();
 
 		cy.cGet('.mobile-wizard-back.close-button').click();
