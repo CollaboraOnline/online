@@ -1216,7 +1216,6 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 bool ChildSession::getCommandValues(const StringVector& tokens)
 {
     bool success;
-    char* values;
     std::string command;
     if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
     {
@@ -1228,26 +1227,22 @@ bool ChildSession::getCommandValues(const StringVector& tokens)
 
     if (command == ".uno:DocumentRepair")
     {
-        char* undo;
-        values = getLOKitDocument()->getCommandValues(".uno:Redo");
-        undo = getLOKitDocument()->getCommandValues(".uno:Undo");
+        LOKitHelper::ScopedString values(getLOKitDocument()->getCommandValues(".uno:Redo"));
+        LOKitHelper::ScopedString undo(getLOKitDocument()->getCommandValues(".uno:Undo"));
         std::ostringstream jsonTemplate;
         jsonTemplate << "{\"commandName\":\".uno:DocumentRepair\",\"Redo\":"
-                     << (values == nullptr ? "" : values)
-                     << ",\"Undo\":" << (undo == nullptr ? "" : undo) << "}";
+                     << (values.get() == nullptr ? "" : values.get())
+                     << ",\"Undo\":" << (undo.get() == nullptr ? "" : undo.get()) << "}";
         std::string json = jsonTemplate.str();
         // json only contains view IDs, insert matching user names.
         std::map<int, UserInfo> viewInfo = _docManager->getViewInfo();
         insertUserNames(viewInfo, json);
         success = sendTextFrame("commandvalues: " + json);
-        std::free(values);
-        std::free(undo);
     }
     else
     {
-        values = getLOKitDocument()->getCommandValues(command.c_str());
-        success = sendTextFrame("commandvalues: " + std::string(values == nullptr ? "{}" : values));
-        std::free(values);
+        LOKitHelper::ScopedString values(getLOKitDocument()->getCommandValues(command.c_str()));
+        success = sendTextFrame("commandvalues: " + std::string(values.get() == nullptr ? "{}" : values.get()));
     }
 
     return success;
