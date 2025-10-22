@@ -837,10 +837,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 5px;
 	transform: translateY(-105%);
 	z-index: 12;
+	border-radius: var(--border-radius);
 	border: solid var(--color-toolbar-border) 1px;
 	display: grid;
 	opacity: 1;
 	transition: all 0.25s allow-discrete;
+	box-shadow: 0 6px 18px var(--color-box-shadow-light);
 }
 
 #context-toolbar.hidden {
