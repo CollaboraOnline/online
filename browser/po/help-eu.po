@@ -3407,10 +3407,10 @@ msgstr "Ezarri objektu-elementuaren propietateak."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Egin klik azpimenuaren ikonoa (<img style=\"height:0.6cm;width:0.6cm;\" alt="
-#~ "\"\" src=\"images/submenu.svg\">) iruzkinei erantzuteko edo haiek lekuz "
+#~ "\"\" src=\"images/lc_more.svg\">) iruzkinei erantzuteko edo haiek lekuz "
 #~ "aldatzeko edo ezabatzeko."
 
 #~ msgid ""

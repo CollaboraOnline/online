@@ -3394,10 +3394,10 @@ msgstr "Stel de eigenschappen van het element van het object in."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Klik op het submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
-#~ "images/submenu.svg\">) icoon om reacties te beantwoorden, te verplaatsen en "
+#~ "images/lc_more.svg\">) icoon om reacties te beantwoorden, te verplaatsen en "
 #~ "te verwijderen."
 
 #~ msgid ""
