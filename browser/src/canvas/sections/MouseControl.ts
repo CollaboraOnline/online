@@ -314,6 +314,19 @@ class MouseControl extends CanvasSectionObject {
 		}
 	}
 
+	private getMobileKeyboardVisibility(): boolean {
+		if (!app.map._docLayer) return false;
+		else if (app.map._docLayer._docType === 'text') return true;
+		else if (app.map._docLayer._docType === 'spreadsheet') {
+			const acceptInput = (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(this.currentPosition.toArray()));
+			//if (acceptInput && app.map.isEditMode()) {
+			//	app.map._docLayer.postKeyboardEvent('input', 0, 769); // F2
+			//}
+			return acceptInput;
+		}
+		else return false;
+	}
+
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.fire('closepopups');
 		app.map.fire('editorgotfocus');
@@ -340,7 +353,9 @@ class MouseControl extends CanvasSectionObject {
 		else { // Old code always sends the first click, so do we.
 			app.map._docLayer._postMouseEvent('buttondown', sendingPosition.x, sendingPosition.y, 1, buttons, modifier);
 			app.map._docLayer._postMouseEvent('buttonup', sendingPosition.x, sendingPosition.y, 1, buttons, modifier);
-			app.map.focus();
+
+			// For future: Here, we are checking the window size to determine the view mode, we can also check the event type (touch/click).
+			app.map.focus((<any>window).mode.isDesktop() ? undefined : this.getMobileKeyboardVisibility());
 		}
 
 		this.clickTimer = setTimeout(() => {
