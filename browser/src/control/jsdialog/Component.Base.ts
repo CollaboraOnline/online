@@ -48,7 +48,7 @@ abstract class JSDialogComponent {
 	/// assign or create container for the component
 	protected abstract setupContainer(parentContainer?: HTMLElement): void;
 
-	/// hanlde update message
+	/// handle update message
 	protected onJSUpdate(e: any) {
 		var data = e.data;
 
