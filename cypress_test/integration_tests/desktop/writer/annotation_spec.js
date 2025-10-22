@@ -56,6 +56,52 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 	});
 
+	it('Toggle Resolved/Unresolved', function() {
+		desktopHelper.insertComment("unresolved comment", true);
+		cy.cGet('#comment-container-1').should('exist');
+		/*
+			after the last `insertComment` call the insert tab is selected.
+			if we don't change the tab and call `insertComment` again, then
+			it will collapse the notebookbar (clicking on the same tab twice).
+			to avoid the 'collapsed notebookbar' state, we click on the home
+			tab to 'reset' the state for the next `insertComment` call.
+		*/
+		cy.cGet('#Home-tab-label').click();
+
+		desktopHelper.insertComment("resolved comment", true);
+		cy.cGet('body').type('focus out of comments');
+		cy.cGet('#comment-container-2').should('exist');
+		cy.cGet('#comment-annotation-menu-2').click();
+		cy.cGet('body').contains('.context-menu-item', 'Resolve').click();
+		cy.cGet('.cool-annotation-content-resolved').should('exist');
+
+		/* scenario 1:
+		 *   - hide all comments -> all hidden
+		 *   - show all comments -> all visible
+		 */
+		desktopHelper.toggleComments();
+		cy.cGet('#comment-container-1').should('be.not.visible');
+		cy.cGet('#comment-container-2').should('be.not.visible');
+		desktopHelper.toggleComments();
+		cy.cGet('#comment-container-1').should('be.visible');
+		cy.cGet('#comment-container-2').should('be.visible');
+
+		/* scenario 2:
+		 *   - hide resolved comments -> resolved comment hidden
+		 *   - hide all comments 	  -> both hidden
+		 *   - show all comments 	  -> resolved comment hidden
+		 */
+		desktopHelper.toggleComments(/*resolved = */ true);
+		cy.cGet('#comment-container-1').should('be.visible');
+		cy.cGet('#comment-container-2').should('be.not.visible');
+		desktopHelper.toggleComments();
+		cy.cGet('#comment-container-1').should('be.not.visible');
+		cy.cGet('#comment-container-2').should('be.not.visible');
+		desktopHelper.toggleComments();
+		cy.cGet('#comment-container-1').should('be.visible');
+		cy.cGet('#comment-container-2').should('be.not.visible');
+	});
+
 	it('Tab Navigation', function() {
 		desktopHelper.insertComment(undefined, false);
 
