@@ -17,22 +17,12 @@ interface DocumentSpacingInfo {
 
 class ViewLayoutWriter extends ViewLayoutBase {
 	public readonly type: string = 'ViewLayoutWriter';
+	private documentScrollOffset: number = 0;
 
 	constructor() {
 		super();
 		app.map.on('zoomlevelschange', this.adjustDocumentMarginsForComments, this);
 		app.map.on('resize', this.adjustDocumentMarginsForComments, this);
-
-		/*
-			WARN: this event hasn't been tested yet because there's a bug
-			in writer comments code. when i hide the comments and scroll down,
-			the comments show up again. this happens on latest master. i will
-			quickly investigate and fix that first and then test this.
-
-			this probably wouldn't work as the comment width is a constant,
-			maybe a conditional which checks if comments are on or off and
-			resets the offset if disabled, yes that would work.
-		*/
 		app.map.on(
 			'showannotationschanged',
 			this.adjustDocumentMarginsForComments,
@@ -67,7 +57,23 @@ class ViewLayoutWriter extends ViewLayoutBase {
 	}
 
 	private adjustDocumentMarginsForComments() {
-		if (this.documentCanMoveLeft())
-			this.scrollHorizontal(this.documentMoveLeftByOffset(), true);
+		const commentSection = app.sectionContainer.getSectionWithName(
+			app.CSections.CommentList.name,
+		) as cool.CommentSection;
+
+		if (commentSection.sectionProperties.show != true) {
+			if (this.documentScrollOffset == 0) return;
+			this.scrollHorizontal(-this.documentScrollOffset, true);
+			this.documentScrollOffset = 0;
+			app.sectionContainer.requestReDraw();
+			return;
+		}
+
+		if (this.documentCanMoveLeft()) {
+			this.documentScrollOffset = this.documentMoveLeftByOffset();
+			this.scrollHorizontal(this.documentScrollOffset, true);
+		} else {
+			this.documentScrollOffset = 0;
+		}
 	}
 }
