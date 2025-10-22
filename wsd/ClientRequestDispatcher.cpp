@@ -1704,6 +1704,19 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
             docBroker = it->second;
     }
 
+    DocumentBroker::ClipboardRequest type;
+    if (request.getMethod() != Poco::Net::HTTPRequest::HTTP_GET)
+        type = DocumentBroker::CLIP_REQUEST_SET;
+    else
+    {
+        if (mime == "text/html")
+            type = DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY;
+        else if (mime == "text/html,text/plain;charset=utf-8")
+            type = DocumentBroker::CLIP_REQUEST_GET_HTML_PLAIN_ONLY;
+        else
+            type = DocumentBroker::CLIP_REQUEST_GET;
+    }
+
     // If we have a valid docBroker, use it.
     // Note: there is a race here as DocBroker may
     // have already exited its SocketPoll, but we
@@ -1713,17 +1726,7 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
     if (docBroker && docBroker->isAlive())
     {
         std::string jailClipFile, clipFile;
-        DocumentBroker::ClipboardRequest type;
-        if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
-        {
-            if (mime == "text/html")
-                type = DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY;
-            else if (mime == "text/html,text/plain;charset=utf-8")
-                type = DocumentBroker::CLIP_REQUEST_GET_HTML_PLAIN_ONLY;
-            else
-                type = DocumentBroker::CLIP_REQUEST_GET;
-        }
-        else
+        if (type == DocumentBroker::CLIP_REQUEST_SET)
         {
             if (!docBroker->getSessionFromClipboardTag(viewId, tag))
             {
@@ -1732,8 +1735,6 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket, "wrong tag");
                 return true;
             }
-
-            type = DocumentBroker::CLIP_REQUEST_SET;
 
             std::string clipName = "setclipboard." + tag;
 
@@ -1774,7 +1775,7 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         LOG_TRC_S("queued clipboard command " << type << " on docBroker fetch");
     }
     // fallback to persistent clipboards if we can
-    else if (!DocumentBroker::lookupSendClipboardTag(socket, tag, false))
+    else if (!DocumentBroker::handlePersistentClipboardRequest(type, socket, tag, false))
     {
         LOG_ERR_S("Invalid clipboard request to server ["
                   << serverId << "] with tag [" << tag << "] and broker [" << docKey

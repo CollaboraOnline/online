@@ -300,7 +300,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     if (_state == SessionState::WAIT_DISCONNECT)
     {
         LOG_TRC("Clipboard request " << tag << " for disconnecting session");
-        if (DocumentBroker::lookupSendClipboardTag(socket, tag, false))
+        if (DocumentBroker::handlePersistentClipboardRequest(type, socket, tag, false))
             return; // the getclipboard already completed.
         if (type == DocumentBroker::CLIP_REQUEST_SET)
         {
