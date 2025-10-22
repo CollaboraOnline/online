@@ -22,10 +22,45 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Initialize the COOLWSD
         COWrapper.startServer()
 
+        // We have to set the product name in the menu entries explicitly, there seems to be no automatic way to do that
+        updateProductName()
+
         // Finish window restoration, and try to open the Open panel if no document is open
         DispatchQueue.main.async { [weak self] in
             self?.documentController.focusOrPresentOpenPanel()
         }
+    }
+
+    /**
+     * Replaces one menu entry in the menu with the provided name. The menu item is identified by its selector.
+     */
+    private func renameItem(in menu: NSMenu, withAction action: Selector, actionName: String, appName: String) {
+        for item in menu.items {
+            if item.action == action {
+                item.title = String(format: actionName, appName)
+                return
+            }
+            if let sub = item.submenu {
+                renameItem(in: sub, withAction: action, actionName: actionName, appName: appName)
+            }
+        }
+    }
+
+    /**
+     * Use the real app name in the menus where it is expected.
+     */
+    private func updateProductName() {
+        guard let mainMenu = NSApp.mainMenu else { return }
+
+        let info = Bundle.main.infoDictionary
+        let name = (info?["CFBundleDisplayName"] as? String)
+            ?? (info?["CFBundleName"] as? String)
+            ?? ProcessInfo.processInfo.processName
+
+        renameItem(in: mainMenu, withAction: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), actionName: NSLocalizedString("About %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
+        renameItem(in: mainMenu, withAction: #selector(NSApplication.hide(_:)), actionName: NSLocalizedString("Hide %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
+        renameItem(in: mainMenu, withAction: #selector(NSApplication.terminate(_:)), actionName: NSLocalizedString("Quit %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
+        renameItem(in: mainMenu, withAction: #selector(NSApplication.showHelp(_:)), actionName: NSLocalizedString("%@ Help", comment: "The format string (%%@) is replaced with the app name"), appName: name)
     }
 
     /**
