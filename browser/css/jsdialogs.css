@@ -59,7 +59,7 @@
 #AcceptRejectChangesDialog #RedlineFilterPage .ui-timefield {
 	margin: 5px;
 }
-.jsdialog.one-child-popup {
+.jsdialog.one-child-popup:not(.ui-iconview) {
 	border: 0;
 	margin: 0 !important;
 	padding: 0 !important;
