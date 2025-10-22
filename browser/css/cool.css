@@ -813,6 +813,10 @@ body {
 	background: url('images/lc_more.svg') no-repeat center/contain !important;
 }
 
+[data-theme='dark'] .cool-annotation-menu, .cool-annotation-menu-redline {
+	background: url('images/dark/lc_more.svg') no-repeat center/contain !important;
+}
+
 .cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover {
 	border: 1px solid var(--color-border-darker);
 }
