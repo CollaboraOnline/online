@@ -20,7 +20,7 @@ class FormulaUsagePopup extends AutoCompletePopup {
 	newPopupData: PopupData;
 
 	constructor(map: any) {
-		super('formulausagePopup', map);
+		super(AutoCompleteDialogId.FormulaUsagePopup, map);
 		this.newPopupData = {
 			children: [
 				{
