@@ -37,16 +37,16 @@ window.L.Map.include({
 		});
 	},
 
-	showResolvedComments: function(on: any) {
+	showResolvedComments: function(on: boolean = false) {
 		var unoCommand = '.uno:ShowResolvedAnnotations';
 		this.sendUnoCommand(unoCommand);
 		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).setViewResolved(on);
-		this.uiManager.setDocTypePref('ShowResolved', on ? true : false);
+		this.uiManager.setDocTypePref('ShowResolved', on);
 	},
 
-	showComments: function(on: any) {
+	showComments: function(on: boolean = false) {
 		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).setView(on);
-		this.uiManager.setDocTypePref('showannotations', on ? true : false);
+		this.uiManager.setDocTypePref('showannotations', on);
 		this.fire('commandstatechanged', {commandName : 'showannotations', state : on ? 'true': 'false'});
 		this.fire('showannotationschanged', {state: on ? 'true': 'false'});
 	}
@@ -77,6 +77,7 @@ export class CommentSection extends CanvasSectionObject {
 		collapsedCommentWidth: number;
 		showSelectedBigger: boolean;
 		commentsAreListed: boolean;
+		show: boolean;
 		[key: string]: any;
 		canvasContainerTop: number; // The top pixel of the document container. Added to positions of comments.
 		canvasContainerLeft: number;
@@ -2197,7 +2198,7 @@ export class CommentSection extends CanvasSectionObject {
 		return index;
 	}
 
-	public setViewResolved (state: any): void {
+	public setViewResolved (state: boolean): void {
 		this.sectionProperties.showResolved = state;
 
 		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
@@ -2216,7 +2217,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.update();
 	}
 
-	public setView (state: any): void {
+	public setView (state: boolean): void {
 		this.sectionProperties.show = state;
 		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
 			if (state == false)
