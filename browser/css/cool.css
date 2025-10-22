@@ -814,7 +814,7 @@ body {
 }
 
 .cool-annotation-menu, .cool-annotation-menu-redline {
-	background: url('images/submenu.svg') no-repeat center/contain !important;
+	background: url('images/lc_more.svg') no-repeat center/contain !important;
 }
 
 .cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover {
