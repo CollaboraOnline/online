@@ -20,48 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	getWebSocketBaseURI(map) {
-		return window.makeWsUrlWopiSrc('/cool/', map.options.doc + '?' + $.param(map.options.docParams));
-	}
-
-	connect(socket) {
-		var map = this._map;
-		map.options.docParams['permission'] = app.getPermission();
-		if (this.socket) {
-			this.close();
-		}
-		if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
-			this.socket = socket;
-		} else if (window.ThisIsAMobileApp) {
-			// We have already opened the FakeWebSocket or MobileSocket over in global.js
-			// With the FakeWebSocket do we then set this.socket at all?
-			// With the MobileSocket we definitely do - this is load-bearing for opening password protected documents
-		} else	{
-			try {
-				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
-				window.socket = this.socket;
-			} catch (e) {
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to {productname}: ').replace('{productname}', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)')) + e, cmd: 'socket', kind: 'failed', id: 3});
-				return;
-			}
-		}
-
-		this.socket.onerror = window.L.bind(this._onSocketError, this);
-		this.socket.onclose = window.L.bind(this._onSocketClose, this);
-		this.socket.onopen = window.L.bind(this._onSocketOpen, this);
-		this.socket.onmessage = window.L.bind(this._slurpMessage, this);
-		this.socket.binaryType = 'arraybuffer';
-		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
-			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
-			clearTimeout(this._accessTokenExpireTimeout);
-			this._accessTokenExpireTimeout = setTimeout(window.L.bind(this._sessionExpiredWarning, this),
-			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
-		}
-
-		// process messages for early socket connection
-		this._emptyQueue();
-	}
-
 	_emptyQueue() {
 		if (window.queueMsg && window.queueMsg.length > 0) {
 			for (var it = 0; it < window.queueMsg.length; it++) {
