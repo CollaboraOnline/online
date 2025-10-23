@@ -222,3 +222,7 @@ windows/coda/x64/
 
 # CODA-W generated files
 windows/coda/config.props
+
+# CODA-Q
+.flatpak-builder/
+qt/flatpak/build-dir/
