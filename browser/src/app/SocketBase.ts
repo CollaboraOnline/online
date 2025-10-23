@@ -224,6 +224,32 @@ class SocketBase {
 	}
 
 	protected _sessionExpiredWarning(): void {
-		console.assert(false, 'This should not be called!');
+		clearTimeout(this._accessTokenExpireTimeout);
+		let expirymsg = window.errorMessages.sessionexpiry;
+		if (
+			parseInt(this._map.options.docParams.access_token_ttl as string) -
+				Date.now() <=
+			0
+		) {
+			expirymsg = window.errorMessages.sessionexpired;
+		}
+		const dateTime = new Date(
+			parseInt(this._map.options.docParams.access_token_ttl as string),
+		);
+		const dateOptions: Intl.DateTimeFormatOptions = {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+		};
+		const timerepr = dateTime.toLocaleDateString(String.locale, dateOptions);
+		this._map.fire('warn', { msg: expirymsg.replace('{time}', timerepr) });
+
+		// If user still doesn't refresh the session, warn again periodically
+		this._accessTokenExpireTimeout = setTimeout(
+			this._sessionExpiredWarning.bind(this),
+			120 * 1000,
+		);
 	}
 }
