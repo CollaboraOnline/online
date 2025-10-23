@@ -175,6 +175,7 @@ body {
 	position: fixed;
 }
 #document-container {
+	font-family: var(--cool-font);
 	background-color: var(--color-main-background);
 	position: relative;
 	margin: 0;
