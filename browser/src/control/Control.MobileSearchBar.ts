@@ -32,7 +32,7 @@ class MobileSearchBar extends Toolbar {
 				type: 'customtoolitem',
 				id: 'cancelsearch',
 				text: _('Clear the search field'),
-				visible: false,
+				enabled: false,
 			},
 			{
 				type: 'customtoolitem',

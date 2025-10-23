@@ -820,15 +820,16 @@ window.L.Map.include({
 		var searchInput = window.L.DomUtil.get('search-input');
 		app.searchService.resetSelection();
 		if (toolbar) {
-			toolbar.showItem('cancelsearch', false);
+			if (!window.mode.isMobile()) {
+				toolbar.showItem('cancelsearch', false);
+			}
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
 		}
 		searchInput.value = '';
 		if (window.mode.isMobile()) {
 			searchInput.focus();
-			// odd, but on mobile we need to invoke it twice
-			toolbar.showItem('cancelsearch', false);
+			toolbar.enableItem('cancelsearch', false);
 		}
 
 		this._onGotFocus();
