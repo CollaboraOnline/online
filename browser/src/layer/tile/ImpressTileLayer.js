@@ -231,11 +231,10 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
 			if (statusJSON.partdimensions) {
 				this._partDimensions = [];
-				for (let i = 0; i < this._parts; i++) {
+				for (let i = 0; i < statusJSON.partdimensions.length; i++) {
 					this._partDimensions.push(new cool.SimplePoint(statusJSON.partdimensions[i].width, statusJSON.partdimensions[i].height));
 				}
 			}
-			else this._partDimensions = [];
 
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
 
@@ -262,7 +261,7 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 
 			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
-			let allPagesResized = !this._partDimensions.length;
+			let allPagesResized = !statusJSON.currentpageresized;
 			this._updateMaxBounds(true, allPagesResized);
 
 			this._viewId = statusJSON.viewid;
@@ -308,7 +307,7 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		if (app.file.fileBasedView)
 			TileManager.updateFileBasedView();
 
-		if (this.invalidatePreviewsUponContextChange === true && !statusJSON.partdimensions) {
+		if (this.invalidatePreviewsUponContextChange === true) {
 			this._invalidateAllPreviews();
 			this.invalidatePreviewsUponContextChange = false;
 		}

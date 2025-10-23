@@ -163,22 +163,24 @@ namespace LOKitHelper
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
 
+        ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
+        if (values)
+        {
+            Poco::JSON::Parser parser;
+            const auto var = parser.parse(values.get());
+            const auto obj = var.extract<Poco::JSON::Object::Ptr>();
+            if (obj && obj->has("parts"))
+            {
+                const auto parts = obj->getArray("parts");
+                std::ostringstream os;
+                parts->stringify(os);
+                resultInfo["partdimensions"] = os.str();
+            }
+        }
+
         if (diffSizePages)
         {
-            ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
-            if (values)
-            {
-                Poco::JSON::Parser parser;
-                const auto var = parser.parse(values.get());
-                const auto obj = var.extract<Poco::JSON::Object::Ptr>();
-                if (obj && obj->has("parts"))
-                {
-                    const auto parts = obj->getArray("parts");
-                    std::ostringstream os;
-                    parts->stringify(os);
-                    resultInfo["partdimensions"] = os.str();
-                }
-            }
+            resultInfo["currentpageresized"] = std::to_string(true);
             return MapToJSONString(resultInfo);
         }
 
