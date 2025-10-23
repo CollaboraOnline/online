@@ -213,7 +213,14 @@ class SocketBase {
 	}
 
 	protected _emptyQueue(): void {
-		console.assert(false, 'This should not be called!');
+		if (window.queueMsg && window.queueMsg.length > 0) {
+			for (let it = 0; it < window.queueMsg.length; it++) {
+				const msg: MessageInterface = window.queueMsg[it];
+				const evt: any = { data: msg, textMsg: msg };
+				this._slurpMessage(evt);
+			}
+			window.queueMsg = [];
+		}
 	}
 
 	protected _sessionExpiredWarning(): void {
