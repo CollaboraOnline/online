@@ -1791,8 +1791,8 @@ function getInitializerClass() {
 
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
-		if (global.ThisIsAMobileApp) {
-			// We use another approach just for iOS for now.
+		if (global.ThisIsAMobileApp || global.ThisIsTheWindowsApp) {
+			// We use another approach for iOS and CODA-W.
 			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
 				// global.postMobileDebug('_(' + string + '): YES: ' + global.LOCALIZATIONS[string]);
 				var result = global.LOCALIZATIONS[string];

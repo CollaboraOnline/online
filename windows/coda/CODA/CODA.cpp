@@ -1083,12 +1083,26 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
                                     .Get(),
                                 &token);
 
+                            // A "LANG" environment variable is not a thing on Windows, but check
+                            // for a such anyway, for easier testing.
+                            auto langEnv = std::getenv("LANG");
+
+                            std::string lang = "en-US";
+                            wchar_t bcp47[LOCALE_NAME_MAX_LENGTH];
+
+                            if (langEnv)
+                                lang = langEnv;
+                            else if (LCIDToLocaleName(MAKELCID(GetUserDefaultUILanguage(), SORT_DEFAULT),
+                                                      bcp47, LOCALE_NAME_MAX_LENGTH, 0))
+                                lang = Util::wide_string_to_string(bcp47);
+
                             const std::string coolURL = app_installation_uri +
                                                         std::string("cool/cool.html?file_path=") +
                                                         data.filenameAndUri.uri +
                                                         std::string("&permission=edit"
-                                                                    "&lang=en-US"
-                                                                    "&appdocid=") +
+                                                                    "&lang=") +
+                                                        lang +
+                                                        std::string("&appdocid=") +
                                                         std::to_string(data.appDocId) +
                                                         std::string("&userinterfacemode=notebookbar"
                                                                     "&dir=ltr");
