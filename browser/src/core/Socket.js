@@ -20,22 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_sessionExpiredWarning() {
-		clearTimeout(this._accessTokenExpireTimeout);
-		var expirymsg = errorMessages.sessionexpiry;
-		if (parseInt(this._map.options.docParams.access_token_ttl) - Date.now() <= 0) {
-			expirymsg = errorMessages.sessionexpired;
-		}
-		var dateTime = new Date(parseInt(this._map.options.docParams.access_token_ttl));
-		var dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-		var timerepr = dateTime.toLocaleDateString(String.locale, dateOptions);
-		this._map.fire('warn', {msg: expirymsg.replace('{time}', timerepr)});
-
-		// If user still doesn't refresh the session, warn again periodically
-		this._accessTokenExpireTimeout = setTimeout(window.L.bind(this._sessionExpiredWarning, this),
-		                                            120 * 1000);
-	}
-
 	setUnloading() {
 		if (this.socket.setUnloading)
 			this.socket.setUnloading();
