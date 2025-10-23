@@ -1035,7 +1035,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobiletext:  [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
@@ -1101,7 +1101,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobilepresentation: [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
@@ -1166,7 +1166,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobiledrawing: [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
@@ -1221,7 +1221,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobilespreadsheet: [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
@@ -2305,7 +2305,7 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch('closeapp');
 		} else if (id === 'repair') {
 			app.dispatcher.dispatch('repair');
-		} else if (id === 'searchdialog') {
+		} else if (id === 'recsearch') {
 			app.dispatcher.dispatch('showsearchbar');
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
