@@ -113,7 +113,11 @@ class StatusBar extends JSDialog.Toolbar {
 		if (e.count === 0) {
 			this.enableItem('searchprev', false);
 			this.enableItem('searchnext', false);
-			this.showItem('cancelsearch', false);
+			if (window.mode.isMobile()) {
+				this.enableItem('cancelsearch', false);
+			} else {
+				this.showItem('cancelsearch', false);
+			}
 			window.L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
 			app.searchService.resetSelection();
