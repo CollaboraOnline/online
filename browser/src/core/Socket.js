@@ -20,15 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_emptyQueue() {
-		if (window.queueMsg && window.queueMsg.length > 0) {
-			for (var it = 0; it < window.queueMsg.length; it++) {
-				this._slurpMessage({data: window.queueMsg[it], textMsg: window.queueMsg[it]});
-			}
-			window.queueMsg = [];
-		}
-	}
-
 	_sessionExpiredWarning() {
 		clearTimeout(this._accessTokenExpireTimeout);
 		var expirymsg = errorMessages.sessionexpiry;
