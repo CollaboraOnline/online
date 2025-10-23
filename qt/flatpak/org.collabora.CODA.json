@@ -150,6 +150,10 @@
           "url": "https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.14-bin.tar.bz2",
           "sha512": "05e9f786044b9ba0dcc5e2b40ed2bd4ecfb25896a453ba78e2d4df18896c6be7d1564fd615f483c90c0d26dd1e0fb507c778f0c10712818b1fc8c9acbc0a26c6",
           "dest": "ant"
+        },
+        {
+          "type": "file",
+          "path": "fixup-application-data.sh"
         }
       ],
       "buildsystem": "simple",
@@ -158,8 +162,9 @@
         "make clean",
         "make",
         "make distro-pack-install",
+        "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh org.collabora.CODA'",
+        "./fixup-application-data.sh",
         "mkdir -p /app/core",
-        "cp -r /run/build/libreoffice/inst/lib/collaboraoffice /app/core/instdir",
         "cp -r include /app/core/."
       ]
     },
@@ -274,7 +279,7 @@
       "buildsystem": "simple",
       "build-commands": [
         "./autogen.sh",
-        "./configure --enable-qtapp --enable-silent-rules --disable-ssl --prefix=/app --with-poco-includes=/app/include --with-poco-libs=/app/lib --with-lokit-path=/app/core/include --with-lo-path=/app/core/instdir",
+        "./configure --enable-qtapp --enable-silent-rules --disable-ssl --prefix=/app --with-poco-includes=/app/include --with-poco-libs=/app/lib --with-lokit-path=/app/core/include --with-lo-path=/app/collaboraoffice",
         "make clean && make -j${FLATPAK_BUILDER_N_JOBS} install",
         "install -Dm755 qt/coda-qt /app/bin/coda"
       ],
