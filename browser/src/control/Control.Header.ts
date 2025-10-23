@@ -60,8 +60,12 @@ export class Header extends CanvasSectionObject {
 
 		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
 		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
-		this._map.on('statusupdated', this._reInitRowColumnHeaderStylesAfterModeChange, this);
+		this._map.on('statusupdated', this._handleStatusUpdated, this);
 
+		this._reInitRowColumnHeaderStylesAfterModeChange();
+	}
+
+	_handleStatusUpdated(): void {
 		this._reInitRowColumnHeaderStylesAfterModeChange();
 	}
 
