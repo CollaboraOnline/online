@@ -1895,11 +1895,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			app.sectionContainer.onCursorPositionChanged();
 		}
 
-		this._map.hyperlinkUnderCursor = obj.hyperlink;
-		URLPopUpSection.closeURLPopUp();
-		if (obj.hyperlink && obj.hyperlink.link)
-			URLPopUpSection.showURLPopUP(obj.hyperlink.link, new cool.SimplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
-
 		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
 			// Unless the focus is in the Calc Formula-Bar, don't steal the focus.
@@ -1917,6 +1912,15 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this.lastCursorPos = app.file.textCursor.rectangle.clone();
 		}
 
+		const isHyperlinkChanged = this._isHyperlinkChanged(obj.hyperlink);
+		this._map.hyperlinkUnderCursor = obj.hyperlink;
+		if (URLPopUpSection.isOpen() && !(obj.hyperlink && obj.hyperlink.link))
+			URLPopUpSection.closeURLPopUp();
+
+		if (obj.hyperlink && obj.hyperlink.link &&
+			( !URLPopUpSection.isOpen() || updateCursor || isHyperlinkChanged))
+			URLPopUpSection.showURLPopUP(obj.hyperlink.link, new cool.SimplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
+
 		// If modifier view is different than the current view
 		// we'll keep the caret position at the same point relative to screen.
 		this._onUpdateCursor(
@@ -1926,6 +1930,22 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// Only for reference equality comparison.
 		this._lastVisibleCursorRef = app.file.textCursor.rectangle.clone();
+	},
+
+	_isHyperlinkChanged: function(hyperlink)
+	{
+		// If there is a new hyperlink or existing hyperlink changed or deleted
+		if (hyperlink && hyperlink.link)
+		{
+			if ((this._map.hyperlinkUnderCursor == null || this._map.hyperlinkUnderCursor == undefined) ||
+				(this._map.hyperlinkUnderCursor.link != hyperlink.link ||
+			     this._map.hyperlinkUnderCursor.text != hyperlink.text))
+				return true;
+		}
+		else if (this._map.hyperlinkUnderCursor != null && this._map.hyperlinkUnderCursor != undefined)
+				return true;
+
+		return false;
 	},
 
 	_updateEditor: function(textMsg) {
