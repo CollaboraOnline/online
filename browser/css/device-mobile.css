@@ -218,6 +218,11 @@ textarea.cool-annotation-textarea {
 	height: 39px !important;
 	display: none;
 }
+#toolbar-search > .root-container {
+	height: 100%;
+	align-items: center;
+	display: flex;
+}
 #toolbar-up #fullscreen {display: none;}
 #toolbar-down {
 	border-top: 1px solid var(--color-border) !important;
@@ -313,9 +318,7 @@ textarea.cool-annotation-textarea {
 }
 #toolbar-search input#search-input {
 	font-size: 16px;
-}
-#toolbar-search #hidesearchbar {
-	padding: 1px 8px !important;
+	height: calc(var(--btn-size) + 2px) /* The height of the buttons plus their margin, to align everything... */;
 }
 #toolbar-search #search {
 	width: 80%;
