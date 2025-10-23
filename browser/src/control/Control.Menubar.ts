@@ -2306,14 +2306,7 @@ class Menubar extends window.L.Control {
 		} else if (id === 'repair') {
 			app.dispatcher.dispatch('repair');
 		} else if (id === 'searchdialog') {
-			if (this._map.isReadOnlyMode()) {
-				$('#toolbar-down').hide();
-				$('#toolbar-search').show();
-				$('#mobile-edit-button').hide();
-				window.L.DomUtil.get('search-input').focus();
-			} else {
-				this._map.sendUnoCommand('.uno:SearchDialog');
-			}
+			app.dispatcher.dispatch('showsearchbar');
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
 		} else if (id === 'pagesetup') {
