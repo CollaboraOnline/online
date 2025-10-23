@@ -1062,7 +1062,11 @@ function setupToolbar(e) {
 		if (e.count === 0) {
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
-			toolbar.showItem('cancelsearch', false);
+			if (window.mode.isMobile()) {
+				toolbar.enableItem('cancelsearch', false);
+			} else {
+				toolbar.showItem('cancelsearch', false);
+			}
 			window.L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
 			const searchbox = document.getElementById('searchbox');
