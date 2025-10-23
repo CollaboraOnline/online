@@ -37,6 +37,7 @@
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
 	height: max-content;
+	overflow: hidden;
 
 	/*
 		some of the below .selected:hover selectors could be rephrased more cleverly or
