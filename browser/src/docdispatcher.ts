@@ -262,6 +262,8 @@ class Dispatcher {
 			$('#toolbar-down').hide();
 			$('#showsearchbar').removeClass('over');
 			$('#toolbar-search').show();
+			if (!app.isReadOnly() && app.map.isReadOnlyMode())
+				$('#mobile-edit-button').hide();
 			window.L.DomUtil.get('search-input').focus();
 		};
 		this.actionsMap['hidesearchbar'] = () => {
