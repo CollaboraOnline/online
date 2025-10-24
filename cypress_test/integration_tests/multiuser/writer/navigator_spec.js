@@ -40,17 +40,17 @@ describe.skip(['tagmultiuser'], 'Navigator follow the change of document', funct
 
 		// User 1 check if the heading text changed
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Changedtext').should('be.visible');
 
 		// User 1 delete heading
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		cy.cGet('#select2-styles-select-container').click();
 		cy.cGet('#select2-styles-select-results').contains('.select2-results__option', 'Title').click();
 
 		// User 2 check if the heading removed from navigator
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Changedtext').should('not.exist');
 	});
 });

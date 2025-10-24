@@ -81,7 +81,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 
 		cy.wait(500);
 
-		cy.cGet('#map').compareSnapshot('selections', 0.02);
+		cy.cGet('#document-container').compareSnapshot('selections', 0.02);
 	});
 });
 

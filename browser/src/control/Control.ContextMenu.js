@@ -130,18 +130,20 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 			app.map._docLayer._resetReferencesMarks();
 		}
 
-		$.contextMenu('destroy', '.leaflet-layer');
+		$.contextMenu('destroy', '#canvas-container');
 		this.hasContextMenu = false;
 	},
 
-	_onMouseDown: function(e) {
-		this._prevMousePos = {x: e.originalEvent.pageX, y: e.originalEvent.pageY};
+	_onMouseDown: function() {
+		if (app.activeDocument && app.activeDocument.mouseControl)
+			this._prevMousePos = app.activeDocument.mouseControl.getMousePagePosition();
 
 		this._onClosePopup();
 	},
 
-	_onMouseUp: function (e) {
-		this._currMousePos = { x: e.originalEvent.pageX, y: e.originalEvent.pageY };
+	_onMouseUp: function () {
+		if (app.activeDocument && app.activeDocument.mouseControl)
+			this._currMousePos = app.activeDocument.mouseControl.getMousePagePosition();
 	},
 
 	_onKeyDown: function(e) {
@@ -189,7 +191,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 			map.fire('mobilewizard', {data: menuData});
 		} else {
 			window.L.installContextMenu({
-				selector: '.leaflet-layer',
+				selector: '#canvas-container',
 				className: 'cool-font on-the-fly-context-menu',
 				trigger: 'none',
 				zIndex: 1500,
@@ -228,10 +230,12 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					}
 				}
 			});
+
+			const position = app.activeDocument.mouseControl.getMousePagePosition();
 			if (autoFillContextMenu)
-				$('.leaflet-layer').contextMenu(this._currMousePos);
+				$('#canvas-container').contextMenu(position);
 			else
-				$('.leaflet-layer').contextMenu(this._prevMousePos);
+				$('#canvas-container').contextMenu(position);
 			$('.context-menu-root').focus();
 			this.hasContextMenu = true;
 		}

@@ -36,8 +36,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Mobile wizard state tests',
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		mobileHelper.openMobileWizard();
+
 		// Open context wizard by right click on document
-		mobileHelper.longPressOnDocument(40, 40);
+		// Longpress is naturally supported now.  So we use contextmenu event to simulate right click.
+		cy.cGet('#document-canvas').trigger('contextmenu', 40, 40);
+
 		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'Paste').should('be.visible');
 
 		// TODO: fix this bug

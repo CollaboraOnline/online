@@ -128,11 +128,9 @@ window.L.Map = window.L.Evented.extend({
 		this.addHandler('keyboard', window.L.Map.Keyboard);
 		this.addHandler('dragging', window.L.Map.Drag);
 		this.dragging.disable(); // FIXME: before unification, this was only called when on a touch device or in a mobile cypress test
-		// It would be better to split dragging.disable into a touch version and a mouse version but this looks like it will require a major rework of its own...
-		this.addHandler('mouse', window.L.Map.Mouse);
+
 		this.addHandler('scrollHandler', window.L.Map.Scroll);
 		this.addHandler('doubleClickZoom', window.L.Map.DoubleClickZoom);
-		this.addHandler('touchGesture', window.L.Map.TouchGesture);
 		this.dragging._draggable._manualDrag = window.touch.isTouchEvent;
 
 		if (this.options.imagePath) {
@@ -866,6 +864,9 @@ window.L.Map = window.L.Evented.extend({
 		var handler = this[name] = new HandlerClass(this);
 
 		this._handlers.push(handler);
+
+		if (name === 'scrollHandler')
+			this.scrollHandler = handler; // Reference for external use.
 
 		if (this.options[name]) {
 			handler.enable();

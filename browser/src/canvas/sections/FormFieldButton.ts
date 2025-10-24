@@ -43,6 +43,8 @@ class FormFieldButton extends HTMLObjectSection {
 		this.createButton();
 		this.createDropDownList();
 		this.addToDOM();
+
+		this.getHTMLObject().style.pointerEvents = '';
 	}
 
 	private fetchPositionAndSize() {
@@ -186,12 +188,6 @@ class FormFieldButton extends HTMLObjectSection {
 		this.getHTMLObject().style.height = height + 'px';
 		this.getHTMLObject().appendChild(this.sectionProperties.container);
 
-		const mapElement = document.getElementById('map');
-		if (mapElement) {
-			this.getHTMLObject().remove();
-			mapElement.appendChild(this.getHTMLObject());
-		}
-
 		this.adjustHTMLObjectPosition();
 	}
 
@@ -226,6 +222,8 @@ class FormFieldButton extends HTMLObjectSection {
 
 		// Apply selection in the document.
 		app.socket.sendMessage(message);
+
+		app.map.focus();
 	}
 
 	private onClickDropdownButton(event: MouseEvent) {

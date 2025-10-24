@@ -238,9 +238,13 @@ class GraphicSelection {
 		}
 
 		// video is handled in _onEmbeddedVideoContent
-		if (this.handlesSection && this.handlesSection.sectionProperties.hasVideo)
-			app.map._cacheSVG[extraInfo.id] = undefined;
-		else if (this.handlesSection) this.handlesSection.setSVG(textMsg);
+		if (this.handlesSection) {
+			if (this.handlesSection.sectionProperties.hasVideo)
+				app.map._cacheSVG[extraInfo.id] = undefined;
+			else this.handlesSection.setSVG(textMsg);
+
+			if (!app.file.textCursor.visible) this.handlesSection.interactable = true;
+		}
 	}
 
 	private static checkChartData() {
@@ -402,11 +406,35 @@ class GraphicSelection {
 
 		GraphicSelection.checkChartData();
 	}
+
+	/*
+		Some keywords: mousecontrol, _postMouseEvent, core side.
+		Explanation:
+			* User can edit a shape's text.
+			* We need to send the mouse events to core in that case (for text selection, double click etc).
+			* When cursor is visible, we assume text editing started.
+			* And we set the "interactable" property of the shape handler section to false.
+			* When "interactable" is false, canvas section container events pass through the section.
+			* In our case, ShapeHandlesSection begins to be ignored.
+			* And MouseControl catches all the events.
+			* Users can select text, click, double click, triple click, quadruple click etc.
+	*/
+	public static onTextCursorVisibility(event: any) {
+		if (this.hasActiveSelection()) {
+			if (event.detail.visible) this.handlesSection.interactable = false;
+			else this.handlesSection.interactable = true;
+		}
+	}
 }
 
 app.events.on(
 	'updatepermission',
 	GraphicSelection.onUpdatePermission.bind(GraphicSelection),
+);
+
+app.events.on(
+	'TextCursorVisibility',
+	GraphicSelection.onTextCursorVisibility.bind(GraphicSelection),
 );
 
 app.definitions.graphicSelection = GraphicSelection;

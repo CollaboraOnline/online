@@ -43,6 +43,7 @@ class URLPopUpSection extends HTMLObjectSection {
 			app.map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
 
 		this.sectionProperties.documentPosition = documentPosition.clone();
+		this.getHTMLObject().style.pointerEvents = '';
     }
 
 	getPopUpWidth(): number {

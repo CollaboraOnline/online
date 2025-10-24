@@ -31,7 +31,7 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 
 		// now move cursor a bit in the first view
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#map').type('{downArrow}{downArrow}{downArrow}{downArrow}{downArrow}{downArrow}');
+		helper.typeIntoDocument('{downArrow}{downArrow}{downArrow}{downArrow}{downArrow}{downArrow}');
 
 		// verify that second view is still at the same position (no jump)
 		cy.cSetActiveFrame('#iframe2');

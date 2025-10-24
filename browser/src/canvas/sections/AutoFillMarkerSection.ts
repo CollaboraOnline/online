@@ -32,12 +32,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.selectedAreaPoint = null;
 		this.sectionProperties.cellCursorPoint = null;
-		this.sectionProperties.inMouseDown = false;
 
-		this.sectionProperties.draggingStarted = false;
 		this.sectionProperties.dragStartPosition = null;
-
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 
 		var cursorStyle = getComputedStyle(this.sectionProperties.docLayer._cursorDataDiv);
 		var selectionStyle = getComputedStyle(this.sectionProperties.docLayer._selectionsDataDiv);
@@ -157,86 +153,58 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		this.drawWhiteOuterBorders();
 	}
 
-	public onMouseMove (point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
-		if ((<any>window).mode.isDesktop())
-			return;
+	private getDocumentPositionFromLocal(point: cool.SimplePoint): cool.SimplePoint {
+		const p2 = point.clone();
+		p2.pX += this.position[0];
+		p2.pY += this.position[1];
+		return p2;
+	}
 
+	private getCenterRegardingDocument(): cool.SimplePoint {
+		const p2 = new cool.SimplePoint(0, 0);
+		p2.pX += this.position[0] + this.size[0] * 0.5;
+		p2.pY += this.position[1] + this.size[1] * 0.5;
+		return p2;
+	}
+
+	private autoScroll(point: cool.SimplePoint) {
+		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const viewCenter = viewedRectangle.pCenter;
+		const refX = point.pX > viewCenter[0] ? viewedRectangle.pX2 : viewedRectangle.pX1;
+		const refY = point.pY > viewCenter[1] ? viewedRectangle.pY2 : viewedRectangle.pY1;
+
+		if (!app.isXVisibleInTheDisplayedArea(point.x))
+			app.activeDocument.activeView.scroll(point.pX - refX, 0);
+		else if (!app.isYVisibleInTheDisplayedArea(point.y))
+			app.activeDocument.activeView.scroll(0, point.pY - refY);
+	}
+
+	public onMouseMove (point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
 		if (dragDistance === null || !this.sectionProperties.docLayer._cellAutoFillAreaPixels)
 			return; // No dragging or no event handling or auto fill marker is not visible.
 
-		var pos: any;
+		const p2 = this.getDocumentPositionFromLocal(point);
+		app.map._docLayer._postMouseEvent('move', p2.x, p2.y, 1, 1, 0);
 
-		if (!this.sectionProperties.draggingStarted) { // Is it first move?
-			this.sectionProperties.draggingStarted = true;
-			this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-			pos = new cool.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
-			pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
-			this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
-		}
-
-		point.pX = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
-		point.pY = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
-
-		this.sectionProperties.docLayer._postMouseEvent('move', point.x, point.y, 1, 1, 0);
-
-		this.map.scrollingIsHandled = true;
-		this.stopPropagating(); // Stop propagating to sections.
-		e.stopPropagation(); // Stop native event.
+		if (!this.containerObject.isMouseInside() && this.containerObject.isDraggingSomething())
+			this.autoScroll(this.getDocumentPositionFromLocal(point));
 	}
 
 	public onMouseUp (point: cool.SimplePoint, e: MouseEvent) {
-		if (this.sectionProperties.draggingStarted) {
-			this.sectionProperties.draggingStarted = false;
-			point.pX += this.myTopLeft[0] + this.size[0] * 0.5;
-			point.pY += this.myTopLeft[1] + this.size[1] * 0.5;
-			this.sectionProperties.docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
-		}
-
-		this.map.scrollingIsHandled = false;
-		this.stopPropagating();
-		e.stopPropagation();
-		(<any>window).IgnorePanning = false;
+		const p2 = this.getDocumentPositionFromLocal(point);
+		app.map._docLayer._postMouseEvent('buttonup', p2.x, p2.y, 1, 1, 0);
 	}
 
 	public onMouseDown (point: cool.SimplePoint, e: MouseEvent) {
-		if ((<any>window).mode.isDesktop()) {
-			if (this.sectionProperties.inMouseDown)
-				return;
+		// revert coordinates to global and fire event again with position in the center
+		// inverse of convertPositionToCanvasLocale
+		const p2 = this.getCenterRegardingDocument();
 
-			this.sectionProperties.inMouseDown = true;
-
-			// revert coordinates to global and fire event again with position in the center
-			// inverse of convertPositionToCanvasLocale
-			var canvasClientRect = this.containerObject.getCanvasBoundingClientRect();
-			point.pX = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
-			point.pY = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
-
-			var newPoint = {
-				clientX: point.pX,
-				clientY: point.pY,
-			};
-
-			var newEvent = this.sectionProperties.docLayer._createNewMouseEvent('mousedown', newPoint);
-			this.sectionProperties.mapPane.dispatchEvent(newEvent);
-		}
-
-		// Just to be safe. We don't need this, but it makes no harm.
-		this.stopPropagating();
-		e.stopPropagation();
-		(<any>window).IgnorePanning = true; // We'll keep this until we have consistent sections and remove map element.
-
-		this.sectionProperties.inMouseDown = false;
+		app.map._docLayer._postMouseEvent('buttondown', p2.x, p2.y, 1, 1, 0);
 	}
 
 	public onMouseEnter () {
-		const grid: any = document.querySelector('.leaflet-map-pane');
-		grid.classList.remove('spreadsheet-cursor');
-		grid.style.cursor = 'crosshair';
-	}
-
-	public onMouseLeave () {
-		const grid: any = document.querySelector('.leaflet-map-pane');
-		grid.classList.add('spreadsheet-cursor');
+		this.context.canvas.style.cursor = 'crosshair';
 	}
 
 	public onNewDocumentTopLeft () {
@@ -244,11 +212,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	}
 
 	public onDoubleClick (point: cool.SimplePoint, e: MouseEvent) {
-		this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-		var pos = new cool.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
-		pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
+		const pos = this.getCenterRegardingDocument();
 		this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 2, 1, 0);
-		this.stopPropagating(); // Stop propagating to sections.
-		e.stopPropagation(); // Stop native event.
+		this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 2, 1, 0);
 	}
 };
