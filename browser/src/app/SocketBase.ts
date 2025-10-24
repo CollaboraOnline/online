@@ -73,9 +73,44 @@ class SocketBase {
 		this.traceEvents = new TraceEvents(this);
 	}
 
-	// we need typing of this function in TraceEvents.ts
 	public sendMessage(msg: MessageInterface): void {
-		console.assert(false, 'This should not be called!');
+		if (!this.socket) {
+			console.error('sendMessage() called with non-existent socket!');
+			return;
+		}
+
+		if (this._map._debug.eventDelayWatchdog) this._map._debug.timeEventDelay();
+
+		if (this._map._fatal) {
+			// Avoid communicating when we're in fatal state
+			return;
+		}
+
+		if (!app.idleHandler._active) {
+			// Avoid communicating when we're inactive.
+			if (typeof msg !== 'string') return;
+
+			if (!msg.startsWith('useractive') && !msg.startsWith('userinactive')) {
+				window.app.console.log(
+					'Ignore outgoing message due to inactivity: "' + msg + '"',
+				);
+				return;
+			}
+		}
+
+		if (this._map.uiManager && this._map.uiManager.isUIBlocked()) return;
+
+		const socketState = this.socket.readyState;
+		if (socketState === 2 || socketState === 3) {
+			this._map.loadDocument();
+		}
+
+		if (socketState === 1) {
+			this._doSend(msg);
+		} else {
+			// push message while trying to connect socket again.
+			this._msgQueue.push(msg);
+		}
 	}
 
 	public sendTraceEvent(
@@ -207,6 +242,10 @@ class SocketBase {
 		this._map['wopi'].resetAppLoaded();
 		this._map.fire('docloaded', { status: false });
 		clearTimeout(this._accessTokenExpireTimeout);
+	}
+
+	protected _doSend(msg: MessageInterface): void {
+		console.assert(false, 'This should not be called!');
 	}
 
 	protected _onSocketOpen(evt: Event): void {

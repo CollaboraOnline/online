@@ -85,7 +85,7 @@ class DebugManager {
 	private logKeyboardEvents: boolean;
 	private logTrace: boolean;
 
-	private eventDelayWatchdog: boolean;
+	public eventDelayWatchdog: boolean;
 	private _eventDelayTimeout: TimeoutHdl;
 	private _lastEventDelayTime: number;
 	private _lastEventDelay: number;
