@@ -256,7 +256,89 @@ class SocketBase {
 	}
 
 	protected _onSocketOpen(evt: Event): void {
-		console.assert(false, 'This should not be called!');
+		window.app.console.debug('_onSocketOpen:');
+		app.idleHandler._serverRecycling = false;
+		app.idleHandler._documentIdle = false;
+
+		// Always send the protocol version number.
+		// TODO: Move the version number somewhere sensible.
+
+		// Note there are two socket "onopen" handlers, this one which ends up as part of
+		// bundle.js and the other in browser/js/global.js. The global.js one attempts to
+		// set up the connection early while bundle.js is still loading. If bundle.js
+		// starts before global.js has connected, then this _onSocketOpen will do the
+		// connection instead, after taking over the socket in "connect"
+
+		// Typically in a "make run" scenario it is the global.js case that sends the
+		// 'coolclient' and 'load' messages while currently in the "WASM app" case it is
+		// this code that gets invoked.
+
+		// Also send information about our performance timer epoch
+		const now0 = Date.now();
+		const now1 = performance.now();
+		const now2 = Date.now();
+		this._doSend(
+			'coolclient ' +
+				this.ProtocolVersionNumber +
+				' ' +
+				(now0 + now2) / 2 +
+				' ' +
+				now1,
+		);
+
+		let msg = 'load url=' + encodeURIComponent(this._map.options.doc);
+		if (this._map._docLayer) {
+			this._reconnecting = true;
+			// we are reconnecting after a lost connection
+			msg += ' part=' + this._map.getCurrentPartNumber();
+		}
+		if (this._map.options.timestamp) {
+			msg += ' timestamp=' + this._map.options.timestamp;
+		}
+		if (this._map._docPassword) {
+			msg += ' password=' + this._map._docPassword;
+		}
+		if (String.locale) {
+			msg += ' lang=' + String.locale;
+		}
+		if (window.deviceFormFactor) {
+			msg += ' deviceFormFactor=' + window.deviceFormFactor;
+		}
+
+		msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+		if (this._map.options.renderingOptions) {
+			const options = {
+				rendering: this._map.options.renderingOptions,
+			};
+			msg += ' options=' + JSON.stringify(options);
+		}
+		const spellOnline = window.prefs.get('spellOnline');
+		if (spellOnline) {
+			msg += ' spellOnline=' + spellOnline;
+		}
+
+		const darkTheme = window.prefs.getBoolean('darkTheme');
+		msg += ' darkTheme=' + darkTheme;
+
+		const darkBackground = window.prefs.getBoolean(
+			'darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'),
+			darkTheme,
+		);
+		msg += ' darkBackground=' + darkBackground;
+		this._map.uiManager.initDarkBackgroundUI(darkBackground);
+
+		msg += ' accessibilityState=' + window.getAccessibilityState();
+
+		msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
+
+		this._doSend(msg);
+		for (let i = 0; i < this._msgQueue.length; i++) {
+			this._doSend(this._msgQueue[i]);
+		}
+		this._msgQueue = [];
+
+		app.idleHandler._activate();
 	}
 
 	protected _onSocketClose(evt: CloseEvent): void {
