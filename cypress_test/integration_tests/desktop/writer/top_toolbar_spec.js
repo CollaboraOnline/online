@@ -509,7 +509,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('.notebookbar .unoSuperScript').click();
-		cy.cGet('.leaflet-layer').click('center');
+		cy.cGet('#document-container').click('center');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p sup').should('exist');
@@ -519,7 +519,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('.notebookbar .unoSubScript').click();
-		cy.cGet('.leaflet-layer').click('center');
+		cy.cGet('#document-container').click('center');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p sub').should('exist');

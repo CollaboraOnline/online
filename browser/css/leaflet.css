@@ -210,7 +210,6 @@
 
 .anchor-marker:hover {
 	background-color: rgba(255,255,255,.95);
-	cursor: grab;
 	border: 1px solid var(--color-primary);
 }
 
@@ -1020,7 +1019,7 @@ input.clipboard {
 	top: 0;
 	bottom: 0;
 	right: 0;
-	z-index: 9;
+	z-index: 11;
 	user-select: none;
 	-webkit-touch-callout: none !important;
 	-webkit-user-select: none !important;

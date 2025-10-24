@@ -78,19 +78,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
 
 		// Click on the bottom left cell and hold
-		cy.cGet('.leaflet-layer')
+		cy.cGet('#document-container')
 			.then(function (items) {
 				expect(items).to.have.lengthOf(1);
 				var yPos = items[0].getBoundingClientRect().height - 60;
-				cy.cGet('.leaflet-layer').realMouseDown({ pointer: 'mouse', button: 'left', x: 30, y: yPos, scrollBehavior: false });
+				cy.cGet('#document-container').realMouseDown({ pointer: 'mouse', button: 'left', x: 30, y: yPos, scrollBehavior: false });
 			});
 		// Drag some cells to the right
-		cy.cGet('.leaflet-layer').realMouseMove(-280, -60, { position: 'bottomRight', scrollBehavior: false });
+		cy.cGet('#document-container').realMouseMove(-280, -60, { position: 'bottomRight', scrollBehavior: false });
 		// Drag to the bottom edge
-		cy.cGet('.leaflet-layer').realMouseMove(-280, 0, { position: 'bottomRight', scrollBehavior: false });
+		cy.cGet('#document-container').realMouseMove(-280, 0, { position: 'bottomRight', scrollBehavior: false });
 		// Wait for autoscroll and lift the button
 		cy.wait(500);
-		cy.cGet('.leaflet-layer').realMouseUp({ pointer: 'mouse', button: 'left' });
+		cy.cGet('#document-container').realMouseUp({ pointer: 'mouse', button: 'left' });
 
 		// Without the fix, the selected range is of the form A17:A22, instead of A17:D22
 		// It's better not to check the exact range because it can easily change in different executions

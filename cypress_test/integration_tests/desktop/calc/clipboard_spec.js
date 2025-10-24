@@ -215,7 +215,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.typeIntoDocument('{enter}');
 		helper.typeIntoDocument('{upArrow}');
 
-		cy.cGet('#map').rightclick(15, 15, { force: true });
+		cy.cGet('#canvas-container').then((items) => {
+			const rect = items[0].getBoundingClientRect();
+			cy.cGet('body').rightclick(rect.left + 55, rect.top + 40);
+		});
 		cy.cGet('.on-the-fly-context-menu').should('be.visible');
 		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Copy').should('be.visible');
 		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Copy').click();
@@ -223,7 +226,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.typeIntoDocument('{rightArrow}');
 		helper.typeIntoDocument('{rightArrow}');
 
-		cy.cGet('#map').rightclick(210, 15, { force: true });
+		cy.cGet('#canvas-container').rightclick(250, 35);
 		cy.cGet('.on-the-fly-context-menu').should('be.visible');
 		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Paste Special').should('be.visible');
 		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Paste Special').click();

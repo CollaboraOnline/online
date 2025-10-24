@@ -11,7 +11,7 @@ describe.skip(['tagmultiuser'], 'Repair Document', function() {
 
 	function repairDoc(frameId1, frameId2) {
 		cy.cSetActiveFrame(frameId1);
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 
 		helper.typeIntoDocument('Hello World');
 
@@ -19,13 +19,13 @@ describe.skip(['tagmultiuser'], 'Repair Document', function() {
 
 		cy.cSetActiveFrame(frameId2);
 		repairHelper.rollbackPastChange('Typing: “World”');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		cy.wait(500);
 		helper.selectAllText();
 		helper.expectTextForClipboard('Hello \n');
 
 		cy.cSetActiveFrame(frameId1);
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('#document-container').click();
 		helper.selectAllText();
 		helper.expectTextForClipboard('Hello \n');
 	}

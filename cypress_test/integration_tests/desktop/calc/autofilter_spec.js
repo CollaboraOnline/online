@@ -125,6 +125,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		cy.wait(500);
 
 		calcHelper.dblClickOnFirstCell();
+		// Position of the double click determines the cursor position. So press home button in order to go to start of the cell.
+		helper.typeIntoDocument('{home}');
+		// Type new content to verify that cell is in edit mode
 		helper.typeIntoDocument('New content{enter}');
 
 		calcHelper.assertSheetContents(['New contentCypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);

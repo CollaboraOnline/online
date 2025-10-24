@@ -126,7 +126,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#contenttree').find('.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable.selected').find('.jsdialog.sidebar.ui-treeview-cell-text').should('have.text','Leading zeroes');
 
 		// Risky: blind click into a big image, because cursor avoid images.
-		cy.cGet('.leaflet-layer').click(450,450);
+		cy.cGet('#document-container').click(450,450);
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'graphics36').should('be.visible');
 		cy.cGet('#contenttree').find('.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable.selected').find('.jsdialog.sidebar.ui-treeview-cell-text').should('have.text','graphics36');
 

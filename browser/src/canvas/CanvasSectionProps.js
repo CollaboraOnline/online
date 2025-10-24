@@ -28,6 +28,7 @@
 app.CSections.Debug = {}; // For keeping things simple.
 
 // First definitions. Other properties will be written according to their orders.
+app.CSections.MouseControl =        { name: "mouse-control"     , zIndex: 5 }; // Handles the event if no section prevented it.
 app.CSections.CommentList =			{ name: 'comment list'		, zIndex: 5	};
 app.CSections.Tiles = 				{ name: 'tiles'				, zIndex: 5 };
 app.CSections.Overlays =				{ name: 'overlay'			, zIndex: 5 };
@@ -47,9 +48,9 @@ app.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 
 app.CSections.Comment =				{ name: 'comment'			, zIndex: 7	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
-app.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 5 };
 app.CSections.CellCursor = 			{ name: 'OwnCellCursor'     , zIndex: 5 };
 app.CSections.FocusCell =             { name: 'focus cell'		, zIndex: 5 };
+app.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 6 };
 app.CSections.DefaultForDocumentObjects = {                         zIndex: 9 };
 app.CSections.HTMLObject     =        {                             zIndex: 9 };
 app.CSections.TableResizeMarker =     { name: 'table resize marker' };
@@ -86,10 +87,12 @@ app.CSections.Debug.DebugOverlay.processingOrder = 	67; // Writer & Impress & Ca
 app.CSections.Debug.PreloadMap.processingOrder =		68; // Writer & Impress & Calc. This is bound to tiles.
 app.CSections.CalcGrid.processingOrder = 				69; // Calc. This is bound to tiles.
 app.CSections.Debug.Splits.processingOrder = 			70; // Calc. This is bound to tiles.
+app.CSections.MouseControl.processingOrder =            71; // Writer & Impress & Calc. Bound to tiles.
 app.CSections.Splitter.processingOrder = 			    80; // Calc.
 
 app.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 app.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
+app.CSections.MouseControl.drawingOrder =           51; // After tiles section.
 app.CSections.CommentList.drawingOrder =				55; // Writer & Impress.
 app.CSections.Debug.TilePixelGrid.drawingOrder = 		60; // Writer & Impress & Calc.
 app.CSections.Debug.DebugOverlay.drawingOrder = 		60; // Writer & Impress & Calc.
