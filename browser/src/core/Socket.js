@@ -20,27 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	setUnloading() {
-		if (this.socket.setUnloading)
-			this.socket.setUnloading();
-	}
-
-	close() {
-		this.socket.onerror = function () {};
-		this.socket.onclose = function () {};
-		this.socket.onmessage = function () {};
-		this.socket.close();
-
-		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization
-		this._map['wopi'].resetAppLoaded();
-		this._map.fire('docloaded', {status: false});
-		clearTimeout(this._accessTokenExpireTimeout);
-	}
-
-	connected() {
-		return this.socket && this.socket.readyState === 1;
-	}
-
 	sendMessage(msg) {
 		if (this._map._debug.eventDelayWatchdog)
 			this._map._debug.timeEventDelay();
