@@ -266,7 +266,8 @@ static const wchar_t* _(const wchar_t* english)
                 // Most translations missing here
                 L"Select document to edit in %s",
                 {
-                    { "de", "Wählen Sie ein Dokument zum Öffnen in %s aus" },
+                    { "de", "Dokument zur Bearbeitung in %s auswählen" },
+                    { "pl". "Wybierz dokument do edycji w %s" },
                     { "ru", "Выберите документ для редактирования в %s" },
                     { "sv", "Välj dolkument att redigera i %s" },
                 },
