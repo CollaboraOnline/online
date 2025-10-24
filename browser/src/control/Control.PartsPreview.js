@@ -244,7 +244,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 			var pcw = document.getElementById('presentation-controls-wrapper');
 			var $trigger = $(pcw);
-			if (isMasterView === 'true') {
+			if (isMasterView === 'true' || app.isReadOnly()) {
 				$trigger.contextMenu(false);
 				return;
 			}
@@ -288,7 +288,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		window.L.DomEvent.on(img, 'contextmenu', function(e) {
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 			var $trigger = $('#' + img.id);
-			if (isMasterView === 'true') {
+			if (isMasterView === 'true' || app.isReadOnly()) {
 				$trigger.contextMenu(false);
 				return;
 			}
