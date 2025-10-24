@@ -3493,10 +3493,10 @@ msgstr "Ορίστε τις ιδιότητες του στοιχείου του 
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Πατήστε στο εικονίδιο υπομενού (<img style=\"height:0.6cm;width:0.6cm;\" alt="
-#~ "\"\" src=\"images/submenu.svg\">) για να απαντήσετε, να μετακινήσετε και να "
+#~ "\"\" src=\"images/lc_more.svg\">) για να απαντήσετε, να μετακινήσετε και να "
 #~ "διαγράψετε σχόλια."
 
 #~ msgid ""

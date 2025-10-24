@@ -3412,10 +3412,10 @@ msgstr "Angi egenskapene til elementet til objektet."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Klikk på undermeny (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
-#~ "images/submenu.svg\">) ikonet for å svare, flytte og slette kommentarer."
+#~ "images/lc_more.svg\">) ikonet for å svare, flytte og slette kommentarer."
 
 #~ msgid ""
 #~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "

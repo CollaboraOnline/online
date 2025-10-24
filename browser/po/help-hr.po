@@ -3362,10 +3362,10 @@ msgstr "Postavi svojstva elementa objekta."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Pritisni na ikonu podizbornika (<img style=\"height:0.6cm;width:0.6cm;\" alt="
-#~ "\"\" src=\"images/submenu.svg\">) za odgovaranje, premještanje i brisanje "
+#~ "\"\" src=\"images/lc_more.svg\">) za odgovaranje, premještanje i brisanje "
 #~ "komentara."
 
 #~ msgid ""

@@ -3434,10 +3434,10 @@ msgstr "Đặt các thuộc tính của phần tử của đối tượng."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Nhấp vào biểu tượng menu con (<img style=\"height:0.6cm;width:0.6cm;\" alt=\""
-#~ "\" src=\"images/submenu.svg\">) để trả lời, di chuyển và xóa nhận xét."
+#~ "\" src=\"images/lc_more.svg\">) để trả lời, di chuyển và xóa nhận xét."
 
 #~ msgid ""
 #~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "

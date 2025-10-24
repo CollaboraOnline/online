@@ -3479,10 +3479,10 @@ msgstr "Définissez les propriétés des éléments de l'objet."
 
 #~ msgid ""
 #~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
 #~ "Cliquez sur l'icône de sous menu (<img style=\"height:0.6cm;width:0.6cm;\" "
-#~ "alt=\"\" src=\"images/submenu.svg\">) pour répondre, déplacer ou supprimer "
+#~ "alt=\"\" src=\"images/lc_more.svg\">) pour répondre, déplacer ou supprimer "
 #~ "les commentaires."
 
 #~ msgid ""
