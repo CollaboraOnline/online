@@ -483,4 +483,54 @@ class SocketBase {
 
 		return true;
 	}
+
+	protected _queueSlurpEventEmission(delayMS: number): void {
+		let now = Date.now();
+		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
+			// The timer already exists, but now want to change timeout _slurpTimerDelay to delayMS.
+			// Cancel it and reschedule by replacement with another timer using the desired delayMS
+			// adjusted as if used at the original launch time.
+			clearTimeout(this._slurpTimer);
+			this._slurpTimer = undefined;
+			this._slurpTimerDelay = delayMS;
+
+			now = Date.now();
+			if (this._slurpTimerLaunchTime === undefined) {
+				console.assert(
+					false,
+					'_slurpTimerLaunchTime is undefined when _slurpTimer exists!',
+				);
+				return;
+			}
+			const sinceLaunchMS = now - this._slurpTimerLaunchTime;
+			delayMS -= sinceLaunchMS;
+			if (delayMS <= 0) delayMS = 1;
+		}
+
+		if (!this._slurpTimer) {
+			if (!this._slurpTimerLaunchTime) {
+				// The initial launch of the timer, rescheduling replacements retain
+				// the launch time
+				this._slurpTimerLaunchTime = now;
+				this._slurpTimerDelay = delayMS;
+			}
+			this._slurpTimer = setTimeout(
+				function (this: SocketBase) {
+					this._slurpTimer = undefined;
+					this._slurpTimerLaunchTime = undefined;
+					this._slurpTimerDelay = undefined;
+					if (this._inLayerTransaction) {
+						this._slurpDuringTransaction = true;
+						return;
+					}
+					this._emitSlurpedEvents();
+				}.bind(this),
+				delayMS,
+			);
+		}
+	}
+
+	protected _emitSlurpedEvents(): void {
+		console.assert(false, 'This should not be called!');
+	}
 }
