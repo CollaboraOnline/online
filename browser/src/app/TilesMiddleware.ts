@@ -55,6 +55,10 @@ class TileCoordData {
 		return new cool.Point(this.x, this.y);
 	}
 
+	getPos2() {
+		return cool.SimplePoint.fromCorePixels([this.x, this.y]);
+	}
+
 	key(): string {
 		return (
 			this.x +
