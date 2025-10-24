@@ -195,9 +195,8 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private paintSimple (tile: any, ctx: any, async: boolean): void {
-		ctx.viewBounds.round();
-		var offset = new cool.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
+	private paintSimple (tile: any, async: boolean): void {
+		const tilePos: cool.SimplePoint = tile.coords.getPos2();
 
 		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
@@ -205,16 +204,16 @@ export class TilesSection extends CanvasSectionObject {
 			// For the full view area repaint, whole canvas is cleared by section container.
 			// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive even if not async.
 			this.context.fillStyle = this.containerObject.getClearColor();
-			this.context.fillRect(offset.x, offset.y, TileManager.tileSize, TileManager.tileSize);
+			this.context.fillRect(tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
 		}
 
 		if (app.file.fileBasedView) {
-			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * app.twipsToPixels);
+			const partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * app.twipsToPixels);
 
-			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - app.activeDocument.activeView.viewedRectangle.pY1;
+			tilePos.pY = tile.coords.part * partHeightPixels + tile.coords.y - app.activeDocument.activeView.viewedRectangle.pY1;
 		}
 
-		this.drawTileToCanvas(tile, this.context, offset.x, offset.y, TileManager.tileSize, TileManager.tileSize);
+		this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -230,7 +229,7 @@ export class TilesSection extends CanvasSectionObject {
 		if (ctx.paneBoundsActive === true)
 			this.paintWithPanes(tile, ctx, async);
 		else
-			this.paintSimple(tile, ctx, async);
+			this.paintSimple(tile, async);
 	}
 
 	private forEachTileInView(zoom: number, part: number, mode: number, ctx: any,
