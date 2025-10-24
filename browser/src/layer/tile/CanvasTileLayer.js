@@ -1308,9 +1308,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
 				var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
 				this._map._textInput.onAccessibilityFocusedCellChanged(
-					outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+						outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
 			}
-			else if (textMsg.startsWith('a11yeditinginselectionstate:')) {
+			else if (textMsg.startsWith('a11yeditingix1nselectionstate:')) {
 				obj = JSON.parse(textMsg.substring('a11yeditinginselectionstate:'.length + 1));
 				this._map._textInput.onAccessibilityEditingInSelectionState(
 					parseInt(obj.cell) > 0, parseInt(obj.enabled) > 0, obj.selection, obj.paragraph);
