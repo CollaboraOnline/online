@@ -153,4 +153,17 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         impressHelper.removeShapeSelection();
         ceHelper.checkHTMLContent('');
     });
+
+    it('Selection rectangle', function() {
+        cy.cGet('#test-div-selection-rectangle').should('exist');
+        cy.cGet('#test-div-tiles').should('exist');
+
+        // Selection section should overlap with tiles section.
+        cy.cGet('#test-div-selection-rectangle').then(function(section1) {
+            cy.cGet('#test-div-tiles').then(function(section2) {
+                 expect(section1[0].style.width).to.be.equal(section2[0].style.width);
+                 expect(section1[0].style.height).to.be.equal(section2[0].style.height);
+            });
+        });
+    });
 });

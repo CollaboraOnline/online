@@ -14,6 +14,7 @@ class DocumentBase {
 	public readonly type: string = 'DocumentBase';
 	public activeView: ViewLayoutBase;
 	public tableMiddleware: TableMiddleware;
+	public selectionMiddleware: ImpressSelectionMiddleware | null;
 
 	protected _fileSize: cool.SimplePoint;
 
@@ -27,6 +28,10 @@ class DocumentBase {
 		this.tableMiddleware = new TableMiddleware();
 
 		this.tableMiddleware.setupTableOverlay();
+
+		if (app.map._docLayer._docType === 'presentation')
+			this.selectionMiddleware = new ImpressSelectionMiddleware();
+		else this.selectionMiddleware = null;
 	}
 
 	public get fileSize(): cool.SimplePoint {
