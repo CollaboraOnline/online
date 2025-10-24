@@ -112,4 +112,26 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 				});
 		});
 	});
+
+	it('Hides the bottom toolbar when the screen is too small', function() {
+		// By default in edit mode, the bottom toolbar is shown...
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('be.visible');
+
+		// ...even when we are in landscape mode...
+		cy.viewport('iphone-6', 'landscape');
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('be.visible');
+
+		// ...but not if our onscreen keyboard is shown. Here simulated by setting our height just under the limit
+		// ...there's no way to know exactly how big the size will be on different devices - particularly when taking into account browser UI - but 150px is still enough to edit the document so it's kind of OK
+		cy.viewport(667, 149);
+		cy.cGet('#toolbar-down').should('not.be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('not.be.visible');
+
+		// ...and closing the keyboard should make it appear again
+		cy.viewport('iphone-6', 'landscape');
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('be.visible');
+	});
 });
