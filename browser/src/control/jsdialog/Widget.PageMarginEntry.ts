@@ -39,6 +39,23 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	container.setAttribute('role', 'listbox');
 	container.setAttribute('aria-label', _('Page margin options'));
 
+	const lang = window.coolParams.get('lang') || 'en-US';
+	const useImperial = lang === 'en-US';
+	const inchToCm = 2.54;
+
+	function formatLocalized(valueInInches: number): string {
+		let value = valueInInches;
+		let unit = '"';
+		if (!useImperial) {
+			value = valueInInches * inchToCm;
+			unit = ' cm';
+		}
+		const formatted = new Intl.NumberFormat(lang, {
+			maximumFractionDigits: 1,
+		}).format(value);
+		return `${formatted}${unit}`;
+	}
+
 	const onMarginClick = (evt: MouseEvent) => {
 		const elm = evt.currentTarget as HTMLElement;
 		const key = elm.id;
@@ -103,12 +120,12 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		const topSpan = document.createElement('span');
 		topSpan.textContent = _('Top: {top}').replace(
 			'{top}',
-			`${opt.details.Top}"`,
+			formatLocalized(opt.details.Top),
 		);
 		const leftSpan = document.createElement('span');
 		leftSpan.textContent = _('Left: {left}').replace(
 			'{left}',
-			`${opt.details.Left}"`,
+			formatLocalized(opt.details.Left),
 		);
 		col1.appendChild(topSpan);
 		col1.appendChild(leftSpan);
@@ -118,12 +135,12 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		const bottomSpan = document.createElement('span');
 		bottomSpan.textContent = _('Bottom: {bottom}').replace(
 			'{bottom}',
-			`${opt.details.Bottom}"`,
+			formatLocalized(opt.details.Bottom),
 		);
 		const rightSpan = document.createElement('span');
 		rightSpan.textContent = _('Right: {right}').replace(
 			'{right}',
-			`${opt.details.Right}"`,
+			formatLocalized(opt.details.Right),
 		);
 		col2.appendChild(bottomSpan);
 		col2.appendChild(rightSpan);
