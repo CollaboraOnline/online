@@ -20,14 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_doSend(msg) {
-		// Only attempt to log text frames, not binary ones.
-		if (typeof msg === 'string')
-			this._logSocket('OUTGOING', msg);
-
-		this.socket.send(msg);
-	}
-
 	_getParameterByName(url, name) {
 		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(url);
@@ -137,39 +129,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		}
 
 		return true;
-	}
-
-	_logSocket(type, msg) {
-		var logMessage = this._map._debug.debugNeverStarted || this._map._debug.logIncomingMessages;
-		if (!logMessage)
-			return;
-
-		if (window.ThisIsTheGtkApp)
-			window.postMobileDebug(type + ' ' + msg);
-
-		var debugOn = this._map._debug.debugOn;
-
-		if (this._map._debug.overlayOn) {
-			this._map._debug.setOverlayMessage('postMessage',type+': '+msg);
-		}
-
-		if (!debugOn && msg.length > 256) // for reasonable performance.
-			msg = msg.substring(0,256) + '<truncated ' + (msg.length - 256) + 'chars>';
-
-		var status = '';
-		if (!window.fullyLoadedAndReady)
-			status += '[!fullyLoadedAndReady]';
-		if (!window.bundlejsLoaded)
-			status += '[!bundlejsLoaded]';
-
-		app.Log.log(msg, type + status);
-
-		if (!window.protocolDebug && !debugOn)
-			return;
-
-		var color = type === 'OUTGOING' ? 'color:red' : 'color:#2e67cf';
-		window.app.console.log(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
-			     'background:#ddf;color:black', color, 'color:');
 	}
 
 	_queueSlurpEventEmission(delayMS) {
