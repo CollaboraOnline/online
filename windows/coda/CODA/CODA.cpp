@@ -134,7 +134,7 @@ static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
 
 // Temporary l10n function for the few UI strings here in this file
-static std::wstring _(const wchar_t* english)
+static const wchar_t* _(const wchar_t* english)
 {
     static std::map<std::wstring, std::map<std::string, std::string>> translations
         {
@@ -263,20 +263,80 @@ static std::wstring _(const wchar_t* english)
                 }
             },
             {
+                // Most translations missing here
                 L"Select document to edit in %s",
                 {
                     { "de", "Wählen Sie ein Dokument zum Öffnen in %s aus" },
                     { "ru", "Выберите документ для редактирования в %s" },
                     { "sv", "Välj dolkument att redigera i %s" },
                 },
-            }
+            },
+            {
+                // Some translations missing here
+                L"Normal files",
+                {
+                    { "cs", "Normální soubory" },
+                    { "da", "Almindelige filer" },
+                    { "de", "Normale Dateien" },
+                    { "el", "Κανονικά αρχεία" },
+                    { "es", "Archivos normales" },
+                    { "fr", "Fichiers normaux" },
+                    { "hu", "Normál fájlok" },
+                    { "it", "File normali" },
+                    { "nb", "Normale filer" },
+                    { "nl", "Normale bestanden" },
+                    { "nn", "Normale filer" },
+                    { "pl", "Pliki normalne" },
+                    { "pt", "Ficheiros normais" },
+                    { "ru", "Обычные файлы" },
+                    { "sl", "Navadne datoteke" },
+                    { "sv", "Vanliga filer" },
+                    { "tr", "Normal dosyalar" },
+                    { "uk", "Звичайні файли" },
+                    { "zh", "普通文件" },
+                },
+            },
+            {
+                L"All files",
+                {
+                    { "ar", "كلّ الملفّات" },
+                    { "cs", "Všechny soubory" },
+                    { "da", "Alle filer" },
+                    { "de", "Alle Dateien" },
+                    { "el", "Όλα τα αρχεία" },
+                    { "es", "Todos los archivos" },
+                    { "fr", "Tous les fichiers" },
+                    { "he", "כל הקבצים" },
+                    { "hu", "Minden fájl" },
+                    { "is", "Allar skrár" },
+                    { "it", "Tutti i file" },
+                    { "ja", "すべてのファイル" },
+                    { "ko", "모든 파일" },
+                    { "nb", "Alle filer" },
+                    { "nl", "Alle bestanden" },
+                    { "nn", "Alle filer" },
+                    { "pl", "Wszystkie pliki" },
+                    { "pt", "Todos os ficheiros" },
+                    { "ru", "Все файлы" },
+                    { "sk", "Všetky súbory" },
+                    { "sl", "Vse datoteke" },
+                    { "sv", "Alla filer" },
+                    { "tr", "Tüm dosyalar" },
+                    { "uk", "Усі файли" },
+                    { "zh-CN", "所有文件" },
+                    { "zh-TW", "所有檔案" },
+                },
+            },
         };
 
     std::wstring e = english;
     if (translations.count(e) == 1)
     {
         if (translations[e].count(uiLanguage) == 1)
-            return Util::string_to_wide_string(translations[e][uiLanguage]);
+        {
+            // This leaks, so sue me. This is temporary code anyway.
+            return _wcsdup(Util::string_to_wide_string(translations[e][uiLanguage]).c_str());
+        }
         else
         {
             auto dash = uiLanguage.find('-');
@@ -284,7 +344,7 @@ static std::wstring _(const wchar_t* english)
             {
                 auto justLanguage = uiLanguage.substr(0, dash);
                 if (translations[e].count(justLanguage) == 1)
-                    return Util::string_to_wide_string(translations[e][justLanguage]);
+                    return _wcsdup(Util::string_to_wide_string(translations[e][justLanguage]).c_str());
             }
         }
     }
@@ -908,16 +968,16 @@ static FilenameAndUri fileOpenDialog()
         std::abort();
 
     COMDLG_FILTERSPEC filter[] = {
-        { L"Typical documents",
+        { _(L"Normal files"),
           L"*.odt;*.docx;*.doc;*.rtf;*.txt;*.ods;*.xlsx;*.xls;*.odp;*.pptx;*.ppt" },
-        { L"All files", L"*.*" }
+        { _(L"All files"), L"*.*" }
     };
 
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
         std::abort();
 
     wchar_t title[100];
-    StringCbPrintfW(title, sizeof(title), _(L"Select document to edit in %s").c_str(), appName.c_str());
+    StringCbPrintfW(title, sizeof(title), _(L"Select document to edit in %s"), appName.c_str());
     if (!SUCCEEDED(dialog->SetTitle(title)))
         std::abort();
 
@@ -938,19 +998,19 @@ static FilenameAndUri fileOpenDialog()
     if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP1)))
         std::abort();
 
-    if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, _(L"Create new").c_str())))
+    if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, _(L"Create new"))))
         std::abort();
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_TEXT,
-                                                      _(L"Text document").c_str())))
+                                                      _(L"Text document"))))
         std::abort();
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_SPREADSHEET,
-                                                      _(L"Spreadsheet").c_str())))
+                                                      _(L"Spreadsheet"))))
         std::abort();
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_PRESENTATION,
-                                                      _(L"Presentation").c_str())))
+                                                      _(L"Presentation"))))
         std::abort();
 
     dialogCustomisation->EndVisualGroup();
