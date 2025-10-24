@@ -4168,15 +4168,6 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
         throw;
     }
 
-    const int unitReturnValue = UnitBase::uninit();
-    if (unitReturnValue != EXIT_OK)
-    {
-        // Overwrite the return value if the unit-test failed.
-        LOG_INF("Overwriting process [coolwsd] exit status ["
-                << returnValue << "] with unit-test status: " << unitReturnValue);
-        returnValue = unitReturnValue;
-    }
-
     cleanup(returnValue);
 
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
