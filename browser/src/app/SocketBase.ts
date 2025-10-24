@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/* eslint-disable @typescript-eslint/no-empty-function */
 
 class SocketBase {
 	private ProtocolVersionNumber: string = '0.1';
@@ -193,7 +194,19 @@ class SocketBase {
 	}
 
 	public close(code?: number, reason?: string): void {
-		console.assert(false, 'This should not be called!');
+		if (!this.socket) {
+			console.error('Tried close() on non-existent socket!');
+			return;
+		}
+		this.socket.onerror = function () {};
+		this.socket.onclose = function () {};
+		this.socket.onmessage = function () {};
+		this.socket.close();
+
+		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization
+		this._map['wopi'].resetAppLoaded();
+		this._map.fire('docloaded', { status: false });
+		clearTimeout(this._accessTokenExpireTimeout);
 	}
 
 	protected _onSocketOpen(evt: Event): void {
@@ -251,5 +264,13 @@ class SocketBase {
 			this._sessionExpiredWarning.bind(this),
 			120 * 1000,
 		);
+	}
+
+	public setUnloading(): void {
+		if (this.socket && this.socket.setUnloading) this.socket.setUnloading();
+	}
+
+	public connected(): boolean {
+		return this.socket !== undefined && this.socket.readyState === 1;
 	}
 }
