@@ -1017,7 +1017,7 @@ class DebugManager {
 						.getSectionWithName('column header')
 						._selectColumn(1, 0);
 					this._map.sendUnoCommand(
-						'.uno:SetOptimalColumnWidthDirect {"aExtraHeight":{"type":"unsigned short","value":0}}',
+						'.uno:SetOptimalColumnWidth {"aExtraWidth":{"type":"unsigned short","value":200}}',
 					);
 					waitTime = 2000;
 				}
