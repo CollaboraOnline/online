@@ -95,15 +95,13 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         if (Log::isEnabled(failed ? Log::Level::ERR : Log::Level::TRC))
         {
             std::ostringstream oss;
-            oss << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
-                << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
-                << httpResponse->statusLine().reasonPhrase()
-                << ". Headers: " << httpResponse->header()
-                << (failed ? "\tBody: [" + COOLProtocol::getAbbreviatedMessage(wopiResponse) + ']'
-                           : std::string());
+            oss << "WOPI::CheckFileInfo returned" << httpResponse->statusLine().statusCode() << ' '
+                << httpResponse->statusLine().reasonPhrase() << " for URI [" << uriAnonym
+                << "]. Headers: " << httpResponse->header();
 
             if (failed)
             {
+                oss << "\tBody: [" << COOLProtocol::getAbbreviatedMessage(wopiResponse) << ']';
                 LOG_ERR(oss.str());
             }
             else
