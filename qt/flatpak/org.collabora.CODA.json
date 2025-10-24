@@ -175,25 +175,34 @@
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
         "-DCMAKE_INSTALL_PREFIX=/app",
-        "-DENABLE_XML=ON",
-        "-DENABLE_JSON=ON",
-        "-DENABLE_MONGODB=OFF",
-        "-DENABLE_REDIS=OFF",
-        "-DENABLE_DATA=ON",
-        "-DENABLE_DATA_SQLITE=ON",
+        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+        "-DBUILD_SHARED_LIBS=OFF",
+        "-DENABLE_TESTS=OFF",
+        "-DENABLE_ACTIVERECORD=OFF",
+        "-DENABLE_ACTIVERECORD_COMPILER=OFF",
+        "-DENABLE_APACHECONNECTOR=OFF",
+        "-DENABLE_DATA=OFF",
         "-DENABLE_DATA_MYSQL=OFF",
         "-DENABLE_DATA_ODBC=OFF",
-        "-DENABLE_PDF=OFF",
-        "-DENABLE_NETSSL=ON",
-        "-DPOCO_UNBUNDLED=ON"
+        "-DENABLE_DATA_POSTGRESQL=OFF",
+        "-DENABLE_DATA_SQLITE=OFF",
+        "-DENABLE_ENCODINGS=OFF",
+        "-DENABLE_JWT=OFF",
+        "-DENABLE_MONGODB=OFF",
+        "-DENABLE_PAGECOMPILER=OFF",
+        "-DENABLE_PAGECOMPILER_FILE2PAGE=OFF",
+        "-DENABLE_PROMETHEUS=OFF",
+        "-DENABLE_REDIS=OFF",
+        "-DPOCO_UNBUNDLED=OFF"
       ],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/pocoproject/poco.git",
-          "tag": "poco-1.12.4"
+          "tag": "poco-1.12.5-release"
         }
-      ]
+      ],
+      "cleanup": [ "*" ]
     },
     {
       "name": "zstd",
