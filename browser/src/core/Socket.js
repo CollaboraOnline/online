@@ -20,43 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	sendMessage(msg) {
-		if (this._map._debug.eventDelayWatchdog)
-			this._map._debug.timeEventDelay();
-
-		if (this._map._fatal) {
-			// Avoid communicating when we're in fatal state
-			return;
-		}
-
-		if (!app.idleHandler._active) {
-			// Avoid communicating when we're inactive.
-			if (typeof msg !== 'string')
-				return;
-
-			if (!msg.startsWith('useractive') && !msg.startsWith('userinactive')) {
-				window.app.console.log('Ignore outgoing message due to inactivity: "' + msg + '"');
-				return;
-			}
-		}
-
-		if (this._map.uiManager && this._map.uiManager.isUIBlocked())
-			return;
-
-		var socketState = this.socket.readyState;
-		if (socketState === 2 || socketState === 3) {
-			this._map.loadDocument();
-		}
-
-		if (socketState === 1) {
-			this._doSend(msg);
-		}
-		else {
-			// push message while trying to connect socket again.
-			this._msgQueue.push(msg);
-		}
-	}
-
 	_doSend(msg) {
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string')
