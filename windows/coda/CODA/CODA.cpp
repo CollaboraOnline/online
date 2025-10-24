@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
+#include <map>
 #include <regex>
 #include <thread>
 #include <vector>
@@ -92,6 +93,9 @@ std::string app_installation_path;
 
 std::string app_installation_uri;
 
+static std::string uiLanguage = "en-US";
+static std::wstring appName;
+
 static COOLWSD* coolwsd = nullptr;
 
 // The main window class name.
@@ -128,6 +132,165 @@ static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
 
 static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
+
+// Temporary l10n function for the few UI strings here in this file
+static std::wstring _(const wchar_t* english)
+{
+    static std::map<std::wstring, std::map<std::string, std::string>> translations
+        {
+            {
+                L"Create new",
+                {
+                    { "ar", "أنشيء جديدًا" },
+                    { "cs", "Vytvořit nový" },
+                    { "da", "Opret ny" },
+                    { "de", "Neu erstellen" },
+                    { "el", "Δημιουργία νέου" },
+                    { "es", "Crear nuevo" },
+                    { "fr", "Créer un nouveau" },
+                    { "he", "יצירת חדש" },
+                    { "hu", "Új létrehozása" },
+                    { "is", "Búa til nýtt" },
+                    { "it", "Crea nuovo" },
+                    { "ja", "新規作成" },
+                    { "ko", "새로 만들기" },
+                    { "nb", "Opprett nytt" },
+                    { "nl", "Nieuw" },
+                    { "nn", "Opprett nytt" },
+                    { "pl", "Utwórz nowy" },
+                    { "pt", "Criar novo" },
+                    { "ru", "Создать новый" },
+                    { "sk", "Vytvoriť nový" },
+                    { "sl", "Ustvari novo" },
+                    { "sv", "Skapa nytt" },
+                    { "tr", "Yeni oluştur" },
+                    { "uk", "Створити новий" },
+                    { "zh-CN", "新建" },
+                    { "zh-TW", "新建" },
+                }
+            },
+            {
+                L"Text document",
+                {
+                    { "ar", "مستند نصي" },
+                    { "cs", "Textový dokument" },
+                    { "da", "Textdokument" },
+                    { "de", "Textdokument" },
+                    { "el", "Έγγραφο κειμένου" },
+                    { "es", "Documento de texto" },
+                    { "fr", "Texte" },
+                    { "he", "מסמך טקסט" },
+                    { "hu", "Szöveges dokumentum" },
+                    { "is", "Textaskjal" },
+                    { "it", "Documento di testo" },
+                    { "ja", "文書ドキュメント" },
+                    { "ko", "텍스트 문서" },
+                    { "nb", "Tekstdokument" },
+                    { "nl", "Tekstdocument" },
+                    { "nn", "Tekstdokument" },
+                    { "pl", "Dokument tekstowy" },
+                    { "pt", "Documento de texto" },
+                    { "ru", "Текстовый документ" },
+                    { "sk", "Textový dokument" },
+                    { "sl", "Dokument z besedilom" },
+                    { "sv", "Textdokument" },
+                    { "tr", "Metin Belgesi" },
+                    { "uk", "Текстовий документ" },
+                    { "zh-CN", "文本文档" },
+                    { "zh-TW", "文字文件" },
+                }
+            },
+            {
+                L"Spreadsheet",
+                {
+                    { "ar", "جدول مُمتد" },
+                    { "cs", "Sešit" },
+                    { "da", "Regneark" },
+                    { "de", "Tabellendokument" },
+                    { "el", "Υπολογιστικό φύλλο" },
+                    { "es", "Hoja de cálculo" },
+                    { "fr", "Classeur" },
+                    { "he", "גיליון אלקטרוני" },
+                    { "hu", "Munkafüzet" },
+                    { "is", "Töflureiknir" },
+                    { "it", "Foglio elettronico" },
+                    { "ja", "表計算ドキュメント" },
+                    { "ko", "스프레드시트" },
+                    { "nb", "Regneark" },
+                    { "nl", "Werkblad" },
+                    { "nn", "Rekneark" },
+                    { "pl", "Arkusz kalkulacyjny" },
+                    { "pt", "Folha de cálculo" },
+                    { "ru", "Электронная таблица" },
+                    { "sk", "Tabuľkový dokument" },
+                    { "sl", "Preglednica" },
+                    { "sv", "Kalkylark" },
+                    { "tr", "Hesap Tablosu" },
+                    { "uk", "Електронна таблиця" },
+                    { "zh-CN", "电子表格" },
+                    { "zh-TW", "試算表" },
+                }
+            },
+            {
+                L"Presentation",
+                {
+                    { "ar", "عرض تقديمي" },
+                    { "cs", "Prezentace" },
+                    { "da", "Præsentation" },
+                    { "de", "Präsentation" },
+                    { "el", "Παρουσίαση" },
+                    { "es", "Presentación" },
+                    { "fr", "Présentation" },
+                    { "he", "מצגתי" },
+                    { "hu", "Bemutató" },
+                    { "is", "Kynning" },
+                    { "it", "Presentazione" },
+                    { "ja", "プレゼンテーション" },
+                    { "ko", "프레젠테이션" },
+                    { "nb", "Presentasjon" },
+                    { "nl", "Presentatie" },
+                    { "nn", "Presentasjon" },
+                    { "pl", "Prezentacja" },
+                    { "pt", "Apresentação" },
+                    { "ru", "Презентация" },
+                    { "sk", "Prezentácia" },
+                    { "sl", "Predstavitev" },
+                    { "sv", "Presentation" },
+                    { "tr", "Sunu" },
+                    { "uk", "Презентація" },
+                    { "zh-CN", "演示文稿" },
+                    { "zh-TW", "簡報" },
+                }
+            },
+            {
+                L"Select document to edit in %s",
+                {
+                    { "de", "Wählen Sie ein Dokument zum Öffnen in %s aus" },
+                    { "ru", "Выберите документ для редактирования в %s" },
+                    { "sv", "Välj dolkument att redigera i %s" },
+                },
+            }
+        };
+
+    std::wstring e = english;
+    if (translations.count(e) == 1)
+    {
+        if (translations[e].count(uiLanguage) == 1)
+            return Util::string_to_wide_string(translations[e][uiLanguage]);
+        else
+        {
+            auto dash = uiLanguage.find('-');
+            if (dash != std::string::npos)
+            {
+                auto justLanguage = uiLanguage.substr(0, dash);
+                if (translations[e].count(justLanguage) == 1)
+                    return Util::string_to_wide_string(translations[e][justLanguage]);
+            }
+        }
+    }
+
+    return english;
+}
 
 // ================ Sample code (MIT licensed). With app-specific modifications in the dialog event handler.
 // https://github.com/microsoft/Windows-classic-samples/blob/2b94df5730177ec27e726b60017c01c97ef1a8fb/Samples/Win7Samples/winui/shell/appplatform/commonfiledialog/CommonFileDialogApp.cpp
@@ -753,7 +916,9 @@ static FilenameAndUri fileOpenDialog()
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
         std::abort();
 
-    if (!SUCCEEDED(dialog->SetTitle(L"Select document to edit in " APP_NAME)))
+    wchar_t title[100];
+    StringCbPrintfW(title, sizeof(title), _(L"Select document to edit in %s").c_str(), appName.c_str());
+    if (!SUCCEEDED(dialog->SetTitle(title)))
         std::abort();
 
     IFileDialogEvents* dialogEvents = NULL;
@@ -773,19 +938,19 @@ static FilenameAndUri fileOpenDialog()
     if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP1)))
         std::abort();
 
-    if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, L"Create new")))
+    if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, _(L"Create new").c_str())))
         std::abort();
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_TEXT,
-                                                      L"Text document")))
+                                                      _(L"Text document").c_str())))
         std::abort();
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_SPREADSHEET,
-                                                      L"Spreadsheet")))
+                                                      _(L"Spreadsheet").c_str())))
         std::abort();
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_PRESENTATION,
-                                                      L"Presentation")))
+                                                      _(L"Presentation").c_str())))
         std::abort();
 
     dialogCustomisation->EndVisualGroup();
@@ -1083,25 +1248,12 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
                                     .Get(),
                                 &token);
 
-                            // A "LANG" environment variable is not a thing on Windows, but check
-                            // for a such anyway, for easier testing.
-                            auto langEnv = std::getenv("LANG");
-
-                            std::string lang = "en-US";
-                            wchar_t bcp47[LOCALE_NAME_MAX_LENGTH];
-
-                            if (langEnv)
-                                lang = langEnv;
-                            else if (LCIDToLocaleName(MAKELCID(GetUserDefaultUILanguage(), SORT_DEFAULT),
-                                                      bcp47, LOCALE_NAME_MAX_LENGTH, 0))
-                                lang = Util::wide_string_to_string(bcp47);
-
                             const std::string coolURL = app_installation_uri +
                                                         std::string("cool/cool.html?file_path=") +
                                                         data.filenameAndUri.uri +
                                                         std::string("&permission=edit"
                                                                     "&lang=") +
-                                                        lang +
+                                                        uiLanguage +
                                                         std::string("&appdocid=") +
                                                         std::to_string(data.appDocId) +
                                                         std::string("&userinterfacemode=notebookbar"
@@ -1237,6 +1389,20 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     app_installation_uri = Poco::URI(Poco::Path(app_installation_path)).toString();
 
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
+    appName = Util::string_to_wide_string(APP_NAME);
+
+    // A "LANG" environment variable is not a thing on Windows, but check
+    // for a such anyway, for easier testing.
+    auto langEnv = std::getenv("LANG");
+
+    wchar_t bcp47[LOCALE_NAME_MAX_LENGTH];
+
+    if (langEnv)
+        uiLanguage = langEnv;
+    else if (LCIDToLocaleName(MAKELCID(GetUserDefaultUILanguage(), SORT_DEFAULT),
+                              bcp47, LOCALE_NAME_MAX_LENGTH, 0))
+        uiLanguage = Util::wide_string_to_string(bcp47);
 
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
     Log::initialize("CODA", COOLWSD_LOGLEVEL);
