@@ -442,4 +442,42 @@ class SocketBase {
 			'color:',
 		);
 	}
+
+	protected _getParameterByName(url: string, name: string): string {
+		name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+		const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		const results = regex.exec(url);
+		return results === null ? '' : results[1].replace(/\+/g, ' ');
+	}
+
+	protected _utf8ToString(data: Uint8Array): string {
+		let strBytes = '';
+		for (let it = 0; it < data.length; it++) {
+			strBytes += String.fromCharCode(data[it]);
+		}
+		return strBytes;
+	}
+
+	// Returns true if, and only if, we are ready to start loading
+	// the tiles and rendering the document.
+	protected _isReady(): boolean {
+		if (window.bundlejsLoaded == false || window.fullyLoadedAndReady == false) {
+			return false;
+		}
+
+		if (
+			typeof this._map == 'undefined' ||
+			isNaN(this._map.options.tileWidthTwips) ||
+			isNaN(this._map.options.tileHeightTwips)
+		) {
+			return false;
+		}
+
+		const center = this._map.getCenter();
+		if (isNaN(center.lat) || isNaN(center.lng) || isNaN(this._map.getZoom())) {
+			return false;
+		}
+
+		return true;
+	}
 }
