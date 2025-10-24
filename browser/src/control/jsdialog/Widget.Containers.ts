@@ -40,7 +40,7 @@ JSDialog.container = function (
 		return JSDialog.grid(parentContainer, data, builder);
 
 	if ((!data.id || data.id === '') && builder)
-		data.id = builder._makeIdUnique('unnamed-container');
+		data.id = JSDialog.MakeIdUnique('unnamed-container');
 
 	if (parentContainer && !parentContainer.id) parentContainer.id = data.id;
 
