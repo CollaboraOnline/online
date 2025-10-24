@@ -20,41 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_getParameterByName(url, name) {
-		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(url);
-		return results === null ? '' : results[1].replace(/\+/g, ' ');
-	}
-
-	_utf8ToString(data) {
-		var strBytes = '';
-		for (var it = 0; it < data.length; it++) {
-			strBytes += String.fromCharCode(data[it]);
-		}
-		return strBytes;
-	}
-
-	// Returns true if, and only if, we are ready to start loading
-	// the tiles and rendering the document.
-	_isReady() {
-		if (window.bundlejsLoaded == false || window.fullyLoadedAndReady == false) {
-			return false;
-		}
-
-		if (typeof this._map == 'undefined' ||
-			isNaN(this._map.options.tileWidthTwips) ||
-			isNaN(this._map.options.tileHeightTwips)) {
-			return false;
-		}
-
-		var center = this._map.getCenter();
-		if (isNaN(center.lat) || isNaN(center.lng) || isNaN(this._map.getZoom())) {
-			return false;
-		}
-
-		return true;
-	}
-
 	_queueSlurpEventEmission(delayMS) {
 
 		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
