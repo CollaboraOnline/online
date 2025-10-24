@@ -20,45 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_queueSlurpEventEmission(delayMS) {
-
-		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
-			// The timer already exists, but now want to change timeout _slurpTimerDelay to delayMS.
-			// Cancel it and reschedule by replacement with another timer using the desired delayMS
-			// adjusted as if used at the original launch time.
-			clearTimeout(this._slurpTimer);
-			this._slurpTimer = null;
-			this._slurpTimerDelay = delayMS;
-
-			var now = Date.now();
-			var sinceLaunchMS = now - this._slurpTimerLaunchTime;
-			delayMS -= sinceLaunchMS;
-			if (delayMS <= 0)
-				delayMS = 1;
-		}
-
-		if (!this._slurpTimer)
-		{
-			var that = this;
-			if (!that._slurpTimerLaunchTime) {
-				// The initial launch of the timer, rescheduling replacements retain
-				// the launch time
-				that._slurpTimerLaunchTime = now;
-				that._slurpTimerDelay = delayMS;
-			}
-			that._slurpTimer = setTimeout(function () {
-				that._slurpTimer = undefined;
-				that._slurpTimerLaunchTime = undefined;
-				that._slurpTimerDelay = undefined;
-				if (that._inLayerTransaction) {
-					that._slurpDuringTransaction = true;
-					return;
-				}
-				that._emitSlurpedEvents();
-			}, delayMS);
-		}
-	}
-
 	_emitSlurpedEvents() {
 		if (this._map._debug.eventDelayWatchdog)
 			this._map._debug.timeEventDelay();
