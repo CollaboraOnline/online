@@ -55,6 +55,7 @@ app.CSections.HTMLObject     =        {                             zIndex: 9 };
 app.CSections.TableResizeMarker =     { name: 'table resize marker' };
 app.CSections.TableSelectMarker =     { name: 'table select marker' };
 app.CSections.FormFieldButton =       { name: 'form field button' };
+app.CSections.CursorHandler =     { name: 'cursor handler' };
 
 app.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 };
 app.CSections.CalcValidityDropDown =  { name: 'calc validity dropdown', zIndex: 11 };
