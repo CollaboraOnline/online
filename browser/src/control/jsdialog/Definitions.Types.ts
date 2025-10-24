@@ -252,6 +252,7 @@ interface TextWidget extends WidgetJSON {
 interface PushButtonWidget extends WidgetJSON {
 	symbol?: string;
 	text?: string;
+	image?: string;
 }
 
 // type: 'menubutton'

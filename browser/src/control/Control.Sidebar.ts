@@ -72,7 +72,7 @@ class Sidebar extends SidebarBase {
 		return '';
 	}
 
-	setupTargetDeck(unoCommand: string) {
+	setupTargetDeck(unoCommand: string | null) {
 		this.targetDeckCommand = unoCommand;
 	}
 
@@ -88,7 +88,6 @@ class Sidebar extends SidebarBase {
 
 	onSidebar(data: FireEvent) {
 		var sidebarData = data.data;
-		this.builder.setWindowId(sidebarData.id);
 		$(this.container).empty();
 
 		if (
@@ -142,6 +141,8 @@ class Sidebar extends SidebarBase {
 				this.builder.build(this.container, [this.model.getSnapshot()], false);
 
 				if (!this.isVisible()) {
+					if ((this.builder as any).windowId === WindowId.Sidebar)
+						$('#sidebar-dock-wrapper').addClass('coreBased');
 					$('#sidebar-dock-wrapper').addClass('visible');
 
 					// schedule focus after animation so it will not shift the browser page

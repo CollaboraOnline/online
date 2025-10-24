@@ -497,7 +497,6 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarBase.ts \
 	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
-	src/control/Notebookbar.ImpressTransitionTab.ts \
 	src/control/Notebookbar.WriterReferencesTab.ts \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
@@ -509,6 +508,9 @@ COOL_JS_LST =\
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
+	src/control/Notebookbar.ImpressAnimationTab.ts \
+	src/control/Notebookbar.ImpressTransitionTab.ts \
+	src/control/Sidebar.FromNotebookbarPanel.ts \
 	src/control/Control.NavigatorPanel.ts \
 	src/control/Control.QuickFindPanel.ts \
 	src/control/AutoCompletePopup.ts \
@@ -1071,8 +1073,10 @@ pot:
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.QuickFindPanel.ts \
+		src/control/Notebookbar.ImpressAnimationTab.ts \
 		src/control/Notebookbar.ImpressTransitionTab.ts \
 		src/control/Notebookbar.WriterReferencesTab.ts \
+		src/control/Sidebar.FromNotebookbarPanel.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \

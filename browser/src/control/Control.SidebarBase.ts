@@ -20,6 +20,7 @@ enum SidebarType {
 	Sidebar = 'sidebar', // core
 	Navigator = 'navigator', // core
 	QuickFind = 'quickfind', // core
+	Notebookbar = 'notebookbar', // online side panel, which sens messages to NB in core
 }
 
 abstract class SidebarBase extends JSDialogComponent {
@@ -72,12 +73,15 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.unregisterMessageHandlers();
 	}
 
+	/// this is used to determine if we need to send uno command - only for core decks
 	isVisible(): boolean {
-		return $(`#${this.type}-dock-wrapper`).hasClass('visible');
+		const node = $(`#${this.type}-dock-wrapper`);
+		return node.hasClass('visible') && node.hasClass('coreBased');
 	}
 
 	closeSidebar() {
 		$(`#${this.type}-dock-wrapper`).removeClass('visible');
+		$(`#${this.type}-dock-wrapper`).removeClass('coreBased');
 
 		if (!this.map.editorHasFocus()) {
 			this.map.fire('editorgotfocus');

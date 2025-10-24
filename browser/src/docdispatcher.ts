@@ -627,6 +627,14 @@ class Dispatcher {
 				app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
 			else app.map.sendUnoCommand('.uno:NotesMode');
 		};
+
+		this.actionsMap['animationdeck'] = () => {
+			app.map.sidebarFromNotebookbar.openAnimationsSidebar();
+		};
+
+		this.actionsMap['transitiondeck'] = () => {
+			app.map.sidebarFromNotebookbar.openTransitionsSidebar();
+		};
 	}
 
 	private addZoteroCommands() {
