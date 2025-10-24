@@ -87,6 +87,7 @@
 		BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEABFC6624AC94C3004DE339 /* Authorization.cpp */; };
 		BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEB0E5D821C7CA800085A0CF /* Settings.bundle */; };
 		BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */; };
+		BEC2DE5A29366171002AFDC2 /* SlideCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEC2DE5829366171002AFDC2 /* SlideCache.cpp */; };
 		BECD984024336DD400016117 /* device-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983E24336DD400016117 /* device-mobile.css */; };
 		BECD984124336DD400016117 /* device-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983F24336DD400016117 /* device-tablet.css */; };
 		BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC84C2452F82800FB02BD /* MobileApp.cpp */; };
@@ -1201,6 +1202,8 @@
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../lobuilddir-symlink/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
 		BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestDetails.hpp; sourceTree = "<group>"; };
 		BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestDetails.cpp; sourceTree = "<group>"; };
+		BEC2DE5829366171002AFDC2 /* SlideCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlideCache.cpp; sourceTree = "<group>"; };
+		BEC2DE5929366171002AFDC2 /* SlideCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlideCache.hpp; sourceTree = "<group>"; };
 		BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFramePainter.cxx; path = "../lobuilddir-symlink/sd/source/ui/slidesorter/view/SlsFramePainter.cxx"; sourceTree = "<group>"; };
 		BECBD30423D7152900DA5582 /* SlideSorterView.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterView.cxx; path = "../lobuilddir-symlink/sd/source/ui/slidesorter/view/SlideSorterView.cxx"; sourceTree = "<group>"; };
 		BECBD30523D7152900DA5582 /* SlsFramePainter.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsFramePainter.hxx; path = "../lobuilddir-symlink/sd/source/ui/slidesorter/view/SlsFramePainter.hxx"; sourceTree = "<group>"; };
@@ -2293,6 +2296,8 @@
 				BE5EB5E621401E0F00E0826C /* RequestVettingStation.cpp */,
 				BE5EB5D521401E0F00E0826C /* Storage.cpp */,
 				BE5EB5CD213FE2D000E0826C /* TileCache.cpp */,
+				BEC2DE5829366171002AFDC2 /* SlideCache.cpp */,
+				BEC2DE5929366171002AFDC2 /* SlideCache.hpp */,
 			);
 			name = wsd;
 			path = ../wsd;
@@ -3786,6 +3791,7 @@
 				BE980C552CE5EDE800FED7BC /* FileUtil-unix.cpp in Sources */,
 				3F3B54DD2A3928D100063C01 /* HttpRequest.cpp in Sources */,
 				BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */,
+				BEC2DE5A29366171002AFDC2 /* SlideCache.cpp in Sources */,
 				C79282312DF89BB2001EA43B /* MobileSocket.mm in Sources */,
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,

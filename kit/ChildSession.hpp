@@ -199,7 +199,7 @@ private:
     bool selectGraphic(const StringVector& tokens);
     bool renderNextSlideLayer(SlideCompressor& scomp, unsigned width, unsigned height,
                               double dDevicePixelRatio, bool& done, const std::string& cacheKey,
-                              std::size_t layerNumber, bool isCompressed);
+                              bool isCompressed);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);
