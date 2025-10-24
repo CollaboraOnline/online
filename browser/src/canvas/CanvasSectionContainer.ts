@@ -274,6 +274,9 @@ class CanvasSectionContainer {
 		else {
 			this.documentAnchorSectionName = null;
 			this.documentAnchor = null;
+
+			if (app.activeDocument?.activeView)
+				app.activeDocument.activeView.documentAnchorPosition = [0, 0];
 		}
 	}
 
@@ -1736,6 +1739,9 @@ class CanvasSectionContainer {
 
 			if (section.name === this.documentAnchorSectionName) {
 				this.documentAnchor = [section.myTopLeft[0], section.myTopLeft[1]];
+
+				if (app.activeDocument?.activeView)
+					app.activeDocument.activeView.documentAnchorPosition = this.documentAnchor.slice();
 			}
 		}
 	}

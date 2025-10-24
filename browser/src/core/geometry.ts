@@ -106,6 +106,10 @@ export class SimplePoint {
 	public static fromCorePixels(point: Array<number>): SimplePoint {
 		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips));
 	}
+
+	// View pixel.
+	public get vX(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewX(this) : this.pX; }
+	public get vY(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewY(this) : this.pY; }
 }
 
 /**
@@ -243,6 +247,16 @@ export class SimpleRectangle {
 	public static fromCorePixels(rectangle: Array<number>): SimpleRectangle {
 		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips));
 	}
+
+	// View pixel. 1..4 represents the 4 corners of the rectangle: TopLeft, TopRight, BottomLeft, BottomRight respectively.
+	public get v1X(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewX(new cool.SimplePoint(this.x1, this.y1)) : this.pX1; }
+	public get v1Y(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewY(new cool.SimplePoint(this.x1, this.y1)) : this.pY1; }
+	public get v2X(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewX(new cool.SimplePoint(this.x2, this.y1)) : this.pX2; }
+	public get v2Y(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewY(new cool.SimplePoint(this.x2, this.y1)) : this.pY1; }
+	public get v3X(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewX(new cool.SimplePoint(this.x1, this.y2)) : this.pX1; }
+	public get v3Y(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewY(new cool.SimplePoint(this.x1, this.y2)) : this.pY2; }
+	public get v4X(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewX(new cool.SimplePoint(this.x2, this.y2)) : this.pX2; }
+	public get v4Y(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.documentToViewY(new cool.SimplePoint(this.x2, this.y2)) : this.pY2; }
 }
 
 /*
