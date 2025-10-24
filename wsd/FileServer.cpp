@@ -2203,7 +2203,21 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     }
 
     Poco::URI dicUrl(fileUrl);
-    dicUrl.addQueryParameter("access_token", accessToken);
+    const auto& queryParams = dicUrl.getQueryParameters();
+    bool hasAccessToken = false;
+    for (const auto& param : queryParams)
+    {
+        if (param.first == "access_token")
+        {
+            hasAccessToken = true;
+            LOG_INF("File URL already contains access_token, skipping append");
+            break;
+        }
+    }
+    if (!hasAccessToken)
+    {
+        dicUrl.addQueryParameter("access_token", accessToken);
+    }
     if (noAuthHeader)
     {
         dicUrl.addQueryParameter("no_auth_header", "1");
