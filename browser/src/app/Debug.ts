@@ -51,12 +51,12 @@ class DebugManager {
 	private _map: MapInterface;
 	private _docLayer: DocLayerInterface | null;
 	private _painter: PainterInterface | null;
-	private debugOn: boolean;
-	private debugNeverStarted: boolean;
+	public debugOn: boolean;
+	public debugNeverStarted: boolean;
 	private _controls: ControlsInterface;
 	private _toolLayers: BaseClass[];
 
-	private overlayOn: boolean;
+	public overlayOn: boolean;
 	private _overlayData: OverlaysInterface;
 
 	private tileOverlaysOn: boolean;
@@ -80,7 +80,7 @@ class DebugManager {
 	private _pingTimes: DebugTimeArray;
 	private _pingTimeoutId: TimeoutHdl;
 
-	private logIncomingMessages: boolean;
+	public logIncomingMessages: boolean;
 	private logOutgoingMessages: boolean;
 	private logKeyboardEvents: boolean;
 	private logTrace: boolean;

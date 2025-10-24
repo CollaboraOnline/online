@@ -245,7 +245,14 @@ class SocketBase {
 	}
 
 	protected _doSend(msg: MessageInterface): void {
-		console.assert(false, 'This should not be called!');
+		if (!this.socket) {
+			console.error('_doSend() called when socket is non-existent!');
+			return;
+		}
+		// Only attempt to log text frames, not binary ones.
+		if (typeof msg === 'string') this._logSocket('OUTGOING', msg);
+
+		this.socket.send(msg);
 	}
 
 	protected _onSocketOpen(evt: Event): void {
@@ -311,5 +318,46 @@ class SocketBase {
 
 	public connected(): boolean {
 		return this.socket !== undefined && this.socket.readyState === 1;
+	}
+
+	protected _logSocket(type: string, msg: string): void {
+		const logMessage =
+			this._map._debug.debugNeverStarted ||
+			this._map._debug.logIncomingMessages;
+		if (!logMessage) return;
+
+		if (window.ThisIsTheGtkApp) window.postMobileDebug(type + ' ' + msg);
+
+		const debugOn = this._map._debug.debugOn;
+
+		if (this._map._debug.overlayOn) {
+			this._map._debug.setOverlayMessage('postMessage', type + ': ' + msg);
+		}
+
+		if (!debugOn && msg.length > 256)
+			// for reasonable performance.
+			msg =
+				msg.substring(0, 256) + '<truncated ' + (msg.length - 256) + 'chars>';
+
+		let status = '';
+		if (!window.fullyLoadedAndReady) status += '[!fullyLoadedAndReady]';
+		if (!window.bundlejsLoaded) status += '[!bundlejsLoaded]';
+
+		app.Log.log(msg, type + status);
+
+		if (!window.protocolDebug && !debugOn) return;
+
+		const color = type === 'OUTGOING' ? 'color:red' : 'color:#2e67cf';
+		window.app.console.log(
+			+new Date() +
+				' %c' +
+				type +
+				status +
+				'%c: ' +
+				msg.concat(' ').replace(' ', '%c '),
+			'background:#ddf;color:black',
+			color,
+			'color:',
+		);
 	}
 }
