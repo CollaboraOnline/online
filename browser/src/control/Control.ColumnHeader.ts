@@ -279,6 +279,10 @@ export class ColumnHeader extends Header {
 				aExtraWidth: {
 					type: 'unsigned short',
 					value: 200
+				},
+				Column: {
+					type: 'unsigned short',
+					value: this._mouseOverEntry.index + 1 // 1-based
 				}
 			};
 
