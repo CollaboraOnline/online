@@ -234,6 +234,7 @@ class InitializerBase {
 
 		const element = window.L.initial = document.getElementById("initial-variables");
 		window.L.initial._stubMessage = function () {};
+		window.L.initial._stubSend = function () {};
 
 		window.host = "";
 		window.serviceRoot = "";

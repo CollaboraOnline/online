@@ -157,6 +157,10 @@ app.definitions.Socket = class Socket extends SocketBase {
 		if (typeof msg === 'string')
 			this._logSocket('OUTGOING', msg);
 
+		if (window.L.Browser.cypressTest) {
+			window.L.initial._stubSend(msg);
+		}
+
 		this.socket.send(msg);
 	}
 
