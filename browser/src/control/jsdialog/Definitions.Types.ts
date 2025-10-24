@@ -98,6 +98,7 @@ interface DialogResponse {
 
 interface DialogJSON extends WidgetJSON {
 	dialogid: string; // unique id for a dialog type, not instance
+	collapsed?: boolean; // if dialog is in collapsed mode
 	responses?: Array<DialogResponse>;
 }
 
