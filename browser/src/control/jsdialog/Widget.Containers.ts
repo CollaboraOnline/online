@@ -41,7 +41,7 @@ JSDialog.container = function (
 
 	let id = data.id;
 	if ((!id || id === '') && builder)
-		id = builder._makeIdUnique('unnamed-container');
+		id = JSDialog.MakeIdUnique('unnamed-container');
 
 	if (parentContainer && !parentContainer.id) parentContainer.id = id;
 

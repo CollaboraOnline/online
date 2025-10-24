@@ -393,6 +393,7 @@ COOL_JS_LST =\
 	src/map/handler/Map.FileInserter.js \
 	src/map/handler/Map.StateChanges.js \
 	src/map/handler/Map.WOPI.js \
+	src/control/jsdialog/Util.UniqueId.ts \
 	src/control/Control.AboutDialog.ts \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \

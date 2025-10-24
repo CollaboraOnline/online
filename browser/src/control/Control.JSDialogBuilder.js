@@ -1797,21 +1797,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		return str.indexOf('lc_') === 0;
 	},
 
-	_makeIdUnique: function(id) {
-		var counter = 0;
-		var found = document.querySelector('[id="' + id + '"]');
-
-		while (found) {
-			counter++;
-			found = document.querySelector('[id="' + id + counter + '"]');
-		}
-
-		if (counter)
-			id = id + counter;
-
-		return id;
-	},
-
 	_unoToolButton: function(parentContainer, data, builder, options) {
 		var button = null;
 
@@ -1877,7 +1862,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				window.L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
 
 			if (isRealUnoCommand)
-				id = builder._makeIdUnique(id);
+				id = JSDialog.MakeIdUnique(id);
 
 			div.id = id;
 			data.id = id; // change in input data for postprocess
@@ -2576,7 +2561,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var temporaryParent = new DocumentFragment();
 
-		// Remove the id of the to-be-removed control, so _makeIdUnique() won't rename
+		// Remove the id of the to-be-removed control, so JSDialog.MakeIdUnique() won't rename
 		// data.id to something we can't find later.
 		control.id = '';
 
