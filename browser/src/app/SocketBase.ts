@@ -531,6 +531,139 @@ class SocketBase {
 	}
 
 	protected _emitSlurpedEvents(): void {
+		if (this._map._debug.eventDelayWatchdog) this._map._debug.timeEventDelay();
+
+		const queueLength = this._slurpQueue.length;
+		const completeEventWholeFunction = this.createCompleteTraceEvent(
+			'emitSlurped-' + String(queueLength),
+			{ '_slurpQueue.length': String(queueLength) },
+		);
+		if (this._map && this._map._docLayer) {
+			TileManager.beginTransaction();
+			this._inLayerTransaction = true;
+
+			// Queue an instant timeout early to try to measure the
+			// re-rendering delay before we get back to the main-loop.
+			if (this.traceEventRecordingToggle) {
+				if (!this._renderEventTimer)
+					this._renderEventTimer = setTimeout(function (this: SocketBase) {
+						if (this._renderEventTimerStart === undefined) {
+							console.assert(
+								false,
+								'_renderEventTimerStart is undefined when renderEvent is run!',
+							);
+							return;
+						}
+						const now = performance.now();
+						const delta = now - this._renderEventTimerStart;
+						if (delta >= 2 /* ms */) {
+							// significant
+							this.sendTraceEvent(
+								name,
+								'X',
+								'ts=' +
+									Math.round(this._renderEventTimerStart * 1000) +
+									' dur=' +
+									Math.round((now - this._renderEventTimerStart) * 1000),
+							);
+							this._renderEventTimerStart = undefined;
+						}
+						this._renderEventTimer = undefined;
+					}, 0);
+			}
+		}
+		// window.app.console.log('Slurp events ' + that._slurpQueue.length);
+		let complete = true;
+		try {
+			for (let i = 0; i < queueLength; ++i) {
+				const evt = this._slurpQueue[i];
+
+				if (evt.isComplete()) {
+					let textMsg;
+					if (typeof evt.data === 'string') {
+						textMsg = evt.data.replace(/\s+/g, '.');
+					} else if (typeof evt.data === 'object') {
+						textMsg = evt.textMsg.replace(/\s+/g, '.');
+					}
+
+					const completeEventOneMessage =
+						this.createCompleteTraceEventFromEvent(textMsg);
+					try {
+						// it is - are you ?
+						this._onMessage(evt);
+					} catch (e: any) {
+						// unpleasant - but stops this one problem event
+						// stopping an unknown number of others.
+						const msg =
+							'Exception ' + e + ' emitting event ' + evt.data + '\n' + e.stack;
+						window.app.console.error(msg);
+
+						// When debugging let QA know something is up.
+						if (window.enableDebug || window.L.Browser.cypressTest)
+							this._map.uiManager.showInfoModal(
+								'cool_alert',
+								'',
+								msg,
+								'',
+								_('Close'),
+								function () {
+									/* Do nothing. */
+								},
+								false,
+							);
+
+						// If we're cypress testing, fail the run. Cypress will fail anyway, but this way we may get
+						// a nice error in the logs rather than guessing that the run failed from our popup blocking input...
+						if (
+							window.L.Browser.cypressTest &&
+							window.parent !== window &&
+							e !== null
+						) {
+							console.log('Sending event error to Cypress...', e);
+							window.parent.postMessage(e);
+						}
+					} finally {
+						if (completeEventOneMessage) completeEventOneMessage.finish();
+					}
+				} else {
+					// Stop emitting, re-start when we async images load.
+					this._slurpQueue = this._slurpQueue.slice(i, queueLength);
+					complete = false;
+					break;
+				}
+			}
+		} finally {
+			if (completeEventWholeFunction) completeEventWholeFunction.finish();
+		}
+
+		if (complete)
+			// Finished all elements in the queue.
+			this._slurpQueue = [];
+
+		if (this._map) {
+			const completeCallback = () => {
+				// Let other layers / overlays catch up.
+				this._map.fire('messagesdone');
+
+				this._renderEventTimerStart = performance.now();
+
+				this._inLayerTransaction = false;
+				if (this._slurpDuringTransaction) {
+					this._slurpDuringTransaction = false;
+					this._queueSlurpEventEmission(1);
+				}
+			};
+
+			if (this._inLayerTransaction && this._map._docLayer) {
+				// Resume with redraw if dirty due to previous _onMessage() calls.
+				TileManager.endTransaction(completeCallback);
+			} else {
+				completeCallback();
+			}
+		}
+	}
+
+	protected _onMessage(e: SlurpMessageEvent): void {
 		console.assert(false, 'This should not be called!');
 	}
 }
