@@ -1154,7 +1154,7 @@ button.leaflet-control-search-next
 .w2ui-icon.help { background: url('images/lc_helpindex.svg') no-repeat center; }
 .w2ui-icon.insertpage { background: url('images/lc_insertpage.svg') no-repeat center; }
 .w2ui-icon.conditionalformatdialog { background: url('images/lc_conditionalformatmenu.svg') no-repeat center; }
-.w2ui-icon.search { background: url('images/sc_recsearch.svg') no-repeat center; }
+.w2ui-icon.search { background: url('images/lc_recsearch.svg') no-repeat center; }
 .w2ui-icon.presentation { background: url('images/lc_dia.svg') no-repeat center; }
 .w2ui-icon.sign_ok { background: url('images/sign_ok.svg') no-repeat center; }
 .w2ui-icon.sign_not_ok { background: url('images/sign_not_ok.svg') no-repeat center; }
@@ -1444,7 +1444,7 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.insertpage { background: url('images/dark/lc_insertpage.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.insertsheet { background: url('images/dark/plus.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.conditionalformatdialog { background: url('images/dark/lc_conditionalformatmenu.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.search { background: url('images/dark/sc_recsearch.svg') no-repeat center; }
+[data-theme='dark'] .w2ui-icon.search { background: url('images/dark/lc_recsearch.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.presentation { background: url('images/dark/lc_dia.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sign_ok { background: url('images/dark/sign_ok.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sign_not_ok { background: url('images/dark/sign_not_ok.svg') no-repeat center; }
