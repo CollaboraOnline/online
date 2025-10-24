@@ -308,8 +308,12 @@ private:
             const unsigned long bioError = ERR_peek_error();
             if (bioError != 0)
             {
+                const size_t errorStringLength = 64;
+                char* errorString = new char[errorStringLength];
+                ERR_error_string_n(bioError, errorString, errorStringLength);
+
                 LOG_DBG("Unexpected SSL error ("
-                        << bioError
+                        << "'" << errorString << "'"
                         << ") after success implies uncleared earlier errors or "
                            "a bug in the SSL library");
                 ERR_clear_error();
