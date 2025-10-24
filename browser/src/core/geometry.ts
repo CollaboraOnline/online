@@ -106,6 +106,17 @@ export class SimplePoint {
 	public static fromCorePixels(point: Array<number>): SimplePoint {
 		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips));
 	}
+
+	// View pixel.
+	public get vX(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.canvasToViewX(this.pX) : this.pX; }
+	public set vX(x: number) { this.pX = app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasX(x) : x; }
+
+	public get vY(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.canvasToViewY(this.pY) : this.pY; }
+	public set vY(y: number) { this.pY = app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasY(y) : y; }
+
+	public vEquals(point: Array<number>): boolean { return this.vX === Math.round(point[0]) && this.vY === Math.round(point[1]); }
+	public vToArray(): number[] { return [this.vX, this.vY]; }
+	public vDistanceTo(point: number[]): number { return Math.sqrt(Math.pow(this.vX - point[0], 2) + Math.pow(this.vY - point[1], 2)); }
 }
 
 /**
@@ -243,6 +254,44 @@ export class SimpleRectangle {
 	public static fromCorePixels(rectangle: Array<number>): SimpleRectangle {
 		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips));
 	}
+
+	// View pixel.
+	public get vX1(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.canvasToViewX(this.pX1) : this.pX1; }
+	public set vX1 (x1: number) { this.pX1 = app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasX(x1) : x1; }
+
+	public get vY1(): number { return app.activeDocument.activeView ? app.activeDocument.activeView.canvasToViewY(this.pY1) : this.pY1; }
+	public set vY1 (y1: number) { this.pY1 = app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasY(y1) : y1; }
+
+	public get vX2(): number { return this.vX1 + this.vWidth; }
+	public set vX2 (x2: number) { this.pWidth = (app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasX(x2) : x2) - this.pX1; }
+
+	public get vY2(): number { return this.vY1 + this.vHeight; }
+	public set vY2 (y2: number) { this.pHeight = (app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasY(y2) : y2) - this.pY1; }
+
+	// Current way of setting width and height allows us to scale the canvas coordinate system (if/when we want to).
+	public get vWidth(): number { return this.vX2 - this.vX1; }
+	public set vWidth (width: number) { this.pWidth = (app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasX(this.vX1 + width) : width) - this.pX1; }
+
+	public get vHeight(): number { return this.vY2 - this.vY1; }
+	public set vHeight (height: number) { this.pHeight = (app.activeDocument.activeView ? app.activeDocument.activeView.viewToCanvasY(this.vY1 + height) : height) - this.pY1; }
+
+	public get vArea(): number { return this.vWidth * this.vHeight; }
+	public get vCenter(): number[] { return [(this.vX1 + this.vX2) / 2, (this.vY1 + this.vY2) / 2]; }
+
+	public vToArray(): number[] { return [this.vX1, this.vY1, this.vWidth, this.vHeight]; }
+
+	// Pixel checkers for coordinate match.
+	public vContainsPoint (point: number[]): boolean { return (Math.round(point[0]) >= this.vX1 && Math.round(point[0]) <= this.vX2 && Math.round(point[1]) >= this.vY1 && Math.round(point[1]) <= this.vY2); }
+	public vContainsX (x: number): boolean { return (Math.round(x) >= this.vX1 && Math.round(x) <= this.vX2); }
+	public vContainsY (y: number): boolean { return (Math.round(y) >= this.vY1 && Math.round(y) <= this.vY2); }
+	public vContainsRectangle(rectangle: number[]): boolean { return this.vContainsPoint([rectangle[0], rectangle[1]]) && this.vContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public vIntersectsRectangle(rectangle: number[]): boolean {
+		return app.LOUtil._doRectanglesIntersect(this.vToArray(), rectangle);
+	}
+	public vEquals(rectangle: Array<number>): boolean { return this.vX1 === Math.round(rectangle[0]) && this.vY1 === Math.round(rectangle[1]) && this.vWidth === Math.round(rectangle[2]) && this.vHeight === Math.round(rectangle[3]); }
+
+	public vMoveTo (point: number[]): void { this.vX1 = Math.round(point[0]); this.vY1 = Math.round(point[1]); }
+	public vMoveBy (point: number[]): void { this.vX1 += Math.round(point[0]); this.vY1 += Math.round(point[1]); }
 }
 
 /*
