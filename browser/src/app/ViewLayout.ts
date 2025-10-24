@@ -42,12 +42,43 @@ class ViewLayoutBase {
 	protected clientVisibleAreaCommand: string = ''; // Last visible area command. Checked to avoid sending the same command multiple times.
 	protected _viewedRectangle: cool.SimpleRectangle; // Currently viewed rectangle.
 	protected _viewSize: cool.SimplePoint; // Scrollable area.
+	protected _documentAnchorPosition: number[]; // The position of document section on the canvas. Always canvas (core) pixels, no need for SimplePoint class.
 	public scrollProperties: ScrollProperties = new ScrollProperties();
 
 	constructor() {
 		this._viewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 		this.lastViewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 		this._viewSize = new cool.SimplePoint(0, 0);
+		this._documentAnchorPosition = [0, 0];
+	}
+
+	/*
+		View layout may choose to render the tiles in different coordinates.
+		In that case, the tiles' coordinates will differ from the file's coordinates.
+		There are x, pX and cX. View layout also adds vX.
+			x : Document coordinate system
+			pX: Corresponding pixel coordinate system on canvas. x and pX have a fixed ratio.
+			cX: Corresponding CSS coordinate system on canvas. x and cX have a fixed ratio.
+			vX: View coordinate system. Current view layout decides on the mapping between x (document coordinate) and vX (view coordinate).
+				View coordinate system also uses canvas pixels as unit (like pX).
+
+		Below functions are used to convert between those coordinate systems.
+		This is the base class. Does nothing special but provide the interface.
+	*/
+	public documentToViewX(point: cool.SimplePoint): number {
+		return point.pX - this._viewedRectangle.pX1 + this._documentAnchorPosition[0];
+	}
+
+	public documentToViewY(point: cool.SimplePoint): number {
+		return point.pY - this._viewedRectangle.pY1 + this._documentAnchorPosition[1];
+	}
+
+	public viewToDocumentX(point: cool.SimplePoint): number {
+		return point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0];
+	}
+
+	public viewToDocumentY(point: cool.SimplePoint): number {
+		return point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1];
 	}
 
 	public resetClientVisibleArea(): void {
@@ -129,6 +160,14 @@ class ViewLayoutBase {
 
 	public set viewSize(size: cool.SimplePoint) {
 		this._viewSize = size;
+	}
+
+	public get documentAnchorPosition() {
+		return this._documentAnchorPosition.slice();
+	}
+
+	public set documentAnchorPosition(newPosition: number[]) {
+		this._documentAnchorPosition = newPosition;
 	}
 
 	private getDocumentAnchorSection(): CanvasSectionObject {
@@ -242,7 +281,7 @@ class ViewLayoutBase {
 	}
 
 	/*
-		`ignoreScrollbarLength` constraints while scrolling the document to make some space for the comments. 
+		`ignoreScrollbarLength` constraints while scrolling the document to make some space for the comments.
 		see `ViewLayoutWriter.adjustDocumentMarginsForComments`
 	*/
 	protected scrollHorizontal(
