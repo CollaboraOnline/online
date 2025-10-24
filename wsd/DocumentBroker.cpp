@@ -3262,9 +3262,11 @@ void DocumentBroker::setLoaded()
         _saveManager.setSavingTimeout(
             std::max(std::chrono::seconds(minTimeoutSecs), std::chrono::seconds(5)));
         LOG_INF("Document [" << _docKey << "] loaded in " << _loadDuration
-                             << ", saving-timeout set to " << _saveManager.getSavingTimeout()
-                             << ", doc PSS: " << Util::getMemoryUsagePSS(_childProcess->getPid())
-                             << " KB, total PSS: " << Util::getProcessTreePss(Util::getProcessId()) << " KB");
+                             << ", saving-timeout set to " << _saveManager.getSavingTimeout());
+        LOG_DBG("Document [" << _docKey
+                             << "] PSS: " << Util::getMemoryUsagePSS(_childProcess->getPid())
+                             << " KB, total PSS: " << Util::getProcessTreePss(Util::getProcessId())
+                             << " KB");
 
         if(_unitWsd != nullptr)
         {
