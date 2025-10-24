@@ -250,17 +250,6 @@
       ]
     },
     {
-      "name": "linux-pam",
-      "buildsystem": "meson",
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/linux-pam/linux-pam.git",
-          "tag": "v1.7.1"
-        }
-      ]
-    },
-    {
       "name": "rsync",
       "buildsystem": "autotools",
       "config-opts": [
