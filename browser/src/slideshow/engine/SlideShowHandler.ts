@@ -226,8 +226,8 @@ class SlideShowHandler {
 		aCommonParameterSet.nMinDuration = nDuration;
 		aCommonParameterSet.nMinNumberOfFrames =
 			aSlideTransitionHandler.getMinFrameCount();
-		aCommonParameterSet.nSlideWidth = this.theMetaPres.slideWidth;
-		aCommonParameterSet.nSlideHeight = this.theMetaPres.slideHeight;
+		aCommonParameterSet.nSlideWidth = this.theMetaPres.getDocWidth;
+		aCommonParameterSet.nSlideHeight = this.theMetaPres.getDocHeight;
 
 		return new SimpleActivity(
 			aCommonParameterSet,

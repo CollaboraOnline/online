@@ -97,12 +97,20 @@ class MetaPresentation {
 		return this._numberOfSlides;
 	}
 
-	public get slideWidth(): number {
+	public get getDocWidth(): number {
 		return this.docWidth;
 	}
 
-	public get slideHeight(): number {
+	public get getDocHeight(): number {
 		return this.docHeight;
+	}
+
+	public set setDocWidth(slideWidth: number) {
+		this.docWidth = slideWidth;
+	}
+
+	public set setDocHeight(slideHeight: number) {
+		this.docHeight = slideHeight;
 	}
 
 	public getCurrentSlideIndex(): number {
