@@ -20,16 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	// convert to string of bytes without blowing the stack if data is large.
-	_strFromUint8(prefix, data) {
-		var i, chunk = 4096;
-		var strBytes = prefix;
-		for (i = 0; i < data.length; i += chunk)
-			strBytes += String.fromCharCode.apply(null, data.slice(i, i + chunk));
-		strBytes += String.fromCharCode.apply(null, data.slice(i));
-		return strBytes;
-	}
-
 	_extractImage(e) {
 		var img;
 		var data = e.imgBytes.subarray(e.imgIndex);
