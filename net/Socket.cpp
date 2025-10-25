@@ -1066,7 +1066,7 @@ void SocketDisposition::execute()
         SocketThreadOwnerChange::resetThreadOwner(*_socket);
 
         assert (isTransfer() && _toPoll);
-        if (!_toPoll->isRunOnClientThread() && !_toPoll->isAlive())
+        if (!_toPoll->isAlive())
         {
             // Ensure the thread is running before adding callback.
             LOG_DBG("Starting target poll thread [" << _toPoll->name() << "] while moving socket #"
@@ -1086,12 +1086,11 @@ void SocketDisposition::execute()
         assert(!_socket && "should be unset after move");
 
         _toPoll->addCallback(std::move(callback));
+
+        // This can happen due to programming error or a race with the thread.
         if (!_toPoll->isAlive())
-        {
-            LOG_ERR("Thread poll [" << _toPoll->name()
+            LOG_WRN("Thread poll [" << _toPoll->name()
                                     << "] is not alive after adding transfer callback");
-            assert("Target poll thread is not alive after transfering");
-        }
 
         _toPoll = nullptr;
     }
