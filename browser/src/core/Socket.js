@@ -20,22 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_extractImage(e) {
-		var img;
-		var data = e.imgBytes.subarray(e.imgIndex);
-		var prefix = '';
-		// FIXME: so we prepend the PNG pre-byte here having removed it in TileCache::appendBlob
-		if (data[0] != 0x89)
-			prefix = String.fromCharCode(0x89);
-		img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(prefix,data));
-		if (window.L.Browser.cypressTest && window.prefs.getBoolean('image_validation_test')) {
-			if (!window.imgDatas)
-				window.imgDatas = [];
-			window.imgDatas.push(img);
-		}
-		return img;
-	}
-
 	_extractTextImg(e) {
 
 		if ((window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) && typeof (e.data) === 'string') {
