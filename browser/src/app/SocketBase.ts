@@ -690,4 +690,22 @@ class SocketBase {
 	protected _extractTextImg(e: SlurpMessageEvent): void {
 		console.assert(false, 'This should not be called!');
 	}
+
+	// make profiling easier
+	protected _extractCopyObject(e: SlurpMessageEvent): void {
+		let index: number;
+
+		e.imgBytes = new Uint8Array(e.data as ArrayBufferLike);
+
+		// search for the first newline which marks the end of the message
+		index = e.imgBytes.indexOf(10);
+		if (index < 0) index = e.imgBytes.length;
+
+		e.textMsg = String.fromCharCode.apply(
+			null,
+			e.imgBytes.subarray(0, index) as unknown as number[],
+		);
+
+		e.imgIndex = index + 1;
+	}
 }
