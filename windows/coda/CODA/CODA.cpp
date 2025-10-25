@@ -267,6 +267,7 @@ static const wchar_t* _(const wchar_t* english)
                 L"Select document to edit in %s",
                 {
                     { "de", "Dokument zur Bearbeitung in %s auswählen" },
+                    { "hu", "Válassza ki a %s-ban szerkesztendő dokumentumot" },
                     { "ja", "%sで編集する文書を選択" },
                     { "pl", "Wybierz dokument do edycji w %s" },
                     { "ru", "Выберите документ для редактирования в %s" },
