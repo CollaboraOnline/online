@@ -725,4 +725,34 @@ class SocketBase {
 		);
 		return strBytes;
 	}
+
+	protected _extractImage(e: SlurpMessageEvent): string {
+		if (!e.imgBytes) {
+			console.assert(
+				false,
+				'Called _extractImage with and event that does not have imgBytes member!',
+			);
+			return '';
+		}
+
+		if (e.imgIndex === undefined) {
+			console.assert(false, '_extractImage: event does not have imgIndex!');
+			return '';
+		}
+
+		const data = e.imgBytes.subarray(e.imgIndex);
+		let prefix = '';
+		// FIXME: so we prepend the PNG pre-byte here having removed it in TileCache::appendBlob
+		if (data[0] != 0x89) prefix = String.fromCharCode(0x89);
+		const img =
+			'data:image/png;base64,' + window.btoa(this._strFromUint8(prefix, data));
+		if (
+			window.L.Browser.cypressTest &&
+			window.prefs.getBoolean('image_validation_test')
+		) {
+			if (!window.imgDatas) window.imgDatas = [];
+			window.imgDatas.push(img);
+		}
+		return img;
+	}
 }
