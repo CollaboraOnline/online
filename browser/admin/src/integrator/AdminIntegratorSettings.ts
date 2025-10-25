@@ -140,6 +140,7 @@ class SettingIframe {
 	private wordbook;
 	private xcuEditor;
 	private _viewSetting;
+	private xcuInitializationAttempted = false;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
 		zoteroAPIKey: 'Zotero',
@@ -626,8 +627,12 @@ class SettingIframe {
 			sharedConfigsContainer,
 		);
 
-		editorContainer.appendChild(navContainer);
-		editorContainer.appendChild(contentsContainer);
+		const xcuBrowserSettingContainer = document.createElement('div');
+		xcuBrowserSettingContainer.id = 'xcu-browser-setting-container';
+		xcuBrowserSettingContainer.appendChild(navContainer);
+		xcuBrowserSettingContainer.appendChild(contentsContainer);
+
+		editorContainer.appendChild(xcuBrowserSettingContainer);
 		editorContainer.appendChild(actionsContainer);
 
 		const oldEditor = sharedConfigsContainer.querySelector('#browser-setting');
@@ -1520,9 +1525,21 @@ class SettingIframe {
 			);
 		} else {
 			// If user doesn't have any xcu file, we generate with default settings...
-			this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
-			this.xcuEditor.generateXcuAndUpload();
-			return await this.fetchAndPopulateSharedConfigs();
+			try {
+				if (!this.xcuInitializationAttempted) {
+					this.xcuInitializationAttempted = true;
+					this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
+					await this.xcuEditor.generateXcuAndUpload();
+					return await this.fetchAndPopulateSharedConfigs();
+				} else {
+					document.getElementById('xcu-browser-setting-container')?.remove();
+					console.warn('XCU file not found and automatic creation failed.');
+				}
+			} catch (error) {
+				console.error('Something went wrong while generating xcu file:', error);
+				this.xcuInitializationAttempted = true;
+				document.getElementById('xcu-browser-setting-container')?.remove();
+			}
 		}
 
 		if (data.autotext)
