@@ -20,31 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	// The problem: if we process one websocket message at a time, the
-	// browser -loves- to trigger a re-render as we hit the main-loop,
-	// this takes ~200ms on a large screen, and worse we get
-	// producer/consumer issues that can fill a multi-second long
-	// buffer of web-socket messages in the client that we can't
-	// process so - slurp and then emit at idle - its faster to delay!
-	_slurpMessage(e) {
-		this._extractTextImg(e);
-
-		// Some messages - we want to process & filter early.
-		var docLayer = this._map ? this._map._docLayer : undefined;
-		if (docLayer && docLayer.filterSlurpedMessage(e))
-			return;
-
-		var predictedTiles = TileManager.predictTilesToSlurp();
-		// scale delay, to a max of 50ms, according to the number of
-		// tiles predicted to arrive.
-		var delayMS = Math.max(Math.min(predictedTiles, 50), 1);
-
-		if (!this._slurpQueue)
-			this._slurpQueue = [];
-		this._slurpQueue.push(e);
-		this._queueSlurpEventEmission(delayMS);
-	}
-
 	// make profiling easier
 	_extractCopyObject(e) {
 		var index;
