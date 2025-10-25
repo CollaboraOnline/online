@@ -20,17 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_buildUnauthorizedMessage(command) {
-		var unauthorizedMsg = errorMessages.unauthorized;
-		if (command.errorCode) {
-			// X509_verify_cert_error_string output
-			var authError = window.atob(command.errorCode);
-			var verifyError = errorMessages.verificationerror.replace('{errormessage}', authError);
-			unauthorizedMsg += ' ' + verifyError;
-		}
-		return unauthorizedMsg;
-	}
-
 	_onMessage(e) {
 		var imgBytes, textMsg;
 
