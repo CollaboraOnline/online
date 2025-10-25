@@ -688,7 +688,124 @@ class SocketBase {
 	}
 
 	protected _extractTextImg(e: SlurpMessageEvent): void {
-		console.assert(false, 'This should not be called!');
+		if (
+			(window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) &&
+			typeof e.data === 'string'
+		) {
+			// Another fix for issue #5843 limit splitting on the first newline
+			// to only certain message types on iOS. Also, fix mangled UTF-8
+			// text on iOS in jsdialogs when using languages like Greek and
+			// Japanese by only setting the image bytes for only the same set
+			// of message types.
+			if (
+				e.data.startsWith('tile:') ||
+				e.data.startsWith('tilecombine:') ||
+				e.data.startsWith('delta:') ||
+				e.data.startsWith('renderfont:') ||
+				e.data.startsWith('rendersearchlist:') ||
+				e.data.startsWith('slidelayer:') ||
+				e.data.startsWith('windowpaint:')
+			) {
+				let index: number;
+				index = e.data.indexOf('\n');
+				if (index < 0) index = e.data.length;
+				e.imgBytes = new Uint8Array(e.data.length);
+				for (let i = 0; i < e.data.length; i++) {
+					e.imgBytes[i] = e.data.charCodeAt(i);
+				}
+				e.imgIndex = index + 1;
+				e.textMsg = e.data.substring(0, index);
+			} else {
+				e.textMsg = e.data;
+			}
+		} else if (typeof e.data === 'string') {
+			e.textMsg = e.data;
+		} else if (typeof e.data === 'object') {
+			this._extractCopyObject(e);
+		}
+		e.isComplete = function () {
+			if (this.image) return !!this.imageIsComplete;
+			return true;
+		};
+
+		// slide rendering is using zstd compressed images (EXPERIMENTAL)
+		const isSlideLayer = e.textMsg.startsWith('slidelayer:');
+		const isSlideRenderComplete = e.textMsg.startsWith(
+			'sliderenderingcomplete:',
+		);
+		const isZstdSlideshowEnabled = app.isExperimentalMode();
+		if (isZstdSlideshowEnabled && (isSlideLayer || isSlideRenderComplete))
+			return;
+
+		const isTile = e.textMsg.startsWith('tile:');
+		const isDelta = e.textMsg.startsWith('delta:');
+		if (
+			!isTile &&
+			!isDelta &&
+			!e.textMsg.startsWith('renderfont:') &&
+			!e.textMsg.startsWith('slidelayer:') &&
+			!e.textMsg.startsWith('windowpaint:')
+		)
+			return;
+
+		if (e.textMsg.indexOf(' nopng') !== -1) return;
+
+		// pass deltas through quickly.
+		if (
+			e.imgBytes &&
+			e.imgIndex !== undefined &&
+			(isTile || isDelta) &&
+			e.imgBytes[e.imgIndex] != 80 /* P(ng) */
+		) {
+			// window.app.console.log('Passed through delta object');
+			const imgEl: CoolHTMLImageElement = new Image();
+			imgEl.rawData = e.imgBytes.subarray(e.imgIndex);
+			imgEl.isKeyframe = isTile;
+			e.image = imgEl;
+			e.imageIsComplete = true;
+			return;
+		}
+
+		// window.app.console.log('PNG preview');
+
+		// lazy-loaded PNG slide previews
+		const img = this._extractImage(e);
+		if (isTile) {
+			const imgEl: CoolHTMLImageElement = new Image();
+			imgEl.src = img;
+			e.image = imgEl;
+			e.imageIsComplete = true;
+			return;
+		}
+
+		// PNG dialog bits
+		const imageElement: CoolHTMLImageElement = new Image();
+		e.image = imageElement;
+		imageElement.onload = function (this: SocketBase) {
+			e.imageIsComplete = true;
+			this._queueSlurpEventEmission(1);
+			if (imageElement.completeTraceEvent)
+				imageElement.completeTraceEvent.finish();
+		}.bind(this);
+		// imageElement.onerror expects a different type of handler according to tsc.
+		// (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error): any;
+		// So use addEventListener() for 'error' event.
+		imageElement.onerror;
+		imageElement.addEventListener(
+			'error',
+			function (this: SocketBase, err: ErrorEvent) {
+				window.app.console.log('Failed to load image ' + img + ' fun ' + err);
+				e.imageIsComplete = true;
+				this._queueSlurpEventEmission(1);
+				if (imageElement.completeTraceEvent)
+					imageElement.completeTraceEvent.abort();
+			}.bind(this),
+		);
+
+		// This can return null.
+		const traceEvt = this.createAsyncTraceEvent('loadTile');
+		imageElement.completeTraceEvent = traceEvt ? traceEvt : undefined;
+		imageElement.src = img;
 	}
 
 	// make profiling easier
