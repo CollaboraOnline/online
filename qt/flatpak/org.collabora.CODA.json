@@ -1070,8 +1070,8 @@
         "make distro-pack-install",
         "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh org.collabora.CODA'",
         "./fixup-application-data.sh",
-        "mkdir -p /app/core",
-        "cp -r include /app/core/."
+        "mkdir -p /app/core/include",
+        "cp -r include/LibreOfficeKit /app/core/include/."
       ]
     },
     {
