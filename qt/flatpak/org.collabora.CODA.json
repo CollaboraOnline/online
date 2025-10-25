@@ -1168,7 +1168,8 @@
           "url": "https://git.libreoffice.org/cppunit",
           "tag": "cppunit-1.15.1"
         }
-      ]
+      ],
+      "cleanup": [ "*" ]
     },
     {
       "name": "rsync",
