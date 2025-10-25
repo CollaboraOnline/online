@@ -20,22 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	// make profiling easier
-	_extractCopyObject(e) {
-		var index;
-
-		e.imgBytes = new Uint8Array(e.data);
-
-		// search for the first newline which marks the end of the message
-		index = e.imgBytes.indexOf(10);
-		if (index < 0)
-			index = e.imgBytes.length;
-
-		e.textMsg = String.fromCharCode.apply(null, e.imgBytes.subarray(0, index));
-
-		e.imgIndex = index + 1;
-	}
-
 	// convert to string of bytes without blowing the stack if data is large.
 	_strFromUint8(prefix, data) {
 		var i, chunk = 4096;
