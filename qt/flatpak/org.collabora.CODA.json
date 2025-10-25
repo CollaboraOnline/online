@@ -1114,16 +1114,17 @@
       "name": "zstd",
       "buildsystem": "simple",
       "build-commands": [
-        "make -j${FLATPAK_BUILDER_N_JOBS} PREFIX=/app ZSTD_LEGACY_SUPPORT=0",
-        "make install PREFIX=/app"
+        "make -j${FLATPAK_BUILDER_N_JOBS} PREFIX=/app ZSTD_LEGACY_SUPPORT=0 BUILD_STATIC=1 BUILD_SHARED=0",
+        "make install PREFIX=/app BUILD_STATIC=1 BUILD_SHARED=0"
       ],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/facebook/zstd.git",
-          "tag": "v1.5.6"
+          "tag": "v1.5.7"
         }
-      ]
+      ],
+      "cleanup": [ "*" ]
     },
     {
       "name": "python3-lxml",
