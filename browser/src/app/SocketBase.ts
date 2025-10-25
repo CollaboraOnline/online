@@ -349,8 +349,28 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
+	// The problem: if we process one websocket message at a time, the
+	// browser -loves- to trigger a re-render as we hit the main-loop,
+	// this takes ~200ms on a large screen, and worse we get
+	// producer/consumer issues that can fill a multi-second long
+	// buffer of web-socket messages in the client that we can't
+	// process so - slurp and then emit at idle - its faster to delay!
 	protected _slurpMessage(evt: MessageEvent): void {
-		console.assert(false, 'This should not be called!');
+		const e = evt as SlurpMessageEvent;
+		this._extractTextImg(e);
+
+		// Some messages - we want to process & filter early.
+		const docLayer = this._map ? this._map._docLayer : undefined;
+		if (docLayer && docLayer.filterSlurpedMessage(e)) return;
+
+		const predictedTiles = TileManager.predictTilesToSlurp();
+		// scale delay, to a max of 50ms, according to the number of
+		// tiles predicted to arrive.
+		const delayMS = Math.max(Math.min(predictedTiles, 50), 1);
+
+		if (!this._slurpQueue) this._slurpQueue = [];
+		this._slurpQueue.push(e);
+		this._queueSlurpEventEmission(delayMS);
 	}
 
 	protected _emptyQueue(): void {
@@ -664,6 +684,10 @@ class SocketBase {
 	}
 
 	protected _onMessage(e: SlurpMessageEvent): void {
+		console.assert(false, 'This should not be called!');
+	}
+
+	protected _extractTextImg(e: SlurpMessageEvent): void {
 		console.assert(false, 'This should not be called!');
 	}
 }
