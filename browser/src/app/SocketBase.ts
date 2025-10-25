@@ -708,4 +708,21 @@ class SocketBase {
 
 		e.imgIndex = index + 1;
 	}
+
+	// convert to string of bytes without blowing the stack if data is large.
+	protected _strFromUint8(prefix: string, data: Uint8Array): string {
+		let i: number;
+		const chunk = 4096;
+		let strBytes = prefix;
+		for (i = 0; i < data.length; i += chunk)
+			strBytes += String.fromCharCode.apply(
+				null,
+				data.slice(i, i + chunk) as unknown as number[],
+			);
+		strBytes += String.fromCharCode.apply(
+			null,
+			data.slice(i) as unknown as number[],
+		);
+		return strBytes;
+	}
 }
