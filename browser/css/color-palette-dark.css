@@ -55,9 +55,17 @@
 	--color-calc-grid: #474747;
 	--color-calc-header: #0a0a0a;
 	--color-calc-header-selected: #646464;
-	--color-text-calc-header-selected: #fff;
-	--color-border-calc-header: var(--color-border-dark);
 	--color-calc-header-hover: #646464;
+
+	--color-calc-header-sheetview: #57685D;
+	--color-calc-header-sheetview-selected: #11370B;
+	--color-calc-header-sheetview-hover: #fff;
+	--color-calc-header-sheetview-unsynced: #f00000;
+
+	--color-text-calc-header-selected: #fff;
+	--color-text-calc-header-sheetview-selected: #f0f0f0;
+
+	--color-border-calc-header: var(--color-border-dark);
 	--column-row-highlight: #B0B0B0;
 
 	--color-grid-helper-line-solid: #e6e6e6;
