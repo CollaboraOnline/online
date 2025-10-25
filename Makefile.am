@@ -861,9 +861,9 @@ prettier-write: browser/node_modules
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
-	$(LN_S) coolconfig loolconfig && \
-	$(LN_S) coolwsd loolwsd && \
-	$(LN_S) coolwsd-systemplate-setup loolwsd-systemplate-setup
+	test -e coolconfig && $(LN_S) coolconfig loolconfig || true; \
+	test -e coolwsd && $(LN_S) coolwsd loolwsd || true; \
+	test -e coolwsd-systemplate-setup && $(LN_S) coolwsd-systemplate-setup loolwsd-systemplate-setup || true
 
 stress_file=$(abs_top_srcdir)/test/data/hello-world.odt
 trace_dir=$(abs_top_srcdir)/test/traces
