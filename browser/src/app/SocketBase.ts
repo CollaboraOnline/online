@@ -872,4 +872,18 @@ class SocketBase {
 		}
 		return img;
 	}
+
+	protected _buildUnauthorizedMessage(command: ServerCommand): string {
+		let unauthorizedMsg = window.errorMessages.unauthorized;
+		if (command.errorCode) {
+			// X509_verify_cert_error_string output
+			const authError = window.atob(command.errorCode);
+			const verifyError = window.errorMessages.verificationerror.replace(
+				'{errormessage}',
+				authError,
+			);
+			unauthorizedMsg += ' ' + verifyError;
+		}
+		return unauthorizedMsg;
+	}
 }
