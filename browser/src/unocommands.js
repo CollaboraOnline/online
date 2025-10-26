@@ -318,6 +318,7 @@ var unoCommandsArray = {
 	'FormatTitle':{global:{menu:_('Format Title...'),},},
 	'FormatTrendline':{global:{menu:_('Format Trend Line...'),},},
 	'FormatTrendlineEquation':{global:{menu:_('Format Trend Line Equation...'),},},
+	'FormatUngroup':{global:{menu:_('~Ungroup'),},},
 	'FormatWall':{global:{menu:_('Format Wall...'),},},
 	'FormatXErrorBars':{global:{menu:_('Format X Error Bars...'),},},
 	'FormatYErrorBars':{global:{menu:_('Format Y Error Bars...'),},},

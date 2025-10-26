@@ -54,7 +54,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
 					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 					  'AnimationEffects', 'ExecuteAnimationEffect',
-					  'InsertAnnotation'],
+					  'InsertAnnotation', 'FormatGroup', 'FormatUngroup'],
 
 			tracking: ['NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange'],
 
