@@ -186,7 +186,7 @@
 		BEF5CE8E2D633CE60006FD77 /* discovery.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
 		BEF6F02B2DD1EC0200EA06BF /* RegexUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RegexUtil.hpp; path = ../../../../common/RegexUtil.hpp; sourceTree = "<group>"; };
 		BEF6F02C2DD1EC0200EA06BF /* RegexUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RegexUtil.cpp; path = ../../../../common/RegexUtil.cpp; sourceTree = "<group>"; };
-		BEF881382EA62DBF0080A631 /* dumpWsdState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dumpWsdState.cpp; path = /Users/kendy/Projects/collabora/online/wsd/dumpWsdState.cpp; sourceTree = "<absolute>"; };
+		BEF881382EA62DBF0080A631 /* dumpWsdState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dumpWsdState.cpp; path = ../../../../wsd/dumpWsdState.cpp; sourceTree = "<group>"; };
 		BEFC03182D64986E009FF7B8 /* Kit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Kit.hpp; path = ../../../../kit/Kit.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
