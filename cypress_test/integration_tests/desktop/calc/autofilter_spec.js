@@ -134,7 +134,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	it('Filter by color', function() {
 		// apply background color to some cells
 		calcHelper.selectCellsInRange('A2:A2');
-		cy.cGet('#backgroundcolor .arrowbackground').click();
+		cy.cGet('#sidebar-dock-wrapper .unoBackgroundColor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('3FAF46');
 
 		calcHelper.openAutoFilterMenu();
