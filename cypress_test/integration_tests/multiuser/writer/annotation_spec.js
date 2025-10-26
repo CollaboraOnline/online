@@ -1,7 +1,6 @@
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
-var { selectZoomLevel } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
@@ -12,12 +11,12 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
 		desktopHelper.switchUIToNotebookbar();
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
-		selectZoomLevel('50', false);
+		desktopHelper.sidebarToggle();
+		desktopHelper.selectZoomLevel('50', false);
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
-		selectZoomLevel('50', false);
+		desktopHelper.sidebarToggle();
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	describe(['tagmultiuser'], 'Annotation Tests', function () {

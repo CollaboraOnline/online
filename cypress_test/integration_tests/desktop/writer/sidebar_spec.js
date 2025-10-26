@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Sidebar tests', function() {
 
@@ -48,7 +49,7 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 
 	it('Show formula Elements sidebar when closed', function() {
 		// close sidebar first, expect it to auto-open
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
 		checkMathElementsVisibility();
@@ -74,11 +75,11 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		});
 
 		// Hide
-		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
+		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
 		// Show
-		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
+		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-panel').should('be.visible');
 		cy.cGet('#sidebar-panel').should('not.be.empty');
 
