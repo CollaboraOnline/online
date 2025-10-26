@@ -85,8 +85,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// When pasting C1 to D1:
 		helper.typeIntoInputField(helper.addressInputSelector, 'D1');
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'D1');
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 
 		// Then make sure the formula gets rewritten as expected:
 		// Internal paste: B1 is 2, C1 is 3, so D1 is 5.
@@ -105,8 +105,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('text/html', html);
 
 		// When pasting the clipboard to A1:
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 
 		// Then make sure we actually consider the content of the HTML:
 		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'clipboard');
@@ -117,8 +117,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('text/plain', text);
 
 		// When pasting the clipboard to A1:
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 
 		// Then make the paste happened:
 		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'plain text');
@@ -131,8 +131,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('image/png', blob, /*image=*/true);
 
 		// When pasting the clipboard:
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 
 		// Then make sure the paste happened:
 		cy.cGet('#document-container svg g').should('exist');
@@ -146,8 +146,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('image/png', blob, /*image=*/true, /*fail=*/false, imageHtml);
 
 		// When pasting the clipboard:
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 
 		// Then make sure the paste happened:
 		// Without the accompanying fix in place, this test would have failed, no image was
@@ -166,22 +166,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// When pasting the clipboard to B1, which fails:
 		helper.typeIntoInputField(helper.addressInputSelector, 'B1');
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 
 		// Then make sure a warning popup is shown:
 		cy.cGet('#copy_paste_warning-box').should('exist');
 
 		// Close the dialog by clicking the OK button. Then try again to make sure the dialog appears again.
 		cy.cGet('#modal-dialog-copy_paste_warning-box #modal-dialog-copy_paste_warning-box-yesbutton').click();
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 		cy.cGet('#copy_paste_warning-box').should('exist');
 
 		// Now when clicking the "Don't show again" button, the dialog should not appear again.
 		cy.cGet('#modal-dialog-copy_paste_warning-box #modal-dialog-copy_paste_warning-box-nobutton').click();
-		cy.cGet('#home-paste-button').click();
-		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+		cy.cGet('#Home .ui-overflow-group-content > .unoPaste .arrowbackground').click();
+		helper.getMenuEntry(0).click(); // Paste
 		cy.cGet('#copy_paste_warning-box').should('not.exist');
 	});
 

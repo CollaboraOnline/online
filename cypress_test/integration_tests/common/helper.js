@@ -1209,6 +1209,11 @@ function containsFocusElement(container, doesContain) {
 	});
 }
 
+function getMenuEntry(index) {
+	cy.log('>> getMenuEntry - ' + index);
+	return cy.cGet('.ui-dialog-content div.ui-combobox-entry span').eq(index);
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1258,3 +1263,4 @@ module.exports.getSubFolder = getSubFolder;
 module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
 module.exports.containsFocusElement = containsFocusElement;
+module.exports.getMenuEntry = getMenuEntry;
