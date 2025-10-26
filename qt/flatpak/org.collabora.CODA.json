@@ -1138,7 +1138,8 @@
         "python3 -m ensurepip || true",
         "python3 -m pip install --no-cache-dir --upgrade pip",
         "python3 -m pip install --no-cache-dir --prefix=/app 'lxml>=5.2,<5.3'"
-      ]
+      ],
+      "cleanup": [ "*" ]
     },
     {
       "name": "python3-polib",
@@ -1152,7 +1153,8 @@
         "python3 -m ensurepip || true",
         "python3 -m pip install --no-cache-dir --upgrade pip",
         "python3 -m pip install --no-cache-dir --prefix=/app 'polib>=1.2,<1.3'"
-      ]
+      ],
+      "cleanup": [ "*" ]
     },
     {
       "name": "cppunit",
