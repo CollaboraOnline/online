@@ -43,6 +43,12 @@ function hideSidebarImpress() {
 	cy.log('<< hideSidebarImpress - end');
 }
 
+function sidebarToggle() {
+	cy.log('>> sidebarToggle');
+	// for notebookbar
+	cy.cGet('#optionscontainer [id^="SidebarDeck.PropertyDeck"] button').click();
+}
+
 // Make the status bar visible if it's hidden at the moment.
 // We use the menu option under 'View' menu to make it visible.
 function showStatusBarIfHidden() {
@@ -564,3 +570,4 @@ module.exports.scrollViewDown = scrollViewDown;
 module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
+module.exports.sidebarToggle = sidebarToggle;
