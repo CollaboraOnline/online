@@ -377,13 +377,14 @@ private:
 
     void performWrites(std::size_t capacity) override
     {
-        LOG_TRC("WebSocketSession: performing writes, up to " << capacity << " bytes.");
-
         std::unique_lock<std::mutex> lock(_outMutex);
 
         std::size_t wrote = 0;
         try
         {
+            if (!_outQueue.empty())
+                LOG_TRC("WebSocketSession: performing writes, up to " << capacity << " bytes");
+
             // Drain the queue, for efficient communication.
             while (capacity > wrote && !_outQueue.empty())
             {
@@ -394,7 +395,8 @@ private:
                 sendTextMessage(item.data(), size);
 
                 wrote += size;
-                LOG_TRC("WebSocketSession: wrote " << size << ", total " << wrote << " bytes.");
+                LOG_TRC("WebSocketSession: performing writes, wrote " << size << " bytes, " << wrote
+                                                                      << " total");
             }
 
             if (_shutdown && _outQueue.empty())
@@ -404,10 +406,14 @@ private:
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("WebSocketSession: Failed to send message: " << ex.what());
+            LOG_ERR("WebSocketSession: Failed to send message after writing "
+                    << wrote << " bytes: " << ex.what());
+            return;
         }
 
-        LOG_TRC("WebSocketSession: performed write, wrote " << wrote << " bytes.");
+        if (wrote)
+            LOG_TRC("WebSocketSession: performed write, wrote "
+                    << wrote << " bytes total (capacity: " << capacity << ')');
     }
 
     // Make these inaccessible since they must only be called from the poll thread.
