@@ -52,6 +52,42 @@ std::string getTopSrcDir(const std::string& defaultPath)
     }
     return defaultPath;
 }
+std::string getUILanguage()
+{
+    const char* envVars[] = {"LC_MESSAGES", "LANGUAGE", "LANG"};
+    // FIXME originally I checked LC_ALL first, but coolwsd sets it to C.UTF-8
+    std::string lang;
+
+    // 1. Check environment variables in precedence order
+    for (const char* var : envVars) {
+        const char* val = std::getenv(var);
+        if (val && *val) {
+            lang = val;
+            if (std::string(var) == "LANGUAGE") {
+                // LANGUAGE can be a colon-separated list, take the first
+                std::size_t pos = lang.find(':');
+                if (pos != std::string::npos)
+                    lang = lang.substr(0, pos);
+            }
+            break;
+        }
+    }
+
+    // 2. Replace '_' with '-'
+    for (char& c : lang)
+        if (c == '_')
+            c = '-';
+
+    // 3. Strip encoding suffix (e.g. ".UTF-8", ".ISO8859-2")
+    if (auto dot = lang.find('.'); dot != std::string::npos)
+        lang.erase(dot);
+
+    // 4. Now check for empty or C/POSIX-like locales
+    if (lang.empty() || lang == "C" || lang == "POSIX")
+        lang = "en-US";
+
+    return lang;
+}
 } // namespace
 
 class EdgeResizeOverlay : public QWidget
@@ -347,7 +383,8 @@ void WebView::load(const std::string& fileURL)
                                     "?file_path=" +
                                     _document._fileURL +
                                     "&permission=edit"
-                                    "&lang=en-US"
+                                    "&lang=" +
+                                    getUILanguage() +
                                     "&appdocid=" +
                                     std::to_string(_document._appDocId) +
                                     "&userinterfacemode=notebookbar";
