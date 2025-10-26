@@ -3780,6 +3780,10 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
 {
     ASSERT_CORRECT_THREAD();
 
+    const std::string id = session->getId();
+    LOG_TRC("Adding " << (session->isReadOnly() ? "readonly" : "non-readonly") << " session [" << id
+                      << "] to docKey [" << _docKey << ']');
+
     try
     {
         // First, download the document, since this can fail.
@@ -3790,8 +3794,6 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
             LOG_ERR(msg);
             throw std::runtime_error(msg);
         }
-
-        const std::string id = session->getId();
 
         // Request a new session from the child kit.
         const std::string message = "session " + id + ' ' + _docKey + ' ' + _docId;
@@ -4090,6 +4092,10 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
     const RequestDetails &requestDetails)
 {
     ASSERT_CORRECT_THREAD();
+
+    LOG_TRC("Creating new client session " << (isReadOnly ? "readonly" : "non-readonly")
+                                           << " session [" << id << "] to docKey ["
+                                           << requestDetails.getDocKey() << ']');
 
     try
     {
