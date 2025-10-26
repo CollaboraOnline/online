@@ -6,14 +6,10 @@
   "base": "io.qt.qtwebengine.BaseApp",
   "base-version": "6.9",
   "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.node20",
-    "org.freedesktop.Sdk.Extension.openjdk21"
+    "org.freedesktop.Sdk.Extension.node20"
   ],
   "add-build-extensions": {
     "org.freedesktop.Sdk.Extension.node20": {
-      "version": "24.08"
-    },
-    "org.freedesktop.Sdk.Extension.openjdk21": {
       "version": "24.08"
     }
   },
@@ -54,13 +50,6 @@
     }
   },
   "modules": [
-    {
-      "name": "openjdk",
-      "buildsystem": "simple",
-      "build-commands": [
-        "/usr/lib/sdk/openjdk21/install.sh"
-      ]
-    },
     {
       "name": "gvfs",
       "buildsystem": "meson",
