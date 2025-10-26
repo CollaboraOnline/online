@@ -1605,7 +1605,7 @@ private:
         /// Transitions to Status::Live, implying the document has loaded.
         void setLive()
         {
-            LOG_TRC("Setting DocumentState to Status::Live from " << name(_status));
+            LOG_TRC("Setting DocumentState to Loaded and Live");
             // assert(_status == Status::Loading
             //        && "Document wasn't in Loading state to transition to Status::Live");
             _loaded = true;
