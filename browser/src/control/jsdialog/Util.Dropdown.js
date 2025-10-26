@@ -202,5 +202,7 @@ JSDialog.CloseAllDropdowns = function () {
 };
 
 JSDialog.GetDropdown = function (id) {
-	return document.body.querySelector('#' + _createDropdownId(id));
+	// remember it can get some random numbers due to JSDialog.MakeIdUnique
+	// TODO: use some register for it
+	return document.body.querySelector('[id^="' + id + '"].modalpopup');
 };
