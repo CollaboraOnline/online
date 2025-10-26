@@ -159,11 +159,144 @@
           "type": "shell"
         },
         {
+          "url": "https://dev-www.libreoffice.org/src/bzip2-1.0.8.tar.gz",
+          "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "bzip2-1.0.8.tar.gz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/cairo-1.17.6.tar.xz",
+          "sha256": "4eebc4c2bad0402bc3f501db184417094657d111fb6c06f076a82ea191fe1faf",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "cairo-1.17.6.tar.xz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/pixman-0.42.2.tar.gz",
+          "sha256": "ea1480efada2fd948bc75366f7c349e1c96d3297d09a3fe62626e38e234a625e",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "pixman-0.42.2.tar.gz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/fontconfig-2.16.2.tar.xz",
+          "sha256": "165b8fd2a119864c87464b233986c4a1bc09efb09c65de1ca40cc1e85ffb77e2",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "fontconfig-2.16.2.tar.xz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/freetype-2.14.1.tar.xz",
+          "sha256": "32427e8c471ac095853212a37aef816c60b42052d4d9e48230bab3bdf2936ccc",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "freetype-2.14.1.tar.xz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/libffi-3.5.2.tar.gz",
+          "sha256": "f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "libffi-3.5.2.tar.gz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/libxml2-2.14.6.tar.xz",
+          "sha256": "7ce458a0affeb83f0b55f1f4f9e0e55735dbfc1a9de124ee86fb4a66b597203a",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "libxml2-2.14.6.tar.xz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/libxslt-1.1.43.tar.xz",
+          "sha256": "5a3d6b383ca5afc235b171118e90f5ff6aa27e9fea3303065231a6d403f0183a",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "libxslt-1.1.43.tar.xz"
+        },
+        {
           "url": "https://dev-www.libreoffice.org/src/curl-8.14.1.tar.xz",
           "sha256": "f4619a1e2474c4bbfedc88a7c2191209c8334b48fa1f4e53fd584cc12e9120dd",
           "type": "file",
           "dest": "external/tarballs",
           "dest-filename": "curl-8.14.1.tar.xz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/nss-3.102.1-with-nspr-4.35.tar.gz",
+          "sha256": "ddfdec73fb4b0eedce5fc4de09de9ba14d2ddbfbf67e42372903e1510f2d3d65",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "nss-3.102.1-with-nspr-4.35.tar.gz"
+        },
+        {
+          "url": "https://dev-www.libreoffice.org/src/Python-3.10.19.tar.xz",
+          "sha256": "c8f4a596572201d81dd7df91f70e177e19a70f1d489968b54b5fbbf29a97c076",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "Python-3.10.19.tar.xz"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifTC.zip",
+          "sha256": "c33e04199f6d69056a6de0ebc5522dbe36e02f145208c71c9a4c803841151ad2",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSerifTC.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifSC.zip",
+          "sha256": "00ed5970680a82453619ac5952c5631ea138372bbb0f864d156d91a0fd9c8279",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSerifSC.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifKR.zip",
+          "sha256": "3c0d276fb05aaefbbca808b4f8c7b1520b4b4e7c0be46296d6e8a5e42f559f5c",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSerifKR.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifJP.zip",
+          "sha256": "362438901cb871bf84b01ff4734c668dab57b4905f39e5ec76d8b68a7a7b5fa8",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSerifJP.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansTC.zip",
+          "sha256": "ec9e8a4156593e1b3ff7cff843989f43f114f96eff0b5db9691ef3c2bdefb73e",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSansTC.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansSC.zip",
+          "sha256": "bee1af8c0722cfb3eb1b2fa91a7f3dc011dca231c25c8fcd9d9d544699ababf9",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSansSC.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansKR.zip",
+          "sha256": "5147b755c29f16f82b706b1c7ff7982894fccbebcf99e6c5fb0d48c315604b98",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSansKR.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansJP.zip",
+          "sha256": "6886c5526628c08f1e21a84f4658ab3daf6d0233de8dc54526ccf9f40bfab18e",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "NotoSansJP.zip"
+        },
+        {
+          "url": "https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip",
+          "sha256": "837b4a9352fce32ad7f298fbf155af1da5b6f3f8dbd995eb63fdd8e82117e4ae",
+          "type": "file",
+          "dest": "external/tarballs",
+          "dest-filename": "Noto-hinted.zip"
         },
         {
           "url": "https://dev-www.libreoffice.org/src/expat-2.7.2.tar.xz",
@@ -1064,7 +1197,7 @@
       ],
       "buildsystem": "simple",
       "build-commands": [
-        "./autogen.sh --prefix=/run/build/libreoffice/inst --enable-ext-nlpsolver --enable-release-build --with-ant-home=/run/build/libreoffice/ant --with-jdk-home=/usr/lib/sdk/openjdk21/jvm/openjdk-21 --without-export-validation --without-junit --without-lxml --without-system-abseil --without-system-argon2 --without-system-beanshell --without-system-bluez --without-system-boost --without-system-box2d --without-system-clucene --without-system-coinmp --without-system-cppunit --without-system-dragonbox --without-system-firebird --without-system-frozen --without-system-glm --without-system-gpgmepp --without-system-java-websocket --without-system-jfreereport --without-system-libabw --without-system-libatomic_ops --without-system-libcdr --without-system-libcmis --without-system-libebook --without-system-libepubgen --without-system-libetonyek --without-system-libexttextcat --without-system-libfixmath --without-system-libfreehand --without-system-liblangtag --without-system-libmspub --without-system-libmwaw --without-system-libnumbertext --without-system-libodfgen --without-system-libpagemaker --without-system-libpng --without-system-libqxp --without-system-librevenge --without-system-libstaroffice --without-system-libtommath --without-system-libvisio --without-system-libwpd --without-system-libwpg --without-system-libwps --without-system-libzmf --without-system-lpsolve --without-system-mariadb --without-system-mdds --without-system-odbc --without-system-openldap --without-system-orcus --without-system-poppler --without-system-postgresql --without-system-redland --without-system-rhino --without-system-sane --without-system-xmlsec --without-system-zxcvbn --without-system-zxing --without-system-libeot --with-gdrive-client-id=280867422816-9jc83t6phkfb2q8p94dtk8kr5fa8af3r.apps.googleusercontent.com --with-gdrive-client-secret=Hnzikj7HqdqsUYLru4jmFo1p",
+        "./autogen.sh --prefix=/run/build/libreoffice/inst --disable-community-flavor --disable-dbus --disable-dconf --disable-epm --disable-evolution2 --disable-ext-nlpsolver --disable-ext-wiki-publisher --disable-firebird-sdbc --disable-gio --disable-gstreamer-1-0 --disable-gtk3 --disable-gui --disable-kf5 --disable-lotuswordpro --disable-lpsolve --disable-odk --disable-online-update --disable-poppler --disable-postgresql-sdbc --disable-qt5 --disable-randr --disable-report-builder --disable-sal-log --disable-scripting-beanshell --disable-scripting-javascript --disable-sdremote --disable-sdremote-bluetooth --disable-symbols --enable-cairo-rgba --enable-extension-integration --enable-hardening-flags --enable-mergelibs --enable-mpl-subset --enable-noto-font --enable-python=internal --enable-release-build --with-branding=icon-themes/galaxy/brand_cp --with-docrepair-fonts --with-fonts --with-galleries=no '--with-lang=ar bg ca cs da de el en-US en-GB eo es eu fi fr gl he hr hu id is it ja ko lo nb nl oc pl pt pt-BR sq ru sk sl sv tr uk vi zh-CN zh-TW' --with-linker-hash-style=both --with-myspell-dicts --with-system-zlib '--with-theme=colibre colibre_svg' --with-vendor=Collabora --without-buildconfig-recorded --without-help --without-java --without-junit --without-lxml --without-system-abseil --without-system-argon2 --without-system-beanshell --without-system-bluez --without-system-boost --without-system-box2d --without-system-cairo --without-system-clucene --without-system-coinmp --without-system-cppunit --without-system-curl --without-system-dragonbox --without-system-expat --without-system-firebird --without-system-fontconfig --without-system-freetype --without-system-frozen --without-system-glm --without-system-gpgmepp --without-system-graphite --without-system-harfbuzz --without-system-icu --without-system-jars --without-system-java-websocket --without-system-jfreereport --without-system-jpeg --without-system-libabw --without-system-libatomic_ops --without-system-libcdr --without-system-libcmis --without-system-libebook --without-system-libeot --without-system-libepubgen --without-system-libetonyek --without-system-libexttextcat --without-system-libfixmath --without-system-libfreehand --without-system-liblangtag --without-system-libmspub --without-system-libmwaw --without-system-libnumbertext --without-system-libodfgen --without-system-libpagemaker --without-system-libpng --without-system-libpng --without-system-libqxp --without-system-librevenge --without-system-libstaroffice --without-system-libtommath --without-system-libvisio --without-system-libwpd --without-system-libwpg --without-system-libwps --without-system-libxml --without-system-libzmf --without-system-lpsolve --without-system-mariadb --without-system-mdds --without-system-nss --without-system-odbc --without-system-openldap --without-system-openssl --without-system-orcus --without-system-poppler --without-system-postgresql --without-system-postgresql --without-system-redland --without-system-rhino --without-system-sane --without-system-xmlsec --without-system-zxcvbn --without-system-zxing --without-templates",
         "make clean",
         "make",
         "make distro-pack-install",
