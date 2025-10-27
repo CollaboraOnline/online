@@ -365,7 +365,7 @@ export class TilesSection extends CanvasSectionObject {
 			this.drawPageBackgroundWriter(ctx);
 	}
 
-	private drawForMultiPageView() {
+	private drawForViewLayoutMultiPage() {
 		const visibleCoordList: Array<TileCoordData> = TileManager.getVisibleCoordList(app.activeDocument.activeView.getVisibleAreaRectangle());
 
 		for (let i = 0; i < visibleCoordList.length; i++) {

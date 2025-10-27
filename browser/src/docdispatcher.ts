@@ -723,7 +723,7 @@ class Dispatcher {
 
 			if (source.indexOf('twopages.svg') !== -1) {
 				source = source.replace('twopages.svg', 'twopages_a.svg');
-				app.activeDocument.activeView = new MultiPageViewLayout();
+				app.activeDocument.activeView = new ViewLayoutMultiPage();
 			}
 			else {
 				source = source.replace('twopages_a.svg', 'twopages.svg');
