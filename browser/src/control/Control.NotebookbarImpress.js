@@ -1302,6 +1302,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 	},
 
 	getFormatTab: function() {
+		const isODF = app.LOUtil.isFileODF(this.map);
 		var content = [
 			{
 				'type': 'overflowgroup',
@@ -1395,6 +1396,15 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'format-namedescription-break', orientation: 'vertical', 'visible': isODF && app.isExperimentalMode() },
+			{
+				'id': 'format-shuffle-pages',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ReshufflePages', 'presentation'),
+				'command': '.uno:ReshufflePages',
+				'visible': isODF && app.isExperimentalMode(),
+				'accessibility': { focusBack: true, combination: 'RP', de: null }
+			},
 		];
 
 		return this.getTabPage('Format', content);
@@ -1409,9 +1419,10 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: true, combination: 'IP', de: null },
 				'children' : [
 					{
-						'id': 'insert-insert-slide',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:InsertSlide', 'presentation'),
+						'id': 'home-create-slide:NewSlideLayoutMenu',
+						'type': 'menubutton',
+						'applyCallback': '.uno:InsertPage',
+						'text': _('New'),
 						'command': '.uno:InsertPage',
 						'accessibility': { focusBack: true, combination: 'IP', de: null }
 					},

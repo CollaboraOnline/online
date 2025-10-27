@@ -2265,7 +2265,13 @@ function generatePictureTransparencyMenu(
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
 		type: 'json',
-		content: generateLayoutPopupGrid('InsertPage'),
+		content: {
+			id: 'Layout-NewSlideLayoutMenu',
+			// _UNO('.uno:InsertCanvasSlide')
+			// Keep the above comment for unocommands.py
+			type: 'newslidelayoutentry',
+			gridContent: generateLayoutPopupGrid('InsertPage'),
+		},
 	},
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
