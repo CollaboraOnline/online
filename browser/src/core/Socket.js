@@ -63,21 +63,11 @@ app.definitions.Socket = class Socket extends SocketBase {
 			return;
 		}
 		else if (textMsg.startsWith('wopi: ')) {
-			// Handle WOPI related messages
-			var wopiInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			this._map.fire('wopiprops', wopiInfo);
+			this._onWopiMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('loadstorage: ')) {
-			if (textMsg.substring(textMsg.indexOf(':') + 2) === 'failed') {
-				window.app.console.debug('Loading document from a storage failed');
-				this._map.fire('postMessage', {
-					msgId: 'App_LoadingStatus',
-					args: {
-						Status: 'Failed'
-					}
-				});
-			}
+			this._onLoadStorageMsg(textMsg);
 		}
 		else if (textMsg.startsWith('lastmodtime: ')) {
 			var time = textMsg.substring(textMsg.indexOf(' ') + 1);
