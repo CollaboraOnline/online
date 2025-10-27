@@ -133,6 +133,8 @@ static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
 static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
 
+static std::wstring new_document(CODA_OPEN_CONTROL id);
+
 // Temporary l10n function for the few UI strings here in this file
 static const wchar_t* _(const wchar_t* english)
 {
@@ -418,54 +420,7 @@ public:
     {
         customisationToDialog[dialogCustomisation]->Close(CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD);
 
-        // Copy a template to the user's document folder. Where else? Should we let the user decide
-        // where it goes?
-
-        std::wstring templateBasename, templateExtension;
-        switch ((CODA_OPEN_CONTROL)id)
-        {
-            case CODA_OPEN_CONTROL::NEW_TEXT:
-                templateBasename = L"Text Document";
-                templateExtension = L"odt";
-                break;
-            case CODA_OPEN_CONTROL::NEW_SPREADSHEET:
-                templateBasename = L"Spreadsheet";
-                templateExtension = L"ods";
-                break;
-            case CODA_OPEN_CONTROL::NEW_PRESENTATION:
-                templateBasename = L"Presentation";
-                templateExtension = L"odp";
-                break;
-            default:
-                std::abort();
-        }
-
-        const auto templateSourcePath = Util::string_to_wide_string(app_installation_path) +
-                                        L"templates\\" + templateBasename + L"." +
-                                        templateExtension;
-
-        PWSTR documents;
-        SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &documents);
-
-        int counter = 0;
-        std::wstring templateCopyPath;
-
-        do
-        {
-            std::wstring number = L"";
-            if (counter > 0)
-                number = L" (" + std::to_wstring(counter) + L")";
-
-            templateCopyPath = std::wstring(documents) + L"\\" + templateBasename + number + L"." +
-                               templateExtension;
-            counter++;
-        } while (std::filesystem::exists(std::filesystem::path(templateCopyPath)));
-
-        std::filesystem::copy_file(templateSourcePath, templateCopyPath);
-
-        CoTaskMemFree(documents);
-
-        new_document_created = templateCopyPath;
+        new_document_created = new_document((CODA_OPEN_CONTROL) id);
 
         return S_OK;
     };
@@ -501,6 +456,58 @@ static HRESULT CDialogEventHandler_CreateInstance(REFIID riid, void** ppv)
 // ================ End of sample code
 
 static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message);
+
+static std::wstring new_document(CODA_OPEN_CONTROL id)
+{
+    // Copy a template to the user's document folder. Where else? Should we let the user decide
+    // where it goes?
+
+    std::wstring templateBasename, templateExtension;
+    switch (id)
+    {
+        case CODA_OPEN_CONTROL::NEW_TEXT:
+            templateBasename = L"Text Document";
+            templateExtension = L"odt";
+            break;
+        case CODA_OPEN_CONTROL::NEW_SPREADSHEET:
+            templateBasename = L"Spreadsheet";
+            templateExtension = L"ods";
+            break;
+        case CODA_OPEN_CONTROL::NEW_PRESENTATION:
+            templateBasename = L"Presentation";
+            templateExtension = L"odp";
+            break;
+        default:
+            std::abort();
+    }
+
+    const auto templateSourcePath = Util::string_to_wide_string(app_installation_path) +
+                                    L"templates\\" + templateBasename + L"." +
+                                    templateExtension;
+
+    PWSTR documents;
+    SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &documents);
+
+    int counter = 0;
+    std::wstring templateCopyPath;
+
+    do
+    {
+        std::wstring number = L"";
+        if (counter > 0)
+            number = L" (" + std::to_wstring(counter) + L")";
+
+        templateCopyPath = std::wstring(documents) + L"\\" + templateBasename + number + L"." +
+                           templateExtension;
+        counter++;
+    } while (std::filesystem::exists(std::filesystem::path(templateCopyPath)));
+
+    std::filesystem::copy_file(templateSourcePath, templateCopyPath);
+
+    CoTaskMemFree(documents);
+
+    return templateCopyPath;
+}
 
 static int generate_new_app_doc_id()
 {
@@ -1426,6 +1433,21 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s == L"uno .uno:CloseWin")
         {
             PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
+        }
+        else if (s.starts_with(L"new-"))
+        {
+            CODA_OPEN_CONTROL id;
+            if (s.substr(4) == L"text")
+                id = CODA_OPEN_CONTROL::NEW_TEXT;
+            else if (s.substr(4) == L"spreadsheet")
+                id = CODA_OPEN_CONTROL::NEW_SPREADSHEET;
+            else if (s.substr(4) == L"presentation")
+                id = CODA_OPEN_CONTROL::NEW_PRESENTATION;
+            else
+                std::abort();
+
+            auto path = Poco::Path(Util::wide_string_to_string(new_document(id)));
+            openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() });
         }
         else
         {
