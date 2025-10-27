@@ -236,10 +236,7 @@ class MultiPageViewLayout extends ViewLayoutBase {
 	}
 
 	public reset() {
-		if (
-			!app.file.writer.multiPageView ||
-			!app.file.writer.pageRectangleList.length
-		)
+		if (!app.file.writer.pageRectangleList.length)
 			return;
 
 		this.resetViewLayout();

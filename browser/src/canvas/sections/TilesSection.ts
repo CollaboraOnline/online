@@ -346,20 +346,8 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	private drawPageBackgroundsMultiPageView() {
-		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
-		this.context.strokeStyle = "red";
-
-		for (let i = 0; i < app.activeDocument.activeView.layoutRectangles.length; i++) {
-			const rectangle = app.activeDocument.activeView.layoutRectangles[i];
-			const coords = [rectangle.layoutX - app.activeDocument.activeView.viewedRectangle.pX1, rectangle.layoutY - app.activeDocument.activeView.viewedRectangle.pY1, rectangle.pWidth, rectangle.pHeight];
-			this.context.strokeRect(coords[0], coords[1], coords[2], coords[3]);
-			this.context.fillRect(coords[0], coords[1], coords[2], coords[3]);
-		}
-	}
-
 	private drawPageBackgrounds (ctx: any) {
-		if (!app.file.fileBasedView && !app.file.writer.multiPageView && this.map._docLayer._docType !== 'text')
+		if (!app.file.fileBasedView && this.map._docLayer._docType !== 'text')
 			return;
 
 		if (!this.containerObject.getDocumentAnchorSection())
@@ -373,8 +361,6 @@ export class TilesSection extends CanvasSectionObject {
 
 		if (app.file.fileBasedView)
 			this.drawPageBackgroundFileBasedView(ctx);
-		else if (app.file.writer.multiPageView)
-			this.drawPageBackgroundsMultiPageView();
 		else if (this.map._docLayer._docType === 'text')
 			this.drawPageBackgroundWriter(ctx);
 	}
@@ -422,12 +408,6 @@ export class TilesSection extends CanvasSectionObject {
 
 		if (this.containerObject.testing) {
 			this.containerObject.createUpdateSingleDivElement(this);
-		}
-
-		if (app.file.writer.multiPageView === true) {
-			this.drawPageBackgroundsMultiPageView();
-			this.drawForMultiPageView();
-			return;
 		}
 
 		var zoom = Math.round(this.map.getZoom());
