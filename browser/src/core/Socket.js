@@ -40,32 +40,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
-			document.getElementById('lokit-version-label').textContent = _('LOKit version:');
-
-			const lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-
-			const versionContainer = document.getElementById('lokit-version');
-			versionContainer.replaceChildren();
-			versionContainer.appendChild(document.createTextNode(lokitVersionObj.ProductName + '\xA0' + lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension));
-
-			const h = lokitVersionObj.BuildId.substring(0, 10);
-			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				const anchor = document.createElement('a');
-				anchor.setAttribute('target', '_blank');
-				anchor.setAttribute('href', 'https://git.libreoffice.org/core/+log/' + lokitVersionObj.BuildId + '/');
-				anchor.textContent = 'git hash: ' + h;
-
-				const span = document.createElement('span');
-				span.appendChild(anchor);
-				versionContainer.appendChild(span);
-			}
-			else {
-				const span = document.createElement('span');
-				span.textContent = 'git hash:\xA0' + h;
-				versionContainer.appendChild(span);
-			}
-
-			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
+			this._onLokitVersionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('enabletraceeventlogging ')) {
 			this.enableTraceEventLogging = true;
