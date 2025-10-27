@@ -133,7 +133,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'text'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'text'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'},
+				{uno: '.uno:SearchDialog', id: 'searchreplace'},
 				{type: 'separator'},
 				{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 					{uno: '.uno:TrackChanges'},
@@ -472,7 +472,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'presentation'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'presentation'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SearchDialog', id: 'searchreplace'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
@@ -635,7 +635,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'presentation'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'presentation'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SearchDialog', id: 'searchreplace'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
@@ -783,7 +783,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'text'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'text'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SearchDialog', id: 'searchreplace'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
