@@ -1192,4 +1192,39 @@ class SocketBase {
 			});
 		}
 	}
+
+	// 'migrate: ' message.
+	protected _onMigrateMsg(textMsg: string): void {
+		const migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		const afterSave = migrate.afterSave as boolean;
+		app.idleHandler._serverRecycling = false;
+		if (!afterSave) {
+			window.migrating = true;
+			this._map.uiManager.closeAll();
+			if (this._map.isEditMode()) {
+				this._map.setPermission('view');
+				this._map.uiManager.showSnackbar(
+					_('Document is getting migrated'),
+					null,
+					null,
+					3000,
+				);
+			}
+			if (migrate.saved) {
+				window.routeToken = migrate.routeToken;
+				window.expectedServerId = migrate.serverId;
+				this.manualReconnect(2000);
+			}
+			return;
+		}
+		// even after save attempt, if document is unsaved reset the file permission
+		if (migrate.saved) {
+			window.routeToken = migrate.routeToken;
+			window.expectedServerId = migrate.serverId;
+			this.manualReconnect(2000);
+		} else {
+			this._map.setPermission(app.file.permission);
+			window.migrating = false;
+		}
+	}
 }
