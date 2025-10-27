@@ -1625,7 +1625,7 @@ class UIManager extends window.L.Control {
 	 */
 	showSnackbar(
 		label: string,
-		action: string,
+		action: string | null,
 		callback: any,
 		timeout?: number,
 		hasProgress?: boolean,
