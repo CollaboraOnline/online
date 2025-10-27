@@ -70,28 +70,11 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this._onLoadStorageMsg(textMsg);
 		}
 		else if (textMsg.startsWith('lastmodtime: ')) {
-			var time = textMsg.substring(textMsg.indexOf(' ') + 1);
-			this._map.updateModificationIndicator(time);
+			this._onLastModTimeMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('commandresult: ')) {
-			var commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			if (commandresult['command'] === 'savetostorage' || commandresult['command'] === 'save') {
-				var postMessageObj = {
-					success: commandresult['success'],
-					result: commandresult['result'],
-					errorMsg: commandresult['errorMsg']
-				};
-
-				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
-			} else if (commandresult['command'] === 'load') {
-				postMessageObj = {
-					success: commandresult['success'],
-					result: commandresult['result'],
-					errorMsg: commandresult['errorMsg']
-				};
-				this._map.fire('postMessage', {msgId: 'Action_Load_Resp', args: postMessageObj});
-			}
+			this._onCommandResultMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
