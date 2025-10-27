@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-10-17 11:07+0000\n"
+"PO-Revision-Date: 2025-10-22 16:02+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3229,18 +3229,16 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Integrator är inte redo för PostMessage-anrop"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "Använder namnrymder."
+msgstr "Använder namnrymder"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr "Använder inte namnrymder"
 
 #: src/control/Control.ServerAuditDialog.ts:236
-#, fuzzy
 msgid "Document container started in {1} ms"
-msgstr "Dokumentbehållaren startade i"
+msgstr "Dokumentbehållaren startades på {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
