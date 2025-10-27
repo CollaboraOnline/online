@@ -16,8 +16,8 @@ class LayoutPageRectangle extends cool.SimpleRectangle {
 	part: number = 0;
 }
 
-class MultiPageViewLayout extends ViewLayoutBase {
-	public readonly type: string = 'MultiPageViewLayout';
+class ViewLayoutMultiPage extends ViewLayoutBase {
+	public readonly type: string = 'ViewLayoutMultiPage';
 	public gapBetweenPages = 20; // Core pixels.
 	public availableWidth = 0;
 	private maxRowsSize = 2;
