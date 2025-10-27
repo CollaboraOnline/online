@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-10-21 00:46+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-10-27 10:18+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2414,32 +2414,31 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animation"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Angewandte Animationen"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Nach oben verschieben"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Nach unten verschieben"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Effekte"
+msgstr "Effekt"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2482,7 +2481,7 @@ msgstr "Feld"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "Animationen"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -3021,9 +3020,8 @@ msgid "Present in Window"
 msgstr "Im Fenster anzeigen"
 
 #: src/control/Control.NotebookbarImpress.js:501
-#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Folgen Sie mir Präsentation"
+msgstr "Folge-mir-Präsentation starten"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:729
@@ -3268,18 +3266,16 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Integrator ist nicht bereit für PostMessage-Aufrufe"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "Namensräume werden verwendet."
+msgstr "Namensräume werden verwendet"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr "Namensräume werden nicht verwendet"
 
 #: src/control/Control.ServerAuditDialog.ts:236
-#, fuzzy
 msgid "Document container started in {1} ms"
-msgstr "Dokumentencontainer gestartet in"
+msgstr "Dokumentencontainer in {1} ms gestartet"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3294,9 +3290,8 @@ msgid "Alerts:"
 msgstr "Alarme:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Überprüfen Sie die Sicherheitswarnungen Ihres Servers"
+msgstr "Überprüfen Sie die Warnmeldungen Ihres Servers"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -3324,7 +3319,7 @@ msgstr "Tabelle einfügen"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Blattliste anzeigen"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
@@ -4189,7 +4184,7 @@ msgstr "Aktuell"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Seitenrandoptionen"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:104
 msgid "Top: {top}"
