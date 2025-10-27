@@ -247,7 +247,6 @@ interface Window {
 			fileBasedView: boolean;
 			writer: {
 				pageRectangleList: Array<any>;
-				multiPageView: boolean;
 			};
 			exportFormats: Array<any>;
 		};
