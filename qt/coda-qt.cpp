@@ -640,7 +640,8 @@ int main(int argc, char** argv)
         .detach();
 
     QApplication app(argc, argv);
-    QApplication::setApplicationName("CODA-Q");
+    QApplication::setApplicationName("Collabora Office");
+    QApplication::setWindowIcon(QIcon::fromTheme("org.collabora.CODA.startcenter"));
 
     for (int i = 1; i < argc; i++)
     {
