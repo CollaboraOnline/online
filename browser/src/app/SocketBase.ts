@@ -1136,4 +1136,24 @@ class SocketBase {
 		app.setCommentEditingPermission(json.editComment); // May be allowed even in readonly mode.
 		app.setRedlineManagementAllowed(json.manageRedlines); // May be allowed even in readonly mode.
 	}
+
+	// 'wopi:' message.
+	protected _onWopiMsg(textMsg: string): void {
+		// Handle WOPI related messages
+		const wopiInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		this._map.fire('wopiprops', wopiInfo);
+	}
+
+	// 'loadstorage: ' message.
+	protected _onLoadStorageMsg(textMsg: string): void {
+		if (textMsg.substring(textMsg.indexOf(':') + 2) === 'failed') {
+			window.app.console.debug('Loading document from a storage failed');
+			this._map.fire('postMessage', {
+				msgId: 'App_LoadingStatus',
+				args: {
+					Status: 'Failed',
+				},
+			});
+		}
+	}
 }
