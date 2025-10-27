@@ -886,4 +886,159 @@ class SocketBase {
 		}
 		return unauthorizedMsg;
 	}
+
+	public manualReconnect(timeout: number): void {
+		console.assert(false, 'This should not be called!');
+	}
+
+	/* _onMessage() subtasks */
+
+	// 'coolserver ' message.
+	// returns boolean whether or not to return immediately from _onMessage().
+	protected _onCoolServerMsg(textMsg: string): boolean {
+		// This must be the first message, unless we reconnect.
+		let oldVersion = '';
+		let sameFile = true;
+		// Check if we are reconnecting.
+		if (this.WSDServer && this.WSDServer.Id) {
+			// Yes we are reconnecting.
+			// If our connection was lost and is ready again, we will not need to refresh the page.
+			oldVersion = this.WSDServer.Version;
+
+			window.app.console.assert(
+				this._map.options.wopiSrc === window.wopiSrc,
+				'wopiSrc mismatch!: ' +
+					this._map.options.wopiSrc +
+					' != ' +
+					window.wopiSrc,
+			);
+			// If another file is opened, we will not refresh the page.
+			if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
+				if (this._map.options.previousWopiSrc !== this._map.options.wopiSrc)
+					sameFile = false;
+			}
+		}
+
+		this.WSDServer = JSON.parse(
+			textMsg.substring(textMsg.indexOf('{')),
+		) as WSDServerInfo;
+
+		if (oldVersion && sameFile) {
+			if (this.WSDServer.Version !== oldVersion) {
+				let reloadMessage = _(
+					'Server is now reachable. We have to refresh the page now.',
+				);
+				if (window.mode.isMobile())
+					reloadMessage = _('Server is now reachable...');
+
+				const reloadFunc = function () {
+					window.location.reload();
+				};
+				if (!this._map['wopi'].DisableInactiveMessages)
+					this._map.uiManager.showSnackbar(
+						reloadMessage,
+						_('RELOAD'),
+						reloadFunc,
+					);
+				else
+					this._map.fire('postMessage', {
+						msgId: 'Reloading',
+						args: { Reason: 'Reconnected' },
+					});
+				setTimeout(reloadFunc, 5000);
+			}
+		}
+		if (window.indirectSocket) {
+			if (
+				window.expectedServerId &&
+				window.expectedServerId != this.WSDServer.Id
+			) {
+				if (this.IndirectSocketReconnectCount++ >= 3) {
+					let msg = window.errorMessages.clusterconfiguration.replace(
+						'{productname}',
+						typeof brandProductName !== 'undefined'
+							? brandProductName
+							: 'Collabora Online Development Edition (unbranded)',
+					);
+					msg = msg.replace('{0}', window.expectedServerId);
+					msg = msg.replace('{1}', window.routeToken);
+					msg = msg.replace('{2}', this.WSDServer.Id);
+					this._map.uiManager.showInfoModal(
+						'wrong-server-modal',
+						_('Cluster configuration warning'),
+						msg,
+						'',
+						_('OK'),
+						null,
+						false,
+					);
+					this.IndirectSocketReconnectCount = 0;
+				} else {
+					this._map.showBusy(_('Wrong server, reconnecting...'), false);
+					this.manualReconnect(3000);
+					// request to indirection server to sanity check the tokens
+					this.sendMessage('routetokensanitycheck');
+					return true;
+				}
+			}
+		}
+
+		const versionLabelElement = document.getElementById(
+			'coolwsd-version-label',
+		);
+		if (versionLabelElement) {
+			versionLabelElement.textContent = _('COOLWSD version:');
+		} else {
+			console.assert(false, '#coolwsd-version-label element does not exist!');
+		}
+		const h = this.WSDServer.Hash;
+		const versionContainer = document.getElementById('coolwsd-version');
+		if (!versionContainer) {
+			console.assert(
+				false,
+				'#coolwsd-version container element does not exist!',
+			);
+		}
+		if (
+			versionContainer &&
+			parseInt(h, 16).toString(16) === h.toLowerCase().replace(/^0+/, '')
+		) {
+			const anchor = document.createElement('a');
+			anchor.setAttribute(
+				'href',
+				'https://github.com/CollaboraOnline/online/commits/' + h,
+			);
+			anchor.setAttribute('target', '_blank');
+			anchor.textContent = h;
+
+			versionContainer.replaceChildren();
+
+			versionContainer.appendChild(
+				document.createTextNode(this.WSDServer.Version),
+			);
+
+			const span = document.createElement('span');
+			span.appendChild(document.createTextNode('git hash:\xA0'));
+			span.appendChild(anchor);
+			span.appendChild(document.createTextNode(this.WSDServer.Options));
+			versionContainer.appendChild(span);
+		} else if (versionContainer) {
+			versionContainer.textContent = this.WSDServer.Version;
+		}
+
+		if (!window.ThisIsAMobileApp) {
+			const idUri = window.makeHttpUrl('/hosting/discovery');
+			$('#served-by-label').text(_('Served by:'));
+			$('#coolwsd-id').html(
+				'<a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>',
+			);
+		}
+
+		// TODO: For now we expect perfect match in protocol versions
+		if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
+			this._map.fire('error', { msg: _('Unsupported server version.') });
+		}
+
+		return false;
+	}
 }
