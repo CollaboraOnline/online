@@ -25,6 +25,8 @@ class MultiPageViewLayout extends ViewLayoutBase {
 
 	constructor() {
 		super();
+
+		this.reset();
 	}
 
 	public sendClientVisibleArea() {

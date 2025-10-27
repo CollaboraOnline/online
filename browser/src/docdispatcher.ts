@@ -715,6 +715,25 @@ class Dispatcher {
 		this.actionsMap['rejectTrackedChangeToNext'] = function () {
 			app.map.sendUnoCommand('.uno:RejectTrackedChangeToNext');
 		};
+
+		this.actionsMap['multipageview'] = function() {
+			const buttonElement = document.getElementById('multi-page-view');
+			const imageElement = buttonElement.querySelector('img');
+			let source = imageElement.src;
+
+			if (source.indexOf('twopages.svg') !== -1) {
+				source = source.replace('twopages.svg', 'twopages_a.svg');
+				app.activeDocument.activeView = new MultiPageViewLayout();
+			}
+			else {
+				source = source.replace('twopages_a.svg', 'twopages.svg');
+				app.activeDocument.activeView = new ViewLayoutWriter();
+			}
+
+			imageElement.src = source;
+			app.activeDocument.activeView.sendClientVisibleArea();
+			app.sectionContainer.requestReDraw();
+		}
 	}
 
 	private addMobileCommands() {
