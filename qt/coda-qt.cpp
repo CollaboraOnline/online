@@ -25,6 +25,8 @@
 #include <QApplication>
 #include <QByteArray>
 #include <QClipboard>
+#include <QCommandLineOption>
+#include <QCommandLineParser>
 #include <QDir>
 #include <QTemporaryFile>
 #include <QProcess>
@@ -615,20 +617,33 @@ void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 
 int main(int argc, char** argv)
 {
-    if (argc < 2)
-    {
-        fprintf(stderr, "Usage: %s DOCUMENT [DOCUMENT...]\n", argv[0]);
-        _exit(1);
-    }
-
-    Log::initialize("Mobile", "trace");
-    Util::setThreadName("main");
-
-    fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
-
     QApplication app(argc, argv);
     QApplication::setApplicationName("Collabora Office");
     QApplication::setWindowIcon(QIcon::fromTheme("com.collabora.Office.startcenter"));
+
+    QCommandLineParser argParser;
+    QCommandLineOption debugOption(
+        QStringList() << "d" << "debug",
+        "Enable debug output."
+    );
+    argParser.addOption(debugOption);
+    argParser.process(app);
+    QStringList files = argParser.positionalArguments();
+
+    if (files.size() < 1)
+    {
+        fprintf(stderr, "Usage: %s [--debug] DOCUMENT [DOCUMENT...]\n", argv[0]);
+        _exit(1);
+    }
+
+    std::string logLevel = "warning";
+    if (argParser.isSet(debugOption))
+        logLevel = "trace";
+
+    Log::initialize("Mobile", logLevel);
+    Util::setThreadName("main");
+
+    fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
     // COOLWSD in a background thread
     std::thread(
@@ -643,10 +658,10 @@ int main(int argc, char** argv)
         })
         .detach();
 
-    for (int i = 1; i < argc; i++)
+    for (auto file : files)
     {
         // Resolve absolute file URL to pass into Online
-        std::string fileURL = Poco::URI(Poco::Path(argv[i])).toString();
+        std::string fileURL = Poco::URI(Poco::Path(std::string(file.toUtf8()))).toString();
         WebView* webViewInstance = new WebView(nullptr);
         webViewInstance->load(fileURL);
     }
