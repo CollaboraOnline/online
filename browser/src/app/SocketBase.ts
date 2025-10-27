@@ -1156,4 +1156,40 @@ class SocketBase {
 			});
 		}
 	}
+
+	// 'lastmodtime: ' message.
+	protected _onLastModTimeMsg(textMsg: string): void {
+		const time = textMsg.substring(textMsg.indexOf(' ') + 1);
+		this._map.updateModificationIndicator(time);
+	}
+
+	// 'commandresult: ' message.
+	protected _onCommandResultMsg(textMsg: string): void {
+		const commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		if (
+			commandresult['command'] === 'savetostorage' ||
+			commandresult['command'] === 'save'
+		) {
+			const postMessageObj = {
+				success: commandresult['success'],
+				result: commandresult['result'],
+				errorMsg: commandresult['errorMsg'],
+			};
+
+			this._map.fire('postMessage', {
+				msgId: 'Action_Save_Resp',
+				args: postMessageObj,
+			});
+		} else if (commandresult['command'] === 'load') {
+			const postMessageObj = {
+				success: commandresult['success'],
+				result: commandresult['result'],
+				errorMsg: commandresult['errorMsg'],
+			};
+			this._map.fire('postMessage', {
+				msgId: 'Action_Load_Resp',
+				args: postMessageObj,
+			});
+		}
+	}
 }
