@@ -69,7 +69,7 @@ int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
 
-void getClipboard(unsigned appDocId)
+static void getClipboard(unsigned appDocId)
 {
     std::unique_ptr<QMimeData> mimeData(new QMimeData());
 
@@ -122,7 +122,7 @@ void getClipboard(unsigned appDocId)
     clipboard->setMimeData(mimeData.release());
 }
 
-void setClipboard(unsigned appDocId)
+static void setClipboard(unsigned appDocId)
 {
     QClipboard* clipboard = QApplication::clipboard();
     if (!clipboard)
@@ -141,7 +141,7 @@ void setClipboard(unsigned appDocId)
     DocumentData::get(appDocId).loKitDocument->setClipboard(1, mimeTypes, sizes, streams);
 }
 
-void setClipboardFromContent(unsigned appDocId, const std::string& content)
+static void setClipboardFromContent(unsigned appDocId, const std::string& content)
 {
     std::vector<const char*> streams;
     std::vector<const char*> mimeTypes;
