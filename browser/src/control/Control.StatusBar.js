@@ -247,6 +247,7 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 			{type: 'spacer',  id: 'permissionspacer'},
 			this._generateHtmlItem('documentstatus', 2),					// spreadsheet, text, presentation, drawing
+			{type: 'customtoolitem',  id: 'multi-page-view', command: 'multipageview', text: _('Multi Page View'), icon: 'twopages.svg', dataPriority: 10,  visible: false}, // text
 			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
 			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical', dataPriority: 9},
@@ -310,6 +311,7 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('permissionmode-container', true);
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
+				this.showItem('multi-page-view', true);
 			}
 			break;
 
