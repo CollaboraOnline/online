@@ -56,20 +56,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			return;
 		}
 		else if (textMsg.startsWith('filemode:')) {
-			var json = JSON.parse(textMsg.substring('filemode:'.length).trim());
-
-			// Never make the permission more permissive than it originally was.
-			if (!app.isReadOnly() && json.readOnly)
-			{
-				app.setPermission('readonly');
-			}
-
-			if (this._map._docLayer) {
-				this._map.setPermission(app.file.permission);
-			}
-
-			app.setCommentEditingPermission(json.editComment); // May be allowed even in readonly mode.
-			app.setRedlineManagementAllowed(json.manageRedlines); // May be allowed even in readonly mode.
+			this._onFileModeMsg(textMsg);
 		}
 		else if (textMsg.startsWith('lockfailed:')) {
 			this._map.onLockFailed(textMsg.substring('lockfailed:'.length).trim());
