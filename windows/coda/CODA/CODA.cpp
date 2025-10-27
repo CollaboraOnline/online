@@ -270,6 +270,8 @@ static const wchar_t* _(const wchar_t* english)
                     { "hu", "Válassza ki a %s-ban szerkesztendő dokumentumot" },
                     { "ja", "%sで編集する文書を選択" },
                     { "pl", "Wybierz dokument do edycji w %s" },
+                    { "pt", "Selecione o documento a editar no %s" },
+                    { "pt-BR", "Selecione o documento para editar no %s" },
                     { "ru", "Выберите документ для редактирования в %s" },
                     { "sv", "Välj dolkument att redigera i %s" },
                 },
