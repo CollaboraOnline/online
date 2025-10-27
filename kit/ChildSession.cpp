@@ -1995,11 +1995,12 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     getLOKitDocument()->setView(_viewId);
     if (target == LokEventTargetEnum::Document)
     {
+#if !MOBILEAPP
         // Check if override mode is disabled.
         if (type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
             !ConfigUtil::getBool("overwrite_mode.enable", false))
             return true;
-
+#endif
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
     }
     else if (winId != 0)
