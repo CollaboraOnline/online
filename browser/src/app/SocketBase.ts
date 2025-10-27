@@ -1042,6 +1042,7 @@ class SocketBase {
 		return false;
 	}
 
+	// 'lokitversion ' message.
 	protected _onLokitVersionMsg(textMsg: string): void {
 		const versionLabelElement = document.getElementById('lokit-version-label');
 		const versionContainer = document.getElementById('lokit-version');
@@ -1092,5 +1093,12 @@ class SocketBase {
 
 		this.TunnelledDialogImageCacheSize =
 			lokitVersionObj.tunnelled_dialog_image_cache_size;
+	}
+
+	// 'osinfo ' message.
+	protected _onOsInfoMsg(textMsg: string) {
+		const osInfo = textMsg.replace('osinfo ', '');
+		const osInfoElement = document.getElementById('os-info');
+		if (osInfoElement) osInfoElement.innerText = osInfo;
 	}
 }
