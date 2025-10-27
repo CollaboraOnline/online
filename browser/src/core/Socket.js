@@ -49,21 +49,10 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this._onOsInfoMsg(textMsg);
 		}
 		else if (textMsg.startsWith('clipboardkey: ')) {
-			var key = textMsg.substring('clipboardkey: '.length);
-			if (this._map._clip)
-				this._map._clip.setKey(key);
+			this._onClipboardKeyMsg(textMsg);
 		}
 		else if (textMsg.startsWith('perm:')) {
-			var perm = textMsg.substring('perm:'.length).trim();
-
-			// Never make the permission more permissive than it originally was.
-			if (!app.isReadOnly())
-				app.setPermission(perm);
-
-			if (this._map._docLayer)
-				this._map.setPermission(app.file.permission);
-
-			app.file.disableSidebar = app.isReadOnly();
+			this._onPermMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('filemode:')) {
