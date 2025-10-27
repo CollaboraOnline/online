@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages brandProductName GraphicSelection TileManager SlideBitmapManager SocketBase */
+/* global app JSDialog _ errorMessages brandProductName GraphicSelection TileManager SlideBitmapManager SocketBase */
 
 app.definitions.Socket = class Socket extends SocketBase {
 
@@ -35,91 +35,8 @@ app.definitions.Socket = class Socket extends SocketBase {
 		var command = this.parseServerCmd(textMsg);
 
 		if (textMsg.startsWith('coolserver ')) {
-			// This must be the first message, unless we reconnect.
-			var oldVersion = null;
-			var sameFile = true;
-			// Check if we are reconnecting.
-			if (this.WSDServer && this.WSDServer.Id) {
-				// Yes we are reconnecting.
-				// If our connection was lost and is ready again, we will not need to refresh the page.
-				oldVersion = this.WSDServer.Version;
-
-				window.app.console.assert(this._map.options.wopiSrc === window.wopiSrc,
-					'wopiSrc mismatch!: ' + this._map.options.wopiSrc + ' != ' + window.wopiSrc);
-				// If another file is opened, we will not refresh the page.
-				if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
-					if (this._map.options.previousWopiSrc !== this._map.options.wopiSrc)
-						sameFile = false;
-				}
-			}
-
-			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-
-			if (oldVersion && sameFile) {
-				if (this.WSDServer.Version !== oldVersion) {
-					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
-					if (window.mode.isMobile())
-						reloadMessage = _('Server is now reachable...');
-
-					var reloadFunc = function() { window.location.reload(); };
-					if (!this._map['wopi'].DisableInactiveMessages)
-						this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), reloadFunc);
-					else
-						this._map.fire('postMessage', {msgId: 'Reloading', args: {Reason: 'Reconnected'}});
-					setTimeout(reloadFunc, 5000);
-				}
-			}
-			if (window.indirectSocket) {
-				if (window.expectedServerId && window.expectedServerId != this.WSDServer.Id) {
-					if (this.IndirectSocketReconnectCount++ >= 3) {
-						var msg = errorMessages.clusterconfiguration.replace('{productname}', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)'));
-						msg = msg.replace('{0}', window.expectedServerId);
-						msg = msg.replace('{1}', window.routeToken);
-						msg = msg.replace('{2}', this.WSDServer.Id);
-						this._map.uiManager.showInfoModal('wrong-server-modal', _('Cluster configuration warning'), msg, '', _('OK'), null, false);
-						this.IndirectSocketReconnectCount = 0;
-					} else {
-						this._map.showBusy(_('Wrong server, reconnecting...'), false);
-						this.manualReconnect(3000);
-						// request to indirection server to sanity check the tokens
-						this.sendMessage('routetokensanitycheck');
-						return;
-					}
-				}
-			}
-
-			document.getElementById('coolwsd-version-label').textContent = _('COOLWSD version:');
-			var h = this.WSDServer.Hash;
-			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				const anchor = document.createElement('a');
-				anchor.setAttribute('href', 'https://github.com/CollaboraOnline/online/commits/' + h);
-				anchor.setAttribute('target', '_blank');
-				anchor.textContent = h;
-
-				const versionContainer = document.getElementById('coolwsd-version');
-				versionContainer.replaceChildren();
-
-				versionContainer.appendChild(document.createTextNode(this.WSDServer.Version));
-
-				let span = document.createElement('span');
-				span.appendChild(document.createTextNode('git hash:\xA0'));
-				span.appendChild(anchor);
-				span.appendChild(document.createTextNode(this.WSDServer.Options));
-				versionContainer.appendChild(span);
-			}
-			else {
-				document.getElementById('coolwsd-version').textContent = this.WSDServer.Version;
-			}
-
-			if (!window.ThisIsAMobileApp) {
-				var idUri = window.makeHttpUrl('/hosting/discovery');
-				$('#served-by-label').text(_('Served by:'));
-				$('#coolwsd-id').html('<a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
-			}
-
-			// TODO: For now we expect perfect match in protocol versions
-			if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
-				this._map.fire('error', {msg: _('Unsupported server version.')});
+			if (this._onCoolServerMsg(textMsg)) {
+				return;
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
@@ -131,7 +48,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			versionContainer.replaceChildren();
 			versionContainer.appendChild(document.createTextNode(lokitVersionObj.ProductName + '\xA0' + lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension));
 
-			h = lokitVersionObj.BuildId.substring(0, 10);
+			const h = lokitVersionObj.BuildId.substring(0, 10);
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				const anchor = document.createElement('a');
 				anchor.setAttribute('target', '_blank');
