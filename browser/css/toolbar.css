@@ -1934,3 +1934,24 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	font-size: var(--default-font-size);
 	color: var(--color-main-text);
 }
+
+.slidelayout-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid transparent;
+	font-size: var(--default-font-size);
+	background-color: var(--color-background-lighter);
+}
+
+.slidelayout-button:hover {
+	background-color: var(--color-background-dark);
+}
+
+.slidelayout-button:focus {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
+}

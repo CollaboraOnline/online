@@ -462,6 +462,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
+	src/control/jsdialog/Widget.NewSlideLayoutEntry.ts \
 	src/control/jsdialog/Widget.OverflowGroup.ts \
 	src/control/jsdialog/Widget.OverflowManager.ts \
 	src/control/jsdialog/Widget.Progressbar.js \
@@ -1126,6 +1127,7 @@ pot:
 		src/control/jsdialog/Widget.PageSizeEntry.ts \
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
+		src/control/jsdialog/Widget.NewSlideLayoutEntry.ts \
 		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
