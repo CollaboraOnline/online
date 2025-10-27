@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-10-20 04:50+0000\n"
+"PO-Revision-Date: 2025-10-21 14:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -560,9 +560,8 @@ msgid "Images"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
-#, fuzzy
 msgid "Tables"
-msgstr "Táblázat"
+msgstr "Táblázatok"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Controls"
@@ -578,7 +577,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden text"
-msgstr ""
+msgstr "Rejtett szöveg"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Placeholders"
@@ -2405,7 +2404,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategória"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
@@ -3244,11 +3243,11 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Nem használ névtereket"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "A dokumentumkonténer {1} ms alatt indult el"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3263,9 +3262,8 @@ msgid "Alerts:"
 msgstr "Figyelmeztetések:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Ellenőrizze a szerver biztonsági figyelmeztetéseit"
+msgstr "Ellenőrizze a szerver figyelmeztetéseit"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -4156,7 +4154,7 @@ msgstr "Előzmények"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Margóbeállítások"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:104
 msgid "Top: {top}"
