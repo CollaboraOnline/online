@@ -879,7 +879,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
         memcpy(appDocIdBuffer, space + 1, appDocIdLen);
         appDocIdBuffer[appDocIdLen] = '\0';
-        unsigned appDocId = static_cast<unsigned>(std::strtoul(appDocIdBuffer, nullptr, 10));
+        char * end;
+        unsigned appDocId = static_cast<unsigned>(std::strtoul(appDocIdBuffer, &end, 10));
+        if (end != appDocIdBuffer + appDocIdLen) {
+            LOG_ERR("Bad document ID \"" << appDocIdBuffer << "\" in \"" << std::string_view(payload, len) << "\"");
+        }
         free(appDocIdBuffer);
 
         handleClientWsUpgrade(
