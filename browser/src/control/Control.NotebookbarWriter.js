@@ -154,6 +154,17 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasSave = !this.map['wopi'].HideSaveOption;
 		var content = [];
 
+		if (window.ThisIsTheWindowsApp) {
+			content.push({
+				'id': 'new:NewMenu',
+				'command': 'new',
+				'class': 'unonew',
+				'type': 'newmenubutton',
+				'text': _('New'),
+				'accessibility': { focusBack: true,	combination: 'N' }
+			});
+		}
+
 		if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			content.push({
 				'type': 'toolbox',

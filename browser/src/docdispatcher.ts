@@ -861,6 +861,11 @@ class Dispatcher {
 			return;
 		}
 
+		if (window.ThisIsTheWindowsApp && action.startsWith('new-')) {
+			window.postMobileMessage(action);
+			return;
+		}
+
 		console.error('unknown dispatch: "' + action + '"');
 	}
 }
