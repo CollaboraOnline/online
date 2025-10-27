@@ -78,32 +78,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			return;
 		}
 		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
-			var migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var afterSave = migrate.afterSave;
-			app.idleHandler._serverRecycling = false;
-			if (!afterSave) {
-				window.migrating = true;
-				this._map.uiManager.closeAll();
-				if (this._map.isEditMode()) {
-					this._map.setPermission('view');
-					this._map.uiManager.showSnackbar(_('Document is getting migrated'), null, null, 3000);
-				}
-				if (migrate.saved) {
-					window.routeToken = migrate.routeToken;
-					window.expectedServerId = migrate.serverId;
-					this.manualReconnect(2000);
-				}
-				return;
-			}
-			// even after save attempt, if document is unsaved reset the file permission
-			if (migrate.saved) {
-				window.routeToken = migrate.routeToken;
-				window.expectedServerId = migrate.serverId;
-				this.manualReconnect(2000);
-			} else {
-				this._map.setPermission(app.file.permission);
-				window.migrating = false;
-			}
+			this._onMigrateMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('close: ')) {
