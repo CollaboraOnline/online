@@ -34,6 +34,12 @@ COOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/coolwsd_output.log
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
 
+LIGHTHOUSE_USER_AGENT = "cypress"
+LIGHTHOUSE_TEST_FOLDER = $(abs_srcdir)/integration_tests/lighthouse
+LIGHTHOUSE_DATA_FOLDER = $(DESKTOP_DATA_FOLDER)
+LIGHTHOUSE_DATA_WORKDIR = $(DESKTOP_DATA_WORKDIR)
+LIGHTHOUSE_TRACK_FOLDER = $(abs_builddir)/workdir/track/lighthouse
+
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
 DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
@@ -90,6 +96,8 @@ endif
 if HAVE_LO_PATH
 
 MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDER)/*_spec.js) $(wildcard $(MOBILE_TEST_FOLDER)/*/*_spec.js))
+
+LIGHTHOUSE_TEST_FILES=$(subst $(LIGHTHOUSE_TEST_FOLDER)/,,$(wildcard $(LIGHTHOUSE_TEST_FOLDER)/*_spec.js) $(wildcard $(LIGHTHOUSE_TEST_FOLDER)/*/*_spec.js))
 
 DESKTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
@@ -330,6 +338,51 @@ define run_mobile_tests
 		$(call run_test_headless,\
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
+endef
+
+################
+# Lighthouse tests.
+################
+
+check-lighthouse: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
+	$(call start_coolwsd)
+	$(call run_lighthouse_tests,$(spec))
+	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
+	$(V)$(KILL_COMMAND) || true
+
+LIGHTHOUSE_CONFIG = \
+	specPattern=$(LIGHTHOUSE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(LIGHTHOUSE_USER_AGENT)
+
+LIGHTHOUSE_ENV = \
+	DATA_FOLDER=$(LIGHTHOUSE_DATA_FOLDER),DATA_WORKDIR=$(LIGHTHOUSE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+
+LIGHTHOUSE_INCLUDE_TAGS = \
+	taglighthouse,$(A11Y_TAG)
+
+# Run lighthouse accessibility tests with Chrome browser.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all lighthouse tests are run.
+define run_lighthouse_tests
+	$(V)echo $(if $(1),"Running lighthouse test: $(1)","Running all lighthouse accessibility tests...")
+	$(V)echo
+	$(eval CYPRESS_INCLUDE_TAGS=$(LIGHTHOUSE_INCLUDE_TAGS))
+	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
+	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval LIGHTHOUSE_BROWSER=chrome)
+	$(eval SPEC_FILE=$(if $(1),$(LIGHTHOUSE_TEST_FOLDER)/$(1)))
+	$(if $(1),$(call check_spec_existence,$(1),lighthouse))
+	$(CYPRESS_BINARY) run \
+		--browser $(LIGHTHOUSE_BROWSER) \
+		--headless \
+		--config-file $(CYPRESS_CONFIG) \
+		--config $(LIGHTHOUSE_CONFIG) \
+		--env $(LIGHTHOUSE_ENV) \
+		$(if $(SPEC_FILE),--spec=$(SPEC_FILE)) \
+		|| ($(KILL_COMMAND) && false)
 endef
 
 ################
@@ -816,7 +869,8 @@ define check_spec_existence
 	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
 				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),\
 				$(if $(filter idle,$(2)),$(IDLE_TEST_FILES),\
-				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES))))))
+				$(if $(filter lighthouse,$(2)),$(LIGHTHOUSE_TEST_FILES),\
+				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES)))))))
 	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
 
 endef
