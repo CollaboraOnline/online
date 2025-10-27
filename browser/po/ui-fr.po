@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-08-28 09:37+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2025-10-27 10:18+0000\n"
+"Last-Translator: Tim <tim1337@users.noreply.hosted.weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -394,7 +394,7 @@ msgstr "Mode sombre"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:149
 msgid "Compact layout"
-msgstr ""
+msgstr "Disposition compacte"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:150
 #, fuzzy
@@ -408,7 +408,7 @@ msgstr "Afficher la règle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:152
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Vérification de l'accessibilité"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 #: src/control/Control.NavigatorPanel.ts:282
@@ -417,11 +417,11 @@ msgstr "Navigateur"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:154
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Afficher la barre latérale"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Custom Animation"
-msgstr ""
+msgstr "Animation personnalisée"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:158
 #, fuzzy
@@ -433,15 +433,15 @@ msgstr "Liste des styles"
 #: src/control/Control.NotebookbarDraw.js:525
 #: src/control/Control.NotebookbarImpress.js:660
 msgid "Grid"
-msgstr ""
+msgstr "Grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Print"
-msgstr ""
+msgstr "Imprimer"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
 #: src/control/Control.NotebookbarImpress.js:669
@@ -461,7 +461,7 @@ msgstr "Aligner sur la grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Synchronisation des axes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 #, fuzzy
@@ -470,11 +470,11 @@ msgstr "Aligner sur la grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:169
 msgid "Empty Pages"
-msgstr ""
+msgstr "Pages vides"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Force Breaks"
-msgstr ""
+msgstr "Forcer les pauses"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 #: src/control/Control.Menubar.ts:771 src/control/Control.TopToolbar.js:110
@@ -484,42 +484,43 @@ msgstr "Toutes les feuilles"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 msgid "Content"
-msgstr ""
+msgstr "Contenu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 msgid "Drawing"
-msgstr ""
+msgstr "Dessin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 #: src/control/Control.NotebookbarDraw.js:1224
 #: src/control/Control.NotebookbarDraw.js:1424
 #: src/control/Control.NotebookbarWriter.js:1221
 msgid "Page"
-msgstr ""
+msgstr "Page"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Fit to page"
-msgstr ""
+msgstr "Adapter à la page"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
+#, fuzzy
 msgid "Tile pages"
-msgstr ""
+msgstr "Pages de carreaux"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet"
-msgstr ""
+msgstr "Livret"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booklet front"
-msgstr ""
+msgstr "Recto du livret"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Booklet back"
-msgstr ""
+msgstr "Verso du livret"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Page name"
-msgstr ""
+msgstr "Nom de la page"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 #: src/control/Control.NotebookbarCalc.js:771
@@ -535,11 +536,11 @@ msgstr "Heure"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "Hidden pages"
-msgstr ""
+msgstr "Pages cachées"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "From printer setup"
-msgstr ""
+msgstr "À partir de la configuration de l'imprimante"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Presentation"
@@ -551,8 +552,9 @@ msgid "Notes"
 msgstr "Notes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
+#, fuzzy
 msgid "Handouts"
-msgstr ""
+msgstr "À distribuer"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 #: src/control/Control.NavigatorPanel.ts:205
@@ -561,11 +563,11 @@ msgstr "Contour"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Document horizontal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Images"
-msgstr ""
+msgstr "Images"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 #, fuzzy
@@ -574,43 +576,43 @@ msgstr "Tableau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Controls"
-msgstr ""
+msgstr "Contrôles"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Background"
-msgstr ""
+msgstr "Arrière plan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 msgid "Print Black"
-msgstr ""
+msgstr "Imprimer en noir"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden text"
-msgstr ""
+msgstr "Texte caché"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Placeholders"
-msgstr ""
+msgstr "Espaces réservés"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Left pages"
-msgstr ""
+msgstr "Pages de gauche"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Right pages"
-msgstr ""
+msgstr "Pages de droite"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Brochure"
-msgstr ""
+msgstr "Brochure"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Brochure de droite à gauche"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Images and Objects"
-msgstr ""
+msgstr "Images et objets"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:298
 msgid "Invalid JSON file"
@@ -3261,15 +3263,15 @@ msgstr "L’intégrateur n’est pas prêt pour les appels PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Avec utilisation des espaces de noms"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Sans utilisation des espaces de noms"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Conteneur de documents lancé dans {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3314,7 +3316,7 @@ msgstr "Insérer une feuille"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Voir la liste des feuilles"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
