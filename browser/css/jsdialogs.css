@@ -85,7 +85,7 @@
 
 /* treeview that does not have an expander column */
 #AcceptRejectChangesDialog .jsdialog.ui-treeview-entry:not(:has(> .ui-treeview-expander-column)) {
-  grid-template-columns: 120px 120px 150px 130px;
+	grid-template-columns: 120px 120px 150px 130px;
 }
 
 #AcceptRejectChangesDialog .jsdialog.ui-treeview-entry .ui-treeview-icon-column + div,
