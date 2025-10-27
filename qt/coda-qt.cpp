@@ -460,20 +460,15 @@ QVariant Bridge::cool(const QString& messageStr)
             .detach();
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
-        std::thread(
-            [this]
-            {
-                struct pollfd p
-                {
-                };
-                p.fd = _document._fakeClientFd;
-                p.events = POLLOUT;
-                fakeSocketPoll(&p, 1, -1);
-                std::string message(_document._fileURL +
-                                    (" " + std::to_string(_document._appDocId)));
-                fakeSocketWrite(_document._fakeClientFd, message.c_str(), message.size());
-            })
-            .detach();
+        struct pollfd p
+        {
+        };
+        p.fd = _document._fakeClientFd;
+        p.events = POLLOUT;
+        fakeSocketPoll(&p, 1, -1);
+        std::string message(_document._fileURL +
+                            (" " + std::to_string(_document._appDocId)));
+        fakeSocketWrite(_document._fakeClientFd, message.c_str(), message.size());
     }
     else if (message == "BYE")
     {
