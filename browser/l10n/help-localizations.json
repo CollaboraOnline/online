@@ -39,6 +39,7 @@
     "hr": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-hr.json",
     "hsb": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-hsb.json",
     "hu": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-hu.json",
+    "hy": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-hy.json",
     "id": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-id.json",
     "is": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-is.json",
     "it": "%SERVICE_ROOT%/browser/%VERSION%/l10n/help-it.json",
