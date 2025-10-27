@@ -46,10 +46,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this.enableTraceEventLogging = true;
 		}
 		else if (textMsg.startsWith('osinfo ')) {
-			var osInfo = textMsg.replace('osinfo ', '');
-			var osInfoElement = document.getElementById('os-info');
-			if (osInfoElement)
-				osInfoElement.innerText = osInfo;
+			this._onOsInfoMsg(textMsg);
 		}
 		else if (textMsg.startsWith('clipboardkey: ')) {
 			var key = textMsg.substring('clipboardkey: '.length);
