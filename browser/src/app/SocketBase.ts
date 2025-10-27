@@ -1101,4 +1101,22 @@ class SocketBase {
 		const osInfoElement = document.getElementById('os-info');
 		if (osInfoElement) osInfoElement.innerText = osInfo;
 	}
+
+	// 'clipboardkey:' message.
+	protected _onClipboardKeyMsg(textMsg: string): void {
+		const key = textMsg.substring('clipboardkey: '.length);
+		if (this._map._clip) this._map._clip.setKey(key);
+	}
+
+	// 'perm:' message.
+	protected _onPermMsg(textMsg: string): void {
+		const perm = textMsg.substring('perm:'.length).trim();
+
+		// Never make the permission more permissive than it originally was.
+		if (!app.isReadOnly()) app.setPermission(perm);
+
+		if (this._map._docLayer) this._map.setPermission(app.file.permission);
+
+		app.file.disableSidebar = app.isReadOnly();
+	}
 }
