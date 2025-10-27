@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-10-20 04:50+0000\n"
+"PO-Revision-Date: 2025-10-21 14:30+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.14-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -2402,8 +2402,9 @@ msgid "Category"
 msgstr "Kategorija"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
+#, fuzzy
 msgid "Start"
-msgstr ""
+msgstr "Začni / Začetek"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
@@ -3235,18 +3236,16 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Integrator ni pripravljen za klice PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "Imenski prostori se uporabljajo."
+msgstr "Imenski prostori so v rabi"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr "Imenski prostori se ne uporabljajo"
 
 #: src/control/Control.ServerAuditDialog.ts:236
-#, fuzzy
 msgid "Document container started in {1} ms"
-msgstr "Vsebnik dokumenta zagnan v"
+msgstr "Vsebnik dokumenta zagnan v {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
