@@ -409,7 +409,19 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Sends a paste event with the specified mime type and content
 	_pasteTypedBlob: function(fileType, fileBlob) {
-		var blob = new Blob(['paste mimetype=' + fileType + '\n', fileBlob]);
+		var header = 'paste mimetype=' + fileType + '\n';
+		var blob;
+		if (window.ThisIsTheQtApp) {
+			// To work around a qtwebchannel "Could not convert argument
+			// QJsonValue(object, QJsonObject()) to target type QString ." bug, send the
+			// playload as a base64-encoded string rather than as an ArrayBuffer blob
+			// (and decode it in ChildSession::paste in kit/ChildSession.cpp):
+			blob = header + window.btoa(
+				Array.from(new Uint8Array(fileBlob), (b) => String.fromCodePoint(b))
+				.join(''));
+                } else {
+			blob = new Blob([header, fileBlob]);
+		}
 		app.socket.sendMessage(blob);
 	},
 
