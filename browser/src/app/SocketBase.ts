@@ -1227,4 +1227,116 @@ class SocketBase {
 			window.migrating = false;
 		}
 	}
+
+	// 'close: ' message.
+	protected _onCloseMsg(textMsg: string): void {
+		textMsg = textMsg.substring('close: '.length);
+		let msg = '';
+		const postMsgData: any = {};
+		let showMsgAndReload = false;
+		// This is due to document owner terminating the session
+		if (textMsg === 'ownertermination') {
+			msg = _('Session terminated by document owner');
+			postMsgData['Reason'] = 'OwnerTermination';
+		} else if (textMsg === 'idle' || textMsg === 'oom') {
+			app.idleHandler._documentIdle = true;
+			this._map._docLayer._documentInfo = undefined;
+			postMsgData['Reason'] = 'DocumentIdle';
+			if (textMsg === 'oom') postMsgData['Reason'] = 'OOM';
+		} else if (textMsg === 'shuttingdown') {
+			msg = _('Server is shutting down for maintenance (auto-saving)');
+			postMsgData['Reason'] = 'ShuttingDown';
+			app.idleHandler._active = false;
+			app.idleHandler._serverRecycling = true;
+		} else if (textMsg === 'docdisconnected') {
+			msg = _('Oops, there is a problem connecting the document');
+			postMsgData['Reason'] = 'DocumentDisconnected';
+		} else if (textMsg === 'recycling') {
+			msg = _('Server is down, restarting automatically. Please wait.');
+			app.idleHandler._active = false;
+			app.idleHandler._serverRecycling = true;
+
+			// Prevent reconnecting the world at the same time.
+			const min = 5000;
+			const max = 10000;
+			const timeoutMs = Math.floor(Math.random() * (max - min) + min);
+
+			clearTimeout(this.timer);
+			this.timer = setInterval(() => {
+				if (this.connected()) {
+					// We're connected: cancel timer and dialog.
+					clearTimeout(this.timer);
+					return;
+				}
+
+				try {
+					this._map.loadDocument(this.socket);
+				} catch (error) {
+					window.app.console.warn('Cannot load document.');
+				}
+			}, timeoutMs);
+		} else if (textMsg.startsWith('documentconflict')) {
+			msg = _(
+				'Document has changed in storage. Loading the new document. Your version is available as revision.',
+			);
+			showMsgAndReload = true;
+		} else if (textMsg.startsWith('versionrestore:')) {
+			textMsg = textMsg.substring('versionrestore:'.length).trim();
+			if (textMsg === 'prerestore_ack') {
+				msg = _(
+					'Restoring older revision. Any unsaved changes will be available in version history',
+				);
+				this._map.fire('postMessage', {
+					msgId: 'App_VersionRestore',
+					args: { Status: 'Pre_Restore_Ack' },
+				});
+				showMsgAndReload = true;
+			}
+		} else if (textMsg.startsWith('reloadafterrename')) {
+			msg = _('Reloading the document after rename');
+			showMsgAndReload = true;
+		}
+
+		if (showMsgAndReload) {
+			if (this._map._docLayer) {
+				this._map._docLayer.removeAllViews();
+			}
+			// Detach all the handlers from current socket, otherwise _onSocketClose tries to reconnect again
+			// However, we want to reconnect manually here.
+			this.close();
+
+			// Reload the document
+			app.idleHandler._active = false;
+			clearTimeout(this.timer);
+			this.timer = setInterval(() => {
+				try {
+					// Activate and cancel timer and dialogs.
+					app.idleHandler._activate();
+					this._map.uiManager.documentNameInput.hideLoadingAnimation();
+				} catch (error) {
+					window.app.console.warn('Cannot activate map');
+				}
+			}, 3000);
+		}
+
+		// Close any open dialogs first.
+		this._map.uiManager.closeAll();
+
+		if (textMsg === 'idle' || textMsg === 'oom') {
+			app.idleHandler._dim();
+			TileManager.discardAllCache();
+		}
+
+		if (postMsgData['Reason']) {
+			// Tell WOPI host about it which should handle this situation
+			this._map.fire('postMessage', {
+				msgId: 'Session_Closed',
+				args: postMsgData,
+			});
+		}
+
+		if (textMsg === 'ownertermination') {
+			this._map.remove();
+		}
+	}
 }
