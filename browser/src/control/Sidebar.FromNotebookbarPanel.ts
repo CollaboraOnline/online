@@ -18,6 +18,7 @@
 enum NotebookbarBasedSidebarId {
 	Animations = 'animations',
 	Transitions = 'transitions',
+	Shapes = 'shapes',
 }
 
 class SidebarFromNotebookbarPanel extends Sidebar {
@@ -64,6 +65,11 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 			NotebookbarBasedSidebarId.Transitions,
 			'TransitionsSidebar',
 			JSDialog.ImpressTransitionTab,
+		);
+		this.appendModel(
+			NotebookbarBasedSidebarId.Shapes,
+			'ShapesSidebar',
+			JSDialog.ShapesTab,
 		);
 
 		this.map.off('sidebar', this.onSidebar, this); // from Sidebar class
@@ -120,6 +126,19 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 			NotebookbarBasedSidebarId.Animations,
 			_('Animations'),
 			this.models.get(NotebookbarBasedSidebarId.Animations)?.getSnapshot(),
+		);
+	}
+
+	public openShapesSidebar() {
+		// we need to clean the core based sidebars
+		this.closeSidebar();
+		this.setupTargetDeck(null);
+		// TODO: change state of old sidebar uno commands
+
+		this.openSidebar(
+			NotebookbarBasedSidebarId.Shapes,
+			_('Shapes'),
+			this.models.get(NotebookbarBasedSidebarId.Shapes)?.getSnapshot(),
 		);
 	}
 

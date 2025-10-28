@@ -1176,6 +1176,13 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'accessibility': { focusBack: true, combination: 'IH', de: null },
 				'children' : [
 					{
+						'id': 'shapessidebarbutton',
+						'type': 'customtoolitem',
+						'text': _('Shapes Sidebar'),
+						'command': 'shapesdeck',
+						'icon': 'lc_basicshapes.svg'
+					},
+					{
 						'type': 'container',
 						'children': [
 							{

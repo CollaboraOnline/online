@@ -346,6 +346,10 @@ class Dispatcher {
 				behavior: 'smooth',
 			}); // Scroll up based on stylepreview height
 		};
+
+		this.actionsMap['shapesdeck'] = () => {
+			app.map.sidebarFromNotebookbar.openShapesSidebar();
+		};
 	}
 
 	private addExportCommands() {
