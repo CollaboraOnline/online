@@ -36,6 +36,7 @@ class CanvasSectionObject {
 	zIndex: number;
 	interactable: boolean = true;
 	isAnimating: boolean = false;
+	isAlwaysVisible: boolean = false;
 	windowSection: boolean = false;
 	sectionProperties: any = {};
 	boundsList: Array<CanvasSectionObject> = []; // The sections those this section can propagate events to. Updated by container.
