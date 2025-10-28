@@ -3971,6 +3971,16 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
             [[document viewController] exportFileURL:payloadURL];
         });
+#elif defined(_WIN32)
+        // We don't need to do any regiterdownload thing for CODA-W. When we come here, the PDF has
+        // been exported already and the user will continue editing the same document. (The user
+        // wasn't given any chance to choose the name or location where to export it, that is a bug
+        // that should be fixed somewhere.) Some "registerdownload" with a weird relative URI
+        // ../..//foo.pdf is surely a meaningless thing to do?
+        //
+        // When we eventually turn CODA-W's "Save a Copy As" functionality into "Save As" where you
+        // continue editing the saved and differently named copy, the export-like PDF and EPUB cases
+        // need to be put into a separate "Export" menu. Or something.
 #else
         // Register download id -> URL mapping in the DocumentBroker
         auto url = std::string("../../") + payload.substr(payload.find_last_of('/'));
