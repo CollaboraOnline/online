@@ -891,6 +891,14 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
+	protected _showDocumentConflictPopUp(): void {
+		console.assert(false, 'This should not be called!');
+	}
+
+	protected _askForDocumentPassword(passwordType: string, msg: string): void {
+		console.assert(false, 'This should not be called!');
+	}
+
 	/* _onMessage() subtasks */
 
 	// 'coolserver ' message.
@@ -1326,5 +1334,195 @@ class SocketBase {
 		if (textMsg === 'ownertermination') {
 			this._map.remove();
 		}
+	}
+
+	// 'error: ' message.
+	// returns true if the caller need to exit immediately.
+	protected _onErrorMsg(textMsg: string, command: ServerCommand): boolean {
+		const errorMessages = window.errorMessages;
+		let msg = '';
+		let passwordType: string = '';
+		if (
+			(textMsg.startsWith('error:') &&
+				(command.errorCmd === 'storage' || command.errorCmd === 'saveas')) ||
+			command.errorCmd === 'downloadas' ||
+			command.errorCmd === 'exportas'
+		) {
+			if (command.errorCmd !== 'storage') {
+				this._map.fire('postMessage', {
+					msgId: 'Action_Save_Resp',
+					args: {
+						success: false,
+						result: command.errorKind,
+					},
+				});
+			}
+
+			this._map.hideBusy();
+			let storageError: string | undefined = undefined;
+			if (command.errorKind === 'savediskfull') {
+				storageError = errorMessages.storage.savediskfull;
+			} else if (command.errorKind === 'savetoolarge') {
+				storageError = errorMessages.storage.savetoolarge;
+			} else if (command.errorKind === 'savefailed') {
+				storageError = errorMessages.storage.savefailed;
+			} else if (command.errorKind === 'renamefailed') {
+				storageError = errorMessages.storage.renamefailed;
+			} else if (command.errorKind === 'saveunauthorized') {
+				storageError = errorMessages.storage.saveunauthorized;
+			} else if (command.errorKind === 'saveasfailed') {
+				storageError = errorMessages.storage.saveasfailed;
+			} else if (command.errorKind === 'loadfailed') {
+				storageError = errorMessages.storage.loadfailed;
+				// Since this is a document load failure, wsd will disconnect the socket anyway,
+				// better we do it first so that another error message doesn't override this one
+				// upon socket close.
+				this.close();
+			} else if (command.errorKind === 'documentconflict') {
+				if (this._map.isReadOnlyMode())
+					return true; // caller should exit immediately.
+				else this._showDocumentConflictPopUp();
+
+				return true; // caller should exit immediately.
+			}
+
+			// Skip empty errors (and allow for suppressing errors by making them blank).
+			if (storageError && storageError != '') {
+				// Parse the storage url as link
+				const tmpLink = document.createElement('a');
+				tmpLink.href = this._map.options.doc;
+				// Insert the storage server address to be more friendly
+				storageError = storageError.replace('%storageserver', tmpLink.host);
+
+				// show message to the user in Control.AlertDialog
+				this._map.fire('warn', { msg: storageError });
+
+				// send to wopi handler so we can respond
+				const postMessageObj = {
+					success: false,
+					cmd: command.errorCmd,
+					result: command.errorKind,
+					errorMsg: storageError,
+				};
+
+				this._map.fire('postMessage', {
+					msgId: 'Action_Save_Resp',
+					args: postMessageObj,
+				});
+
+				return true; // caller should exit immediately.
+			}
+		} else if (
+			textMsg.startsWith('error:') &&
+			command.errorCmd === 'internal'
+		) {
+			this._map.hideBusy();
+			this._map._fatal = true;
+			if (command.errorKind === 'diskfull') {
+				this._map.fire('error', { msg: errorMessages.diskfull });
+			} else if (command.errorKind === 'unauthorized') {
+				const postMessageObj = {
+					errorType: 'websocketunauthorized',
+					success: false,
+					errorMsg: this._buildUnauthorizedMessage(command),
+					result: '',
+				};
+				this._map.fire('postMessage', {
+					msgId: 'Action_Load_Resp',
+					args: postMessageObj,
+				});
+			}
+
+			if (this._map._docLayer) {
+				this._map._docLayer.removeAllViews();
+				this._map._docLayer._resetClientVisArea();
+			}
+			this.close();
+
+			return true; // caller should exit immediately.
+		} else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
+			this._map.hideBusy();
+			this.close();
+
+			const errorKind = command.errorKind ? command.errorKind : '';
+			let passwordNeeded = false;
+			if (errorKind.startsWith('passwordrequired')) {
+				passwordNeeded = true;
+				msg = '';
+				passwordType = errorKind.split(':')[1];
+				if (passwordType === 'to-view') {
+					msg += _('Document requires password to view.');
+				} else if (passwordType === 'to-modify') {
+					msg += _('Document requires password to modify.');
+					msg += ' ';
+					msg += _('Hit Cancel to open in view-only mode.');
+				}
+			} else if (errorKind.startsWith('wrongpassword')) {
+				passwordNeeded = true;
+				msg = _('Wrong password provided. Please try again.');
+			} else if (errorKind.startsWith('faileddocloading')) {
+				this._map._fatal = true;
+				this._map.fire('error', { msg: errorMessages.faileddocloading });
+			} else if (errorKind.startsWith('docloadtimeout')) {
+				this._map._fatal = true;
+				this._map.fire('error', { msg: errorMessages.docloadtimeout });
+			} else if (errorKind.startsWith('docunloading')) {
+				// The document is unloading. Have to wait a bit.
+				app.idleHandler._active = false;
+
+				clearTimeout(this.timer);
+				if (this.ReconnectCount++ >= 10) {
+					this._map.fire('error', { msg: errorMessages.docunloadinggiveup });
+					// Give up.
+					return true; // caller should exit immediately.
+				}
+
+				this.timer = setInterval(
+					function () {
+						try {
+							// Activate and cancel timer and dialogs.
+							app.idleHandler._activate();
+						} catch (error) {
+							window.app.console.warn('Cannot activate map');
+						}
+						// .5, 2, 4.5, 8, 12.5, 18, 24.5, 32, 40.5 seconds
+					},
+					500 * this.ReconnectCount * this.ReconnectCount,
+				); // Quadratic back-off.
+
+				if (this.ReconnectCount > 1) {
+					this._map.showBusy(errorMessages.docunloadingretry, false);
+				}
+			}
+
+			if (passwordNeeded) {
+				this._askForDocumentPassword(passwordType, msg);
+				return true; // caller should exit immediately.
+			}
+		} else if (
+			textMsg.startsWith('error:') &&
+			command.errorCmd === 'dialogevent' &&
+			command.errorKind === 'cantchangepass'
+		) {
+			const msg = _('Only the document owner can change the password.');
+			this._map.uiManager.showInfoModal('cool_alert', '', msg, '', _('OK'));
+			return true; // caller should exit immediately.
+		} else if (textMsg.startsWith('error:') && !this._map._docLayer) {
+			textMsg = textMsg.substring(6);
+			if (command.errorKind === 'hardlimitreached') {
+				textMsg = errorMessages.limitreachedprod;
+				if (command.params) {
+					textMsg = textMsg.replace('{0}', command.params[0]);
+					textMsg = textMsg.replace('{1}', command.params[1]);
+				}
+			} else if (command.errorKind === 'serviceunavailable') {
+				textMsg = errorMessages.serviceunavailable;
+			}
+			this._map._fatal = true;
+			app.idleHandler._active = false; // Practically disconnected.
+			this._map.fire('error', { msg: textMsg });
+		}
+
+		return false;
 	}
 }
