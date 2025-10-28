@@ -474,7 +474,8 @@ class CanvasSectionContainer {
 	}
 
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
-		return app.isRectangleVisibleInTheDisplayedArea(
+		return section.isAlwaysVisible ||
+			app.isRectangleVisibleInTheDisplayedArea(
 			[
 				Math.round(section.position[0] * app.pixelsToTwips),
 				Math.round(section.position[1] * app.pixelsToTwips),
