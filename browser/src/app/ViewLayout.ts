@@ -228,11 +228,11 @@ class ViewLayoutBase {
 		// Sizes of the scroll bars.
 		this.scrollProperties.verticalScrollSize = Math.round(
 			Math.pow(this.scrollProperties.verticalScrollLength, 2) /
-				app.activeDocument.activeView.viewSize.pY,
+				this.viewSize.pY,
 		);
 		this.scrollProperties.horizontalScrollSize = Math.round(
 			Math.pow(this.scrollProperties.horizontalScrollLength, 2) /
-				app.activeDocument.activeView.viewSize.pX,
+				this.viewSize.pX,
 		);
 
 		if (
@@ -251,22 +251,22 @@ class ViewLayoutBase {
 
 		// 1px scrolling = xpx document height / width.
 		this.scrollProperties.horizontalScrollRatio =
-			(app.activeDocument.activeView.viewSize.pX - documentAnchor.size[0]) /
+			(this.viewSize.pX - documentAnchor.size[0]) /
 			(this.scrollProperties.horizontalScrollLength -
 				this.scrollProperties.horizontalScrollSize);
 		this.scrollProperties.verticalScrollRatio =
-			(app.activeDocument.activeView.viewSize.pY - documentAnchor.size[1]) /
+			(this.viewSize.pY - documentAnchor.size[1]) /
 			(this.scrollProperties.verticalScrollLength -
 				this.scrollProperties.verticalScrollSize);
 
 		// The start position of scroll bars on canvas.
 		this.scrollProperties.startX =
-			app.activeDocument.activeView.viewedRectangle.pX1 /
+			this.viewedRectangle.pX1 /
 				this.scrollProperties.horizontalScrollRatio +
 			this.scrollProperties.xOffset;
 
 		this.scrollProperties.startY =
-			app.activeDocument.activeView.viewedRectangle.pY1 /
+			this.viewedRectangle.pY1 /
 				this.scrollProperties.verticalScrollRatio +
 			this.scrollProperties.yOffset;
 
