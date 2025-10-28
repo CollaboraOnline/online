@@ -626,6 +626,10 @@ int main(int argc, char** argv)
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
+    QApplication app(argc, argv);
+    QApplication::setApplicationName("Collabora Office");
+    QApplication::setWindowIcon(QIcon::fromTheme("org.collabora.CODA.startcenter"));
+
     // COOLWSD in a background thread
     std::thread(
         []
@@ -638,10 +642,6 @@ int main(int argc, char** argv)
             LOG_TRC("One run of COOLWSD completed");
         })
         .detach();
-
-    QApplication app(argc, argv);
-    QApplication::setApplicationName("Collabora Office");
-    QApplication::setWindowIcon(QIcon::fromTheme("org.collabora.CODA.startcenter"));
 
     for (int i = 1; i < argc; i++)
     {
