@@ -342,7 +342,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
+				// In CODA-W, the functionality that we actually have at the moment is "Save a Copy As".
+				'text': !window.ThisIsAMobileApp ? _('Download') :
+					(window.ThisIsTheWindowsApp? _('Save a Copy As') :
+					 _('Save As')),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
 			});
 		}
