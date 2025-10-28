@@ -22,6 +22,15 @@ window.L.Map.include({
 			cool.CommentSection.showCommentEditingWarning();
 			return;
 		}
+
+		/*
+			if the user inserts a new comment when all the comments
+			are hidden, the new comment also goes into hiding as it
+			is saved. so we show all the comments instead of hiding
+			the newly inserted one.
+		*/
+		app.map.showComments(true);
+
 		var avatar = undefined;
 		var author = this.getViewName(this._docLayer._viewId);
 		if (author in this._viewInfoByUserName) {
@@ -1883,7 +1892,7 @@ export class CommentSection extends CanvasSectionObject {
 			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale) + this.sectionProperties.canvasContainerLeft) + 'px';
 			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
 
-			if (!subList[i].isEdit())
+			if (this.sectionProperties.show != false && !subList[i].isEdit())
 				subList[i].show();
 		}
 		return lastY;
