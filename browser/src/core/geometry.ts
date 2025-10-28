@@ -61,11 +61,13 @@ namespace cool {
 export class SimplePoint {
 	private _x: number;
 	private _y: number;
+	public part: number; // Affects nothing. To be used in view layouts that redesign coordinate space.
 
 	// Constructor uses twips.
-	constructor(x: number, y: number) {
+	constructor(x: number, y: number, part = -1) {
 		this._x = Math.round(x);
 		this._y = Math.round(y);
+		this.part = part;
 	}
 
 	// twips.
@@ -101,10 +103,10 @@ export class SimplePoint {
 	public cToArray(): number[] { return [this.cX, this.cY]; }
 	public cDistanceTo(point: number[]): number { return Math.sqrt(Math.pow(this.cX - point[0], 2) + Math.pow(this.cY - point[1], 2)); }
 
-	public clone(): SimplePoint { return new SimplePoint(this._x, this._y); }
+	public clone(): SimplePoint { return new SimplePoint(this._x, this._y, this.part); }
 
-	public static fromCorePixels(point: Array<number>): SimplePoint {
-		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips));
+	public static fromCorePixels(point: Array<number>, part = -1): SimplePoint {
+		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips), part);
 	}
 
 	// View pixel.
@@ -122,13 +124,15 @@ export class SimpleRectangle {
 	private _y1: number;
 	private _width: number;
 	private _height: number;
+	public part: number;
 
 	// Constructor uses twips.
-	constructor (x: number, y: number, width: number, height: number) {
+	constructor (x: number, y: number, width: number, height: number, part = -1) {
 		this._x1 = Math.round(x);
 		this._y1 = Math.round(y);
 		this._width = Math.round(width);
 		this._height = Math.round(height);
+		this.part = part;
 	}
 
 	// twips.
@@ -242,10 +246,10 @@ export class SimpleRectangle {
 	public cMoveTo (point: number[]): void { this._x1 = Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 = Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 	public cMoveBy (point: number[]): void { this._x1 += Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 += Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 
-	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height); }
+	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height, this.part); }
 
-	public static fromCorePixels(rectangle: Array<number>): SimpleRectangle {
-		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips));
+	public static fromCorePixels(rectangle: Array<number>, part = -1): SimpleRectangle {
+		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips), part);
 	}
 
 	// View pixel. 1..4 represents the 4 corners of the rectangle: TopLeft, TopRight, BottomLeft, BottomRight respectively.
