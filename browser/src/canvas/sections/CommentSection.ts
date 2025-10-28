@@ -1358,6 +1358,9 @@ export class Comment extends CanvasSectionObject {
 		No need to do that for now.
 	*/
 	private checkIfCursorIsOnThisCommentWriter(rectangles: any, point: Array<number>) {
+		if (this.sectionProperties.commentListSection.sectionProperties.show == false)
+			return;
+
 		for (var i: number = 0; i < rectangles.length; i++) {
 			if (this.doesRectangleContainPoint(rectangles[i], point)) {
 				if (!this.isSelected()) {
