@@ -56,7 +56,7 @@ class TileCoordData {
 	}
 
 	getPos2() {
-		return cool.SimplePoint.fromCorePixels([this.x, this.y]);
+		return cool.SimplePoint.fromCorePixels([this.x, this.y], this.part);
 	}
 
 	key(): string {
