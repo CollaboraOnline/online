@@ -161,6 +161,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'class': 'unonew',
 				'type': 'newmenubutton',
 				'text': _('New'),
+				'icon': 'lc_new.svg',
 				'accessibility': { focusBack: true,	combination: 'N' }
 			});
 		}
