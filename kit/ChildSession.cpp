@@ -1372,6 +1372,13 @@ std::string ChildSession::getJailDocRoot() const
 
 bool ChildSession::downloadAs(const StringVector& tokens)
 {
+#ifdef IOS
+    NSLog(@"We should never come here, aborting");
+    std::abort();
+#elif defined(_WIN32)
+    // Presumably ditto for CODA-W
+    std::abort();
+#else
     std::string name, id, format, filterOptions;
 
     if (tokens.size() < 5 ||
@@ -1406,10 +1413,6 @@ bool ChildSession::downloadAs(const StringVector& tokens)
         filterOptions += std::string(",Watermark=") + getWatermarkText() + std::string("WATERMARKEND");
     }
 
-#ifdef IOS
-    NSLog(@"We should never come here, aborting");
-    std::abort();
-#else
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
