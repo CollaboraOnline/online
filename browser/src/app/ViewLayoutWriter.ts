@@ -24,9 +24,23 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		app.map.on('resize', this.adjustDocumentMarginsForComments, this);
 		app.map.on(
 			'showannotationschanged',
-			this.adjustDocumentMarginsForComments,
+			this.adjustDocumentMarginsOnAnnotationToggle,
 			this,
 		);
+	}
+
+	private adjustDocumentMarginsOnAnnotationToggle() {
+		const commentSection = app.sectionContainer.getSectionWithName(
+			app.CSections.CommentList.name,
+		) as cool.CommentSection;
+
+		if (
+			commentSection.sectionProperties.selectedComment &&
+			!commentSection.sectionProperties.selectedComment.isEdit()
+		) {
+			commentSection.unselect();
+		}
+		this.adjustDocumentMarginsForComments();
 	}
 
 	private getCommentAndDocumentSpacingInfo(): DocumentSpacingInfo {
