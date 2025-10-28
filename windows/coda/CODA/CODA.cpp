@@ -6,8 +6,6 @@
 
 #include <config.h>
 
-// #define ONE_PROCESS_PER_DOCUMENT
-
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -1415,19 +1413,9 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s == L"uno .uno:Open")
         {
-#ifdef ONE_PROCESS_PER_DOCUMENT
-            STARTUPINFOW startupInfo{ sizeof(STARTUPINFOW) };
-            PROCESS_INFORMATION processInformation;
-
-            if (!CreateProcessW(Util::string_to_wide_string(app_exe_path).c_str(),
-                                Util::string_to_wide_string("CODA").data(), NULL, NULL, TRUE, 0,
-                                NULL, NULL, &startupInfo, &processInformation))
-                LOG_ERR("CreateProcess failed: " << GetLastError());
-#else
             auto filenameAndUri = fileOpenDialog();
             if (filenameAndUri.filename != "")
                 openCOOLWindow(filenameAndUri);
-#endif
         }
         else if (s == L"uno .uno:CloseWin")
         {
