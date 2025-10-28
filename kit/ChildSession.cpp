@@ -60,6 +60,7 @@
 #include "wasmapp.hpp"
 #endif
 
+#include <cassert>
 #include <climits>
 #include <fstream>
 #include <memory>
@@ -1746,7 +1747,17 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
 
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
-    const int size = length - firstLine.size() - 1;
+    int size = length - firstLine.size() - 1;
+#if defined QTAPP
+    // To work around a qtwebchannel "Could not convert argument QJsonValue(object, QJsonObject())
+    // to target type QString ." bug, _pasteTypedBlob in browser/src/map/Clipboard.js base64-encoded
+    // the payload:
+    std::string dec;
+    [[maybe_unused]] auto const res = macaron::Base64::Decode(std::string_view(data, size), dec);
+    assert(res.empty());
+    data = dec.data();
+    size = dec.size();
+#endif
     bool success = false;
     std::string result = "pasteresult: ";
     if (size > 0)
