@@ -296,6 +296,17 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return dialogEvent(tokens);
     }
+    else if (tokens.equals(0, "shapeslayout"))
+    {
+        if (_isDocLoaded)
+        {
+            getLOKitDocument()->setView(_viewId);
+            LOG_ERR("Shapes Layout sending to core...");
+            // FIXME: add core API
+            // getLOKitDocument()->sendShapesLayout("some shapes data for core...");
+        }
+        return true;
+    }
     else if (tokens.equals(0, "load"))
     {
         if (_isDocLoaded)

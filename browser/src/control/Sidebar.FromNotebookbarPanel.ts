@@ -23,6 +23,7 @@ enum NotebookbarBasedSidebarId {
 
 class SidebarFromNotebookbarPanel extends Sidebar {
 	models: Map<string, JSDialogModelState>;
+	isCustomCallbackUsed: boolean = false;
 
 	/// converts notebookbar tab into sidebar-compatible JSON
 	convertToModel(id: string, raw: NotebookbarTabContent): JSDialogJSON {
@@ -81,6 +82,30 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		this.map.off('customsidebar');
 	}
 
+	/// callback on widget actions done by user
+	protected callback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		if (this.isCustomCallbackUsed) {
+			app.console.error('Shapes Sidebar: ' + eventType + ' ' + JSON.stringify(object) + ' ' + data);
+			// do some core messaging here...
+			app.socket.sendMessage('shapeslayout');
+		} else {
+			builder._defaultCallbackHandler(
+				objectType,
+				eventType,
+				object,
+				data,
+				builder,
+			);
+		}
+	}
+
+
 	/// apply to the cached model too
 	protected onJSUpdate(e: any) {
 		var data = e.data;
@@ -104,6 +129,8 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 	}
 
 	public openTransitionsSidebar() {
+		this.isCustomCallbackUsed = false;
+
 		// we need to clean the core based sidebars
 		this.closeSidebar();
 		this.setupTargetDeck(null);
@@ -117,6 +144,8 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 	}
 
 	public openAnimationsSidebar() {
+		this.isCustomCallbackUsed = false;
+
 		// we need to clean the core based sidebars
 		this.closeSidebar();
 		this.setupTargetDeck(null);
@@ -134,6 +163,8 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		this.closeSidebar();
 		this.setupTargetDeck(null);
 		// TODO: change state of old sidebar uno commands
+
+		this.isCustomCallbackUsed = true;
 
 		this.openSidebar(
 			NotebookbarBasedSidebarId.Shapes,

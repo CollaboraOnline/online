@@ -1208,6 +1208,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return forwardToChild(firstLine, docBroker);
     }
+    else if (tokens.equals(0, "shapeslayout"))
+    {
+        return forwardToChild(firstLine, docBroker);
+    }
     else if (tokens.equals(0, "formfieldevent") ||
              tokens.equals(0, "sallogoverride") ||
              tokens.equals(0, "contentcontrolevent"))

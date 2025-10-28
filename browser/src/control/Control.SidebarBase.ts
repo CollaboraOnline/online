@@ -155,7 +155,7 @@ abstract class SidebarBase extends JSDialogComponent {
 		}
 	}
 
-	callback(
+	protected callback(
 		objectType: string,
 		eventType: string,
 		object: any,
