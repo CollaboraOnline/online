@@ -1336,7 +1336,7 @@ void Document::onUnload(const ChildSession& session)
     }
 
     // If we have no more sessions, we have nothing more to do.
-    if (!Util::isMobileApp() && _sessions.empty())
+    if (!Util::isMobileApp() && !haveLoadedSessions())
     {
         // Sanity check.
         std::ostringstream msg;
@@ -1390,6 +1390,19 @@ void Document::onUnload(const ChildSession& session)
         // Broadcast updated view info
         notifyViewInfo();
     }
+}
+
+bool Document::haveLoadedSessions() const
+{
+    for (const auto& session : _sessions)
+    {
+        if (session.second->isDocLoaded())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Document::updateActivityHeader() const
