@@ -663,6 +663,7 @@ export class CommentSection extends CanvasSectionObject {
 			}
 		}
 		this.checkSize();
+		app.map.fire('deleteannotation');
 	}
 
 	public click (annotation: any): void {
