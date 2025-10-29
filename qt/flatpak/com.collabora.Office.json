@@ -1264,6 +1264,44 @@
           "path": "../../"
         }
       ]
+    },
+    {
+      "name": "build-sass",
+      "buildsystem": "simple",
+      "build-options": {
+        "append-path": "/usr/lib/sdk/node20/bin",
+        "env": {
+          "NPM_CONFIG_PREFIX": "/app"
+        },
+        "build-args": [
+          "--share=network"
+        ]
+      },
+      "build-commands": [
+        "npm install -g sass"
+      ],
+      "sources": [
+        {
+          "type": "script",
+          "commands": [
+            "true"
+          ]
+        }
+      ],
+      "cleanup": [ "*" ]
+    },
+    {
+      "name": "collabora-online-branding",
+      "buildsystem": "simple",
+      "build-commands": [
+        "./brand.sh /app/collaboraoffice /app/share/coolwsd/browser/dist CO-theme"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "../../../online-branding"
+        }
+      ]
     }
   ]
 }
