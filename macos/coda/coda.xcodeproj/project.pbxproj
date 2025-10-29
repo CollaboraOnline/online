@@ -588,7 +588,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\nrsync -avz --delete --delete-excluded \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\nrsync -avz --delete --delete-excluded \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
