@@ -274,6 +274,8 @@ static const wchar_t* _(const wchar_t* english)
                     { "pt-BR", L"Selecione o documento para editar no %s" },
                     { "ru", L"Выберите документ для редактирования в %s" },
                     { "sv", L"Välj dolkument att redigera i %s" },
+                    { "zh-CN", L"选择要在 %s 中编辑的文档" },
+                    { "zh-TW", L"選擇要在 %s 中編輯的文檔" },
                 },
             },
             {
