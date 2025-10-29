@@ -1,5 +1,5 @@
 {
-  "id": "org.collabora.CODA",
+  "id": "com.collabora.Office",
   "runtime": "org.kde.Platform",
   "runtime-version": "6.9",
   "sdk": "org.kde.Sdk",
@@ -1183,7 +1183,7 @@
         "make clean",
         "make",
         "make distro-pack-install",
-        "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh org.collabora.CODA'",
+        "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh com.collabora.Office'",
         "./fixup-application-data.sh",
         "mkdir -p /app/core/include",
         "cp -r include/LibreOfficeKit /app/core/include/."
