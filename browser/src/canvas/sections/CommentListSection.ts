@@ -312,7 +312,7 @@ export class CommentSection extends CanvasSectionObject {
 			when that happens, `ViewLayoutWriter` moves the document to
 			the left in function `adjustDocumentMarginsForComments`.
 		*/
-		if (app.activeDocument.activeView.documentCanMoveLeft())
+		if (app.activeDocument.activeView.viewHasEnoughSpaceToShowFullWidthComments())
 			return false;
 		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
 	}

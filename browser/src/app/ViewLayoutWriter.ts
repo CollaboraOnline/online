@@ -64,6 +64,11 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		);
 	}
 
+	public viewHasEnoughSpaceToShowFullWidthComments() {
+		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
+		return spacingInfo.documentMarginsWidth * 2 >= spacingInfo.commentSectionWidth;
+	}
+
 	private documentMoveLeftByOffset(): number {
 		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
 		return spacingInfo.commentSectionWidth - spacingInfo.documentMarginsWidth;
