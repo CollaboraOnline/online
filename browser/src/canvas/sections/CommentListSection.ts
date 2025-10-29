@@ -2231,11 +2231,16 @@ export class CommentSection extends CanvasSectionObject {
 	*/
 	public setView(state: boolean): void {
 		this.sectionProperties.show = state;
+		const commentShouldCollapse = this.shouldCollapse();
+
 		for (var idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
 			if (state == false) {
 				this.sectionProperties.commentList[idx].hide();
 			} else if (this.sectionProperties.commentList[idx].sectionProperties.data.resolved != 'true' || this.sectionProperties.showResolved == true) {
 				this.sectionProperties.commentList[idx].show();
+				if (commentShouldCollapse) {
+					this.sectionProperties.commentList[idx].setCollapsed();
+				}
 			}
 		}
 	}
