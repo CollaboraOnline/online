@@ -82,6 +82,13 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 		}
 	});
 
+	entry.addEventListener('keydown', function (event) {
+        if (event.key === 'Tab') {
+			JSDialog.CloseDropdown(data.comboboxId);
+			event.preventDefault();
+		}
+	});
+
 	if (data.hasSubMenu) {
 		entry.setAttribute('aria-haspopup', true);
 		entry.setAttribute('aria-expanded', false);
