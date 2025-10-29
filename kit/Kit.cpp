@@ -3908,10 +3908,9 @@ void lokit_main(
         // Are we bind mounting ?
         pathAndQuery.append(std::string("&adms_bindmounted=") +
                             (JailUtil::isBindMountingEnabled() ? "ok" : "slow"));
-        // Are we using a container ?
+        // Are we using a container - either chroot or namespace ?
         pathAndQuery.append(std::string("&adms_contained=") +
-                            ((ChildSession::NoCapsForKit || !usingMountNamespace) ?
-                             "uncontained" : "ok"));
+                            (ChildSession::NoCapsForKit ? "uncontained" : "ok"));
         // How slow was the jail setup ?
         pathAndQuery.append(std::string("&adms_info_setup_ms=") +
                             std::to_string(jailSetupTime.count()));
