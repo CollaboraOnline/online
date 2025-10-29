@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BECC4BAA2CBD3FA300A120B3"
-               BuildableName = "coda.app"
+               BuildableName = "Collabora Office.app"
                BlueprintName = "coda"
                ReferencedContainer = "container:coda.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BECC4BAA2CBD3FA300A120B3"
-            BuildableName = "coda.app"
+            BuildableName = "Collabora Office.app"
             BlueprintName = "coda"
             ReferencedContainer = "container:coda.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BECC4BAA2CBD3FA300A120B3"
-            BuildableName = "coda.app"
+            BuildableName = "Collabora Office.app"
             BlueprintName = "coda"
             ReferencedContainer = "container:coda.xcodeproj">
          </BuildableReference>
