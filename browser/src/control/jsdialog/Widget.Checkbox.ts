@@ -9,9 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/* global $ JSDialog */
+declare var JSDialog: any;
 
-function _createCheckboxContainer(parentContainer, data, builder) {
+function _createCheckboxContainer(
+	parentContainer: HTMLElement,
+	data: any,
+	builder: JSBuilder,
+) {
 	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-checkbox checkbutton',
@@ -21,7 +25,11 @@ function _createCheckboxContainer(parentContainer, data, builder) {
 	return container;
 }
 
-function _createCheckboxControl(parentContainer, data, builder) {
+function _createCheckboxControl(
+	parentContainer: HTMLElement,
+	data: any,
+	builder: JSBuilder,
+) {
 	const checkbox = window.L.DomUtil.create(
 		'input',
 		builder.options.cssClass,
@@ -33,7 +41,11 @@ function _createCheckboxControl(parentContainer, data, builder) {
 	return checkbox;
 }
 
-function _createCheckboxLabel(parentContainer, data, builder) {
+function _createCheckboxLabel(
+	parentContainer: HTMLElement,
+	data: any,
+	builder: JSBuilder,
+) {
 	const label = window.L.DomUtil.create(
 		'label',
 		builder.options.cssClass,
@@ -45,14 +57,24 @@ function _createCheckboxLabel(parentContainer, data, builder) {
 	return label;
 }
 
-JSDialog.Checkbox = function (parentContainer, data, builder) {
+JSDialog.Checkbox = function (
+	parentContainer: HTMLElement,
+	data: any,
+	builder: JSBuilder,
+) {
 	const container = _createCheckboxContainer(parentContainer, data, builder);
 	const checkbox = _createCheckboxControl(container, data, builder);
 	const label = _createCheckboxLabel(container, data, builder);
 
 	checkbox.addEventListener('change', () => {
 		if (container.hasAttribute('disabled')) return;
-		builder.callback('checkbox', 'change', container, checkbox.checked, builder);
+		builder.callback(
+			'checkbox',
+			'change',
+			container,
+			checkbox.checked,
+			builder,
+		);
 	});
 
 	if (data.enabled === false) {
