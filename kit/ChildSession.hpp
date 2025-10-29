@@ -94,6 +94,7 @@ public:
     const std::string& getViewUserPrivateInfo() const { return getUserPrivateInfo(); }
     void updateSpeed();
     int getSpeed();
+    bool isDocLoaded() const { return _isDocLoaded; }
 
     void loKitCallback(int type, const std::string& payload);
 
