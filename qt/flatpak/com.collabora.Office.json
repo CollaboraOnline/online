@@ -218,69 +218,6 @@
           "dest-filename": "Python-3.10.19.tar.xz"
         },
         {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifTC.zip",
-          "sha256": "c33e04199f6d69056a6de0ebc5522dbe36e02f145208c71c9a4c803841151ad2",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSerifTC.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifSC.zip",
-          "sha256": "00ed5970680a82453619ac5952c5631ea138372bbb0f864d156d91a0fd9c8279",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSerifSC.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifKR.zip",
-          "sha256": "3c0d276fb05aaefbbca808b4f8c7b1520b4b4e7c0be46296d6e8a5e42f559f5c",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSerifKR.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifJP.zip",
-          "sha256": "362438901cb871bf84b01ff4734c668dab57b4905f39e5ec76d8b68a7a7b5fa8",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSerifJP.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansTC.zip",
-          "sha256": "ec9e8a4156593e1b3ff7cff843989f43f114f96eff0b5db9691ef3c2bdefb73e",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSansTC.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansSC.zip",
-          "sha256": "bee1af8c0722cfb3eb1b2fa91a7f3dc011dca231c25c8fcd9d9d544699ababf9",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSansSC.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansKR.zip",
-          "sha256": "5147b755c29f16f82b706b1c7ff7982894fccbebcf99e6c5fb0d48c315604b98",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSansKR.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/NotoSansJP.zip",
-          "sha256": "6886c5526628c08f1e21a84f4658ab3daf6d0233de8dc54526ccf9f40bfab18e",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "NotoSansJP.zip"
-        },
-        {
-          "url": "https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip",
-          "sha256": "837b4a9352fce32ad7f298fbf155af1da5b6f3f8dbd995eb63fdd8e82117e4ae",
-          "type": "file",
-          "dest": "external/tarballs",
-          "dest-filename": "Noto-hinted.zip"
-        },
-        {
           "url": "https://dev-www.libreoffice.org/src/expat-2.7.2.tar.xz",
           "sha256": "21b778b34ec837c2ac285aef340f9fb5fa063a811b21ea4d2412a9702c88995c",
           "type": "file",
@@ -1179,7 +1116,7 @@
       ],
       "buildsystem": "simple",
       "build-commands": [
-        "./autogen.sh --prefix=/run/build/libreoffice/inst --disable-community-flavor --disable-dbus --disable-dconf --disable-epm --disable-evolution2 --disable-ext-nlpsolver --disable-ext-wiki-publisher --disable-firebird-sdbc --disable-gio --disable-gstreamer-1-0 --disable-gtk3 --disable-gui --disable-kf5 --disable-lotuswordpro --disable-lpsolve --disable-odk --disable-online-update --disable-poppler --disable-postgresql-sdbc --disable-qt5 --disable-randr --disable-report-builder --disable-sal-log --disable-scripting-beanshell --disable-scripting-javascript --disable-sdremote --disable-sdremote-bluetooth --enable-symbols --enable-cairo-rgba --enable-extension-integration --enable-hardening-flags --enable-mergelibs --enable-mpl-subset --enable-noto-font --enable-python=internal --enable-release-build --with-branding=icon-themes/galaxy/brand_cp --with-docrepair-fonts --with-fonts --with-galleries=no '--with-lang=ar bg ca cs da de el en-US en-GB eo es eu fi fr gl he hr hu id is it ja ko lo nb nl oc pl pt pt-BR sq ru sk sl sv tr uk vi zh-CN zh-TW' --with-linker-hash-style=both --with-myspell-dicts --with-system-zlib '--with-theme=colibre colibre_svg' --with-vendor=Collabora --without-buildconfig-recorded --without-help --without-java --without-junit --without-lxml --without-system-abseil --without-system-argon2 --without-system-beanshell --without-system-bluez --without-system-boost --without-system-box2d --without-system-cairo --without-system-clucene --without-system-coinmp --without-system-cppunit --without-system-curl --without-system-dragonbox --without-system-expat --without-system-firebird --without-system-fontconfig --without-system-freetype --without-system-frozen --without-system-glm --without-system-gpgmepp --without-system-graphite --without-system-harfbuzz --without-system-icu --without-system-jars --without-system-java-websocket --without-system-jfreereport --without-system-jpeg --without-system-libabw --without-system-libatomic_ops --without-system-libcdr --without-system-libcmis --without-system-libebook --without-system-libeot --without-system-libepubgen --without-system-libetonyek --without-system-libexttextcat --without-system-libfixmath --without-system-libfreehand --without-system-liblangtag --without-system-libmspub --without-system-libmwaw --without-system-libnumbertext --without-system-libodfgen --without-system-libpagemaker --without-system-libpng --without-system-libpng --without-system-libqxp --without-system-librevenge --without-system-libstaroffice --without-system-libtommath --without-system-libvisio --without-system-libwpd --without-system-libwpg --without-system-libwps --without-system-libxml --without-system-libzmf --without-system-lpsolve --without-system-mariadb --without-system-mdds --without-system-odbc --without-system-openldap --without-system-openssl --without-system-orcus --without-system-poppler --without-system-postgresql --without-system-postgresql --without-system-redland --without-system-rhino --without-system-sane --without-system-xmlsec --without-system-zxcvbn --without-system-zxing --without-templates",
+        "./autogen.sh --prefix=/run/build/libreoffice/inst --disable-community-flavor --disable-dbus --disable-dconf --disable-epm --disable-evolution2 --disable-ext-nlpsolver --disable-ext-wiki-publisher --disable-firebird-sdbc --disable-gio --disable-gstreamer-1-0 --disable-gtk3 --disable-gui --disable-kf5 --disable-lotuswordpro --disable-lpsolve --disable-odk --disable-online-update --disable-poppler --disable-postgresql-sdbc --disable-qt5 --disable-randr --disable-report-builder --disable-sal-log --disable-scripting-beanshell --disable-scripting-javascript --disable-sdremote --disable-sdremote-bluetooth --enable-symbols --enable-cairo-rgba --enable-extension-integration --enable-hardening-flags --enable-mergelibs --enable-mpl-subset --disable-noto-font --enable-python=internal --enable-release-build --with-branding=icon-themes/galaxy/brand_cp --with-docrepair-fonts --with-fonts --with-galleries=no '--with-lang=ar bg ca cs da de el en-US en-GB eo es eu fi fr gl he hr hu id is it ja ko lo nb nl oc pl pt pt-BR sq ru sk sl sv tr uk vi zh-CN zh-TW' --with-linker-hash-style=both --with-myspell-dicts --with-system-zlib '--with-theme=colibre colibre_svg' --with-vendor=Collabora --without-buildconfig-recorded --without-help --without-java --without-junit --without-lxml --without-system-abseil --without-system-argon2 --without-system-beanshell --without-system-bluez --without-system-boost --without-system-box2d --without-system-cairo --without-system-clucene --without-system-coinmp --without-system-cppunit --without-system-curl --without-system-dragonbox --without-system-expat --without-system-firebird --without-system-fontconfig --without-system-freetype --without-system-frozen --without-system-glm --without-system-gpgmepp --without-system-graphite --without-system-harfbuzz --without-system-icu --without-system-jars --without-system-java-websocket --without-system-jfreereport --without-system-jpeg --without-system-libabw --without-system-libatomic_ops --without-system-libcdr --without-system-libcmis --without-system-libebook --without-system-libeot --without-system-libepubgen --without-system-libetonyek --without-system-libexttextcat --without-system-libfixmath --without-system-libfreehand --without-system-liblangtag --without-system-libmspub --without-system-libmwaw --without-system-libnumbertext --without-system-libodfgen --without-system-libpagemaker --without-system-libpng --without-system-libpng --without-system-libqxp --without-system-librevenge --without-system-libstaroffice --without-system-libtommath --without-system-libvisio --without-system-libwpd --without-system-libwpg --without-system-libwps --without-system-libxml --without-system-libzmf --without-system-lpsolve --without-system-mariadb --without-system-mdds --without-system-odbc --without-system-openldap --without-system-openssl --without-system-orcus --without-system-poppler --without-system-postgresql --without-system-postgresql --without-system-redland --without-system-rhino --without-system-sane --without-system-xmlsec --without-system-zxcvbn --without-system-zxing --without-templates",
         "make clean",
         "make",
         "make distro-pack-install",
