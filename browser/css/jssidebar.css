@@ -21,6 +21,11 @@ img.sidebar.ui-image {
 	width: 300px;
 }
 
+#SdMasterPagesDeck .ui-iconview-entry img {
+	width: 90%;
+	height: 44px;
+}
+
 .sidebar.ui-grid {
 	row-gap: 8px;
 }
