@@ -40,7 +40,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	container.setAttribute('aria-label', _('Page margin options'));
 
 	const lang = window.coolParams.get('lang') || 'en-US';
-	const useImperial = lang === 'en-US';
+	const useImperial = lang === 'en-US' || lang === 'en'; // we need to consider both short form as some user can user lang=en-US using document URL
 	const inchToCm = 2.54;
 
 	function formatLocalized(valueInInches: number): string {
