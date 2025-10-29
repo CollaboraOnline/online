@@ -1154,17 +1154,19 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         break;
 
         case WM_CLOSE:
-            // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
-            do_bye_handling_things(windowData[hWnd]);
+            {
+                // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
+                do_bye_handling_things(windowData[hWnd]);
 
-            // This seems to be what actually causes the document to be closed from a LO core point
-            // of view? At least the lock file disappears here.
-            DocumentData::get(windowData[hWnd].appDocId)
-                .loKitDocument->destroyView(
-                    DocumentData::get(windowData[hWnd].appDocId).loKitDocument->getView());
+                // This seems to be what actually causes the document to be closed from a LO core
+                // point of view? At least the lock file disappears here.
+                auto loKitDoc = DocumentData::get(windowData[hWnd].appDocId).loKitDocument;
+                if (loKitDoc)
+                    loKitDoc->destroyView(loKitDoc->getView());
 
-            DocumentData::deallocate(windowData[hWnd].appDocId);
-            DestroyWindow(hWnd);
+                DocumentData::deallocate(windowData[hWnd].appDocId);
+                DestroyWindow(hWnd);
+            }
             break;
 
         case WM_DESTROY:
