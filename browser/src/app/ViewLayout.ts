@@ -237,7 +237,7 @@ class ViewLayoutBase {
 	}
 
 	// virtual function implemented by the children
-	public documentCanMoveLeft() {
+	public viewHasEnoughSpaceToShowFullWidthComments() {
 		return false;
 	}
 
