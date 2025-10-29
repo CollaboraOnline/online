@@ -628,7 +628,7 @@ int main(int argc, char** argv)
 
     QApplication app(argc, argv);
     QApplication::setApplicationName("Collabora Office");
-    QApplication::setWindowIcon(QIcon::fromTheme("org.collabora.CODA.startcenter"));
+    QApplication::setWindowIcon(QIcon::fromTheme("com.collabora.Office.startcenter"));
 
     // COOLWSD in a background thread
     std::thread(
