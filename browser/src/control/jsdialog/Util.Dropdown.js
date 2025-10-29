@@ -138,6 +138,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 	if (initialSelectedId) {
 		json.init_focus_id = initialSelectedId;
+		json.children[0].initialSelectedId = initialSelectedId;
 	}
 
 	var lastSubMenuOpened = null;

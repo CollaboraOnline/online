@@ -204,6 +204,7 @@ interface GridWidgetJSON extends ContainerWidgetJSON {
 	cols: number; // number of grid columns
 	rows: number; // numer of grid rows
 	tabIndex?: number;
+	initialSelectedId?: string; // id of the first selected element
 }
 
 interface ToolboxWidgetJSON extends WidgetJSON {
