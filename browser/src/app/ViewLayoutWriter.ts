@@ -23,6 +23,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		app.map.on('zoomlevelschange', this.documentZoomOrResizeCallback, this);
 		app.map.on('resize', this.documentZoomOrResizeCallback, this);
 		app.map.on('deleteannotation', this.annotationOperationsCallback, this);
+		app.map.on('insertannotation', this.annotationOperationsCallback, this);
 		app.map.on(
 			'showannotationschanged',
 			this.annotationOperationsCallback,
