@@ -1187,6 +1187,10 @@
         "./fixup-application-data.sh",
         "mkdir -p /app/core/include",
         "cp -r include/LibreOfficeKit /app/core/include/."
+      ],
+      "cleanup": [
+              "/core",
+              "/bin/collaboraoffice"
       ]
     },
     {
