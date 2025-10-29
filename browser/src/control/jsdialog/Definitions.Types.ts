@@ -28,6 +28,7 @@ interface WidgetJSON {
 	labelledBy?: string;
 	allyRole?: string;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
+	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }
 
 interface JSBuilderOptions {
@@ -118,12 +119,6 @@ interface DialogResponse {
 	response: number;
 }
 
-interface DialogJSON extends WidgetJSON {
-	dialogid: string; // unique id for a dialog type, not instance
-	collapsed?: boolean; // if dialog is in collapsed mode
-	responses?: Array<DialogResponse>;
-}
-
 interface ActionData {
 	control_id: string;
 	action_type: string;
@@ -131,12 +126,13 @@ interface ActionData {
 }
 
 // JSDialog message (full, update or action)
-interface JSDialogJSON extends DialogJSON {
+interface JSDialogJSON extends WidgetJSON {
 	id: string; // unique windowId
 	jsontype: string; // specifies target component, on root level only
 	action?: string; // optional name of an action
 	control?: WidgetJSON;
 	data?: ActionData;
+	init_focus_id?: string; // id of initially focused widget
 }
 
 // JSDialog message for popup
@@ -151,6 +147,12 @@ interface PopupData extends JSDialogJSON {
 	persistKeyboard?: boolean;
 	posx: number;
 	posy: number;
+}
+
+interface DialogJSON extends JSDialogJSON {
+	dialogid: string; // unique id for a dialog type, not instance
+	collapsed?: boolean; // if dialog is in collapsed mode
+	responses?: Array<DialogResponse>;
 }
 
 // Notebookbar
@@ -239,6 +241,7 @@ interface OverflowGroupContainer extends Element {
 interface GridWidgetJSON extends ContainerWidgetJSON {
 	cols: number; // number of grid columns
 	rows: number; // numer of grid rows
+	tabIndex?: number;
 }
 
 interface ToolboxWidgetJSON extends WidgetJSON {
@@ -325,6 +328,7 @@ interface ComboBoxEntry extends MenuDefinition {
 	selected?: boolean; // is selected
 	comboboxId?: string; // used to reference parent
 	pos: string | number; // identifier of an entry
+	initialSelectedId?: string;
 }
 
 interface ComboBoxWidget extends WidgetJSON {
