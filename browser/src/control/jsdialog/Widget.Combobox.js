@@ -56,6 +56,8 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
     if (data.selected) {
         entry.setAttribute('aria-selected', 'true');
 		window.L.DomUtil.addClass(entry, 'selected');
+    } else {
+        entry.setAttribute('aria-selected', 'false');
     }
 
 	if (data.checked)
