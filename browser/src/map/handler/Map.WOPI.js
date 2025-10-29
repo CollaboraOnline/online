@@ -432,11 +432,12 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Show_Sidebar') {
 			/* id is optional */
-                        if (msg.Values) {
+			if (msg.Values) {
 				switch (msg.Values.id) {
 				case 'Navigator':
 				case 'ModifyPage':
 				case 'CustomAnimation':
+				case 'MasterSlidesPanel':
 					this._map.sendUnoCommand(`.uno:${msg.Values.id}`);
 					return;
 				}
