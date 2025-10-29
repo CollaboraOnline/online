@@ -82,7 +82,10 @@ map.addControl(map.uiManager);
 if (!window.L.Browser.cypressTest)
 	map.tooltip = window.L.control.tooltip();
 
-map.uiManager.initializeBasicUI();
+if (window.coolParams.get('iswelcome'))
+	map.uiManager.initializeNonInteractiveUI();
+else
+	map.uiManager.initializeBasicUI();
 
 if (wopiSrc === '' && filePath === '' && !window.ThisIsAMobileApp) {
 	map.uiManager.showInfoModal('wrong-wopi-src-modal', '', errorMessages.wrongwopisrc, '', _('OK'), null, false);
