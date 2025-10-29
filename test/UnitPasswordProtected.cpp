@@ -37,7 +37,9 @@ public:
         }
         else
         {
-            LOK_ASSERT_EQUAL_STR("error: cmd=load kind=docunloading", message);
+            // We get faileddocloading followed by docunloading errors.
+            LOK_ASSERT(message == "error: cmd=load kind=faileddocloading" ||
+                       message == "error: cmd=load kind=docunloading");
         }
 
         passTest("Password is required for viewing");
@@ -83,7 +85,9 @@ public:
         }
         else
         {
-            LOK_ASSERT_EQUAL_STR("error: cmd=load kind=docunloading", message);
+            // We get faileddocloading followed by docunloading errors.
+            LOK_ASSERT(message == "error: cmd=load kind=faileddocloading" ||
+                       message == "error: cmd=load kind=docunloading");
         }
 
         passTest("Password is required for viewing");

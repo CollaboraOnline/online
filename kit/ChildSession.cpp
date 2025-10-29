@@ -972,6 +972,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     if (!loaded || _viewId < 0)
     {
         LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << ']');
+        sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
         return false;
     }
 
