@@ -1000,7 +1000,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			|| command.errorCmd === 'downloadas'
 			|| command.errorCmd === 'exportas')  {
 
-			if (command.errorCmd === 'saveas') {
+			if (command.errorCmd !== 'storage') {
 				this._map.fire('postMessage', {
 					msgId: 'Action_Save_Resp',
 					args: {
@@ -1380,7 +1380,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			app.serverConnectionService.onViewSetting(settingJSON);
 		}
 
-		if (textMsg.startsWith('downloadas:')) {
+		if (textMsg.startsWith('downloadas:') || textMsg.startsWith('exportas:')) {
 			var postMessageObj = {
 				success: true,
 				result: 'exportas',
