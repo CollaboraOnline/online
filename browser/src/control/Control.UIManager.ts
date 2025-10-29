@@ -459,19 +459,24 @@ class UIManager extends window.L.Control {
 		app.serverConnectionService.onBasicUI();
 	}
 
+
+	initializeNonInteractiveUI() {
+		app.console.debug('UIManager: initialize basic UI');
+
+		this.map.jsdialog = window.L.control.jsDialog();
+		this.map.addControl(this.map.jsdialog);
+		this.map.dialog = window.L.control.lokDialog();
+		this.map.addControl(this.map.dialog);
+
+		app.serverConnectionService.onBasicUI();
+	}
+
 	/**
 	 * Initializes specialized UI components based on the document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').
 	 */
 	initializeSpecializedUI(docType: string): void {
 		app.console.debug('UIManager: initialize specialized UI for: ' + docType);
-
-		// const startWelcomePresentation = window.coolParams.get('iswelcome');
-		// if (startWelcomePresentation)
-		// {
-		// 	this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
-		// 	return;
-		// }
 
 		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
@@ -496,17 +501,22 @@ class UIManager extends window.L.Control {
 			// docloaded event is fired multiple times, unfortunately
       // but presentation should start only once
 			this.map.off('docloaded', startPresentation);
-			// setTimeout(() => {
-			// 	this.map.welcomeSlideshow = new WelcomeSlideShow(this.map);
-			// }, 20000);
 			
-			if (!startWelcomePresentation )
+			if (!startWelcomePresentation)
 				window.postMobileMessage('WELCOME');
 			else
+				// setTimeout(() => {
 				app.dispatcher.dispatch('presentation');
+				// }, 20000)
 		};
 
 		this.map.on('docloaded', startPresentation);
+
+		if (startWelcomePresentation)
+		{
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
+			return;
+		}
 
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();

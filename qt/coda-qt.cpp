@@ -494,11 +494,11 @@ QVariant Bridge::cool(const QString& messageStr)
                     webViewInstance->load(fileURL, true);
                 },
                 Qt::QueuedConnection);
-            LOG_INF("Opening welcome slideshow: " << welcomePath);
+            LOG_TRC_NOFILE("Opening welcome slideshow: " << welcomePath);
         }
         else
         {
-            LOG_WRN("Welcome slideshow not found at: " << welcomePath);
+            LOG_TRC_NOFILE("Welcome slideshow not found at: " << welcomePath);
         }
     }
     else if (message == "BYE")

@@ -495,7 +495,9 @@ class Dispatcher {
 		this.actionsMap['presentation'] = this.actionsMap[
 			'fullscreen-presentation'
 		] = () => {
-			if ((window as any).canvasSlideshowEnabled) app.map.fire('newfullscreen');
+			if ((window as any).canvasSlideshowEnabled) app.map.fire('newfullscreen', {
+				isWelcomePresentation: window.coolParams.get('iswelcome'),
+			});
 			else app.map.fire('fullscreen');
 		};
 

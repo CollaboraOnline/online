@@ -128,6 +128,7 @@ class SlideShowPresenter {
 	_progressBarContainer: HTMLDivElement | null = null;
 	_slideNavContainer: HTMLDivElement | null = null;
 	_enableA11y: boolean = false;
+	_isWelcomePresentation: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
@@ -448,6 +449,7 @@ class SlideShowPresenter {
 
 	private centerCanvas() {
 		if (!this._slideShowCanvas) return;
+
 		let winWidth = 0;
 		let winHeight = 0;
 		if (this._slideShowWindowProxy) {
@@ -481,7 +483,11 @@ class SlideShowPresenter {
 		}
 	}
 
-	private _createPresenterHTML(parent: Element, width: number, height: number) {
+	private _createPresenterHTML(
+		parent: Element,
+		width: number,
+		height: number,
+	) {
 		const presenterContainer = window.L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
@@ -494,6 +500,7 @@ class SlideShowPresenter {
 			presenterContainer,
 		);
 		slideshowContainer.id = 'slideshow-container';
+
 		this._slideShowCanvas = this._createCanvas(
 			slideshowContainer,
 			width,
@@ -502,7 +509,11 @@ class SlideShowPresenter {
 		return presenterContainer;
 	}
 
-	_createCanvas(parent: Element, width: number, height: number) {
+	_createCanvas(
+		parent: Element,
+		width: number,
+		height: number,
+	) {
 		const canvas = window.L.DomUtil.create(
 			'canvas',
 			'leaflet-slideshow2',
@@ -519,7 +530,8 @@ class SlideShowPresenter {
 		}
 
 		this._progressBarContainer = this._createProgressBar(parent);
-		this._slideNavContainer = this._createSlideNav(parent);
+		if (!this._isWelcomePresentation)
+			this._slideNavContainer = this._createSlideNav(parent);
 
 		canvas.addEventListener(
 			'click',
@@ -616,7 +628,9 @@ class SlideShowPresenter {
 		return slideNavContainer;
 	}
 
-	private _configureSlideNavStyles(container: HTMLDivElement): void {
+	private _configureSlideNavStyles(
+		container: HTMLDivElement,
+	): void {
 		container.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
 		container.style.position = 'absolute';
 		container.style.bottom = '8px';
@@ -652,6 +666,8 @@ class SlideShowPresenter {
 	};
 
 	_hideSlideControls() {
+		if (!this._slideNavContainer)
+			return;
 		this._slideNavContainer.style.visibility = 'hidden';
 		this._slideNavContainer.style.opacity = '0';
 		this._slideNavContainer.style.transition =
@@ -659,6 +675,9 @@ class SlideShowPresenter {
 	}
 
 	_showSlideControls() {
+		if (!this._slideNavContainer)
+			return;
+
 		this._slideNavContainer.style.visibility = 'visible';
 		this._slideNavContainer.style.opacity = '1';
 		this._slideNavContainer.style.transition = 'opacity 1s linear';
@@ -670,7 +689,9 @@ class SlideShowPresenter {
 		);
 	}
 
-	private _initializeSlideNavWidget(container: HTMLDivElement): void {
+	private _initializeSlideNavWidget(
+		container: HTMLDivElement
+	): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		closeImg.id = 'endshow';
 		const slideshowCloseText = _('End Show');
@@ -785,8 +806,13 @@ class SlideShowPresenter {
 			}
 			this._stopFullScreen();
 			this._closeSlideShowWindow();
+			if ((window as any).ThisIsAMobileApp && this._isWelcomePresentation) {
+				this._isWelcomePresentation = false;
+				app.dispatcher.dispatch('closeapp');
+			}
 			return;
 		}
+
 		this.startTimer(settings.loopAndRepeatDuration);
 	}
 
@@ -1002,11 +1028,14 @@ class SlideShowPresenter {
 			}
 
 			// fullscreen
+			const width = window.screen.width;
+			const height = window.screen.height;
 			this._presenterContainer = this._createPresenterHTML(
 				this._map._container,
-				window.screen.width,
-				window.screen.height,
+				width,
+				height,
 			);
+
 			if (this._presenterContainer.requestFullscreen) {
 				this._presenterContainer
 					.requestFullscreen()
@@ -1115,6 +1144,7 @@ class SlideShowPresenter {
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
 		this._startSlide = that?.startSlideNumber ?? 0;
+		this._isWelcomePresentation = that?.isWelcomePresentation ?? false;
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
 			return;
