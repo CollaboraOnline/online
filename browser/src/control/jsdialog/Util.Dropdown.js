@@ -40,6 +40,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				allyRole: 'listbox',
 				cols: 1,
 				rows: entries.length,
+				tabIndex: 0,
 				children: []
 			}
 		]
