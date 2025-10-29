@@ -70,6 +70,9 @@ JSDialog.grid = function (
 
 	if (data.allyRole) {
 		table.role = data.allyRole;
+
+		if(data.allyRole === 'listbox')
+			table.setAttribute('aria-activedescendant', data.initialSelectedId);
 	}
 
 	if (data.tabIndex !== undefined)

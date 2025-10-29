@@ -43,6 +43,13 @@ function moveToFocusableEntry(
 		}
 	};
 
+	const updateAriaActiveDescendant = (elem: HTMLElement) => {
+		const listbox = elem.closest('[role="listbox"]');
+		if (listbox && elem.id) {
+			listbox.setAttribute('aria-activedescendant', elem.id);
+		}
+	};
+
 	// If the current element is focused but not selected, add 'selected' class and return
 	if (
 		document.activeElement === currentElement &&
@@ -51,6 +58,7 @@ function moveToFocusableEntry(
 	) {
 		currentElement.classList.add('selected');
 		updateAriaSelected(currentElement, 'true');
+		updateAriaActiveDescendant(currentElement);
 		return;
 	}
 
@@ -63,6 +71,7 @@ function moveToFocusableEntry(
 		(siblingElement as HTMLElement).focus();
 		siblingElement.classList.add('selected');
 		updateAriaSelected(siblingElement, 'true');
+		updateAriaActiveDescendant(siblingElement);
 
 		currentElement.classList.remove('selected');
 		updateAriaSelected(currentElement, 'false');
