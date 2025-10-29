@@ -1002,6 +1002,10 @@ else
 fi
 AC_SUBST(APP_PACKAGE_NAME)
 
+if test "$enable_windowsapp" = "yes" -a -z "$with_app_name"; then
+   AC_MSG_ERROR([You must use --with-app-name])
+fi
+
 APP_NAME="Collabora Online Development Edition"
 if test -n "$with_app_name"; then
    APP_NAME="$with_app_name"
