@@ -738,25 +738,23 @@ static void do_cut_or_copy(ClipboardOp op, WindowData& data)
         {
             std::wstring wtext =
                 sizes[i] ? Util::string_to_wide_string(std::string(streams[i])) : L"";
-            const int byteSize = wtext.size() * 2 + 2;
+            const int byteSize = wtext.size() * 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
             if (hglData)
             {
                 wchar_t* wcopy = (wchar_t*)GlobalLock(hglData);
-                memcpy(wcopy, wtext.c_str(), byteSize - 2);
-                wcopy[wtext.size()] = L'\0';
+                memcpy(wcopy, wtext.c_str(), byteSize);
                 GlobalUnlock(hglData);
                 SetClipboardData(wformat, hglData);
             }
         }
         else if (format)
         {
-            HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, sizes[i] + 1);
+            HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, sizes[i]);
             if (hglData)
             {
                 char* copy = (char*)GlobalLock(hglData);
                 memcpy(copy, streams[i], sizes[i]);
-                copy[sizes[i]] = '\0';
                 GlobalUnlock(hglData);
                 SetClipboardData(format, hglData);
                 if (format2)
