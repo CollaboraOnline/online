@@ -72,6 +72,9 @@ JSDialog.grid = function (
 		table.role = data.allyRole;
 	}
 
+	if (data.tabIndex !== undefined)
+		table.setAttribute('tabindex', data.tabIndex);
+
 	const gridRowColStyle =
 		'grid-template-rows: repeat(' +
 		rows +
