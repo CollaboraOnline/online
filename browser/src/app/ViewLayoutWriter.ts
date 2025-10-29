@@ -20,28 +20,14 @@ class ViewLayoutWriter extends ViewLayoutBase {
 
 	constructor() {
 		super();
-		app.map.on('zoomlevelschange', this.adjustDocumentMarginsForComments, this);
-		app.map.on('resize', this.adjustDocumentMarginsForComments, this);
-		app.map.on('deleteannotation', this.adjustDocumentMarginsForComments, this);
+		app.map.on('zoomlevelschange', this.documentZoomOrResizeCallback, this);
+		app.map.on('resize', this.documentZoomOrResizeCallback, this);
+		app.map.on('deleteannotation', this.annotationOperationsCallback, this);
 		app.map.on(
 			'showannotationschanged',
-			this.adjustDocumentMarginsOnAnnotationToggle,
+			this.annotationOperationsCallback,
 			this,
 		);
-	}
-
-	private adjustDocumentMarginsOnAnnotationToggle() {
-		const commentSection = app.sectionContainer.getSectionWithName(
-			app.CSections.CommentList.name,
-		) as cool.CommentSection;
-
-		if (
-			commentSection.sectionProperties.selectedComment &&
-			!commentSection.sectionProperties.selectedComment.isEdit()
-		) {
-			commentSection.unselect();
-		}
-		this.adjustDocumentMarginsForComments();
 	}
 
 	private getCommentAndDocumentSpacingInfo(): DocumentSpacingInfo {
@@ -55,46 +41,83 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		} as DocumentSpacingInfo;
 	}
 
-	public documentCanMoveLeft() {
+	private documentCanMoveLeft() {
 		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
-		return (
-			spacingInfo.documentMarginsWidth < spacingInfo.commentSectionWidth &&
-			spacingInfo.commentSectionWidth - spacingInfo.documentMarginsWidth <
-				spacingInfo.documentMarginsWidth
-		);
+
+		const commentsWiderThanRightMargin =
+			spacingInfo.documentMarginsWidth + this.documentScrollOffset <
+			spacingInfo.commentSectionWidth;
+
+		const haveEnoughLeftMarginForMove =
+			spacingInfo.commentSectionWidth -
+				(spacingInfo.documentMarginsWidth + this.documentScrollOffset) <
+			spacingInfo.documentMarginsWidth - this.documentScrollOffset;
+
+		return commentsWiderThanRightMargin && haveEnoughLeftMarginForMove;
 	}
 
+	/*
+		`cool.CommentSection.shouldCollapse()` doesn't need `documentScrollOffset`
+		details to know if it `shouldCollapse` the comments or not.
+	*/
 	public viewHasEnoughSpaceToShowFullWidthComments() {
 		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
-		return spacingInfo.documentMarginsWidth * 2 >= spacingInfo.commentSectionWidth;
+		return (
+			spacingInfo.documentMarginsWidth * 2 >= spacingInfo.commentSectionWidth
+		);
 	}
 
 	private documentMoveLeftByOffset(): number {
 		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
-		return spacingInfo.commentSectionWidth - spacingInfo.documentMarginsWidth;
+		return (
+			spacingInfo.commentSectionWidth -
+			(spacingInfo.documentMarginsWidth + this.documentScrollOffset)
+		);
 	}
 
-	private adjustDocumentMarginsForComments() {
+	private recenterDocument() {
+		if (this.documentScrollOffset == 0) return;
+
+		this.scrollHorizontal(-this.documentScrollOffset, true);
+		this.documentScrollOffset = 0;
+		app.sectionContainer.requestReDraw();
+	}
+
+	private adjustDocumentMarginsForComments(onZoomOrResize: boolean) {
 		const commentSection = app.sectionContainer.getSectionWithName(
 			app.CSections.CommentList.name,
 		) as cool.CommentSection;
 
-		if (
+		const cursorAtComment =
+			commentSection.sectionProperties.selectedComment &&
+			!commentSection.sectionProperties.selectedComment.isEdit();
+
+		if (!onZoomOrResize && cursorAtComment) {
+			commentSection.unselect();
+		}
+
+		const commentsHiddenOrNotPresent =
 			commentSection.sectionProperties.show != true ||
-			commentSection.sectionProperties.commentList.length == 0
-		) {
-			if (this.documentScrollOffset == 0) return;
-			this.scrollHorizontal(-this.documentScrollOffset, true);
-			this.documentScrollOffset = 0;
-			app.sectionContainer.requestReDraw();
+			commentSection.sectionProperties.commentList.length == 0;
+
+		if (commentsHiddenOrNotPresent) {
+			this.recenterDocument();
 			return;
 		}
 
 		if (this.documentCanMoveLeft()) {
 			this.documentScrollOffset = this.documentMoveLeftByOffset();
 			this.scrollHorizontal(this.documentScrollOffset, true);
-		} else {
+		} else if (onZoomOrResize) {
 			this.documentScrollOffset = 0;
 		}
+	}
+
+	private documentZoomOrResizeCallback() {
+		this.adjustDocumentMarginsForComments(true);
+	}
+
+	private annotationOperationsCallback() {
+		this.adjustDocumentMarginsForComments(false);
 	}
 }
