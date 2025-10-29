@@ -28,15 +28,6 @@ function KeyboardListNavigation(
 			moveToFocusableEntry(currentElement, 'previous');
 			event.preventDefault();
 			break;
-		case 'Tab':
-			if (event.shiftKey) {
-				moveToFocusableEntry(currentElement, 'previous');
-				event.preventDefault();
-			} else {
-				moveToFocusableEntry(currentElement, 'next');
-				event.preventDefault();
-			}
-			break;
 		default:
 			break;
 	}
