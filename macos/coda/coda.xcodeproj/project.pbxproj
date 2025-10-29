@@ -178,7 +178,7 @@
 		BEA264AB2CBE99340007435A /* Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Storage.cpp; path = ../../../../wsd/Storage.cpp; sourceTree = "<group>"; };
 		BEA264AC2CBE99340007435A /* TileCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TileCache.cpp; path = ../../../../wsd/TileCache.cpp; sourceTree = "<group>"; };
 		BEA264B52CBE9BEF0007435A /* Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Storage.hpp; path = ../../../../wsd/Storage.hpp; sourceTree = "<group>"; };
-		BECC4BAB2CBD3FA300A120B3 /* coda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coda.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BECC4BAB2CBD3FA300A120B3 /* Collabora Office.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collabora Office.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEF3F822CE20BDD00ABE785 /* SetupKitEnvironment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SetupKitEnvironment.hpp; path = ../../../../kit/SetupKitEnvironment.hpp; sourceTree = "<group>"; };
@@ -391,7 +391,7 @@
 		BECC4BAC2CBD3FA300A120B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BECC4BAB2CBD3FA300A120B3 /* coda.app */,
+				BECC4BAB2CBD3FA300A120B3 /* Collabora Office.app */,
 				BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */,
 				BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */,
 			);
@@ -421,7 +421,7 @@
 			packageProductDependencies = (
 			);
 			productName = coda;
-			productReference = BECC4BAB2CBD3FA300A120B3 /* coda.app */;
+			productReference = BECC4BAB2CBD3FA300A120B3 /* Collabora Office.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BECC4BBB2CBD3FA400A120B3 /* codaTests */ = {
@@ -575,7 +575,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\"\nrsync -avz --exclude=\"**/gengal\" --exclude=\"**/opencltest\" --exclude=\"**/soffice\" --exclude=\"**/uno\" --exclude=\"**/unopkg\" --exclude=\"**/uri-encode\" --exclude=\"**/QuickLookPreview.appex\" --exclude=\"**/QuickLookThumbnail.appex\" $LO_PATH/Contents/ ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\nrsync -avz --exclude=\"**/gengal\" --exclude=\"**/opencltest\" --exclude=\"**/soffice\" --exclude=\"**/uno\" --exclude=\"**/unopkg\" --exclude=\"**/uri-encode\" --exclude=\"**/QuickLookPreview.appex\" --exclude=\"**/QuickLookThumbnail.appex\" \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -848,9 +848,11 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coda/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -872,8 +874,10 @@
 					"-lssl",
 					"-lcrypto",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.coda;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
+				PRODUCT_MODULE_NAME = coda;
+				PRODUCT_NAME = "$(APP_BUNDLE_NAME)";
+				STRINGS_FILE_INFOPLIST_RENAME = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "coda-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -900,9 +904,11 @@
 				EXCLUDED_ARCHS = x86_64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coda/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -924,8 +930,10 @@
 					"-lssl",
 					"-lcrypto",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.coda;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
+				PRODUCT_MODULE_NAME = coda;
+				PRODUCT_NAME = "$(APP_BUNDLE_NAME)";
+				STRINGS_FILE_INFOPLIST_RENAME = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "coda-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

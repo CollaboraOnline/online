@@ -6,11 +6,13 @@
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleName</key>
+	<string>$(APP_BUNDLE_NAME)</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(APP_BUNDLE_NAME)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>NSDocumentClass</key>
-			<string>$(PRODUCT_MODULE_NAME).Document</string>
 			<key>CFBundleTypeName</key>
 			<string>OpenDocument Text</string>
 			<key>CFBundleTypeRole</key>
@@ -19,10 +21,10 @@
 			<array>
 				<string>org.oasis-open.opendocument.text</string>
 			</array>
-		</dict>
-		<dict>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
+		</dict>
+		<dict>
 			<key>CFBundleTypeName</key>
 			<string>OpenDocument Spreadsheet</string>
 			<key>CFBundleTypeRole</key>
@@ -31,10 +33,10 @@
 			<array>
 				<string>org.oasis-open.opendocument.spreadsheet</string>
 			</array>
-		</dict>
-		<dict>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
+		</dict>
+		<dict>
 			<key>CFBundleTypeName</key>
 			<string>OpenDocument Presentation</string>
 			<key>CFBundleTypeRole</key>
@@ -43,6 +45,8 @@
 			<array>
 				<string>org.oasis-open.opendocument.presentation</string>
 			</array>
+			<key>NSDocumentClass</key>
+			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
 	</array>
 </dict>

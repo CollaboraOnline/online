@@ -200,11 +200,6 @@ AC_ARG_ENABLE([android-google-play],
               AS_HELP_STRING([--enable-android-google-play],
                              [When enabled, the app encourages the user periodically to rate the app on Google Play Store.]))
 
-AC_ARG_WITH(android-package-name,
-            AS_HELP_STRING([--with-android-package-name="org.libreoffice.androidapp"],
-                           [Set Android package name of the build.]),
-,)
-
 AC_ARG_WITH(android-package-versioncode,
             AS_HELP_STRING([--with-android-package-versioncode=6.7.8-23],
                            [Set the versionCode for the Android package.]),
@@ -221,6 +216,11 @@ AC_ARG_WITH(android-abi,
                             For example, when you use --with-android-abi="x86_64 x86",
                             you have to specify --with-lo-builddir=::/path/to/x86/builddir:/path/to/x86-64/builddir.
                             If you are building for only a single ABI you may omit the colons.]),
+,)
+
+AC_ARG_WITH(app-package-name,
+            AS_HELP_STRING([--with-app-package-name="org.collabora.app"],
+                           [Set the app package name of the build.]),
 ,)
 
 AC_ARG_WITH([app-name],
@@ -985,22 +985,22 @@ fi
 AC_SUBST(LOKIT_PATH)
 
 ENABLE_ANDROIDAPP=
-ANDROID_PACKAGE_NAME=
 if test "$enable_androidapp" = "yes"; then
     ENABLE_ANDROIDAPP=true
-
-    AC_MSG_CHECKING([for Android package name])
-    if test -z "$with_android_package_name" -o "$with_android_package_name" = "no"; then
-        ANDROID_PACKAGE_NAME="org.libreoffice.androidapp"
-        AC_MSG_RESULT([not set, using $ANDROID_PACKAGE_NAME])
-    else
-        ANDROID_PACKAGE_NAME="$with_android_package_name"
-        AC_MSG_RESULT([$ANDROID_PACKAGE_NAME])
-    fi
 fi
 AC_SUBST(ENABLE_ANDROIDAPP)
 AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
-AC_SUBST(ANDROID_PACKAGE_NAME)
+
+APP_PACKAGE_NAME=
+AC_MSG_CHECKING([for app package name])
+if test -z "$with_app_package_name" -o "$with_app_package_name" = "no"; then
+    APP_PACKAGE_NAME="org.collabora.app"
+    AC_MSG_RESULT([not set, using $APP_PACKAGE_NAME])
+else
+    APP_PACKAGE_NAME="$with_app_package_name"
+    AC_MSG_RESULT([$APP_PACKAGE_NAME])
+fi
+AC_SUBST(APP_PACKAGE_NAME)
 
 APP_NAME="Collabora Online Development Edition"
 if test -n "$with_app_name"; then

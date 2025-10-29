@@ -10,7 +10,7 @@ ext {
     liboAbiSplit        = [@ANDROID_ABI_SPLIT@]
 }
 android.defaultConfig {
-    applicationId '@ANDROID_PACKAGE_NAME@'
+    applicationId '@APP_PACKAGE_NAME@'
     versionCode @ANDROID_PACKAGE_VERSIONCODE@
     versionName '@COOLWSD_VERSION@'
 }
