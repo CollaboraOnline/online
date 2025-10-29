@@ -71,6 +71,12 @@ function moveToFocusableEntry(
 
 JSDialog.KeyboardListNavigation = function (container: HTMLElement) {
 	container.addEventListener('keydown', (event: KeyboardEvent) => {
+
+		const allowedKeys = ['ArrowDown', 'ArrowUp'];
+		if (!allowedKeys.includes(event.key)) {
+			return;
+		}
+
 		const activeElement = document.activeElement as HTMLElement;
 		if (!JSDialog.IsTextInputField(activeElement)) {
 			KeyboardListNavigation(event, activeElement);
