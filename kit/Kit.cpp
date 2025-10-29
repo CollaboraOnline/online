@@ -1303,20 +1303,18 @@ bool Document::onLoad(const std::string& sessionId,
     std::shared_ptr<ChildSession> session = it->second;
     try
     {
-        if (!load(session, renderOpts))
+        if (load(session, renderOpts))
         {
-            return false;
+            return true;
         }
     }
     catch (const std::exception &exc)
     {
-        LOG_ERR("Exception while loading url [" << uriAnonym <<
-                "] for session [" << sessionId << "]: " << exc.what());
-        session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
-        return false;
+        LOG_ERR("Exception while loading url [" << uriAnonym << "] for session [" << sessionId
+                                                << "]: " << exc.what());
     }
 
-    return true;
+    return false;
 }
 
 void Document::onUnload(const ChildSession& session)
@@ -2197,6 +2195,12 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 
     const int viewId = _loKitDocument->getView();
     session->setViewId(viewId);
+    if (viewId < 0)
+    {
+        LOG_ERR("Failed to load view into document url [" << anonymizeUrl(_url) << "] for session ["
+                                                          << sessionId << ']');
+        return nullptr;
+    }
 
     _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
                                         session->getViewUserExtraInfo(), session->getViewUserPrivateInfo(),
