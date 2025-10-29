@@ -1362,7 +1362,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_cut_or_copy(ClipboardOp::CUT, data);
         }
-        else if (s == L"COPY")
+        else if (s == L"COPY" || s == L"CLIPBOARDWRITE")
         {
             do_cut_or_copy(ClipboardOp::COPY, data);
         }
