@@ -205,10 +205,10 @@ public:
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse.statusLine().statusCode());
         LOK_ASSERT(httpResponse.statusLine().statusCategory() ==
                    http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse.statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse.statusLine().reasonPhrase());
-        LOK_ASSERT_EQUAL(std::string("attachment; filename=\"test.txt\""),
-                         httpResponse.header().get("Content-Disposition"));
+        LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse.statusLine().httpVersion());
+        LOK_ASSERT_EQUAL_STR("OK", httpResponse.statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL_STR("attachment; filename=\"test.txt\"",
+                             httpResponse.header().get("Content-Disposition"));
 
         // TODO: check content-length etc.
 

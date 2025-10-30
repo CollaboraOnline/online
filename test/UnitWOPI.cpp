@@ -64,10 +64,10 @@ public:
             LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
             // the document is not modified
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL_STR("false", request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // but the save action is an explicit user's request
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
+            LOK_ASSERT_EQUAL_STR("false", request.get("X-COOL-WOPI-IsAutosave"));
 
             _finishedSaveUnmodified = true;
 
@@ -81,14 +81,14 @@ public:
             LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
             // the document is modified
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL_STR("true", request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // and this test fakes that it's an autosave
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsAutosave"));
+            LOK_ASSERT_EQUAL_STR("true", request.get("X-COOL-WOPI-IsAutosave"));
 
             // Check that we get the extended data.
-            LOK_ASSERT_EQUAL(std::string("CustomFlag=Custom Value;AnotherFlag=AnotherValue"),
-                             request.get("X-COOL-WOPI-ExtendedData"));
+            LOK_ASSERT_EQUAL_STR("CustomFlag=Custom Value;AnotherFlag=AnotherValue",
+                                 request.get("X-COOL-WOPI-ExtendedData"));
 
             _finishedSaveModified = true;
 
@@ -397,7 +397,7 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+        LOK_ASSERT_EQUAL_STR("true", request.get("X-COOL-WOPI-IsModifiedByUser"));
         LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsModifiedByUser"));
 
         LOK_ASSERT_EQUAL(true, request.has("X-COOL-WOPI-IsAutosave"));

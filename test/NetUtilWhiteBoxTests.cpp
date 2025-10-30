@@ -138,53 +138,53 @@ void NetUtilWhiteBoxTests::testParseUri()
 
     LOK_ASSERT(net::parseUri("localhost", scheme, host, port));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("localhost"), host);
+    LOK_ASSERT_EQUAL_STR("localhost", host);
     LOK_ASSERT(port.empty());
 
     LOK_ASSERT(net::parseUri("127.0.0.1", scheme, host, port));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
+    LOK_ASSERT_EQUAL_STR("127.0.0.1", host);
     LOK_ASSERT(port.empty());
 
     LOK_ASSERT(net::parseUri("domain.com", scheme, host, port));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
     LOK_ASSERT(port.empty());
 
     LOK_ASSERT(net::parseUri("127.0.0.1:9999", scheme, host, port));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
+    LOK_ASSERT_EQUAL_STR("127.0.0.1", host);
+    LOK_ASSERT_EQUAL_STR("9999", port);
 
     LOK_ASSERT(net::parseUri("domain.com:88", scheme, host, port));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
+    LOK_ASSERT_EQUAL_STR("88", port);
 
     LOK_ASSERT(net::parseUri("http://domain.com", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL_STR("http://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
     LOK_ASSERT(port.empty());
 
     LOK_ASSERT(net::parseUri("https://domain.com:88", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
+    LOK_ASSERT_EQUAL_STR("https://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
+    LOK_ASSERT_EQUAL_STR("88", port);
 
     LOK_ASSERT(net::parseUri("http://domain.com/path/to/file", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL_STR("http://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
     LOK_ASSERT(port.empty());
 
     LOK_ASSERT(net::parseUri("https://domain.com:88/path/to/file", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
+    LOK_ASSERT_EQUAL_STR("https://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
+    LOK_ASSERT_EQUAL_STR("88", port);
 
     LOK_ASSERT(net::parseUri("wss://127.0.0.1:9999/", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("wss://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
+    LOK_ASSERT_EQUAL_STR("wss://", scheme);
+    LOK_ASSERT_EQUAL_STR("127.0.0.1", host);
+    LOK_ASSERT_EQUAL_STR("9999", port);
 }
 
 void NetUtilWhiteBoxTests::testParseUriUrl()
@@ -204,63 +204,63 @@ void NetUtilWhiteBoxTests::testParseUriUrl()
 
     LOK_ASSERT(net::parseUri("localhost", scheme, host, port, pathAndQuery));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("localhost"), host);
+    LOK_ASSERT_EQUAL_STR("localhost", host);
     LOK_ASSERT(port.empty());
     LOK_ASSERT(pathAndQuery.empty());
 
     LOK_ASSERT(net::parseUri("127.0.0.1", scheme, host, port, pathAndQuery));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
+    LOK_ASSERT_EQUAL_STR("127.0.0.1", host);
     LOK_ASSERT(port.empty());
     LOK_ASSERT(pathAndQuery.empty());
 
     LOK_ASSERT(net::parseUri("domain.com", scheme, host, port, pathAndQuery));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
     LOK_ASSERT(port.empty());
     LOK_ASSERT(pathAndQuery.empty());
 
     LOK_ASSERT(net::parseUri("127.0.0.1:9999", scheme, host, port, pathAndQuery));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
+    LOK_ASSERT_EQUAL_STR("127.0.0.1", host);
+    LOK_ASSERT_EQUAL_STR("9999", port);
     LOK_ASSERT(pathAndQuery.empty());
 
     LOK_ASSERT(net::parseUri("domain.com:88", scheme, host, port, pathAndQuery));
     LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
+    LOK_ASSERT_EQUAL_STR("88", port);
     LOK_ASSERT(pathAndQuery.empty());
 
     LOK_ASSERT(net::parseUri("http://domain.com", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL_STR("http://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
     LOK_ASSERT(port.empty());
     LOK_ASSERT(pathAndQuery.empty());
 
     LOK_ASSERT(net::parseUri("https://domain.com:88", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
+    LOK_ASSERT_EQUAL_STR("https://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
+    LOK_ASSERT_EQUAL_STR("88", port);
 
     LOK_ASSERT(net::parseUri("http://domain.com/path/to/file", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL_STR("http://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
     LOK_ASSERT(port.empty());
-    LOK_ASSERT_EQUAL(std::string("/path/to/file"), pathAndQuery);
+    LOK_ASSERT_EQUAL_STR("/path/to/file", pathAndQuery);
 
     LOK_ASSERT(
         net::parseUri("https://domain.com:88/path/to/file", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-    LOK_ASSERT_EQUAL(std::string("/path/to/file"), pathAndQuery);
+    LOK_ASSERT_EQUAL_STR("https://", scheme);
+    LOK_ASSERT_EQUAL_STR("domain.com", host);
+    LOK_ASSERT_EQUAL_STR("88", port);
+    LOK_ASSERT_EQUAL_STR("/path/to/file", pathAndQuery);
 
     LOK_ASSERT(net::parseUri("wss://127.0.0.1:9999/", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("wss://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
-    LOK_ASSERT_EQUAL(std::string("/"), pathAndQuery);
+    LOK_ASSERT_EQUAL_STR("wss://", scheme);
+    LOK_ASSERT_EQUAL_STR("127.0.0.1", host);
+    LOK_ASSERT_EQUAL_STR("9999", port);
+    LOK_ASSERT_EQUAL_STR("/", pathAndQuery);
 }
 
 void NetUtilWhiteBoxTests::testParseUrl()

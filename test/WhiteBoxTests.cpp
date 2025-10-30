@@ -111,10 +111,10 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
 
     std::string bar;
     LOK_ASSERT(COOLProtocol::getTokenString("bar=hello-sailor", "bar", bar));
-    LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
+    LOK_ASSERT_EQUAL_STR("hello-sailor", bar);
 
     LOK_ASSERT(COOLProtocol::getTokenString("bar=", "bar", bar));
-    LOK_ASSERT_EQUAL(std::string(""), bar);
+    LOK_ASSERT_EQUAL_STR("", bar);
 
     int mumble;
     std::map<std::string, int> map { { "hello", 1 }, { "goodbye", 2 }, { "adieu", 3 } };
@@ -129,7 +129,7 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
     LOK_ASSERT_EQUAL(42, foo);
 
     LOK_ASSERT(COOLProtocol::getTokenString(tokens, "bar", bar));
-    LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
+    LOK_ASSERT_EQUAL_STR("hello-sailor", bar);
 
     LOK_ASSERT(COOLProtocol::getTokenKeyword(tokens, "mumble", map, mumble));
     LOK_ASSERT_EQUAL(2, mumble);
@@ -138,57 +138,57 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
     LOK_ASSERT_EQUAL(42, foo);
 
     LOK_ASSERT(COOLProtocol::getTokenStringFromMessage(message, "bar", bar));
-    LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
+    LOK_ASSERT_EQUAL_STR("hello-sailor", bar);
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed("A").size());
-    LOK_ASSERT_EQUAL(std::string("A"), Util::trimmed("A"));
+    LOK_ASSERT_EQUAL_STR("A", Util::trimmed("A"));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed(" X").size());
-    LOK_ASSERT_EQUAL(std::string("X"), Util::trimmed(" X"));
+    LOK_ASSERT_EQUAL_STR("X", Util::trimmed(" X"));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed("Y ").size());
-    LOK_ASSERT_EQUAL(std::string("Y"), Util::trimmed("Y "));
+    LOK_ASSERT_EQUAL_STR("Y", Util::trimmed("Y "));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed(" Z ").size());
-    LOK_ASSERT_EQUAL(std::string("Z"), Util::trimmed(" Z "));
+    LOK_ASSERT_EQUAL_STR("Z", Util::trimmed(" Z "));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trimmed(" ").size());
-    LOK_ASSERT_EQUAL(std::string(""), Util::trimmed(" "));
+    LOK_ASSERT_EQUAL_STR("", Util::trimmed(" "));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trimmed("   ").size());
-    LOK_ASSERT_EQUAL(std::string(""), Util::trimmed("   "));
+    LOK_ASSERT_EQUAL_STR("", Util::trimmed("   "));
 
     std::string s;
 
     s = "A";
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = "A";
-    LOK_ASSERT_EQUAL(std::string("A"), Util::trim(s));
+    LOK_ASSERT_EQUAL_STR("A", Util::trim(s));
 
     s = " X";
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = " X";
-    LOK_ASSERT_EQUAL(std::string("X"), Util::trim(s));
+    LOK_ASSERT_EQUAL_STR("X", Util::trim(s));
 
     s = "Y ";
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = "Y ";
-    LOK_ASSERT_EQUAL(std::string("Y"), Util::trim(s));
+    LOK_ASSERT_EQUAL_STR("Y", Util::trim(s));
 
     s = " Z ";
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = " Z ";
-    LOK_ASSERT_EQUAL(std::string("Z"), Util::trim(s));
+    LOK_ASSERT_EQUAL_STR("Z", Util::trim(s));
 
     s = " ";
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trim(s).size());
     s = " ";
-    LOK_ASSERT_EQUAL(std::string(""), Util::trim(s));
+    LOK_ASSERT_EQUAL_STR("", Util::trim(s));
 
     s = "   ";
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trim(s).size());
     s = "   ";
-    LOK_ASSERT_EQUAL(std::string(""), Util::trim(s));
+    LOK_ASSERT_EQUAL_STR("", Util::trim(s));
 
     // Integer lists.
     std::vector<int> ints;
@@ -219,7 +219,7 @@ void WhiteBoxTests::testSplitting()
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", 0, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", -1, '\n'));
-    LOK_ASSERT_EQUAL(std::string("ab"), Util::getDelimitedInitialSubstring("abc", 2, '\n'));
+    LOK_ASSERT_EQUAL_STR("ab", Util::getDelimitedInitialSubstring("abc", 2, '\n'));
 
     std::string first;
     std::string second;
@@ -232,116 +232,114 @@ void WhiteBoxTests::testSplitting()
 
     // Split first, remove delim.
     std::tie(first, second) = Util::split(std::string("a"), '.', true);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string(""), second);
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR("", second);
 
     // Split first, keep delim.
     std::tie(first, second) = Util::split(std::string("a"), '.', false);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string(""), second);
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR("", second);
 
     // Split first, remove delim.
     std::tie(first, second) = Util::splitLast(std::string("a"), '.', true);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string(""), second);
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR("", second);
 
     // Split first, keep delim.
     std::tie(first, second) = Util::splitLast(std::string("a"), '.', false);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string(""), second);
-
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR("", second);
 
     // Split first, remove delim.
     std::tie(first, second) = Util::split(std::string("a."), '.', true);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string(""), second);
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR("", second);
 
     // Split first, keep delim.
     std::tie(first, second) = Util::split(std::string("a."), '.', false);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string("."), second);
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR(".", second);
 
     // Split first, remove delim.
     std::tie(first, second) = Util::splitLast(std::string("a."), '.', true);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string(""), second);
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR("", second);
 
     // Split first, keep delim.
     std::tie(first, second) = Util::splitLast(std::string("a."), '.', false);
-    LOK_ASSERT_EQUAL(std::string("a"), first);
-    LOK_ASSERT_EQUAL(std::string("."), second);
-
+    LOK_ASSERT_EQUAL_STR("a", first);
+    LOK_ASSERT_EQUAL_STR(".", second);
 
     // Split first, remove delim.
     std::tie(first, second) = Util::split(std::string("aa.bb"), '.', true);
-    LOK_ASSERT_EQUAL(std::string("aa"), first);
-    LOK_ASSERT_EQUAL(std::string("bb"), second);
+    LOK_ASSERT_EQUAL_STR("aa", first);
+    LOK_ASSERT_EQUAL_STR("bb", second);
 
     // Split first, keep delim.
     std::tie(first, second) = Util::split(std::string("aa.bb"), '.', false);
-    LOK_ASSERT_EQUAL(std::string("aa"), first);
-    LOK_ASSERT_EQUAL(std::string(".bb"), second);
+    LOK_ASSERT_EQUAL_STR("aa", first);
+    LOK_ASSERT_EQUAL_STR(".bb", second);
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), Util::getLastDelimiterPosition("aa.bb.cc", 8, '.'));
 
     // Split last, remove delim.
     std::tie(first, second) = Util::splitLast(std::string("aa.bb.cc"), '.', true);
-    LOK_ASSERT_EQUAL(std::string("aa.bb"), first);
-    LOK_ASSERT_EQUAL(std::string("cc"), second);
+    LOK_ASSERT_EQUAL_STR("aa.bb", first);
+    LOK_ASSERT_EQUAL_STR("cc", second);
 
     // Split last, keep delim.
     std::tie(first, second) = Util::splitLast(std::string("aa.bb.cc"), '.', false);
-    LOK_ASSERT_EQUAL(std::string("aa.bb"), first);
-    LOK_ASSERT_EQUAL(std::string(".cc"), second);
+    LOK_ASSERT_EQUAL_STR("aa.bb", first);
+    LOK_ASSERT_EQUAL_STR(".cc", second);
 
     // Split last, remove delim.
     std::tie(first, second) = Util::splitLast(std::string("/owncloud/index.php/apps/richdocuments/wopi/files/13_ocgdpzbkm39u"), '/', true);
-    LOK_ASSERT_EQUAL(std::string("/owncloud/index.php/apps/richdocuments/wopi/files"), first);
-    LOK_ASSERT_EQUAL(std::string("13_ocgdpzbkm39u"), second);
+    LOK_ASSERT_EQUAL_STR("/owncloud/index.php/apps/richdocuments/wopi/files", first);
+    LOK_ASSERT_EQUAL_STR("13_ocgdpzbkm39u", second);
 
     // Split last, keep delim.
     std::tie(first, second) = Util::splitLast(std::string("/owncloud/index.php/apps/richdocuments/wopi/files/13_ocgdpzbkm39u"), '/', false);
-    LOK_ASSERT_EQUAL(std::string("/owncloud/index.php/apps/richdocuments/wopi/files"), first);
-    LOK_ASSERT_EQUAL(std::string("/13_ocgdpzbkm39u"), second);
+    LOK_ASSERT_EQUAL_STR("/owncloud/index.php/apps/richdocuments/wopi/files", first);
+    LOK_ASSERT_EQUAL_STR("/13_ocgdpzbkm39u", second);
 
     std::string third;
     std::string fourth;
 
     std::tie(first, second, third, fourth) = Util::splitUrl("filename");
-    LOK_ASSERT_EQUAL(std::string(""), first);
-    LOK_ASSERT_EQUAL(std::string("filename"), second);
-    LOK_ASSERT_EQUAL(std::string(""), third);
-    LOK_ASSERT_EQUAL(std::string(""), fourth);
+    LOK_ASSERT_EQUAL_STR("", first);
+    LOK_ASSERT_EQUAL_STR("filename", second);
+    LOK_ASSERT_EQUAL_STR("", third);
+    LOK_ASSERT_EQUAL_STR("", fourth);
 
     std::tie(first, second, third, fourth) = Util::splitUrl("filename.ext");
-    LOK_ASSERT_EQUAL(std::string(""), first);
-    LOK_ASSERT_EQUAL(std::string("filename"), second);
-    LOK_ASSERT_EQUAL(std::string(".ext"), third);
-    LOK_ASSERT_EQUAL(std::string(""), fourth);
+    LOK_ASSERT_EQUAL_STR("", first);
+    LOK_ASSERT_EQUAL_STR("filename", second);
+    LOK_ASSERT_EQUAL_STR(".ext", third);
+    LOK_ASSERT_EQUAL_STR("", fourth);
 
     std::tie(first, second, third, fourth) = Util::splitUrl("/path/to/filename");
-    LOK_ASSERT_EQUAL(std::string("/path/to/"), first);
-    LOK_ASSERT_EQUAL(std::string("filename"), second);
-    LOK_ASSERT_EQUAL(std::string(""), third);
-    LOK_ASSERT_EQUAL(std::string(""), fourth);
+    LOK_ASSERT_EQUAL_STR("/path/to/", first);
+    LOK_ASSERT_EQUAL_STR("filename", second);
+    LOK_ASSERT_EQUAL_STR("", third);
+    LOK_ASSERT_EQUAL_STR("", fourth);
 
     std::tie(first, second, third, fourth) = Util::splitUrl("http://domain.com/path/filename");
-    LOK_ASSERT_EQUAL(std::string("http://domain.com/path/"), first);
-    LOK_ASSERT_EQUAL(std::string("filename"), second);
-    LOK_ASSERT_EQUAL(std::string(""), third);
-    LOK_ASSERT_EQUAL(std::string(""), fourth);
+    LOK_ASSERT_EQUAL_STR("http://domain.com/path/", first);
+    LOK_ASSERT_EQUAL_STR("filename", second);
+    LOK_ASSERT_EQUAL_STR("", third);
+    LOK_ASSERT_EQUAL_STR("", fourth);
 
     std::tie(first, second, third, fourth) = Util::splitUrl("http://domain.com/path/filename.ext");
-    LOK_ASSERT_EQUAL(std::string("http://domain.com/path/"), first);
-    LOK_ASSERT_EQUAL(std::string("filename"), second);
-    LOK_ASSERT_EQUAL(std::string(".ext"), third);
-    LOK_ASSERT_EQUAL(std::string(""), fourth);
+    LOK_ASSERT_EQUAL_STR("http://domain.com/path/", first);
+    LOK_ASSERT_EQUAL_STR("filename", second);
+    LOK_ASSERT_EQUAL_STR(".ext", third);
+    LOK_ASSERT_EQUAL_STR("", fourth);
 
     std::tie(first, second, third, fourth) = Util::splitUrl("http://domain.com/path/filename.ext?params=3&command=5");
-    LOK_ASSERT_EQUAL(std::string("http://domain.com/path/"), first);
-    LOK_ASSERT_EQUAL(std::string("filename"), second);
-    LOK_ASSERT_EQUAL(std::string(".ext"), third);
-    LOK_ASSERT_EQUAL(std::string("?params=3&command=5"), fourth);
+    LOK_ASSERT_EQUAL_STR("http://domain.com/path/", first);
+    LOK_ASSERT_EQUAL_STR("filename", second);
+    LOK_ASSERT_EQUAL_STR(".ext", third);
+    LOK_ASSERT_EQUAL_STR("?params=3&command=5", fourth);
 }
 
 void WhiteBoxTests::testMessage()
@@ -374,12 +372,12 @@ void WhiteBoxTests::testPathPrefixTrimming()
     LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("/"));
     LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("."));
 
-    LOK_ASSERT_EQUAL(std::string("filename.cpp"),
-                     std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
-    LOK_ASSERT_EQUAL(std::string("filename.cpp"),
-                     std::string(LOG_FILE_NAME("path/to/a/looooooong/filename.cpp")));
-    LOK_ASSERT_EQUAL(std::string("filename.cpp"),
-                     std::string(LOG_FILE_NAME("/path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("filename.cpp",
+                         std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("filename.cpp",
+                         std::string(LOG_FILE_NAME("path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("filename.cpp",
+                         std::string(LOG_FILE_NAME("/path/to/a/looooooong/filename.cpp")));
     LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("")));
     LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("/")));
     LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME(".")));
@@ -394,14 +392,14 @@ void WhiteBoxTests::testPathPrefixTrimming()
     LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/"));
     LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("."));
 
-    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
-                     std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
-    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
-                     std::string(LOG_FILE_NAME("path/to/a/looooooong/filename.cpp")));
-    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
-                     std::string(LOG_FILE_NAME("/path/to/a/looooooong/filename.cpp")));
-    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
-                     std::string(LOG_FILE_NAME("../path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("path/to/a/looooooong/filename.cpp",
+                         std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("path/to/a/looooooong/filename.cpp",
+                         std::string(LOG_FILE_NAME("path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("path/to/a/looooooong/filename.cpp",
+                         std::string(LOG_FILE_NAME("/path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL_STR("path/to/a/looooooong/filename.cpp",
+                         std::string(LOG_FILE_NAME("../path/to/a/looooooong/filename.cpp")));
     LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("")));
     LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("/")));
     LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME(".")));
@@ -417,7 +415,7 @@ void WhiteBoxTests::testMessageAbbreviation()
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", 0, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", -1, '\n'));
-    LOK_ASSERT_EQUAL(std::string("ab"), Util::getDelimitedInitialSubstring("abc", 2, '\n'));
+    LOK_ASSERT_EQUAL_STR("ab", Util::getDelimitedInitialSubstring("abc", 2, '\n'));
 
     // The end arg of getAbbreviatedMessage is the length of the first argument, not
     // the point at which it should be abbreviated. Abbreviation appends ... to the
@@ -426,7 +424,7 @@ void WhiteBoxTests::testMessageAbbreviation()
     LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage(nullptr, -1));
     LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage("abc", 0));
     LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage("abc", -1));
-    LOK_ASSERT_EQUAL(std::string("ab"), COOLProtocol::getAbbreviatedMessage("abc", 2));
+    LOK_ASSERT_EQUAL_STR("ab", COOLProtocol::getAbbreviatedMessage("abc", 2));
 
     std::string s;
     std::string abbr;
@@ -453,12 +451,13 @@ void WhiteBoxTests::testReplace()
 {
     constexpr std::string_view testname = __func__;
 
-    LOK_ASSERT_EQUAL(std::string("zesz one zwo flee"), Util::replace("test one two flee", "t", "z"));
-    LOK_ASSERT_EQUAL(std::string("testt one two flee"), Util::replace("test one two flee", "tes", "test"));
-    LOK_ASSERT_EQUAL(std::string("testest one two flee"), Util::replace("test one two flee", "tes", "testes"));
-    LOK_ASSERT_EQUAL(std::string("tete one two flee"), Util::replace("tettet one two flee", "tet", "te"));
-    LOK_ASSERT_EQUAL(std::string("t one two flee"), Util::replace("test one two flee", "tes", ""));
-    LOK_ASSERT_EQUAL(std::string("test one two flee"), Util::replace("test one two flee", "", "X"));
+    LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replace("test one two flee", "t", "z"));
+    LOK_ASSERT_EQUAL_STR("testt one two flee", Util::replace("test one two flee", "tes", "test"));
+    LOK_ASSERT_EQUAL_STR("testest one two flee",
+                         Util::replace("test one two flee", "tes", "testes"));
+    LOK_ASSERT_EQUAL_STR("tete one two flee", Util::replace("tettet one two flee", "tet", "te"));
+    LOK_ASSERT_EQUAL_STR("t one two flee", Util::replace("test one two flee", "tes", ""));
+    LOK_ASSERT_EQUAL_STR("test one two flee", Util::replace("test one two flee", "", "X"));
 }
 
 void WhiteBoxTests::testReplaceChar()
@@ -484,8 +483,8 @@ void WhiteBoxTests::testReplaceAllOf()
 {
     constexpr std::string_view testname = __func__;
 
-    LOK_ASSERT_EQUAL(std::string("humvee"), Util::replaceAllOf("humans","san", "eve"));
-    LOK_ASSERT_EQUAL(std::string("simple.odt"), Util::replaceAllOf("s#&-le.odt", "#&-", "imp"));
+    LOK_ASSERT_EQUAL_STR("humvee", Util::replaceAllOf("humans", "san", "eve"));
+    LOK_ASSERT_EQUAL_STR("simple.odt", Util::replaceAllOf("s#&-le.odt", "#&-", "imp"));
 }
 
 void WhiteBoxTests::testRegexListMatcher()
@@ -634,11 +633,11 @@ void WhiteBoxTests::testTileData()
     LOK_ASSERT_EQUAL(out.size(), size_t(0));
 
     LOK_ASSERT_EQUAL(data.appendChangesSince(out, 42), true);
-    LOK_ASSERT_EQUAL(std::string("foobaa"), Util::toString(out));
+    LOK_ASSERT_EQUAL_STR("foobaa", Util::toString(out));
 
     out.clear();
     LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
-    LOK_ASSERT_EQUAL(std::string("baa"), Util::toString(out));
+    LOK_ASSERT_EQUAL_STR("baa", Util::toString(out));
 
     // append another delta
     data.appendBlob(47, "Dbaz", 4);
@@ -646,11 +645,11 @@ void WhiteBoxTests::testTileData()
 
     out.clear();
     LOK_ASSERT_EQUAL(data.appendChangesSince(out, 1), true);
-    LOK_ASSERT_EQUAL(std::string("foobaabaz"), Util::toString(out));
+    LOK_ASSERT_EQUAL_STR("foobaabaz", Util::toString(out));
 
     out.clear();
     LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
-    LOK_ASSERT_EQUAL(std::string("baabaz"), Util::toString(out));
+    LOK_ASSERT_EQUAL_STR("baabaz", Util::toString(out));
 
     // append an empty delta
     data.appendBlob(52, "D", 1);
@@ -712,7 +711,7 @@ void WhiteBoxTests::testJson()
 
     std::string sValue;
     JsonUtil::findJSONValue(object, "BaseFileName", sValue);
-    LOK_ASSERT_EQUAL(std::string("SomeFile.pdf"), sValue);
+    LOK_ASSERT_EQUAL_STR("SomeFile.pdf", sValue);
 
     // Don't accept inexact key names.
     sValue.clear();
@@ -723,7 +722,7 @@ void WhiteBoxTests::testJson()
     LOK_ASSERT_EQUAL(std::string(), sValue);
 
     JsonUtil::findJSONValue(object, "UserId", sValue);
-    LOK_ASSERT_EQUAL(std::string("user@user.com"), sValue);
+    LOK_ASSERT_EQUAL_STR("user@user.com", sValue);
 }
 
 void WhiteBoxTests::testAnonymization()
@@ -746,11 +745,9 @@ void WhiteBoxTests::testAnonymization()
     std::uint64_t anonymizationSalt = 1111111111182589933;
     Anonymizer::initialize(true, anonymizationSalt);
 
-    LOK_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"), Anonymizer::anonymizeUrl(name));
-    LOK_ASSERT_EQUAL(std::string("#1#8f8d95bd2a202d00#.odt"),
-                     Anonymizer::anonymizeUrl(filenameTestx));
-    LOK_ASSERT_EQUAL(std::string("/path/to/#2#5c872b2d82ecc8a0#.ext"),
-                     Anonymizer::anonymizeUrl(path));
+    LOK_ASSERT_EQUAL_STR("#0#5e45aef91248a8aa#", Anonymizer::anonymizeUrl(name));
+    LOK_ASSERT_EQUAL_STR("#1#8f8d95bd2a202d00#.odt", Anonymizer::anonymizeUrl(filenameTestx));
+    LOK_ASSERT_EQUAL_STR("/path/to/#2#5c872b2d82ecc8a0#.ext", Anonymizer::anonymizeUrl(path));
     LOK_ASSERT_EQUAL(
         std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
                     "#3#22c6f0caad277666#?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
@@ -766,17 +763,16 @@ void WhiteBoxTests::testAnonymization()
     anonymizationSalt = 0;
     Anonymizer::initialize(true, anonymizationSalt);
 
-    LOK_ASSERT_EQUAL(std::string("#0#42027f9b6df09510#"), Anonymizer::anonymizeUrl(name));
+    LOK_ASSERT_EQUAL_STR("#0#42027f9b6df09510#", Anonymizer::anonymizeUrl(name));
     Anonymizer::mapAnonymized(name, name);
     LOK_ASSERT_EQUAL(name, Anonymizer::anonymizeUrl(name));
 
-    LOK_ASSERT_EQUAL(std::string("#1#366ab9ebe19ea09e#.ext"), Anonymizer::anonymizeUrl(filename));
+    LOK_ASSERT_EQUAL_STR("#1#366ab9ebe19ea09e#.ext", Anonymizer::anonymizeUrl(filename));
     Anonymizer::mapAnonymized("filename",
                               "filename"); // Identity map of the filename without extension.
     LOK_ASSERT_EQUAL(filename, Anonymizer::anonymizeUrl(filename));
 
-    LOK_ASSERT_EQUAL(std::string("#2#eac31ed57854de54#.odt"),
-                     Anonymizer::anonymizeUrl(filenameTestx));
+    LOK_ASSERT_EQUAL_STR("#2#eac31ed57854de54#.odt", Anonymizer::anonymizeUrl(filenameTestx));
     Anonymizer::mapAnonymized("testx (6)",
                               "testx (6)"); // Identity map of the filename without extension.
     LOK_ASSERT_EQUAL(filenameTestx, Anonymizer::anonymizeUrl(filenameTestx));
@@ -849,56 +845,48 @@ void WhiteBoxTests::testIso8601Time()
     std::ostringstream oss;
 
     std::chrono::system_clock::time_point t(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1567444337874777375)));
-    LOK_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"),
-                         Util::getIso8601FracformatTime(t));
+    LOK_ASSERT_EQUAL_STR("2019-09-02T17:12:17.874777Z", Util::getIso8601FracformatTime(t));
 
     t = std::chrono::system_clock::time_point(std::chrono::system_clock::duration::zero());
-    LOK_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"),
-                         Util::getIso8601FracformatTime(t));
+    LOK_ASSERT_EQUAL_STR("1970-01-01T00:00:00.000000Z", Util::getIso8601FracformatTime(t));
 
     t = Util::iso8601ToTimestamp("1970-01-01T00:00:00.000000Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
-    LOK_ASSERT_EQUAL(std::string("0"), oss.str());
-    LOK_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"),
-                         Util::time_point_to_iso8601(t));
+    LOK_ASSERT_EQUAL_STR("0", oss.str());
+    LOK_ASSERT_EQUAL_STR("1970-01-01T00:00:00.000000Z", Util::time_point_to_iso8601(t));
 
     oss.str(std::string());
     t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
     if (std::is_same<std::chrono::system_clock::period, std::nano>::value)
-        LOK_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
+        LOK_ASSERT_EQUAL_STR("1567444337874777000", oss.str());
     else
-        LOK_ASSERT_EQUAL(std::string("1567444337874777"), oss.str());
-    LOK_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"),
-                         Util::time_point_to_iso8601(t));
+        LOK_ASSERT_EQUAL_STR("1567444337874777", oss.str());
+    LOK_ASSERT_EQUAL_STR("2019-09-02T17:12:17.874777Z", Util::time_point_to_iso8601(t));
 
     oss.str(std::string());
     t = Util::iso8601ToTimestamp("2019-10-24T14:31:28.063730Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
     if (std::is_same<std::chrono::system_clock::period, std::nano>::value)
-        LOK_ASSERT_EQUAL(std::string("1571927488063730000"), oss.str());
+        LOK_ASSERT_EQUAL_STR("1571927488063730000", oss.str());
     else
-        LOK_ASSERT_EQUAL(std::string("1571927488063730"), oss.str());
-    LOK_ASSERT_EQUAL(std::string("2019-10-24T14:31:28.063730Z"),
-                         Util::time_point_to_iso8601(t));
+        LOK_ASSERT_EQUAL_STR("1571927488063730", oss.str());
+    LOK_ASSERT_EQUAL_STR("2019-10-24T14:31:28.063730Z", Util::time_point_to_iso8601(t));
 
     t = Util::iso8601ToTimestamp("2020-02-20T20:02:20.100000Z", "LastModifiedTime");
-    LOK_ASSERT_EQUAL(std::string("2020-02-20T20:02:20.100000Z"),
-                         Util::time_point_to_iso8601(t));
+    LOK_ASSERT_EQUAL_STR("2020-02-20T20:02:20.100000Z", Util::time_point_to_iso8601(t));
 
     t = std::chrono::system_clock::time_point();
-    LOK_ASSERT_EQUAL(std::string("Thu, 01 Jan 1970 00:00:00"), Util::getHttpTime(t));
+    LOK_ASSERT_EQUAL_STR("Thu, 01 Jan 1970 00:00:00", Util::getHttpTime(t));
 
     t = std::chrono::system_clock::time_point(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1569592993495336798)));
-    LOK_ASSERT_EQUAL(std::string("Fri, 27 Sep 2019 14:03:13"), Util::getHttpTime(t));
+    LOK_ASSERT_EQUAL_STR("Fri, 27 Sep 2019 14:03:13", Util::getHttpTime(t));
 
     t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583000Z", "LastModifiedTime");
-    LOK_ASSERT_EQUAL(std::string("2020-09-22T21:45:12.583000Z"),
-                         Util::time_point_to_iso8601(t));
+    LOK_ASSERT_EQUAL_STR("2020-09-22T21:45:12.583000Z", Util::time_point_to_iso8601(t));
 
     t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583Z", "LastModifiedTime");
-    LOK_ASSERT_EQUAL(std::string("2020-09-22T21:45:12.583000Z"),
-                         Util::time_point_to_iso8601(t));
+    LOK_ASSERT_EQUAL_STR("2020-09-22T21:45:12.583000Z", Util::time_point_to_iso8601(t));
 
     for (int i = 0; i < 100; ++i)
     {
@@ -938,12 +926,12 @@ void WhiteBoxTests::testClockAsString()
 
     const auto steady_tp = std::chrono::steady_clock::time_point(
         std::chrono::steady_clock::duration(std::chrono::nanoseconds(295708311764285)));
-    LOK_ASSERT_EQUAL(std::string("Sat Feb 12 18:58.889 2022"),
+    LOK_ASSERT_EQUAL_STR("Sat Feb 12 18:58.889 2022",
                      Util::getSteadyClockAsString(steady_tp));
 
     const auto sys_tp = std::chrono::system_clock::time_point(
         std::chrono::system_clock::duration(std::chrono::nanoseconds(1644764467739980124)));
-    LOK_ASSERT_EQUAL(std::string("Sat Feb 12 18:58.889 2022"),
+    LOK_ASSERT_EQUAL_STR("Sat Feb 12 18:58.889 2022",
                      Util::getSystemClockAsString(sys_tp));
 #endif
 }

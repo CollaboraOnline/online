@@ -32,7 +32,7 @@ std::string getFontList(const std::string& message, const std::string& testname)
     const Poco::Dynamic::Var result = parser.parse(message);
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     std::string text = command->get("commandName").toString();
-    LOK_ASSERT_EQUAL(std::string(".uno:CharFontName"), text);
+    LOK_ASSERT_EQUAL_STR(".uno:CharFontName", text);
     text = command->get("commandValues").toString();
     return text;
 }
@@ -181,10 +181,10 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
             StringVector tokens(StringVector::tokenize(response.substr(6), ' '));
             std::string cmd;
             COOLProtocol::getTokenString(tokens, "cmd", cmd);
-            LOK_ASSERT_EQUAL(std::string("internal"), cmd);
+            LOK_ASSERT_EQUAL_STR("internal", cmd);
             std::string kind;
             COOLProtocol::getTokenString(tokens, "kind", kind);
-            LOK_ASSERT_EQUAL(std::string("diskfull"), kind);
+            LOK_ASSERT_EQUAL_STR("diskfull", kind);
         }
     }
     catch (const Poco::Exception& exc)

@@ -55,9 +55,9 @@ UnitBase::TestResult UnitHosting::testDiscovery()
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
-    LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-    LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
-    LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse->header().getContentType());
+    LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
+    LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
+    LOK_ASSERT_EQUAL_STR("text/xml", httpResponse->header().getContentType());
 
     // Repeat, with a trailing slash in the URL.
     TST_LOG("Getting /hosting/discovery the second time.");
@@ -72,9 +72,9 @@ UnitBase::TestResult UnitHosting::testDiscovery()
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse2->statusLine().statusCode());
     LOK_ASSERT(httpResponse2->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
-    LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse2->statusLine().httpVersion());
-    LOK_ASSERT_EQUAL(std::string("OK"), httpResponse2->statusLine().reasonPhrase());
-    LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse2->header().getContentType());
+    LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse2->statusLine().httpVersion());
+    LOK_ASSERT_EQUAL_STR("OK", httpResponse2->statusLine().reasonPhrase());
+    LOK_ASSERT_EQUAL_STR("text/xml", httpResponse2->header().getContentType());
 
     TST_LOG("Comparing /hosting/discovery from both requests.");
     LOK_ASSERT_EQUAL(httpResponse2->getBody(), httpResponse->getBody());
@@ -95,7 +95,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
     std::string capabilitiesURI;
     {
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-        LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse->header().getContentType());
+        LOK_ASSERT_EQUAL_STR("text/xml", httpResponse->header().getContentType());
 
         const std::string& discoveryXML = httpResponse->getBody();
 
@@ -129,7 +129,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
 
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-        LOK_ASSERT_EQUAL(std::string("application/json"), httpResponse->header().getContentType());
+        LOK_ASSERT_EQUAL_STR("application/json", httpResponse->header().getContentType());
 
         const std::string& responseString = httpResponse->getBody();
 
