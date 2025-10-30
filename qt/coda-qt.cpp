@@ -658,7 +658,7 @@ int main(int argc, char** argv)
         })
         .detach();
 
-    for (auto file : files)
+    for (auto const & file : files)
     {
         // Resolve absolute file URL to pass into Online
         std::string fileURL = Poco::URI(Poco::Path(std::string(file.toUtf8()))).toString();
