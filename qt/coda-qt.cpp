@@ -27,6 +27,7 @@
 #include <QClipboard>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+#include <QDesktopServices>
 #include <QDir>
 #include <QTemporaryFile>
 #include <QProcess>
@@ -414,6 +415,7 @@ QVariant Bridge::cool(const QString& messageStr)
 {
     constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
     constexpr std::string_view DOWNLOADAS = "downloadas ";
+    constexpr std::string_view HYPERLINK = "HYPERLINK ";
 
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
@@ -589,6 +591,11 @@ QVariant Bridge::cool(const QString& messageStr)
         {
             _webView->window()->windowHandle()->startSystemMove();
         }
+    }
+    else if (message.starts_with(HYPERLINK))
+    {
+        QString qurl = QString::fromStdString(message.substr(HYPERLINK.size()));
+        QDesktopServices::openUrl(QUrl::fromUserInput(qurl));
     }
     else
     {
