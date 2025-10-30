@@ -231,3 +231,4 @@ windows/coda/config.props
 # CODA-Q
 .flatpak-builder/
 qt/flatpak/build-dir/
+qt/flatpak/repo/
