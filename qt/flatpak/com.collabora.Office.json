@@ -44,8 +44,7 @@
     "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/libexec",
     "env": {
       "CFLAGS": "-O2",
-      "CXXFLAGS": "-O2 -DPOCO_UNBUNDLED=1",
-      "POCO_UNBUNDLED": "1",
+      "CXXFLAGS": "-O2",
       "NINJA_STATUS": "[%p | %f/%t] "
     }
   },
@@ -813,7 +812,7 @@
         "-DENABLE_PAGECOMPILER_FILE2PAGE=OFF",
         "-DENABLE_PROMETHEUS=OFF",
         "-DENABLE_REDIS=OFF",
-        "-DPOCO_UNBUNDLED=OFF"
+        "-DPOCO_UNBUNDLED=ON"
       ],
       "sources": [
         {
