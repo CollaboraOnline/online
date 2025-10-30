@@ -35,7 +35,7 @@ double getColRowSize(const std::string& property, const std::string& message, in
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     std::string text = command->get("commandName").toString();
 
-    LOK_ASSERT_EQUAL(std::string(".uno:ViewRowColumnHeaders"), text);
+    LOK_ASSERT_EQUAL_STR(".uno:ViewRowColumnHeaders", text);
     LOK_ASSERT(command->isArray(property));
 
     Poco::JSON::Array::Ptr array = command->getArray(property);

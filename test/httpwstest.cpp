@@ -448,12 +448,12 @@ void HTTPWSTest::testUndoConflict()
         // undo conflict
         response = getResponseString(socket0, "unocommandresult:", testname + "0 ");
         Poco::JSON::Object::Ptr objJSON = parser.parse(response.substr(17)).extract<Poco::JSON::Object::Ptr>();
-        LOK_ASSERT_EQUAL(std::string(".uno:Undo"), objJSON->get("commandName").toString());
-        LOK_ASSERT_EQUAL(std::string("true"), objJSON->get("success").toString());
+        LOK_ASSERT_EQUAL_STR(".uno:Undo", objJSON->get("commandName").toString());
+        LOK_ASSERT_EQUAL_STR("true", objJSON->get("success").toString());
         LOK_ASSERT(objJSON->has("result"));
         const Poco::Dynamic::Var parsedResultJSON = objJSON->get("result");
         const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
-        LOK_ASSERT_EQUAL(std::string("long"), resultObj->get("type").toString());
+        LOK_ASSERT_EQUAL_STR("long", resultObj->get("type").toString());
         LOK_ASSERT(Poco::strToInt(resultObj->get("value").toString(), conflict, 10));
         LOK_ASSERT(conflict > 0); /*UNDO_CONFLICT*/
 

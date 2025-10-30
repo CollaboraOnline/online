@@ -162,7 +162,7 @@ UnitBase::TestResult UnitLoad::testBadLoad()
         helpers::sendTextFrame(socket, "status", testname);
 
         const auto line = helpers::assertResponseString(socket, "error:", testname);
-        LOK_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
+        LOK_ASSERT_EQUAL_STR("error: cmd=status kind=nodocloaded", line);
     }
     catch (const Poco::Exception& exc)
     {

@@ -60,14 +60,14 @@ void RequestDetailsTests::testDownloadURI()
         // LOK_ASSERT_EQUAL(URI, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("browser"), details[0]);
-        LOK_ASSERT_EQUAL(std::string("browser"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("browser", details[0]);
+        LOK_ASSERT_EQUAL_STR("browser", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
         LOK_ASSERT(details.equals(0, "browser"));
-        LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
-        LOK_ASSERT_EQUAL(std::string("src"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("map"), details[3]);
-        LOK_ASSERT_EQUAL(std::string("Clipboard.js"), details[4]);
+        LOK_ASSERT_EQUAL_STR("49c225146", details[1]);
+        LOK_ASSERT_EQUAL_STR("src", details[2]);
+        LOK_ASSERT_EQUAL_STR("map", details[3]);
+        LOK_ASSERT_EQUAL_STR("Clipboard.js", details[4]);
 
         http::Request request2(URI);
         request2.set("Host", Root);
@@ -87,12 +87,12 @@ void RequestDetailsTests::testDownloadURI()
         // LOK_ASSERT_EQUAL(URI, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
-        LOK_ASSERT_EQUAL(std::string("browser"), details[0]);
-        LOK_ASSERT_EQUAL(std::string("browser"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("browser", details[0]);
+        LOK_ASSERT_EQUAL_STR("browser", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
         LOK_ASSERT(details.equals(0, "browser"));
-        LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
-        LOK_ASSERT_EQUAL(std::string("select2.css"), details[2]);
+        LOK_ASSERT_EQUAL_STR("49c225146", details[1]);
+        LOK_ASSERT_EQUAL_STR("select2.css", details[2]);
 
         http::Request request2(URI);
         request2.set("Host", Root);
@@ -125,12 +125,12 @@ void RequestDetailsTests::testCoolURI()
     LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(4), details.size());
-    LOK_ASSERT_EQUAL(std::string("browser"), details[0]);
-    LOK_ASSERT_EQUAL(std::string("browser"), details.getField(RequestDetails::Field::Type));
+    LOK_ASSERT_EQUAL_STR("browser", details[0]);
+    LOK_ASSERT_EQUAL_STR("browser", details.getField(RequestDetails::Field::Type));
     LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
     LOK_ASSERT(details.equals(0, "browser"));
-    LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
-    LOK_ASSERT_EQUAL(std::string("cool.html"), details[2]);
+    LOK_ASSERT_EQUAL_STR("49c225146", details[1]);
+    LOK_ASSERT_EQUAL_STR("cool.html", details[2]);
     LOK_ASSERT_EQUAL(std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%"
                                  "2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&"
                                  "title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1"),
@@ -175,24 +175,24 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
             details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("open"), details[3]);
-        LOK_ASSERT_EQUAL(std::string("open"), details[4]);
-        LOK_ASSERT_EQUAL(std::string("0"), details[5]);
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("open", details[3]);
+        LOK_ASSERT_EQUAL_STR("open", details[4]);
+        LOK_ASSERT_EQUAL_STR("0", details[5]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("open", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "open"));
-        LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("open", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
-        LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("0", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
 
         http::Request request2(URI);
@@ -228,23 +228,23 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
             details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
-        LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("write", details[3]); // SessionId, since the real SessionId is blank.
+        LOK_ASSERT_EQUAL_STR("2", details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("write", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
-        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("2", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -280,23 +280,23 @@ void RequestDetailsTests::testLocal()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
             details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
-        LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("write", details[3]); // SessionId, since the real SessionId is blank.
+        LOK_ASSERT_EQUAL_STR("2", details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("write", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
-        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("2", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -343,21 +343,21 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(fileUrl, details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("open"), details[3]);
-        LOK_ASSERT_EQUAL(std::string("open"), details[4]);
-        LOK_ASSERT_EQUAL(std::string("0"), details[5]);
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("open", details[3]);
+        LOK_ASSERT_EQUAL_STR("open", details[4]);
+        LOK_ASSERT_EQUAL_STR("0", details[5]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("open", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "open"));
-        LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("open", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
-        LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("0", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
 
         http::Request request2(URI);
@@ -389,20 +389,20 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(fileUrl, details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
-        LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("write", details[3]); // SessionId, since the real SessionId is blank.
+        LOK_ASSERT_EQUAL_STR("2", details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("write", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
-        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("2", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -434,20 +434,20 @@ void RequestDetailsTests::testLocalHexified()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(fileUrl, details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
-        LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("write", details[3]); // SessionId, since the real SessionId is blank.
+        LOK_ASSERT_EQUAL_STR("2", details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("write", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
-        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("2", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -501,9 +501,10 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(false, details.isWebSocket());
         LOK_ASSERT_EQUAL(true, details.isGet());
 
-        LOK_ASSERT_EQUAL(std::string("b26112ab1b6f2ed98ce1329f0f344791"), details.getField(RequestDetails::Field::SessionId));
-        LOK_ASSERT_EQUAL(std::string("close"), details.getField(RequestDetails::Field::Command));
-        LOK_ASSERT_EQUAL(std::string("31"), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("b26112ab1b6f2ed98ce1329f0f344791",
+                             details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("close", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("31", details.getField(RequestDetails::Field::Serial));
 
         const std::string docUri
             = "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
@@ -525,8 +526,8 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
@@ -540,23 +541,24 @@ void RequestDetailsTests::testRequestDetails()
                 "253Aocqiesh0cngs%253Dr5ujg4tpvgu9paaf5bguiokgjl%253AXCookieName%"
                 "253DXCookieValue%253ASuperCookieName%253DBAZINGA"),
             details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
         LOK_ASSERT_EQUAL(
             std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%"
                         "2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&compat="),
             details[3]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[4]);
-        LOK_ASSERT_EQUAL(std::string("b26112ab1b6f2ed98ce1329f0f344791"), details[5]);
-        LOK_ASSERT_EQUAL(std::string("close"), details[6]);
-        LOK_ASSERT_EQUAL(std::string("31"), details[7]);
+        LOK_ASSERT_EQUAL_STR("ws", details[4]);
+        LOK_ASSERT_EQUAL_STR("b26112ab1b6f2ed98ce1329f0f344791", details[5]);
+        LOK_ASSERT_EQUAL_STR("close", details[6]);
+        LOK_ASSERT_EQUAL_STR("31", details[7]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("b26112ab1b6f2ed98ce1329f0f344791"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("b26112ab1b6f2ed98ce1329f0f344791",
+                             details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "b26112ab1b6f2ed98ce1329f0f344791"));
-        LOK_ASSERT_EQUAL(std::string("close"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("close", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "close"));
-        LOK_ASSERT_EQUAL(std::string("31"), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("31", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "31"));
 
         http::Request request2(URI);
@@ -606,7 +608,7 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string("http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%"
@@ -614,23 +616,24 @@ void RequestDetailsTests::testRequestDetails()
                         "3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0%26reuse_cookies%"
                         "3DXCookieName%253DXCookieValue%253ASuperCookieName%253DBAZINGA"),
             details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
         LOK_ASSERT_EQUAL(
             std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%"
                         "2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u&compat="),
             details[3]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[4]);
-        LOK_ASSERT_EQUAL(std::string("1c99a7bcdbf3209782d7eb38512e6564"), details[5]);
-        LOK_ASSERT_EQUAL(std::string("write"), details[6]);
-        LOK_ASSERT_EQUAL(std::string("2"), details[7]);
+        LOK_ASSERT_EQUAL_STR("ws", details[4]);
+        LOK_ASSERT_EQUAL_STR("1c99a7bcdbf3209782d7eb38512e6564", details[5]);
+        LOK_ASSERT_EQUAL_STR("write", details[6]);
+        LOK_ASSERT_EQUAL_STR("2", details[7]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string("1c99a7bcdbf3209782d7eb38512e6564"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("1c99a7bcdbf3209782d7eb38512e6564",
+                             details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "1c99a7bcdbf3209782d7eb38512e6564"));
-        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("write", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, "write"));
-        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("2", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "2"));
 
         http::Request request2(URI);
@@ -668,20 +671,21 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string(), details.getField(RequestDetails::Field::WOPISrc));
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
-        LOK_ASSERT_EQUAL(std::string("%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp"), details[1]);
-        LOK_ASSERT_EQUAL(std::string("Ar3M1X89mVaryYkh"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("UjaCGP4cYHlU6TvUGdnFTPi8hjOS87uFym7ruWMq3F3jBr0kSPgVhbKz5CwUyV8R"), details[3]);
-        LOK_ASSERT_EQUAL(std::string("slideshow.svg"), details[4]);
+        LOK_ASSERT_EQUAL_STR("%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp", details[1]);
+        LOK_ASSERT_EQUAL_STR("Ar3M1X89mVaryYkh", details[2]);
+        LOK_ASSERT_EQUAL_STR("UjaCGP4cYHlU6TvUGdnFTPi8hjOS87uFym7ruWMq3F3jBr0kSPgVhbKz5CwUyV8R",
+                             details[3]);
+        LOK_ASSERT_EQUAL_STR("slideshow.svg", details[4]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -716,17 +720,17 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
-        LOK_ASSERT_EQUAL(std::string("clipboard"), details[1]);
+        LOK_ASSERT_EQUAL_STR("clipboard", details[1]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -793,7 +797,7 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(permission, it != params.end() ? it->second : "");
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
 
         const std::string encodedDocUri
@@ -807,13 +811,13 @@ void RequestDetailsTests::testRequestDetails()
 
         LOK_ASSERT_EQUAL(encodedDocUri, details[1]);
 
-        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Command));
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
-        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
 
         http::Request request2(URI);
@@ -832,15 +836,15 @@ void RequestDetailsTests::testAuthorization()
     Authorization auth1(Authorization::Type::Token, "abc", false);
     Poco::URI uri1("http://localhost");
     auth1.authorizeURI(uri1);
-    LOK_ASSERT_EQUAL(std::string("http://localhost/?access_token=abc"), uri1.toString());
+    LOK_ASSERT_EQUAL_STR("http://localhost/?access_token=abc", uri1.toString());
     Poco::Net::HTTPRequest req1;
     auth1.authorizeRequest(req1);
-    LOK_ASSERT_EQUAL(std::string("Bearer abc"), req1.get("Authorization"));
+    LOK_ASSERT_EQUAL_STR("Bearer abc", req1.get("Authorization"));
 
     Authorization auth1modify(Authorization::Type::Token, "modified", false);
     // still the same uri1, currently "http://localhost/?access_token=abc"
     auth1modify.authorizeURI(uri1);
-    LOK_ASSERT_EQUAL(std::string("http://localhost/?access_token=modified"), uri1.toString());
+    LOK_ASSERT_EQUAL_STR("http://localhost/?access_token=modified", uri1.toString());
 
     Authorization auth2(Authorization::Type::Header, "def", false);
     Poco::Net::HTTPRequest req2;
@@ -851,24 +855,24 @@ void RequestDetailsTests::testAuthorization()
     Poco::URI uri2("http://localhost");
     auth3.authorizeURI(uri2);
     // nothing added with the Authorization header approach
-    LOK_ASSERT_EQUAL(std::string("http://localhost"), uri2.toString());
+    LOK_ASSERT_EQUAL_STR("http://localhost", uri2.toString());
     Poco::Net::HTTPRequest req3;
     auth3.authorizeRequest(req3);
-    LOK_ASSERT_EQUAL(std::string("Basic huhu=="), req3.get("Authorization"));
+    LOK_ASSERT_EQUAL_STR("Basic huhu==", req3.get("Authorization"));
 
     Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\rX-Something:   additional  ", false);
     Poco::Net::HTTPRequest req4;
     auth4.authorizeRequest(req4);
     LOK_ASSERT_MESSAGE("Exected request to have Authorization header", req4.has("Authorization"));
-    LOK_ASSERT_EQUAL(std::string("Basic blah=="), req4.get("Authorization"));
+    LOK_ASSERT_EQUAL_STR("Basic blah==", req4.get("Authorization"));
     LOK_ASSERT_MESSAGE("Exected request to have X-Something header", req4.has("X-Something"));
-    LOK_ASSERT_EQUAL(std::string("additional"), req4.get("X-Something"));
+    LOK_ASSERT_EQUAL_STR("additional", req4.get("X-Something"));
 
     Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\rX-Something-More:   else  \n\r", false);
     Poco::Net::HTTPRequest req5;
     auth5.authorizeRequest(req5);
-    LOK_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
-    LOK_ASSERT_EQUAL(std::string("else"), req5.get("X-Something-More"));
+    LOK_ASSERT_EQUAL_STR("Basic huh==", req5.get("Authorization"));
+    LOK_ASSERT_EQUAL_STR("else", req5.get("X-Something-More"));
 
     Authorization auth6(Authorization::Type::None, "Authorization: basic huh==", false);
     Poco::Net::HTTPRequest req6;
@@ -890,7 +894,7 @@ void RequestDetailsTests::testAuthorization()
         Poco::Net::HTTPRequest req;
         auth.authorizeRequest(req);
         LOK_ASSERT_EQUAL(AuthorizationParam, req.get("Authorization"));
-        LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req.get("X-Requested-With"));
+        LOK_ASSERT_EQUAL_STR("XMLHttpRequest", req.get("X-Requested-With"));
     }
 
     {
@@ -905,7 +909,7 @@ void RequestDetailsTests::testAuthorization()
         Poco::Net::HTTPRequest req7;
         auth7.authorizeRequest(req7);
         LOK_ASSERT_EQUAL(AuthorizationParam, req7.get("Authorization"));
-        LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req7.get("X-Requested-With"));
+        LOK_ASSERT_EQUAL_STR("XMLHttpRequest", req7.get("X-Requested-With"));
     }
 
     {

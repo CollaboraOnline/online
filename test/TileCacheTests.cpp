@@ -786,17 +786,17 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
         const auto tile1 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId1;
         COOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId1);
+        LOK_ASSERT_EQUAL_STR("cached", renderId1);
 
         const auto tile2 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId2;
         COOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId2);
+        LOK_ASSERT_EQUAL_STR("cached", renderId2);
 
         const auto tile3 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId3;
         COOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId3);
+        LOK_ASSERT_EQUAL_STR("cached", renderId3);
 
         // Get new rendercount.
         sendTextFrame(socket1, "ping", testname1);
@@ -1355,7 +1355,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
             tile = assertResponseString(socket, "tile:", testname);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             StringVector tokens(StringVector::tokenize(tile, ' '));
-            LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
+            LOK_ASSERT_EQUAL_STR("tile:", tokens[0]);
             LOK_ASSERT_EQUAL(1000, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
             LOK_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
             LOK_ASSERT_EQUAL(pixTileSize,

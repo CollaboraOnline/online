@@ -337,7 +337,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
         const std::string id = tokens[2].substr(std::string("id=").size());
         LOK_ASSERT(!downloadId.empty());
         LOK_ASSERT_EQUAL(static_cast<int>(Poco::URI(helpers::getTestServerURI()).getPort()), port);
-        LOK_ASSERT_EQUAL(std::string("slideshow"), id);
+        LOK_ASSERT_EQUAL_STR("slideshow", id);
 
         std::string encodedDoc;
         Poco::URI::encode(documentPath, ":/?", encodedDoc);
@@ -360,7 +360,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
         LOK_ASSERT(http::Header::ConnectionToken::None ==
                    responseSVG->header().getConnectionToken());
 
-        LOK_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG->header().getContentType());
+        LOK_ASSERT_EQUAL_STR("image/svg+xml", responseSVG->header().getContentType());
         LOK_ASSERT(0 < responseSVG->header().getContentLength());
         TST_LOG("SVG file size: " << responseSVG->header().getContentLength());
 
@@ -446,8 +446,8 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
                 LOK_ASSERT(http::Header::ConnectionToken::None ==
                            responseICO->header().getConnectionToken());
 
-                LOK_ASSERT_EQUAL(std::string("image/vnd.microsoft.icon"),
-                                 responseICO->header().getContentType());
+                LOK_ASSERT_EQUAL_STR("image/vnd.microsoft.icon",
+                                     responseICO->header().getContentType());
                 LOK_ASSERT(0 < responseICO->header().getContentLength());
                 TST_LOG("Favicon file size: " << responseICO->header().getContentLength());
             }
@@ -489,8 +489,7 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
                 LOK_ASSERT(http::Header::ConnectionToken::None ==
                            responseSVG->header().getConnectionToken());
 
-                LOK_ASSERT_EQUAL(std::string("image/svg+xml"),
-                                 responseSVG->header().getContentType());
+                LOK_ASSERT_EQUAL_STR("image/svg+xml", responseSVG->header().getContentType());
                 LOK_ASSERT(0 < responseSVG->header().getContentLength());
                 TST_LOG("SVG file size: " << responseSVG->header().getContentLength());
 

@@ -101,7 +101,7 @@ private:
         // For now we only set one cookie
         LOK_ASSERT_EQUAL(1, static_cast<int>(cookies.size()));
         // and it is jwt=
-        LOK_ASSERT_EQUAL(std::string("jwt"), cookies[0].getName());
+        LOK_ASSERT_EQUAL_STR("jwt", cookies[0].getName());
 
         // Check cookie properties
         const std::string cookiePath = cookies[0].getPath();

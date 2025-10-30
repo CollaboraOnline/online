@@ -78,10 +78,10 @@ public:
 
         // Note that this is expected for both living and closed documents.
         // This failed when either case didn't add the custom header.
-        LOK_ASSERT_EQUAL(std::string("true"), httpResponse->get("X-COOL-Clipboard"));
+        LOK_ASSERT_EQUAL_STR("true", httpResponse->get("X-COOL-Clipboard"));
 
         // We should mark clipboard responses as non-cacheable.
-        LOK_ASSERT_EQUAL(std::string("no-cache"), httpResponse->get("Cache-Control"));
+        LOK_ASSERT_EQUAL_STR("no-cache", httpResponse->get("Cache-Control"));
 
         TST_LOG("getClipboard: sent request: " << clipPathAndQuery);
 

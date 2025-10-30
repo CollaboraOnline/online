@@ -35,11 +35,11 @@ void UriTests::testEncode()
     LOK_ASSERT(Uri::needsEncoding("www.example.com") == false);
     LOK_ASSERT(Uri::needsEncoding("www.example.com/file") == true);
 
-    LOK_ASSERT_EQUAL(std::string("www.example.com%2Ffile"), Uri("www.example.com/file").encoded());
-    LOK_ASSERT_EQUAL(std::string("www.example.com%2Ffile"), Uri::encode("www.example.com/file"));
+    LOK_ASSERT_EQUAL_STR("www.example.com%2Ffile", Uri("www.example.com/file").encoded());
+    LOK_ASSERT_EQUAL_STR("www.example.com%2Ffile", Uri::encode("www.example.com/file"));
 
-    LOK_ASSERT_EQUAL(std::string("www.example.com/file"), Uri("www.example.com%2Ffile").decoded());
-    LOK_ASSERT_EQUAL(std::string("www.example.com/file"), Uri::decode("www.example.com%2Ffile"));
+    LOK_ASSERT_EQUAL_STR("www.example.com/file", Uri("www.example.com%2Ffile").decoded());
+    LOK_ASSERT_EQUAL_STR("www.example.com/file", Uri::decode("www.example.com%2Ffile"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UriTests);

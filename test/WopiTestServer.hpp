@@ -428,14 +428,14 @@ protected:
                     TST_LOG("FakeWOPIHost: Handling PutRelativeFile (#"
                             << _countPutRelative << "): " << uriReq.getPath());
 
-                    LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+                    LOK_ASSERT_EQUAL_STR("PUT_RELATIVE", request.get("X-WOPI-Override"));
                     assertPutRelativeFileRequest(request);
                     content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
                 }
                 else
                 {
                     // rename file; response should be the file name without the url and the extension
-                    LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
+                    LOK_ASSERT_EQUAL_STR("RENAME_FILE", request.get("X-WOPI-Override"));
                     assertRenameFileRequest(request);
                     content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
                 }
