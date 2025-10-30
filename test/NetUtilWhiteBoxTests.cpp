@@ -267,13 +267,12 @@ void NetUtilWhiteBoxTests::testParseUrl()
 {
     constexpr std::string_view testname = __func__;
 
-    LOK_ASSERT_EQUAL(std::string(), net::parseUrl(""));
+    LOK_ASSERT_EQUAL_STR(std::string(), net::parseUrl(""));
 
-    LOK_ASSERT_EQUAL(std::string(), net::parseUrl("https://sub.domain.com:80"));
-    LOK_ASSERT_EQUAL(std::string("/"), net::parseUrl("https://sub.domain.com:80/"));
+    LOK_ASSERT_EQUAL_STR(std::string(), net::parseUrl("https://sub.domain.com:80"));
+    LOK_ASSERT_EQUAL_STR("/", net::parseUrl("https://sub.domain.com:80/"));
 
-    LOK_ASSERT_EQUAL(std::string("/some/path"),
-                     net::parseUrl("https://sub.domain.com:80/some/path"));
+    LOK_ASSERT_EQUAL_STR("/some/path", net::parseUrl("https://sub.domain.com:80/some/path"));
 }
 
 void NetUtilWhiteBoxTests::testSameOrigin()

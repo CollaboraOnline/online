@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 namespace net
 {
@@ -69,7 +70,7 @@ inline bool parseUri(std::string uri, std::string& scheme, std::string& host, st
 }
 
 /// Return the locator given a URI.
-inline std::string parseUrl(const std::string& uri)
+inline std::string_view parseUrl(const std::string_view uri)
 {
     std::size_t itScheme = uri.find("://");
     if (itScheme != uri.npos)
@@ -87,7 +88,7 @@ inline std::string parseUrl(const std::string& uri)
         return uri.substr(itUrl); // Including the first slash.
     }
 
-    return std::string();
+    return std::string_view();
 }
 
 } // namespace net

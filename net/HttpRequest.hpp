@@ -2040,7 +2040,7 @@ inline const std::shared_ptr<const http::Response>
 get(const std::string& url, std::chrono::milliseconds timeout = Session::getDefaultTimeout())
 {
     auto httpSession = http::Session::create(url);
-    return httpSession->syncRequest(http::Request(net::parseUrl(url)), timeout);
+    return httpSession->syncRequest(http::Request(std::string(net::parseUrl(url))), timeout);
 }
 
 /// HTTP Get synchronously given a url and a path.
