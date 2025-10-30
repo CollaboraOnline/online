@@ -1814,8 +1814,7 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
                 _presetTimestamp[fileName] = ts;
             }
 
-            std::string viewSettings = presetsPath + "viewsetting/viewsetting.json";
-            std::string settings;
+            const std::string viewSettings = presetsPath + "viewsetting/viewsetting.json";
             if (FileUtil::Stat(viewSettings).exists())
             {
                 const std::string settings = extractViewSettings(viewSettings, session, _isViewSettingsAccessibilityEnabled, _isViewSettingsUpdated);
