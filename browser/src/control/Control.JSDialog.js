@@ -483,7 +483,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// this will only search in current instance and not in whole document
 		const tabControlWidget = this.findTabControl(instance);
 
-		let focusWidget, firstFocusableElement ;
+		let focusWidget, firstFocusableElement;
 
 		if (tabControlWidget && !instance.init_focus_id) {
 			// get DOM element of tabControl from current instance
@@ -500,7 +500,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				if (focusables && focusables.length) firstFocusableElement = focusables[0];
 			}
 
-			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)){
+			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)) {
 				firstFocusableElement = JSDialog.FindFocusableWithin(firstFocusableElement, 'next');
 			}
 		}
