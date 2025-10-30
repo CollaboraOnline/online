@@ -4128,7 +4128,7 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
 #if defined(QTAPP)
                     lok_init_2(LO_PATH "/program", nullptr);
 #elif defined(MACOS)
-                    lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
+                    lok_init_2((getBundlePath() + "/Contents/Frameworks").c_str(), getAppSupportURL().c_str());
 #elif defined(_WIN32)
                     lok_init_2((app_installation_path + "lo\\program").c_str(),
                                (app_installation_uri + "lo").c_str());

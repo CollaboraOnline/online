@@ -588,7 +588,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\nrsync -avz --delete --delete-excluded \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/lokit/\"\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\nSIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\nfor f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n  [ -f \"$f\" ] || continue\n  codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -851,12 +851,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = coda/coda.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
-				ENABLE_APP_SANDBOX = NO;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -906,12 +907,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = coda/coda.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
-				ENABLE_APP_SANDBOX = NO;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = x86_64;
