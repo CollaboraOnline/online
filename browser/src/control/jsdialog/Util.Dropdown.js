@@ -73,6 +73,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		if (entries[i].type === 'json') {
 			// replace old grid with new widget
 			json.children[0] = entries[i].content;
+			initialSelectedId = json.children[0].initialSelectedId;
 			if (json.children[0].type === 'grid') json.gridKeyboardNavigation = true;
 			break;
 		}
