@@ -1570,7 +1570,7 @@ AS_IF([test "$webkit_try_older" = true],
 
 dnl config for qtapp frontend for cool
 AS_IF([test "$ENABLE_QTAPP" = true],
-      [PKG_CHECK_MODULES([QT6],[Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets],,)
+      [PKG_CHECK_MODULES([QT6],[Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6Svg Qt6SvgWidgets],,)
        dnl Qt6 moc executable is found at /usr/lib64/qt6/libexec/moc with
        dnl qt-base-devel on fedora... TODO: check what is the story with other
        dnl distros is it ever really in the PATH?

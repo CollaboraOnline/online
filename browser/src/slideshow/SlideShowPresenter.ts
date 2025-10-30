@@ -1177,6 +1177,7 @@ class SlideShowPresenter {
 	/// called as a response on getpresentationinfo
 	onSlideShowInfo(data: PresentationInfo) {
 		app.console.debug('SlideShow: received information about presentation');
+
 		this._presentationInfo = data;
 
 		const numberOfSlides = this._getSlidesCount();

@@ -779,6 +779,11 @@ class LayerDrawing {
 	onSlideRenderingComplete(e: any) {
 		if (this.isDisposed()) return;
 		this.map.fire('handleslideshowprogressbar', { isVisible: false });
+		
+		// show welcome slideshow once 1st slide is rendered
+		const index = this.getSlideInfo(this.requestedSlideHash || this.prefetchedSlideHash).index;
+		if (app.map.slideShowPresenter._isWelcomePresentation && index === 0 && window.ThisIsAMobileApp)
+			app.socket.sendMessage('SHOW_WELCOME');
 
 		if (!e.success) {
 			const slideHash = this.requestedSlideHash || this.prefetchedSlideHash;
