@@ -275,12 +275,14 @@ class TileManager {
 		}
 	}
 
-	public static isReceivedFirstTile(): boolean {
-		return this.receivedFirstTile;
-	}
-
 	public static appendAfterFirstTileTask(task: AfterFirstTileTask): void {
-		this.afterFirstTileTasks.push(task);
+		// in case we are already after the first tile -> do in next frame
+		if (this.receivedFirstTile)
+			app.layoutingService.appendLayoutingTask(() => {
+				task();
+			});
+		// wait for it
+		else this.afterFirstTileTasks.push(task);
 	}
 
 	/// Called before frame rendering to update details
@@ -1858,13 +1860,11 @@ class TileManager {
 
 		this.queueAcknowledgement(tileMsgObj);
 
-		if (!this.receivedFirstTile) {
-			// This was the first tile, exec the queued tasks.
-			this.receivedFirstTile = true;
-			while (this.afterFirstTileTasks.length > 0) {
-				const task = this.afterFirstTileTasks.shift();
-				task();
-			}
+		// This was the first tile, exec the queued tasks.
+		this.receivedFirstTile = true;
+		while (this.afterFirstTileTasks.length > 0) {
+			const task = this.afterFirstTileTasks.shift();
+			task();
 		}
 	}
 
