@@ -48,6 +48,7 @@ export class Header extends CanvasSectionObject {
 	_dragDistance: number[];
 	_isColumn: boolean;
 	cursor: string;
+	resizeHandleSize: number;
 
 	getFont: () => string;
 
@@ -490,9 +491,10 @@ export class Header extends CanvasSectionObject {
 			const start = end - entry.size;
 			if (position >= start && position < end) {
 				// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
-				let resizeAreaStart = isRTL ? Math.min(start + 3 * app.dpiScale, end) : Math.max(start, end - 3 * app.dpiScale);
+				const borderResizeHandle = 3;
+				let resizeAreaStart = isRTL ? Math.min(start + borderResizeHandle * app.dpiScale, end) : Math.max(start, end - borderResizeHandle * app.dpiScale);
 				if (entry.isCurrent || (window as any).mode.isMobile()) {
-					resizeAreaStart = isRTL ? start + this._resizeHandleSize : end - this._resizeHandleSize;
+					resizeAreaStart = isRTL ? start + this.resizeHandleSize : end - this.resizeHandleSize;
 				}
 				const isMouseOverResizeArea = isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
 				result = {entry: entry, hit: isMouseOverResizeArea};
