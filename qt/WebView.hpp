@@ -16,20 +16,20 @@
 #include <QWebEngineView>
 #include "Document.hpp"
 #include <QMainWindow>
-#include <utility>
 
 class WebView
 {
 public:
-    explicit WebView(QWidget* parent, QWebEngineProfile* profile);
+    explicit WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome = false);
     QWebEngineView* webEngineView() { return _webView; }
 
-    void load(const std::string& fileURL, bool isWelcome = false);
+    void load(const std::string& fileURL);
 
 private:
     QMainWindow* _mainWindow;
     QWebEngineView* _webView;
     coda::DocumentData _document;
+    bool _isWelcome;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
