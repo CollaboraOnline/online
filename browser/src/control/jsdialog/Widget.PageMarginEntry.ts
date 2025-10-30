@@ -57,7 +57,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		return `${formatted}${unit}`;
 	}
 
-	const onMarginClick = (evt: MouseEvent) => {
+	const onMarginClick = (evt: MouseEvent | KeyboardEvent) => {
 		const elm = evt.currentTarget as HTMLElement;
 		const key = elm.id;
 		if (!key || !options[key]) return;
@@ -102,7 +102,10 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		item.addEventListener('click', onMarginClick);
 
 		item.addEventListener('keydown', function (event: KeyboardEvent) {
-			if (event.key === 'Tab') {
+			if (event.key === 'Enter' || event.key === ' ') {
+				onMarginClick(event);
+				event.preventDefault();
+			} else if (event.key === 'Tab') {
 				JSDialog.CloseDropdown(data.id);
 				event.preventDefault();
 			}
@@ -183,12 +186,17 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	custom.setAttribute('role', 'button');
 	custom.setAttribute('tabindex', '0');
 
-	custom.addEventListener('click', (evt: MouseEvent) => {
+	const customClickEventHdl = () => {
 		map.sendUnoCommand(isCalc ? '.uno:PageFormatDialog' : '.uno:PageDialog');
 		builder.callback('dialog', 'close', { id: data.id }, null);
-	});
+	};
+
+	custom.addEventListener('click', customClickEventHdl);
 	custom.addEventListener('keydown', function (event: KeyboardEvent) {
-		if (event.key === 'Tab') {
+		if (event.key === 'Enter' || event.key === ' ') {
+			customClickEventHdl();
+			event.preventDefault();
+		} else if (event.key === 'Tab') {
 			JSDialog.CloseDropdown(data.id);
 			event.preventDefault();
 		}
