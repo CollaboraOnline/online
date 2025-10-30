@@ -261,8 +261,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
         "paste mimetype=text/plain;charset=utf-8\nand now for something completely different",
         testname);
     res = helpers::getAllText(socket, testname);
-    LOK_ASSERT_EQUAL(
-        std::string("textselectioncontent: and now for something completely different"), res);
+    LOK_ASSERT_EQUAL_STR("textselectioncontent: and now for something completely different", res);
 
     // Close and reopen the same document and test again.
     socket->shutdownWS();
@@ -288,8 +287,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
     helpers::sendTextFrame(
         socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
     res = helpers::getAllText(socket, testname);
-    LOK_ASSERT_EQUAL(
-        std::string("textselectioncontent: and now for something completely different"), res);
+    LOK_ASSERT_EQUAL_STR("textselectioncontent: and now for something completely different", res);
 
     // Can we still edit the comment?
     helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nblah blah xyz",
@@ -335,8 +333,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
         "paste mimetype=text/plain;charset=utf-8\nand now for something completely different",
         testname);
     res = helpers::getAllText(socket, testname);
-    LOK_ASSERT_EQUAL(
-        std::string("textselectioncontent: and now for something completely different"), res);
+    LOK_ASSERT_EQUAL_STR("textselectioncontent: and now for something completely different", res);
 
     // Close and reopen the same document and test again.
     TST_LOG("Closing connection after pasting.");
@@ -363,8 +360,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
     helpers::sendTextFrame(
         socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
     res = helpers::getAllText(socket, testname);
-    LOK_ASSERT_EQUAL(
-        std::string("textselectioncontent: and now for something completely different"), res);
+    LOK_ASSERT_EQUAL_STR("textselectioncontent: and now for something completely different", res);
 
     // Can we still edit the comment?
     helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nnew text different",

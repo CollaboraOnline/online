@@ -748,16 +748,14 @@ void WhiteBoxTests::testAnonymization()
     LOK_ASSERT_EQUAL_STR("#0#5e45aef91248a8aa#", Anonymizer::anonymizeUrl(name));
     LOK_ASSERT_EQUAL_STR("#1#8f8d95bd2a202d00#.odt", Anonymizer::anonymizeUrl(filenameTestx));
     LOK_ASSERT_EQUAL_STR("/path/to/#2#5c872b2d82ecc8a0#.ext", Anonymizer::anonymizeUrl(path));
-    LOK_ASSERT_EQUAL(
-        std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-                    "#3#22c6f0caad277666#?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
-                    "token_ttl=0&permission=edit"),
-        Anonymizer::anonymizeUrl(plainUrl));
-    LOK_ASSERT_EQUAL(
-        std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-                    "736_ocgdpzbkm39u/"
-                    "#4#294f0dfb18f6a80b#.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
-                    "token_ttl=0&permission=edit"),
+    LOK_ASSERT_EQUAL_STR("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
+                         "#3#22c6f0caad277666#?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&"
+                         "access_token_ttl=0&permission=edit",
+                         Anonymizer::anonymizeUrl(plainUrl));
+    LOK_ASSERT_EQUAL_STR(
+        "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/736_ocgdpzbkm39u/"
+        "#4#294f0dfb18f6a80b#.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_token_ttl=0&"
+        "permission=edit",
         Anonymizer::anonymizeUrl(fileUrl));
 
     anonymizationSalt = 0;
