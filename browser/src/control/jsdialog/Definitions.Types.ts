@@ -356,6 +356,13 @@ interface EditWidgetJSON extends WidgetJSON {
 	changedCallback: any; // callback  for 'change' event
 }
 
+// type: 'checkbox'
+interface CheckboxWidgetJSON extends WidgetJSON {
+	text: string;
+	checked?: boolean; // checkbox state
+	hidden?: boolean;
+}
+
 interface SeparatorWidgetJSON extends WidgetJSON {
 	orientation: string;
 }

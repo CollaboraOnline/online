@@ -13,7 +13,7 @@ declare var JSDialog: any;
 
 function _createCheckboxContainer(
 	parentContainer: HTMLElement,
-	data: any,
+	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
 ) {
 	const container = window.L.DomUtil.create(
@@ -27,7 +27,7 @@ function _createCheckboxContainer(
 
 function _createCheckboxControl(
 	parentContainer: HTMLElement,
-	data: any,
+	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
 ) {
 	const checkbox = window.L.DomUtil.create(
@@ -43,7 +43,7 @@ function _createCheckboxControl(
 
 function _createCheckboxLabel(
 	parentContainer: HTMLElement,
-	data: any,
+	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
 ) {
 	const label = window.L.DomUtil.create(
@@ -59,7 +59,7 @@ function _createCheckboxLabel(
 
 JSDialog.Checkbox = function (
 	parentContainer: HTMLElement,
-	data: any,
+	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
 ) {
 	const container = _createCheckboxContainer(parentContainer, data, builder);
@@ -89,12 +89,7 @@ JSDialog.Checkbox = function (
 
 	if (!container.hasAttribute('disabled')) {
 		const state = data.checked;
-		if (
-			(state && state === 'true') ||
-			state === true ||
-			state === 1 ||
-			state === '1'
-		) {
+		if (state === true) {
 			$(checkbox).prop('checked', true);
 		} else if (state) {
 			$(checkbox).prop('checked', false);
