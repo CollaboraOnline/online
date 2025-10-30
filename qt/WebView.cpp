@@ -82,6 +82,7 @@ std::string getUILanguage()
 WebView::WebView(QWidget* parent, QWebEngineProfile* profile)
     : _mainWindow(new QMainWindow(parent))
     , _webView(new QWebEngineView(_mainWindow))
+    , _isWelcome(isWelcome)
 {
     _mainWindow->setCentralWidget(_webView);
 
@@ -112,7 +113,7 @@ std::pair<int, int> getWindowSize(bool isWelcome)
     return { width, height };
 }
 
-void WebView::load(const std::string& fileURL, bool isWelcome)
+void WebView::load(const std::string& fileURL)
 {
     _document = {
         ._fileURL = fileURL,
@@ -122,7 +123,15 @@ void WebView::load(const std::string& fileURL, bool isWelcome)
 
     // setup js c++ communication
     QWebChannel* channel = new QWebChannel(_webView->page());
-    auto bridge = new Bridge(channel, _document, _webView);
+    QSvgWidget* loadingOverlay = nullptr;
+    if (_isWelcome)
+    {
+        // TODO: make it dynamic
+        const std::string svgPath = "/home/rashesh/Downloads/welcome.svg";
+        loadingOverlay = new QSvgWidget(QString::fromStdString(svgPath), _webView);
+    }
+
+    auto bridge = new Bridge(channel, _document, _webView, loadingOverlay);
     channel->registerObject("bridge", bridge);
     _webView->page()->setWebChannel(channel);
 
@@ -136,12 +145,19 @@ void WebView::load(const std::string& fileURL, bool isWelcome)
                                     "&appdocid=" +
                                     std::to_string(_document._appDocId) +
                                     "&userinterfacemode=notebookbar" +
-                                    (isWelcome ? "&iswelcome=true" : "");
+                                    (_isWelcome ? "&iswelcome=true" : "");
 
     LOG_TRC("Open URL: " << urlAndQuery);
     _webView->load(QUrl(QString::fromStdString(urlAndQuery)));
 
-    auto size = getWindowSize(isWelcome);
+    auto size = getWindowSize(_isWelcome);
+    if (_isWelcome && loadingOverlay)
+    {
+        loadingOverlay->resize(size.first, size.second);
+        loadingOverlay->setStyleSheet("background-color: white;");
+        loadingOverlay->raise();
+        loadingOverlay->show();
+    }
     _mainWindow->resize(size.first, size.second);
     _mainWindow->show();
 }
