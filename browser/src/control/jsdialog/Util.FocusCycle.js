@@ -64,6 +64,7 @@ function isFocusable(element) {
 		'input[type="checkbox"]:not([disabled]):not(.hidden)',
 		'select:not([disabled]):not(.hidden)',
 		'[tabindex]:not([tabindex="-1"]):not(.jsdialog-begin-marker):not(.jsdialog-end-marker):not([disabled]):not(.hidden)',
+		'[role="listbox"] [role="option"]:not([disabled]):not(.hidden)'
 	];
 
 	return focusableElements.some((selector) => element.matches(selector));

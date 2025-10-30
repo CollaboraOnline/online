@@ -60,7 +60,11 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			return false;
 	};
 
-	for (var i in entries) {
+	const shouldSelectFirstEntry = entries.length > 0 ? !entries.some(entry => entry.selected === true) : false;
+
+	let initialSelectedId;
+
+	for (let i = 0; i < entries.length; i++) {
 		var checkedValue = (entries[i].checked === undefined)
 			? undefined : (entries[i].uno && isChecked('.uno' + entries[i].uno));
 
@@ -115,13 +119,18 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					w2icon: entries[i].icon, // FIXME: DEPRECATED
 					icon: entries[i].img,
 					checked: entries[i].checked || checkedValue,
-					selected: entries[i].selected,
+					selected: (i === 0 && shouldSelectFirstEntry) ? true : entries[i].selected,
 					hasSubMenu: !!entries[i].items
 				};
+				if(entry.selected) initialSelectedId = entry.id;
 			break;
 		}
 
 		json.children[0].children.push(entry);
+	}
+
+	if (initialSelectedId) {
+		json.init_focus_id = initialSelectedId;
 	}
 
 	var lastSubMenuOpened = null;
