@@ -1099,6 +1099,8 @@ void Document::trimIfInactive()
     SigUtil::addActivity("trimIfInactive");
     _loKit->trimMemory(4096);
     _deltaGen->dropCache();
+    // Inform docbroker that document has (deep) trimmed memory
+    sendTextFrame("memorytrimmed:");
 }
 
 void Document::trimAfterInactivity()

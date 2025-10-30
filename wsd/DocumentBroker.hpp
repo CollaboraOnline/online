@@ -419,6 +419,8 @@ public:
         _cursorHeight = h;
     }
 
+    void clearCaches();
+
     void invalidateTiles(const std::string& tiles, CanonicalViewId canonicalViewId)
     {
         // Remove from cache.
