@@ -43,7 +43,6 @@
 #include <QWebChannel>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
-#include <QWindow>
 #include <QMessageBox>
 #include <QDialog>
 #include <QVBoxLayout>
@@ -585,13 +584,6 @@ QVariant Bridge::cool(const QString& messageStr)
 
         LOG_INF("downloadas: exported to " << destPath.toStdString());
         return {};
-    }
-    else if (message == "WINDOW_START_MOVE")
-    {
-        if (_webView && _webView->window() && _webView->window()->windowHandle())
-        {
-            _webView->window()->windowHandle()->startSystemMove();
-        }
     }
     else if (message.starts_with(HYPERLINK))
     {
