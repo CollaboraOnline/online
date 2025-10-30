@@ -42,6 +42,7 @@ interface ConfigData {
 	browsersetting: ConfigItem[] | null;
 	viewsetting: ConfigItem[] | null;
 	xcu: ConfigItem[] | null;
+	serverprivateinfo?: ConfigItem[] | null;
 }
 
 interface ViewSettings {
@@ -50,6 +51,11 @@ interface ViewSettings {
 	signatureCert: string;
 	signatureKey: string;
 	signatureCa: string;
+}
+
+interface ServerPrivateInfoSettings {
+	eSignatureSecret: string;
+	eSignatureClientId: string;
 }
 
 interface SectionConfig {
@@ -148,6 +154,7 @@ class SettingIframe {
 	private wordbook;
 	private xcuEditor;
 	private _viewSetting;
+	private _serverPrivateInfo: ServerPrivateInfoSettings | undefined;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
 		zoteroAPIKey: 'Zotero',
@@ -246,6 +253,8 @@ class SettingIframe {
 			this.settingConfigBasePath() + '/browsersetting/',
 		viewSettingsUpload: () => this.settingConfigBasePath() + '/viewsetting/',
 		XcuUpload: () => this.settingConfigBasePath() + '/xcu/',
+		serverPrivateInfoUpload: () =>
+			this.settingConfigBasePath() + '/serverprivateinfo/',
 	};
 	private browserSettingOptions: Record<string, any> = {};
 
@@ -272,6 +281,15 @@ class SettingIframe {
 	): Promise<void> {
 		const file = new File([content], filename, { type: 'text/plain' });
 		await this.uploadFile(this.PATH.viewSettingsUpload(), file);
+	}
+
+	async uploadServerPrivateInfoFile(
+		filename: string,
+		content: string,
+	): Promise<void> {
+		const file = new File([content], filename, { type: 'application/json' });
+		await this.uploadFile(this.PATH.serverPrivateInfoUpload(), file);
+		console.log("Upload file")
 	}
 
 	private initWindowVariables(): void {
@@ -785,6 +803,67 @@ class SettingIframe {
 		actionsContainer.appendChild(saveButton);
 
 		return actionsContainer;
+	}
+
+	private createServerPrivateInfoSection(data: ServerPrivateInfoSettings): void {
+		this._serverPrivateInfo = data;
+		const settingsContainer = document.getElementById('allConfigSection');
+		if (!settingsContainer) return;
+		let section = document.getElementById('server-private-info-section');
+		if (section) section.remove();
+		section = document.createElement('div');
+		section.id = 'server-private-info-section';
+		section.classList.add('section');
+		section.appendChild(this.createHeading(_('Electronic signature')));
+		section.appendChild(
+			this.createParagraph(
+				_('Configure server-side credentials for electronic signature integration.'),
+			),
+		);
+		const editor = document.createElement('div');
+		editor.id = 'server-private-info-editor';
+		section.appendChild(editor);
+		const fieldset = document.createElement('fieldset');
+		fieldset.classList.add('view-settings-fieldset');
+		editor.appendChild(fieldset);
+		fieldset.appendChild(this.createLegend(_('Option')));
+		fieldset.appendChild(
+			this.createInputField(
+				'eSignatureClientId',
+				_('eSignature Client ID'),
+				data.eSignatureClientId || '',
+				data,
+				false,
+				false,
+			),
+		);
+		fieldset.appendChild(
+			this.createInputField(
+				'eSignatureSecret',
+				_('eSignature Secret'),
+				data.eSignatureSecret || '',
+				data,
+				false,
+				false,
+			),
+		);
+		section.appendChild(this.createServerPrivateInfoActions());
+		settingsContainer.appendChild(section);
+	}
+
+	private createServerPrivateInfoActions(): HTMLDivElement {
+		return this.createSettingsActions(
+			'serverprivateinfo',
+			'Electronic signature',
+			'serverprivateinfo.json',
+			() => this.getDefaultServerPrivateInfoSettings(),
+			() => this._serverPrivateInfo,
+			(settings) =>
+				this.uploadServerPrivateInfoFile(
+					'serverprivateinfo.json',
+					JSON.stringify(settings),
+				),
+		);
 	}
 
 	private createMaterialDesignIconContainer(
@@ -1554,6 +1633,29 @@ class SettingIframe {
 			);
 		}
 
+		if (this.isAdmin()) {
+			if (data.serverprivateinfo && data.serverprivateinfo.length > 0) {
+				const fileId = data.serverprivateinfo[0].uri;
+				const spContent = await this.fetchSettingFile(fileId);
+				const defaults = this.getDefaultServerPrivateInfoSettings();
+				let parsed: ServerPrivateInfoSettings = defaults;
+				try {
+					parsed = spContent
+						? { ...defaults, ...JSON.parse(spContent) }
+						: defaults;
+				} catch (e) {
+					parsed = defaults;
+				}
+				this.createServerPrivateInfoSection(parsed);
+			} else {
+				await this.uploadServerPrivateInfoFile(
+					'serverprivateinfo.json',
+					JSON.stringify(this.getDefaultServerPrivateInfoSettings()),
+				);
+				return await this.fetchAndPopulateSharedConfigs();
+			}
+		}
+
 		const settingsContainer = document.getElementById('allConfigSection');
 		if (!settingsContainer) return;
 		if (data.xcu && data.xcu.length > 0) {
@@ -1729,6 +1831,13 @@ class SettingIframe {
 			signatureCert: '',
 			signatureKey: '',
 			signatureCa: '',
+		};
+	}
+
+	private getDefaultServerPrivateInfoSettings(): ServerPrivateInfoSettings {
+		return {
+			eSignatureSecret: '',
+			eSignatureClientId: '',
 		};
 	}
 
