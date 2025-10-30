@@ -99,6 +99,14 @@ export class RowHeader extends cool.Header {
 		this._headerInfo = new cool.HeaderInfo(this._map, false /* isCol */);
 	}
 
+	isMouseOverResizeArea(start: number, end:number, position: number, entryIsCurrent: boolean) : boolean {
+		let resizeAreaStart = Math.max(start, end - this.borderResizeHandle * app.dpiScale);
+		if (entryIsCurrent || (window as any).mode.isMobile()) {
+			resizeAreaStart =  end - this.resizeHandleSize;
+		}
+		return position > resizeAreaStart;
+	}
+
 	drawHeaderEntry (entry: HeaderEntryData): void {
 		if (!entry)
 			return;
