@@ -96,6 +96,16 @@ export class ColumnHeader extends Header {
 		this._headerInfo = new cool.HeaderInfo(this._map, true /* isCol */);
 	}
 
+	isMouseOverResizeArea(start: number, end:number, position: number, entryIsCurrent: boolean) : boolean {
+		const isRTL = this.isCalcRTL();
+		// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
+		let resizeAreaStart = isRTL ? Math.min(start + this.borderResizeHandle * app.dpiScale, end) : Math.max(start, end - this.borderResizeHandle * app.dpiScale);
+		if (entryIsCurrent || (window as any).mode.isMobile()) {
+			resizeAreaStart = isRTL ? start + this.resizeHandleSize : end - this.resizeHandleSize;
+		}
+		return isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
+	}
+
 	drawHeaderEntry (entry: HeaderEntryData): void {
 		if (!entry)
 			return;

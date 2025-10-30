@@ -49,6 +49,7 @@ export class Header extends CanvasSectionObject {
 	_isColumn: boolean;
 	cursor: string;
 	resizeHandleSize: number;
+	borderResizeHandle = 3;
 
 	getFont: () => string;
 
@@ -69,6 +70,8 @@ export class Header extends CanvasSectionObject {
 	_handleStatusUpdated(): void {
 		this._reInitRowColumnHeaderStylesAfterModeChange();
 	}
+
+	isMouseOverResizeArea(start: number, end:number, position: number, entryIsCurrent: boolean): boolean {return false;}
 
 	_initHeaderEntryStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
@@ -490,14 +493,7 @@ export class Header extends CanvasSectionObject {
 			const end = isRTL ? this.size[0] - entry.pos + entry.size : entry.pos;
 			const start = end - entry.size;
 			if (position >= start && position < end) {
-				// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
-				const borderResizeHandle = 3;
-				let resizeAreaStart = isRTL ? Math.min(start + borderResizeHandle * app.dpiScale, end) : Math.max(start, end - borderResizeHandle * app.dpiScale);
-				if (this._isColumn && (entry.isCurrent || (window as any).mode.isMobile())) {
-					resizeAreaStart = isRTL ? start + this.resizeHandleSize : end - this.resizeHandleSize;
-				}
-				const isMouseOverResizeArea = isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
-				result = {entry: entry, hit: isMouseOverResizeArea};
+				result = {entry: entry, hit: this.isMouseOverResizeArea(start, end, position, entry.isCurrent)};
 				return true;
 			}
 		}.bind(this));
