@@ -542,10 +542,9 @@ void RequestDetailsTests::testRequestDetails()
                 "253DXCookieValue%253ASuperCookieName%253DBAZINGA"),
             details[1]);
         LOK_ASSERT_EQUAL_STR("ws", details[2]);
-        LOK_ASSERT_EQUAL(
-            std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%"
-                        "2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&compat="),
-            details[3]);
+        LOK_ASSERT_EQUAL_STR("WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%"
+                             "2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&compat=",
+                             details[3]);
         LOK_ASSERT_EQUAL_STR("ws", details[4]);
         LOK_ASSERT_EQUAL_STR("b26112ab1b6f2ed98ce1329f0f344791", details[5]);
         LOK_ASSERT_EQUAL_STR("close", details[6]);
@@ -610,17 +609,16 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), details.size());
         LOK_ASSERT_EQUAL_STR("cool", details[0]);
         LOK_ASSERT(details.equals(0, "cool"));
-        LOK_ASSERT_EQUAL(
-            std::string("http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%"
-                        "2Fwopi%2Ffiles%2F165_ocgdpzbkm39u%3Faccess_token%"
-                        "3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0%26reuse_cookies%"
-                        "3DXCookieName%253DXCookieValue%253ASuperCookieName%253DBAZINGA"),
+        LOK_ASSERT_EQUAL_STR(
+            "http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%"
+            "2F165_ocgdpzbkm39u%3Faccess_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_"
+            "ttl%3D0%26reuse_cookies%3DXCookieName%253DXCookieValue%253ASuperCookieName%"
+            "253DBAZINGA",
             details[1]);
         LOK_ASSERT_EQUAL_STR("ws", details[2]);
-        LOK_ASSERT_EQUAL(
-            std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%"
-                        "2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u&compat="),
-            details[3]);
+        LOK_ASSERT_EQUAL_STR("WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%"
+                             "2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u&compat=",
+                             details[3]);
         LOK_ASSERT_EQUAL_STR("ws", details[4]);
         LOK_ASSERT_EQUAL_STR("1c99a7bcdbf3209782d7eb38512e6564", details[5]);
         LOK_ASSERT_EQUAL_STR("write", details[6]);
