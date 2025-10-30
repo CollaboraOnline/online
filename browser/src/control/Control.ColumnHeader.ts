@@ -27,7 +27,6 @@ export class ColumnHeader extends Header {
 	cursor: string = 'col-resize';
 
 	_current: number;
-	_resizeHandleSize: number;
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
@@ -41,7 +40,7 @@ export class ColumnHeader extends Header {
 		this._map = window.L.Map.THIS;
 		this._isColumn = true;
 		this._current = -1;
-		this._resizeHandleSize = 15 * app.dpiScale;
+		this.resizeHandleSize = 15 * app.dpiScale;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
@@ -125,7 +124,7 @@ export class ColumnHeader extends Header {
 		this.context.fillRect(startX, 0, entry.size, this.size[1]);
 
 		// draw resize handle
-		const handleSize = this._resizeHandleSize;
+		const handleSize = this.resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			const center = isRTL ? startX + handleSize / 2 : startX + entry.size - handleSize / 2;
 			const y = 2 * app.dpiScale;
