@@ -68,6 +68,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
     CPPUNIT_TEST(testStateEnum);
     CPPUNIT_TEST(testFindInVector);
+    CPPUNIT_TEST(testJoinPair);
     CPPUNIT_TEST(testThreadPool);
     CPPUNIT_TEST_SUITE_END();
 
@@ -96,6 +97,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testJsonUtilEscapeJSONValue();
     void testStateEnum();
     void testFindInVector();
+    void testJoinPair();
     void testThreadPool();
 
     size_t waitForThreads(size_t count);
@@ -1123,6 +1125,35 @@ void WhiteBoxTests::testFindInVector()
     ret = Util::findInVector(v, "blah");
     expected = std::string::npos;
     LOK_ASSERT_EQUAL(expected, ret);
+}
+
+void WhiteBoxTests::testJoinPair()
+{
+    constexpr std::string_view testname = __func__;
+
+    LOK_ASSERT_EQUAL_STR(std::string(), Util::joinPair(std::vector<int>()));
+    LOK_ASSERT_EQUAL_STR(std::string(), Util::joinPair(std::vector<int>(), "bazinga"));
+    LOK_ASSERT_EQUAL_STR(std::string(), Util::joinPair(std::vector<int>(), "bazinga", "more"));
+
+    LOK_ASSERT_EQUAL_STR("1", Util::joinPair<std::vector<int>>({ 1 }));
+    LOK_ASSERT_EQUAL_STR("1", Util::joinPair<std::vector<int>>({ 1 }, "bazinga"));
+    LOK_ASSERT_EQUAL_STR("1", Util::joinPair<std::vector<int>>({ 1 }, "bazinga", "more"));
+
+    LOK_ASSERT_EQUAL_STR("1 / 2", Util::joinPair<std::vector<int>>({ 1, 2 }));
+    LOK_ASSERT_EQUAL_STR("1bazinga2", Util::joinPair<std::vector<int>>({ 1, 2 }, "bazinga"));
+    LOK_ASSERT_EQUAL_STR("1bazingamore2",
+                         Util::joinPair<std::vector<int>>({ 1, 2 }, "bazinga", "more"));
+
+    LOK_ASSERT_EQUAL_STR("1 / 2", Util::joinPair<std::vector<int>>({ 1, 2 }));
+    LOK_ASSERT_EQUAL_STR("132", Util::joinPair<std::vector<int>>({ 1, 2 }, 3));
+    LOK_ASSERT_EQUAL_STR("1342", Util::joinPair<std::vector<int>>({ 1, 2 }, 3, 4));
+
+    LOK_ASSERT_EQUAL_STR("1 / 2 / 3 / 4 / 5 / 6 / 7",
+                         Util::joinPair<std::vector<int>>({ 1, 2, 3, 4, 5, 6, 7 }));
+    LOK_ASSERT_EQUAL_STR("1323334353637",
+                         Util::joinPair<std::vector<int>>({ 1, 2, 3, 4, 5, 6, 7 }, 3));
+    LOK_ASSERT_EQUAL_STR("1342343344345346347",
+                         Util::joinPair<std::vector<int>>({ 1, 2, 3, 4, 5, 6, 7 }, 3, 4));
 }
 
 #if 0

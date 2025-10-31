@@ -672,7 +672,7 @@ public:
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
         os << indent << "\tstage: " << name(_stage);
         os << indent << "\theaders: ";
-        Util::joinPair(os, _header, indent + '\t');
+        Util::joinPair(os, _header, indent, '\t');
     }
 
 protected:
