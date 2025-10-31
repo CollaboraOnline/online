@@ -190,6 +190,9 @@ class BrowserProperties {
 
 				return global.L.Browser.mobile && !global.mode.isMobile();
 			},
+			isCODesktop: function() {
+				return global.ThisIsTheMacOSApp || global.ThisIsTheQtApp || global.ThisIsTheWindowsApp;
+			},
 			isDesktop: function() {
 				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
 					return true;

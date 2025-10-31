@@ -821,7 +821,7 @@ class SlideShowPresenter {
 			}
 			this._stopFullScreen();
 			this._closeSlideShowWindow();
-			if ((window as any).ThisIsAMobileApp && this._isWelcomePresentation) {
+			if (window.mode.isCODesktop() && this._isWelcomePresentation) {
 				this._isWelcomePresentation = false;
 				app.dispatcher.dispatch('closeapp');
 			}
