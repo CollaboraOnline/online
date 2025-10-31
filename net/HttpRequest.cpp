@@ -1002,9 +1002,9 @@ std::shared_ptr<Session> Session::create(std::string host, Protocol protocol, in
 
     if (!portString.empty())
     {
-        const int portInt = std::stoi(portString);
+        const auto [portInt, res] = Util::i32FromString(portString);
         assert((port == 0 || port == portInt) && "Two conflicting port numbers given.");
-        if (portInt > 0)
+        if (res && portInt > 0)
             port = portInt;
     }
 
