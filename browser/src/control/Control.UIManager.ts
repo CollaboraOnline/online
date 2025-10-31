@@ -461,7 +461,7 @@ class UIManager extends window.L.Control {
 
 
 	initializeNonInteractiveUI() {
-		app.console.debug('UIManager: initialize basic UI');
+		app.console.debug('UIManager: initialize non-interactive basic UI');
 
 		this.map.jsdialog = window.L.control.jsDialog();
 		this.map.addControl(this.map.jsdialog);
@@ -480,41 +480,43 @@ class UIManager extends window.L.Control {
 
 		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
-		const startWelcomePresentation = window.coolParams.get('iswelcome');
+		const startWelcomePresentation = window.coolParams.get('welcome');
 		// check for "presentation" dispatch event only after document gets fully loaded
 		const startPresentation = () => {
-			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
+			if (
+				startFolloMePresntationGet === 'true' ||
+				startFolloMePresntationGet === '1'
+			) {
 				const dispatchFollowPresentation = () => {
 					app.dispatcher.dispatch('followpresentation');
 					this.map.off('slideshowfollowon', dispatchFollowPresentation);
-				}
+				};
 				// have to wait until we get all the leader slide details
 				// if we start the follow me presentation directly then
 				// it will start from beginning and not where the leader is
 				// This also help with if the follow me presentation is not running
 				this.map.on('slideshowfollowon', dispatchFollowPresentation);
-			}
-			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
+			} else if (
+				startPresentationGet === 'true' ||
+				startPresentationGet === '1' ||
+				startWelcomePresentation === 'true'
+			) {
 				app.dispatcher.dispatch('presentation');
 			}
 
 			// docloaded event is fired multiple times, unfortunately
       // but presentation should start only once
 			this.map.off('docloaded', startPresentation);
-			
-			if (!startWelcomePresentation)
-				window.postMobileMessage('WELCOME');
-			else
-				// setTimeout(() => {
-				app.dispatcher.dispatch('presentation');
-				// }, 20000)
 		};
 
 		this.map.on('docloaded', startPresentation);
 
-		if (startWelcomePresentation)
-		{
-			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
+		// Return early when we are loading welcome slideshow
+		if (startWelcomePresentation) {
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(
+				this.map,
+				window.enableAccessibility,
+			);
 			return;
 		}
 
@@ -574,6 +576,7 @@ class UIManager extends window.L.Control {
 			this.initializeRuler();
 			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
 			this.map.presenterConsole = new SlideShow.PresenterConsole(this.map, this.map.slideShowPresenter);
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
 		}
 
 		if (docType === 'text') {

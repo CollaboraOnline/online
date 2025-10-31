@@ -496,7 +496,7 @@ class Dispatcher {
 			'fullscreen-presentation'
 		] = () => {
 			if ((window as any).canvasSlideshowEnabled) app.map.fire('newfullscreen', {
-				isWelcomePresentation: window.coolParams.get('iswelcome'),
+				isWelcomePresentation: window.coolParams.get('welcome') === 'true' ? true : false,
 			});
 			else app.map.fire('fullscreen');
 		};
