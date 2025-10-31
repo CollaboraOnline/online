@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-10-27 10:19+0000\n"
+"PO-Revision-Date: 2025-10-31 11:24+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hy/>\n"
@@ -1504,152 +1504,156 @@ msgstr "Սլովենիա"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Slovakia"
-msgstr ""
+msgstr "Սլովակիա"
 
 #: src/control/Control.ESignature.ts:194
 msgid "San Marino"
-msgstr ""
+msgstr "Սան Մարինո"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Turkey"
-msgstr ""
+msgstr "Թուրքիա"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Թայվան, Չինաստանի նահանգ"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ուկրաինա"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Ամերիկայի Միացյալ Նահանգներ"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Սուրբ Աթոռ (Վատիկան քաղաք-պետություն)"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr ""
+msgstr "Կոսովո"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Հարավային Աֆրիկա"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Փաստաթուղթը ստորագրվում է և շուտով կհրապարակվի"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Երկիր:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Մատակարար:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Տեղադրեք էլեկտրոնային ստորագրություն"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Ընդարձակել բանաձևերի գոտին"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
-msgstr ""
+msgstr "Ֆունկցիայի Հրաշագործ"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Select Function"
-msgstr ""
+msgstr "Ընտրեք ֆունկցիան"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
 #: src/control/Control.NotebookbarWriter.js:1564
 msgid "Formula"
-msgstr ""
+msgstr "Բանաձև"
 
 #: src/control/Control.FormulaBarJSDialog.js:87
 #: src/control/Control.MobileTopBar.ts:42
 msgid "Accept"
-msgstr ""
+msgstr "Ընդունել"
 
 #: src/control/Control.FormulaBarJSDialog.js:171
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Փլուզել բանաձևերի գոտին"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
+"Անգործուն փաստաթուղթ - խնդրում ենք սեղմել՝ վերբեռնելու և խմբագրումը "
+"վերսկսելու համար"
 
 #: src/control/Control.IdleHandler.ts:45
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
+"Անգործուն փաստաթուղթ - խնդրում ենք սեղմել՝ վերաբեռնելու և խմբագրումը "
+"վերսկսելու համար"
 
 #: src/control/Control.JSDialog.js:337
 msgid "Close dialog"
-msgstr ""
+msgstr "Փակել երկխոսությունը"
 
 #: src/control/Control.JSDialogBuilder.js:506
 msgid "Solid"
-msgstr ""
+msgstr "Միատարր"
 
 #: src/control/Control.JSDialogBuilder.js:509
 msgid "Linear"
-msgstr ""
+msgstr "Գծային"
 
 #: src/control/Control.JSDialogBuilder.js:512
 msgid "Axial"
-msgstr ""
+msgstr "Առանցքի"
 
 #: src/control/Control.JSDialogBuilder.js:515
 msgid "Radial"
-msgstr ""
+msgstr "Շառավղային"
 
 #: src/control/Control.JSDialogBuilder.js:518
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Թերատակերպ (Էլիպսոիդ)"
 
 #: src/control/Control.JSDialogBuilder.js:522
 msgid "Quadratic"
-msgstr ""
+msgstr "Քառակուսային"
 
 #: src/control/Control.JSDialogBuilder.js:525
 msgid "Square"
-msgstr ""
+msgstr "Քառակուսի"
 
 #: src/control/Control.JSDialogBuilder.js:528
 msgid "Fixed size"
-msgstr ""
+msgstr "Սևեռված չափ"
 
 #: src/control/Control.JSDialogBuilder.js:1234
 msgid "From"
-msgstr ""
+msgstr "Սկսած"
 
 #: src/control/Control.JSDialogBuilder.js:1237
 msgid "To"
-msgstr ""
+msgstr "Դեպի"
 
 #: src/control/Control.JSDialogBuilder.js:1240
 msgid "Color"
-msgstr ""
+msgstr "Գույն"
 
 #: src/control/Control.JSDialogBuilder.js:1316
 msgid "Select range"
-msgstr ""
+msgstr "Ընտրեք միջակայքը"
 
 #: src/control/Control.JSDialogBuilder.js:1445
 #: src/control/Control.NotebookbarBuilder.js:150
 msgid "Font Name"
-msgstr ""
+msgstr "Տառատեսակի անունը"
 
 #: src/control/Control.JSDialogBuilder.js:1447 src/control/Toolbar.js:135
 msgid "Font Size"
-msgstr ""
+msgstr "Տառատեսակի չափը"
 
 #: src/control/Control.JSDialogBuilder.js:1449
 #: src/control/Control.NotebookbarCalc.js:935
@@ -1659,84 +1663,84 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1061
 #: src/control/Control.TopToolbar.js:484
 msgid "Style"
-msgstr ""
+msgstr "Ոճ"
 
 #: src/control/Control.JSDialogBuilder.js:1737
 msgid "reply"
-msgstr ""
+msgstr "պատասխան"
 
 #: src/control/Control.JSDialogBuilder.js:1740
 msgid "replies"
-msgstr ""
+msgstr "պատասխաններ"
 
 #: src/control/Control.JSDialogBuilder.js:1815
 msgid "Insert Comment"
-msgstr ""
+msgstr "Ներդրեք մեկնաբանություն"
 
 #: src/control/Control.JSDialogBuilder.js:2108
 msgid "Open {name}"
-msgstr ""
+msgstr "Բացել {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2434
 #: src/control/Control.Menubar.ts:931
 msgid "Rows"
-msgstr ""
+msgstr "Տողեր"
 
 #: src/control/Control.JSDialogBuilder.js:2435
 #: src/control/Control.Menubar.ts:934
 msgid "Columns"
-msgstr ""
+msgstr "Սյունակներ"
 
 #: src/control/Control.JSDialogBuilder.js:2455
 msgid "Insert Table"
-msgstr ""
+msgstr "Աղյուսակի տեղադրում"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:393
 #: src/control/Control.Menubar.ts:395 src/control/Control.Menubar.ts:397
 #: src/control/Control.Menubar.ts:588 src/control/Control.Menubar.ts:730
 #: src/control/Control.Menubar.ts:1019 src/control/Control.StatusBar.js:518
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Ոչ մի (ուղղագրությունը մի՛ ստուգիր)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Ընտրեք լեզուն"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Լեզու"
 
 #: src/control/Control.Mention.ts:181
 msgid "No search results found!"
-msgstr ""
+msgstr "Որոնման արդյունքներ չեն գտնվել։"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
 #: src/control/Control.Menubar.ts:1054
 #: src/control/Control.NotebookbarBuilder.js:338
 #: src/control/Control.NotebookbarBuilder.js:551
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF տեքստային փաստաթուղթ (.odt)"
 
 #: src/control/Control.Menubar.ts:98 src/control/Control.Menubar.ts:113
 #: src/control/Control.Menubar.ts:1055
 #: src/control/Control.NotebookbarBuilder.js:350
 #: src/control/Control.NotebookbarBuilder.js:563
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Word 2003 փաստաթուղթ (.doc)"
 
 #: src/control/Control.Menubar.ts:99 src/control/Control.Menubar.ts:114
 #: src/control/Control.Menubar.ts:1056
 #: src/control/Control.NotebookbarBuilder.js:346
 #: src/control/Control.NotebookbarBuilder.js:559
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Word փաստաթուղթ (.docx)"
 
 #: src/control/Control.Menubar.ts:100 src/control/Control.Menubar.ts:115
 #: src/control/Control.Menubar.ts:1057
 #: src/control/Control.NotebookbarBuilder.js:342
 #: src/control/Control.NotebookbarBuilder.js:555
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
 #: src/control/Control.Menubar.ts:434 src/control/Control.Menubar.ts:440
@@ -1747,7 +1751,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1173 src/control/Control.Menubar.ts:1180
 #: src/control/Control.Menubar.ts:1228 src/control/Control.Menubar.ts:1238
 msgid "Export as"
-msgstr ""
+msgstr "Արտահանել որպես"
 
 #: src/control/Control.Menubar.ts:103 src/control/Control.Menubar.ts:110
 #: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:441
@@ -1766,39 +1770,39 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:637
 #: src/control/Control.NotebookbarDraw.js:312
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF փաստաթուղթ (.pdf)"
 
 #: src/control/Control.Menubar.ts:104 src/control/Control.Menubar.ts:116
 #: src/control/Control.Menubar.ts:1044 src/control/Control.Menubar.ts:1058
 #: src/control/Control.NotebookbarBuilder.js:354
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:106 src/control/Control.UIManager.ts:325
 msgid "Rename Document"
-msgstr ""
+msgstr "Անվանափխեք փաստաթուղթը"
 
 #: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:438
 #: src/control/Control.Menubar.ts:613 src/control/Control.Menubar.ts:755
 #: src/control/Control.Menubar.ts:1046 src/control/Control.Menubar.ts:1111
 #: src/control/Control.Menubar.ts:1176 src/control/Control.Menubar.ts:1231
 msgid "Share..."
-msgstr ""
+msgstr "Համօգտագործել..."
 
 #: src/control/Control.Menubar.ts:108 src/control/Control.Menubar.ts:439
 #: src/control/Control.Menubar.ts:615 src/control/Control.Menubar.ts:756
 #: src/control/Control.Menubar.ts:1047 src/control/Control.Menubar.ts:1112
 #: src/control/Control.Menubar.ts:1178 src/control/Control.Menubar.ts:1232
 msgid "See revision history"
-msgstr ""
+msgstr "Դիտել վերանայումների պատմությունը"
 
 #: src/control/Control.Menubar.ts:109 src/control/Control.Menubar.ts:440
 #: src/control/Control.Menubar.ts:616 src/control/Control.Menubar.ts:757
 #: src/control/Control.Menubar.ts:1051 src/control/Control.Menubar.ts:1116
 #: src/control/Control.Menubar.ts:1180 src/control/Control.Menubar.ts:1238
 msgid "Download as"
-msgstr ""
+msgstr "Ներբեռնել որպես"
 
 #: src/control/Control.Menubar.ts:111 src/control/Control.Menubar.ts:442
 #: src/control/Control.Menubar.ts:618 src/control/Control.Menubar.ts:759
@@ -1808,11 +1812,11 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:403
 #: src/control/Control.NotebookbarBuilder.js:445
 msgid "PDF Document (.pdf) as..."
-msgstr ""
+msgstr "PDF փաստաթուղթ (.pdf) որպես..."
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:764
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML նիշք (.html)"
 
 #: src/control/Control.Menubar.ts:120 src/control/Control.Menubar.ts:456
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:767
@@ -1822,13 +1826,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
 msgid "Options"
-msgstr ""
+msgstr "Ընտրանքներ"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:625 src/control/Control.Menubar.ts:773
 #: src/control/Control.Toolbar.js:1104
 msgid "Close document"
-msgstr ""
+msgstr "Փակել փաստաթուղթը"
 
 #: src/control/Control.Menubar.ts:128 src/control/Control.Menubar.ts:467
 #: src/control/Control.Menubar.ts:630 src/control/Control.Menubar.ts:778
@@ -1839,7 +1843,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:376
 #: src/control/Control.NotebookbarWriter.js:335
 msgid "Repair"
-msgstr ""
+msgstr "Վերանորոգում"
 
 #: src/control/Control.Menubar.ts:158 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:479 src/control/Control.Menubar.ts:485
@@ -1851,22 +1855,22 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1676
 #: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
-msgstr ""
+msgstr "Վերագործարկեք մեծացումը"
 
 #: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:491
 #: src/control/Control.Menubar.ts:654 src/control/Control.Menubar.ts:799
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Միացնել/անջատել UI ռեժիմը"
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:493
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:800
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Ցուցադրել կարգավիճակի գոտին"
 
 #: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:660 src/control/Control.Menubar.ts:801
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Թաքցնել ընտրացանկի վահանակը"
 
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
 #: src/control/Control.Menubar.ts:656 src/control/Control.Menubar.ts:803
@@ -1877,26 +1881,26 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1768
 msgid "Invert Background"
-msgstr ""
+msgstr "Շրջել ֆոնը"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:806
 #: src/control/Control.NotebookbarCalc.js:2586
 #: src/control/Control.NotebookbarWriter.js:954
 #: src/control/Control.NotebookbarWriter.js:1088
 msgid "Style list"
-msgstr ""
+msgstr "Ոճերի ցանկ"
 
 #: src/control/Control.Menubar.ts:182 src/control/Control.Menubar.ts:508
 #: src/control/Control.Menubar.ts:663 src/control/Control.Menubar.ts:817
 #: src/control/Control.Menubar.ts:1301 src/control/Control.Menubar.ts:1351
 #: src/control/Control.Menubar.ts:1365 src/control/Control.Menubar.ts:1388
 msgid "Local Image..."
-msgstr ""
+msgstr "Տեղային պատկեր..."
 
 #: src/control/Control.Menubar.ts:206 src/control/Control.Menubar.ts:208
 #: src/control/Control.Menubar.ts:1318 src/control/Control.Menubar.ts:1320
 msgid "All"
-msgstr ""
+msgstr "Բոլորը"
 
 #: src/control/Control.Menubar.ts:218 src/control/Control.Menubar.ts:519
 #: src/control/Control.Menubar.ts:670 src/control/Control.Menubar.ts:829
@@ -1905,77 +1909,77 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1598
 #: src/control/Control.NotebookbarWriter.js:1344
 msgid "Smart Picker"
-msgstr ""
+msgstr "Խելացի ընտրիչ"
 
 #: src/control/Control.Menubar.ts:219 src/control/Control.Menubar.ts:520
 #: src/control/Control.Menubar.ts:671 src/control/Control.Menubar.ts:830
 msgid "AI Assistant"
-msgstr ""
+msgstr "ԱԲ օգնական"
 
 #: src/control/Control.Menubar.ts:260
 msgid "Text orientation"
-msgstr ""
+msgstr "Տեքստի կողմնորոշում"
 
 #: src/control/Control.Menubar.ts:330
 #: src/control/Notebookbar.WriterReferencesTab.ts:25
 msgid "References"
-msgstr ""
+msgstr "Հղումներ"
 
 #: src/control/Control.Menubar.ts:333
 #: src/control/Notebookbar.WriterReferencesTab.ts:72
 msgid "Update Index"
-msgstr ""
+msgstr "Թարմացնել ցուցիչը"
 
 #: src/control/Control.Menubar.ts:342
 #: src/control/Notebookbar.WriterReferencesTab.ts:220
 msgid "Add Citation"
-msgstr ""
+msgstr "Ավելացնել վկայակոչում"
 
 #: src/control/Control.Menubar.ts:343
 #: src/control/Notebookbar.WriterReferencesTab.ts:237
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Ավելացնել վկայակոչման նշում"
 
 #: src/control/Control.Menubar.ts:344
 #: src/control/Notebookbar.WriterReferencesTab.ts:203
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Ավելացնել մատենագրություն"
 
 #: src/control/Control.Menubar.ts:346
 #: src/control/Notebookbar.WriterReferencesTab.ts:262
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Թարմացնել վկայակոչումները"
 
 #: src/control/Control.Menubar.ts:347
 #: src/control/Notebookbar.WriterReferencesTab.ts:279
 #: src/control/Control.Zotero.js:1531
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Անջատել վկայակոչումները"
 
 #: src/control/Control.Menubar.ts:348
 #: src/control/Notebookbar.WriterReferencesTab.ts:296
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Վկայակոչումների նախապատվություններ"
 
 #: src/control/Control.Menubar.ts:376 src/control/Control.Menubar.ts:1340
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Զետեղեք Rich Text"
 
 #: src/control/Control.Menubar.ts:377 src/control/Control.Menubar.ts:1341
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Նշման վանդակի տեղադրում"
 
 #: src/control/Control.Menubar.ts:378 src/control/Control.Menubar.ts:1342
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Զետեղեք Բացվող ցանկը"
 
 #: src/control/Control.Menubar.ts:379 src/control/Control.Menubar.ts:1343
 msgid "Insert Picture"
-msgstr ""
+msgstr "Զետեղեք նկար"
 
 #: src/control/Control.Menubar.ts:380 src/control/Control.Menubar.ts:1344
 msgid "Insert Date"
-msgstr ""
+msgstr "Զետեղեք ամսաթիվ"
 
 #: src/control/Control.Menubar.ts:381 src/control/Control.Menubar.ts:1345
 #: src/control/Control.NotebookbarCalc.js:326
@@ -1984,35 +1988,35 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:350
 #: src/control/Control.NotebookbarWriter.js:1632
 msgid "Properties"
-msgstr ""
+msgstr "Հատկություններ"
 
 #: src/control/Control.Menubar.ts:401 src/control/Control.Menubar.ts:1089
 #: src/control/Control.NotebookbarWriter.js:472
 msgid "Screen Reading"
-msgstr ""
+msgstr "Էկրանի ընթերցում"
 
 #: src/control/Control.Menubar.ts:414
 #: src/control/Control.NotebookbarWriter.js:436
 msgid "Forum"
-msgstr ""
+msgstr "Ֆորում"
 
 #: src/control/Control.Menubar.ts:415 src/control/Control.Menubar.ts:594
 #: src/control/Control.Menubar.ts:733 src/control/Control.Menubar.ts:1026
 #: src/control/Control.NotebookbarWriter.js:448
 msgid "Online Help"
-msgstr ""
+msgstr "Առցանց օգնություն"
 
 #: src/control/Control.Menubar.ts:416 src/control/Control.Menubar.ts:595
 #: src/control/Control.Menubar.ts:734 src/control/Control.Menubar.ts:1027
 #: src/control/Control.NotebookbarWriter.js:461
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Ստեղնաշարի դյուրանցումներ"
 
 #: src/control/Control.Menubar.ts:417 src/control/Control.Menubar.ts:596
 #: src/control/Control.Menubar.ts:735 src/control/Control.Menubar.ts:1028
 #: src/control/Control.NotebookbarWriter.js:510
 msgid "Report an issue"
-msgstr ""
+msgstr "Հաղորդել խնդրի մասին"
 
 #: src/control/Control.Menubar.ts:418 src/control/Control.Menubar.ts:597
 #: src/control/Control.Menubar.ts:736 src/control/Control.Menubar.ts:1029
@@ -2020,7 +2024,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1218 src/control/Control.Menubar.ts:1293
 #: src/control/Control.NotebookbarWriter.js:524
 msgid "Latest Updates"
-msgstr ""
+msgstr "Վերջին թարմացումները"
 
 #: src/control/Control.Menubar.ts:419 src/control/Control.Menubar.ts:598
 #: src/control/Control.Menubar.ts:737 src/control/Control.Menubar.ts:1030
@@ -2028,7 +2032,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1219 src/control/Control.Menubar.ts:1294
 #: src/control/Control.NotebookbarWriter.js:538
 msgid "Send Feedback"
-msgstr ""
+msgstr "Ուղարկել արձագանք"
 
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:599
 #: src/control/Control.Menubar.ts:738 src/control/Control.Menubar.ts:1031
@@ -2036,233 +2040,233 @@ msgstr ""
 #: src/control/Control.ServerAuditDialog.ts:287
 #: src/control/Control.ServerAuditDialog.ts:288
 msgid "Server audit"
-msgstr ""
+msgstr "Սերվերի աուդիտ"
 
 #: src/control/Control.Menubar.ts:423 src/control/Control.Menubar.ts:602
 #: src/control/Control.Menubar.ts:741 src/control/Control.Menubar.ts:1034
 msgid "Last modification"
-msgstr ""
+msgstr "Վերջին փոփոխությունը"
 
 #: src/control/Control.Menubar.ts:430 src/control/Control.Menubar.ts:443
 #: src/control/Control.Menubar.ts:1119
 #: src/control/Control.NotebookbarBuilder.js:411
 #: src/control/Control.NotebookbarBuilder.js:585
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF շնորհանդես (.odp)"
 
 #: src/control/Control.Menubar.ts:431 src/control/Control.Menubar.ts:444
 #: src/control/Control.Menubar.ts:1120
 #: src/control/Control.NotebookbarBuilder.js:423
 #: src/control/Control.NotebookbarBuilder.js:593
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 շնորհանդես (.ppt)"
 
 #: src/control/Control.Menubar.ts:432 src/control/Control.Menubar.ts:445
 #: src/control/Control.Menubar.ts:1121
 #: src/control/Control.NotebookbarBuilder.js:419
 #: src/control/Control.NotebookbarBuilder.js:589
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint շնորհանդես (.pptx)"
 
 #: src/control/Control.Menubar.ts:437 src/control/Control.Menubar.ts:612
 msgid "Save Comments"
-msgstr ""
+msgstr "Պահպանել մեկնաբանությունները"
 
 #: src/control/Control.Menubar.ts:446
 #: src/control/Control.NotebookbarBuilder.js:427
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML փաստաթուղթ (.html)"
 
 #: src/control/Control.Menubar.ts:447
 #: src/control/Control.NotebookbarBuilder.js:458
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.ts:448
 #: src/control/Control.NotebookbarBuilder.js:470
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.ts:449
 #: src/control/Control.NotebookbarBuilder.js:482
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Ընթացիկ սահիկը որպես Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:450
 #: src/control/Control.NotebookbarBuilder.js:494
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Ընթացիկ սահիկը որպես Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.ts:451
 #: src/control/Control.NotebookbarBuilder.js:506
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Ընթացիկ սահիկը որպես Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.ts:452
 #: src/control/Control.NotebookbarBuilder.js:518
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Ընթացիկ սահիկը որպես Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.ts:459
 #: src/control/Control.NotebookbarBuilder.js:656
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Լիաէջ սահիկներ"
 
 #: src/control/Control.Menubar.ts:460
 #: src/control/Control.NotebookbarBuilder.js:660
 msgid "Notes Pages"
-msgstr ""
+msgstr "Նշումների էջեր"
 
 #: src/control/Control.Menubar.ts:494
 #: src/control/Control.NotebookbarImpress.js:644
 msgid "Notes View"
-msgstr ""
+msgstr "Նշումների դիտում"
 
 #: src/control/Control.Menubar.ts:498
 #: src/control/Control.NotebookbarImpress.js:650
 msgid "Master View"
-msgstr ""
+msgstr "Գլխավոր տեսք"
 
 #: src/control/Control.Menubar.ts:510
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Տեղային մուլտիմեդիա..."
 
 #: src/control/Control.Menubar.ts:579 src/control/Control.Menubar.ts:1162
 #: src/control/Control.PresentationBar.js:128
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Լիաէկրան շնորհանդես"
 
 #: src/control/Control.Menubar.ts:580
 msgid "Present current slide"
-msgstr ""
+msgstr "Ներկայացնել ընթացիկ սահիկը"
 
 #: src/control/Control.Menubar.ts:581
 msgid "Present in new window"
-msgstr ""
+msgstr "Ներկայացնել նոր պատուհանում"
 
 #: src/control/Control.Menubar.ts:582
 #: src/control/Control.NotebookbarImpress.js:493
 #: src/slideshow/PresenterConsole.js:249
 msgid "Presenter Console"
-msgstr ""
+msgstr "Ներկայացնողի կոնսոլ"
 
 #: src/control/Control.Menubar.ts:619 src/control/Control.Menubar.ts:1122
 #: src/control/Control.Menubar.ts:1183
 #: src/control/Control.NotebookbarBuilder.js:415
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "ODF Drawing (.odg)"
-msgstr ""
+msgstr "ODF Drawing (.odg)"
 
 #: src/control/Control.Menubar.ts:748 src/control/Control.Menubar.ts:760
 #: src/control/Control.Menubar.ts:1241
 #: src/control/Control.NotebookbarBuilder.js:377
 #: src/control/Control.NotebookbarBuilder.js:570
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF աղյուսակաթերթ (.ods)"
 
 #: src/control/Control.Menubar.ts:749 src/control/Control.Menubar.ts:761
 #: src/control/Control.Menubar.ts:1242
 #: src/control/Control.NotebookbarBuilder.js:385
 #: src/control/Control.NotebookbarBuilder.js:578
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003 աղյուսակաթերթ (.xls)"
 
 #: src/control/Control.Menubar.ts:750 src/control/Control.Menubar.ts:762
 #: src/control/Control.Menubar.ts:1243
 #: src/control/Control.NotebookbarBuilder.js:381
 #: src/control/Control.NotebookbarBuilder.js:574
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel աղյուսակաթերթ (.xlsx)"
 
 #: src/control/Control.Menubar.ts:763
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV նիշք (.csv)"
 
 #: src/control/Control.Menubar.ts:770
 #: src/control/jsdialog/Definitions.Menu.ts:1572
 msgid "Active sheet"
-msgstr ""
+msgstr "Ակտիվ թերթիկ"
 
 #: src/control/Control.Menubar.ts:809
 #: src/control/Control.NotebookbarCalc.js:1437
 msgid "Focus Cell"
-msgstr ""
+msgstr "Ֆոկուսային բջիջ"
 
 #: src/control/Control.Menubar.ts:903
 #: src/control/jsdialog/Definitions.Menu.ts:1820
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Գունանշեք բջիջները սրանով..."
 
 #: src/control/Control.Menubar.ts:904
 #: src/control/jsdialog/Definitions.Menu.ts:1823
 msgid "Values greater than..."
-msgstr ""
+msgstr "Արժեքները մեծ են, քան..."
 
 #: src/control/Control.Menubar.ts:905
 #: src/control/jsdialog/Definitions.Menu.ts:1827
 msgid "Values less than..."
-msgstr ""
+msgstr "Արժեքները փոքր են, քան..."
 
 #: src/control/Control.Menubar.ts:906
 #: src/control/jsdialog/Definitions.Menu.ts:1831
 msgid "Values equal to..."
-msgstr ""
+msgstr "Արժեքները հավասար են..."
 
 #: src/control/Control.Menubar.ts:907
 #: src/control/jsdialog/Definitions.Menu.ts:1835
 msgid "Values between..."
-msgstr ""
+msgstr "Արժեքները միջև..."
 
 #: src/control/Control.Menubar.ts:908
 #: src/control/jsdialog/Definitions.Menu.ts:1839
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Արժեքները կրկնօրինակ են..."
 
 #: src/control/Control.Menubar.ts:909
 #: src/control/jsdialog/Definitions.Menu.ts:1843
 msgid "Containing text..."
-msgstr ""
+msgstr "Պարունակող տեքստ..."
 
 #: src/control/Control.Menubar.ts:911 src/control/Control.Menubar.ts:921
 #: src/control/jsdialog/Definitions.Menu.ts:1847
 #: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "More highlights..."
-msgstr ""
+msgstr "Ավելի շատ կարևորագույն պահեր..."
 
 #: src/control/Control.Menubar.ts:913
 #: src/control/jsdialog/Definitions.Menu.ts:1851
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Վերևի/Ներքևի կանոններ..."
 
 #: src/control/Control.Menubar.ts:914
 #: src/control/jsdialog/Definitions.Menu.ts:1854
 msgid "Top N elements..."
-msgstr ""
+msgstr "Վերին N տարրերը..."
 
 #: src/control/Control.Menubar.ts:915
 #: src/control/jsdialog/Definitions.Menu.ts:1858
 msgid "Top N percent..."
-msgstr ""
+msgstr "Վերին N տոկոսը..."
 
 #: src/control/Control.Menubar.ts:916
 #: src/control/jsdialog/Definitions.Menu.ts:1862
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Ստորին N տարրերը..."
 
 #: src/control/Control.Menubar.ts:917
 #: src/control/jsdialog/Definitions.Menu.ts:1866
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Ստորին N տոկոսը..."
 
 #: src/control/Control.Menubar.ts:918
 #: src/control/jsdialog/Definitions.Menu.ts:1870
 msgid "Above Average..."
-msgstr ""
+msgstr "Միջինից բարձր..."
 
 #: src/control/Control.Menubar.ts:919
 #: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Below Average..."
-msgstr ""
+msgstr "Միջինից ցածր..."
 
 #: src/control/Control.Menubar.ts:1038 src/control/Control.Menubar.ts:1104
 #: src/control/Control.Menubar.ts:1169 src/control/Control.Menubar.ts:1224
@@ -2277,183 +2281,185 @@ msgstr ""
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:581
 #: src/control/Toolbar.js:582
 msgid "Search"
-msgstr ""
+msgstr "Որոնում"
 
 #: src/control/Control.Menubar.ts:1091
 #: src/control/Control.NotebookbarCalc.js:1090
 #: src/control/Control.NotebookbarWriter.js:1796
 msgid "Page Setup"
-msgstr ""
+msgstr "Էջի կարգաբերում"
 
 #: src/control/Control.Menubar.ts:1235
 msgid "Define print area"
-msgstr ""
+msgstr "Սահմանել տպելու տարածքը"
 
 #: src/control/Control.Menubar.ts:1236
 msgid "Remove print area"
-msgstr ""
+msgstr "Հեռացնել տպելու տարածքը"
 
 #: src/control/Control.Menubar.ts:1592 src/control/Control.StatusBar.js:517
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Վերականգնել լռելյայն լեզվին"
 
 #: src/control/Control.Menubar.ts:1623 src/control/Control.Menubar.ts:1624
 #: src/control/Control.Menubar.ts:1625 src/control/Control.Toolbar.js:247
 #: src/control/jsdialog/Definitions.Menu.ts:2100
 msgid "More..."
-msgstr ""
+msgstr "Ավելին..."
 
 #: src/control/Control.Menubar.ts:1967
 msgid "Use Compact view"
-msgstr ""
+msgstr "Օգտագործեք կոմպակտ տեսքը"
 
 #: src/control/Control.Menubar.ts:1969
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Օգտագործել ներդիրային տեսքը"
 
 #: src/control/Control.Menubar.ts:2123
 msgid "Insert Shape"
-msgstr ""
+msgstr "Ներդրեք ուրվագիծը"
 
 #: src/control/Control.Menubar.ts:2207
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Ստորագրության տողը այժմ կարող է տեղափոխվել կամ չափափոխվել անհրաժեշտության "
+"դեպքում։"
 
 #: src/control/Control.Menubar.ts:2209
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Ավարտել էլեկտրոնային ստորագրումը"
 
 #: src/control/Control.Menubar.ts:2408
 msgid "file type icon"
-msgstr ""
+msgstr "նիշքի տեսակի պատկերակ"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:198
 msgid "Show the search bar"
-msgstr ""
+msgstr "Ցուցադրել որոնման վահանակը"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:145
 msgid "Borders"
-msgstr ""
+msgstr "Սահմաններ"
 
 #: src/control/Control.MobileSearchBar.ts:28
 msgid "Hide the search bar"
-msgstr ""
+msgstr "Թաքցնել որոնման վահանակը"
 
 #: src/control/Control.MobileSearchBar.ts:48
 msgid "Clear the search field"
-msgstr ""
+msgstr "Մաքրեք որոնման դաշտը"
 
 #: src/control/Control.MobileWizardBuilder.js:568
 msgid "Background Color"
-msgstr ""
+msgstr "Հետնամասի գույն"
 
 #: src/control/Control.MobileWizardBuilder.js:570
 msgid "Gradient Start"
-msgstr ""
+msgstr "Գրադիենտի սկիզբ"
 
 #: src/control/Control.MobileWizardBuilder.js:572
 msgid "Gradient End"
-msgstr ""
+msgstr "Գրադիենտի վերջ"
 
 #: src/control/Control.NavigatorPanel.ts:112
 msgid "Navigation"
-msgstr ""
+msgstr "Նավարկում"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Close Navigation"
-msgstr ""
+msgstr "Փակել Նավարկումը"
 
 #: src/control/Control.NavigatorPanel.ts:184
 #: src/control/Control.NotebookbarImpress.js:1408
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Սահիկներ"
 
 #: src/control/Control.NavigatorPanel.ts:222
 msgid "Results"
-msgstr ""
+msgstr "Արյունքներ"
 
 #: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
-msgstr ""
+msgstr "Որոնում..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Մուտքագրեք որոնման դաշտում՝ ձեր փաստաթղթում որևէ բան գտնելու համար"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Անիմացիա"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Կիրառական անիմացիաներ"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Շարժել վեր"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Շարժել ներքև"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Դաս"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Սկսել"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
-msgstr ""
+msgstr "Էֆեկտ"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Անցում"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:43
 msgid "Transitions"
-msgstr ""
+msgstr "Անցումներ"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Տարբերակ"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "Տևողություն"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "Մկնիկի սեղմման ժամանակ"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "Հետո"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Բովանդակության աղյուսակ"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Տողատակ/Էջատակ"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1576
 #: src/control/Control.NotebookbarImpress.js:1634
 msgid "Field"
-msgstr ""
+msgstr "Դաշտ"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:56
 msgid "Animations"
-msgstr ""
+msgstr "Անիմացիաներ"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2466,36 +2472,36 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:218
 #: src/control/Control.NotebookbarWriter.js:251
 msgid "Share"
-msgstr ""
+msgstr "Համօգտագործել"
 
 #: src/control/Control.NotebookbarBuilder.js:223
 msgid "Tap to expand"
-msgstr ""
+msgstr "Հպեք՝ ընդլայնելու համար"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 #: src/control/Control.NotebookbarBuilder.js:272
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Հպեք՝ պայթեցնելու համար"
 
 #: src/control/Control.NotebookbarBuilder.js:364
 #: src/control/Control.NotebookbarBuilder.js:393
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTML նիշք (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:389
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV նիշք (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:532
 msgid "Image (.png)"
-msgstr ""
+msgstr "Պատկեր (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:57
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:37
 msgid "File"
-msgstr ""
+msgstr "Նիշք"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:63
@@ -2519,7 +2525,7 @@ msgstr "Ներդնել"
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1282
 msgid "Page Layout"
-msgstr ""
+msgstr "Էջի դասավորություն"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Formulas"
@@ -2527,28 +2533,28 @@ msgstr "Բանաձևեր"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
-msgstr ""
+msgstr "Տվյալներ"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:63
 msgid "Review"
-msgstr ""
+msgstr "Գրախոսել"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:69
 msgid "Format"
-msgstr ""
+msgstr "Ձևաչափ"
 
 #: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
 msgid "Shape"
-msgstr ""
+msgstr "Ուրվագիծ"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2556,20 +2562,20 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:95
 #: src/control/Control.NotebookbarWriter.js:1616
 msgid "Picture"
-msgstr ""
+msgstr "Նկար"
 
 #: src/control/Control.NotebookbarCalc.js:86
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:150
 #: src/control/Control.NotebookbarWriter.js:102
 msgid "View"
-msgstr ""
+msgstr "Տեսք"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1678
 #: src/control/Control.NotebookbarCalc.js:2647
 msgid "Sparkline"
-msgstr ""
+msgstr "Կայծքագիծ"
 
 #: src/control/Control.NotebookbarCalc.js:99
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2577,21 +2583,21 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:108
 #: src/control/Control.ServerAuditDialog.ts:307
 msgid "Help"
-msgstr ""
+msgstr "Օգնություն"
 
 #: src/control/Control.NotebookbarCalc.js:157
 #: src/control/Control.NotebookbarImpress.js:218
 #: src/control/Control.NotebookbarWriter.js:179
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Save As"
-msgstr ""
+msgstr "Պահպանել որպես"
 
 #: src/control/Control.NotebookbarCalc.js:176
 #: src/control/Control.NotebookbarDraw.js:190
 #: src/control/Control.NotebookbarImpress.js:238
 #: src/control/Control.NotebookbarWriter.js:199
 msgid "Export As"
-msgstr ""
+msgstr "Արտահանել որպես"
 
 #: src/control/Control.NotebookbarCalc.js:202
 #: src/control/Control.NotebookbarCalc.js:251
@@ -2602,14 +2608,14 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:226
 #: src/control/Control.NotebookbarWriter.js:275
 msgid "See history"
-msgstr ""
+msgstr "Տես պատմությունը"
 
 #: src/control/Control.NotebookbarCalc.js:339
 #: src/control/Control.NotebookbarDraw.js:370
 #: src/control/Control.NotebookbarImpress.js:404
 #: src/control/Control.NotebookbarWriter.js:363
 msgid "Signature"
-msgstr ""
+msgstr "Ստորագրություն"
 
 #: src/control/Control.NotebookbarCalc.js:355
 #: src/control/Control.NotebookbarDraw.js:387
@@ -2617,58 +2623,58 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:379
 #: src/control/Control.UIManager.ts:325
 msgid "Rename"
-msgstr ""
+msgstr "Անվանափոխել"
 
 #: src/control/Control.NotebookbarCalc.js:409
 #: src/control/Control.NotebookbarDraw.js:611
 #: src/control/Control.NotebookbarImpress.js:739
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
-msgstr ""
+msgstr "Սեղմատախտակ"
 
 #: src/control/Control.NotebookbarCalc.js:470
 #: src/control/Control.NotebookbarDraw.js:671
 #: src/control/Control.NotebookbarWriter.js:648 src/control/Toolbar.js:56
 msgid "Font"
-msgstr ""
+msgstr "Տառատեսակ"
 
 #: src/control/Control.NotebookbarCalc.js:615
 #: src/control/Control.NotebookbarDraw.js:812
 msgid "Alignment"
-msgstr ""
+msgstr "Հավասարեցում"
 
 #: src/control/Control.NotebookbarCalc.js:742
 msgid "Merge & Center"
-msgstr ""
+msgstr "Միաձուլում և կենտրոնացում"
 
 #: src/control/Control.NotebookbarCalc.js:752
 #: src/control/Control.NotebookbarCalc.js:768
 msgid "Number"
-msgstr ""
+msgstr "Թիվ"
 
 #: src/control/Control.NotebookbarCalc.js:767
 msgid "General"
-msgstr ""
+msgstr "Ընդհանուր"
 
 #: src/control/Control.NotebookbarCalc.js:769
 msgid "Percent"
-msgstr ""
+msgstr "Տոկոս"
 
 #: src/control/Control.NotebookbarCalc.js:770
 msgid "Currency"
-msgstr ""
+msgstr "Արժույթ"
 
 #: src/control/Control.NotebookbarCalc.js:773
 msgid "Scientific"
-msgstr ""
+msgstr "Գիտական"
 
 #: src/control/Control.NotebookbarCalc.js:774
 msgid "Fraction"
-msgstr ""
+msgstr "Կոտորակ"
 
 #: src/control/Control.NotebookbarCalc.js:775
 msgid "Boolean Value"
-msgstr ""
+msgstr "Բուլյան արժեք"
 
 #: src/control/Control.NotebookbarCalc.js:776
 #: src/control/Control.NotebookbarCalc.js:1844
@@ -2677,89 +2683,89 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1708
 #: src/control/Control.NotebookbarWriter.js:1493
 msgid "Text"
-msgstr ""
+msgstr "Տեքստ"
 
 #: src/control/Control.NotebookbarCalc.js:854
 msgid "Cells"
-msgstr ""
+msgstr "Բջիջներ"
 
 #: src/control/Control.NotebookbarCalc.js:956
 #: src/control/jsdialog/Definitions.Menu.ts:2298
 msgid "Default"
-msgstr ""
+msgstr "Լռելյայն"
 
 #: src/control/Control.NotebookbarCalc.js:963
 msgid "Heading 1"
-msgstr ""
+msgstr "Գլխագիր 1"
 
 #: src/control/Control.NotebookbarCalc.js:970
 msgid "Heading 2"
-msgstr ""
+msgstr "Գլխագիր 2"
 
 #: src/control/Control.NotebookbarCalc.js:983
 msgid "Good"
-msgstr ""
+msgstr "Լավ"
 
 #: src/control/Control.NotebookbarCalc.js:990
 msgid "Neutral"
-msgstr ""
+msgstr "Չեզոք"
 
 #: src/control/Control.NotebookbarCalc.js:997
 msgid "Bad"
-msgstr ""
+msgstr "Վատ"
 
 #: src/control/Control.NotebookbarCalc.js:1012
 msgid "Editing"
-msgstr ""
+msgstr "Խմբագրում"
 
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:1195
 #: src/control/Control.NotebookbarImpress.js:1288
 #: src/control/Control.NotebookbarWriter.js:1040
 msgid "Replace"
-msgstr ""
+msgstr "Փոխարինել"
 
 #: src/control/Control.NotebookbarCalc.js:1100
 #: src/control/Control.NotebookbarWriter.js:1806
 msgid "Margin"
-msgstr ""
+msgstr "Լուսանցք"
 
 #: src/control/Control.NotebookbarCalc.js:1107
 #: src/control/Control.NotebookbarWriter.js:1813
 msgid "Size"
-msgstr ""
+msgstr "Չափ"
 
 #: src/control/Control.NotebookbarCalc.js:1168
 msgid "Row Height"
-msgstr ""
+msgstr "Տողի բարձրությունը"
 
 #: src/control/Control.NotebookbarCalc.js:1176
 msgid "Column Width"
-msgstr ""
+msgstr "Սյունակի լայնությունը"
 
 #: src/control/Control.NotebookbarCalc.js:1196
 msgid "Insert Rows Above"
-msgstr ""
+msgstr "Տեղադրեք տողերը վերևում"
 
 #: src/control/Control.NotebookbarCalc.js:1203
 msgid "Insert Columns Before"
-msgstr ""
+msgstr "Սյունակների տեղադրումը նախքան"
 
 #: src/control/Control.NotebookbarCalc.js:1210
 msgid "Delete Rows"
-msgstr ""
+msgstr "Ջնջել տողերը"
 
 #: src/control/Control.NotebookbarCalc.js:1222
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "Տեղադրեք տողերը ներքևում"
 
 #: src/control/Control.NotebookbarCalc.js:1229
 msgid "Insert Columns After"
-msgstr ""
+msgstr "Տեղադրեք սյունակները հետո"
 
 #: src/control/Control.NotebookbarCalc.js:1236
 msgid "Delete Columns"
-msgstr ""
+msgstr "Ջնջեք սյունակները"
 
 #: src/control/Control.NotebookbarCalc.js:1259
 #: src/control/Control.NotebookbarCalc.js:2809
@@ -2772,7 +2778,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2894
 #: src/control/Control.NotebookbarWriter.js:3217
 msgid "Align"
-msgstr ""
+msgstr "Հավասարեցնել"
 
 #: src/control/Control.NotebookbarCalc.js:1329
 #: src/control/Control.NotebookbarCalc.js:2876
@@ -2785,39 +2791,39 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2953
 #: src/control/Control.NotebookbarWriter.js:3276
 msgid "Arrange"
-msgstr ""
+msgstr "Դասավորել"
 
 #: src/control/Control.NotebookbarCalc.js:1391
 msgid "Freeze"
-msgstr ""
+msgstr "Սառեցնել"
 
 #: src/control/Control.NotebookbarCalc.js:1445
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:539
 #: src/control/Control.NotebookbarWriter.js:1662
 msgid "Zoom"
-msgstr ""
+msgstr "Մեծացնել"
 
 #: src/control/Control.NotebookbarCalc.js:1452
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1648
 msgid "Read mode"
-msgstr ""
+msgstr "Կարդալու ռեժիմ"
 
 #: src/control/Control.NotebookbarCalc.js:1519
 #: src/control/Control.NotebookbarDraw.js:518
 #: src/control/Control.NotebookbarImpress.js:630
 #: src/control/Control.NotebookbarWriter.js:1753
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Ծալել ներդիրները"
 
 #: src/control/Control.NotebookbarCalc.js:1531
 #: src/control/Control.NotebookbarDraw.js:506
 #: src/control/Control.NotebookbarImpress.js:618
 #: src/control/Control.NotebookbarWriter.js:1741
 msgid "Status Bar"
-msgstr ""
+msgstr "Կարգավիճակի գոտի"
 
 #: src/control/Control.NotebookbarCalc.js:1587
 #: src/control/Control.NotebookbarCalc.js:2319
@@ -2828,15 +2834,15 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3002
 #: src/control/Control.NotebookbarWriter.js:3325
 msgid "Group"
-msgstr ""
+msgstr "Խմբավորել"
 
 #: src/control/Control.NotebookbarCalc.js:1594
 msgid "Ungroup"
-msgstr ""
+msgstr "Ապախմբավորել"
 
 #: src/control/Control.NotebookbarCalc.js:1616
 msgid "Pivot Table"
-msgstr ""
+msgstr "Առանցքային աղյուսակ"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 #: src/control/Control.NotebookbarDraw.js:1013
@@ -2845,7 +2851,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1454
 #: src/control/Control.NotebookbarWriter.js:1252
 msgid "Illustrations"
-msgstr ""
+msgstr "Նկարազարդումներ"
 
 #: src/control/Control.NotebookbarCalc.js:1728
 #: src/control/Control.NotebookbarDraw.js:1027
@@ -2854,72 +2860,72 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1532
 #: src/control/Control.NotebookbarWriter.js:1297
 msgid "Shapes"
-msgstr ""
+msgstr "Ձևեր"
 
 #: src/control/Control.NotebookbarCalc.js:1773
 #: src/control/Control.NotebookbarDraw.js:1591
 #: src/control/Control.NotebookbarImpress.js:1619
 #: src/control/Control.NotebookbarWriter.js:1365
 msgid "Assistant"
-msgstr ""
+msgstr "Օգնական"
 
 #: src/control/Control.NotebookbarCalc.js:1944
 msgid "Insert Function"
-msgstr ""
+msgstr "Տեղադրեք ֆունկցիա"
 
 #: src/control/Control.NotebookbarCalc.js:1952
 msgid "Function Library"
-msgstr ""
+msgstr "Ֆունկցիաների գրադարան"
 
 #: src/control/Control.NotebookbarCalc.js:1966
 msgid "AutoSum"
-msgstr ""
+msgstr "Ինքնագումարում"
 
 #: src/control/Control.NotebookbarCalc.js:1979
 msgid "Financial"
-msgstr ""
+msgstr "Ֆինանսական"
 
 #: src/control/Control.NotebookbarCalc.js:1997
 msgid "Logical"
-msgstr ""
+msgstr "Տրամաբանական"
 
 #: src/control/Control.NotebookbarCalc.js:2027
 msgid "Date & Time"
-msgstr ""
+msgstr "Ամսաթիվ և ժամ"
 
 #: src/control/Control.NotebookbarCalc.js:2039
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Որոնում և հղումներ"
 
 #: src/control/Control.NotebookbarCalc.js:2057
 msgid "Math & Trig"
-msgstr ""
+msgstr "Մաթեմ և Եռանկյունաչափություն"
 
 #: src/control/Control.NotebookbarCalc.js:2069
 msgid "More Functions"
-msgstr ""
+msgstr "Ավելի շատ գործառույթներ"
 
 #: src/control/Control.NotebookbarCalc.js:2114
 msgid "Range"
-msgstr ""
+msgstr "Տիրույթ"
 
 #: src/control/Control.NotebookbarCalc.js:2197
 msgid "Sort"
-msgstr ""
+msgstr "Տեսակավորել"
 
 #: src/control/Control.NotebookbarCalc.js:2243
 msgid "Filter"
-msgstr ""
+msgstr "Զտել"
 
 #: src/control/Control.NotebookbarCalc.js:2491
 #: src/control/Control.NotebookbarImpress.js:1966
 #: src/control/Control.NotebookbarWriter.js:2236
 msgid "Comments"
-msgstr ""
+msgstr "Մեկնաբանություններ"
 
 #: src/control/Control.NotebookbarCalc.js:2596
 msgid "Format Cells"
-msgstr ""
+msgstr "Ձևաչափել բջիջները"
 
 #: src/control/Control.NotebookbarCalc.js:2742
 #: src/control/Control.NotebookbarCalc.js:3099
@@ -2927,18 +2933,18 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2839
 #: src/control/Control.NotebookbarWriter.js:3162
 msgid "Wrap"
-msgstr ""
+msgstr "Փաթաթել"
 
 #: src/control/Control.NotebookbarCalc.js:2981
 #: src/control/Control.NotebookbarImpress.js:2685
 #: src/control/Control.NotebookbarWriter.js:3048
 msgid "Image Controls"
-msgstr ""
+msgstr "Պատկերի վերահսկում"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
 msgid "Layout"
-msgstr ""
+msgstr "Դասավորություն"
 
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1490
@@ -2947,17 +2953,17 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:81
 #: src/control/Control.NotebookbarWriter.js:1244
 msgid "Table"
-msgstr ""
+msgstr "Աղյուսակ"
 
 #: src/control/Control.NotebookbarDraw.js:321
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF փաստաթուղթ (.pdf) - Գիտակ"
 
 #: src/control/Control.NotebookbarDraw.js:494
 #: src/control/Control.NotebookbarImpress.js:606
 #: src/control/Control.NotebookbarWriter.js:1729
 msgid "Ruler"
-msgstr ""
+msgstr "Քանոն"
 
 #: src/control/Control.NotebookbarDraw.js:899
 #: src/control/Control.NotebookbarImpress.js:989
@@ -2965,460 +2971,472 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:793
 #: src/control/Control.NotebookbarWriter.js:2605
 msgid "Paragraph"
-msgstr ""
+msgstr "Պարբերություն"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "Դիզայն"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
-msgstr ""
+msgstr "Սահիկացուցադրություն"
 
 #: src/control/Control.NotebookbarImpress.js:143
 msgid "Master"
-msgstr ""
+msgstr "Վարպետ"
 
 #: src/control/Control.NotebookbarImpress.js:469
 msgid "From Beginning"
-msgstr ""
+msgstr "Սկզբից"
 
 #: src/control/Control.NotebookbarImpress.js:476
 msgid "From Current Slide"
-msgstr ""
+msgstr "Ընթացիկ սահիկից"
 
 #: src/control/Control.NotebookbarImpress.js:485
 msgid "Present in Window"
-msgstr ""
+msgstr "Ներկայացնել պատուհանում"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Start Follow-me Presentation"
-msgstr ""
+msgstr "Սկսել «Հետևիր ինձ» ներկայացումը"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:729
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Հետևեք ներկայացմանը"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
-msgstr ""
+msgstr "Սահիկի տեսքեր"
 
 #: src/control/Control.NotebookbarImpress.js:676
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Կապել ցանցին"
 
 #: src/control/Control.NotebookbarImpress.js:800
 #: src/control/Control.NotebookbarImpress.js:1816
 msgid "Slide Layout"
-msgstr ""
+msgstr "Սահիկի դասավորություն"
 
 #: src/control/Control.NotebookbarImpress.js:811
 msgid "New"
-msgstr ""
+msgstr "Նոր"
 
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1826
 msgid "Change Layout"
-msgstr ""
+msgstr "Փոխել դասավորությունը"
 
 #: src/control/Control.NotebookbarImpress.js:830
 #: src/control/Control.NotebookbarImpress.js:1833
 msgid "Reset Layout"
-msgstr ""
+msgstr "Վերագործարկեք դասավորությունը"
 
 #: src/control/Control.NotebookbarImpress.js:844
 msgid "Character"
-msgstr ""
+msgstr "Նիշ"
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Բացատավորում և գույն"
 
 #: src/control/Control.NotebookbarImpress.js:1794
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Վարպետ սահիկի կաղապարներ"
 
 #: src/control/Control.NotebookbarImpress.js:1845
 msgid "Slide Size"
-msgstr ""
+msgstr "Սահիկի չափը"
 
 #: src/control/Control.NotebookbarImpress.js:1868
 msgid "Background Image"
-msgstr ""
+msgstr "Հետնամասի պատկեր"
 
 #: src/control/Control.NotebookbarImpress.js:2070
 msgid "Merge & Split"
-msgstr ""
+msgstr "Միավորում և բաժանում"
 
 #: src/control/Control.NotebookbarImpress.js:2109
 #: src/control/Control.NotebookbarWriter.js:2555
 msgid "Select"
-msgstr ""
+msgstr "Ընտրել"
 
 #: src/control/Control.NotebookbarImpress.js:2718
 msgid "Effects"
-msgstr ""
+msgstr "Էֆեկտներ"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
-msgstr ""
+msgstr "Ձև"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Online"
-msgstr ""
+msgstr "Գնա առցանց"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Offline"
-msgstr ""
+msgstr "Գնա Անցանց"
 
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.Zotero.js:827
 msgid "Styles"
-msgstr ""
+msgstr "Ոճեր"
 
 #: src/control/Control.NotebookbarWriter.js:940
 msgid "Scroll up"
-msgstr ""
+msgstr "Գլորել վերև"
 
 #: src/control/Control.NotebookbarWriter.js:947
 msgid "Scroll down"
-msgstr ""
+msgstr "Գլորել ներքև"
 
 #: src/control/Control.NotebookbarWriter.js:1098
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Ցուցակներ/Նշիկներ"
 
 #: src/control/Control.NotebookbarWriter.js:1385
 msgid "Header & Footer"
-msgstr ""
+msgstr "Վերնախորագիր և Տողատակ"
 
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Section"
-msgstr ""
+msgstr "Բաժին"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Symbols"
-msgstr ""
+msgstr "Նշաններ"
 
 #: src/control/Control.NotebookbarWriter.js:1592
 msgid "Rich Text"
-msgstr ""
+msgstr "Հարստացված տեքստ"
 
 #: src/control/Control.NotebookbarWriter.js:1600
 msgid "Checkbox"
-msgstr ""
+msgstr "Ընտրավանդակ"
 
 #: src/control/Control.NotebookbarWriter.js:1608
 msgid "Dropdown"
-msgstr ""
+msgstr "Բացվող ցանկ"
 
 #: src/control/Control.NotebookbarWriter.js:2311
 msgid "Tracking"
-msgstr ""
+msgstr "Հետևում"
 
 #: src/control/Control.NotebookbarWriter.js:2493
 msgid "Split"
-msgstr ""
+msgstr "Բաժանել"
 
 #: src/control/Control.NotebookbarWriter.js:2677
 msgid "Number Format"
-msgstr ""
+msgstr "Թվերի ձևաչափ"
 
 #: src/control/Control.PartsPreview.js:187
 msgid "preview of page %1"
-msgstr ""
+msgstr "%1 էջի նախադիտում"
 
 #: src/control/Control.PartsPreview.js:189
 msgid "Slide %1"
-msgstr ""
+msgstr "Սահիկ %1"
 
 #: src/control/Control.PartsPreview.js:267
 msgid "Paste Slide"
-msgstr ""
+msgstr "Հետ տեղադրել սահիկը"
 
 #: src/control/Control.PartsPreview.js:318
 msgid "Paste"
-msgstr ""
+msgstr "Հետ տեղադրել"
 
 #: src/control/Control.SaveState.ts:38
 msgid "Saving"
-msgstr ""
+msgstr "Պահպանում"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Վերև ոլորել ծանոթագրությունները"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Ներքև ոլորել ծանոթագրությունները"
 
 #: src/control/Control.ServerAuditDialog.ts:58
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Ձեր WOPI սերվերը անվտանգ չէ. SSL ստուգումը ձախողվել է"
 
 #: src/control/Control.ServerAuditDialog.ts:63
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "SSL նույնականացման հետ կապված խնդիրներ չեն հայտնաբերվել"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Փաստաթղթերը արդյունավետորեն չեն պարունակվում. բացակայում են "
+"հնարավորություններ կամ անվանատարածքներ։"
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Յուրաքանչյուր փաստաթուղթ անվտանգ կերպով պահվում է"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Հնարավոր ռիսկային համակարգային զանգերի BPF ֆիլտրացումը (seccomp) միացված չէ. "
+"սա անվտանգության վտանգ է։"
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Համակարգային զանգերի անվտանգության զտումը միացված է"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Ձեր սերվերը կարգավորված է անբավարար սարքային ռեսուրսներով, ինչը կարող է "
+"հանգեցնել վատ աշխատանքի։"
 
 #: src/control/Control.ServerAuditDialog.ts:101
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Սարքավորումների ռեսուրսները բավարար են օպտիմալ աշխատանքի համար"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Դանդաղ Kit jail կարգավորումը պատճենելով, հնարավոր չէ կապել-միացնել։"
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Արագ kit jail ամրացման միացումը միացված է"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Բոլոր ցանցային հարցումների պրոքսիավորումը վատ է աշխատում։"
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "Ուղիղ ցանցային միացում"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "IsAdminUser հատկությունը չի սահմանվում ինտեգրացիայի միջոցով"
 
 #: src/control/Control.ServerAuditDialog.ts:134
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Օգտագործվել է հնացած is_admin դաշտը, ինտեգրումը պետք է օգտագործի IsAdminUser "
+"հատկությունը"
 
 #: src/control/Control.ServerAuditDialog.ts:140
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "IsAdminUser օգտատիրոջ հատկությունը սահմանվում է ինտեգրացիայի միջոցով"
 
 #: src/control/Control.ServerAuditDialog.ts:148
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API-ը նախնականացված է"
 
 #: src/control/Control.ServerAuditDialog.ts:153
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Ինտեգրատորը պատրաստ չէ PostMessage զանգերի համար"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Անվանատարածքների օգտագործումը"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Անվանատարածքներ չօգտագործելը"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Փաստաթղթի կոնտեյները գործարկվել է {1} մվ-ից"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
-msgstr ""
+msgstr "Կարգավիճակ"
 
 #: src/control/Control.ServerAuditDialog.ts:316
 msgid "No issues found"
-msgstr ""
+msgstr "Խնդիրներ չեն հայտնաբերվել"
 
 #: src/control/Control.ServerAuditDialog.ts:321
 msgid "Alerts:"
-msgstr ""
+msgstr "Զգուշացումներ:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
 msgid "Check warnings of your server"
-msgstr ""
+msgstr "Ստուգեք ձեր սերվերի նախազգուշացումները"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
-msgstr ""
+msgstr "ԲԱՑԵԼ"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Ոլորել դեպի առաջին թերթիկը"
 
 #: src/control/Control.SheetsBar.js:58
 msgid "Scroll left"
-msgstr ""
+msgstr "Ոլորել ձախ"
 
 #: src/control/Control.SheetsBar.js:66
 msgid "Scroll right"
-msgstr ""
+msgstr "Ոլորել աջ"
 
 #: src/control/Control.SheetsBar.js:74
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Ոլորել դեպի վերջին թերթիկը"
 
 #: src/control/Control.SheetsBar.js:81
 msgid "Insert sheet"
-msgstr ""
+msgstr "Տեղադրեք թերթիկ"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Ցուցադրել աղյուսակների ցանկը"
 
 #: src/control/Control.StatusBar.js:152
 msgid "On"
-msgstr ""
+msgstr "Միացված է"
 
 #: src/control/Control.StatusBar.js:154
 #: src/control/jsdialog/Definitions.Menu.ts:1767
 msgid "Off"
-msgstr ""
+msgstr "Անջատված"
 
 #: src/control/Control.StatusBar.js:187
 #: src/control/jsdialog/Definitions.Menu.ts:163
 msgid "Average"
-msgstr ""
+msgstr "Միջին"
 
 #: src/control/Control.StatusBar.js:188
 msgid "CountA"
-msgstr ""
+msgstr "CountA"
 
 #: src/control/Control.StatusBar.js:189
 #: src/control/jsdialog/Definitions.Menu.ts:166
 msgid "Count"
-msgstr ""
+msgstr "Հաշվարկ"
 
 #: src/control/Control.StatusBar.js:190
 msgid "Maximum"
-msgstr ""
+msgstr "Առավելագույն"
 
 #: src/control/Control.StatusBar.js:191
 msgid "Minimum"
-msgstr ""
+msgstr "Նվազագույն"
 
 #: src/control/Control.StatusBar.js:192
 #: src/control/jsdialog/Definitions.Menu.ts:162
 msgid "Sum"
-msgstr ""
+msgstr "Գումար"
 
 #: src/control/Control.StatusBar.js:193
 msgid "Selection count"
-msgstr ""
+msgstr "Ընտրությունների հաշվարկ"
 
 #: src/control/Control.StatusBar.js:389
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Պատահական փոփոխություններից խուսափելու համար հեղինակը այս նիշքը սահմանել է "
+"բացել միայն դիտման համար"
 
 #: src/control/Control.StatusBar.js:439
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Ընտրեք մի քանի բջիջ"
 
 #: src/control/Control.StatusBar.js:456
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Ընտրության ռեժիմ՝ ակտիվ չէ"
 
 #: src/control/Control.StatusBar.js:534
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Սահմանել լեզուն բոլոր տեքստերի համար"
 
 #: src/control/Control.StatusBar.js:537
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Սահմանել պարբերության լեզուն"
 
 #: src/control/Control.StatusBar.js:538
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Սահմանել ընտրության լեզուն"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Տեղադրեք թերթիկը սրանից առաջ"
 
 #: src/control/Control.Tabs.js:58
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Տեղադրեք թերթիկը սրանից հետո"
 
 #: src/control/Control.Tabs.js:97
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Տեղափոխել թերթիկը ձախ"
 
 #: src/control/Control.Tabs.js:103
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Տեղափոխել թերթիկը աջ"
 
 #: src/control/Control.Tabs.js:114
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Պատճենել թերթիկը..."
 
 #: src/control/Control.Tabs.js:395
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr ""
+msgstr "Վստա՞հ եք, որ ուզում եք ջնջել {sheet} թերթիկը։"
 
 #: src/control/Control.Tabs.js:406
 msgid "Rename sheet"
-msgstr ""
+msgstr "Անվանափոխել թերթիկը"
 
 #: src/control/Control.Tabs.js:406
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Մուտքագրեք նոր թերթիկի անունը"
 
 #: src/control/Control.Toolbar.js:968
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
+"Հակամարտություն՝ «Հետարկել/Վերադարձնել» մի քանի օգտատերերի հետ։ Խնդրում ենք "
+"օգտագործել փաստաթղթի վերականգնումը՝ լուծելու համար"
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Ակտիվ թերթիկ"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr ""
+msgstr "Լռելյայն ոճ"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
-msgstr ""
+msgstr "Ներդրեք աղյուսակ"
 
 #: src/control/Control.TopToolbar.js:192
 msgid "Insert shapes"
-msgstr ""
+msgstr "Տեղադրեք ձևեր"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
-msgstr ""
+msgstr "Տեղադրեք միակցիչներ"
 
 #: src/control/Control.TopToolbar.js:223 src/control/Control.UIManager.ts:1133
 msgid "Hide Menu"
-msgstr ""
+msgstr "Թաքցնել ընտրացանկը"
 
 #: src/control/Control.UIManager.ts:325
 msgid "Enter new name"
-msgstr ""
+msgstr "Մուտքագրեք նոր անունը"
 
 #: src/control/Control.UIManager.ts:1160
 msgid "Show Menu"
-msgstr ""
+msgstr "Ցուցադրել ընտրացանկը"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
