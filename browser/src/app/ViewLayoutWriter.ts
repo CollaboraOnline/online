@@ -84,27 +84,38 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		app.sectionContainer.requestReDraw();
 	}
 
-	private adjustDocumentMarginsForComments(onZoomOrResize: boolean) {
+	private commentsHiddenOrNotPresent() {
 		const commentSection = app.sectionContainer.getSectionWithName(
 			app.CSections.CommentList.name,
 		) as cool.CommentSection;
 
-		const cursorAtComment =
-			commentSection.sectionProperties.selectedComment &&
-			!commentSection.sectionProperties.selectedComment.isEdit();
+		if (
+			commentSection.sectionProperties.show != true ||
+			commentSection.sectionProperties.commentList.length == 0
+		) {
+			this.recenterDocument();
+			return true;
+		}
+		return false;
+	}
 
-		if (!onZoomOrResize && cursorAtComment) {
+	private unselectSelectedCommentIfAny() {
+		const commentSection = app.sectionContainer.getSectionWithName(
+			app.CSections.CommentList.name,
+		) as cool.CommentSection;
+
+		if (
+			commentSection.sectionProperties.selectedComment &&
+			!commentSection.sectionProperties.selectedComment.isEdit()
+		) {
 			commentSection.unselect();
 		}
+	}
 
-		const commentsHiddenOrNotPresent =
-			commentSection.sectionProperties.show != true ||
-			commentSection.sectionProperties.commentList.length == 0;
+	private adjustDocumentMarginsForComments(onZoomOrResize: boolean) {
+		this.unselectSelectedCommentIfAny();
 
-		if (commentsHiddenOrNotPresent) {
-			this.recenterDocument();
-			return;
-		}
+		if (this.commentsHiddenOrNotPresent()) return;
 
 		if (this.documentCanMoveLeft()) {
 			this.documentScrollOffset = this.documentMoveLeftByOffset();
