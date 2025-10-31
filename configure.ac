@@ -1748,7 +1748,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$EN
        fi
 
        # If poco is built with --unbundled, it uses the system pcre library
-       AC_MSG_CHECKING([if we need to link with -lpcre])
+       AC_MSG_CHECKING([if we need to link with PCRE2])
        AC_LINK_IFELSE([AC_LANG_SOURCE([
        #include <Poco/RegularExpression.h>
        int main(int argc, char **argv)
@@ -1761,7 +1761,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$EN
        ])],
                       [AC_MSG_RESULT([no])],
                       [AC_MSG_RESULT([yes])
-                       LIBS="$LIBS -lpcre"])
+                       LIBS="$LIBS -lpcre2-8"])
 
        ])
 
