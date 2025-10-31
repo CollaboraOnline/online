@@ -635,8 +635,7 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
         return nullptr;
     }
 
-    scheme = Util::toLower(std::move(scheme));
-    const bool isSsl = scheme == "https://" || scheme == "wss://";
+    const bool isSsl = Util::iequal(scheme, "https://") || Util::iequal(scheme, "wss://");
 
     return connect(host, port, isSsl, protocolHandler);
 }

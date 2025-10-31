@@ -1367,8 +1367,7 @@ public:
             return nullptr;
         }
 
-        scheme = Util::toLower(std::move(scheme));
-        const bool secure = (scheme == "https://" || scheme == "wss://");
+        const bool secure = (Util::iequal(scheme, "https://") || Util::iequal(scheme, "wss://"));
         const auto protocol = secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted;
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
