@@ -311,7 +311,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     // All document types.
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'o', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT, unoAction: '.uno:Open' }),
 
-    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', platform: Platform.CODAWINDOWS, unoAction: '.uno:CloseWin' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'w', platform: Platform.CODAWINDOWS | Platform.CODAQT, unoAction: '.uno:CloseWin' }),
 
     /*
         Disable F5 or assign it something to prevent browser refresh.

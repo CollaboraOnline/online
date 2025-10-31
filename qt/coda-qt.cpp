@@ -510,6 +510,14 @@ QVariant Bridge::cool(const QString& messageStr)
             webViewInstance->load(filePath.toStdString());
         }
     }
+    else if (message == "uno .uno:CloseWin")
+    {
+        // Close the main window associated with this web view
+        if (_webView && _webView->window())
+        {
+            _webView->window()->close();
+        }
+    }
     else if (message == "PRINT")
     {
         printDocument(_document._appDocId, _webView);
