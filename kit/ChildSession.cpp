@@ -1748,10 +1748,13 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
     int size = length - firstLine.size() - 1;
-#if defined QTAPP
-    // To work around a qtwebchannel "Could not convert argument QJsonValue(object, QJsonObject())
-    // to target type QString ." bug, _pasteTypedBlob in browser/src/map/Clipboard.js base64-encoded
-    // the payload:
+#if defined QTAPP || defined _WIN32
+    // In CODA-Q, to work around a qtwebchannel "Could not convert argument QJsonValue(object,
+    // QJsonObject()) to target type QString ." bug, _pasteTypedBlob in browser/src/map/Clipboard.js
+    // base64-encoded the payload:
+    //
+    // The same root problem in CODA-W, although there we end up with a "the server encountered a
+    // unknown error while parsing the [object command" error message.
     std::string dec;
     [[maybe_unused]] auto const res = macaron::Base64::Decode(std::string_view(data, size), dec);
     assert(res.empty());
