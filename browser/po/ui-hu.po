@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-21 09:53+0200\n"
-"PO-Revision-Date: 2025-10-21 14:30+0000\n"
+"PO-Revision-Date: 2025-10-28 05:55+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -495,11 +495,11 @@ msgstr "Lap méretéhez igazítás"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Tile pages"
-msgstr ""
+msgstr "Oldalak mozaikszerű elrendezése"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Booklet"
-msgstr ""
+msgstr "Füzet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Booklet front"
