@@ -245,12 +245,14 @@ coolforkit_caps_SOURCES = $(coolforkit_sources) \
                           kit/forkit-main.cpp
 
 coolforkit_caps_LDADD = ${coolforkit_ldadd}
+coolforkit_caps_LDFLAGS = -Wl,--wrap=open $(AM_LDFLAGS)
 
 coolforkit_ns_SOURCES = $(coolforkit_sources) \
                         $(shared_sources) \
                         kit/forkit-main.cpp
 
 coolforkit_ns_LDADD = ${coolforkit_ldadd}
+coolforkit_ns_LDFLAGS = -Wl,--wrap=open $(AM_LDFLAGS)
 
 if ENABLE_DEBUG
 coolwsd_inproc_SOURCES = $(coolwsd_sources) \
@@ -260,6 +262,7 @@ coolwsd_inproc_SOURCES = $(coolwsd_sources) \
 
 coolwsd_inproc_LDADD = ${coolwsd_LDADD} \
                        ${coolforkit_ldadd}
+coolwsd_inproc_LDFLAGS = -Wl,--wrap=open $(AM_LDFLAGS)
 endif
 
 if ENABLE_LIBFUZZER
