@@ -42,17 +42,18 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		} as DocumentSpacingInfo;
 	}
 
-	private documentCanMoveLeft() {
+	private documentCanMoveLeft(ignoreDocumentScrollOffset: boolean) {
 		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
+		const offset = ignoreDocumentScrollOffset ? 0 : this.documentScrollOffset;
 
 		const commentsWiderThanRightMargin =
-			spacingInfo.documentMarginsWidth + this.documentScrollOffset <
+			spacingInfo.documentMarginsWidth + offset <
 			spacingInfo.commentSectionWidth;
 
 		const haveEnoughLeftMarginForMove =
 			spacingInfo.commentSectionWidth -
-				(spacingInfo.documentMarginsWidth + this.documentScrollOffset) <
-			spacingInfo.documentMarginsWidth - this.documentScrollOffset;
+				(spacingInfo.documentMarginsWidth + offset) <
+			spacingInfo.documentMarginsWidth - offset;
 
 		return commentsWiderThanRightMargin && haveEnoughLeftMarginForMove;
 	}
@@ -117,11 +118,10 @@ class ViewLayoutWriter extends ViewLayoutBase {
 
 		if (this.commentsHiddenOrNotPresent()) return;
 
-		if (this.documentCanMoveLeft()) {
+		if (this.documentCanMoveLeft(onZoomOrResize)) {
+			if (onZoomOrResize) this.documentScrollOffset = 0;
 			this.documentScrollOffset = this.documentMoveLeftByOffset();
 			this.scrollHorizontal(this.documentScrollOffset, true);
-		} else if (onZoomOrResize) {
-			this.documentScrollOffset = 0;
 		}
 	}
 
