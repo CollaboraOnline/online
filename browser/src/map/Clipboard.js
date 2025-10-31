@@ -411,7 +411,7 @@ window.L.Clipboard = window.L.Class.extend({
 	_pasteTypedBlob: function(fileType, fileBlob) {
 		var header = 'paste mimetype=' + fileType + '\n';
 		var blob;
-		if (window.ThisIsTheQtApp) {
+		if (window.ThisIsTheQtApp || window.ThisIsTheWindowsApp) {
 			// To work around a qtwebchannel "Could not convert argument
 			// QJsonValue(object, QJsonObject()) to target type QString ." bug, send the
 			// playload as a base64-encoded string rather than as an ArrayBuffer blob
