@@ -266,7 +266,9 @@ static const wchar_t* _(const wchar_t* english)
                 // Most translations missing here
                 L"Select document to edit in %s",
                 {
+                    { "cs", L"Vyberte dokument k úpravám v %s" },
                     { "de", L"Dokument zur Bearbeitung in %s auswählen" },
+                    { "es", L"Seleccione el documento para editar en %s" },
                     { "hu", L"Válassza ki a %s-ban szerkesztendő dokumentumot" },
                     { "ja", L"%sで編集する文書を選択" },
                     { "pl", L"Wybierz dokument do edycji w %s" },
