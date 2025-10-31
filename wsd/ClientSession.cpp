@@ -823,7 +823,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             std::string osVersionInfo(
                 ConfigUtil::getConfigValue<std::string>("per_view.custom_os_info", ""));
             if (osVersionInfo.empty())
-                osVersionInfo = Util::getLinuxVersion();
+            {
+                CONFIG_STATIC const bool sig = ConfigUtil::getBool("security.server_signature", false);
+                // Honour security.server_signature for reporting OS details too
+                if (sig)
+                    osVersionInfo = Util::getLinuxVersion();
+                else
+                    osVersionInfo = "unknown";
+            }
 
             sendTextFrame(std::string("osinfo ") + osVersionInfo);
         }
