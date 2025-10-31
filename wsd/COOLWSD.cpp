@@ -3556,7 +3556,7 @@ std::string COOLWSD::getServerURL()
 #endif
 #endif
 
-int COOLWSD::innerMain()
+void COOLWSD::innerMain()
 {
 #if !MOBILEAPP
 #  ifdef __linux__
@@ -3597,7 +3597,7 @@ int COOLWSD::innerMain()
         LOG_INF("Locale is set to " + std::string(locale));
         ::setenv("LC_ALL", locale, 1);
     }
-#endif
+#endif // !IOS
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child coolwsd,
@@ -4049,19 +4049,13 @@ int COOLWSD::innerMain()
     JailUtil::cleanupJails(CleanupChildRoot);
 #endif // !MOBILEAPP
 
-    const int returnValue = UnitBase::uninit();
-
-    LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
-
-    SigUtil::addActivity("finished with status " + std::to_string(returnValue));
-
     if constexpr (Util::isMobileApp())
-        Util::forcedExit(returnValue);
+    {
+        LOG_INF("Process [coolwsd] finished with exit status: " << EXIT_OK);
+        Util::forcedExit(EXIT_OK);
+    }
 
-    return returnValue;
-#else // IOS
-    return 0;
-#endif
+#endif // !IOS
 }
 
 std::shared_ptr<TerminatingPoll> COOLWSD:: getWebServerPoll ()
@@ -4069,10 +4063,30 @@ std::shared_ptr<TerminatingPoll> COOLWSD:: getWebServerPoll ()
     return COOLWSDServer::WebServerPoll;
 }
 
-void COOLWSD::cleanup([[maybe_unused]] int returnValue)
+int COOLWSD::cleanup(int returnValue)
 {
     try
     {
+#ifndef IOS
+        if (UnitBase::isUnitTesting())
+        {
+            LOG_DBG("Coolwsd finished with exit status " << returnValue
+                                                         << "; uninitializing UnitBase");
+            const int unitReturnValue = UnitBase::uninit();
+            if (unitReturnValue != EXIT_OK)
+            {
+                // Overwrite the return value if the unit-test failed.
+                LOG_INF("Overwriting process [coolwsd] exit status ["
+                        << returnValue << "] with unit-test status: " << unitReturnValue);
+                returnValue = unitReturnValue;
+            }
+        }
+
+        LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
+
+        SigUtil::addActivity("finished with status " + std::to_string(returnValue));
+#endif // !IOS
+
         COOLWSDServer::Instance.reset();
 
         PrisonerPoll.reset();
@@ -4120,7 +4134,10 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
     catch (const std::exception& ex)
     {
         LOG_ERR("Failed to uninitialize: " << ex.what());
+        throw;
     }
+
+    return returnValue;
 }
 
 int COOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -4129,21 +4146,23 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
 
     int returnValue = EXIT_SOFTWARE;
 
-    try {
-        returnValue = innerMain();
+    try
+    {
+        innerMain();
     }
     catch (const std::exception& e)
     {
         LOG_FTL("Exception: " << e.what());
-        cleanup(returnValue);
+        cleanup(EXIT_SOFTWARE);
         throw;
-    } catch (...) {
-        cleanup(returnValue);
+    }
+    catch (...)
+    {
+        cleanup(EXIT_SOFTWARE);
         throw;
     }
 
-    cleanup(returnValue);
-
+    returnValue = cleanup(EXIT_OK);
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
 
 #if CODE_COVERAGE
