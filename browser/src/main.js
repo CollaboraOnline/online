@@ -82,7 +82,7 @@ map.addControl(map.uiManager);
 if (!window.L.Browser.cypressTest)
 	map.tooltip = window.L.control.tooltip();
 
-if (window.coolParams.get('iswelcome'))
+if (window.coolParams.get('welcome'))
 	map.uiManager.initializeNonInteractiveUI();
 else
 	map.uiManager.initializeBasicUI();
