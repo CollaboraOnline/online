@@ -14,7 +14,7 @@ Run `./autogen.sh`, then configure
 ```
 Adjust the paths to `--with-lo-path` and `--with-lokit-path`.
 
-Then run `make -j$(nproc)` on the **top directory**. This will result in `coda-qt` 
+Then run `make -j$(nproc)` on the **top directory**. This will result in `coda-qt`
 executable in this directory.
 
 ## Run
@@ -23,6 +23,14 @@ Usage: `./qt/coda-qt DOCUMENT [DOCUMENT...]`
 
 e.g.
 `./coda-qt ../test/data/hello.odt`
+
+## Debug with Chromium DevTools
+
+```sh
+export QTWEBENGINE_REMOTE_DEBUGGING=3311
+```
+
+Then run `coda-qt` and open http://localhost:3311
 
 ## Flatpak
 
