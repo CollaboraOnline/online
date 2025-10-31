@@ -281,7 +281,7 @@ protected:
     int main(const std::vector<std::string>& args) override;
 
     /// Handle various global static destructors.
-    static void cleanup(int returnValue);
+    static int cleanup(int returnValue);
 
 private:
 #if !MOBILEAPP
@@ -297,7 +297,7 @@ private:
     void innerInitialize(Application& self);
 
     /// The actual main implementation.
-    int innerMain();
+    void innerMain();
 
     static void appendAllowedHostsFrom(Poco::Util::LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed);
     static void appendAllowedAliasGroups(Poco::Util::LayeredConfiguration& conf, std::vector<std::string>& allowed);
