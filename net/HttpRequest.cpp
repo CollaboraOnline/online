@@ -982,18 +982,17 @@ std::shared_ptr<Session> Session::create(std::string host, Protocol protocol, in
         throw std::runtime_error("Invalid URI [" + host + "] to http::Session::create.");
     }
 
-    scheme = Util::toLower(std::move(scheme));
     if (!scheme.empty())
     {
         switch (protocol)
         {
             case Protocol::HttpUnencrypted:
-                assert((scheme == "http://" || scheme == "ws://")
-                       && "createHttp has a conflicting scheme.");
+                assert((Util::iequal(scheme, "http://") || Util::iequal(scheme, "ws://")) &&
+                       "createHttp has a conflicting scheme.");
                 break;
             case Protocol::HttpSsl:
-                assert((scheme == "https://" || scheme == "wss://")
-                       && "createHttp has a conflicting scheme.");
+                assert((Util::iequal(scheme, "https://") || Util::iequal(scheme, "wss://")) &&
+                       "createHttp has a conflicting scheme.");
                 break;
         }
     }
