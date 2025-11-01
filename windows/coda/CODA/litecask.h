@@ -74,9 +74,7 @@ int main(int argc, char** argv)
 #endif
 #include <bit>
 #define getpid() _getpid()
-#include <intrin.h>
 #include <windows.h>
-#pragma intrinsic(_umul128)  // For Wyhash
 
 #else
 
@@ -849,14 +847,10 @@ struct DataFile {
 static inline void
 _wymum(uint64_t* A, uint64_t* B)
 {
-#if defined(_MSC_VER)
-    *A = _umul128(*A, *B, B);
-#else
     __uint128_t r = *A;
     r *= *B;
     *A = (uint64_t)r;
     *B = (uint64_t)(r >> 64);
-#endif
 }
 
 static inline uint64_t
