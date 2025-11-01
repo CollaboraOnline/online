@@ -4701,7 +4701,11 @@ void DocumentBroker::handleSlideLayerResponse(const std::shared_ptr<Message>& me
     size_t pos = Util::findInVector(message->data(), "\n");
     std::string msg(message->data().data(), pos == std::string::npos ? message->size() : pos);
     Poco::JSON::Object::Ptr jsonPtr;
-    JsonUtil::parseJSON(msg, jsonPtr);
+    if (!JsonUtil::parseJSON(msg, jsonPtr))
+    {
+        LOG_ERR("Invalid slide layer response, could not parse JSON: " << msg);
+        return;
+    }
     const std::string key = JsonUtil::getJSONValue<std::string>(jsonPtr, "cacheKey");
 
     // This message has forwardToken which can cause issue if reused for forwardToClient when using cache.
