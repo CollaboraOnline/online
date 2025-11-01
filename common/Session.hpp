@@ -345,8 +345,8 @@ protected:
     inline void logPrefix(std::ostream& os) const { os << _name << ": "; }
 
     void setSignToUserPrivateConfig(const std::string& key,
-                                    Poco::JSON::Object::Ptr signatureDataObject,
-                                    Poco::JSON::Object::Ptr userPrivateInfoObject);
+                                    const Poco::JSON::Object::Ptr& signatureDataObject,
+                                    Poco::JSON::Object::Ptr& userPrivateInfoObject);
 
 private:
     void shutdown(bool goingAway = false, const std::string& statusMessage = std::string());

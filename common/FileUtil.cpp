@@ -268,7 +268,7 @@ namespace FileUtil
                                                          std::string localJailRoot, std::string jailDir)
     {
         std::string localDir = FileUtil::buildLocalPathToJail(
-            usingMountNamespaces, localJailRoot, jailDir);
+            usingMountNamespaces, std::move(localJailRoot), jailDir);
 
         // This is the location of the file as seen by the kit, the location as
         // seen inside the jail. Ideally (and typically) noCaps is false, and
