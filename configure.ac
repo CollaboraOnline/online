@@ -1220,7 +1220,7 @@ AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.
 
 # Test for build environment
 
-AS_IF([test "$ENABLE_GTKAPP" != true -a test "$ENABLE_QTAPP" != true],
+AS_IF([test "$ENABLE_GTKAPP" != true -a "$ENABLE_QTAPP" != true],
       [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Woverloaded-virtual -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
