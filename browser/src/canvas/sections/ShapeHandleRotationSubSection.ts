@@ -23,7 +23,6 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		this.sectionProperties.position = documentPosition.clone();
         this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
-		this.sectionProperties.mouseIsInside = false;
 		this.sectionProperties.lastDraggingDistance = null;
 		this.sectionProperties.cursorStyle = 'pointer';
 
