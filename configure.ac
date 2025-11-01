@@ -1512,7 +1512,7 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$host_os" != "emscripten"],
       [PKG_CHECK_MODULES([PNG], [libpng])
 dnl    deflated HTTP / web-page serving
        PKG_CHECK_MODULES([ZLIB], [zlib])
@@ -1522,24 +1522,27 @@ dnl    tile compression
        PKG_CHECK_MODULES([CPPUNIT], [cppunit])
        ])
 
-# Check if the platform supports Capabilities
-AC_CHECK_HEADERS([sys/capability.h],
-    [ have_capability_h=yes ],
-    [ have_capability_h=no ])
+AS_IF([test "$ENABLE_WINDOWSAPP" != "true"],
+      [# Check if the platform supports Capabilities
+       AC_CHECK_HEADERS([sys/capability.h],
+           [ have_capability_h=yes ],
+           [ have_capability_h=no ])
 
-AS_IF([test "x$have_capability_h" = xyes], [
-    dnl If the header is found, proceed to look for the libcap library:
-    AC_SEARCH_LIBS([cap_get_proc], [cap],
-    [
-        dnl If found, define a macro we can test in our code
-        AC_DEFINE([HAVE_LIBCAP], [1], [Define to 1 if libcap (cap_get_proc) is available])
-    ],
-    [
-        AC_MSG_ERROR([libcap not available?])
-    ])
-], [
-    AC_MSG_WARN([sys/capability.h not found; skipping capabilities.])
-])
+       AS_IF([test "x$have_capability_h" = xyes], [
+           dnl If the header is found, proceed to look for the libcap library:
+           AC_SEARCH_LIBS([cap_get_proc], [cap],
+           [
+               dnl If found, define a macro we can test in our code
+               AC_DEFINE([HAVE_LIBCAP], [1], [Define to 1 if libcap (cap_get_proc) is available])
+           ],
+           [
+               AC_MSG_ERROR([libcap not available?])
+           ])
+       ], [
+           AC_MSG_WARN([sys/capability.h not found; skipping capabilities.])
+       ])
+      ]
+)
 
 dnl NB. this is a gtk3 frontend.
 webkit_try_older=
