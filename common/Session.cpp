@@ -185,11 +185,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
                 continue;
             }
 
-            this->setSignToUserPrivateConfig("SignatureCert", signatureDataObject,
+            setSignToUserPrivateConfig("SignatureCert", signatureDataObject,
                                              userPrivateInfoObject);
-            this->setSignToUserPrivateConfig("SignatureKey", signatureDataObject,
+            setSignToUserPrivateConfig("SignatureKey", signatureDataObject,
                                              userPrivateInfoObject);
-            this->setSignToUserPrivateConfig("SignatureCa", signatureDataObject,
+            setSignToUserPrivateConfig("SignatureCa", signatureDataObject,
                                              userPrivateInfoObject);
 
             _userPrivateInfo = JsonUtil::jsonToString(userPrivateInfoObject);
