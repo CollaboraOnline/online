@@ -428,8 +428,8 @@ void Session::dumpState(std::ostream& os)
 }
 
 void Session::setSignToUserPrivateConfig(const std::string& key,
-                                         Poco::JSON::Object::Ptr signatureDataObject,
-                                         Poco::JSON::Object::Ptr userPrivateInfoObject)
+                                         const Poco::JSON::Object::Ptr& signatureDataObject,
+                                         Poco::JSON::Object::Ptr& userPrivateInfoObject)
 {
     if (!signatureDataObject->has(key))
     {
