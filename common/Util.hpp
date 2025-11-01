@@ -1335,27 +1335,6 @@ int main(int argc, char**argv)
         return std::string(s);
     }
 
-    /// Concatenate the given elements in a container to each other using
-    /// the delimiter of choice.
-    template <typename T, typename U = const char*>
-    inline std::string join(const T& elements, const U& delimiter)
-    {
-        std::ostringstream oss;
-        bool first = true;
-        for (const auto& elem : elements)
-        {
-            if (!first)
-            {
-                oss << delimiter;
-            }
-
-            oss << elem;
-            first = false;
-        }
-
-        return oss.str();
-    }
-
     // Create a ostringstream with desired ostream format set
     inline std::ostringstream makeDumpStateStream()
     {
@@ -1374,8 +1353,8 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to a stream.
-    template <typename S, typename T, typename... Delimiters>
-    void joinPair(S& stream, T&& container, Delimiters&&... delimiters)
+    template <std::ranges::forward_range T, typename... Delimiters>
+    void joinPair(std::ostream& stream, T&& container, Delimiters&&... delimiters)
     {
         unsigned i = 0;
         for (const auto& pair : container)
@@ -1390,7 +1369,7 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to string.
-    template <typename T, typename... Delimiters>
+    template <std::ranges::forward_range T, typename... Delimiters>
     std::string joinPair(T&& container, Delimiters&&... delimiters)
     {
         std::ostringstream oss;
@@ -1399,7 +1378,7 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to string.
-    template <typename T> std::string joinPair(T&& container)
+    template <std::ranges::forward_range T> std::string joinPair(T&& container)
     {
         std::ostringstream oss;
         joinPair(oss, std::forward<T>(container), " / ");
