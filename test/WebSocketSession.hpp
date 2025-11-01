@@ -238,8 +238,7 @@ public:
                                         std::chrono::milliseconds timeout,
                                         const std::string_view context = std::string_view())
     {
-        LOG_DBG(context << "Waiting for any [" << Util::join(prefixes, ", ") << "] for "
-                        << timeout);
+        LOG_DBG(context << "Waiting for any [" << Util::joinPair(prefixes, ", ") << "] for " << timeout);
 
         return poll(
             [&](const std::vector<char>& message)

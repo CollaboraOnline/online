@@ -74,7 +74,7 @@ void UnitInvalidation::renderArea(const std::shared_ptr<http::WebSocketSession> 
             }
         }
 
-        helpers::sendTextFrame(session, "tileprocessed wids=" + Util::join(wids, ","));
+        helpers::sendTextFrame(session, "tileprocessed wids=" + Util::joinPair(wids, ","));
 }
 
 void UnitInvalidation::invokeWSDTest()
