@@ -1339,7 +1339,7 @@ int main(int argc, char**argv)
     /// Concatenate the given elements in a container to each other using
     /// the delimiter of choice.
     template <typename T, typename U = const char*>
-    inline std::string join(const T& elements, const U& delimiter = ", ")
+    inline std::string join(const T& elements, const U& delimiter)
     {
         std::ostringstream oss;
         bool first = true;
