@@ -1110,14 +1110,19 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		// There is no native "double-click" event for touch devices. But we need to support double-tap.
 		if ((e as any).pointerType === 'touch') {
-			if (this.sectionProperties.lastTapTime && (Date.now() - this.sectionProperties.lastTapTime) < 250)
+			if (this.sectionProperties.lastTapTime && (Date.now() - this.sectionProperties.lastTapTime) < 250) {
+				point.pX -= this.position[0]; // Take the addition back. It will be added in onDoubleClick.
+				point.pY -= this.position[1];
 				this.onDoubleClick(point, e);
+			}
 
 			this.sectionProperties.lastTapTime = Date.now();
 		}
 	}
 
 	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		point.pX += this.position[0];
+		point.pY += this.position[1];
 		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 2, 1, 0);
 		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 2, 1, 0);
 	}
