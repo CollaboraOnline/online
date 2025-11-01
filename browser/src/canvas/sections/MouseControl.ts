@@ -272,6 +272,15 @@ class MouseControl extends CanvasSectionObject {
 				this.mouseDownSent = true;
 			}
 
+			if (!this.containerObject.isMouseInside()) {
+				point.pX += this.position[0];
+				point.pY += this.position[1];
+				app.map.fire('handleautoscroll', {
+					pos: { x: point.cX, y: point.cY },
+					map: app.map,
+				});
+			} else app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
+
 			this.sendMouseMove(count, buttons, modifier);
 		}
 
@@ -301,6 +310,8 @@ class MouseControl extends CanvasSectionObject {
 				this.readButtons(e),
 				this.readModifier(e),
 			);
+
+			app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
 		} else if (e.type === 'touchend' && this.localPositionOnMouseDown) {
 			// For swipe action.
 			const diff = new cool.SimplePoint(
