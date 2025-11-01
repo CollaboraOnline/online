@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -33,3 +34,5 @@
 #include <wsd/SpecialBrokers.hpp>
 
 #endif
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
