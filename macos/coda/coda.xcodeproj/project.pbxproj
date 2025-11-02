@@ -874,7 +874,6 @@
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-liconv",
-					"-lpam",
 					"-lPocoFoundation",
 					"-lPocoUtil",
 					"-lPocoXML",
@@ -927,7 +926,6 @@
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-liconv",
-					"-lpam",
 					"-lPocoFoundation",
 					"-lPocoUtil",
 					"-lPocoXML",
