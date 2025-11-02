@@ -67,6 +67,13 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	public onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
+		// We need this to prevent native context menu.
+		e.preventDefault();
+
+		// We will remove below ones after we remove map HTML element.
+		e.stopPropagation();
+		e.stopImmediatePropagation();
+
 		const buttons = app.LOButtons.right;
 		const modifier = this.readModifier(e);
 		if (modifier === 0) {
