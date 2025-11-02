@@ -359,7 +359,6 @@
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
 				OTHER_LDFLAGS = (
 					"-liconv",
-					"-lpam",
 					"-lPocoFoundation",
 					"-lPocoUtil",
 					"-lPocoXML",
@@ -393,7 +392,6 @@
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
 				OTHER_LDFLAGS = (
 					"-liconv",
-					"-lpam",
 					"-lPocoFoundation",
 					"-lPocoUtil",
 					"-lPocoXML",
