@@ -365,13 +365,9 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"-lPocoNetSSL",
-					"-lPocoCrypto",
 					"-lzstd",
 					"-lpng",
 					"-lz",
-					"-lssl",
-					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -403,13 +399,9 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"-lPocoNetSSL",
-					"-lPocoCrypto",
 					"-lzstd",
 					"-lpng",
 					"-lz",
-					"-lssl",
-					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
