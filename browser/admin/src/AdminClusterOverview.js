@@ -215,7 +215,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
             cpuStat.appendChild(spanforBullet);
             cpuStat.appendChild(spanforText);
             tileParent.appendChild(cpuStat);
-        } else if (graphName == 'mem') {
+        } else { // 'mem'
             var memStat = document.createElement('p');
             memStat.className = 'pb-1 has-text-right';
             spanforBullet.style = 'color:green';
@@ -245,7 +245,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
                     return d + '%';
                 });
             yAxisGenerator.ticks(3);
-        } else if (graphName == 'mem') {
+        } else { // 'mem'
             yAxisGenerator = d3.axisLeft(obj.yScale)
                 .tickFormat(function (d) {
                     return Util.humanizeMem(d);
