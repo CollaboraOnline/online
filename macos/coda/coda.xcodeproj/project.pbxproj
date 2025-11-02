@@ -880,13 +880,9 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"-lPocoNetSSL",
-					"-lPocoCrypto",
 					"$(HOMEBREW_PATH)/lib/libzstd.a",
 					"-lpng",
 					"-lz",
-					"-lssl",
-					"-lcrypto",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
 				PRODUCT_MODULE_NAME = coda;
@@ -937,13 +933,9 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"-lPocoNetSSL",
-					"-lPocoCrypto",
 					"$(HOMEBREW_PATH)/lib/libzstd.a",
 					"-lpng",
 					"-lz",
-					"-lssl",
-					"-lcrypto",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
 				PRODUCT_MODULE_NAME = coda;
