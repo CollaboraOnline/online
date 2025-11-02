@@ -9,4 +9,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # invocation for coverity to collect c/c++ and javascript
-coverity capture --dir cov-int --language c-family --language javascript --file-include-regex browser/src -- make -j `nproc`
+coverity capture --dir cov-int --language c-family --language javascript --file-include-regex "browser/(src|admin|welcome)" -- make -j `nproc`
