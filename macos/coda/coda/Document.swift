@@ -277,12 +277,13 @@ class Document: NSDocument {
 
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         let permission = readOnly ? "readonly" : "edit"
+        let lang = Locale.preferredLanguages.first ?? "en-US"
 
         components.queryItems = [
             URLQueryItem(name: "file_path", value: tempFileURL!.absoluteString),
             URLQueryItem(name: "closebutton", value: "1"),
             URLQueryItem(name: "permission", value: permission),
-            // TODO: add "lang" if needed
+            URLQueryItem(name: "lang", value: lang),
             URLQueryItem(name: "appdocid", value: "\(self.appDocId)"),
             URLQueryItem(name: "userinterfacemode", value: "notebookbar"),
             // TODO: add "dir" if needed
