@@ -944,6 +944,13 @@ AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice cor
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
 
+if test "$enable_macosapp" = "yes"; then
+   AC_MSG_CHECKING([for libpng include directory to build against])
+   CHK_FILE_VAR(LIBPNG_INCLUDES,png.h,png.h include)
+   AC_MSG_CHECKING([for static libpng lib to build against])
+   CHK_FILE_VAR(LIBPNG_LIBS,libpng.a,libpng)
+fi
+
 if test "$enable_windowsapp" = "yes" ; then
    LIBPNG_INCLUDES_WINDOWS=`cd "$LIBPNG_INCLUDES" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
    LIBPNG_LIBS_WINDOWS=`cd "$LIBPNG_LIBS" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`

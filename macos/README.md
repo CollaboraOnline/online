@@ -90,8 +90,7 @@ update the paths to the core instdir and online repo):
 
 ## Then you can build CODA-M:
 
-* ( cd browser ; gmake )
-* open Xcode's project macos/coda/coda.xcodeproj & build from there
+Just run 'make' from the terminal.
 
 # Building and debugging coolwsd directly in Xcode
 

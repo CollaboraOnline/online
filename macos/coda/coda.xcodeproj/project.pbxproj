@@ -734,12 +734,12 @@
 					"$(SRCROOT)/../../kit",
 					"$(SRCROOT)/../../net",
 					"$(SRCROOT)/../../wsd",
+					"$(LIBPNG_INCLUDES)",
 					"$(POCO_INCLUDES)",
-					"$(HOMEBREW_PATH)/include",
+					"$(ZSTD_INCLUDES)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(POCO_LIBS)",
-					"$(HOMEBREW_PATH)/lib",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
@@ -752,8 +752,8 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"$(HOMEBREW_PATH)/lib/libpng.a",
+					"$(LIBPNG_LIBS)/libpng.a",
+					"$(ZSTD_LIBS)/libzstd.a",
 				);
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -818,12 +818,12 @@
 					"$(SRCROOT)/../../kit",
 					"$(SRCROOT)/../../net",
 					"$(SRCROOT)/../../wsd",
+					"$(LIBPNG_INCLUDES)",
 					"$(POCO_INCLUDES)",
-					"$(HOMEBREW_PATH)/include",
+					"$(ZSTD_INCLUDES)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(POCO_LIBS)",
-					"$(HOMEBREW_PATH)/lib",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
@@ -835,8 +835,8 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"$(HOMEBREW_PATH)/lib/libpng.a",
+					"$(LIBPNG_LIBS)/libpng.a",
+					"$(ZSTD_LIBS)/libzstd.a",
 				);
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -879,8 +879,8 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"$(HOMEBREW_PATH)/lib/libpng.a",
+					"$(LIBPNG_LIBS)/libpng.a",
+					"$(ZSTD_LIBS)/libzstd.a",
 					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
@@ -931,8 +931,8 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"$(HOMEBREW_PATH)/lib/libpng.a",
+					"$(LIBPNG_LIBS)/libpng.a",
+					"$(ZSTD_LIBS)/libzstd.a",
 					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
