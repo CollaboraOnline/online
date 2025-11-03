@@ -273,7 +273,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = '';
 		}
 
-		var $doc, $a;
 		var nTotalViews;
 		var docProps, sPid, sName;
 		if (textMsg.startsWith('documents')) {
@@ -337,7 +336,10 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			else if (sCommand === 'uptime') {
 				nData = Util.humanizeSecs(nData);
 			}
-			$(document.getElementById(sCommand)).text(nData);
+			{
+				const cmdEl = document.getElementById(sCommand);
+				if (cmdEl) cmdEl.textContent = nData;
+			}
 		}
 		else if (textMsg.startsWith('rmdoc')) {
 			textMsg = textMsg.substring('rmdoc'.length);
@@ -347,19 +349,20 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 			var doc = document.getElementById('doc' + sPid);
 			if (doc !== undefined && doc !== null) {
-				var $user = $(document.getElementById('user' + sessionid));
-				$user.remove();
+				var userEl = document.getElementById('user' + sessionid);
+				if (userEl) userEl.remove();
 				var collapsable = getCollapsibleClass('ucontainer' + sPid);
 				var viewerCount = parseInt(collapsable.getText().split(' ')[0]) - 1;
 				if (viewerCount === 0) {
 					document.getElementById('docview').deleteRow(doc.rowIndex);
-				}
-				else {
+				} else {
 					collapsable.setText(String(viewerCount) + _(' user(s).'));
 				}
-				$a = $(document.getElementById('active_users_count'));
-				nTotalViews = parseInt($a.text());
-				$a.text(nTotalViews - 1);
+				var aEl = document.getElementById('active_users_count');
+				if (aEl) {
+					nTotalViews = parseInt(aEl.textContent) || 0;
+					aEl.textContent = String(nTotalViews - 1);
+				}
 			}
 
 			var docEntry = document.getElementById(sessionid + '_' + sPid);
@@ -382,11 +385,11 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			var sProp = docProps[1];
 			var sValue = docProps[2];
 
-			$doc = $('#doc' + sPid);
-			if ($doc.length !== 0) {
+			var docEl2 = document.getElementById('doc' + sPid);
+			if (docEl2) {
 				if (sProp == 'mem') {
-					var $mem = $('#docmem' + sPid);
-					$mem.text(Util.humanizeMem(parseInt(sValue)));
+					var memEl = document.getElementById('docmem' + sPid);
+					if (memEl) memEl.textContent = Util.humanizeMem(parseInt(sValue));
 				}
 			}
 		}
@@ -396,8 +399,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			sPid = docProps[0];
 			var value = docProps[1];
 
-			var $mod = $(document.getElementById('mod' + sPid));
-			$mod.text(value);
+			var modEl = document.getElementById('mod' + sPid);
+			if (modEl) modEl.textContent = value;
 		}
 		else if (textMsg.startsWith('uploaded')) {
 			textMsg = textMsg.substring('uploaded'.length);
@@ -406,10 +409,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				sPid = docProps[0];
 				var value = docProps[1];
 
-				var up = $(document.getElementById('up' + sPid));
-				if (up !== undefined) {
-					up.text(value);
-				}
+				var upEl = document.getElementById('up' + sPid);
+				if (upEl) upEl.textContent = value;
 			}
 		}
 		else if (e.data == 'InvalidAuthToken' || e.data == 'NotAuthenticated') {

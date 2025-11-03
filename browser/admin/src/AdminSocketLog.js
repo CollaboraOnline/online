@@ -12,15 +12,15 @@
  * Socket to be intialized on opening the log page in Admin console
  */
 
-/* global Admin $ AdminSocketBase */
+/* global Admin AdminSocketBase */
 
 var AdminSocketLog = AdminSocketBase.extend({
 	_logLines: '',
 
 	constructor: function(host) {
 		this.base(host);
-		// There is a "$" is never used error. Let's get rid of this. This is vanilla script and has not more lines than the one with JQuery.
-		$('#form-channel-list').id;
+		// There was a "$" is never used error; replace the id-based jQuery lookup with a native DOM access.
+		document.getElementById('form-channel-list');
 	},
 
 	refreshLog: function() {
