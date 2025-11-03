@@ -54,8 +54,7 @@ std::string getTopSrcDir(const std::string& defaultPath)
 }
 std::string getUILanguage()
 {
-    const char* envVars[] = {"LC_MESSAGES", "LANGUAGE", "LANG"};
-    // FIXME originally I checked LC_ALL first, but coolwsd sets it to C.UTF-8
+    const char* envVars[] = {"LC_ALL", "LC_MESSAGES", "LANGUAGE", "LANG"};
     std::string lang;
 
     // 1. Check environment variables in precedence order
