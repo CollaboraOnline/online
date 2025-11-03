@@ -29,38 +29,40 @@
 .ui-overflow-group-more.unotoolbutton,
 .jsdialog.unotoolbutton,
 .notebookbar.unotoolbutton,
+.unotoolbutton,
+.close-navigation-wrapper,
 #closebutton {
 	background-color: transparent;
 	border: 1px solid transparent;
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
 	height: max-content;
+
+	/*
+		some of the below .selected:hover selectors could be rephrased more cleverly or
+		even are redundant due to specificity+ordering rules. I know, but doing it this
+		way makes the behavior more explicit
+	*/
+
+	&:hover {
+		border: 1px solid var(--color-btn-border);
+	}
+
+	&.selected, &.selected:hover {
+		border: 1px solid rgb(var(--doc-type));
+	}
+
+	&.selected {
+		background-color: rgba(var(--doc-type), 0.1);
+		color: var(--color-text-dark);
+	}
+
+	&:hover, &.selected:hover {
+		color: var(--color-text-darker);
+		background-color: var(--color-background-tabs-group);
+	}
 }
 
-/* toolbuttons non selected hover */
-.hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
-.hasnotebookbar .ui-content.unotoolbutton.inline:hover,
-.hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline):hover,
-.unotoolbutton:hover,
-.close-navigation-wrapper:hover {
-	border: 1px solid var(--color-btn-border);
-	color: var(--color-text-darker);
-	border-radius: var(--border-radius);
-	background-color: var(--color-background-tabs-group);
-}
-
-/* toolbuttons selected */
-.hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
-.hasnotebookbar .ui-content.unotoolbutton.selected.inline,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
-.sidebar.unotoolbutton.selected,
-.notebookbar.unotoolbutton.selected,
-.jsdialog.unotoolbutton.selected {
-	background-color: rgba(var(--doc-type), 0.1);
-	border: 1px solid rgb(var(--doc-type));
-	color: var(--color-text-dark);
-	border-radius: var(--border-radius);
-}
 [data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
 [data-theme='dark'] #toggledarktheme,
 [data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
@@ -69,20 +71,6 @@
 [data-theme='dark'] #context-toolbar .unotoolbutton.selected {
 	background-color: var(--color-background-darker);
 	border-color: var(--color-border-darker);
-}
-
-/* toolbuttons selected hover */
-/* toolbuttons have .unobuttons as children */
-.hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
-.hasnotebookbar .ui-content.unotoolbutton.selected:hover,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
-.sidebar.unotoolbutton.selected:hover,
-.ui-overflow-group-more.unotoolbutton:hover,
-.notebookbar.unotoolbutton.selected:hover,
-.jsdialog.unotoolbutton.selected:hover {
-	color: var(--color-text-darker);
-	border-radius: var(--border-radius);
-	background-color: var(--color-background-tabs-group);
 }
 
 /*limit icon to button height*/
