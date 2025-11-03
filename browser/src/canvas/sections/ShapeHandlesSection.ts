@@ -445,6 +445,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	addEmbeddedVideo(svgString: any) {
 		this.sectionProperties.hasVideo = true;
 		this.setSVG(svgString);
+		this.sectionProperties.svg.style.opacity = 0.5;
 		this.sectionProperties.svg.remove();
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
@@ -1138,6 +1139,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		app.activeDocument.mouseControl.onContextMenu(point, e);
 	}
 
+	private hideSubSections() {
+		for (let i = 0; i < this.sectionProperties.subSections.length; i++)
+			this.sectionProperties.subSections[i].setShowSection(false);
+	}
+
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		point.pX += this.position[0];
 		point.pY += this.position[1];
@@ -1153,6 +1159,16 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			}
 
 			this.sectionProperties.lastTapTime = Date.now();
+		}
+
+		if (this.sectionProperties.hasVideo && this.sectionProperties.svg) {
+			const videoObject = this.sectionProperties.svg.querySelector('video');
+
+			if (videoObject) {
+				this.sectionProperties.svg.style.opacity = 1;
+				this.sectionProperties.svg.style.pointerEvents = '';
+				this.hideSubSections();
+			}
 		}
 	}
 
