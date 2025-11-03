@@ -3904,7 +3904,7 @@ int COOLWSD::innerMain()
 #endif
     }
 
-#if !defined(IOS) && !defined(QTAPP) // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
+#if !defined(IOS) // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
             // loop never exits.
 
     COOLWSD::alertAllUsersInternal("close: shuttingdown");
