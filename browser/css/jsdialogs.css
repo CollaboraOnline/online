@@ -3001,3 +3001,7 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 	width: 200px;
 	height: 146px
 }
+
+#SpecialCharactersDialog #showcharset.jsdialog.ui-iconview {
+	grid-template-columns: repeat(16, 1fr);
+}
