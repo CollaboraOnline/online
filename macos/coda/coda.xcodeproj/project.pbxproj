@@ -753,7 +753,7 @@
 					"-lPocoJSON",
 					"-lPocoNet",
 					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"-lpng",
+					"$(HOMEBREW_PATH)/lib/libpng.a",
 				);
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -836,7 +836,7 @@
 					"-lPocoJSON",
 					"-lPocoNet",
 					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"-lpng",
+					"$(HOMEBREW_PATH)/lib/libpng.a",
 				);
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -880,7 +880,7 @@
 					"-lPocoJSON",
 					"-lPocoNet",
 					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"-lpng",
+					"$(HOMEBREW_PATH)/lib/libpng.a",
 					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
@@ -932,7 +932,7 @@
 					"-lPocoJSON",
 					"-lPocoNet",
 					"$(HOMEBREW_PATH)/lib/libzstd.a",
-					"-lpng",
+					"$(HOMEBREW_PATH)/lib/libpng.a",
 					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
