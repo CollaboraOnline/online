@@ -588,7 +588,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\nSIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\nfor f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n  [ -f \"$f\" ] || continue\n  codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\ndone\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\n# Re-sign the dylibs for Release (not needed for development)\nif [ \"$CONFIGURATION\" = \"Release\" ]; then\n  SIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\n  for f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n    [ -f \"$f\" ] || continue\n    codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\n  done\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -738,9 +738,7 @@
 					"$(POCO_INCLUDES)",
 					"$(ZSTD_INCLUDES)",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(POCO_LIBS)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(POCO_LIBS)";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -822,9 +820,7 @@
 					"$(POCO_INCLUDES)",
 					"$(ZSTD_INCLUDES)",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(POCO_LIBS)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(POCO_LIBS)";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
