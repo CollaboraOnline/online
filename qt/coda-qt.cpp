@@ -71,6 +71,7 @@ const int SHOW_JS_MAXLEN = 300;
 int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
+static std::thread coolwsdThread;
 
 static void getClipboard(unsigned appDocId)
 {
@@ -622,6 +623,15 @@ Bridge* bridge = nullptr;
 // Disable accessibility
 void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 
+static void stopServer() {
+    LOG_TRC("Requesting shutdown");
+    SigUtil::requestShutdown();
+    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+
+    // wait until coolwsdThread is torn down, so that we don't start cleaning up too early
+    coolwsdThread.join();
+}
+
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
@@ -653,7 +663,7 @@ int main(int argc, char** argv)
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
     // COOLWSD in a background thread
-    std::thread(
+    coolwsdThread = std::thread(
         []
         {
             Util::setThreadName("app");
@@ -662,8 +672,7 @@ int main(int argc, char** argv)
             coolwsd->run(1, argv_local);
             delete coolwsd;
             LOG_TRC("One run of COOLWSD completed");
-        })
-        .detach();
+        });
 
     for (auto const & file : files)
     {
@@ -673,7 +682,9 @@ int main(int argc, char** argv)
         webViewInstance->load(fileURL);
     }
 
-    return app.exec();
+    auto const ret = app.exec();
+    stopServer();
+    return ret;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
