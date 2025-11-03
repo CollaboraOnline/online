@@ -7,8 +7,19 @@
 
 #pragma once
 
+#include <QWebEngineProfile>
+
 extern int coolwsd_server_socket_fd;
 extern const char* user_name;
 extern LibreOfficeKit* lo_kit;
+
+class Application {
+private:
+    static QWebEngineProfile* globalProfile;
+
+public:
+    static void initialize();
+    static QWebEngineProfile* getProfile();
+};
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -79,26 +79,11 @@ std::string getUILanguage()
 }
 } // namespace
 
-WebView::WebView(QWidget* parent)
+WebView::WebView(QWidget* parent, QWebEngineProfile* profile)
     : _mainWindow(new QMainWindow(parent))
     , _webView(new QWebEngineView(_mainWindow))
 {
     _mainWindow->setCentralWidget(_webView);
-
-    QWebEngineProfile* profile = new QWebEngineProfile(QStringLiteral("PersistentProfile"), _mainWindow);
-
-    // use XDG-compliant paths
-    QString appData =
-        QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    QString cacheData =
-        QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-    QString storagePath = appData + "/PersistentProfile/storage";
-    QDir().mkpath(storagePath);
-    QDir().mkpath(cacheData);
-
-    profile->setPersistentStoragePath(storagePath);
-    profile->setCachePath(cacheData);
-    profile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
 
     QWebEnginePage* page = new QWebEnginePage(profile, _webView);
     _webView->setPage(page);
