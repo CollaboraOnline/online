@@ -53,14 +53,15 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QPrinterInfo>
+#include <QDir>
+#include <QStandardPaths>
+
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
 #include <poll.h>
 #include <string>
-#include <string_view>
 #include <thread>
-#include <vector>
 #include "WebView.hpp"
 
 const char* user_name = "Dummy";
@@ -71,6 +72,7 @@ int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
 static std::thread coolwsdThread;
+QWebEngineProfile* Application::globalProfile = nullptr;
 
 static void getClipboard(unsigned appDocId)
 {
@@ -506,7 +508,7 @@ QVariant Bridge::cool(const QString& messageStr)
         );
         if (!filePath.isEmpty())
         {
-            WebView* webViewInstance = new WebView(nullptr);
+            WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
             webViewInstance->load(filePath.toStdString());
         }
     }
@@ -632,6 +634,26 @@ static void stopServer() {
     coolwsdThread.join();
 }
 
+void Application::initialize()
+{
+    if (!globalProfile)
+    {
+        globalProfile = new QWebEngineProfile(QStringLiteral("PersistentProfile"), qApp);
+
+        QString appData = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        QString cacheData = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        QString storagePath = appData + "/PersistentProfile/storage";
+        QDir().mkpath(storagePath);
+        QDir().mkpath(cacheData);
+
+        globalProfile->setPersistentStoragePath(storagePath);
+        globalProfile->setCachePath(cacheData);
+        globalProfile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
+    }
+}
+
+QWebEngineProfile* Application::getProfile() { return globalProfile; }
+
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
@@ -674,11 +696,13 @@ int main(int argc, char** argv)
             LOG_TRC("One run of COOLWSD completed");
         });
 
+    Application::initialize();
+
     for (auto const & file : files)
     {
         // Resolve absolute file URL to pass into Online
         std::string fileURL = Poco::URI(Poco::Path(std::string(file.toUtf8()))).toString();
-        WebView* webViewInstance = new WebView(nullptr);
+        WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
         webViewInstance->load(fileURL);
     }
 
