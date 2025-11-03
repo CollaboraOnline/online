@@ -478,10 +478,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "WELCOME")
     {
-        // TODO: make it dynamic
-        // const std::string welcomePath = getTopSrcDir(TOPSRCDIR) +
-        //                                "/browser/dist/welcome.odp";
-        const std::string welcomePath = "/home/rashesh/Downloads/welcome-slideshow.odp";
+        const std::string welcomePath = getTopSrcDir(TOPSRCDIR) + "/browser/dist/welcome/welcome-slideshow.odp";
         struct stat st;
         if (FileUtil::getStatOfFile(welcomePath, st) == 0)
         {

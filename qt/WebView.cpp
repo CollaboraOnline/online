@@ -15,6 +15,8 @@
 #include <QMainWindow>
 #include "FakeSocket.hpp"
 #include "MobileApp.hpp"
+#include "qt.hpp"
+
 #include <cstdlib>
 #include <cstring>
 
@@ -33,15 +35,6 @@ unsigned generateNewAppDocId()
     return appIdCounter++;
 }
 
-std::string getTopSrcDir(const std::string& defaultPath)
-{
-    const char* envPath = std::getenv("COOL_TOPSRCDIR");
-    if (envPath && std::strlen(envPath) > 0)
-    {
-        return std::string(envPath);
-    }
-    return defaultPath;
-}
 std::string getUILanguage()
 {
     const char* envVars[] = {"LC_ALL", "LC_MESSAGES", "LANGUAGE", "LANG"};
@@ -126,8 +119,7 @@ void WebView::load(const std::string& fileURL)
     QSvgWidget* loadingOverlay = nullptr;
     if (_isWelcome)
     {
-        // TODO: make it dynamic
-        const std::string svgPath = "/home/rashesh/Downloads/welcome.svg";
+        const std::string svgPath = getTopSrcDir(TOPSRCDIR) + "/browser/dist/welcome/welcome.svg";
         loadingOverlay = new QSvgWidget(QString::fromStdString(svgPath), _webView);
     }
 

@@ -1,0 +1,82 @@
+<svg width="900" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .welcome-text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 600;
+        font-size: 26px;
+      }
+      .welcome-text-long {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 600;
+        font-size: 22px;
+      }
+      .title-text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        font-size: 42px;
+      }
+    </style>
+  </defs>
+
+  <!-- Background with subtle purple tint -->
+  <rect width="900" height="600" fill="#faf8fc"/>
+
+  <!-- More prominent decorative circles using purple shades -->
+  <circle cx="100" cy="100" r="80" fill="#5c2983" opacity="0.15"/>
+  <circle cx="800" cy="500" r="100" fill="#7b3ba6" opacity="0.12"/>
+  <circle cx="750" cy="150" r="70" fill="#2e1a47" opacity="0.18"/>
+  <circle cx="150" cy="500" r="60" fill="#5c2983" opacity="0.1"/>
+  <circle cx="850" cy="80" r="50" fill="#8e4db8" opacity="0.12"/>
+
+  <!-- Title -->
+  <text x="450" y="80" text-anchor="middle" class="title-text" fill="#2e1a47">
+    Welcome Greetings
+  </text>
+
+  <!-- Welcome in different languages - adjusted layout -->
+  <!-- Row 1 -->
+  <text x="120" y="160" class="welcome-text" fill="#5c2983">Welcome</text>
+  <text x="350" y="160" class="welcome-text" fill="#2e1a47">Bienvenido</text>
+  <text x="630" y="160" class="welcome-text" fill="#7b3ba6">Bienvenue</text>
+
+  <!-- Row 2 -->
+  <text x="120" y="220" class="welcome-text" fill="#8e4db8">Willkommen</text>
+  <text x="400" y="220" class="welcome-text" fill="#5c2983">Benvenuto</text>
+  <text x="650" y="220" class="welcome-text" fill="#2e1a47">Bem-vindo</text>
+
+  <!-- Row 3 -->
+  <text x="120" y="280" class="welcome-text" fill="#2e1a47">欢迎</text>
+  <text x="350" y="280" class="welcome-text" fill="#7b3ba6">ようこそ</text>
+  <text x="550" y="280" class="welcome-text" fill="#5c2983">환영합니다</text>
+
+  <!-- Row 4 -->
+  <text x="120" y="340" class="welcome-text" fill="#5c2983">स्वागत</text>
+  <text x="350" y="340" class="welcome-text" fill="#2e1a47">مرحبا</text>
+  <text x="550" y="340" class="welcome-text-long" fill="#8e4db8">Добро пожаловать</text>
+
+  <!-- Row 5 -->
+  <text x="120" y="400" class="welcome-text" fill="#7b3ba6">Tervetuloa</text>
+  <text x="380" y="400" class="welcome-text-long" fill="#5c2983">Καλώς ήρθατε</text>
+  <text x="650" y="400" class="welcome-text" fill="#2e1a47">Välkommen</text>
+
+  <!-- Row 6 -->
+  <text x="120" y="460" class="welcome-text" fill="#2e1a47">Hoş geldiniz</text>
+  <text x="400" y="460" class="welcome-text" fill="#8e4db8">Welkom</text>
+  <text x="600" y="460" class="welcome-text" fill="#5c2983">Vitajte</text>
+
+  <!-- Row 7 -->
+  <text x="120" y="520" class="welcome-text" fill="#7b3ba6">Witaj</text>
+  <text x="300" y="520" class="welcome-text" fill="#2e1a47">Benvingut</text>
+  <text x="550" y="520" class="welcome-text" fill="#5c2983">Selamat datang</text>
+
+  <!-- Bottom accent line with gradient -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2e1a47;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5c2983;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8e4db8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="100" y="560" width="700" height="5" fill="url(#purpleGradient)" rx="2"/>
+</svg>

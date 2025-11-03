@@ -13,7 +13,8 @@ extern int coolwsd_server_socket_fd;
 extern const char* user_name;
 extern LibreOfficeKit* lo_kit;
 
-class Application {
+class Application
+{
 private:
     static QWebEngineProfile* globalProfile;
 
@@ -21,5 +22,18 @@ public:
     static void initialize();
     static QWebEngineProfile* getProfile();
 };
+
+namespace
+{
+inline std::string getTopSrcDir(const std::string& defaultPath)
+{
+    const char* envPath = std::getenv("COOL_TOPSRCDIR");
+    if (envPath && std::strlen(envPath) > 0)
+    {
+        return std::string(envPath);
+    }
+    return defaultPath;
+}
+} // namespace
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
