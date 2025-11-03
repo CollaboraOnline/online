@@ -752,7 +752,7 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(LIBPNG_LIBS)/libpng.a",
+					"$(LIBPNG_LIBS)/$(LIBPNG_STATIC_LIB)",
 					"$(ZSTD_LIBS)/libzstd.a",
 				);
 				SDKROOT = macosx;
@@ -835,7 +835,7 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(LIBPNG_LIBS)/libpng.a",
+					"$(LIBPNG_LIBS)/$(LIBPNG_STATIC_LIB)",
 					"$(ZSTD_LIBS)/libzstd.a",
 				);
 				SDKROOT = macosx;
@@ -879,7 +879,7 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(LIBPNG_LIBS)/libpng.a",
+					"$(LIBPNG_LIBS)/$(LIBPNG_STATIC_LIB)",
 					"$(ZSTD_LIBS)/libzstd.a",
 					"-lz",
 				);
@@ -931,7 +931,7 @@
 					"-lPocoXML",
 					"-lPocoJSON",
 					"-lPocoNet",
-					"$(LIBPNG_LIBS)/libpng.a",
+					"$(LIBPNG_LIBS)/$(LIBPNG_STATIC_LIB)",
 					"$(ZSTD_LIBS)/libzstd.a",
 					"-lz",
 				);

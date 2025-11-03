@@ -606,13 +606,14 @@ AC_SUBST(ENABLE_EXOTIC_FILE_FORMATS)
 AC_SUBST(SERVER_SIGNATURE)
 
 dnl check for a file at a path with an env-var with a given suffix
-AC_DEFUN([CHK_FILE_VAR], dnl $1:env-var, $2:filename-to-match, $3:cleartext-name, $4:suffix
+AC_DEFUN([CHK_FILE_VAR], dnl $1:env-var, $2:filename-to-match, $3:cleartext-name, $4:suffix, $5:env-var to define if found
 [
    if test -n "$[$1][$4]" -o "z[$4]" = "z"; then
        found_file=""
        for f in $2; do
            if test -f "$[$1][$4]/$f"; then
                found_file="$f"
+               $5="$f"
                break
            fi
        done
@@ -943,12 +944,13 @@ AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice cor
 
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
+LIBPNG_STATIC_LIB=""
 
 if test "$enable_macosapp" = "yes"; then
    AC_MSG_CHECKING([for libpng include directory to build against])
    CHK_FILE_VAR(LIBPNG_INCLUDES,png.h,png.h include)
    AC_MSG_CHECKING([for static libpng lib to build against])
-   CHK_FILE_VAR(LIBPNG_LIBS,libpng.a,libpng)
+   CHK_FILE_VAR(LIBPNG_LIBS,libpng.a liblibpng.a,libpng,,LIBPNG_STATIC_LIB) dnl LibreOffice wrongly builds libpng as liblibpng.a
 fi
 
 if test "$enable_windowsapp" = "yes" ; then
@@ -960,6 +962,7 @@ AC_SUBST(LIBPNG_INCLUDES)
 AC_SUBST(LIBPNG_INCLUDES_WINDOWS)
 AC_SUBST(LIBPNG_LIBS)
 AC_SUBST(LIBPNG_LIBS_WINDOWS)
+AC_SUBST(LIBPNG_STATIC_LIB)
 
 ZLIB_INCLUDES="$with_zlib_includes"
 ZLIB_LIBS="$with_zlib_libs"
