@@ -613,7 +613,7 @@ AC_DEFUN([CHK_FILE_VAR], dnl $1:env-var, $2:filename-to-match, $3:cleartext-name
        for f in $2; do
            if test -f "$[$1][$4]/$f"; then
                found_file="$f"
-               $5="$f"
+               ifelse([$5], [], [], [AS_VAR_SET([$5], [$f])])
                break
            fi
        done
