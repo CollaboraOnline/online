@@ -119,6 +119,8 @@ enum class CODA_OPEN_CONTROL : DWORD
     SEP2
 };
 
+enum class PERMISSION { EDIT, READONLY, VIEW, WELCOME };
+
 constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
 
 // Ugly to use globals like this
@@ -132,6 +134,7 @@ static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
 
 static std::wstring new_document(CODA_OPEN_CONTROL id);
+static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission);
 
 // Temporary l10n function for the few UI strings here in this file
 static const wchar_t* _(const wchar_t* english)
@@ -644,6 +647,13 @@ static void do_hullo_handling_things(WindowData& data)
 
     std::string message(data.filenameAndUri.uri + " " + std::to_string(data.appDocId));
     fakeSocketWrite(data.fakeClientFd, message.c_str(), message.size());
+}
+
+static void do_welcome_handling_things(WindowData& data)
+{
+    const auto welcomeSlideshow = Poco::Path(app_installation_path + "cool\\welcome\\welcome-slideshow.odp");
+
+    openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, PERMISSION::WELCOME);
 }
 
 static void do_bye_handling_things(const WindowData& data)
@@ -1209,7 +1219,7 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
     return 0;
 }
 
-static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
+static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission)
 {
     bool havePersistedSize = false;
 
@@ -1273,14 +1283,14 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
     CreateCoreWebView2EnvironmentWithOptions(
         nullptr, nullptr, nullptr,
         Microsoft::WRL::Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
-            [&data](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
+            [&data, permission](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
             {
                 // Create a CoreWebView2Controller and get the associated CoreWebView2 whose parent is the main window hWnd
                 env->CreateCoreWebView2Controller(
                     data.hWnd,
                     Microsoft::WRL::Callback<
                         ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
-                        [&data](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
+                        [&data, permission](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
                         {
                             if (!controller)
                                 return E_FAIL;
@@ -1322,16 +1332,22 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri)
                                     .Get(),
                                 &token);
 
-                            const std::string coolURL = app_installation_uri +
-                                                        std::string("cool/cool.html?file_path=") +
-                                                        data.filenameAndUri.uri +
-                                                        std::string("&permission=edit"
-                                                                    "&lang=") +
-                                                        uiLanguage +
-                                                        std::string("&appdocid=") +
-                                                        std::to_string(data.appDocId) +
-                                                        std::string("&userinterfacemode=notebookbar"
-                                                                    "&dir=ltr");
+                            std::string permissionString =
+                                (permission == PERMISSION::EDIT ? "edit" :
+                                 permission == PERMISSION::READONLY ? "readonly" :
+                                 permission == PERMISSION::VIEW ? "view" :
+                                 permission == PERMISSION::WELCOME ? "view" :
+                                 "huh");
+
+                            const std::string coolURL =
+                                app_installation_uri +
+                                std::string("cool/cool.html?file_path=") + data.filenameAndUri.uri +
+                                std::string("&permission=") + permissionString +
+                                std::string("&lang=") + uiLanguage +
+                                std::string("&appdocid=") + std::to_string(data.appDocId) +
+                                std::string("&userinterfacemode=notebookbar"
+                                            "&dir=ltr") +
+                                (permission == PERMISSION::WELCOME ? "&welcome=true" : "");
 
                             webView->Navigate(Util::string_to_wide_string(coolURL).c_str());
                             controller->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
@@ -1354,6 +1370,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         if (s == L"HULLO")
         {
             do_hullo_handling_things(data);
+        }
+        else if (s == L"WELCOME")
+        {
+            do_welcome_handling_things(data);
         }
         else if (s == L"BYE")
         {
@@ -1420,7 +1440,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             auto filenameAndUri = fileOpenDialog();
             if (filenameAndUri.filename != "")
-                openCOOLWindow(filenameAndUri);
+                openCOOLWindow(filenameAndUri, PERMISSION::EDIT);
         }
         else if (s == L"uno .uno:CloseWin")
         {
@@ -1439,7 +1459,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
                 std::abort();
 
             auto path = Poco::Path(Util::wide_string_to_string(new_document(id)));
-            openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() });
+            openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::EDIT);
         }
         else
         {
@@ -1587,7 +1607,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         }
    }
 
-    openCOOLWindow(filenameAndUri);
+    openCOOLWindow(filenameAndUri, PERMISSION::EDIT);
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
