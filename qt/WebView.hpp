@@ -16,6 +16,7 @@
 #include <QWebEngineView>
 #include "Document.hpp"
 #include <QMainWindow>
+#include <utility>
 
 class WebView
 {
@@ -23,7 +24,7 @@ public:
     explicit WebView(QWidget* parent, QWebEngineProfile* profile);
     QWebEngineView* webEngineView() { return _webView; }
 
-    void load(const std::string& fileURL);
+    void load(const std::string& fileURL, bool isWelcome = false);
 
 private:
     QMainWindow* _mainWindow;

@@ -89,7 +89,30 @@ WebView::WebView(QWidget* parent, QWebEngineProfile* profile)
     _webView->setPage(page);
 }
 
-void WebView::load(const std::string& fileURL)
+std::pair<int, int> getWindowSize(bool isWelcome)
+{
+    QScreen* screen = QGuiApplication::primaryScreen();
+    const int viewportWidth = screen->availableGeometry().width();
+    const int viewportHeight = screen->availableGeometry().height();
+
+    if (!isWelcome)
+        return { viewportWidth, viewportHeight };
+
+    const int maxWidth = 1280;
+    const int maxHeight = 720;
+    const int minWidth = 800;
+    const int minHeight = 450;
+
+    int width = static_cast<int>(std::floor(viewportWidth * 0.4));
+    int height = static_cast<int>(std::floor((width * 9.0) / 16.0));
+
+    width = std::min(std::max(width, minWidth), maxWidth);
+    height = std::min(std::max(height, minHeight), maxHeight);
+
+    return { width, height };
+}
+
+void WebView::load(const std::string& fileURL, bool isWelcome)
 {
     _document = {
         ._fileURL = fileURL,
@@ -112,12 +135,14 @@ void WebView::load(const std::string& fileURL)
                                     getUILanguage() +
                                     "&appdocid=" +
                                     std::to_string(_document._appDocId) +
-                                    "&userinterfacemode=notebookbar";
+                                    "&userinterfacemode=notebookbar" +
+                                    (isWelcome ? "&iswelcome=true" : "");
 
     LOG_TRC("Open URL: " << urlAndQuery);
     _webView->load(QUrl(QString::fromStdString(urlAndQuery)));
 
-    _mainWindow->resize(1600, 900);
+    auto size = getWindowSize(isWelcome);
+    _mainWindow->resize(size.first, size.second);
     _mainWindow->show();
 }
 
