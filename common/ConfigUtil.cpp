@@ -423,6 +423,11 @@ std::string getString(const std::string& key, const std::string& def)
 
 bool getBool(const std::string& key, const bool def)
 {
+    if constexpr (Util::isFuzzing())
+    {
+        return def;
+    }
+
     assert(Config && "Config is not initialized.");
     return (Config != nullptr) ? Config->getBool(key, def) : def;
 }
