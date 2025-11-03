@@ -22,6 +22,11 @@ final class DocumentController: NSDocumentController {
     private weak var liveOpenPanel: NSOpenPanel?
 
     /**
+     * Window for the New document workflow.
+     */
+    private var newDocWindowController: NSWindowController?
+
+    /**
      * One place to decide if we should quit the app on losing focus.
      */
     func hasDocsOrWindows() -> Bool {
@@ -68,7 +73,8 @@ final class DocumentController: NSDocumentController {
     override func newDocument(_ sender: Any?) {
         closeLiveOpenPanel()
 
-        // TODO open the dialog for the new document here
+        // Open the dialog for the new document
+        presentNewDocumentDialog()
     }
 
     /**
@@ -100,5 +106,93 @@ final class DocumentController: NSDocumentController {
 
         // No panel up -> trigger standard Open panel flow.
         super.openDocument(nil)
+    }
+
+    /**
+     * Create or focus the New document window.
+     */
+    func presentNewDocumentDialog() {
+        if let wc = newDocWindowController { // focus if already open
+            wc.window?.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        let vc = NewDocumentViewController()
+        vc.onSelect = { [weak self] kind in
+            guard let self else { return }
+            self.newDocWindowController?.close()
+            self.newDocWindowController = nil
+            self.createDocument(fromTemplateFor: kind)
+        }
+
+        // Simple titled window for the web view
+        let w = NSWindow(contentViewController: vc)
+        w.title = "New"
+        w.styleMask = [.titled, .closable, .miniaturizable]
+        w.setContentSize(NSSize(width: 520, height: 360))
+        w.center()
+
+        let wc = NSWindowController(window: w)
+        newDocWindowController = wc
+        wc.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    enum NewKind { case text, spreadsheet, presentation }
+
+    private func createDocument(fromTemplateFor kind: NewKind) {
+        // Pick the template file in your bundle
+        guard let (resName, ext) = templateNameAndExt(for: kind),
+              let templatesURL = Bundle.main.url(forResource: resName, withExtension: ext, subdirectory: "templates")
+        else {
+            NSApp.presentError(NSError(domain: "NewDoc", code: 1, userInfo: [NSLocalizedDescriptionKey: "Template not found."]))
+            return
+        }
+
+        // Ask AppKit which document type this URL maps to (so your Info.plist drives it)
+        let typeName: String
+        do {
+            typeName = try self.typeForContents(of: templatesURL)
+        } catch {
+            NSApp.presentError(error)
+            return
+        }
+
+        // Load the template data
+        let data: Data
+        do {
+            data = try Data(contentsOf: templatesURL)
+        } catch {
+            NSApp.presentError(error)
+            return
+        }
+
+        // Create an *untitled* document of the resolved type,
+        // then feed it the template data via your existing read(from:data:) path.
+        do {
+            guard let doc = try makeUntitledDocument(ofType: typeName) as? Document else {
+                throw NSError(domain: "NewDoc", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unexpected document class"])
+            }
+
+            try doc.read(from: data, ofType: typeName) // <- seeds tempDirectoryURL/tempFileURL exactly like a normal open
+
+            // Show it, using the usual controllers
+            addDocument(doc)
+            doc.makeWindowControllers()
+            doc.showWindows()
+
+            // The doc starts unmodified; Document manages that itself.
+        } catch {
+            NSApp.presentError(error)
+        }
+    }
+
+    private func templateNameAndExt(for kind: NewKind) -> (String, String)? {
+        switch kind {
+        case .text:         return ("Text Document", "odt")
+        case .spreadsheet:  return ("Spreadsheet", "ods")
+        case .presentation: return ("Presentation", "odp")
+        }
     }
 }
