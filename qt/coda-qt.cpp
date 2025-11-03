@@ -476,6 +476,31 @@ QVariant Bridge::cool(const QString& messageStr)
                             (" " + std::to_string(_document._appDocId)));
         fakeSocketWrite(_document._fakeClientFd, message.c_str(), message.size());
     }
+    else if (message == "WELCOME")
+    {
+        // TODO: make it dynamic
+        // const std::string welcomePath = getTopSrcDir(TOPSRCDIR) +
+        //                                "/browser/dist/welcome.odp";
+        const std::string welcomePath = "/home/rashesh/Downloads/welcome-slideshow.odp";
+        struct stat st;
+        if (FileUtil::getStatOfFile(welcomePath, st) == 0)
+        {
+            std::string fileURL = Poco::URI(Poco::Path(welcomePath)).toString();
+            QMetaObject::invokeMethod(
+                qApp,
+                [fileURL]
+                {
+                    WebView* webViewInstance = new WebView(nullptr);
+                    webViewInstance->load(fileURL, true);
+                },
+                Qt::QueuedConnection);
+            LOG_INF("Opening welcome slideshow: " << welcomePath);
+        }
+        else
+        {
+            LOG_WRN("Welcome slideshow not found at: " << welcomePath);
+        }
+    }
     else if (message == "BYE")
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
