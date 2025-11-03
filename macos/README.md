@@ -1,5 +1,9 @@
 # Building the CODA-M
 
+The following instructions depend heavily on using Homebrew, as that makes the
+managing the build requirements much easier. It is of course possible to avoid
+it, and only depend on eg. self-built libpng, etc.
+
 ## Setup
 
 * Instal node.js
@@ -8,7 +12,7 @@
     * brew install poco
 * zstd
     * brew install zstd
-* missing from the iOS build instructions (needed for online.git)
+* for ./configure
     * brew install libtool
 * zlib
     * brew install zlib
@@ -60,62 +64,41 @@ autogen.input:
     --without-system-dicts
     --without-myspell-dicts
 
-Configure Collabora Online
+## Configure Collabora Online
 
     ./autogen.sh && ./configure \
     --enable-macosapp \
     --enable-experimental \
     --with-app-name="Collabora Office" \
-    --with-vendor="Collabora Productivity" \
+    --with-app-package-name=com.yourpackage.name \
+    --with-vendor="Your Name" \
     --with-poco-includes=/opt/homebrew/opt/poco/include \
     --with-poco-libs=/opt/homebrew/opt/poco/lib \
     --with-zstd-includes=/opt/homebrew/include \
     --with-zstd-libs=/opt/homebrew/lib \
-    --with-lo-path=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app \
-    --with-lokit-path=/Users/kendy/Projects/lo/core/include
+    --with-libpng-includes=/opt/homebrew/include \
+    --with-libpng-libs=/opt/homebrew/lib \
+    --with-lo-path=path-to-lo-core/instdir/your-built-lo.app \
+    --with-lokit-path=path-to-lo-core/include
 
-Obbiously you need to change the /Users/kendy/... above to match what
-you have. Also, on Intel Macs homebrew gets installed in /usr/local,
-not /opt/homebrew.
+Obbiously you need to change the path-to-lo-core and your-built-lo above to
+match what you have. Also, on Intel Macs homebrew gets installed in
+/usr/local, not /opt/homebrew; but you may prefer your own built versions of
+POCO, libpng and zstd.
 
-If you find an instance of /Users/kendy hardcoded somewhere, please
-report that, it's a mistake and should be fixed.
-
-## Install branding
+## Install branding (OPTIONAL)
 
 Checkout online-branding, and install the branding like the following (please
 update the paths to the core instdir and online repo):
 
 ./brand.sh ~/Projects/lo/core/instdir ../online/browser/dist 1
 
-## Then you can build CODA-M:
+## Build the JavaScipt bits
 
 Just run 'make' from the terminal.
 
-# Building and debugging coolwsd directly in Xcode
+## Build the Desktop Edition
 
-There is an additional Xcode project for easy building and debugging of
-coolwsd on macOS directly in Xcode. Configure everything as above, but use
-a slightly different ./configure (particularly notice the
-missing --enable-macosapp):
+Open the macos/coda/coda.xcodeproj project in Xcode and choose 'Build and Run current scheme'.
 
-    ./autogen.sh && ./configure \
-    --with-app-name="Collabora Office" \
-    --enable-experimental \
-    --enable-debug \
-    --with-vendor="Collabora Productivity" \
-    --with-poco-includes=/opt/homebrew/opt/poco/include \
-    --with-poco-libs=/opt/homebrew/opt/poco/lib \
-    --with-zstd-includes=/opt/homebrew/include \
-    --with-zstd-libs=/opt/homebrew/lib \
-    --with-lo-path=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app \
-    --with-lokit-path=/Users/kendy/Projects/lo/core/include
-
-Then open the macos/coolwsd.xcodeproj project in Xcode and you can build, run
-and debug directly from Xcode.
-
-# TODO
-
-* configure.ac
-    * add sanity check for the lo builddir when configuring with —enable-macosapp
-    * MACOSAPP_FONTS
+That's it!
