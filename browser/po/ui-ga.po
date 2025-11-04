@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-21 14:30+0000\n"
+"PO-Revision-Date: 2025-11-03 17:51+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
-"n>6 && n<11) ? 3 : 4;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :"
+"(n>6 && n<11) ? 3 : 4;\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -376,16 +376,15 @@ msgstr "Inrochtaineacht"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Teastas Sínithe"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Eochair Shínithe"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Síniú"
+msgstr "Síniú CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -774,21 +773,24 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Chun Zotero a úsáid, sonraigh d’eochair API anseo. Is féidir leat d’eochair "
+"API a chruthú i do "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Socruithe API cuntais Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Socruithe Doiciméid"
+msgstr "Síniú Doiciméad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Chun síniú doiciméad a úsáid, sonraigh do theastas sínithe, d'eochair agus "
+"do shlabhra CA anseo."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2814,7 +2816,7 @@ msgstr "Socraigh"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Radharc Bileoige"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
