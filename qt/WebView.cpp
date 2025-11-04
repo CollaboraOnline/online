@@ -25,6 +25,8 @@
 #include <QAction>
 #include <QFileDialog>
 #include <QKeySequence>
+#include <QGuiApplication>
+#include <QScreen>
 
 namespace
 {
@@ -72,7 +74,7 @@ std::string getUILanguage()
 }
 } // namespace
 
-WebView::WebView(QWidget* parent, QWebEngineProfile* profile)
+WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
     : _mainWindow(new QMainWindow(parent))
     , _webView(new QWebEngineView(_mainWindow))
     , _isWelcome(isWelcome)
