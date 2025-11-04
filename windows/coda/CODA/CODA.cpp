@@ -1376,7 +1376,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     AddClipboardFormatListener(hWnd);
 
     CreateCoreWebView2EnvironmentWithOptions(
-        nullptr, nullptr, nullptr,
+        nullptr, (Util::string_to_wide_string(localAppData) + L"\\UDF").c_str(), nullptr,
         Microsoft::WRL::Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
             [&data, permission](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
             {
