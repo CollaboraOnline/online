@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-22 16:02+0000\n"
+"PO-Revision-Date: 2025-11-02 14:51+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -373,16 +373,15 @@ msgstr "Accessibility"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Signature Certificate"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Signature Key"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Signature"
+msgstr "Signature CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -768,21 +767,23 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"To use Zotero specify your API key here. You can create your API key in your "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Zotero account API settings"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Document Settings"
+msgstr "Document Signing"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"To use document signing, specify your signing certificate, key and CA chain "
+"here."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2797,7 +2798,7 @@ msgstr "Arrange"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Sheet View"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
