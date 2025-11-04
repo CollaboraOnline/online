@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-09-22 10:54+0000\n"
+"PO-Revision-Date: 2025-11-03 17:51+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -374,16 +374,15 @@ msgstr "Hygyrchedd"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Tystysgrif Llofnod"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Allwedd Llofnod"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Llofnod"
+msgstr "CA Llofnod"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -440,11 +439,11 @@ msgstr "Grid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 msgid "Print"
-msgstr ""
+msgstr "Argraffu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Other"
-msgstr ""
+msgstr "Arall"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 #: src/control/Control.NotebookbarImpress.js:669
@@ -452,32 +451,29 @@ msgid "Show Grid"
 msgstr "Dangos Grid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Snapio i Grid"
+msgstr "Snapio i grid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
-#, fuzzy
 msgid "Size to grid"
-msgstr "Snapio i Grid"
+msgstr "Meintioli i grid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Cydamseru Echelau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-#, fuzzy
 msgid "Snap grid"
-msgstr "Snapio i Grid"
+msgstr "Grid snapio"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Empty Pages"
-msgstr ""
+msgstr "Tudalennau Gwag"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Force Breaks"
-msgstr ""
+msgstr "Toriadau Gorfodol"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: src/control/Control.Menubar.ts:772 src/control/Control.TopToolbar.js:110
@@ -487,11 +483,11 @@ msgstr "Pob dalen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Content"
-msgstr ""
+msgstr "Cynnwys"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Drawing"
-msgstr ""
+msgstr "Lluniadu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 #: src/control/Control.NotebookbarDraw.js:1224
@@ -502,27 +498,27 @@ msgstr "Tudalen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Fit to page"
-msgstr ""
+msgstr "Ffitio i dudalen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Tile pages"
-msgstr ""
+msgstr "Tudalennau teitl"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Booklet"
-msgstr ""
+msgstr "Llyfryn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet front"
-msgstr ""
+msgstr "Blaen llyfryn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet back"
-msgstr ""
+msgstr "Cefn llyfryn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Page name"
-msgstr ""
+msgstr "Enw tudalen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 #: src/control/Control.NotebookbarCalc.js:771
@@ -538,11 +534,11 @@ msgstr "Amser"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden pages"
-msgstr ""
+msgstr "Tudalennau cudd"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "From printer setup"
-msgstr ""
+msgstr "O osodiad yr argraffydd"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Presentation"
@@ -555,7 +551,7 @@ msgstr "Nodiadau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Handouts"
-msgstr ""
+msgstr "Taflenni"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.NavigatorPanel.ts:205
@@ -564,56 +560,55 @@ msgstr "Amlinelliad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Llorweddol taflen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
-msgstr ""
+msgstr "Delweddau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
-#, fuzzy
 msgid "Tables"
-msgstr "Tabl"
+msgstr "Tablau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
-msgstr ""
+msgstr "Rheoliadau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Background"
-msgstr ""
+msgstr "Cefndir"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
-msgstr ""
+msgstr "Argraffu Du"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
-msgstr ""
+msgstr "Testun cudd"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
-msgstr ""
+msgstr "Dalfannau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Left pages"
-msgstr ""
+msgstr "Tudalennau chwith"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Right pages"
-msgstr ""
+msgstr "Tudalennau de"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Brochure"
-msgstr ""
+msgstr "Llyfryn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "De i Chwith Llyfryn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
-msgstr ""
+msgstr "Delweddau a Gwrthrychau"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:310
 msgid "Invalid JSON file"
@@ -776,21 +771,24 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"I ddefnyddio Zotero, nodwch eich allwedd API yma. Gallwch greu eich allwedd "
+"API yn eich "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "gosodiadau API cyfrif Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Gosodiadau Dogfen"
+msgstr "Llofnodi Dogfen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"I ddefnyddio llofnodi dogfennau, nodwch eich tystysgrif llofnodi, allwedd a "
+"chadwyn CA yma."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2406,32 +2404,31 @@ msgstr "Teipiwch yn y blwch chwilio i ddod o hyd i unrhyw beth yn eich dogfen"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animeiddiad"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Animeiddiadau wedi'u gosod"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Symud i Fyny"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Symud i Lawr"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Categori"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Cychwyn"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Effeithiau"
+msgstr "Effaith"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2439,9 +2436,8 @@ msgstr "Trawsnewid"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
-#, fuzzy
 msgid "Transitions"
-msgstr "Trawsnewid"
+msgstr "Trawsnewidiadau"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
@@ -2475,7 +2471,7 @@ msgstr "Maes"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animeiddiadau"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2811,7 +2807,7 @@ msgstr "Trefnu"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Gwedd Dalen"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3018,9 +3014,8 @@ msgid "Present in Window"
 msgstr "Presennol mewn Ffenest"
 
 #: src/control/Control.NotebookbarImpress.js:501
-#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Cyflwyniad dilyn fi"
+msgstr "Cychwyn Cyflwyniad Dilyn fi"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:731
@@ -3192,20 +3187,24 @@ msgstr "Dim problemau gyda dilysu SSL wedi'u canfod"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Nid yw'r dogfennau wedi eu cynnwys yn effeithiol: galluoedd neu enw gofodau "
+"coll."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Mae pob dogfen wedi ei gynnwys yn ddiogel"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Nid yw hidlo BPF o alwadau system posib anniogel (seccomp) wedi ei alluogi; "
+"perygl diogelwch."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Hidlo diogelwch galwad system wedi ei alluogi"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3221,15 +3220,15 @@ msgstr "Mae'r caledwedd yn ddigonol ar gyfer y perfformiad gorau"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Methu bind-mount, gosod gyda chopïo Slow Kit."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Wedi galluogi fast kit jail bind mount"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Perfformiad gwael didoli pob cais rhwydwaith."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
