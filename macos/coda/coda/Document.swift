@@ -75,6 +75,8 @@ class Document: NSDocument {
         set {
             // in case this is the first modified -> unmodified flip after the user triggered "Save As"
             var triggerPendingSave: PendingSave? = nil
+            // in case the save was triggered from inside the webview, we should ask for the document name (if it is Untitled) etc.
+            var triggerImplicitSave = false
 
             modifiedLock.lock()
 
@@ -90,6 +92,9 @@ class Document: NSDocument {
                     triggerPendingSave = pendingSave
                     pendingSave = nil
                 }
+                else {
+                    triggerImplicitSave = true
+                }
             }
 
             modifiedLock.unlock()
@@ -98,6 +103,11 @@ class Document: NSDocument {
             if let ps = triggerPendingSave {
                 DispatchQueue.main.async {
                     self.performPendingSave(ps)
+                }
+            }
+            else if triggerImplicitSave {
+                DispatchQueue.main.async {
+                    self.performImplicitSave()
                 }
             }
         }
@@ -225,6 +235,14 @@ class Document: NSDocument {
      */
     private func performPendingSave(_ ps: PendingSave) {
         super.save(to: ps.url, ofType: ps.typeName, for: ps.operation, completionHandler: ps.completion)
+    }
+
+    /**
+     * Performs an AppKit-driven save (or Save As… if the document is untitled) after a COOL-initiated flush.
+     */
+    private func performImplicitSave() {
+        // This will show the Save panel if fileURL == nil, otherwise it saves in place.
+        self.save(self)
     }
 
     /**
