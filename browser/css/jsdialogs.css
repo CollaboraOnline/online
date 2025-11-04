@@ -47,6 +47,11 @@
 	padding-right: 5px;
 }
 
+div.ui-treeview-icon-column {
+	height: 100%;
+	text-align: right;
+}
+
 #AcceptRejectChangesDialog {
 	width: max-content;
 	max-width: 1000px;
@@ -1608,9 +1613,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: none;
 }
 
-/* hide arrow icons in the autofilter menu*/
-#menu img.jsdialog.autofilter.ui-treeview-checkbox {
-	display: none;
+/* border-less arrow icons in the autofilter menu */
+#menu img.jsdialog.autofilter.ui-treeview-checkbox.ui-treeview-image {
+	display: inline;
+	outline: none;
 }
 
 /* Word count dialog */
