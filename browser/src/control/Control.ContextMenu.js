@@ -232,10 +232,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 			});
 
 			const position = app.activeDocument.mouseControl.getMousePagePosition();
-			if (autoFillContextMenu)
-				$('#canvas-container').contextMenu(position);
-			else
-				$('#canvas-container').contextMenu(position);
+			$('#canvas-container').contextMenu(position);
 			$('.context-menu-root').focus();
 			this.hasContextMenu = true;
 		}
