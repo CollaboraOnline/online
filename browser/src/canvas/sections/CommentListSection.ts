@@ -121,7 +121,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.show = null;
 		this.sectionProperties.showResolved = false;
-		this.sectionProperties.marginY = 10 * app.dpiScale;
+		this.sectionProperties.marginY = 20 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
