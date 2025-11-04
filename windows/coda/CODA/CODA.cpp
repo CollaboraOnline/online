@@ -91,6 +91,8 @@ std::string app_installation_path;
 
 std::string app_installation_uri;
 
+std::string localAppData;
+
 static std::string uiLanguage = "en-US";
 static std::wstring appName;
 
@@ -1491,6 +1493,11 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     appName = Util::string_to_wide_string(APP_NAME);
 
+    PWSTR appDataFolder;
+    SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &appDataFolder);
+    localAppData = Util::wide_string_to_string(std::wstring(appDataFolder) + L"\\" + appName);
+    CoTaskMemFree(appDataFolder);
+
     // A "LANG" environment variable is not a thing on Windows, but check
     // for a such anyway, for easier testing.
     auto langEnv = std::getenv("LANG");
@@ -1512,8 +1519,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     persistentWindowSizeStoreOK =
         (persistentWindowSizeStore.open
-         (Util::string_to_wide_string(app_installation_path +
-                                      "persistentWindowSizes")) == litecask::Status::Ok);
+         (Util::string_to_wide_string(localAppData +
+                                      "\\persistentWindowSizes")) == litecask::Status::Ok);
 
     // Create a dummy hidden owner window so that the file open dialog can inherit its icon for the
     // task switcher (Alt-Tab) from it.
