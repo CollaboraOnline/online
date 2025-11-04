@@ -19,6 +19,7 @@
 #include <shlobj.h>
 #include <shlwapi.h>
 #include <shobjidl.h>
+#include <shobjidl_core.h>
 #include <wincrypt.h>
 
 #include "WebView2.h"
@@ -134,6 +135,8 @@ static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
 
 static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
+
+static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension);
 
 static std::wstring new_document(CODA_OPEN_CONTROL id);
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission);
@@ -574,6 +577,24 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
     char* wparam = _strdup((pretext + std::string(base64.data()) + posttext).c_str());
 
     PostMessageW(hWnd, CODA_WM_EXECUTESCRIPT, (WPARAM)wparam, 0);
+}
+
+// FIXME: This function is *exported* on purpose and called by SfxStoringHelper::FinishGUIStoreModel() in
+// sfx2/source/doc/guisaveas.cxx in core. Yes, this is an awful hack.
+
+extern "C" __declspec(dllexport) void output_file_dialog_from_core(const std::wstring& suggestedURI, std::string& result)
+{
+    auto URI = Poco::URI(Util::wide_string_to_string(suggestedURI));
+    auto path = URI.getPath();
+    if (path.size() > 4 && path[0] == '/' && path[2] == ':' && path[3] == '/')
+        path = path.substr(1);
+    auto lastSlash = path.find_last_of('/');
+    auto filename = path.substr(lastSlash + 1);
+    auto folder = path.substr(0, lastSlash);
+    auto lastPeriod = filename.find_last_of('.');
+    auto extension = filename.substr(lastPeriod + 1);
+    auto filenameAndUri = fileSaveDialog(filename, folder, extension);
+    result = filenameAndUri.uri;
 }
 
 static void do_hullo_handling_things(WindowData& data)
@@ -1078,7 +1099,7 @@ static FilenameAndUri fileOpenDialog()
     return { path.getFileName(), Poco::URI(path).toString() };
 }
 
-static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& extension)
+static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension)
 {
     IFileSaveDialog* dialog;
 
@@ -1110,6 +1131,20 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
 
     if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
         std::abort();
+
+    if (folder != "")
+    {
+        std::wstring wfolder = Util::string_to_wide_string(folder);
+        std::replace(wfolder.begin(), wfolder.end(), L'/', L'\\');
+
+        IShellItem* psiFolder;
+        if (SUCCEEDED(SHCreateItemFromParsingName(wfolder.c_str(), nullptr, IID_PPV_ARGS(&psiFolder))))
+        {
+            if (!SUCCEEDED(dialog->SetFolder(psiFolder)))
+                std::abort();
+            psiFolder->Release();
+        }
+    }
 
     if (!SUCCEEDED(dialog->Show(hiddenOwnerWindow)))
         return {};
@@ -1526,7 +1561,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             auto const extension = name.substr(dot + 1);
             auto const basename = data.filenameAndUri.filename.substr(
                 0, data.filenameAndUri.filename.find_last_of('.'));
-            auto filenameAndUri = fileSaveDialog(basename + "." + extension, extension);
+            auto filenameAndUri = fileSaveDialog(basename + "." + extension, "", extension);
 
             if (filenameAndUri.filename != "")
                 DocumentData::get(data.appDocId).loKitDocument->saveAs(filenameAndUri.uri.c_str(), extension.c_str(), nullptr);
