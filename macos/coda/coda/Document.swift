@@ -43,6 +43,17 @@ class Document: NSDocument {
     @objc
     var tempFileURL: URL?
 
+    /** Parameters for a deferred Save / Save As… request. */
+    private struct PendingSave {
+        let url: URL
+        let typeName: String
+        let operation: NSDocument.SaveOperationType
+        let completion: (((any Error)?) -> Void)
+    }
+
+    /** Stashed Save / Save As… request while edits are still dirty (nil when none). */
+    private var pendingSave: PendingSave?
+
     /// Make sure the isModified access can be atomic.
     private var modifiedLock = NSLock()
     private var _isModified: Bool = false
@@ -62,6 +73,9 @@ class Document: NSDocument {
             return value
         }
         set {
+            // in case this is the first modified -> unmodified flip after the user triggered "Save As"
+            var triggerPendingSave: PendingSave? = nil
+
             modifiedLock.lock()
 
             let oldValue = _isModified
@@ -70,10 +84,40 @@ class Document: NSDocument {
             // trigger the saving operation when the document was previously marked as modified, but changes to non-modified
             if oldValue && !newValue {
                 updateChangeCount(.changeDone)
+
+                // decide under the lock if we should run the stashed Save now
+                if pendingSave != nil {
+                    triggerPendingSave = pendingSave
+                    pendingSave = nil
+                }
             }
 
             modifiedLock.unlock()
+
+            // schedule the actual save outside the lock
+            if let ps = triggerPendingSave {
+                DispatchQueue.main.async {
+                    self.performPendingSave(ps)
+                }
+            }
         }
+    }
+
+    /**
+     * Atomically checks dirty state and, if dirty, stashes a pending save target. Returns true if pending was set.
+     */
+    private func setPendingIfModified(url: URL,
+                                      typeName: String,
+                                      saveOperation: NSDocument.SaveOperationType,
+                                      completionHandler: @escaping ((any Error)?) -> Void) -> Bool {
+        modifiedLock.lock()
+        defer { modifiedLock.unlock() }
+        if _isModified {
+            pendingSave = PendingSave(url: url, typeName: typeName, operation: saveOperation, completion: completionHandler)
+            return true
+        }
+
+        return false
     }
 
     // MARK: - deinit
@@ -164,22 +208,23 @@ class Document: NSDocument {
      */
     override func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, completionHandler: @escaping ((any Error)?) -> Void) {
 
-        if isModified {
+        if setPendingIfModified(url: url, typeName: typeName, saveOperation: saveOperation, completionHandler: completionHandler) {
             // we have to wait for COOL to save first
             DispatchQueue.main.async {
                 COWrapper.handleMessage(with: self, message: "save dontTerminateEdit=1 dontSaveIfUnmodified=1")
-            }
-
-            // FIXME would be much better to have handleMessage() with some kind of await or completion handler,
-            // and call the completionHandler() from there, so that we can be 100% sure the save has concluded
-            DispatchQueue.main.async {
-                completionHandler(nil)
             }
         }
         else {
             // all is good, we can proceed with copying the data from COOL
             super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
         }
+    }
+
+    /**
+     * Calls super.save(...) to complete a pending Save / Save As…
+     */
+    private func performPendingSave(_ ps: PendingSave) {
+        super.save(to: ps.url, ofType: ps.typeName, for: ps.operation, completionHandler: ps.completion)
     }
 
     /**
