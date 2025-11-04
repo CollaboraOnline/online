@@ -582,7 +582,7 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
 // FIXME: This function is *exported* on purpose and called by SfxStoringHelper::FinishGUIStoreModel() in
 // sfx2/source/doc/guisaveas.cxx in core. Yes, this is an awful hack.
 
-extern "C" __declspec(dllexport) void output_file_dialog_from_core(const std::wstring& suggestedURI, std::string& result)
+__declspec(dllexport) void output_file_dialog_from_core(const std::wstring& suggestedURI, std::string& result)
 {
     auto URI = Poco::URI(Util::wide_string_to_string(suggestedURI));
     auto path = URI.getPath();
