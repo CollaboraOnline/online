@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 12:28+0100\n"
+"POT-Creation-Date: 2025-11-04 22:40+0100\n"
 "PO-Revision-Date: 2025-01-28 15:02+0000\n"
 "Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -148,11 +148,11 @@ msgstr "Gráfico de rede"
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
 #: admin/src/integrator/AdminIntegratorSettings.ts:1721
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:528
+#: src/canvas/sections/CommentListSection.ts:537
 #: src/canvas/sections/CommentSection.ts:184
 #: src/canvas/sections/CommentSection.ts:487
 #: src/canvas/sections/CommentSection.ts:1241
-#: src/control/Control.Notebookbar.js:255
+#: src/control/Control.Notebookbar.js:268
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -238,11 +238,11 @@ msgstr "Definir níveis de registro"
 msgid "Log Levels"
 msgstr "Níveis de registro"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:169
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:178
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:399 src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:357 src/core/Socket.js:1138 src/core/Socket.js:1143
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Fechar"
@@ -302,7 +302,7 @@ msgstr "Aviso"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1778 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1499
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -313,8 +313,8 @@ msgstr "Aviso"
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:748 src/core/Socket.js:684 src/core/Socket.js:1150
-#: src/core/Socket.js:1220 src/core/Socket.js:1396 src/core/Socket.js:1400
+#: src/control/Toolbar.js:748 src/core/Socket.js:642 src/core/Socket.js:1108
+#: src/core/Socket.js:1178 src/core/Socket.js:1354 src/core/Socket.js:1358
 #: src/docdispatcher.ts:560 src/main.js:88 src/main.js:91 src/main.js:132
 #: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
@@ -329,7 +329,7 @@ msgstr "OK"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:523
+#: src/canvas/sections/CommentListSection.ts:532
 #: src/canvas/sections/CommentSection.ts:183
 #: src/canvas/sections/CommentSection.ts:186
 #: src/canvas/sections/CommentSection.ts:1242
@@ -338,9 +338,9 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1779 src/control/Control.UIManager.ts:1860
-#: src/control/Control.UIManager.ts:2014 src/control/Control.UIManager.ts:2192
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1421
+#: src/control/Control.UIManager.ts:1785 src/control/Control.UIManager.ts:1866
+#: src/control/Control.UIManager.ts:2020 src/control/Control.UIManager.ts:2198
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1379
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "Cancelar"
@@ -740,7 +740,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1159
 #: src/canvas/sections/CommentSection.ts:1164
-#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:557
+#: src/control/Control.ContextMenu.js:253 src/docdispatcher.ts:557
 msgid "Delete"
 msgstr "Excluir"
 
@@ -892,17 +892,17 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1606
+#: js/global.js:1610
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
 
-#: js/global.js:1608
+#: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
 
-#: js/global.js:1610
+#: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
 msgstr "Falhado para obter RouteToken do controlador"
 
@@ -918,94 +918,94 @@ msgstr "Ctrl+Shift+Alt+D para sair"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:168
+#: src/canvas/sections/CommentListSection.ts:177
 msgid "A comment is being edited"
 msgstr "Um comentário está sendo editado"
 
-#: src/canvas/sections/CommentListSection.ts:169
+#: src/canvas/sections/CommentListSection.ts:178
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 "Por favor, salve ou descarte o comentário que está sendo editado atualmente."
 
-#: src/canvas/sections/CommentListSection.ts:1189
+#: src/canvas/sections/CommentListSection.ts:1199
 msgid "Modify"
 msgstr "Modificar"
 
-#: src/canvas/sections/CommentListSection.ts:1195
+#: src/canvas/sections/CommentListSection.ts:1205
 #: src/canvas/sections/CommentSection.ts:187
 #: src/canvas/sections/CommentSection.ts:491
 #: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "Responder"
 
-#: src/canvas/sections/CommentListSection.ts:1201
+#: src/canvas/sections/CommentListSection.ts:1211
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Remover"
 
-#: src/canvas/sections/CommentListSection.ts:1207
+#: src/canvas/sections/CommentListSection.ts:1217
 msgid "Remove Thread"
 msgstr "Remover Tópico"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Resolve"
 msgstr "Resolver"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Unresolve"
 msgstr "Pendente"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Unresolve Thread"
 msgstr "Tópicos Pendentes"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Resolve Thread"
 msgstr "Decidir Tópico"
 
-#: src/canvas/sections/CommentListSection.ts:1225
+#: src/canvas/sections/CommentListSection.ts:1235
 msgid "Promote to top comment"
 msgstr "Promover a comentário de topo"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Show on the side"
 msgstr "Mostrar ao lado"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Open in full view"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1237
+#: src/canvas/sections/CommentListSection.ts:1247
 msgid "Show in navigator"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1265
+#: src/canvas/sections/CommentListSection.ts:1275
 #: src/control/Control.JSDialogBuilder.js:1696
-#: src/layer/tile/CanvasTileLayer.js:3500
-#: src/layer/tile/CanvasTileLayer.js:3511
+#: src/layer/tile/CanvasTileLayer.js:3476
+#: src/layer/tile/CanvasTileLayer.js:3487
 msgid "Comment"
 msgstr "Comentário"
 
-#: src/canvas/sections/CommentListSection.ts:1486
-#: src/canvas/sections/CommentListSection.ts:1499
+#: src/canvas/sections/CommentListSection.ts:1497
+#: src/canvas/sections/CommentListSection.ts:1510
 msgid "Comments Updated"
 msgstr "Comentários atualizados"
 
-#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1498
 msgid "Another user has removed this comment."
 msgstr "Outro usuário removeu este comentário."
 
-#: src/canvas/sections/CommentListSection.ts:1500
+#: src/canvas/sections/CommentListSection.ts:1511
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1501 src/core/Socket.js:1425
+#: src/canvas/sections/CommentListSection.ts:1512 src/core/Socket.js:1383
 msgid "Overwrite"
 msgstr "Substituir"
 
-#: src/canvas/sections/CommentListSection.ts:1502
+#: src/canvas/sections/CommentListSection.ts:1513
 msgid "Update"
 msgstr ""
 
@@ -1047,19 +1047,19 @@ msgstr "Resolvido"
 msgid "Saved"
 msgstr "Salvar"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:439
+#: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
 msgstr ""
 
-#: src/canvas/sections/URLPopUpSection.ts:66
+#: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
 msgstr "Copiar localização do link"
 
-#: src/canvas/sections/URLPopUpSection.ts:80
+#: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
 msgstr "Editar link"
 
-#: src/canvas/sections/URLPopUpSection.ts:95
+#: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
 msgstr "Remover link"
 
@@ -1145,15 +1145,15 @@ msgstr "O servidor encontrou o erro {0} ao analisar o comando {1} ."
 msgid "Unlock"
 msgstr "Desbloquear"
 
-#: src/control/Control.ContextMenu.js:277
+#: src/control/Control.ContextMenu.js:278
 msgid "Paste Special"
 msgstr "Colar especial"
 
-#: src/control/Control.ContextMenu.js:284
+#: src/control/Control.ContextMenu.js:285
 msgid "Copy Cells"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:289
+#: src/control/Control.ContextMenu.js:290
 msgid "Fill Series"
 msgstr ""
 
@@ -2336,7 +2336,7 @@ msgstr ""
 msgid "Finish electronic signing"
 msgstr ""
 
-#: src/control/Control.Menubar.ts:2402
+#: src/control/Control.Menubar.ts:2403
 msgid "file type icon"
 msgstr "ícone de tipo de arquivo"
 
@@ -2469,7 +2469,7 @@ msgstr "Campos"
 msgid "Animations"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:637
+#: src/control/Control.Notebookbar.js:650
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2805,6 +2805,26 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1406
+msgid "Default View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1423
+msgid "Select Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1430
+msgid "New Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1437
+msgid "Remove Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1444
+msgid "Exit Sheet View"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1459
@@ -3516,7 +3536,7 @@ msgstr ""
 "API da Web. Isso pode causar alguns problemas durante a edição de citações "
 "ou bibliografia."
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1341
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1299
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -4268,68 +4288,68 @@ msgstr ""
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Categoria e objetos que você adicionar ao documento aparecerá aqui"
 
-#: src/core/Socket.js:44
+#: src/app/SocketBase.ts:153
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Opa, há um problema de conexão com {productname}: "
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:623
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "O servidor está agora acessível. É necessário atualizar a página."
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:625
 msgid "Server is now reachable..."
 msgstr "O servidor está agora acessível..."
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:629
 msgid "RELOAD"
 msgstr "RECARREGAR"
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:642
 msgid "Cluster configuration warning"
 msgstr "Aviso de configuração de cluster"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:645
 msgid "Wrong server, reconnecting..."
 msgstr "Servidor errado, reconectando..."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:654
 msgid "COOLWSD version:"
 msgstr "Versão COOLWSD:"
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:679
 msgid "Served by:"
 msgstr "Servido por:"
 
-#: src/core/Socket.js:727
+#: src/core/Socket.js:685
 msgid "Unsupported server version."
 msgstr "A versão do servidor não é homologada."
 
-#: src/core/Socket.js:731
+#: src/core/Socket.js:689
 msgid "LOKit version:"
 msgstr "Versão LOKit:"
 
-#: src/core/Socket.js:856
+#: src/core/Socket.js:814
 msgid "Document is getting migrated"
 msgstr "Migrando documento"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:841
 msgid "Session terminated by document owner"
 msgstr "Sessão encerrada pelo proprietário do documento"
 
-#: src/core/Socket.js:894
+#: src/core/Socket.js:852
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "O servidor está se desligando para manutenção (auto-salvamento)"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:858
 msgid "Oops, there is a problem connecting the document"
 msgstr "Há um problema ao conectar o documento"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "O servidor está fora do ar, reiniciando automaticamente. Por favor, espere."
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:889
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -4337,7 +4357,7 @@ msgstr ""
 "O documento foi alterado no armazenamento. Recarregando o documento. Sua "
 "versão está disponível como revisão."
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:895
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -4345,79 +4365,79 @@ msgstr ""
 "Restaurando a revisão anterior. Quaisquer alterações não salvas estarão "
 "disponíveis no histórico da versão"
 
-#: src/core/Socket.js:943
+#: src/core/Socket.js:901
 msgid "Reloading the document after rename"
 msgstr "Recarregar o documento após renomear"
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1060
 msgid "Document requires password to view."
 msgstr "O documento exige uma senha de abertura."
 
-#: src/core/Socket.js:1105
+#: src/core/Socket.js:1063
 msgid "Document requires password to modify."
 msgstr "O documento exige uma senha para modificação."
 
-#: src/core/Socket.js:1107
+#: src/core/Socket.js:1065
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pressione Cancelar para abrir no modo de só leitura."
 
-#: src/core/Socket.js:1111
+#: src/core/Socket.js:1069
 msgid "Wrong password provided. Please try again."
 msgstr "Senha inválida. Tente novamente."
 
-#: src/core/Socket.js:1149
+#: src/core/Socket.js:1107
 msgid "Only the document owner can change the password."
 msgstr "Apenas o proprietário do documento pode alterar a senha."
 
-#: src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:1138 src/core/Socket.js:1143
 msgid "Missing Fonts"
 msgstr "Fontes faltantes"
 
-#: src/core/Socket.js:1217
+#: src/core/Socket.js:1175
 msgid "Someone"
 msgstr "Alguém"
 
-#: src/core/Socket.js:1218
+#: src/core/Socket.js:1176
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} guardou este documento como {filename}. Quer juntar-se?"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "O documento está sendo renomeado e será recarregado em breve"
 
-#: src/core/Socket.js:1238
+#: src/core/Socket.js:1196
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "O documento está mudando para o modo offline e irá recarregar em breve"
 
-#: src/core/Socket.js:1341
+#: src/core/Socket.js:1299
 msgid "Connecting..."
 msgstr "Conectando..."
 
-#: src/core/Socket.js:1356
+#: src/core/Socket.js:1314
 msgid "Server is shutting down"
 msgstr "O servidor está desligando"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Exported to storage"
 msgstr "Exportado para o armazenamento"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Successfully exported: "
 msgstr "Exportado com sucesso: "
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1382
 msgid "Discard"
 msgstr "Descartar"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1394
 msgid "Save to new file"
 msgstr "Salvar com outro nome"
 
-#: src/core/Socket.js:1446
+#: src/core/Socket.js:1404
 msgid "Document has been changed"
 msgstr "O documento foi alterado"
 
-#: src/core/Socket.js:1447
+#: src/core/Socket.js:1405
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -4425,17 +4445,17 @@ msgstr ""
 "O documento foi alterado no armazenamento. O que deseja fazer com as "
 "alterações não salvas?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1670
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Ocorreu um erro de conexão com seu documento. Tente novamente."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1687
 msgid "Reconnecting..."
 msgstr "A reconectar..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1697
 msgid "The server has been disconnected."
 msgstr "O servidor foi desconectado."
 
@@ -4447,15 +4467,15 @@ msgstr "Deseja eliminar este slide?"
 msgid "Are you sure you want to delete this page?"
 msgstr "Deseja excluir esta página?"
 
-#: src/docstate.ts:115
+#: src/docstate.ts:135
 msgid "Standard"
 msgstr "Padrão"
 
-#: src/docstate.ts:260
+#: src/docstate.ts:280
 msgid "Theme colors"
 msgstr "Cores do tema"
 
-#: src/docstate.ts:261
+#: src/docstate.ts:281
 msgid "Document colors"
 msgstr "Cores do documento"
 
@@ -4747,39 +4767,39 @@ msgstr ""
 msgid "{0} deleted"
 msgstr ""
 
-#: src/layer/marker/TextInput.js:451
+#: src/layer/marker/TextInput.js:458
 msgid "Screen reader support for text content is disabled. "
 msgstr ""
 
-#: src/layer/marker/TextInput.js:452
+#: src/layer/marker/TextInput.js:459
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
 
-#: src/layer/marker/TextInput.js:453
+#: src/layer/marker/TextInput.js:460
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
 
-#: src/layer/marker/TextInput.js:454
+#: src/layer/marker/TextInput.js:461
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr ""
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the Help tab"
 msgstr ""
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the View menu"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1591
+#: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
 msgstr "Funções"
 
-#: src/layer/tile/CanvasTileLayer.js:1851
+#: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:3528
+#: src/layer/tile/CanvasTileLayer.js:3504
 msgid "No Comments"
 msgstr "0 Comentários"
 
@@ -4839,15 +4859,15 @@ msgstr ""
 msgid "Close popup to ignore paste special"
 msgstr ""
 
-#: src/map/Map.js:213
+#: src/map/Map.js:211
 msgid "Initializing..."
 msgstr "Inicializando..."
 
-#: src/map/Map.js:496 src/map/Map.js:499 src/map/Map.js:502 src/map/Map.js:505
+#: src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503
 msgid "Last saved:"
 msgstr "Documento salvo:"
 
-#: src/map/Map.js:1512
+#: src/map/Map.js:1513
 msgid "Please wait!"
 msgstr ""
 
@@ -5053,11 +5073,13 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Edição Desenvolvimento"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
+#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">apps</a> are also available for "
+"mobile."
 msgstr ""
 "Aproveite os últimos desenvolvimentos em produtividade online, grátis para "
 "você usar, explorar e usar com outros no navegador. <a target=\"_blank\" "
@@ -5070,11 +5092,12 @@ msgid "Discover All The Changes"
 msgstr "Descubra todas as mudanças"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
+#, fuzzy
 msgid ""
-"Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">release notes</a> and learn all about: The "
-"latest Collabora Online Development Edition, aimed at home users and small "
-"teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
+"all about: The latest Collabora Online Development Edition, aimed at home "
+"users and small teams."
 msgstr ""
 "Verifique as <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
 "code-25-04-release-notes/\">notas de lançamento</a> e saiba tudo sobre: A "
@@ -5090,15 +5113,16 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
+#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
+"from scratch. You can also help out with <a target=\"_blank\" "
+"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Você está interessado em contribuir, mas não sabe por onde começar? Acesse "
 "às <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"

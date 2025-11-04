@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 12:28+0100\n"
+"POT-Creation-Date: 2025-11-04 22:40+0100\n"
 "PO-Revision-Date: 2025-11-04 21:38+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hy/>\n"
-"Language: hy\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -144,11 +144,11 @@ msgstr "Ցանցային գրաֆիկ"
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
 #: admin/src/integrator/AdminIntegratorSettings.ts:1721
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:528
+#: src/canvas/sections/CommentListSection.ts:537
 #: src/canvas/sections/CommentSection.ts:184
 #: src/canvas/sections/CommentSection.ts:487
 #: src/canvas/sections/CommentSection.ts:1241
-#: src/control/Control.Notebookbar.js:255
+#: src/control/Control.Notebookbar.js:268
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -236,11 +236,11 @@ msgstr "Սահմանել գրանցամատյանի մակարդակները"
 msgid "Log Levels"
 msgstr "Գրանցամատյանի մակարդակներ"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:169
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:178
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:399 src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:357 src/core/Socket.js:1138 src/core/Socket.js:1143
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Փակել"
@@ -298,7 +298,7 @@ msgstr "Զգուշացում"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1778 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1499
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -309,8 +309,8 @@ msgstr "Զգուշացում"
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:748 src/core/Socket.js:684 src/core/Socket.js:1150
-#: src/core/Socket.js:1220 src/core/Socket.js:1396 src/core/Socket.js:1400
+#: src/control/Toolbar.js:748 src/core/Socket.js:642 src/core/Socket.js:1108
+#: src/core/Socket.js:1178 src/core/Socket.js:1354 src/core/Socket.js:1358
 #: src/docdispatcher.ts:560 src/main.js:88 src/main.js:91 src/main.js:132
 #: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
@@ -325,7 +325,7 @@ msgstr "ԼԱՎ"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:523
+#: src/canvas/sections/CommentListSection.ts:532
 #: src/canvas/sections/CommentSection.ts:183
 #: src/canvas/sections/CommentSection.ts:186
 #: src/canvas/sections/CommentSection.ts:1242
@@ -334,9 +334,9 @@ msgstr "ԼԱՎ"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1779 src/control/Control.UIManager.ts:1860
-#: src/control/Control.UIManager.ts:2014 src/control/Control.UIManager.ts:2192
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1421
+#: src/control/Control.UIManager.ts:1785 src/control/Control.UIManager.ts:1866
+#: src/control/Control.UIManager.ts:2020 src/control/Control.UIManager.ts:2198
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1379
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "Չեղարկել"
@@ -744,7 +744,7 @@ msgstr "Նիշքը վերբեռնելիս ինչ-որ սխալ է տեղի ու�
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1159
 #: src/canvas/sections/CommentSection.ts:1164
-#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:557
+#: src/control/Control.ContextMenu.js:253 src/docdispatcher.ts:557
 msgid "Delete"
 msgstr "Ջնջել"
 
@@ -902,7 +902,7 @@ msgstr " րոպ"
 msgid " s"
 msgstr " վրկ"
 
-#: js/global.js:1606
+#: js/global.js:1610
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
@@ -910,11 +910,11 @@ msgstr ""
 "Համակարգն այժմ կարգավորում է ռեսուրսները։ Խնդրում ենք մի փոքր սպասել, մինչև "
 "մենք կկրկնենք ձեր հարցումը..."
 
-#: js/global.js:1608
+#: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr "Փաստաթուղթը տեղափոխվում է նոր սերվեր։ Շուտով կրկին կփորձենք..."
 
-#: js/global.js:1610
+#: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
 msgstr "Չհաջողվեց ստանալ RouteToken-ը կառավարիչից"
 
@@ -931,83 +931,83 @@ msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
 "Իրադարձությունների մշակումը հետաձգվել է անսպասելիորեն երկար ժամանակով՝ {0} մվ"
 
-#: src/canvas/sections/CommentListSection.ts:168
+#: src/canvas/sections/CommentListSection.ts:177
 msgid "A comment is being edited"
 msgstr "Մեկնաբանությունը խմբագրվում է"
 
-#: src/canvas/sections/CommentListSection.ts:169
+#: src/canvas/sections/CommentListSection.ts:178
 msgid "Please save or discard the comment currently being edited."
 msgstr "Խնդրում ենք պահպանել կամ մերժել ներկայումս խմբագրվող մեկնաբանությունը։"
 
-#: src/canvas/sections/CommentListSection.ts:1189
+#: src/canvas/sections/CommentListSection.ts:1199
 msgid "Modify"
 msgstr "Ձևափոխել"
 
-#: src/canvas/sections/CommentListSection.ts:1195
+#: src/canvas/sections/CommentListSection.ts:1205
 #: src/canvas/sections/CommentSection.ts:187
 #: src/canvas/sections/CommentSection.ts:491
 #: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "Պատասխան"
 
-#: src/canvas/sections/CommentListSection.ts:1201
+#: src/canvas/sections/CommentListSection.ts:1211
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Հեռացնել"
 
-#: src/canvas/sections/CommentListSection.ts:1207
+#: src/canvas/sections/CommentListSection.ts:1217
 msgid "Remove Thread"
 msgstr "Հեռացնել գալարը"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Resolve"
 msgstr "Լուծել"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Unresolve"
 msgstr "Չլուծված"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Unresolve Thread"
 msgstr "Չլուծված թնջուկ"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Resolve Thread"
 msgstr "Լուծել թնջուկը"
 
-#: src/canvas/sections/CommentListSection.ts:1225
+#: src/canvas/sections/CommentListSection.ts:1235
 msgid "Promote to top comment"
 msgstr "Առաջ մղել դեպի լավագույն մեկնաբանություն"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Show on the side"
 msgstr "Ցույց տալ կողքում"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Open in full view"
 msgstr "Բացել լրիվ դիտումում"
 
-#: src/canvas/sections/CommentListSection.ts:1237
+#: src/canvas/sections/CommentListSection.ts:1247
 msgid "Show in navigator"
 msgstr "Ցուցադրել նավարկիչում"
 
-#: src/canvas/sections/CommentListSection.ts:1265
+#: src/canvas/sections/CommentListSection.ts:1275
 #: src/control/Control.JSDialogBuilder.js:1696
-#: src/layer/tile/CanvasTileLayer.js:3500
-#: src/layer/tile/CanvasTileLayer.js:3511
+#: src/layer/tile/CanvasTileLayer.js:3476
+#: src/layer/tile/CanvasTileLayer.js:3487
 msgid "Comment"
 msgstr "Մեկնաբանություն"
 
-#: src/canvas/sections/CommentListSection.ts:1486
-#: src/canvas/sections/CommentListSection.ts:1499
+#: src/canvas/sections/CommentListSection.ts:1497
+#: src/canvas/sections/CommentListSection.ts:1510
 msgid "Comments Updated"
 msgstr "Մեկնաբանությունները թարմացվել են"
 
-#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1498
 msgid "Another user has removed this comment."
 msgstr "Մեկ այլ օգտատեր հեռացրել է այս մեկնաբանությունը։"
 
-#: src/canvas/sections/CommentListSection.ts:1500
+#: src/canvas/sections/CommentListSection.ts:1511
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -1015,11 +1015,11 @@ msgstr ""
 "Մեկ այլ օգտատեր թարմացրել է մեկնաբանությունը։ Կցանկանայի՞ք վերագրել այդ "
 "փոփոխությունները։"
 
-#: src/canvas/sections/CommentListSection.ts:1501 src/core/Socket.js:1425
+#: src/canvas/sections/CommentListSection.ts:1512 src/core/Socket.js:1383
 msgid "Overwrite"
 msgstr "Վերագրել"
 
-#: src/canvas/sections/CommentListSection.ts:1502
+#: src/canvas/sections/CommentListSection.ts:1513
 msgid "Update"
 msgstr "Թարմացում"
 
@@ -1059,19 +1059,19 @@ msgstr "Լուծված"
 msgid "Saved"
 msgstr "Պահպանված է"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:439
+#: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
 msgstr "Փաստաթուղթը պարունակում է չաջակցվող մեդիա"
 
-#: src/canvas/sections/URLPopUpSection.ts:66
+#: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
 msgstr "Պատճենել հղման տեղը"
 
-#: src/canvas/sections/URLPopUpSection.ts:80
+#: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
 msgstr "Խմբագրել հղումը"
 
-#: src/canvas/sections/URLPopUpSection.ts:95
+#: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
 msgstr "Հեռացնել հղումը"
 
@@ -1157,15 +1157,15 @@ msgstr "Սերվերը {1} հրամանը վերլուծելիս հանդիպե�
 msgid "Unlock"
 msgstr "Ապակողպել"
 
-#: src/control/Control.ContextMenu.js:277
+#: src/control/Control.ContextMenu.js:278
 msgid "Paste Special"
 msgstr "Հետ տեղադրել Հատուկ"
 
-#: src/control/Control.ContextMenu.js:284
+#: src/control/Control.ContextMenu.js:285
 msgid "Copy Cells"
 msgstr "Պատճենել բջիջները"
 
-#: src/control/Control.ContextMenu.js:289
+#: src/control/Control.ContextMenu.js:290
 msgid "Fill Series"
 msgstr "Լրացրեք շարքը"
 
@@ -2349,7 +2349,7 @@ msgstr ""
 msgid "Finish electronic signing"
 msgstr "Ավարտել էլեկտրոնային ստորագրումը"
 
-#: src/control/Control.Menubar.ts:2402
+#: src/control/Control.Menubar.ts:2403
 msgid "file type icon"
 msgstr "նիշքի տեսակի պատկերակ"
 
@@ -2481,7 +2481,7 @@ msgstr "Դաշտ"
 msgid "Animations"
 msgstr "Անիմացիաներ"
 
-#: src/control/Control.Notebookbar.js:637
+#: src/control/Control.Notebookbar.js:650
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2816,6 +2816,26 @@ msgstr "Դասավորել"
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
 msgstr "Թերթի տեսք"
+
+#: src/control/Control.NotebookbarCalc.js:1406
+msgid "Default View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1423
+msgid "Select Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1430
+msgid "New Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1437
+msgid "Remove Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1444
+msgid "Exit Sheet View"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3531,7 +3551,7 @@ msgstr ""
 "վեբ API-ի միջոցով: Դա կարող է որոշ խնդիրներ առաջացնել մեջբերումները կամ "
 "մատենագիտությունը խմբագրելիս:"
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1341
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1299
 msgid "Loading..."
 msgstr "Բեռնվում է..."
 
@@ -4280,68 +4300,68 @@ msgstr "Ավելի շատ տարբերակներ {1} -ի համար"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Փաստաթղթին ավելացված վերնախորագրերն ու օբյեկտները կհայտնվեն այստեղ"
 
-#: src/core/Socket.js:44
+#: src/app/SocketBase.ts:153
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Վա՜յ, {productname}-ին միանալու խնդիր կա: "
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:623
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Սերվերն այժմ հասանելի է։ Մենք պետք է թարմացնենք էջը։"
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:625
 msgid "Server is now reachable..."
 msgstr "Սերվերն այժմ հասանելի է..."
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:629
 msgid "RELOAD"
 msgstr "ՎԵՐԱԲԵՌՆԵԼ"
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:642
 msgid "Cluster configuration warning"
 msgstr "Կլաստերի կարգավորման նախազգուշացում"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:645
 msgid "Wrong server, reconnecting..."
 msgstr "Սխալ սերվեր, վերամիացում..."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:654
 msgid "COOLWSD version:"
 msgstr "COOLWSD տարբերակ:"
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:679
 msgid "Served by:"
 msgstr "Սպասարկված է:"
 
-#: src/core/Socket.js:727
+#: src/core/Socket.js:685
 msgid "Unsupported server version."
 msgstr "Չաջակցվող սերվերի տարբերակ։"
 
-#: src/core/Socket.js:731
+#: src/core/Socket.js:689
 msgid "LOKit version:"
 msgstr "LOKit տարբերակ:"
 
-#: src/core/Socket.js:856
+#: src/core/Socket.js:814
 msgid "Document is getting migrated"
 msgstr "Փաստաթուղթը տեղափոխվում է"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:841
 msgid "Session terminated by document owner"
 msgstr "Սեսիան դադարեցվել է փաստաթղթի տնօրինողի կողմից"
 
-#: src/core/Socket.js:894
+#: src/core/Socket.js:852
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Սերվերը անջատվում է սպասարկման համար (ինքնաշխատ պահպանում)"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:858
 msgid "Oops, there is a problem connecting the document"
 msgstr "Վա՜յ, փաստաթուղթը միացնելու խնդիր կա"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Սերվերը անջատված է, ինքնաշխատ կերպով վերագործարկվում է։ Խնդրում ենք սպասել։"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:889
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -4349,7 +4369,7 @@ msgstr ""
 "Փաստաթուղթը փոխվել է պահեստում։ Բեռնվում է նոր փաստաթուղթը։ Ձեր տարբերակը "
 "հասանելի է որպես վերանայված տարբերակ։"
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:895
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -4357,81 +4377,81 @@ msgstr ""
 "Վերականգնվում է հին տարբերակը։ Բոլոր չպահպանված փոփոխությունները հասանելի "
 "կլինեն տարբերակների պատմության մեջ"
 
-#: src/core/Socket.js:943
+#: src/core/Socket.js:901
 msgid "Reloading the document after rename"
 msgstr "Վերանվանելուց հետո փաստաթղթի վերաբեռնում"
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1060
 msgid "Document requires password to view."
 msgstr "Փաստաթուղթը դիտելու համար գաղտնաբառ է պահանջվում։"
 
-#: src/core/Socket.js:1105
+#: src/core/Socket.js:1063
 msgid "Document requires password to modify."
 msgstr "Փաստաթուղթը փոփոխելու համար գաղտնաբառ է պահանջվում։"
 
-#: src/core/Socket.js:1107
+#: src/core/Socket.js:1065
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Սեղմեք «Չեղարկել»՝ միայն դիտման ռեժիմով բացելու համար։"
 
-#: src/core/Socket.js:1111
+#: src/core/Socket.js:1069
 msgid "Wrong password provided. Please try again."
 msgstr "Սխալ գաղտնաբառ է տրամադրվել։ Խնդրում ենք կրկին փորձել։"
 
-#: src/core/Socket.js:1149
+#: src/core/Socket.js:1107
 msgid "Only the document owner can change the password."
 msgstr "Միայն փաստաթղթի սեփականատերը կարող է փոխել գաղտնաբառը։"
 
-#: src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:1138 src/core/Socket.js:1143
 msgid "Missing Fonts"
 msgstr "Բացակայող տառատեսակներ"
 
-#: src/core/Socket.js:1217
+#: src/core/Socket.js:1175
 msgid "Someone"
 msgstr "Ինչ-որ մեկը"
 
-#: src/core/Socket.js:1218
+#: src/core/Socket.js:1176
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "{username}-ը պահպանել է այս փաստաթուղթը որպես {filename}: Ցանկանո՞ւմ եք "
 "միանալ:"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "Փաստաթուղթը վերանվանվում է և շուտով կվերաբեռնվի"
 
-#: src/core/Socket.js:1238
+#: src/core/Socket.js:1196
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Փաստաթուղթը անցնում է անցանց ռեժիմի և շուտով կվերբեռնվի"
 
-#: src/core/Socket.js:1341
+#: src/core/Socket.js:1299
 msgid "Connecting..."
 msgstr "Միանում է..."
 
-#: src/core/Socket.js:1356
+#: src/core/Socket.js:1314
 msgid "Server is shutting down"
 msgstr "Սերվերը անջատվում է"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Exported to storage"
 msgstr "Արտահանվել է պահեստում"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Successfully exported: "
 msgstr "Հաջողությամբ արտահանվեց: "
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1382
 msgid "Discard"
 msgstr "Մերժել"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1394
 msgid "Save to new file"
 msgstr "Պահպանել նոր նիշքում"
 
-#: src/core/Socket.js:1446
+#: src/core/Socket.js:1404
 msgid "Document has been changed"
 msgstr "Փաստաթուղթը փոփոխվել է"
 
-#: src/core/Socket.js:1447
+#: src/core/Socket.js:1405
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -4439,7 +4459,7 @@ msgstr ""
 "Փաստաթուղթը փոփոխվել է հիշողության պահեստում: Ի՞նչ եք ուզում անել ձեր "
 "չպահպանված փոփոխությունների հետ:"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1670
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -4447,11 +4467,11 @@ msgstr ""
 "Դե, սա ամոթալի է, մենք չենք կարողանում կապ հաստատել ձեր փաստաթղթի հետ։ "
 "Խնդրում ենք կրկին փորձել։"
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1687
 msgid "Reconnecting..."
 msgstr "Վերամիացում..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1697
 msgid "The server has been disconnected."
 msgstr "Սերվերը անջատվել է։"
 
@@ -4463,15 +4483,15 @@ msgstr "Վստա՞հ եք, որ ուզում եք հանել այս սահիկը
 msgid "Are you sure you want to delete this page?"
 msgstr "Վստա՞հ եք, որ ուզում եք հանել այս էջը։"
 
-#: src/docstate.ts:115
+#: src/docstate.ts:135
 msgid "Standard"
 msgstr "Ստանդարտ"
 
-#: src/docstate.ts:260
+#: src/docstate.ts:280
 msgid "Theme colors"
 msgstr "Թեմայի գույներ"
 
-#: src/docstate.ts:261
+#: src/docstate.ts:281
 msgid "Document colors"
 msgstr "Փաստաթղթի գույները"
 
@@ -4774,40 +4794,40 @@ msgstr "{0} ապաընտրված է"
 msgid "{0} deleted"
 msgstr "{0} ջնջված"
 
-#: src/layer/marker/TextInput.js:451
+#: src/layer/marker/TextInput.js:458
 msgid "Screen reader support for text content is disabled. "
 msgstr "Տեքստային բովանդակության էկրանի ընթերցիչի աջակցությունն անջատված է։ "
 
-#: src/layer/marker/TextInput.js:452
+#: src/layer/marker/TextInput.js:459
 msgid "You need to enable it both at server level and in the UI. "
 msgstr "Դուք պետք է այն միացնեք և՛ սերվերի մակարդակում, և՛ Օգտ․ միջ-ում։ "
 
-#: src/layer/marker/TextInput.js:453
+#: src/layer/marker/TextInput.js:460
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
 "Սերվերի կարգավորումների համար հասանելիության բաժինը փնտրեք coolwsd.xml -ում։ "
 
-#: src/layer/marker/TextInput.js:454
+#: src/layer/marker/TextInput.js:461
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr "Ստուգեք նաև {parentControl}-ի ներքո հնչյունավորման անջատիչը։"
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the Help tab"
 msgstr "«Օգնություն» ներդիրը"
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the View menu"
 msgstr "«Դիտել» ընտրացանկը"
 
-#: src/layer/tile/CanvasTileLayer.js:1591
+#: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
 msgstr "Ֆունկցիաներ"
 
-#: src/layer/tile/CanvasTileLayer.js:1851
+#: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
 msgstr "Անվանված միջակայք"
 
-#: src/layer/tile/CanvasTileLayer.js:3528
+#: src/layer/tile/CanvasTileLayer.js:3504
 msgid "No Comments"
 msgstr "Մեկնաբանություններ չկան"
 
@@ -4869,15 +4889,15 @@ msgstr "Ավելի շատ տարբերակներ տեսնելու համար օ�
 msgid "Close popup to ignore paste special"
 msgstr "Փակեք բացվող պատուհանը՝ հատուկ տեղադրումը անտեսելու համար"
 
-#: src/map/Map.js:213
+#: src/map/Map.js:211
 msgid "Initializing..."
 msgstr "Նախաձեռնվում է..."
 
-#: src/map/Map.js:496 src/map/Map.js:499 src/map/Map.js:502 src/map/Map.js:505
+#: src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503
 msgid "Last saved:"
 msgstr "Վերջին անգամ պահպանված:"
 
-#: src/map/Map.js:1512
+#: src/map/Map.js:1513
 msgid "Please wait!"
 msgstr "Խնդրում եմ սպասեք։"
 
@@ -5077,34 +5097,36 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Զարգացման տարբերակ"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
+#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">apps</a> are also available for "
+"mobile."
 msgstr ""
 "Վայելեք առցանց արտադրողականության վերջին զարգացումները, որոնք անվճար են ձեզ "
 "համար՝ օգտագործելու, ուսումնասիրելու և զննարկիչում ուրիշների հետ "
 "օգտագործելու համար: Բջջային հեռախոսների համար հասանելի են նաև տարբեր <a "
-"target=\"_blank\" href="
-"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
-">հավելվածներ</a>:"
+"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
+"collabora-office-android-ios/\">հավելվածներ</a>:"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "Բացահայտեք բոլոր փոփոխությունները"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
+#, fuzzy
 msgid ""
-"Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">release notes</a> and learn all about: The "
-"latest Collabora Online Development Edition, aimed at home users and small "
-"teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
+"all about: The latest Collabora Online Development Edition, aimed at home "
+"users and small teams."
 msgstr ""
-"Ստուգեք <a target=\"_blank\" href="
-"\"https://www.collaboraonline.com/code-25-04-release-notes/\">թողարկման "
-"նշումները</a> և իմացեք ամեն ինչ Collabora-ի առցանց մշակման վերջին տարբերակի "
-"մասին, որը նախատեսված է տանը օգտագործման և փոքր թիմերի համար:"
+"Ստուգեք <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
+"code-25-04-release-notes/\">թողարկման նշումները</a> և իմացեք ամեն ինչ "
+"Collabora-ի առցանց մշակման վերջին տարբերակի մասին, որը նախատեսված է տանը "
+"օգտագործման և փոքր թիմերի համար:"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5115,23 +5137,23 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
+#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
+"from scratch. You can also help out with <a target=\"_blank\" "
+"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Հետաքրքրվա՞ծ եք ներդրում ունենալով, բայց չգիտե՞ք որտեղից սկսել: Անցեք <a "
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
 ">քայլ առ քայլ հրահանգներին</a> և կառուցեք CODE-ը զրոյից: Կարող եք նաև օգնել "
-"<a target=\"_blank\" href="
-"\"https://collaboraonline.github.io/post/translate/\">թարգմանությունների</a> "
-"հարցում կամ <a target=\"_blank\" href="
-"\"https://collaboraonline.github.io/post/filebugs/\">սխալի մասին հաղորդում "
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">թարգմանությունների</a> հարցում կամ <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/filebugs/\">սխալի մասին հաղորդում "
 "ներկայացնելով</a>՝ այն վերարտադրելու բոլոր անհրաժեշտ քայլերով:"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5

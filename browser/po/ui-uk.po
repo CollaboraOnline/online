@@ -7,18 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 12:28+0100\n"
+"POT-Creation-Date: 2025-11-04 22:40+0100\n"
 "PO-Revision-Date: 2025-11-02 14:51+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: uk\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural="
-"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? "
-"1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
@@ -146,11 +145,11 @@ msgstr "Графік мережі"
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
 #: admin/src/integrator/AdminIntegratorSettings.ts:1721
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:528
+#: src/canvas/sections/CommentListSection.ts:537
 #: src/canvas/sections/CommentSection.ts:184
 #: src/canvas/sections/CommentSection.ts:487
 #: src/canvas/sections/CommentSection.ts:1241
-#: src/control/Control.Notebookbar.js:255
+#: src/control/Control.Notebookbar.js:268
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -234,11 +233,11 @@ msgstr "Встановити рівні журналювання"
 msgid "Log Levels"
 msgstr "Рівні журналювання"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:169
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:178
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:399 src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:357 src/core/Socket.js:1138 src/core/Socket.js:1143
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Закрити"
@@ -297,7 +296,7 @@ msgstr "Попередження"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1778 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1499
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -308,8 +307,8 @@ msgstr "Попередження"
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:748 src/core/Socket.js:684 src/core/Socket.js:1150
-#: src/core/Socket.js:1220 src/core/Socket.js:1396 src/core/Socket.js:1400
+#: src/control/Toolbar.js:748 src/core/Socket.js:642 src/core/Socket.js:1108
+#: src/core/Socket.js:1178 src/core/Socket.js:1354 src/core/Socket.js:1358
 #: src/docdispatcher.ts:560 src/main.js:88 src/main.js:91 src/main.js:132
 #: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
@@ -324,7 +323,7 @@ msgstr "OK"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:523
+#: src/canvas/sections/CommentListSection.ts:532
 #: src/canvas/sections/CommentSection.ts:183
 #: src/canvas/sections/CommentSection.ts:186
 #: src/canvas/sections/CommentSection.ts:1242
@@ -333,9 +332,9 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1779 src/control/Control.UIManager.ts:1860
-#: src/control/Control.UIManager.ts:2014 src/control/Control.UIManager.ts:2192
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1421
+#: src/control/Control.UIManager.ts:1785 src/control/Control.UIManager.ts:1866
+#: src/control/Control.UIManager.ts:2020 src/control/Control.UIManager.ts:2198
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1379
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "Скасувати"
@@ -740,7 +739,7 @@ msgstr "Під час завантаження файлу сталася пом�
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1159
 #: src/canvas/sections/CommentSection.ts:1164
-#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:557
+#: src/control/Control.ContextMenu.js:253 src/docdispatcher.ts:557
 msgid "Delete"
 msgstr "Видалити"
 
@@ -896,7 +895,7 @@ msgstr " хв"
 msgid " s"
 msgstr " с"
 
-#: js/global.js:1606
+#: js/global.js:1610
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
@@ -904,11 +903,11 @@ msgstr ""
 "Система зараз налаштовує ресурси. Будь ласка, зачекайте хвилинку, поки ми "
 "повторимо ваш запит..."
 
-#: js/global.js:1608
+#: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr "Документ переноситься на новий сервер. Повторна спроба незабаром..."
 
-#: js/global.js:1610
+#: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
 msgstr "Не вдалося отримати RouteToken від контролера"
 
@@ -924,93 +923,93 @@ msgstr "Ctrl+Shift+Alt+D, щоб вийти"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "Обробку події було відкладено на несподівано тривалий час: {0} мс"
 
-#: src/canvas/sections/CommentListSection.ts:168
+#: src/canvas/sections/CommentListSection.ts:177
 msgid "A comment is being edited"
 msgstr "Коментар редагується"
 
-#: src/canvas/sections/CommentListSection.ts:169
+#: src/canvas/sections/CommentListSection.ts:178
 msgid "Please save or discard the comment currently being edited."
 msgstr "Збережіть або відкиньте коментар, який зараз редагується."
 
-#: src/canvas/sections/CommentListSection.ts:1189
+#: src/canvas/sections/CommentListSection.ts:1199
 msgid "Modify"
 msgstr "Змінити"
 
-#: src/canvas/sections/CommentListSection.ts:1195
+#: src/canvas/sections/CommentListSection.ts:1205
 #: src/canvas/sections/CommentSection.ts:187
 #: src/canvas/sections/CommentSection.ts:491
 #: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "Відповідь"
 
-#: src/canvas/sections/CommentListSection.ts:1201
+#: src/canvas/sections/CommentListSection.ts:1211
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Видалити"
 
-#: src/canvas/sections/CommentListSection.ts:1207
+#: src/canvas/sections/CommentListSection.ts:1217
 msgid "Remove Thread"
 msgstr "Вилучити ланцюжок"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Resolve"
 msgstr "Вирішити"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Unresolve"
 msgstr "Позначити не розв'язаним"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Unresolve Thread"
 msgstr "Позначити ланцюжок не розв'язаним"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Resolve Thread"
 msgstr "Позначити ланцюжок розв'язаним"
 
-#: src/canvas/sections/CommentListSection.ts:1225
+#: src/canvas/sections/CommentListSection.ts:1235
 msgid "Promote to top comment"
 msgstr "Підвищити до верхнього коментаря"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Show on the side"
 msgstr "Показати збоку"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Open in full view"
 msgstr "Відкрити на весь екран"
 
-#: src/canvas/sections/CommentListSection.ts:1237
+#: src/canvas/sections/CommentListSection.ts:1247
 msgid "Show in navigator"
 msgstr "Показати в навігаторі"
 
-#: src/canvas/sections/CommentListSection.ts:1265
+#: src/canvas/sections/CommentListSection.ts:1275
 #: src/control/Control.JSDialogBuilder.js:1696
-#: src/layer/tile/CanvasTileLayer.js:3500
-#: src/layer/tile/CanvasTileLayer.js:3511
+#: src/layer/tile/CanvasTileLayer.js:3476
+#: src/layer/tile/CanvasTileLayer.js:3487
 msgid "Comment"
 msgstr "Коментар"
 
-#: src/canvas/sections/CommentListSection.ts:1486
-#: src/canvas/sections/CommentListSection.ts:1499
+#: src/canvas/sections/CommentListSection.ts:1497
+#: src/canvas/sections/CommentListSection.ts:1510
 msgid "Comments Updated"
 msgstr "Коментарі оновлено"
 
-#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1498
 msgid "Another user has removed this comment."
 msgstr "Інший користувач вилучив цей коментар."
 
-#: src/canvas/sections/CommentListSection.ts:1500
+#: src/canvas/sections/CommentListSection.ts:1511
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr "Інший користувач оновив коментар. Бажаєте перезаписати ці зміни?"
 
-#: src/canvas/sections/CommentListSection.ts:1501 src/core/Socket.js:1425
+#: src/canvas/sections/CommentListSection.ts:1512 src/core/Socket.js:1383
 msgid "Overwrite"
 msgstr "Перезаписати"
 
-#: src/canvas/sections/CommentListSection.ts:1502
+#: src/canvas/sections/CommentListSection.ts:1513
 msgid "Update"
 msgstr "Оновити"
 
@@ -1050,19 +1049,19 @@ msgstr "Вирішено"
 msgid "Saved"
 msgstr "Збережено"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:439
+#: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
 msgstr "Документ містить непідтримувані медіа"
 
-#: src/canvas/sections/URLPopUpSection.ts:66
+#: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
 msgstr "Копіювати розташування посилання"
 
-#: src/canvas/sections/URLPopUpSection.ts:80
+#: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
 msgstr "Редагувати посилання"
 
-#: src/canvas/sections/URLPopUpSection.ts:95
+#: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
 msgstr "Вилучити посилання"
 
@@ -1148,15 +1147,15 @@ msgstr "Сервер зіткнувся з {0} помилок під час оп
 msgid "Unlock"
 msgstr "Розблокувати"
 
-#: src/control/Control.ContextMenu.js:277
+#: src/control/Control.ContextMenu.js:278
 msgid "Paste Special"
 msgstr "Вставити як"
 
-#: src/control/Control.ContextMenu.js:284
+#: src/control/Control.ContextMenu.js:285
 msgid "Copy Cells"
 msgstr "Копіювати комірки"
 
-#: src/control/Control.ContextMenu.js:289
+#: src/control/Control.ContextMenu.js:290
 msgid "Fill Series"
 msgstr "Заповнити ряди"
 
@@ -2336,7 +2335,7 @@ msgstr "Рядок підпису тепер можна переміщувати
 msgid "Finish electronic signing"
 msgstr "Завершити електронний підпис"
 
-#: src/control/Control.Menubar.ts:2402
+#: src/control/Control.Menubar.ts:2403
 msgid "file type icon"
 msgstr "піктограма типу файлу"
 
@@ -2468,7 +2467,7 @@ msgstr "Поли"
 msgid "Animations"
 msgstr "Анімації"
 
-#: src/control/Control.Notebookbar.js:637
+#: src/control/Control.Notebookbar.js:650
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2803,6 +2802,26 @@ msgstr "Упорядкувати"
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
 msgstr "Перегляд аркуша"
+
+#: src/control/Control.NotebookbarCalc.js:1406
+msgid "Default View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1423
+msgid "Select Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1430
+msgid "New Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1437
+msgid "Remove Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1444
+msgid "Exit Sheet View"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3519,7 +3538,7 @@ msgstr ""
 "API. Це може спричинити певні проблеми під час редагування цитат або "
 "бібліографії."
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1341
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1299
 msgid "Loading..."
 msgstr "Завантаження…"
 
@@ -4268,67 +4287,67 @@ msgstr "Більше опцій для {1}"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Тут з'являться заголовки та об'єкти, які ви додасте до документа"
 
-#: src/core/Socket.js:44
+#: src/app/SocketBase.ts:153
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Йой, виникла проблема під час з’єднання з {productname}: "
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:623
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Сервер тепер доступний. Ми мусимо оновити сторінку зараз."
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:625
 msgid "Server is now reachable..."
 msgstr "Сервер уже доступний..."
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:629
 msgid "RELOAD"
 msgstr "ПЕРЕЗАВАНТАЖИТИ"
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:642
 msgid "Cluster configuration warning"
 msgstr "Попередження конфігурації кластера"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:645
 msgid "Wrong server, reconnecting..."
 msgstr "Неправильний сервер, повторне з'єднання..."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:654
 msgid "COOLWSD version:"
 msgstr "Версія COOLWSD:"
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:679
 msgid "Served by:"
 msgstr "Працює на:"
 
-#: src/core/Socket.js:727
+#: src/core/Socket.js:685
 msgid "Unsupported server version."
 msgstr "Непідтримувана версія сервера."
 
-#: src/core/Socket.js:731
+#: src/core/Socket.js:689
 msgid "LOKit version:"
 msgstr "Версія LOKit:"
 
-#: src/core/Socket.js:856
+#: src/core/Socket.js:814
 msgid "Document is getting migrated"
 msgstr "Документ переноситься"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:841
 msgid "Session terminated by document owner"
 msgstr "Сесія припинена власником документу"
 
-#: src/core/Socket.js:894
+#: src/core/Socket.js:852
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сервер вимикається на технічне обслуговування (автозбереження)"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:858
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ой, виникла проблема під час з’єднання з документом"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Сервер не працює, перезапускається автоматично. Будь ласка, зачекайте."
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:889
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -4336,7 +4355,7 @@ msgstr ""
 "Документ змінено у сховищі. Завантажую новий документ. Ваш варіант буде "
 "доступний як версія."
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:895
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -4344,86 +4363,86 @@ msgstr ""
 "Відновлення старішої версії. Незбережені зміни будуть доступн в історії "
 "версій"
 
-#: src/core/Socket.js:943
+#: src/core/Socket.js:901
 msgid "Reloading the document after rename"
 msgstr "Перезавантаження документа після перейменування"
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1060
 msgid "Document requires password to view."
 msgstr "Документ вимагає пароль для перегляду."
 
-#: src/core/Socket.js:1105
+#: src/core/Socket.js:1063
 msgid "Document requires password to modify."
 msgstr "Документ вимагає пароль для редагування."
 
-#: src/core/Socket.js:1107
+#: src/core/Socket.js:1065
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Натисніть Скасувати для відкриття у режимі перегляду."
 
-#: src/core/Socket.js:1111
+#: src/core/Socket.js:1069
 msgid "Wrong password provided. Please try again."
 msgstr "Надано неправильний пароль. Спробуйте знову."
 
-#: src/core/Socket.js:1149
+#: src/core/Socket.js:1107
 msgid "Only the document owner can change the password."
 msgstr "Лише власник документа може змінити пароль."
 
-#: src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:1138 src/core/Socket.js:1143
 msgid "Missing Fonts"
 msgstr "Відсутні шрифти"
 
-#: src/core/Socket.js:1217
+#: src/core/Socket.js:1175
 msgid "Someone"
 msgstr "Хтось"
 
-#: src/core/Socket.js:1218
+#: src/core/Socket.js:1176
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} зберігає цей документ як {filename}. Бажаєте приєднатися?"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "Документ перейменовується і незабаром перезавантажиться"
 
-#: src/core/Socket.js:1238
+#: src/core/Socket.js:1196
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Документ переходить в офлайн-режим і незабаром перезавантажиться"
 
-#: src/core/Socket.js:1341
+#: src/core/Socket.js:1299
 msgid "Connecting..."
 msgstr "З'єднання..."
 
-#: src/core/Socket.js:1356
+#: src/core/Socket.js:1314
 msgid "Server is shutting down"
 msgstr "Сервер вимикається"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Exported to storage"
 msgstr "Експортовано в сховище"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Successfully exported: "
 msgstr "Успішно експортовано: "
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1382
 msgid "Discard"
 msgstr "Відхилити"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1394
 msgid "Save to new file"
 msgstr "Зберегти в новий файл"
 
-#: src/core/Socket.js:1446
+#: src/core/Socket.js:1404
 msgid "Document has been changed"
 msgstr "Документ було змінено"
 
-#: src/core/Socket.js:1447
+#: src/core/Socket.js:1405
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 "Документ було змінено у сховищі. Що зробити зі своїми незбереженими змінами?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1670
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -4431,11 +4450,11 @@ msgstr ""
 "Нам ганьба, бо ми не можемо під'єднатися до вашого документа. Будь ласка, "
 "спробуйте знову."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1687
 msgid "Reconnecting..."
 msgstr "Повторне з'єднання..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1697
 msgid "The server has been disconnected."
 msgstr "Сервер від'єднано."
 
@@ -4447,15 +4466,15 @@ msgstr "Ви дійсно бажаєте видалити цей слайд?"
 msgid "Are you sure you want to delete this page?"
 msgstr "Ви дійсно бажаєте видалити цю сторінку?"
 
-#: src/docstate.ts:115
+#: src/docstate.ts:135
 msgid "Standard"
 msgstr "Стандартно"
 
-#: src/docstate.ts:260
+#: src/docstate.ts:280
 msgid "Theme colors"
 msgstr "Кольори теми"
 
-#: src/docstate.ts:261
+#: src/docstate.ts:281
 msgid "Document colors"
 msgstr "Кольори документа"
 
@@ -4751,40 +4770,40 @@ msgstr "{0} скасовано"
 msgid "{0} deleted"
 msgstr "{0} видалено"
 
-#: src/layer/marker/TextInput.js:451
+#: src/layer/marker/TextInput.js:458
 msgid "Screen reader support for text content is disabled. "
 msgstr "Підтримка зчитувача з екрана для текстового вмісту вимкнена. "
 
-#: src/layer/marker/TextInput.js:452
+#: src/layer/marker/TextInput.js:459
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
 "Його потрібно ввімкнути як на рівні сервера, так і в інтерфейсі користувача. "
 
-#: src/layer/marker/TextInput.js:453
+#: src/layer/marker/TextInput.js:460
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr "Шукайте розділ доступності в coolwsd.xml для налаштування сервера. "
 
-#: src/layer/marker/TextInput.js:454
+#: src/layer/marker/TextInput.js:461
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr "Також перевірте перемикач озвучення в {parentControl}."
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the Help tab"
 msgstr "вкладку Довідка"
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the View menu"
 msgstr "меню Перегляд"
 
-#: src/layer/tile/CanvasTileLayer.js:1591
+#: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
 msgstr "Функції"
 
-#: src/layer/tile/CanvasTileLayer.js:1851
+#: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
 msgstr "Іменований діапазон"
 
-#: src/layer/tile/CanvasTileLayer.js:3528
+#: src/layer/tile/CanvasTileLayer.js:3504
 msgid "No Comments"
 msgstr "Коментарі відсутні"
 
@@ -4848,15 +4867,15 @@ msgstr ""
 msgid "Close popup to ignore paste special"
 msgstr "Закрийте спливне вікно, щоб ігнорувати спеціальне вставлення"
 
-#: src/map/Map.js:213
+#: src/map/Map.js:211
 msgid "Initializing..."
 msgstr "Ініціалізація…"
 
-#: src/map/Map.js:496 src/map/Map.js:499 src/map/Map.js:502 src/map/Map.js:505
+#: src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503
 msgid "Last saved:"
 msgstr "Востаннє збережено:"
 
-#: src/map/Map.js:1512
+#: src/map/Map.js:1513
 msgid "Please wait!"
 msgstr "Будь ласка, зачекайте!"
 
@@ -5058,11 +5077,13 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online для розробників"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
+#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">apps</a> are also available for "
+"mobile."
 msgstr ""
 "Насолоджуйтесь найновішими розробками онлайн-роботи, безплатними для "
 "користування, вивчення та спільної роботи у браузері. Різні <a target="
@@ -5075,11 +5096,12 @@ msgid "Discover All The Changes"
 msgstr "Дізнайтеся про всі зміни"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
+#, fuzzy
 msgid ""
-"Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">release notes</a> and learn all about: The "
-"latest Collabora Online Development Edition, aimed at home users and small "
-"teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
+"all about: The latest Collabora Online Development Edition, aimed at home "
+"users and small teams."
 msgstr ""
 "Перегляньте <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
 "code-25-04-release-notes/\">примітки до випуску</a> та дізнайтеся все про: "
@@ -5095,15 +5117,16 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
+#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
+"from scratch. You can also help out with <a target=\"_blank\" "
+"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Ви хочете зробити внесок, але не знаєте, з чого почати? Перейдіть до <a "
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
