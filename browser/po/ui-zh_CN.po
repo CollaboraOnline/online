@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 12:28+0100\n"
+"POT-Creation-Date: 2025-11-04 22:40+0100\n"
 "PO-Revision-Date: 2025-05-15 08:51+0000\n"
 "Last-Translator: blueskyxxz <xinxizhe@163.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -144,11 +144,11 @@ msgstr "网络图"
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
 #: admin/src/integrator/AdminIntegratorSettings.ts:1721
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:528
+#: src/canvas/sections/CommentListSection.ts:537
 #: src/canvas/sections/CommentSection.ts:184
 #: src/canvas/sections/CommentSection.ts:487
 #: src/canvas/sections/CommentSection.ts:1241
-#: src/control/Control.Notebookbar.js:255
+#: src/control/Control.Notebookbar.js:268
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -230,11 +230,11 @@ msgstr "设置日志级别"
 msgid "Log Levels"
 msgstr "日志级别"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:169
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:178
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:399 src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:357 src/core/Socket.js:1138 src/core/Socket.js:1143
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "关闭"
@@ -292,7 +292,7 @@ msgstr "注意"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1778 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1499
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -303,8 +303,8 @@ msgstr "注意"
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:748 src/core/Socket.js:684 src/core/Socket.js:1150
-#: src/core/Socket.js:1220 src/core/Socket.js:1396 src/core/Socket.js:1400
+#: src/control/Toolbar.js:748 src/core/Socket.js:642 src/core/Socket.js:1108
+#: src/core/Socket.js:1178 src/core/Socket.js:1354 src/core/Socket.js:1358
 #: src/docdispatcher.ts:560 src/main.js:88 src/main.js:91 src/main.js:132
 #: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
@@ -319,7 +319,7 @@ msgstr "确定"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:523
+#: src/canvas/sections/CommentListSection.ts:532
 #: src/canvas/sections/CommentSection.ts:183
 #: src/canvas/sections/CommentSection.ts:186
 #: src/canvas/sections/CommentSection.ts:1242
@@ -328,9 +328,9 @@ msgstr "确定"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1779 src/control/Control.UIManager.ts:1860
-#: src/control/Control.UIManager.ts:2014 src/control/Control.UIManager.ts:2192
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1421
+#: src/control/Control.UIManager.ts:1785 src/control/Control.UIManager.ts:1866
+#: src/control/Control.UIManager.ts:2020 src/control/Control.UIManager.ts:2198
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1379
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "取消"
@@ -376,8 +376,9 @@ msgid "Signature Certificate"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
+#, fuzzy
 msgid "Signature Key"
-msgstr ""
+msgstr "签名"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
 #, fuzzy
@@ -740,7 +741,7 @@ msgstr "上传文件时出现一些错误，请重试。"
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1159
 #: src/canvas/sections/CommentSection.ts:1164
-#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:557
+#: src/control/Control.ContextMenu.js:253 src/docdispatcher.ts:557
 msgid "Delete"
 msgstr "删除"
 
@@ -893,17 +894,17 @@ msgstr " 分钟"
 msgid " s"
 msgstr " 秒"
 
-#: js/global.js:1606
+#: js/global.js:1610
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
 
-#: js/global.js:1608
+#: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
 
-#: js/global.js:1610
+#: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
 msgstr "无法从控制器获取 RouteToken"
 
@@ -919,93 +920,93 @@ msgstr "按下 Ctrl + Shift + Alt + D 退出"
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "事件处理延迟时间过长：{0}毫秒"
 
-#: src/canvas/sections/CommentListSection.ts:168
+#: src/canvas/sections/CommentListSection.ts:177
 msgid "A comment is being edited"
 msgstr "正在编辑批注"
 
-#: src/canvas/sections/CommentListSection.ts:169
+#: src/canvas/sections/CommentListSection.ts:178
 msgid "Please save or discard the comment currently being edited."
 msgstr "请保存或舍弃当前正在编辑的批注。"
 
-#: src/canvas/sections/CommentListSection.ts:1189
+#: src/canvas/sections/CommentListSection.ts:1199
 msgid "Modify"
 msgstr "修改"
 
-#: src/canvas/sections/CommentListSection.ts:1195
+#: src/canvas/sections/CommentListSection.ts:1205
 #: src/canvas/sections/CommentSection.ts:187
 #: src/canvas/sections/CommentSection.ts:491
 #: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "回复"
 
-#: src/canvas/sections/CommentListSection.ts:1201
+#: src/canvas/sections/CommentListSection.ts:1211
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "删除"
 
-#: src/canvas/sections/CommentListSection.ts:1207
+#: src/canvas/sections/CommentListSection.ts:1217
 msgid "Remove Thread"
 msgstr "移除主题"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Resolve"
 msgstr "解决"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Unresolve"
 msgstr "未解决"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Unresolve Thread"
 msgstr "未解决主题"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Resolve Thread"
 msgstr "解决主题"
 
-#: src/canvas/sections/CommentListSection.ts:1225
+#: src/canvas/sections/CommentListSection.ts:1235
 msgid "Promote to top comment"
 msgstr "置顶批注"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Show on the side"
 msgstr "在侧边显示"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Open in full view"
 msgstr "全屏查看"
 
-#: src/canvas/sections/CommentListSection.ts:1237
+#: src/canvas/sections/CommentListSection.ts:1247
 msgid "Show in navigator"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1265
+#: src/canvas/sections/CommentListSection.ts:1275
 #: src/control/Control.JSDialogBuilder.js:1696
-#: src/layer/tile/CanvasTileLayer.js:3500
-#: src/layer/tile/CanvasTileLayer.js:3511
+#: src/layer/tile/CanvasTileLayer.js:3476
+#: src/layer/tile/CanvasTileLayer.js:3487
 msgid "Comment"
 msgstr "批注"
 
-#: src/canvas/sections/CommentListSection.ts:1486
-#: src/canvas/sections/CommentListSection.ts:1499
+#: src/canvas/sections/CommentListSection.ts:1497
+#: src/canvas/sections/CommentListSection.ts:1510
 msgid "Comments Updated"
 msgstr "批注已更新"
 
-#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1498
 msgid "Another user has removed this comment."
 msgstr "其他用户已经移除该批注。"
 
-#: src/canvas/sections/CommentListSection.ts:1500
+#: src/canvas/sections/CommentListSection.ts:1511
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr "其他用户已经更新该批注。您想要覆盖这些修改吗？"
 
-#: src/canvas/sections/CommentListSection.ts:1501 src/core/Socket.js:1425
+#: src/canvas/sections/CommentListSection.ts:1512 src/core/Socket.js:1383
 msgid "Overwrite"
 msgstr "覆盖"
 
-#: src/canvas/sections/CommentListSection.ts:1502
+#: src/canvas/sections/CommentListSection.ts:1513
 msgid "Update"
 msgstr "更新"
 
@@ -1046,19 +1047,19 @@ msgstr "已解决"
 msgid "Saved"
 msgstr "已保存"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:439
+#: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
 msgstr "文档包含不支持的视频"
 
-#: src/canvas/sections/URLPopUpSection.ts:66
+#: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
 msgstr "复制链接"
 
-#: src/canvas/sections/URLPopUpSection.ts:80
+#: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
 msgstr "修改链接"
 
-#: src/canvas/sections/URLPopUpSection.ts:95
+#: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
 msgstr "移除链接"
 
@@ -1140,15 +1141,15 @@ msgstr "服务器在处理 {1} 命令时遇到了 {0} 错误。"
 msgid "Unlock"
 msgstr "解锁"
 
-#: src/control/Control.ContextMenu.js:277
+#: src/control/Control.ContextMenu.js:278
 msgid "Paste Special"
 msgstr "选择性粘贴"
 
-#: src/control/Control.ContextMenu.js:284
+#: src/control/Control.ContextMenu.js:285
 msgid "Copy Cells"
 msgstr "复制单元格"
 
-#: src/control/Control.ContextMenu.js:289
+#: src/control/Control.ContextMenu.js:290
 msgid "Fill Series"
 msgstr "填充序列"
 
@@ -2324,7 +2325,7 @@ msgstr "签名行现在可以根据需要移动或调整大小。"
 msgid "Finish electronic signing"
 msgstr "完成电子签名"
 
-#: src/control/Control.Menubar.ts:2402
+#: src/control/Control.Menubar.ts:2403
 msgid "file type icon"
 msgstr "文件类型图标"
 
@@ -2457,7 +2458,7 @@ msgstr "字段"
 msgid "Animations"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:637
+#: src/control/Control.Notebookbar.js:650
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2793,6 +2794,26 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1406
+msgid "Default View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1423
+msgid "Select Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1430
+msgid "New Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1437
+msgid "Remove Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1444
+msgid "Exit Sheet View"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1459
@@ -3500,7 +3521,7 @@ msgid ""
 msgstr "该文档包含一些可能无法通过 Web API 访问的引用。 "
 "编辑引文或参考书目时可能会导致一些问题。"
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1341
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1299
 msgid "Loading..."
 msgstr "正在载入…"
 
@@ -4243,167 +4264,167 @@ msgstr "用于 {name} 的更多选项"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "您添加到文档中的标题和对象将显示在此处"
 
-#: src/core/Socket.js:44
+#: src/app/SocketBase.ts:153
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "糟糕，连接到 {productname} 时出现问题： "
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:623
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "服务器现在可以访问。页面必须立即刷新。"
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:625
 msgid "Server is now reachable..."
 msgstr "服务器现在可以访问…"
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:629
 msgid "RELOAD"
 msgstr "重新加载"
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:642
 msgid "Cluster configuration warning"
 msgstr "集群配置警告"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:645
 msgid "Wrong server, reconnecting..."
 msgstr "服务器错误，正在重连…"
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:654
 msgid "COOLWSD version:"
 msgstr "COOLWSD 版本："
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:679
 msgid "Served by:"
 msgstr "服务提供方："
 
-#: src/core/Socket.js:727
+#: src/core/Socket.js:685
 msgid "Unsupported server version."
 msgstr "不被支持的服务器版本。"
 
-#: src/core/Socket.js:731
+#: src/core/Socket.js:689
 msgid "LOKit version:"
 msgstr "LOKit 版本："
 
-#: src/core/Socket.js:856
+#: src/core/Socket.js:814
 msgid "Document is getting migrated"
 msgstr "文档正在迁移"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:841
 msgid "Session terminated by document owner"
 msgstr "会话已被文档所有者终止"
 
-#: src/core/Socket.js:894
+#: src/core/Socket.js:852
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "服务器将关闭以维护（自动保存中）"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:858
 msgid "Oops, there is a problem connecting the document"
 msgstr "糟糕，连接到文件时出错"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "服务器已关闭，将会自动重新启动。请稍候。"
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:889
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "文档已在服务器上被更改。正在加载新的文件，您的编辑将作为更改历史保存。"
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:895
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "恢复老版本。任何未保存的更改可在版本历史中查看"
 
-#: src/core/Socket.js:943
+#: src/core/Socket.js:901
 msgid "Reloading the document after rename"
 msgstr "重命名后重新加载文档"
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1060
 msgid "Document requires password to view."
 msgstr "文档需要密码才能查看。"
 
-#: src/core/Socket.js:1105
+#: src/core/Socket.js:1063
 msgid "Document requires password to modify."
 msgstr "文档需要密码才能修改。"
 
-#: src/core/Socket.js:1107
+#: src/core/Socket.js:1065
 msgid "Hit Cancel to open in view-only mode."
 msgstr "点击“取消”在只读模式下打开。"
 
-#: src/core/Socket.js:1111
+#: src/core/Socket.js:1069
 msgid "Wrong password provided. Please try again."
 msgstr "密码错误。请重试。"
 
-#: src/core/Socket.js:1149
+#: src/core/Socket.js:1107
 msgid "Only the document owner can change the password."
 msgstr "只有文档作者可以修改密码。"
 
-#: src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:1138 src/core/Socket.js:1143
 msgid "Missing Fonts"
 msgstr "缺失字体"
 
-#: src/core/Socket.js:1217
+#: src/core/Socket.js:1175
 msgid "Someone"
 msgstr "某人"
 
-#: src/core/Socket.js:1218
+#: src/core/Socket.js:1176
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} 将此文档保存为 {filename}。你想要加入吗？"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "文档正被重命名，即将重新加载"
 
-#: src/core/Socket.js:1238
+#: src/core/Socket.js:1196
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "文档正切换到脱机模式，即将重新加载"
 
-#: src/core/Socket.js:1341
+#: src/core/Socket.js:1299
 msgid "Connecting..."
 msgstr "正在连接…"
 
-#: src/core/Socket.js:1356
+#: src/core/Socket.js:1314
 msgid "Server is shutting down"
 msgstr "服务器正在关闭"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Exported to storage"
 msgstr "导出到存储"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Successfully exported: "
 msgstr "成功导出： "
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1382
 msgid "Discard"
 msgstr "丢弃"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1394
 msgid "Save to new file"
 msgstr "保存为新文档"
 
-#: src/core/Socket.js:1446
+#: src/core/Socket.js:1404
 msgid "Document has been changed"
 msgstr "文档已被修改"
 
-#: src/core/Socket.js:1447
+#: src/core/Socket.js:1405
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "文档已在存储位置被更改。对于您尚未保存更改的文档，您打算怎么做？"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1670
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "很抱歉，无法连接到您的文档。请重试。"
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1687
 msgid "Reconnecting..."
 msgstr "正在重新连接…"
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1697
 msgid "The server has been disconnected."
 msgstr "服务器连接已中断。"
 
@@ -4415,15 +4436,15 @@ msgstr "您确定要删除这张幻灯片吗？"
 msgid "Are you sure you want to delete this page?"
 msgstr "您确定要删除该页面吗？"
 
-#: src/docstate.ts:115
+#: src/docstate.ts:135
 msgid "Standard"
 msgstr "标准"
 
-#: src/docstate.ts:260
+#: src/docstate.ts:280
 msgid "Theme colors"
 msgstr "主题颜色"
 
-#: src/docstate.ts:261
+#: src/docstate.ts:281
 msgid "Document colors"
 msgstr "文档颜色"
 
@@ -4680,39 +4701,39 @@ msgstr "未选择{0}个"
 msgid "{0} deleted"
 msgstr "已删除{0}个"
 
-#: src/layer/marker/TextInput.js:451
+#: src/layer/marker/TextInput.js:458
 msgid "Screen reader support for text content is disabled. "
 msgstr "屏幕阅读器对文本内容的支持已关闭。 "
 
-#: src/layer/marker/TextInput.js:452
+#: src/layer/marker/TextInput.js:459
 msgid "You need to enable it both at server level and in the UI. "
 msgstr "您需要同时在服务器和UI中启用它。 "
 
-#: src/layer/marker/TextInput.js:453
+#: src/layer/marker/TextInput.js:460
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr "请在 coolwsd.xml 文件的辅助功能设置部分查找服务器设置。 "
 
-#: src/layer/marker/TextInput.js:454
+#: src/layer/marker/TextInput.js:461
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr "还要检查{parentControl}下的语音朗读开关。"
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the Help tab"
 msgstr "帮助选项卡"
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the View menu"
 msgstr "视图菜单"
 
-#: src/layer/tile/CanvasTileLayer.js:1591
+#: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
 msgstr "函数"
 
-#: src/layer/tile/CanvasTileLayer.js:1851
+#: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
 msgstr "命名范围"
 
-#: src/layer/tile/CanvasTileLayer.js:3528
+#: src/layer/tile/CanvasTileLayer.js:3504
 msgid "No Comments"
 msgstr "暂无批注"
 
@@ -4770,15 +4791,15 @@ msgstr "请使用以下组合以查看更多选项："
 msgid "Close popup to ignore paste special"
 msgstr "关闭弹出窗口以忽略选择性粘贴"
 
-#: src/map/Map.js:213
+#: src/map/Map.js:211
 msgid "Initializing..."
 msgstr "正在初始化…"
 
-#: src/map/Map.js:496 src/map/Map.js:499 src/map/Map.js:502 src/map/Map.js:505
+#: src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503
 msgid "Last saved:"
 msgstr "上次保存："
 
-#: src/map/Map.js:1512
+#: src/map/Map.js:1513
 msgid "Please wait!"
 msgstr "请稍后！"
 
@@ -4977,11 +4998,13 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online 开发版本（CODE）"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
+#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">apps</a> are also available for "
+"mobile."
 msgstr ""
 "享受在线生产力的最新发展，您可以在浏览器中免费使用、探索并与其他人一起使用。 "
 "各种<a target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
@@ -4992,11 +5015,12 @@ msgid "Discover All The Changes"
 msgstr "检查所有更新"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
+#, fuzzy
 msgid ""
-"Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">release notes</a> and learn all about: The "
-"latest Collabora Online Development Edition, aimed at home users and small "
-"teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
+"all about: The latest Collabora Online Development Edition, aimed at home "
+"users and small teams."
 msgstr ""
 "请查阅<a target=\"_blank\" href=\"https://www.collaboraonline.com/"
 "code-25-04-release-notes/\">发布说明</a>，了解最新的针对家庭用户和小团队的 "
@@ -5011,15 +5035,16 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
+#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
+"from scratch. You can also help out with <a target=\"_blank\" "
+"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "如果您有兴趣参与项目但不知道从何开始，请查看<a target=\"_blank\" href=\"https"
 "://collaboraonline.github.io/post/build-code/\">逐步说明</a>，从头开始构建 "

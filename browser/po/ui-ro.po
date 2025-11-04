@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 12:28+0100\n"
+"POT-Creation-Date: 2025-11-04 22:40+0100\n"
 "PO-Revision-Date: 2025-08-25 11:46+0000\n"
 "Last-Translator: Ion Silvestru <ion.silvestru@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
@@ -145,11 +145,11 @@ msgstr "Grafic de rețea"
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
 #: admin/src/integrator/AdminIntegratorSettings.ts:1721
 #: admin/src/integrator/WordBook.ts:394 admin/src/integrator/Xcu.ts:413
-#: src/canvas/sections/CommentListSection.ts:528
+#: src/canvas/sections/CommentListSection.ts:537
 #: src/canvas/sections/CommentSection.ts:184
 #: src/canvas/sections/CommentSection.ts:487
 #: src/canvas/sections/CommentSection.ts:1241
-#: src/control/Control.Notebookbar.js:255
+#: src/control/Control.Notebookbar.js:268
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:30
@@ -235,11 +235,11 @@ msgstr "Setează nivelele de jurnalizare"
 msgid "Log Levels"
 msgstr "Nivele de jurnalizare"
 
-#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:169
+#: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:178
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:191
-#: src/core/Socket.js:399 src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:357 src/core/Socket.js:1138 src/core/Socket.js:1143
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Închide"
@@ -298,7 +298,7 @@ msgstr "Avertizare"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: admin/src/integrator/AdminIntegratorSettings.ts:1778 src/app/Debug.ts:1391
-#: src/canvas/sections/CommentListSection.ts:1488
+#: src/canvas/sections/CommentListSection.ts:1499
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -309,8 +309,8 @@ msgstr "Avertizare"
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:411
 #: src/control/Parts.js:490 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:748 src/core/Socket.js:684 src/core/Socket.js:1150
-#: src/core/Socket.js:1220 src/core/Socket.js:1396 src/core/Socket.js:1400
+#: src/control/Toolbar.js:748 src/core/Socket.js:642 src/core/Socket.js:1108
+#: src/core/Socket.js:1178 src/core/Socket.js:1354 src/core/Socket.js:1358
 #: src/docdispatcher.ts:560 src/main.js:88 src/main.js:91 src/main.js:132
 #: src/map/Clipboard.js:1302 src/map/handler/Map.Feedback.js:96
 #: src/map/handler/Map.SlideShow.js:60 src/map/handler/Map.SlideShow.js:169
@@ -325,7 +325,7 @@ msgstr "OK"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: admin/src/integrator/WordBook.ts:386
-#: src/canvas/sections/CommentListSection.ts:523
+#: src/canvas/sections/CommentListSection.ts:532
 #: src/canvas/sections/CommentSection.ts:183
 #: src/canvas/sections/CommentSection.ts:186
 #: src/canvas/sections/CommentSection.ts:1242
@@ -334,9 +334,9 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1779 src/control/Control.UIManager.ts:1860
-#: src/control/Control.UIManager.ts:2014 src/control/Control.UIManager.ts:2192
-#: src/control/Control.Zotero.js:360 src/core/Socket.js:1421
+#: src/control/Control.UIManager.ts:1785 src/control/Control.UIManager.ts:1866
+#: src/control/Control.UIManager.ts:2020 src/control/Control.UIManager.ts:2198
+#: src/control/Control.Zotero.js:360 src/core/Socket.js:1379
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
 msgstr "Renunţă"
@@ -382,8 +382,9 @@ msgid "Signature Certificate"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
+#, fuzzy
 msgid "Signature Key"
-msgstr ""
+msgstr "Semnătură"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
 #, fuzzy
@@ -749,7 +750,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1159
 #: src/canvas/sections/CommentSection.ts:1164
-#: src/control/Control.ContextMenu.js:252 src/docdispatcher.ts:557
+#: src/control/Control.ContextMenu.js:253 src/docdispatcher.ts:557
 msgid "Delete"
 msgstr "Șterge"
 
@@ -906,7 +907,7 @@ msgstr " minute"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1606
+#: js/global.js:1610
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
@@ -914,11 +915,11 @@ msgstr ""
 "Sistemul ajustează în prezent resursele. Vă rugăm să așteptați un moment în "
 "timp ce reîncercăm solicitarea dvs...."
 
-#: js/global.js:1608
+#: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr "Documentul este migrat pe un server nou. Se va reîncerca în curând..."
 
-#: js/global.js:1610
+#: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
 msgstr "Nu s-a putut obține RouteToken de la controler"
 
@@ -936,83 +937,83 @@ msgstr ""
 "Gestionarea evenimentelor a fost amânată pentru o perioadă neașteptat de "
 "lungă: {0}ms"
 
-#: src/canvas/sections/CommentListSection.ts:168
+#: src/canvas/sections/CommentListSection.ts:177
 msgid "A comment is being edited"
 msgstr "Un comentariu este în curs de editare"
 
-#: src/canvas/sections/CommentListSection.ts:169
+#: src/canvas/sections/CommentListSection.ts:178
 msgid "Please save or discard the comment currently being edited."
 msgstr "Salvați sau renunțați la comentariul în curs de editare."
 
-#: src/canvas/sections/CommentListSection.ts:1189
+#: src/canvas/sections/CommentListSection.ts:1199
 msgid "Modify"
 msgstr "Modifică"
 
-#: src/canvas/sections/CommentListSection.ts:1195
+#: src/canvas/sections/CommentListSection.ts:1205
 #: src/canvas/sections/CommentSection.ts:187
 #: src/canvas/sections/CommentSection.ts:491
 #: src/canvas/sections/CommentSection.ts:1246
 msgid "Reply"
 msgstr "Răspuns"
 
-#: src/canvas/sections/CommentListSection.ts:1201
+#: src/canvas/sections/CommentListSection.ts:1211
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
 msgstr "Elimină"
 
-#: src/canvas/sections/CommentListSection.ts:1207
+#: src/canvas/sections/CommentListSection.ts:1217
 msgid "Remove Thread"
 msgstr "Elimină firul"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Resolve"
 msgstr "Rezolvă"
 
-#: src/canvas/sections/CommentListSection.ts:1213
+#: src/canvas/sections/CommentListSection.ts:1223
 msgid "Unresolve"
 msgstr "Nerezolvat"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Unresolve Thread"
 msgstr "Fir nerezolvat"
 
-#: src/canvas/sections/CommentListSection.ts:1219
+#: src/canvas/sections/CommentListSection.ts:1229
 msgid "Resolve Thread"
 msgstr "Rezolvă fir"
 
-#: src/canvas/sections/CommentListSection.ts:1225
+#: src/canvas/sections/CommentListSection.ts:1235
 msgid "Promote to top comment"
 msgstr "Promovați în topul comentariului"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Show on the side"
 msgstr "Arată pe lateral"
 
-#: src/canvas/sections/CommentListSection.ts:1231
+#: src/canvas/sections/CommentListSection.ts:1241
 msgid "Open in full view"
 msgstr "Deschide la vedere completă"
 
-#: src/canvas/sections/CommentListSection.ts:1237
+#: src/canvas/sections/CommentListSection.ts:1247
 msgid "Show in navigator"
 msgstr "Afișare în navigator"
 
-#: src/canvas/sections/CommentListSection.ts:1265
+#: src/canvas/sections/CommentListSection.ts:1275
 #: src/control/Control.JSDialogBuilder.js:1696
-#: src/layer/tile/CanvasTileLayer.js:3500
-#: src/layer/tile/CanvasTileLayer.js:3511
+#: src/layer/tile/CanvasTileLayer.js:3476
+#: src/layer/tile/CanvasTileLayer.js:3487
 msgid "Comment"
 msgstr "Comentariu"
 
-#: src/canvas/sections/CommentListSection.ts:1486
-#: src/canvas/sections/CommentListSection.ts:1499
+#: src/canvas/sections/CommentListSection.ts:1497
+#: src/canvas/sections/CommentListSection.ts:1510
 msgid "Comments Updated"
 msgstr "Comentarii actualizate"
 
-#: src/canvas/sections/CommentListSection.ts:1487
+#: src/canvas/sections/CommentListSection.ts:1498
 msgid "Another user has removed this comment."
 msgstr "Un alt utilizator a eliminat acest comentariu."
 
-#: src/canvas/sections/CommentListSection.ts:1500
+#: src/canvas/sections/CommentListSection.ts:1511
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -1020,11 +1021,11 @@ msgstr ""
 "Un alt utilizator a actualizat comentariul. Doriți să suprascrieți aceste "
 "modificări?"
 
-#: src/canvas/sections/CommentListSection.ts:1501 src/core/Socket.js:1425
+#: src/canvas/sections/CommentListSection.ts:1512 src/core/Socket.js:1383
 msgid "Overwrite"
 msgstr "Suprascrie"
 
-#: src/canvas/sections/CommentListSection.ts:1502
+#: src/canvas/sections/CommentListSection.ts:1513
 msgid "Update"
 msgstr "Actualizare"
 
@@ -1064,19 +1065,19 @@ msgstr "Rezolvat"
 msgid "Saved"
 msgstr "Salvat"
 
-#: src/canvas/sections/ShapeHandlesSection.ts:439
+#: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
 msgstr "Documentul conține conținut media neacceptat"
 
-#: src/canvas/sections/URLPopUpSection.ts:66
+#: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
 msgstr "Copiați locația linkului"
 
-#: src/canvas/sections/URLPopUpSection.ts:80
+#: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
 msgstr "Editați linkul"
 
-#: src/canvas/sections/URLPopUpSection.ts:95
+#: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
 msgstr "Eliminați linkul"
 
@@ -1162,15 +1163,15 @@ msgstr "Serverul a întâmpinat o eroare {0} analizând comanda {1}."
 msgid "Unlock"
 msgstr "Deblochează"
 
-#: src/control/Control.ContextMenu.js:277
+#: src/control/Control.ContextMenu.js:278
 msgid "Paste Special"
 msgstr "Lipire specială"
 
-#: src/control/Control.ContextMenu.js:284
+#: src/control/Control.ContextMenu.js:285
 msgid "Copy Cells"
 msgstr "Copiați celule"
 
-#: src/control/Control.ContextMenu.js:289
+#: src/control/Control.ContextMenu.js:290
 msgid "Fill Series"
 msgstr "Completează cu serii"
 
@@ -2353,7 +2354,7 @@ msgstr ""
 msgid "Finish electronic signing"
 msgstr "Finalizare semnare electronică"
 
-#: src/control/Control.Menubar.ts:2402
+#: src/control/Control.Menubar.ts:2403
 msgid "file type icon"
 msgstr "pictograma tipului de fișier"
 
@@ -2487,7 +2488,7 @@ msgstr "Câmp"
 msgid "Animations"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:637
+#: src/control/Control.Notebookbar.js:650
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:228
 #: src/control/Control.NotebookbarDraw.js:209
@@ -2821,6 +2822,26 @@ msgstr "Aranjare"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1406
+msgid "Default View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1423
+msgid "Select Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1430
+msgid "New Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1437
+msgid "Remove Sheet View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1444
+msgid "Exit Sheet View"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1459
@@ -3533,7 +3554,7 @@ msgstr ""
 "Documentul conține câteva citate care pot fi inaccesibile prin API-ul web. "
 "Poate cauza unele probleme la editarea citatelor sau a bibliografiei."
 
-#: src/control/Control.Zotero.js:246 src/core/Socket.js:1341
+#: src/control/Control.Zotero.js:246 src/core/Socket.js:1299
 msgid "Loading..."
 msgstr "Se încarcă..."
 
@@ -4284,67 +4305,67 @@ msgstr "Mai multe opțiuni pentru {1}"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Titlurile și obiectele pe care le adăugați în document vor apărea aici"
 
-#: src/core/Socket.js:44
+#: src/app/SocketBase.ts:153
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Hopa, a apărut o problemă la conectarea la {productname}: "
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:623
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Serverul este acum accesibil. Trebuie să reîmprospătăm pagina acum."
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:625
 msgid "Server is now reachable..."
 msgstr "Serverul este acum accesibil."
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:629
 msgid "RELOAD"
 msgstr "REÎNCARCĂ"
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:642
 msgid "Cluster configuration warning"
 msgstr "Avertisment de configurare a clusterului"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:645
 msgid "Wrong server, reconnecting..."
 msgstr "Server greșit, reconectare..."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:654
 msgid "COOLWSD version:"
 msgstr "Versiunea COOLWSD:"
 
-#: src/core/Socket.js:721
+#: src/core/Socket.js:679
 msgid "Served by:"
 msgstr "Servit de:"
 
-#: src/core/Socket.js:727
+#: src/core/Socket.js:685
 msgid "Unsupported server version."
 msgstr "Versiune server nesuportată."
 
-#: src/core/Socket.js:731
+#: src/core/Socket.js:689
 msgid "LOKit version:"
 msgstr "Versiunea LOKit:"
 
-#: src/core/Socket.js:856
+#: src/core/Socket.js:814
 msgid "Document is getting migrated"
 msgstr "Documentul este în curs de migrare"
 
-#: src/core/Socket.js:883
+#: src/core/Socket.js:841
 msgid "Session terminated by document owner"
 msgstr "Sesiune încheiată de proprietarul documentului"
 
-#: src/core/Socket.js:894
+#: src/core/Socket.js:852
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Serverul se închide pentru întreținere (salvare automată)"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:858
 msgid "Oops, there is a problem connecting the document"
 msgstr "Hopa, a apărut o problemă la conectarea documentului"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Serverul este oprit, repornind automat. Va rugam asteptati."
 
-#: src/core/Socket.js:931
+#: src/core/Socket.js:889
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -4352,7 +4373,7 @@ msgstr ""
 "Documentul s-a schimbat în stocare. Se încarcă noul document. Versiunea dvs. "
 "este disponibilă ca revizuire."
 
-#: src/core/Socket.js:937
+#: src/core/Socket.js:895
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -4360,80 +4381,80 @@ msgstr ""
 "Restabilirea versiunii mai vechi. Orice modificări nesalvate vor fi "
 "disponibile în istoricul versiunilor"
 
-#: src/core/Socket.js:943
+#: src/core/Socket.js:901
 msgid "Reloading the document after rename"
 msgstr "Reîncărcarea documentului după redenumire"
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1060
 msgid "Document requires password to view."
 msgstr "Documentul necesită parolă pentru vizualizare."
 
-#: src/core/Socket.js:1105
+#: src/core/Socket.js:1063
 msgid "Document requires password to modify."
 msgstr "Documentul necesită parolă pentru modificare."
 
-#: src/core/Socket.js:1107
+#: src/core/Socket.js:1065
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Dacă apăsați pe Renunță documentul se deschide în mod vizualizare."
 
-#: src/core/Socket.js:1111
+#: src/core/Socket.js:1069
 msgid "Wrong password provided. Please try again."
 msgstr "Parolă greșită. Încercați din nou."
 
-#: src/core/Socket.js:1149
+#: src/core/Socket.js:1107
 msgid "Only the document owner can change the password."
 msgstr "Numai proprietarul documentului poate schimba parola."
 
-#: src/core/Socket.js:1180 src/core/Socket.js:1185
+#: src/core/Socket.js:1138 src/core/Socket.js:1143
 msgid "Missing Fonts"
 msgstr "Fonturi lipsă"
 
-#: src/core/Socket.js:1217
+#: src/core/Socket.js:1175
 msgid "Someone"
 msgstr "Cineva"
 
-#: src/core/Socket.js:1218
+#: src/core/Socket.js:1176
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "{username} a salvat acest document ca {filename}. Doriți să vă alăturați?"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "Documentul este redenumit și se va reîncărca în curând"
 
-#: src/core/Socket.js:1238
+#: src/core/Socket.js:1196
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Documentul trece în modul Offline și se va reîncărca în scurt timp"
 
-#: src/core/Socket.js:1341
+#: src/core/Socket.js:1299
 msgid "Connecting..."
 msgstr "Conectare..."
 
-#: src/core/Socket.js:1356
+#: src/core/Socket.js:1314
 msgid "Server is shutting down"
 msgstr "Serverul se închide"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Exported to storage"
 msgstr "Exportat în stocare"
 
-#: src/core/Socket.js:1396
+#: src/core/Socket.js:1354
 msgid "Successfully exported: "
 msgstr "Exportat cu succes: "
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1382
 msgid "Discard"
 msgstr "Renunţare"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1394
 msgid "Save to new file"
 msgstr "Salvare în fișier nou"
 
-#: src/core/Socket.js:1446
+#: src/core/Socket.js:1404
 msgid "Document has been changed"
 msgstr "Documentul a fost modificat"
 
-#: src/core/Socket.js:1447
+#: src/core/Socket.js:1405
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -4441,17 +4462,17 @@ msgstr ""
 "Documentul a fost modificat în stocare. Ce ați dori să faceți cu "
 "modificările nesalvate?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1670
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Ne pare rău, dar nu se poate conecta la document. Încercați mai târziu."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1687
 msgid "Reconnecting..."
 msgstr "Reconectare..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1697
 msgid "The server has been disconnected."
 msgstr "Serverul a fost deconectat."
 
@@ -4463,15 +4484,15 @@ msgstr "Sigur doriți să ștergeți diapozitivul?"
 msgid "Are you sure you want to delete this page?"
 msgstr "Sigur doriți să ștergeți pagina?"
 
-#: src/docstate.ts:115
+#: src/docstate.ts:135
 msgid "Standard"
 msgstr "Standard"
 
-#: src/docstate.ts:260
+#: src/docstate.ts:280
 msgid "Theme colors"
 msgstr "Culori temă"
 
-#: src/docstate.ts:261
+#: src/docstate.ts:281
 msgid "Document colors"
 msgstr "Culori document"
 
@@ -4769,41 +4790,41 @@ msgstr "{0} neselectat"
 msgid "{0} deleted"
 msgstr "{0} eliminat"
 
-#: src/layer/marker/TextInput.js:451
+#: src/layer/marker/TextInput.js:458
 msgid "Screen reader support for text content is disabled. "
 msgstr "Suportul cititorului de ecran pentru conținutul text este dezactivat. "
 
-#: src/layer/marker/TextInput.js:452
+#: src/layer/marker/TextInput.js:459
 msgid "You need to enable it both at server level and in the UI. "
 msgstr "Trebuie să-l activați atât la nivel de server, cât și în UI. "
 
-#: src/layer/marker/TextInput.js:453
+#: src/layer/marker/TextInput.js:460
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
 "Căutați secțiunea de accesibilitate în coolwsd.xml pentru setarea "
 "serverului. "
 
-#: src/layer/marker/TextInput.js:454
+#: src/layer/marker/TextInput.js:461
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr "Verificați, de asemenea, comutatorul de voce over sub {parentControl}."
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the Help tab"
 msgstr "fila Ajutor"
 
-#: src/layer/marker/TextInput.js:456
+#: src/layer/marker/TextInput.js:463
 msgid "the View menu"
 msgstr "meniul Vizualizare"
 
-#: src/layer/tile/CanvasTileLayer.js:1591
+#: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
 msgstr "Funcții"
 
-#: src/layer/tile/CanvasTileLayer.js:1851
+#: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
 msgstr "Interval numit"
 
-#: src/layer/tile/CanvasTileLayer.js:3528
+#: src/layer/tile/CanvasTileLayer.js:3504
 msgid "No Comments"
 msgstr "Fără comentarii"
 
@@ -4868,15 +4889,15 @@ msgstr ""
 msgid "Close popup to ignore paste special"
 msgstr "Închideți fereastra pop-up pentru a ignora lipirea specială"
 
-#: src/map/Map.js:213
+#: src/map/Map.js:211
 msgid "Initializing..."
 msgstr "Se inițializează..."
 
-#: src/map/Map.js:496 src/map/Map.js:499 src/map/Map.js:502 src/map/Map.js:505
+#: src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500 src/map/Map.js:503
 msgid "Last saved:"
 msgstr "Ultima salvare:"
 
-#: src/map/Map.js:1512
+#: src/map/Map.js:1513
 msgid "Please wait!"
 msgstr "Vă rugăm aşteptaţi!"
 
@@ -5081,11 +5102,13 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Ediţia Dezvoltator"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
+#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">apps</a> are also available for "
+"mobile."
 msgstr ""
 "Bucurați-vă de cele mai recente evoluții în productivitatea online, gratuit "
 "pentru dvs. să le utilizați, să le explorați și să le utilizați împreună cu "
@@ -5098,11 +5121,12 @@ msgid "Discover All The Changes"
 msgstr "Descoperiți toate modificările"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
+#, fuzzy
 msgid ""
-"Check the <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">release notes</a> and learn all about: The "
-"latest Collabora Online Development Edition, aimed at home users and small "
-"teams."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
+"collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
+"all about: The latest Collabora Online Development Edition, aimed at home "
+"users and small teams."
 msgstr ""
 "Consultați <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
 "code-25-04-release-notes/\">notele de lansare</a> și aflați totul despre: "
@@ -5118,15 +5142,16 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
+#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
-"to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">step-by-step instructions</a> and build CODE "
+"from scratch. You can also help out with <a target=\"_blank\" "
+"rel=\"noopener\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">translations</a> or by <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Ești interesat să contribui, dar nu știi de unde să începi? Accesați <a "
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
