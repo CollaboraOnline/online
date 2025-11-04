@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-21 00:46+0000\n"
+"PO-Revision-Date: 2025-11-03 17:51+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : "
+"(n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -380,16 +380,15 @@ msgstr "Zpřístupnění"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Podpisový certifikát"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Podpisový klíč"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Podpis"
+msgstr "Podpis CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -773,21 +772,24 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Chcete-li používat Zotero, zadejte zde svůj klíč API. Klíč API si můžete "
+"vytvořit ve svém "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "nastavení API účtu Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Nastavení dokumentu"
+msgstr "Podepisování dokumentů"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Chcete-li použít podepisování dokumentů, zadejte zde svůj podpisový "
+"certifikát, klíč a řetězec certifikačních autorit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2807,7 +2809,7 @@ msgstr "Uspořádat"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Zobrazení listu"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3258,18 +3260,16 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Integrátor není připraven na volání PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "S použitím jmenných prostorů."
+msgstr "Používání jmenných prostorů"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr "Bez použití jmenných prostorů"
 
 #: src/control/Control.ServerAuditDialog.ts:236
-#, fuzzy
 msgid "Document container started in {1} ms"
-msgstr "Kontejner dokumentu spuštěn v"
+msgstr "Kontejner dokumentů spuštěn za {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
