@@ -235,6 +235,13 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.contentNode = window.L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
+
+		const commentFooter = window.L.DomUtil.create('div', 'cool-annotation-footer', this.sectionProperties.wrapper);
+		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', commentFooter);
+		const resolvedEl = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', commentFooter);
+		this.sectionProperties.resolvedTextElement = resolvedEl;
+		this.updateResolvedField(this.sectionProperties.data.resolved);
+
 		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
 		this.createReplyHint(this.sectionProperties.nodeModify);
@@ -291,14 +298,8 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.author = window.L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
 
 		var tbody = window.L.DomUtil.create('tbody', '', this.sectionProperties.author);
-		var rowResolved = window.L.DomUtil.create('tr', '', tbody);
-		var tdResolved = window.L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
-		var pResolved = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
-		this.sectionProperties.resolvedTextElement = pResolved;
 
-		this.updateResolvedField(this.sectionProperties.data.resolved);
-
-		var tr = window.L.DomUtil.create('tr', '', tbody);
+		var tr = window.L.DomUtil.create('tr', 'cool-annotation-author-header', tbody);
 		this.sectionProperties.authorRow = tr;
 		tr.id = 'author table row ' + this.sectionProperties.data.id;
 		var tdImg = window.L.DomUtil.create('td', 'cool-annotation-img', tr);
@@ -318,11 +319,17 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.authorAvatarImg = imgAuthor;
 		this.sectionProperties.authorAvatartdImg = tdImg;
 		this.sectionProperties.contentAuthor = window.L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
-		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
 	}
 
 	private createMenu (): void {
 		var tdMenu = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		const edit = window.L.DomUtil.create('div', 'cool-annotation-menu-edit', tdMenu);
+		edit.id = 'comment-annotation-menu-edit-' + this.sectionProperties.data.id;
+		edit.tabIndex = 0;
+		edit.onclick = this.onEditComment.bind(this);
+		edit.dataset.title = Comment.editCommentLabel;
+		edit.setAttribute('aria-label', Comment.editCommentLabel);
+
 		this.sectionProperties.menu = window.L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.tabIndex = 0;
@@ -513,7 +520,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
 		}
 		else {
-			$(this.sectionProperties.authorAvatarImg).css('padding-top', '4px');
+			$(this.sectionProperties.authorAvatarImg).css('padding', '1.8px');
 		}
 		var user = this.map.getViewId(this.sectionProperties.data.author);
 		if (user >= 0) {
@@ -984,6 +991,12 @@ export class Comment extends CanvasSectionObject {
 		$(this.sectionProperties.menu).contextMenu();
 		window.L.DomEvent.stopPropagation(e);
 	}
+
+	private onEditComment (e: any): void {
+		this.sectionProperties.commentListSection.modify(this);
+		window.L.DomEvent.stopPropagation(e);
+	}
+
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
