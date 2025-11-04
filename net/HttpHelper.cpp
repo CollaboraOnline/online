@@ -25,10 +25,10 @@
 #include <common/Util.hpp>
 #include <net/Socket.hpp>
 
-namespace HttpHelper
+namespace
 {
-void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,
-                                 const std::string& path, const int bufferSize)
+static void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,
+                                        const std::string& path, const int bufferSize)
 {
     std::ifstream file(path, std::ios::binary);
     std::unique_ptr<char[]> buf = std::make_unique<char[]>(bufferSize);
@@ -43,8 +43,8 @@ void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,
     } while (file);
 }
 
-void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                             const int fileSize)
+static void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket,
+                                    const std::string& path, const int fileSize)
 {
     // FIXME: Should compress once ahead of time
     // compression of bundle.js takes significant time:
@@ -136,6 +136,10 @@ static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std:
     }
 }
 
+} // namespace
+
+namespace HttpHelper
+{
 void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
               http::Response& response, const bool noCache,
               const bool deflate, const bool headerOnly)
