@@ -632,6 +632,11 @@ static void stopServer() {
 
     // wait until coolwsdThread is torn down, so that we don't start cleaning up too early
     coolwsdThread.join();
+
+    QWebEngineProfile* profile = Application::getProfile();
+    if (profile) {
+        profile->deleteLater();
+    }
 }
 
 void Application::initialize()
@@ -642,11 +647,8 @@ void Application::initialize()
 
         QString appData = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
         QString cacheData = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-        QString storagePath = appData + "/PersistentProfile/storage";
-        QDir().mkpath(storagePath);
-        QDir().mkpath(cacheData);
 
-        globalProfile->setPersistentStoragePath(storagePath);
+        globalProfile->setPersistentStoragePath(appData);
         globalProfile->setCachePath(cacheData);
         globalProfile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
     }
