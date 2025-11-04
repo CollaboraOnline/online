@@ -1477,6 +1477,13 @@ else
     AC_MSG_RESULT([no])
 fi
 
+# check if the --with-lo-path is set correctly
+if test "$enable_macosapp" = "yes" ; then
+    AC_MSG_CHECKING([whether --with-lo-path contains a working installation])
+    lo_path_frameworks="$LO_PATH/Contents/Frameworks"
+    CHK_FILE_VAR(lo_path_frameworks,libsofficeapp.dylib libmergedlo.dylib,lokit) dnl check presence of any of these dylibs
+fi
+
 AC_SUBST(LO_PATH)
 AC_DEFINE_UNQUOTED([LO_PATH],["$LO_PATH"],[Path to LibreOffice installation])
 AC_SUBST(JAILS_PATH)
