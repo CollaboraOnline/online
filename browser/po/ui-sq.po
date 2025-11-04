@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-13 12:07+0000\n"
+"PO-Revision-Date: 2025-11-02 14:51+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -375,20 +375,19 @@ msgstr "Jeni i sigurt se doni të fiket shërbyesi?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Accessibility"
-msgstr ""
+msgstr "Përdorim Nga Persona Me Aftësi të Kufizuara"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Dëshmi Nënshkrimi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Kyç Nënshkrimi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Nënshkrim"
+msgstr "AD Nënshkrimi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -421,9 +420,8 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: src/control/Control.NavigatorPanel.ts:282
-#, fuzzy
 msgid "Navigator"
-msgstr "Lëvizje"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Show Sidebar"
@@ -442,11 +440,11 @@ msgstr "Listë Stilesh"
 #: src/control/Control.NotebookbarDraw.js:525
 #: src/control/Control.NotebookbarImpress.js:660
 msgid "Grid"
-msgstr ""
+msgstr "Rrjetë"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 msgid "Print"
-msgstr ""
+msgstr "Shtype"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Other"
@@ -464,7 +462,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "Size to grid"
-msgstr ""
+msgstr "Madhësi sa rrjeta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Synchronize axes"
@@ -480,7 +478,7 @@ msgstr "Faqe të zbrazëta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Force Breaks"
-msgstr ""
+msgstr "Detyro Ndërprerje"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: src/control/Control.Menubar.ts:772 src/control/Control.TopToolbar.js:110
@@ -509,7 +507,7 @@ msgstr "Sa ta nxërë faqja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Tile pages"
-msgstr ""
+msgstr "Faqe mozaik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Booklet"
@@ -587,7 +585,7 @@ msgstr "Sfond"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
-msgstr ""
+msgstr "Shtypje e Zezë"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
@@ -780,21 +778,24 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Që të përdorni Zotero-n, jepni këtu kyçin tuaj API. Kyçin tuaj API mund ta "
+"krijoni te "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Rregullime API llogarie Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Rregullime Dokumenti"
+msgstr "Nënshkrim Dokumenti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Që të përdorni nënshkrim dokumenti, jepni këtu dëshminë, kyçin dhe Ad-në "
+"tuaj të nënshkrimeve."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -988,7 +989,7 @@ msgstr "Hape në pamje të plotë"
 
 #: src/canvas/sections/CommentListSection.ts:1237
 msgid "Show in navigator"
-msgstr ""
+msgstr "Shfaqe te menu lëvizjesh"
 
 #: src/canvas/sections/CommentListSection.ts:1265
 #: src/control/Control.JSDialogBuilder.js:1696
@@ -2412,32 +2413,31 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animacion"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Animacione të aplikuara"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Ngjite Sipër"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Zbrite Poshtë"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Fillim"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Efekte"
+msgstr "Efekt"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2480,7 +2480,7 @@ msgstr "Fushë"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animacione"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2799,7 +2799,7 @@ msgstr "Fshini Shtylla"
 #: src/control/Control.NotebookbarWriter.js:2894
 #: src/control/Control.NotebookbarWriter.js:3217
 msgid "Align"
-msgstr ""
+msgstr "Drejtoje"
 
 #: src/control/Control.NotebookbarCalc.js:1329
 #: src/control/Control.NotebookbarCalc.js:2945
@@ -2816,11 +2816,11 @@ msgstr "Sistemoji"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Parje Flete"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
-msgstr ""
+msgstr "Ngrije"
 
 #: src/control/Control.NotebookbarCalc.js:1513
 #: src/control/Control.NotebookbarDraw.js:420
@@ -2924,7 +2924,7 @@ msgstr "Kërkim & Referencë"
 
 #: src/control/Control.NotebookbarCalc.js:2126
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matematikë & Trigonometri"
 
 #: src/control/Control.NotebookbarCalc.js:2138
 msgid "More Functions"
@@ -2950,7 +2950,7 @@ msgstr "Komente"
 
 #: src/control/Control.NotebookbarCalc.js:2665
 msgid "Format Cells"
-msgstr ""
+msgstr "Formato Kutiza"
 
 #: src/control/Control.NotebookbarCalc.js:2811
 #: src/control/Control.NotebookbarCalc.js:3168
@@ -3118,7 +3118,7 @@ msgstr "Rrëshqit për poshtë"
 
 #: src/control/Control.NotebookbarWriter.js:1098
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Lista/Me Toptha"
 
 #: src/control/Control.NotebookbarWriter.js:1385
 msgid "Header & Footer"
@@ -3150,7 +3150,7 @@ msgstr "Ndjekje"
 
 #: src/control/Control.NotebookbarWriter.js:2493
 msgid "Split"
-msgstr ""
+msgstr "Ndaji"
 
 #: src/control/Control.NotebookbarWriter.js:2677
 msgid "Number Format"
@@ -3206,10 +3206,12 @@ msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"S’është aktivizuar filtrim BPF i thirrjesh potencialisht të rrezikshme ndaj "
+"sistemit (seccomp); një rrezik për sigurinë."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Filtrimi i sigurisë së thirrjeve ndaj sistemit është aktivizuar"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3264,18 +3266,16 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Integruesi s’është gati për thirrje ndaj PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "Duke përdorur emrhapësira."
+msgstr "Duke përdorur emërhapësira"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
 msgstr "Duke mos përdorur emërhapësira"
 
 #: src/control/Control.ServerAuditDialog.ts:236
-#, fuzzy
 msgid "Document container started in {1} ms"
-msgstr "Kontejner dokumenti filluar në"
+msgstr "Kontejner dokumenti filloi më in {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3290,9 +3290,8 @@ msgid "Alerts:"
 msgstr "Sinjalizime:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Shihni sinjalizime sigurie të shërbyesit tuaj"
+msgstr "Shihni sinjalizime të shërbyesit tuaj"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -3320,7 +3319,7 @@ msgstr "Futni fletë"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Shfaq listë fletësh"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
@@ -4090,7 +4089,7 @@ msgstr "Titull, Lëndë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2164
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Titull dhe 2 Pjesë Lënde"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2165
 msgid "Title Only"
@@ -4101,33 +4100,28 @@ msgid "Centered Text"
 msgstr "Tekst në Qendër"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2167
-#, fuzzy
 msgid "Title, 2 Content and Content"
-msgstr "Titull, Lëndë përmbi Lëndë"
+msgstr "Titull, 2 Lëndë dhe Lëndë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2168
-#, fuzzy
 msgid "Title, Content and 2 Content"
-msgstr "Titull, Lëndë përmbi Lëndë"
+msgstr "Titull, Lëndë dhe 2 Pjesë Lënde"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
-#, fuzzy
 msgid "Title, 2 Content over Content"
-msgstr "Titull, Lëndë përmbi Lëndë"
+msgstr "Titull, 2 Pjesë Lënde përmbi Lëndë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title, Content over Content"
 msgstr "Titull, Lëndë përmbi Lëndë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
-#, fuzzy
 msgid "Title, 4 Content"
-msgstr "Titull, Lëndë"
+msgstr "Titull, 4 Pjesë Lënde"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
-#, fuzzy
 msgid "Title, 6 Content"
-msgstr "Titull, Lëndë"
+msgstr "Titull, 6 Pjesë Lënde"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Vertical Title, Text, Chart"
@@ -4155,7 +4149,7 @@ msgstr "Bardhë/Zi"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2313
 msgid "Watermark"
-msgstr ""
+msgstr "Filigran"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2321
 msgid "Insert comment"
@@ -4188,7 +4182,7 @@ msgstr "Së fundi"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Mundësi mënjanash faqeje"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
@@ -5060,7 +5054,7 @@ msgstr "Klikoni që të dilet nga paraqitja…"
 
 #: src/slideshow/SlideShowPresenter.ts:676
 msgid "End Show"
-msgstr ""
+msgstr "Përfundoje Shfaqjen"
 
 #: src/slideshow/SlideShowPresenter.ts:707
 #: src/slideshow/SlideShowPresenter.ts:719
