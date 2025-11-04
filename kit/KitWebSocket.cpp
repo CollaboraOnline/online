@@ -134,9 +134,9 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         {
 #if MOBILEAPP
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
-            std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-            _ksPoll->terminationFlag = true;
-            _ksPoll->terminationCV.notify_all();
+            std::unique_lock<std::mutex> lock(_ksPoll->termination->mutex);
+            _ksPoll->termination->flag = true;
+            _ksPoll->termination->cv.notify_all();
 #else
             LOG_INF("Setting TerminationFlag due to 'exit' command.");
             SigUtil::setTerminationFlag();
@@ -215,9 +215,9 @@ void KitWebSocketHandler::onDisconnect()
     }
 #if MOBILEAPP
     {
-        std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-        _ksPoll->terminationFlag = true;
-        _ksPoll->terminationCV.notify_all();
+        std::unique_lock<std::mutex> lock(_ksPoll->termination->mutex);
+        _ksPoll->termination->flag = true;
+        _ksPoll->termination->cv.notify_all();
     }
 #endif
     _ksPoll.reset();
