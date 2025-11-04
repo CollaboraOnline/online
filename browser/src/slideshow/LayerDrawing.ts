@@ -781,14 +781,14 @@ class LayerDrawing {
 		this.map.fire('handleslideshowprogressbar', { isVisible: false });
 		
 		// show welcome slideshow once 1st slide is rendered
-		const index = this.getSlideInfo(this.requestedSlideHash || this.prefetchedSlideHash).index;
+		const slideHash = this.requestedSlideHash || this.prefetchedSlideHash;
+	  const slideInfo = this.getSlideInfo(slideHash);
+		const index = slideInfo ? slideInfo.index : undefined;
+
 		if (app.map.slideShowPresenter._isWelcomePresentation && index === 0 && window.mode.isCODesktop())
 			app.socket.sendMessage('SHOW_WELCOME');
 
 		if (!e.success) {
-			const slideHash = this.requestedSlideHash || this.prefetchedSlideHash;
-			const slideInfo = this.getSlideInfo(slideHash);
-			const index = slideInfo ? slideInfo.index : undefined;
 			this.requestedSlideHash = null;
 			this.prefetchedSlideHash = null;
 			app.console.debug(
@@ -817,7 +817,7 @@ class LayerDrawing {
 		this.cacheAndNotify();
 
 		// fetch next slide and draw it on offscreen canvas
-		if (reqSlideInfo.next && !this.slideCache.has(reqSlideInfo.next)) {
+		if (reqSlideInfo?.next && !this.slideCache.has(reqSlideInfo.next)) {
 			this.requestSlideImpl(reqSlideInfo.next, true);
 		}
 	}
