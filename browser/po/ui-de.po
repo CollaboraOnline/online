@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-27 10:18+0000\n"
+"PO-Revision-Date: 2025-11-01 12:51+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -383,16 +383,15 @@ msgstr "Barrierefreiheit"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Signaturzertifikat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Signaturschlüssel"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Unterschrift"
+msgstr "Signatur-Zertifizierungsstelle"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -792,18 +791,19 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "API-Einstellungen des Zotero-Kontos"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Dokumenteinstellungen"
+msgstr "Dokumentsignierung"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Um die Dokumentensignierung zu verwenden, geben Sie hier Ihr "
+"Signaturzertifikat, Ihren Schlüssel und Ihre Zertifizierungsstellen-Kette an."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2654,7 +2654,7 @@ msgstr "Versionsgeschichte betrachten"
 #: src/control/Control.NotebookbarImpress.js:404
 #: src/control/Control.NotebookbarWriter.js:363
 msgid "Signature"
-msgstr "Unterschrift"
+msgstr "Signatur"
 
 #: src/control/Control.NotebookbarCalc.js:355
 #: src/control/Control.NotebookbarDraw.js:387
@@ -2817,7 +2817,7 @@ msgstr "Spalten löschen"
 #: src/control/Control.NotebookbarWriter.js:2894
 #: src/control/Control.NotebookbarWriter.js:3217
 msgid "Align"
-msgstr "Ausrichtung"
+msgstr "Ausrichten"
 
 #: src/control/Control.NotebookbarCalc.js:1329
 #: src/control/Control.NotebookbarCalc.js:2945
@@ -2830,7 +2830,7 @@ msgstr "Ausrichtung"
 #: src/control/Control.NotebookbarWriter.js:2953
 #: src/control/Control.NotebookbarWriter.js:3276
 msgid "Arrange"
-msgstr "Anordnung"
+msgstr "Anordnen"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
