@@ -193,9 +193,13 @@ public:
     static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
 
-    std::mutex terminationMutex;
-    std::condition_variable terminationCV;
-    bool terminationFlag;
+    struct TerminationData
+    {
+        std::mutex mutex;
+        std::condition_variable cv;
+        bool flag;
+    };
+    std::shared_ptr<TerminationData> termination;
 #endif
 };
 

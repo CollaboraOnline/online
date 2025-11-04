@@ -2960,7 +2960,8 @@ std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly()
 KitSocketPoll::KitSocketPoll() : SocketPoll("kit")
 {
 #if MOBILEAPP
-    terminationFlag = false;
+    termination = std::make_shared<KitSocketPoll::TerminationData>();
+    termination->flag = false;
 #endif
     mainPoll = this;
 }
@@ -4083,8 +4084,18 @@ void lokit_main(
         // Let forkit handle the jail cleanup.
 
 #else // !MOBILEAPP
-        std::unique_lock<std::mutex> lock(mainKit->terminationMutex);
-        mainKit->terminationCV.wait(lock,[&]{ return mainKit->terminationFlag; } );
+        auto const termination = mainKit->termination;
+#if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+        // Release the mainKit KitSocketPoll instance early here, so that its destructor will
+        // reliably be called on the expected "lokit_runloop" owner thread (started by
+        // initKitRunLoopThread), avoiding a race between this thread releasing its shared reference
+        // when mainKit goes out of scope and the "lokit_runloop" thread releasing its shared
+        // reference when it releases the KitSocketPoll instance at the end of
+        // KitWebSocketHandler::onDisconnect (in kit/KitWebSocket.cpp):
+        mainKit.reset();
+#endif
+        std::unique_lock<std::mutex> lock(termination->mutex);
+        termination->cv.wait(lock,[&]{ return termination->flag; } );
 #endif // !MOBILEAPP
     }
     catch (const Exception& exc)
