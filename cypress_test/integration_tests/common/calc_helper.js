@@ -303,13 +303,21 @@ function openAutoFilterMenu(secondColumn) {
 }
 
 function assertNumberofSheets(n) {
+	cy.log('>> assertNumberofSheets - start');
+
 	cy.cGet('button.spreadsheet-tab').should('have.length', n);
+
+	cy.log('>> assertNumberofSheets - end');
 }
 
 function selectOptionFromContextMenu(contextMenu) {
+	cy.log('>> selectOptionFromContextMenu - start');
+
 	cy.wait(1000);
 	cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').rightclick();
 	cy.cGet('body').contains('.context-menu-link', contextMenu).click();
+
+	cy.log('>> selectOptionFromContextMenu - end');
 }
 
 function selectOptionMobileWizard(menu) {
