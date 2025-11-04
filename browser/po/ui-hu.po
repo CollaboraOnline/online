@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-28 05:55+0000\n"
+"PO-Revision-Date: 2025-11-04 21:38+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -379,16 +379,15 @@ msgstr "Akadálymentesítés"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Aláírótanúsítvány"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Aláírókulcs"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Aláírás"
+msgstr "Aláíró CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -516,15 +515,15 @@ msgstr "Füzet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet front"
-msgstr ""
+msgstr "Füzet előlapja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet back"
-msgstr ""
+msgstr "Füzet hátlapja"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Page name"
-msgstr ""
+msgstr "Oldal neve"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 #: src/control/Control.NotebookbarCalc.js:771
@@ -544,7 +543,7 @@ msgstr "Rejtett oldalak"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "From printer setup"
-msgstr ""
+msgstr "A nyomtató beállításaiból"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Presentation"
@@ -557,7 +556,7 @@ msgstr "Jegyzetek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Handouts"
-msgstr ""
+msgstr "Emlékeztetők"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.NavigatorPanel.ts:205
@@ -566,11 +565,11 @@ msgstr "Szerkezet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Emlékeztetők vízszintesen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
-msgstr ""
+msgstr "Képek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
 msgid "Tables"
@@ -578,15 +577,15 @@ msgstr "Táblázatok"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
-msgstr ""
+msgstr "Vezérlőelemek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Background"
-msgstr ""
+msgstr "Háttér"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
-msgstr ""
+msgstr "Nyomtatás feketében"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
@@ -594,27 +593,27 @@ msgstr "Rejtett szöveg"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
-msgstr ""
+msgstr "Helykitöltők"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Left pages"
-msgstr ""
+msgstr "Baloldali oldalak"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Right pages"
-msgstr ""
+msgstr "Jobboldali oldalak"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Brochure"
-msgstr ""
+msgstr "Brosúra"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Brosúra jobbról balra"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
-msgstr ""
+msgstr "Képek és objektumok"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:310
 msgid "Invalid JSON file"
@@ -772,21 +771,24 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"A Zotero használatához adja meg az API-kulcsot. Az API-kulcsot létrehozhatja "
+"a "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Zotero-fiókjának API-beállításainál"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Dokumentumbeállítások"
+msgstr "Dokumentumok aláírása"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"A dokumentumok aláírásának használatához adja meg az aláírási tanúsítványt, "
+"a kulcsot és a CA láncot."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2406,19 +2408,19 @@ msgstr "Írja be a keresőmezőbe a dokumentumban keresett kifejezést"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animáció"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Alkalmazott animációk"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Mozgatás felfelé"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Mozgatás lefelé"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
@@ -2426,12 +2428,11 @@ msgstr "Kategória"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Indítás"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Effektusok"
+msgstr "Effektus"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2439,9 +2440,8 @@ msgstr "Átmenet"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
-#, fuzzy
 msgid "Transitions"
-msgstr "Átmenet"
+msgstr "Átmenetek"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
@@ -2475,7 +2475,7 @@ msgstr "Mező"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animációk"
 
 #: src/control/Control.Notebookbar.js:637
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2811,7 +2811,7 @@ msgstr "Elrendezés"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Munkalapnézet"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3018,9 +3018,8 @@ msgid "Present in Window"
 msgstr "Diavetítés ablakban"
 
 #: src/control/Control.NotebookbarImpress.js:501
-#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr "Bemutató követése"
+msgstr "Követhető bemutató indítása"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:731
@@ -3192,20 +3191,24 @@ msgstr "Az SSL-ellenőrzés során nem volt probléma"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"A dokumentumok nincsenek effektíve szeparálva: hiányzó kapabilitások vagy "
+"névterek."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Minden dokumentum biztonságosan el van szeparálva a többitől"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"A potenciálisan veszélyes rendszerhívások BPF-szűrése nem engedélyezett; ez "
+"biztonsági kockázat."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "A rendszerhívások biztonsági szűrése engedélyezett"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3221,19 +3224,19 @@ msgstr "A hardvererőforrások elégségesek az optimális teljesítményhez"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "A Kit jail elkészítése lassú másolással történik, nincs bind mount."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "A Kit jail elkészítése gyors, bind mount segítségével"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "A hálózati kérések kiszolgálása lassú proxyn keresztül történik."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "Közvetlen hálózati kapcsolat"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3260,9 +3263,8 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "Az integrátor nem áll készen a PostMessage hívásokra"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "Nem használ névtereket"
+msgstr "Használ névtereket"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
@@ -3314,7 +3316,7 @@ msgstr "Munkalap beszúrása"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Munkalapok listájának megjelenítése"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
