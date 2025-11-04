@@ -1136,6 +1136,96 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 {
     switch (message)
     {
+        case WM_SIZING:
+            {
+                int minimumWidth = 1000, minimumHeight = 800;
+
+                HMONITOR monitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
+                MONITORINFO monitorInfo;
+                monitorInfo.cbSize = sizeof(monitorInfo);
+                if (GetMonitorInfoW(monitor, &monitorInfo))
+                {
+                    // If the monitor has a "reasonable" aspect ratio (1:1 to 2:1) (taking into
+                    // account it might be in landscape or portrait orientation), set minimum width
+                    // to a quarter of monitor width and minimum height to a third of monitior
+                    // height. (Because COOL requires more essential space in the vertical
+                    // direction, I think.)
+                    double aspectRatio =
+                        (double)(monitorInfo.rcWork.right - monitorInfo.rcWork.left) / (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
+                    if (aspectRatio >= 0.49 && aspectRatio <= 2.01)
+                    {
+                        // Reasonable case
+                        minimumWidth = (monitorInfo.rcWork.right - monitorInfo.rcWork.left) / 4;
+                        minimumHeight = (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top) / 3;
+                    }
+                    else if (aspectRatio < 0.49)
+                    {
+                        // Very narrow, set just minimum height
+                        minimumHeight = (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top) / 3;
+                    }
+                    else if (aspectRatio > 2.01)
+                    {
+                        // Very wide, set just minimum width
+                        minimumWidth = (monitorInfo.rcWork.right - monitorInfo.rcWork.left) / 4;
+                    }
+                }
+
+                RECT* rect = (RECT*)lParam;
+                if (rect->right - rect->left < minimumWidth)
+                {
+                    switch (wParam)
+                    {
+                        case WMSZ_LEFT:
+                        case WMSZ_TOPLEFT:
+                        case WMSZ_BOTTOMLEFT:
+                            rect->left = rect->right - minimumWidth;
+                            break;
+                        case WMSZ_RIGHT:
+                        case WMSZ_TOPRIGHT:
+                        case WMSZ_BOTTOMRIGHT:
+                            rect->right = rect->left + minimumWidth;
+                            break;
+                        case WMSZ_TOP:
+                        case WMSZ_BOTTOM:
+                            {
+                                // Weird case, resizing height but still the width goes below the
+                                // minimum? Grow width on both sizes.
+                                auto mid = (rect->left + rect->right) / 2;
+                                rect->left = mid - minimumWidth/2;
+                                rect->right = rect->left + minimumWidth;
+                            }
+                            break;
+                    }
+                }
+                if (rect->bottom - rect->top < minimumHeight)
+                {
+                    switch (wParam)
+                    {
+                        case WMSZ_TOP:
+                        case WMSZ_TOPLEFT:
+                        case WMSZ_TOPRIGHT:
+                            rect->top = rect->bottom - minimumHeight;
+                            break;
+                        case WMSZ_BOTTOM:
+                        case WMSZ_BOTTOMLEFT:
+                        case WMSZ_BOTTOMRIGHT:
+                            rect->bottom = rect->top + minimumHeight;
+                            break;
+                        case WMSZ_LEFT:
+                        case WMSZ_RIGHT:
+                            {
+                                // Weird case, resizing width but still the height goes below the
+                                // minimum? Grow height on both sizes.
+                                auto mid = (rect->top + rect->bottom) / 2;
+                                rect->top = mid - minimumHeight/2;
+                                rect->bottom = rect->top + minimumHeight;
+                            }
+                            break;
+                    }
+                }
+            }
+            return TRUE;
+
         case WM_SIZE:
             if (windowData[hWnd].webViewController != nullptr)
             {
@@ -1248,6 +1338,9 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
         // make the document window also (if the monitor is large enough) higher than wider? On small
         // monitors (1280x768 or less?) we should probably default to making the document window
         // full-screen?
+
+        // FIXME: My initial assumption that the COOL window would open up on the monitor where the
+        // file section dialog was is incorrect.
 
         MONITORINFO monitorInfo;
 
