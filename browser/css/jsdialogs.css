@@ -438,6 +438,11 @@ algned to the bottom */
 	margin-bottom: 14px !important;
 }
 
+.unotoolbutton.notebookbar.ui-content.has-label > *:not(.arrowbackground) {
+	height: var(--notebookbar-element-height) !important;
+	align-content: center;
+}
+
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
 	justify-content: center;
 }
@@ -1408,10 +1413,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	box-sizing: border-box;
 }
 
-.notebookbar .ui-overflow-group-inner {
-	height: var(--notebookbar-element-height);
-	align-content: center;
-}
 
 .ui-overflow-group-label {
 	font-family: var(--jquery-ui-font);

@@ -218,6 +218,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .root-container.notebookbar {
 	display: table-cell;
 	vertical-align: middle;
+	align-content: center;
 }
 
 #toolbar-wrapper.hasnotebookbar {
@@ -259,8 +260,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	color: var(--color-main-text);
 }
 
-.horizontal.notebookbar:has(.unoBezier_Unfilled) {
-	height: 100%;
+/* Curve isn't in a vertical notebookbar, so it's center-aligned by default instead of top-aligned. 
+	This rule ensures it aligns to the top. */
+.horizontal.notebookbar #insert-illustrations.ui-overflow-group .ui-overflow-group-content,
+.horizontal.notebookbar #insert-illustrations.ui-overflow-group .top-row-overflow-group {
 	align-items: start;
 }
 
