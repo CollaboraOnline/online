@@ -56,6 +56,7 @@
 #include <QDir>
 #include <QStandardPaths>
 
+#include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
@@ -368,38 +369,31 @@ void Bridge::evalJS(const std::string& script)
 
 void Bridge::send2JS(const std::vector<char>& buffer)
 {
-    LOG_TRC_NOFILE(
-        "Send to JS: " << COOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
+    if (buffer.empty())
+        return;
 
-    std::string js;
-    const char* newline = static_cast<const char*>(memchr(buffer.data(), '\n', buffer.size()));
-    if (newline)
-    {
-        // treat as binary – deliver Base64 ArrayBuffer
-        QByteArray base64 = QByteArray(buffer.data(), static_cast<int>(buffer.size())).toBase64();
-        js = "window.TheFakeWebSocket.onmessage({data: Base64ToArrayBuffer('" +
-             base64.toStdString() + "')});";
-    }
-    else
-    {
-        // escape non-printables similar to original implementation
-        std::string data;
-        data.reserve(buffer.size() * 2);
-        static const char hex[] = "0123456789abcdef";
-        for (unsigned char ch : buffer)
-        {
-            if (ch < ' ' || ch >= 0x80 || ch == '\'' || ch == '\\')
-            {
-                data.push_back('\\');
-                data.push_back('x');
-                data.push_back(hex[(ch >> 4) & 0xF]);
-                data.push_back(hex[ch & 0xF]);
-            }
-            else
-                data.push_back(static_cast<char>(ch));
+    const std::string_view bufferView(buffer.data(), buffer.size());
+
+    LOG_TRC_NOFILE(
+        "Send to JS: " << COOLProtocol::getAbbreviatedMessage(bufferView.data(), bufferView.size()));
+
+    // Determine if message is of a binary type
+    bool binaryMessage = std::any_of(
+        std::begin(COOLProtocol::binaryMessageTypes),
+        std::end(COOLProtocol::binaryMessageTypes),
+        [&](const char* type) {
+            return bufferView.starts_with(type);
         }
-        js = "window.TheFakeWebSocket.onmessage({data: '" + data + "'});";
-    }
+    );
+
+    QByteArray base64 = QByteArray(bufferView.data(), bufferView.size()).toBase64();
+
+    std::string pretext = binaryMessage
+                              ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
+                              : "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
+    const std::string posttext = "')});";
+
+    std::string js = pretext + base64.toStdString() + posttext;
 
     std::string subjs = js.substr(0, std::min<std::string::size_type>(SHOW_JS_MAXLEN, js.length()));
     if (js.length() > SHOW_JS_MAXLEN)
