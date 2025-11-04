@@ -8,17 +8,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-31 12:28+0100\n"
-"PO-Revision-Date: 2025-10-22 16:02+0000\n"
+"PO-Revision-Date: 2025-11-02 14:51+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.14-dev\n"
+"Plural-Forms: nplurals=3; plural="
+"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -377,16 +378,15 @@ msgstr "Доступність"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Сертифікат підпису"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Ключ підпису"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Підпис"
+msgstr "Signature CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -771,21 +771,24 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Щоб використовувати Zotero, вкажіть тут свій ключ API. Ви можете створити "
+"свій ключ API у своєму "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Налаштування API облікового запису Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Налаштування документа"
+msgstr "Підписання документів"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Щоб використовувати підпис документів, укажіть тут свій сертифікат підпису, "
+"ключ і ланцюжок ЦС."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -2799,7 +2802,7 @@ msgstr "Упорядкувати"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Перегляд аркуша"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
