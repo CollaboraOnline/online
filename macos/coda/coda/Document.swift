@@ -364,7 +364,6 @@ class Document: NSDocument {
 
         components.queryItems = [
             URLQueryItem(name: "file_path", value: tempFileURL!.absoluteString),
-            URLQueryItem(name: "closebutton", value: "1"),
             URLQueryItem(name: "permission", value: permission),
             URLQueryItem(name: "lang", value: lang),
             URLQueryItem(name: "appdocid", value: "\(self.appDocId)"),
