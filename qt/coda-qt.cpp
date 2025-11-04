@@ -518,6 +518,24 @@ QVariant Bridge::cool(const QString& messageStr)
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+
+        QMetaObject::invokeMethod(
+            qApp,
+            [this]()
+            {
+                if (_webView)
+                {
+                    QWidget* topLevel = _webView->window();
+                    if (topLevel)
+                    {
+                        LOG_INF("Closing document window");
+                        topLevel->hide();
+                        topLevel->close();
+                        topLevel->deleteLater();
+                    }
+                }
+            },
+            Qt::QueuedConnection);
     }
     else if (message == "CLIPBOARDWRITE")
     {
