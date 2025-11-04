@@ -1403,7 +1403,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 										'type': 'combobox',
 										'text': 'Default',
 										'entries': [
-											'Default View'
+											_('Default View')
 										],
 										'selectedCount': '1',
 										'selectedEntries': [
@@ -1420,28 +1420,28 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									{
 										'id': 'selectsheetview',
 										'type': 'toolitem',
-										'text': _UNO('.uno:SelectSheetView'),
+										'text': _('Select Sheet View'),
 										'command': '.uno:SelectSheetView',
 										'accessibility': { focusBack: true,	combination: 'SS', de: null }
 									},
 									{
 										'id': 'newsheetview',
 										'type': 'toolitem',
-										'text': _UNO('.uno:NewSheetView'),
+										'text': _('New Sheet View'),
 										'command': '.uno:NewSheetView',
 										'accessibility': { focusBack: true,	combination: 'NS', de: null }
 									},
 									{
 										'id': 'removesheetview',
 										'type': 'toolitem',
-										'text': _UNO('.uno:RemoveSheetView'),
+										'text': _('Remove Sheet View'),
 										'command': '.uno:RemoveSheetView',
 										'accessibility': { focusBack: true,	combination: 'RS', de: null }
 									},
 									{
 										'id': 'exitsheetview',
 										'type': 'toolitem',
-										'text': _UNO('.uno:ExitSheetView'),
+										'text': _('Exit Sheet View'),
 										'command': '.uno:ExitSheetView',
 										'accessibility': { focusBack: true,	combination: 'ES', de: null }
 									},
@@ -1634,7 +1634,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true,	combination: 'N', de: null }
 			},
-			
+
 		];
 
 		return this.getTabPage('View', content);
