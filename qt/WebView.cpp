@@ -27,6 +27,8 @@
 #include <QKeySequence>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QWebEngineFullScreenRequest>
+#include <QWebEngineSettings>
 
 namespace
 {
@@ -83,6 +85,18 @@ WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
 
     QWebEnginePage* page = new QWebEnginePage(profile, _webView);
     _webView->setPage(page);
+
+    page->settings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
+
+    QObject::connect(page, &QWebEnginePage::fullScreenRequested,
+                     [this](QWebEngineFullScreenRequest request)
+                     {
+                         if (request.toggleOn())
+                             _mainWindow->showFullScreen();
+                         else
+                             _mainWindow->showNormal();
+                         request.accept();
+                     });
 }
 
 std::pair<int, int> getWindowSize(bool isWelcome)
