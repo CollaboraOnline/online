@@ -36,16 +36,16 @@ def extract_underscore_text(odp_file_path: str) -> List[str]:
 
             # Find all text:span elements
             for span in root.findall(".//text:span", namespaces):
-                if span.text and span.text.startswith("_"):
+                if span.text and span.text.startswith("_") and span.text not in texts:
                     texts.append(span.text)
 
             # Also check text:p (paragraphs) and text:h (headings)
             for element in root.findall(".//text:p", namespaces):
-                if element.text and element.text.startswith("_"):
+                if element.text and element.text.startswith("_") and element.text not in texts:
                     texts.append(element.text)
 
             for element in root.findall(".//text:h", namespaces):
-                if element.text and element.text.startswith("_"):
+                if element.text and element.text.startswith("_") and element.text not in texts:
                     texts.append(element.text)
 
     except FileNotFoundError:
