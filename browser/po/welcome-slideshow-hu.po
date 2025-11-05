@@ -1,96 +1,96 @@
 #: browser/welcome/welcome-slideshow.odp:1
 msgid "Collabora Office"
-msgstr ""
+msgstr "Collabora Office"
 
 #: browser/welcome/welcome-slideshow.odp:2
 msgid "Same look, same code"
-msgstr ""
+msgstr "Ugyanaz a kinézet, ugyanaz a kód"
 
 #: browser/welcome/welcome-slideshow.odp:3
 msgid "Your files, your device"
-msgstr ""
+msgstr "Saját fájlok, saját eszközön"
 
 #: browser/welcome/welcome-slideshow.odp:4
 msgid "Find out more!"
-msgstr ""
+msgstr "További információk!"
 
 #: browser/welcome/welcome-slideshow.odp:5
 msgid "Open it and feel instantly at home:"
-msgstr ""
+msgstr "A megnyitás után otthonos érzet:"
 
 #: browser/welcome/welcome-slideshow.odp:6
 msgid "ODF or DOCX"
-msgstr ""
+msgstr "ODF vagy DOCX"
 
 #: browser/welcome/welcome-slideshow.odp:7
 msgid "Quick edits or deep dives"
-msgstr ""
+msgstr "Gyors szerkesztés vagy elmélyült alkotás"
 
 #: browser/welcome/welcome-slideshow.odp:8
-msgid "A clean, beautiful interfaceaa"
-msgstr ""
+msgid "A clean, beautiful interface"
+msgstr "Letisztult, szép felület"
 
 #: browser/welcome/welcome-slideshow.odp:9
 msgid "Next"
-msgstr ""
+msgstr "Következő"
 
 #: browser/welcome/welcome-slideshow.odp:10
 msgid "The familiar, powerful Collabora Online experience"
-msgstr ""
+msgstr "Az ismerős, hatékony Collabora Online élmény"
 
 #: browser/welcome/welcome-slideshow.odp:11
 msgid "Now locally on Windows, macOS, and Linux"
-msgstr ""
+msgstr "Most helyben Windowson, macOS-en és Linuxon"
 
 #: browser/welcome/welcome-slideshow.odp:12
 msgid "Enjoy editing your documents locally with an intuitive, intelligent interface"
-msgstr ""
+msgstr "A dokumentumszerkesztés élménye helyben, intuitív és intelligens felületen"
 
 #: browser/welcome/welcome-slideshow.odp:13
 msgid "Navigator bar with document search"
-msgstr ""
+msgstr "Navigátorpanel keresőmezővel"
 
 #: browser/welcome/welcome-slideshow.odp:14
 msgid "Helpful quick access examples"
-msgstr ""
+msgstr "Hasznos munkagyorsító példák"
 
 #: browser/welcome/welcome-slideshow.odp:15
 msgid "Create and edit tables within documents"
-msgstr ""
+msgstr "Táblázatok létrehozása és szerkesztése"
 
 #: browser/welcome/welcome-slideshow.odp:16
 msgid "Powerful data and charting tools"
-msgstr ""
+msgstr "Hatékony adatfeldolgozás és grafikonok"
 
 #: browser/welcome/welcome-slideshow.odp:17
 msgid "Privacy by design"
-msgstr ""
+msgstr "Fókuszban az adatvédelem"
 
 #: browser/welcome/welcome-slideshow.odp:18
 msgid "Fully open source – no hidden processes, no telemetry"
-msgstr ""
+msgstr "Nyílt forráskód – nincsenek rejtett folyamatok, nincs telemetria"
 
 #: browser/welcome/welcome-slideshow.odp:19
 msgid "Documents never leave your device – unless you say so"
-msgstr ""
+msgstr "A dokumentumok csak a felhasználó tudtával hagyhatják el a rendszert"
 
 #: browser/welcome/welcome-slideshow.odp:20
 msgid "Collabora Office Desktop"
-msgstr ""
+msgstr "Collabora Office Desktop"
 
 #: browser/welcome/welcome-slideshow.odp:21
 msgid "Take back control"
-msgstr ""
+msgstr "Az irányítás visszavétele"
 
 #: browser/welcome/welcome-slideshow.odp:22
 msgid "We’re excited to share this release with our community"
-msgstr ""
+msgstr "Nagy izgalommal tesszük közzé ezt szoftvert"
 
 #: browser/welcome/welcome-slideshow.odp:23
 msgid "Try it out. Break things. Let us know what works and what doesn’t."
-msgstr ""
+msgstr "Várjuk a visszajelzéseket, hogy mi működik, és mi nem."
 
 #: browser/welcome/welcome-slideshow.odp:24
 msgid "Together, we're building a privacy-respecting, open, and elegant office suite for everyone."
-msgstr ""
+msgstr "A közösséggel együtt mindenki számára készítjük ezt a biztonságos, nyílt és elegáns irodai programcsomagot."
 
