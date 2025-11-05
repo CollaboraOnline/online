@@ -1427,7 +1427,8 @@ class CanvasSectionContainer {
 	}
 
 	public doesSectionIncludePoint (section: any, point: number[]): boolean { // No ray casting here, it is a rectangle.
-		return ((point[0] >= section.myTopLeft[0] && point[0] <= section.myTopLeft[0] + section.size[0]) && (point[1] >= section.myTopLeft[1] && point[1] <= section.myTopLeft[1] + section.size[1]));
+		// use isHit from section, that does check against bounds of local range (position, size)
+		return section.isHit(point);
 	}
 
 	private doSectionsIntersectOnYAxis (section1: any, section2: any): boolean {

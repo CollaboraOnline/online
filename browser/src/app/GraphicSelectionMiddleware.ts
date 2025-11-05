@@ -21,6 +21,7 @@ class GraphicSelection {
 	public static chartContextToolbarSelectStyle: ChartContextButtonSection =
 		null;
 	public static chartContextToolbarSaveStyle: ChartContextButtonSection = null;
+	public static diagramButton: DiagramButtonSection = null;
 
 	public static hasActiveSelection() {
 		return this.rectangle !== null;
@@ -247,6 +248,34 @@ class GraphicSelection {
 		}
 	}
 
+	private static checkDiagramData() {
+		if (GraphicSelection.extraInfo && GraphicSelection.extraInfo.isDiagram) {
+			if (!GraphicSelection.diagramButton) {
+				// need to create DiagramButtonSection
+				const subSection = app.sectionContainer.getSectionWithName(
+					this.handlesSection.sectionProperties.subSectionPrefix + 'diagram',
+				);
+				var halfWidth: number = 0;
+
+				if (subSection && subSection.sectionProperties) {
+					// get distance that frame occupies from frame object
+					halfWidth = subSection.sectionProperties.ownInfo.halfWidth;
+				}
+
+				GraphicSelection.diagramButton = new DiagramButtonSection(
+					halfWidth * app.twipsToPixels,
+				);
+				GraphicSelection.diagramButton.forceNextReposition();
+				app.sectionContainer.addSection(GraphicSelection.diagramButton);
+			}
+
+			GraphicSelection.diagramButton.updatePosition();
+		} else if (GraphicSelection.diagramButton) {
+			app.sectionContainer.removeSection(GraphicSelection.diagramButton.name);
+			GraphicSelection.diagramButton = null;
+		}
+	}
+
 	private static checkChartData() {
 		if (
 			GraphicSelection.extraInfo &&
@@ -405,6 +434,7 @@ class GraphicSelection {
 		}
 
 		GraphicSelection.checkChartData();
+		GraphicSelection.checkDiagramData();
 	}
 
 	/*
