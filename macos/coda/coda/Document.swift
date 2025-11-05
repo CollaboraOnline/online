@@ -83,10 +83,12 @@ class Document: NSDocument {
             let oldValue = _isModified
             _isModified = newValue
 
-            // trigger the saving operation when the document was previously marked as modified, but changes to non-modified
-            if oldValue && !newValue {
+            // non-modified -> modified: Mark that the document became edited
+            if !oldValue && newValue {
                 updateChangeCount(.changeDone)
-
+            }
+            // modified -> non-modified: Trigger the saving operation
+            else if oldValue && !newValue {
                 // decide under the lock if we should run the stashed Save now
                 if pendingSave != nil {
                     triggerPendingSave = pendingSave
@@ -234,7 +236,25 @@ class Document: NSDocument {
      * Calls super.save(...) to complete a pending Save / Save As…
      */
     private func performPendingSave(_ ps: PendingSave) {
-        super.save(to: ps.url, ofType: ps.typeName, for: ps.operation, completionHandler: ps.completion)
+        do {
+            // Perform the actual write using NSDocument’s writing pipeline (uses data(ofType:)).
+            try self.write(to: ps.url, ofType: ps.typeName, for: ps.operation, originalContentsURL: self.fileURL)
+
+            // For Save As / first Save, adopt the new URL/type. Save To must NOT change fileURL.
+            if ps.operation == .saveAsOperation || (ps.operation == .saveOperation && self.fileURL == nil) {
+                self.fileURL = ps.url
+                self.fileType = ps.typeName
+            }
+
+            // Clear the change count; we’re now up to date.
+            self.updateChangeCount(.changeCleared)
+
+            // Tell AppKit the *original* save request completed (this unblocks the close button flow).
+            DispatchQueue.main.async { ps.completion(nil) }
+        }
+        catch {
+            DispatchQueue.main.async { ps.completion(error) }
+        }
     }
 
     /**
