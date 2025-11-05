@@ -1385,12 +1385,7 @@ void Document::onUnload(const ChildSession& session)
     _loKitDocument->setView(viewId);
     _loKitDocument->registerCallback(nullptr, nullptr);
     _loKit->registerCallback(nullptr, nullptr);
-#ifndef _WIN32
-    // In CODA-W we call destroyView() when the document window closes in the WM_CLOSE handler.
-    // Doing it there makes things work more reliably when the user closes the window before things
-    // for it have initialised fully.
     _loKitDocument->destroyView(viewId);
-#endif
 
     // Since callback messages are processed on idle-timer,
     // we could receive callbacks after destroying a view.
