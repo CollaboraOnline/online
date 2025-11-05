@@ -129,6 +129,18 @@ class AboutDialog {
 				productNameWithURL,
 			);
 
+		const links = content.querySelectorAll<HTMLAnchorElement>(
+			'#coolwsd-version a, #lokit-version a, #lokit-extra a'
+		);
+
+		for (let i = 0; i < links.length; i++) {
+			const link = links[i];
+			link.addEventListener('click', (event: MouseEvent) => {
+				event.preventDefault();
+				window.open(link.href, '_blank');
+			});
+		}
+
 		const slowProxyElement = content.querySelector(
 			'#slow-proxy',
 		) as HTMLElement;
