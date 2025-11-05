@@ -576,7 +576,6 @@ class UIManager extends window.L.Control {
 			this.initializeRuler();
 			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
 			this.map.presenterConsole = new SlideShow.PresenterConsole(this.map, this.map.slideShowPresenter);
-			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map, window.enableAccessibility);
 		}
 
 		if (docType === 'text') {
