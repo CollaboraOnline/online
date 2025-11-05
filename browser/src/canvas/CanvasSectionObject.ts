@@ -147,6 +147,19 @@ class CanvasSectionObject {
 		return null;
 	}
 
+	setSize(w: number, h: number): void  {
+		if (!this.containerObject)
+			return;
+
+		w = Math.round(w);
+		h = Math.round(h);
+
+		if (this.size[0] === w && this.size[1] === h)
+			return;
+
+		this.size = [w, h];
+	}
+
 	// Document objects only.
 	setPosition(x: number, y: number): void {
 		if (this.documentObject !== true || !this.containerObject)
@@ -196,6 +209,18 @@ class CanvasSectionObject {
 
 		if (this.containerObject.testing)
 			this.containerObject.createUpdateSingleDivElement(this);
+	}
+
+	/*
+		Allow locally to influence if this object is hit by the given point.
+		This can be used e.g. to have CanvasSectionObjects with 'holes',
+		e.g. a frame around something and you only want the frame to be hittable
+	*/
+	isHit(point: number[]): boolean {
+		// return result of inside local range (position, size) check
+		return (
+			(point[0] >= this.myTopLeft[0] && point[0] <= this.myTopLeft[0] + this.size[0]) &&
+			(point[1] >= this.myTopLeft[1] && point[1] <= this.myTopLeft[1] + this.size[1]))
 	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.

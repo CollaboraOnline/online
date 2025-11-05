@@ -334,6 +334,7 @@ COOL_JS_LST =\
 	src/canvas/sections/ShapeHandleGluePointSubSection.ts \
 	src/canvas/sections/ShapeHandleAnchorSubSection.ts \
 	src/canvas/sections/ShapeHandleRotationSubSection.ts \
+	src/canvas/sections/ShapeHandleDiagramSubSection.ts \
 	src/canvas/sections/ShapeHandleScalingSubSection.ts \
 	src/canvas/sections/ValidityInputHelpSection.ts \
 	src/canvas/sections/CellCursorSection.ts \
@@ -366,7 +367,9 @@ COOL_JS_LST =\
 	src/canvas/sections/CursorHeaderSection.ts \
 	src/canvas/sections/CursorHandler.ts \
 	src/canvas/sections/TableInsertMarkerSection.ts \
+	src/canvas/sections/GenericButtonSection.ts \
 	src/canvas/sections/ChartContextButtonSection.ts \
+	src/canvas/sections/DiagramButtonSection.ts \
 	src/canvas/sections/ContentControlDropdownSubSection.ts \
 	src/canvas/sections/ContentControlSection.ts \
 	src/layer/marker/ProgressOverlay.js \
@@ -1065,7 +1068,9 @@ pot:
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
 		src/canvas/sections/TableInsertMarkerSection.ts \
+		src/canvas/sections/GenericButtonSection.ts \
 		src/canvas/sections/ChartContextButtonSection.ts \
+		src/canvas/sections/DiagramButtonSection.ts \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AddressInputField.ts \

@@ -373,6 +373,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	private getDiagram(halfWidth: number, halfHeight: number) {
+		if (this.isDiagram() && this.sectionProperties.info?.handles?.kinds?.rectangle) {
+			// get a scaled oversize measurement in X and Y
+			const scaleFactor = 3;
+			halfWidth *= scaleFactor;
+			halfHeight *= scaleFactor;
+
+			// get object size as base for calculations
+			const topLeft = this.sectionProperties.info.handles.kinds.rectangle['1'][0];
+
+			// create a shape with overhang of halfWidth/Height on all sides,
+			const width : number = this.getShapeWidth(true) + 2 * halfWidth;
+			const height : number = this.getShapeHeight(true) + 2 * halfHeight;
+			const info = {
+				kind: 'DiagramHandle',
+				size: new cool.SimplePoint(width, height),
+				halfWidth: halfWidth,
+				halfHeight: halfHeight
+			};
+			this.sectionProperties.handles.push({
+				info: info,
+				point: new cool.SimplePoint(
+					topLeft.point.x - info.halfWidth,
+					topLeft.point.y - info.halfHeight) });
+		}
+	}
+
 	// Get the handle positions and other information from the info that core side sent us.
 	private getHandles() {
 		this.sectionProperties.handles = [];
@@ -380,6 +407,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		const halfWidth = app.pixelsToTwips * (this.sectionProperties.handleWidth * 0.5);
 		const halfHeight = app.pixelsToTwips * (this.sectionProperties.handleHeight * 0.5);
 
+		this.getDiagram(halfWidth, halfHeight);
 		this.getScalingHandles(halfWidth, halfHeight);
 		this.getAnchorHandle(halfWidth, halfHeight);
 		this.getRotationHandle();
@@ -399,6 +427,13 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	isSVGVisible() {
 		if (this.sectionProperties.svg)
 			return this.sectionProperties.svg.style.display === '';
+		else
+			return false;
+	}
+
+	isDiagram() {
+		if (GraphicSelection?.extraInfo?.isDiagram === true)
+			return true;
 		else
 			return false;
 	}
@@ -598,6 +633,39 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	checkDiagramSubSection(handle: any) {
+		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + 'diagram');
+
+		if (!newSubSection) {
+			newSubSection = new app.definitions.shapeHandleDiagramSubSection(
+				this,
+				this.sectionProperties.subSectionPrefix + 'diagram',
+				[handle.info.size.pX, handle.info.size.pY],
+				new cool.SimplePoint(
+					handle.point.x,
+					handle.point.y),
+				handle.info
+			);
+			return newSubSection;
+		}
+		else {
+			newSubSection.sectionProperties.ownInfo = handle.info;
+			newSubSection.setPosition(
+				handle.point.pX,
+				handle.point.pY);
+			newSubSection.setSize(
+				handle.info.size.pX,
+				handle.info.size.pY);
+
+			// we also need to update the edit button by resetting it's
+			// last remembered zoom value
+			if (GraphicSelection.diagramButton)
+				GraphicSelection.diagramButton.forceNextReposition();
+
+			return null;
+		}
+	}
+
 	checkCustomSubSection(handle: any): any {
 		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + handle.info.id);
 
@@ -667,6 +735,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				newSubSection = this.checkScalingSubSection(this.sectionProperties.handles[i]);
 			else if (this.sectionProperties.handles[i].info.kind === 'ShapeRotationHandle')
 				newSubSection = this.checkRotationSubSection(this.sectionProperties.handles[i]);
+			else if (this.sectionProperties.handles[i].info.kind === 'DiagramHandle')
+				newSubSection = this.checkDiagramSubSection(this.sectionProperties.handles[i]);
 			else if (this.sectionProperties.handles[i].info.kind === '22')
 				newSubSection = this.checkCustomSubSection(this.sectionProperties.handles[i]);
 			else if (this.sectionProperties.handles[i].info.kind === '9')
