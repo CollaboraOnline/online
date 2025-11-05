@@ -101,6 +101,87 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('#comment-container-2').should('be.not.visible');
 	});
 
+	it('Visibility at Different Zoom Levels', function() {
+		/*
+			1. insert comment at 50% zoom level
+			2. then keep increasing the zoom level and assert comment visibility.
+			3. visible at 100% and 120%, and hidden (collapsed) at 150%
+		*/
+		desktopHelper.selectZoomLevel('100', false);
+		desktopHelper.insertComment('test comment', true);
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		desktopHelper.selectZoomLevel('120', false);
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		desktopHelper.selectZoomLevel('150', false);
+		cy.cGet('#comment-container-1').should('be.not.visible');
+	});
+
+	it('Visibility at Different Window Widths (increasing)', function() {
+		/*
+			1. start with collapsed comment and increase window width
+			2. cy.viewport(1400, 600); at 150% comment is collapsed
+			3. increase width by 20 and assert visibility
+		*/
+		desktopHelper.insertComment('test comment', true);
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		desktopHelper.selectZoomLevel('150', false);
+		cy.cGet('#comment-container-1').should('be.not.visible');
+
+		for (let width = 1420; width < 1500; width += 20) {
+			cy.viewport(width, 600);
+			cy.cGet('#comment-container-1').should('be.not.visible');
+		}
+
+		for (let width = 1500; width < 1620; width += 20) {
+			cy.viewport(width, 600);
+			cy.cGet('#comment-container-1').should('be.visible');
+		}
+	});
+
+	it('Visibility at Different Window Widths (decreasing)', function() {
+		/*
+			1. start with wide window (== zoomed out document) and reduce window width
+			2. cy.viewport(1400, 600); at 100% comments are visible
+			3. decrease width by 10 and assert visibility
+		*/
+		desktopHelper.insertComment('test comment', true);
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		desktopHelper.selectZoomLevel('120', false);
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		for (let width = 1420; width > 1260; width -= 20) {
+			cy.viewport(width, 600);
+			cy.cGet('#comment-container-1').should('be.visible');
+		}
+	});
+
+	it('Visibility on Small Resizes (1px width increase/decrease)', function() {
+		desktopHelper.insertComment('test comment', true);
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		desktopHelper.selectZoomLevel('120', false);
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		for (let width = 1420; width > 1300; width -= 1) {
+			cy.viewport(width, 600);
+			cy.cGet('#comment-container-1').should('be.visible');
+		}
+
+		for (let width = 1300; width < 1420; width += 1) {
+			cy.viewport(width, 600);
+			cy.cGet('#comment-container-1').should('be.visible');
+		}
+	});
+
+
 	it('Tab Navigation', function() {
 		desktopHelper.insertComment(undefined, false);
 
