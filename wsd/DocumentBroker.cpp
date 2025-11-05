@@ -4675,7 +4675,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
 }
 
 void DocumentBroker::handleGetSlideRequest(const StringVector& tokens,
-                                           std::shared_ptr<ClientSession> session)
+                                           const std::shared_ptr<ClientSession>& session)
 {
     // cacheKey example:
     // hash=108777063986320 part=0 width=1919 height=1080 renderBackground=1 renderMasterPage=1 devicePixelRatio=1 compressedLayers=0 uniqueID=324
@@ -4684,7 +4684,7 @@ void DocumentBroker::handleGetSlideRequest(const StringVector& tokens,
     {
         LOG_INF("Slideshow: Cached slide layer reused by canonical view ID "
                 << session->getCanonicalViewId());
-        for (auto message : itr->second)
+        for (const auto& message : itr->second)
         {
             session->sendBinaryFrame(message->data().data(), message->size());
         }

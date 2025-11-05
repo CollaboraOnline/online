@@ -1587,7 +1587,7 @@ void ClientSession::updateBrowserSettingsJSON(const std::string& json)
 {
     Poco::JSON::Parser parser;
     auto result = parser.parse(json);
-    auto extractedObject= result.extract<Poco::JSON::Object::Ptr>();
+    const auto& extractedObject = result.extract<Poco::JSON::Object::Ptr>();
     for (const auto& key : extractedObject->getNames())
     {
         const std::string& value = extractedObject->get(key);

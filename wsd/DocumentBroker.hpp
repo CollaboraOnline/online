@@ -445,7 +445,8 @@ public:
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void sendTileCombine(const TileCombined& tileCombined);
 
-    void handleGetSlideRequest(const StringVector& tokens, std::shared_ptr<ClientSession> session);
+    void handleGetSlideRequest(const StringVector& tokens,
+                               const std::shared_ptr<ClientSession>& session);
 
     enum ClipboardRequest : std::uint8_t {
         CLIP_REQUEST_SET,
