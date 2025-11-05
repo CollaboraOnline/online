@@ -14,6 +14,29 @@ function clickFormulaBar() {
 	cy.log('<< clickFormulaBar - end');
 }
 
+// Click on the document at the specified offset from the origin of cell A1.
+function clickAtOffset(offsetX, offsetY, right=false) {
+	cy.log('>> clickAtOffset - start');
+	cy.log('Param - offsetX: ' + offsetX);
+	cy.log('Param - offsetY: ' + offsetY);
+
+	cy.cGet('#map').should('exist');
+	cy.cGet('#map').should('be.visible');
+	cy.cGet('#map')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			const XPos = items[0].getBoundingClientRect().left + 2 + offsetX;
+			const YPos = items[0].getBoundingClientRect().top + 2 + offsetY;
+			if (right) {
+				cy.cGet('body').rightclick(XPos, YPos);
+			} else {
+				cy.cGet('body').click(XPos, YPos);
+			}
+		});
+
+	cy.log('<< clickAtOffset - end');
+}
+
 // Click on the first cell of the sheet (A1), we use the document
 // top left corner to achive that, so it work's if the view is at the
 // start of the sheet.
@@ -335,6 +358,7 @@ function selectOptionMobileWizard(menu) {
 		.click();
 }
 
+module.exports.clickAtOffset = clickAtOffset;
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.clickOnACell = clickOnACell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
