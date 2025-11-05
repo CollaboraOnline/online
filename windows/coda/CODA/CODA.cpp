@@ -71,6 +71,7 @@ struct WindowData
     HWND hWnd;
     RECT originalRect;
     LONG originalStyle;
+    POINT previousSize; // After a WM_SIZE
     bool isFullScreen;
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
@@ -80,6 +81,12 @@ struct WindowData
     DWORD lastAnyonesClipboardModification;
     wil::com_ptr<ICoreWebView2Controller> webViewController;
     wil::com_ptr<ICoreWebView2> webView;
+};
+
+struct PersistedDocumentWindowSize
+{
+    POINT size;
+    WPARAM resizeType;
 };
 
 static std::map<HWND, WindowData> windowData;
@@ -1328,10 +1335,19 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                     persistentWindowSizeStoreOK &&
                     (wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED))
                 {
-                    std::vector<uint8_t> value(sizeof(POINT));
-                    POINT* p = reinterpret_cast<POINT*>(value.data());
-                    p->x = LOWORD(lParam);
-                    p->y = HIWORD(lParam);
+                    std::vector<uint8_t> value(sizeof(PersistedDocumentWindowSize));
+                    PersistedDocumentWindowSize* p = reinterpret_cast<PersistedDocumentWindowSize*>(value.data());
+                    if (wParam == SIZE_RESTORED)
+                    {
+                        p->size.x = LOWORD(lParam);
+                        p->size.y = HIWORD(lParam);
+                        windowData[hWnd].previousSize = p->size;
+                    }
+                    else
+                    {
+                        p->size = windowData[hWnd].previousSize;
+                    }
+                    p->resizeType = wParam;
                     persistentWindowSizeStore.put(windowData[hWnd].filenameAndUri.uri.c_str(), value);
                 }
             };
@@ -1403,16 +1419,31 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     bool havePersistedSize = false;
 
     int width, height;
+    bool maximize = false;
 
     if (persistentWindowSizeStoreOK)
     {
-        std::vector<uint8_t> value(sizeof(POINT));
+        std::vector<uint8_t> value;
         if (persistentWindowSizeStore.get(filenameAndUri.uri.c_str(), value) == litecask::Status::Ok)
         {
-            const POINT* p = reinterpret_cast<POINT*>(value.data());
-            width = p->x;
-            height = p->y;
-            havePersistedSize = true;
+            if (value.size() == sizeof(POINT))
+            {
+                // We used to store just the size
+                const POINT* p = reinterpret_cast<POINT*>(value.data());
+                width = p->x;
+                height = p->y;
+                havePersistedSize = true;
+            }
+            else if (value.size() == sizeof(PersistedDocumentWindowSize))
+            {
+                // Currently we also store the last wParam in the WM_SIZE message
+                const PersistedDocumentWindowSize* p = reinterpret_cast<PersistedDocumentWindowSize*>(value.data());
+                width = p->size.x;
+                height = p->size.y;
+                if (p->resizeType == SIZE_MAXIMIZED)
+                    maximize = true;
+                havePersistedSize = true;
+            }
         }
     }
 
@@ -1451,6 +1482,8 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
 
     auto& data = windowData[hWnd];
     data.hWnd = hWnd;
+    data.previousSize.x = width;
+    data.previousSize.y = height;
     data.isFullScreen = false;
     data.fakeClientFd = fakeSocketSocket();
     data.appDocId = generate_new_app_doc_id();
@@ -1458,7 +1491,10 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     data.lastAnyonesClipboardModification = 1;
     data.filenameAndUri = filenameAndUri;
 
-    ShowWindow(hWnd, appShowMode);
+    if (maximize)
+        ShowWindow(hWnd, SW_MAXIMIZE);
+    else
+        ShowWindow(hWnd, appShowMode);
     UpdateWindow(hWnd);
 
     AddClipboardFormatListener(hWnd);
