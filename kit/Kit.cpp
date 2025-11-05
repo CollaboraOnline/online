@@ -490,7 +490,7 @@ namespace
         } else
             LOG_TRC("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
                     << ". Will copy.");
-        if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
+        if (!FileUtil::copy(fpath, newPath, /*log=*/false, /*throw_on_error=*/false))
         {
             LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
             Util::forcedExit(EX_SOFTWARE);
@@ -1231,7 +1231,7 @@ void Document::trimAfterInactivity()
 
     if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
     {
-        Document* document = dynamic_cast<Document*>(descriptor->getDoc());
+        Document* document = descriptor->getDoc();
         Poco::JSON::Object::Ptr object;
         if (document && JsonUtil::parseJSON(payload, object))
         {
@@ -1247,7 +1247,7 @@ void Document::trimAfterInactivity()
     }
     else if (type == LOK_CALLBACK_VIEW_RENDER_STATE)
     {
-        Document* document = dynamic_cast<Document*>(descriptor->getDoc());
+        Document* document = descriptor->getDoc();
         if (document)
         {
             std::shared_ptr<ChildSession> session = document->findSessionByViewId(descriptor->getViewId());
