@@ -276,18 +276,29 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOGA_INF_NOFILE(A,X) LOG_MESSAGE_(INF, A, X, logPrefix, LOG_END_NOFILE)
 // WRN and ERR should not be filtered by area
 
-/// Log an ERR entry with the given errno appended.
-#define LOG_SYS_ERRNO(ERRNO, X)                                                                    \
+/// Internal: Log an entry with the given ERRNO appended using the given LOGGER.
+#define LOG_ERRNO_(LOGGER, ERRNO, X)                                                               \
     do                                                                                             \
     {                                                                                              \
         const auto onrre = ERRNO; /* Save errno immediately while avoiding name clashes*/          \
-        LOG_ERR(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
+        LOGGER(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');    \
     } while (false)
+
+/// Log an ERR entry with the given errno appended.
+#define LOG_ERR_ERRNO(ERRNO, X) LOG_ERRNO_(LOG_ERR, ERRNO, X)
+/// Log an WRN entry with the given errno appended.
+#define LOG_WRN_ERRNO(ERRNO, X) LOG_ERRNO_(LOG_WRN, ERRNO, X)
+/// Log an INF entry with the given errno appended.
+#define LOG_INF_ERRNO(ERRNO, X) LOG_ERRNO_(LOG_INF, ERRNO, X)
+/// Log an DBG entry with the given errno appended.
+#define LOG_DBG_ERRNO(ERRNO, X) LOG_ERRNO_(LOG_DBG, ERRNO, X)
+/// Log an TRC entry with the given errno appended.
+#define LOG_TRC_ERRNO(ERRNO, X) LOG_ERRNO_(LOG_TRC, ERRNO, X)
 
 /// Log an ERR entry with errno appended.
 /// NOTE: Must be called immediately after an API that sets errno.
-/// Use LOG_SYS_ERRNO to pass errno explicitly.
-#define LOG_SYS(X) LOG_SYS_ERRNO(errno, X)
+/// Use LOG_ERR_ERRNO to pass errno explicitly.
+#define LOG_SYS(X) LOG_ERR_ERRNO(errno, X)
 
 #define LOG_FTL(X)                                                                                 \
     do                                                                                             \
