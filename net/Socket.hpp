@@ -1475,7 +1475,7 @@ public:
                         else
                         {
                             // Unexpected read error while draining the read buffer.
-                            LOG_SYS_ERRNO(last_errno, "Read failed, have " << _inBuffer.size()
+                            LOG_ERR_ERRNO(last_errno, "Read failed, have " << _inBuffer.size()
                                                                            << " buffered bytes");
                         }
                     }
@@ -1828,7 +1828,7 @@ public:
 
                 // 0 len is unspecified result, according to man write(2).
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
-                    LOG_SYS_ERRNO(last_errno, "Socket write returned " << len);
+                    LOG_ERR_ERRNO(last_errno, "Socket write returned " << len);
                 else if (len <= 0) // Trace errno for debugging, even for "unspecified result."
                     LOGA_TRC(Socket, "Write failed, have " << _outBuffer.size() << " buffered bytes ("
                              << Util::symbolicErrno(last_errno) << ": "
