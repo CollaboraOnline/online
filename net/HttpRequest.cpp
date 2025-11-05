@@ -29,16 +29,16 @@
 #include <sys/types.h>
 #include <utility>
 
-namespace http
+namespace
 {
 /// Returns true iff the character given is a whitespace.
 /// FIXME: Technically, we should skip: SP, HTAB, VT (%x0B),
 ///         FF (%x0C), or bare CR.
-static inline bool isWhitespace(const char ch) { return ch == ' ' || ch == '\t' || ch == '\r'; }
+inline bool isWhitespace(const char ch) { return ch == ' ' || ch == '\t' || ch == '\r'; }
 
 /// Skips over space and tab characters starting at off.
 /// Returns the offset of the first match, otherwise, len.
-static inline int64_t skipSpaceAndTab(const char* p, int64_t off, int64_t len)
+inline int64_t skipSpaceAndTab(const char* p, int64_t off, int64_t len)
 {
     for (; off < len; ++off)
     {
@@ -49,7 +49,7 @@ static inline int64_t skipSpaceAndTab(const char* p, int64_t off, int64_t len)
     return len;
 }
 
-static inline int64_t skipCRLF(const char* p, int64_t off, int64_t len)
+inline int64_t skipCRLF(const char* p, int64_t off, int64_t len)
 {
     for (; off < len; ++off)
     {
@@ -64,7 +64,7 @@ static inline int64_t skipCRLF(const char* p, int64_t off, int64_t len)
 /// Returns the offset to the first LF character,
 /// if found, otherwise, len.
 /// Ex.: for [xxxCRLFCRLF] the offset to the second LF is returned.
-static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
+inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
 {
     // Find the line break, which ends the status line.
     for (; off < len; ++off)
@@ -77,7 +77,7 @@ static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
     return len;
 }
 
-static inline int64_t findLineBreak(const std::string_view data, int64_t off)
+inline int64_t findLineBreak(const std::string_view data, int64_t off)
 {
     return findLineBreak(data.data(), off, data.size());
 }
@@ -85,7 +85,7 @@ static inline int64_t findLineBreak(const std::string_view data, int64_t off)
 /// Finds the double CRLF that signifies the end
 /// of a block, such as a header. The second CRLF
 /// is for a blank line, and that's what we seek.
-static inline int64_t findBlankLine(const char* p, int64_t off, int64_t len)
+inline int64_t findBlankLine(const char* p, int64_t off, int64_t len)
 {
     for (; off < len;)
     {
@@ -110,7 +110,7 @@ static inline int64_t findBlankLine(const char* p, int64_t off, int64_t len)
 /// Find the end of text.
 /// Returns the offset to the first whitespace or
 /// line-break character if found, otherwise, len.
-static inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
+inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
 {
     for (; off < len; ++off)
     {
@@ -120,6 +120,11 @@ static inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
 
     return len;
 }
+
+} // namespace
+
+namespace http
+{
 
 int64_t Header::parse(const char* p, int64_t len)
 {
