@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-02 14:51+0000\n"
+"PO-Revision-Date: 2025-11-05 14:58+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2823,23 +2823,23 @@ msgstr "Bladweergave"
 
 #: src/control/Control.NotebookbarCalc.js:1406
 msgid "Default View"
-msgstr ""
+msgstr "Standaardweergave"
 
 #: src/control/Control.NotebookbarCalc.js:1423
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Selecteer bladweergave"
 
 #: src/control/Control.NotebookbarCalc.js:1430
 msgid "New Sheet View"
-msgstr ""
+msgstr "Nieuw bladweergave"
 
 #: src/control/Control.NotebookbarCalc.js:1437
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Bladweergave verwijderen"
 
 #: src/control/Control.NotebookbarCalc.js:1444
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Bladweergave verlaten"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -5106,7 +5106,6 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Ontwikkel Versie"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5116,7 +5115,8 @@ msgid ""
 msgstr ""
 "Geniet van de nieuwste ontwikkelingen op het gebied van online "
 "productiviteit, vrij om te gebruiken, verbeteringen te ontdekken en om met "
-"anderen samen te werken in een browser. Diverse <a target=\"_blank\" href="
+"anderen samen te werken in een browser. Diverse <a target=\"_blank\" rel="
+"\"noopener\" href="
 "\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
 ">Apps</a> zijn ook voor mobiele devices beschikbaar."
 
@@ -5125,17 +5125,17 @@ msgid "Discover All The Changes"
 msgstr "Kennis nemen van veranderingen"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"Lees de <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">uitgavenotities van deze versie</a> en kom meer "
-"te weten over de meest recente Collabora Online Ontwikkel Versie, gericht op "
-"thuisgebruikers en kleine teams."
+"Lees de <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\""
+">uitgavenotities van deze versie</a> en kom meer te weten over de meest "
+"recente Collabora Online Ontwikkel Versie, gericht op thuisgebruikers en "
+"kleine teams."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5146,7 +5146,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5158,13 +5157,14 @@ msgid ""
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Ben je geïnteresseerd om bij te dragen, maar weet je niet waar je moet "
-"beginnen? Ga naar de <a target=\"_blank\" href=\"https://collaboraonline."
-"github.io/post/build-code/\">stap-voor-stap instructies</a> en bouw CODE aan "
-"de hand daarvan helemaal opnieuw. Je kunt ook helpen met <a target=\"_blank\""
-" href=\"https://collaboraonline.github.io/post/translate/\">vertalen</a> of "
-"met het <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"filebugs/\">rapporteren van fouten</a> of het toevoegen van essentiële "
-"stappen om die te reproduceren."
+"beginnen? Ga naar de <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/build-code/\">stap-voor-stap "
+"instructies</a> en bouw CODE aan de hand daarvan helemaal opnieuw. Je kunt "
+"ook helpen met <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/translate/\">vertalen</a> of met "
+"het <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">rapporteren van fouten</"
+"a> of het toevoegen van essentiële stappen om die te reproduceren."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
