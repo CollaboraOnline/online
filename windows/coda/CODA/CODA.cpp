@@ -99,6 +99,8 @@ static std::wstring appName;
 
 static COOLWSD* coolwsd = nullptr;
 
+static std::thread coolwsdThread;
+
 // The main window class name.
 static const wchar_t windowClass[] = L"CODA";
 
@@ -595,6 +597,14 @@ __declspec(dllexport) void output_file_dialog_from_core(const std::wstring& sugg
     auto extension = filename.substr(lastPeriod + 1);
     auto filenameAndUri = fileSaveDialog(filename, folder, extension);
     result = filenameAndUri.uri;
+}
+
+static void stopServer()
+{
+    SigUtil::requestShutdown();
+
+    // Wait until coolwsdThread is torn down, so that we don't start cleaning up too early.
+    coolwsdThread.join();
 }
 
 static void do_hullo_handling_things(WindowData& data)
@@ -1298,12 +1308,6 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
                 do_bye_handling_things(windowData[hWnd]);
 
-                // This seems to be what actually causes the document to be closed from a LO core
-                // point of view? At least the lock file disappears here.
-                auto loKitDoc = DocumentData::get(windowData[hWnd].appDocId).loKitDocument;
-                if (loKitDoc)
-                    loKitDoc->destroyView(loKitDoc->getView());
-
                 DocumentData::deallocate(windowData[hWnd].appDocId);
                 DestroyWindow(hWnd);
             }
@@ -1312,12 +1316,12 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         case WM_DESTROY:
             if (DocumentData::count() == 0)
             {
-                // FIXME: We probably should not just do a blunt TerminateProcess(). On the other
-                // hand, it works.
-                LOG_INF("DocumentData::count() is ZERO, bluntly exiting");
+                stopServer();
                 if (persistentWindowSizeStoreOK)
+                {
+                    persistentWindowSizeStoreOK = false;
                     persistentWindowSizeStore.close();
-                TerminateProcess(GetCurrentProcess(), 0);
+                }
             }
             break;
 
@@ -1698,7 +1702,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
-    std::thread(
+    coolwsdThread = std::thread(
         []
         {
             assert(coolwsd == nullptr);
@@ -1716,8 +1720,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
                 delete coolwsd;
                 LOG_TRC("One run of COOLWSD completed");
             }
-        })
-        .detach();
+        });
 
     {
         WNDCLASSEXW wcex;
