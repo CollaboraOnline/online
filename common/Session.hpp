@@ -168,24 +168,10 @@ public:
         return buffer != nullptr && sendTextFrame(buffer, std::strlen(buffer));
     }
 
-    template <std::size_t N>
-    bool sendTextFrameAndLogError(const char (&buffer)[N])
-    {
-        static_assert(N > 0, "Cannot have string literal with size zero");
-        LOG_ERR(buffer);
-        return sendTextFrame(buffer, N - 1);
-    }
-
-    bool sendTextFrameAndLogError(const std::string& text)
+    bool sendTextFrameAndLogError(const std::string_view text)
     {
         LOG_ERR(text);
         return sendTextFrame(text.data(), text.size());
-    }
-
-    bool sendTextFrameAndLogError(const char* buffer)
-    {
-        LOG_ERR(buffer);
-        return buffer != nullptr && sendTextFrame(buffer, std::strlen(buffer));
     }
 
     virtual void handleMessage(const std::vector<char> &data) override;
