@@ -822,17 +822,12 @@ window.L.Map = window.L.Evented.extend({
 	invalidateSize: function (debounceMoveend, oldSize) {
 		if (!this._loaded) { return this; }
 
-		if (!oldSize)
-			oldSize = this.getSize();
-
+		if (!oldSize) oldSize = this.getSize();
 		this._sizeChanged = true;
+		const newSize = this.getSize();
 
-		var newSize = this.getSize(),
-		    oldCenter = oldSize.divideBy(2).round(),
-		    newCenter = newSize.divideBy(2).round(),
-		    offset = oldCenter.subtract(newCenter);
-
-		if (!offset.x && !offset.y) { return this; }
+		if (oldSize.x === newSize.x && oldSize.y === newSize.y)
+			return this;
 
 		this.fire('move');
 
