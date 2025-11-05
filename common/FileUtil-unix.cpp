@@ -43,10 +43,7 @@ namespace FileUtil
         if (link(source.c_str(), newPath.c_str()) == 0)
             return true;
 
-        const auto onrre = errno;
-        LOG_DBG("Failed to link [" << source << "] to [" << newPath << "] ("
-                                   << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
-                                   << "), will try to copy");
+        LOG_DBG_SYS("Failed to link [" << source << "] to [" << newPath << "], will try to copy");
 
         return FileUtil::copy(source, newPath, /*log=*/true, /*throw_on_error=*/false);
     }

@@ -299,6 +299,14 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 /// NOTE: Must be called immediately after an API that sets errno.
 /// Use LOG_ERR_ERRNO to pass errno explicitly.
 #define LOG_SYS(X) LOG_ERR_ERRNO(errno, X)
+/// Log an WRN entry with the given errno appended.
+#define LOG_WRN_SYS(X) LOG_WRN_ERRNO(errno, X)
+/// Log an INF entry with the given errno appended.
+#define LOG_INF_SYS(X) LOG_INF_ERRNO(errno, X)
+/// Log an DBG entry with the given errno appended.
+#define LOG_DBG_SYS(X) LOG_DBG_ERRNO(errno, X)
+/// Log an TRC entry with the given errno appended.
+#define LOG_TRC_SYS(X) LOG_TRC_ERRNO(errno, X)
 
 #define LOG_FTL(X)                                                                                 \
     do                                                                                             \

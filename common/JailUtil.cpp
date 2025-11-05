@@ -67,7 +67,7 @@ bool enterMountingNS(uid_t uid, gid_t gid)
     if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));
+        LOG_SYS("enterMountingNS, unshare failed");
         return false;
     }
 
@@ -76,7 +76,7 @@ bool enterMountingNS(uid_t uid, gid_t gid)
     // Do not propagate any mounts from this new namespace to the system.
     if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
     {
-        LOG_ERR("enterMountingNS, root mount failed: " << strerror(errno));
+        LOG_SYS("enterMountingNS, root mount failed");
         // set to original uid so coolmount check isn't surprised by 'nobody'
         mapuser(uid, uid, gid, gid);
         return false;
@@ -99,7 +99,7 @@ bool enterUserNS(uid_t uid, gid_t gid)
     if (unshare(CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));
+        LOG_SYS("enterMountingNS, unshare failed");
         return false;
     }
 
@@ -420,7 +420,7 @@ void createJailPath(const std::string& path)
     LOG_INF("Creating jail path (if missing): " << path);
     Poco::File(path).createDirectories();
     if (chmod(path.c_str(), S_IXUSR | S_IWUSR | S_IRUSR) != 0)
-        LOG_WRN("chmod(\"" << path << "\") failed: " << strerror(errno));
+        LOG_WRN_SYS("chmod(\"" << path << "\") failed");
 }
 
 void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
@@ -619,9 +619,11 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
             }
 
             // Failed to link a file. Disable linking and copy instead.
-            LOG_WRN("Failed to link ["
-                    << srcFilename << "] -> [" << dstFilename << "] (" << strerror(linkerr)
-                    << "). Will copy and disable linking dynamic system files in this run.");
+            LOG_WRN_ERRNO(
+                linkerr,
+                "Failed to link ["
+                    << srcFilename << "] -> [" << dstFilename
+                    << "]. Will copy and disable linking dynamic system files in this run");
             LinkDynamicFiles = false;
         }
 

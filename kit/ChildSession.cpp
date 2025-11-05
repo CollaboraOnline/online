@@ -916,10 +916,7 @@ namespace {
         if (!FileUtil::copyAtomic(oldName, newName, /*preserveTimestamps=*/true))
         {
             // It's not an error if there was no file to copy, when the document isn't modified.
-            const auto onrre = errno;
-            LOG_TRC("Failed to copy [" << oldName << "] to [" << newName << "] ("
-                                         << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
-                                         << ')');
+            LOG_TRC_SYS("Failed to copy [" << oldName << "] to [" << newName << ']');
         }
         else
         {

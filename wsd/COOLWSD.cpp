@@ -1115,8 +1115,7 @@ void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chron
         if (len == -1 && errno != EAGAIN)
         {
             // Some read error, EAGAIN is when there is no data so let's not warn for it
-            LOG_WRN("InotifyPoll - Read error " << std::strerror(errno)
-                                                << " when trying to get events");
+            LOG_WRN_SYS("InotifyPoll - Read error when trying to get events");
         }
         else if (len == -1)
         {
@@ -1284,7 +1283,7 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
 
     if (pid == -1)
     {
-        LOG_ERR("setupChildRoot fork failed: " << strerror(errno));
+        LOG_SYS("setupChildRoot fork failed");
         return;
     }
 
@@ -1292,13 +1291,13 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
     const int rc = waitpid(pid, &wstatus, 0);
     if (rc == -1)
     {
-        LOG_ERR("setupChildRoot waitpid failed: " << strerror(errno));
+        LOG_SYS("setupChildRoot waitpid failed");
         return;
     }
 
     if (!WIFEXITED(wstatus))
     {
-        LOG_ERR("setupChildRoot abnormal termination");
+        LOG_SYS("setupChildRoot abnormal termination");
         return;
     }
 
