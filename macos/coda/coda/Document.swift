@@ -175,8 +175,12 @@ class Document: NSDocument {
 
         // Ensure the window exists so we can apply a default if no saved frame yet
         windowController.loadWindow()
-        if let win = windowController.window, !win.setFrameUsingName(initialName) {
-            FrameAutosaveHelper.applyDefaultFrame(win, widthFraction: 0.95, heightFraction: 0.95)
+        if let win = windowController.window {
+            win.minSize = NSSize(width: 800, height: 600)
+
+            if !win.setFrameUsingName(initialName) {
+                FrameAutosaveHelper.applyDefaultFrame(win, widthFraction: 0.95, heightFraction: 0.95)
+            }
         }
 
         // Observe fileURL so we can switch/migrate the autosave key after first save/rename.
