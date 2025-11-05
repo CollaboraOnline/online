@@ -962,10 +962,10 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
                                    LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
 
                                    // find a candidate with matching configId
-                                   auto found =
-                                       std::find_if(NewChildren.begin(), NewChildren.end(), [configId](auto candidate)->bool {
-                                           return candidate->getConfigId() == configId;
-                                       });
+                                   auto found = std::find_if(
+                                       NewChildren.begin(), NewChildren.end(),
+                                       [configId](const auto& candidate) -> bool
+                                       { return candidate->getConfigId() == configId; });
 
                                    const bool candidateMatch = found != NewChildren.end();
                                    // move this candidate into the last position
@@ -1049,14 +1049,14 @@ public:
         return POLLIN;
     }
 
-    bool watch(std::string configFile);
+    bool watch(std::string_view configFile);
 
 private:
     int m_watchedCount = 0;
     bool m_stopOnConfigChange;
 };
 
-bool InotifySocket::watch(const std::string configFile)
+bool InotifySocket::watch(const std::string_view configFile)
 {
     LOG_TRC("Inotify - Attempting to watch " << configFile << ", in addition to current "
                                              << m_watchedCount << " watched files");
@@ -1069,7 +1069,7 @@ bool InotifySocket::watch(const std::string configFile)
     }
 
     int watchedStatus;
-    watchedStatus = inotify_add_watch(getFD(), configFile.c_str(), IN_MODIFY);
+    watchedStatus = inotify_add_watch(getFD(), configFile.data(), IN_MODIFY);
 
     if (watchedStatus == -1)
         LOG_WRN("Inotify - Failed to watch config file " << configFile);
@@ -1319,7 +1319,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Initialize the config subsystem.
     LayeredConfiguration& conf = config();
 
-    const std::unordered_map<std::string, std::string> defAppConfig =
+    const std::unordered_map<std::string, std::string>& defAppConfig =
         ConfigUtil::getDefaultAppConfig();
 
     // Set default values, in case they are missing from the config file.
