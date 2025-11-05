@@ -45,7 +45,7 @@ msgid "Quick edits or deep dives"
 msgstr ""
 
 #: browser/welcome/welcome-slideshow.odp:8
-msgid "A clean, beautiful interfaceaa"
+msgid "A clean, beautiful interface"
 msgstr ""
 
 #: browser/welcome/welcome-slideshow.odp:9
