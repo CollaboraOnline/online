@@ -197,8 +197,7 @@ void resetTerminationFlags()
         {
             // Log errno if we had a child pid we expected to reap.
             if (!sighandler)
-                LOG_WRN("Failed to reap child process " << pid << " (" << Util::symbolicErrno(errno)
-                                                        << ": " << std::strerror(errno) << ')');
+                LOG_WRN_SYS("Failed to reap child process " << pid);
         }
 
         return std::make_pair(ret, 0);

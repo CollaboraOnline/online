@@ -332,8 +332,7 @@ static void cleanupChildren(const std::string& childRoot)
                     int noteCrashFD = open(noteCrashFile.c_str(), O_CREAT | O_TRUNC | O_WRONLY,
                                            S_IRUSR | S_IWUSR);
                     if (noteCrashFD < 0)
-                        LOG_ERR("Couldn't create file: " << noteCrashFile
-                                                         << " due to error: " << strerror(errno));
+                        LOG_SYS("Couldn't create file: " << noteCrashFile);
                     else
                         close(noteCrashFD);
                 }
