@@ -108,6 +108,9 @@ window.L.Map.include({
 	_shouldStartReadOnly: function () {
 		if (this.isLockedReadOnlyUser())
 			return true;
+		if (window.mode.isCODesktop()) {
+			return true;
+		}
 		var fileName = this['wopi'].BaseFileName;
 		// use this feature for only integration.
 		if (!fileName) return false;
