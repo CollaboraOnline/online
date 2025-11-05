@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Extract all text starting with "_" from an ODP file and generate a .po file.
+Extract all text starting with "_" from an ODF file and generate a .po file.
 """
 
 import zipfile
@@ -9,12 +9,12 @@ from typing import List
 from datetime import datetime
 
 
-def extract_underscore_text(odp_file_path: str) -> List[str]:
+def extract_underscore_text(odf_file_path: str) -> List[str]:
     """
-    Extract all text starting with '_' from an ODP file.
+    Extract all text starting with '_' from an ODF file.
 
     Args:
-        odp_file_path: Path to the ODP file
+        odf_file_path: Path to the ODF file
 
     Returns:
         List of text strings that start with '_'
@@ -22,9 +22,9 @@ def extract_underscore_text(odp_file_path: str) -> List[str]:
     texts = []
 
     try:
-        with zipfile.ZipFile(odp_file_path, "r") as zip_ref:
+        with zipfile.ZipFile(odf_file_path, "r") as zip_ref:
             if "content.xml" not in zip_ref.namelist():
-                print("Error: content.xml not found in ODP file")
+                print("Error: content.xml not found in ODF file")
                 return texts
 
             content_xml = zip_ref.read("content.xml")
@@ -49,9 +49,9 @@ def extract_underscore_text(odp_file_path: str) -> List[str]:
                     texts.append(element.text)
 
     except FileNotFoundError:
-        print(f"Error: File '{odp_file_path}' not found")
+        print(f"Error: File '{odf_file_path}' not found")
     except zipfile.BadZipFile:
-        print(f"Error: '{odp_file_path}' is not a valid ZIP/ODP file")
+        print(f"Error: '{odf_file_path}' is not a valid ZIP/ODF file")
     except ET.ParseError as e:
         print(f"Error parsing XML: {e}")
 
