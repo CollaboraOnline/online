@@ -69,6 +69,9 @@ struct FilenameAndUri
 struct WindowData
 {
     HWND hWnd;
+    RECT originalRect;
+    LONG originalStyle;
+    bool isFullScreen;
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
     FilenameAndUri filenameAndUri;
@@ -689,6 +692,46 @@ static void do_welcome_handling_things(WindowData& data)
     openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, PERMISSION::WELCOME);
 }
 
+static void enter_full_screen(WindowData& data)
+{
+    if (data.isFullScreen)
+        return;
+
+    HMONITOR monitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
+    MONITORINFO monitorInfo = { sizeof(monitorInfo) };
+    GetMonitorInfo(monitor, &monitorInfo);
+
+    GetWindowRect(data.hWnd, &data.originalRect);
+
+    // Remove window borders and title bar
+    LONG style = GetWindowLong(data.hWnd, GWL_STYLE);
+    data.originalStyle = style;
+    style &= ~(WS_OVERLAPPEDWINDOW);
+    SetWindowLong(data.hWnd, GWL_STYLE, style);
+
+    // Resize window to fill the entire monitor
+    SetWindowPos(data.hWnd, NULL,
+                 monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
+                 monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left,
+                 monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top,
+                 SWP_NOZORDER | SWP_FRAMECHANGED);
+    data.isFullScreen = true;
+}
+
+static void leave_full_screen(WindowData& data)
+{
+    if (!data.isFullScreen)
+        return;
+
+    SetWindowLong(data.hWnd, GWL_STYLE, data.originalStyle);
+    SetWindowPos(data.hWnd, NULL,
+                 data.originalRect.left, data.originalRect.top,
+                 data.originalRect.right - data.originalRect.left,
+                 data.originalRect.bottom - data.originalRect.top,
+                 SWP_NOZORDER | SWP_FRAMECHANGED);
+    data.isFullScreen = false;
+}
+
 static void do_bye_handling_things(const WindowData& data)
 {
     LOG_TRC_NOFILE(
@@ -1278,7 +1321,9 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 GetClientRect(hWnd, &bounds);
                 windowData[hWnd].webViewController->put_Bounds(bounds);
 
-                if (persistentWindowSizeStoreOK && (wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED))
+                if (!windowData[hWnd].isFullScreen &&
+                    persistentWindowSizeStoreOK &&
+                    (wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED))
                 {
                     std::vector<uint8_t> value(sizeof(POINT));
                     POINT* p = reinterpret_cast<POINT*>(value.data());
@@ -1403,6 +1448,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
 
     auto& data = windowData[hWnd];
     data.hWnd = hWnd;
+    data.isFullScreen = false;
     data.fakeClientFd = fakeSocketSocket();
     data.appDocId = generate_new_app_doc_id();
     data.lastOwnClipboardModification = 0;
@@ -1466,17 +1512,25 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                     .Get(),
                                 &token);
 
-                            std::string permissionString =
-                                (permission == PERMISSION::EDIT ? "edit" :
-                                 permission == PERMISSION::READONLY ? "readonly" :
-                                 permission == PERMISSION::VIEW ? "view" :
-                                 permission == PERMISSION::WELCOME ? "view" :
-                                 "huh");
+                            webView->add_ContainsFullScreenElementChanged(
+                                Microsoft::WRL::Callback<ICoreWebView2ContainsFullScreenElementChangedEventHandler>(
+                                    [&data](ICoreWebView2* sender, IUnknown* args) -> HRESULT
+                                    {
+                                        BOOL containsFullscreenElement;
+                                        sender->get_ContainsFullScreenElement(&containsFullscreenElement);
+                                        if (containsFullscreenElement)
+                                            enter_full_screen(data);
+                                        else
+                                            leave_full_screen(data);
+                                        return S_OK;
+                                    })
+                                    .Get(),
+                                nullptr);
 
                             const std::string coolURL =
                                 app_installation_uri +
                                 std::string("cool/cool.html?file_path=") + data.filenameAndUri.uri +
-                                std::string("&permission=") + permissionString +
+                                std::string("&permission=edit") +
                                 std::string("&lang=") + uiLanguage +
                                 std::string("&appdocid=") + std::to_string(data.appDocId) +
                                 std::string("&userinterfacemode=notebookbar"
