@@ -506,7 +506,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'command': 'presentation-currentslide',
 				'accessibility': { focusBack: true, combination: 'FC', de: null }
 			},
-			{ type: 'separator', id: 'slide-show-presentation', orientation: 'vertical' },
+			!window.ThisIsAMobileApp ? { type: 'separator', id: 'slide-show-presentation', orientation: 'vertical' } : {},
 			!window.ThisIsAMobileApp ?
 				{
 					'id': 'slide-presentation-in-window',
