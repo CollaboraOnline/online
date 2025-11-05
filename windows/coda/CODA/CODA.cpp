@@ -689,6 +689,9 @@ static void do_welcome_handling_things(WindowData& data)
 {
     const auto welcomeSlideshow = Poco::Path(app_installation_path + "cool\\welcome\\welcome-slideshow.odp");
 
+    if (!Poco::File(welcomeSlideshow).exists())
+        return;
+
     openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, PERMISSION::WELCOME);
 }
 
