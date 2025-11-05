@@ -368,7 +368,7 @@ namespace FileUtil
 
     void lslr(const std::string& dir);
 
-    std::vector<std::string> getDirEntries(std::string dirPath);
+    std::vector<std::string> getDirEntries(const std::string& dirPath);
 
 } // end namespace FileUtil
 
