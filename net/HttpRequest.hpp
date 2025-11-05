@@ -1261,7 +1261,7 @@ public:
     }
 
 private:
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     void finish(State newState)
     {
@@ -1624,7 +1624,7 @@ public:
     }
 
 private:
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     /// Make a synchronous request.
     bool syncRequestImpl(SocketPoll& poller)
