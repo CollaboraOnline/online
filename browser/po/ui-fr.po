@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-03 17:51+0000\n"
-"Last-Translator: Tim <tim1337@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2025-11-05 14:58+0000\n"
+"Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2908,7 +2908,7 @@ msgstr "Dégrouper"
 
 #: src/control/Control.NotebookbarCalc.js:1685
 msgid "Pivot Table"
-msgstr ""
+msgstr "Table Pivot"
 
 #: src/control/Control.NotebookbarCalc.js:1734
 #: src/control/Control.NotebookbarDraw.js:1013
@@ -2937,7 +2937,7 @@ msgstr "Assistant"
 
 #: src/control/Control.NotebookbarCalc.js:2013
 msgid "Insert Function"
-msgstr ""
+msgstr "Insérer Fonction"
 
 #: src/control/Control.NotebookbarCalc.js:2021
 #, fuzzy
@@ -2946,23 +2946,23 @@ msgstr "Assistant de fonctions"
 
 #: src/control/Control.NotebookbarCalc.js:2035
 msgid "AutoSum"
-msgstr ""
+msgstr "SommeAuto"
 
 #: src/control/Control.NotebookbarCalc.js:2048
 msgid "Financial"
-msgstr ""
+msgstr "Financier"
 
 #: src/control/Control.NotebookbarCalc.js:2066
 msgid "Logical"
-msgstr ""
+msgstr "Logique"
 
 #: src/control/Control.NotebookbarCalc.js:2096
 msgid "Date & Time"
-msgstr ""
+msgstr "Date et Heure"
 
 #: src/control/Control.NotebookbarCalc.js:2108
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Recherche & Référence"
 
 #: src/control/Control.NotebookbarCalc.js:2126
 msgid "Math & Trig"
@@ -2970,30 +2970,29 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2138
 msgid "More Functions"
-msgstr ""
+msgstr "Plus de Fonctions"
 
 #: src/control/Control.NotebookbarCalc.js:2183
 msgid "Range"
-msgstr ""
+msgstr "Plage"
 
 #: src/control/Control.NotebookbarCalc.js:2266
 msgid "Sort"
-msgstr ""
+msgstr "Trie"
 
 #: src/control/Control.NotebookbarCalc.js:2312
 msgid "Filter"
-msgstr ""
+msgstr "Filtre"
 
 #: src/control/Control.NotebookbarCalc.js:2560
 #: src/control/Control.NotebookbarImpress.js:1966
 #: src/control/Control.NotebookbarWriter.js:2236
-#, fuzzy
 msgid "Comments"
-msgstr "Commentaire"
+msgstr "Commentaires"
 
 #: src/control/Control.NotebookbarCalc.js:2665
 msgid "Format Cells"
-msgstr ""
+msgstr "Formater les Cellules"
 
 #: src/control/Control.NotebookbarCalc.js:2811
 #: src/control/Control.NotebookbarCalc.js:3168
@@ -3007,7 +3006,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:2685
 #: src/control/Control.NotebookbarWriter.js:3048
 msgid "Image Controls"
-msgstr ""
+msgstr "Contrôles d'Image"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
@@ -3039,7 +3038,7 @@ msgstr "Règle"
 #: src/control/Control.NotebookbarWriter.js:793
 #: src/control/Control.NotebookbarWriter.js:2605
 msgid "Paragraph"
-msgstr ""
+msgstr "Paragraphe"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
@@ -3107,11 +3106,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Espacement et Couleur"
 
 #: src/control/Control.NotebookbarImpress.js:1794
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Modèles de Diapo Maîtresse"
 
 #: src/control/Control.NotebookbarImpress.js:1845
 msgid "Slide Size"
