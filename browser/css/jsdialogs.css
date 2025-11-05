@@ -2942,7 +2942,7 @@ kbd,
 
 /* Listbox UI grid */
 .jsdialog.ui-grid[role='listbox'] {
-	max-height: 470px;
+	max-height: min(470px, 45vh);
 	overflow-x: hidden;
 	overflow-y: auto;
 }
