@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-01 12:51+0000\n"
+"PO-Revision-Date: 2025-11-05 14:58+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || "
+"(n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2809,23 +2809,23 @@ msgstr "Widok arkusza"
 
 #: src/control/Control.NotebookbarCalc.js:1406
 msgid "Default View"
-msgstr ""
+msgstr "Widok domyślny"
 
 #: src/control/Control.NotebookbarCalc.js:1423
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Wybierz widok arkusza"
 
 #: src/control/Control.NotebookbarCalc.js:1430
 msgid "New Sheet View"
-msgstr ""
+msgstr "Nowy widok arkusza"
 
 #: src/control/Control.NotebookbarCalc.js:1437
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Usuń widok arkusza"
 
 #: src/control/Control.NotebookbarCalc.js:1444
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Opuść widok arkusza"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -5090,7 +5090,6 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Development Edition"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5100,26 +5099,25 @@ msgid ""
 msgstr ""
 "Ciesz się najnowszymi osiągnięciami w dziedzinie produktywności online, z "
 "których możesz bezpłatnie korzystać, odkrywać i używać z innymi osobami w "
-"przeglądarce. Różne <a target=\"_blank\" href=\"https://www.collaboraonline."
-"com/solutions/collabora-office-android-ios/\">aplikacje</a> są również "
-"dostępne na urządzenia mobilne."
+"przeglądarce. Różne <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">aplikacje</a> są również dostępne na urządzenia mobilne."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "Odkryj wszystkie zmiany"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"Sprawdź <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">informacje o wydaniu</a> i dowiedz się "
-"wszystkiego o najnowszej wersji Collabora Online Development Edition, "
-"skierowanej do użytkowników domowych i małych zespołów."
+"Sprawdź <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">informacje o "
+"wydaniu</a> i dowiedz się wszystkiego o najnowszej wersji Collabora Online "
+"Development Edition, skierowanej do użytkowników domowych i małych zespołów."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5130,7 +5128,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5142,12 +5139,14 @@ msgid ""
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Chcesz wziąć udział w projekcie, ale nie wiesz, od czego zacząć? Przejdź do "
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">instrukcji krok po kroku</a> i skompiluj CODE od podstaw. "
-"Możesz także pomóc w <a target=\"_blank\" href=\"https://collaboraonline."
-"github.io/post/translate/\">tłumaczeniu</a> lub <a target=\"_blank\" href="
-"\"https://collaboraonline.github.io/post/filebugs/\">zgłaszając błąd</a> "
-"wraz ze wszystkimi niezbędnymi krokami, jak go odtworzyć."
+"<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/build-code/\">instrukcji krok po "
+"kroku</a> i skompiluj CODE od podstaw. Możesz także pomóc w <a target="
+"\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/translate/\">tłumaczeniu</a> lub <a "
+"target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">zgłosić błąd</a>, "
+"podając wszystkie niezbędne kroki dotyczące jego odtworzenia."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
