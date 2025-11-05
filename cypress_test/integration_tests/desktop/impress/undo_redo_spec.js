@@ -12,7 +12,6 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('{ctrl+a}');
 		helper.copy();
-		impressHelper.dblclickOnSelectedShape();
 		helper.clipboardTextShouldBeDifferentThan('Hello World');
 	}
 
