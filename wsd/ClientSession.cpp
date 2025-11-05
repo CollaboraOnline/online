@@ -944,7 +944,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "tile"))
     {
         int canonicalViewId = to_underlying(getCanonicalViewId());
-        if (!(UnitWSD::isUnitTesting() ? true : canonicalViewId != 0 && canonicalViewId >= 1000))
+        if (!(UnitWSD::isUnitTesting() ? true : canonicalViewId >= 1000))
         {
             LOG_WRN("Got tile request for session [" << getId() << "] on document [" << docBroker->getDocKey()
                                 << "] with invalid view ID [" << canonicalViewId << "].");
@@ -954,7 +954,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "tilecombine"))
     {
         int canonicalViewId = to_underlying(getCanonicalViewId());
-        if (!(UnitWSD::isUnitTesting() ? true : canonicalViewId != 0 && canonicalViewId >= 1000))
+        if (!(UnitWSD::isUnitTesting() ? true : canonicalViewId >= 1000))
         {
             LOG_WRN("Got tilecombine request for session [" << getId() << "] on document [" << docBroker->getDocKey()
                                 << "] with invalid view ID [" << canonicalViewId << "].");
