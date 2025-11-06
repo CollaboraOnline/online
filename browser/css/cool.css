@@ -642,6 +642,8 @@ body {
 	line-height: 1.4;
 	max-height: var(--annotation-input-size);
 	overflow: auto;
+	scrollbar-color: var(--scrollbar-color);
+	scrollbar-width: thin;
 }
 
 .cool-annotation-info-collapsed {
@@ -764,7 +766,7 @@ body {
 	height: var(--default-height);
 	width: var(--default-width);
 	padding: 0;
-	outline: 2px solid #fff;
+	outline: 2px solid var(--color-background-lighter);
 	outline-offset: -3px;
 }
 
@@ -845,6 +847,7 @@ body {
 	border: 1px solid transparent !important;
 	display: inline-block !important;
 	cursor: pointer;
+	box-sizing: border-box;
 }
 
 .cool-redline-accept-button {
@@ -877,7 +880,7 @@ body {
 
 .cool-annotation-date {
 	font-size: 0.625rem;
-	color: #555555;
+	color: var(--color-date-text);
 }
 
 .annotation-button-autosaved {
