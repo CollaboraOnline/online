@@ -49,6 +49,8 @@ class Document: NSDocument {
         let typeName: String
         let operation: NSDocument.SaveOperationType
         let completion: (((any Error)?) -> Void)
+        /** Change-count token captured when the save started; used to clear only if nothing new happened. */
+        let token: Any
     }
 
     /** Stashed Save / Save As… request while edits are still dirty (nil when none). */
@@ -73,10 +75,8 @@ class Document: NSDocument {
             return value
         }
         set {
-            // in case this is the first modified -> unmodified flip after the user triggered "Save As"
-            var triggerPendingSave: PendingSave? = nil
-            // in case the save was triggered from inside the webview, we should ask for the document name (if it is Untitled) etc.
-            var triggerImplicitSave = false
+            // schedule UI updates after we release the lock
+            var changeUpdate: (() -> Void)?
 
             modifiedLock.lock()
 
@@ -87,30 +87,16 @@ class Document: NSDocument {
             if !oldValue && newValue {
                 updateChangeCount(.changeDone)
             }
-            // modified -> non-modified: Trigger the saving operation
-            else if oldValue && !newValue {
-                // decide under the lock if we should run the stashed Save now
-                if pendingSave != nil {
-                    triggerPendingSave = pendingSave
-                    pendingSave = nil
-                }
-                else {
-                    triggerImplicitSave = true
-                }
+            // modified -> non-modified: Clear the mark unless there is an ongoing saving operation
+            else if oldValue && !newValue && pendingSave == nil {
+                changeUpdate = { self.updateChangeCount(.changeCleared) }
             }
 
             modifiedLock.unlock()
 
-            // schedule the actual save outside the lock
-            if let ps = triggerPendingSave {
-                DispatchQueue.main.async {
-                    self.performPendingSave(ps)
-                }
-            }
-            else if triggerImplicitSave {
-                DispatchQueue.main.async {
-                    self.performImplicitSave()
-                }
+            // change the "Edited" mark
+            if let changeUpdate {
+                DispatchQueue.main.async(execute: changeUpdate)
             }
         }
     }
@@ -125,11 +111,38 @@ class Document: NSDocument {
         modifiedLock.lock()
         defer { modifiedLock.unlock() }
         if _isModified {
-            pendingSave = PendingSave(url: url, typeName: typeName, operation: saveOperation, completion: completionHandler)
+            let t = self.changeCountToken(for: saveOperation)
+            pendingSave = PendingSave(url: url, typeName: typeName, operation: saveOperation, completion: completionHandler, token: t)
             return true
         }
 
         return false
+    }
+
+    /**
+     * Called by the COOL once it flushed edits to `tempFileURL` (based on .uno:Save command result); completes any pending Save / Save As…
+     */
+    func triggerSave() {
+        // Grab and clear the pending request atomically.
+        var ps: PendingSave?
+
+        modifiedLock.lock()
+        ps = pendingSave
+        pendingSave = nil
+        modifiedLock.unlock()
+
+        if let ps {
+            // Finish the original AppKit request: write the bytes and call its original completion
+            DispatchQueue.main.async {
+                self.performPendingSave(ps)
+            }
+        }
+        else {
+            // No pending AppKit request → internal/webview save: ask AppKit to Save (or show Save As… if untitled)
+            DispatchQueue.main.async {
+                self.performImplicitSave()
+            }
+        }
     }
 
     // MARK: - deinit
@@ -250,8 +263,8 @@ class Document: NSDocument {
                 self.fileType = ps.typeName
             }
 
-            // Clear the change count; we’re now up to date.
-            self.updateChangeCount(.changeCleared)
+            // Clear edited state only if nothing new happened since this save began.
+            self.updateChangeCount(withToken: ps.token, for: ps.operation)
 
             // Tell AppKit the *original* save request completed (this unblocks the close button flow).
             DispatchQueue.main.async { ps.completion(nil) }
