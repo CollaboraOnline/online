@@ -185,6 +185,14 @@ class Document: NSDocument {
 
         addWindowController(windowController)
 
+        if let win = windowController.window {
+            // Enable window tabbing
+            win.tabbingMode = .preferred
+            win.tabbingIdentifier = "CollaboraDocumentTab"
+            // Set minimum window size
+            win.minSize = NSSize(width: 800, height: 600)
+        }
+
         if let viewController = windowController.contentViewController as? ViewController {
             viewController.loadDocument(self)
         }
