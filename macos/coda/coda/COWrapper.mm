@@ -147,14 +147,9 @@ static std::thread coolwsdThread;
     // First we simply send the Online C++ parts the URL and the appDocId. This corresponds
     // to the GET request with Upgrade to WebSocket.
     std::string url([[document.tempFileURL absoluteString] UTF8String]);
-    struct pollfd p;
-    p.fd = document.fakeClientFd;
-    p.events = POLLOUT;
-    fakeSocketPoll(&p, 1, -1);
-
     // appDocId is read in ClientRequestDispatcher::handleIncomingMessage() in COOLWSD.cpp
     std::string message(url + " " + std::to_string(document.appDocId));
-    fakeSocketWrite(document.fakeClientFd, message.c_str(), message.size());
+    fakeSocketWriteQueue(document.fakeClientFd, message.c_str(), message.size());
 }
 
 + (void)handleByeWith:(Document *_Nonnull)document {
@@ -164,11 +159,7 @@ static std::thread coolwsdThread;
 
 + (void)handleMessageWith:(Document *)document message:(NSString *)message {
     const char *buf = [message UTF8String];
-    struct pollfd p;
-    p.fd = document.fakeClientFd;
-    p.events = POLLOUT;
-    fakeSocketPoll(&p, 1, -1);
-    fakeSocketWrite(document.fakeClientFd, buf, strlen(buf));
+    fakeSocketWriteQueue(document.fakeClientFd, buf, strlen(buf));
 }
 
 + (void)saveAsWith:(Document *)document url:(NSString *)url format:(NSString *)format filterOptions:(NSString *)filterOptions {
