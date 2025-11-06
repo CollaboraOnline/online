@@ -2278,6 +2278,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		this._map.hideBusy();
 		this._map.fire('commandresult', {commandName: commandName, success: success, result: obj.result});
+		if (window.ThisIsTheMacOSApp) {
+			window.postMobileMessage('COMMANDRESULT ' + textMsg);
+		}
 
 		if (this._map.CallPythonScriptSource != null) {
 			this._map.CallPythonScriptSource.postMessage(JSON.stringify({'MessageId': 'CallPythonScript-Result',
