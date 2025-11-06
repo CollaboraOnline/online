@@ -141,6 +141,23 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                         } catch {}
                     }
                 }
+                else if body.hasPrefix("COMMANDRESULT ") {
+                    if let brace = body.firstIndex(of: "{") {
+                        // substring that shares storage with the original string
+                        let jsonSlice = body[brace...]
+
+                        // convert directly to Data and decode.
+                        let data = Data(jsonSlice.utf8)
+                        do {
+                            let result = try JSONDecoder().decode(CommandResult.self, from: data)
+
+                            // Was it a successful save?
+                            if result.commandName == ".uno:Save" && result.success == true && result.wasModified == true {
+                                document.triggerSave()
+                            }
+                        } catch {}
+                    }
+                }
                 else if body == "SLIDESHOW" {
                     COWrapper.LOG_ERR("TODO: Implement slideshow")
                     /*
