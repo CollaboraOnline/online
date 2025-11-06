@@ -370,14 +370,26 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (data.step != undefined) {
 			// we don't want to show error popups due to browser step validation
 			// so be sure all the values will be acceptted, check only precision
-			var step = getPrecision(data.step);
-			var value = data.value ? getPrecision(data.value) : 1;
-			var minStep = getPrecision(data.min);
-			var maxStep = getPrecision(data.max);
 
-			step = Math.min(step, value, minStep, maxStep);
+			// these are set by core when there is no explicit min/max.
+			const noMin = -2147483648;
+			const noMax =  2147483647;
+			if (data.min === noMin && data.max === noMax && data.step === 1) {
+				// This is to allow decimal points in user input
+				// and the step button will increment/decrement
+				// according to current value's precision.
+				$(spinfield).attr('step', 'any');
 
-			$(spinfield).attr('step', step);
+			} else {
+				var step = getPrecision(data.step);
+				var value = data.value ? getPrecision(data.value) : 1;
+				var minStep = getPrecision(data.min);
+				var maxStep = getPrecision(data.max);
+
+				step = Math.min(step, value, minStep, maxStep);
+
+				$(spinfield).attr('step', step);
+			}
 		}
 
 		const isDisabled = data.enabled === false;
