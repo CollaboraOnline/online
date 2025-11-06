@@ -1851,6 +1851,16 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		const itemsToSyncWithContainer = [];
 
+		const setDisabled = (disabled) => {
+			if (disabled) {
+				div.setAttribute('disabled', 'true');
+				div.setAttribute('aria-disabled', true);
+			} else {
+				div.removeAttribute('disabled');
+				div.removeAttribute('aria-disabled');
+			}
+		};
+
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command.replace('.uno:', '') : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
@@ -1951,63 +1961,44 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tooltip = JSDialog.ShortcutsUtil.getShortcut(tooltip, data.command);
 			div.setAttribute('data-cooltip', tooltip);
 
-			var isDisabled = data.enabled === false;
-			if (data.command) {
-				var updateFunction = function() {
-					var items = builder.map['stateChangeHandler'];
-					var state = items.getItemValue(data.command);
-
-					if (state && state === 'true') {
-						$(button).addClass('selected');
-						$(div).addClass('selected');
-						button.setAttribute('aria-pressed', true);
-					}
-					else {
-						$(button).removeClass('selected');
-						$(div).removeClass('selected');
-						button.setAttribute('aria-pressed', false);
-					}
-
-					if (isDisabled) {
-						div.setAttribute('disabled', 'true');
-						div.setAttribute('aria-disabled', true);
-					} else {
-						div.removeAttribute('disabled');
-						div.removeAttribute('aria-disabled');
-					}
-				};
-
-				updateFunction();
-
-				builder.map.on('commandstatechanged', function(e) {
-					isDisabled = false;
-					if (e.commandName === data.command)
-					{
-						// in some cases we will get both property like state and disabled
-						// to handle it we will set disable var based on INCOMING info (ex: .uno:ParaRightToLft)
-						isDisabled = e.disabled || e.state == 'disabled';
-						updateFunction();
-					}
-				}, this);
-			}
-
-			if (isDisabled) {
-				div.setAttribute('disabled', 'true');
-				div.setAttribute('aria-disabled', true);
-			}
-
-			var selectFn = function() {
+			const selectFn = () => {
 				window.L.DomUtil.addClass(button, 'selected');
 				window.L.DomUtil.addClass(div, 'selected');
 				button.setAttribute('aria-pressed', true);
 			};
 
-			var unSelectFn = function() {
+			const unSelectFn = () => {
 				window.L.DomUtil.removeClass(button, 'selected');
 				window.L.DomUtil.removeClass(div, 'selected');
 				button.setAttribute('aria-pressed', false);
 			};
 
+			if (data.command) {
+				const updateFunction = () => {
+					const items = builder.map['stateChangeHandler'];
+					const state = items.getItemValue(data.command);
+
+					if (state && state === 'true')
+						selectFn();
+					else
+						unSelectFn();
+				};
+
+				updateFunction();
+				setDisabled(data.enabled === false);
+
+				builder.map.on('commandstatechanged', function(e) {
+					if (e.commandName === data.command)
+					{
+						updateFunction();
+						// in some cases we will get both property like state and disabled
+						// to handle it we will set disable var based on INCOMING info (ex: .uno:ParaRightToLft)
+						setDisabled(e.disabled || e.state == 'disabled');
+					}
+				}, this);
+			}
+
+			setDisabled(data.enabled === false);
 			div.onSelect = selectFn;
 			div.onUnSelect = unSelectFn;
 
@@ -2140,11 +2131,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		builder._preventDocumentLosingFocusOnClick(div);
 
-		if (isDisabled) {
-			div.setAttribute('disabled', 'true');
-			div.setAttribute('aria-disabled', true);
-		}
-
+		setDisabled(data.enabled === false);
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
 
