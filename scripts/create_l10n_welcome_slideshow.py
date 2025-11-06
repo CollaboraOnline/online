@@ -1,7 +1,6 @@
 import zipfile
 import xml.etree.ElementTree as ET
 from io import BytesIO
-import shutil
 import re
 import os
 import sys
@@ -280,9 +279,37 @@ def add_l10n_to_odt(odt_path, l10n_content):
         import traceback
 
         traceback.print_exc()
-        print(f"Restoring backup from {backup_path}")
-        shutil.copy2(backup_path, odt_path)
         return False
+
+
+def detect_available_locales(po_directory, lang_to_locale_map):
+    """
+    Detect available locales from PO files in directory
+
+    Args:
+        po_directory: Directory containing welcome-slideshow-*.po files
+        lang_to_locale_map: Dict mapping language codes to locales
+
+    Returns:
+        List of available locale codes
+    """
+    po_files = glob(os.path.join(po_directory, "welcome-slideshow-*.po"))
+
+    if not po_files:
+        print(f"No PO files found in {po_directory}")
+        return []
+
+    available_locales = []
+
+    for po_file in sorted(po_files):
+        lang_code = extract_language_from_filename(os.path.basename(po_file))
+
+        if lang_code:
+            locale = lang_to_locale_map.get(lang_code, lang_code)
+            available_locales.append(locale)
+            print(f"  Detected: {os.path.basename(po_file)} → {locale}")
+
+    return sorted(available_locales)
 
 
 if __name__ == "__main__":
@@ -292,9 +319,6 @@ if __name__ == "__main__":
     odf_file = (
         sys.argv[2] if len(sys.argv) > 2 else "browser/welcome/welcome-slideshow.odp"
     )
-
-    # Define supported locales
-    supported_locales = ["en-US", "de-DE", "hu-HU", "fr-FR"]
 
     # Optional: Define custom language-to-locale mapping
     lang_to_locale_map = {
@@ -310,6 +334,10 @@ if __name__ == "__main__":
         "zh": "zh-CN",
     }
 
+    # Auto-detect available locales from PO files
+    print("Detecting available locales from PO files...")
+    supported_locales = detect_available_locales(po_directory, lang_to_locale_map)
+
     print("=" * 60)
     print("L10n Content Generator from PO Files")
     print("=" * 60)
@@ -322,7 +350,7 @@ if __name__ == "__main__":
         po_directory, supported_locales, lang_to_locale_map
     )
 
-    # print(l10n_content)
+    print(l10n_content)
 
     print()
 
