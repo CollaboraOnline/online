@@ -151,21 +151,9 @@ public:
     }
 
     /// Sends a WebSocket Text message.
-    bool sendTextFrame(const std::string& text)
+    bool sendTextFrame(const std::string_view text)
     {
         return sendTextFrame(text.data(), text.size());
-    }
-
-    template <std::size_t N>
-    bool sendTextFrame(const char (&buffer)[N])
-    {
-        static_assert(N > 0, "Cannot have string literal with size zero");
-        return sendTextFrame(buffer, N - 1);
-    }
-
-    bool sendTextFrame(const char* buffer)
-    {
-        return buffer != nullptr && sendTextFrame(buffer, std::strlen(buffer));
     }
 
     bool sendTextFrameAndLogError(const std::string_view text)
