@@ -14,7 +14,7 @@ describe(['tagdesktop'], 'Sidebar tests', function() {
 		cy.viewport(1000,660);
 		cy.wait(500); // wait to make fully rendered
 		cy.cGet('#sidebar-dock-wrapper').scrollTo(0,0,{ ensureScrollable: false });
-		cy.wait(1000); // wait for animations
+		cy.wait(500); // wait for animations
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('sidebar_writer', 0.07);
 	});
 
