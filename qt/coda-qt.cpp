@@ -602,15 +602,9 @@ QVariant Bridge::cool(const QString& messageStr)
             .detach();
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
-        struct pollfd p
-        {
-        };
-        p.fd = _document._fakeClientFd;
-        p.events = POLLOUT;
-        fakeSocketPoll(&p, 1, -1);
         std::string message(_document._fileURL.toString() +
                             (" " + std::to_string(_document._appDocId)));
-        fakeSocketWrite(_document._fakeClientFd, message.c_str(), message.size());
+        fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
     }
     else if (message == "WELCOME")
     {
@@ -850,19 +844,7 @@ QVariant Bridge::cool(const QString& messageStr)
     else
     {
         // Forward arbitrary payload from JS → Online
-        std::string copy = message; // make lifetime explicit
-        std::thread(
-            [this, copy]
-            {
-                struct pollfd p
-                {
-                };
-                p.fd = _document._fakeClientFd;
-                p.events = POLLOUT;
-                fakeSocketPoll(&p, 1, -1);
-                fakeSocketWrite(_document._fakeClientFd, copy.c_str(), copy.size());
-            })
-            .detach();
+        fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
     }
     return {};
 }
