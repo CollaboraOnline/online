@@ -477,14 +477,10 @@ QVariant Bridge::cool(const QString& messageStr)
         if (FileUtil::getStatOfFile(welcomePath, st) == 0)
         {
             std::string fileURL = Poco::URI(Poco::Path(welcomePath)).toString();
-            QMetaObject::invokeMethod(
-                qApp,
-                [fileURL]
-                {
-                    WebView* webViewInstance = new WebView(nullptr, Application::getProfile(), /*isWelcome*/ true);
-                    webViewInstance->load(fileURL);
-                },
-                Qt::QueuedConnection);
+            QTimer::singleShot(0, [fileURL]() {
+                WebView* webViewInstance = new WebView(nullptr, Application::getProfile(), /*isWelcome*/ true);
+                webViewInstance->load(fileURL);
+            });
             LOG_TRC_NOFILE("Opening welcome slideshow: " << welcomePath);
         }
         else
@@ -513,23 +509,19 @@ QVariant Bridge::cool(const QString& messageStr)
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
-        QMetaObject::invokeMethod(
-            qApp,
-            [this]()
+        QTimer::singleShot(0, [this]() {
+            if (_webView)
             {
-                if (_webView)
+                QWidget* topLevel = _webView->window();
+                if (topLevel)
                 {
-                    QWidget* topLevel = _webView->window();
-                    if (topLevel)
-                    {
-                        LOG_INF("Closing document window");
-                        topLevel->hide();
-                        topLevel->close();
-                        topLevel->deleteLater();
-                    }
+                    LOG_INF("Closing document window");
+                    topLevel->hide();
+                    topLevel->close();
+                    topLevel->deleteLater();
                 }
-            },
-            Qt::QueuedConnection);
+            }
+        });
     }
     else if (message == "CLIPBOARDWRITE")
     {
@@ -693,7 +685,7 @@ void Application::initialize()
 {
     if (!globalProfile)
     {
-        globalProfile = new QWebEngineProfile(QStringLiteral("PersistentProfile"), qApp);
+        globalProfile = new QWebEngineProfile(QStringLiteral("PersistentProfile"));
 
         QString appData = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
         QString cacheData = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
