@@ -181,6 +181,34 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		}
 	});
 
+	it('Collapse/Expand On Last 1px Resize', function() {
+		desktopHelper.insertComment('test comment', true);
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		desktopHelper.selectZoomLevel('120', false);
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		/*
+			at this point, the space on the left of the document and the 
+			space on the right of the document (without moving the document
+			to the left) is same, equal to half of the comment width;
+		*/
+		cy.viewport(1285, 600);
+		cy.cGet('#comment-container-1').should('be.visible');
+
+		/*
+			we reduce the width by just one pixel at this point, and
+			`haveEnoughLeftMarginForMove` becomes false in
+			`ViewLayoutWriter.documentCanMoveLeft(...)` and thus document
+			can't move left anymore, so we collapse the comments.
+		*/
+		cy.viewport(1284, 600);
+		cy.cGet('#comment-container-1').should('be.not.visible');
+
+		cy.viewport(1285, 600);
+		cy.cGet('#comment-container-1').should('be.visible');
+	});
 
 	it('Tab Navigation', function() {
 		desktopHelper.insertComment(undefined, false);
