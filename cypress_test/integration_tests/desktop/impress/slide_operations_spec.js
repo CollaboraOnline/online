@@ -40,6 +40,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
+	it('Check slide sorter focus', function() {
+		cy.cGet('#insertpage-button').click();
+		cy.wait(100);
+
+		// Set the focus to slide sorter.
+		cy.cGet('#preview-frame-part-0').click();
+		cy.cGet('#preview-frame-part-1').click();
+
+		// Slide sorter should keep focus while user clicks on different slides.
+		cy.window().then(win => {
+			const app = win['0'].app;
+			cy.expect(app.map._docLayer._preview.partsFocused).to.be.equal(true);
+		});
+	});
+
 	it('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		desktopHelper.closeNavigatorSidebar();
