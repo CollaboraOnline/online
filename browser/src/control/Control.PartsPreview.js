@@ -235,11 +235,6 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			that.partsFocused = true;
 		};
 
-		img.onblur = function () {
-			that._map._clip.clearSelection();
-			that.partsFocused = false;
-		};
-
 		var that = this;
 		window.L.DomEvent.on(frame, 'contextmenu', function(e) {
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
