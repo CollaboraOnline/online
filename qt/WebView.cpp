@@ -41,7 +41,7 @@ unsigned generateNewAppDocId()
 
 std::string getUILanguage()
 {
-    const char* envVars[] = {"LC_ALL", "LC_MESSAGES", "LANGUAGE", "LANG"};
+    const char* envVars[] = {"LC_ALL", "LC_MESSAGES", "LANG", "LANGUAGE"};
     std::string lang;
 
     // 1. Check environment variables in precedence order
