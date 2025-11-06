@@ -12,6 +12,7 @@
 	--color-text-lighter: #fff; /* secondard text, disabled */
 	--color-status-badge: #d6d6d6;
 	--color-slideshow: #d6d6d6;
+	--color-date-text: #d6d6d6;
 
 	--color-main-background: #121212;
 	--color-background-dark: #1E1E1E;  /* select */
@@ -73,6 +74,7 @@
 	--color-smart-guides-helper-line: #f36d4f;
 
 	--color-quickfind-border: #444;
+	--scrollbar-color: #c0bfbc transparent;
 }
 
 [data-bg-theme='dark'] {
