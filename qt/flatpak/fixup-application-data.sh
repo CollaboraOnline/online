@@ -30,5 +30,5 @@ rm /app/share/applications/com.collabora.Office.*.desktop
 rm /app/share/icons/hicolor/*/apps/com.collabora.Office.{base,basic,calc,chart,draw,impress,main,math,writer}.*
 
 # Fix Exec lines:
-sed -i -e s/^Exec=collaboraoffice/Exec=coda/ /app/share/applications/com.collabora.Office.desktop
+sed -i -e s/^Exec=collaboraoffice/Exec=coda-qt/ /app/share/applications/com.collabora.Office.desktop
 sed -i -e 's/^\(Exec=.*\)%U/\1%F/' /app/share/applications/com.collabora.Office.desktop
