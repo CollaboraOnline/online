@@ -720,10 +720,7 @@ static IMP standardImpOfInputAccessoryView = nil;
         }
 
         const char *buf = [message.body UTF8String];
-        p.fd = self.document->fakeClientFd;
-        p.events = POLLOUT;
-        fakeSocketPoll(&p, 1, -1);
-        fakeSocketWrite(self.document->fakeClientFd, buf, strlen(buf));
+        fakeSocketWriteQueue(self.document->fakeClientFd, buf, strlen(buf));
     } else {
         LOG_ERR("Unrecognized kind of message received from WebView: " << [message.name UTF8String] << ":" << [message.body UTF8String]);
     }
