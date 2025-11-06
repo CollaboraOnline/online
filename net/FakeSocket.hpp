@@ -147,4 +147,9 @@ inline int fakeSocketClose(int)
 
 #endif // !MOBILEAPP
 
+inline ssize_t fakeSocketWriteQueue(int fd, const void *buf, size_t nbytes)
+{
+    return fakeSocketWrite(fd, buf, nbytes);
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

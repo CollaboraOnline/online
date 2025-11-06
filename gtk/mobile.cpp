@@ -227,15 +227,7 @@ static void handle_cool_message(WebKitUserContentManager *manager,
             // WebSocket.
             LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
 
-            // Must do this in a thread, too, so that we can return to the GTK+ main loop
-            std::thread([]
-            {
-                struct pollfd pollfd;
-                pollfd.fd = fakeClientFd;
-                pollfd.events = POLLOUT;
-                fakeSocketPoll(&pollfd, 1, -1);
-                fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
-            }).detach();
+            fakeSocketWriteQueue(fakeClientFd, fileURL.c_str(), fileURL.size());
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
@@ -248,17 +240,7 @@ static void handle_cool_message(WebKitUserContentManager *manager,
         }
         else
         {
-            // As above
-            char *string_copy = strdup(string_value);
-            std::thread([=]
-            {
-                struct pollfd pollfd;
-                pollfd.fd = fakeClientFd;
-                pollfd.events = POLLOUT;
-                fakeSocketPoll(&pollfd, 1, -1);
-                fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
-                free(string_copy);
-            }).detach();
+            fakeSocketWriteQueue(fakeClientFd, string_value, strlen(string_value));
         }
         g_free(string_value);
     }

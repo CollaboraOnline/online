@@ -126,11 +126,7 @@ void handle_cool_message(const char *string_value)
         LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
         std::cout << "Loading file [" << fileURL << "]" << std::endl;
 
-        struct pollfd pollfd;
-        pollfd.fd = fakeClientFd;
-        pollfd.events = POLLOUT;
-        fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+        fakeSocketWriteQueue(fakeClientFd, fileURL.c_str(), fileURL.size());
     }
     else if (strcmp(string_value, "BYE") == 0)
     {
@@ -141,12 +137,7 @@ void handle_cool_message(const char *string_value)
     }
     else
     {
-        // As above
-        struct pollfd pollfd;
-        pollfd.fd = fakeClientFd;
-        pollfd.events = POLLOUT;
-        fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, string_value, strlen(string_value));
+        fakeSocketWriteQueue(fakeClientFd, string_value, strlen(string_value));
     }
 }
 
