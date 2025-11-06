@@ -1,0 +1,95 @@
+#: browser/welcome/welcome-slideshow.odp:1
+msgid "Collabora Office"
+msgstr "Collabora Office"
+
+#: browser/welcome/welcome-slideshow.odp:2
+msgid "Same look, same code"
+msgstr "Stejný vzhled, stejný kód"
+
+#: browser/welcome/welcome-slideshow.odp:3
+msgid "Your files, your device"
+msgstr "Vaše soubory, vaše zařízení"
+
+#: browser/welcome/welcome-slideshow.odp:4
+msgid "Find out more!"
+msgstr "Zjistěte víc!"
+
+#: browser/welcome/welcome-slideshow.odp:5
+msgid "Open it and feel instantly at home:"
+msgstr "Otevřete a hned se budete cítit jako doma:"
+
+#: browser/welcome/welcome-slideshow.odp:6
+msgid "ODF or DOCX"
+msgstr "ODF nebo DOCX"
+
+#: browser/welcome/welcome-slideshow.odp:7
+msgid "Quick edits or deep dives"
+msgstr "Rychlé úpravy i detailní práce"
+
+#: browser/welcome/welcome-slideshow.odp:8
+msgid "A clean, beautiful interface"
+msgstr "Čisté, krásné rozhraní"
+
+#: browser/welcome/welcome-slideshow.odp:9
+msgid "Next"
+msgstr "Další"
+
+#: browser/welcome/welcome-slideshow.odp:10
+msgid "The familiar, powerful Collabora Online experience"
+msgstr "Známé a výkonné prostředí Collabora Online"
+
+#: browser/welcome/welcome-slideshow.odp:11
+msgid "Now locally on Windows, macOS, and Linux"
+msgstr "Nyní lokálně na Windows, macOS a Linuxu"
+
+#: browser/welcome/welcome-slideshow.odp:12
+msgid "Enjoy editing your documents locally with an intuitive, intelligent interface"
+msgstr "Užívejte si úpravy dokumentů lokálně v intuitivním, chytrém rozhraní"
+
+#: browser/welcome/welcome-slideshow.odp:13
+msgid "Navigator bar with document search"
+msgstr "Navigační lišta s vyhledáváním v dokumentu"
+
+#: browser/welcome/welcome-slideshow.odp:14
+msgid "Helpful quick access examples"
+msgstr "Užitečné příklady rychlého přístupu"
+
+#: browser/welcome/welcome-slideshow.odp:15
+msgid "Create and edit tables within documents"
+msgstr "Vytvářejte a upravujte tabulky v dokumentech"
+
+#: browser/welcome/welcome-slideshow.odp:16
+msgid "Powerful data and charting tools"
+msgstr "Výkonné nástroje pro práci s daty a grafy"
+
+#: browser/welcome/welcome-slideshow.odp:17
+msgid "Privacy by design"
+msgstr "Soukromí od základu"
+
+#: browser/welcome/welcome-slideshow.odp:18
+msgid "Fully open source – no hidden processes, no telemetry"
+msgstr "Plně open‑source – žádné skryté procesy, žádná telemetrie"
+
+#: browser/welcome/welcome-slideshow.odp:19
+msgid "Documents never leave your device – unless you say so"
+msgstr "Dokumenty nikdy neopustí vaše zařízení – ledaže to výslovně povolíte"
+
+#: browser/welcome/welcome-slideshow.odp:20
+msgid "Collabora Office Desktop"
+msgstr "Collabora Office Desktop"
+
+#: browser/welcome/welcome-slideshow.odp:21
+msgid "Take back control"
+msgstr "Získejte zpět kontrolu"
+
+#: browser/welcome/welcome-slideshow.odp:22
+msgid "We’re excited to share this release with our community"
+msgstr "Jsme nadšení, že se o toto vydání můžeme podělit s naší komunitou"
+
+#: browser/welcome/welcome-slideshow.odp:23
+msgid "Try it out. Break things. Let us know what works and what doesn’t."
+msgstr "Vyzkoušejte to. Klidně něco rozbijte. Dejte nám vědět, co funguje a co ne."
+
+#: browser/welcome/welcome-slideshow.odp:24
+msgid "Together, we're building a privacy-respecting, open, and elegant office suite for everyone."
+msgstr "Společně budujeme kancelářský balík pro každého – otevřený, elegantní a respektující soukromí."
