@@ -313,7 +313,6 @@ def detect_available_locales(po_directory, lang_to_locale_map):
 
 
 if __name__ == "__main__":
-    # Configuration - CHANGE THESE TO YOUR PATHS
     po_directory = sys.argv[1] if len(sys.argv) > 1 else "browser/po/"
 
     odf_file = (
