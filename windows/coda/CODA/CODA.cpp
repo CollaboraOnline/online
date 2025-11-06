@@ -709,7 +709,7 @@ static void do_hullo_handling_things(WindowData& data)
     // "client" thread before we have written the URL to it.
 
     std::string message(data.filenameAndUri.uri + " " + std::to_string(data.appDocId));
-    fakeSocketWrite(data.fakeClientFd, message.c_str(), message.size());
+    fakeSocketWriteQueue(data.fakeClientFd, message.c_str(), message.size());
 }
 
 static void do_welcome_handling_things(WindowData& data)
@@ -792,19 +792,7 @@ static void do_other_message_handling_things(const WindowData& data, const char*
 {
     LOG_TRC_NOFILE("Handling other message:'" << message << "'");
 
-    char* message_copy = _strdup(message);
-    // As above, must do this in a thread
-    std::thread(
-        [=]
-        {
-            struct pollfd pollfd;
-            pollfd.fd = data.fakeClientFd;
-            pollfd.events = POLLOUT;
-            fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(data.fakeClientFd, message_copy, strlen(message_copy));
-            std::free(message_copy);
-        })
-        .detach();
+    fakeSocketWriteQueue(data.fakeClientFd, message, strlen(message));
 }
 
 static void do_cut_or_copy(ClipboardOp op, WindowData& data)
